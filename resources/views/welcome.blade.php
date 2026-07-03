@@ -3,13 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Sekolah Ceria Nusantara — TK &amp; SD Modern, Ceria, dan Ramah Anak
-    </title>
-    <meta
-      name="description"
-      content="Sekolah Ceria Nusantara adalah sekolah TK dan SD modern dengan kurikulum aktif, guru ramah anak, dan lingkungan yang aman dan menyenangkan. PPDB 2026/2027 telah dibuka!"
-    />
+    <title>{{ $meta['title'] }}</title>
+    <meta name="description" content="{{ $meta['description'] }}" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 font-size=%2290%22>🎨</text></svg>"
@@ -101,27 +96,30 @@
 
         <div class="container hero__inner">
           <div class="hero__content reveal">
-            <p class="eyebrow eyebrow--pink">
-              🎉 PPDB Tahun Ajaran 2026/2027 Resmi Dibuka
-            </p>
-            <h1 class="hero__title">
-              Tempat Ceria untuk Anak
-              <span class="text-highlight">Tumbuh, Bermain,</span> dan Belajar
-            </h1>
-            <p class="hero__subtitle">
-              Sekolah Ceria Nusantara memadukan kurikulum modern, guru yang
-              hangat, dan lingkungan yang aman supaya si kecil selalu semangat
-              berangkat sekolah setiap hari.
-            </p>
-            <div class="hero__actions">
-              <a href="#ppdb" class="btn btn--primary btn--lg"
-                >Daftar PPDB Sekarang</a
-              >
-              <a href="#program" class="btn btn--ghost btn--lg"
-                >Lihat Program</a
-              >
+              <p class="eyebrow eyebrow--pink">
+                {{ $hero['eyebrow'] }}
+              </p>
+
+              <h1 class="hero__title">
+                {{ $hero['title_before'] }}
+                <span class="text-highlight">{{ $hero['title_highlight'] }}</span>
+                {{ $hero['title_after'] }}
+              </h1>
+
+              <p class="hero__subtitle">
+                {{ $hero['subtitle'] }}
+              </p>
+
+              <div class="hero__actions">
+                <a href="{{ $hero['primary_cta']['href'] }}" class="btn btn--primary btn--lg">
+                  {{ $hero['primary_cta']['label'] }}
+                </a>
+
+                <a href="{{ $hero['secondary_cta']['href'] }}" class="btn btn--ghost btn--lg">
+                  {{ $hero['secondary_cta']['label'] }}
+                </a>
+              </div>
             </div>
-          </div>
 
           <div class="hero__visual reveal reveal--delay-1">
             <div class="hero__illustration" id="tiltIllustration">
@@ -137,18 +135,12 @@
                 <div class="illustration-grass"></div>
               </div>
 
-              <div class="sticker-card sticker-card--1">
-                <span class="sticker-card__icon">✅</span>
-                <span>Akreditasi A</span>
-              </div>
-              <div class="sticker-card sticker-card--2">
-                <span class="sticker-card__icon">🤗</span>
-                <span>Guru Ramah Anak</span>
-              </div>
-              <div class="sticker-card sticker-card--3">
-                <span class="sticker-card__icon">🎨</span>
-                <span>Kelas Aktif &amp; Kreatif</span>
-              </div>
+              @foreach ($hero['badges'] as $badge)
+                <div class="sticker-card sticker-card--{{ $loop->iteration }}">
+                    <span class="sticker-card__icon">{{ $badge['icon'] }}</span>
+                    <span>{{ $badge['label'] }}</span>
+                </div>
+              @endforeach            
             </div>
           </div>
         </div>
