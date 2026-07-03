@@ -17,6 +17,7 @@ final class HomeController extends Controller
             'ppdb' => __('home.ppdb'),
             'visiMisi' => __('home.visi_misi'),
             'schoolValues' => __('home.nilai_sekolah'),
+            'featuredPrograms' => __('home.program_unggulan'),
         ]);
     }
 }

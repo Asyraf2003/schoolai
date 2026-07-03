@@ -222,4 +222,55 @@ return [
             ],
         ],
     ],
+
+    'program_unggulan' => [
+        'eyebrow' => 'Program Unggulan',
+        'title' => 'Program Unggulan Kami',
+        'subtitle' => 'Pilihan program pendidikan Islamic School untuk mendukung pembelajaran, karakter, bahasa, dan literasi siswa.',
+        'items' => [
+            [
+                'card_class' => 'program-card--rot-1',
+                'icon' => '🏫',
+                'background' => 'var(--color-pink-soft)',
+                'title' => 'SDIT',
+                'description' => 'Program sekolah dasar Islam terpadu dengan penguatan akademik dan karakter Islami.',
+            ],
+            [
+                'card_class' => 'program-card--rot-2',
+                'icon' => '🌍',
+                'background' => 'var(--color-mint-soft)',
+                'title' => 'Mitra Bahasa',
+                'description' => 'Pembelajaran bahasa Inggris dan bahasa Arab untuk membangun kemampuan komunikasi global.',
+            ],
+            [
+                'card_class' => 'program-card--rot-1',
+                'icon' => '🎒',
+                'background' => 'var(--color-blue-soft)',
+                'title' => 'Taman Kanak-Kanak',
+                'description' => 'Pembelajaran usia dini yang hangat, aktif, dan sesuai tahap perkembangan anak.',
+            ],
+            [
+                'card_class' => 'program-card--rot-2',
+                'icon' => '🕌',
+                'background' => 'var(--color-yellow-soft)',
+                'title' => 'Tahfidz',
+                'description' => 'Program hafalan Al-Qur’an dengan pembiasaan adab dan karakter Islami.',
+            ],
+            [
+                'card_class' => 'program-card--rot-1',
+                'icon' => '🧸',
+                'background' => 'var(--color-purple-soft)',
+                'title' => 'Kelompok Bermain',
+                'description' => 'Kegiatan bermain terarah untuk membangun kemandirian, sosial, dan rasa ingin tahu.',
+            ],
+            [
+                'card_class' => 'program-card--rot-2',
+                'icon' => '📚',
+                'background' => 'var(--color-orange-soft)',
+                'title' => 'Perpustakaan',
+                'description' => 'Ruang literasi untuk menumbuhkan minat baca dan kebiasaan belajar mandiri.',
+            ],
+        ],
+        'empty' => 'Program Unggulan Belum Tersedia',
+    ],
 ];

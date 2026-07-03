@@ -291,79 +291,28 @@
       <section class="program-section section" id="program">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--orange">Kurikulum Kami</p>
-            <h2 class="section-title">Program Unggulan</h2>
+            <p class="eyebrow eyebrow--orange">{{ $featuredPrograms['eyebrow'] }}</p>
+            <h2 class="section-title">{{ $featuredPrograms['title'] }}</h2>
             <p class="section-subtitle">
-              Rangkaian program yang dirancang supaya anak belajar sambil
-              bermain.
+              {{ $featuredPrograms['subtitle'] }}
             </p>
           </div>
           <div class="program-flow">
-            <article class="program-card program-card--rot-1">
-              <span
-                class="program-card__icon"
-                style="background: var(--color-pink-soft)"
-                >📖</span
-              >
-              <h3>Kelas Literasi Ceria</h3>
-              <p>
-                Membaca dan mendongeng interaktif untuk menumbuhkan cinta buku
-                sejak dini.
-              </p>
-            </article>
-            <article class="program-card program-card--rot-2">
-              <span
-                class="program-card__icon"
-                style="background: var(--color-mint-soft)"
-                >🔬</span
-              >
-              <h3>Science Fun Lab</h3>
-              <p>
-                Eksperimen sains sederhana yang aman dan seru untuk
-                dipraktikkan.
-              </p>
-            </article>
-            <article class="program-card program-card--rot-1">
-              <span
-                class="program-card__icon"
-                style="background: var(--color-blue-soft)"
-                >🌍</span
-              >
-              <h3>English Day</h3>
-              <p>
-                Sehari penuh berbahasa Inggris lewat lagu, cerita, dan
-                permainan.
-              </p>
-            </article>
-            <article class="program-card program-card--rot-2">
-              <span
-                class="program-card__icon"
-                style="background: var(--color-yellow-soft)"
-                >🕌</span
-              >
-              <h3>Tahfidz &amp; Karakter</h3>
-              <p>Hafalan surat pendek dibarengi pembiasaan akhlak yang baik.</p>
-            </article>
-            <article class="program-card program-card--rot-1">
-              <span
-                class="program-card__icon"
-                style="background: var(--color-purple-soft)"
-                >💻</span
-              >
-              <h3>Coding Kids Dasar</h3>
-              <p>
-                Belajar logika pemrograman dengan cara visual dan menyenangkan.
-              </p>
-            </article>
-            <article class="program-card program-card--rot-2">
-              <span
-                class="program-card__icon"
-                style="background: var(--color-orange-soft)"
-                >🌳</span
-              >
-              <h3>Outdoor Learning</h3>
-              <p>Eksplorasi alam terbuka untuk melatih rasa ingin tahu anak.</p>
-            </article>
+            @forelse ($featuredPrograms['items'] as $program)
+              <article class="program-card {{ $program['card_class'] }}">
+                <span
+                  class="program-card__icon"
+                  style="background: {{ $program['background'] }}"
+                  >{{ $program['icon'] }}</span
+                >
+                <h3>{{ $program['title'] }}</h3>
+                <p>
+                  {{ $program['description'] }}
+                </p>
+              </article>
+            @empty
+              <p>{{ $featuredPrograms['empty'] }}</p>
+            @endforelse
           </div>
         </div>
       </section>
