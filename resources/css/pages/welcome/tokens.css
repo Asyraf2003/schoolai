@@ -1,0 +1,23 @@
+/* Welcome tokens: warna/ukuran khusus homepage sekolah. Nanti nilai detailnya boleh dirapikan dari template final. */
+:root {
+    --home-cream: #fff8ec;
+    --home-cream-dark: #fcefd8;
+    --home-yellow: #ffc93c;
+    --home-yellow-soft: #fff0c2;
+    --home-blue: #7fc7e0;
+    --home-blue-soft: #dcf1f7;
+    --home-mint: #7ed9b4;
+    --home-mint-soft: #dcf6ea;
+    --home-orange: #ff9f5a;
+    --home-pink: #ffafc5;
+    --home-pink-soft: #ffe4ec;
+    --home-purple: #b7a3e0;
+    --home-ink: #33314d;
+    --home-ink-soft: #6c6a85;
+    --home-white: #ffffff;
+    --home-radius-sm: 14px;
+    --home-radius-md: 22px;
+    --home-radius-lg: 32px;
+    --home-radius-pill: 999px;
+    --home-shadow-soft: 0 10px 30px rgba(51, 49, 77, 0.08);
+}
