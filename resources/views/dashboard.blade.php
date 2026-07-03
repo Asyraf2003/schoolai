@@ -15,6 +15,10 @@
 
         <h1>{{ __('app.dashboard.heading') }}</h1>
 
+        <p>
+            <a href="{{ route('admin.stats.edit') }}">Kelola Statistik Homepage</a>
+        </p>
+
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit">{{ __('app.dashboard.logout') }}</button>

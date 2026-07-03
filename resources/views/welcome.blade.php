@@ -168,12 +168,18 @@
       <section class="stats-ribbon reveal">
         <div class="container stats-ribbon__grid">
           @foreach ($stats as $stat)
+            @php
+              $statValue = trim((string) ($stat['value'] ?? (($stat['count'] ?? '') . ($stat['suffix'] ?? ''))));
+              $statCount = $stat['count'] ?? null;
+              $statSuffix = $stat['suffix'] ?? '';
+              $canAnimateCount = is_numeric($statCount);
+            @endphp
             <div class="stat-item">
               <span
                 class="stat-item__number"
-                data-count="{{ $stat['count'] }}"
-                @if (($stat['suffix'] ?? '') !== '') data-suffix="{{ $stat['suffix'] }}" @endif
-              >0</span>
+                @if ($canAnimateCount) data-count="{{ $statCount }}" @endif
+                @if ($canAnimateCount && $statSuffix !== '') data-suffix="{{ $statSuffix }}" @endif
+              >{{ $canAnimateCount ? '0' : $statValue }}</span>
               <span class="stat-item__label">{{ $stat['label'] }}</span>
             </div>
           @endforeach

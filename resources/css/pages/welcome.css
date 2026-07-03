@@ -4340,3 +4340,48 @@ h1, h2, h3, h4, p { margin: 0; }
     font-size: 0.66rem;
   }
 }
+
+
+/* STATS ADMIN TEXT VALUE AND DESKTOP HOVER FINAL OVERRIDE */
+.stat-item {
+  padding: 16px 14px;
+  border-radius: 22px;
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.stat-item__number,
+.stat-item__label {
+  transition: color 0.28s ease, transform 0.28s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stat-item:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 18px 34px rgba(0,0,0,0.18);
+  }
+
+  .stat-item:hover .stat-item__number {
+    color: #ffffff;
+    transform: scale(1.04);
+  }
+
+  .stat-item:hover .stat-item__label {
+    color: #ffe8a3;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .stat-item {
+    transition: none;
+  }
+
+  .stat-item:hover {
+    transform: none;
+    background: transparent;
+    box-shadow: none;
+  }
+}

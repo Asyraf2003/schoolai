@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var statNumbers = document.querySelectorAll('.stat-item__number');
 
   function animateCount(el) {
+    if (!el.hasAttribute('data-count')) return;
     var target = parseInt(el.getAttribute('data-count'), 10) || 0;
     var suffix = el.getAttribute('data-suffix') || '';
     var duration = 1400; // ms
@@ -175,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     // Fallback jika IntersectionObserver tidak tersedia
     statNumbers.forEach(function (el) {
+      if (!el.hasAttribute('data-count')) return;
       var target = parseInt(el.getAttribute('data-count'), 10) || 0;
       el.textContent = target + (el.getAttribute('data-suffix') || '');
     });

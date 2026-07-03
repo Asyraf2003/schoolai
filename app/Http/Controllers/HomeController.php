@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SiteStatistic;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Schema;
 
 final class HomeController extends Controller
 {
@@ -12,7 +14,7 @@ final class HomeController extends Controller
             'meta' => __('home.meta'),
             'hero' => $this->heroData(),
             'navbar' => $this->navbarData(),
-            'stats' => __('home.stats.items'),
+            'stats' => $this->statsData(),
             'quickInfo' => __('home.quick_info.items'),
             'ppdb' => __('home.ppdb'),
             'visiMisi' => __('home.visi_misi'),
@@ -51,6 +53,44 @@ final class HomeController extends Controller
         }, $hero['badges'] ?? []);
 
         return $hero;
+    }
+
+    private function statsData(): array
+    {
+        if (! Schema::hasTable('site_statistics')) {
+            return $this->languageStatsData();
+        }
+
+        $statistics = SiteStatistic::query()
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get(['value', 'label', 'description']);
+
+        if ($statistics->isEmpty()) {
+            return $this->languageStatsData();
+        }
+
+        return $statistics
+            ->map(fn (SiteStatistic $statistic): array => [
+                'value' => $statistic->value,
+                'label' => $statistic->label,
+                'description' => $statistic->description,
+            ])
+            ->all();
+    }
+
+    private function languageStatsData(): array
+    {
+        return array_map(
+            fn (array $item): array => [
+                'value' => trim((string) ($item['count'] ?? '') . (string) ($item['suffix'] ?? '')),
+                'count' => $item['count'] ?? null,
+                'suffix' => $item['suffix'] ?? '',
+                'label' => $item['label'] ?? '',
+                'description' => $item['description'] ?? null,
+            ],
+            __('home.stats.items')
+        );
     }
 
     private function navbarData(): array

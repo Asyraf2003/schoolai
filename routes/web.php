@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\SiteStatisticController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -22,6 +23,14 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::redirect('/admin', '/admin/stats')->name('admin.index');
+
+    Route::get('/admin/stats', [SiteStatisticController::class, 'edit'])
+        ->name('admin.stats.edit');
+
+    Route::put('/admin/stats', [SiteStatisticController::class, 'update'])
+        ->name('admin.stats.update');
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
