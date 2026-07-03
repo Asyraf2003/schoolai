@@ -1,17 +1,21 @@
 <!doctype html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
+    <title>{{ __('app.dashboard.title') }}</title>
 </head>
 <body>
     <main>
-        <h1>Selamat datang</h1>
+        @if (session('success'))
+            <p>{{ session('success') }}</p>
+        @endif
+
+        <h1>{{ __('app.dashboard.heading') }}</h1>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit">Logout</button>
+            <button type="submit">{{ __('app.dashboard.logout') }}</button>
         </form>
     </main>
 </body>
