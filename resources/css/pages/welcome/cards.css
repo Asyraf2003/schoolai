@@ -1,0 +1,57 @@
+/* Cards & media placeholder: gaya kartu umum, ikon, gambar dummy, dan filter ekskul. */
+.info-card__icon,
+.value-card__icon,
+.program-card__icon,
+.facility-card__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 14px;
+    border-radius: var(--home-radius-md);
+    font-size: 24px;
+}
+
+.card-media,
+.gallery-item,
+.article-card__image,
+.facility-card__image {
+    min-height: 180px;
+    border-radius: var(--home-radius-md);
+    background: linear-gradient(135deg, var(--home-blue-soft), var(--home-pink-soft));
+}
+
+/* TODO media: ganti placeholder ini ke public/media/home/... saat asset asli sudah tersedia. */
+[data-media-placeholder] {
+    display: grid;
+    place-items: center;
+    min-height: 180px;
+    border-radius: var(--home-radius-md);
+    background: repeating-linear-gradient(45deg, var(--home-blue-soft), var(--home-blue-soft) 12px, var(--home-pink-soft) 12px, var(--home-pink-soft) 24px);
+    color: var(--home-ink-soft);
+    font-weight: 800;
+}
+
+.filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.filter-btn {
+    padding: 9px 14px;
+    border-radius: var(--home-radius-pill);
+    background: var(--home-white);
+    box-shadow: var(--home-shadow-soft);
+    font-weight: 800;
+}
+
+.filter-btn.active {
+    background: var(--home-orange);
+    color: var(--home-white);
+}
+
+.exkul-card.is-hidden {
+    display: none;
+}
