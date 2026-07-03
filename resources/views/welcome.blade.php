@@ -146,7 +146,15 @@
 
               @foreach ($hero['badges'] as $badge)
                 <div class="sticker-card sticker-card--{{ $loop->iteration }}">
-                  <span class="sticker-card__icon">{{ $badge['icon'] }}</span>
+                  @if (! empty($badge['image_url']))
+                    <img
+                      src="{{ $badge['image_url'] }}"
+                      alt="{{ $badge['alt'] ?? $badge['label'] }}"
+                      class="sticker-card__image"
+                    />
+                  @else
+                    <span class="sticker-card__icon">{{ $badge['icon'] }}</span>
+                  @endif
                   <span>{{ $badge['label'] }}</span>
                 </div>
               @endforeach
