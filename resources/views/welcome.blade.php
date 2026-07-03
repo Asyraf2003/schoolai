@@ -96,30 +96,30 @@
 
         <div class="container hero__inner">
           <div class="hero__content reveal">
-              <p class="eyebrow eyebrow--pink">
-                {{ $hero['eyebrow'] }}
-              </p>
+            <p class="eyebrow eyebrow--pink">
+              {{ $hero['eyebrow'] }}
+            </p>
 
-              <h1 class="hero__title">
-                {{ $hero['title_before'] }}
-                <span class="text-highlight">{{ $hero['title_highlight'] }}</span>
-                {{ $hero['title_after'] }}
-              </h1>
+            <h1 class="hero__title">
+              {{ $hero['title_before'] }}
+              <span class="text-highlight">{{ $hero['title_highlight'] }}</span>
+              {{ $hero['title_after'] }}
+            </h1>
 
-              <p class="hero__subtitle">
-                {{ $hero['subtitle'] }}
-              </p>
+            <p class="hero__subtitle">
+              {{ $hero['subtitle'] }}
+            </p>
 
-              <div class="hero__actions">
-                <a href="{{ $hero['primary_cta']['href'] }}" class="btn btn--primary btn--lg">
-                  {{ $hero['primary_cta']['label'] }}
-                </a>
+            <div class="hero__actions">
+              <a href="{{ $hero['primary_cta']['href'] }}" class="btn btn--primary btn--lg">
+                {{ $hero['primary_cta']['label'] }}
+              </a>
 
-                <a href="{{ $hero['secondary_cta']['href'] }}" class="btn btn--ghost btn--lg">
-                  {{ $hero['secondary_cta']['label'] }}
-                </a>
-              </div>
+              <a href="{{ $hero['secondary_cta']['href'] }}" class="btn btn--ghost btn--lg">
+                {{ $hero['secondary_cta']['label'] }}
+              </a>
             </div>
+          </div>
 
           <div class="hero__visual reveal reveal--delay-1">
             <div class="hero__illustration" id="tiltIllustration">
@@ -137,10 +137,10 @@
 
               @foreach ($hero['badges'] as $badge)
                 <div class="sticker-card sticker-card--{{ $loop->iteration }}">
-                    <span class="sticker-card__icon">{{ $badge['icon'] }}</span>
-                    <span>{{ $badge['label'] }}</span>
+                  <span class="sticker-card__icon">{{ $badge['icon'] }}</span>
+                  <span>{{ $badge['label'] }}</span>
                 </div>
-              @endforeach            
+              @endforeach
             </div>
           </div>
         </div>
