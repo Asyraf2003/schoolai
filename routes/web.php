@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login'])
         ->middleware('throttle:5,1')
         ->name('login.store');
+
+    Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])
+        ->name('google.redirect');
+
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])
+        ->name('google.callback');
 });
 
 Route::middleware('auth')->group(function () {
