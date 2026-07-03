@@ -113,25 +113,51 @@
           <div class="hero__visual reveal reveal--delay-1">
             <div class="hero__illustration" id="tiltIllustration">
               <div class="illustration-card">
-                <div class="illustration-sun">☀️</div>
-                <div class="illustration-building">
-                  <div class="roof"></div>
-                  <div class="wall">
-                    <span>🏫</span>
-                  </div>
-                </div>
-                <div class="illustration-kids">🧒🎒 🧑‍🎓📚 👧🖍️</div>
-                <div class="illustration-grass"></div>
-              </div>
+                @if (! empty($hero['visual_image_url']))
+                  <div class="hero-photo-stack" aria-label="{{ $hero['visual_image_alt'] ?? 'Foto lingkungan sekolah' }}">
+                    <img
+                      src="{{ $hero['visual_image_url'] }}"
+                      alt="{{ $hero['visual_image_alt'] ?? 'Foto lingkungan sekolah' }}"
+                      class="hero-photo-frame hero-photo-frame--main"
+                    />
 
+                    <img
+                      src="{{ $hero['visual_image_url'] }}"
+                      alt=""
+                      class="hero-photo-frame hero-photo-frame--top"
+                      aria-hidden="true"
+                    />
+
+                    <img
+                      src="{{ $hero['visual_image_url'] }}"
+                      alt=""
+                      class="hero-photo-frame hero-photo-frame--bottom"
+                      aria-hidden="true"
+                    />
+
+                    @if (! empty($hero['logo_image_url']))
+                      <img
+                        src="{{ $hero['logo_image_url'] }}"
+                        alt="{{ $hero['logo_image_alt'] ?? 'Al Mustaqbal Islamic School' }}"
+                        class="hero-photo-logo"
+                      />
+                    @endif
+                  </div>
+                @else
+                  <div class="hero-photo-fallback">
+                    Foto sekolah belum tersedia
+                  </div>
+                @endif
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="wave-divider" aria-hidden="true">
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <use href="#wave-shape" class="wave-fill-cream"></use>
-          </svg>
+        <div class="hero-wave-divider" aria-hidden="true">
+          <span class="hero-wave hero-wave--1"></span>
+          <span class="hero-wave hero-wave--2"></span>
+          <span class="hero-wave hero-wave--3"></span>
+          <span class="hero-wave hero-wave--4"></span>
         </div>
       </section>
 

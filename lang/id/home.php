@@ -15,6 +15,8 @@ return [
         'background_image' => 'media/home/hero-school.png',
         'visual_image' => 'media/home/hero-school.png',
         'visual_image_alt' => 'Gedung Islamic School Al Mustaqbal',
+        'logo_image' => 'media/home/mustaqbalfont.png',
+        'logo_image_alt' => 'Al Mustaqbal Islamic School',
         'primary_cta' => [
             'label' => 'Daftar PPDB',
             'href' => '#ppdb',

@@ -42,6 +42,7 @@ final class HomeController extends Controller
 
         $hero['background_image_url'] = $this->publicAssetUrl($hero['background_image'] ?? null);
         $hero['visual_image_url'] = $this->publicAssetUrl($hero['visual_image'] ?? null);
+        $hero['logo_image_url'] = $this->publicAssetUrl($hero['logo_image'] ?? null);
 
         $hero['badges'] = array_map(function (array $badge): array {
             $badge['image_url'] = $this->publicAssetUrl($badge['image'] ?? null);
