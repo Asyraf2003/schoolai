@@ -23,6 +23,7 @@ final class HomeController extends Controller
             'articlesSection' => __('home.artikel'),
             'announcementsSection' => __('home.pengumuman'),
             'facilitiesSection' => __('home.fasilitas'),
+            'contactSection' => __('home.kontak'),
         ]);
     }
 }

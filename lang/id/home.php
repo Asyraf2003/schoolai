@@ -505,4 +505,40 @@ return [
             ],
         ],
     ],
+
+    'kontak' => [
+        'eyebrow' => 'Kontak',
+        'title' => 'Hubungi Kami',
+        'cta' => [
+            'label' => 'Kirim Pesan',
+            'href' => 'mailto:example@gmail.com',
+        ],
+        'items' => [
+            [
+                'icon' => '📍',
+                'label' => 'Alamat',
+                'value' => 'Jl. Raya Cileungsi No.KM 2, RT.002/RW.008, Cileungsi, Kec. Cileungsi, Kabupaten Bogor, Jawa Barat 16820',
+            ],
+            [
+                'icon' => '💬',
+                'label' => 'WhatsApp',
+                'value' => '+62 812-3456-7890',
+            ],
+            [
+                'icon' => '✉️',
+                'label' => 'Email',
+                'value' => 'example@gmail.com',
+            ],
+            [
+                'icon' => '🕘',
+                'label' => 'Jam Operasional',
+                'value' => 'Senin – Jumat, 07.00 – 15.00 WIB',
+            ],
+        ],
+        'map' => [
+            'aria_label' => 'Peta lokasi Islamic School',
+            'pin_label' => 'Islamic School',
+            'todo' => 'TODO: ganti placeholder peta dengan lokasi resmi jika data map final sudah tersedia.',
+        ],
+    ],
 ];

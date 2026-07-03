@@ -478,55 +478,36 @@
       <section class="kontak-section section" id="kontak">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--purple">Hubungi Kami</p>
-            <h2 class="section-title">Kontak &amp; Lokasi</h2>
+            <p class="eyebrow eyebrow--purple">{{ $contactSection['eyebrow'] }}</p>
+            <h2 class="section-title">{{ $contactSection['title'] }}</h2>
           </div>
           <div class="kontak-grid">
             <div class="kontak-info reveal">
-              <div class="kontak-info__item">
-                <span class="kontak-info__icon">📍</span>
-                <div>
-                  <h4>Alamat</h4>
-                  <p>
-                    Jl. Mawar Ceria No. 12, Kel. Sukamaju, Kota Bahagia, 12345
-                  </p>
+              @foreach ($contactSection['items'] as $item)
+                <div class="kontak-info__item">
+                  <span class="kontak-info__icon">{{ $item['icon'] }}</span>
+                  <div>
+                    <h4>{{ $item['label'] }}</h4>
+                    <p>{{ $item['value'] }}</p>
+                  </div>
                 </div>
-              </div>
-              <div class="kontak-info__item">
-                <span class="kontak-info__icon">💬</span>
-                <div>
-                  <h4>WhatsApp</h4>
-                  <p>0812-3456-7890</p>
-                </div>
-              </div>
-              <div class="kontak-info__item">
-                <span class="kontak-info__icon">✉️</span>
-                <div>
-                  <h4>Email</h4>
-                  <p>info@sekolahcerianusantara.sch.id</p>
-                </div>
-              </div>
-              <div class="kontak-info__item">
-                <span class="kontak-info__icon">🕘</span>
-                <div>
-                  <h4>Jam Operasional</h4>
-                  <p>Senin – Jumat, 07.00 – 15.00 WIB</p>
-                </div>
-              </div>
-              <a href="#" class="btn btn--primary">Hubungi Admin</a>
+              @endforeach
+              <a href="{{ $contactSection['cta']['href'] }}" class="btn btn--primary">
+                {{ $contactSection['cta']['label'] }}
+              </a>
             </div>
 
             <!-- Placeholder peta custom dengan CSS, tanpa embed eksternal -->
             <div
               class="map-placeholder reveal reveal--delay-1"
               role="img"
-              aria-label="Peta lokasi Sekolah Ceria Nusantara"
+              aria-label="{{ $contactSection['map']['aria_label'] }}"
             >
               <div class="map-placeholder__grid"></div>
               <div class="map-placeholder__road map-placeholder__road--h"></div>
               <div class="map-placeholder__road map-placeholder__road--v"></div>
               <div class="map-placeholder__pin">
-                📍<span>Sekolah Ceria Nusantara</span>
+                📍<span>{{ $contactSection['map']['pin_label'] }}</span>
               </div>
             </div>
           </div>
