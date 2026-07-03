@@ -4079,3 +4079,59 @@ h1, h2, h3, h4, p { margin: 0; }
       0 8px 18px rgba(0,0,0,0.22) !important;
   }
 }
+
+/* HERO DESKTOP ONE SCREEN SEA BOUNDARY FINAL OVERRIDE */
+@media (min-width: 1024px) {
+  .hero {
+    box-sizing: border-box;
+    height: 100svh;
+    min-height: 720px;
+    max-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: calc(var(--nav-h) + 40px);
+    padding-bottom: 132px;
+    overflow: hidden;
+  }
+
+  .hero__inner {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+
+  .hero-wave-divider {
+    bottom: 0;
+    height: 128px;
+  }
+
+  .hero-wave-divider::before {
+    height: 118px;
+    bottom: -38px;
+  }
+
+  .hero-wave--1 {
+    height: 128px;
+    bottom: -48px;
+  }
+
+  .hero-wave--2 {
+    height: 112px;
+    bottom: -34px;
+  }
+
+  .hero-wave--3 {
+    height: 94px;
+    bottom: -22px;
+  }
+
+  .hero-wave-divider::after {
+    height: 78px;
+    bottom: -10px;
+  }
+
+  .hero-wave--4 {
+    height: 58px;
+    bottom: -2px;
+  }
+}
