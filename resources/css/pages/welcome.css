@@ -1516,3 +1516,112 @@ h1, h2, h3, h4, p { margin: 0; }
     box-shadow: none;
   }
 }
+
+/* HERO COLLAGE CLEAN SURFACE FINAL OVERRIDE */
+.illustration-card {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+}
+
+.hero-photo-stack {
+  inset: 0;
+  overflow: visible;
+}
+
+.hero-photo-frame {
+  border: 7px solid rgba(255, 255, 255, 0.94);
+  box-shadow: 0 20px 45px rgba(24, 22, 36, 0.18);
+}
+
+.hero-photo-frame--main {
+  width: 88%;
+  height: 78%;
+  left: 6%;
+  top: 7%;
+  border-radius: 32px;
+  z-index: 3;
+  transform:
+    translate3d(calc(var(--hero-shift-x) * 0.62), calc(var(--hero-shift-y) * 0.62), 64px)
+    rotateX(var(--hero-rotate-x))
+    rotateY(var(--hero-rotate-y))
+    rotate(-1.5deg);
+}
+
+.hero-photo-frame--top {
+  width: 34%;
+  height: 27%;
+  right: -3%;
+  top: 0;
+  z-index: 5;
+}
+
+.hero-photo-frame--bottom {
+  width: 32%;
+  height: 25%;
+  left: -1%;
+  bottom: 9%;
+  z-index: 4;
+}
+
+.hero-photo-logo {
+  left: -19%;
+  bottom: -4%;
+  width: 132%;
+  max-width: none;
+  max-height: none;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  object-fit: contain;
+  z-index: 12;
+  pointer-events: none;
+  filter: drop-shadow(0 14px 22px rgba(18, 18, 24, 0.30));
+  transform:
+    translate3d(calc(var(--hero-shift-x) * 0.5), calc(var(--hero-shift-y) * 0.44), 142px)
+    rotate(-3deg);
+}
+
+@media (max-width: 767px) {
+  .illustration-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .hero-photo-frame--main {
+    width: 90%;
+    height: 76%;
+    left: 5%;
+    top: 7%;
+  }
+
+  .hero-photo-frame--top {
+    width: 32%;
+    height: 25%;
+    right: -1%;
+    top: 2%;
+  }
+
+  .hero-photo-frame--bottom {
+    width: 30%;
+    height: 23%;
+    left: 1%;
+    bottom: 10%;
+  }
+
+  .hero-photo-logo {
+    left: -13%;
+    bottom: -2%;
+    width: 118%;
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+}
