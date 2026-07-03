@@ -32,8 +32,18 @@
     <!-- ======================= NAVBAR ======================= -->
     <header class="navbar" id="navbar">
       <div class="navbar__inner container">
-        <a href="{{ $navbar['logo']['href'] }}" class="navbar__logo">
-          <span class="navbar__logo-icon">{{ $navbar['logo']['icon'] }}</span>
+        <a href="{{ $navbar['logo']['href'] }}" class="navbar__logo" aria-label="{{ $navbar['logo']['line_1'] }} {{ $navbar['logo']['line_2'] }}">
+          <span class="navbar__logo-icon">
+            @if (! empty($navbar['logo']['image_url']))
+              <img
+                src="{{ $navbar['logo']['image_url'] }}"
+                alt="{{ $navbar['logo']['image_alt'] ?? ($navbar['logo']['line_1'] . ' ' . $navbar['logo']['line_2']) }}"
+                class="navbar__logo-image"
+              />
+            @else
+              {{ $navbar['logo']['icon'] }}
+            @endif
+          </span>
           <span class="navbar__logo-text">
             {{ $navbar['logo']['line_1'] }}<br /><small>{{ $navbar['logo']['line_2'] }}</small>
           </span>

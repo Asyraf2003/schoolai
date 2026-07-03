@@ -52,7 +52,9 @@ return [
         'logo' => [
             'href' => '#beranda',
             'icon' => '🌈',
-            'line_1' => 'Islamic',
+            'image' => 'media/home/logo.png',
+            'image_alt' => 'Logo Al Mustaqbal School',
+            'line_1' => 'Al Mustaqbal',
             'line_2' => 'School',
         ],
         'items' => [

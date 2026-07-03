@@ -11,7 +11,7 @@ final class HomeController extends Controller
         return view('welcome', [
             'meta' => __('home.meta'),
             'hero' => $this->heroData(),
-            'navbar' => __('home.navbar'),
+            'navbar' => $this->navbarData(),
             'stats' => __('home.stats.items'),
             'quickInfo' => __('home.quick_info.items'),
             'ppdb' => __('home.ppdb'),
@@ -51,6 +51,19 @@ final class HomeController extends Controller
         }, $hero['badges'] ?? []);
 
         return $hero;
+    }
+
+    private function navbarData(): array
+    {
+        $navbar = __('home.navbar');
+
+        if (! is_array($navbar)) {
+            return [];
+        }
+
+        $navbar['logo']['image_url'] = $this->publicAssetUrl($navbar['logo']['image'] ?? null);
+
+        return $navbar;
     }
 
     private function publicAssetUrl(mixed $path): ?string
