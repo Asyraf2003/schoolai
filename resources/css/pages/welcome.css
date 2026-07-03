@@ -1778,3 +1778,195 @@ h1, h2, h3, h4, p { margin: 0; }
     height: 48px;
   }
 }
+
+
+/* HERO VECTOR SEA WAVES FINAL OVERRIDE */
+.hero-wave-divider {
+  height: 138px;
+  bottom: -1px;
+  overflow: hidden;
+  z-index: 3;
+  background: transparent;
+  pointer-events: none;
+}
+
+.hero-wave-divider::before,
+.hero-wave-divider::after,
+.hero-wave {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  pointer-events: none;
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+  background-size: 520px 100%;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-position: 0 100%;
+  mask-position: 0 100%;
+  -webkit-mask-size: 520px 100%;
+  mask-size: 520px 100%;
+  will-change: transform, -webkit-mask-position, mask-position;
+}
+
+.hero-wave-divider::before,
+.hero-wave-divider::after {
+  content: "";
+}
+
+.hero-wave-divider::before {
+  height: 104px;
+  bottom: -18px;
+  z-index: 1;
+  background: #19c7e8;
+  opacity: 0.82;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 54 C46 20 88 86 136 48 C187 8 230 76 282 42 C336 6 386 70 438 36 C472 14 498 26 520 42 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 54 C46 20 88 86 136 48 C187 8 230 76 282 42 C336 6 386 70 438 36 C472 14 498 26 520 42 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  animation:
+    hero-vector-wave-slide 9s linear infinite,
+    hero-vector-wave-float 5.4s ease-in-out infinite alternate;
+}
+
+.hero-wave-divider::after {
+  height: 88px;
+  bottom: -8px;
+  z-index: 5;
+  background: #d9f7ff;
+  opacity: 0.78;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 66 C42 42 78 74 122 56 C176 34 204 78 258 54 C310 32 346 74 396 52 C450 28 480 48 520 34 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 66 C42 42 78 74 122 56 C176 34 204 78 258 54 C310 32 346 74 396 52 C450 28 480 48 520 34 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  animation:
+    hero-vector-wave-slide-reverse 12s linear infinite,
+    hero-vector-wave-float 6.2s ease-in-out infinite alternate-reverse;
+}
+
+.hero-wave {
+  border-radius: 0;
+  transform: none;
+  animation:
+    hero-vector-wave-slide 10s linear infinite,
+    hero-vector-wave-float 5.8s ease-in-out infinite alternate;
+}
+
+.hero-wave--1 {
+  height: 118px;
+  bottom: -38px;
+  z-index: 2;
+  background: #0477e8;
+  opacity: 0.92;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 48 C44 18 78 18 118 42 C164 70 196 6 250 30 C300 54 324 22 368 36 C418 52 456 18 520 42 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 48 C44 18 78 18 118 42 C164 70 196 6 250 30 C300 54 324 22 368 36 C418 52 456 18 520 42 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  animation-duration: 8.2s, 5.2s;
+}
+
+.hero-wave--2 {
+  height: 110px;
+  bottom: -28px;
+  left: -18%;
+  width: 136%;
+  z-index: 3;
+  background: #109aec;
+  opacity: 0.90;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 58 C50 18 92 78 144 46 C190 20 230 36 272 54 C320 78 356 18 404 38 C454 58 486 22 520 48 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 58 C50 18 92 78 144 46 C190 20 230 36 272 54 C320 78 356 18 404 38 C454 58 486 22 520 48 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  animation-name: hero-vector-wave-slide-reverse, hero-vector-wave-float;
+  animation-duration: 10.5s, 6s;
+}
+
+.hero-wave--3 {
+  height: 96px;
+  bottom: -16px;
+  left: -14%;
+  width: 132%;
+  z-index: 4;
+  background: #27d3ec;
+  opacity: 0.92;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 70 C44 42 82 38 126 60 C176 86 202 34 252 54 C306 76 326 34 374 54 C424 74 466 36 520 58 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 70 C44 42 82 38 126 60 C176 86 202 34 252 54 C306 76 326 34 374 54 C424 74 466 36 520 58 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  animation-duration: 12.5s, 6.8s;
+}
+
+.hero-wave--4 {
+  height: 76px;
+  bottom: -2px;
+  left: -8%;
+  width: 116%;
+  z-index: 6;
+  background: #bff5ff;
+  opacity: 0.96;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 82 C48 58 74 84 126 68 C180 52 214 88 264 66 C314 44 354 80 400 62 C450 42 486 62 520 52 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 520 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M0 82 C48 58 74 84 126 68 C180 52 214 88 264 66 C314 44 354 80 400 62 C450 42 486 62 520 52 L520 120 L0 120 Z'/%3E%3C/svg%3E");
+  animation-name: hero-vector-wave-slide-reverse, hero-vector-wave-float;
+  animation-duration: 14s, 7.2s;
+}
+
+@keyframes hero-vector-wave-slide {
+  from {
+    -webkit-mask-position: 0 100%;
+    mask-position: 0 100%;
+    background-position: 0 100%;
+  }
+  to {
+    -webkit-mask-position: 520px 100%;
+    mask-position: 520px 100%;
+    background-position: 520px 100%;
+  }
+}
+
+@keyframes hero-vector-wave-slide-reverse {
+  from {
+    -webkit-mask-position: 0 100%;
+    mask-position: 0 100%;
+    background-position: 0 100%;
+  }
+  to {
+    -webkit-mask-position: -520px 100%;
+    mask-position: -520px 100%;
+    background-position: -520px 100%;
+  }
+}
+
+@keyframes hero-vector-wave-float {
+  from {
+    transform: translateY(0) scaleY(1);
+  }
+  to {
+    transform: translateY(-7px) scaleY(1.04);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-wave-divider {
+    height: 112px;
+  }
+
+  .hero-wave-divider::before {
+    height: 82px;
+    bottom: -18px;
+  }
+
+  .hero-wave-divider::after {
+    height: 70px;
+    bottom: -8px;
+  }
+
+  .hero-wave--1 {
+    height: 90px;
+    bottom: -34px;
+  }
+
+  .hero-wave--2 {
+    height: 86px;
+    bottom: -26px;
+  }
+
+  .hero-wave--3 {
+    height: 76px;
+    bottom: -16px;
+  }
+
+  .hero-wave--4 {
+    height: 58px;
+    bottom: -2px;
+  }
+}
