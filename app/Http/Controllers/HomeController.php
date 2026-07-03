@@ -11,6 +11,7 @@ final class HomeController extends Controller
         return view('welcome', [
             'meta' => __('home.meta'),
             'hero' => __('home.hero'),
+            'navbar' => __('home.navbar'),
         ]);
     }
 }

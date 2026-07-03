@@ -32,29 +32,32 @@
     <!-- ======================= NAVBAR ======================= -->
     <header class="navbar" id="navbar">
       <div class="navbar__inner container">
-        <a href="#beranda" class="navbar__logo">
-          <span class="navbar__logo-icon">🌈</span>
+        <a href="{{ $navbar['logo']['href'] }}" class="navbar__logo">
+          <span class="navbar__logo-icon">{{ $navbar['logo']['icon'] }}</span>
           <span class="navbar__logo-text">
-            Sekolah Ceria<br /><small>Nusantara</small>
+            {{ $navbar['logo']['line_1'] }}<br /><small>{{ $navbar['logo']['line_2'] }}</small>
           </span>
         </a>
 
-        <nav class="navbar__menu" id="navMenu" aria-label="Menu utama">
+        <nav class="navbar__menu" id="navMenu" aria-label="{{ $navbar['aria_label'] }}">
           <ul>
-            <li><a href="#beranda" class="nav-link active">Beranda</a></li>
-            <li><a href="#program" class="nav-link">Program</a></li>
-            <li><a href="#galeri" class="nav-link">Galeri</a></li>
-            <li><a href="#artikel" class="nav-link">Artikel</a></li>
-            <li><a href="#ppdb" class="nav-link">PPDB</a></li>
-            <li><a href="#kontak" class="nav-link">Kontak</a></li>
+            @foreach ($navbar['items'] as $item)
+              <li>
+                <a href="{{ $item['href'] }}" class="nav-link {{ $loop->first ? 'active' : '' }}">
+                  {{ $item['label'] }}
+                </a>
+              </li>
+            @endforeach
           </ul>
-          <a href="#ppdb" class="btn btn--primary navbar__cta">Daftar PPDB</a>
+          <a href="{{ $navbar['cta']['href'] }}" class="btn btn--primary navbar__cta">
+            {{ $navbar['cta']['label'] }}
+          </a>
         </nav>
 
         <button
           class="hamburger"
           id="hamburgerBtn"
-          aria-label="Buka menu"
+          aria-label="{{ $navbar['mobile_open_label'] }}"
           aria-expanded="false"
           aria-controls="navMenu"
         >

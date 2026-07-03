@@ -35,4 +35,45 @@ return [
             ],
         ],
     ],
+
+    'navbar' => [
+        'aria_label' => 'Menu utama',
+        'logo' => [
+            'href' => '#beranda',
+            'icon' => '🌈',
+            'line_1' => 'Islamic',
+            'line_2' => 'School',
+        ],
+        'items' => [
+            [
+                'label' => 'Beranda',
+                'href' => '#beranda',
+            ],
+            [
+                'label' => 'Pendidikan',
+                'href' => '#program',
+            ],
+            [
+                'label' => 'Galeri',
+                'href' => '#galeri',
+            ],
+            [
+                'label' => 'Artikel',
+                'href' => '#artikel',
+            ],
+            [
+                'label' => 'PPDB',
+                'href' => '#ppdb',
+            ],
+            [
+                'label' => 'Kontak',
+                'href' => '#kontak',
+            ],
+        ],
+        'cta' => [
+            'label' => 'Daftar Sekarang',
+            'href' => '#ppdb',
+        ],
+        'mobile_open_label' => 'Buka menu',
+    ],
 ];
