@@ -1,5 +1,3 @@
-import './bootstrap';
-
 const welcomeCard = document.querySelector('[data-welcome-card]');
 const welcomeNote = document.querySelector('[data-welcome-note]');
 
