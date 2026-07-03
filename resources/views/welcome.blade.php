@@ -175,42 +175,17 @@
       <section class="quick-info section">
         <div class="container">
           <div class="quick-info__grid">
-            <div class="info-card reveal">
-              <span
-                class="info-card__icon"
-                style="background: var(--color-yellow-soft)"
-                >📅</span
-              >
-              <h3>Tahun Ajaran 2026/2027</h3>
-              <p>Persiapan kelas baru untuk TK dan SD sudah dimulai.</p>
-            </div>
-            <div class="info-card reveal reveal--delay-1">
-              <span
-                class="info-card__icon"
-                style="background: var(--color-mint-soft)"
-                >📝</span
-              >
-              <h3>Pendaftaran Dibuka</h3>
-              <p>Gelombang 1 sedang berlangsung, kuota terbatas tiap kelas.</p>
-            </div>
-            <div class="info-card reveal reveal--delay-2">
-              <span
-                class="info-card__icon"
-                style="background: var(--color-blue-soft)"
-                >🎒</span
-              >
-              <h3>Jenjang TK &amp; SD</h3>
-              <p>Mulai dari Kelompok Bermain hingga Sekolah Dasar kelas 6.</p>
-            </div>
-            <div class="info-card reveal reveal--delay-3">
-              <span
-                class="info-card__icon"
-                style="background: var(--color-pink-soft)"
-                >⏳</span
-              >
-              <h3>Kuota Terbatas</h3>
-              <p>Setiap kelas hanya menerima jumlah siswa yang terbatas.</p>
-            </div>
+            @foreach ($quickInfo as $info)
+              <div class="info-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}">
+                <span
+                  class="info-card__icon"
+                  style="background: {{ $info['background'] }}"
+                  >{{ $info['icon'] }}</span
+                >
+                <h3>{{ $info['title'] }}</h3>
+                <p>{{ $info['description'] }}</p>
+              </div>
+            @endforeach
           </div>
         </div>
         <div class="wave-divider" aria-hidden="true">

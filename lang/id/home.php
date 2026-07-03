@@ -105,4 +105,33 @@ return [
             ],
         ],
     ],
+
+    'quick_info' => [
+        'items' => [
+            [
+                'icon' => '📚',
+                'background' => 'var(--color-yellow-soft)',
+                'title' => 'Informasi Akademik',
+                'description' => 'Pengumuman, jadwal, dan nilai sekolah tersedia dalam satu tempat.',
+            ],
+            [
+                'icon' => '🎨',
+                'background' => 'var(--color-mint-soft)',
+                'title' => 'Ekstrakurikuler',
+                'description' => 'Jelajahi kegiatan siswa untuk mengembangkan minat dan bakat.',
+            ],
+            [
+                'icon' => '📝',
+                'background' => 'var(--color-blue-soft)',
+                'title' => 'PPDB Online',
+                'description' => 'Pendaftaran peserta didik baru dapat dilakukan dengan lebih mudah.',
+            ],
+            [
+                'icon' => '🎒',
+                'background' => 'var(--color-pink-soft)',
+                'title' => 'Jenjang Pendidikan',
+                'description' => 'Tersedia program SDIT, taman kanak-kanak, tahfidz, dan kelompok bermain.',
+            ],
+        ],
+    ],
 ];
