@@ -27,19 +27,19 @@ return [
             [
                 'icon' => '📖',
                 'label' => 'Tahfidz Al-Qur’an',
-                'image' => 'media/home/hero-tahfidz.jpg',
+                'image' => 'media/home/hero-school.png',
                 'alt' => 'Kegiatan tahfidz Al-Qur’an',
             ],
             [
                 'icon' => '🧑‍🏫',
                 'label' => 'Guru Pendamping',
-                'image' => 'media/home/hero-class.jpg',
+                'image' => 'media/home/hero-school.png',
                 'alt' => 'Guru mendampingi siswa belajar di kelas',
             ],
             [
                 'icon' => '🏫',
                 'label' => 'Lingkungan Nyaman',
-                'image' => 'media/home/hero-library.jpg',
+                'image' => 'media/home/hero-school.png',
                 'alt' => 'Lingkungan belajar Islamic School',
             ],
         ],
