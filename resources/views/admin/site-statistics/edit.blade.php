@@ -165,7 +165,7 @@
 
     .stats-admin-fields {
       display: grid;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: 220px 1fr;
       gap: 16px;
     }
 
@@ -179,8 +179,7 @@
       font-size: 0.9rem;
     }
 
-    .field input,
-    .field textarea {
+    .field input {
       width: 100%;
       box-sizing: border-box;
       border: 1px solid var(--admin-line);
@@ -192,13 +191,7 @@
       outline: none;
     }
 
-    .field textarea {
-      min-height: 46px;
-      resize: vertical;
-    }
-
-    .field input:focus,
-    .field textarea:focus {
+    .field input:focus {
       border-color: var(--admin-orange);
       box-shadow: 0 0 0 4px rgba(215,107,34,0.12);
     }
@@ -336,18 +329,6 @@
                     required
                   >
                   @error('statistics.' . $index . '.label')
-                    <span class="field-error">{{ $message }}</span>
-                  @enderror
-                </div>
-
-                <div class="field" style="grid-column: 1 / -1;">
-                  <label for="stat-description-{{ $statistic->id }}">Catatan internal / deskripsi</label>
-                  <textarea
-                    id="stat-description-{{ $statistic->id }}"
-                    name="statistics[{{ $index }}][description]"
-                    maxlength="255"
-                  >{{ old('statistics.' . $index . '.description', $statistic->description) }}</textarea>
-                  @error('statistics.' . $index . '.description')
                     <span class="field-error">{{ $message }}</span>
                   @enderror
                 </div>

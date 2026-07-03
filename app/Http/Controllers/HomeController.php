@@ -64,7 +64,7 @@ final class HomeController extends Controller
         $statistics = SiteStatistic::query()
             ->orderBy('sort_order')
             ->orderBy('id')
-            ->get(['value', 'label', 'description']);
+            ->get(['value', 'label']);
 
         if ($statistics->isEmpty()) {
             return $this->languageStatsData();
@@ -74,7 +74,6 @@ final class HomeController extends Controller
             ->map(fn (SiteStatistic $statistic): array => [
                 'value' => $statistic->value,
                 'label' => $statistic->label,
-                'description' => $statistic->description,
             ])
             ->all();
     }
@@ -87,7 +86,6 @@ final class HomeController extends Controller
                 'count' => $item['count'] ?? null,
                 'suffix' => $item['suffix'] ?? '',
                 'label' => $item['label'] ?? '',
-                'description' => $item['description'] ?? null,
             ],
             __('home.stats.items')
         );

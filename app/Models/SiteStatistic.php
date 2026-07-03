@@ -12,7 +12,6 @@ final class SiteStatistic extends Model
     protected $fillable = [
         'value',
         'label',
-        'description',
         'sort_order',
     ];
 }

@@ -29,7 +29,6 @@ final class SiteStatisticController extends Controller
             'statistics.*.id' => ['required', 'integer', 'exists:site_statistics,id'],
             'statistics.*.value' => ['required', 'string', 'max:80'],
             'statistics.*.label' => ['required', 'string', 'max:120'],
-            'statistics.*.description' => ['nullable', 'string', 'max:255'],
         ]);
 
         foreach ($validated['statistics'] as $index => $item) {
@@ -38,7 +37,6 @@ final class SiteStatisticController extends Controller
                 ->update([
                     'value' => trim($item['value']),
                     'label' => trim($item['label']),
-                    'description' => isset($item['description']) ? trim((string) $item['description']) : null,
                     'sort_order' => $index + 1,
                 ]);
         }
@@ -56,7 +54,6 @@ final class SiteStatisticController extends Controller
             SiteStatistic::query()->create([
                 'value' => trim((string) ($item['count'] ?? '') . (string) ($item['suffix'] ?? '')),
                 'label' => (string) ($item['label'] ?? ''),
-                'description' => $item['description'] ?? null,
                 'sort_order' => $index + 1,
             ]);
         }
