@@ -1,0 +1,15 @@
+/* Base global: warna dasar, font, dan perilaku umum body. Jangan taruh style halaman di sini. */
+:root {
+    color-scheme: light;
+    font-family: var(--font-app);
+    color: var(--color-slate-900);
+    background: var(--color-cream-50);
+}
+
+body {
+    background: var(--color-cream-50);
+}
+
+a {
+    color: var(--color-blue-700);
+}
