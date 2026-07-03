@@ -1,0 +1,14 @@
+/* Shared layout: class utilitas kecil yang boleh dipakai lintas halaman. */
+.page-center {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.surface-card {
+    width: min(100%, var(--container-md));
+    border-radius: var(--radius-lg);
+    background: var(--color-white-soft);
+    box-shadow: var(--shadow-soft);
+}
