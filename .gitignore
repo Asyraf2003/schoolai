@@ -39,3 +39,4 @@ Thumbs.db
 # Local AI agent generated folders
 /.agents
 /.claude
+.commit_counter
