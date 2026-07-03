@@ -1,0 +1,14 @@
+/* Component kecil untuk pesan sukses/error. Dipakai lintas login dan dashboard. */
+.flash-message {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: #dcfce7;
+    color: #166534;
+}
+
+.field-error {
+    margin: 6px 0 0;
+    color: #b91c1c;
+    font-size: 14px;
+}
