@@ -166,4 +166,29 @@ return [
             ],
         ],
     ],
+
+    'visi_misi' => [
+        'vision' => [
+            'eyebrow' => '🧭 Visi',
+            'text' => 'Program Pendidikan Islamic School bertujuan untuk membina generasi Muslim yang memiliki karakter menginspirasi, inovatif, dan berintegritas, mampu menjalankan peran mereka sebagai Khalifatullah melalui pengembangan pendidikan holistik.',
+        ],
+        'missions' => [
+            [
+                'icon' => '🌱',
+                'text' => 'Membentuk generasi Islam berdasarkan Al-Qur’an dan Sunnah Rasulullah SAW.',
+            ],
+            [
+                'icon' => '🌍',
+                'text' => 'Mengembangkan semangat inspirasi dengan wawasan global dan kemampuan berkomunikasi secara sosial melalui penguasaan lebih dari satu bahasa.',
+            ],
+            [
+                'icon' => '💡',
+                'text' => 'Menciptakan generasi pembelajar sepanjang hayat yang berpikir kritis dan inovatif.',
+            ],
+            [
+                'icon' => '🤝',
+                'text' => 'Membentuk karakter peduli lingkungan dengan integritas, baik secara lokal maupun global.',
+            ],
+        ],
+    ],
 ];

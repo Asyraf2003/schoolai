@@ -243,35 +243,20 @@
       <section class="visi-misi section">
         <div class="container visi-misi__grid">
           <div class="visi-card reveal">
-            <span class="eyebrow eyebrow--blue">🧭 Visi Kami</span>
+            <span class="eyebrow eyebrow--blue">{{ $visiMisi['vision']['eyebrow'] }}</span>
             <p class="visi-card__text">
-              Menjadi sekolah TK dan SD pilihan keluarga Indonesia yang
-              membentuk anak ceria, mandiri, dan berkarakter kuat sejak usia
-              dini.
+              {{ $visiMisi['vision']['text'] }}
             </p>
           </div>
           <div class="misi-list">
-            <div class="misi-card reveal reveal--delay-1">
-              <span class="misi-card__icon">🌱</span>
-              <p>
-                Menghadirkan pembelajaran aktif yang menumbuhkan rasa ingin tahu
-                anak.
-              </p>
-            </div>
-            <div class="misi-card reveal reveal--delay-2">
-              <span class="misi-card__icon">🤝</span>
-              <p>
-                Membangun karakter santun dan mandiri melalui kebiasaan
-                sehari-hari.
-              </p>
-            </div>
-            <div class="misi-card reveal reveal--delay-3">
-              <span class="misi-card__icon">🏡</span>
-              <p>
-                Menyediakan lingkungan sekolah yang aman, hangat, dan
-                menyenangkan.
-              </p>
-            </div>
+            @foreach ($visiMisi['missions'] as $mission)
+              <div class="misi-card reveal reveal--delay-{{ min($loop->iteration, 3) }}">
+                <span class="misi-card__icon">{{ $mission['icon'] }}</span>
+                <p>
+                  {{ $mission['text'] }}
+                </p>
+              </div>
+            @endforeach
           </div>
         </div>
       </section>
