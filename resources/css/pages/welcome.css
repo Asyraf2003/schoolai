@@ -3258,3 +3258,180 @@ h1, h2, h3, h4, p { margin: 0; }
     animation-duration: 6.5s !important;
   }
 }
+
+
+/* HERO MOBILE PAINT TEXT AND ALTERNATE WAVES FINAL OVERRIDE */
+
+/* Wave depth: belakang gede, depan makin tipis, arah gerak selang-seling */
+.hero-wave-divider::before {
+  height: 132px;
+  bottom: -38px;
+  z-index: 1;
+  opacity: 0.72;
+  animation-name: hero-svg-wave-a !important;
+  animation-duration: 3.4s !important;
+  animation-direction: alternate !important;
+}
+
+.hero-wave--1 {
+  height: 146px;
+  bottom: -52px;
+  z-index: 2;
+  opacity: 0.86;
+  animation-name: hero-svg-wave-b !important;
+  animation-duration: 3.9s !important;
+  animation-direction: alternate-reverse !important;
+}
+
+.hero-wave--2 {
+  height: 126px;
+  bottom: -36px;
+  z-index: 3;
+  opacity: 0.78;
+  animation-name: hero-svg-wave-a !important;
+  animation-duration: 4.7s !important;
+  animation-direction: alternate !important;
+}
+
+.hero-wave--3 {
+  height: 104px;
+  bottom: -22px;
+  z-index: 4;
+  opacity: 0.70;
+  animation-name: hero-svg-wave-b !important;
+  animation-duration: 5.4s !important;
+  animation-direction: alternate-reverse !important;
+}
+
+.hero-wave-divider::after {
+  height: 90px;
+  bottom: -11px;
+  z-index: 6;
+  opacity: 0.58;
+  animation-name: hero-svg-wave-a !important;
+  animation-duration: 4.2s !important;
+  animation-direction: alternate !important;
+}
+
+.hero-wave--4 {
+  height: 68px;
+  bottom: -2px;
+  z-index: 7;
+  opacity: 0.82;
+  animation-name: hero-svg-wave-b !important;
+  animation-duration: 5.8s !important;
+  animation-direction: alternate-reverse !important;
+}
+
+/* Mobile: bukan kotak besar, tapi coretan putih di belakang tulisan */
+@media (max-width: 767px) {
+  .hero__content {
+    padding: 18px 14px 16px;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    text-align: center;
+  }
+
+  .hero__title {
+    display: inline;
+    padding: 0.04em 0.18em 0.08em;
+    border-radius: 0.26em 0.34em 0.22em 0.38em;
+    color: #24213e;
+    background:
+      radial-gradient(ellipse at 12% 48%, rgba(255,255,255,0.92) 0 28%, transparent 58%),
+      radial-gradient(ellipse at 68% 58%, rgba(255,255,255,0.82) 0 34%, transparent 64%),
+      linear-gradient(100deg, rgba(255,255,255,0.86), rgba(255,255,255,0.58) 72%, rgba(255,255,255,0.18));
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    -webkit-text-stroke: 0.9px rgba(255,255,255,0.92);
+    text-shadow:
+      0 2px 0 rgba(255,255,255,0.92),
+      0 6px 16px rgba(255,255,255,0.70),
+      0 12px 28px rgba(19,18,34,0.26);
+  }
+
+  .hero__title .text-highlight,
+  .text-highlight {
+    padding-inline: 0.04em;
+    color: #c85c1c;
+    -webkit-text-stroke: 0.75px rgba(255,246,221,0.98);
+    text-shadow:
+      0 2px 0 rgba(255,235,172,0.92),
+      0 5px 14px rgba(255,255,255,0.74),
+      0 10px 24px rgba(80,45,16,0.28);
+  }
+
+  .hero__subtitle {
+    display: inline-block;
+    max-width: min(100%, 340px);
+    margin-top: 22px;
+    padding: 10px 14px 12px;
+    border-radius: 18px 26px 20px 28px;
+    color: #25223d;
+    background:
+      radial-gradient(ellipse at 18% 28%, rgba(255,255,255,0.86), transparent 56%),
+      radial-gradient(ellipse at 82% 70%, rgba(255,255,255,0.74), transparent 58%),
+      linear-gradient(96deg, rgba(255,255,255,0.76), rgba(255,255,255,0.46));
+    font-weight: 760;
+    line-height: 1.58;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    text-shadow:
+      0 1px 0 rgba(255,255,255,0.98),
+      0 4px 12px rgba(255,255,255,0.78),
+      0 8px 20px rgba(16,14,30,0.18);
+  }
+
+  .hero__actions {
+    margin-top: 24px;
+  }
+
+  .hero-wave-divider::before {
+    height: 98px;
+    bottom: -30px;
+    opacity: 0.72;
+    animation-duration: 3.4s !important;
+    animation-direction: alternate !important;
+  }
+
+  .hero-wave--1 {
+    height: 104px;
+    bottom: -39px;
+    opacity: 0.86;
+    animation-duration: 3.9s !important;
+    animation-direction: alternate-reverse !important;
+  }
+
+  .hero-wave--2 {
+    height: 90px;
+    bottom: -28px;
+    opacity: 0.78;
+    animation-duration: 4.7s !important;
+    animation-direction: alternate !important;
+  }
+
+  .hero-wave--3 {
+    height: 76px;
+    bottom: -18px;
+    opacity: 0.70;
+    animation-duration: 5.4s !important;
+    animation-direction: alternate-reverse !important;
+  }
+
+  .hero-wave-divider::after {
+    height: 68px;
+    bottom: -10px;
+    opacity: 0.58;
+    animation-duration: 4.2s !important;
+    animation-direction: alternate !important;
+  }
+
+  .hero-wave--4 {
+    height: 54px;
+    bottom: -2px;
+    opacity: 0.84;
+    animation-duration: 5.8s !important;
+    animation-direction: alternate-reverse !important;
+  }
+}
