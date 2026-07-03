@@ -1,0 +1,63 @@
+/* Gallery & lightbox: struktur awal untuk galeri homepage. */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+    cursor: pointer;
+}
+
+.gallery-item__caption {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    padding: 10px 12px;
+    border-radius: var(--home-radius-sm);
+    background: rgba(255, 255, 255, 0.9);
+    font-weight: 800;
+}
+
+.lightbox[hidden] {
+    display: none;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.72);
+}
+
+.lightbox__content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 720px);
+    padding: 20px;
+    border-radius: var(--home-radius-lg);
+    background: var(--home-white);
+}
+
+.lightbox__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--home-radius-pill);
+    background: var(--home-ink);
+    color: var(--home-white);
+}
