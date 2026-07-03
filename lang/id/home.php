@@ -12,8 +12,8 @@ return [
         'title_highlight' => 'adab, ilmu, dan hafalan',
         'title_after' => 'sejak dini',
         'subtitle' => 'Lingkungan belajar yang hangat untuk anak bertumbuh dengan Al-Qur’an, akhlak, bahasa, kreativitas, dan pendampingan guru yang dekat dengan keluarga.',
-        'background_image' => 'media/home/hero-school.jpg',
-        'visual_image' => 'media/home/hero-school-card.jpg',
+        'background_image' => 'media/home/hero-school.png',
+        'visual_image' => 'media/home/hero-school-card.png',
         'visual_image_alt' => 'Gedung Islamic School Al Mustaqbal',
         'primary_cta' => [
             'label' => 'Daftar PPDB',
