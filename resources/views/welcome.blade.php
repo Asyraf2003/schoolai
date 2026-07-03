@@ -395,79 +395,36 @@
       <section class="artikel-section section" id="artikel">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--yellow">Tips &amp; Wawasan</p>
-            <h2 class="section-title">Artikel untuk Orang Tua</h2>
+            <p class="eyebrow eyebrow--yellow">{{ $articlesSection['eyebrow'] }}</p>
+            <h2 class="section-title">{{ $articlesSection['title'] }}</h2>
           </div>
           <div class="artikel-grid">
-            <article class="artikel-card reveal">
-              <div
-                class="artikel-card__thumb"
-                style="
-                  background: linear-gradient(
-                    135deg,
-                    var(--color-yellow-soft),
-                    var(--color-orange-soft)
-                  );
-                "
-              >
-                📰
-              </div>
-              <div class="artikel-card__body">
-                <span class="artikel-card__date">3 Juni 2026</span>
-                <h3>Tips Membantu Anak Berani Masuk Sekolah</h3>
-                <p>
-                  Panduan sederhana bagi orang tua untuk membantu anak lebih
-                  percaya diri di hari pertama sekolah.
-                </p>
-                <a href="#artikel" class="link-arrow">Baca Artikel →</a>
-              </div>
-            </article>
-            <article class="artikel-card reveal reveal--delay-1">
-              <div
-                class="artikel-card__thumb"
-                style="
-                  background: linear-gradient(
-                    135deg,
-                    var(--color-mint-soft),
-                    var(--color-blue-soft)
-                  );
-                "
-              >
-                🧩
-              </div>
-              <div class="artikel-card__body">
-                <span class="artikel-card__date">18 Mei 2026</span>
-                <h3>Belajar Sambil Bermain: Kenapa Penting?</h3>
-                <p>
-                  Mengenal manfaat metode belajar sambil bermain untuk tumbuh
-                  kembang anak usia dini.
-                </p>
-                <a href="#artikel" class="link-arrow">Baca Artikel →</a>
-              </div>
-            </article>
-            <article class="artikel-card reveal reveal--delay-2">
-              <div
-                class="artikel-card__thumb"
-                style="
-                  background: linear-gradient(
-                    135deg,
-                    var(--color-pink-soft),
-                    var(--color-purple-soft)
-                  );
-                "
-              >
-                🏫
-              </div>
-              <div class="artikel-card__body">
-                <span class="artikel-card__date">2 Mei 2026</span>
-                <h3>Cara Memilih Sekolah TK dan SD yang Tepat</h3>
-                <p>
-                  Beberapa hal penting yang perlu dipertimbangkan orang tua
-                  sebelum memilih sekolah untuk anak.
-                </p>
-                <a href="#artikel" class="link-arrow">Baca Artikel →</a>
-              </div>
-            </article>
+            @foreach ($articlesSection['items'] as $article)
+              <article class="artikel-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}">
+                <div
+                  class="artikel-card__thumb"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      {{ $article['gradient_from'] }},
+                      {{ $article['gradient_to'] }}
+                    );
+                  "
+                >
+                  {{ $article['emoji'] }}
+                </div>
+                <div class="artikel-card__body">
+                  <span class="artikel-card__date">{{ $article['date'] }}</span>
+                  <h3>{{ $article['title'] }}</h3>
+                  <p>
+                    {{ $article['description'] }}
+                  </p>
+                  <a href="{{ $article['href'] }}" class="link-arrow">
+                    {{ $articlesSection['read_more'] }} →
+                  </a>
+                </div>
+              </article>
+            @endforeach
           </div>
         </div>
       </section>

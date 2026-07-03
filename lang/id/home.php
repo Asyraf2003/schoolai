@@ -398,4 +398,39 @@ return [
             ],
         ],
     ],
+
+    'artikel' => [
+        'eyebrow' => 'Artikel Terbaru',
+        'title' => 'Semua Artikel',
+        'read_more' => 'Baca Artikel',
+        'items' => [
+            [
+                'date' => '3 Juni 2026',
+                'emoji' => '📰',
+                'gradient_from' => 'var(--color-yellow-soft)',
+                'gradient_to' => 'var(--color-orange-soft)',
+                'title' => 'Informasi Akademik Islamic School',
+                'description' => 'Kumpulan informasi akademik, kegiatan sekolah, dan agenda penting untuk orang tua dan siswa.',
+                'href' => '#artikel',
+            ],
+            [
+                'date' => '18 Mei 2026',
+                'emoji' => '📚',
+                'gradient_from' => 'var(--color-mint-soft)',
+                'gradient_to' => 'var(--color-blue-soft)',
+                'title' => 'Membangun Generasi Berkarakter',
+                'description' => 'Catatan tentang pendidikan karakter, pembiasaan baik, dan lingkungan belajar yang mendukung perkembangan siswa.',
+                'href' => '#artikel',
+            ],
+            [
+                'date' => '2 Mei 2026',
+                'emoji' => '🏫',
+                'gradient_from' => 'var(--color-pink-soft)',
+                'gradient_to' => 'var(--color-purple-soft)',
+                'title' => 'Mengenal Program Pendidikan Islamic School',
+                'description' => 'Ringkasan program SDIT, taman kanak-kanak, tahfidz, bahasa, kelompok bermain, dan perpustakaan.',
+                'href' => '#artikel',
+            ],
+        ],
+    ],
 ];
