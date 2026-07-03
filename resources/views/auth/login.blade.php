@@ -9,6 +9,12 @@
     <main>
         <h1>Login Admin</h1>
 
+        <p>
+            <a href="{{ route('google.redirect') }}">Masuk dengan Google</a>
+        </p>
+
+        <p>atau masuk dengan email dan password</p>
+
         <form method="POST" action="{{ route('login.store') }}">
             @csrf
 
