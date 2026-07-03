@@ -1,14 +1,7 @@
-const welcomeCard = document.querySelector('[data-welcome-card]');
-const welcomeNote = document.querySelector('[data-welcome-note]');
+import { ready } from './core/dom.js';
+import { loadPage } from './core/page-loader.js';
 
-if (welcomeCard) {
-    requestAnimationFrame(() => {
-        welcomeCard.classList.add('is-visible');
-    });
-}
-
-if (welcomeNote) {
-    window.setInterval(() => {
-        welcomeNote.classList.toggle('is-highlighted');
-    }, 1800);
-}
+// Entry JS Vite. Ambil nama halaman dari body[data-page], lalu load module halaman yang relevan saja.
+ready(() => {
+    loadPage(document.body?.dataset?.page);
+});
