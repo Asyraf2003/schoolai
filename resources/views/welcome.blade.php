@@ -321,10 +321,10 @@
       <section class="ekskul-section section">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--mint">Kembangkan Bakat</p>
-            <h2 class="section-title">Ekstrakurikuler</h2>
+            <p class="eyebrow eyebrow--mint">{{ $extracurricular['eyebrow'] }}</p>
+            <h2 class="section-title">{{ $extracurricular['title'] }}</h2>
             <p class="section-subtitle">
-              Pilih kegiatan favorit anak di luar jam pelajaran utama.
+              {{ $extracurricular['subtitle'] }}
             </p>
           </div>
 
@@ -333,46 +333,29 @@
             role="group"
             aria-label="Filter ekstrakurikuler"
           >
-            <button class="filter-btn active" data-filter="semua">Semua</button>
-            <button class="filter-btn" data-filter="seni">Seni</button>
-            <button class="filter-btn" data-filter="olahraga">Olahraga</button>
-            <button class="filter-btn" data-filter="sains">Sains</button>
+            @foreach ($extracurricular['filters'] as $filter)
+              <button
+                class="filter-btn {{ $loop->first ? 'active' : '' }}"
+                data-filter="{{ $filter['value'] }}"
+              >
+                {{ $filter['label'] }}
+              </button>
+            @endforeach
           </div>
 
           <div class="ekskul-grid" id="ekskulGrid">
-            <div class="ekskul-card" data-category="seni">
-              <span class="ekskul-card__icon">🖍️</span>
-              <h3>Menggambar</h3>
-              <span class="tag tag--seni">Seni</span>
-            </div>
-            <div class="ekskul-card" data-category="seni">
-              <span class="ekskul-card__icon">💃</span>
-              <h3>Menari</h3>
-              <span class="tag tag--seni">Seni</span>
-            </div>
-            <div class="ekskul-card" data-category="olahraga">
-              <span class="ekskul-card__icon">⚽</span>
-              <h3>Futsal Mini</h3>
-              <span class="tag tag--olahraga">Olahraga</span>
-            </div>
-            <div class="ekskul-card" data-category="olahraga">
-              <span class="ekskul-card__icon">🏕️</span>
-              <h3>Pramuka Siaga</h3>
-              <span class="tag tag--olahraga">Olahraga</span>
-            </div>
-            <div class="ekskul-card" data-category="seni">
-              <span class="ekskul-card__icon">🎵</span>
-              <h3>Musik</h3>
-              <span class="tag tag--seni">Seni</span>
-            </div>
-            <div class="ekskul-card" data-category="sains">
-              <span class="ekskul-card__icon">🤖</span>
-              <h3>Robotik Dasar</h3>
-              <span class="tag tag--sains">Sains</span>
-            </div>
+            @forelse ($extracurricular['items'] as $item)
+              <div class="ekskul-card" data-category="{{ $item['category'] }}">
+                <span class="ekskul-card__icon">{{ $item['icon'] }}</span>
+                <h3>{{ $item['title'] }}</h3>
+                <span class="tag {{ $item['tag_class'] }}">{{ $item['category_label'] }}</span>
+              </div>
+            @empty
+              <p class="text-sm">{{ $extracurricular['empty'] }}</p>
+            @endforelse
           </div>
           <p class="ekskul-empty" id="ekskulEmpty" hidden>
-            Belum ada kegiatan di kategori ini.
+            {{ $extracurricular['empty'] }}
           </p>
         </div>
         <div class="wave-divider" aria-hidden="true">

@@ -18,6 +18,7 @@ final class HomeController extends Controller
             'visiMisi' => __('home.visi_misi'),
             'schoolValues' => __('home.nilai_sekolah'),
             'featuredPrograms' => __('home.program_unggulan'),
+            'extracurricular' => __('home.ekstrakurikuler'),
         ]);
     }
 }

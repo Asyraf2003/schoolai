@@ -273,4 +273,73 @@ return [
         ],
         'empty' => 'Program Unggulan Belum Tersedia',
     ],
+
+    'ekstrakurikuler' => [
+        'eyebrow' => 'Kembangkan Bakat',
+        'title' => 'Ekstrakurikuler',
+        'subtitle' => 'Ekstrakurikuler unggulan di luar jam kelas untuk membantu siswa mengenali minat dan bakatnya.',
+        'filters' => [
+            [
+                'label' => 'Semua',
+                'value' => 'semua',
+            ],
+            [
+                'label' => 'Seni',
+                'value' => 'seni',
+            ],
+            [
+                'label' => 'Olahraga',
+                'value' => 'olahraga',
+            ],
+            [
+                'label' => 'Sains',
+                'value' => 'sains',
+            ],
+        ],
+        'items' => [
+            [
+                'icon' => '🖍️',
+                'title' => 'Menggambar',
+                'category' => 'seni',
+                'category_label' => 'Seni',
+                'tag_class' => 'tag--seni',
+            ],
+            [
+                'icon' => '🎵',
+                'title' => 'Musik',
+                'category' => 'seni',
+                'category_label' => 'Seni',
+                'tag_class' => 'tag--seni',
+            ],
+            [
+                'icon' => '⚽',
+                'title' => 'Futsal Mini',
+                'category' => 'olahraga',
+                'category_label' => 'Olahraga',
+                'tag_class' => 'tag--olahraga',
+            ],
+            [
+                'icon' => '🏕️',
+                'title' => 'Pramuka Siaga',
+                'category' => 'olahraga',
+                'category_label' => 'Olahraga',
+                'tag_class' => 'tag--olahraga',
+            ],
+            [
+                'icon' => '🔬',
+                'title' => 'Sains Dasar',
+                'category' => 'sains',
+                'category_label' => 'Sains',
+                'tag_class' => 'tag--sains',
+            ],
+            [
+                'icon' => '🌍',
+                'title' => 'Bahasa Inggris',
+                'category' => 'sains',
+                'category_label' => 'Sains',
+                'tag_class' => 'tag--sains',
+            ],
+        ],
+        'empty' => 'Belum ada kegiatan di kategori ini.',
+    ],
 ];
