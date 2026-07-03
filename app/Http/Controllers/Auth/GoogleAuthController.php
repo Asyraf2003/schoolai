@@ -29,7 +29,7 @@ class GoogleAuthController extends Controller
         } catch (Throwable) {
             return redirect()
                 ->route('login')
-                ->withErrors(['email' => 'Login Google gagal. Coba lagi.']);
+                ->withErrors(['email' => __('app.auth.errors.google_failed')]);
         }
 
         $email = $googleUser->getEmail();
@@ -37,7 +37,7 @@ class GoogleAuthController extends Controller
         if (! $email) {
             return redirect()
                 ->route('login')
-                ->withErrors(['email' => 'Akun Google tidak memiliki email yang bisa digunakan.']);
+                ->withErrors(['email' => __('app.auth.errors.google_missing_email')]);
         }
 
         $rawUser = $googleUser->user ?? [];
@@ -46,7 +46,7 @@ class GoogleAuthController extends Controller
         if ($emailVerified === false || $emailVerified === 'false' || $emailVerified === 0 || $emailVerified === '0') {
             return redirect()
                 ->route('login')
-                ->withErrors(['email' => 'Email Google belum terverifikasi.']);
+                ->withErrors(['email' => __('app.auth.errors.google_unverified_email')]);
         }
 
         $user = User::firstOrNew(['email' => $email]);
@@ -69,7 +69,9 @@ class GoogleAuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()
+            ->intended(route('dashboard'))
+            ->with('success', __('app.auth.success.logged_in'));
     }
 
     private function configureGoogleOAuth(): void
