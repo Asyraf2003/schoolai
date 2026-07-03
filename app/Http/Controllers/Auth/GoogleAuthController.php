@@ -15,11 +15,15 @@ class GoogleAuthController extends Controller
 {
     public function redirect()
     {
+        $this->configureGoogleOAuth();
+
         return Socialite::driver('google')->redirect();
     }
 
     public function callback(Request $request)
     {
+        $this->configureGoogleOAuth();
+
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (Throwable) {
@@ -66,5 +70,14 @@ class GoogleAuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard'));
+    }
+
+    private function configureGoogleOAuth(): void
+    {
+        config([
+            'services.google.client_id' => env('GOOGLE_CLIENT_ID'),
+            'services.google.client_secret' => env('GOOGLE_CLIENT_SECRET'),
+            'services.google.redirect' => env('GOOGLE_REDIRECT_URI'),
+        ]);
     }
 }
