@@ -191,4 +191,35 @@ return [
             ],
         ],
     ],
+
+    'nilai_sekolah' => [
+        'eyebrow' => 'Nilai',
+        'title' => 'Nilai-Nilai Kami',
+        'items' => [
+            [
+                'card_class' => 'nilai-card--yellow',
+                'icon' => '📖',
+                'title' => 'Qur\'ani',
+                'description' => 'Membentuk karakter siswa berdasarkan Al-Qur’an dan Sunnah Rasulullah SAW.',
+            ],
+            [
+                'card_class' => 'nilai-card--mint',
+                'icon' => '💡',
+                'title' => 'Inovasi',
+                'description' => 'Mendorong siswa berpikir kritis, kreatif, dan terbuka terhadap pembelajaran baru.',
+            ],
+            [
+                'card_class' => 'nilai-card--pink',
+                'icon' => '🤝',
+                'title' => 'Integrasi',
+                'description' => 'Menghubungkan ilmu, karakter, bahasa, dan kepedulian sosial dalam kehidupan sehari-hari.',
+            ],
+            [
+                'card_class' => 'nilai-card--purple',
+                'icon' => '✨',
+                'title' => 'Inspirasi',
+                'description' => 'Menumbuhkan semangat menjadi pribadi yang bermanfaat dan menginspirasi lingkungan sekitar.',
+            ],
+        ],
+    ],
 ];

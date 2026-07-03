@@ -16,6 +16,7 @@ final class HomeController extends Controller
             'quickInfo' => __('home.quick_info.items'),
             'ppdb' => __('home.ppdb'),
             'visiMisi' => __('home.visi_misi'),
+            'schoolValues' => __('home.nilai_sekolah'),
         ]);
     }
 }

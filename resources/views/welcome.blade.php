@@ -265,38 +265,19 @@
       <section class="nilai-section section">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--purple">Nilai yang Kami Tanamkan</p>
-            <h2 class="section-title">4 Nilai Utama Sekolah Ceria Nusantara</h2>
+            <p class="eyebrow eyebrow--purple">{{ $schoolValues['eyebrow'] }}</p>
+            <h2 class="section-title">{{ $schoolValues['title'] }}</h2>
           </div>
           <div class="nilai-grid">
-            <div class="nilai-card nilai-card--yellow reveal">
-              <span class="nilai-card__icon">😄</span>
-              <h3>Ceria</h3>
-              <p>
-                Anak belajar dengan gembira lewat permainan dan cerita setiap
-                hari.
-              </p>
-            </div>
-            <div class="nilai-card nilai-card--mint reveal reveal--delay-1">
-              <span class="nilai-card__icon">🌱</span>
-              <h3>Mandiri</h3>
-              <p>
-                Dibiasakan mengurus keperluan sendiri sesuai dengan usianya.
-              </p>
-            </div>
-            <div class="nilai-card nilai-card--pink reveal reveal--delay-2">
-              <span class="nilai-card__icon">🤝</span>
-              <h3>Santun</h3>
-              <p>Dibimbing berkata baik dan menghargai teman serta guru.</p>
-            </div>
-            <div class="nilai-card nilai-card--purple reveal reveal--delay-3">
-              <span class="nilai-card__icon">🎨</span>
-              <h3>Kreatif</h3>
-              <p>
-                Diberi ruang untuk berkarya lewat seni, cerita, dan proyek
-                sederhana.
-              </p>
-            </div>
+            @foreach ($schoolValues['items'] as $value)
+              <div class="nilai-card {{ $value['card_class'] }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}">
+                <span class="nilai-card__icon">{{ $value['icon'] }}</span>
+                <h3>{{ $value['title'] }}</h3>
+                <p>
+                  {{ $value['description'] }}
+                </p>
+              </div>
+            @endforeach
           </div>
         </div>
         <div class="wave-divider" aria-hidden="true">
