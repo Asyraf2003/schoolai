@@ -83,21 +83,22 @@ h1, h2, h3, h4, p { margin: 0; }
 
   /* Layout */
   --container-w: 1180px;
-  --page-x-gap: 8px;
+  --page-x-gap: 16px;
   --nav-h: 84px;
 }
 
 
 
+
 @media (min-width: 768px) {
   :root {
-    --page-x-gap: 10px;
+    --page-x-gap: 38px;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --page-x-gap: 19px;
+    --page-x-gap: 76px;
   }
 }
 
