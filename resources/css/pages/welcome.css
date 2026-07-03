@@ -90,15 +90,16 @@ h1, h2, h3, h4, p { margin: 0; }
 
 
 
+
 @media (min-width: 768px) {
   :root {
-    --page-x-gap: 38px;
+    --page-x-gap: 76px;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --page-x-gap: 76px;
+    --page-x-gap: 152px;
   }
 }
 
