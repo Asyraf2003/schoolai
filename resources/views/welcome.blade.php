@@ -455,34 +455,16 @@
       <section class="fasilitas-section section">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--mint">Fasilitas Sekolah</p>
-            <h2 class="section-title">Nyaman dan Aman untuk Anak</h2>
+            <p class="eyebrow eyebrow--mint">{{ $facilitiesSection['eyebrow'] }}</p>
+            <h2 class="section-title">{{ $facilitiesSection['title'] }}</h2>
           </div>
           <div class="fasilitas-grid">
-            <div class="fasilitas-item reveal">
-              <span class="fasilitas-item__icon">🏫</span>
-              <p>Ruang Kelas Nyaman</p>
-            </div>
-            <div class="fasilitas-item reveal">
-              <span class="fasilitas-item__icon">📚</span>
-              <p>Perpustakaan Mini</p>
-            </div>
-            <div class="fasilitas-item reveal">
-              <span class="fasilitas-item__icon">🛝</span>
-              <p>Area Bermain Aman</p>
-            </div>
-            <div class="fasilitas-item reveal">
-              <span class="fasilitas-item__icon">🩺</span>
-              <p>UKS</p>
-            </div>
-            <div class="fasilitas-item reveal">
-              <span class="fasilitas-item__icon">📷</span>
-              <p>CCTV Area Sekolah</p>
-            </div>
-            <div class="fasilitas-item reveal">
-              <span class="fasilitas-item__icon">🍎</span>
-              <p>Kantin Sehat</p>
-            </div>
+            @foreach ($facilitiesSection['items'] as $facility)
+              <div class="fasilitas-item reveal">
+                <span class="fasilitas-item__icon">{{ $facility['icon'] }}</span>
+                <p>{{ $facility['label'] }}</p>
+              </div>
+            @endforeach
           </div>
         </div>
         <div class="wave-divider" aria-hidden="true">

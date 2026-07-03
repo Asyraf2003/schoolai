@@ -474,4 +474,35 @@ return [
         ],
         'empty' => 'Belum ada pengumuman.',
     ],
+
+    'fasilitas' => [
+        'eyebrow' => 'Fasilitas Sekolah',
+        'title' => 'Fasilitas Pendukung Islamic School',
+        'items' => [
+            [
+                'icon' => '🏫',
+                'label' => 'Ruang Kelas Nyaman',
+            ],
+            [
+                'icon' => '📚',
+                'label' => 'Perpustakaan',
+            ],
+            [
+                'icon' => '🛝',
+                'label' => 'Area Bermain Aman',
+            ],
+            [
+                'icon' => '🩺',
+                'label' => 'UKS',
+            ],
+            [
+                'icon' => '📷',
+                'label' => 'CCTV Area Sekolah',
+            ],
+            [
+                'icon' => '🍎',
+                'label' => 'Kantin Sehat',
+            ],
+        ],
+    ],
 ];
