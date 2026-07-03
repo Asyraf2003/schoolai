@@ -158,24 +158,16 @@
       <!-- ======================= STATISTIK ======================= -->
       <section class="stats-ribbon reveal">
         <div class="container stats-ribbon__grid">
-          <div class="stat-item">
-            <span class="stat-item__number" data-count="320" data-suffix="+"
-              >0</span
-            >
-            <span class="stat-item__label">Siswa Aktif</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-item__number" data-count="32">0</span>
-            <span class="stat-item__label">Guru &amp; Staff</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-item__number" data-count="18">0</span>
-            <span class="stat-item__label">Program Kegiatan</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-item__number" data-count="12">0</span>
-            <span class="stat-item__label">Tahun Pengalaman</span>
-          </div>
+          @foreach ($stats as $stat)
+            <div class="stat-item">
+              <span
+                class="stat-item__number"
+                data-count="{{ $stat['count'] }}"
+                @if (($stat['suffix'] ?? '') !== '') data-suffix="{{ $stat['suffix'] }}" @endif
+              >0</span>
+              <span class="stat-item__label">{{ $stat['label'] }}</span>
+            </div>
+          @endforeach
         </div>
       </section>
 

@@ -12,6 +12,7 @@ final class HomeController extends Controller
             'meta' => __('home.meta'),
             'hero' => __('home.hero'),
             'navbar' => __('home.navbar'),
+            'stats' => __('home.stats.items'),
         ]);
     }
 }

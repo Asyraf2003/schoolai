@@ -76,4 +76,33 @@ return [
         ],
         'mobile_open_label' => 'Buka menu',
     ],
+
+    'stats' => [
+        'items' => [
+            [
+                'count' => 320,
+                'suffix' => '+',
+                'label' => 'Siswa',
+                'description' => 'Yang telah lulus',
+            ],
+            [
+                'count' => 24,
+                'suffix' => '+',
+                'label' => 'Penghargaan Bergengsi',
+                'description' => 'Kami telah memenangkan berbagai penghargaan bergengsi dalam bidang pendidikan.',
+            ],
+            [
+                'count' => 1200,
+                'suffix' => '+',
+                'label' => 'Jam',
+                'description' => 'Kegiatan belajar mengajar.',
+            ],
+            [
+                'count' => 18,
+                'suffix' => '+',
+                'label' => 'Program',
+                'description' => 'Ekstrakurikuler unggulan.',
+            ],
+        ],
+    ],
 ];
