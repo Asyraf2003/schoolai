@@ -3435,3 +3435,116 @@ h1, h2, h3, h4, p { margin: 0; }
     animation-direction: alternate-reverse !important;
   }
 }
+
+
+/* HERO MOBILE TRUE PAINT SPLASH FINAL OVERRIDE */
+@media (max-width: 767px) {
+  .hero__content {
+    position: relative;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    isolation: isolate;
+    overflow: visible;
+  }
+
+  .hero__content::before,
+  .hero__content::after {
+    display: none !important;
+  }
+
+  .hero__title {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    padding: 10px 12px 12px;
+    background: transparent !important;
+    isolation: isolate;
+  }
+
+  .hero__title::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    left: -7%;
+    right: -7%;
+    top: -12%;
+    bottom: -8%;
+    background:
+      radial-gradient(circle at 12% 26%, rgba(255,255,255,0.96) 0 7%, transparent 14%),
+      radial-gradient(circle at 86% 24%, rgba(255,255,255,0.78) 0 6%, transparent 15%),
+      radial-gradient(circle at 42% 86%, rgba(255,255,255,0.72) 0 8%, transparent 17%),
+      linear-gradient(96deg, rgba(255,255,255,0.92), rgba(255,255,255,0.60));
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox%3D'0 0 500 220' xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' preserveAspectRatio%3D'none'%3E%0A  %3Cpath fill%3D'black' d%3D'M29 112 C12 67 47 29 101 25 C149 21 177 47 214 31 C267 8 322 14 349 44 C382 81 431 48 468 86 C510 129 459 192 393 184 C345 178 319 205 264 191 C211 178 174 211 126 190 C73 167 43 151 29 112 Z'%2F%3E%0A%3C%2Fsvg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg viewBox%3D'0 0 500 220' xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' preserveAspectRatio%3D'none'%3E%0A  %3Cpath fill%3D'black' d%3D'M29 112 C12 67 47 29 101 25 C149 21 177 47 214 31 C267 8 322 14 349 44 C382 81 431 48 468 86 C510 129 459 192 393 184 C345 178 319 205 264 191 C211 178 174 211 126 190 C73 167 43 151 29 112 Z'%2F%3E%0A%3C%2Fsvg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    filter: drop-shadow(0 12px 22px rgba(23, 20, 36, 0.14));
+    transform: rotate(-1.4deg);
+  }
+
+  .hero__title::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -10% -10%;
+    background:
+      radial-gradient(circle at 8% 36%, rgba(255,255,255,0.42) 0 2px, transparent 3px),
+      radial-gradient(circle at 18% 74%, rgba(255,255,255,0.34) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 22%, rgba(255,255,255,0.38) 0 2px, transparent 3px),
+      radial-gradient(circle at 91% 66%, rgba(255,255,255,0.30) 0 2px, transparent 3px);
+    background-size: 46px 38px;
+    opacity: 0.78;
+    transform: rotate(2deg);
+  }
+
+  .hero__subtitle {
+    position: relative;
+    display: inline-block;
+    max-width: min(100%, 340px);
+    padding: 12px 16px;
+    background: transparent !important;
+    isolation: isolate;
+  }
+
+  .hero__subtitle::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: -8%;
+    right: -8%;
+    top: -18%;
+    bottom: -18%;
+    background:
+      radial-gradient(circle at 18% 36%, rgba(255,255,255,0.90) 0 10%, transparent 24%),
+      radial-gradient(circle at 82% 62%, rgba(255,255,255,0.62) 0 11%, transparent 26%),
+      linear-gradient(92deg, rgba(255,255,255,0.78), rgba(255,255,255,0.38));
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox%3D'0 0 500 220' xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' preserveAspectRatio%3D'none'%3E%0A  %3Cpath fill%3D'black' d%3D'M28 96 C5 55 42 19 91 27 C135 34 164 10 207 21 C252 33 282 24 321 31 C382 42 420 71 407 111 C392 157 329 157 284 148 C238 138 209 171 160 153 C114 136 55 151 28 96 Z'%2F%3E%0A%3C%2Fsvg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg viewBox%3D'0 0 500 220' xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' preserveAspectRatio%3D'none'%3E%0A  %3Cpath fill%3D'black' d%3D'M28 96 C5 55 42 19 91 27 C135 34 164 10 207 21 C252 33 282 24 321 31 C382 42 420 71 407 111 C392 157 329 157 284 148 C238 138 209 171 160 153 C114 136 55 151 28 96 Z'%2F%3E%0A%3C%2Fsvg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    filter: drop-shadow(0 10px 18px rgba(23, 20, 36, 0.12));
+    transform: rotate(1.2deg);
+  }
+
+  .hero__title,
+  .hero__subtitle {
+    color: #24213e;
+    -webkit-text-stroke: 0.75px rgba(255, 255, 255, 0.95);
+    text-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.92),
+      0 6px 14px rgba(255, 255, 255, 0.70),
+      0 12px 26px rgba(19, 18, 34, 0.24);
+  }
+
+  .hero__title .text-highlight,
+  .text-highlight {
+    background: transparent !important;
+    color: #c85c1c;
+    -webkit-text-stroke: 0.72px rgba(255, 246, 221, 0.98);
+  }
+}
