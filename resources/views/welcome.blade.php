@@ -71,7 +71,13 @@
 
     <main id="main-content">
       <!-- ======================= HERO ======================= -->
-      <section class="hero" id="beranda">
+      <section
+        class="hero"
+        id="beranda"
+        @if (! empty($hero['background_image_url']))
+          style="--hero-bg-image: url('{{ $hero['background_image_url'] }}')"
+        @endif
+      >
         <div class="hero__decor" aria-hidden="true">
           <span
             class="floaty floaty--star"
