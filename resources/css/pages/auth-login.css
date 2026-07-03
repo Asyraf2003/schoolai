@@ -1,0 +1,29 @@
+/* Page CSS: khusus halaman login. Masih tipis, nanti desain login bisa tumbuh di sini. */
+.auth-login-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: linear-gradient(135deg, var(--color-cream-50), var(--color-blue-50));
+}
+
+.auth-login-page main {
+    width: min(100%, var(--container-sm));
+    padding: 28px;
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    box-shadow: var(--shadow-soft);
+}
+
+.auth-login-page form {
+    display: grid;
+    gap: 14px;
+}
+
+.auth-login-page input[type='email'],
+.auth-login-page input[type='password'] {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-sm);
+}
