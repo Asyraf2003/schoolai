@@ -4,11 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ __('app.auth.login.title') }}</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="auth-login-page" data-page="authLogin">
     <main>
         @if (session('success'))
-            <p>{{ session('success') }}</p>
+            <p class="flash-message">{{ session('success') }}</p>
         @endif
 
         <h1>{{ __('app.auth.login.heading') }}</h1>
@@ -34,7 +36,7 @@
                 >
 
                 @error('email')
-                    <p>{{ $message }}</p>
+                    <p class="field-error">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -48,7 +50,7 @@
                 >
 
                 @error('password')
-                    <p>{{ $message }}</p>
+                    <p class="field-error">{{ $message }}</p>
                 @enderror
             </div>
 
