@@ -213,41 +213,27 @@
             </div>
             <div class="ppdb-panel__text">
               <p class="eyebrow eyebrow--white">
-                Penerimaan Peserta Didik Baru
+                {{ $ppdb['eyebrow'] }}
               </p>
               <h2 class="section-title section-title--white">
-                Daftarkan Si Kecil, Mulai Petualangan Belajarnya
+                {{ $ppdb['title'] }}
               </h2>
               <p class="ppdb-panel__desc">
-                Prosesnya mudah dan tidak ribet. Tim kami siap membantu mulai
-                dari pengisian formulir sampai hari pertama anak bersekolah.
+                {{ $ppdb['description'] }}
               </p>
-              <a href="#" class="btn btn--white btn--lg"
-                >Klik ke Pendaftaran PPDB</a
-              >
+              <a href="{{ $ppdb['cta']['href'] }}" class="btn btn--white btn--lg">
+                {{ $ppdb['cta']['label'] }}
+              </a>
             </div>
 
             <ol class="ppdb-steps">
-              <li class="ppdb-step">
-                <span class="ppdb-step__num">1</span>
-                <h4>Isi Formulir</h4>
-                <p>Lengkapi data anak dan orang tua secara online.</p>
-              </li>
-              <li class="ppdb-step">
-                <span class="ppdb-step__num">2</span>
-                <h4>Verifikasi Data</h4>
-                <p>Tim admin memeriksa kelengkapan berkas pendaftaran.</p>
-              </li>
-              <li class="ppdb-step">
-                <span class="ppdb-step__num">3</span>
-                <h4>Observasi Anak</h4>
-                <p>Sesi kenalan singkat yang santai dan menyenangkan.</p>
-              </li>
-              <li class="ppdb-step">
-                <span class="ppdb-step__num">4</span>
-                <h4>Pengumuman</h4>
-                <p>Hasil pendaftaran dikirim lewat WhatsApp dan email.</p>
-              </li>
+              @foreach ($ppdb['steps'] as $step)
+                <li class="ppdb-step">
+                  <span class="ppdb-step__num">{{ $step['number'] }}</span>
+                  <h4>{{ $step['title'] }}</h4>
+                  <p>{{ $step['description'] }}</p>
+                </li>
+              @endforeach
             </ol>
           </div>
         </div>

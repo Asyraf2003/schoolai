@@ -134,4 +134,36 @@ return [
             ],
         ],
     ],
+
+    'ppdb' => [
+        'eyebrow' => 'Penerimaan Peserta Didik Baru',
+        'title' => 'Daftar Sekarang di Islamic School',
+        'description' => 'Pendaftaran peserta didik baru dapat dilakukan dengan lebih mudah. Informasi akademik, kegiatan, dan proses PPDB tersedia dalam satu tempat.',
+        'cta' => [
+            'label' => 'Daftar Sekarang',
+            'href' => '#ppdb',
+        ],
+        'steps' => [
+            [
+                'number' => '1',
+                'title' => 'Isi Formulir',
+                'description' => 'Lengkapi data calon siswa dan orang tua secara online.',
+            ],
+            [
+                'number' => '2',
+                'title' => 'Verifikasi Data',
+                'description' => 'Tim admin memeriksa kelengkapan data dan berkas pendaftaran.',
+            ],
+            [
+                'number' => '3',
+                'title' => 'Konfirmasi Pendaftaran',
+                'description' => 'Orang tua mendapatkan informasi lanjutan dari pihak sekolah.',
+            ],
+            [
+                'number' => '4',
+                'title' => 'Pengumuman',
+                'description' => 'Hasil pendaftaran diinformasikan melalui kontak resmi sekolah.',
+            ],
+        ],
+    ],
 ];

@@ -14,6 +14,7 @@ final class HomeController extends Controller
             'navbar' => __('home.navbar'),
             'stats' => __('home.stats.items'),
             'quickInfo' => __('home.quick_info.items'),
+            'ppdb' => __('home.ppdb'),
         ]);
     }
 }
