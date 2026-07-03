@@ -1,0 +1,16 @@
+/* Page CSS: khusus dashboard. Saat ini sengaja minimal karena canvas dashboard masih kosong. */
+.dashboard-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: var(--color-blue-50);
+}
+
+.dashboard-page main {
+    width: min(100%, var(--container-md));
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    background: #ffffff;
+    box-shadow: var(--shadow-soft);
+}
