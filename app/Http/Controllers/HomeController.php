@@ -19,6 +19,7 @@ final class HomeController extends Controller
             'schoolValues' => __('home.nilai_sekolah'),
             'featuredPrograms' => __('home.program_unggulan'),
             'extracurricular' => __('home.ekstrakurikuler'),
+            'gallerySection' => __('home.galeri'),
         ]);
     }
 }

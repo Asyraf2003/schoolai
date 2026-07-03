@@ -369,64 +369,24 @@
       <section class="galeri-section section" id="galeri">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--white">Momen Sekolah</p>
-            <h2 class="section-title section-title--white">Galeri Kegiatan</h2>
+            <p class="eyebrow eyebrow--white">{{ $gallerySection['eyebrow'] }}</p>
+            <h2 class="section-title section-title--white">{{ $gallerySection['title'] }}</h2>
             <p class="section-subtitle section-subtitle--white">
-              Sekilas cerita keseruan anak-anak di Sekolah Ceria Nusantara.
+              {{ $gallerySection['subtitle'] }}
             </p>
           </div>
 
           <div class="galeri-grid" id="galeriGrid">
-            <button
-              class="galeri-item galeri-item--tall"
-              style="--g1: var(--color-yellow); --g2: var(--color-orange)"
-              data-caption="Semangat pagi anak-anak TK sebelum masuk kelas."
-            >
-              <span class="galeri-item__emoji">🌞🧒</span>
-              <span class="galeri-item__caption"
-                >Semangat Pagi di Kelas TK</span
+            @foreach ($gallerySection['items'] as $item)
+              <button
+                class="galeri-item {{ $item['item_class'] }}"
+                style="--g1: {{ $item['g1'] }}; --g2: {{ $item['g2'] }}"
+                data-caption="{{ $item['caption'] }}"
               >
-            </button>
-            <button
-              class="galeri-item"
-              style="--g1: var(--color-mint); --g2: var(--color-blue)"
-              data-caption="Anak-anak antusias mencoba eksperimen sains sederhana."
-            >
-              <span class="galeri-item__emoji">🧪🔬</span>
-              <span class="galeri-item__caption">Eksperimen Sains Seru</span>
-            </button>
-            <button
-              class="galeri-item"
-              style="--g1: var(--color-blue); --g2: var(--color-purple)"
-              data-caption="Waktu bermain bersama di taman sekolah yang aman."
-            >
-              <span class="galeri-item__emoji">🛝🎈</span>
-              <span class="galeri-item__caption">Waktu Bermain di Taman</span>
-            </button>
-            <button
-              class="galeri-item galeri-item--tall"
-              style="--g1: var(--color-pink); --g2: var(--color-purple)"
-              data-caption="Keceriaan anak-anak dalam lomba mewarnai tahunan."
-            >
-              <span class="galeri-item__emoji">🖍️🎨</span>
-              <span class="galeri-item__caption">Lomba Mewarnai Ceria</span>
-            </button>
-            <button
-              class="galeri-item"
-              style="--g1: var(--color-orange); --g2: var(--color-yellow)"
-              data-caption="Latihan rutin Pramuka Siaga di halaman sekolah."
-            >
-              <span class="galeri-item__emoji">🏕️🧭</span>
-              <span class="galeri-item__caption">Latihan Pramuka Siaga</span>
-            </button>
-            <button
-              class="galeri-item"
-              style="--g1: var(--color-purple); --g2: var(--color-pink)"
-              data-caption="Penampilan siswa dalam pentas seni tahunan sekolah."
-            >
-              <span class="galeri-item__emoji">🎭🎶</span>
-              <span class="galeri-item__caption">Pentas Seni Tahunan</span>
-            </button>
+                <span class="galeri-item__emoji">{{ $item['emoji'] }}</span>
+                <span class="galeri-item__caption">{{ $item['title'] }}</span>
+              </button>
+            @endforeach
           </div>
         </div>
       </section>
