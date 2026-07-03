@@ -1482,3 +1482,37 @@ h1, h2, h3, h4, p { margin: 0; }
     padding: 10px 14px;
   }
 }
+
+/* HERO LOGO TRANSPARENT GIANT OVERRIDE */
+.hero-photo-logo {
+  left: -44%;
+  bottom: -14%;
+  width: 260%;
+  max-width: none;
+  max-height: none;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  object-fit: contain;
+  z-index: 12;
+  filter: drop-shadow(0 16px 24px rgba(18, 18, 24, 0.28));
+  transform:
+    translate3d(calc(var(--hero-shift-x) * 0.5), calc(var(--hero-shift-y) * 0.44), 142px)
+    rotate(-3deg);
+}
+
+@media (max-width: 767px) {
+  .hero-photo-logo {
+    left: -38%;
+    bottom: -10%;
+    width: 230%;
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+}
