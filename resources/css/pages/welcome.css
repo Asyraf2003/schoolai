@@ -4385,3 +4385,56 @@ h1, h2, h3, h4, p { margin: 0; }
     box-shadow: none;
   }
 }
+
+/* STATS TEXT ONLY HOVER FINAL OVERRIDE */
+.stat-item {
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.stat-item__number,
+.stat-item__label {
+  display: inline-block;
+  transform-origin: center;
+  transition:
+    color 0.24s ease,
+    transform 0.24s ease,
+    text-shadow 0.24s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stat-item:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .stat-item:hover .stat-item__number {
+    color: #ffffff;
+    transform: scale(1.16);
+    text-shadow:
+      0 0 18px rgba(255, 209, 70, 0.34),
+      0 10px 24px rgba(0, 0, 0, 0.20);
+  }
+
+  .stat-item:hover .stat-item__label {
+    color: #ffffff;
+    transform: scale(1.08);
+    text-shadow:
+      0 0 14px rgba(255, 255, 255, 0.22),
+      0 8px 18px rgba(0, 0, 0, 0.18);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .stat-item,
+  .stat-item:hover,
+  .stat-item__number,
+  .stat-item__label,
+  .stat-item:hover .stat-item__number,
+  .stat-item:hover .stat-item__label {
+    transform: none !important;
+    text-shadow: none !important;
+  }
+}
