@@ -430,39 +430,23 @@
       </section>
 
       <!-- ======================= PENGUMUMAN ======================= -->
-      <section class="pengumuman-section section">
+      <section class="pengumuman-section section" id="pengumuman">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--blue">Jangan Sampai Terlewat</p>
-            <h2 class="section-title">Pengumuman Sekolah</h2>
+            <p class="eyebrow eyebrow--blue">{{ $announcementsSection['eyebrow'] }}</p>
+            <h2 class="section-title">{{ $announcementsSection['title'] }}</h2>
           </div>
           <div class="pengumuman-grid">
-            <div class="sticky-note sticky-note--yellow reveal">
-              <span class="sticky-note__pin">📌</span>
-              <span class="sticky-note__date">10 Juli 2026</span>
-              <h3>Jadwal Open House</h3>
-              <p>Kunjungi kelas dan kenali guru-guru sebelum mendaftar.</p>
-            </div>
-            <div class="sticky-note sticky-note--pink reveal reveal--delay-1">
-              <span class="sticky-note__pin">📌</span>
-              <span class="sticky-note__date">1 Juni – 31 Juli 2026</span>
-              <h3>Pendaftaran PPDB Gelombang 1</h3>
-              <p>Segera daftarkan si kecil, kuota gelombang 1 terbatas.</p>
-            </div>
-            <div class="sticky-note sticky-note--mint reveal reveal--delay-2">
-              <span class="sticky-note__pin">📌</span>
-              <span class="sticky-note__date">17 Agustus 2026</span>
-              <h3>Libur Nasional</h3>
-              <p>
-                Sekolah libur dalam rangka Hari Kemerdekaan Republik Indonesia.
-              </p>
-            </div>
-            <div class="sticky-note sticky-note--purple reveal reveal--delay-3">
-              <span class="sticky-note__pin">📌</span>
-              <span class="sticky-note__date">20 Desember 2026</span>
-              <h3>Kegiatan Pentas Seni</h3>
-              <p>Penampilan bakat seni siswa TK dan SD di akhir semester.</p>
-            </div>
+            @forelse ($announcementsSection['items'] as $announcement)
+              <div class="sticky-note {{ $announcement['note_class'] }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}">
+                <span class="sticky-note__pin">{{ $announcement['pin'] }}</span>
+                <span class="sticky-note__date">{{ $announcement['date'] }}</span>
+                <h3>{{ $announcement['title'] }}</h3>
+                <p>{{ $announcement['description'] }}</p>
+              </div>
+            @empty
+              <p>{{ $announcementsSection['empty'] }}</p>
+            @endforelse
           </div>
         </div>
       </section>

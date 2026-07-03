@@ -433,4 +433,45 @@ return [
             ],
         ],
     ],
+
+    'pengumuman' => [
+        'eyebrow' => 'Pengumuman',
+        'title' => 'Pengumuman Sekolah',
+        'read_more' => 'Baca Selengkapnya',
+        'items' => [
+            [
+                'note_class' => 'sticky-note--yellow',
+                'pin' => '📌',
+                'date' => '10 Juli 2026',
+                'title' => 'Jadwal Open House',
+                'description' => 'Kunjungi kelas, kenali guru, dan lihat langsung suasana belajar Islamic School.',
+                'href' => '#pengumuman',
+            ],
+            [
+                'note_class' => 'sticky-note--pink',
+                'pin' => '📌',
+                'date' => '1 Juni – 31 Juli 2026',
+                'title' => 'Pendaftaran PPDB Gelombang 1',
+                'description' => 'Pendaftaran peserta didik baru telah dibuka. Kuota tiap program terbatas.',
+                'href' => '#ppdb',
+            ],
+            [
+                'note_class' => 'sticky-note--mint',
+                'pin' => '📌',
+                'date' => '17 Agustus 2026',
+                'title' => 'Libur Nasional',
+                'description' => 'Sekolah libur dalam rangka Hari Kemerdekaan Republik Indonesia.',
+                'href' => '#pengumuman',
+            ],
+            [
+                'note_class' => 'sticky-note--purple',
+                'pin' => '📌',
+                'date' => '20 Desember 2026',
+                'title' => 'Kegiatan Pentas Seni',
+                'description' => 'Penampilan bakat seni, bahasa, dan kreativitas siswa pada akhir semester.',
+                'href' => '#pengumuman',
+            ],
+        ],
+        'empty' => 'Belum ada pengumuman.',
+    ],
 ];

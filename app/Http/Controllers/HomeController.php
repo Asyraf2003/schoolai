@@ -21,6 +21,7 @@ final class HomeController extends Controller
             'extracurricular' => __('home.ekstrakurikuler'),
             'gallerySection' => __('home.galeri'),
             'articlesSection' => __('home.artikel'),
+            'announcementsSection' => __('home.pengumuman'),
         ]);
     }
 }
