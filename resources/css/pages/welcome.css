@@ -4135,3 +4135,73 @@ h1, h2, h3, h4, p { margin: 0; }
     bottom: -2px;
   }
 }
+
+/* HERO SEA KEEP FRONT THREE FINAL OVERRIDE */
+.hero-wave-divider::before,
+.hero-wave--1,
+.hero-wave--2 {
+  display: none !important;
+}
+
+.hero-wave--3,
+.hero-wave-divider::after,
+.hero-wave--4 {
+  display: block !important;
+}
+
+.hero-wave--3 {
+  height: 104px;
+  bottom: -24px;
+  opacity: 0.74;
+  z-index: 4;
+}
+
+.hero-wave-divider::after {
+  height: 82px;
+  bottom: -10px;
+  opacity: 0.66;
+  z-index: 6;
+}
+
+.hero-wave--4 {
+  height: 62px;
+  bottom: -2px;
+  opacity: 0.86;
+  z-index: 7;
+}
+
+@media (max-width: 767px) {
+  .hero-wave-divider::before,
+  .hero-wave--1,
+  .hero-wave--2 {
+    display: none !important;
+  }
+
+  .hero-wave--3,
+  .hero-wave-divider::after,
+  .hero-wave--4 {
+    display: block !important;
+  }
+
+  .hero-wave-divider {
+    height: 84px;
+  }
+
+  .hero-wave--3 {
+    height: 70px;
+    bottom: -18px;
+    opacity: 0.72;
+  }
+
+  .hero-wave-divider::after {
+    height: 58px;
+    bottom: -10px;
+    opacity: 0.62;
+  }
+
+  .hero-wave--4 {
+    height: 44px;
+    bottom: -2px;
+    opacity: 0.84;
+  }
+}
