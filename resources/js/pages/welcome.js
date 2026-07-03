@@ -273,12 +273,23 @@ document.addEventListener('DOMContentLoaded', function () {
       var rect = tiltEl.getBoundingClientRect();
       var x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 sampai 0.5
       var y = (e.clientY - rect.top) / rect.height - 0.5;
-      var rotateX = (y * -6).toFixed(2);
-      var rotateY = (x * 6).toFixed(2);
+      var rotateX = (y * -7).toFixed(2);
+      var rotateY = (x * 7).toFixed(2);
+      var shiftX = (x * 24).toFixed(2);
+      var shiftY = (y * 24).toFixed(2);
+
+      tiltEl.style.setProperty('--hero-rotate-x', rotateX + 'deg');
+      tiltEl.style.setProperty('--hero-rotate-y', rotateY + 'deg');
+      tiltEl.style.setProperty('--hero-shift-x', shiftX + 'px');
+      tiltEl.style.setProperty('--hero-shift-y', shiftY + 'px');
       tiltEl.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
     });
 
     tiltEl.addEventListener('mouseleave', function () {
+      tiltEl.style.setProperty('--hero-rotate-x', '0deg');
+      tiltEl.style.setProperty('--hero-rotate-y', '0deg');
+      tiltEl.style.setProperty('--hero-shift-x', '0px');
+      tiltEl.style.setProperty('--hero-shift-y', '0px');
       tiltEl.style.transform = 'rotateX(0deg) rotateY(0deg)';
     });
   }

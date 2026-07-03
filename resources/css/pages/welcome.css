@@ -340,9 +340,10 @@ h1, h2, h3, h4, p { margin: 0; }
     linear-gradient(
       90deg,
       rgba(255, 253, 247, 1) 0%,
-      rgba(255, 253, 247, 0.98) 36%,
-      rgba(255, 248, 236, 0.72) 62%,
-      rgba(255, 248, 236, 0.15) 100%
+      rgba(255, 253, 247, 1) 42%,
+      rgba(255, 248, 236, 0.78) 58%,
+      rgba(255, 248, 236, 0.26) 76%,
+      rgba(255, 248, 236, 0) 100%
     ),
     var(--hero-bg-image, linear-gradient(180deg, #FFFDF7 0%, var(--color-cream) 60%));
   background-size: cover, cover;
@@ -379,7 +380,17 @@ h1, h2, h3, h4, p { margin: 0; }
 }
 
 .hero__visual { position: relative; display: flex; justify-content: center; perspective: 1200px; }
-.hero__illustration { position: relative; width: 100%; max-width: 460px; transition: transform 0.15s ease-out; transform-style: preserve-3d; }
+.hero__illustration {
+  --hero-rotate-x: 0deg;
+  --hero-rotate-y: 0deg;
+  --hero-shift-x: 0px;
+  --hero-shift-y: 0px;
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+}
 
 .illustration-card {
   position: relative;
@@ -443,6 +454,64 @@ h1, h2, h3, h4, p { margin: 0; }
   background:
     linear-gradient(180deg, rgba(255,255,255,0.08), rgba(51,49,77,0.18)),
     linear-gradient(135deg, rgba(255,248,236,0.14), rgba(255,201,60,0.18));
+}
+.hero-photo-stack {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.hero-photo-frame {
+  position: absolute;
+  display: block;
+  object-fit: cover;
+  border: 8px solid rgba(255,255,255,0.94);
+  box-shadow: var(--shadow-float);
+  background: var(--color-white);
+  will-change: transform;
+  transition: transform 0.16s ease-out;
+}
+.hero-photo-frame--main {
+  width: 78%;
+  height: 72%;
+  left: 11%;
+  top: 13%;
+  border-radius: 30px;
+  transform:
+    translate3d(calc(var(--hero-shift-x) * 0.55), calc(var(--hero-shift-y) * 0.55), 54px)
+    rotateX(var(--hero-rotate-x))
+    rotateY(var(--hero-rotate-y))
+    rotate(-1.5deg);
+}
+.hero-photo-frame--top {
+  width: 42%;
+  height: 34%;
+  right: -2%;
+  top: 2%;
+  border-radius: 24px;
+  transform:
+    translate3d(calc(var(--hero-shift-x) * -0.9), calc(var(--hero-shift-y) * -0.75), 90px)
+    rotate(8deg);
+}
+.hero-photo-frame--bottom {
+  width: 44%;
+  height: 35%;
+  left: -3%;
+  bottom: 3%;
+  border-radius: 24px;
+  transform:
+    translate3d(calc(var(--hero-shift-x) * 0.9), calc(var(--hero-shift-y) * 0.75), 78px)
+    rotate(-8deg);
+}
+.hero-photo-fallback {
+  position: absolute;
+  inset: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.74);
+  color: var(--color-ink-soft);
+  font-weight: 700;
+  text-align: center;
 }
 
 .sticker-card {

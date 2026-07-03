@@ -79,26 +79,6 @@
         @endif
       >
         <div class="hero__decor" aria-hidden="true">
-          <span
-            class="floaty floaty--star"
-            style="--x: 8%; --y: 18%; --delay: 0s"
-            >⭐</span
-          >
-          <span
-            class="floaty floaty--cloud"
-            style="--x: 78%; --y: 12%; --delay: 0.6s"
-            >☁️</span
-          >
-          <span
-            class="floaty floaty--pencil"
-            style="--x: 4%; --y: 70%; --delay: 1.1s"
-            >✏️</span
-          >
-          <span
-            class="floaty floaty--balloon"
-            style="--x: 88%; --y: 65%; --delay: 0.3s"
-            >🎈</span
-          >
           <div class="blob blob--yellow blob--1"></div>
           <div class="blob blob--blue blob--2"></div>
         </div>
@@ -144,20 +124,6 @@
                 <div class="illustration-grass"></div>
               </div>
 
-              @foreach ($hero['badges'] as $badge)
-                <div class="sticker-card sticker-card--{{ $loop->iteration }}">
-                  @if (! empty($badge['image_url']))
-                    <img
-                      src="{{ $badge['image_url'] }}"
-                      alt="{{ $badge['alt'] ?? $badge['label'] }}"
-                      class="sticker-card__image"
-                    />
-                  @else
-                    <span class="sticker-card__icon">{{ $badge['icon'] }}</span>
-                  @endif
-                  <span>{{ $badge['label'] }}</span>
-                </div>
-              @endforeach
             </div>
           </div>
         </div>
