@@ -24,6 +24,7 @@ final class HomeController extends Controller
             'announcementsSection' => __('home.pengumuman'),
             'facilitiesSection' => __('home.fasilitas'),
             'contactSection' => __('home.kontak'),
+            'footerSection' => __('home.footer'),
         ]);
     }
 }

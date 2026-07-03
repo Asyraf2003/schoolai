@@ -519,47 +519,41 @@
     <footer class="site-footer">
       <div class="container site-footer__grid">
         <div class="footer-brand">
-          <a href="#beranda" class="navbar__logo navbar__logo--footer">
-            <span class="navbar__logo-icon">🌈</span>
+          <a href="{{ $footerSection['brand']['href'] }}" class="navbar__logo navbar__logo--footer">
+            <span class="navbar__logo-icon">{{ $footerSection['brand']['icon'] }}</span>
             <span class="navbar__logo-text"
-              >Sekolah Ceria<br /><small>Nusantara</small></span
+              >{{ $footerSection['brand']['line_1'] }}<br /><small>{{ $footerSection['brand']['line_2'] }}</small></span
             >
           </a>
           <p>
-            Tempat anak tumbuh ceria, belajar bermakna, dan bersiap meraih masa
-            depan.
+            {{ $footerSection['brand']['description'] }}
           </p>
           <div class="footer-social">
-            <a href="#" aria-label="Instagram">📸</a>
-            <a href="#" aria-label="Facebook">📘</a>
-            <a href="#" aria-label="YouTube">📺</a>
-            <a href="#" aria-label="TikTok">🎵</a>
+            @foreach ($footerSection['socials'] as $social)
+              <a href="{{ $social['href'] }}" aria-label="{{ $social['label'] }}">{{ $social['icon'] }}</a>
+            @endforeach
           </div>
         </div>
 
         <div class="footer-links">
-          <h4>Tautan Cepat</h4>
+          <h4>{{ $footerSection['links_title'] }}</h4>
           <ul>
-            <li><a href="#beranda">Beranda</a></li>
-            <li><a href="#program">Program</a></li>
-            <li><a href="#galeri">Galeri</a></li>
-            <li><a href="#artikel">Artikel</a></li>
-            <li><a href="#ppdb">PPDB</a></li>
-            <li><a href="#kontak">Kontak</a></li>
+            @foreach ($footerSection['links'] as $link)
+              <li><a href="{{ $link['href'] }}">{{ $link['label'] }}</a></li>
+            @endforeach
           </ul>
         </div>
 
         <div class="footer-contact">
-          <h4>Kontak</h4>
-          <p>📍 Jl. Mawar Ceria No. 12, Kota Bahagia</p>
-          <p>💬 0812-3456-7890</p>
-          <p>✉️ info@sekolahcerianusantara.sch.id</p>
+          <h4>{{ $footerSection['contact_title'] }}</h4>
+          @foreach ($footerSection['contact'] as $contact)
+            <p>{{ $contact['icon'] }} {{ $contact['text'] }}</p>
+          @endforeach
         </div>
       </div>
       <div class="site-footer__bottom">
         <p>
-          &copy; <span id="currentYear"></span> Sekolah Ceria Nusantara. Semua
-          hak dilindungi.
+          &copy; <span id="currentYear"></span> {{ $footerSection['copyright'] }}
         </p>
       </div>
     </footer>

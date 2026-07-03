@@ -541,4 +541,79 @@ return [
             'todo' => 'TODO: ganti placeholder peta dengan lokasi resmi jika data map final sudah tersedia.',
         ],
     ],
+
+    'footer' => [
+        'brand' => [
+            'href' => '#beranda',
+            'icon' => '🌈',
+            'line_1' => 'Islamic',
+            'line_2' => 'School',
+            'description' => 'Mencetak generasi berkarakter, berprestasi, dan berwawasan global melalui pendidikan holistik.',
+        ],
+        'socials' => [
+            [
+                'label' => 'Instagram',
+                'icon' => '📸',
+                'href' => '#',
+            ],
+            [
+                'label' => 'Facebook',
+                'icon' => '📘',
+                'href' => '#',
+            ],
+            [
+                'label' => 'YouTube',
+                'icon' => '📺',
+                'href' => '#',
+            ],
+            [
+                'label' => 'TikTok',
+                'icon' => '🎵',
+                'href' => '#',
+            ],
+        ],
+        'links_title' => 'Tautan',
+        'links' => [
+            [
+                'label' => 'Beranda',
+                'href' => '#beranda',
+            ],
+            [
+                'label' => 'Pendidikan',
+                'href' => '#program',
+            ],
+            [
+                'label' => 'Galeri',
+                'href' => '#galeri',
+            ],
+            [
+                'label' => 'Artikel',
+                'href' => '#artikel',
+            ],
+            [
+                'label' => 'PPDB',
+                'href' => '#ppdb',
+            ],
+            [
+                'label' => 'Kontak',
+                'href' => '#kontak',
+            ],
+        ],
+        'contact_title' => 'Kontak',
+        'contact' => [
+            [
+                'icon' => '📍',
+                'text' => 'Jl. Raya Cileungsi No.KM 2, RT.002/RW.008, Cileungsi, Kec. Cileungsi, Kabupaten Bogor, Jawa Barat 16820',
+            ],
+            [
+                'icon' => '💬',
+                'text' => '+62 812-3456-7890',
+            ],
+            [
+                'icon' => '✉️',
+                'text' => 'example@gmail.com',
+            ],
+        ],
+        'copyright' => 'Islamic School. Semua hak dilindungi.',
+    ],
 ];
