@@ -128,13 +128,6 @@
                       aria-hidden="true"
                     />
 
-                    <img
-                      src="{{ $hero['visual_image_url'] }}"
-                      alt=""
-                      class="hero-photo-frame hero-photo-frame--bottom"
-                      aria-hidden="true"
-                    />
-
                     @if (! empty($hero['logo_image_url']))
                       <img
                         src="{{ $hero['logo_image_url'] }}"
