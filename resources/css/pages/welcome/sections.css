@@ -1,0 +1,105 @@
+/* Section homepage: statistik, quick info, PPDB, visi misi, nilai, program, ekskul, artikel, pengumuman, fasilitas, kontak. */
+.stats-ribbon {
+    padding: 28px 0;
+    background: var(--home-white);
+}
+
+.stats-ribbon__grid,
+.quick-info__grid,
+.values-grid,
+.program-grid,
+.article-grid,
+.announcement-grid,
+.facility-grid,
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.stat-item,
+.info-card,
+.value-card,
+.program-card,
+.article-card,
+.announcement-card,
+.facility-card,
+.contact-card,
+.ppdb-step {
+    padding: 22px;
+    border-radius: var(--home-radius-md);
+    background: var(--home-white);
+    box-shadow: var(--home-shadow-soft);
+}
+
+.stat-item__number {
+    display: block;
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--home-orange);
+}
+
+.ppdb-section {
+    padding: 92px 0;
+    background: var(--home-yellow-soft);
+}
+
+.ppdb-panel {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+    gap: 32px;
+    padding: 42px;
+    border-radius: 40px;
+    background: linear-gradient(135deg, var(--home-orange), #ef6b7a);
+    color: var(--home-white);
+}
+
+.ppdb-steps {
+    display: grid;
+    gap: 14px;
+}
+
+.ppdb-step {
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: none;
+}
+
+.ppdb-step__num {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--home-radius-pill);
+    background: var(--home-white);
+    color: var(--home-orange);
+    font-weight: 900;
+}
+
+.vision-mission,
+.school-values,
+.featured-program,
+.extracurricular,
+.gallery-section,
+.article-section,
+.announcement-section,
+.facility-section,
+.contact-section {
+    padding: 88px 0;
+}
+
+.section-header {
+    max-width: 760px;
+    margin-bottom: 34px;
+}
+
+.section-header--center {
+    margin-inline: auto;
+    text-align: center;
+}
+
+.wave-divider svg {
+    width: 100%;
+    height: 80px;
+}
