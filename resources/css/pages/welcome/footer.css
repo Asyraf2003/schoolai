@@ -1,0 +1,57 @@
+/* Footer, kontak, map, dan scroll-to-top homepage. */
+.site-footer {
+    padding-top: 56px;
+    background: var(--home-ink);
+    color: var(--home-white);
+}
+
+.site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 1fr;
+    gap: 28px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.footer-social a {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--home-radius-pill);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.site-footer__bottom {
+    margin-top: 42px;
+    padding: 18px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.14);
+}
+
+.map-placeholder {
+    min-height: 260px;
+    border-radius: var(--home-radius-md);
+    background: linear-gradient(135deg, var(--home-mint-soft), var(--home-blue-soft));
+}
+
+.scroll-top-btn {
+    position: fixed;
+    z-index: 60;
+    right: 22px;
+    bottom: 22px;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--home-radius-pill);
+    background: var(--home-orange);
+    color: var(--home-white);
+    box-shadow: var(--home-shadow-soft);
+}
+
+.scroll-top-btn[hidden] {
+    display: none;
+}
