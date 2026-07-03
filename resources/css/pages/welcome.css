@@ -3895,3 +3895,135 @@ h1, h2, h3, h4, p { margin: 0; }
       0 8px 18px rgba(14,12,26,0.22);
   }
 }
+
+
+/* HERO MOBILE HARD CONTRAST AND RESPONSIVE LOGO LOCK FINAL OVERRIDE */
+
+/* Desktop/tablet lock: cegah style mobile kebawa saat resize balik */
+.hero .hero-photo-logo {
+  left: -19% !important;
+  bottom: -4% !important;
+  width: 132% !important;
+  max-width: none !important;
+  max-height: none !important;
+  height: auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+  z-index: 12 !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 14px 22px rgba(18, 18, 24, 0.30)) !important;
+  transform:
+    translate3d(calc(var(--hero-shift-x) * 0.5), calc(var(--hero-shift-y) * 0.44), 142px)
+    rotate(-3deg) !important;
+}
+
+/* Mobile: prioritaskan readability, bukan efek coretan yang sok artistik */
+@media (max-width: 767px) {
+  .hero__content {
+    position: relative;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    isolation: isolate;
+  }
+
+  .hero__content::before,
+  .hero__content::after,
+  .hero__title::before,
+  .hero__title::after,
+  .hero__subtitle::before,
+  .hero__subtitle::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .hero .eyebrow {
+    display: none !important;
+  }
+
+  .hero__title {
+    display: block !important;
+    padding: 0 !important;
+    margin-inline: auto;
+    max-width: 360px;
+    color: #ffffff !important;
+    background: none !important;
+    border-radius: 0 !important;
+    -webkit-box-decoration-break: initial !important;
+    box-decoration-break: initial !important;
+    -webkit-text-stroke: 1.25px #17142b !important;
+    text-shadow:
+      0 1px 0 #17142b,
+      0 2px 0 #17142b,
+      0 4px 10px rgba(0,0,0,0.72),
+      0 10px 24px rgba(0,0,0,0.56),
+      0 16px 42px rgba(255,255,255,0.34) !important;
+  }
+
+  .hero .text-highlight {
+    color: #ff8f2a !important;
+    background: none !important;
+    -webkit-text-stroke: 1px #17142b !important;
+    text-shadow:
+      0 1px 0 #17142b,
+      0 2px 0 #17142b,
+      0 4px 10px rgba(0,0,0,0.70),
+      0 8px 22px rgba(255,255,255,0.38) !important;
+  }
+
+  .hero .text-highlight::after {
+    display: none !important;
+  }
+
+  .hero__subtitle {
+    display: block !important;
+    max-width: 340px !important;
+    margin: 18px auto 0 !important;
+    padding: 0 !important;
+    color: #ffffff !important;
+    background: none !important;
+    border-radius: 0 !important;
+    font-weight: 900 !important;
+    line-height: 1.62 !important;
+    -webkit-text-stroke: 0.55px #17142b !important;
+    text-shadow:
+      0 1px 0 #17142b,
+      0 2px 0 rgba(23,20,43,0.90),
+      0 4px 10px rgba(0,0,0,0.70),
+      0 10px 24px rgba(0,0,0,0.48),
+      0 14px 34px rgba(255,255,255,0.28) !important;
+  }
+
+  .hero__visual {
+    perspective: none !important;
+  }
+
+  .hero__illustration {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero-photo-frame {
+    transition: none !important;
+  }
+
+  .hero-photo-logo {
+    left: 50% !important;
+    bottom: 9% !important;
+    width: 76% !important;
+    max-width: 300px !important;
+    max-height: none !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    z-index: 10 !important;
+    filter: drop-shadow(0 10px 18px rgba(18,18,24,0.36)) !important;
+    transform: translateX(-50%) !important;
+  }
+}
