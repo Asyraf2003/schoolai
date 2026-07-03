@@ -1,6 +1,5 @@
 // Loader halaman: module hanya di-import ketika body[data-page] cocok. Tidak semua DOM logic dipaksa hidup global.
 const pageModules = {
-    welcome: () => import('../pages/welcome.js'),
     authLogin: () => import('../pages/auth-login.js'),
     dashboard: () => import('../pages/dashboard.js'),
 };
