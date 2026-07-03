@@ -17,6 +17,5 @@
 
 @import './components/flash.css';
 
-@import './pages/welcome.css';
 @import './pages/auth-login.css';
 @import './pages/dashboard.css';

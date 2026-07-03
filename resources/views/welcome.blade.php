@@ -14,9 +14,9 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 font-size=%2290%22>🎨</text></svg>"
     />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/pages/welcome.css', 'resources/js/pages/welcome.js'])
   </head>
-  <body data-page="welcome">
+  <body>
     <!-- Skip link untuk aksesibilitas keyboard -->
     <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
 
@@ -880,6 +880,5 @@
         <p class="lightbox__caption" id="lightboxCaption"></p>
       </div>
     </div>
-
   </body>
 </html>
