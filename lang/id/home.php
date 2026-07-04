@@ -776,7 +776,6 @@ return [
     ],
 
     'kontak' => [
-        'eyebrow' => 'Kontak',
         'title' => 'Hubungi Kami',
         'cta' => [
             'label' => 'Kirim Email',

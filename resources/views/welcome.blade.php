@@ -617,7 +617,6 @@
       <section class="fasilitas-section section">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--mint">{{ $facilitiesSection['eyebrow'] }}</p>
             <h2 class="section-title">{{ $facilitiesSection['title'] }}</h2>
           </div>
           <div class="fasilitas-grid">
