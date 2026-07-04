@@ -21,7 +21,7 @@ final class HomeController extends Controller
             'schoolValues' => __('home.nilai_sekolah'),
             'featuredPrograms' => __('home.program_unggulan'),
             'extracurricular' => __('home.ekstrakurikuler'),
-            'gallerySection' => __('home.galeri'),
+            'gallerySection' => $this->gallerySectionData(),
             'articlesSection' => __('home.artikel'),
             'announcementsSection' => __('home.pengumuman'),
             'facilitiesSection' => __('home.fasilitas'),
@@ -96,6 +96,111 @@ final class HomeController extends Controller
         $navbar['logo']['image_url'] = $this->publicAssetUrl($navbar['logo']['image'] ?? null);
 
         return $navbar;
+    }
+
+    private function gallerySectionData(): array
+    {
+        $gallery = __('home.galeri');
+
+        if (! is_array($gallery)) {
+            return ['items' => []];
+        }
+
+        $gallery['items'] = $this->latestGalleryItems(6);
+
+        return $gallery;
+    }
+
+    private function latestGalleryItems(int $limit = 6): array
+    {
+        $limit = max(3, min($limit, 6));
+
+        return array_slice($this->allGalleryItems(), 0, $limit);
+    }
+
+    private function allGalleryItems(): array
+    {
+        $items = __('home.galeri.items');
+
+        if (! is_array($items)) {
+            return [];
+        }
+
+        $normalizedItems = array_values(array_filter(
+            array_map(
+                fn (mixed $item): ?array => is_array($item)
+                    ? $this->normalizeGalleryItem($item)
+                    : null,
+                $items
+            )
+        ));
+
+        usort(
+            $normalizedItems,
+            fn (array $first, array $second): int => strcmp(
+                (string) ($second['published_at'] ?? ''),
+                (string) ($first['published_at'] ?? '')
+            )
+        );
+
+        return $normalizedItems;
+    }
+
+    private function normalizeGalleryItem(array $item): array
+    {
+        $allowedTypes = ['photo', 'video', 'reel'];
+        $allowedVariants = ['normal', 'wide', 'tall', 'feature'];
+
+        $type = $item['type'] ?? 'photo';
+        $variant = $item['variant'] ?? 'normal';
+
+        if (! in_array($type, $allowedTypes, true)) {
+            $type = 'photo';
+        }
+
+        if (! in_array($variant, $allowedVariants, true)) {
+            $variant = 'normal';
+        }
+
+        $item['type'] = $type;
+        $item['type_label'] = match ($type) {
+            'video' => 'Video',
+            'reel' => 'Reel',
+            default => 'Foto',
+        };
+        $item['is_video'] = $type !== 'photo';
+        $item['variant'] = $variant;
+        $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
+        $item['thumbnail_url'] = $this->publicAssetUrl($item['thumbnail'] ?? null);
+        $item['published_at'] = (string) ($item['published_at'] ?? $item['date'] ?? '');
+        $item['date'] = (string) ($item['date'] ?? $item['published_at']);
+        $item['caption'] = (string) ($item['caption'] ?? '');
+        $item['category'] = (string) ($item['category'] ?? '');
+        $item['accent'] = (string) ($item['accent'] ?? '#f97316');
+        $item['fallback_icon'] = (string) ($item['fallback_icon'] ?? $item['emoji'] ?? '📸');
+
+        return $item;
+    }
+
+    private function instagramUrl(mixed $url): ?string
+    {
+        if (! is_string($url) || trim($url) === '') {
+            return null;
+        }
+
+        $url = trim($url);
+
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (! is_string($host) || ! str_ends_with(strtolower($host), 'instagram.com')) {
+            return null;
+        }
+
+        return $url;
     }
 
     private function publicAssetUrl(mixed $path): ?string
