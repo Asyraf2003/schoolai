@@ -6497,7 +6497,14 @@ h1, h2, h3, h4, p { margin: 0; }
   margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(280px, 430px) minmax(320px, 500px);
-  gap: clamp(42px, 8vw, 118px);
+
+  /* EDIT DI SINI: jarak antara teks kiri dan gambar kanan. */
+  --gallery-story-gap: clamp(58px, 9vw, 146px);
+
+  /* EDIT DI SINI: geser gambar kanan. 2cm sesuai request, bisa ganti ke 1cm, 60px, 80px, dst. */
+  --gallery-visual-shift-x: 2cm;
+
+  gap: var(--gallery-story-gap);
   align-items: start;
 }
 
@@ -6617,6 +6624,7 @@ h1, h2, h3, h4, p { margin: 0; }
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateX(var(--gallery-visual-shift-x));
 }
 
 .galeri-story-visual__track {
@@ -6743,7 +6751,12 @@ h1, h2, h3, h4, p { margin: 0; }
   .galeri-story {
     grid-template-columns: 1fr;
     max-width: 640px;
-    gap: 30px;
+
+    /* EDIT DI SINI MOBILE: jangan geser gambar di tablet/HP. */
+    --gallery-story-gap: 30px;
+    --gallery-visual-shift-x: 0px;
+
+    gap: var(--gallery-story-gap);
   }
 
   .galeri-story::before {
