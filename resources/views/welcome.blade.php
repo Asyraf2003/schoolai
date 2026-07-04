@@ -447,6 +447,7 @@
                   class="galeri-story-card{{ $loop->first ? ' is-active' : '' }}"
                   tabindex="0"
                   data-gallery-story-item
+                  data-gallery-index="{{ $loop->index }}"
                   data-title="{{ $item['title'] ?? '' }}"
                   data-caption="{{ $item['caption'] ?? '' }}"
                   data-category="{{ $item['category'] ?? '' }}"
@@ -478,74 +479,44 @@
                     @if (! empty($item['caption']))
                       <p>{{ $item['caption'] }}</p>
                     @endif
-
-                    @if (! empty($item['instagram_url']))
-                      <a
-                        href="{{ $item['instagram_url'] }}"
-                        class="galeri-story-card__link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Lihat di Instagram →
-                      </a>
-                    @else
-                      <span class="galeri-story-card__link galeri-story-card__link--disabled">
-                        Link Instagram belum tersedia
-                      </span>
-                    @endif
                   </div>
                 </article>
               @endforeach
             </div>
 
-            <aside
-              class="galeri-story__visual"
-              aria-live="polite"
-              @if ($initialGalleryItem)
-                style="--g1: {{ $initialGalleryItem['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $initialGalleryItem['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $initialGalleryItem['accent'] ?? '#f97316' }}"
-              @endif
-            >
-              <div class="galeri-story-visual__frame" data-gallery-visual-frame>
-                <div class="galeri-story-visual__media">
-                  <img
-                    src="{{ $initialGalleryItem['thumbnail_url'] ?? '' }}"
-                    alt="{{ $initialGalleryItem['title'] ?? 'Galeri sekolah' }}"
-                    class="galeri-story-visual__image"
-                    data-gallery-visual-image
-                    @if (empty($initialGalleryItem['thumbnail_url'])) hidden @endif
-                  />
-
-                  <span
-                    class="galeri-story-visual__fallback"
-                    data-gallery-visual-fallback
-                    @if (! empty($initialGalleryItem['thumbnail_url'])) hidden @endif
+            <aside class="galeri-story__visual" aria-hidden="true">
+              <div class="galeri-story-visual__track" data-gallery-visual-track>
+                @foreach ($gallerySection['items'] as $item)
+                  <div
+                    class="galeri-story-visual__panel{{ $loop->first ? ' is-active' : '' }}"
+                    data-gallery-visual-panel
+                    data-gallery-index="{{ $loop->index }}"
+                    style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
                   >
-                    {{ $initialGalleryItem['fallback_icon'] ?? ($initialGalleryItem['emoji'] ?? '📸') }}
-                  </span>
+                    <div class="galeri-story-visual__media">
+                      @if (! empty($item['thumbnail_url']))
+                        <img
+                          src="{{ $item['thumbnail_url'] }}"
+                          alt="{{ $item['title'] }}"
+                          class="galeri-story-visual__image"
+                          loading="lazy"
+                        />
+                      @else
+                        <span class="galeri-story-visual__fallback">
+                          {{ $item['fallback_icon'] ?? ($item['emoji'] ?? '📸') }}
+                        </span>
+                      @endif
 
-                  <span class="galeri-story-visual__badge" data-gallery-visual-type>
-                    {{ $initialGalleryItem['type_label'] ?? 'Foto' }}
-                  </span>
+                      <span class="galeri-story-visual__badge">
+                        {{ $item['type_label'] ?? 'Foto' }}
+                      </span>
 
-                  <span
-                    class="galeri-story-visual__play"
-                    data-gallery-visual-play
-                    @if (empty($initialGalleryItem['is_video'])) hidden @endif
-                    aria-hidden="true"
-                  >
-                    ▶
-                  </span>
-                </div>
-
-                <div class="galeri-story-visual__body">
-                  <div class="galeri-story-visual__meta">
-                    <span data-gallery-visual-category>{{ $initialGalleryItem['category'] ?? 'Galeri' }}</span>
-                    <span data-gallery-visual-date>{{ $initialGalleryItem['date'] ?? '' }}</span>
+                      @if (! empty($item['is_video']))
+                        <span class="galeri-story-visual__play" aria-hidden="true">▶</span>
+                      @endif
+                    </div>
                   </div>
-
-                  <h3 data-gallery-visual-title>{{ $initialGalleryItem['title'] ?? 'Galeri Sekolah' }}</h3>
-                  <p data-gallery-visual-caption>{{ $initialGalleryItem['caption'] ?? '' }}</p>
-                </div>
+                @endforeach
               </div>
             </aside>
           </div>
