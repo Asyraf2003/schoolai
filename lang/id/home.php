@@ -533,7 +533,7 @@ return [
             [
                 'title' => 'Market Day Siswa SDIT',
                 'type' => 'reel',
-                'instagram_url' => '',
+                'instagram_url' => 'https://www.instagram.com/',
                 'thumbnail' => '',
                 'published_at' => '2026-07-01',
                 'date' => '1 Juli 2026',
