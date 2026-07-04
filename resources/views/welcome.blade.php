@@ -650,7 +650,17 @@
                   <span class="kontak-info__icon">{{ $item['icon'] }}</span>
                   <div>
                     <h4>{{ $item['label'] }}</h4>
-                    <p>{{ $item['value'] }}</p>
+                    @if (! empty($item['href']))
+                      <a
+                        href="{{ $item['href'] }}"
+                        target="{{ str_starts_with($item['href'], 'http') ? '_blank' : '_self' }}"
+                        rel="{{ str_starts_with($item['href'], 'http') ? 'noopener noreferrer' : '' }}"
+                      >
+                        {{ $item['value'] }}
+                      </a>
+                    @else
+                      <p>{{ $item['value'] }}</p>
+                    @endif
                   </div>
                 </div>
               @endforeach
@@ -659,19 +669,33 @@
               </a>
             </div>
 
-            <!-- Placeholder peta custom dengan CSS, tanpa embed eksternal -->
-            <div
-              class="map-placeholder reveal reveal--delay-1"
-              role="img"
-              aria-label="{{ $contactSection['map']['aria_label'] }}"
-            >
-              <div class="map-placeholder__grid"></div>
-              <div class="map-placeholder__road map-placeholder__road--h"></div>
-              <div class="map-placeholder__road map-placeholder__road--v"></div>
-              <div class="map-placeholder__pin">
-                📍<span>{{ $contactSection['map']['pin_label'] }}</span>
+            @if (! empty($contactSection['map']['embed_url']))
+              <div class="map-embed reveal reveal--delay-1">
+                <iframe
+                  src="{{ $contactSection['map']['embed_url'] }}"
+                  title="{{ $contactSection['map']['aria_label'] }}"
+                  width="600"
+                  height="450"
+                  style="border:0;"
+                  allowfullscreen
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                ></iframe>
               </div>
-            </div>
+            @else
+              <div
+                class="map-placeholder reveal reveal--delay-1"
+                role="img"
+                aria-label="{{ $contactSection['map']['aria_label'] }}"
+              >
+                <div class="map-placeholder__grid"></div>
+                <div class="map-placeholder__road map-placeholder__road--h"></div>
+                <div class="map-placeholder__road map-placeholder__road--v"></div>
+                <div class="map-placeholder__pin">
+                  📍<span>{{ $contactSection['map']['pin_label'] }}</span>
+                </div>
+              </div>
+            @endif
           </div>
         </div>
       </section>
