@@ -249,24 +249,51 @@
       </section>
 
       <!-- ======================= NILAI SEKOLAH ======================= -->
-      <section class="nilai-section section">
+      <section class="nilai-section section" id="nilai">
         <div class="container">
-          <div class="section-head">
-            <p class="eyebrow eyebrow--purple">{{ $schoolValues['eyebrow'] }}</p>
-            <h2 class="section-title">{{ $schoolValues['title'] }}</h2>
-          </div>
-          <div class="nilai-grid">
-            @foreach ($schoolValues['items'] as $value)
-              <div class="nilai-card {{ $value['card_class'] }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}">
-                <span class="nilai-card__icon">{{ $value['icon'] }}</span>
-                <h3>{{ $value['title'] }}</h3>
-                <p>
-                  {{ $value['description'] }}
-                </p>
-              </div>
-            @endforeach
+          <div class="nilai-section__shell">
+            <div class="nilai-section__intro reveal">
+              <p class="eyebrow eyebrow--purple">{{ $schoolValues['eyebrow'] }}</p>
+              <h2 class="section-title">{{ $schoolValues['title'] }}</h2>
+              <p class="section-subtitle">
+                {{ $schoolValues['subtitle'] }}
+              </p>
+            </div>
+
+            <div class="nilai-grid" aria-label="Nilai sekolah Al-Mustaqbal">
+              @foreach ($schoolValues['items'] as $value)
+                <button
+                  type="button"
+                  class="nilai-card{{ $loop->first ? ' is-active' : '' }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}"
+                  data-school-value-card
+                  aria-pressed="{{ $loop->first ? 'true' : 'false' }}"
+                  style="--nilai-accent: {{ $value['accent'] ?? '#a855f7' }}"
+                >
+                  <span class="nilai-card__glow" aria-hidden="true"></span>
+                  <span class="nilai-card__top">
+                    <span class="nilai-card__code">{{ $value['code'] }}</span>
+                    <span class="nilai-card__spark" aria-hidden="true"></span>
+                  </span>
+
+                  <span class="nilai-card__content">
+                    <span class="nilai-card__title">{{ $value['title'] }}</span>
+                    <span class="nilai-card__summary">{{ $value['summary'] }}</span>
+                    <span class="nilai-card__description">
+                      @foreach ($value['text_parts'] as $part)
+                        @if (! empty($part['mark']))
+                          <span class="nilai-mark nilai-mark--{{ $part['mark'] }}">{{ $part['text'] }}</span>
+                        @else
+                          {{ $part['text'] }}
+                        @endif
+                      @endforeach
+                    </span>
+                  </span>
+                </button>
+              @endforeach
+            </div>
           </div>
         </div>
+
         <div class="wave-divider" aria-hidden="true">
           <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
             <use href="#wave-shape" class="wave-fill-mint"></use>
