@@ -436,18 +436,76 @@
             </p>
           </div>
 
-          <div class="galeri-grid" id="galeriGrid">
+          <div class="galeri-grid galeri-grid--teaser" id="galeriGrid">
             @foreach ($gallerySection['items'] as $item)
-              <button
-                class="galeri-item {{ $item['item_class'] }}"
-                style="--g1: {{ $item['g1'] }}; --g2: {{ $item['g2'] }}"
-                data-caption="{{ $item['caption'] }}"
+              <article
+                class="galeri-item galeri-card galeri-card--{{ $item['variant'] ?? 'normal' }} {{ $item['item_class'] ?? '' }}{{ ! empty($item['is_video']) ? ' galeri-card--video' : '' }}"
+                style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
+                data-caption="{{ $item['caption'] ?? '' }}"
               >
-                <span class="galeri-item__emoji">{{ $item['emoji'] }}</span>
-                <span class="galeri-item__caption">{{ $item['title'] }}</span>
-              </button>
+                <div class="galeri-card__media">
+                  @if (! empty($item['thumbnail_url']))
+                    <img
+                      src="{{ $item['thumbnail_url'] }}"
+                      alt="{{ $item['title'] }}"
+                      class="galeri-card__image"
+                      loading="lazy"
+                    />
+                  @else
+                    <span class="galeri-item__emoji galeri-card__fallback">{{ $item['fallback_icon'] ?? ($item['emoji'] ?? '📸') }}</span>
+                  @endif
+
+                  <span class="galeri-card__badge">
+                    {{ $item['type_label'] ?? 'Foto' }}
+                  </span>
+
+                  @if (! empty($item['is_video']))
+                    <span class="galeri-card__play" aria-hidden="true">▶</span>
+                  @endif
+                </div>
+
+                <div class="galeri-card__body">
+                  <div class="galeri-card__meta">
+                    @if (! empty($item['category']))
+                      <span>{{ $item['category'] }}</span>
+                    @endif
+                    @if (! empty($item['date']))
+                      <span>{{ $item['date'] }}</span>
+                    @endif
+                  </div>
+
+                  <h3 class="galeri-item__caption galeri-card__title">{{ $item['title'] }}</h3>
+
+                  @if (! empty($item['caption']))
+                    <p class="galeri-card__caption">{{ $item['caption'] }}</p>
+                  @endif
+
+                  @if (! empty($item['instagram_url']))
+                    <a
+                      href="{{ $item['instagram_url'] }}"
+                      class="galeri-card__link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Lihat di Instagram →
+                    </a>
+                  @else
+                    <span class="galeri-card__link galeri-card__link--disabled">
+                      Link Instagram belum tersedia
+                    </span>
+                  @endif
+                </div>
+              </article>
             @endforeach
           </div>
+
+          @if (! empty($gallerySection['cta']['href']) && ! empty($gallerySection['cta']['label']))
+            <div class="galeri-section__action">
+              <a href="{{ $gallerySection['cta']['href'] }}" class="btn btn--white">
+                {{ $gallerySection['cta']['label'] }}
+              </a>
+            </div>
+          @endif
         </div>
       </section>
 

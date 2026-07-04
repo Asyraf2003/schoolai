@@ -238,7 +238,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   galeriItems.forEach(function (item) {
-    item.addEventListener('click', function () { openLightbox(item); });
+    item.addEventListener('click', function (event) {
+      if (event.target && event.target.closest && event.target.closest('a')) {
+        return;
+      }
+
+      openLightbox(item);
+    });
   });
 
   if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
