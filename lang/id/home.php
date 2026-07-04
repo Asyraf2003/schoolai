@@ -222,7 +222,6 @@ return [
     ],
 
     'nilai_sekolah' => [
-        'eyebrow' => 'Nilai Sekolah',
         'title' => 'Nilai yang Menjadi Arah Tumbuh Anak',
         'subtitle' => 'Empat nilai utama yang membentuk budaya belajar Al-Mustaqbal: dekat dengan Al-Qur’an, berani berpikir, menyatu dalam karakter, dan menginspirasi lingkungan.',
         'items' => [
@@ -355,7 +354,6 @@ return [
     ],
 
     'ekstrakurikuler' => [
-        'eyebrow' => 'Eksplorasi Bakat',
         'title' => 'Ekstrakurikuler yang Membuat Anak Berani Mencoba',
         'subtitle' => 'Kegiatan pilihan di luar kelas untuk membantu siswa mengenali minat, melatih percaya diri, bergerak aktif, dan belajar bekerja sama.',
         'filters' => [

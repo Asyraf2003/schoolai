@@ -253,7 +253,6 @@
         <div class="container">
           <div class="nilai-section__shell">
             <div class="nilai-section__intro reveal">
-              <p class="eyebrow eyebrow--purple">{{ $schoolValues['eyebrow'] }}</p>
               <h2 class="section-title">{{ $schoolValues['title'] }}</h2>
               <p class="section-subtitle">
                 {{ $schoolValues['subtitle'] }}
@@ -361,7 +360,6 @@
         <div class="container">
           <div class="ekskul-section__head reveal">
             <div>
-              <p class="eyebrow eyebrow--mint">{{ $extracurricular['eyebrow'] }}</p>
               <h2 class="section-title">{{ $extracurricular['title'] }}</h2>
               <p class="section-subtitle">
                 {{ $extracurricular['subtitle'] }}
