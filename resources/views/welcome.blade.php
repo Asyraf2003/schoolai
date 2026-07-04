@@ -462,6 +462,29 @@
                     {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
                   </span>
 
+                  <div class="galeri-story-card__mobile-media">
+                    @if (! empty($item['thumbnail_url']))
+                      <img
+                        src="{{ $item['thumbnail_url'] }}"
+                        alt="{{ $item['title'] }}"
+                        class="galeri-story-card__mobile-image"
+                        loading="lazy"
+                      />
+                    @else
+                      <span class="galeri-story-card__mobile-fallback">
+                        {{ $item['fallback_icon'] ?? ($item['emoji'] ?? '📸') }}
+                      </span>
+                    @endif
+
+                    <span class="galeri-story-card__mobile-badge">
+                      {{ $item['type_label'] ?? 'Foto' }}
+                    </span>
+
+                    @if (! empty($item['is_video']))
+                      <span class="galeri-story-card__mobile-play" aria-hidden="true">▶</span>
+                    @endif
+                  </div>
+
                   <div class="galeri-story-card__content">
                     <div class="galeri-story-card__meta">
                       @if (! empty($item['category']))
