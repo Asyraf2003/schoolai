@@ -356,17 +356,25 @@
       </section>
 
       <!-- ======================= EKSTRAKURIKULER ======================= -->
-      <section class="ekskul-section section">
+      <section class="ekskul-section section" id="ekstrakurikuler">
         <div class="container">
-          <div class="section-head">
-            <h2 class="section-title">{{ $extracurricular['title'] }}</h2>
-            <p class="section-subtitle">
-              {{ $extracurricular['subtitle'] }}
-            </p>
+          <div class="ekskul-section__head reveal">
+            <div>
+              <p class="eyebrow eyebrow--mint">{{ $extracurricular['eyebrow'] }}</p>
+              <h2 class="section-title">{{ $extracurricular['title'] }}</h2>
+              <p class="section-subtitle">
+                {{ $extracurricular['subtitle'] }}
+              </p>
+            </div>
+
+            <div class="ekskul-section__badge" aria-hidden="true">
+              <span>{{ count($extracurricular['items']) }}</span>
+              <small>Kegiatan</small>
+            </div>
           </div>
 
           <div
-            class="filter-bar"
+            class="filter-bar ekskul-filter-bar reveal reveal--delay-1"
             role="group"
             aria-label="Filter ekstrakurikuler"
           >
@@ -382,19 +390,41 @@
 
           <div class="ekskul-grid" id="ekskulGrid">
             @forelse ($extracurricular['items'] as $item)
-              <div class="ekskul-card" data-category="{{ $item['category'] }}">
-                <span class="ekskul-card__icon">{{ $item['icon'] }}</span>
-                <h3>{{ $item['title'] }}</h3>
-                <span class="tag {{ $item['tag_class'] }}">{{ $item['category_label'] }}</span>
-              </div>
+              <button
+                type="button"
+                class="ekskul-card ekskul-card--{{ $item['variant'] ?? 'normal' }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : '' }}{{ $loop->first ? ' is-active' : '' }}"
+                data-category="{{ $item['category'] }}"
+                data-ekskul-card
+                aria-pressed="{{ $loop->first ? 'true' : 'false' }}"
+                style="--ekskul-accent: {{ $item['accent'] ?? '#0ea5e9' }}"
+              >
+                <span class="ekskul-card__shine" aria-hidden="true"></span>
+
+                <span class="ekskul-card__top">
+                  <span class="ekskul-card__icon">{{ $item['icon'] }}</span>
+                  <span class="ekskul-card__code">{{ $item['code'] }}</span>
+                </span>
+
+                <span class="ekskul-card__body">
+                  <span class="ekskul-card__title">{{ $item['title'] }}</span>
+                  <span class="ekskul-card__description">{{ $item['description'] }}</span>
+                </span>
+
+                <span class="ekskul-card__meta">
+                  <span class="tag {{ $item['tag_class'] }}">{{ $item['category_label'] }}</span>
+                  <span class="ekskul-card__level">{{ $item['level'] }}</span>
+                </span>
+              </button>
             @empty
               <p class="text-sm">{{ $extracurricular['empty'] }}</p>
             @endforelse
           </div>
+
           <p class="ekskul-empty" id="ekskulEmpty" hidden>
             {{ $extracurricular['empty'] }}
           </p>
         </div>
+
         <div class="wave-divider" aria-hidden="true">
           <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
             <use href="#wave-shape" class="wave-fill-blue"></use>
