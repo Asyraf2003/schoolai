@@ -486,3 +486,108 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+/* GALLERY_STICKY_STORY_FINAL */
+document.addEventListener('DOMContentLoaded', function () {
+  var storyRoot = document.querySelector('[data-gallery-story]');
+  if (!storyRoot) return;
+
+  var cards = Array.prototype.slice.call(storyRoot.querySelectorAll('[data-gallery-story-item]'));
+  if (!cards.length) return;
+
+  var visualFrame = storyRoot.querySelector('[data-gallery-visual-frame]');
+  var visualImage = storyRoot.querySelector('[data-gallery-visual-image]');
+  var visualFallback = storyRoot.querySelector('[data-gallery-visual-fallback]');
+  var visualType = storyRoot.querySelector('[data-gallery-visual-type]');
+  var visualPlay = storyRoot.querySelector('[data-gallery-visual-play]');
+  var visualCategory = storyRoot.querySelector('[data-gallery-visual-category]');
+  var visualDate = storyRoot.querySelector('[data-gallery-visual-date]');
+  var visualTitle = storyRoot.querySelector('[data-gallery-visual-title]');
+  var visualCaption = storyRoot.querySelector('[data-gallery-visual-caption]');
+  var activeCard = cards[0];
+
+  function textFrom(card, name) {
+    return card.getAttribute(name) || '';
+  }
+
+  function activateGalleryStory(card) {
+    if (!card || card === activeCard) return;
+
+    activeCard = card;
+
+    cards.forEach(function (item) {
+      item.classList.toggle('is-active', item === card);
+    });
+
+    var title = textFrom(card, 'data-title');
+    var caption = textFrom(card, 'data-caption');
+    var category = textFrom(card, 'data-category');
+    var date = textFrom(card, 'data-date');
+    var typeLabel = textFrom(card, 'data-type-label') || 'Foto';
+    var thumbnailUrl = textFrom(card, 'data-thumbnail-url');
+    var fallbackIcon = textFrom(card, 'data-fallback-icon') || '📸';
+    var isVideo = textFrom(card, 'data-is-video') === '1';
+
+    if (visualFrame) {
+      visualFrame.style.setProperty('--g1', card.style.getPropertyValue('--g1') || 'var(--color-orange)');
+      visualFrame.style.setProperty('--g2', card.style.getPropertyValue('--g2') || 'var(--color-yellow)');
+      visualFrame.style.setProperty('--gallery-accent', card.style.getPropertyValue('--gallery-accent') || '#f97316');
+    }
+
+    if (visualTitle) visualTitle.textContent = title;
+    if (visualCaption) visualCaption.textContent = caption;
+    if (visualCategory) visualCategory.textContent = category || 'Galeri';
+    if (visualDate) visualDate.textContent = date;
+    if (visualType) visualType.textContent = typeLabel;
+    if (visualPlay) visualPlay.hidden = !isVideo;
+
+    if (visualImage && visualFallback) {
+      if (thumbnailUrl) {
+        visualImage.hidden = false;
+        visualImage.src = thumbnailUrl;
+        visualImage.alt = title || 'Galeri sekolah';
+        visualFallback.hidden = true;
+      } else {
+        visualImage.hidden = true;
+        visualImage.removeAttribute('src');
+        visualFallback.hidden = false;
+        visualFallback.textContent = fallbackIcon;
+      }
+    }
+  }
+
+  cards.forEach(function (card) {
+    card.addEventListener('focus', function () {
+      activateGalleryStory(card);
+    });
+
+    card.addEventListener('mouseenter', function () {
+      if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        activateGalleryStory(card);
+      }
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          activateGalleryStory(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.55,
+      rootMargin: '-22% 0px -28% 0px'
+    });
+
+    cards.forEach(function (card) {
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        activateGalleryStory(card);
+      });
+    });
+  }
+});
