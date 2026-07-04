@@ -297,28 +297,60 @@
       <!-- ======================= PROGRAM UNGGULAN ======================= -->
       <section class="program-section section" id="program">
         <div class="container">
-          <div class="section-head">
-            <h2 class="section-title">{{ $featuredPrograms['title'] }}</h2>
-            <p class="section-subtitle">
-              {{ $featuredPrograms['subtitle'] }}
-            </p>
-          </div>
-          <div class="program-flow">
-            @forelse ($featuredPrograms['items'] as $program)
-              <article class="program-card {{ $program['card_class'] }}">
-                <span
-                  class="program-card__icon"
-                  style="background: {{ $program['background'] }}"
-                  >{{ $program['icon'] }}</span
+          <div class="program-section__shell">
+            <aside class="program-spotlight reveal">
+              <span class="program-spotlight__kicker">{{ $featuredPrograms['eyebrow'] }}</span>
+              <h2 class="program-spotlight__title">{{ $featuredPrograms['title'] }}</h2>
+              <p class="program-spotlight__subtitle">
+                {{ $featuredPrograms['subtitle'] }}
+              </p>
+
+              <div class="program-spotlight__chips" aria-label="Ringkasan program">
+                <span>6 Program</span>
+                <span>TK & SD</span>
+                <span>Qur’ani</span>
+              </div>
+            </aside>
+
+            <div class="program-flow" aria-label="Daftar program unggulan">
+              @forelse ($featuredPrograms['items'] as $program)
+                <button
+                  type="button"
+                  class="program-card{{ $loop->first ? ' is-active' : '' }}"
+                  data-featured-program-card
+                  aria-pressed="{{ $loop->first ? 'true' : 'false' }}"
+                  style="--program-accent: {{ $program['accent'] ?? '#0ea5e9' }}"
                 >
-                <h3>{{ $program['title'] }}</h3>
-                <p>
-                  {{ $program['description'] }}
-                </p>
-              </article>
-            @empty
-              <p>{{ $featuredPrograms['empty'] }}</p>
-            @endforelse
+                  <span class="program-card__orb" aria-hidden="true"></span>
+
+                  <span class="program-card__head">
+                    <span class="program-card__code">{{ $program['code'] }}</span>
+                    <span class="program-card__label">{{ $program['label'] }}</span>
+                  </span>
+
+                  <span class="program-card__body">
+                    <span class="program-card__title">{{ $program['title'] }}</span>
+                    <span class="program-card__summary">{{ $program['summary'] }}</span>
+                    <span class="program-card__description">
+                      @foreach ($program['text_parts'] as $part)
+                        @if (! empty($part['mark']))
+                          <span class="program-mark program-mark--{{ $part['mark'] }}">{{ $part['text'] }}</span>
+                        @else
+                          {{ $part['text'] }}
+                        @endif
+                      @endforeach
+                    </span>
+                  </span>
+
+                  <span class="program-card__footer">
+                    <span>Lihat fokus</span>
+                    <span aria-hidden="true">→</span>
+                  </span>
+                </button>
+              @empty
+                <p class="program-empty">{{ $featuredPrograms['empty'] }}</p>
+              @endforelse
+            </div>
           </div>
         </div>
       </section>
@@ -327,7 +359,6 @@
       <section class="ekskul-section section">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--mint">{{ $extracurricular['eyebrow'] }}</p>
             <h2 class="section-title">{{ $extracurricular['title'] }}</h2>
             <p class="section-subtitle">
               {{ $extracurricular['subtitle'] }}
