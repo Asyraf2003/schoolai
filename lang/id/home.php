@@ -182,25 +182,65 @@ return [
 
     'visi_misi' => [
         'vision' => [
-            'eyebrow' => '🧭 Visi',
-            'text' => 'Program Pendidikan Islamic School bertujuan untuk membina generasi Muslim yang memiliki karakter menginspirasi, inovatif, dan berintegritas, mampu menjalankan peran mereka sebagai Khalifatullah melalui pengembangan pendidikan holistik.',
+            'eyebrow' => 'Visi',
+            'title' => 'Arah Pendidikan Al-Mustaqbal',
+            'text_parts' => [
+                ['text' => 'Program Pendidikan Al-Mustaqbal bertujuan untuk membina '],
+                ['text' => 'generasi Muslim', 'mark' => 'blue'],
+                ['text' => ' yang memiliki karakter '],
+                ['text' => 'menginspirasi, inovatif, dan berintegritas', 'mark' => 'orange'],
+                ['text' => ', mampu menjalankan peran mereka sebagai '],
+                ['text' => 'Khalifatullah', 'mark' => 'green'],
+                ['text' => ' melalui pengembangan '],
+                ['text' => 'pendidikan holistik.', 'mark' => 'purple'],
+            ],
+        ],
+        'missions_intro' => [
+            'eyebrow' => 'Misi',
+            'title' => 'Empat langkah membentuk generasi Islam yang utuh',
         ],
         'missions' => [
             [
-                'icon' => '🌱',
-                'text' => 'Membentuk generasi Islam berdasarkan Al-Qur’an dan Sunnah Rasulullah SAW.',
+                'title' => 'Fondasi Al-Qur’an & Sunnah',
+                'accent' => '#22c55e',
+                'text_parts' => [
+                    ['text' => 'Membentuk generasi Islam berdasarkan '],
+                    ['text' => 'Al-Qur’an dan Sunnah Rasulullah SAW', 'mark' => 'green'],
+                    ['text' => '.'],
+                ],
             ],
             [
-                'icon' => '🌍',
-                'text' => 'Mengembangkan semangat inspirasi dengan wawasan global dan kemampuan berkomunikasi secara sosial melalui penguasaan lebih dari satu bahasa.',
+                'title' => 'Wawasan Global & Bahasa',
+                'accent' => '#0ea5e9',
+                'text_parts' => [
+                    ['text' => 'Mengembangkan semangat inspirasi dengan '],
+                    ['text' => 'wawasan global', 'mark' => 'blue'],
+                    ['text' => ' dan kemampuan berkomunikasi secara sosial, melalui penguasaan '],
+                    ['text' => 'lebih dari satu bahasa', 'mark' => 'orange'],
+                    ['text' => '.'],
+                ],
             ],
             [
-                'icon' => '💡',
-                'text' => 'Menciptakan generasi pembelajar sepanjang hayat yang berpikir kritis dan inovatif.',
+                'title' => 'Pembelajar Kritis & Inovatif',
+                'accent' => '#f97316',
+                'text_parts' => [
+                    ['text' => 'Menciptakan generasi '],
+                    ['text' => 'pembelajar sepanjang hayat', 'mark' => 'purple'],
+                    ['text' => ' yang berpikir '],
+                    ['text' => 'kritis dan inovatif', 'mark' => 'orange'],
+                    ['text' => '.'],
+                ],
             ],
             [
-                'icon' => '🤝',
-                'text' => 'Membentuk karakter peduli lingkungan dengan integritas, baik secara lokal maupun global.',
+                'title' => 'Peduli Lingkungan & Berintegritas',
+                'accent' => '#14b8a6',
+                'text_parts' => [
+                    ['text' => 'Membentuk karakter '],
+                    ['text' => 'peduli lingkungan', 'mark' => 'green'],
+                    ['text' => ' dengan '],
+                    ['text' => 'integritas', 'mark' => 'blue'],
+                    ['text' => ', baik secara lokal maupun global.'],
+                ],
             ],
         ],
     ],

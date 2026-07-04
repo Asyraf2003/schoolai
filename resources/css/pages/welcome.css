@@ -4438,3 +4438,460 @@ h1, h2, h3, h4, p { margin: 0; }
     text-shadow: none !important;
   }
 }
+
+
+/* VISI MISI INTERACTIVE AL MUSTAQBAL FINAL OVERRIDE */
+.visi-misi {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255, 213, 79, 0.18), transparent 30%),
+    radial-gradient(circle at 92% 18%, rgba(14, 165, 233, 0.16), transparent 32%),
+    linear-gradient(180deg, var(--color-cream), #fffaf0);
+}
+
+.visi-misi::before,
+.visi-misi::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(2px);
+  opacity: 0.48;
+}
+
+.visi-misi::before {
+  width: 260px;
+  height: 260px;
+  left: -110px;
+  top: 48px;
+  background: rgba(255, 159, 90, 0.26);
+}
+
+.visi-misi::after {
+  width: 320px;
+  height: 320px;
+  right: -150px;
+  bottom: 18px;
+  background: rgba(46, 213, 175, 0.22);
+}
+
+.visi-misi__shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 34px;
+  align-items: stretch;
+}
+
+.visi-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+  padding: clamp(30px, 4vw, 48px);
+  border-radius: 34px;
+  background:
+    linear-gradient(135deg, rgba(33,31,59,0.96), rgba(39,37,73,0.92)),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.20), transparent 36%);
+  color: #fff;
+  box-shadow: 0 26px 70px rgba(33,31,59,0.22);
+  isolation: isolate;
+  transition:
+    transform 0.34s ease,
+    box-shadow 0.34s ease;
+}
+
+.visi-card::before {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  z-index: -1;
+  background:
+    conic-gradient(
+      from 120deg,
+      rgba(255, 209, 70, 0.28),
+      rgba(46, 213, 175, 0.22),
+      rgba(14, 165, 233, 0.24),
+      rgba(255, 159, 90, 0.26),
+      rgba(255, 209, 70, 0.28)
+    );
+  animation: visi-glow-spin 12s linear infinite;
+  opacity: 0.75;
+}
+
+.visi-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: 33px;
+  background:
+    linear-gradient(135deg, rgba(33,31,59,0.96), rgba(48,45,85,0.94));
+}
+
+.visi-card__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.visi-card__kicker,
+.misi-panel__kicker {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.13);
+  color: #fff2b9;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+}
+
+.visi-card__pulse {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: #2ed5af;
+  box-shadow: 0 0 0 0 rgba(46,213,175,0.55);
+  animation: visi-pulse 1.9s ease-out infinite;
+}
+
+.visi-card__title {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  color: #fff;
+}
+
+.visi-card__text {
+  margin: 0;
+  max-width: 680px;
+  font-family: var(--font-display);
+  font-size: clamp(1.16rem, 1.3vw + 0.84rem, 1.62rem);
+  font-weight: 720;
+  line-height: 1.54;
+  color: rgba(255,255,255,0.88);
+}
+
+.vm-mark {
+  position: relative;
+  display: inline;
+  font-weight: 950;
+  color: var(--vm-mark-color, #fff);
+  text-shadow: 0 8px 22px rgba(0,0,0,0.16);
+}
+
+.vm-mark::after {
+  content: "";
+  position: absolute;
+  left: -0.05em;
+  right: -0.05em;
+  bottom: 0.02em;
+  height: 0.34em;
+  z-index: -1;
+  border-radius: 999px;
+  background: var(--vm-mark-bg, rgba(255,255,255,0.18));
+  transform: rotate(-1deg);
+  opacity: 0.88;
+}
+
+.vm-mark--blue {
+  --vm-mark-color: #7dd3fc;
+  --vm-mark-bg: rgba(14,165,233,0.22);
+}
+
+.vm-mark--orange {
+  --vm-mark-color: #ffb15f;
+  --vm-mark-bg: rgba(249,115,22,0.22);
+}
+
+.vm-mark--green {
+  --vm-mark-color: #86efac;
+  --vm-mark-bg: rgba(34,197,94,0.22);
+}
+
+.vm-mark--purple {
+  --vm-mark-color: #d8b4fe;
+  --vm-mark-bg: rgba(168,85,247,0.20);
+}
+
+.misi-panel {
+  position: relative;
+  padding: clamp(22px, 3vw, 32px);
+  border-radius: 34px;
+  background: rgba(255,255,255,0.74);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: 0 24px 60px rgba(33,31,59,0.12);
+  backdrop-filter: blur(18px);
+}
+
+.misi-panel__head {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.misi-panel__kicker {
+  background: #211f3b;
+  color: #fff2b9;
+}
+
+.misi-panel__head h3 {
+  margin: 0;
+  max-width: 580px;
+  font-family: var(--font-display);
+  font-size: clamp(1.48rem, 2vw, 2.1rem);
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+  color: #211f3b;
+}
+
+.misi-list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.misi-list__item {
+  margin: 0;
+}
+
+.misi-card {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 18px 18px;
+  border: 1px solid rgba(33,31,59,0.08);
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,251,241,0.86));
+  color: #211f3b;
+  box-shadow: 0 16px 34px rgba(33,31,59,0.08);
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    background 0.28s ease;
+}
+
+.misi-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: var(--misi-accent);
+  opacity: 0.9;
+  transition: width 0.28s ease, opacity 0.28s ease;
+  z-index: -1;
+}
+
+.misi-card::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  right: -94px;
+  top: -100px;
+  border-radius: 999px;
+  background: var(--misi-accent);
+  opacity: 0.10;
+  transition:
+    transform 0.28s ease,
+    opacity 0.28s ease;
+  z-index: -1;
+}
+
+.misi-card__number {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--misi-accent) 14%, #ffffff);
+  color: var(--misi-accent);
+  font-family: var(--font-display);
+  font-weight: 950;
+  font-size: 1rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--misi-accent) 26%, transparent);
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    color 0.28s ease;
+}
+
+.misi-card__body {
+  display: grid;
+  gap: 7px;
+}
+
+.misi-card__title {
+  font-family: var(--font-display);
+  font-size: 1.06rem;
+  font-weight: 950;
+  line-height: 1.12;
+  color: #211f3b;
+  transition: color 0.28s ease;
+}
+
+.misi-card__text {
+  display: block;
+  color: rgba(33,31,59,0.76);
+  font-weight: 650;
+  line-height: 1.58;
+  transition: color 0.28s ease;
+}
+
+.misi-card .vm-mark::after {
+  height: 0.42em;
+  bottom: -0.02em;
+}
+
+.misi-card.is-active {
+  transform: translateY(-5px);
+  border-color: color-mix(in srgb, var(--misi-accent) 42%, transparent);
+  box-shadow: 0 24px 48px rgba(33,31,59,0.14);
+}
+
+.misi-card.is-active::before {
+  width: 100%;
+  opacity: 0.10;
+}
+
+.misi-card.is-active::after {
+  opacity: 0.18;
+  transform: translate(-22px, 28px) scale(1.12);
+}
+
+.misi-card.is-active .misi-card__number {
+  background: var(--misi-accent);
+  color: #ffffff;
+  transform: rotate(-5deg) scale(1.08);
+}
+
+.misi-card.is-active .misi-card__title {
+  color: var(--misi-accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .visi-card:hover,
+  .visi-card:focus-visible {
+    transform: translateY(-8px) rotate(-0.5deg);
+    box-shadow: 0 34px 86px rgba(33,31,59,0.28);
+  }
+
+  .misi-card:hover,
+  .misi-card:focus-visible {
+    transform: translateY(-6px) translateX(6px);
+    border-color: color-mix(in srgb, var(--misi-accent) 46%, transparent);
+    box-shadow: 0 26px 54px rgba(33,31,59,0.16);
+    outline: none;
+  }
+
+  .misi-card:hover::before,
+  .misi-card:focus-visible::before {
+    width: 100%;
+    opacity: 0.10;
+  }
+
+  .misi-card:hover .misi-card__number,
+  .misi-card:focus-visible .misi-card__number {
+    background: var(--misi-accent);
+    color: #fff;
+    transform: rotate(-5deg) scale(1.1);
+  }
+
+  .misi-card:hover .misi-card__title,
+  .misi-card:focus-visible .misi-card__title {
+    color: var(--misi-accent);
+  }
+}
+
+@media (max-width: 1023px) {
+  .visi-misi__shell {
+    grid-template-columns: 1fr;
+  }
+
+  .visi-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .visi-misi {
+    overflow: hidden;
+  }
+
+  .visi-card,
+  .misi-panel {
+    border-radius: 26px;
+  }
+
+  .visi-card {
+    padding: 28px 22px;
+  }
+
+  .misi-panel {
+    padding: 20px 16px;
+  }
+
+  .misi-card {
+    grid-template-columns: 42px 1fr;
+    gap: 13px;
+    padding: 16px 14px;
+    border-radius: 20px;
+  }
+
+  .misi-card__number {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+  }
+}
+
+@keyframes visi-glow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes visi-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46,213,175,0.52);
+  }
+
+  80%,
+  100% {
+    box-shadow: 0 0 0 16px rgba(46,213,175,0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visi-card::before,
+  .visi-card__pulse {
+    animation: none !important;
+  }
+
+  .visi-card,
+  .misi-card,
+  .misi-card__number {
+    transition: none !important;
+  }
+}
