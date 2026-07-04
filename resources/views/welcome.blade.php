@@ -253,6 +253,7 @@
         <div class="container">
           <div class="nilai-section__shell">
             <div class="nilai-section__intro reveal">
+              <p class="eyebrow eyebrow--purple">{{ $schoolValues['eyebrow'] }}</p>
               <h2 class="section-title">{{ $schoolValues['title'] }}</h2>
               <p class="section-subtitle">
                 {{ $schoolValues['subtitle'] }}

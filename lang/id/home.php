@@ -2,21 +2,21 @@
 
 return [
     'meta' => [
-        'title' => 'Islamic School',
-        'description' => 'Selamat Datang di Website Sekolah',
+        'title' => 'Al Mustaqbal School',
+        'description' => 'Website resmi Al Mustaqbal School untuk informasi pendidikan, PPDB, program, kegiatan, dan kontak sekolah.',
     ],
 
     'hero' => [
-        'eyebrow' => 'Islamic School • TK & SD',
+        'eyebrow' => 'Al Mustaqbal School • TK & SD',
         'title_before' => 'Sekolah Islam yang menumbuhkan',
         'title_highlight' => 'adab, ilmu, dan hafalan',
         'title_after' => 'sejak dini',
         'subtitle' => 'Lingkungan belajar yang hangat untuk anak bertumbuh dengan Al-Qur’an, akhlak, bahasa, kreativitas, dan pendampingan guru yang dekat dengan keluarga.',
         'background_image' => 'media/home/hero-school.png',
         'visual_image' => 'media/home/hero-school.png',
-        'visual_image_alt' => 'Gedung Islamic School Al Mustaqbal',
+        'visual_image_alt' => 'Gedung Al Mustaqbal School',
         'logo_image' => 'media/home/mustaqbalfont.png',
-        'logo_image_alt' => 'Al Mustaqbal Islamic School',
+        'logo_image_alt' => 'Al Mustaqbal School',
         'primary_cta' => [
             'label' => 'Daftar PPDB',
             'href' => '#ppdb',
@@ -25,27 +25,7 @@ return [
             'label' => 'Lihat Program',
             'href' => '#program',
         ],
-        'badges' => [
-            [
-                'icon' => '📖',
-                'label' => 'Tahfidz Al-Qur’an',
-                'image' => 'media/home/hero-school.png',
-                'alt' => 'Kegiatan tahfidz Al-Qur’an',
-            ],
-            [
-                'icon' => '🧑‍🏫',
-                'label' => 'Guru Pendamping',
-                'image' => 'media/home/hero-school.png',
-                'alt' => 'Guru mendampingi siswa belajar di kelas',
-            ],
-            [
-                'icon' => '🏫',
-                'label' => 'Lingkungan Nyaman',
-                'image' => 'media/home/hero-school.png',
-                'alt' => 'Lingkungan belajar Islamic School',
-            ],
-        ],
-    ],
+],
 
     'navbar' => [
         'aria_label' => 'Menu utama',
@@ -96,25 +76,21 @@ return [
                 'count' => 320,
                 'suffix' => '+',
                 'label' => 'Siswa',
-                'description' => 'Yang telah lulus',
             ],
             [
                 'count' => 24,
                 'suffix' => '+',
                 'label' => 'Penghargaan Bergengsi',
-                'description' => 'Kami telah memenangkan berbagai penghargaan bergengsi dalam bidang pendidikan.',
             ],
             [
                 'count' => 1200,
                 'suffix' => '+',
                 'label' => 'Jam',
-                'description' => 'Kegiatan belajar mengajar.',
             ],
             [
                 'count' => 18,
                 'suffix' => '+',
                 'label' => 'Program',
-                'description' => 'Ekstrakurikuler unggulan.',
             ],
         ],
     ],
@@ -150,7 +126,7 @@ return [
 
     'ppdb' => [
         'eyebrow' => 'Penerimaan Peserta Didik Baru',
-        'title' => 'Daftar Sekarang di Islamic School',
+        'title' => 'Daftar Sekarang di Al Mustaqbal School',
         'description' => 'Pendaftaran peserta didik baru dapat dilakukan dengan lebih mudah. Informasi akademik, kegiatan, dan proses PPDB tersedia dalam satu tempat.',
         'cta' => [
             'label' => 'Daftar Sekarang',
@@ -536,7 +512,7 @@ return [
     'galeri' => [
         'eyebrow' => 'Galeri',
         'title' => 'Galeri Pilihan Kami',
-        'subtitle' => 'Dokumentasi kegiatan dan suasana belajar siswa di Islamic School.',
+        'subtitle' => 'Dokumentasi kegiatan dan suasana belajar siswa di Al Mustaqbal School.',
         'items' => [
             [
                 'item_class' => 'galeri-item--tall',

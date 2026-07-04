@@ -266,53 +266,6 @@ document.addEventListener('DOMContentLoaded', function () {
     revealEls.forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ---------- 10. TILT AGRESIF PADA FOTO HERO ---------- */
-  var tiltEl = document.getElementById('tiltIllustration');
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (tiltEl && !prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
-    function resetHeroTilt() {
-      tiltEl.style.setProperty('--hero-rotate-x', '0deg');
-      tiltEl.style.setProperty('--hero-rotate-y', '0deg');
-      tiltEl.style.setProperty('--hero-shift-x', '0px');
-      tiltEl.style.setProperty('--hero-shift-y', '0px');
-      tiltEl.style.setProperty('--hero-proximity', '0');
-      tiltEl.style.transform = 'rotateX(0deg) rotateY(0deg)';
-    }
-
-    document.addEventListener('mousemove', function (e) {
-      var rect = tiltEl.getBoundingClientRect();
-      var centerX = rect.left + rect.width / 2;
-      var centerY = rect.top + rect.height / 2;
-      var dx = e.clientX - centerX;
-      var dy = e.clientY - centerY;
-      var distance = Math.sqrt(dx * dx + dy * dy);
-      var maxDistance = Math.max(rect.width, rect.height) * 1.45;
-      var proximity = Math.max(0, 1 - distance / maxDistance);
-
-      if (proximity <= 0) {
-        resetHeroTilt();
-        return;
-      }
-
-      var normalizedX = dx / (rect.width / 2);
-      var normalizedY = dy / (rect.height / 2);
-      var rotateX = (normalizedY * -18 * proximity).toFixed(2);
-      var rotateY = (normalizedX * 18 * proximity).toFixed(2);
-      var shiftX = (normalizedX * 58 * proximity).toFixed(2);
-      var shiftY = (normalizedY * 58 * proximity).toFixed(2);
-
-      tiltEl.style.setProperty('--hero-rotate-x', rotateX + 'deg');
-      tiltEl.style.setProperty('--hero-rotate-y', rotateY + 'deg');
-      tiltEl.style.setProperty('--hero-shift-x', shiftX + 'px');
-      tiltEl.style.setProperty('--hero-shift-y', shiftY + 'px');
-      tiltEl.style.setProperty('--hero-proximity', proximity.toFixed(2));
-      tiltEl.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
-    });
-
-    window.addEventListener('blur', resetHeroTilt);
-  }
-
 });
 
 
