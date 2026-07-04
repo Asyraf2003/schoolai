@@ -423,12 +423,6 @@
             {{ $extracurricular['empty'] }}
           </p>
         </div>
-
-        <div class="wave-divider" aria-hidden="true">
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <use href="#wave-shape" class="wave-fill-blue"></use>
-          </svg>
-        </div>
       </section>
 
       <!-- ======================= GALERI ======================= -->
