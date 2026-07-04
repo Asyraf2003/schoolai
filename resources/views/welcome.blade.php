@@ -253,7 +253,6 @@
         <div class="container">
           <div class="nilai-section__shell">
             <div class="nilai-section__intro reveal">
-              <p class="eyebrow eyebrow--purple">{{ $schoolValues['eyebrow'] }}</p>
               <h2 class="section-title">{{ $schoolValues['title'] }}</h2>
               <p class="section-subtitle">
                 {{ $schoolValues['subtitle'] }}
@@ -292,12 +291,6 @@
               @endforeach
             </div>
           </div>
-        </div>
-
-        <div class="wave-divider" aria-hidden="true">
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <use href="#wave-shape" class="wave-fill-mint"></use>
-          </svg>
         </div>
       </section>
 
