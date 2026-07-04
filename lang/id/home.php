@@ -508,7 +508,6 @@ return [
     ],
 
     'galeri' => [
-        'eyebrow' => 'Galeri Sekolah',
         'title' => 'Momen Terbaru Al Mustaqbal School',
         'subtitle' => 'Dokumentasi kegiatan belajar, ibadah, kreativitas, dan kebersamaan siswa. Untuk saat ini galeri memakai data manual dan tautan Instagram, belum memakai API.',
         'cta' => [

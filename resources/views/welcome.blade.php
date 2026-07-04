@@ -429,7 +429,6 @@
       <section class="galeri-section section" id="galeri">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--white">{{ $gallerySection['eyebrow'] }}</p>
             <h2 class="section-title section-title--white">{{ $gallerySection['title'] }}</h2>
             <p class="section-subtitle section-subtitle--white">
               {{ $gallerySection['subtitle'] }}
