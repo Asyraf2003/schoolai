@@ -298,7 +298,6 @@
       <section class="program-section section" id="program">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--orange">{{ $featuredPrograms['eyebrow'] }}</p>
             <h2 class="section-title">{{ $featuredPrograms['title'] }}</h2>
             <p class="section-subtitle">
               {{ $featuredPrograms['subtitle'] }}
