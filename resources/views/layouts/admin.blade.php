@@ -402,6 +402,11 @@
       color: #fff;
     }
 
+    .admin-primary-action[disabled] {
+      opacity: 0.65;
+      cursor: progress;
+    }
+
     .admin-primary-action--ghost {
       background: #fff;
       color: var(--admin-ink);
@@ -435,7 +440,9 @@
 
     .gallery-lite-panel,
     .gallery-detail-panel,
-    .gallery-lite-form__panel {
+    .gallery-lite-form__panel,
+    .gallery-media-review,
+    .gallery-upload-progress {
       border: 1px solid var(--admin-line);
       border-radius: 16px;
       background: #fff;
@@ -671,6 +678,81 @@
     .admin-check-field input {
       width: 17px;
       height: 17px;
+    }
+
+    .gallery-media-review {
+      padding: 16px;
+    }
+
+    .gallery-media-review__head,
+    .gallery-upload-progress__text {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .gallery-media-review__head span,
+    .gallery-upload-progress__text span {
+      color: var(--admin-muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .gallery-media-review__stage {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 14px;
+      background: #f6f3ec;
+      color: var(--admin-muted);
+      font-weight: 800;
+    }
+
+    .gallery-media-review__stage img,
+    .gallery-media-review__stage video {
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      display: block;
+      background: #111827;
+    }
+
+    .gallery-video-thumb {
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      margin-top: 12px;
+      border-radius: 12px;
+      background: #111827;
+    }
+
+    .gallery-upload-progress {
+      padding: 14px 16px;
+    }
+
+    .gallery-upload-progress__bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #f3f4f6;
+    }
+
+    .gallery-upload-progress__bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: var(--admin-orange);
+      transition: width 0.18s ease;
+      animation: gallery-upload-pulse 1.1s ease-in-out infinite;
+    }
+
+    @keyframes gallery-upload-pulse {
+      0%, 100% { opacity: 0.72; }
+      50% { opacity: 1; }
     }
     /* /ADMIN_GALLERY_DUMMY_FINAL */
 

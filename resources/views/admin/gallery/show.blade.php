@@ -37,7 +37,7 @@
       @if($item->media_url && $item->type === 'photo')
         <img src="{{ $item->media_url }}" alt="{{ $item->title }}">
       @elseif($item->media_url && $item->is_video)
-        <video src="{{ $item->media_url }}" controls preload="metadata"></video>
+        <video src="{{ $item->media_url }}#t=0.1" controls preload="metadata" data-gallery-detail-video></video>
       @else
         <span>{{ $item->type_label }}</span>
       @endif
@@ -81,4 +81,18 @@
       <button type="submit" class="admin-small-action admin-small-action--danger">{{ $page['delete_button'] }}</button>
     </form>
   </section>
+
+  <script>
+    (() => {
+      document.querySelectorAll('[data-gallery-detail-video]').forEach((video) => {
+        video.addEventListener('loadedmetadata', () => {
+          try {
+            video.currentTime = 0.1;
+          } catch {
+            // Browser malas menurut. Tidak apa, manusia juga begitu.
+          }
+        }, { once: true });
+      });
+    })();
+  </script>
 @endsection
