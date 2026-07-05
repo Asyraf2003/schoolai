@@ -670,11 +670,14 @@ return [
 
     'artikel' => [
         'eyebrow' => 'Artikel Terbaru',
-        'title' => 'Semua Artikel',
+        'title' => 'Cerita Sekolah untuk Orang Tua',
+        'subtitle' => 'Bacaan singkat seputar kegiatan, agenda akademik, dan pendekatan pendidikan Al Mustaqbal School.',
         'read_more' => 'Baca Artikel',
+        'empty' => 'Belum ada artikel terbaru.',
         'items' => [
             [
                 'date' => '3 Juni 2026',
+                'category' => 'Akademik',
                 'emoji' => '📰',
                 'gradient_from' => 'var(--color-yellow-soft)',
                 'gradient_to' => 'var(--color-orange-soft)',
@@ -684,6 +687,7 @@ return [
             ],
             [
                 'date' => '18 Mei 2026',
+                'category' => 'Karakter',
                 'emoji' => '📚',
                 'gradient_from' => 'var(--color-mint-soft)',
                 'gradient_to' => 'var(--color-blue-soft)',
@@ -693,6 +697,7 @@ return [
             ],
             [
                 'date' => '2 Mei 2026',
+                'category' => 'Program',
                 'emoji' => '🏫',
                 'gradient_from' => 'var(--color-pink-soft)',
                 'gradient_to' => 'var(--color-purple-soft)',

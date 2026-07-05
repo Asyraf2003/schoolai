@@ -554,40 +554,100 @@
       </section>
 
       <!-- ======================= ARTIKEL ======================= -->
-      <section class="artikel-section section" id="artikel">
+      <section class="artikel-section section" id="artikel" aria-labelledby="artikel-heading">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head artikel-section__head">
             <p class="eyebrow eyebrow--yellow">{{ $articlesSection['eyebrow'] }}</p>
-            <h2 class="section-title">{{ $articlesSection['title'] }}</h2>
+            <h2 class="section-title" id="artikel-heading">{{ $articlesSection['title'] }}</h2>
+            @if (! empty($articlesSection['subtitle']))
+              <p class="section-subtitle artikel-section__subtitle">
+                {{ $articlesSection['subtitle'] }}
+              </p>
+            @endif
           </div>
-          <div class="artikel-grid">
-            @foreach ($articlesSection['items'] as $article)
-              <article class="artikel-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}">
-                <div
-                  class="artikel-card__thumb"
-                  style="
-                    background: linear-gradient(
-                      135deg,
-                      {{ $article['gradient_from'] }},
-                      {{ $article['gradient_to'] }}
-                    );
-                  "
-                >
-                  {{ $article['emoji'] }}
+
+          @php
+            $articleItems = $articlesSection['items'] ?? [];
+            $featuredArticle = $articleItems[0] ?? null;
+            $sideArticles = array_slice($articleItems, 1);
+          @endphp
+
+          @if ($featuredArticle)
+            <div class="artikel-editorial">
+              <article
+                class="artikel-featured reveal"
+                style="--artikel-g1: {{ $featuredArticle['gradient_from'] ?? 'var(--color-yellow-soft)' }}; --artikel-g2: {{ $featuredArticle['gradient_to'] ?? 'var(--color-orange-soft)' }}"
+              >
+                <div class="artikel-featured__media" aria-hidden="true">
+                  <span class="artikel-featured__emoji">{{ $featuredArticle['emoji'] ?? '📰' }}</span>
+                  <span class="artikel-featured__orb artikel-featured__orb--one"></span>
+                  <span class="artikel-featured__orb artikel-featured__orb--two"></span>
                 </div>
-                <div class="artikel-card__body">
-                  <span class="artikel-card__date">{{ $article['date'] }}</span>
-                  <h3>{{ $article['title'] }}</h3>
-                  <p>
-                    {{ $article['description'] }}
+
+                <div class="artikel-featured__body">
+                  <div class="artikel-meta">
+                    <span>{{ $featuredArticle['date'] }}</span>
+                    @if (! empty($featuredArticle['category']))
+                      <span>{{ $featuredArticle['category'] }}</span>
+                    @endif
+                  </div>
+
+                  <h3 class="artikel-featured__title">
+                    <a href="{{ $featuredArticle['href'] }}">
+                      {{ $featuredArticle['title'] }}
+                    </a>
+                  </h3>
+
+                  <p class="artikel-featured__description">
+                    {{ $featuredArticle['description'] }}
                   </p>
-                  <a href="{{ $article['href'] }}" class="link-arrow">
+
+                  <a
+                    href="{{ $featuredArticle['href'] }}"
+                    class="artikel-featured__cta link-arrow"
+                    aria-label="{{ $articlesSection['read_more'] }}: {{ $featuredArticle['title'] }}"
+                  >
                     {{ $articlesSection['read_more'] }} →
                   </a>
                 </div>
               </article>
-            @endforeach
-          </div>
+
+              <div class="artikel-side-list" aria-label="Artikel lainnya">
+                @forelse ($sideArticles as $article)
+                  <article class="artikel-side-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 2) : ' reveal--delay-1' }}">
+                    <div
+                      class="artikel-side-card__icon"
+                      style="--artikel-g1: {{ $article['gradient_from'] ?? 'var(--color-mint-soft)' }}; --artikel-g2: {{ $article['gradient_to'] ?? 'var(--color-blue-soft)' }}"
+                      aria-hidden="true"
+                    >
+                      {{ $article['emoji'] ?? '📚' }}
+                    </div>
+
+                    <div class="artikel-side-card__body">
+                      <div class="artikel-meta">
+                        <span>{{ $article['date'] }}</span>
+                        @if (! empty($article['category']))
+                          <span>{{ $article['category'] }}</span>
+                        @endif
+                      </div>
+
+                      <h3 class="artikel-side-card__title">
+                        <a href="{{ $article['href'] }}">
+                          {{ $article['title'] }}
+                        </a>
+                      </h3>
+
+                      <p>{{ $article['description'] }}</p>
+                    </div>
+                  </article>
+                @empty
+                  <p class="artikel-empty">{{ $articlesSection['empty'] ?? 'Belum ada artikel terbaru.' }}</p>
+                @endforelse
+              </div>
+            </div>
+          @else
+            <p class="artikel-empty">{{ $articlesSection['empty'] ?? 'Belum ada artikel terbaru.' }}</p>
+          @endif
         </div>
       </section>
 
