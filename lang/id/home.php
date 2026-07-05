@@ -588,12 +588,17 @@ return [
             'image_alt' => 'Logo Al Mustaqbal',
             'name' => 'Al Mustaqbal',
         ],
-        'location_title' => 'Lokasi:',
-        'location_label' => 'Lokasi Sekolah',
-        'location_hint' => 'Malang, Jawa Timur',
-        'location_href' => 'https://www.google.com/maps/search/?api=1&query=Jl.%20Mayjend%20Panjaitan%20No.19%2C%20Penanggungan%2C%20Klojen%2C%20Malang',
+        'channels_title' => 'Kontak Cepat:',
         'channels_title' => 'Kontak Cepat:',
         'channels' => [
+            [
+                'label' => 'Lokasi',
+                'note' => 'Google Maps',
+                'icon' => 'maps',
+                'asset' => '/media/home/maps.png',
+                'asset_alt' => 'Ikon lokasi Google Maps',
+                'href' => 'https://www.google.com/maps/search/?api=1&query=Jl.%20Mayjend%20Panjaitan%20No.19%2C%20Penanggungan%2C%20Klojen%2C%20Malang',
+            ],
             [
                 'label' => 'WhatsApp',
                 'note' => 'Chat Admin',
@@ -612,12 +617,11 @@ return [
             ],
             [
                 'label' => 'Facebook',
-                'note' => 'Segera Hadir',
+                'note' => 'Halaman Sekolah',
                 'icon' => 'facebook',
                 'asset' => '/media/home/facebook.png',
                 'asset_alt' => 'Ikon Facebook',
-                'href' => '#',
-                'disabled' => true,
+                'href' => 'https://www.facebook.com/almustaqbal.School19/',
             ],
             [
                 'label' => 'Email',

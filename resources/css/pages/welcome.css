@@ -8026,3 +8026,65 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 
+/* FOOTER_CHANNEL_MAP_FACEBOOK_CLEAN_FINAL */
+/* Lokasi pakai maps.png, Facebook aktif, semua channel tetap satu UI lazy asset. */
+.footer-location-line {
+  display: none;
+}
+
+.footer-channel--maps {
+  --channel-accent: #34a853;
+}
+
+.footer-channel-grid {
+  max-width: 340px;
+}
+
+.footer-channel-grid .footer-channel:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.footer-channel__asset {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: block;
+  object-fit: contain;
+  transform: translateZ(0);
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease,
+    opacity 0.22s ease;
+}
+
+.footer-channel:hover .footer-channel__asset,
+.footer-channel:focus-visible .footer-channel__asset {
+  transform: translateY(-1px) scale(1.08) rotate(-3deg);
+}
+
+.footer-channel__fallback {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(31, 46, 43, 0.08);
+  color: #444;
+  font-size: 0.7rem;
+  font-weight: 950;
+}
+
+@media (max-width: 560px) {
+  .footer-channel-grid {
+    max-width: none;
+  }
+
+  .footer-channel__asset,
+  .footer-channel__fallback {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+}
+

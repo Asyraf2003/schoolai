@@ -642,20 +642,6 @@
             />
           </a>
 
-          <div class="footer-location-line">
-            <strong>{{ $footerSection['location_title'] }}</strong>
-            <a
-              href="{{ $footerSection['location_href'] }}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {{ $footerSection['location_label'] }}
-            </a>
-            @if (! empty($footerSection['location_hint']))
-              <p>{{ $footerSection['location_hint'] }}</p>
-            @endif
-          </div>
-
           @if (! empty($footerSection['channels']))
             <div class="footer-channel-group" aria-label="{{ $footerSection['channels_title'] }}">
               <strong>{{ $footerSection['channels_title'] }}</strong>
