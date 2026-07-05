@@ -4,9 +4,24 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\SiteStatisticController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/bahasa/{locale}', function (string $locale, Request $request) {
+    abort_unless(in_array($locale, ['id', 'en'], true), 404);
+
+    $request->session()->put('locale', $locale);
+
+    $previous = url()->previous() ?: route('home');
+
+    if (! str_starts_with($previous, $request->getSchemeAndHttpHost())) {
+        $previous = route('home');
+    }
+
+    return redirect($previous)->withCookie(cookie('site_locale', $locale, 60 * 24 * 365));
+})->whereIn('locale', ['id', 'en'])->name('language.switch');
+
 Route::view('/ppdb', 'pages.ppdb')->name('ppdb');
 Route::view('/artikel', 'pages.artikel')->name('artikel');
 Route::view('/galeri', 'pages.galeri')->name('galeri');

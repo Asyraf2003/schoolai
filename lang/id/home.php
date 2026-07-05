@@ -60,8 +60,20 @@ return [
             [
                 'label' => 'Bahasa',
                 'href' => '#',
+                'type' => 'language',
                 'badge' => 'ID',
-                'disabled' => true,
+                'options' => [
+                    [
+                        'locale' => 'id',
+                        'label' => 'Indonesia',
+                        'short' => 'ID',
+                    ],
+                    [
+                        'locale' => 'en',
+                        'label' => 'English',
+                        'short' => 'EN',
+                    ],
+                ],
             ],
         ],
         'cta' => [

@@ -52,8 +52,39 @@
         <nav class="navbar__menu" id="navMenu" aria-label="{{ $navbar['aria_label'] }}">
           <ul>
             @foreach ($navbar['items'] as $item)
-              <li>
-                @if (! empty($item['disabled']))
+              <li class="{{ ($item['type'] ?? null) === 'language' ? 'nav-language' : '' }}">
+                @if (($item['type'] ?? null) === 'language')
+                  @php
+                    $currentLocale = app()->getLocale();
+                    $currentOption = collect($item['options'] ?? [])->firstWhere('locale', $currentLocale);
+                  @endphp
+
+                  <button
+                    type="button"
+                    class="nav-link nav-language__button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    {{ $item['label'] }}
+                    <small class="nav-link__badge">{{ $currentOption['short'] ?? strtoupper($currentLocale) }}</small>
+                  </button>
+
+                  <div class="nav-language__panel" role="menu" aria-label="{{ $item['label'] }}">
+                    @foreach ($item['options'] ?? [] as $option)
+                      <a
+                        href="{{ route('language.switch', $option['locale']) }}"
+                        class="nav-language__option {{ app()->getLocale() === $option['locale'] ? 'is-active' : '' }}"
+                        role="menuitem"
+                        @if (app()->getLocale() === $option['locale'])
+                          aria-current="true"
+                        @endif
+                      >
+                        <span>{{ $option['label'] }}</span>
+                        <small>{{ $option['short'] }}</small>
+                      </a>
+                    @endforeach
+                  </div>
+                @elseif (! empty($item['disabled']))
                   <span class="nav-link nav-link--dummy" aria-disabled="true">
                     {{ $item['label'] }}
                     @if (! empty($item['badge']))

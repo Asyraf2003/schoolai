@@ -8229,3 +8229,107 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 
+/* NAV_LANGUAGE_SWITCHER_PERSIST_FINAL */
+/* Switch bahasa server-side: session + cookie, tetap aktif setelah refresh/pindah halaman. */
+.nav-language {
+  position: relative;
+}
+
+.nav-language__button {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nav-language__panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 90;
+  min-width: 178px;
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid rgba(31, 46, 43, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 42px rgba(31, 46, 43, 0.12);
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  backdrop-filter: blur(12px);
+}
+
+.nav-language:hover .nav-language__panel,
+.nav-language:focus-within .nav-language__panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.nav-language__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 11px;
+  border-radius: 13px;
+  color: var(--color-ink);
+  font-size: 0.86rem;
+  font-weight: 850;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-language__option small {
+  display: inline-grid;
+  place-items: center;
+  min-width: 30px;
+  height: 22px;
+  padding-inline: 8px;
+  border-radius: 999px;
+  background: rgba(245, 166, 35, 0.14);
+  color: #c47a00;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+}
+
+.nav-language__option:hover,
+.nav-language__option:focus-visible,
+.nav-language__option.is-active {
+  background: rgba(245, 166, 35, 0.13);
+  color: #a86000;
+  outline: none;
+}
+
+.nav-language__option:hover,
+.nav-language__option:focus-visible {
+  transform: translateX(2px);
+}
+
+@media (max-width: 820px) {
+  .nav-language__button {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-language__panel {
+    position: static;
+    min-width: 0;
+    margin-top: 8px;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.74);
+  }
+}
+
