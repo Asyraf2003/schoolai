@@ -7976,3 +7976,53 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 
+/* FOOTER_CHANNEL_PUBLIC_ASSETS_LAZY_FINAL */
+/* Channel footer pakai asset lokal public + lazy img agar render awal tetap ringan. */
+.footer-channel {
+  min-height: 60px;
+}
+
+.footer-channel__asset {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: block;
+  object-fit: contain;
+  transform: translateZ(0);
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease,
+    opacity 0.22s ease;
+}
+
+.footer-channel:hover .footer-channel__asset,
+.footer-channel:focus-visible .footer-channel__asset {
+  transform: translateY(-1px) scale(1.08) rotate(-3deg);
+}
+
+.footer-channel--disabled .footer-channel__asset {
+  filter: saturate(0.55) opacity(0.72);
+}
+
+.footer-channel__fallback {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(31, 46, 43, 0.08);
+  color: #444;
+  font-size: 0.7rem;
+  font-weight: 950;
+}
+
+@media (max-width: 560px) {
+  .footer-channel__asset,
+  .footer-channel__fallback {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+}
+

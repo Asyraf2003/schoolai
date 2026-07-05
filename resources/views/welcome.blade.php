@@ -677,35 +677,20 @@
                       rel="{{ str_starts_with($channel['href'], 'http') ? 'noopener noreferrer' : '' }}"
                     >
                   @endif
-                    @switch($channel['icon'])
-                      @case('whatsapp')
-                        <svg class="footer-channel__icon" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M20.2 11.7a8.2 8.2 0 0 1-12 7.2L4 20l1.2-4a8.2 8.2 0 1 1 15-4.3Z"></path>
-                          <path d="M8.8 8.6c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .6.4l.7 1.6c.1.3.1.5-.1.7l-.4.5c-.1.1-.2.3-.1.5.5 1 1.3 1.9 2.5 2.5.2.1.4 0 .5-.1l.6-.7c.2-.2.4-.3.7-.2l1.6.8c.3.2.4.3.4.6 0 .8-.6 1.5-1.4 1.7-.8.2-2.1 0-3.5-.8-1.7-.9-3.2-2.4-4.1-4.1-.7-1.3-.9-2.6-.6-3.2Z"></path>
-                        </svg>
-                        @break
-
-                      @case('instagram')
-                        <svg class="footer-channel__icon" viewBox="0 0 24 24" aria-hidden="true">
-                          <rect x="4" y="4" width="16" height="16" rx="5"></rect>
-                          <circle cx="12" cy="12" r="3.4"></circle>
-                          <circle cx="17.2" cy="6.8" r="1.1" class="footer-channel__dot"></circle>
-                        </svg>
-                        @break
-
-                      @case('facebook')
-                        <svg class="footer-channel__icon" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M14.2 8.2h2V4.8c-.4-.1-1.6-.2-3-.2-3 0-5 1.8-5 5.2v2.9H5v3.8h3.2v6h4v-6h3.1l.5-3.8h-3.6v-2.5c0-1.1.3-2 2-2Z"></path>
-                        </svg>
-                        @break
-
-                      @case('email')
-                        <svg class="footer-channel__icon" viewBox="0 0 24 24" aria-hidden="true">
-                          <rect x="3.8" y="5.6" width="16.4" height="12.8" rx="2.4"></rect>
-                          <path d="M5 8l7 5 7-5"></path>
-                        </svg>
-                        @break
-                    @endswitch
+                    @if (! empty($channel['asset']))
+                      <img
+                        src="{{ $channel['asset'] }}"
+                        alt="{{ $channel['asset_alt'] ?? $channel['label'] }}"
+                        class="footer-channel__asset"
+                        loading="lazy"
+                        decoding="async"
+                        fetchpriority="low"
+                        width="28"
+                        height="28"
+                      />
+                    @else
+                      <span class="footer-channel__fallback">{{ substr($channel['label'], 0, 2) }}</span>
+                    @endif
 
                     <span class="footer-channel__body">
                       <span class="footer-channel__label">{{ $channel['label'] }}</span>
