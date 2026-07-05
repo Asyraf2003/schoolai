@@ -107,10 +107,6 @@
 
         <div class="container hero__inner">
           <div class="hero__content reveal">
-            <p class="eyebrow eyebrow--pink">
-              {{ $hero['eyebrow'] }}
-            </p>
-
             <h1 class="hero__title">
               {{ $hero['title_before'] }}
               <span class="text-highlight">{{ $hero['title_highlight'] }}</span>

@@ -7,7 +7,6 @@ return [
     ],
 
     'hero' => [
-        'eyebrow' => 'Al Mustaqbal School • TK & SD',
         'title_before' => 'Sekolah Islam yang menumbuhkan',
         'title_highlight' => 'adab, ilmu, dan hafalan',
         'title_after' => 'sejak dini',
