@@ -158,6 +158,58 @@ return [
         ],
     ],
 
+    'artikel_detail' => [
+        'title' => 'Building Manners Before Achievement - Al Mustaqbal School',
+        'description' => 'A dummy article about daily manners culture at Al Mustaqbal School.',
+        'back_to_articles' => '← Back to Articles',
+        'category' => 'Character',
+        'date' => 'July 12, 2026',
+        'read_time' => '5 min read',
+        'issue' => 'Main Issue 01',
+        'heading' => 'Building Manners Before Achievement: Small Habits Repeated Every Day',
+        'lead' => 'In kindergarten and elementary years, manners are not just another lesson topic. Manners are small habits practiced, repeated, and modeled until they become part of how children see themselves and others.',
+        'hero_note' => 'This is a dummy article for simulating a school article detail page.',
+        'toc_title' => 'Inside This Article',
+        'toc' => [
+            'Why manners come first',
+            'Small habits that shape character',
+            'The role of teachers and parents',
+        ],
+        'sections' => [
+            [
+                'heading' => 'Why manners come first',
+                'body' => [
+                    'Academic achievement matters, but children need a foundation of attitude so knowledge does not stop as memorization. A child who learns to greet, queue, ask permission, and listen while others speak is building self-control.',
+                    'In an Islamic school, manners also become a simple way to connect knowledge with character. Not through long lectures all the time, but through routines that are consistent and easy for children to observe.',
+                ],
+            ],
+            [
+                'heading' => 'Small habits that shape character',
+                'body' => [
+                    'School culture can begin with things that look simple: arranging sandals, returning books to the shelf, giving greetings, keeping voices calm while friends speak, and daring to apologize after making a mistake.',
+                    'These small things may not look fancy in a brochure, but they shape the safety of the classroom. Children learn that they are not the center of the universe. Bad news for human ego, decent news for classroom survival.',
+                ],
+            ],
+            [
+                'heading' => 'The role of teachers and parents',
+                'body' => [
+                    'Teachers help maintain the rhythm of habits at school, while parents strengthen them at home. When both environments move in the same direction, children are not confused by changing standards.',
+                    'The key is not perfection, but consistency. Children do not need to see adults always being right. They need to see adults willing to improve, apologize, and model the same manners expected from children.',
+                ],
+            ],
+        ],
+        'quote' => [
+            'text' => 'Manners grow from small habits practiced patiently, not from long advice that disappears after the school bell rings.',
+            'author' => 'Teacher Note from Al Mustaqbal',
+        ],
+        'related_title' => 'Related dummy articles',
+        'related' => [
+            ['title' => 'Why Children Need to Learn Queueing Early', 'meta' => 'Character • 4 min'],
+            ['title' => 'Gradual Tahfidz: Small, Consistent, and Joyful', 'meta' => 'Programs • 5 min'],
+            ['title' => 'Preparing Children for School Without Morning Drama', 'meta' => 'Parenting • 6 min'],
+        ],
+    ],
+
     'galeri' => [
         'title' => 'Gallery - Al Mustaqbal School',
         'description' => 'Dummy gallery of Al Mustaqbal School activities using simulated photo and video visuals without external images.',

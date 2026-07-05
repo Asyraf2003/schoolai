@@ -158,6 +158,58 @@ return [
         ],
     ],
 
+    'artikel_detail' => [
+        'title' => 'Membangun Adab Sebelum Prestasi - Al Mustaqbal School',
+        'description' => 'Artikel dummy tentang budaya adab harian di Al Mustaqbal School.',
+        'back_to_articles' => '← Kembali ke Artikel',
+        'category' => 'Karakter',
+        'date' => '12 Juli 2026',
+        'read_time' => '5 menit baca',
+        'issue' => 'Edisi Utama 01',
+        'heading' => 'Membangun Adab Sebelum Prestasi: Budaya Kecil yang Diulang Setiap Hari',
+        'lead' => 'Di usia TK dan SD, adab bukan sekadar materi pelajaran. Adab adalah kebiasaan kecil yang dilatih, diulang, dan dicontohkan sampai menjadi bagian dari cara anak melihat dirinya dan orang lain.',
+        'hero_note' => 'Artikel ini dummy untuk simulasi halaman detail artikel sekolah.',
+        'toc_title' => 'Isi Artikel',
+        'toc' => [
+            'Mengapa adab didahulukan',
+            'Kebiasaan kecil yang membentuk karakter',
+            'Peran guru dan orang tua',
+        ],
+        'sections' => [
+            [
+                'heading' => 'Mengapa adab didahulukan',
+                'body' => [
+                    'Prestasi akademik penting, tetapi anak membutuhkan fondasi sikap agar ilmu yang dipelajari tidak berhenti sebagai hafalan. Anak yang belajar menyapa, antre, meminta izin, dan mendengar giliran bicara sedang membangun kontrol diri.',
+                    'Di sekolah Islam, pembiasaan adab juga menjadi cara sederhana untuk menghubungkan ilmu dengan akhlak. Bukan lewat ceramah panjang setiap saat, melainkan lewat rutinitas yang konsisten dan mudah dilihat anak.',
+                ],
+            ],
+            [
+                'heading' => 'Kebiasaan kecil yang membentuk karakter',
+                'body' => [
+                    'Budaya sekolah dapat dimulai dari hal yang tampak remeh: merapikan sandal, mengembalikan buku ke rak, mengucapkan salam, menjaga suara saat teman berbicara, dan berani meminta maaf ketika keliru.',
+                    'Hal kecil seperti ini tidak terlihat mewah di brosur, tetapi justru menentukan rasa aman kelas. Anak belajar bahwa dirinya bukan pusat semesta. Sebuah kabar buruk untuk ego manusia, tapi kabar baik untuk masa depan kelas.',
+                ],
+            ],
+            [
+                'heading' => 'Peran guru dan orang tua',
+                'body' => [
+                    'Guru membantu menjaga ritme pembiasaan di sekolah, sementara orang tua memperkuatnya di rumah. Jika dua lingkungan ini berjalan searah, anak tidak bingung menghadapi standar yang berubah-ubah.',
+                    'Kuncinya bukan kesempurnaan, melainkan konsistensi. Anak tidak perlu melihat orang dewasa selalu benar. Anak perlu melihat orang dewasa mau memperbaiki diri, meminta maaf, dan mencontohkan adab yang sama dengan yang diminta dari anak.',
+                ],
+            ],
+        ],
+        'quote' => [
+            'text' => 'Adab tumbuh dari kebiasaan kecil yang dilatih dengan sabar, bukan dari nasihat panjang yang hilang setelah bel pulang.',
+            'author' => 'Catatan Guru Al Mustaqbal',
+        ],
+        'related_title' => 'Artikel terkait dummy',
+        'related' => [
+            ['title' => 'Mengapa Anak Perlu Belajar Mengantre Sejak Dini', 'meta' => 'Karakter • 4 menit'],
+            ['title' => 'Tahfidz Bertahap: Sedikit, Rutin, dan Bahagia', 'meta' => 'Program • 5 menit'],
+            ['title' => 'Cara Menyiapkan Anak Masuk Sekolah Tanpa Drama Pagi', 'meta' => 'Parenting • 6 menit'],
+        ],
+    ],
+
     'galeri' => [
         'title' => 'Galeri Al Mustaqbal School',
         'description' => 'Galeri dummy kegiatan Al Mustaqbal School dengan tampilan foto dan video simulasi tanpa gambar eksternal.',

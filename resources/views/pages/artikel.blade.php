@@ -41,7 +41,7 @@
             <span>{{ $featured['date'] }}</span>
             <span>{{ $featured['read_time'] }}</span>
           </div>
-          <a href="/artikel#featured" class="link-arrow">{{ __('pages.common.read_more') }} →</a>
+          <a href="{{ route('artikel.detail') }}" class="link-arrow">{{ __('pages.common.read_more') }} →</a>
         </div>
       </article>
     </div>
@@ -62,7 +62,7 @@
               <span>{{ $article['date'] }}</span>
               <span>{{ $article['read_time'] }}</span>
             </div>
-            <a href="/artikel#{{ $article['issue'] }}" class="link-arrow">{{ __('pages.common.read_more') }} →</a>
+            <a href="{{ $loop->first ? route('artikel.detail') : '/artikel#' . $article['issue'] }}" class="link-arrow">{{ __('pages.common.read_more') }} →</a>
           </article>
         @endforeach
       </div>

@@ -24,6 +24,7 @@ Route::get('/bahasa/{locale}', function (string $locale, Request $request) {
 
 Route::view('/ppdb', 'pages.ppdb')->name('ppdb');
 Route::view('/artikel', 'pages.artikel')->name('artikel');
+Route::view('/artikel/adab-sebelum-prestasi', 'pages.artikel-detail')->name('artikel.detail');
 Route::view('/galeri', 'pages.galeri')->name('galeri');
 
 
