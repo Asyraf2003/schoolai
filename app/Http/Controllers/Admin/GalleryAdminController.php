@@ -29,6 +29,8 @@ final class GalleryAdminController extends Controller
 
     public function index(): View
     {
+        $this->normalizeSortOrdersIfNeeded();
+
         $items = GalleryItem::query()->ordered()->get();
 
         return view('admin.gallery.index', [
@@ -63,7 +65,7 @@ final class GalleryAdminController extends Controller
                 'type' => 'photo',
                 'category_id' => 'Kegiatan',
                 'category_en' => 'Activities',
-                'sort_order' => min(GalleryItem::query()->count() + 1, self::MAX_ITEMS),
+                'sort_order' => $this->nextSortOrder(),
                 'is_published' => true,
                 'published_at' => now(),
             ]),
@@ -82,8 +84,11 @@ final class GalleryAdminController extends Controller
 
         $data = $this->validatedData($request);
         $data = $this->applyMedia($request, $data);
+        $data['sort_order'] = $this->nextSortOrder();
 
         $item = GalleryItem::query()->create($data);
+
+        $this->normalizeSortOrders();
 
         return redirect()
             ->route('admin.galeri.show', $item)
@@ -108,6 +113,8 @@ final class GalleryAdminController extends Controller
 
         $galleryItem->update($data);
 
+        $this->normalizeSortOrders();
+
         return redirect()
             ->route('admin.galeri.show', $galleryItem)
             ->with('success', 'Item galeri berhasil diperbarui.');
@@ -123,6 +130,8 @@ final class GalleryAdminController extends Controller
 
         $this->deleteStoredPublicFile($galleryItem->media_url);
         $galleryItem->delete();
+
+        $this->normalizeSortOrders();
 
         return redirect()
             ->route('admin.galeri')
@@ -146,6 +155,10 @@ final class GalleryAdminController extends Controller
 
     public function moveUp(GalleryItem $galleryItem): RedirectResponse
     {
+        $this->normalizeSortOrders();
+
+        $galleryItem->refresh();
+
         $previousItem = GalleryItem::query()
             ->where('sort_order', '<', $galleryItem->sort_order)
             ->orderByDesc('sort_order')
@@ -154,13 +167,20 @@ final class GalleryAdminController extends Controller
 
         if ($previousItem) {
             $this->swapSortOrder($galleryItem, $previousItem);
+            $this->normalizeSortOrders();
         }
 
-        return back()->with('success', 'Posisi item galeri diperbarui.');
+        return redirect()
+            ->route('admin.galeri')
+            ->with('success', 'Urutan galeri berhasil diperbarui.');
     }
 
     public function moveDown(GalleryItem $galleryItem): RedirectResponse
     {
+        $this->normalizeSortOrders();
+
+        $galleryItem->refresh();
+
         $nextItem = GalleryItem::query()
             ->where('sort_order', '>', $galleryItem->sort_order)
             ->orderBy('sort_order')
@@ -169,9 +189,12 @@ final class GalleryAdminController extends Controller
 
         if ($nextItem) {
             $this->swapSortOrder($galleryItem, $nextItem);
+            $this->normalizeSortOrders();
         }
 
-        return back()->with('success', 'Posisi item galeri diperbarui.');
+        return redirect()
+            ->route('admin.galeri')
+            ->with('success', 'Urutan galeri berhasil diperbarui.');
     }
 
     private function validatedData(Request $request, ?GalleryItem $galleryItem = null): array
@@ -209,7 +232,6 @@ final class GalleryAdminController extends Controller
                 'url',
                 'max:2048',
             ],
-            'sort_order' => ['required', 'integer', 'min:1', 'max:' . self::MAX_ITEMS],
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
         ], [
@@ -332,12 +354,48 @@ final class GalleryAdminController extends Controller
         return $query->count() < 1;
     }
 
+    private function nextSortOrder(): int
+    {
+        return min(((int) GalleryItem::query()->max('sort_order')) + 1, self::MAX_ITEMS);
+    }
+
+    private function normalizeSortOrdersIfNeeded(): void
+    {
+        $orders = GalleryItem::query()
+            ->ordered()
+            ->pluck('sort_order')
+            ->values()
+            ->all();
+
+        foreach ($orders as $index => $order) {
+            if ((int) $order !== $index + 1) {
+                $this->normalizeSortOrders();
+                return;
+            }
+        }
+    }
+
+    private function normalizeSortOrders(): void
+    {
+        GalleryItem::query()
+            ->ordered()
+            ->get()
+            ->values()
+            ->each(function (GalleryItem $item, int $index): void {
+                $expectedOrder = $index + 1;
+
+                if ($item->sort_order !== $expectedOrder) {
+                    $item->forceFill(['sort_order' => $expectedOrder])->save();
+                }
+            });
+    }
+
     private function swapSortOrder(GalleryItem $firstItem, GalleryItem $secondItem): void
     {
         $firstSortOrder = $firstItem->sort_order;
 
-        $firstItem->update(['sort_order' => $secondItem->sort_order]);
-        $secondItem->update(['sort_order' => $firstSortOrder]);
+        $firstItem->forceFill(['sort_order' => $secondItem->sort_order])->save();
+        $secondItem->forceFill(['sort_order' => $firstSortOrder])->save();
     }
 
     private function limits(): array

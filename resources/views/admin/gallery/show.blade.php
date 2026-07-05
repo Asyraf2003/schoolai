@@ -63,18 +63,6 @@
       </button>
     </form>
 
-    <form method="POST" action="{{ route('admin.galeri.move-up', $item) }}">
-      @csrf
-      @method('PATCH')
-      <button type="submit" class="admin-small-action">{{ $page['move_up'] }}</button>
-    </form>
-
-    <form method="POST" action="{{ route('admin.galeri.move-down', $item) }}">
-      @csrf
-      @method('PATCH')
-      <button type="submit" class="admin-small-action">{{ $page['move_down'] }}</button>
-    </form>
-
     <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" onsubmit="return confirm('Hapus item galeri ini?')">
       @csrf
       @method('DELETE')

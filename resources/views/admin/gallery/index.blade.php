@@ -39,8 +39,8 @@
     @if($items->isNotEmpty())
       <div class="gallery-lite-list">
         @foreach($items as $item)
-          <a href="{{ route('admin.galeri.show', $item) }}" class="gallery-lite-row">
-            <span class="gallery-lite-row__order">{{ $item->sort_order }}</span>
+          <article class="gallery-lite-row">
+            <span class="gallery-lite-row__order">{{ str_pad((string) $item->sort_order, 2, '0', STR_PAD_LEFT) }}</span>
 
             <span class="gallery-lite-row__body">
               <strong>{{ $item->admin_title }}</strong>
@@ -50,7 +50,24 @@
             <span class="gallery-lite-status {{ $item->is_published ? 'is-active' : 'is-inactive' }}">
               {{ $item->is_published ? $page['published'] : $page['draft'] }}
             </span>
-          </a>
+
+            <span class="gallery-lite-actions">
+              <form method="POST" action="{{ route('admin.galeri.move-up', $item) }}">
+                @csrf
+                @method('PATCH')
+                <button type="submit" class="admin-small-action" @disabled($loop->first)>{{ $page['move_up'] }}</button>
+              </form>
+
+              <form method="POST" action="{{ route('admin.galeri.move-down', $item) }}">
+                @csrf
+                @method('PATCH')
+                <button type="submit" class="admin-small-action" @disabled($loop->last)>{{ $page['move_down'] }}</button>
+              </form>
+
+              <a href="{{ route('admin.galeri.show', $item) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
+              <a href="{{ route('admin.galeri.edit', $item) }}" class="admin-small-action admin-small-action--ghost">{{ $page['edit_button'] }}</a>
+            </span>
+          </article>
         @endforeach
       </div>
     @else

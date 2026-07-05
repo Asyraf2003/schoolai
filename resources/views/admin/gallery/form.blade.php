@@ -66,12 +66,6 @@
         </div>
 
         <div class="admin-field">
-          <label for="sort_order">{{ $form['sort_order'] }}</label>
-          <input id="sort_order" name="sort_order" type="number" min="1" max="{{ $limits['max_items'] }}" value="{{ old('sort_order', $item->sort_order) }}" required>
-          @error('sort_order') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field">
           <label for="category_id">{{ $form['category_id'] }}</label>
           <input id="category_id" name="category_id" value="{{ old('category_id', $item->category_id ?: $item->category) }}" maxlength="80" required>
           @error('category_id') <small>{{ $message }}</small> @enderror
