@@ -617,30 +617,44 @@ return [
         'brand' => [
             'href' => '#beranda',
             'icon' => '🌈',
-            'line_1' => 'Islamic',
+            'line_1' => 'Al Mustaqbal',
             'line_2' => 'School',
-            'description' => 'Mencetak generasi berkarakter, berprestasi, dan berwawasan global melalui pendidikan holistik.',
+            'description' => 'Lingkungan belajar Islam yang hangat untuk menumbuhkan adab, ilmu, kreativitas, dan kedekatan anak dengan Al-Qur’an.',
         ],
         'socials' => [
             [
-                'label' => 'Instagram',
+                'label' => 'Instagram Al Mustaqbal School',
                 'icon' => '📸',
-                'href' => '#',
+                'href' => 'https://www.instagram.com/sdit.almustaqbal',
+            ],
+        ],
+        'partners_title' => 'Mitra Kami',
+        'partners_subtitle' => 'Kolaborasi dan jejaring yang mendukung kegiatan, kepedulian, pengembangan digital, olahraga, dan dokumentasi sekolah.',
+        'partners' => [
+            [
+                'label' => 'SDIT Al Mustaqbal',
+                'image' => '/media/home/2.png',
+                'href' => 'https://www.instagram.com/sdit.almustaqbal',
             ],
             [
-                'label' => 'Facebook',
-                'icon' => '📘',
-                'href' => '#',
+                'label' => 'DT Peduli',
+                'image' => '/media/home/3.png',
+                'href' => 'https://dtpeduli.org/',
             ],
             [
-                'label' => 'YouTube',
-                'icon' => '📺',
-                'href' => '#',
+                'label' => 'F1 Club Taekwondo Malang',
+                'image' => '/media/home/4.png',
+                'href' => 'https://www.instagram.com/f1clubtaekwondo_malang',
             ],
             [
-                'label' => 'TikTok',
-                'icon' => '🎵',
-                'href' => '#',
+                'label' => 'Digido',
+                'image' => '/media/home/5.png',
+                'href' => 'https://digido.co.id/',
+            ],
+            [
+                'label' => 'Dokumentasi Kegiatan',
+                'image' => '/media/home/6.png',
+                'href' => 'https://www.instagram.com/reel/CzFSt1oyYGm',
             ],
         ],
         'links_title' => 'Tautan',
@@ -674,17 +688,21 @@ return [
         'contact' => [
             [
                 'icon' => '📍',
-                'text' => 'Jl. Mayjend Panjaitan No.19, Penanggungan, Kec. Klojen, Malang',
+                'text' => 'Jl. Mayjend Panjaitan No.19, Penanggungan, Kec. Klojen, Malang, Kota Malang, Jawa Timur 65113',
+                'href' => 'https://www.google.com/maps/search/?api=1&query=Jl.%20Mayjend%20Panjaitan%20No.19%2C%20Penanggungan%2C%20Klojen%2C%20Malang',
             ],
             [
                 'icon' => '💬',
                 'text' => '+62 889-9112-8060',
+                'href' => 'https://wa.me/6288991128060',
             ],
             [
                 'icon' => '✉️',
                 'text' => 'almustaqbal010@gmail.com',
+                'href' => 'mailto:almustaqbal010@gmail.com',
             ],
         ],
-        'copyright' => 'Islamic School. Semua hak dilindungi.',
+        'copyright' => 'Al Mustaqbal School. Semua hak dilindungi.',
     ],
+
 ];

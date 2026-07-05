@@ -680,40 +680,98 @@
 
     <!-- ======================= FOOTER ======================= -->
     <footer class="site-footer">
-      <div class="container site-footer__grid">
-        <div class="footer-brand">
-          <a href="{{ $footerSection['brand']['href'] }}" class="navbar__logo navbar__logo--footer">
-            <span class="navbar__logo-icon">{{ $footerSection['brand']['icon'] }}</span>
-            <span class="navbar__logo-text"
-              >{{ $footerSection['brand']['line_1'] }}<br /><small>{{ $footerSection['brand']['line_2'] }}</small></span
-            >
-          </a>
-          <p>
-            {{ $footerSection['brand']['description'] }}
-          </p>
-          <div class="footer-social">
-            @foreach ($footerSection['socials'] as $social)
-              <a href="{{ $social['href'] }}" aria-label="{{ $social['label'] }}">{{ $social['icon'] }}</a>
+      <div class="container">
+        <div class="site-footer__grid">
+          <div class="footer-brand">
+            <a href="{{ $footerSection['brand']['href'] }}" class="navbar__logo navbar__logo--footer">
+              <span class="navbar__logo-icon">{{ $footerSection['brand']['icon'] }}</span>
+              <span class="navbar__logo-text">
+                {{ $footerSection['brand']['line_1'] }}<br /><small>{{ $footerSection['brand']['line_2'] }}</small>
+              </span>
+            </a>
+
+            <p>
+              {{ $footerSection['brand']['description'] }}
+            </p>
+
+            @if (! empty($footerSection['socials']))
+              <div class="footer-social" aria-label="Media sosial sekolah">
+                @foreach ($footerSection['socials'] as $social)
+                  <a
+                    href="{{ $social['href'] }}"
+                    aria-label="{{ $social['label'] }}"
+                    target="{{ str_starts_with($social['href'], 'http') ? '_blank' : '_self' }}"
+                    rel="{{ str_starts_with($social['href'], 'http') ? 'noopener noreferrer' : '' }}"
+                  >
+                    {{ $social['icon'] }}
+                  </a>
+                @endforeach
+              </div>
+            @endif
+          </div>
+
+          <div class="footer-links">
+            <h4>{{ $footerSection['links_title'] }}</h4>
+            <ul>
+              @foreach ($footerSection['links'] as $link)
+                <li><a href="{{ $link['href'] }}">{{ $link['label'] }}</a></li>
+              @endforeach
+            </ul>
+          </div>
+
+          <div class="footer-contact">
+            <h4>{{ $footerSection['contact_title'] }}</h4>
+            @foreach ($footerSection['contact'] as $contact)
+              <p>
+                <span aria-hidden="true">{{ $contact['icon'] }}</span>
+                @if (! empty($contact['href']))
+                  <a
+                    href="{{ $contact['href'] }}"
+                    target="{{ str_starts_with($contact['href'], 'http') ? '_blank' : '_self' }}"
+                    rel="{{ str_starts_with($contact['href'], 'http') ? 'noopener noreferrer' : '' }}"
+                  >
+                    {{ $contact['text'] }}
+                  </a>
+                @else
+                  <span>{{ $contact['text'] }}</span>
+                @endif
+              </p>
             @endforeach
           </div>
         </div>
 
-        <div class="footer-links">
-          <h4>{{ $footerSection['links_title'] }}</h4>
-          <ul>
-            @foreach ($footerSection['links'] as $link)
-              <li><a href="{{ $link['href'] }}">{{ $link['label'] }}</a></li>
-            @endforeach
-          </ul>
-        </div>
+        @if (! empty($footerSection['partners']))
+          <section class="footer-partners" aria-labelledby="footer-partners-heading">
+            <div class="footer-partners__head">
+              <h4 id="footer-partners-heading">{{ $footerSection['partners_title'] }}</h4>
+              @if (! empty($footerSection['partners_subtitle']))
+                <p>{{ $footerSection['partners_subtitle'] }}</p>
+              @endif
+            </div>
 
-        <div class="footer-contact">
-          <h4>{{ $footerSection['contact_title'] }}</h4>
-          @foreach ($footerSection['contact'] as $contact)
-            <p>{{ $contact['icon'] }} {{ $contact['text'] }}</p>
-          @endforeach
-        </div>
+            <div class="footer-partners__grid">
+              @foreach ($footerSection['partners'] as $partner)
+                <a
+                  href="{{ $partner['href'] }}"
+                  class="footer-partner-card"
+                  aria-label="{{ $partner['label'] }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="{{ $partner['image'] }}"
+                    alt="{{ $partner['label'] }}"
+                    class="footer-partner-card__logo"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              @endforeach
+            </div>
+          </section>
+        @endif
       </div>
+
       <div class="site-footer__bottom">
         <p>
           &copy; <span id="currentYear"></span> {{ $footerSection['copyright'] }}
