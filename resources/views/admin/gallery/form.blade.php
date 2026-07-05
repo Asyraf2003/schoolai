@@ -6,6 +6,7 @@
   $action = $isEdit ? route('admin.galeri.update', $item) : route('admin.galeri.store');
   $publishedAtValue = old('published_at', optional($item->published_at)->format('Y-m-d\TH:i'));
   $currentType = old('type', $item->type ?: 'photo');
+  $isVideo = $currentType === 'video';
 @endphp
 
 @extends('layouts.admin', [
@@ -14,7 +15,7 @@
 ])
 
 @section('content')
-  <form method="POST" action="{{ $action }}" class="gallery-lite-form" enctype="multipart/form-data" data-gallery-embed-form>
+  <form method="POST" action="{{ $action }}" class="gallery-lite-form" enctype="multipart/form-data" data-gallery-video-form novalidate>
     @csrf
     @if($isEdit)
       @method('PUT')
@@ -33,7 +34,7 @@
     </header>
 
     @if(isset($errors) && $errors->any())
-      <div class="admin-error-box">
+      <div class="admin-error-box" role="alert">
         @foreach($errors->all() as $error)
           <p>{{ $error }}</p>
         @endforeach
@@ -70,9 +71,16 @@
           @error('caption') <small>{{ $message }}</small> @enderror
         </div>
 
-        <div class="admin-field admin-field--wide" data-gallery-photo-field>
-          <label for="media_file">{{ $form['media_file'] }}</label>
-          <input id="media_file" name="media_file" type="file" accept="image/jpeg,image/png,image/webp" data-gallery-photo-input>
+        <div class="admin-field admin-field--wide" data-gallery-photo-field @if($isVideo) hidden @endif>
+          <label for="media_file">{{ $form['photo_file'] }}</label>
+          <input
+            id="media_file"
+            name="media_file"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            data-gallery-photo-input
+            @disabled($isVideo)
+          >
           <em>
             {{ $form['photo_hint'] }}
             @if($isEdit && $item->is_photo && $item->media_url)
@@ -82,10 +90,19 @@
           @error('media_file') <small>{{ $message }}</small> @enderror
         </div>
 
-        <div class="admin-field admin-field--wide" data-gallery-embed-field>
-          <label for="media_url">{{ $form['media_url'] }}</label>
-          <input id="media_url" name="media_url" type="url" value="{{ old('media_url', $item->is_embed ? $item->media_url : '') }}" maxlength="2048" placeholder="https://www.youtube.com/watch?v=...">
-          <em>{{ $form['embed_hint'] }}</em>
+        <div class="admin-field admin-field--wide" data-gallery-video-field @if(! $isVideo) hidden @endif>
+          <label for="media_url">{{ $form['video_url'] }}</label>
+          <input
+            id="media_url"
+            name="media_url"
+            type="url"
+            value="{{ old('media_url', $item->is_video ? $item->media_url : '') }}"
+            maxlength="2048"
+            placeholder="https://www.youtube.com/watch?v=..."
+            data-gallery-video-url
+            @disabled(! $isVideo)
+          >
+          <em>{{ $form['video_hint'] }}</em>
           @error('media_url') <small>{{ $message }}</small> @enderror
         </div>
 
@@ -116,7 +133,7 @@
       <div class="gallery-media-review__stage" data-gallery-preview-stage>
         @if($isEdit && $item->is_photo && $item->media_url)
           <img src="{{ $item->media_url }}" alt="{{ $item->title }}">
-        @elseif($isEdit && $item->is_embed && $item->media_url)
+        @elseif($isEdit && $item->is_video && $item->media_url)
           <iframe src="{{ $item->media_url }}" title="{{ $item->title }}" loading="lazy" allowfullscreen></iframe>
         @else
           <span>{{ $form['review_empty'] }}</span>
@@ -127,14 +144,14 @@
 
   <script>
     (() => {
-      const form = document.querySelector('[data-gallery-embed-form]');
+      const form = document.querySelector('[data-gallery-video-form]');
       if (!form) return;
 
       const typeInput = form.querySelector('[data-gallery-type]');
       const photoField = form.querySelector('[data-gallery-photo-field]');
-      const embedField = form.querySelector('[data-gallery-embed-field]');
+      const videoField = form.querySelector('[data-gallery-video-field]');
       const photoInput = form.querySelector('[data-gallery-photo-input]');
-      const embedInput = form.querySelector('[name="media_url"]');
+      const videoInput = form.querySelector('[data-gallery-video-url]');
       const stage = form.querySelector('[data-gallery-preview-stage]');
       const emptyText = @json($form['review_empty']);
       let previewUrl = null;
@@ -146,23 +163,27 @@
         }
       }
 
-      function setStage(html) {
-        if (stage) stage.innerHTML = html;
+      function setEmpty() {
+        if (stage) {
+          stage.replaceChildren(document.createElement('span'));
+          stage.firstElementChild.textContent = emptyText;
+        }
       }
 
-      function updateFields() {
-        const isEmbed = typeInput.value === 'embed';
+      function updateFields({ clear = false } = {}) {
+        const isVideo = typeInput.value === 'video';
 
-        photoField.hidden = isEmbed;
-        embedField.hidden = !isEmbed;
+        photoField.hidden = isVideo;
+        videoField.hidden = !isVideo;
 
-        photoInput.disabled = isEmbed;
-        embedInput.disabled = !isEmbed;
+        photoInput.disabled = isVideo;
+        videoInput.disabled = !isVideo;
 
-        if (isEmbed) {
-          photoInput.value = '';
-        } else {
-          embedInput.value = '';
+        if (clear) {
+          if (isVideo) photoInput.value = '';
+          if (!isVideo) videoInput.value = '';
+          clearPreviewUrl();
+          setEmpty();
         }
       }
 
@@ -170,46 +191,84 @@
         clearPreviewUrl();
 
         if (!file) {
-          setStage(`<span>${emptyText}</span>`);
+          setEmpty();
           return;
         }
 
         previewUrl = URL.createObjectURL(file);
-        setStage('');
 
         const img = document.createElement('img');
         img.alt = file.name;
         img.src = previewUrl;
-        stage.appendChild(img);
+
+        stage.replaceChildren(img);
       }
 
-      function previewEmbed(url) {
+      function toPreviewUrl(url) {
+        try {
+          const parsed = new URL(url.trim());
+          const host = parsed.hostname.toLowerCase();
+
+          if (host === 'youtu.be') {
+            const id = parsed.pathname.split('/').filter(Boolean)[0];
+            return id ? `https://www.youtube.com/embed/${encodeURIComponent(id)}` : '';
+          }
+
+          if (host.includes('youtube.com')) {
+            const id = parsed.searchParams.get('v');
+            if (id) return `https://www.youtube.com/embed/${encodeURIComponent(id)}`;
+
+            const parts = parsed.pathname.split('/').filter(Boolean);
+            const marker = parts.findIndex((part) => part === 'shorts' || part === 'embed');
+            if (marker >= 0 && parts[marker + 1]) {
+              return `https://www.youtube.com/embed/${encodeURIComponent(parts[marker + 1])}`;
+            }
+          }
+
+          if (host.includes('tiktok.com')) {
+            const match = parsed.pathname.match(/\/video\/(\d+)/);
+            return match ? `https://www.tiktok.com/embed/v2/${match[1]}` : '';
+          }
+
+          if (host.includes('instagram.com')) {
+            const match = parsed.pathname.match(/^\/(p|reel|tv)\/([^/]+)/);
+            return match ? `https://www.instagram.com/${match[1]}/${encodeURIComponent(match[2])}/embed` : '';
+          }
+
+          if (host.includes('vimeo.com')) {
+            const match = parsed.pathname.match(/(?:\/video)?\/(\d+)/);
+            return match ? `https://player.vimeo.com/video/${match[1]}` : '';
+          }
+
+          return '';
+        } catch {
+          return '';
+        }
+      }
+
+      function previewVideo(url) {
         clearPreviewUrl();
 
-        const cleanUrl = url.trim();
+        const embedUrl = toPreviewUrl(url);
 
-        if (!cleanUrl) {
-          setStage(`<span>${emptyText}</span>`);
+        if (!embedUrl) {
+          setEmpty();
           return;
         }
 
         const iframe = document.createElement('iframe');
-        iframe.src = cleanUrl;
-        iframe.title = 'Preview embed';
+        iframe.src = embedUrl;
+        iframe.title = 'Preview video';
         iframe.loading = 'lazy';
         iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
 
-        setStage('');
-        stage.appendChild(iframe);
+        stage.replaceChildren(iframe);
       }
 
-      typeInput.addEventListener('change', () => {
-        updateFields();
-        setStage(`<span>${emptyText}</span>`);
-      });
-
+      typeInput.addEventListener('change', () => updateFields({ clear: true }));
       photoInput.addEventListener('change', () => previewPhoto(photoInput.files?.[0] || null));
-      embedInput.addEventListener('input', () => previewEmbed(embedInput.value));
+      videoInput.addEventListener('input', () => previewVideo(videoInput.value));
 
       updateFields();
     })();

@@ -61,14 +61,12 @@ return new class extends Migration
                 }
             }
 
-            $mediaUrl = (string) ($item['media_url'] ?? $item['thumbnail'] ?? '');
-
             $rows[] = [
                 'title' => (string) ($item['title'] ?? 'Galeri tanpa judul'),
                 'type' => 'photo',
                 'category' => (string) ($item['category'] ?? 'Umum'),
                 'caption' => (string) ($item['caption'] ?? ''),
-                'media_url' => $mediaUrl,
+                'media_url' => (string) ($item['media_url'] ?? $item['thumbnail'] ?? ''),
                 'sort_order' => $index + 1,
                 'is_published' => true,
                 'published_at' => $publishedAt,

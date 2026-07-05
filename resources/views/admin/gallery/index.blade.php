@@ -24,18 +24,18 @@
   </header>
 
   @if(session('success'))
-    <p class="flash-message">{{ session('success') }}</p>
+    <p class="flash-message" role="status">{{ session('success') }}</p>
   @endif
 
   @if(isset($errors) && $errors->any())
-    <div class="admin-error-box">
+    <div class="admin-error-box" role="alert">
       @foreach($errors->all() as $error)
         <p>{{ $error }}</p>
       @endforeach
     </div>
   @endif
 
-  <section class="gallery-lite-panel">
+  <section class="gallery-lite-panel" aria-label="{{ $page['heading'] }}">
     @if($items->isNotEmpty())
       <div class="gallery-lite-list">
         @foreach($items as $item)

@@ -163,7 +163,7 @@ final class HomeController extends Controller
 
     private function normalizeGalleryItem(array $item): array
     {
-        $allowedTypes = ['photo', 'embed'];
+        $allowedTypes = ['photo', 'video'];
         $allowedVariants = ['normal', 'wide', 'tall', 'feature'];
 
         $type = $item['type'] ?? 'photo';
@@ -180,9 +180,9 @@ final class HomeController extends Controller
         $rawMedia = $item['media_url'] ?? $item['thumbnail'] ?? null;
 
         $item['type'] = $type;
-        $item['type_label'] = $type === 'embed' ? 'Embed' : 'Foto';
-        $item['is_embed'] = $type === 'embed';
-        $item['is_video'] = false;
+        $item['type_label'] = $type === 'video' ? 'Video' : 'Foto';
+        $item['is_video'] = $type === 'video';
+        $item['is_embed'] = false;
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
         $item['media_url'] = $this->publicAssetUrl($rawMedia);
@@ -191,8 +191,8 @@ final class HomeController extends Controller
         $item['date'] = (string) ($item['date'] ?? $item['published_at']);
         $item['caption'] = (string) ($item['caption'] ?? '');
         $item['category'] = (string) ($item['category'] ?? '');
-        $item['accent'] = $type === 'embed' ? '#f97316' : '#19aee6';
-        $item['fallback_icon'] = $type === 'embed' ? '▶' : '📸';
+        $item['accent'] = $type === 'video' ? '#f97316' : '#19aee6';
+        $item['fallback_icon'] = $type === 'video' ? '▶' : '📸';
 
         return $item;
     }

@@ -44,14 +44,14 @@ final class GalleryItem extends Model
         return $this->type === 'photo';
     }
 
-    public function getIsEmbedAttribute(): bool
+    public function getIsVideoAttribute(): bool
     {
-        return $this->type === 'embed';
+        return $this->type === 'video';
     }
 
     public function getTypeLabelAttribute(): string
     {
-        return $this->is_embed ? 'Embed' : 'Foto';
+        return $this->is_video ? 'Video' : 'Foto';
     }
 
     public function getMediaLabelAttribute(): string

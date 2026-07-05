@@ -327,7 +327,7 @@
                   data-date="{{ $item['date'] ?? '' }}"
                   data-type-label="{{ $item['type_label'] ?? 'Foto' }}"
                   data-media-url="{{ $item['media_url'] ?? '' }}"
-                  data-is-embed="{{ ! empty($item['is_embed']) ? '1' : '0' }}"
+                  data-is-video="{{ ! empty($item['is_video']) ? '1' : '0' }}"
                   style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
                 >
                   <span class="galeri-story-card__number">
@@ -335,12 +335,12 @@
                   </span>
 
                   <div class="galeri-story-card__mobile-media">
-                    {{-- HOMEPAGE_GALLERY_PHOTO_EMBED_FINAL --}}
-                    @if (! empty($item['is_embed']) && ! empty($item['media_url']))
+                    {{-- HOMEPAGE_GALLERY_PHOTO_VIDEO_FINAL --}}
+                    @if (! empty($item['is_video']) && ! empty($item['media_url']))
                       <iframe
                         src="{{ $item['media_url'] }}"
                         title="{{ $item['title'] }}"
-                        class="galeri-story-card__mobile-embed"
+                        class="galeri-story-card__mobile-video"
                         loading="lazy"
                         allowfullscreen
                       ></iframe>
@@ -393,12 +393,12 @@
                     style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
                   >
                     <div class="galeri-story-visual__media">
-                      {{-- HOMEPAGE_GALLERY_PHOTO_EMBED_FINAL --}}
-                      @if (! empty($item['is_embed']) && ! empty($item['media_url']))
+                      {{-- HOMEPAGE_GALLERY_PHOTO_VIDEO_FINAL --}}
+                      @if (! empty($item['is_video']) && ! empty($item['media_url']))
                         <iframe
                           src="{{ $item['media_url'] }}"
                           title="{{ $item['title'] }}"
-                          class="galeri-story-visual__embed"
+                          class="galeri-story-visual__video"
                           loading="lazy"
                           allowfullscreen
                         ></iframe>

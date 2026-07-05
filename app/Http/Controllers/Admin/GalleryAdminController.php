@@ -172,6 +172,7 @@ final class GalleryAdminController extends Controller
     {
         $type = (string) $request->input('type', 'photo');
         $isPhoto = $type === 'photo';
+
         $needsPhotoFile = $isPhoto && (
             ! $galleryItem?->exists ||
             $galleryItem->type !== 'photo' ||
@@ -180,17 +181,21 @@ final class GalleryAdminController extends Controller
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:160'],
-            'type' => ['required', Rule::in(['photo', 'embed'])],
+            'type' => ['required', Rule::in(['photo', 'video'])],
             'category' => ['required', 'string', 'max:80'],
             'caption' => ['nullable', 'string', 'max:1000'],
             'media_file' => [
-                $needsPhotoFile ? 'required' : 'nullable',
+                Rule::requiredIf(fn (): bool => $needsPhotoFile),
+                Rule::prohibitedIf(fn (): bool => $type === 'video'),
+                'nullable',
                 'file',
+                'image',
                 'mimes:jpg,jpeg,png,webp',
                 'max:' . self::MAX_PHOTO_KB,
             ],
             'media_url' => [
-                Rule::requiredIf(fn (): bool => $type === 'embed'),
+                Rule::requiredIf(fn (): bool => $type === 'video'),
+                Rule::prohibitedIf(fn (): bool => $type === 'photo'),
                 'nullable',
                 'url',
                 'max:2048',
@@ -198,6 +203,15 @@ final class GalleryAdminController extends Controller
             'sort_order' => ['required', 'integer', 'min:1', 'max:' . self::MAX_ITEMS],
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
+        ], [
+            'media_file.required' => 'Upload foto wajib diisi untuk tipe Foto.',
+            'media_file.prohibited' => 'Tipe Video tidak menerima upload file. Gunakan URL video.',
+            'media_file.image' => 'File harus berupa gambar.',
+            'media_file.mimes' => 'Foto harus JPG, PNG, atau WebP.',
+            'media_file.max' => 'Ukuran foto maksimal 10MB.',
+            'media_url.required' => 'URL video wajib diisi untuk tipe Video.',
+            'media_url.prohibited' => 'Tipe Foto tidak menerima URL video. Gunakan upload foto.',
+            'media_url.url' => 'URL video tidak valid.',
         ]);
 
         unset($validated['media_file']);
@@ -219,9 +233,9 @@ final class GalleryAdminController extends Controller
 
     private function applyMedia(Request $request, array $data, ?GalleryItem $currentItem = null): array
     {
-        if ($data['type'] === 'embed') {
+        if ($data['type'] === 'video') {
             $this->deleteStoredPublicFile($currentItem?->media_url);
-            $data['media_url'] = $this->normalizeEmbedUrl((string) ($data['media_url'] ?? ''));
+            $data['media_url'] = $this->normalizeVideoUrl((string) ($data['media_url'] ?? ''));
 
             return $data;
         }
@@ -236,24 +250,30 @@ final class GalleryAdminController extends Controller
         return $data;
     }
 
-    private function normalizeEmbedUrl(string $url): string
+    private function normalizeVideoUrl(string $url): string
     {
         $url = trim($url);
         $host = strtolower((string) parse_url($url, PHP_URL_HOST));
         $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
         parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
 
+        if ($url === '' || $host === '') {
+            throw ValidationException::withMessages([
+                'media_url' => 'URL video tidak valid.',
+            ]);
+        }
+
         if (in_array($host, ['youtu.be', 'www.youtu.be'], true) && $path !== '') {
-            return 'https://www.youtube.com/embed/' . strtok($path, '/');
+            return 'https://www.youtube.com/embed/' . rawurlencode(strtok($path, '/'));
         }
 
         if (str_contains($host, 'youtube.com')) {
             if (! empty($query['v'])) {
-                return 'https://www.youtube.com/embed/' . $query['v'];
+                return 'https://www.youtube.com/embed/' . rawurlencode((string) $query['v']);
             }
 
             if (preg_match('~(?:shorts|embed)/([^/?#]+)~', $path, $match)) {
-                return 'https://www.youtube.com/embed/' . $match[1];
+                return 'https://www.youtube.com/embed/' . rawurlencode($match[1]);
             }
         }
 
@@ -261,11 +281,19 @@ final class GalleryAdminController extends Controller
             return 'https://www.tiktok.com/embed/v2/' . $match[1];
         }
 
-        if (str_contains($host, 'instagram.com') && ! str_ends_with($path, 'embed')) {
-            return rtrim($url, '/') . '/embed';
+        if (str_contains($host, 'instagram.com') && preg_match('~^(p|reel|tv)/([^/]+)~', $path, $match)) {
+            return 'https://www.instagram.com/' . $match[1] . '/' . rawurlencode($match[2]) . '/embed';
         }
 
-        return $url;
+        if (str_contains($host, 'vimeo.com')) {
+            if (preg_match('~(?:video/)?(\d+)~', $path, $match)) {
+                return 'https://player.vimeo.com/video/' . $match[1];
+            }
+        }
+
+        throw ValidationException::withMessages([
+            'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, atau Vimeo.',
+        ]);
     }
 
     private function deleteStoredPublicFile(?string $url): void
@@ -314,7 +342,7 @@ final class GalleryAdminController extends Controller
     {
         return [
             'photo' => 'Foto',
-            'embed' => 'Embed',
+            'video' => 'Video',
         ];
     }
 }

@@ -21,11 +21,11 @@
   </header>
 
   @if(session('success'))
-    <p class="flash-message">{{ session('success') }}</p>
+    <p class="flash-message" role="status">{{ session('success') }}</p>
   @endif
 
   @if(isset($errors) && $errors->any())
-    <div class="admin-error-box">
+    <div class="admin-error-box" role="alert">
       @foreach($errors->all() as $error)
         <p>{{ $error }}</p>
       @endforeach
@@ -36,8 +36,8 @@
     <div class="gallery-detail-preview">
       @if($item->is_photo && $item->media_url)
         <img src="{{ $item->media_url }}" alt="{{ $item->title }}">
-      @elseif($item->is_embed && $item->media_url)
-        <iframe src="{{ $item->media_url }}" title="{{ $item->title }}" loading="lazy" allowfullscreen></iframe>
+      @elseif($item->is_video && $item->media_url)
+        <iframe src="{{ $item->media_url }}" title="{{ $item->title }}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       @else
         <span>{{ $item->type_label }}</span>
       @endif
