@@ -54,10 +54,6 @@ return [
                 'label' => 'Artikel',
                 'href' => '#artikel',
             ],
-            [
-                'label' => 'Kontak',
-                'href' => '#kontak',
-            ],
         ],
         'cta' => [
             'label' => 'Daftar Sekarang',
@@ -575,45 +571,7 @@ return [
         ],
     ],
 
-'kontak' => [
-        'title' => 'Hubungi Kami',
-        'cta' => [
-            'label' => 'Kirim Email',
-            'href' => 'mailto:almustaqbal010@gmail.com',
-        ],
-        'items' => [
-            [
-                'icon' => '📍',
-                'label' => 'Alamat',
-                'value' => 'Jl. Mayjend Panjaitan No.19, Penanggungan, Kec. Klojen, Malang, Kota Malang, Jawa Timur 65113',
-                'href' => 'https://www.google.com/maps/search/?api=1&query=Jl.%20Mayjend%20Panjaitan%20No.19%2C%20Penanggungan%2C%20Klojen%2C%20Malang',
-            ],
-            [
-                'icon' => '💬',
-                'label' => 'Telepon / WhatsApp',
-                'value' => '+62 889-9112-8060',
-                'href' => 'https://wa.me/6288991128060',
-            ],
-            [
-                'icon' => '✉️',
-                'label' => 'Email',
-                'value' => 'almustaqbal010@gmail.com',
-                'href' => 'mailto:almustaqbal010@gmail.com',
-            ],
-            [
-                'icon' => '🕘',
-                'label' => 'Jam Operasional',
-                'value' => 'Senin – Jumat, 07.00 – 15.00 WIB',
-            ],
-        ],
-        'map' => [
-            'aria_label' => 'Peta lokasi Al Mustaqbal School di Jl. Mayjend Panjaitan No.19, Malang',
-            'pin_label' => 'Al Mustaqbal School',
-            'embed_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.377504618063!2d112.6227122116326!3d-7.959882879291638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629d484d9407b%3A0x592f535caf89815c!2sJl.%20Mayjend%20Panjaitan%20No.19%2C%20Penanggungan%2C%20Kec.%20Klojen%2C%20Kota%20Malang%2C%20Jawa%20Timur%2065113!5e0!3m2!1sen!2sid!4v1783160839273!5m2!1sen!2sid',
-        ],
-    ],
-
-    'footer' => [
+'footer' => [
         'brand' => [
             'href' => '#beranda',
             'image' => '/media/home/logo.png',
@@ -668,10 +626,6 @@ return [
             [
                 'label' => 'PPDB',
                 'href' => '/ppdb',
-            ],
-            [
-                'label' => 'Kontak',
-                'href' => '#kontak',
             ],
         ],
         'gallery_links_title' => 'Galeri Kami',

@@ -908,79 +908,6 @@ h1, h2, h3, h4, p { margin: 0; }
 .artikel-card h3 { font-family: var(--font-display); font-size: 1.08rem; margin: 8px 0 10px; line-height: 1.35; }
 .artikel-card p { font-size: 0.9rem; color: var(--color-ink-soft); margin-bottom: 16px; }
 
-/* ---------- 18. KONTAK & MAP ---------- */
-.kontak-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: stretch;
-}
-.kontak-info {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-.kontak-info__item {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-.kontak-info__icon {
-  width: 44px; height: 44px;
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--color-orange-soft);
-  border-radius: var(--radius-sm);
-  font-size: 1.2rem;
-}
-.kontak-info__item h4 { font-family: var(--font-display); font-size: 0.98rem; margin-bottom: 4px; }
-.kontak-info__item p { color: var(--color-ink-soft); font-size: 0.92rem; }
-.kontak-info .btn { align-self: flex-start; margin-top: 8px; }
-
-.map-placeholder {
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  min-height: 320px;
-  background: var(--color-mint-soft);
-  box-shadow: var(--shadow-soft);
-}
-.map-placeholder__grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(51,49,77,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(51,49,77,0.06) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-.map-placeholder__road {
-  position: absolute;
-  background: var(--color-white);
-  box-shadow: 0 0 0 4px rgba(255,255,255,0.5);
-}
-.map-placeholder__road--h { top: 45%; left: 0; right: 0; height: 14px; }
-.map-placeholder__road--v { left: 38%; top: 0; bottom: 0; width: 14px; }
-.map-placeholder__pin {
-  position: absolute;
-  top: 40%; left: 40%;
-  transform: translate(-50%, -100%);
-  font-size: 2.2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: float-y 3s ease-in-out infinite;
-}
-.map-placeholder__pin span {
-  background: var(--color-white);
-  color: var(--color-ink);
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-soft);
-  white-space: nowrap;
-  margin-top: 4px;
-}
-
 /* ---------- 19. FOOTER ---------- */
 .site-footer {
   background: var(--color-ink);
@@ -1066,7 +993,6 @@ h1, h2, h3, h4, p { margin: 0; }
 
   .ppdb-panel { grid-template-columns: 1fr; padding: 40px; }
   .visi-misi__grid { grid-template-columns: 1fr; }
-  .kontak-grid { grid-template-columns: 1fr; }
   .site-footer__grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -1114,9 +1040,6 @@ h1, h2, h3, h4, p { margin: 0; }
   .ppdb-steps { grid-template-columns: 1fr; }
 
   .visi-card__text { font-size: 1.1rem; }
-
-  .kontak-grid { grid-template-columns: 1fr; }
-  .map-placeholder { min-height: 240px; }
 
   .site-footer__grid { grid-template-columns: 1fr; text-align: left; }
   .scroll-top-btn { width: 46px; height: 46px; bottom: 20px; right: 20px; }
@@ -6363,42 +6286,6 @@ h1, h2, h3, h4, p { margin: 0; }
     bottom: 14px;
     width: 46px;
     height: 46px;
-  }
-}
-
-/* CONTACT_MAP_EMBED_FINAL */
-.kontak-info__item a {
-  color: var(--color-ink-soft);
-  font-size: 0.92rem;
-  line-height: 1.55;
-  transition: color 0.2s ease;
-}
-
-.kontak-info__item a:hover {
-  color: var(--color-purple);
-}
-
-.map-embed {
-  position: relative;
-  min-height: 360px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-mint-soft);
-  box-shadow: var(--shadow-soft);
-}
-
-.map-embed iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 360px;
-  border: 0;
-}
-
-@media (max-width: 720px) {
-  .map-embed,
-  .map-embed iframe {
-    min-height: 320px;
   }
 }
 
