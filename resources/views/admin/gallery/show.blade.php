@@ -37,7 +37,7 @@
       @if($item->is_photo && $item->media_url)
         <img src="{{ $item->media_url }}" alt="{{ $item->admin_title }}">
       @elseif($item->is_video && $item->media_url)
-        <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       @else
         <span>{{ $item->type_label }}</span>
       @endif

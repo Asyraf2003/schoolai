@@ -181,14 +181,17 @@ final class HomeController extends Controller
         }
 
         $rawMedia = $item['media_url'] ?? $item['thumbnail'] ?? null;
+        $mediaUrl = $type === 'video'
+            ? $this->trustedVideoEmbedUrl($rawMedia)
+            : $this->publicAssetUrl($rawMedia);
 
         $item['type'] = $type;
         $item['type_label'] = (string) ($item['type_label'] ?? ($type === 'video' ? 'Video' : (app()->getLocale() === 'en' ? 'Photo' : 'Foto')));
         $item['is_video'] = $type === 'video';
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
-        $item['media_url'] = $this->publicAssetUrl($rawMedia);
-        $item['thumbnail_url'] = $type === 'photo' ? $this->publicAssetUrl($rawMedia) : null;
+        $item['media_url'] = $mediaUrl;
+        $item['thumbnail_url'] = $type === 'photo' ? $mediaUrl : null;
         $item['published_at'] = (string) ($item['published_at'] ?? $item['date'] ?? '');
         $item['date'] = (string) ($item['date'] ?? $item['published_at']);
         $item['caption'] = (string) ($item['caption'] ?? '');
@@ -197,6 +200,45 @@ final class HomeController extends Controller
         $item['fallback_icon'] = $type === 'video' ? '▶' : '📸';
 
         return $item;
+    }
+
+    private function trustedVideoEmbedUrl(mixed $url): ?string
+    {
+        if (! is_string($url) || trim($url) === '') {
+            return null;
+        }
+
+        $url = trim($url);
+
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
+
+        if ($scheme !== 'https' || $host === '') {
+            return null;
+        }
+
+        if ($host === 'www.youtube.com' && preg_match('~^embed/[^/?#]+$~', $path)) {
+            return $url;
+        }
+
+        if ($host === 'www.tiktok.com' && preg_match('~^embed/v2/\d+$~', $path)) {
+            return $url;
+        }
+
+        if ($host === 'www.instagram.com' && preg_match('~^(p|reel|tv)/[^/]+/embed$~', $path)) {
+            return $url;
+        }
+
+        if ($host === 'player.vimeo.com' && preg_match('~^video/\d+$~', $path)) {
+            return $url;
+        }
+
+        return null;
     }
 
     private function instagramUrl(mixed $url): ?string

@@ -26,7 +26,6 @@ final class GalleryItem extends Model
         'caption_id',
         'caption_en',
         'media_url',
-        'sort_order',
         'is_published',
         'published_at',
     ];

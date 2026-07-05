@@ -146,7 +146,7 @@
         @if($isEdit && $item->is_photo && $item->media_url)
           <img src="{{ $item->media_url }}" alt="{{ $item->admin_title }}">
         @elseif($isEdit && $item->is_video && $item->media_url)
-          <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
         @else
           <span>{{ $form['review_empty'] }}</span>
         @endif
@@ -226,13 +226,14 @@
         try {
           const parsed = new URL(url.trim());
           const host = parsed.hostname.toLowerCase();
+          const hostMatches = (domain) => host === domain || host.endsWith(`.${domain}`);
 
-          if (host === 'youtu.be') {
+          if (hostMatches('youtu.be')) {
             const id = parsed.pathname.split('/').filter(Boolean)[0];
             return id ? `https://www.youtube.com/embed/${encodeURIComponent(id)}` : '';
           }
 
-          if (host.includes('youtube.com')) {
+          if (hostMatches('youtube.com')) {
             const id = parsed.searchParams.get('v');
             if (id) return `https://www.youtube.com/embed/${encodeURIComponent(id)}`;
 
@@ -243,17 +244,17 @@
             }
           }
 
-          if (host.includes('tiktok.com')) {
+          if (hostMatches('tiktok.com')) {
             const match = parsed.pathname.match(/\/video\/(\d+)/);
             return match ? `https://www.tiktok.com/embed/v2/${match[1]}` : '';
           }
 
-          if (host.includes('instagram.com')) {
+          if (hostMatches('instagram.com')) {
             const match = parsed.pathname.match(/^\/(p|reel|tv)\/([^/]+)/);
             return match ? `https://www.instagram.com/${match[1]}/${encodeURIComponent(match[2])}/embed` : '';
           }
 
-          if (host.includes('vimeo.com')) {
+          if (hostMatches('vimeo.com')) {
             const match = parsed.pathname.match(/(?:\/video)?\/(\d+)/);
             return match ? `https://player.vimeo.com/video/${match[1]}` : '';
           }
@@ -278,6 +279,7 @@
         iframe.src = embedUrl;
         iframe.title = 'Preview video';
         iframe.loading = 'lazy';
+        iframe.allow = 'fullscreen; picture-in-picture';
         iframe.allowFullscreen = true;
         iframe.referrerPolicy = 'strict-origin-when-cross-origin';
 

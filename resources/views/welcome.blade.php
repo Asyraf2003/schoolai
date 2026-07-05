@@ -342,7 +342,9 @@
                         title="{{ $item['title'] }}"
                         class="galeri-story-card__mobile-video"
                         loading="lazy"
+                        allow="fullscreen; picture-in-picture"
                         allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin"
                       ></iframe>
                     @elseif (! empty($item['media_url']))
                       <img
@@ -400,7 +402,9 @@
                           title="{{ $item['title'] }}"
                           class="galeri-story-visual__video"
                           loading="lazy"
+                          allow="fullscreen; picture-in-picture"
                           allowfullscreen
+                          referrerpolicy="strict-origin-when-cross-origin"
                         ></iframe>
                       @elseif (! empty($item['media_url']))
                         <img

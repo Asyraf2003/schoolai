@@ -28,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (PostTooLargeException $exception, Request $request) {
             if ($request->is('admin/galeri*')) {
                 return back()->withErrors([
-                    'media_file' => 'Ukuran file terlalu besar. Maksimal media galeri 100MB. Pastikan upload_max_filesize dan post_max_size PHP lebih besar dari 100MB.',
+                    'media_file' => 'Ukuran file terlalu besar. Maksimal foto galeri 10MB. Pastikan upload_max_filesize dan post_max_size PHP lebih besar dari 10MB.',
                 ]);
             }
 

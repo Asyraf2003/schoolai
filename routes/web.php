@@ -15,8 +15,20 @@ Route::get('/bahasa/{locale}', function (string $locale, Request $request) {
     $request->session()->put('locale', $locale);
 
     $previous = url()->previous() ?: route('home');
+    $host = $request->getSchemeAndHttpHost();
 
-    if (! str_starts_with($previous, $request->getSchemeAndHttpHost())) {
+    if (! str_starts_with($previous, $host)) {
+        $previous = route('home');
+    }
+
+    $previousPath = parse_url($previous, PHP_URL_PATH) ?: '/';
+
+    if (
+        $previousPath === '/admin' ||
+        str_starts_with($previousPath, '/admin/') ||
+        $previousPath === '/login' ||
+        str_starts_with($previousPath, '/auth/')
+    ) {
         $previous = route('home');
     }
 
