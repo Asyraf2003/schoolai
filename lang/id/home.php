@@ -589,7 +589,7 @@ return [
             'name' => 'Al Mustaqbal',
             'description' => 'Sekolah Islam ramah anak yang mendampingi tumbuh kembang, adab, dan rasa ingin tahu siswa sejak usia dini.',
         ],
-        'channels_title' => 'Social Media :',
+        'channels_title' => 'Kontak Cepat :',
         'channels' => [
             [
                 'label' => 'Lokasi',
