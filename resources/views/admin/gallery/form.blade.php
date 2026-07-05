@@ -23,7 +23,6 @@
 
     <header class="admin-topbar admin-topbar--compact">
       <div>
-        <p class="admin-topbar__eyebrow">{{ $page['eyebrow'] }}</p>
         <h1>{{ $isEdit ? $page['edit_title'] : $page['create_title'] }}</h1>
       </div>
 

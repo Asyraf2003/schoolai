@@ -32,7 +32,6 @@ return [
     /* ADMIN_GALLERY_DUMMY_LANG_FINAL */
     'gallery' => [
         'title' => 'Admin Galeri',
-        'eyebrow' => 'Galeri',
         'heading' => 'Galeri',
         'description' => 'Kelola maksimal 6 item galeri.',
         'create_title' => 'Tambah Item',

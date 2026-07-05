@@ -32,7 +32,6 @@ return [
     /* ADMIN_GALLERY_DUMMY_LANG_FINAL */
     'gallery' => [
         'title' => 'Gallery Admin',
-        'eyebrow' => 'Gallery',
         'heading' => 'Gallery',
         'description' => 'Manage up to 6 gallery items.',
         'create_title' => 'Create Item',
