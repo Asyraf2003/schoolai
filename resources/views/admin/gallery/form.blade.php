@@ -22,7 +22,7 @@
     <a href="{{ $isEdit ? route('admin.galeri.show', $item) : route('admin.galeri') }}" class="admin-primary-action admin-primary-action--ghost">{{ $page['back_button'] }}</a>
   </header>
 
-  @if($errors->any())
+  @if(isset($errors) && $errors->any())
     <div class="admin-error-box">
       @foreach($errors->all() as $error)
         <p>{{ $error }}</p>

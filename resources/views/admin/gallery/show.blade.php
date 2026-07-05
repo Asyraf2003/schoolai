@@ -24,7 +24,7 @@
     <p class="flash-message">{{ session('success') }}</p>
   @endif
 
-  @if($errors->any())
+  @if(isset($errors) && $errors->any())
     <div class="admin-error-box">
       @foreach($errors->all() as $error)
         <p>{{ $error }}</p>
