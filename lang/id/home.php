@@ -75,6 +75,13 @@ return [
                     ],
                 ],
             ],
+                    [
+                        'locale' => 'en',
+                        'label' => 'English',
+                        'short' => 'EN',
+                    ],
+                ],
+            ],
         ],
         'cta' => [
             'label' => 'Daftar Sekarang',

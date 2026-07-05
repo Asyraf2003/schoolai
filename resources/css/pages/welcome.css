@@ -8333,3 +8333,81 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 
+
+
+/* NAV_LANGUAGE_MOBILE_SEGMENT_FINAL */
+/* Mobile: language switch dibuat compact ID/EN, bukan card besar yang makan tempat. */
+@media (max-width: 820px) {
+  .nav-language {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 2px 0 10px;
+  }
+
+  .nav-language__button {
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    justify-content: flex-start;
+    gap: 8px;
+    color: var(--color-ink);
+    pointer-events: none;
+  }
+
+  .nav-language__panel {
+    position: static;
+    width: fit-content;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 0;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 244, 220, 0.9);
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    backdrop-filter: none;
+  }
+
+  .nav-language__option {
+    min-width: 0;
+    padding: 0;
+    border-radius: 999px;
+    transform: none;
+  }
+
+  .nav-language__option span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .nav-language__option small {
+    min-width: 40px;
+    height: 30px;
+    padding-inline: 10px;
+    background: transparent;
+    color: #9a6a20;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .nav-language__option.is-active small,
+  .nav-language__option:hover small,
+  .nav-language__option:focus-visible small {
+    background: #ff9955;
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+}
