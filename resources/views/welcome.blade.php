@@ -720,16 +720,6 @@
       </div>
     </footer>
 
-    <!-- Tombol scroll to top -->
-    <button
-      class="scroll-top-btn"
-      id="scrollTopBtn"
-      aria-label="Kembali ke atas"
-      hidden
-    >
-      ⬆️
-    </button>
-
     <!-- Lightbox galeri -->
     <div class="lightbox" id="lightbox" hidden>
       <div class="lightbox__backdrop" id="lightboxBackdrop"></div>

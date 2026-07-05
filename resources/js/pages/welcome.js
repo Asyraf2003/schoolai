@@ -109,26 +109,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /* ---------- 8. TOMBOL SCROLL TO TOP (dipanggil dalam scroll listener) ---------- */
-  var scrollTopBtn = document.getElementById('scrollTopBtn');
-  function handleScrollTopBtn() {
-    if (window.scrollY > 500) {
-      scrollTopBtn.hidden = false;
-    } else {
-      scrollTopBtn.hidden = true;
-    }
-  }
-
-  if (scrollTopBtn) {
-    scrollTopBtn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
 
   // Gabungkan semua listener scroll supaya efisien (tidak berulang-ulang)
   window.addEventListener('scroll', function () {
     handleNavbarScroll();
-    handleScrollTopBtn();
     updateActiveNavLink();
   });
   // Jalankan sekali di awal untuk set kondisi awal
