@@ -12,7 +12,7 @@ final class GalleryItem extends Model
     use HasFactory;
 
     public const MAX_ITEMS = 6;
-    public const MAX_MEDIA_KB = 102400;
+    public const MAX_PHOTO_KB = 10240;
 
     protected $fillable = [
         'title',
@@ -39,20 +39,31 @@ final class GalleryItem extends Model
             ->orderBy('id');
     }
 
-    public function getIsVideoAttribute(): bool
+    public function getIsPhotoAttribute(): bool
     {
-        return $this->type === 'video';
+        return $this->type === 'photo';
+    }
+
+    public function getIsEmbedAttribute(): bool
+    {
+        return $this->type === 'embed';
     }
 
     public function getTypeLabelAttribute(): string
     {
-        return $this->type === 'video' ? 'Video' : 'Foto';
+        return $this->is_embed ? 'Embed' : 'Foto';
     }
 
-    public function getMediaFilenameAttribute(): string
+    public function getMediaLabelAttribute(): string
     {
         if (! $this->media_url) {
             return '-';
+        }
+
+        $host = parse_url($this->media_url, PHP_URL_HOST);
+
+        if (is_string($host) && $host !== '') {
+            return $host;
         }
 
         $path = parse_url($this->media_url, PHP_URL_PATH);

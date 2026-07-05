@@ -163,7 +163,7 @@ final class HomeController extends Controller
 
     private function normalizeGalleryItem(array $item): array
     {
-        $allowedTypes = ['photo', 'video'];
+        $allowedTypes = ['photo', 'embed'];
         $allowedVariants = ['normal', 'wide', 'tall', 'feature'];
 
         $type = $item['type'] ?? 'photo';
@@ -177,22 +177,22 @@ final class HomeController extends Controller
             $variant = 'normal';
         }
 
-        $rawMedia = $item['media_url'] ?? null;
-        $rawThumbnail = $item['thumbnail'] ?? null;
+        $rawMedia = $item['media_url'] ?? $item['thumbnail'] ?? null;
 
         $item['type'] = $type;
-        $item['type_label'] = $type === 'video' ? 'Video' : 'Foto';
-        $item['is_video'] = $type === 'video';
+        $item['type_label'] = $type === 'embed' ? 'Embed' : 'Foto';
+        $item['is_embed'] = $type === 'embed';
+        $item['is_video'] = false;
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
         $item['media_url'] = $this->publicAssetUrl($rawMedia);
-        $item['thumbnail_url'] = $this->publicAssetUrl($rawThumbnail ?? ($type === 'photo' ? $rawMedia : null));
+        $item['thumbnail_url'] = $type === 'photo' ? $this->publicAssetUrl($rawMedia) : null;
         $item['published_at'] = (string) ($item['published_at'] ?? $item['date'] ?? '');
         $item['date'] = (string) ($item['date'] ?? $item['published_at']);
         $item['caption'] = (string) ($item['caption'] ?? '');
         $item['category'] = (string) ($item['category'] ?? '');
-        $item['accent'] = $type === 'video' ? '#f97316' : '#19aee6';
-        $item['fallback_icon'] = $type === 'video' ? '▶' : '📸';
+        $item['accent'] = $type === 'embed' ? '#f97316' : '#19aee6';
+        $item['fallback_icon'] = $type === 'embed' ? '▶' : '📸';
 
         return $item;
     }

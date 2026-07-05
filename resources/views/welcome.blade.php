@@ -313,10 +313,6 @@
             </p>
           </div>
 
-          @php
-            $initialGalleryItem = $gallerySection['items'][0] ?? null;
-          @endphp
-
           <div class="galeri-story" id="galeriGrid" data-gallery-story>
             <div class="galeri-story__copy" aria-label="Daftar momen galeri terbaru">
               @foreach ($gallerySection['items'] as $item)
@@ -330,11 +326,8 @@
                   data-category="{{ $item['category'] ?? '' }}"
                   data-date="{{ $item['date'] ?? '' }}"
                   data-type-label="{{ $item['type_label'] ?? 'Foto' }}"
-                  data-thumbnail-url="{{ $item['thumbnail_url'] ?? '' }}"
                   data-media-url="{{ $item['media_url'] ?? '' }}"
-                  data-fallback-icon="{{ $item['fallback_icon'] ?? ($item['emoji'] ?? '📸') }}"
-                  data-instagram-url="{{ $item['instagram_url'] ?? '' }}"
-                  data-is-video="{{ ! empty($item['is_video']) ? '1' : '0' }}"
+                  data-is-embed="{{ ! empty($item['is_embed']) ? '1' : '0' }}"
                   style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
                 >
                   <span class="galeri-story-card__number">
@@ -342,18 +335,18 @@
                   </span>
 
                   <div class="galeri-story-card__mobile-media">
-                    {{-- HOMEPAGE_GALLERY_REAL_MEDIA_FINAL --}}
-                    @if (! empty($item['is_video']) && ! empty($item['media_url']))
-                      <video
-                        src="{{ $item['media_url'] }}#t=0.1"
-                        class="galeri-story-card__mobile-video"
-                        muted
-                        playsinline
-                        preload="metadata"
-                      ></video>
-                    @elseif (! empty($item['thumbnail_url']) || ! empty($item['media_url']))
+                    {{-- HOMEPAGE_GALLERY_PHOTO_EMBED_FINAL --}}
+                    @if (! empty($item['is_embed']) && ! empty($item['media_url']))
+                      <iframe
+                        src="{{ $item['media_url'] }}"
+                        title="{{ $item['title'] }}"
+                        class="galeri-story-card__mobile-embed"
+                        loading="lazy"
+                        allowfullscreen
+                      ></iframe>
+                    @elseif (! empty($item['media_url']))
                       <img
-                        src="{{ ! empty($item['thumbnail_url']) ? $item['thumbnail_url'] : ($item['media_url'] ?? '') }}"
+                        src="{{ $item['media_url'] }}"
                         alt="{{ $item['title'] }}"
                         class="galeri-story-card__mobile-image"
                         loading="lazy"
@@ -367,10 +360,6 @@
                     <span class="galeri-story-card__mobile-badge">
                       {{ $item['type_label'] ?? 'Foto' }}
                     </span>
-
-                    @if (! empty($item['is_video']))
-                      <span class="galeri-story-card__mobile-play" aria-hidden="true">▶</span>
-                    @endif
                   </div>
 
                   <div class="galeri-story-card__content">
@@ -404,18 +393,18 @@
                     style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
                   >
                     <div class="galeri-story-visual__media">
-                      {{-- HOMEPAGE_GALLERY_REAL_MEDIA_FINAL --}}
-                      @if (! empty($item['is_video']) && ! empty($item['media_url']))
-                        <video
-                          src="{{ $item['media_url'] }}#t=0.1"
-                          class="galeri-story-visual__video"
-                          muted
-                          playsinline
-                          preload="metadata"
-                        ></video>
-                      @elseif (! empty($item['thumbnail_url']) || ! empty($item['media_url']))
+                      {{-- HOMEPAGE_GALLERY_PHOTO_EMBED_FINAL --}}
+                      @if (! empty($item['is_embed']) && ! empty($item['media_url']))
+                        <iframe
+                          src="{{ $item['media_url'] }}"
+                          title="{{ $item['title'] }}"
+                          class="galeri-story-visual__embed"
+                          loading="lazy"
+                          allowfullscreen
+                        ></iframe>
+                      @elseif (! empty($item['media_url']))
                         <img
-                          src="{{ ! empty($item['thumbnail_url']) ? $item['thumbnail_url'] : ($item['media_url'] ?? '') }}"
+                          src="{{ $item['media_url'] }}"
                           alt="{{ $item['title'] }}"
                           class="galeri-story-visual__image"
                           loading="lazy"
@@ -429,10 +418,6 @@
                       <span class="galeri-story-visual__badge">
                         {{ $item['type_label'] ?? 'Foto' }}
                       </span>
-
-                      @if (! empty($item['is_video']))
-                        <span class="galeri-story-visual__play" aria-hidden="true">▶</span>
-                      @endif
                     </div>
                   </div>
                 @endforeach

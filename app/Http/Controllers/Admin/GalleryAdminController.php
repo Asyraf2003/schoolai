@@ -15,7 +15,7 @@ use Illuminate\Validation\ValidationException;
 final class GalleryAdminController extends Controller
 {
     private const MAX_ITEMS = GalleryItem::MAX_ITEMS;
-    private const MAX_MEDIA_KB = GalleryItem::MAX_MEDIA_KB;
+    private const MAX_PHOTO_KB = GalleryItem::MAX_PHOTO_KB;
 
     public function __invoke(): View
     {
@@ -75,7 +75,7 @@ final class GalleryAdminController extends Controller
         }
 
         $data = $this->validatedData($request);
-        $data['media_url'] = $this->storeMediaFile($request);
+        $data = $this->applyMedia($request, $data);
 
         $item = GalleryItem::query()->create($data);
 
@@ -98,11 +98,7 @@ final class GalleryAdminController extends Controller
     public function update(Request $request, GalleryItem $galleryItem): RedirectResponse
     {
         $data = $this->validatedData($request, $galleryItem);
-
-        if ($request->hasFile('media_file')) {
-            $this->deleteStoredPublicFile($galleryItem->media_url);
-            $data['media_url'] = $this->storeMediaFile($request);
-        }
+        $data = $this->applyMedia($request, $data, $galleryItem);
 
         $galleryItem->update($data);
 
@@ -175,20 +171,30 @@ final class GalleryAdminController extends Controller
     private function validatedData(Request $request, ?GalleryItem $galleryItem = null): array
     {
         $type = (string) $request->input('type', 'photo');
-        $mediaRules = $galleryItem?->exists
-            ? ['nullable', 'file', 'max:' . self::MAX_MEDIA_KB]
-            : ['required', 'file', 'max:' . self::MAX_MEDIA_KB];
-
-        $mediaRules[] = $type === 'video'
-            ? 'mimes:mp4,webm,mov,m4v'
-            : 'mimes:jpg,jpeg,png,webp';
+        $isPhoto = $type === 'photo';
+        $needsPhotoFile = $isPhoto && (
+            ! $galleryItem?->exists ||
+            $galleryItem->type !== 'photo' ||
+            ! $galleryItem->media_url
+        );
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:160'],
-            'type' => ['required', Rule::in(['photo', 'video'])],
+            'type' => ['required', Rule::in(['photo', 'embed'])],
             'category' => ['required', 'string', 'max:80'],
             'caption' => ['nullable', 'string', 'max:1000'],
-            'media_file' => $mediaRules,
+            'media_file' => [
+                $needsPhotoFile ? 'required' : 'nullable',
+                'file',
+                'mimes:jpg,jpeg,png,webp',
+                'max:' . self::MAX_PHOTO_KB,
+            ],
+            'media_url' => [
+                Rule::requiredIf(fn (): bool => $type === 'embed'),
+                'nullable',
+                'url',
+                'max:2048',
+            ],
             'sort_order' => ['required', 'integer', 'min:1', 'max:' . self::MAX_ITEMS],
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
@@ -211,9 +217,55 @@ final class GalleryAdminController extends Controller
         return $validated;
     }
 
-    private function storeMediaFile(Request $request): string
+    private function applyMedia(Request $request, array $data, ?GalleryItem $currentItem = null): array
     {
-        return Storage::url($request->file('media_file')->store('gallery', 'public'));
+        if ($data['type'] === 'embed') {
+            $this->deleteStoredPublicFile($currentItem?->media_url);
+            $data['media_url'] = $this->normalizeEmbedUrl((string) ($data['media_url'] ?? ''));
+
+            return $data;
+        }
+
+        unset($data['media_url']);
+
+        if ($request->hasFile('media_file')) {
+            $this->deleteStoredPublicFile($currentItem?->media_url);
+            $data['media_url'] = Storage::url($request->file('media_file')->store('gallery/photos', 'public'));
+        }
+
+        return $data;
+    }
+
+    private function normalizeEmbedUrl(string $url): string
+    {
+        $url = trim($url);
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
+        parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+
+        if (in_array($host, ['youtu.be', 'www.youtu.be'], true) && $path !== '') {
+            return 'https://www.youtube.com/embed/' . strtok($path, '/');
+        }
+
+        if (str_contains($host, 'youtube.com')) {
+            if (! empty($query['v'])) {
+                return 'https://www.youtube.com/embed/' . $query['v'];
+            }
+
+            if (preg_match('~(?:shorts|embed)/([^/?#]+)~', $path, $match)) {
+                return 'https://www.youtube.com/embed/' . $match[1];
+            }
+        }
+
+        if (str_contains($host, 'tiktok.com') && preg_match('~/video/(\d+)~', '/' . $path, $match)) {
+            return 'https://www.tiktok.com/embed/v2/' . $match[1];
+        }
+
+        if (str_contains($host, 'instagram.com') && ! str_ends_with($path, 'embed')) {
+            return rtrim($url, '/') . '/embed';
+        }
+
+        return $url;
     }
 
     private function deleteStoredPublicFile(?string $url): void
@@ -253,8 +305,8 @@ final class GalleryAdminController extends Controller
         return [
             'max_items' => self::MAX_ITEMS,
             'min_published_items' => 1,
-            'max_media_mb' => 100,
-            'max_media_kb' => self::MAX_MEDIA_KB,
+            'max_photo_mb' => 10,
+            'max_photo_kb' => self::MAX_PHOTO_KB,
         ];
     }
 
@@ -262,7 +314,7 @@ final class GalleryAdminController extends Controller
     {
         return [
             'photo' => 'Foto',
-            'video' => 'Video',
+            'embed' => 'Embed',
         ];
     }
 }

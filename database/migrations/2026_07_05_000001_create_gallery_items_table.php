@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('type', 16)->default('photo');
             $table->string('category', 80)->default('Umum');
             $table->text('caption')->nullable();
-            $table->string('media_url')->nullable();
+            $table->string('media_url', 2048)->nullable();
             $table->unsignedTinyInteger('sort_order')->default(1);
             $table->boolean('is_published')->default(true);
             $table->timestamp('published_at')->nullable();
@@ -51,12 +51,6 @@ return new class extends Migration
                 continue;
             }
 
-            $type = $item['type'] ?? 'photo';
-
-            if (! in_array($type, ['photo', 'video'], true)) {
-                $type = 'photo';
-            }
-
             $publishedAt = $now->copy()->subDays($index);
 
             if (! empty($item['published_at']) && is_string($item['published_at'])) {
@@ -67,12 +61,14 @@ return new class extends Migration
                 }
             }
 
+            $mediaUrl = (string) ($item['media_url'] ?? $item['thumbnail'] ?? '');
+
             $rows[] = [
                 'title' => (string) ($item['title'] ?? 'Galeri tanpa judul'),
-                'type' => $type,
+                'type' => 'photo',
                 'category' => (string) ($item['category'] ?? 'Umum'),
                 'caption' => (string) ($item['caption'] ?? ''),
-                'media_url' => (string) ($item['media_url'] ?? $item['thumbnail'] ?? ''),
+                'media_url' => $mediaUrl,
                 'sort_order' => $index + 1,
                 'is_published' => true,
                 'published_at' => $publishedAt,

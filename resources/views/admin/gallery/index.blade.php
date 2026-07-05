@@ -44,7 +44,7 @@
 
             <span class="gallery-lite-row__body">
               <strong>{{ $item->title }}</strong>
-              <small>{{ $item->type_label }} · {{ $item->category }} · {{ $item->media_filename }}</small>
+              <small>{{ $item->type_label }} · {{ $item->category }} · {{ $item->media_label }}</small>
             </span>
 
             <span class="gallery-lite-status {{ $item->is_published ? 'is-active' : 'is-inactive' }}">

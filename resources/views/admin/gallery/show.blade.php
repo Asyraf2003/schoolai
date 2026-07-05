@@ -34,10 +34,10 @@
 
   <section class="gallery-detail-panel">
     <div class="gallery-detail-preview">
-      @if($item->media_url && $item->type === 'photo')
+      @if($item->is_photo && $item->media_url)
         <img src="{{ $item->media_url }}" alt="{{ $item->title }}">
-      @elseif($item->media_url && $item->is_video)
-        <video src="{{ $item->media_url }}#t=0.1" controls preload="metadata" data-gallery-detail-video></video>
+      @elseif($item->is_embed && $item->media_url)
+        <iframe src="{{ $item->media_url }}" title="{{ $item->title }}" loading="lazy" allowfullscreen></iframe>
       @else
         <span>{{ $item->type_label }}</span>
       @endif
@@ -49,7 +49,7 @@
       <div><dt>{{ $page['type'] }}</dt><dd>{{ $item->type_label }}</dd></div>
       <div><dt>{{ $page['category'] }}</dt><dd>{{ $item->category }}</dd></div>
       <div><dt>{{ $page['date'] }}</dt><dd>{{ optional($item->published_at)->format('d M Y H:i') ?? '-' }}</dd></div>
-      <div><dt>{{ $page['media'] }}</dt><dd>{{ $item->media_filename }}</dd></div>
+      <div><dt>{{ $page['media'] }}</dt><dd>@if($item->media_url)<a href="{{ $item->media_url }}" target="_blank" rel="noopener">{{ $item->media_label }}</a>@else - @endif</dd></div>
       <div class="gallery-detail-list__wide"><dt>{{ $page['caption'] }}</dt><dd>{{ $item->caption ?: '-' }}</dd></div>
     </dl>
   </section>
@@ -81,18 +81,4 @@
       <button type="submit" class="admin-small-action admin-small-action--danger">{{ $page['delete_button'] }}</button>
     </form>
   </section>
-
-  <script>
-    (() => {
-      document.querySelectorAll('[data-gallery-detail-video]').forEach((video) => {
-        video.addEventListener('loadedmetadata', () => {
-          try {
-            video.currentTime = 0.1;
-          } catch {
-            // Browser malas menurut. Tidak apa, manusia juga begitu.
-          }
-        }, { once: true });
-      });
-    })();
-  </script>
 @endsection
