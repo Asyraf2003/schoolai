@@ -33,8 +33,14 @@
   @endif
 
   <section class="gallery-detail-panel">
-    <div class="gallery-detail-preview" style="--admin-gallery-accent: {{ $item->accent }};">
-      <span>{{ $item->fallback_icon }}</span>
+    <div class="gallery-detail-preview">
+      @if($item->media_url && $item->type === 'photo')
+        <img src="{{ $item->media_url }}" alt="{{ $item->title }}">
+      @elseif($item->media_url && $item->is_video)
+        <video src="{{ $item->media_url }}" controls preload="metadata"></video>
+      @else
+        <span>{{ $item->fallback_icon }}</span>
+      @endif
     </div>
 
     <dl class="gallery-detail-list">

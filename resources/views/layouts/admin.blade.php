@@ -530,18 +530,28 @@
 
     .gallery-detail-panel {
       display: grid;
-      grid-template-columns: 190px 1fr;
+      grid-template-columns: 240px 1fr;
       gap: 18px;
       padding: 18px;
     }
 
     .gallery-detail-preview {
-      min-height: 160px;
+      min-height: 180px;
       display: grid;
       place-items: center;
       border-radius: 14px;
-      background: color-mix(in srgb, var(--admin-gallery-accent) 18%, white);
+      background: #f6f3ec;
+      overflow: hidden;
       font-size: 3rem;
+    }
+
+    .gallery-detail-preview img,
+    .gallery-detail-preview video {
+      width: 100%;
+      height: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      display: block;
     }
 
     .gallery-detail-list {
@@ -628,6 +638,10 @@
       outline: none;
     }
 
+    .admin-field input[type="file"] {
+      background: #fff;
+    }
+
     .admin-field textarea {
       resize: vertical;
     }
@@ -642,6 +656,14 @@
     .admin-field small {
       color: #b91c1c;
       font-weight: 700;
+    }
+
+    .admin-field em {
+      color: var(--admin-muted);
+      font-size: 0.82rem;
+      font-style: normal;
+      line-height: 1.45;
+      word-break: break-word;
     }
 
     .admin-check-field {

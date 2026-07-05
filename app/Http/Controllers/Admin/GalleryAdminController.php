@@ -8,6 +8,7 @@ use App\Models\GalleryItem;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -75,7 +76,11 @@ final class GalleryAdminController extends Controller
             ]);
         }
 
-        $item = GalleryItem::query()->create($this->validatedData($request));
+        $data = $this->validatedData($request);
+        $data = $this->applyUploadedFiles($request, $data);
+        $data = array_merge($data, $this->visualDefaultsForType($data['type']));
+
+        $item = GalleryItem::query()->create($data);
 
         return redirect()
             ->route('admin.galeri.show', $item)
@@ -95,7 +100,11 @@ final class GalleryAdminController extends Controller
 
     public function update(Request $request, GalleryItem $galleryItem): RedirectResponse
     {
-        $galleryItem->update($this->validatedData($request, $galleryItem));
+        $data = $this->validatedData($request, $galleryItem);
+        $data = $this->applyUploadedFiles($request, $data, $galleryItem);
+        $data = array_merge($data, $this->visualDefaultsForType($data['type']));
+
+        $galleryItem->update($data);
 
         return redirect()
             ->route('admin.galeri.show', $galleryItem)
@@ -109,6 +118,9 @@ final class GalleryAdminController extends Controller
                 'delete' => 'Minimal harus ada 1 item galeri yang published.',
             ]);
         }
+
+        $this->deleteStoredPublicFile($galleryItem->media_url);
+        $this->deleteStoredPublicFile($galleryItem->thumbnail_url);
 
         $galleryItem->delete();
 
@@ -165,14 +177,25 @@ final class GalleryAdminController extends Controller
     private function validatedData(Request $request, ?GalleryItem $galleryItem = null): array
     {
         $type = (string) $request->input('type', 'photo');
+        $mediaRules = ['nullable', 'file', 'max:20480'];
+
+        if ($type === 'photo') {
+            $mediaRules[] = 'mimes:jpg,jpeg,png,webp';
+        } else {
+            $mediaRules[] = 'mimes:mp4,webm,mov';
+        }
+
+        if (! $galleryItem?->exists) {
+            array_unshift($mediaRules, 'required');
+        }
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:160'],
             'type' => ['required', Rule::in(['photo', 'video', 'reel'])],
             'category' => ['required', 'string', 'max:80'],
             'caption' => ['nullable', 'string', 'max:1000'],
-            'thumbnail_url' => ['nullable', 'string', 'max:255'],
-            'media_url' => ['nullable', 'string', 'max:255'],
+            'media_file' => $mediaRules,
+            'thumbnail_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'duration_seconds' => [
                 Rule::requiredIf(fn (): bool => in_array($type, ['video', 'reel'], true)),
                 'nullable',
@@ -182,10 +205,10 @@ final class GalleryAdminController extends Controller
             ],
             'sort_order' => ['required', 'integer', 'min:1', 'max:' . self::MAX_ITEMS],
             'is_published' => ['nullable', 'boolean'],
-            'fallback_icon' => ['required', 'string', 'max:16'],
-            'accent' => ['required', 'regex:/^#[0-9a-fA-F]{6}$/'],
             'published_at' => ['nullable', 'date'],
         ]);
+
+        unset($validated['media_file'], $validated['thumbnail_file']);
 
         $validated['is_published'] = $request->boolean('is_published');
 
@@ -204,6 +227,48 @@ final class GalleryAdminController extends Controller
         }
 
         return $validated;
+    }
+
+    private function applyUploadedFiles(Request $request, array $data, ?GalleryItem $currentItem = null): array
+    {
+        if ($request->hasFile('media_file')) {
+            $this->deleteStoredPublicFile($currentItem?->media_url);
+            $data['media_url'] = Storage::url($request->file('media_file')->store('gallery/media', 'public'));
+        }
+
+        if ($request->hasFile('thumbnail_file')) {
+            $this->deleteStoredPublicFile($currentItem?->thumbnail_url);
+            $data['thumbnail_url'] = Storage::url($request->file('thumbnail_file')->store('gallery/thumbnails', 'public'));
+        }
+
+        return $data;
+    }
+
+    private function deleteStoredPublicFile(?string $url): void
+    {
+        if (! $url || ! str_starts_with($url, '/storage/')) {
+            return;
+        }
+
+        Storage::disk('public')->delete(substr($url, strlen('/storage/')));
+    }
+
+    private function visualDefaultsForType(string $type): array
+    {
+        return match ($type) {
+            'video' => [
+                'fallback_icon' => '▶️',
+                'accent' => '#f97316',
+            ],
+            'reel' => [
+                'fallback_icon' => '🎬',
+                'accent' => '#8b5cf6',
+            ],
+            default => [
+                'fallback_icon' => '📸',
+                'accent' => '#19aee6',
+            ],
+        };
     }
 
     private function wouldLeaveNoPublishedItem(?GalleryItem $currentItem, bool $nextPublished): bool
