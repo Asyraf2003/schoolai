@@ -192,7 +192,7 @@ final class HomeController extends Controller
         $item['caption'] = (string) ($item['caption'] ?? '');
         $item['category'] = (string) ($item['category'] ?? '');
         $item['accent'] = $type === 'video' ? '#f97316' : '#19aee6';
-        $item['fallback_icon'] = $type === 'video' ? '▶️' : '📸';
+        $item['fallback_icon'] = $type === 'video' ? '▶' : '📸';
 
         return $item;
     }
@@ -224,7 +224,17 @@ final class HomeController extends Controller
             return null;
         }
 
+        $path = trim($path);
+
+        if (filter_var($path, FILTER_VALIDATE_URL)) {
+            return $path;
+        }
+
         $relativePath = ltrim($path, '/');
+
+        if (str_starts_with($relativePath, 'storage/')) {
+            return asset($relativePath);
+        }
 
         if (! file_exists(public_path($relativePath))) {
             return null;

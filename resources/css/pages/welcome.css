@@ -10008,3 +10008,27 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 /* /PPDB_PSB_INSPIRED_SECTION_FINAL */
+
+
+
+/* HOMEPAGE_GALLERY_REAL_MEDIA_FINAL */
+.galeri-story-card__mobile-image,
+.galeri-story-card__mobile-video,
+.galeri-story-visual__image,
+.galeri-story-visual__video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.galeri-story-card__mobile-video,
+.galeri-story-visual__video {
+  background: #111827;
+}
+
+.galeri-story-visual__media video,
+.galeri-story-card__mobile-media video {
+  pointer-events: none;
+}
+/* /HOMEPAGE_GALLERY_REAL_MEDIA_FINAL */
