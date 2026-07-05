@@ -1,4 +1,4 @@
-{{-- ADMIN_GALLERY_DUMMY_FINAL --}}
+{{-- REAL_GALLERY_CRUD_INDEX_FINAL --}}
 @php
   $page = __('admin.gallery');
 @endphp
@@ -16,20 +16,36 @@
       <p>{{ $page['description'] }}</p>
     </div>
 
-    <span class="admin-status-pill">{{ __('admin.shell.status') }}</span>
+    @if($canCreate)
+      <a href="{{ route('admin.galeri.create') }}" class="admin-primary-action">{{ $page['create_button'] }}</a>
+    @else
+      <span class="admin-status-pill">{{ str_replace(':max', $limits['max_items'], $page['limit_badge']) }}</span>
+    @endif
   </header>
 
-  <section class="gallery-admin-summary" aria-label="{{ $page['slot_title'] }}">
+  @if(session('success'))
+    <p class="flash-message">{{ session('success') }}</p>
+  @endif
+
+  @if($errors->any())
+    <div class="admin-error-box">
+      @foreach($errors->all() as $error)
+        <p>{{ $error }}</p>
+      @endforeach
+    </div>
+  @endif
+
+  <section class="gallery-admin-summary" aria-label="{{ $page['source_title'] }}">
     <article>
       <span>{{ str_replace(':max', $limits['max_items'], $page['limit_badge']) }}</span>
-      <strong>{{ $page['slot_title'] }}</strong>
-      <p>{{ $page['slot_description'] }}</p>
+      <strong>{{ $page['source_title'] }}</strong>
+      <p>{{ $page['source_description'] }}</p>
     </article>
 
     <article>
-      <span>{{ str_replace(':min', $limits['min_items'], $page['minimum_badge']) }}</span>
-      <strong>{{ $page['source_title'] }}</strong>
-      <p>{{ $page['source_description'] }}</p>
+      <span>{{ str_replace(':min', $limits['min_published_items'], $page['minimum_badge']) }}</span>
+      <strong>{{ $page['published'] }}</strong>
+      <p>{{ $page['empty_description'] }}</p>
     </article>
 
     <article>
@@ -46,51 +62,67 @@
         <p>{{ $page['source_description'] }}</p>
       </div>
 
-      <span>{{ count($items) }}/{{ $limits['max_items'] }}</span>
+      <span>{{ $items->count() }}/{{ $limits['max_items'] }}</span>
     </div>
 
-    @if(count($items) > 0)
+    @if($items->isNotEmpty())
       <div class="gallery-admin-grid">
         @foreach($items as $item)
-          <article class="gallery-admin-card" style="--admin-gallery-accent: {{ $item['accent'] }};">
+          <article class="gallery-admin-card" style="--admin-gallery-accent: {{ $item->accent }};">
             <div class="gallery-admin-card__visual">
-              <span aria-hidden="true">{{ $item['fallback_icon'] }}</span>
+              <span aria-hidden="true">{{ $item->fallback_icon }}</span>
 
-              @if($item['is_video'])
-                <small>{{ $item['type_label'] }} · {{ $item['duration_label'] }}</small>
-              @else
-                <small>{{ $item['type_label'] }}</small>
-              @endif
+              <small>
+                {{ $item->type_label }}
+                @if($item->is_video)
+                  · {{ $item->duration_label }}
+                @endif
+              </small>
             </div>
 
             <div class="gallery-admin-card__body">
-              <h3>{{ $item['title'] }}</h3>
+              <div class="gallery-admin-card__title-row">
+                <h3>{{ $item->title }}</h3>
+                <span class="gallery-status {{ $item->is_published ? 'is-published' : 'is-draft' }}">
+                  {{ $item->is_published ? $page['published'] : $page['draft'] }}
+                </span>
+              </div>
 
               <dl>
                 <div>
                   <dt>{{ $page['type'] }}</dt>
-                  <dd>{{ $item['type_label'] }}</dd>
+                  <dd>{{ $item->type_label }}</dd>
                 </div>
 
                 <div>
                   <dt>{{ $page['category'] }}</dt>
-                  <dd>{{ $item['category'] }}</dd>
+                  <dd>{{ $item->category }}</dd>
                 </div>
 
                 <div>
                   <dt>{{ $page['duration'] }}</dt>
-                  <dd>{{ $item['duration_label'] }}</dd>
+                  <dd>{{ $item->duration_label }}</dd>
                 </div>
 
                 <div>
                   <dt>{{ $page['date'] }}</dt>
-                  <dd>{{ $item['date'] ?: '-' }}</dd>
+                  <dd>{{ optional($item->published_at)->format('d M Y') ?? '-' }}</dd>
                 </div>
               </dl>
 
-              @if($item['caption'] !== '')
-                <p><strong>{{ $page['caption'] }}:</strong> {{ $item['caption'] }}</p>
+              @if($item->caption)
+                <p><strong>{{ $page['caption'] }}:</strong> {{ $item->caption }}</p>
               @endif
+
+              <div class="gallery-card-actions">
+                <a href="{{ route('admin.galeri.edit', $item) }}" class="admin-small-action">{{ $page['edit_button'] }}</a>
+
+                <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" onsubmit="return confirm('Hapus item galeri ini?')">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="admin-small-action admin-small-action--danger">{{ $page['delete_button'] }}</button>
+                </form>
+              </div>
             </div>
           </article>
         @endforeach

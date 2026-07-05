@@ -361,6 +361,44 @@
     }
 
     /* ADMIN_GALLERY_DUMMY_FINAL */
+    .admin-primary-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--admin-orange), #ea580c);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 950;
+      border: 0;
+      box-shadow: 0 16px 34px rgba(234,88,12,0.22);
+    }
+
+    .admin-primary-action--ghost {
+      background: #fff;
+      color: var(--admin-ink);
+      box-shadow: 0 14px 34px rgba(32,34,63,0.08);
+    }
+
+    .admin-error-box {
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #fef2f2;
+      color: #b91c1c;
+      font-weight: 800;
+    }
+
+    .admin-error-box p {
+      margin: 0;
+    }
+
+    .admin-error-box p + p {
+      margin-top: 6px;
+    }
+
     .gallery-admin-summary {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -369,7 +407,8 @@
     }
 
     .gallery-admin-summary article,
-    .gallery-admin-panel {
+    .gallery-admin-panel,
+    .gallery-form-panel {
       border: 1px solid var(--admin-line);
       background: rgba(255,255,255,0.88);
       box-shadow: var(--admin-shadow);
@@ -407,7 +446,8 @@
       line-height: 1.65;
     }
 
-    .gallery-admin-panel {
+    .gallery-admin-panel,
+    .gallery-form-panel {
       margin-top: 24px;
       border-radius: 32px;
       overflow: hidden;
@@ -491,12 +531,36 @@
       padding: 18px;
     }
 
+    .gallery-admin-card__title-row {
+      display: grid;
+      gap: 10px;
+    }
+
     .gallery-admin-card__body h3 {
       margin: 0;
       min-height: 52px;
       color: var(--admin-ink);
       font-size: 1.05rem;
       line-height: 1.25;
+    }
+
+    .gallery-status {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 950;
+    }
+
+    .gallery-status.is-published {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .gallery-status.is-draft {
+      background: #f3f4f6;
+      color: #4b5563;
     }
 
     .gallery-admin-card dl {
@@ -531,6 +595,38 @@
       margin: 14px 0 0;
       color: var(--admin-muted);
       line-height: 1.6;
+    }
+
+    .gallery-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .gallery-card-actions form {
+      margin: 0;
+    }
+
+    .admin-small-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 0;
+      background: var(--admin-dark);
+      color: #fff;
+      text-decoration: none;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .admin-small-action--danger {
+      background: #b91c1c;
     }
 
     .gallery-admin-empty {
@@ -581,6 +677,87 @@
       background: rgba(32,31,61,0.08);
       color: var(--admin-ink);
       font-weight: 850;
+    }
+
+    .gallery-admin-form {
+      display: grid;
+      gap: 20px;
+    }
+
+    .gallery-form-panel {
+      padding: 28px;
+    }
+
+    .gallery-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .admin-field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .admin-field--wide {
+      grid-column: 1 / -1;
+    }
+
+    .admin-field label,
+    .admin-check-field {
+      color: var(--admin-ink);
+      font-weight: 900;
+    }
+
+    .admin-field input,
+    .admin-field select,
+    .admin-field textarea {
+      width: 100%;
+      border: 1px solid var(--admin-line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: #fffdf8;
+      color: var(--admin-ink);
+      font: inherit;
+      outline: none;
+    }
+
+    .admin-field textarea {
+      resize: vertical;
+    }
+
+    .admin-field input:focus,
+    .admin-field select:focus,
+    .admin-field textarea:focus {
+      border-color: var(--admin-orange);
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.13);
+    }
+
+    .admin-field small {
+      color: #b91c1c;
+      font-weight: 800;
+    }
+
+    .admin-field em {
+      color: var(--admin-muted);
+      font-size: 0.82rem;
+      font-style: normal;
+      line-height: 1.5;
+    }
+
+    .admin-check-field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--admin-line);
+      border-radius: 16px;
+      background: #fffdf8;
+    }
+
+    .admin-check-field input {
+      width: 18px;
+      height: 18px;
     }
     /* /ADMIN_GALLERY_DUMMY_FINAL */
 

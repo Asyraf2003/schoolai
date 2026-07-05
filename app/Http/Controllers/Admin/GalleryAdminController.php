@@ -1,15 +1,20 @@
 <?php
-/* ADMIN_GALLERY_DUMMY_FINAL */
+/* REAL_GALLERY_CRUD_CONTROLLER_FINAL */
 
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GalleryItem;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 final class GalleryAdminController extends Controller
 {
-    private const MAX_ITEMS = 6;
-    private const MAX_VIDEO_SECONDS = 180;
+    private const MAX_ITEMS = GalleryItem::MAX_ITEMS;
+    private const MAX_VIDEO_SECONDS = GalleryItem::MAX_VIDEO_SECONDS;
 
     public function __invoke(): View
     {
@@ -18,93 +23,170 @@ final class GalleryAdminController extends Controller
 
     public function index(): View
     {
-        $items = $this->galleryItems();
-
         return view('admin.gallery.index', [
             'adminPageKey' => 'galeri',
-            'items' => $items,
-            'limits' => [
-                'max_items' => self::MAX_ITEMS,
-                'min_items' => 1,
-                'max_video_seconds' => self::MAX_VIDEO_SECONDS,
-                'max_video_minutes' => 3,
-            ],
+            'items' => GalleryItem::query()->ordered()->get(),
+            'limits' => $this->limits(),
             'dbMap' => $this->databaseMap(),
+            'canCreate' => GalleryItem::query()->count() < self::MAX_ITEMS,
         ]);
     }
 
-    private function galleryItems(): array
+    public function create(): View|RedirectResponse
     {
-        $items = __('home.galeri.items');
-
-        if (! is_array($items)) {
-            return [];
+        if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
+            return redirect()
+                ->route('admin.galeri')
+                ->withErrors(['title' => 'Maksimal hanya boleh 6 item galeri. Hapus atau edit item yang sudah ada.']);
         }
 
-        $items = array_values(array_filter(
-            array_map(fn (mixed $item): ?array => is_array($item) ? $this->normalizeItem($item) : null, $items)
-        ));
-
-        usort(
-            $items,
-            fn (array $first, array $second): int => strcmp(
-                (string) ($second['published_at'] ?? ''),
-                (string) ($first['published_at'] ?? '')
-            )
-        );
-
-        return array_slice($items, 0, self::MAX_ITEMS);
+        return view('admin.gallery.form', [
+            'adminPageKey' => 'galeri',
+            'mode' => 'create',
+            'item' => new GalleryItem([
+                'type' => 'photo',
+                'category' => 'Kegiatan',
+                'sort_order' => min(GalleryItem::query()->count() + 1, self::MAX_ITEMS),
+                'is_published' => true,
+                'fallback_icon' => '📸',
+                'accent' => '#19aee6',
+                'published_at' => now(),
+            ]),
+            'limits' => $this->limits(),
+            'typeOptions' => $this->typeOptions(),
+        ]);
     }
 
-    private function normalizeItem(array $item): array
+    public function store(Request $request): RedirectResponse
     {
-        $type = $item['type'] ?? 'photo';
-
-        if (! in_array($type, ['photo', 'video', 'reel'], true)) {
-            $type = 'photo';
+        if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
+            throw ValidationException::withMessages([
+                'title' => 'Maksimal hanya boleh 6 item galeri.',
+            ]);
         }
 
-        $durationSeconds = (int) ($item['duration_seconds'] ?? 0);
+        $data = $this->validatedData($request);
 
-        if ($type === 'photo') {
-            $durationSeconds = 0;
+        GalleryItem::query()->create($data);
+
+        return redirect()
+            ->route('admin.galeri')
+            ->with('success', 'Item galeri berhasil ditambahkan.');
+    }
+
+    public function edit(GalleryItem $galleryItem): View
+    {
+        return view('admin.gallery.form', [
+            'adminPageKey' => 'galeri',
+            'mode' => 'edit',
+            'item' => $galleryItem,
+            'limits' => $this->limits(),
+            'typeOptions' => $this->typeOptions(),
+        ]);
+    }
+
+    public function update(Request $request, GalleryItem $galleryItem): RedirectResponse
+    {
+        $data = $this->validatedData($request, $galleryItem);
+
+        $galleryItem->update($data);
+
+        return redirect()
+            ->route('admin.galeri')
+            ->with('success', 'Item galeri berhasil diperbarui.');
+    }
+
+    public function destroy(GalleryItem $galleryItem): RedirectResponse
+    {
+        if ($galleryItem->is_published && GalleryItem::query()->where('is_published', true)->count() <= 1) {
+            return back()->withErrors([
+                'delete' => 'Minimal harus ada 1 item galeri yang published.',
+            ]);
         }
 
-        if ($type !== 'photo' && $durationSeconds <= 0) {
-            $durationSeconds = 60;
+        $galleryItem->delete();
+
+        return redirect()
+            ->route('admin.galeri')
+            ->with('success', 'Item galeri berhasil dihapus.');
+    }
+
+    private function validatedData(Request $request, ?GalleryItem $galleryItem = null): array
+    {
+        $type = (string) $request->input('type', 'photo');
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:160'],
+            'type' => ['required', Rule::in(['photo', 'video', 'reel'])],
+            'category' => ['required', 'string', 'max:80'],
+            'caption' => ['nullable', 'string', 'max:1000'],
+            'thumbnail_url' => ['nullable', 'string', 'max:255'],
+            'media_url' => ['nullable', 'string', 'max:255'],
+            'duration_seconds' => [
+                Rule::requiredIf(fn (): bool => in_array($type, ['video', 'reel'], true)),
+                'nullable',
+                'integer',
+                'min:1',
+                'max:' . self::MAX_VIDEO_SECONDS,
+            ],
+            'sort_order' => ['required', 'integer', 'min:1', 'max:' . self::MAX_ITEMS],
+            'is_published' => ['nullable', 'boolean'],
+            'fallback_icon' => ['required', 'string', 'max:16'],
+            'accent' => ['required', 'regex:/^#[0-9a-fA-F]{6}$/'],
+            'published_at' => ['nullable', 'date'],
+        ]);
+
+        $validated['is_published'] = $request->boolean('is_published');
+
+        if (! in_array($validated['type'], ['video', 'reel'], true)) {
+            $validated['duration_seconds'] = null;
         }
 
-        $durationSeconds = min($durationSeconds, self::MAX_VIDEO_SECONDS);
+        if (($validated['published_at'] ?? null) === '') {
+            $validated['published_at'] = null;
+        }
 
+        if ($this->wouldLeaveNoPublishedItem($galleryItem, $validated['is_published'])) {
+            throw ValidationException::withMessages([
+                'is_published' => 'Minimal harus ada 1 item galeri yang published.',
+            ]);
+        }
+
+        return $validated;
+    }
+
+    private function wouldLeaveNoPublishedItem(?GalleryItem $currentItem, bool $nextPublished): bool
+    {
+        if ($nextPublished) {
+            return false;
+        }
+
+        $query = GalleryItem::query()->where('is_published', true);
+
+        if ($currentItem?->exists) {
+            $query->whereKeyNot($currentItem->getKey());
+        }
+
+        return $query->count() < 1;
+    }
+
+    private function limits(): array
+    {
         return [
-            'title' => (string) ($item['title'] ?? 'Galeri tanpa judul'),
-            'type' => $type,
-            'type_label' => match ($type) {
-                'video' => 'Video',
-                'reel' => 'Reel',
-                default => 'Foto',
-            },
-            'is_video' => $type !== 'photo',
-            'duration_seconds' => $durationSeconds,
-            'duration_label' => $durationSeconds > 0 ? $this->durationLabel($durationSeconds) : '-',
-            'caption' => (string) ($item['caption'] ?? ''),
-            'category' => (string) ($item['category'] ?? 'Umum'),
-            'published_at' => (string) ($item['published_at'] ?? $item['date'] ?? ''),
-            'date' => (string) ($item['date'] ?? $item['published_at'] ?? ''),
-            'thumbnail' => (string) ($item['thumbnail'] ?? ''),
-            'video_path' => (string) ($item['video_path'] ?? ''),
-            'instagram_url' => (string) ($item['instagram_url'] ?? ''),
-            'fallback_icon' => (string) ($item['fallback_icon'] ?? $item['emoji'] ?? '📸'),
-            'accent' => (string) ($item['accent'] ?? '#19aee6'),
+            'max_items' => self::MAX_ITEMS,
+            'min_published_items' => 1,
+            'max_video_seconds' => self::MAX_VIDEO_SECONDS,
+            'max_video_minutes' => 3,
         ];
     }
 
-    private function durationLabel(int $seconds): string
+    private function typeOptions(): array
     {
-        $minutes = intdiv($seconds, 60);
-        $remainingSeconds = $seconds % 60;
-
-        return sprintf('%d:%02d', $minutes, $remainingSeconds);
+        return [
+            'photo' => 'Foto',
+            'video' => 'Video',
+            'reel' => 'Reel',
+        ];
     }
 
     private function databaseMap(): array
@@ -112,13 +194,13 @@ final class GalleryAdminController extends Controller
         return [
             ['field' => 'id', 'type' => 'bigint unsigned', 'note' => 'Primary key.'],
             ['field' => 'title', 'type' => 'varchar(160)', 'note' => 'Judul item galeri. Wajib.'],
-            ['field' => 'type', 'type' => 'enum/photo,video,reel', 'note' => 'Jenis konten. Video dan reel dibatasi 3 menit.'],
-            ['field' => 'category', 'type' => 'varchar(80)', 'note' => 'Kategori tampilan seperti Kegiatan, Tahfidz, Bahasa.'],
-            ['field' => 'caption', 'type' => 'text nullable', 'note' => 'Deskripsi singkat untuk publik.'],
-            ['field' => 'thumbnail_path', 'type' => 'varchar(255) nullable', 'note' => 'Path gambar thumbnail lokal.'],
-            ['field' => 'media_path', 'type' => 'varchar(255) nullable', 'note' => 'Path foto/video lokal jika nanti upload aktif.'],
+            ['field' => 'type', 'type' => 'varchar(16)', 'note' => 'photo, video, atau reel.'],
+            ['field' => 'category', 'type' => 'varchar(80)', 'note' => 'Kategori tampilan publik.'],
+            ['field' => 'caption', 'type' => 'text nullable', 'note' => 'Deskripsi singkat.'],
+            ['field' => 'thumbnail_url', 'type' => 'varchar(255) nullable', 'note' => 'Path/URL thumbnail.'],
+            ['field' => 'media_url', 'type' => 'varchar(255) nullable', 'note' => 'Path/URL foto atau video.'],
             ['field' => 'duration_seconds', 'type' => 'unsigned smallint nullable', 'note' => 'Wajib untuk video/reel. Max 180.'],
-            ['field' => 'sort_order', 'type' => 'unsigned tinyint', 'note' => 'Urutan tampil. Max 6 item aktif.'],
+            ['field' => 'sort_order', 'type' => 'unsigned tinyint', 'note' => 'Urutan tampil. Max 6 item.'],
             ['field' => 'is_published', 'type' => 'boolean', 'note' => 'Status tampil di publik.'],
             ['field' => 'published_at', 'type' => 'timestamp nullable', 'note' => 'Tanggal publikasi.'],
         ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GalleryItem;
 use App\Models\SiteStatistic;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
@@ -116,6 +117,28 @@ final class HomeController extends Controller
 
     private function allGalleryItems(): array
     {
+        if (Schema::hasTable('gallery_items')) {
+            return GalleryItem::query()
+                ->where('is_published', true)
+                ->ordered()
+                ->limit(6)
+                ->get()
+                ->map(fn (GalleryItem $item): array => $this->normalizeGalleryItem([
+                    'title' => $item->title,
+                    'type' => $item->type,
+                    'thumbnail' => $item->thumbnail_url,
+                    'media_url' => $item->media_url,
+                    'published_at' => optional($item->published_at)->toDateString() ?? '',
+                    'date' => optional($item->published_at)->translatedFormat('j F Y') ?? '',
+                    'caption' => $item->caption ?? '',
+                    'category' => $item->category,
+                    'accent' => $item->accent,
+                    'fallback_icon' => $item->fallback_icon,
+                    'duration_seconds' => $item->duration_seconds,
+                ]))
+                ->all();
+        }
+
         $items = __('home.galeri.items');
 
         if (! is_array($items)) {
