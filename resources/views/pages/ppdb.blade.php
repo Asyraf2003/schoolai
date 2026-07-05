@@ -44,6 +44,69 @@
     </div>
   </section>
 
+
+  {{-- PPDB_PSB_INSPIRED_SECTION_FINAL --}}
+  <section class="ppdb-journey-section text-center position-relative" aria-labelledby="ppdb-journey-title">
+    <div class="container">
+      <div class="ppdb-journey-head reveal">
+        <div class="ppdb-title-effect" aria-hidden="true">
+          <span class="bar bar-top"></span>
+          <span class="bar bar-right"></span>
+          <span class="bar bar-bottom"></span>
+          <span class="bar bar-left"></span>
+        </div>
+
+        <p class="ppdb-journey-kicker">{{ $page['psb_showcase']['eyebrow'] }}</p>
+        <h2 id="ppdb-journey-title">{{ $page['psb_showcase']['title'] }}</h2>
+        <p>{{ $page['psb_showcase']['subtitle'] }}</p>
+      </div>
+
+      <div class="ppdb-flight-stage" aria-hidden="true">
+        <svg class="ppdb-flight-svg" viewBox="0 0 900 130" preserveAspectRatio="none">
+          <path
+            class="ppdb-flight-path"
+            d="M 40 76 C 150 8, 250 118, 360 58 S 570 18, 670 72 S 810 112, 860 40"
+          />
+        </svg>
+        <span class="ppdb-flight-plane">✈</span>
+      </div>
+
+      <div class="ppdb-work-grid">
+        @foreach($page['psb_showcase']['items'] as $item)
+          <article class="ppdb-work-process reveal">
+            @if(! $loop->last)
+              <div class="ppdb-box-loader" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            @endif
+
+            <div class="ppdb-step-num-box">
+              <div class="ppdb-step-icon">
+                <span aria-hidden="true">{{ $item['icon'] }}</span>
+              </div>
+              <div class="ppdb-step-num">{{ $item['number'] }}</div>
+            </div>
+
+            <div class="ppdb-step-desc">
+              <h3>{{ $item['title'] }}</h3>
+              <p>{{ $item['description'] }}</p>
+              <strong>{{ $item['highlight'] }}</strong>
+            </div>
+          </article>
+        @endforeach
+      </div>
+
+      <div class="ppdb-journey-cta reveal">
+        <p>{{ $page['psb_showcase']['note'] }}</p>
+        <a href="#alur-ppdb" class="btn btn--primary">{{ $page['psb_showcase']['button'] }}</a>
+      </div>
+    </div>
+  </section>
+  {{-- /PPDB_PSB_INSPIRED_SECTION_FINAL --}}
+
+
   <section id="alur-ppdb" class="public-section">
     <div class="container">
       <div class="public-section-head">

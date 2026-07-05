@@ -60,6 +60,40 @@ return [
                 ['icon' => '🧡', 'title' => 'Parent Friendly', 'text' => 'Warm communication from the admission process onward.'],
             ],
         ],
+
+        /* PPDB_PSB_INSPIRED_SECTION_FINAL */
+        'psb_showcase' => [
+            'eyebrow' => 'Admission Special Program',
+            'title' => 'A Light, Warm, and Guided Admission Flow at Al Mustaqbal',
+            'subtitle' => 'This dummy section is designed to feel like an official admission page: informative, polished, and lively without external images.',
+            'items' => [
+                [
+                    'number' => '01',
+                    'icon' => '✓',
+                    'title' => 'Family Consultation',
+                    'description' => 'Parents discuss the child’s needs, suitable level, and school visit schedule.',
+                    'highlight' => 'Free first session',
+                ],
+                [
+                    'number' => '02',
+                    'icon' => '💡',
+                    'title' => 'Child Observation',
+                    'description' => 'Teachers get to know the child through play, storytelling, and light interaction.',
+                    'highlight' => 'Child friendly',
+                ],
+                [
+                    'number' => '03',
+                    'icon' => '🚀',
+                    'title' => 'School Orientation',
+                    'description' => 'Children begin adapting to class, teachers, friends, daily prayers, and learning rhythm.',
+                    'highlight' => 'Grow confident',
+                ],
+            ],
+            'note' => 'Want a clearer admission overview? Parents can continue to the registration flow below.',
+            'button' => 'View Admission Flow',
+        ],
+        /* /PPDB_PSB_INSPIRED_SECTION_FINAL */
+
         'steps_intro' => [
             'eyebrow' => 'Admission Flow',
             'heading' => 'Four light steps before your child starts school.',

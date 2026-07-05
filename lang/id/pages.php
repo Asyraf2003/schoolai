@@ -60,6 +60,40 @@ return [
                 ['icon' => '🧡', 'title' => 'Ramah Orang Tua', 'text' => 'Komunikasi hangat sejak proses daftar.'],
             ],
         ],
+
+        /* PPDB_PSB_INSPIRED_SECTION_FINAL */
+        'psb_showcase' => [
+            'eyebrow' => 'Program Khusus PPDB',
+            'title' => 'Alur Masuk Al Mustaqbal yang Ringan, Hangat, dan Terarah',
+            'subtitle' => 'Bagian ini dummy, dibuat untuk memberi rasa seperti halaman PSB resmi: informatif, rapi, dan tetap hidup tanpa gambar eksternal.',
+            'items' => [
+                [
+                    'number' => '01',
+                    'icon' => '✓',
+                    'title' => 'Konsultasi Keluarga',
+                    'description' => 'Orang tua bertanya kebutuhan anak, jenjang yang cocok, dan jadwal kunjungan sekolah.',
+                    'highlight' => 'Gratis sesi awal',
+                ],
+                [
+                    'number' => '02',
+                    'icon' => '💡',
+                    'title' => 'Observasi Anak',
+                    'description' => 'Guru mengenal kesiapan anak lewat bermain, bercerita, dan interaksi ringan.',
+                    'highlight' => 'Ramah anak',
+                ],
+                [
+                    'number' => '03',
+                    'icon' => '🚀',
+                    'title' => 'Orientasi Sekolah',
+                    'description' => 'Anak mulai beradaptasi dengan kelas, guru, teman, doa harian, dan ritme belajar.',
+                    'highlight' => 'Mulai percaya diri',
+                ],
+            ],
+            'note' => 'Ingin tahu gambaran PPDB lebih lengkap? Orang tua dapat lanjut melihat alur pendaftaran di bawah ini.',
+            'button' => 'Lihat Alur PPDB',
+        ],
+        /* /PPDB_PSB_INSPIRED_SECTION_FINAL */
+
         'steps_intro' => [
             'eyebrow' => 'Alur Pendaftaran',
             'heading' => 'Empat langkah ringan sebelum anak mulai bersekolah.',
