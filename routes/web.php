@@ -7,6 +7,10 @@ use App\Http\Controllers\Admin\SiteStatisticController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::view('/ppdb', 'pages.ppdb')->name('ppdb');
+Route::view('/artikel', 'pages.artikel')->name('artikel');
+Route::view('/galeri', 'pages.galeri')->name('galeri');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');

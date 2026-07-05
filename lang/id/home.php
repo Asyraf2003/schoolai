@@ -19,7 +19,7 @@ return [
         'logo_image_alt' => 'Al Mustaqbal School',
         'primary_cta' => [
             'label' => 'Daftar PPDB',
-            'href' => '#ppdb',
+            'href' => '/ppdb',
         ],
         'secondary_cta' => [
             'label' => 'Lihat Program',
@@ -48,15 +48,11 @@ return [
             ],
             [
                 'label' => 'Galeri',
-                'href' => '#galeri',
+                'href' => '/galeri',
             ],
             [
                 'label' => 'Artikel',
-                'href' => '#artikel',
-            ],
-            [
-                'label' => 'PPDB',
-                'href' => '#ppdb',
+                'href' => '/artikel',
             ],
             [
                 'label' => 'Kontak',
@@ -65,7 +61,7 @@ return [
         ],
         'cta' => [
             'label' => 'Daftar Sekarang',
-            'href' => '#ppdb',
+            'href' => '/ppdb',
         ],
         'mobile_open_label' => 'Buka menu',
     ],
@@ -130,7 +126,7 @@ return [
         'description' => 'Pendaftaran peserta didik baru dapat dilakukan dengan lebih mudah. Informasi akademik, kegiatan, dan proses PPDB tersedia dalam satu tempat.',
         'cta' => [
             'label' => 'Daftar Sekarang',
-            'href' => '#ppdb',
+            'href' => '/ppdb',
         ],
         'steps' => [
             [
@@ -521,7 +517,7 @@ return [
         'empty' => 'Belum ada artikel terbaru.',
         'cta' => [
             'label' => 'Lihat Semua Cerita',
-            'href' => '#artikel',
+            'href' => '/artikel',
         ],
         'items' => [
             [
@@ -535,7 +531,7 @@ return [
                 'title' => 'Ritme Belajar Anak: Tenang, Terarah, dan Tidak Terburu-buru',
                 'description' => 'Bagaimana sekolah menyusun kegiatan harian agar anak punya waktu belajar, bermain, berdoa, bertanya, dan berani mencoba.',
                 'highlight' => 'Fokus: rutinitas belajar harian',
-                'href' => '#artikel',
+                'href' => '/artikel',
             ],
             [
                 'issue' => '02',
@@ -548,7 +544,7 @@ return [
                 'title' => 'Adab Kecil yang Dibiasakan Setiap Hari',
                 'description' => 'Dari salam, antre, merapikan barang, sampai berani meminta maaf. Hal kecil, dampaknya tidak sekecil ego manusia dewasa.',
                 'highlight' => 'Fokus: pembiasaan karakter',
-                'href' => '#artikel',
+                'href' => '/artikel',
             ],
             [
                 'issue' => '03',
@@ -561,7 +557,7 @@ return [
                 'title' => 'Mengenal Alur Program TK, SDIT, Tahfidz, dan Literasi',
                 'description' => 'Ringkasan program belajar yang membantu orang tua memahami fokus sekolah tanpa harus membaca dokumen sepanjang perjanjian pinjaman.',
                 'highlight' => 'Fokus: program sekolah',
-                'href' => '#artikel',
+                'href' => '/artikel',
             ],
             [
                 'issue' => '04',
@@ -574,7 +570,7 @@ return [
                 'title' => 'Belajar Lewat Karya, Cerita, dan Keberanian Tampil',
                 'description' => 'Kegiatan kreatif membantu anak melatih bahasa, ekspresi, kerja sama, dan rasa percaya diri dalam suasana yang aman.',
                 'highlight' => 'Fokus: kreativitas anak',
-                'href' => '#galeri',
+                'href' => '/galeri',
             ],
         ],
     ],
@@ -659,15 +655,15 @@ return [
             ],
             [
                 'label' => 'Galeri',
-                'href' => '#galeri',
+                'href' => '/galeri',
             ],
             [
                 'label' => 'Artikel',
-                'href' => '#artikel',
+                'href' => '/artikel',
             ],
             [
                 'label' => 'PPDB',
-                'href' => '#ppdb',
+                'href' => '/ppdb',
             ],
             [
                 'label' => 'Kontak',
