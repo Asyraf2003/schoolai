@@ -22,7 +22,6 @@ final class HomeController extends Controller
             'featuredPrograms' => __('home.program_unggulan'),
             'gallerySection' => $this->gallerySectionData(),
             'articlesSection' => __('home.artikel'),
-            'facilitiesSection' => __('home.fasilitas'),
             'contactSection' => __('home.kontak'),
             'footerSection' => __('home.footer'),
         ]);
