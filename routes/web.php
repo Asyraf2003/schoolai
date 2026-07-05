@@ -43,7 +43,21 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::redirect('/admin', '/admin/stats')->name('admin.index');
+    /* ADMIN_DESKTOP_DUMMY_ROUTES_FINAL */
+    Route::redirect('/admin', '/admin/dashboard')->name('admin.index');
+
+    Route::view('/admin/dashboard', 'admin.placeholder', ['adminPageKey' => 'dashboard'])
+        ->name('admin.dashboard');
+
+    Route::view('/admin/ppdb', 'admin.placeholder', ['adminPageKey' => 'ppdb'])
+        ->name('admin.ppdb');
+
+    Route::view('/admin/artikel', 'admin.placeholder', ['adminPageKey' => 'artikel'])
+        ->name('admin.artikel');
+
+    Route::view('/admin/galeri', 'admin.placeholder', ['adminPageKey' => 'galeri'])
+        ->name('admin.galeri');
+    /* /ADMIN_DESKTOP_DUMMY_ROUTES_FINAL */
 
     Route::get('/admin/stats', [SiteStatisticController::class, 'edit'])
         ->name('admin.stats.edit');
@@ -51,9 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/stats', [SiteStatisticController::class, 'update'])
         ->name('admin.stats.update');
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::redirect('/dashboard', '/admin/dashboard')->name('dashboard');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });

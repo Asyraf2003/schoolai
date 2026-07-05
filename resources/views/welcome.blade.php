@@ -292,7 +292,6 @@
                   </span>
 
                   <span class="program-card__footer">
-                    <span>Lihat fokus</span>
                     <span aria-hidden="true">→</span>
                   </span>
                 </button>
