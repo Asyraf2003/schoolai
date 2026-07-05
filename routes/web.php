@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\SiteStatisticController;
+use App\Http\Controllers\Admin\GalleryAdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/admin/artikel', 'admin.placeholder', ['adminPageKey' => 'artikel'])
         ->name('admin.artikel');
 
-    Route::view('/admin/galeri', 'admin.placeholder', ['adminPageKey' => 'galeri'])
+    Route::get('/admin/galeri', GalleryAdminController::class)
         ->name('admin.galeri');
     /* /ADMIN_DESKTOP_DUMMY_ROUTES_FINAL */
 

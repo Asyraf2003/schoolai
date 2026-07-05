@@ -28,6 +28,37 @@ return [
         'status' => 'Dummy Mode',
         'notice' => 'This panel is still dummy. The structure comes first, real features can follow when humans stop changing scope every five minutes.',
     ],
+
+    /* ADMIN_GALLERY_DUMMY_LANG_FINAL */
+    'gallery' => [
+        'title' => 'Gallery Admin',
+        'eyebrow' => 'First Module',
+        'heading' => 'Manage Public Gallery',
+        'description' => 'This page is still dummy, but it already maps homepage gallery data toward a future database structure.',
+        'limit_badge' => 'Maximum :max active items',
+        'minimum_badge' => 'Minimum :min item is valid',
+        'video_badge' => 'Video maximum :minutes minutes',
+        'source_title' => 'Dummy source from homepage',
+        'source_description' => 'The list below reads gallery items from lang/home.php, limited to 6 latest items for admin simulation.',
+        'empty_title' => 'No gallery item yet',
+        'empty_description' => 'Later, even 1 gallery item is enough to keep the public section displayable.',
+        'type' => 'Type',
+        'category' => 'Category',
+        'duration' => 'Duration',
+        'date' => 'Date',
+        'caption' => 'Caption',
+        'video_rule' => 'Video rule',
+        'video_rule_text' => 'For video/reel, store duration in seconds and reject anything longer than 180 seconds.',
+        'db_title' => 'Future Database Map',
+        'db_description' => 'No migration is created yet. This is only a structure contract so the future DB does not become a drawer with no shelves.',
+        'field' => 'Field',
+        'data_type' => 'Data Type',
+        'note' => 'Note',
+        'slot_title' => 'Public Display Slot',
+        'slot_description' => 'Homepage and gallery page can read active items ordered by sort_order, maximum 6 for homepage.',
+    ],
+    /* /ADMIN_GALLERY_DUMMY_LANG_FINAL */
+
     'pages' => [
         'dashboard' => [
             'title' => 'Admin Dashboard',
