@@ -11,6 +11,11 @@ final class GalleryAdminController extends Controller
     private const MAX_ITEMS = 6;
     private const MAX_VIDEO_SECONDS = 180;
 
+    public function __invoke(): View
+    {
+        return $this->index();
+    }
+
     public function index(): View
     {
         $items = $this->galleryItems();
