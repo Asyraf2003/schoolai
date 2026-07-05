@@ -710,12 +710,14 @@ return [
 
     'pengumuman' => [
         'eyebrow' => 'Pengumuman',
-        'title' => 'Pengumuman Sekolah',
-        'read_more' => 'Baca Selengkapnya',
+        'title' => 'Papan Informasi Orang Tua',
+        'subtitle' => 'Informasi ringkas tentang agenda, pendaftaran, libur, dan kegiatan sekolah yang perlu diperhatikan keluarga.',
+        'read_more' => 'Lihat Info',
         'items' => [
             [
                 'note_class' => 'sticky-note--yellow',
                 'pin' => '📌',
+                'type' => 'Agenda',
                 'date' => '10 Juli 2026',
                 'title' => 'Jadwal Open House',
                 'description' => 'Kunjungi kelas, kenali guru, dan lihat langsung suasana belajar Islamic School.',
@@ -724,6 +726,7 @@ return [
             [
                 'note_class' => 'sticky-note--pink',
                 'pin' => '📌',
+                'type' => 'PPDB',
                 'date' => '1 Juni – 31 Juli 2026',
                 'title' => 'Pendaftaran PPDB Gelombang 1',
                 'description' => 'Pendaftaran peserta didik baru telah dibuka. Kuota tiap program terbatas.',
@@ -732,6 +735,7 @@ return [
             [
                 'note_class' => 'sticky-note--mint',
                 'pin' => '📌',
+                'type' => 'Libur',
                 'date' => '17 Agustus 2026',
                 'title' => 'Libur Nasional',
                 'description' => 'Sekolah libur dalam rangka Hari Kemerdekaan Republik Indonesia.',
@@ -740,6 +744,7 @@ return [
             [
                 'note_class' => 'sticky-note--purple',
                 'pin' => '📌',
+                'type' => 'Kegiatan',
                 'date' => '20 Desember 2026',
                 'title' => 'Kegiatan Pentas Seni',
                 'description' => 'Penampilan bakat seni, bahasa, dan kreativitas siswa pada akhir semester.',
@@ -751,31 +756,44 @@ return [
 
     'fasilitas' => [
         'eyebrow' => 'Fasilitas Sekolah',
-        'title' => 'Fasilitas Pendukung Islamic School',
+        'title' => 'Ruang Belajar yang Aman dan Hangat',
+        'subtitle' => 'Fasilitas disiapkan untuk mendukung belajar, bermain, ibadah, kesehatan, dan kenyamanan anak selama di sekolah.',
         'items' => [
             [
                 'icon' => '🏫',
                 'label' => 'Ruang Kelas Nyaman',
+                'description' => 'Kelas terang, rapi, dan ramah anak untuk kegiatan belajar harian.',
+                'tag' => 'Belajar',
             ],
             [
                 'icon' => '📚',
                 'label' => 'Perpustakaan',
+                'description' => 'Sudut literasi untuk membangun kebiasaan membaca sejak dini.',
+                'tag' => 'Literasi',
             ],
             [
                 'icon' => '🛝',
                 'label' => 'Area Bermain Aman',
+                'description' => 'Area bermain yang mendukung motorik, kerja sama, dan eksplorasi anak.',
+                'tag' => 'Bermain',
             ],
             [
                 'icon' => '🩺',
                 'label' => 'UKS',
+                'description' => 'Ruang kesehatan dasar untuk penanganan awal saat anak kurang nyaman.',
+                'tag' => 'Kesehatan',
             ],
             [
                 'icon' => '📷',
                 'label' => 'CCTV Area Sekolah',
+                'description' => 'Pemantauan area penting untuk membantu menjaga keamanan lingkungan sekolah.',
+                'tag' => 'Keamanan',
             ],
             [
                 'icon' => '🍎',
                 'label' => 'Kantin Sehat',
+                'description' => 'Pilihan makanan dan minuman yang lebih terarah untuk keseharian siswa.',
+                'tag' => 'Nutrisi',
             ],
         ],
     ],

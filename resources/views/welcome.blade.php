@@ -652,39 +652,82 @@
       </section>
 
       <!-- ======================= PENGUMUMAN ======================= -->
-      <section class="pengumuman-section section" id="pengumuman">
+      <section class="pengumuman-section section" id="pengumuman" aria-labelledby="pengumuman-heading">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head pengumuman-section__head">
             <p class="eyebrow eyebrow--blue">{{ $announcementsSection['eyebrow'] }}</p>
-            <h2 class="section-title">{{ $announcementsSection['title'] }}</h2>
+            <h2 class="section-title" id="pengumuman-heading">{{ $announcementsSection['title'] }}</h2>
+            @if (! empty($announcementsSection['subtitle']))
+              <p class="section-subtitle pengumuman-section__subtitle">
+                {{ $announcementsSection['subtitle'] }}
+              </p>
+            @endif
           </div>
-          <div class="pengumuman-grid">
+
+          <div class="pengumuman-board">
             @forelse ($announcementsSection['items'] as $announcement)
-              <div class="sticky-note {{ $announcement['note_class'] }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . $loop->index : '' }}">
-                <span class="sticky-note__pin">{{ $announcement['pin'] }}</span>
-                <span class="sticky-note__date">{{ $announcement['date'] }}</span>
-                <h3>{{ $announcement['title'] }}</h3>
-                <p>{{ $announcement['description'] }}</p>
-              </div>
+              <article class="pengumuman-card {{ $announcement['note_class'] ?? '' }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : '' }}">
+                <div class="pengumuman-card__date">
+                  <span>{{ $announcement['date'] }}</span>
+                  @if (! empty($announcement['type']))
+                    <small>{{ $announcement['type'] }}</small>
+                  @endif
+                </div>
+
+                <div class="pengumuman-card__body">
+                  <span class="pengumuman-card__pin" aria-hidden="true">{{ $announcement['pin'] ?? '📌' }}</span>
+                  <h3>{{ $announcement['title'] }}</h3>
+                  <p>{{ $announcement['description'] }}</p>
+
+                  @if (! empty($announcement['href']))
+                    <a
+                      href="{{ $announcement['href'] }}"
+                      class="pengumuman-card__link"
+                      aria-label="{{ $announcementsSection['read_more'] }}: {{ $announcement['title'] }}"
+                    >
+                      {{ $announcementsSection['read_more'] }}
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  @endif
+                </div>
+              </article>
             @empty
-              <p>{{ $announcementsSection['empty'] }}</p>
+              <p class="pengumuman-empty">{{ $announcementsSection['empty'] }}</p>
             @endforelse
           </div>
         </div>
       </section>
 
       <!-- ======================= FASILITAS ======================= -->
-      <section class="fasilitas-section section">
+      <section class="fasilitas-section section" id="fasilitas" aria-labelledby="fasilitas-heading">
         <div class="container">
-          <div class="section-head">
-            <h2 class="section-title">{{ $facilitiesSection['title'] }}</h2>
+          <div class="section-head fasilitas-section__head">
+            <p class="eyebrow eyebrow--purple">{{ $facilitiesSection['eyebrow'] }}</p>
+            <h2 class="section-title" id="fasilitas-heading">{{ $facilitiesSection['title'] }}</h2>
+            @if (! empty($facilitiesSection['subtitle']))
+              <p class="section-subtitle fasilitas-section__subtitle">
+                {{ $facilitiesSection['subtitle'] }}
+              </p>
+            @endif
           </div>
-          <div class="fasilitas-grid">
+
+          <div class="fasilitas-showcase" aria-label="Daftar fasilitas sekolah">
             @foreach ($facilitiesSection['items'] as $facility)
-              <div class="fasilitas-item reveal">
-                <span class="fasilitas-item__icon">{{ $facility['icon'] }}</span>
-                <p>{{ $facility['label'] }}</p>
-              </div>
+              <article class="fasilitas-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : '' }}">
+                <div class="fasilitas-card__top">
+                  <span class="fasilitas-card__icon" aria-hidden="true">{{ $facility['icon'] }}</span>
+                  @if (! empty($facility['tag']))
+                    <span class="fasilitas-card__tag">{{ $facility['tag'] }}</span>
+                  @endif
+                </div>
+
+                <div class="fasilitas-card__body">
+                  <h3>{{ $facility['label'] }}</h3>
+                  @if (! empty($facility['description']))
+                    <p>{{ $facility['description'] }}</p>
+                  @endif
+                </div>
+              </article>
             @endforeach
           </div>
         </div>
