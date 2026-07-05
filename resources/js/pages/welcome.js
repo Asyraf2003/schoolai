@@ -182,29 +182,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- 6. FILTER EKSTRAKURIKULER ---------- */
-  var filterBtns = document.querySelectorAll('.filter-btn');
-  var ekskulCards = document.querySelectorAll('.ekskul-card');
-  var ekskulEmpty = document.getElementById('ekskulEmpty');
-
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var filter = btn.getAttribute('data-filter');
-
-      filterBtns.forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-
-      var visibleCount = 0;
-      ekskulCards.forEach(function (card) {
-        var category = card.getAttribute('data-category');
-        var shouldShow = (filter === 'semua' || filter === category);
-        card.classList.toggle('is-hidden', !shouldShow);
-        if (shouldShow) visibleCount++;
-      });
-
-      if (ekskulEmpty) ekskulEmpty.hidden = visibleCount !== 0;
-    });
-  });
 
   /* ---------- 7. LIGHTBOX GALERI ---------- */
   var galeriItems = document.querySelectorAll('.galeri-item');
@@ -438,54 +415,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-
-/* EKSKUL_BENTO_INTERACTIVE_FINAL */
-document.addEventListener('DOMContentLoaded', function () {
-  var ekskulCards = Array.prototype.slice.call(document.querySelectorAll('[data-ekskul-card]'));
-  var filterButtons = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
-
-  if (!ekskulCards.length) return;
-
-  function activateEkskulCard(activeCard) {
-    ekskulCards.forEach(function (card) {
-      var isActive = card === activeCard;
-      card.classList.toggle('is-active', isActive);
-      card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    });
-  }
-
-  function activateFirstVisibleEkskulCard() {
-    var firstVisible = ekskulCards.find(function (card) {
-      return !card.classList.contains('is-hidden');
-    });
-
-    if (firstVisible) {
-      activateEkskulCard(firstVisible);
-    }
-  }
-
-  ekskulCards.forEach(function (card) {
-    card.addEventListener('click', function () {
-      activateEkskulCard(card);
-    });
-
-    card.addEventListener('focus', function () {
-      activateEkskulCard(card);
-    });
-
-    card.addEventListener('mouseenter', function () {
-      if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        activateEkskulCard(card);
-      }
-    });
-  });
-
-  filterButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-      window.requestAnimationFrame(activateFirstVisibleEkskulCard);
-    });
-  });
-});
 
 /* GALLERY_STICKY_STORY_FINAL */
 document.addEventListener('DOMContentLoaded', function () {

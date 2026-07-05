@@ -355,76 +355,6 @@
         </div>
       </section>
 
-      <!-- ======================= EKSTRAKURIKULER ======================= -->
-      <section class="ekskul-section section" id="ekstrakurikuler">
-        <div class="container">
-          <div class="ekskul-section__head reveal">
-            <div>
-              <h2 class="section-title">{{ $extracurricular['title'] }}</h2>
-              <p class="section-subtitle">
-                {{ $extracurricular['subtitle'] }}
-              </p>
-            </div>
-
-            <div class="ekskul-section__badge" aria-hidden="true">
-              <span>{{ count($extracurricular['items']) }}</span>
-              <small>Kegiatan</small>
-            </div>
-          </div>
-
-          <div
-            class="filter-bar ekskul-filter-bar reveal reveal--delay-1"
-            role="group"
-            aria-label="Filter ekstrakurikuler"
-          >
-            @foreach ($extracurricular['filters'] as $filter)
-              <button
-                class="filter-btn {{ $loop->first ? 'active' : '' }}"
-                data-filter="{{ $filter['value'] }}"
-              >
-                {{ $filter['label'] }}
-              </button>
-            @endforeach
-          </div>
-
-          <div class="ekskul-grid" id="ekskulGrid">
-            @forelse ($extracurricular['items'] as $item)
-              <button
-                type="button"
-                class="ekskul-card ekskul-card--{{ $item['variant'] ?? 'normal' }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : '' }}{{ $loop->first ? ' is-active' : '' }}"
-                data-category="{{ $item['category'] }}"
-                data-ekskul-card
-                aria-pressed="{{ $loop->first ? 'true' : 'false' }}"
-                style="--ekskul-accent: {{ $item['accent'] ?? '#0ea5e9' }}"
-              >
-                <span class="ekskul-card__shine" aria-hidden="true"></span>
-
-                <span class="ekskul-card__top">
-                  <span class="ekskul-card__icon">{{ $item['icon'] }}</span>
-                  <span class="ekskul-card__code">{{ $item['code'] }}</span>
-                </span>
-
-                <span class="ekskul-card__body">
-                  <span class="ekskul-card__title">{{ $item['title'] }}</span>
-                  <span class="ekskul-card__description">{{ $item['description'] }}</span>
-                </span>
-
-                <span class="ekskul-card__meta">
-                  <span class="tag {{ $item['tag_class'] }}">{{ $item['category_label'] }}</span>
-                  <span class="ekskul-card__level">{{ $item['level'] }}</span>
-                </span>
-              </button>
-            @empty
-              <p class="text-sm">{{ $extracurricular['empty'] }}</p>
-            @endforelse
-          </div>
-
-          <p class="ekskul-empty" id="ekskulEmpty" hidden>
-            {{ $extracurricular['empty'] }}
-          </p>
-        </div>
-      </section>
-
       <!-- ======================= GALERI ======================= -->
       <section class="galeri-section section" id="galeri">
         <div class="container">
@@ -648,53 +578,6 @@
           @else
             <p class="artikel-empty">{{ $articlesSection['empty'] ?? 'Belum ada artikel terbaru.' }}</p>
           @endif
-        </div>
-      </section>
-
-      <!-- ======================= PENGUMUMAN ======================= -->
-      <section class="pengumuman-section section" id="pengumuman" aria-labelledby="pengumuman-heading">
-        <div class="container">
-          <div class="section-head pengumuman-section__head">
-            <p class="eyebrow eyebrow--blue">{{ $announcementsSection['eyebrow'] }}</p>
-            <h2 class="section-title" id="pengumuman-heading">{{ $announcementsSection['title'] }}</h2>
-            @if (! empty($announcementsSection['subtitle']))
-              <p class="section-subtitle pengumuman-section__subtitle">
-                {{ $announcementsSection['subtitle'] }}
-              </p>
-            @endif
-          </div>
-
-          <div class="pengumuman-board">
-            @forelse ($announcementsSection['items'] as $announcement)
-              <article class="pengumuman-card {{ $announcement['note_class'] ?? '' }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : '' }}">
-                <div class="pengumuman-card__date">
-                  <span>{{ $announcement['date'] }}</span>
-                  @if (! empty($announcement['type']))
-                    <small>{{ $announcement['type'] }}</small>
-                  @endif
-                </div>
-
-                <div class="pengumuman-card__body">
-                  <span class="pengumuman-card__pin" aria-hidden="true">{{ $announcement['pin'] ?? '📌' }}</span>
-                  <h3>{{ $announcement['title'] }}</h3>
-                  <p>{{ $announcement['description'] }}</p>
-
-                  @if (! empty($announcement['href']))
-                    <a
-                      href="{{ $announcement['href'] }}"
-                      class="pengumuman-card__link"
-                      aria-label="{{ $announcementsSection['read_more'] }}: {{ $announcement['title'] }}"
-                    >
-                      {{ $announcementsSection['read_more'] }}
-                      <span aria-hidden="true">→</span>
-                    </a>
-                  @endif
-                </div>
-              </article>
-            @empty
-              <p class="pengumuman-empty">{{ $announcementsSection['empty'] }}</p>
-            @endforelse
-          </div>
         </div>
       </section>
 
