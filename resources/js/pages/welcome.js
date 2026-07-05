@@ -68,23 +68,60 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ---------- 3. SMOOTH SCROLL + NAV AKTIF ---------- */
+  /* NAV_CONTACT_ACTIVE_WHEN_FOOTER_VISIBLE_FINAL */
   var allNavLinks = document.querySelectorAll('.nav-link');
+  var defaultActiveNavLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link.active'));
   var sections = [];
+
+  function getElementDocumentTop(el) {
+    return el.getBoundingClientRect().top + window.pageYOffset;
+  }
+
+  function clearActiveNavLinks() {
+    allNavLinks.forEach(function (link) {
+      link.classList.remove('active');
+    });
+  }
+
+  function restoreDefaultActiveNavLinks() {
+    clearActiveNavLinks();
+
+    defaultActiveNavLinks.forEach(function (link) {
+      if (document.documentElement.contains(link)) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  function setOnlyActiveNavLink(activeLink) {
+    clearActiveNavLinks();
+
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
+  }
 
   allNavLinks.forEach(function (link) {
     var targetId = link.getAttribute('href');
+
     if (targetId && targetId.startsWith('#')) {
       var targetSection = document.querySelector(targetId);
-      if (targetSection) sections.push({ id: targetId, el: targetSection, link: link });
+
+      if (targetSection) {
+        sections.push({ id: targetId, el: targetSection, link: link });
+      }
 
       link.addEventListener('click', function (e) {
         e.preventDefault();
+
         var target = document.querySelector(targetId);
         if (target) {
           var navForOffset = document.getElementById('navbar');
           var navHeight = navForOffset ? navForOffset.offsetHeight : 0;
           var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight + 1;
+
           window.scrollTo({ top: targetPos, behavior: 'smooth' });
+          window.setTimeout(updateActiveNavLink, 90);
         }
       });
     }
@@ -94,13 +131,42 @@ document.addEventListener('DOMContentLoaded', function () {
     var navbarEl = document.getElementById('navbar');
     if (!navbarEl || !sections.length) return;
 
-    var scrollPos = window.scrollY + navbarEl.offsetHeight + 40;
-    var current = sections[0];
+    var navHeight = navbarEl.offsetHeight || 0;
+    var topActivationLine = window.scrollY + navHeight + 48;
+    var footerActivationLine = window.scrollY + window.innerHeight - 120;
+    var pageBottomReached = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 4);
+    var current = null;
+
     sections.forEach(function (section) {
-      if (section.el.offsetTop <= scrollPos) current = section;
+      var sectionTop = getElementDocumentTop(section.el);
+      var sectionHeight = Math.max(section.el.offsetHeight, section.el.scrollHeight, 1);
+      var sectionBottom = sectionTop + sectionHeight;
+      var isContactSection = section.id === '#kontak';
+
+      if (isContactSection) {
+        if (sectionTop <= footerActivationLine || pageBottomReached) {
+          current = section;
+        }
+
+        return;
+      }
+
+      if (sectionTop <= topActivationLine && sectionBottom > topActivationLine) {
+        current = section;
+        return;
+      }
+
+      if (sectionTop <= topActivationLine) {
+        current = section;
+      }
     });
-    allNavLinks.forEach(function (link) { link.classList.remove('active'); });
-    if (current) current.link.classList.add('active');
+
+    if (current) {
+      setOnlyActiveNavLink(current.link);
+      return;
+    }
+
+    restoreDefaultActiveNavLinks();
   }
 
   /* ---------- 4. NAVBAR BERUBAH SAAT SCROLL ---------- */

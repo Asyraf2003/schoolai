@@ -22,7 +22,7 @@
   }
 
   $homeUrl = route('home');
-  $contactUrl = $isHomeNav ? '#kontak' : $homeUrl . '#kontak';
+  $contactUrl = '#kontak';
 
   if ($isHomeNav) {
       $menuItems = $siteNavbar['items'] ?? [];
@@ -68,6 +68,12 @@
   }
 
   $logo = $siteNavbar['logo'] ?? [];
+  $logoImageUrl = $logo['image_url'] ?? null;
+
+  if (empty($logoImageUrl) && ! empty($logo['image'])) {
+      $logoImageUrl = asset(ltrim((string) $logo['image'], '/'));
+  }
+
   $logoHref = $isHomeNav ? ($logo['href'] ?? '#beranda') : $homeUrl;
   $logoLabel = trim((string) (($logo['line_1'] ?? __('pages.common.school_name')) . ' ' . ($logo['line_2'] ?? '')));
   $showCta = $isHomeNav && ! empty($siteNavbar['cta']);
@@ -78,9 +84,9 @@
   <div class="navbar__inner container">
     <a href="{{ $logoHref }}" class="navbar__logo" aria-label="{{ $logoLabel }}">
       <span class="navbar__logo-icon">
-        @if (! empty($logo['image_url']))
+        @if (! empty($logoImageUrl))
           <img
-            src="{{ $logo['image_url'] }}"
+            src="{{ $logoImageUrl }}"
             alt="{{ $logo['image_alt'] ?? $logoLabel }}"
             class="navbar__logo-image"
           />
