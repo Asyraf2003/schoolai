@@ -592,25 +592,35 @@ return [
         'location_label' => 'Lokasi Sekolah',
         'location_hint' => 'Malang, Jawa Timur',
         'location_href' => 'https://www.google.com/maps/search/?api=1&query=Jl.%20Mayjend%20Panjaitan%20No.19%2C%20Penanggungan%2C%20Klojen%2C%20Malang',
-        'phone_title' => 'WhatsApp:',
-        'phone' => '+62 889-9112-8060',
-        'phone_href' => 'https://wa.me/6288991128060',
-        'email_title' => 'Email:',
-        'email' => 'almustaqbal010@gmail.com',
-        'email_href' => 'mailto:almustaqbal010@gmail.com',
-        'socials' => [
+        'channels_title' => 'Hubungi Kami:',
+        'channels' => [
             [
-                'label' => 'Instagram Al Mustaqbal',
+                'label' => 'WhatsApp',
+                'note' => 'Chat Admin',
+                'icon' => 'whatsapp',
+                'href' => 'https://wa.me/6288991128060',
+            ],
+            [
+                'label' => 'Instagram',
+                'note' => 'Kegiatan Sekolah',
                 'icon' => 'instagram',
                 'href' => 'https://www.instagram.com/sdit.almustaqbal',
             ],
             [
-                'label' => 'Email Al Mustaqbal',
+                'label' => 'Facebook',
+                'note' => 'Segera Hadir',
+                'icon' => 'facebook',
+                'href' => '#',
+                'disabled' => true,
+            ],
+            [
+                'label' => 'Email',
+                'note' => 'Kirim Pesan',
                 'icon' => 'email',
                 'href' => 'mailto:almustaqbal010@gmail.com',
             ],
         ],
-        'links_title' => 'Halaman Kami',
+'links_title' => 'Halaman Kami',
         'links' => [
             [
                 'label' => 'Beranda',
