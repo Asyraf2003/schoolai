@@ -74,15 +74,8 @@ return [
                         'short' => 'EN',
                     ],
                 ],
-            ],
-                    [
-                        'locale' => 'en',
-                        'label' => 'English',
-                        'short' => 'EN',
-                    ],
-                ],
-            ],
-        ],
+            ], 
+        ], 
         'cta' => [
             'label' => 'Daftar Sekarang',
             'href' => '/ppdb',
