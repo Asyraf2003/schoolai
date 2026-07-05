@@ -8088,3 +8088,21 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 
+/* FOOTER_BRAND_DESCRIPTION_FINAL */
+/* Deskripsi singkat di bawah logo footer agar kolom brand tidak terasa kosong. */
+.footer-brand__description {
+  max-width: 300px;
+  margin: -10px 0 22px;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 560px) {
+  .footer-brand__description {
+    max-width: none;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+  }
+}
+

@@ -587,9 +587,9 @@ return [
             'image' => '/media/home/logo.png',
             'image_alt' => 'Logo Al Mustaqbal',
             'name' => 'Al Mustaqbal',
+            'description' => 'Sekolah Islam ramah anak yang mendampingi tumbuh kembang, adab, dan rasa ingin tahu siswa sejak usia dini.',
         ],
-        'channels_title' => 'Kontak Cepat:',
-        'channels_title' => 'Kontak Cepat:',
+        'channels_title' => 'Social Media :',
         'channels' => [
             [
                 'label' => 'Lokasi',

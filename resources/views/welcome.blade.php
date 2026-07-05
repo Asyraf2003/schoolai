@@ -642,6 +642,12 @@
             />
           </a>
 
+          @if (! empty($footerSection['brand']['description']))
+            <p class="footer-brand__description">
+              {{ $footerSection['brand']['description'] }}
+            </p>
+          @endif
+
           @if (! empty($footerSection['channels']))
             <div class="footer-channel-group" aria-label="{{ $footerSection['channels_title'] }}">
               <strong>{{ $footerSection['channels_title'] }}</strong>
