@@ -606,10 +606,6 @@
                 <a href="{{ $articlesSection['cta']['href'] }}" class="btn btn--primary">
                   {{ $articlesSection['cta']['label'] }}
                 </a>
-
-                @if (! empty($articlesSection['cta']['note']))
-                  <p>{{ $articlesSection['cta']['note'] }}</p>
-                @endif
               </div>
             @endif
           @else

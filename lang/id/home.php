@@ -522,7 +522,6 @@ return [
         'cta' => [
             'label' => 'Lihat Semua Cerita',
             'href' => '#artikel',
-            'note' => 'Halaman detail artikel bisa ditambahkan nanti saat kontennya sudah siap.',
         ],
         'items' => [
             [
