@@ -7,21 +7,11 @@
 ])
 
 @section('content')
-  <header class="admin-topbar admin-topbar--compact">
-    <div>
-      <p class="admin-topbar__eyebrow">{{ $page['eyebrow'] }}</p>
-      <h1>{{ $page['heading'] }}</h1>
-      <p>{{ $page['description'] }}</p>
-    </div>
-
-    <div class="admin-inline-actions">
-      <span class="admin-counter">{{ str_replace([':count', ':max'], [$items->count(), $limits['max_items']], $page['limit_badge']) }}</span>
-
-      @if($canCreate)
-        <a href="{{ route('admin.galeri.create') }}" class="admin-primary-action">{{ $page['create_button'] }}</a>
-      @endif
-    </div>
-  </header>
+  <div class="admin-gallery-toolbar">
+    @if($canCreate)
+      <a href="{{ route('admin.galeri.create') }}" class="admin-primary-action">{{ $page['create_button'] }}</a>
+    @endif
+  </div>
 
   @if(session('success'))
     <p class="flash-message" role="status">{{ session('success') }}</p>
