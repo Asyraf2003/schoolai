@@ -43,7 +43,7 @@ Route::middleware('guest')->group(function () {
         ->name('google.callback');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'admin.locale'])->group(function () {
     /* ADMIN_DESKTOP_DUMMY_ROUTES_FINAL */
     Route::redirect('/admin', '/admin/dashboard')->name('admin.index');
 

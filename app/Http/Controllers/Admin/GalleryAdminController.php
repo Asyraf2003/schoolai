@@ -17,6 +17,11 @@ final class GalleryAdminController extends Controller
     private const MAX_ITEMS = GalleryItem::MAX_ITEMS;
     private const MAX_PHOTO_KB = GalleryItem::MAX_PHOTO_KB;
 
+    public function __construct()
+    {
+        app()->setLocale('id');
+    }
+
     public function __invoke(): View
     {
         return $this->index();
@@ -48,7 +53,7 @@ final class GalleryAdminController extends Controller
         if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
             return redirect()
                 ->route('admin.galeri')
-                ->withErrors(['title' => 'Maksimal hanya boleh 6 item galeri.']);
+                ->withErrors(['title_id' => 'Maksimal hanya boleh 6 item galeri.']);
         }
 
         return view('admin.gallery.form', [
@@ -56,7 +61,8 @@ final class GalleryAdminController extends Controller
             'mode' => 'create',
             'item' => new GalleryItem([
                 'type' => 'photo',
-                'category' => 'Kegiatan',
+                'category_id' => 'Kegiatan',
+                'category_en' => 'Activities',
                 'sort_order' => min(GalleryItem::query()->count() + 1, self::MAX_ITEMS),
                 'is_published' => true,
                 'published_at' => now(),
@@ -70,7 +76,7 @@ final class GalleryAdminController extends Controller
     {
         if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
             throw ValidationException::withMessages([
-                'title' => 'Maksimal hanya boleh 6 item galeri.',
+                'title_id' => 'Maksimal hanya boleh 6 item galeri.',
             ]);
         }
 
@@ -180,10 +186,13 @@ final class GalleryAdminController extends Controller
         );
 
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:160'],
+            'title_id' => ['required', 'string', 'max:160'],
+            'title_en' => ['nullable', 'string', 'max:160'],
             'type' => ['required', Rule::in(['photo', 'video'])],
-            'category' => ['required', 'string', 'max:80'],
-            'caption' => ['nullable', 'string', 'max:1000'],
+            'category_id' => ['required', 'string', 'max:80'],
+            'category_en' => ['nullable', 'string', 'max:80'],
+            'caption_id' => ['nullable', 'string', 'max:1000'],
+            'caption_en' => ['nullable', 'string', 'max:1000'],
             'media_file' => [
                 Rule::requiredIf(fn (): bool => $needsPhotoFile),
                 Rule::prohibitedIf(fn (): bool => $type === 'video'),
@@ -204,6 +213,8 @@ final class GalleryAdminController extends Controller
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
         ], [
+            'title_id.required' => 'Judul Indonesia wajib diisi.',
+            'category_id.required' => 'Kategori Indonesia wajib diisi.',
             'media_file.required' => 'Upload foto wajib diisi untuk tipe Foto.',
             'media_file.prohibited' => 'Tipe Video tidak menerima upload file. Gunakan URL video.',
             'media_file.image' => 'File harus berupa gambar.',
@@ -216,6 +227,9 @@ final class GalleryAdminController extends Controller
 
         unset($validated['media_file']);
 
+        $validated['title'] = $validated['title_id'];
+        $validated['category'] = $validated['category_id'];
+        $validated['caption'] = $validated['caption_id'] ?? null;
         $validated['is_published'] = $request->boolean('is_published');
 
         if (($validated['published_at'] ?? null) === '') {
@@ -285,10 +299,8 @@ final class GalleryAdminController extends Controller
             return 'https://www.instagram.com/' . $match[1] . '/' . rawurlencode($match[2]) . '/embed';
         }
 
-        if (str_contains($host, 'vimeo.com')) {
-            if (preg_match('~(?:video/)?(\d+)~', $path, $match)) {
-                return 'https://player.vimeo.com/video/' . $match[1];
-            }
+        if (str_contains($host, 'vimeo.com') && preg_match('~(?:video/)?(\d+)~', $path, $match)) {
+            return 'https://player.vimeo.com/video/' . $match[1];
         }
 
         throw ValidationException::withMessages([
@@ -314,7 +326,7 @@ final class GalleryAdminController extends Controller
         $query = GalleryItem::query()->where('is_published', true);
 
         if ($currentItem?->exists) {
-            $query->whereKeyNot($currentItem->getKey());
+            $query->where($currentItem->getKeyName(), '!=', $currentItem->getKey());
         }
 
         return $query->count() < 1;

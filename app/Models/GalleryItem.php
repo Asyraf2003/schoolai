@@ -16,9 +16,15 @@ final class GalleryItem extends Model
 
     protected $fillable = [
         'title',
+        'title_id',
+        'title_en',
         'type',
         'category',
+        'category_id',
+        'category_en',
         'caption',
+        'caption_id',
+        'caption_en',
         'media_url',
         'sort_order',
         'is_published',
@@ -54,6 +60,51 @@ final class GalleryItem extends Model
         return $this->is_video ? 'Video' : 'Foto';
     }
 
+    public function getAdminTitleAttribute(): string
+    {
+        return $this->firstFilled($this->title_id, $this->title, $this->title_en, 'Galeri tanpa judul');
+    }
+
+    public function getAdminCategoryAttribute(): string
+    {
+        return $this->firstFilled($this->category_id, $this->category, $this->category_en, 'Umum');
+    }
+
+    public function getAdminCaptionAttribute(): string
+    {
+        return $this->firstFilled($this->caption_id, $this->caption, $this->caption_en, '');
+    }
+
+    public function titleForLocale(string $locale): string
+    {
+        return $locale === 'en'
+            ? $this->firstFilled($this->title_en, $this->title_id, $this->title, 'Untitled gallery')
+            : $this->firstFilled($this->title_id, $this->title, $this->title_en, 'Galeri tanpa judul');
+    }
+
+    public function categoryForLocale(string $locale): string
+    {
+        return $locale === 'en'
+            ? $this->firstFilled($this->category_en, $this->category_id, $this->category, 'General')
+            : $this->firstFilled($this->category_id, $this->category, $this->category_en, 'Umum');
+    }
+
+    public function captionForLocale(string $locale): string
+    {
+        return $locale === 'en'
+            ? $this->firstFilled($this->caption_en, $this->caption_id, $this->caption, '')
+            : $this->firstFilled($this->caption_id, $this->caption, $this->caption_en, '');
+    }
+
+    public function typeLabelForLocale(string $locale): string
+    {
+        if ($this->is_video) {
+            return 'Video';
+        }
+
+        return $locale === 'en' ? 'Photo' : 'Foto';
+    }
+
     public function getMediaLabelAttribute(): string
     {
         if (! $this->media_url) {
@@ -69,5 +120,16 @@ final class GalleryItem extends Model
         $path = parse_url($this->media_url, PHP_URL_PATH);
 
         return basename(is_string($path) ? $path : $this->media_url);
+    }
+
+    private function firstFilled(mixed ...$values): string
+    {
+        foreach ($values as $value) {
+            if (is_string($value) && trim($value) !== '') {
+                return trim($value);
+            }
+        }
+
+        return '';
     }
 }

@@ -118,19 +118,22 @@ final class HomeController extends Controller
     private function allGalleryItems(): array
     {
         if (Schema::hasTable('gallery_items')) {
+            $locale = app()->getLocale();
+
             return GalleryItem::query()
                 ->where('is_published', true)
                 ->ordered()
                 ->limit(6)
                 ->get()
                 ->map(fn (GalleryItem $item): array => $this->normalizeGalleryItem([
-                    'title' => $item->title,
+                    'title' => $item->titleForLocale($locale),
                     'type' => $item->type,
+                    'type_label' => $item->typeLabelForLocale($locale),
                     'media_url' => $item->media_url,
                     'published_at' => optional($item->published_at)->toDateString() ?? '',
                     'date' => optional($item->published_at)->translatedFormat('j F Y') ?? '',
-                    'caption' => $item->caption ?? '',
-                    'category' => $item->category,
+                    'caption' => $item->captionForLocale($locale),
+                    'category' => $item->categoryForLocale($locale),
                 ]))
                 ->all();
         }
@@ -180,9 +183,8 @@ final class HomeController extends Controller
         $rawMedia = $item['media_url'] ?? $item['thumbnail'] ?? null;
 
         $item['type'] = $type;
-        $item['type_label'] = $type === 'video' ? 'Video' : 'Foto';
+        $item['type_label'] = (string) ($item['type_label'] ?? ($type === 'video' ? 'Video' : (app()->getLocale() === 'en' ? 'Photo' : 'Foto')));
         $item['is_video'] = $type === 'video';
-        $item['is_embed'] = false;
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
         $item['media_url'] = $this->publicAssetUrl($rawMedia);

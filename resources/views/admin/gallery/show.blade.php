@@ -10,8 +10,8 @@
   <header class="admin-topbar admin-topbar--compact">
     <div>
       <p class="admin-topbar__eyebrow">{{ $page['detail_title'] }}</p>
-      <h1>{{ $item->title }}</h1>
-      <p>{{ $item->type_label }} · {{ $item->category }}</p>
+      <h1>{{ $item->admin_title }}</h1>
+      <p>{{ $item->type_label }} · {{ $item->admin_category }}</p>
     </div>
 
     <div class="admin-inline-actions">
@@ -35,9 +35,9 @@
   <section class="gallery-detail-panel">
     <div class="gallery-detail-preview">
       @if($item->is_photo && $item->media_url)
-        <img src="{{ $item->media_url }}" alt="{{ $item->title }}">
+        <img src="{{ $item->media_url }}" alt="{{ $item->admin_title }}">
       @elseif($item->is_video && $item->media_url)
-        <iframe src="{{ $item->media_url }}" title="{{ $item->title }}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       @else
         <span>{{ $item->type_label }}</span>
       @endif
@@ -47,10 +47,10 @@
       <div><dt>{{ $page['status'] }}</dt><dd>{{ $item->is_published ? $page['published'] : $page['draft'] }}</dd></div>
       <div><dt>{{ $page['sort_order'] }}</dt><dd>{{ $item->sort_order }}</dd></div>
       <div><dt>{{ $page['type'] }}</dt><dd>{{ $item->type_label }}</dd></div>
-      <div><dt>{{ $page['category'] }}</dt><dd>{{ $item->category }}</dd></div>
+      <div><dt>{{ $page['category'] }}</dt><dd>{{ $item->admin_category }}</dd></div>
       <div><dt>{{ $page['date'] }}</dt><dd>{{ optional($item->published_at)->format('d M Y H:i') ?? '-' }}</dd></div>
       <div><dt>{{ $page['media'] }}</dt><dd>@if($item->media_url)<a href="{{ $item->media_url }}" target="_blank" rel="noopener">{{ $item->media_label }}</a>@else - @endif</dd></div>
-      <div class="gallery-detail-list__wide"><dt>{{ $page['caption'] }}</dt><dd>{{ $item->caption ?: '-' }}</dd></div>
+      <div class="gallery-detail-list__wide"><dt>{{ $page['caption'] }}</dt><dd>{{ $item->admin_caption ?: '-' }}</dd></div>
     </dl>
   </section>
 

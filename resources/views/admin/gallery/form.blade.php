@@ -43,10 +43,16 @@
 
     <section class="gallery-lite-form__panel">
       <div class="gallery-lite-form__grid">
-        <div class="admin-field admin-field--wide">
-          <label for="title">{{ $form['title'] }}</label>
-          <input id="title" name="title" value="{{ old('title', $item->title) }}" maxlength="160" required>
-          @error('title') <small>{{ $message }}</small> @enderror
+        <div class="admin-field">
+          <label for="title_id">{{ $form['title_id'] }}</label>
+          <input id="title_id" name="title_id" value="{{ old('title_id', $item->title_id ?: $item->title) }}" maxlength="160" required>
+          @error('title_id') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field">
+          <label for="title_en">{{ $form['title_en'] }}</label>
+          <input id="title_en" name="title_en" value="{{ old('title_en', $item->title_en) }}" maxlength="160">
+          @error('title_en') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field">
@@ -60,15 +66,33 @@
         </div>
 
         <div class="admin-field">
-          <label for="category">{{ $form['category'] }}</label>
-          <input id="category" name="category" value="{{ old('category', $item->category) }}" maxlength="80" required>
-          @error('category') <small>{{ $message }}</small> @enderror
+          <label for="sort_order">{{ $form['sort_order'] }}</label>
+          <input id="sort_order" name="sort_order" type="number" min="1" max="{{ $limits['max_items'] }}" value="{{ old('sort_order', $item->sort_order) }}" required>
+          @error('sort_order') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field">
+          <label for="category_id">{{ $form['category_id'] }}</label>
+          <input id="category_id" name="category_id" value="{{ old('category_id', $item->category_id ?: $item->category) }}" maxlength="80" required>
+          @error('category_id') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field">
+          <label for="category_en">{{ $form['category_en'] }}</label>
+          <input id="category_en" name="category_en" value="{{ old('category_en', $item->category_en) }}" maxlength="80">
+          @error('category_en') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field admin-field--wide">
-          <label for="caption">{{ $form['caption'] }}</label>
-          <textarea id="caption" name="caption" rows="3" maxlength="1000">{{ old('caption', $item->caption) }}</textarea>
-          @error('caption') <small>{{ $message }}</small> @enderror
+          <label for="caption_id">{{ $form['caption_id'] }}</label>
+          <textarea id="caption_id" name="caption_id" rows="3" maxlength="1000">{{ old('caption_id', $item->caption_id ?: $item->caption) }}</textarea>
+          @error('caption_id') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="caption_en">{{ $form['caption_en'] }}</label>
+          <textarea id="caption_en" name="caption_en" rows="3" maxlength="1000">{{ old('caption_en', $item->caption_en) }}</textarea>
+          @error('caption_en') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field admin-field--wide" data-gallery-photo-field @if($isVideo) hidden @endif>
@@ -107,12 +131,6 @@
         </div>
 
         <div class="admin-field">
-          <label for="sort_order">{{ $form['sort_order'] }}</label>
-          <input id="sort_order" name="sort_order" type="number" min="1" max="{{ $limits['max_items'] }}" value="{{ old('sort_order', $item->sort_order) }}" required>
-          @error('sort_order') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field">
           <label for="published_at">{{ $form['published_at'] }}</label>
           <input id="published_at" name="published_at" type="datetime-local" value="{{ $publishedAtValue }}">
           @error('published_at') <small>{{ $message }}</small> @enderror
@@ -132,9 +150,9 @@
 
       <div class="gallery-media-review__stage" data-gallery-preview-stage>
         @if($isEdit && $item->is_photo && $item->media_url)
-          <img src="{{ $item->media_url }}" alt="{{ $item->title }}">
+          <img src="{{ $item->media_url }}" alt="{{ $item->admin_title }}">
         @elseif($isEdit && $item->is_video && $item->media_url)
-          <iframe src="{{ $item->media_url }}" title="{{ $item->title }}" loading="lazy" allowfullscreen></iframe>
+          <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
         @else
           <span>{{ $form['review_empty'] }}</span>
         @endif
@@ -164,10 +182,11 @@
       }
 
       function setEmpty() {
-        if (stage) {
-          stage.replaceChildren(document.createElement('span'));
-          stage.firstElementChild.textContent = emptyText;
-        }
+        if (!stage) return;
+
+        const placeholder = document.createElement('span');
+        placeholder.textContent = emptyText;
+        stage.replaceChildren(placeholder);
       }
 
       function updateFields({ clear = false } = {}) {
@@ -191,6 +210,11 @@
         clearPreviewUrl();
 
         if (!file) {
+          setEmpty();
+          return;
+        }
+
+        if (!file.type.startsWith('image/')) {
           setEmpty();
           return;
         }
