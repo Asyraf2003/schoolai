@@ -23,12 +23,22 @@ final class GalleryAdminController extends Controller
 
     public function index(): View
     {
+        $items = GalleryItem::query()->ordered()->get();
+
         return view('admin.gallery.index', [
             'adminPageKey' => 'galeri',
-            'items' => GalleryItem::query()->ordered()->get(),
+            'items' => $items,
             'limits' => $this->limits(),
-            'dbMap' => $this->databaseMap(),
-            'canCreate' => GalleryItem::query()->count() < self::MAX_ITEMS,
+            'canCreate' => $items->count() < self::MAX_ITEMS,
+        ]);
+    }
+
+    public function show(GalleryItem $galleryItem): View
+    {
+        return view('admin.gallery.show', [
+            'adminPageKey' => 'galeri',
+            'item' => $galleryItem,
+            'limits' => $this->limits(),
         ]);
     }
 
@@ -37,7 +47,7 @@ final class GalleryAdminController extends Controller
         if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
             return redirect()
                 ->route('admin.galeri')
-                ->withErrors(['title' => 'Maksimal hanya boleh 6 item galeri. Hapus atau edit item yang sudah ada.']);
+                ->withErrors(['title' => 'Maksimal hanya boleh 6 item galeri.']);
         }
 
         return view('admin.gallery.form', [
@@ -65,12 +75,10 @@ final class GalleryAdminController extends Controller
             ]);
         }
 
-        $data = $this->validatedData($request);
-
-        GalleryItem::query()->create($data);
+        $item = GalleryItem::query()->create($this->validatedData($request));
 
         return redirect()
-            ->route('admin.galeri')
+            ->route('admin.galeri.show', $item)
             ->with('success', 'Item galeri berhasil ditambahkan.');
     }
 
@@ -87,12 +95,10 @@ final class GalleryAdminController extends Controller
 
     public function update(Request $request, GalleryItem $galleryItem): RedirectResponse
     {
-        $data = $this->validatedData($request, $galleryItem);
-
-        $galleryItem->update($data);
+        $galleryItem->update($this->validatedData($request, $galleryItem));
 
         return redirect()
-            ->route('admin.galeri')
+            ->route('admin.galeri.show', $galleryItem)
             ->with('success', 'Item galeri berhasil diperbarui.');
     }
 
@@ -109,6 +115,51 @@ final class GalleryAdminController extends Controller
         return redirect()
             ->route('admin.galeri')
             ->with('success', 'Item galeri berhasil dihapus.');
+    }
+
+    public function toggle(GalleryItem $galleryItem): RedirectResponse
+    {
+        if ($galleryItem->is_published && GalleryItem::query()->where('is_published', true)->count() <= 1) {
+            return back()->withErrors([
+                'is_published' => 'Minimal harus ada 1 item galeri yang published.',
+            ]);
+        }
+
+        $galleryItem->update([
+            'is_published' => ! $galleryItem->is_published,
+        ]);
+
+        return back()->with('success', 'Status item galeri berhasil diubah.');
+    }
+
+    public function moveUp(GalleryItem $galleryItem): RedirectResponse
+    {
+        $previousItem = GalleryItem::query()
+            ->where('sort_order', '<', $galleryItem->sort_order)
+            ->orderByDesc('sort_order')
+            ->orderByDesc('id')
+            ->first();
+
+        if ($previousItem) {
+            $this->swapSortOrder($galleryItem, $previousItem);
+        }
+
+        return back()->with('success', 'Posisi item galeri diperbarui.');
+    }
+
+    public function moveDown(GalleryItem $galleryItem): RedirectResponse
+    {
+        $nextItem = GalleryItem::query()
+            ->where('sort_order', '>', $galleryItem->sort_order)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->first();
+
+        if ($nextItem) {
+            $this->swapSortOrder($galleryItem, $nextItem);
+        }
+
+        return back()->with('success', 'Posisi item galeri diperbarui.');
     }
 
     private function validatedData(Request $request, ?GalleryItem $galleryItem = null): array
@@ -170,6 +221,14 @@ final class GalleryAdminController extends Controller
         return $query->count() < 1;
     }
 
+    private function swapSortOrder(GalleryItem $firstItem, GalleryItem $secondItem): void
+    {
+        $firstSortOrder = $firstItem->sort_order;
+
+        $firstItem->update(['sort_order' => $secondItem->sort_order]);
+        $secondItem->update(['sort_order' => $firstSortOrder]);
+    }
+
     private function limits(): array
     {
         return [
@@ -186,23 +245,6 @@ final class GalleryAdminController extends Controller
             'photo' => 'Foto',
             'video' => 'Video',
             'reel' => 'Reel',
-        ];
-    }
-
-    private function databaseMap(): array
-    {
-        return [
-            ['field' => 'id', 'type' => 'bigint unsigned', 'note' => 'Primary key.'],
-            ['field' => 'title', 'type' => 'varchar(160)', 'note' => 'Judul item galeri. Wajib.'],
-            ['field' => 'type', 'type' => 'varchar(16)', 'note' => 'photo, video, atau reel.'],
-            ['field' => 'category', 'type' => 'varchar(80)', 'note' => 'Kategori tampilan publik.'],
-            ['field' => 'caption', 'type' => 'text nullable', 'note' => 'Deskripsi singkat.'],
-            ['field' => 'thumbnail_url', 'type' => 'varchar(255) nullable', 'note' => 'Path/URL thumbnail.'],
-            ['field' => 'media_url', 'type' => 'varchar(255) nullable', 'note' => 'Path/URL foto atau video.'],
-            ['field' => 'duration_seconds', 'type' => 'unsigned smallint nullable', 'note' => 'Wajib untuk video/reel. Max 180.'],
-            ['field' => 'sort_order', 'type' => 'unsigned tinyint', 'note' => 'Urutan tampil. Max 6 item.'],
-            ['field' => 'is_published', 'type' => 'boolean', 'note' => 'Status tampil di publik.'],
-            ['field' => 'published_at', 'type' => 'timestamp nullable', 'note' => 'Tanggal publikasi.'],
         ];
     }
 }

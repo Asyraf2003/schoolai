@@ -66,6 +66,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/galeri', [GalleryAdminController::class, 'store'])
         ->name('admin.galeri.store');
 
+    Route::get('/admin/galeri/{galleryItem}', [GalleryAdminController::class, 'show'])
+        ->name('admin.galeri.show');
+
     Route::get('/admin/galeri/{galleryItem}/edit', [GalleryAdminController::class, 'edit'])
         ->name('admin.galeri.edit');
 
@@ -74,6 +77,15 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/admin/galeri/{galleryItem}', [GalleryAdminController::class, 'destroy'])
         ->name('admin.galeri.destroy');
+
+    Route::patch('/admin/galeri/{galleryItem}/toggle', [GalleryAdminController::class, 'toggle'])
+        ->name('admin.galeri.toggle');
+
+    Route::patch('/admin/galeri/{galleryItem}/move-up', [GalleryAdminController::class, 'moveUp'])
+        ->name('admin.galeri.move-up');
+
+    Route::patch('/admin/galeri/{galleryItem}/move-down', [GalleryAdminController::class, 'moveDown'])
+        ->name('admin.galeri.move-down');
     /* /REAL_GALLERY_CRUD_ROUTES_FINAL */
     /* /ADMIN_DESKTOP_DUMMY_ROUTES_FINAL */
 

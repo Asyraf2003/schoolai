@@ -13,14 +13,13 @@
 ])
 
 @section('content')
-  <header class="admin-topbar">
+  <header class="admin-topbar admin-topbar--compact">
     <div>
       <p class="admin-topbar__eyebrow">{{ $page['eyebrow'] }}</p>
       <h1>{{ $isEdit ? $page['edit_title'] : $page['create_title'] }}</h1>
-      <p>{{ $page['video_rule_text'] }}</p>
     </div>
 
-    <a href="{{ route('admin.galeri') }}" class="admin-primary-action admin-primary-action--ghost">{{ $page['back_button'] }}</a>
+    <a href="{{ $isEdit ? route('admin.galeri.show', $item) : route('admin.galeri') }}" class="admin-primary-action admin-primary-action--ghost">{{ $page['back_button'] }}</a>
   </header>
 
   @if($errors->any())
@@ -31,14 +30,14 @@
     </div>
   @endif
 
-  <form method="POST" action="{{ $action }}" class="gallery-admin-form">
+  <form method="POST" action="{{ $action }}" class="gallery-lite-form">
     @csrf
     @if($isEdit)
       @method('PUT')
     @endif
 
-    <section class="gallery-form-panel">
-      <div class="gallery-form-grid">
+    <section class="gallery-lite-form__panel">
+      <div class="gallery-lite-form__grid">
         <div class="admin-field admin-field--wide">
           <label for="title">{{ $form['title'] }}</label>
           <input id="title" name="title" value="{{ old('title', $item->title) }}" maxlength="160" required>
@@ -63,28 +62,25 @@
 
         <div class="admin-field admin-field--wide">
           <label for="caption">{{ $form['caption'] }}</label>
-          <textarea id="caption" name="caption" rows="4" maxlength="1000">{{ old('caption', $item->caption) }}</textarea>
+          <textarea id="caption" name="caption" rows="3" maxlength="1000">{{ old('caption', $item->caption) }}</textarea>
           @error('caption') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field">
           <label for="thumbnail_url">{{ $form['thumbnail_url'] }}</label>
           <input id="thumbnail_url" name="thumbnail_url" value="{{ old('thumbnail_url', $item->thumbnail_url) }}" maxlength="255">
-          <em>{{ $form['hint_media'] }}</em>
           @error('thumbnail_url') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field">
           <label for="media_url">{{ $form['media_url'] }}</label>
           <input id="media_url" name="media_url" value="{{ old('media_url', $item->media_url) }}" maxlength="255">
-          <em>{{ $form['hint_media'] }}</em>
           @error('media_url') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field">
           <label for="duration_seconds">{{ $form['duration_seconds'] }}</label>
           <input id="duration_seconds" name="duration_seconds" type="number" min="1" max="{{ $limits['max_video_seconds'] }}" value="{{ old('duration_seconds', $item->duration_seconds) }}">
-          <em>{{ $form['hint_duration'] }}</em>
           @error('duration_seconds') <small>{{ $message }}</small> @enderror
         </div>
 
@@ -120,9 +116,7 @@
     </section>
 
     <div class="admin-actions">
-      <button type="submit" class="admin-save-btn">
-        {{ $isEdit ? $page['update_button'] : $page['save_button'] }}
-      </button>
+      <button type="submit" class="admin-save-btn">{{ $isEdit ? $page['update_button'] : $page['save_button'] }}</button>
     </div>
   </form>
 @endsection
