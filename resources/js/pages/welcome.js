@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   // Jalankan sekali di awal untuk set kondisi awal
   handleNavbarScroll();
-  handleScrollTopBtn();
   updateActiveNavLink();
 
   /* ---------- 5. ANIMASI ANGKA STATISTIK ---------- */
