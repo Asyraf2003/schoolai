@@ -68,7 +68,13 @@
             d="M 40 76 C 150 8, 250 118, 360 58 S 570 18, 670 72 S 810 112, 860 40"
           />
         </svg>
-        <span class="ppdb-flight-plane">✈</span>
+        <span class="ppdb-flight-plane" aria-hidden="true">
+          <svg class="ppdb-paper-plane" viewBox="0 0 96 96" role="img" focusable="false">
+            <path class="ppdb-paper-plane__body" d="M8 47.5 84 14 61 84 43.5 57.5 27 72 31.5 52.5 8 47.5Z" />
+            <path class="ppdb-paper-plane__fold" d="M31.5 52.5 84 14 43.5 57.5 61 84" />
+            <path class="ppdb-paper-plane__shine" d="M43.5 57.5 84 14 31.5 52.5" />
+          </svg>
+        </span>
       </div>
 
       <div class="ppdb-work-grid">
