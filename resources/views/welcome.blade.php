@@ -648,6 +648,10 @@
             </p>
           @endif
 
+
+        </div>
+
+        <div class="footer-channels">
           @if (! empty($footerSection['channels']))
             <div class="footer-channel-group" aria-label="{{ $footerSection['channels_title'] }}">
               <strong>{{ $footerSection['channels_title'] }}</strong>
