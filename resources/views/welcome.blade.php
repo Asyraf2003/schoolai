@@ -692,16 +692,23 @@
             />
           </a>
 
-          <div class="footer-address">
-            <strong>{{ $footerSection['address_title'] }}</strong>
-            @foreach ($footerSection['address_lines'] as $line)
-              <p>{{ $line }}</p>
-            @endforeach
+          <div class="footer-location-line">
+            <strong>{{ $footerSection['location_title'] }}</strong>
+            <a
+              href="{{ $footerSection['location_href'] }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ $footerSection['location_label'] }}
+            </a>
+            @if (! empty($footerSection['location_hint']))
+              <p>{{ $footerSection['location_hint'] }}</p>
+            @endif
           </div>
 
           <div class="footer-contact-line">
             <strong>{{ $footerSection['phone_title'] }}</strong>
-            <a href="{{ $footerSection['phone_href'] }}">{{ $footerSection['phone'] }}</a>
+            <a href="{{ $footerSection['phone_href'] }}" target="_blank" rel="noopener noreferrer">{{ $footerSection['phone'] }}</a>
           </div>
 
           <div class="footer-contact-line">

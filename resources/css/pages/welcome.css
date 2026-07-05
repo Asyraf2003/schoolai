@@ -7711,3 +7711,54 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 
+/* FOOTER_CONTACT_SUMMARY_FINAL */
+/* Footer kontak ringkas: lokasi klik ke Google Maps, detail penuh tetap di section Hubungi Kami. */
+.footer-location-line,
+.footer-contact-line {
+  margin-bottom: 18px;
+  color: #444;
+}
+
+.footer-location-line strong,
+.footer-contact-line strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #444;
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+
+.footer-location-line a,
+.footer-contact-line a {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  color: #444;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  text-decoration: none;
+}
+
+.footer-location-line a::after {
+  content: "↗";
+  margin-left: 6px;
+  color: #f5a623;
+  font-size: 0.82rem;
+  transform: translateY(-1px);
+}
+
+.footer-location-line p {
+  margin: 4px 0 0;
+  color: #777;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.footer-location-line a:hover,
+.footer-contact-line a:hover,
+.footer-location-line a:focus-visible,
+.footer-contact-line a:focus-visible {
+  color: #f5a623;
+  outline: none;
+}
+
