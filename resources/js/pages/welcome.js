@@ -81,7 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         var target = document.querySelector(targetId);
         if (target) {
-          var navHeight = document.getElementById('navbar').offsetHeight;
+          var navForOffset = document.getElementById('navbar');
+          var navHeight = navForOffset ? navForOffset.offsetHeight : 0;
           var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight + 1;
           window.scrollTo({ top: targetPos, behavior: 'smooth' });
         }
@@ -90,7 +91,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   function updateActiveNavLink() {
-    var scrollPos = window.scrollY + document.getElementById('navbar').offsetHeight + 40;
+    var navbarEl = document.getElementById('navbar');
+    if (!navbarEl || !sections.length) return;
+
+    var scrollPos = window.scrollY + navbarEl.offsetHeight + 40;
     var current = sections[0];
     sections.forEach(function (section) {
       if (section.el.offsetTop <= scrollPos) current = section;
@@ -102,6 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------- 4. NAVBAR BERUBAH SAAT SCROLL ---------- */
   var navbar = document.getElementById('navbar');
   function handleNavbarScroll() {
+    if (!navbar) return;
+
     if (window.scrollY > 40) {
       navbar.classList.add('is-scrolled');
     } else {
@@ -211,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+    if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
   });
 
   /* ---------- 9. ANIMASI REVEAL SAAT SCROLL ---------- */
@@ -462,3 +468,127 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+/* PUBLIC_PAGES_INTERACTION_FINAL */
+document.addEventListener('DOMContentLoaded', function () {
+  var articleFilters = Array.prototype.slice.call(document.querySelectorAll('[data-public-filter]'));
+  var articleCards = Array.prototype.slice.call(document.querySelectorAll('[data-public-article]'));
+  var articleSearch = document.querySelector('[data-public-search]');
+  var activeArticleFilter = 'all';
+
+  function activateButton(buttons, activeButton) {
+    buttons.forEach(function (button) {
+      button.classList.toggle('is-active', button === activeButton);
+      button.setAttribute('aria-pressed', button === activeButton ? 'true' : 'false');
+    });
+  }
+
+  function updateArticles() {
+    var query = articleSearch ? articleSearch.value.trim().toLowerCase() : '';
+
+    articleCards.forEach(function (card) {
+      var category = card.getAttribute('data-category') || '';
+      var text = card.textContent.toLowerCase();
+      var categoryMatch = activeArticleFilter === 'all' || category === activeArticleFilter;
+      var queryMatch = !query || text.indexOf(query) !== -1;
+
+      card.classList.toggle('is-hidden', !(categoryMatch && queryMatch));
+    });
+  }
+
+  if (articleCards.length) {
+    articleFilters.forEach(function (button) {
+      button.setAttribute('aria-pressed', button.classList.contains('is-active') ? 'true' : 'false');
+      button.addEventListener('click', function () {
+        activeArticleFilter = button.getAttribute('data-public-filter') || 'all';
+        activateButton(articleFilters, button);
+        updateArticles();
+      });
+    });
+
+    if (articleSearch) {
+      articleSearch.addEventListener('input', updateArticles);
+    }
+
+    updateArticles();
+  }
+
+  var galleryFilters = Array.prototype.slice.call(document.querySelectorAll('[data-public-gallery-filter]'));
+  var galleryCards = Array.prototype.slice.call(document.querySelectorAll('[data-public-gallery-card]'));
+  var activeGalleryFilter = 'all';
+
+  function updateGallery() {
+    galleryCards.forEach(function (card) {
+      var category = card.getAttribute('data-category') || '';
+      var type = card.getAttribute('data-type') || '';
+      var match = activeGalleryFilter === 'all' || category === activeGalleryFilter || type === activeGalleryFilter;
+
+      card.classList.toggle('is-hidden', !match);
+    });
+  }
+
+  if (galleryCards.length) {
+    galleryFilters.forEach(function (button) {
+      button.setAttribute('aria-pressed', button.classList.contains('is-active') ? 'true' : 'false');
+      button.addEventListener('click', function () {
+        activeGalleryFilter = button.getAttribute('data-public-gallery-filter') || 'all';
+        activateButton(galleryFilters, button);
+        updateGallery();
+      });
+    });
+
+    updateGallery();
+  }
+
+  var publicLightbox = document.querySelector('[data-public-lightbox]');
+  var lightboxVisualPublic = document.querySelector('[data-public-lightbox-visual]');
+  var lightboxTitlePublic = document.querySelector('[data-public-lightbox-title]');
+  var lightboxCaptionPublic = document.querySelector('[data-public-lightbox-caption]');
+  var lightboxClosePublic = Array.prototype.slice.call(document.querySelectorAll('[data-public-lightbox-close]'));
+  var publicLastFocused = null;
+
+  function closePublicLightbox() {
+    if (!publicLightbox) return;
+
+    publicLightbox.hidden = true;
+    document.body.style.overflow = '';
+
+    if (publicLastFocused && publicLastFocused.focus) {
+      publicLastFocused.focus();
+    }
+  }
+
+  function openPublicLightbox(card) {
+    if (!publicLightbox || !lightboxVisualPublic || !lightboxTitlePublic || !lightboxCaptionPublic) return;
+
+    publicLastFocused = document.activeElement;
+    lightboxVisualPublic.textContent = card.getAttribute('data-emoji') || '';
+    lightboxVisualPublic.style.background = 'linear-gradient(135deg, ' + getComputedStyle(card).getPropertyValue('--gallery-g1') + ', ' + getComputedStyle(card).getPropertyValue('--gallery-g2') + ')';
+    lightboxTitlePublic.textContent = card.getAttribute('data-title') || '';
+    lightboxCaptionPublic.textContent = card.getAttribute('data-caption') || '';
+    publicLightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+
+    var closeButton = publicLightbox.querySelector('.public-lightbox__close');
+    if (closeButton) closeButton.focus();
+  }
+
+  if (publicLightbox && galleryCards.length) {
+    galleryCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        openPublicLightbox(card);
+      });
+    });
+
+    lightboxClosePublic.forEach(function (button) {
+      button.addEventListener('click', closePublicLightbox);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && publicLightbox && !publicLightbox.hidden) {
+        closePublicLightbox();
+      }
+    });
+  }
+});
+/* /PUBLIC_PAGES_INTERACTION_FINAL */
