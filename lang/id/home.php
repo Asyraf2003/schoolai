@@ -616,21 +616,95 @@ return [
     'footer' => [
         'brand' => [
             'href' => '#beranda',
-            'icon' => '🌈',
-            'line_1' => 'Al Mustaqbal',
-            'line_2' => 'School',
-            'description' => 'Lingkungan belajar Islam yang hangat untuk menumbuhkan adab, ilmu, kreativitas, dan kedekatan anak dengan Al-Qur’an.',
+            'image' => '/media/home/logo.png',
+            'image_alt' => 'Logo Al Mustaqbal',
+            'name' => 'Al Mustaqbal',
         ],
+        'address_title' => 'Alamat:',
+        'address_lines' => [
+            'Jl. Mayjend Panjaitan No.19, Penanggungan, Kec. Klojen, Malang',
+            'Kota Malang, Jawa Timur 65113',
+        ],
+        'phone_title' => 'Telepon:',
+        'phone' => '+62 889-9112-8060',
+        'phone_href' => 'https://wa.me/6288991128060',
+        'email_title' => 'Email:',
+        'email' => 'almustaqbal010@gmail.com',
+        'email_href' => 'mailto:almustaqbal010@gmail.com',
         'socials' => [
             [
-                'label' => 'Instagram Al Mustaqbal School',
-                'icon' => '📸',
+                'label' => 'WhatsApp Al Mustaqbal',
+                'icon' => 'WA',
+                'href' => 'https://wa.me/6288991128060',
+            ],
+            [
+                'label' => 'Instagram Al Mustaqbal',
+                'icon' => 'IG',
                 'href' => 'https://www.instagram.com/sdit.almustaqbal',
+            ],
+            [
+                'label' => 'Email Al Mustaqbal',
+                'icon' => '✉',
+                'href' => 'mailto:almustaqbal010@gmail.com',
+            ],
+        ],
+        'links_title' => 'Halaman Kami',
+        'links' => [
+            [
+                'label' => 'Beranda',
+                'href' => '#beranda',
+            ],
+            [
+                'label' => 'Tentang',
+                'href' => '#visi-misi',
+            ],
+            [
+                'label' => 'Artikel',
+                'href' => '/artikel',
+            ],
+            [
+                'label' => 'Galeri',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'PPDB',
+                'href' => '/ppdb',
+            ],
+            [
+                'label' => 'Kontak',
+                'href' => '#kontak',
+            ],
+        ],
+        'gallery_links_title' => 'Galeri Kami',
+        'gallery_links' => [
+            [
+                'label' => 'SDIT',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Bahasa',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Taman Kanak-Kanak',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Tahfidz',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Perpustakaan',
+                'href' => '/galeri',
             ],
         ],
         'partners_title' => 'Mitra Kami',
-        'partners_subtitle' => 'Kolaborasi dan jejaring yang mendukung kegiatan, kepedulian, pengembangan digital, olahraga, dan dokumentasi sekolah.',
         'partners' => [
+            [
+                'label' => 'Dokumentasi Kegiatan',
+                'image' => '/media/home/6.png',
+                'href' => 'https://www.instagram.com/reel/CzFSt1oyYGm',
+            ],
             [
                 'label' => 'SDIT Al Mustaqbal',
                 'image' => '/media/home/2.png',
@@ -651,58 +725,8 @@ return [
                 'image' => '/media/home/5.png',
                 'href' => 'https://digido.co.id/',
             ],
-            [
-                'label' => 'Dokumentasi Kegiatan',
-                'image' => '/media/home/6.png',
-                'href' => 'https://www.instagram.com/reel/CzFSt1oyYGm',
-            ],
         ],
-        'links_title' => 'Tautan',
-        'links' => [
-            [
-                'label' => 'Beranda',
-                'href' => '#beranda',
-            ],
-            [
-                'label' => 'Pendidikan',
-                'href' => '#program',
-            ],
-            [
-                'label' => 'Galeri',
-                'href' => '/galeri',
-            ],
-            [
-                'label' => 'Artikel',
-                'href' => '/artikel',
-            ],
-            [
-                'label' => 'PPDB',
-                'href' => '/ppdb',
-            ],
-            [
-                'label' => 'Kontak',
-                'href' => '#kontak',
-            ],
-        ],
-        'contact_title' => 'Kontak',
-        'contact' => [
-            [
-                'icon' => '📍',
-                'text' => 'Jl. Mayjend Panjaitan No.19, Penanggungan, Kec. Klojen, Malang, Kota Malang, Jawa Timur 65113',
-                'href' => 'https://www.google.com/maps/search/?api=1&query=Jl.%20Mayjend%20Panjaitan%20No.19%2C%20Penanggungan%2C%20Klojen%2C%20Malang',
-            ],
-            [
-                'icon' => '💬',
-                'text' => '+62 889-9112-8060',
-                'href' => 'https://wa.me/6288991128060',
-            ],
-            [
-                'icon' => '✉️',
-                'text' => 'almustaqbal010@gmail.com',
-                'href' => 'mailto:almustaqbal010@gmail.com',
-            ],
-        ],
-        'copyright' => 'Al Mustaqbal School. Semua hak dilindungi.',
+        'copyright' => 'Al Mustaqbal. Semua Hak Dilindungi.',
     ],
 
 ];
