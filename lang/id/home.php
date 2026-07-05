@@ -48,11 +48,11 @@ return [
             ],
             [
                 'label' => 'Galeri',
-                'href' => '/galeri',
+                'href' => '#galeri',
             ],
             [
                 'label' => 'Artikel',
-                'href' => '/artikel',
+                'href' => '#artikel',
             ],
             [
                 'label' => 'Kontak',
