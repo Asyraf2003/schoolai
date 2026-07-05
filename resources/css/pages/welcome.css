@@ -10049,4 +10049,22 @@ h1, h2, h3, h4, p { margin: 0; }
 .galeri-story-visual__video {
   pointer-events: auto;
 }
-/* /HOMEPAGE_GALLERY_PHOTO_VIDEO_FINAL */
+/* /HOMEPAGE_GALLERY_PHOTO_VIDEO_FINAL */\n\n
+/* HOMEPAGE_GALLERY_VIDEO_LAYER_FIX_FINAL */
+.galeri-story-visual__panel {
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 0;
+}
+
+.galeri-story-visual__panel.is-active {
+  pointer-events: auto;
+  visibility: visible;
+  z-index: 2;
+}
+
+.galeri-story-card {
+  cursor: pointer;
+}
+/* /HOMEPAGE_GALLERY_VIDEO_LAYER_FIX_FINAL */
+\n

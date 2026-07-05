@@ -497,6 +497,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   cards.forEach(function (card, index) {
+    card.addEventListener('click', function () {
+      activateGalleryStory(index);
+    });
+
     card.addEventListener('focus', function () {
       activateGalleryStory(index);
     });
