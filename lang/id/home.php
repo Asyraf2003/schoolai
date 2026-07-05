@@ -54,6 +54,16 @@ return [
                 'label' => 'Artikel',
                 'href' => '#artikel',
             ],
+            [
+                'label' => 'Kontak',
+                'href' => '#kontak',
+            ],
+            [
+                'label' => 'Bahasa',
+                'href' => '#',
+                'badge' => 'ID',
+                'disabled' => true,
+            ],
         ],
         'cta' => [
             'label' => 'Daftar Sekarang',
@@ -590,18 +600,13 @@ return [
         'email_href' => 'mailto:almustaqbal010@gmail.com',
         'socials' => [
             [
-                'label' => 'WhatsApp Al Mustaqbal',
-                'icon' => 'WA',
-                'href' => 'https://wa.me/6288991128060',
-            ],
-            [
                 'label' => 'Instagram Al Mustaqbal',
-                'icon' => 'IG',
+                'icon' => 'instagram',
                 'href' => 'https://www.instagram.com/sdit.almustaqbal',
             ],
             [
                 'label' => 'Email Al Mustaqbal',
-                'icon' => '✉',
+                'icon' => 'email',
                 'href' => 'mailto:almustaqbal010@gmail.com',
             ],
         ],

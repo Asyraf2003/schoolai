@@ -53,9 +53,21 @@
           <ul>
             @foreach ($navbar['items'] as $item)
               <li>
-                <a href="{{ $item['href'] }}" class="nav-link {{ $loop->first ? 'active' : '' }}">
-                  {{ $item['label'] }}
-                </a>
+                @if (! empty($item['disabled']))
+                  <span class="nav-link nav-link--dummy" aria-disabled="true">
+                    {{ $item['label'] }}
+                    @if (! empty($item['badge']))
+                      <small class="nav-link__badge">{{ $item['badge'] }}</small>
+                    @endif
+                  </span>
+                @else
+                  <a href="{{ $item['href'] }}" class="nav-link {{ $loop->first ? 'active' : '' }}">
+                    {{ $item['label'] }}
+                    @if (! empty($item['badge']))
+                      <small class="nav-link__badge">{{ $item['badge'] }}</small>
+                    @endif
+                  </a>
+                @endif
               </li>
             @endforeach
           </ul>
@@ -617,7 +629,7 @@
     </main>
 
     <!-- ======================= FOOTER ======================= -->
-    <footer class="site-footer">
+    <footer class="site-footer" id="kontak">
       <div class="container site-footer__grid">
         <div class="footer-brand">
           <a href="{{ $footerSection['brand']['href'] }}" class="footer-brand__logo" aria-label="{{ $footerSection['brand']['name'] }}">
@@ -663,7 +675,25 @@
                   target="{{ str_starts_with($social['href'], 'http') ? '_blank' : '_self' }}"
                   rel="{{ str_starts_with($social['href'], 'http') ? 'noopener noreferrer' : '' }}"
                 >
-                  {{ $social['icon'] }}
+                  @switch($social['icon'])
+                    @case('instagram')
+                      <svg class="footer-social__icon footer-social__icon--instagram" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="4" y="4" width="16" height="16" rx="5"></rect>
+                        <circle cx="12" cy="12" r="3.4"></circle>
+                        <circle cx="17.2" cy="6.8" r="1.1" class="footer-social__dot"></circle>
+                      </svg>
+                      @break
+
+                    @case('email')
+                      <svg class="footer-social__icon footer-social__icon--email" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3.8" y="5.6" width="16.4" height="12.8" rx="2.4"></rect>
+                        <path d="M5 8l7 5 7-5"></path>
+                      </svg>
+                      @break
+
+                    @default
+                      <span class="footer-social__fallback">{{ $social['icon'] }}</span>
+                  @endswitch
                 </a>
               @endforeach
             </div>

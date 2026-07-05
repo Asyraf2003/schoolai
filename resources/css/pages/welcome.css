@@ -7723,3 +7723,94 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 
+/* NAV_CONTACT_LANGUAGE_FOOTER_SOCIAL_FINAL */
+/* Kontak scroll ke footer, Bahasa masih dummy, social icon pakai inline SVG. */
+.nav-link--dummy {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: default;
+  color: rgba(31, 46, 43, 0.55);
+  user-select: none;
+}
+
+.nav-link--dummy:hover {
+  color: rgba(31, 46, 43, 0.55);
+}
+
+.nav-link__badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  height: 20px;
+  padding-inline: 7px;
+  border-radius: 999px;
+  background: rgba(245, 166, 35, 0.14);
+  color: #c47a00;
+  font-size: 0.66rem;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.footer-social a {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #5f5f5f;
+}
+
+.footer-social a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ffc04d, #ff8a3d);
+  opacity: 0;
+  transition: opacity 0.24s ease;
+  z-index: -1;
+}
+
+.footer-social a:hover::before,
+.footer-social a:focus-visible::before {
+  opacity: 1;
+}
+
+.footer-social__icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-social__dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.footer-social__fallback {
+  position: relative;
+  z-index: 1;
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+@media (max-width: 560px) {
+  .nav-link--dummy {
+    opacity: 0.72;
+  }
+
+  .footer-social a {
+    width: 42px;
+    height: 42px;
+  }
+
+  .footer-social__icon {
+    width: 19px;
+    height: 19px;
+  }
+}
+
