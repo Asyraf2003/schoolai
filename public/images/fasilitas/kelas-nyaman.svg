@@ -1,0 +1,33 @@
+<!-- FACILITY_VISUAL_ASSET -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Ruang kelas nyaman</title>
+  <desc id="desc">Ilustrasi ruang kelas hangat dengan papan tulis, meja, buku, dan dekorasi anak.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF1B8"/>
+      <stop offset="100%" stop-color="#FFD3A3"/>
+    </linearGradient>
+    <linearGradient id="board" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2F7D64"/>
+      <stop offset="100%" stop-color="#8BE0C3"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="620" rx="54" fill="url(#bg)"/>
+  <circle cx="780" cy="100" r="76" fill="#fff" opacity=".45"/>
+  <circle cx="96" cy="518" r="92" fill="#fff" opacity=".34"/>
+  <rect x="104" y="112" width="520" height="252" rx="32" fill="url(#board)"/>
+  <rect x="140" y="152" width="448" height="18" rx="9" fill="#fff" opacity=".85"/>
+  <rect x="140" y="196" width="328" height="16" rx="8" fill="#fff" opacity=".68"/>
+  <rect x="140" y="238" width="390" height="16" rx="8" fill="#fff" opacity=".58"/>
+  <rect x="190" y="408" width="520" height="84" rx="28" fill="#FFFFFF" opacity=".92"/>
+  <rect x="246" y="354" width="96" height="160" rx="26" fill="#7C5CFF"/>
+  <rect x="400" y="350" width="108" height="164" rx="28" fill="#F97316"/>
+  <rect x="564" y="354" width="96" height="160" rx="26" fill="#22C55E"/>
+  <circle cx="294" cy="322" r="35" fill="#FFE8C7"/>
+  <circle cx="454" cy="316" r="38" fill="#FFE8C7"/>
+  <circle cx="612" cy="322" r="35" fill="#FFE8C7"/>
+  <path d="M694 150h90a28 28 0 0 1 28 28v148a28 28 0 0 1-28 28h-90z" fill="#fff" opacity=".78"/>
+  <rect x="722" y="190" width="54" height="18" rx="9" fill="#7C5CFF" opacity=".55"/>
+  <rect x="722" y="232" width="62" height="18" rx="9" fill="#F97316" opacity=".55"/>
+  <rect x="722" y="274" width="44" height="18" rx="9" fill="#22C55E" opacity=".55"/>
+</svg>

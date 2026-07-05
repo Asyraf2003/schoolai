@@ -1,0 +1,32 @@
+<!-- FACILITY_VISUAL_ASSET -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Area bermain aman</title>
+  <desc id="desc">Ilustrasi area bermain anak dengan perosotan, bola, awan, dan ruang gerak aman.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE3EC"/>
+      <stop offset="100%" stop-color="#E6DDFF"/>
+    </linearGradient>
+    <linearGradient id="slide" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FF8FAB"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="620" rx="54" fill="url(#bg)"/>
+  <circle cx="140" cy="120" r="58" fill="#fff" opacity=".64"/>
+  <circle cx="196" cy="122" r="42" fill="#fff" opacity=".64"/>
+  <circle cx="736" cy="124" r="60" fill="#fff" opacity=".56"/>
+  <circle cx="790" cy="128" r="38" fill="#fff" opacity=".56"/>
+  <rect x="146" y="448" width="608" height="60" rx="30" fill="#fff" opacity=".72"/>
+  <rect x="270" y="208" width="56" height="260" rx="24" fill="#7C5CFF"/>
+  <rect x="496" y="178" width="56" height="290" rx="24" fill="#22C55E"/>
+  <path d="M310 214h220v70H310z" fill="#211F3B" opacity=".78"/>
+  <path d="M510 278c84 36 132 98 146 186H548c-16-58-54-94-116-112z" fill="url(#slide)"/>
+  <path d="M318 282c-82 42-132 104-150 186h110c18-54 54-92 116-114z" fill="#0EA5E9"/>
+  <circle cx="704" cy="436" r="52" fill="#FACC15"/>
+  <path d="M670 430h68M704 396v80" stroke="#fff" stroke-width="15" stroke-linecap="round" opacity=".88"/>
+  <circle cx="222" cy="404" r="30" fill="#FFE8C7"/>
+  <path d="M188 456c24-38 58-42 92-2" stroke="#211F3B" stroke-width="18" stroke-linecap="round" opacity=".65"/>
+  <circle cx="590" cy="390" r="30" fill="#FFE8C7"/>
+  <path d="M558 440c22-34 54-38 86-2" stroke="#211F3B" stroke-width="18" stroke-linecap="round" opacity=".65"/>
+</svg>

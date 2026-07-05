@@ -594,15 +594,38 @@
             @endif
           </div>
 
-          <div class="fasilitas-showcase" aria-label="Daftar fasilitas sekolah">
+          <div class="fasilitas-showcase fasilitas-showcase--visual" aria-label="Daftar fasilitas sekolah">
             @foreach ($facilitiesSection['items'] as $facility)
-              <article class="fasilitas-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : '' }}">
-                <div class="fasilitas-card__top">
-                  <span class="fasilitas-card__icon" aria-hidden="true">{{ $facility['icon'] }}</span>
-                  @if (! empty($facility['tag']))
-                    <span class="fasilitas-card__tag">{{ $facility['tag'] }}</span>
-                  @endif
-                </div>
+              @php
+                $isFeaturedFacility = ! empty($facility['featured']);
+              @endphp
+
+              <article class="fasilitas-card {{ $isFeaturedFacility ? 'fasilitas-card--visual' : 'fasilitas-card--compact' }} reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : '' }}">
+                @if ($isFeaturedFacility)
+                  <div class="fasilitas-card__media">
+                    @if (! empty($facility['image_url']))
+                      <img
+                        src="{{ $facility['image_url'] }}"
+                        alt="{{ $facility['image_alt'] ?? $facility['label'] }}"
+                        loading="lazy"
+                        class="fasilitas-card__image"
+                      />
+                    @else
+                      <span class="fasilitas-card__image-fallback" aria-hidden="true">{{ $facility['icon'] }}</span>
+                    @endif
+
+                    @if (! empty($facility['tag']))
+                      <span class="fasilitas-card__media-tag">{{ $facility['tag'] }}</span>
+                    @endif
+                  </div>
+                @else
+                  <div class="fasilitas-card__top">
+                    <span class="fasilitas-card__icon" aria-hidden="true">{{ $facility['icon'] }}</span>
+                    @if (! empty($facility['tag']))
+                      <span class="fasilitas-card__tag">{{ $facility['tag'] }}</span>
+                    @endif
+                  </div>
+                @endif
 
                 <div class="fasilitas-card__body">
                   <h3>{{ $facility['label'] }}</h3>
@@ -613,6 +636,18 @@
               </article>
             @endforeach
           </div>
+
+          @if (! empty($facilitiesSection['cta']['href']) && ! empty($facilitiesSection['cta']['label']))
+            <div class="fasilitas-section__action">
+              <a href="{{ $facilitiesSection['cta']['href'] }}" class="btn btn--primary">
+                {{ $facilitiesSection['cta']['label'] }}
+              </a>
+
+              @if (! empty($facilitiesSection['cta']['note']))
+                <p>{{ $facilitiesSection['cta']['note'] }}</p>
+              @endif
+            </div>
+          @endif
         </div>
         <div class="wave-divider" aria-hidden="true">
           <svg viewBox="0 0 1440 120" preserveAspectRatio="none">

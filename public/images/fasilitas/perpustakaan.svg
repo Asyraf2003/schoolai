@@ -1,0 +1,28 @@
+<!-- FACILITY_VISUAL_ASSET -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Perpustakaan sekolah</title>
+  <desc id="desc">Ilustrasi perpustakaan dengan rak buku, buku terbuka, dan suasana literasi anak.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#DDF8EF"/>
+      <stop offset="100%" stop-color="#CFEFFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="620" rx="54" fill="url(#bg)"/>
+  <circle cx="120" cy="110" r="82" fill="#fff" opacity=".42"/>
+  <circle cx="760" cy="510" r="108" fill="#fff" opacity=".35"/>
+  <rect x="110" y="116" width="680" height="330" rx="36" fill="#FFFFFF" opacity=".82"/>
+  <rect x="148" y="164" width="96" height="218" rx="18" fill="#7C5CFF"/>
+  <rect x="264" y="146" width="74" height="236" rx="18" fill="#F97316"/>
+  <rect x="358" y="184" width="86" height="198" rx="18" fill="#22C55E"/>
+  <rect x="466" y="154" width="72" height="228" rx="18" fill="#0EA5E9"/>
+  <rect x="560" y="174" width="92" height="208" rx="18" fill="#FACC15"/>
+  <rect x="674" y="144" width="76" height="238" rx="18" fill="#FF8FAB"/>
+  <rect x="126" y="400" width="648" height="28" rx="14" fill="#211F3B" opacity=".78"/>
+  <path d="M286 474c72-44 142-42 210 0v70c-68-36-138-36-210 0z" fill="#fff"/>
+  <path d="M496 474c70-42 138-42 206 0v70c-68-36-136-36-206 0z" fill="#fff"/>
+  <path d="M286 474c72-44 142-42 210 0" fill="#7C5CFF" stroke="#7C5CFF" stroke-width="18" stroke-linecap="round" opacity=".72"/>
+  <path d="M496 474c70-42 138-42 206 0" fill="#F97316" stroke="#F97316" stroke-width="18" stroke-linecap="round" opacity=".72"/>
+  <circle cx="206" cy="502" r="38" fill="#FFE8C7"/>
+  <path d="M170 548c22-38 52-50 86-2" stroke="#211F3B" stroke-width="18" stroke-linecap="round" opacity=".7"/>
+</svg>
