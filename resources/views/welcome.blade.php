@@ -639,7 +639,6 @@
       <section class="kontak-section section" id="kontak">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow eyebrow--purple">{{ $contactSection['eyebrow'] }}</p>
             <h2 class="section-title">{{ $contactSection['title'] }}</h2>
           </div>
           <div class="kontak-grid">
