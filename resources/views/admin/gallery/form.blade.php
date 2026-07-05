@@ -69,28 +69,16 @@
           @error('caption') <small>{{ $message }}</small> @enderror
         </div>
 
-        <div class="admin-field">
+        <div class="admin-field admin-field--wide">
           <label for="media_file">{{ $form['media_file'] }}</label>
           <input id="media_file" name="media_file" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" @required(! $isEdit)>
-          @if($isEdit && $item->media_url)
-            <em>{{ $form['current_media'] }}: {{ $item->media_url }}</em>
-          @endif
+          <em>
+            {{ $form['media_hint'] }}
+            @if($isEdit && $item->media_url)
+              {{ $form['current_media'] }}: {{ $item->media_filename }}
+            @endif
+          </em>
           @error('media_file') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field">
-          <label for="thumbnail_file">{{ $form['thumbnail_file'] }}</label>
-          <input id="thumbnail_file" name="thumbnail_file" type="file" accept="image/jpeg,image/png,image/webp">
-          @if($isEdit && $item->thumbnail_url)
-            <em>{{ $form['current_thumbnail'] }}: {{ $item->thumbnail_url }}</em>
-          @endif
-          @error('thumbnail_file') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field">
-          <label for="duration_seconds">{{ $form['duration_seconds'] }}</label>
-          <input id="duration_seconds" name="duration_seconds" type="number" min="1" max="{{ $limits['max_video_seconds'] }}" value="{{ old('duration_seconds', $item->duration_seconds) }}">
-          @error('duration_seconds') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field">

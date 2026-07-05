@@ -39,7 +39,7 @@
       @elseif($item->media_url && $item->is_video)
         <video src="{{ $item->media_url }}" controls preload="metadata"></video>
       @else
-        <span>{{ $item->fallback_icon }}</span>
+        <span>{{ $item->type_label }}</span>
       @endif
     </div>
 
@@ -48,10 +48,8 @@
       <div><dt>{{ $page['sort_order'] }}</dt><dd>{{ $item->sort_order }}</dd></div>
       <div><dt>{{ $page['type'] }}</dt><dd>{{ $item->type_label }}</dd></div>
       <div><dt>{{ $page['category'] }}</dt><dd>{{ $item->category }}</dd></div>
-      <div><dt>{{ $page['duration'] }}</dt><dd>{{ $item->duration_label }}</dd></div>
       <div><dt>{{ $page['date'] }}</dt><dd>{{ optional($item->published_at)->format('d M Y H:i') ?? '-' }}</dd></div>
-      <div><dt>{{ $page['thumbnail'] }}</dt><dd>{{ $item->thumbnail_url ?: '-' }}</dd></div>
-      <div><dt>{{ $page['media'] }}</dt><dd>{{ $item->media_url ?: '-' }}</dd></div>
+      <div><dt>{{ $page['media'] }}</dt><dd>{{ $item->media_filename }}</dd></div>
       <div class="gallery-detail-list__wide"><dt>{{ $page['caption'] }}</dt><dd>{{ $item->caption ?: '-' }}</dd></div>
     </dl>
   </section>

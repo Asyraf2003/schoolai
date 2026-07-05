@@ -18,13 +18,9 @@ return new class extends Migration
             $table->string('type', 16)->default('photo');
             $table->string('category', 80)->default('Umum');
             $table->text('caption')->nullable();
-            $table->string('thumbnail_url')->nullable();
             $table->string('media_url')->nullable();
-            $table->unsignedSmallInteger('duration_seconds')->nullable();
             $table->unsignedTinyInteger('sort_order')->default(1);
             $table->boolean('is_published')->default(true);
-            $table->string('fallback_icon', 16)->default('📸');
-            $table->string('accent', 32)->default('#19aee6');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
 
@@ -57,20 +53,16 @@ return new class extends Migration
 
             $type = $item['type'] ?? 'photo';
 
-            if (! in_array($type, ['photo', 'video', 'reel'], true)) {
+            if (! in_array($type, ['photo', 'video'], true)) {
                 $type = 'photo';
             }
-
-            $durationSeconds = $type === 'photo'
-                ? null
-                : min(max((int) ($item['duration_seconds'] ?? 60), 1), 180);
 
             $publishedAt = $now->copy()->subDays($index);
 
             if (! empty($item['published_at']) && is_string($item['published_at'])) {
                 try {
                     $publishedAt = \Carbon\Carbon::parse($item['published_at']);
-                } catch (Throwable) {
+                } catch (\Throwable) {
                     $publishedAt = $now->copy()->subDays($index);
                 }
             }
@@ -80,13 +72,9 @@ return new class extends Migration
                 'type' => $type,
                 'category' => (string) ($item['category'] ?? 'Umum'),
                 'caption' => (string) ($item['caption'] ?? ''),
-                'thumbnail_url' => ! empty($item['thumbnail']) ? (string) $item['thumbnail'] : null,
-                'media_url' => ! empty($item['media_url']) ? (string) $item['media_url'] : null,
-                'duration_seconds' => $durationSeconds,
+                'media_url' => (string) ($item['media_url'] ?? $item['thumbnail'] ?? ''),
                 'sort_order' => $index + 1,
                 'is_published' => true,
-                'fallback_icon' => (string) ($item['fallback_icon'] ?? $item['emoji'] ?? '📸'),
-                'accent' => (string) ($item['accent'] ?? '#19aee6'),
                 'published_at' => $publishedAt,
                 'created_at' => $now,
                 'updated_at' => $now,

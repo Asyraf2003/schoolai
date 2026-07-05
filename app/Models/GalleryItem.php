@@ -3,34 +3,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 final class GalleryItem extends Model
 {
     use HasFactory;
 
     public const MAX_ITEMS = 6;
-    public const MAX_VIDEO_SECONDS = 180;
+    public const MAX_MEDIA_KB = 102400;
 
     protected $fillable = [
         'title',
         'type',
         'category',
         'caption',
-        'thumbnail_url',
         'media_url',
-        'duration_seconds',
         'sort_order',
         'is_published',
-        'fallback_icon',
-        'accent',
         'published_at',
     ];
 
     protected $casts = [
-        'duration_seconds' => 'integer',
         'sort_order' => 'integer',
         'is_published' => 'boolean',
         'published_at' => 'datetime',
@@ -46,27 +41,22 @@ final class GalleryItem extends Model
 
     public function getIsVideoAttribute(): bool
     {
-        return in_array($this->type, ['video', 'reel'], true);
+        return $this->type === 'video';
     }
 
     public function getTypeLabelAttribute(): string
     {
-        return match ($this->type) {
-            'video' => 'Video',
-            'reel' => 'Reel',
-            default => 'Foto',
-        };
+        return $this->type === 'video' ? 'Video' : 'Foto';
     }
 
-    public function getDurationLabelAttribute(): string
+    public function getMediaFilenameAttribute(): string
     {
-        if (! $this->is_video || ! $this->duration_seconds) {
+        if (! $this->media_url) {
             return '-';
         }
 
-        $minutes = intdiv($this->duration_seconds, 60);
-        $seconds = $this->duration_seconds % 60;
+        $path = parse_url($this->media_url, PHP_URL_PATH);
 
-        return sprintf('%d:%02d', $minutes, $seconds);
+        return basename(is_string($path) ? $path : $this->media_url);
     }
 }
