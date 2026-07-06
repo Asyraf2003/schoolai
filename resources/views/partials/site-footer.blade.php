@@ -56,8 +56,8 @@
 
     <div class="footer-channels">
       @if (! empty($siteFooter['channels']))
-        <div class="footer-channel-group" aria-label="{{ $siteFooter['channels_title'] ?? 'Kontak' }}">
-          <strong>{{ $siteFooter['channels_title'] ?? 'Kontak' }}</strong>
+        <div class="footer-channel-group" aria-label="{{ $siteFooter['channels_title'] ?? __('pages.common.footer.contact_title') }}">
+          <strong>{{ $siteFooter['channels_title'] ?? __('pages.common.footer.contact_title') }}</strong>
 
           <div class="footer-channel-grid">
             @foreach ($siteFooter['channels'] as $channel)
@@ -119,8 +119,8 @@
     @endif
 
     @if (! empty($siteFooter['gallery_links']))
-      <nav class="footer-gallery-links" aria-label="{{ $siteFooter['gallery_links_title'] ?? 'Galeri' }}">
-        <h4>{{ $siteFooter['gallery_links_title'] ?? 'Galeri' }}</h4>
+      <nav class="footer-gallery-links" aria-label="{{ $siteFooter['gallery_links_title'] ?? __('pages.common.nav.galeri') }}">
+        <h4>{{ $siteFooter['gallery_links_title'] ?? __('pages.common.nav.galeri') }}</h4>
         <ul>
           @foreach ($siteFooter['gallery_links'] as $link)
             <li><a href="{{ $normalizeFooterHref($link['href'] ?? '#') }}">{{ $link['label'] ?? '' }}</a></li>
