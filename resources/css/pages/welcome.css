@@ -10806,3 +10806,63 @@ h1, h2, h3, h4, p { margin: 0; }
   line-height: 1.68;
 }
 /* /HOMEPAGE_GALLERY_HEADING_ONLY_FIX_FINAL */
+
+/* HOMEPAGE_SECTION_HEADING_RHYTHM_PATCH_FINAL */
+/* Scoped typography rhythm only. Do not touch gallery sticky/media layout. */
+.visi-misi__head .section-title,
+.nilai-section__intro .section-title,
+.program-section__head .section-title,
+.galeri-section__head .section-title,
+.galeri-section__head .section-title--white,
+.galeri-section .galeri-section__head .section-title--white,
+.artikel-section__head .section-title {
+  font-size: clamp(1.95rem, 2.25vw + 0.95rem, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+.visi-misi__head .section-subtitle,
+.nilai-section__intro .section-subtitle,
+.program-section__head .section-subtitle,
+.galeri-section__head .section-subtitle,
+.galeri-section__head .section-subtitle--white,
+.galeri-section .galeri-section__head .section-subtitle--white,
+.artikel-section__head .section-subtitle {
+  max-width: 680px;
+  margin-top: 12px;
+  font-size: clamp(0.98rem, 0.28vw + 0.9rem, 1.08rem);
+  line-height: 1.68;
+}
+
+.visi-misi__head,
+.program-section__head,
+.galeri-section__head,
+.artikel-section__head {
+  margin-bottom: clamp(30px, 4vw, 52px);
+}
+
+.nilai-section__intro {
+  margin-bottom: clamp(30px, 4vw, 52px);
+}
+
+@media (max-width: 720px) {
+  .visi-misi__head .section-title,
+  .nilai-section__intro .section-title,
+  .program-section__head .section-title,
+  .galeri-section__head .section-title,
+  .galeri-section__head .section-title--white,
+  .galeri-section .galeri-section__head .section-title--white,
+  .artikel-section__head .section-title {
+    font-size: clamp(1.85rem, 8.4vw, 2.7rem);
+    line-height: 1.08;
+  }
+
+  .visi-misi__head,
+  .program-section__head,
+  .galeri-section__head,
+  .artikel-section__head,
+  .nilai-section__intro {
+    margin-bottom: 30px;
+  }
+}
+/* /HOMEPAGE_SECTION_HEADING_RHYTHM_PATCH_FINAL */
