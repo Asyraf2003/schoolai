@@ -151,7 +151,7 @@
                 <span class="visi-card__pulse" aria-hidden="true"></span>
               </div>
 
-              <h2 class="visi-card__title">{{ $visiMisi['vision']['title'] }}</h2>
+              <h3 class="visi-card__title">{{ $visiMisi['vision']['title'] }}</h3>
 
               <p class="visi-card__text">
                 @foreach ($visiMisi['vision']['text_parts'] as $part)
@@ -262,7 +262,7 @@
 
           <div class="program-section__shell">
             <aside class="program-spotlight reveal">
-              <h2 class="program-spotlight__title">{{ $featuredPrograms['title'] }}</h2>
+              <h3 class="program-spotlight__title">{{ $featuredPrograms['title'] }}</h3>
               <p class="program-spotlight__subtitle">
                 {{ $featuredPrograms['subtitle'] }}
               </p>

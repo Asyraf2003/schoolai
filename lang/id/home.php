@@ -372,7 +372,7 @@ return [
         'empty' => 'Program Unggulan Belum Tersedia',
     ],
 
-'galeri' => [
+    'galeri' => [
 
     'section_title' => 'Galeri Kegiatan Sekolah',
 
