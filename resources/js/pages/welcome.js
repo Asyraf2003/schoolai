@@ -481,14 +481,20 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!cards.length || !panels.length) return;
 
   var activeIndex = 0;
+  var lastFocused = null;
+  var mediaLightbox = null;
+  var mediaStage = null;
+  var mediaTitle = null;
+  var mediaCaption = null;
+  var mediaBadge = null;
 
   function activateGalleryStory(index) {
-    if (index === activeIndex) return;
-
     activeIndex = index;
 
     cards.forEach(function (card, cardIndex) {
-      card.classList.toggle('is-active', cardIndex === index);
+      var isActive = cardIndex === index;
+      card.classList.toggle('is-active', isActive);
+      card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
 
     panels.forEach(function (panel, panelIndex) {
@@ -496,9 +502,118 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  function ensureMediaLightbox() {
+    if (mediaLightbox) return;
+
+    mediaLightbox = document.createElement('div');
+    mediaLightbox.className = 'homepage-gallery-lightbox';
+    mediaLightbox.setAttribute('role', 'dialog');
+    mediaLightbox.setAttribute('aria-modal', 'true');
+    mediaLightbox.setAttribute('aria-label', 'Media galeri homepage');
+    mediaLightbox.hidden = true;
+
+    mediaLightbox.innerHTML =
+      '<button type="button" class="homepage-gallery-lightbox__backdrop" data-homepage-gallery-close aria-label="Tutup"></button>' +
+      '<article class="homepage-gallery-lightbox__panel">' +
+        '<button type="button" class="homepage-gallery-lightbox__close" data-homepage-gallery-close>Tutup</button>' +
+        '<div class="homepage-gallery-lightbox__media" data-homepage-gallery-media></div>' +
+        '<span class="homepage-gallery-lightbox__badge" data-homepage-gallery-badge></span>' +
+        '<h2 data-homepage-gallery-title></h2>' +
+        '<p data-homepage-gallery-caption></p>' +
+      '</article>';
+
+    document.body.appendChild(mediaLightbox);
+
+    mediaStage = mediaLightbox.querySelector('[data-homepage-gallery-media]');
+    mediaTitle = mediaLightbox.querySelector('[data-homepage-gallery-title]');
+    mediaCaption = mediaLightbox.querySelector('[data-homepage-gallery-caption]');
+    mediaBadge = mediaLightbox.querySelector('[data-homepage-gallery-badge]');
+
+    Array.prototype.slice.call(mediaLightbox.querySelectorAll('[data-homepage-gallery-close]')).forEach(function (button) {
+      button.addEventListener('click', closeStoryMedia);
+    });
+  }
+
+  function clearStoryMedia() {
+    if (mediaStage) {
+      mediaStage.replaceChildren();
+    }
+  }
+
+  function openStoryMedia(card) {
+    var mediaUrl = card.getAttribute('data-media-url') || '';
+    if (!mediaUrl) return false;
+
+    ensureMediaLightbox();
+
+    var title = card.getAttribute('data-title') || '';
+    var caption = card.getAttribute('data-caption') || '';
+    var typeLabel = card.getAttribute('data-type-label') || '';
+    var isVideo = card.getAttribute('data-is-video') === '1';
+
+    lastFocused = document.activeElement;
+    clearStoryMedia();
+
+    if (isVideo) {
+      var iframe = document.createElement('iframe');
+      iframe.src = mediaUrl;
+      iframe.title = title || 'Video galeri';
+      iframe.loading = 'lazy';
+      iframe.allow = 'fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      mediaStage.appendChild(iframe);
+    } else {
+      var image = document.createElement('img');
+      image.src = mediaUrl;
+      image.alt = title || '';
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      mediaStage.appendChild(image);
+    }
+
+    mediaTitle.textContent = title;
+    mediaCaption.textContent = caption;
+    mediaCaption.hidden = !caption;
+    mediaBadge.textContent = typeLabel;
+    mediaBadge.hidden = !typeLabel;
+
+    mediaLightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+
+    var closeButton = mediaLightbox.querySelector('.homepage-gallery-lightbox__close');
+    if (closeButton) closeButton.focus();
+
+    return true;
+  }
+
+  function closeStoryMedia() {
+    if (!mediaLightbox) return;
+
+    mediaLightbox.hidden = true;
+    document.body.style.overflow = '';
+    clearStoryMedia();
+
+    if (lastFocused && lastFocused.focus) {
+      lastFocused.focus();
+    }
+  }
+
   cards.forEach(function (card, index) {
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-pressed', index === activeIndex ? 'true' : 'false');
+
     card.addEventListener('click', function () {
       activateGalleryStory(index);
+      openStoryMedia(card);
+    });
+
+    card.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      event.preventDefault();
+      activateGalleryStory(index);
+      openStoryMedia(card);
     });
 
     card.addEventListener('focus', function () {
@@ -510,6 +625,12 @@ document.addEventListener('DOMContentLoaded', function () {
         activateGalleryStory(index);
       }
     });
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && mediaLightbox && !mediaLightbox.hidden) {
+      closeStoryMedia();
+    }
   });
 
   if ('IntersectionObserver' in window) {
@@ -530,14 +651,10 @@ document.addEventListener('DOMContentLoaded', function () {
     cards.forEach(function (card) {
       observer.observe(card);
     });
-  } else {
-    cards.forEach(function (card, index) {
-      card.addEventListener('click', function () {
-        activateGalleryStory(index);
-      });
-    });
   }
 });
+
+
 
 /* PUBLIC_PAGES_INTERACTION_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
