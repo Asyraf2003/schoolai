@@ -34,13 +34,19 @@ final class GalleryPageController extends Controller
             ->where('is_published', true)
             ->ordered()
             ->get()
-            ->map(fn (GalleryItem $item): array => [
-                'title' => $item->titleForLocale($locale),
-                'type' => $item->type === 'video' ? 'video' : 'photo',
-                'media_url' => $this->mediaUrl($item->media_url),
-                'emoji' => $item->type === 'video' ? '▶️' : '📸',
-                'badge' => $item->type === 'video' ? 'Video' : ($locale === 'en' ? 'Photo' : 'Foto'),
-            ])
+            ->map(function (GalleryItem $item) use ($locale): array {
+                $type = $item->type === 'video' ? 'video' : 'photo';
+                $mediaUrl = $this->trustedMediaUrl($type, $item->media_url);
+
+                return [
+                    'title' => $item->titleForLocale($locale),
+                    'type' => $type,
+                    'media_url' => $mediaUrl,
+                    'thumbnail_url' => $type === 'video' ? $this->videoThumbnailUrl($mediaUrl) : $mediaUrl,
+                    'emoji' => $type === 'video' ? '▶️' : '📸',
+                    'badge' => $type === 'video' ? 'Video' : ($locale === 'en' ? 'Photo' : 'Foto'),
+                ];
+            })
             ->filter(fn (array $item): bool => trim((string) ($item['title'] ?? '')) !== '')
             ->values()
             ->all();
@@ -69,14 +75,20 @@ final class GalleryPageController extends Controller
                     'title' => $section->titleForLocale($locale),
                     'description' => $section->descriptionForLocale($locale),
                     'items' => $section->mediaItems
-                        ->map(fn (GalleryPageMediaItem $item): array => [
-                            'title' => '',
-                            'label' => $section->titleForLocale($locale),
-                            'type' => $item->type === 'video' ? 'video' : 'photo',
-                            'media_url' => $this->mediaUrl($item->media_url),
-                            'emoji' => $item->type === 'video' ? '▶️' : '📸',
-                            'badge' => '',
-                        ])
+                        ->map(function (GalleryPageMediaItem $item) use ($section, $locale): array {
+                            $type = $item->type === 'video' ? 'video' : 'photo';
+                            $mediaUrl = $this->trustedMediaUrl($type, $item->media_url);
+
+                            return [
+                                'title' => '',
+                                'label' => $section->titleForLocale($locale),
+                                'type' => $type,
+                                'media_url' => $mediaUrl,
+                                'thumbnail_url' => $type === 'video' ? $this->videoThumbnailUrl($mediaUrl) : $mediaUrl,
+                                'emoji' => $type === 'video' ? '▶️' : '📸',
+                                'badge' => '',
+                            ];
+                        })
                         ->filter(fn (array $item): bool => (string) ($item['media_url'] ?? '') !== '')
                         ->values()
                         ->all(),
@@ -87,7 +99,7 @@ final class GalleryPageController extends Controller
             ->all();
     }
 
-    private function mediaUrl(?string $url): ?string
+    private function trustedMediaUrl(string $type, ?string $url): ?string
     {
         if (! is_string($url) || trim($url) === '') {
             return null;
@@ -95,8 +107,18 @@ final class GalleryPageController extends Controller
 
         $url = trim($url);
 
-        if (str_starts_with($url, '/storage/')) {
-            return $url;
+        if ($type === 'photo') {
+            if (str_starts_with($url, '/storage/')) {
+                return $url;
+            }
+
+            if (! filter_var($url, FILTER_VALIDATE_URL)) {
+                return null;
+            }
+
+            $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+
+            return in_array($scheme, ['http', 'https'], true) ? $url : null;
         }
 
         if (! filter_var($url, FILTER_VALIDATE_URL)) {
@@ -104,7 +126,46 @@ final class GalleryPageController extends Controller
         }
 
         $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
 
-        return in_array($scheme, ['http', 'https'], true) ? $url : null;
+        if ($scheme !== 'https' || $host === '') {
+            return null;
+        }
+
+        if ($host === 'www.youtube.com' && preg_match('~^embed/[^/?#]+$~', $path)) {
+            return $url;
+        }
+
+        if ($host === 'www.tiktok.com' && preg_match('~^embed/v2/\d+$~', $path)) {
+            return $url;
+        }
+
+        if ($host === 'www.instagram.com' && preg_match('~^(p|reel|tv)/[^/]+/embed$~', $path)) {
+            return $url;
+        }
+
+        if ($host === 'player.vimeo.com' && preg_match('~^video/\d+$~', $path)) {
+            return $url;
+        }
+
+        return null;
+    }
+
+    private function videoThumbnailUrl(?string $embedUrl): ?string
+    {
+        if (! is_string($embedUrl) || trim($embedUrl) === '') {
+            return null;
+        }
+
+        $embedUrl = trim($embedUrl);
+        $host = strtolower((string) parse_url($embedUrl, PHP_URL_HOST));
+        $path = trim((string) parse_url($embedUrl, PHP_URL_PATH), '/');
+
+        if ($host === 'www.youtube.com' && preg_match('~^embed/([^/?#]+)$~', $path, $match)) {
+            return 'https://i.ytimg.com/vi/' . rawurlencode($match[1]) . '/hqdefault.jpg';
+        }
+
+        return null;
     }
 }

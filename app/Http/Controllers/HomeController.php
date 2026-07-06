@@ -191,7 +191,7 @@ final class HomeController extends Controller
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
         $item['media_url'] = $mediaUrl;
-        $item['thumbnail_url'] = $type === 'photo' ? $mediaUrl : null;
+        $item['thumbnail_url'] = $type === 'photo' ? $mediaUrl : $this->videoThumbnailUrl($mediaUrl);
         $item['published_at'] = (string) ($item['published_at'] ?? $item['date'] ?? '');
         $item['date'] = (string) ($item['date'] ?? $item['published_at']);
         $item['caption'] = (string) ($item['caption'] ?? '');
@@ -236,6 +236,24 @@ final class HomeController extends Controller
 
         if ($host === 'player.vimeo.com' && preg_match('~^video/\d+$~', $path)) {
             return $url;
+        }
+
+        return null;
+    }
+
+
+    private function videoThumbnailUrl(?string $embedUrl): ?string
+    {
+        if (! is_string($embedUrl) || trim($embedUrl) === '') {
+            return null;
+        }
+
+        $embedUrl = trim($embedUrl);
+        $host = strtolower((string) parse_url($embedUrl, PHP_URL_HOST));
+        $path = trim((string) parse_url($embedUrl, PHP_URL_PATH), '/');
+
+        if ($host === 'www.youtube.com' && preg_match('~^embed/([^/?#]+)$~', $path, $match)) {
+            return 'https://i.ytimg.com/vi/' . rawurlencode($match[1]) . '/hqdefault.jpg';
         }
 
         return null;
