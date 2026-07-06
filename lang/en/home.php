@@ -8,6 +8,10 @@ return array_replace_recursive($id, [
         'description' => 'Official Al Mustaqbal School website for admission, programs, school activities, and contact information.',
     ],
 
+    'accessibility' => [
+        'skip_to_content' => 'Skip to main content',
+    ],
+
     'hero' => [
         'title_before' => 'An Islamic school that nurtures',
         'title_highlight' => 'character, knowledge, and memorization',
@@ -15,6 +19,9 @@ return array_replace_recursive($id, [
         'subtitle' => 'A warm learning environment where children grow with the Qur’an, good manners, language, creativity, and teachers who work closely with families.',
         'visual_image_alt' => 'Al Mustaqbal School building',
         'logo_image_alt' => 'Al Mustaqbal School',
+        'visual_image_fallback_alt' => 'School environment photo',
+        'logo_image_fallback_alt' => 'Al Mustaqbal Islamic School',
+        'visual_image_unavailable' => 'School photo is not available yet',
         'primary_cta' => [
             'label' => 'Apply for Admission',
             'href' => '/ppdb',
@@ -175,6 +182,7 @@ return array_replace_recursive($id, [
     'nilai_sekolah' => [
         'title' => 'Values That Guide Children’s Growth',
         'subtitle' => 'Four core values shape the learning culture of Al Mustaqbal: close to the Qur’an, brave in thinking, strong in character, and inspiring to the community.',
+        'aria_label' => 'Al Mustaqbal school values',
         'items' => [
             [
                 'code' => 'Q',
@@ -485,6 +493,7 @@ return array_replace_recursive($id, [
         'subtitle' => 'Short updates, parenting insights, and children’s activity stories in a light format so parents can quickly understand the key message.',
         'read_more' => 'Read Summary',
         'empty' => 'No latest articles yet.',
+        'rail_aria_label' => 'More school stories',
         'cta' => [
             'label' => 'View All Stories',
             'href' => '/artikel',

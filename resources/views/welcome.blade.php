@@ -13,7 +13,7 @@
   </head>
   <body>
     <!-- Skip link untuk aksesibilitas keyboard -->
-    <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
+    <a href="#main-content" class="skip-link">{{ __('home.accessibility.skip_to_content') }}</a>
 
     <!-- Definisi SVG yang dipakai berulang (wave divider) agar file tetap ringan -->
     <svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -73,10 +73,10 @@
             <div class="hero__illustration" id="tiltIllustration">
               <div class="illustration-card">
                 @if (! empty($hero['visual_image_url']))
-                  <div class="hero-photo-stack" aria-label="{{ $hero['visual_image_alt'] ?? 'Foto lingkungan sekolah' }}">
+                  <div class="hero-photo-stack" aria-label="{{ $hero['visual_image_alt'] ?? __('home.hero.visual_image_fallback_alt') }}">
                     <img
                       src="{{ $hero['visual_image_url'] }}"
-                      alt="{{ $hero['visual_image_alt'] ?? 'Foto lingkungan sekolah' }}"
+                      alt="{{ $hero['visual_image_alt'] ?? __('home.hero.visual_image_fallback_alt') }}"
                       class="hero-photo-frame hero-photo-frame--main"
                     />
 
@@ -90,14 +90,14 @@
                     @if (! empty($hero['logo_image_url']))
                       <img
                         src="{{ $hero['logo_image_url'] }}"
-                        alt="{{ $hero['logo_image_alt'] ?? 'Al Mustaqbal Islamic School' }}"
+                        alt="{{ $hero['logo_image_alt'] ?? __('home.hero.logo_image_fallback_alt') }}"
                         class="hero-photo-logo"
                       />
                     @endif
                   </div>
                 @else
                   <div class="hero-photo-fallback">
-                    Foto sekolah belum tersedia
+                    {{ $hero['visual_image_unavailable'] ?? __('home.hero.visual_image_unavailable') }}
                   </div>
                 @endif
               </div>
@@ -213,7 +213,7 @@
               </p>
             </div>
 
-            <div class="nilai-grid" aria-label="Nilai sekolah Al-Mustaqbal">
+            <div class="nilai-grid" aria-label="{{ $schoolValues['aria_label'] ?? __('home.nilai_sekolah.aria_label') }}">
               @foreach ($schoolValues['items'] as $value)
                 <button
                   type="button"
@@ -553,7 +553,7 @@
                 </div>
               </article>
 
-              <div class="artikel-digest__rail" aria-label="Cerita sekolah lainnya">
+              <div class="artikel-digest__rail" aria-label="{{ $articlesSection['rail_aria_label'] ?? __('home.artikel.rail_aria_label') }}">
                 @forelse ($digestArticles as $article)
                   <article
                     class="artikel-digest-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : ' reveal--delay-1' }}"
@@ -597,7 +597,7 @@
                     </a>
                   </article>
                 @empty
-                  <p class="artikel-empty">{{ $articlesSection['empty'] ?? 'Belum ada artikel terbaru.' }}</p>
+                  <p class="artikel-empty">{{ $articlesSection['empty'] ?? __('home.artikel.empty') }}</p>
                 @endforelse
               </div>
             </div>
@@ -610,7 +610,7 @@
               </div>
             @endif
           @else
-            <p class="artikel-empty">{{ $articlesSection['empty'] ?? 'Belum ada artikel terbaru.' }}</p>
+            <p class="artikel-empty">{{ $articlesSection['empty'] ?? __('home.artikel.empty') }}</p>
           @endif
         </div>
       </section>

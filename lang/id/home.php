@@ -6,6 +6,10 @@ return [
         'description' => 'Website resmi Al Mustaqbal School untuk informasi pendidikan, PPDB, program, kegiatan, dan kontak sekolah.',
     ],
 
+    'accessibility' => [
+        'skip_to_content' => 'Langsung ke konten utama',
+    ],
+
     'hero' => [
         'title_before' => 'Sekolah Islam yang menumbuhkan',
         'title_highlight' => 'adab, ilmu, dan hafalan',
@@ -16,6 +20,9 @@ return [
         'visual_image_alt' => 'Gedung Al Mustaqbal School',
         'logo_image' => 'media/home/mustaqbalfont.png',
         'logo_image_alt' => 'Al Mustaqbal School',
+        'visual_image_fallback_alt' => 'Foto lingkungan sekolah',
+        'logo_image_fallback_alt' => 'Al Mustaqbal Islamic School',
+        'visual_image_unavailable' => 'Foto sekolah belum tersedia',
         'primary_cta' => [
             'label' => 'Daftar PPDB',
             'href' => '/ppdb',
@@ -239,6 +246,7 @@ return [
     'nilai_sekolah' => [
         'title' => 'Nilai yang Menjadi Arah Tumbuh Anak',
         'subtitle' => 'Empat nilai utama yang membentuk budaya belajar Al-Mustaqbal: dekat dengan Al-Qur’an, berani berpikir, menyatu dalam karakter, dan menginspirasi lingkungan.',
+        'aria_label' => 'Nilai sekolah Al-Mustaqbal',
         'items' => [
             [
                 'code' => 'Q',
@@ -558,6 +566,7 @@ return [
         'subtitle' => 'Kabar singkat, insight pengasuhan, dan cerita kegiatan anak dalam format ringan agar orang tua cepat menangkap inti informasinya.',
         'read_more' => 'Baca Ringkasan',
         'empty' => 'Belum ada artikel terbaru.',
+        'rail_aria_label' => 'Cerita sekolah lainnya',
         'cta' => [
             'label' => 'Lihat Semua Cerita',
             'href' => '/artikel',
