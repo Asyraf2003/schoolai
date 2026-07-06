@@ -837,6 +837,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!cards.length || !lightbox || !mediaBox || !titleBox || !badgeBox) return;
 
+  var wallVideoTitleFallback = lightbox.getAttribute('data-gallery-wall-video-title') || 'Gallery video';
+
   function clearMedia() {
     mediaBox.replaceChildren();
   }
@@ -859,7 +861,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (mediaUrl && isVideo) {
       var iframe = document.createElement('iframe');
       iframe.src = mediaUrl;
-      iframe.title = title || 'Video galeri';
+      iframe.title = title || wallVideoTitleFallback;
       iframe.loading = 'lazy';
       iframe.allow = 'fullscreen; picture-in-picture';
       iframe.allowFullscreen = true;

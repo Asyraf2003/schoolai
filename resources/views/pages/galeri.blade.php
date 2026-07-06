@@ -67,7 +67,7 @@
     </div>
   </section>
 
-  <div class="gallery-wall-lightbox" data-gallery-wall-lightbox hidden role="dialog" aria-modal="true" aria-label="{{ __('pages.common.view_gallery') }}">
+  <div class="gallery-wall-lightbox" data-gallery-wall-lightbox data-gallery-wall-video-title="{{ __('pages.common.gallery_video_title') }}" hidden role="dialog" aria-modal="true" aria-label="{{ __('pages.common.view_gallery') }}">
     <button type="button" class="gallery-wall-lightbox__backdrop" data-gallery-wall-lightbox-close aria-label="{{ __('pages.common.close') }}"></button>
 
     <article class="gallery-wall-lightbox__panel">

@@ -16,6 +16,7 @@ return [
         'read_more' => 'Baca Artikel',
         'learn_more' => 'Lihat Detail',
         'view_gallery' => 'Lihat Galeri',
+        'gallery_video_title' => 'Video galeri',
         'whatsapp_url' => 'https://wa.me/6281234567890?text=Assalamu%27alaikum%2C%20saya%20ingin%20bertanya%20tentang%20PPDB%20Al%20Mustaqbal%20School',
         'nav' => [
             'home' => 'Beranda',

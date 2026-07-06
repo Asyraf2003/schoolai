@@ -465,7 +465,7 @@
                       @endif
 
                       <span class="galeri-story-visual__badge">
-                        {{ $item['type_label'] ?? 'Foto' }}
+                        {{ $item['type_label'] ?? ($gallerySection['default_type_label'] ?? __('home.galeri.default_type_label')) }}
                       </span>
                     </div>
                   </div>
@@ -627,9 +627,9 @@
         class="lightbox__content"
         role="dialog"
         aria-modal="true"
-        aria-label="Pratinjau galeri"
+        aria-label="{{ $gallerySection['lightbox_label'] ?? __('home.galeri.lightbox_label') }}"
       >
-        <button class="lightbox__close" id="lightboxClose" aria-label="Tutup">
+        <button class="lightbox__close" id="lightboxClose" aria-label="{{ $gallerySection['close_label'] ?? __('home.galeri.close_label') }}">
           ✕
         </button>
         <div class="lightbox__visual" id="lightboxVisual"></div>
