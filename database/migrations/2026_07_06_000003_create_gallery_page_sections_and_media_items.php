@@ -12,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('gallery_page_sections', function (Blueprint $table): void {
             $table->id();
-            $table->text('title_id');
+            $table->text('title_id')->nullable();
             $table->text('title_en')->nullable();
             $table->longText('description_id')->nullable();
             $table->longText('description_en')->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration
         Schema::create('gallery_page_media_items', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('gallery_page_section_id')->constrained('gallery_page_sections')->cascadeOnDelete();
-            $table->text('title_id');
+            $table->text('title_id')->nullable();
             $table->text('title_en')->nullable();
             $table->longText('description_id')->nullable();
             $table->longText('description_en')->nullable();

@@ -16,18 +16,6 @@
   <section class="gallery-lite-form__panel">
     <div class="gallery-lite-form__grid">
       <div class="admin-field">
-        <label for="title_id">Judul Indonesia</label>
-        <input id="title_id" name="title_id" value="{{ old('title_id', $item->title_id) }}" required>
-        @error('title_id') <small>{{ $message }}</small> @enderror
-      </div>
-
-      <div class="admin-field">
-        <label for="title_en">Judul English</label>
-        <input id="title_en" name="title_en" value="{{ old('title_en', $item->title_en) }}">
-        @error('title_en') <small>{{ $message }}</small> @enderror
-      </div>
-
-      <div class="admin-field">
         <label for="type">Tipe</label>
         <select id="type" name="type" required data-gallery-page-media-type>
           @foreach($typeOptions as $value => $label)
@@ -41,18 +29,6 @@
         <label for="published_at">Tanggal</label>
         <input id="published_at" name="published_at" type="datetime-local" value="{{ $publishedAtValue }}">
         @error('published_at') <small>{{ $message }}</small> @enderror
-      </div>
-
-      <div class="admin-field admin-field--wide">
-        <label for="description_id">Deskripsi Indonesia</label>
-        <textarea id="description_id" name="description_id" rows="4">{{ old('description_id', $item->description_id) }}</textarea>
-        @error('description_id') <small>{{ $message }}</small> @enderror
-      </div>
-
-      <div class="admin-field admin-field--wide">
-        <label for="description_en">Deskripsi English</label>
-        <textarea id="description_en" name="description_en" rows="4">{{ old('description_en', $item->description_en) }}</textarea>
-        @error('description_en') <small>{{ $message }}</small> @enderror
       </div>
 
       <div class="admin-field admin-field--wide" data-gallery-page-media-photo-field @if($isVideo) hidden @endif>

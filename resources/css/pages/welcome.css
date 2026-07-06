@@ -11125,3 +11125,12 @@ h1, h2, h3, h4, p { margin: 0; }
 }
 /* /PUBLIC_GALERI_PAGE_SECTIONS_FINAL */
 
+
+
+/* PUBLIC_GALERI_MEDIA_ONLY_REFINEMENT_FINAL */
+.gallery-wall-grid--subsection .gallery-wall-card:not(:has(.gallery-wall-card__caption)) .gallery-wall-card__media::after {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255,255,255,0.20), transparent 22%),
+    linear-gradient(180deg, rgba(31,30,46,0.04), rgba(31,30,46,0.10));
+}
+/* /PUBLIC_GALERI_MEDIA_ONLY_REFINEMENT_FINAL */

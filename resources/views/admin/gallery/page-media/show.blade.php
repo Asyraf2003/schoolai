@@ -20,8 +20,8 @@
   <header class="admin-topbar admin-topbar--compact">
     <div>
       <p class="admin-topbar__eyebrow">Detail/Edit Media</p>
-      <h1>{{ $item->admin_title }}</h1>
-      <p>Bagian: {{ $section->admin_title }}</p>
+      <h1>Edit {{ $item->type_label }}</h1>
+      <p>Bagian: {{ $section->admin_title }}. Media ini hanya menyimpan foto/embed, bukan judul atau deskripsi.</p>
     </div>
 
     <div class="admin-inline-actions">

@@ -70,13 +70,14 @@ final class GalleryPageController extends Controller
                     'description' => $section->descriptionForLocale($locale),
                     'items' => $section->mediaItems
                         ->map(fn (GalleryPageMediaItem $item): array => [
-                            'title' => $item->titleForLocale($locale),
+                            'title' => '',
+                            'label' => $section->titleForLocale($locale),
                             'type' => $item->type === 'video' ? 'video' : 'photo',
                             'media_url' => $this->mediaUrl($item->media_url),
                             'emoji' => $item->type === 'video' ? '▶️' : '📸',
-                            'badge' => $item->typeLabelForLocale($locale),
+                            'badge' => '',
                         ])
-                        ->filter(fn (array $item): bool => trim((string) ($item['title'] ?? '')) !== '')
+                        ->filter(fn (array $item): bool => (string) ($item['media_url'] ?? '') !== '')
                         ->values()
                         ->all(),
                 ];

@@ -52,26 +52,22 @@ final class GalleryPageMediaItem extends Model
 
     public function getAdminTitleAttribute(): string
     {
-        return $this->firstFilled($this->title_id, $this->title_en, 'Media tanpa judul');
+        return $this->type_label . ' halaman galeri';
     }
 
     public function getAdminDescriptionAttribute(): string
     {
-        return $this->firstFilled($this->description_id, $this->description_en, '');
+        return $this->media_label;
     }
 
     public function titleForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->title_en, $this->title_id, 'Untitled media')
-            : $this->firstFilled($this->title_id, $this->title_en, 'Media tanpa judul');
+        return '';
     }
 
     public function descriptionForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->description_en, $this->description_id, '')
-            : $this->firstFilled($this->description_id, $this->description_en, '');
+        return '';
     }
 
     public function typeLabelForLocale(string $locale): string

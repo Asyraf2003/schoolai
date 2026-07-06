@@ -2,6 +2,7 @@
   $type = $item['type'] ?? 'photo';
   $isVideo = $type === 'video';
   $title = $item['title'] ?? '';
+  $label = $item['label'] ?? $title;
   $mediaUrl = $item['media_url'] ?? null;
   $emoji = $item['emoji'] ?? ($isVideo ? '▶️' : '📸');
   $badge = $item['badge'] ?? ($isVideo ? 'Video' : 'Foto');
@@ -13,7 +14,7 @@
   tabindex="0"
   role="button"
   data-gallery-wall-card
-  data-gallery-title="{{ $title }}"
+  data-gallery-title="{{ $label }}"
   data-gallery-media-url="{{ $mediaUrl ?? '' }}"
   data-gallery-is-video="{{ $isVideo ? '1' : '0' }}"
   data-gallery-emoji="{{ $emoji }}"
@@ -24,21 +25,28 @@
     @if($mediaUrl && $isVideo)
       <iframe
         src="{{ $mediaUrl }}"
-        title="{{ $title }}"
+        title="{{ $label }}"
         loading="lazy"
         allow="fullscreen; picture-in-picture"
         allowfullscreen
         referrerpolicy="strict-origin-when-cross-origin"
       ></iframe>
     @elseif($mediaUrl)
-      <img src="{{ $mediaUrl }}" alt="{{ $title }}" loading="lazy">
+      <img src="{{ $mediaUrl }}" alt="{{ $label }}" loading="lazy">
     @else
       <span aria-hidden="true">{{ $emoji }}</span>
     @endif
   </div>
 
-  <div class="gallery-wall-card__caption">
-    <span>{{ $badge }}</span>
-    <h3>{{ $title }}</h3>
-  </div>
+  @if($badge || $title)
+    <div class="gallery-wall-card__caption">
+      @if($badge)
+        <span>{{ $badge }}</span>
+      @endif
+
+      @if($title)
+        <h3>{{ $title }}</h3>
+      @endif
+    </div>
+  @endif
 </article>

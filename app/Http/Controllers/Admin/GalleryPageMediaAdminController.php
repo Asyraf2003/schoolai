@@ -108,10 +108,6 @@ final class GalleryPageMediaAdminController extends Controller
         );
 
         $validated = $request->validate([
-            'title_id' => ['required', 'string'],
-            'title_en' => ['nullable', 'string'],
-            'description_id' => ['nullable', 'string'],
-            'description_en' => ['nullable', 'string'],
             'type' => ['required', Rule::in(['photo', 'video'])],
             'media_file' => [
                 Rule::requiredIf(fn (): bool => $needsPhotoFile),
@@ -132,7 +128,6 @@ final class GalleryPageMediaAdminController extends Controller
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
         ], [
-            'title_id.required' => 'Judul Indonesia wajib diisi.',
             'media_file.required' => 'Upload foto wajib diisi untuk tipe Foto.',
             'media_file.prohibited' => 'Tipe Video tidak menerima upload file. Gunakan URL video.',
             'media_file.image' => 'File harus berupa gambar.',
@@ -145,6 +140,10 @@ final class GalleryPageMediaAdminController extends Controller
 
         unset($validated['media_file']);
 
+        $validated['title_id'] = null;
+        $validated['title_en'] = null;
+        $validated['description_id'] = null;
+        $validated['description_en'] = null;
         $validated['is_published'] = $request->boolean('is_published');
 
         if (($validated['published_at'] ?? null) === '') {

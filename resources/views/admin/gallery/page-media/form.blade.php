@@ -9,7 +9,7 @@
     <div>
       <p class="admin-topbar__eyebrow">Media Bagian Galeri</p>
       <h1>Tambah Media</h1>
-      <p>Bagian: {{ $section->admin_title }}</p>
+      <p>Bagian: {{ $section->admin_title }}. Cukup pilih foto atau tempel URL embed.</p>
     </div>
 
     <div class="admin-inline-actions">

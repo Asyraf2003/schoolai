@@ -87,7 +87,7 @@
     <div class="admin-gallery-block__head">
       <div>
         <h2>Media di Bagian Ini</h2>
-        <p>Tanpa posisi. Urutan tampil berdasarkan data terbaru.</p>
+        <p>Tanpa posisi dan tanpa judul per media. Section yang mengatur judul dan deskripsi.</p>
       </div>
 
       <a href="{{ route('admin.galeri.section-media.create', $section) }}" class="admin-primary-action">Tambah Media</a>
@@ -111,8 +111,8 @@
               <span class="gallery-lite-status {{ $item->is_published ? 'is-active' : 'is-inactive' }}">
                 {{ $item->is_published ? 'Aktif' : 'Nonaktif' }}
               </span>
-              <h3>{{ $item->admin_title }}</h3>
-              <p>{{ $item->admin_description ?: $item->media_label }}</p>
+              <h3>{{ $item->type_label }}</h3>
+              <p>{{ $item->media_label }}</p>
             </div>
 
             <div class="gallery-lite-actions">
