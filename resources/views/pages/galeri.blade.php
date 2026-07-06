@@ -3,6 +3,7 @@
   $page = $page ?? __('pages.galeri');
   $dbItems = $galleryItems ?? [];
   $items = ! empty($dbItems) ? $dbItems : ($page['items'] ?? []);
+  $sections = $gallerySections ?? [];
 @endphp
 
 @extends('layouts.public', ['title' => $page['title'] ?? __('pages.galeri.title'), 'description' => $page['description'] ?? __('pages.galeri.description')])
@@ -42,52 +43,30 @@
 
       <div class="gallery-wall-grid" data-gallery-wall>
         @foreach($items as $item)
-          @php
-            $type = $item['type'] ?? 'photo';
-            $isVideo = $type === 'video';
-            $title = $item['title'] ?? '';
-            $mediaUrl = $item['media_url'] ?? null;
-            $emoji = $item['emoji'] ?? ($isVideo ? '▶️' : '📸');
-            $badge = $item['badge'] ?? ($isVideo ? 'Video' : 'Foto');
-            $gradient = $item['gradient'] ?? ['#DCF1F7', '#FFC93C'];
-          @endphp
-
-          <article
-            class="gallery-wall-card reveal"
-            tabindex="0"
-            role="button"
-            data-gallery-wall-card
-            data-gallery-title="{{ $title }}"
-            data-gallery-media-url="{{ $mediaUrl ?? '' }}"
-            data-gallery-is-video="{{ $isVideo ? '1' : '0' }}"
-            data-gallery-emoji="{{ $emoji }}"
-            data-gallery-badge="{{ $badge }}"
-            style="--gallery-g1: {{ $gradient[0] ?? '#DCF1F7' }}; --gallery-g2: {{ $gradient[1] ?? '#FFC93C' }};"
-          >
-            <div class="gallery-wall-card__media">
-              @if($mediaUrl && $isVideo)
-                <iframe
-                  src="{{ $mediaUrl }}"
-                  title="{{ $title }}"
-                  loading="lazy"
-                  allow="fullscreen; picture-in-picture"
-                  allowfullscreen
-                  referrerpolicy="strict-origin-when-cross-origin"
-                ></iframe>
-              @elseif($mediaUrl)
-                <img src="{{ $mediaUrl }}" alt="{{ $title }}" loading="lazy">
-              @else
-                <span aria-hidden="true">{{ $emoji }}</span>
-              @endif
-            </div>
-
-            <div class="gallery-wall-card__caption">
-              <span>{{ $badge }}</span>
-              <h3>{{ $title }}</h3>
-            </div>
-          </article>
+          @include('pages.partials.gallery-wall-card', ['item' => $item])
         @endforeach
       </div>
+
+      @foreach($sections as $section)
+        <section class="gallery-wall-subsection reveal" aria-labelledby="gallery-section-{{ $loop->index }}">
+          <header class="gallery-wall-subsection__head">
+            <div>
+              <span class="public-eyebrow">{{ $page['wall']['section_eyebrow'] ?? 'Bagian Galeri' }}</span>
+              <h2 id="gallery-section-{{ $loop->index }}">{{ $section['title'] }}</h2>
+            </div>
+
+            @if(! empty($section['description']))
+              <p>{{ $section['description'] }}</p>
+            @endif
+          </header>
+
+          <div class="gallery-wall-grid gallery-wall-grid--subsection">
+            @foreach($section['items'] as $item)
+              @include('pages.partials.gallery-wall-card', ['item' => $item])
+            @endforeach
+          </div>
+        </section>
+      @endforeach
     </div>
   </section>
 

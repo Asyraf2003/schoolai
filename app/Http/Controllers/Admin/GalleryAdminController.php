@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GalleryItem;
+use App\Models\GalleryPageSection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -33,9 +35,17 @@ final class GalleryAdminController extends Controller
 
         $items = GalleryItem::query()->ordered()->get();
 
+        $pageSections = Schema::hasTable('gallery_page_sections')
+            ? GalleryPageSection::query()
+                ->withCount('mediaItems')
+                ->orderBy('id')
+                ->get()
+            : collect();
+
         return view('admin.gallery.index', [
             'adminPageKey' => 'galeri',
             'items' => $items,
+            'pageSections' => $pageSections,
             'limits' => $this->limits(),
             'canCreate' => $items->count() < self::MAX_ITEMS,
         ]);

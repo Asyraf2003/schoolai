@@ -33,7 +33,7 @@ return [
     'gallery' => [
         'title' => 'Admin Galeri',
         'heading' => 'Galeri',
-        'description' => 'Kelola maksimal 6 item galeri.',
+        'description' => 'Kelola 6 item utama homepage dan bagian halaman galeri.',
         'create_title' => 'Tambah Item',
         'edit_title' => 'Edit Item',
         'detail_title' => 'Detail Item',
