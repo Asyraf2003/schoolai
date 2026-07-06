@@ -17,6 +17,10 @@ return [
         'learn_more' => 'View Details',
         'view_gallery' => 'View Gallery',
         'gallery_video_title' => 'Gallery video',
+        'mobile_menu_open' => 'Open menu',
+        'mobile_menu_close' => 'Close menu',
+        'media_video' => 'Video',
+        'media_photo' => 'Photo',
         'whatsapp_url' => 'https://wa.me/6281234567890?text=Assalamu%27alaikum%2C%20I%20would%20like%20to%20ask%20about%20admission%20at%20Al%20Mustaqbal%20School',
         'nav' => [
             'home' => 'Home',
@@ -28,6 +32,7 @@ return [
         'footer' => [
             'description' => 'A child-friendly Islamic school combining manners, academics, tahfidz, and warm learning experiences for families.',
             'contact_title' => 'School Contact',
+            'links_title' => 'Pages',
             'address_label' => 'Address',
             'address' => 'Jl. Pendidikan Anak No. 12, Mataram',
             'phone_label' => 'WhatsApp',

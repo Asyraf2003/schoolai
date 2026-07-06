@@ -17,6 +17,10 @@ return [
         'learn_more' => 'Lihat Detail',
         'view_gallery' => 'Lihat Galeri',
         'gallery_video_title' => 'Video galeri',
+        'mobile_menu_open' => 'Buka menu',
+        'mobile_menu_close' => 'Tutup menu',
+        'media_video' => 'Video',
+        'media_photo' => 'Foto',
         'whatsapp_url' => 'https://wa.me/6281234567890?text=Assalamu%27alaikum%2C%20saya%20ingin%20bertanya%20tentang%20PPDB%20Al%20Mustaqbal%20School',
         'nav' => [
             'home' => 'Beranda',
@@ -28,6 +32,7 @@ return [
         'footer' => [
             'description' => 'Sekolah Islam ramah anak yang memadukan adab, akademik, tahfidz, dan pengalaman belajar yang hangat untuk keluarga.',
             'contact_title' => 'Kontak Sekolah',
+            'links_title' => 'Halaman',
             'address_label' => 'Alamat',
             'address' => 'Jl. Pendidikan Anak No. 12, Mataram',
             'phone_label' => 'WhatsApp',
