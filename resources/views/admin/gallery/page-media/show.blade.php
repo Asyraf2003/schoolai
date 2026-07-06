@@ -38,7 +38,7 @@
       <form method="POST" action="{{ route('admin.galeri.section-media.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Hapus media ini?">
         @csrf
         @method('DELETE')
-        <button type="submit" class="admin-primary-action admin-primary-action--danger">Hapus</button>
+        <button type="button" data-admin-delete-trigger class="admin-primary-action admin-primary-action--danger">Hapus</button>
       </form>
     </div>
   </header>
