@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function () {
       iframe.src = normalizeStoryVideoUrl(mediaUrl);
       iframe.title = title || videoTitleFallback;
       iframe.loading = 'eager';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
       iframe.allowFullscreen = true;
       iframe.setAttribute('allowfullscreen', '');
       iframe.setAttribute('playsinline', '');
