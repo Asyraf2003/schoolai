@@ -10,9 +10,7 @@
 <body class="auth-login-page" data-page="authLogin">
     <main class="auth-login" aria-labelledby="login-heading">
         <section class="auth-login__card">
-            <header class="auth-login__header">
-                <h1 id="login-heading">{{ __('app.auth.login.heading') }}</h1>
-            </header>
+            <h1 id="login-heading">{{ __('app.auth.login.heading') }}</h1>
 
             @if (session('success'))
                 <p class="auth-login__flash" role="status">{{ session('success') }}</p>
@@ -64,12 +62,6 @@
                     {{ __('app.auth.login.submit') }}
                 </button>
             </form>
-
-            <div class="auth-login__separator" aria-hidden="true">
-                <span></span>
-                <strong>{{ __('app.auth.login.separator') }}</strong>
-                <span></span>
-            </div>
 
             <a class="auth-login__google" href="{{ route('google.redirect') }}">
                 <img

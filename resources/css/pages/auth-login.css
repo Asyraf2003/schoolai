@@ -1,226 +1,190 @@
-/* Page CSS: khusus halaman login. Masih tipis, nanti desain login bisa tumbuh di sini. */
-.auth-login-page {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 24px;
-    background: linear-gradient(135deg, var(--color-cream-50), var(--color-blue-50));
+/* AUTH_LOGIN_BOX_FINAL */
+html,
+body.auth-login-page {
+  min-height: 100%;
 }
 
-.auth-login-page main {
-    width: min(100%, var(--container-sm));
-    padding: 28px;
-    border-radius: var(--radius-md);
-    background: #ffffff;
-    box-shadow: var(--shadow-soft);
-}
-
-.auth-login-page form {
-    display: grid;
-    gap: 14px;
-}
-
-.auth-login-page input[type='email'],
-.auth-login-page input[type='password'] {
-    width: 100%;
-    padding: 11px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: var(--radius-sm);
-}
-
-/* AUTH_LOGIN_SIMPLE_CENTERED_FINAL */
-.auth-login-page {
-  min-height: 100vh;
+body.auth-login-page {
   margin: 0;
-  color: #172033;
-  background:
-    radial-gradient(circle at top left, rgba(255, 201, 60, 0.22), transparent 34%),
-    linear-gradient(135deg, #fff7ed 0%, #f8fafc 52%, #eef6ff 100%);
+  color: #111827;
+  background: #f3f7fb;
 }
 
-.auth-login-page * {
+body.auth-login-page * {
   box-sizing: border-box;
 }
 
-.auth-login {
+.auth-login-page .auth-login {
   min-height: 100vh;
+  width: 100%;
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: 24px;
+  background: #f3f7fb;
 }
 
-.auth-login__card {
-  width: min(420px, 100%);
-  padding: clamp(24px, 5vw, 36px);
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.13);
+.auth-login-page .auth-login__card {
+  width: min(390px, 100%);
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #dbe3ee;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 18px 55px rgba(15, 23, 42, 0.10);
 }
 
-.auth-login__header {
-  margin-bottom: 22px;
+.auth-login-page .auth-login__card h1 {
+  margin: 0 0 24px;
+  color: #111827;
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   text-align: center;
 }
 
-.auth-login__header h1 {
-  margin: 0;
-  color: #111827;
-  font-size: clamp(1.9rem, 5vw, 2.55rem);
-  line-height: 1.05;
-  letter-spacing: -0.045em;
-}
-
-.auth-login__flash {
+.auth-login-page .auth-login__flash {
   margin: 0 0 16px;
-  padding: 12px 14px;
+  padding: 11px 12px;
   border: 1px solid #a7f3d0;
-  border-radius: 14px;
+  border-radius: 10px;
   background: #ecfdf5;
   color: #047857;
-  font-weight: 750;
-}
-
-.auth-login__form {
-  display: grid;
-  gap: 15px;
-}
-
-.auth-login__field {
-  display: grid;
-  gap: 8px;
-}
-
-.auth-login__field label,
-.auth-login__remember {
-  color: #334155;
-  font-size: 0.92rem;
-  font-weight: 800;
-}
-
-.auth-login__field input {
-  width: 100%;
-  min-height: 50px;
-  border: 1px solid rgba(15, 23, 42, 0.14);
-  border-radius: 16px;
-  padding: 0 14px;
-  background: #fff;
-  color: #111827;
-  font: inherit;
+  font-size: 0.9rem;
   font-weight: 700;
 }
 
-.auth-login__field input:focus {
-  outline: none;
-  border-color: rgba(37, 99, 235, 0.62);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+.auth-login-page .auth-login__form {
+  display: grid;
+  gap: 14px;
 }
 
-.auth-login__field input[aria-invalid="true"] {
+.auth-login-page .auth-login__field {
+  display: grid;
+  gap: 7px;
+}
+
+.auth-login-page .auth-login__field label {
+  color: #26364d;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.auth-login-page .auth-login__field input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #cbd5e1;
+  border-radius: 11px;
+  padding: 0 12px;
+  background: #ffffff;
+  color: #111827;
+  font: inherit;
+}
+
+.auth-login-page .auth-login__field input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.auth-login-page .auth-login__field input[aria-invalid="true"] {
   border-color: #ef4444;
 }
 
-.auth-login__error {
+.auth-login-page .auth-login__error {
   margin: 0;
-  padding: 10px 12px;
+  padding: 9px 10px;
   border: 1px solid #fecaca;
-  border-radius: 13px;
+  border-radius: 10px;
   background: #fef2f2;
   color: #b91c1c;
-  font-size: 0.86rem;
-  font-weight: 750;
+  font-size: 0.84rem;
+  font-weight: 700;
 }
 
-.auth-login__remember {
+.auth-login-page .auth-login__remember {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   width: fit-content;
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
 }
 
-.auth-login__remember input {
-  width: 17px;
-  height: 17px;
+.auth-login-page .auth-login__remember input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
   accent-color: #2563eb;
 }
 
-.auth-login__submit,
-.auth-login__google {
-  min-height: 50px;
-  border-radius: 16px;
-  font: inherit;
-  font-weight: 900;
-}
-
-.auth-login__submit {
+.auth-login-page .auth-login__submit,
+.auth-login-page .auth-login__google {
   width: 100%;
-  border: 0;
-  background: #2563eb;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
-}
-
-.auth-login__submit:hover {
-  background: #1d4ed8;
-}
-
-.auth-login__separator {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 11px;
-  margin: 22px 0;
-  color: #64748b;
-  font-size: 0.82rem;
+  min-height: 46px;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 0.95rem;
   font-weight: 800;
 }
 
-.auth-login__separator span {
-  height: 1px;
-  background: rgba(100, 116, 139, 0.26);
+.auth-login-page .auth-login__submit {
+  border: 0;
+  background: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
 }
 
-.auth-login__google {
+.auth-login-page .auth-login__submit:hover {
+  background: #1d4ed8;
+}
+
+.auth-login-page .auth-login__google {
   display: inline-flex;
-  width: 100%;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  border: 1px solid rgba(15, 23, 42, 0.14);
-  background: #fff;
-  color: #172033;
+  margin-top: 14px;
+  border: 1px solid #d1d9e6;
+  background: #ffffff;
+  color: #111827;
   text-decoration: none;
 }
 
-.auth-login__google:hover {
-  border-color: rgba(37, 99, 235, 0.42);
+.auth-login-page .auth-login__google:hover {
   background: #f8fafc;
+  border-color: #b8c4d6;
 }
 
-.auth-login__google img {
+.auth-login-page .auth-login__google img {
   width: 20px;
   height: 20px;
   display: block;
   object-fit: contain;
 }
 
-.auth-login__submit:focus-visible,
-.auth-login__google:focus-visible,
-.auth-login__remember input:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.36);
-  outline-offset: 4px;
+.auth-login-page .auth-login__submit:focus-visible,
+.auth-login-page .auth-login__google:focus-visible,
+.auth-login-page .auth-login__remember input:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 3px;
 }
 
 @media (max-width: 480px) {
-  .auth-login {
-    padding: 14px;
+  .auth-login-page .auth-login {
+    padding: 16px;
   }
 
-  .auth-login__card {
-    border-radius: 22px;
-    padding: 22px;
+  .auth-login-page .auth-login__card {
+    width: 100%;
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .auth-login-page .auth-login__card h1 {
+    font-size: 1.85rem;
   }
 }
-/* /AUTH_LOGIN_SIMPLE_CENTERED_FINAL */
+/* /AUTH_LOGIN_BOX_FINAL */

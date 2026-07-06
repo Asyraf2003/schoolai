@@ -12,7 +12,7 @@ return [
 
     'auth' => [
         'login' => [
-            'title' => 'Login Admin',
+            'title' => 'Login',
             'heading' => 'Login',
             'google_button' => 'Masuk dengan Google',
             'separator' => 'atau masuk dengan email dan password',
