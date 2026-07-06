@@ -335,7 +335,73 @@
                   </span>
 
                   <div class="galeri-story-card__mobile-media">
-                      {{-- HOMEPAGE_GALLERY_PHOTO_VIDEO_FINAL --}}
+                    @if (! empty($item['is_video']))
+                      @if (! empty($item['thumbnail_url']))
+                        <img
+                          data-lazy-media
+                          data-lazy-src="{{ $item['thumbnail_url'] }}"
+                          alt="{{ $item['title'] }}"
+                          class="galeri-story-card__mobile-image"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <span class="galeri-story-card__mobile-play" aria-hidden="true">▶</span>
+                      @else
+                        <span class="galeri-story-card__mobile-fallback">
+                          {{ $item['fallback_icon'] ?? '▶' }}
+                        </span>
+                      @endif
+                    @elseif (! empty($item['media_url']))
+                      <img
+                        data-lazy-media
+                        data-lazy-src="{{ $item['media_url'] }}"
+                        alt="{{ $item['title'] }}"
+                        class="galeri-story-card__mobile-image"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    @else
+                      <span class="galeri-story-card__mobile-fallback">
+                        {{ $item['fallback_icon'] ?? ($item['emoji'] ?? '📸') }}
+                      </span>
+                    @endif
+
+                    <span class="galeri-story-card__mobile-badge">
+                      {{ $item['type_label'] ?? 'Foto' }}
+                    </span>
+                  </div>
+
+                  <div class="galeri-story-card__content">
+                    <div class="galeri-story-card__meta">
+                      @if (! empty($item['category']))
+                        <span>{{ $item['category'] }}</span>
+                      @endif
+                      <span>{{ $item['type_label'] ?? 'Foto' }}</span>
+                      @if (! empty($item['date']))
+                        <span>{{ $item['date'] }}</span>
+                      @endif
+                    </div>
+
+                    <h3>{{ $item['title'] }}</h3>
+
+                    @if (! empty($item['caption']))
+                      <p>{{ $item['caption'] }}</p>
+                    @endif
+                  </div>
+                </article>
+              @endforeach
+            </div>
+
+            <aside class="galeri-story__visual" aria-hidden="true">
+              <div class="galeri-story-visual__track" data-gallery-visual-track>
+                @foreach ($gallerySection['items'] as $item)
+                  <div
+                    class="galeri-story-visual__panel{{ $loop->first ? ' is-active' : '' }}"
+                    data-gallery-visual-panel
+                    data-gallery-index="{{ $loop->index }}"
+                    style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
+                  >
+                    <div class="galeri-story-visual__media">
                       @if (! empty($item['is_video']))
                         @if (! empty($item['thumbnail_url']))
                           <img
