@@ -505,6 +505,45 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  function normalizeStoryVideoUrl(url) {
+    if (!url) return '';
+
+    try {
+      var parsed = new URL(url, window.location.href);
+      var host = parsed.hostname.replace(/^www\./, '');
+
+      if (host === 'youtu.be') {
+        var videoId = parsed.pathname.replace(/^\//, '').split('/')[0];
+
+        if (videoId) {
+          parsed.protocol = 'https:';
+          parsed.hostname = 'www.youtube.com';
+          parsed.pathname = '/embed/' + videoId;
+        }
+      }
+
+      host = parsed.hostname.replace(/^www\./, '');
+
+      if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtube-nocookie.com') {
+        var watchId = parsed.searchParams.get('v');
+
+        if (watchId && parsed.pathname === '/watch') {
+          parsed.pathname = '/embed/' + watchId;
+          parsed.searchParams.delete('v');
+        }
+
+        parsed.protocol = 'https:';
+        parsed.searchParams.set('playsinline', '1');
+        parsed.searchParams.set('rel', '0');
+        parsed.searchParams.set('modestbranding', '1');
+      }
+
+      return parsed.toString();
+    } catch (error) {
+      return url;
+    }
+  }
+
   function openStoryMediaByIndex(index) {
     var card = cards[index];
 
@@ -529,11 +568,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (isVideo) {
       var iframe = document.createElement('iframe');
-      iframe.src = mediaUrl;
+      iframe.src = normalizeStoryVideoUrl(mediaUrl);
       iframe.title = title || videoTitleFallback;
-      iframe.loading = 'lazy';
-      iframe.allow = 'fullscreen; picture-in-picture';
+      iframe.loading = 'eager';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
       iframe.allowFullscreen = true;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('playsinline', '');
+      iframe.setAttribute('webkit-playsinline', '');
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       mediaStage.appendChild(iframe);
     } else {
