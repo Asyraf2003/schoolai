@@ -392,13 +392,16 @@
               @endforeach
             </div>
 
-            <aside class="galeri-story__visual" aria-hidden="true">
+            <aside class="galeri-story__visual" aria-label="Preview media galeri">
               <div class="galeri-story-visual__track" data-gallery-visual-track>
                 @foreach ($gallerySection['items'] as $item)
                   <div
                     class="galeri-story-visual__panel{{ $loop->first ? ' is-active' : '' }}"
                     data-gallery-visual-panel
                     data-gallery-index="{{ $loop->index }}"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Buka media {{ $item['title'] ?? 'galeri' }}"
                     style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
                   >
                     <div class="galeri-story-visual__media">

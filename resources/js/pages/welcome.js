@@ -498,7 +498,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     panels.forEach(function (panel, panelIndex) {
-      panel.classList.toggle('is-active', panelIndex === index);
+      var isActive = panelIndex === index;
+      panel.classList.toggle('is-active', isActive);
+      panel.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
   }
 
@@ -540,6 +542,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  function openStoryMediaByIndex(index) {
+    var card = cards[index];
+
+    if (!card) return false;
+
+    return openStoryMedia(card);
+  }
+
   function openStoryMedia(card) {
     var mediaUrl = card.getAttribute('data-media-url') || '';
     if (!mediaUrl) return false;
@@ -579,7 +589,11 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaBadge.hidden = !typeLabel;
 
     mediaLightbox.hidden = false;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = '';
+
+    window.requestAnimationFrame(function () {
+      document.body.style.overflow = 'hidden';
+    });
 
     var closeButton = mediaLightbox.querySelector('.homepage-gallery-lightbox__close');
     if (closeButton) closeButton.focus();
@@ -624,6 +638,25 @@ document.addEventListener('DOMContentLoaded', function () {
       if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         activateGalleryStory(index);
       }
+    });
+  });
+
+  panels.forEach(function (panel, index) {
+    panel.setAttribute('role', 'button');
+    panel.setAttribute('tabindex', '0');
+    panel.setAttribute('aria-pressed', index === activeIndex ? 'true' : 'false');
+
+    panel.addEventListener('click', function () {
+      activateGalleryStory(index);
+      openStoryMediaByIndex(index);
+    });
+
+    panel.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      event.preventDefault();
+      activateGalleryStory(index);
+      openStoryMediaByIndex(index);
     });
   });
 

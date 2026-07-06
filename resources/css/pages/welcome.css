@@ -10793,3 +10793,20 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 /* /HOMEPAGE_GALLERY_CLICK_LIGHTBOX_FINAL */
+
+
+/* HOMEPAGE_GALLERY_VISUAL_CLICK_FIX_FINAL */
+.galeri-story-visual__panel.is-active,
+.galeri-story-visual__media,
+.galeri-story-visual__play,
+.galeri-story-card__mobile-media,
+.galeri-story-card__mobile-play {
+  cursor: pointer;
+}
+
+.galeri-story-visual__panel:focus-visible,
+.galeri-story-card:focus-visible {
+  outline: 3px solid rgba(255, 201, 60, 0.82);
+  outline-offset: 4px;
+}
+/* /HOMEPAGE_GALLERY_VISUAL_CLICK_FIX_FINAL */
