@@ -37,7 +37,6 @@
     <div class="admin-gallery-block__head">
       <div>
         <h2>Galeri Utama Homepage</h2>
-        <p>Maksimal 6 item. Posisi hanya berlaku untuk area ini.</p>
       </div>
 
       <span class="admin-counter">{{ $items->count() }}/{{ $limits['max_items'] ?? 6 }} item</span>
