@@ -138,6 +138,13 @@
       <!-- ======================= VISI MISI ======================= -->
       <section class="visi-misi section" id="visi-misi">
         <div class="container">
+          <header class="section-head section-head--center visi-misi__head reveal">
+            <h2 class="section-title">{{ $visiMisi['section_title'] ?? $visiMisi['vision']['title'] }}</h2>
+            @if (! empty($visiMisi['section_subtitle']))
+              <p class="section-subtitle">{{ $visiMisi['section_subtitle'] }}</p>
+            @endif
+          </header>
+
           <div class="visi-misi__shell">
             <article class="visi-card reveal" tabindex="0">
               <div class="visi-card__topline">
@@ -242,8 +249,17 @@
       </section>
 
       <!-- ======================= PROGRAM UNGGULAN ======================= -->
-      <section class="program-section section" id="program">
+      <section class="program-section section" id="program" aria-labelledby="program-heading">
         <div class="container">
+          <header class="section-head section-head--center program-section__head reveal">
+            <h2 class="section-title" id="program-heading">{{ $featuredPrograms['section_title'] ?? $featuredPrograms['title'] }}</h2>
+            @if (! empty($featuredPrograms['section_subtitle']))
+              <p class="section-subtitle">{{ $featuredPrograms['section_subtitle'] }}</p>
+            @elseif (! empty($featuredPrograms['subtitle']))
+              <p class="section-subtitle">{{ $featuredPrograms['subtitle'] }}</p>
+            @endif
+          </header>
+
           <div class="program-section__shell">
             <aside class="program-spotlight reveal">
               <h2 class="program-spotlight__title">{{ $featuredPrograms['title'] }}</h2>
@@ -301,14 +317,22 @@
       </section>
 
       <!-- ======================= GALERI ======================= -->
-      <section class="galeri-section section" id="galeri">
+      <section class="galeri-section section" id="galeri" aria-labelledby="homepage-gallery-heading">
         <div class="container">
-          <div class="section-head">
-            <h2 class="section-title section-title--white">{{ $gallerySection['title'] }}</h2>
-            <p class="section-subtitle section-subtitle--white">
-              {{ $gallerySection['subtitle'] }}
-            </p>
-          </div>
+          <header class="section-head section-head--center galeri-section__head reveal">
+            <h2 class="section-title section-title--white" id="homepage-gallery-heading">
+              {{ $gallerySection['section_title'] ?? $gallerySection['title'] }}
+            </h2>
+            @if (! empty($gallerySection['section_subtitle']))
+              <p class="section-subtitle section-subtitle--white">
+                {{ $gallerySection['section_subtitle'] }}
+              </p>
+            @elseif (! empty($gallerySection['subtitle']))
+              <p class="section-subtitle section-subtitle--white">
+                {{ $gallerySection['subtitle'] }}
+              </p>
+            @endif
+          </header>
 
           <div class="galeri-story" id="galeriGrid" data-gallery-story>
             <div class="galeri-story__copy" aria-label="Daftar momen galeri terbaru">
