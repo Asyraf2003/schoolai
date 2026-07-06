@@ -9,9 +9,7 @@
 @section('content')
   <header class="admin-topbar admin-topbar--compact">
     <div>
-      <p class="admin-topbar__eyebrow">Konten Galeri</p>
       <h1>{{ $page['heading'] }}</h1>
-      <p>Kelola 6 item utama homepage dan bagian galeri halaman khusus. Karena tentu saja satu galeri saja terlalu waras untuk manusia modern.</p>
     </div>
 
     <div class="admin-inline-actions">
