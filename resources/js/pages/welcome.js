@@ -487,6 +487,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var mediaTitle = null;
   var mediaCaption = null;
   var mediaBadge = null;
+  var lightboxLabel = storyRoot.getAttribute('data-lightbox-label') || 'Homepage gallery media';
+  var closeLabel = storyRoot.getAttribute('data-close-label') || 'Close';
+  var videoTitleFallback = storyRoot.getAttribute('data-video-title') || 'Gallery video';
 
   function activateGalleryStory(index) {
     activeIndex = index;
@@ -511,13 +514,13 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaLightbox.className = 'homepage-gallery-lightbox';
     mediaLightbox.setAttribute('role', 'dialog');
     mediaLightbox.setAttribute('aria-modal', 'true');
-    mediaLightbox.setAttribute('aria-label', 'Media galeri homepage');
+    mediaLightbox.setAttribute('aria-label', lightboxLabel);
     mediaLightbox.hidden = true;
 
     mediaLightbox.innerHTML =
-      '<button type="button" class="homepage-gallery-lightbox__backdrop" data-homepage-gallery-close aria-label="Tutup"></button>' +
+      '<button type="button" class="homepage-gallery-lightbox__backdrop" data-homepage-gallery-close aria-label=""></button>' +
       '<article class="homepage-gallery-lightbox__panel">' +
-        '<button type="button" class="homepage-gallery-lightbox__close" data-homepage-gallery-close>Tutup</button>' +
+        '<button type="button" class="homepage-gallery-lightbox__close" data-homepage-gallery-close></button>' +
         '<div class="homepage-gallery-lightbox__media" data-homepage-gallery-media></div>' +
         '<span class="homepage-gallery-lightbox__badge" data-homepage-gallery-badge></span>' +
         '<h2 data-homepage-gallery-title></h2>' +
@@ -532,6 +535,12 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaBadge = mediaLightbox.querySelector('[data-homepage-gallery-badge]');
 
     Array.prototype.slice.call(mediaLightbox.querySelectorAll('[data-homepage-gallery-close]')).forEach(function (button) {
+      button.setAttribute('aria-label', closeLabel);
+
+      if (button.classList.contains('homepage-gallery-lightbox__close')) {
+        button.textContent = closeLabel;
+      }
+
       button.addEventListener('click', closeStoryMedia);
     });
   }
@@ -567,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isVideo) {
       var iframe = document.createElement('iframe');
       iframe.src = mediaUrl;
-      iframe.title = title || 'Video galeri';
+      iframe.title = title || videoTitleFallback;
       iframe.loading = 'lazy';
       iframe.allow = 'fullscreen; picture-in-picture';
       iframe.allowFullscreen = true;

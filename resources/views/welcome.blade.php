@@ -267,14 +267,14 @@
                 {{ $featuredPrograms['subtitle'] }}
               </p>
 
-              <div class="program-spotlight__chips" aria-label="Ringkasan program">
-                <span>6 Program</span>
-                <span>TK & SD</span>
-                <span>Qur’ani</span>
+              <div class="program-spotlight__chips" aria-label="{{ $featuredPrograms['chips_aria_label'] ?? __('home.program_unggulan.chips_aria_label') }}">
+                @foreach (($featuredPrograms['chips'] ?? []) as $chip)
+                  <span>{{ $chip }}</span>
+                @endforeach
               </div>
             </aside>
 
-            <div class="program-flow" aria-label="Daftar program unggulan">
+            <div class="program-flow" aria-label="{{ $featuredPrograms['flow_aria_label'] ?? __('home.program_unggulan.flow_aria_label') }}">
               @forelse ($featuredPrograms['items'] as $program)
                 <button
                   type="button"
@@ -334,8 +334,15 @@
             @endif
           </header>
 
-          <div class="galeri-story" id="galeriGrid" data-gallery-story>
-            <div class="galeri-story__copy" aria-label="Daftar momen galeri terbaru">
+          <div
+            class="galeri-story"
+            id="galeriGrid"
+            data-gallery-story
+            data-lightbox-label="{{ $gallerySection['lightbox_label'] ?? __('home.galeri.lightbox_label') }}"
+            data-close-label="{{ $gallerySection['close_label'] ?? __('home.galeri.close_label') }}"
+            data-video-title="{{ $gallerySection['video_title'] ?? __('home.galeri.video_title') }}"
+          >
+            <div class="galeri-story__copy" aria-label="{{ $gallerySection['aria_label'] ?? __('home.galeri.aria_label') }}">
               @foreach ($gallerySection['items'] as $item)
                 <article
                   class="galeri-story-card{{ $loop->first ? ' is-active' : '' }}"
@@ -346,7 +353,7 @@
                   data-caption="{{ $item['caption'] ?? '' }}"
                   data-category="{{ $item['category'] ?? '' }}"
                   data-date="{{ $item['date'] ?? '' }}"
-                  data-type-label="{{ $item['type_label'] ?? 'Foto' }}"
+                  data-type-label="{{ $item['type_label'] ?? ($gallerySection['default_type_label'] ?? __('home.galeri.default_type_label')) }}"
                   data-media-url="{{ $item['media_url'] ?? '' }}"
                   data-is-video="{{ ! empty($item['is_video']) ? '1' : '0' }}"
                   style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
@@ -388,7 +395,7 @@
                     @endif
 
                     <span class="galeri-story-card__mobile-badge">
-                      {{ $item['type_label'] ?? 'Foto' }}
+                      {{ $item['type_label'] ?? ($gallerySection['default_type_label'] ?? __('home.galeri.default_type_label')) }}
                     </span>
                   </div>
 
@@ -397,7 +404,7 @@
                       @if (! empty($item['category']))
                         <span>{{ $item['category'] }}</span>
                       @endif
-                      <span>{{ $item['type_label'] ?? 'Foto' }}</span>
+                      <span>{{ $item['type_label'] ?? ($gallerySection['default_type_label'] ?? __('home.galeri.default_type_label')) }}</span>
                       @if (! empty($item['date']))
                         <span>{{ $item['date'] }}</span>
                       @endif
@@ -413,7 +420,7 @@
               @endforeach
             </div>
 
-            <aside class="galeri-story__visual" aria-label="Preview media galeri">
+            <aside class="galeri-story__visual" aria-label="{{ $gallerySection['visual_aria_label'] ?? __('home.galeri.visual_aria_label') }}">
               <div class="galeri-story-visual__track" data-gallery-visual-track>
                 @foreach ($gallerySection['items'] as $item)
                   <div
@@ -422,7 +429,7 @@
                     data-gallery-index="{{ $loop->index }}"
                     role="button"
                     tabindex="0"
-                    aria-label="Buka media {{ $item['title'] ?? 'galeri' }}"
+                    aria-label="{{ $gallerySection['open_media_prefix'] ?? __('home.galeri.open_media_prefix') }} {{ $item['title'] ?? ($gallerySection['fallback_item_label'] ?? __('home.galeri.fallback_item_label')) }}"
                     style="--g1: {{ $item['g1'] ?? 'var(--color-orange)' }}; --g2: {{ $item['g2'] ?? 'var(--color-yellow)' }}; --gallery-accent: {{ $item['accent'] ?? '#f97316' }}"
                   >
                     <div class="galeri-story-visual__media">

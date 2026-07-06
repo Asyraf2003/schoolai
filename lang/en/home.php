@@ -230,7 +230,14 @@ return array_replace_recursive($id, [
         'section_subtitle' => 'Learning levels and programs are designed step by step, from early childhood to academic, social, and Qur’anic independence.',
 
         'title' => 'A Learning Path from Early Years to Independence',
-        'subtitle' => 'Al Mustaqbal programs are designed to strengthen manners, academics, the Qur’an, language, literacy, and children’s independence step by step.',
+        'subtitle' => 'Al Mustaqbal programs are designed to strengthen manners, academics, the Qur’an, language, literacy, and children’s independence step by step.',        'chips_aria_label' => 'Program summary',
+        'flow_aria_label' => 'Featured program list',
+        'chips' => [
+            '6 Programs',
+            'Kindergarten & Elementary',
+            'Qur’anic',
+        ],
+
         'items' => [
             [
                 'code' => 'KB',
@@ -315,7 +322,15 @@ return array_replace_recursive($id, [
         'section_subtitle' => 'Snapshots of learning, worship, student work, and togetherness documented at school.',
 
         'title' => 'Latest Moments from Al Mustaqbal School',
-        'subtitle' => 'Documentation of learning, worship, creativity, and student togetherness. For now, the gallery uses manual data and Instagram links, not an API.',
+        'subtitle' => 'Documentation of learning, worship, creativity, and student togetherness. For now, the gallery uses manual data and Instagram links, not an API.',        'aria_label' => 'Latest gallery moments list',
+        'visual_aria_label' => 'Gallery media preview',
+        'open_media_prefix' => 'Open media',
+        'fallback_item_label' => 'gallery',
+        'lightbox_label' => 'Homepage gallery media',
+        'close_label' => 'Close',
+        'video_title' => 'Gallery video',
+        'default_type_label' => 'Photo',
+
         'cta' => [
             'label' => 'View Full Gallery',
             'href' => '/galeri',

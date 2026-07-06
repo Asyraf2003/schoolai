@@ -294,7 +294,14 @@ return [
         'section_subtitle' => 'Jenjang dan program pembelajaran dirancang bertahap, dari usia dini sampai anak siap mandiri secara akademik, sosial, dan Qur’ani.',
 
         'title' => 'Jalur Belajar dari Usia Dini sampai Mandiri',
-        'subtitle' => 'Program Al-Mustaqbal dirancang untuk menguatkan adab, akademik, Al-Qur’an, bahasa, literasi, dan kemandirian anak secara bertahap.',
+        'subtitle' => 'Program Al-Mustaqbal dirancang untuk menguatkan adab, akademik, Al-Qur’an, bahasa, literasi, dan kemandirian anak secara bertahap.',        'chips_aria_label' => 'Ringkasan program',
+        'flow_aria_label' => 'Daftar program unggulan',
+        'chips' => [
+            '6 Program',
+            'TK & SD',
+            'Qur’ani',
+        ],
+
         'items' => [
             [
                 'code' => 'KB',
@@ -379,7 +386,15 @@ return [
     'section_subtitle' => 'Cuplikan kegiatan belajar, ibadah, karya, dan kebersamaan siswa yang terdokumentasi di sekolah.',
 
         'title' => 'Momen Terbaru Al Mustaqbal School',
-        'subtitle' => 'Dokumentasi kegiatan belajar, ibadah, kreativitas, dan kebersamaan siswa. Untuk saat ini galeri memakai data manual dan tautan Instagram, belum memakai API.',
+        'subtitle' => 'Dokumentasi kegiatan belajar, ibadah, kreativitas, dan kebersamaan siswa. Untuk saat ini galeri memakai data manual dan tautan Instagram, belum memakai API.',        'aria_label' => 'Daftar momen galeri terbaru',
+        'visual_aria_label' => 'Preview media galeri',
+        'open_media_prefix' => 'Buka media',
+        'fallback_item_label' => 'galeri',
+        'lightbox_label' => 'Media galeri homepage',
+        'close_label' => 'Tutup',
+        'video_title' => 'Video galeri',
+        'default_type_label' => 'Foto',
+
         'cta' => [
             'label' => 'Lihat Semua Galeri',
             'href' => '/galeri',
