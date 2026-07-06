@@ -338,7 +338,8 @@
                     {{-- HOMEPAGE_GALLERY_PHOTO_VIDEO_FINAL --}}
                     @if (! empty($item['is_video']) && ! empty($item['media_url']))
                       <iframe
-                        src="{{ $item['media_url'] }}"
+                        data-lazy-media
+                          data-lazy-src="{{ $item['media_url'] }}"
                         title="{{ $item['title'] }}"
                         class="galeri-story-card__mobile-video"
                         loading="lazy"
@@ -348,7 +349,8 @@
                       ></iframe>
                     @elseif (! empty($item['media_url']))
                       <img
-                        src="{{ $item['media_url'] }}"
+                        data-lazy-media
+                          data-lazy-src="{{ $item['media_url'] }}"
                         alt="{{ $item['title'] }}"
                         class="galeri-story-card__mobile-image"
                         loading="lazy"
@@ -398,7 +400,8 @@
                       {{-- HOMEPAGE_GALLERY_PHOTO_VIDEO_FINAL --}}
                       @if (! empty($item['is_video']) && ! empty($item['media_url']))
                         <iframe
-                          src="{{ $item['media_url'] }}"
+                          data-lazy-media
+                          data-lazy-src="{{ $item['media_url'] }}"
                           title="{{ $item['title'] }}"
                           class="galeri-story-visual__video"
                           loading="lazy"
@@ -408,7 +411,8 @@
                         ></iframe>
                       @elseif (! empty($item['media_url']))
                         <img
-                          src="{{ $item['media_url'] }}"
+                          data-lazy-media
+                          data-lazy-src="{{ $item['media_url'] }}"
                           alt="{{ $item['title'] }}"
                           class="galeri-story-visual__image"
                           loading="lazy"

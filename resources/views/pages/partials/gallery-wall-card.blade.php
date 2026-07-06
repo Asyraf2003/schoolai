@@ -24,7 +24,8 @@
   <div class="gallery-wall-card__media">
     @if($mediaUrl && $isVideo)
       <iframe
-        src="{{ $mediaUrl }}"
+        data-lazy-media
+        data-lazy-src="{{ $mediaUrl }}"
         title="{{ $label }}"
         loading="lazy"
         allow="fullscreen; picture-in-picture"
@@ -32,7 +33,13 @@
         referrerpolicy="strict-origin-when-cross-origin"
       ></iframe>
     @elseif($mediaUrl)
-      <img src="{{ $mediaUrl }}" alt="{{ $label }}" loading="lazy">
+      <img
+        data-lazy-media
+        data-lazy-src="{{ $mediaUrl }}"
+        alt="{{ $label }}"
+        loading="lazy"
+        decoding="async"
+      >
     @else
       <span aria-hidden="true">{{ $emoji }}</span>
     @endif
