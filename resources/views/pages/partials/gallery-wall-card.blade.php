@@ -10,7 +10,7 @@
   $gradient = $item['gradient'] ?? ['#DCF1F7', '#FFC93C'];
 @endphp
 
-<article
+<div
   class="gallery-wall-card reveal"
   tabindex="0"
   role="button"
@@ -48,4 +48,4 @@
       <span class="gallery-wall-card__fallback" aria-hidden="true">{{ $emoji }}</span>
     @endif
   </div>
-</article>
+</div>

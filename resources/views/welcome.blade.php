@@ -344,9 +344,10 @@
           >
             <div class="galeri-story__copy" aria-label="{{ $gallerySection['aria_label'] ?? __('home.galeri.aria_label') }}">
               @foreach ($gallerySection['items'] as $item)
-                <article
+                <div
                   class="galeri-story-card{{ $loop->first ? ' is-active' : '' }}"
                   tabindex="0"
+                  role="button"
                   data-gallery-story-item
                   data-gallery-index="{{ $loop->index }}"
                   data-title="{{ $item['title'] ?? '' }}"
@@ -416,7 +417,7 @@
                       <p>{{ $item['caption'] }}</p>
                     @endif
                   </div>
-                </article>
+                </div>
               @endforeach
             </div>
 
