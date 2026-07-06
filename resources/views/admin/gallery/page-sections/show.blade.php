@@ -108,7 +108,7 @@
                 </button>
               </form>
 
-              <form method="POST" action="{{ route('admin.galeri.section-media.destroy', $item) }}" onsubmit="return confirm('Hapus media ini?')">
+              <form method="POST" action="{{ route('admin.galeri.section-media.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Hapus media ini?">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="admin-small-action admin-small-action--danger">Hapus</button>

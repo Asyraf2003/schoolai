@@ -80,7 +80,7 @@
                 </button>
               </form>
 
-              <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" onsubmit="return confirm('Hapus item galeri utama ini?')">
+              <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Hapus item galeri utama ini?">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="admin-small-action admin-small-action--danger">{{ $page['delete_button'] }}</button>
@@ -133,7 +133,7 @@
                 </button>
               </form>
 
-              <form method="POST" action="{{ route('admin.galeri.sections.destroy', $section) }}" onsubmit="return confirm('Hapus bagian galeri ini beserta semua medianya?')">
+              <form method="POST" action="{{ route('admin.galeri.sections.destroy', $section) }}" data-admin-delete-form data-admin-delete-message="Hapus bagian galeri ini beserta semua medianya?">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="admin-small-action admin-small-action--danger">{{ $page['delete_button'] }}</button>

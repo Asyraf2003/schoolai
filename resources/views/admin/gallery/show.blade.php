@@ -62,7 +62,7 @@
           </button>
         </form>
 
-        <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" onsubmit="return confirm('Hapus item galeri ini?')">
+        <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Hapus item galeri ini?">
           @csrf
           @method('DELETE')
           <button type="submit" class="admin-small-action admin-small-action--danger">{{ $page['delete_button'] }}</button>
