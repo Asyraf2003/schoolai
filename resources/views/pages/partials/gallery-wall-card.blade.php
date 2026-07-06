@@ -34,7 +34,8 @@
       >
       <span class="gallery-wall-card__play" aria-hidden="true">▶</span>
     @elseif($isVideo)
-      <span aria-hidden="true">{{ $emoji }}</span>
+      <span class="gallery-wall-card__fallback" aria-hidden="true">{{ $emoji }}</span>
+      <span class="gallery-wall-card__play" aria-hidden="true">▶</span>
     @elseif($mediaUrl)
       <img
         data-lazy-media
@@ -44,19 +45,7 @@
         decoding="async"
       >
     @else
-      <span aria-hidden="true">{{ $emoji }}</span>
+      <span class="gallery-wall-card__fallback" aria-hidden="true">{{ $emoji }}</span>
     @endif
   </div>
-
-  @if($badge || $title)
-    <div class="gallery-wall-card__caption">
-      @if($badge)
-        <span>{{ $badge }}</span>
-      @endif
-
-      @if($title)
-        <h3>{{ $title }}</h3>
-      @endif
-    </div>
-  @endif
 </article>
