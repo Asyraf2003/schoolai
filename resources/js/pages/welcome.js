@@ -240,54 +240,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  /* ---------- 7. LIGHTBOX GALERI ---------- */
-  var galeriItems = document.querySelectorAll('.galeri-item');
-  var lightbox = document.getElementById('lightbox');
-  var lightboxVisual = document.getElementById('lightboxVisual');
-  var lightboxCaption = document.getElementById('lightboxCaption');
-  var lightboxClose = document.getElementById('lightboxClose');
-  var lightboxBackdrop = document.getElementById('lightboxBackdrop');
-  var lastFocusedElement = null;
-
-  function openLightbox(item) {
-    var emoji = item.querySelector('.galeri-item__emoji');
-    var caption = item.getAttribute('data-caption') || '';
-    var g1 = getComputedStyle(item).getPropertyValue('--g1');
-    var g2 = getComputedStyle(item).getPropertyValue('--g2');
-
-    lightboxVisual.style.background = 'linear-gradient(135deg,' + g1 + ',' + g2 + ')';
-    lightboxVisual.textContent = emoji ? emoji.textContent : '';
-    lightboxCaption.textContent = caption;
-
-    lastFocusedElement = document.activeElement;
-    lightbox.hidden = false;
-    document.body.style.overflow = 'hidden';
-    lightboxClose.focus();
-  }
-
-  function closeLightbox() {
-    lightbox.hidden = true;
-    document.body.style.overflow = '';
-    if (lastFocusedElement) lastFocusedElement.focus();
-  }
-
-  galeriItems.forEach(function (item) {
-    item.addEventListener('click', function (event) {
-      if (event.target && event.target.closest && event.target.closest('a')) {
-        return;
-      }
-
-      openLightbox(item);
-    });
-  });
-
-  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-  if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
-  });
-
   /* ---------- 9. ANIMASI REVEAL SAAT SCROLL ---------- */
   var revealEls = document.querySelectorAll('.reveal');
 

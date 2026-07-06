@@ -620,21 +620,5 @@
     {{-- WELCOME_SHARED_FOOTER_COMPONENT_FINAL --}}
     @include('partials.site-footer', ['footerSection' => $footerSection])
 
-    <!-- Lightbox galeri -->
-    <div class="lightbox" id="lightbox" hidden>
-      <div class="lightbox__backdrop" id="lightboxBackdrop"></div>
-      <div
-        class="lightbox__content"
-        role="dialog"
-        aria-modal="true"
-        aria-label="{{ $gallerySection['lightbox_label'] ?? __('home.galeri.lightbox_label') }}"
-      >
-        <button class="lightbox__close" id="lightboxClose" aria-label="{{ $gallerySection['close_label'] ?? __('home.galeri.close_label') }}">
-          ✕
-        </button>
-        <div class="lightbox__visual" id="lightboxVisual"></div>
-        <p class="lightbox__caption" id="lightboxCaption"></p>
-      </div>
-    </div>
   </body>
 </html>
