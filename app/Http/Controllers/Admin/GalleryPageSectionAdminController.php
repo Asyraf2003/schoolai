@@ -48,6 +48,15 @@ final class GalleryPageSectionAdminController extends Controller
         ]);
     }
 
+    public function edit(GalleryPageSection $galleryPageSection): View
+    {
+        return view('admin.gallery.page-sections.form', [
+            'adminPageKey' => 'galeri',
+            'mode' => 'edit',
+            'section' => $galleryPageSection,
+        ]);
+    }
+
     public function update(Request $request, GalleryPageSection $galleryPageSection): RedirectResponse
     {
         $galleryPageSection->update($this->validatedData($request));

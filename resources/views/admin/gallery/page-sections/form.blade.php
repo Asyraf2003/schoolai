@@ -18,8 +18,8 @@
 
     <header class="admin-topbar admin-topbar--compact">
       <div>
-        <p class="admin-topbar__eyebrow">Bagian Halaman Galeri</p>
         <h1>{{ $isEdit ? 'Edit Bagian Galeri' : 'Tambah Bagian Galeri' }}</h1>
+        <p>Bagian menyimpan judul dan deskripsi. Media di dalamnya hanya foto atau embed.</p>
       </div>
 
       <div class="admin-inline-actions">

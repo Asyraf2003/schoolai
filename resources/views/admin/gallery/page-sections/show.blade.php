@@ -19,13 +19,13 @@
 
   <header class="admin-topbar admin-topbar--compact">
     <div>
-      <p class="admin-topbar__eyebrow">Detail/Edit Bagian</p>
       <h1>{{ $section->admin_title }}</h1>
       <p>{{ $section->admin_description ?: 'Belum ada deskripsi.' }}</p>
     </div>
 
     <div class="admin-inline-actions">
       <a href="{{ route('admin.galeri') }}" class="admin-primary-action admin-primary-action--ghost">Kembali</a>
+      <a href="{{ route('admin.galeri.sections.edit', $section) }}" class="admin-primary-action admin-primary-action--ghost">Edit Bagian</a>
       <a href="{{ route('admin.galeri.section-media.create', $section) }}" class="admin-primary-action">Tambah Media</a>
     </div>
   </header>
@@ -33,8 +33,8 @@
   <section class="admin-gallery-block">
     <div class="admin-gallery-block__head">
       <div>
-        <h2>Edit Bagian</h2>
-        <p>Judul dan deskripsi boleh panjang. Dunia belum runtuh karena textarea, sejauh ini.</p>
+        <h2>Detail Bagian</h2>
+        <p>Judul dan deskripsi section. Media di bawah hanya foto atau embed.</p>
       </div>
 
       <span class="gallery-lite-status {{ $section->is_published ? 'is-active' : 'is-inactive' }}">
@@ -42,52 +42,34 @@
       </span>
     </div>
 
-    <form method="POST" action="{{ route('admin.galeri.sections.update', $section) }}" class="gallery-lite-form">
-      @csrf
-      @method('PUT')
-
-      <div class="gallery-lite-form__grid">
-        <div class="admin-field">
-          <label for="title_id">Judul Indonesia</label>
-          <input id="title_id" name="title_id" value="{{ old('title_id', $section->title_id) }}" required>
-          @error('title_id') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field">
-          <label for="title_en">Judul English</label>
-          <input id="title_en" name="title_en" value="{{ old('title_en', $section->title_en) }}">
-          @error('title_en') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field admin-field--wide">
-          <label for="description_id">Deskripsi Indonesia</label>
-          <textarea id="description_id" name="description_id" rows="4">{{ old('description_id', $section->description_id) }}</textarea>
-          @error('description_id') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field admin-field--wide">
-          <label for="description_en">Deskripsi English</label>
-          <textarea id="description_en" name="description_en" rows="4">{{ old('description_en', $section->description_en) }}</textarea>
-          @error('description_en') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <label class="admin-check-field">
-          <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $section->is_published))>
-          <span>Aktif</span>
-        </label>
+    <dl class="gallery-detail-list gallery-detail-list--simple">
+      <div>
+        <dt>Judul Indonesia</dt>
+        <dd>{{ $section->title_id ?: '-' }}</dd>
       </div>
 
-      <div class="gallery-detail-actions gallery-detail-actions--simple">
-        <button type="submit" class="admin-primary-action">Update Bagian</button>
+      <div>
+        <dt>Judul English</dt>
+        <dd>{{ $section->title_en ?: '-' }}</dd>
       </div>
-    </form>
+
+      <div class="gallery-detail-list__wide">
+        <dt>Deskripsi Indonesia</dt>
+        <dd>{{ $section->description_id ?: '-' }}</dd>
+      </div>
+
+      <div class="gallery-detail-list__wide">
+        <dt>Deskripsi English</dt>
+        <dd>{{ $section->description_en ?: '-' }}</dd>
+      </div>
+    </dl>
   </section>
 
   <section class="admin-gallery-block">
     <div class="admin-gallery-block__head">
       <div>
-        <h2>Media di Bagian Ini</h2>
-        <p>Tanpa posisi dan tanpa judul per media. Section yang mengatur judul dan deskripsi.</p>
+        <h2>Media</h2>
+        <p>Upload beberapa foto sekaligus atau tempel banyak URL embed dari tombol Tambah Media.</p>
       </div>
 
       <a href="{{ route('admin.galeri.section-media.create', $section) }}" class="admin-primary-action">Tambah Media</a>
@@ -99,9 +81,9 @@
           <article class="admin-media-card">
             <div class="admin-media-card__preview">
               @if($item->is_photo && $item->media_url)
-                <img src="{{ $item->media_url }}" alt="{{ $item->admin_title }}">
+                <img src="{{ $item->media_url }}" alt="{{ $section->admin_title }}">
               @elseif($item->is_video && $item->media_url)
-                <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                <iframe src="{{ $item->media_url }}" title="{{ $section->admin_title }}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
               @else
                 <span>{{ $item->type_label }}</span>
               @endif
@@ -116,7 +98,7 @@
             </div>
 
             <div class="gallery-lite-actions">
-              <a href="{{ route('admin.galeri.section-media.show', $item) }}" class="admin-small-action admin-small-action--ghost">Detail/Edit</a>
+              <a href="{{ route('admin.galeri.section-media.show', $item) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
 
               <form method="POST" action="{{ route('admin.galeri.section-media.toggle', $item) }}">
                 @csrf

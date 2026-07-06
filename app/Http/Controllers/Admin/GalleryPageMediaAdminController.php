@@ -39,16 +39,11 @@ final class GalleryPageMediaAdminController extends Controller
 
     public function store(Request $request, GalleryPageSection $galleryPageSection): RedirectResponse
     {
-        $data = $this->validatedData($request);
-        $data = $this->applyMedia($request, $data);
-
-        $item = new GalleryPageMediaItem($data);
-        $item->section()->associate($galleryPageSection);
-        $item->save();
+        $createdCount = $this->storeMany($request, $galleryPageSection);
 
         return redirect()
-            ->route('admin.galeri.section-media.show', $item)
-            ->with('success', 'Media halaman galeri berhasil ditambahkan.');
+            ->route('admin.galeri.sections.show', $galleryPageSection)
+            ->with('success', "{$createdCount} media berhasil ditambahkan.");
     }
 
     public function show(GalleryPageMediaItem $galleryPageMediaItem): View
@@ -59,15 +54,26 @@ final class GalleryPageMediaAdminController extends Controller
             'adminPageKey' => 'galeri',
             'section' => $galleryPageMediaItem->section,
             'item' => $galleryPageMediaItem,
+        ]);
+    }
+
+    public function edit(GalleryPageMediaItem $galleryPageMediaItem): View
+    {
+        $galleryPageMediaItem->load('section');
+
+        return view('admin.gallery.page-media.edit', [
+            'adminPageKey' => 'galeri',
+            'section' => $galleryPageMediaItem->section,
             'mode' => 'edit',
+            'item' => $galleryPageMediaItem,
             'typeOptions' => $this->typeOptions(),
         ]);
     }
 
     public function update(Request $request, GalleryPageMediaItem $galleryPageMediaItem): RedirectResponse
     {
-        $data = $this->validatedData($request, $galleryPageMediaItem);
-        $data = $this->applyMedia($request, $data, $galleryPageMediaItem);
+        $data = $this->validatedSingleData($request, $galleryPageMediaItem);
+        $data = $this->applySingleMedia($request, $data, $galleryPageMediaItem);
 
         $galleryPageMediaItem->update($data);
 
@@ -88,6 +94,7 @@ final class GalleryPageMediaAdminController extends Controller
     public function destroy(GalleryPageMediaItem $galleryPageMediaItem): RedirectResponse
     {
         $section = $galleryPageMediaItem->section;
+
         $this->deleteStoredPublicFile($galleryPageMediaItem->media_url);
         $galleryPageMediaItem->delete();
 
@@ -96,7 +103,93 @@ final class GalleryPageMediaAdminController extends Controller
             ->with('success', 'Media halaman galeri berhasil dihapus.');
     }
 
-    private function validatedData(Request $request, ?GalleryPageMediaItem $mediaItem = null): array
+    private function storeMany(Request $request, GalleryPageSection $section): int
+    {
+        $type = (string) $request->input('type', 'photo');
+
+        if ($type === 'photo') {
+            $validated = $request->validate([
+                'type' => ['required', Rule::in(['photo'])],
+                'media_files' => ['required', 'array', 'min:1'],
+                'media_files.*' => [
+                    'required',
+                    'file',
+                    'image',
+                    'mimes:jpg,jpeg,png,webp',
+                    'max:' . self::MAX_PHOTO_KB,
+                ],
+                'media_urls' => ['nullable'],
+                'is_published' => ['nullable', 'boolean'],
+                'published_at' => ['nullable', 'date'],
+            ], [
+                'media_files.required' => 'Minimal pilih 1 foto.',
+                'media_files.*.image' => 'Semua file harus berupa gambar.',
+                'media_files.*.mimes' => 'Foto harus JPG, PNG, atau WebP.',
+                'media_files.*.max' => 'Ukuran tiap foto maksimal 10MB.',
+            ]);
+
+            $created = 0;
+
+            foreach ($request->file('media_files', []) as $file) {
+                $section->mediaItems()->create([
+                    'type' => 'photo',
+                    'media_url' => Storage::url($file->store('gallery/page', 'public')),
+                    'is_published' => $request->boolean('is_published'),
+                    'published_at' => $validated['published_at'] ?? null,
+                    'title_id' => null,
+                    'title_en' => null,
+                    'description_id' => null,
+                    'description_en' => null,
+                ]);
+
+                $created++;
+            }
+
+            return $created;
+        }
+
+        $validated = $request->validate([
+            'type' => ['required', Rule::in(['video'])],
+            'media_urls' => ['required', 'string', 'max:20000'],
+            'is_published' => ['nullable', 'boolean'],
+            'published_at' => ['nullable', 'date'],
+        ], [
+            'media_urls.required' => 'Minimal tempel 1 URL video/embed.',
+        ]);
+
+        $urls = collect(preg_split('/\R+/', (string) $validated['media_urls']))
+            ->map(fn (string $url): string => trim($url))
+            ->filter()
+            ->unique()
+            ->values();
+
+        if ($urls->isEmpty()) {
+            throw ValidationException::withMessages([
+                'media_urls' => 'Minimal tempel 1 URL video/embed.',
+            ]);
+        }
+
+        $created = 0;
+
+        foreach ($urls as $url) {
+            $section->mediaItems()->create([
+                'type' => 'video',
+                'media_url' => $this->normalizeVideoUrl($url),
+                'is_published' => $request->boolean('is_published'),
+                'published_at' => $validated['published_at'] ?? null,
+                'title_id' => null,
+                'title_en' => null,
+                'description_id' => null,
+                'description_en' => null,
+            ]);
+
+            $created++;
+        }
+
+        return $created;
+    }
+
+    private function validatedSingleData(Request $request, ?GalleryPageMediaItem $mediaItem = null): array
     {
         $type = (string) $request->input('type', 'photo');
         $isPhoto = $type === 'photo';
@@ -153,7 +246,7 @@ final class GalleryPageMediaAdminController extends Controller
         return $validated;
     }
 
-    private function applyMedia(Request $request, array $data, ?GalleryPageMediaItem $currentItem = null): array
+    private function applySingleMedia(Request $request, array $data, ?GalleryPageMediaItem $currentItem = null): array
     {
         if ($data['type'] === 'video') {
             $this->deleteStoredPublicFile($currentItem?->media_url);
@@ -187,6 +280,7 @@ final class GalleryPageMediaAdminController extends Controller
             ! filter_var($url, FILTER_VALIDATE_URL)
         ) {
             throw ValidationException::withMessages([
+                'media_urls' => 'URL video tidak valid.',
                 'media_url' => 'URL video tidak valid.',
             ]);
         }
@@ -220,6 +314,7 @@ final class GalleryPageMediaAdminController extends Controller
         }
 
         throw ValidationException::withMessages([
+            'media_urls' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, atau Vimeo.',
             'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, atau Vimeo.',
         ]);
     }

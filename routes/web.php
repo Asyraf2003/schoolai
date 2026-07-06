@@ -92,6 +92,9 @@ Route::middleware(['auth', 'admin.locale'])->group(function () {
     Route::get('/admin/galeri/bagian/{galleryPageSection}', [GalleryPageSectionAdminController::class, 'show'])
         ->name('admin.galeri.sections.show');
 
+    Route::get('/admin/galeri/bagian/{galleryPageSection}/edit', [GalleryPageSectionAdminController::class, 'edit'])
+        ->name('admin.galeri.sections.edit');
+
     Route::put('/admin/galeri/bagian/{galleryPageSection}', [GalleryPageSectionAdminController::class, 'update'])
         ->name('admin.galeri.sections.update');
 
@@ -109,6 +112,9 @@ Route::middleware(['auth', 'admin.locale'])->group(function () {
 
     Route::get('/admin/galeri/media/{galleryPageMediaItem}', [GalleryPageMediaAdminController::class, 'show'])
         ->name('admin.galeri.section-media.show');
+
+    Route::get('/admin/galeri/media/{galleryPageMediaItem}/edit', [GalleryPageMediaAdminController::class, 'edit'])
+        ->name('admin.galeri.section-media.edit');
 
     Route::put('/admin/galeri/media/{galleryPageMediaItem}', [GalleryPageMediaAdminController::class, 'update'])
         ->name('admin.galeri.section-media.update');

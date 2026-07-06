@@ -71,7 +71,7 @@
                 <button type="submit" class="admin-small-action" @disabled($loop->last)>{{ $page['move_down'] }}</button>
               </form>
 
-              <a href="{{ route('admin.galeri.show', $item) }}" class="admin-small-action admin-small-action--ghost">Detail/Edit</a>
+              <a href="{{ route('admin.galeri.show', $item) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
 
               <form method="POST" action="{{ route('admin.galeri.toggle', $item) }}">
                 @csrf
@@ -124,7 +124,7 @@
             </div>
 
             <div class="gallery-lite-actions admin-section-card__actions">
-              <a href="{{ route('admin.galeri.sections.show', $section) }}" class="admin-small-action admin-small-action--ghost">Detail/Edit</a>
+              <a href="{{ route('admin.galeri.sections.show', $section) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
 
               <form method="POST" action="{{ route('admin.galeri.sections.toggle', $section) }}">
                 @csrf
