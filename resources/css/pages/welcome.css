@@ -10739,3 +10739,42 @@ h1, h2, h3, h4, p { margin: 0; }
   outline-offset: 4px;
 }
 /* /HOMEPAGE_GALLERY_VISUAL_CLICK_FIX_FINAL */
+
+
+/* HOMEPAGE_SECTION_HEADINGS_WITHOUT_LABELS_FINAL */
+.visi-misi__head,
+.program-section__head,
+.galeri-section__head {
+  max-width: 880px;
+  margin-inline: auto;
+  margin-bottom: clamp(26px, 4vw, 46px);
+  text-align: center;
+}
+
+.visi-misi__head .section-title,
+.program-section__head .section-title {
+  margin-inline: auto;
+}
+
+.visi-misi__head .section-subtitle,
+.program-section__head .section-subtitle,
+.galeri-section__head .section-subtitle {
+  margin-top: 12px;
+  margin-inline: auto;
+}
+
+.galeri-section__head {
+  position: relative;
+  z-index: 2;
+}
+
+.galeri-section__head .section-title {
+  display: block;
+  color: var(--color-white);
+  text-shadow: 0 14px 34px rgba(31, 30, 46, 0.22);
+}
+
+.galeri-section__head .section-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+}
+/* /HOMEPAGE_SECTION_HEADINGS_WITHOUT_LABELS_FINAL */

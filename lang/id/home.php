@@ -169,6 +169,11 @@ return [
     ],
 
     'visi_misi' => [
+
+        'section_title' => 'Arah Pendidikan, Visi, dan Misi Sekolah',
+
+        'section_subtitle' => 'Bagian ini merangkum arah besar pendidikan Al-Mustaqbal: iman, ilmu, adab, bahasa, kemandirian, dan karakter anak secara utuh.',
+
         'vision' => [
             'title' => 'Arah Pendidikan Al-Mustaqbal',
             'text_parts' => [
@@ -283,6 +288,11 @@ return [
     ],
 
     'program_unggulan' => [
+
+        'section_title' => 'Program Pendidikan Al-Mustaqbal',
+
+        'section_subtitle' => 'Jenjang dan program pembelajaran dirancang bertahap, dari usia dini sampai anak siap mandiri secara akademik, sosial, dan Qur’ani.',
+
         'title' => 'Jalur Belajar dari Usia Dini sampai Mandiri',
         'subtitle' => 'Program Al-Mustaqbal dirancang untuk menguatkan adab, akademik, Al-Qur’an, bahasa, literasi, dan kemandirian anak secara bertahap.',
         'items' => [
@@ -363,6 +373,11 @@ return [
     ],
 
 'galeri' => [
+
+    'section_title' => 'Galeri Kegiatan Sekolah',
+
+    'section_subtitle' => 'Cuplikan kegiatan belajar, ibadah, karya, dan kebersamaan siswa yang terdokumentasi di sekolah.',
+
         'title' => 'Momen Terbaru Al Mustaqbal School',
         'subtitle' => 'Dokumentasi kegiatan belajar, ibadah, kreativitas, dan kebersamaan siswa. Untuk saat ini galeri memakai data manual dan tautan Instagram, belum memakai API.',
         'cta' => [

@@ -105,6 +105,11 @@ return array_replace_recursive($id, [
     ],
 
     'visi_misi' => [
+
+        'section_title' => 'Educational Direction, Vision, and Mission',
+
+        'section_subtitle' => 'This section summarizes Al Mustaqbal’s educational direction: faith, knowledge, manners, language, independence, and whole-child character.',
+
         'vision' => [
             'title' => 'The Educational Direction of Al Mustaqbal',
             'text_parts' => [
@@ -219,6 +224,11 @@ return array_replace_recursive($id, [
     ],
 
     'program_unggulan' => [
+
+        'section_title' => 'Al Mustaqbal Educational Programs',
+
+        'section_subtitle' => 'Learning levels and programs are designed step by step, from early childhood to academic, social, and Qur’anic independence.',
+
         'title' => 'A Learning Path from Early Years to Independence',
         'subtitle' => 'Al Mustaqbal programs are designed to strengthen manners, academics, the Qur’an, language, literacy, and children’s independence step by step.',
         'items' => [
@@ -299,6 +309,11 @@ return array_replace_recursive($id, [
     ],
 
     'galeri' => [
+
+        'section_title' => 'School Activity Gallery',
+
+        'section_subtitle' => 'Snapshots of learning, worship, student work, and togetherness documented at school.',
+
         'title' => 'Latest Moments from Al Mustaqbal School',
         'subtitle' => 'Documentation of learning, worship, creativity, and student togetherness. For now, the gallery uses manual data and Instagram links, not an API.',
         'cta' => [
