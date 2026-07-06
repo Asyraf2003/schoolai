@@ -178,7 +178,9 @@
     <button
       class="hamburger"
       id="hamburgerBtn"
-      aria-label="{{ $siteNavbar['mobile_open_label'] ?? 'Buka menu' }}"
+      aria-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
+      data-mobile-open-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
+      data-mobile-close-label="{{ $siteNavbar['mobile_close_label'] ?? __('pages.common.mobile_menu_close') }}"
       aria-expanded="false"
       aria-controls="navMenu"
     >

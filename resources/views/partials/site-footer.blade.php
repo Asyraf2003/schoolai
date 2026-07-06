@@ -108,8 +108,8 @@
     </div>
 
     @if (! empty($siteFooter['links']))
-      <nav class="footer-links" aria-label="{{ $siteFooter['links_title'] ?? 'Halaman' }}">
-        <h4>{{ $siteFooter['links_title'] ?? 'Halaman' }}</h4>
+      <nav class="footer-links" aria-label="{{ $siteFooter['links_title'] ?? __('pages.common.footer.links_title') }}">
+        <h4>{{ $siteFooter['links_title'] ?? __('pages.common.footer.links_title') }}</h4>
         <ul>
           @foreach ($siteFooter['links'] as $link)
             <li><a href="{{ $normalizeFooterHref($link['href'] ?? '#') }}">{{ $link['label'] ?? '' }}</a></li>

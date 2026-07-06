@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     navMenu.classList.add('active');
     navOverlay.classList.add('active');
     hamburgerBtn.setAttribute('aria-expanded', 'true');
-    hamburgerBtn.setAttribute('aria-label', 'Tutup menu');
+    hamburgerBtn.setAttribute('aria-label', closeMenuLabel);
     document.body.style.overflow = 'hidden';
   }
 
@@ -39,11 +39,13 @@ document.addEventListener('DOMContentLoaded', function () {
     navMenu.classList.remove('active');
     navOverlay.classList.remove('active');
     hamburgerBtn.setAttribute('aria-expanded', 'false');
-    hamburgerBtn.setAttribute('aria-label', 'Buka menu');
+    hamburgerBtn.setAttribute('aria-label', openMenuLabel);
     document.body.style.overflow = '';
   }
 
   if (hamburgerBtn && navMenu && navOverlay) {
+    var openMenuLabel = hamburgerBtn.getAttribute('data-mobile-open-label') || hamburgerBtn.getAttribute('aria-label') || 'Open menu';
+    var closeMenuLabel = hamburgerBtn.getAttribute('data-mobile-close-label') || 'Close menu';
     hamburgerBtn.addEventListener('click', function () {
       var isOpen = navMenu.classList.contains('active');
       if (isOpen) {

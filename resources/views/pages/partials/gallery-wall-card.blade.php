@@ -6,7 +6,7 @@
   $mediaUrl = $item['media_url'] ?? null;
   $thumbnailUrl = $item['thumbnail_url'] ?? null;
   $emoji = $item['emoji'] ?? ($isVideo ? '▶️' : '📸');
-  $badge = $item['badge'] ?? ($isVideo ? 'Video' : 'Foto');
+  $badge = $item['badge'] ?? ($isVideo ? __('pages.common.media_video') : __('pages.common.media_photo'));
   $gradient = $item['gradient'] ?? ['#DCF1F7', '#FFC93C'];
 @endphp
 
