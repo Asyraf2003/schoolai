@@ -15,7 +15,6 @@
     <div class="container gallery-wall-hero__inner">
       <article class="gallery-wall-hero-card reveal">
         <a href="{{ route('home') }}" class="link-arrow">{{ __('pages.common.back_home') }}</a>
-        <span class="public-eyebrow">{{ $page['hero']['eyebrow'] ?? '' }}</span>
         <h1 id="galeri-title">{{ $page['hero']['heading'] ?? '' }}</h1>
 
         @if(! empty($page['hero']['subtitle']))
@@ -37,7 +36,6 @@
   <section class="gallery-wall-section" aria-labelledby="gallery-wall-title">
     <div class="container">
       <header class="gallery-wall-head reveal">
-        <span class="public-eyebrow">{{ $page['wall']['eyebrow'] ?? '' }}</span>
         <h2 id="gallery-wall-title">{{ $page['wall']['title'] ?? '' }}</h2>
       </header>
 
@@ -51,7 +49,6 @@
         <section class="gallery-wall-subsection reveal" aria-labelledby="gallery-section-{{ $loop->index }}">
           <header class="gallery-wall-subsection__head">
             <div>
-              <span class="public-eyebrow">{{ $page['wall']['section_eyebrow'] ?? 'Bagian Galeri' }}</span>
               <h2 id="gallery-section-{{ $loop->index }}">{{ $section['title'] }}</h2>
             </div>
 

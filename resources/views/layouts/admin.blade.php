@@ -217,14 +217,7 @@
       margin-bottom: 24px;
     }
 
-    .admin-topbar__eyebrow {
-      margin: 0 0 8px;
-      color: var(--admin-orange);
-      font-size: 0.82rem;
-      font-weight: 950;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+    
 
     .admin-topbar h1 {
       margin: 0;
@@ -836,7 +829,6 @@
     }
     /* /ADMIN_TOAST_NOTIFICATIONS_FINAL */
 
-
     /* ADMIN_MINIMAL_PANEL_FINAL */
     body.admin-desktop-body {
       background: #f6f7f9;
@@ -937,7 +929,6 @@
       font-size: 1rem;
       line-height: 1.6;
     }
-
 
     /* ADMIN_GALLERY_PAGE_SECTIONS_FINAL */
     .admin-gallery-block {

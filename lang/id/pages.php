@@ -43,7 +43,6 @@ return [
         'title' => 'PPDB Al Mustaqbal School',
         'description' => 'Informasi dummy PPDB Al Mustaqbal School untuk jenjang KB, TK, SDIT, dan Tahfidz.',
         'hero' => [
-            'eyebrow' => 'PPDB Tahun Ajaran 2026/2027',
             'heading' => 'Temani langkah pertama anak menuju ilmu, adab, dan keberanian.',
             'subtitle' => 'Halaman ini berisi simulasi informasi penerimaan murid baru Al Mustaqbal School. Kontennya dummy, tetapi strukturnya dibuat realistis agar siap dikembangkan menjadi halaman publik resmi.',
             'primary_cta' => 'Tanya PPDB via WhatsApp',
@@ -63,7 +62,6 @@ return [
 
         /* PPDB_PSB_INSPIRED_SECTION_FINAL */
         'psb_showcase' => [
-            'eyebrow' => 'Program Khusus PPDB',
             'title' => 'Alur Masuk Al Mustaqbal yang Ringan, Hangat, dan Terarah',
             'subtitle' => 'Bagian ini dummy, dibuat untuk memberi rasa seperti halaman PSB resmi: informatif, rapi, dan tetap hidup tanpa gambar eksternal.',
             'items' => [
@@ -95,7 +93,6 @@ return [
         /* /PPDB_PSB_INSPIRED_SECTION_FINAL */
 
         'steps_intro' => [
-            'eyebrow' => 'Alur Pendaftaran',
             'heading' => 'Empat langkah ringan sebelum anak mulai bersekolah.',
             'subtitle' => 'Alur dibuat jelas supaya orang tua tidak perlu menebak-nebak seperti mencari bug tanpa log.',
         ],
@@ -106,7 +103,6 @@ return [
             ['title' => 'Daftar Ulang', 'text' => 'Keluarga melengkapi dokumen dan menerima jadwal orientasi sekolah.'],
         ],
         'program_intro' => [
-            'eyebrow' => 'Jenjang Tersedia',
             'heading' => 'Pilih jalur belajar sesuai usia dan kesiapan anak.',
         ],
         'programs' => [
@@ -116,7 +112,6 @@ return [
             ['icon' => '📖', 'name' => 'Tahfidz', 'age' => 'Program pendamping', 'text' => 'Murajaah, hafalan bertahap, dan penguatan cinta Al-Qur’an.'],
         ],
         'documents_intro' => [
-            'eyebrow' => 'Syarat Dokumen',
             'heading' => 'Berkas dummy yang biasanya disiapkan orang tua.',
         ],
         'documents' => [
@@ -128,7 +123,6 @@ return [
             'Catatan alergi atau kebutuhan khusus jika ada.',
         ],
         'timeline_intro' => [
-            'eyebrow' => 'Timeline Dummy',
             'heading' => 'Ritme PPDB dibuat bertahap dan mudah dipantau.',
         ],
         'timeline' => [
@@ -138,7 +132,6 @@ return [
             ['date' => 'Juni–Juli', 'title' => 'Masa Orientasi', 'text' => 'Anak mulai adaptasi kelas, guru, teman, dan rutinitas sekolah.'],
         ],
         'faq_intro' => [
-            'eyebrow' => 'FAQ PPDB',
             'heading' => 'Pertanyaan yang biasanya muncul sebelum orang tua mantap mendaftar.',
         ],
         'faq' => [
@@ -158,7 +151,6 @@ return [
         'title' => 'Artikel Al Mustaqbal School',
         'description' => 'Kumpulan artikel dummy Al Mustaqbal School tentang akademik, karakter, kegiatan, parenting, dan program sekolah.',
         'hero' => [
-            'eyebrow' => 'Majalah Sekolah',
             'heading' => 'Cerita belajar, karakter, dan parenting dalam satu ruang baca.',
             'subtitle' => 'Listing artikel dummy ini dibuat seperti kanal editorial sekolah agar orang tua melihat napas akademik dan budaya sekolah sebelum bertanya lebih jauh.',
             'search_placeholder' => 'Cari artikel dummy...',
@@ -248,7 +240,6 @@ return [
         'title' => 'Galeri Al Mustaqbal School',
         'description' => 'Galeri foto dan video Al Mustaqbal School.',
         'hero' => [
-            'eyebrow' => 'Galeri Sekolah',
             'heading' => 'Momen sekolah yang sederhana, hidup, dan mudah dilihat.',
             'subtitle' => 'Kumpulan foto dan video pilihan dari kegiatan, fasilitas, program, dan suasana belajar anak.',
             'cards' => [
@@ -258,7 +249,6 @@ return [
             ],
         ],
         'wall' => [
-            'eyebrow' => 'Album Pilihan',
             'title' => 'Lihat suasana sekolah dari dekat',
         ],
         'items' => [

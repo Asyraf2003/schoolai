@@ -114,25 +114,6 @@ h1, h2, h3, h4, p { margin: 0; }
 }
 .section-subtitle--white { color: rgba(255,255,255,0.85); }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
-  padding: 8px 18px;
-  border-radius: var(--radius-pill);
-  margin-bottom: 16px;
-}
-.eyebrow--pink { background: var(--color-pink-soft); color: #C74672; }
-.eyebrow--blue { background: var(--color-blue-soft); color: #1A7594; }
-.eyebrow--mint { background: var(--color-mint-soft); color: #1F8F63; }
-.eyebrow--yellow { background: var(--color-yellow-soft); color: #9A6B0A; }
-.eyebrow--orange { background: var(--color-orange-soft); color: #C25E1E; }
-.eyebrow--purple { background: var(--color-purple-soft); color: #6B4FA0; }
-.eyebrow--white { background: rgba(255,255,255,0.2); color: var(--color-white); }
-
 .text-highlight {
   position: relative;
   color: #C25E1E;

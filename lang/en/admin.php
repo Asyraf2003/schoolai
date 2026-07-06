@@ -24,7 +24,6 @@ return [
         'logout' => 'Logout',
     ],
     'shell' => [
-        'eyebrow' => 'Admin Area',
         'status' => 'Dummy Mode',
         'notice' => 'This panel is still dummy. The structure comes first, real features can follow when humans stop changing scope every five minutes.',
     ],

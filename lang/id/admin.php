@@ -24,7 +24,6 @@ return [
         'logout' => 'Logout',
     ],
     'shell' => [
-        'eyebrow' => 'Admin Area',
         'status' => 'Dummy Mode',
         'notice' => 'Panel ini masih dummy. Struktur disiapkan dulu, fitur asli menyusul kalau manusia tidak berubah pikiran tiap lima menit.',
     ],

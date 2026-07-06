@@ -141,7 +141,6 @@
           <div class="visi-misi__shell">
             <article class="visi-card reveal" tabindex="0">
               <div class="visi-card__topline">
-                <span class="visi-card__kicker">{{ $visiMisi['vision']['eyebrow'] }}</span>
                 <span class="visi-card__pulse" aria-hidden="true"></span>
               </div>
 
@@ -160,7 +159,6 @@
 
             <div class="misi-panel reveal reveal--delay-1">
               <div class="misi-panel__head">
-                <span class="misi-panel__kicker">{{ $visiMisi['missions_intro']['eyebrow'] }}</span>
                 <h3>{{ $visiMisi['missions_intro']['title'] }}</h3>
               </div>
 
@@ -248,7 +246,6 @@
         <div class="container">
           <div class="program-section__shell">
             <aside class="program-spotlight reveal">
-              <span class="program-spotlight__kicker">{{ $featuredPrograms['eyebrow'] }}</span>
               <h2 class="program-spotlight__title">{{ $featuredPrograms['title'] }}</h2>
               <p class="program-spotlight__subtitle">
                 {{ $featuredPrograms['subtitle'] }}

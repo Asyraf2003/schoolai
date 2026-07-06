@@ -138,7 +138,6 @@ return [
     ],
 
     'ppdb' => [
-        'eyebrow' => 'Penerimaan Peserta Didik Baru',
         'title' => 'Daftar Sekarang di Al Mustaqbal School',
         'description' => 'Pendaftaran peserta didik baru dapat dilakukan dengan lebih mudah. Informasi akademik, kegiatan, dan proses PPDB tersedia dalam satu tempat.',
         'cta' => [
@@ -171,7 +170,6 @@ return [
 
     'visi_misi' => [
         'vision' => [
-            'eyebrow' => 'Visi',
             'title' => 'Arah Pendidikan Al-Mustaqbal',
             'text_parts' => [
                 ['text' => 'Program Pendidikan Al-Mustaqbal bertujuan untuk membina '],
@@ -185,7 +183,6 @@ return [
             ],
         ],
         'missions_intro' => [
-            'eyebrow' => 'Misi',
             'title' => 'Empat langkah membentuk generasi Islam yang utuh',
         ],
         'missions' => [
@@ -286,7 +283,6 @@ return [
     ],
 
     'program_unggulan' => [
-        'eyebrow' => 'Program Unggulan',
         'title' => 'Jalur Belajar dari Usia Dini sampai Mandiri',
         'subtitle' => 'Program Al-Mustaqbal dirancang untuk menguatkan adab, akademik, Al-Qur’an, bahasa, literasi, dan kemandirian anak secara bertahap.',
         'items' => [

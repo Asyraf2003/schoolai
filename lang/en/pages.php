@@ -43,7 +43,6 @@ return [
         'title' => 'Admission - Al Mustaqbal School',
         'description' => 'Dummy admission information for Al Mustaqbal School covering Playgroup, Kindergarten, Islamic Elementary, and Tahfidz.',
         'hero' => [
-            'eyebrow' => 'Admission 2026/2027',
             'heading' => 'Guide your child’s first steps toward knowledge, manners, and courage.',
             'subtitle' => 'This page contains simulated admission information for Al Mustaqbal School. The content is dummy, but the structure is designed to feel realistic and ready for a public school website.',
             'primary_cta' => 'Ask Admission via WhatsApp',
@@ -63,7 +62,6 @@ return [
 
         /* PPDB_PSB_INSPIRED_SECTION_FINAL */
         'psb_showcase' => [
-            'eyebrow' => 'Admission Special Program',
             'title' => 'A Light, Warm, and Guided Admission Flow at Al Mustaqbal',
             'subtitle' => 'This dummy section is designed to feel like an official admission page: informative, polished, and lively without external images.',
             'items' => [
@@ -95,7 +93,6 @@ return [
         /* /PPDB_PSB_INSPIRED_SECTION_FINAL */
 
         'steps_intro' => [
-            'eyebrow' => 'Admission Flow',
             'heading' => 'Four light steps before your child starts school.',
             'subtitle' => 'The flow is clear so parents do not have to guess things like debugging without logs.',
         ],
@@ -106,7 +103,6 @@ return [
             ['title' => 'Re-registration', 'text' => 'Families complete documents and receive the school orientation schedule.'],
         ],
         'program_intro' => [
-            'eyebrow' => 'Available Levels',
             'heading' => 'Choose a learning path based on age and readiness.',
         ],
         'programs' => [
@@ -116,7 +112,6 @@ return [
             ['icon' => '📖', 'name' => 'Tahfidz', 'age' => 'Companion program', 'text' => 'Review, gradual memorization, and love for the Qur’an.'],
         ],
         'documents_intro' => [
-            'eyebrow' => 'Required Documents',
             'heading' => 'Dummy files parents usually prepare.',
         ],
         'documents' => [
@@ -128,7 +123,6 @@ return [
             'Allergy or special needs notes if applicable.',
         ],
         'timeline_intro' => [
-            'eyebrow' => 'Dummy Timeline',
             'heading' => 'The admission rhythm is gradual and easy to follow.',
         ],
         'timeline' => [
@@ -138,7 +132,6 @@ return [
             ['date' => 'June–July', 'title' => 'Orientation Period', 'text' => 'Children start adapting to class, teachers, friends, and school routines.'],
         ],
         'faq_intro' => [
-            'eyebrow' => 'Admission FAQ',
             'heading' => 'Questions parents usually ask before registering.',
         ],
         'faq' => [
@@ -158,7 +151,6 @@ return [
         'title' => 'Articles - Al Mustaqbal School',
         'description' => 'Dummy articles from Al Mustaqbal School about academics, character, activities, parenting, and school programs.',
         'hero' => [
-            'eyebrow' => 'School Journal',
             'heading' => 'Learning stories, character notes, and parenting insights in one reading space.',
             'subtitle' => 'This dummy article listing is shaped like a school editorial channel so parents can sense the school’s academic and cultural rhythm.',
             'search_placeholder' => 'Search dummy articles...',
@@ -248,7 +240,6 @@ return [
         'title' => 'Gallery - Al Mustaqbal School',
         'description' => 'Photo and video gallery of Al Mustaqbal School.',
         'hero' => [
-            'eyebrow' => 'School Gallery',
             'heading' => 'Simple, lively, and easy-to-view school moments.',
             'subtitle' => 'A collection of selected photos and videos from activities, facilities, programs, and children’s learning atmosphere.',
             'cards' => [
@@ -258,7 +249,6 @@ return [
             ],
         ],
         'wall' => [
-            'eyebrow' => 'Selected Album',
             'title' => 'See the school atmosphere up close',
         ],
         'items' => [

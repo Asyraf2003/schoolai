@@ -8,7 +8,6 @@
     <div class="container public-hero__grid">
       <div class="public-hero__copy reveal">
         <a href="{{ route('home') }}" class="link-arrow">{{ __('pages.common.back_home') }}</a>
-        <span class="public-eyebrow">{{ $page['hero']['eyebrow'] }}</span>
         <h1 id="ppdb-title" class="public-hero__title">{{ $page['hero']['heading'] }}</h1>
         <p class="public-hero__subtitle">{{ $page['hero']['subtitle'] }}</p>
 
@@ -19,7 +18,7 @@
 
         <p class="public-note">{{ $page['hero']['note'] }}</p>
 
-        <div class="public-stat-row" aria-label="{{ $page['hero']['eyebrow'] }}">
+        <div class="public-stat-row" aria-label="{{ $page['hero']['heading'] ?? $page['title'] }}">
           @foreach($page['hero']['stats'] as $stat)
             <div>
               <strong>{{ $stat['value'] }}</strong>
@@ -29,7 +28,7 @@
         </div>
       </div>
 
-      <div class="ppdb-hero-card reveal" aria-label="{{ $page['hero']['eyebrow'] }}">
+      <div class="ppdb-hero-card reveal" aria-label="{{ $page['hero']['heading'] ?? $page['title'] }}">
         <div class="ppdb-hero-card__orb" aria-hidden="true">✨</div>
         @foreach($page['hero']['mini_cards'] as $card)
           <article class="ppdb-mini-card">
@@ -55,8 +54,6 @@
           <span class="bar bar-bottom"></span>
           <span class="bar bar-left"></span>
         </div>
-
-        <p class="ppdb-journey-kicker">{{ $page['psb_showcase']['eyebrow'] }}</p>
         <h2 id="ppdb-journey-title">{{ $page['psb_showcase']['title'] }}</h2>
         <p>{{ $page['psb_showcase']['subtitle'] }}</p>
       </div>
@@ -116,7 +113,6 @@
   <section id="alur-ppdb" class="public-section">
     <div class="container">
       <div class="public-section-head">
-        <span class="public-eyebrow">{{ $page['steps_intro']['eyebrow'] }}</span>
         <h2>{{ $page['steps_intro']['heading'] }}</h2>
         <p>{{ $page['steps_intro']['subtitle'] }}</p>
       </div>
@@ -136,7 +132,6 @@
   <section class="public-section public-section--soft">
     <div class="container">
       <div class="public-section-head">
-        <span class="public-eyebrow">{{ $page['program_intro']['eyebrow'] }}</span>
         <h2>{{ $page['program_intro']['heading'] }}</h2>
       </div>
 
@@ -157,7 +152,6 @@
     <div class="container ppdb-info-grid">
       <div>
         <div class="public-section-head public-section-head--compact">
-          <span class="public-eyebrow">{{ $page['documents_intro']['eyebrow'] }}</span>
           <h2>{{ $page['documents_intro']['heading'] }}</h2>
         </div>
 
@@ -170,7 +164,6 @@
 
       <div>
         <div class="public-section-head public-section-head--compact">
-          <span class="public-eyebrow">{{ $page['timeline_intro']['eyebrow'] }}</span>
           <h2>{{ $page['timeline_intro']['heading'] }}</h2>
         </div>
 
@@ -190,7 +183,6 @@
   <section class="public-section public-section--soft">
     <div class="container">
       <div class="public-section-head">
-        <span class="public-eyebrow">{{ $page['faq_intro']['eyebrow'] }}</span>
         <h2>{{ $page['faq_intro']['heading'] }}</h2>
       </div>
 

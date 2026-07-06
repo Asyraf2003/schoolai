@@ -90,7 +90,6 @@ return array_replace_recursive($id, [
     ],
 
     'ppdb' => [
-        'eyebrow' => 'New Student Admission',
         'title' => 'Apply Now at Al Mustaqbal School',
         'description' => 'New student admission is easier to access. Academic information, activities, and registration steps are available in one place.',
         'cta' => [
@@ -107,7 +106,6 @@ return array_replace_recursive($id, [
 
     'visi_misi' => [
         'vision' => [
-            'eyebrow' => 'Vision',
             'title' => 'The Educational Direction of Al Mustaqbal',
             'text_parts' => [
                 ['text' => 'Al Mustaqbal’s education program aims to nurture '],
@@ -121,7 +119,6 @@ return array_replace_recursive($id, [
             ],
         ],
         'missions_intro' => [
-            'eyebrow' => 'Mission',
             'title' => 'Four steps to shape a complete Islamic generation',
         ],
         'missions' => [
@@ -222,7 +219,6 @@ return array_replace_recursive($id, [
     ],
 
     'program_unggulan' => [
-        'eyebrow' => 'Featured Programs',
         'title' => 'A Learning Path from Early Years to Independence',
         'subtitle' => 'Al Mustaqbal programs are designed to strengthen manners, academics, the Qur’an, language, literacy, and children’s independence step by step.',
         'items' => [

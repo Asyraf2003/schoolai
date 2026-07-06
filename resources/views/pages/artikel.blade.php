@@ -9,11 +9,10 @@
     <div class="container">
       <div class="article-hero-card reveal">
         <a href="{{ route('home') }}" class="link-arrow">{{ __('pages.common.back_home') }}</a>
-        <span class="public-eyebrow">{{ $page['hero']['eyebrow'] }}</span>
         <h1 id="artikel-title" class="public-hero__title">{{ $page['hero']['heading'] }}</h1>
         <p class="public-hero__subtitle">{{ $page['hero']['subtitle'] }}</p>
 
-        <div class="article-toolbar" aria-label="{{ $page['hero']['eyebrow'] }}">
+        <div class="article-toolbar" aria-label="{{ $page['hero']['heading'] ?? $page['title'] }}">
           <label class="public-sr-only" for="articleSearch">{{ $page['hero']['search_placeholder'] }}</label>
           <input id="articleSearch" type="search" class="article-search" data-public-search placeholder="{{ $page['hero']['search_placeholder'] }}" />
 
