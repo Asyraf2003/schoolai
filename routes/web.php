@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GalleryPageController;
 use App\Http\Controllers\Admin\SiteStatisticController;
 use App\Http\Controllers\Admin\GalleryAdminController;
+use App\Http\Controllers\Admin\ArticleAdminController;
 use App\Http\Controllers\Admin\GalleryPageSectionAdminController;
 use App\Http\Controllers\Admin\GalleryPageMediaAdminController;
 use Illuminate\Http\Request;
@@ -68,8 +69,26 @@ Route::middleware(['auth', 'admin.locale'])->group(function () {
     Route::view('/admin/ppdb', 'admin.placeholder', ['adminPageKey' => 'ppdb'])
         ->name('admin.ppdb');
 
-    Route::view('/admin/artikel', 'admin.placeholder', ['adminPageKey' => 'artikel'])
+    Route::get('/admin/artikel', [ArticleAdminController::class, 'index'])
         ->name('admin.artikel');
+
+    Route::get('/admin/artikel/create', [ArticleAdminController::class, 'create'])
+        ->name('admin.artikel.create');
+
+    Route::post('/admin/artikel', [ArticleAdminController::class, 'store'])
+        ->name('admin.artikel.store');
+
+    Route::get('/admin/artikel/{article}', [ArticleAdminController::class, 'show'])
+        ->name('admin.artikel.show');
+
+    Route::get('/admin/artikel/{article}/edit', [ArticleAdminController::class, 'edit'])
+        ->name('admin.artikel.edit');
+
+    Route::put('/admin/artikel/{article}', [ArticleAdminController::class, 'update'])
+        ->name('admin.artikel.update');
+
+    Route::delete('/admin/artikel/{article}', [ArticleAdminController::class, 'destroy'])
+        ->name('admin.artikel.destroy');
 
     /* REAL_GALLERY_CRUD_ROUTES_FINAL */
     Route::get('/admin/galeri', [GalleryAdminController::class, 'index'])
