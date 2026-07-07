@@ -6559,6 +6559,34 @@ h1, h2, h3, h4, p { margin: 0; }
     linear-gradient(135deg, var(--artikel-g1), var(--artikel-g2));
 }
 
+.artikel-digest__media-image,
+.artikel-digest-card__media-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.artikel-digest__hero-media:has(.artikel-digest__media-image)::after,
+.artikel-digest-card__media:has(.artikel-digest-card__media-image)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(31, 46, 43, 0.02), rgba(31, 46, 43, 0.34));
+  pointer-events: none;
+}
+
+.artikel-digest__hero-media:has(.artikel-digest__media-image) .artikel-digest__issue,
+.artikel-digest-card__media:has(.artikel-digest-card__media-image) .artikel-digest-card__issue {
+  z-index: 2;
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+}
+
 .artikel-digest__hero-media::before {
   content: "";
   position: absolute;

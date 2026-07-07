@@ -509,11 +509,22 @@
                 class="artikel-digest__hero reveal"
                 style="--artikel-g1: {{ $featuredArticle['gradient_from'] ?? 'var(--color-yellow-soft)' }}; --artikel-g2: {{ $featuredArticle['gradient_to'] ?? 'var(--color-orange-soft)' }}"
               >
-                <div class="artikel-digest__hero-media" aria-hidden="true">
-                  <span class="artikel-digest__issue">{{ $featuredArticle['issue'] ?? '01' }}</span>
-                  <span class="artikel-digest__emoji">{{ $featuredArticle['emoji'] ?? '📰' }}</span>
-                  <span class="artikel-digest__spark artikel-digest__spark--one"></span>
-                  <span class="artikel-digest__spark artikel-digest__spark--two"></span>
+                <div class="artikel-digest__hero-media">
+                  @if (! empty($featuredArticle['thumbnail_url']))
+                    <img
+                      src="{{ $featuredArticle['thumbnail_url'] }}"
+                      alt="{{ $featuredArticle['title'] }}"
+                      class="artikel-digest__media-image"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  @else
+                    <span class="artikel-digest__emoji" aria-hidden="true">{{ $featuredArticle['emoji'] ?? '📰' }}</span>
+                  @endif
+
+                  <span class="artikel-digest__issue" aria-hidden="true">{{ $featuredArticle['issue'] ?? '01' }}</span>
+                  <span class="artikel-digest__spark artikel-digest__spark--one" aria-hidden="true"></span>
+                  <span class="artikel-digest__spark artikel-digest__spark--two" aria-hidden="true"></span>
                 </div>
 
                 <div class="artikel-digest__hero-body">
@@ -566,8 +577,19 @@
                       aria-label="{{ $articlesSection['read_more'] }}: {{ $article['title'] }}"
                     >
                       <span class="artikel-digest-card__media" aria-hidden="true">
+                        @if (! empty($article['thumbnail_url']))
+                          <img
+                            src="{{ $article['thumbnail_url'] }}"
+                            alt=""
+                            class="artikel-digest-card__media-image"
+                            loading="lazy"
+                            decoding="async"
+                          >
+                        @else
+                          <span class="artikel-digest-card__emoji">{{ $article['emoji'] ?? '📚' }}</span>
+                        @endif
+
                         <span class="artikel-digest-card__issue">{{ $article['issue'] ?? str_pad((string) ($loop->iteration + 1), 2, '0', STR_PAD_LEFT) }}</span>
-                        <span class="artikel-digest-card__emoji">{{ $article['emoji'] ?? '📚' }}</span>
                       </span>
 
                       <span class="artikel-digest-card__content">
