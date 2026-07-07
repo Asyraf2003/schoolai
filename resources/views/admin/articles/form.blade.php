@@ -11,7 +11,7 @@
 ])
 
 @section('content')
-  <form method="POST" action="{{ $action }}" class="gallery-lite-form" novalidate>
+  <form method="POST" action="{{ $action }}" class="gallery-lite-form" enctype="multipart/form-data" novalidate>
     @csrf
     @if($isEdit)
       @method('PUT')
@@ -20,7 +20,7 @@
     <header class="admin-topbar admin-topbar--compact">
       <div>
         <h1>{{ $isEdit ? 'Edit Artikel' : 'Tambah Artikel' }}</h1>
-        <p>Link Indonesia wajib. Link English opsional. Author default Admin kalau dikosongkan.</p>
+        <p>Thumbnail wajib upload file lokal. Link Indonesia wajib. Link English opsional. Author default Admin kalau dikosongkan.</p>
       </div>
 
       <div class="admin-inline-actions">
@@ -52,10 +52,21 @@
         </div>
 
         <div class="admin-field admin-field--wide">
-          <label for="thumbnail_url">URL Thumbnail</label>
-          <input id="thumbnail_url" name="thumbnail_url" type="url" value="{{ old('thumbnail_url', $article->thumbnail_url) }}" maxlength="2048" placeholder="https://..." required>
-          <em>Wajib. Gunakan URL gambar dari Medium atau gambar publik lain.</em>
-          @error('thumbnail_url') <small>{{ $message }}</small> @enderror
+          <label for="thumbnail_file">Upload Thumbnail</label>
+          <input
+            id="thumbnail_file"
+            name="thumbnail_file"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            @required(! $isEdit || ! $article->thumbnail_url)
+          >
+          <em>
+            Wajib. JPG, PNG, atau WebP. Maksimal 10MB.
+            @if($isEdit && $article->thumbnail_url)
+              Thumbnail saat ini: {{ basename(parse_url($article->thumbnail_url, PHP_URL_PATH) ?: $article->thumbnail_url) }}
+            @endif
+          </em>
+          @error('thumbnail_file') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field admin-field--wide">
@@ -88,14 +99,14 @@
 
     <section class="gallery-media-review">
       <div class="gallery-media-review__head">
-        <strong>Preview Thumbnail</strong>
+        <strong>Preview Thumbnail Saat Ini</strong>
       </div>
 
       <div class="gallery-media-review__stage">
-        @if(old('thumbnail_url', $article->thumbnail_url))
-          <img src="{{ old('thumbnail_url', $article->thumbnail_url) }}" alt="{{ old('title_id', $article->admin_title) }}">
+        @if($isEdit && $article->thumbnail_url)
+          <img src="{{ $article->thumbnail_url }}" alt="{{ $article->admin_title }}">
         @else
-          <span>Masukkan URL thumbnail untuk preview.</span>
+          <span>Thumbnail baru akan tampil setelah artikel disimpan.</span>
         @endif
       </div>
     </section>
