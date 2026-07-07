@@ -1,70 +1,128 @@
-{{-- PUBLIC_ARTIKEL_DUMMY_FINAL --}}
-@extends('layouts.public', ['title' => __('pages.artikel.title'), 'description' => __('pages.artikel.description')])
+{{-- PUBLIC_ARTIKEL_DB_FINAL --}}
+@extends('layouts.public', [
+  'title' => $page['title'] ?? __('pages.artikel.title'),
+  'description' => $page['description'] ?? __('pages.artikel.description'),
+])
 
-@php($page = __('pages.artikel'))
-@php($featured = $page['featured'])
+@php
+  $hero = $page['hero'] ?? [];
+  $featured = $articles[0] ?? null;
+  $articleList = array_slice($articles, 1);
+  $readLabel = __('pages.common.read_more');
+@endphp
 
 @section('content')
-  <section class="public-hero public-hero--artikel" aria-labelledby="artikel-title">
+  <section class="public-hero public-hero--artikel article-index-hero" aria-labelledby="artikel-title">
     <div class="container">
-      <div class="article-hero-card reveal">
+      <div class="article-hero-card article-index-hero__card reveal">
         <a href="{{ route('home') }}" class="link-arrow">{{ __('pages.common.back_home') }}</a>
-        <h1 id="artikel-title" class="public-hero__title">{{ $page['hero']['heading'] }}</h1>
-        <p class="public-hero__subtitle">{{ $page['hero']['subtitle'] }}</p>
 
-        <div class="article-toolbar" aria-label="{{ $page['hero']['heading'] ?? $page['title'] }}">
-          <label class="public-sr-only" for="articleSearch">{{ $page['hero']['search_placeholder'] }}</label>
-          <input id="articleSearch" type="search" class="article-search" data-public-search placeholder="{{ $page['hero']['search_placeholder'] }}" />
+        <h1 id="artikel-title" class="public-hero__title">
+          {{ $hero['heading'] ?? $page['title'] ?? 'Artikel' }}
+        </h1>
 
-          <div class="public-filter-row">
-            @foreach($page['categories'] as $category)
-              <button type="button" class="public-filter-chip {{ $category['slug'] === 'all' ? 'is-active' : '' }}" data-public-filter="{{ $category['slug'] }}">
-                {{ $category['label'] }}
-              </button>
+        @if(! empty($hero['subtitle']))
+          <p class="public-hero__subtitle">{{ $hero['subtitle'] }}</p>
+        @endif
+
+        <div class="article-toolbar article-toolbar--search-only" aria-label="{{ $hero['search_label'] ?? $hero['heading'] ?? $page['title'] ?? 'Artikel' }}">
+          <label class="public-sr-only" for="articleSearch">{{ $hero['search_placeholder'] ?? 'Cari artikel...' }}</label>
+          <input
+            id="articleSearch"
+            type="search"
+            class="article-search article-search--wide"
+            data-public-search
+            placeholder="{{ $hero['search_placeholder'] ?? 'Cari artikel...' }}"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  @if($featured)
+    <section class="public-section article-index-section">
+      <div class="container">
+        <article class="article-index-featured reveal" data-public-article>
+          <a href="{{ $featured['href'] }}" class="article-index-featured__media" target="_blank" rel="noopener">
+            @if(! empty($featured['thumbnail_url']))
+              <img src="{{ $featured['thumbnail_url'] }}" alt="{{ $featured['title'] }}" loading="lazy" decoding="async">
+            @else
+              <span>{{ $featured['number'] }}</span>
+            @endif
+          </a>
+
+          <div class="article-index-featured__body">
+            <div class="article-meta article-index-meta">
+              @if(! empty($featured['date']))
+                <span>{{ $featured['date'] }}</span>
+              @endif
+              <span>{{ $featured['author'] }}</span>
+            </div>
+
+            <h2>
+              <a href="{{ $featured['href'] }}" target="_blank" rel="noopener">{{ $featured['title'] }}</a>
+            </h2>
+
+            @if(! empty($featured['description']))
+              <p>{{ $featured['description'] }}</p>
+            @endif
+
+            <a href="{{ $featured['href'] }}" class="link-arrow" target="_blank" rel="noopener">
+              {{ $readLabel }} →
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="public-section public-section--soft article-index-list-section">
+      <div class="container">
+        @if(! empty($articleList))
+          <div class="article-index-grid">
+            @foreach($articleList as $article)
+              <article class="article-index-card reveal" data-public-article>
+                <a href="{{ $article['href'] }}" class="article-index-card__media" target="_blank" rel="noopener">
+                  @if(! empty($article['thumbnail_url']))
+                    <img src="{{ $article['thumbnail_url'] }}" alt="{{ $article['title'] }}" loading="lazy" decoding="async">
+                  @else
+                    <span>{{ $article['number'] }}</span>
+                  @endif
+                </a>
+
+                <div class="article-index-card__body">
+                  <div class="article-meta article-index-meta">
+                    @if(! empty($article['date']))
+                      <span>{{ $article['date'] }}</span>
+                    @endif
+                    <span>{{ $article['author'] }}</span>
+                  </div>
+
+                  <h2>
+                    <a href="{{ $article['href'] }}" target="_blank" rel="noopener">{{ $article['title'] }}</a>
+                  </h2>
+
+                  @if(! empty($article['description']))
+                    <p>{{ $article['description'] }}</p>
+                  @endif
+
+                  <a href="{{ $article['href'] }}" class="link-arrow" target="_blank" rel="noopener">
+                    {{ $readLabel }} →
+                  </a>
+                </div>
+              </article>
             @endforeach
           </div>
+        @endif
+      </div>
+    </section>
+  @else
+    <section class="public-section">
+      <div class="container">
+        <div class="article-index-empty reveal">
+          <h2>{{ $page['empty_title'] ?? 'Belum ada artikel.' }}</h2>
+          <p>{{ $page['empty_description'] ?? 'Artikel sekolah akan tampil di sini setelah admin menambahkannya.' }}</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="public-section">
-    <div class="container">
-      <article class="featured-article reveal" data-public-article data-category="{{ $featured['category_slug'] }}">
-        <div class="featured-article__issue">{{ $featured['issue'] }}</div>
-        <div>
-          <span class="article-chip">{{ $featured['category'] }}</span>
-          <h2>{{ $featured['title'] }}</h2>
-          <p>{{ $featured['excerpt'] }}</p>
-          <div class="article-meta">
-            <span>{{ $featured['date'] }}</span>
-            <span>{{ $featured['read_time'] }}</span>
-          </div>
-          <a href="{{ route('artikel.detail') }}" class="link-arrow">{{ __('pages.common.read_more') }} →</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="public-section public-section--soft">
-    <div class="container">
-      <div class="article-grid">
-        @foreach($page['articles'] as $article)
-          <article class="article-list-card reveal" data-public-article data-category="{{ $article['category_slug'] }}">
-            <div class="article-list-card__top">
-              <span class="article-list-card__issue">#{{ $article['issue'] }}</span>
-              <span class="article-chip">{{ $article['category'] }}</span>
-            </div>
-            <h2>{{ $article['title'] }}</h2>
-            <p>{{ $article['excerpt'] }}</p>
-            <div class="article-meta">
-              <span>{{ $article['date'] }}</span>
-              <span>{{ $article['read_time'] }}</span>
-            </div>
-            <a href="{{ $loop->first ? route('artikel.detail') : '/artikel#' . $article['issue'] }}" class="link-arrow">{{ __('pages.common.read_more') }} →</a>
-          </article>
-        @endforeach
-      </div>
-    </div>
-  </section>
+    </section>
+  @endif
 @endsection

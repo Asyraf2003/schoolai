@@ -155,12 +155,14 @@ return [
 
     'artikel' => [
         'title' => 'Articles - Al Mustaqbal School',
-        'description' => 'Dummy articles from Al Mustaqbal School about academics, character, activities, parenting, and school programs.',
+        'description' => 'Stories, updates, and articles from Al Mustaqbal School for parents.',
         'hero' => [
             'heading' => 'Learning stories, character notes, and parenting insights in one reading space.',
             'subtitle' => 'This dummy article listing is shaped like a school editorial channel so parents can sense the school’s academic and cultural rhythm.',
-            'search_placeholder' => 'Search dummy articles...',
+            'search_placeholder' => 'Search article title...',
         ],
+        'empty_title' => 'No articles yet.',
+        'empty_description' => 'School articles will appear here after an admin adds them.',
         'categories' => [
             ['slug' => 'all', 'label' => 'All'],
             ['slug' => 'akademik', 'label' => 'Academics'],

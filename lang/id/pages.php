@@ -155,12 +155,14 @@ return [
 
     'artikel' => [
         'title' => 'Artikel Al Mustaqbal School',
-        'description' => 'Kumpulan artikel dummy Al Mustaqbal School tentang akademik, karakter, kegiatan, parenting, dan program sekolah.',
+        'description' => 'Kumpulan cerita, kabar, dan artikel Al Mustaqbal School untuk orang tua.',
         'hero' => [
-            'heading' => 'Cerita belajar, karakter, dan parenting dalam satu ruang baca.',
-            'subtitle' => 'Listing artikel dummy ini dibuat seperti kanal editorial sekolah agar orang tua melihat napas akademik dan budaya sekolah sebelum bertanya lebih jauh.',
-            'search_placeholder' => 'Cari artikel dummy...',
+            'heading' => 'Cerita sekolah, kabar kegiatan, dan catatan untuk orang tua.',
+            'subtitle' => 'Baca artikel terbaru dari sekolah. Gunakan pencarian untuk menemukan judul yang dibutuhkan.',
+            'search_placeholder' => 'Cari judul artikel...',
         ],
+        'empty_title' => 'Belum ada artikel.',
+        'empty_description' => 'Artikel sekolah akan tampil di sini setelah admin menambahkannya.',
         'categories' => [
             ['slug' => 'all', 'label' => 'Semua'],
             ['slug' => 'akademik', 'label' => 'Akademik'],

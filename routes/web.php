@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ArticlePageController;
 use App\Http\Controllers\GalleryPageController;
 use App\Http\Controllers\Admin\SiteStatisticController;
 use App\Http\Controllers\Admin\GalleryAdminController;
@@ -40,7 +41,7 @@ Route::get('/bahasa/{locale}', function (string $locale, Request $request) {
 })->whereIn('locale', ['id', 'en'])->name('language.switch');
 
 Route::view('/ppdb', 'pages.ppdb')->name('ppdb');
-Route::view('/artikel', 'pages.artikel')->name('artikel');
+Route::get('/artikel', ArticlePageController::class)->name('artikel');
 Route::view('/artikel/adab-sebelum-prestasi', 'pages.artikel-detail')->name('artikel.detail');
 Route::get('/galeri', GalleryPageController::class)->name('galeri');
 

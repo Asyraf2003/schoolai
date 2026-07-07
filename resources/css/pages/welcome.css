@@ -10850,3 +10850,198 @@ h1, h2, h3, h4, p { margin: 0; }
   }
 }
 /* /HOMEPAGE_SECTION_HEADING_RHYTHM_PATCH_FINAL */
+
+/* PUBLIC_ARTICLE_INDEX_DB_FINAL */
+.article-toolbar--search-only {
+  margin-top: 28px;
+}
+
+.article-search--wide {
+  width: min(560px, 100%);
+}
+
+.article-index-section {
+  padding-top: 56px;
+}
+
+.article-index-featured {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4vw, 46px);
+  align-items: stretch;
+  padding: clamp(18px, 3vw, 28px);
+  border-radius: 42px;
+  background:
+    radial-gradient(circle at 85% 16%, rgba(255, 201, 60, 0.20), transparent 28%),
+    linear-gradient(135deg, rgba(255,255,255,0.94), rgba(220,246,234,0.86));
+  box-shadow: var(--shadow-card);
+}
+
+.article-index-featured__media,
+.article-index-card__media {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.72), transparent 28%),
+    linear-gradient(135deg, var(--color-yellow-soft), var(--color-mint-soft));
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.article-index-featured__media {
+  min-height: clamp(260px, 34vw, 430px);
+  border-radius: 34px;
+}
+
+.article-index-featured__media img,
+.article-index-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.article-index-featured__media span,
+.article-index-card__media span {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  font-weight: 950;
+  color: rgba(31, 46, 43, 0.42);
+}
+
+.article-index-featured__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 24px);
+}
+
+.article-index-featured h2,
+.article-index-card h2 {
+  font-family: var(--font-display);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.article-index-featured h2 {
+  margin: 12px 0 14px;
+  font-size: clamp(2rem, 4.2vw, 4.6rem);
+}
+
+.article-index-featured h2 a,
+.article-index-card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-index-featured h2 a:hover,
+.article-index-card h2 a:hover {
+  color: var(--color-purple);
+}
+
+.article-index-featured p,
+.article-index-card p {
+  color: var(--color-ink-soft);
+  line-height: 1.72;
+}
+
+.article-index-featured .link-arrow,
+.article-index-card .link-arrow {
+  width: fit-content;
+  margin-top: 20px;
+}
+
+.article-index-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 28px);
+}
+
+.article-index-card {
+  display: flex;
+  min-width: 0;
+  min-height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(31, 46, 43, 0.07);
+}
+
+.article-index-card__media {
+  aspect-ratio: 16 / 10;
+  border-radius: 0;
+}
+
+.article-index-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.article-index-card h2 {
+  margin: 10px 0 10px;
+  font-size: clamp(1.25rem, 1.9vw, 1.75rem);
+}
+
+.article-index-card .link-arrow {
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.article-index-meta {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.article-index-empty {
+  padding: clamp(28px, 5vw, 56px);
+  border-radius: 36px;
+  background: rgba(255,255,255,0.88);
+  box-shadow: var(--shadow-soft);
+}
+
+.article-index-empty h2 {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+}
+
+.article-index-empty p {
+  margin-top: 10px;
+  color: var(--color-ink-soft);
+}
+
+@media (max-width: 1180px) {
+  .article-index-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .article-index-featured,
+  .article-index-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .article-index-featured {
+    border-radius: 30px;
+  }
+
+  .article-index-featured__media {
+    min-height: 220px;
+    border-radius: 24px;
+  }
+
+  .article-index-featured__body {
+    padding: 8px 4px 4px;
+  }
+
+  .article-index-card {
+    border-radius: 26px;
+  }
+}
+/* /PUBLIC_ARTICLE_INDEX_DB_FINAL */
