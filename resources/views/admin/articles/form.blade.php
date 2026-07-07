@@ -11,7 +11,7 @@
 ])
 
 @section('content')
-  <form method="POST" action="{{ $action }}" class="gallery-lite-form" enctype="multipart/form-data" novalidate>
+  <form method="POST" action="{{ $action }}" class="gallery-lite-form" enctype="multipart/form-data" novalidate data-article-form>
     @csrf
     @if($isEdit)
       @method('PUT')
@@ -58,6 +58,7 @@
             name="thumbnail_file"
             type="file"
             accept="image/jpeg,image/png,image/webp"
+            data-article-thumbnail-input
             @required(! $isEdit || ! $article->thumbnail_url)
           >
           <em>
@@ -99,16 +100,79 @@
 
     <section class="gallery-media-review">
       <div class="gallery-media-review__head">
-        <strong>Preview Thumbnail Saat Ini</strong>
+        <strong>Preview Thumbnail</strong>
       </div>
 
-      <div class="gallery-media-review__stage">
+      <div class="gallery-media-review__stage" data-article-thumbnail-stage>
         @if($isEdit && $article->thumbnail_url)
-          <img src="{{ $article->thumbnail_url }}" alt="{{ $article->admin_title }}">
+          <img src="{{ $article->thumbnail_url }}" alt="{{ $article->admin_title }}" data-article-current-thumbnail>
         @else
-          <span>Thumbnail baru akan tampil setelah artikel disimpan.</span>
+          <span data-article-thumbnail-empty>Thumbnail baru akan tampil setelah dipilih.</span>
         @endif
       </div>
     </section>
   </form>
+
+  <script>
+    (() => {
+      const form = document.querySelector('[data-article-form]');
+      if (!form) return;
+
+      const input = form.querySelector('[data-article-thumbnail-input]');
+      const stage = form.querySelector('[data-article-thumbnail-stage]');
+      const emptyText = 'Thumbnail baru akan tampil setelah dipilih.';
+      let previewUrl = null;
+
+      if (!input || !stage) return;
+
+      function revokePreviewUrl() {
+        if (previewUrl) {
+          URL.revokeObjectURL(previewUrl);
+          previewUrl = null;
+        }
+      }
+
+      function setEmpty(message = emptyText) {
+        revokePreviewUrl();
+
+        const span = document.createElement('span');
+        span.textContent = message;
+        span.setAttribute('data-article-thumbnail-empty', '');
+
+        stage.replaceChildren(span);
+      }
+
+      function setImage(file) {
+        revokePreviewUrl();
+
+        previewUrl = URL.createObjectURL(file);
+
+        const image = document.createElement('img');
+        image.src = previewUrl;
+        image.alt = file.name || 'Preview thumbnail artikel';
+        image.loading = 'eager';
+
+        stage.replaceChildren(image);
+      }
+
+      input.addEventListener('change', () => {
+        const file = input.files && input.files[0] ? input.files[0] : null;
+
+        if (!file) {
+          setEmpty();
+          return;
+        }
+
+        if (!file.type || !file.type.startsWith('image/')) {
+          input.value = '';
+          setEmpty('File harus berupa gambar.');
+          return;
+        }
+
+        setImage(file);
+      });
+
+      window.addEventListener('beforeunload', revokePreviewUrl);
+    })();
+  </script>
 @endsection
