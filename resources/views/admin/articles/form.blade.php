@@ -52,6 +52,20 @@
         </div>
 
         <div class="admin-field admin-field--wide">
+          <label for="description_id">Deskripsi Indonesia</label>
+          <textarea id="description_id" name="description_id" rows="3" maxlength="600">{{ old('description_id', $article->description_id) }}</textarea>
+          <em>Opsional, tapi disarankan. Dipakai di homepage dan halaman artikel.</em>
+          @error('description_id') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="description_en">Deskripsi English</label>
+          <textarea id="description_en" name="description_en" rows="3" maxlength="600">{{ old('description_en', $article->description_en) }}</textarea>
+          <em>Opsional. Jika kosong, versi English fallback ke deskripsi Indonesia.</em>
+          @error('description_en') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
           <label for="thumbnail_file">Upload Thumbnail</label>
           <input
             id="thumbnail_file"

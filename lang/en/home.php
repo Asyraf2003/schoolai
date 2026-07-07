@@ -491,7 +491,7 @@ return array_replace_recursive($id, [
     'artikel' => [
         'title' => 'School Stories Close to Parents',
         'subtitle' => 'Short updates, parenting insights, and children’s activity stories in a light format so parents can quickly understand the key message.',
-        'read_more' => 'Read Summary',
+        'read_more' => 'Read Article',
         'empty' => 'No latest articles yet.',
         'rail_aria_label' => 'More school stories',
         'cta' => [

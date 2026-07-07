@@ -101,6 +101,8 @@ final class ArticleAdminController extends Controller
         $data = $request->validate([
             'title_id' => ['required', 'string', 'max:200'],
             'title_en' => ['nullable', 'string', 'max:200'],
+            'description_id' => ['nullable', 'string', 'max:600'],
+            'description_en' => ['nullable', 'string', 'max:600'],
             'thumbnail_file' => [
                 Rule::requiredIf(fn (): bool => $needsThumbnailFile),
                 'nullable',
@@ -129,6 +131,8 @@ final class ArticleAdminController extends Controller
         unset($data['thumbnail_file']);
 
         $data['title_en'] = $this->nullableText($data['title_en'] ?? null);
+        $data['description_id'] = $this->nullableText($data['description_id'] ?? null);
+        $data['description_en'] = $this->nullableText($data['description_en'] ?? null);
         $data['link_en'] = $this->nullableText($data['link_en'] ?? null);
         $data['author'] = $this->nullableText($data['author'] ?? null) ?: Article::DEFAULT_AUTHOR;
         $data['published_date'] = $data['published_date'] ?? optional($article?->published_date)->toDateString() ?? today()->toDateString();

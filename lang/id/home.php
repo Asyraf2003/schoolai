@@ -564,7 +564,7 @@ return [
     'artikel' => [
         'title' => 'Cerita Sekolah yang Dekat dengan Orang Tua',
         'subtitle' => 'Kabar singkat, insight pengasuhan, dan cerita kegiatan anak dalam format ringan agar orang tua cepat menangkap inti informasinya.',
-        'read_more' => 'Baca Ringkasan',
+        'read_more' => 'Baca Artikel',
         'empty' => 'Belum ada artikel terbaru.',
         'rail_aria_label' => 'Cerita sekolah lainnya',
         'cta' => [

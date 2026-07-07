@@ -141,9 +141,11 @@ final class HomeController extends Controller
                 return [
                     'issue' => str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT),
                     'title' => $article->titleForLocale($locale),
-                    'description' => $locale === 'en'
-                        ? 'Read the latest school story by ' . $article->authorForDisplay() . '.'
-                        : 'Baca cerita terbaru sekolah oleh ' . $article->authorForDisplay() . '.',
+                    'description' => $article->descriptionForLocale($locale) ?: (
+                        $locale === 'en'
+                            ? 'Read the latest school story by ' . $article->authorForDisplay() . '.'
+                            : 'Baca cerita terbaru sekolah oleh ' . $article->authorForDisplay() . '.'
+                    ),
                     'highlight' => $article->authorForDisplay(),
                     'category' => $locale === 'en' ? 'Article' : 'Artikel',
                     'date' => $publishedDate?->translatedFormat('j F Y') ?? '',

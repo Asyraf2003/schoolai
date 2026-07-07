@@ -15,6 +15,8 @@ final class Article extends Model
     protected $fillable = [
         'title_id',
         'title_en',
+        'description_id',
+        'description_en',
         'thumbnail_url',
         'link_id',
         'link_en',
@@ -56,6 +58,13 @@ final class Article extends Model
         return $locale === 'en'
             ? $this->firstFilled($this->title_en, $this->title_id, 'Untitled article')
             : $this->firstFilled($this->title_id, $this->title_en, 'Artikel tanpa judul');
+    }
+
+    public function descriptionForLocale(string $locale): string
+    {
+        return $locale === 'en'
+            ? $this->firstFilled($this->description_en, $this->description_id)
+            : $this->firstFilled($this->description_id, $this->description_en);
     }
 
     public function linkForLocale(string $locale): string
