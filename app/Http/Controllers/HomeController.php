@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\GalleryItem;
 use App\Models\SiteStatistic;
 use Illuminate\Contracts\View\View;
@@ -22,7 +23,7 @@ final class HomeController extends Controller
             'schoolValues' => __('home.nilai_sekolah'),
             'featuredPrograms' => __('home.program_unggulan'),
             'gallerySection' => $this->gallerySectionData(),
-            'articlesSection' => __('home.artikel'),
+            'articlesSection' => $this->articlesSectionData(),
             'footerSection' => __('home.footer'),
         ]);
     }
@@ -106,6 +107,62 @@ final class HomeController extends Controller
         $gallery['items'] = $this->latestGalleryItems(6);
 
         return $gallery;
+    }
+
+
+    private function articlesSectionData(): array
+    {
+        $section = __('home.artikel');
+
+        if (! is_array($section)) {
+            return ['items' => []];
+        }
+
+        if (! Schema::hasTable('articles')) {
+            return $section;
+        }
+
+        $locale = app()->getLocale();
+
+        $articles = Article::query()
+            ->latestPublished()
+            ->limit(4)
+            ->get();
+
+        if ($articles->isEmpty()) {
+            return $section;
+        }
+
+        $section['items'] = $articles
+            ->values()
+            ->map(function (Article $article, int $index) use ($locale): array {
+                $publishedDate = $article->published_date;
+
+                return [
+                    'issue' => str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT),
+                    'title' => $article->titleForLocale($locale),
+                    'description' => $locale === 'en'
+                        ? 'Read the latest school story by ' . $article->authorForDisplay() . '.'
+                        : 'Baca cerita terbaru sekolah oleh ' . $article->authorForDisplay() . '.',
+                    'highlight' => $article->authorForDisplay(),
+                    'category' => $locale === 'en' ? 'Article' : 'Artikel',
+                    'date' => $publishedDate?->translatedFormat('j F Y') ?? '',
+                    'published_at' => $publishedDate?->toDateString() ?? '',
+                    'reading_time' => $locale === 'en' ? 'External article' : 'Artikel eksternal',
+                    'href' => $article->linkForLocale($locale),
+                    'thumbnail_url' => $this->publicAssetUrl($article->thumbnail_url) ?? $article->thumbnail_url,
+                    'emoji' => '📰',
+                    'gradient_from' => 'var(--color-yellow-soft)',
+                    'gradient_to' => 'var(--color-orange-soft)',
+                ];
+            })
+            ->all();
+
+        if (isset($section['cta']) && is_array($section['cta'])) {
+            $section['cta']['href'] = route('artikel');
+        }
+
+        return $section;
     }
 
     private function latestGalleryItems(int $limit = 6): array
