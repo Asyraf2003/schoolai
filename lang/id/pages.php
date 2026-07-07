@@ -160,88 +160,16 @@ return [
             'heading' => 'Cerita sekolah, kabar kegiatan, dan catatan untuk orang tua.',
             'subtitle' => 'Baca artikel terbaru dari sekolah. Gunakan pencarian untuk menemukan judul yang dibutuhkan.',
             'search_placeholder' => 'Cari judul artikel...',
+            'search_label' => 'Pencarian artikel',
         ],
         'empty_title' => 'Belum ada artikel.',
         'empty_description' => 'Artikel sekolah akan tampil di sini setelah admin menambahkannya.',
-        'categories' => [
-            ['slug' => 'all', 'label' => 'Semua'],
-            ['slug' => 'akademik', 'label' => 'Akademik'],
-            ['slug' => 'karakter', 'label' => 'Karakter'],
-            ['slug' => 'kegiatan', 'label' => 'Kegiatan'],
-            ['slug' => 'parenting', 'label' => 'Parenting'],
-            ['slug' => 'program', 'label' => 'Program'],
-        ],
-        'featured' => [
-            'issue' => 'Edisi Utama 01',
-            'category' => 'Karakter',
-            'category_slug' => 'karakter',
-            'title' => 'Membangun Adab Sebelum Prestasi: Budaya Kecil yang Diulang Setiap Hari',
-            'excerpt' => 'Di sekolah dasar dan usia dini, pembentukan karakter bukan poster di dinding. Ia muncul dari antre, menyapa, merapikan sandal, dan berani meminta maaf.',
-            'date' => '12 Juli 2026',
-            'read_time' => '5 menit baca',
-        ],
-        'articles' => [
-            ['issue' => '02', 'category' => 'Akademik', 'category_slug' => 'akademik', 'title' => 'Belajar Matematika Lewat Permainan Pola dan Cerita', 'excerpt' => 'Anak memahami angka lebih cepat ketika konsep terasa dekat dengan dunia bermain.', 'date' => '14 Juli 2026', 'read_time' => '4 menit'],
-            ['issue' => '03', 'category' => 'Parenting', 'category_slug' => 'parenting', 'title' => 'Cara Menyiapkan Anak Masuk Sekolah Tanpa Drama Pagi', 'excerpt' => 'Rutinitas tidur, tas, dan sarapan sederhana bisa menyelamatkan banyak pagi keluarga.', 'date' => '15 Juli 2026', 'read_time' => '6 menit'],
-            ['issue' => '04', 'category' => 'Kegiatan', 'category_slug' => 'kegiatan', 'title' => 'Market Day Mini: Anak Belajar Amanah dari Jual Beli', 'excerpt' => 'Kegiatan kecil yang memperkenalkan komunikasi, berhitung, dan tanggung jawab.', 'date' => '18 Juli 2026', 'read_time' => '3 menit'],
-            ['issue' => '05', 'category' => 'Program', 'category_slug' => 'program', 'title' => 'Tahfidz Bertahap: Sedikit, Rutin, dan Bahagia', 'excerpt' => 'Hafalan anak dibangun dengan ritme ringan agar cinta Al-Qur’an tumbuh lebih dulu.', 'date' => '20 Juli 2026', 'read_time' => '5 menit'],
-            ['issue' => '06', 'category' => 'Karakter', 'category_slug' => 'karakter', 'title' => 'Mengapa Anak Perlu Belajar Mengantre Sejak Dini', 'excerpt' => 'Mengantre adalah latihan sabar, empati, dan kontrol diri dalam bentuk paling konkret.', 'date' => '22 Juli 2026', 'read_time' => '4 menit'],
-            ['issue' => '07', 'category' => 'Akademik', 'category_slug' => 'akademik', 'title' => 'Literasi Awal Tidak Harus Selalu Lembar Kerja', 'excerpt' => 'Membaca gambar, bercerita ulang, dan mengenal bunyi adalah fondasi literasi.', 'date' => '24 Juli 2026', 'read_time' => '4 menit'],
-            ['issue' => '08', 'category' => 'Kegiatan', 'category_slug' => 'kegiatan', 'title' => 'Outing Class ke Taman: Observasi Alam Tanpa Ribet', 'excerpt' => 'Anak belajar warna, tekstur, dan rasa ingin tahu lewat lingkungan terdekat.', 'date' => '27 Juli 2026', 'read_time' => '3 menit'],
-            ['issue' => '09', 'category' => 'Program', 'category_slug' => 'program', 'title' => 'Bahasa Arab Harian Lewat Sapaan dan Lagu Pendek', 'excerpt' => 'Kosakata tumbuh alami ketika dipakai dalam rutinitas kelas.', 'date' => '29 Juli 2026', 'read_time' => '5 menit'],
-        ],
     ],
 
     'artikel_detail' => [
-        'title' => 'Membangun Adab Sebelum Prestasi - Al Mustaqbal School',
-        'description' => 'Artikel dummy tentang budaya adab harian di Al Mustaqbal School.',
+        'title' => 'Artikel Al Mustaqbal School',
+        'description' => 'Halaman detail artikel lama dialihkan ke daftar artikel.',
         'back_to_articles' => '← Kembali ke Artikel',
-        'category' => 'Karakter',
-        'date' => '12 Juli 2026',
-        'read_time' => '5 menit baca',
-        'issue' => 'Edisi Utama 01',
-        'heading' => 'Membangun Adab Sebelum Prestasi: Budaya Kecil yang Diulang Setiap Hari',
-        'lead' => 'Di usia TK dan SD, adab bukan sekadar materi pelajaran. Adab adalah kebiasaan kecil yang dilatih, diulang, dan dicontohkan sampai menjadi bagian dari cara anak melihat dirinya dan orang lain.',
-        'hero_note' => 'Artikel ini dummy untuk simulasi halaman detail artikel sekolah.',
-        'toc_title' => 'Isi Artikel',
-        'toc' => [
-            'Mengapa adab didahulukan',
-            'Kebiasaan kecil yang membentuk karakter',
-            'Peran guru dan orang tua',
-        ],
-        'sections' => [
-            [
-                'heading' => 'Mengapa adab didahulukan',
-                'body' => [
-                    'Prestasi akademik penting, tetapi anak membutuhkan fondasi sikap agar ilmu yang dipelajari tidak berhenti sebagai hafalan. Anak yang belajar menyapa, antre, meminta izin, dan mendengar giliran bicara sedang membangun kontrol diri.',
-                    'Di sekolah Islam, pembiasaan adab juga menjadi cara sederhana untuk menghubungkan ilmu dengan akhlak. Bukan lewat ceramah panjang setiap saat, melainkan lewat rutinitas yang konsisten dan mudah dilihat anak.',
-                ],
-            ],
-            [
-                'heading' => 'Kebiasaan kecil yang membentuk karakter',
-                'body' => [
-                    'Budaya sekolah dapat dimulai dari hal yang tampak remeh: merapikan sandal, mengembalikan buku ke rak, mengucapkan salam, menjaga suara saat teman berbicara, dan berani meminta maaf ketika keliru.',
-                    'Hal kecil seperti ini tidak terlihat mewah di brosur, tetapi justru menentukan rasa aman kelas. Anak belajar bahwa dirinya bukan pusat semesta. Sebuah kabar buruk untuk ego manusia, tapi kabar baik untuk masa depan kelas.',
-                ],
-            ],
-            [
-                'heading' => 'Peran guru dan orang tua',
-                'body' => [
-                    'Guru membantu menjaga ritme pembiasaan di sekolah, sementara orang tua memperkuatnya di rumah. Jika dua lingkungan ini berjalan searah, anak tidak bingung menghadapi standar yang berubah-ubah.',
-                    'Kuncinya bukan kesempurnaan, melainkan konsistensi. Anak tidak perlu melihat orang dewasa selalu benar. Anak perlu melihat orang dewasa mau memperbaiki diri, meminta maaf, dan mencontohkan adab yang sama dengan yang diminta dari anak.',
-                ],
-            ],
-        ],
-        'quote' => [
-            'text' => 'Adab tumbuh dari kebiasaan kecil yang dilatih dengan sabar, bukan dari nasihat panjang yang hilang setelah bel pulang.',
-            'author' => 'Catatan Guru Al Mustaqbal',
-        ],
-        'related_title' => 'Artikel terkait dummy',
-        'related' => [
-            ['title' => 'Mengapa Anak Perlu Belajar Mengantre Sejak Dini', 'meta' => 'Karakter • 4 menit'],
-            ['title' => 'Tahfidz Bertahap: Sedikit, Rutin, dan Bahagia', 'meta' => 'Program • 5 menit'],
-            ['title' => 'Cara Menyiapkan Anak Masuk Sekolah Tanpa Drama Pagi', 'meta' => 'Parenting • 6 menit'],
-        ],
     ],
 
     'galeri' => [

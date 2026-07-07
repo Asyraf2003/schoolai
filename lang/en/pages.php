@@ -157,91 +157,19 @@ return [
         'title' => 'Articles - Al Mustaqbal School',
         'description' => 'Stories, updates, and articles from Al Mustaqbal School for parents.',
         'hero' => [
-            'heading' => 'Learning stories, character notes, and parenting insights in one reading space.',
-            'subtitle' => 'This dummy article listing is shaped like a school editorial channel so parents can sense the school’s academic and cultural rhythm.',
+            'heading' => 'School stories, activity updates, and notes for parents.',
+            'subtitle' => 'Read the latest articles from school. Use search to find the title you need.',
             'search_placeholder' => 'Search article title...',
+            'search_label' => 'Article search',
         ],
         'empty_title' => 'No articles yet.',
         'empty_description' => 'School articles will appear here after an admin adds them.',
-        'categories' => [
-            ['slug' => 'all', 'label' => 'All'],
-            ['slug' => 'akademik', 'label' => 'Academics'],
-            ['slug' => 'karakter', 'label' => 'Character'],
-            ['slug' => 'kegiatan', 'label' => 'Activities'],
-            ['slug' => 'parenting', 'label' => 'Parenting'],
-            ['slug' => 'program', 'label' => 'Programs'],
-        ],
-        'featured' => [
-            'issue' => 'Main Issue 01',
-            'category' => 'Character',
-            'category_slug' => 'karakter',
-            'title' => 'Building Manners Before Achievement: Small Habits Repeated Every Day',
-            'excerpt' => 'In early childhood and elementary education, character is not a poster on the wall. It appears in lining up, greeting, arranging sandals, and daring to apologize.',
-            'date' => 'July 12, 2026',
-            'read_time' => '5 min read',
-        ],
-        'articles' => [
-            ['issue' => '02', 'category' => 'Academics', 'category_slug' => 'akademik', 'title' => 'Learning Math Through Patterns and Stories', 'excerpt' => 'Children grasp numbers faster when concepts feel close to their world of play.', 'date' => 'July 14, 2026', 'read_time' => '4 min'],
-            ['issue' => '03', 'category' => 'Parenting', 'category_slug' => 'parenting', 'title' => 'Preparing Children for School Without Morning Drama', 'excerpt' => 'Sleep routines, packed bags, and simple breakfasts can save many family mornings.', 'date' => 'July 15, 2026', 'read_time' => '6 min'],
-            ['issue' => '04', 'category' => 'Activities', 'category_slug' => 'kegiatan', 'title' => 'Mini Market Day: Learning Trust Through Buying and Selling', 'excerpt' => 'A small activity introducing communication, counting, and responsibility.', 'date' => 'July 18, 2026', 'read_time' => '3 min'],
-            ['issue' => '05', 'category' => 'Programs', 'category_slug' => 'program', 'title' => 'Gradual Tahfidz: Small, Consistent, and Joyful', 'excerpt' => 'Memorization is built with a light rhythm so love for the Qur’an grows first.', 'date' => 'July 20, 2026', 'read_time' => '5 min'],
-            ['issue' => '06', 'category' => 'Character', 'category_slug' => 'karakter', 'title' => 'Why Children Need to Learn Queueing Early', 'excerpt' => 'Queueing trains patience, empathy, and self-control in a concrete form.', 'date' => 'July 22, 2026', 'read_time' => '4 min'],
-            ['issue' => '07', 'category' => 'Academics', 'category_slug' => 'akademik', 'title' => 'Early Literacy Is Not Always a Worksheet', 'excerpt' => 'Reading pictures, retelling stories, and recognizing sounds are literacy foundations.', 'date' => 'July 24, 2026', 'read_time' => '4 min'],
-            ['issue' => '08', 'category' => 'Activities', 'category_slug' => 'kegiatan', 'title' => 'Outing Class to the Park: Simple Nature Observation', 'excerpt' => 'Children learn colors, textures, and curiosity through nearby environments.', 'date' => 'July 27, 2026', 'read_time' => '3 min'],
-            ['issue' => '09', 'category' => 'Programs', 'category_slug' => 'program', 'title' => 'Daily Arabic Through Greetings and Short Songs', 'excerpt' => 'Vocabulary grows naturally when used in classroom routines.', 'date' => 'July 29, 2026', 'read_time' => '5 min'],
-        ],
     ],
 
     'artikel_detail' => [
-        'title' => 'Building Manners Before Achievement - Al Mustaqbal School',
-        'description' => 'A dummy article about daily manners culture at Al Mustaqbal School.',
+        'title' => 'Articles - Al Mustaqbal School',
+        'description' => 'The old article detail page redirects to the article list.',
         'back_to_articles' => '← Back to Articles',
-        'category' => 'Character',
-        'date' => 'July 12, 2026',
-        'read_time' => '5 min read',
-        'issue' => 'Main Issue 01',
-        'heading' => 'Building Manners Before Achievement: Small Habits Repeated Every Day',
-        'lead' => 'In kindergarten and elementary years, manners are not just another lesson topic. Manners are small habits practiced, repeated, and modeled until they become part of how children see themselves and others.',
-        'hero_note' => 'This is a dummy article for simulating a school article detail page.',
-        'toc_title' => 'Inside This Article',
-        'toc' => [
-            'Why manners come first',
-            'Small habits that shape character',
-            'The role of teachers and parents',
-        ],
-        'sections' => [
-            [
-                'heading' => 'Why manners come first',
-                'body' => [
-                    'Academic achievement matters, but children need a foundation of attitude so knowledge does not stop as memorization. A child who learns to greet, queue, ask permission, and listen while others speak is building self-control.',
-                    'In an Islamic school, manners also become a simple way to connect knowledge with character. Not through long lectures all the time, but through routines that are consistent and easy for children to observe.',
-                ],
-            ],
-            [
-                'heading' => 'Small habits that shape character',
-                'body' => [
-                    'School culture can begin with things that look simple: arranging sandals, returning books to the shelf, giving greetings, keeping voices calm while friends speak, and daring to apologize after making a mistake.',
-                    'These small things may not look fancy in a brochure, but they shape the safety of the classroom. Children learn that they are not the center of the universe. Bad news for human ego, decent news for classroom survival.',
-                ],
-            ],
-            [
-                'heading' => 'The role of teachers and parents',
-                'body' => [
-                    'Teachers help maintain the rhythm of habits at school, while parents strengthen them at home. When both environments move in the same direction, children are not confused by changing standards.',
-                    'The key is not perfection, but consistency. Children do not need to see adults always being right. They need to see adults willing to improve, apologize, and model the same manners expected from children.',
-                ],
-            ],
-        ],
-        'quote' => [
-            'text' => 'Manners grow from small habits practiced patiently, not from long advice that disappears after the school bell rings.',
-            'author' => 'Teacher Note from Al Mustaqbal',
-        ],
-        'related_title' => 'Related dummy articles',
-        'related' => [
-            ['title' => 'Why Children Need to Learn Queueing Early', 'meta' => 'Character • 4 min'],
-            ['title' => 'Gradual Tahfidz: Small, Consistent, and Joyful', 'meta' => 'Programs • 5 min'],
-            ['title' => 'Preparing Children for School Without Morning Drama', 'meta' => 'Parenting • 6 min'],
-        ],
     ],
 
     'galeri' => [

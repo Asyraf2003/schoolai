@@ -42,7 +42,7 @@ Route::get('/bahasa/{locale}', function (string $locale, Request $request) {
 
 Route::view('/ppdb', 'pages.ppdb')->name('ppdb');
 Route::get('/artikel', ArticlePageController::class)->name('artikel');
-Route::view('/artikel/adab-sebelum-prestasi', 'pages.artikel-detail')->name('artikel.detail');
+Route::redirect('/artikel/adab-sebelum-prestasi', '/artikel', 301)->name('artikel.detail');
 Route::get('/galeri', GalleryPageController::class)->name('galeri');
 
 
