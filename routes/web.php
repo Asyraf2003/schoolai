@@ -3,9 +3,11 @@
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PpdbPageController;
 use App\Http\Controllers\ArticlePageController;
 use App\Http\Controllers\GalleryPageController;
 use App\Http\Controllers\Admin\SiteStatisticController;
+use App\Http\Controllers\Admin\PpdbSettingController;
 use App\Http\Controllers\Admin\GalleryAdminController;
 use App\Http\Controllers\Admin\ArticleAdminController;
 use App\Http\Controllers\Admin\GalleryPageSectionAdminController;
@@ -40,7 +42,7 @@ Route::get('/bahasa/{locale}', function (string $locale, Request $request) {
     return redirect($previous)->withCookie(cookie('site_locale', $locale, 60 * 24 * 365));
 })->whereIn('locale', ['id', 'en'])->name('language.switch');
 
-Route::view('/ppdb', 'pages.ppdb')->name('ppdb');
+Route::get('/ppdb', PpdbPageController::class)->name('ppdb');
 Route::get('/artikel', ArticlePageController::class)->name('artikel');
 Route::redirect('/artikel/adab-sebelum-prestasi', '/artikel', 301)->name('artikel.detail');
 Route::get('/galeri', GalleryPageController::class)->name('galeri');
@@ -67,8 +69,14 @@ Route::middleware(['auth', 'admin.locale'])->group(function () {
     Route::view('/admin/dashboard', 'admin.placeholder', ['adminPageKey' => 'dashboard'])
         ->name('admin.dashboard');
 
-    Route::view('/admin/ppdb', 'admin.placeholder', ['adminPageKey' => 'ppdb'])
+    Route::get('/admin/ppdb', [PpdbSettingController::class, 'edit'])
         ->name('admin.ppdb');
+
+    Route::put('/admin/ppdb', [PpdbSettingController::class, 'update'])
+        ->name('admin.ppdb.update');
+
+    Route::patch('/admin/ppdb/toggle', [PpdbSettingController::class, 'toggle'])
+        ->name('admin.ppdb.toggle');
 
     Route::get('/admin/artikel', [ArticleAdminController::class, 'index'])
         ->name('admin.artikel');
