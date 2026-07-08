@@ -28,18 +28,26 @@ final class PpdbSettingController extends Controller
     {
         $validator = validator($request->all(), [
             'registration_url' => ['required', 'url', 'max:2048'],
+            'information_url' => ['nullable', 'url', 'max:2048'],
             'is_active' => ['nullable', 'boolean'],
         ], [
             'registration_url.required' => 'Link formulir PPDB wajib diisi.',
             'registration_url.url' => 'Link formulir PPDB tidak valid.',
             'registration_url.max' => 'Link formulir PPDB terlalu panjang.',
+            'information_url.url' => 'Link info, brosur, atau PDF PPDB tidak valid.',
+            'information_url.max' => 'Link info, brosur, atau PDF PPDB terlalu panjang.',
         ]);
 
         $validator->after(function (Validator $validator) use ($request): void {
-            $url = trim((string) $request->input('registration_url'));
+            foreach ([
+                'registration_url' => 'Link formulir PPDB',
+                'information_url' => 'Link info, brosur, atau PDF PPDB',
+            ] as $field => $label) {
+                $url = trim((string) $request->input($field));
 
-            if ($url !== '' && ! $this->isPublicUrl($url)) {
-                $validator->errors()->add('registration_url', 'Link formulir PPDB harus URL publik, bukan localhost, IP lokal, login, atau halaman admin.');
+                if ($url !== '' && ! $this->isPublicUrl($url)) {
+                    $validator->errors()->add($field, $label . ' harus URL publik, bukan localhost, IP lokal, login, atau halaman admin.');
+                }
             }
         });
 
@@ -48,6 +56,7 @@ final class PpdbSettingController extends Controller
         $setting = $this->currentSetting();
         $setting->update([
             'registration_url' => trim((string) $validated['registration_url']),
+            'information_url' => $this->nullableText($validated['information_url'] ?? null),
             'is_active' => $request->boolean('is_active'),
         ]);
 
@@ -72,6 +81,7 @@ final class PpdbSettingController extends Controller
     {
         return PpdbSetting::query()->firstOrCreate([], [
             'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
+            'information_url' => null,
             'is_active' => true,
         ]);
     }
@@ -104,5 +114,16 @@ final class PpdbSettingController extends Controller
             $path === '/login' ||
             str_starts_with($path, '/auth/')
         );
+    }
+
+    private function nullableText(mixed $value): ?string
+    {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return $value === '' ? null : $value;
     }
 }
