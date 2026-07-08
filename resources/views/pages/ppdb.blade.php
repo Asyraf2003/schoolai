@@ -5,9 +5,10 @@
   $page = __('pages.ppdb');
   $ppdbAdmission = $ppdbAdmission ?? null;
   $ppdbFormUrl = $ppdbAdmission?->publicRegistrationUrl();
+  $ppdbInfoUrl = $ppdbAdmission?->publicInformationUrl();
   $ppdbIsOpen = (bool) ($ppdbAdmission?->isRegistrationOpen() ?? false);
   $isEnglish = app()->getLocale() === 'en';
-  $ppdbHeroButtonLabel = $isEnglish ? 'Apply for Admission' : 'Daftar PPDB';
+  $ppdbHeroButtonLabel = $isEnglish ? 'View Admission Info' : 'Lihat Info PPDB';
   $ppdbFinalButtonLabel = $isEnglish ? 'Apply Now' : 'Daftar Sekarang';
   $ppdbClosedTitle = $isEnglish ? 'Admission is currently closed' : 'Pendaftaran saat ini sedang ditutup';
   $ppdbClosedText = $isEnglish
@@ -102,10 +103,10 @@
         <p class="public-hero__subtitle">{{ $page['hero']['subtitle'] }}</p>
 
         <div class="public-hero__actions">
-          @if ($ppdbIsOpen && $ppdbFormUrl)
-            <a href="{{ $ppdbFormUrl }}" class="btn btn--primary" target="_blank" rel="noopener noreferrer">{{ $ppdbHeroButtonLabel }}</a>
+          @if ($ppdbInfoUrl)
+            <a href="{{ $ppdbInfoUrl }}" class="btn btn--primary" target="_blank" rel="noopener noreferrer">{{ $ppdbHeroButtonLabel }}</a>
           @else
-            <a href="#ppdb-closed-modal" class="btn btn--primary">{{ $ppdbHeroButtonLabel }}</a>
+            <a href="#alur-ppdb" class="btn btn--primary">{{ $ppdbHeroButtonLabel }}</a>
           @endif
           <a href="#alur-ppdb" class="btn btn--ghost">{{ $page['hero']['secondary_cta'] }}</a>
         </div>
