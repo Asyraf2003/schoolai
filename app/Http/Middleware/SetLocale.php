@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
+// use App;
+
 final class SetLocale
 {
     /**
@@ -17,10 +19,10 @@ final class SetLocale
     {
         $locale = $request->session()->get('locale')
             ?? $request->cookie('site_locale')
-            ?? 'id';
+            ?? config('app.locale');
 
         if (! in_array($locale, ['id', 'en'], true)) {
-            $locale = 'id';
+            $locale = config('app.locale');
         }
 
         App::setLocale($locale);
