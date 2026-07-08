@@ -1,9 +1,100 @@
 {{-- PUBLIC_PPDB_DUMMY_FINAL --}}
 @extends('layouts.public', ['title' => __('pages.ppdb.title'), 'description' => __('pages.ppdb.description')])
 
-@php($page = __('pages.ppdb'))
+@php
+  $page = __('pages.ppdb');
+  $ppdbAdmission = $ppdbAdmission ?? null;
+  $ppdbFormUrl = $ppdbAdmission?->publicRegistrationUrl();
+  $ppdbIsOpen = (bool) ($ppdbAdmission?->isRegistrationOpen() ?? false);
+  $isEnglish = app()->getLocale() === 'en';
+  $ppdbHeroButtonLabel = $isEnglish ? 'Apply for Admission' : 'Daftar PPDB';
+  $ppdbFinalButtonLabel = $isEnglish ? 'Apply Now' : 'Daftar Sekarang';
+  $ppdbClosedTitle = $isEnglish ? 'Admission is currently closed' : 'Pendaftaran saat ini sedang ditutup';
+  $ppdbClosedText = $isEnglish
+      ? 'Sorry, admission registration is not open at the moment. Please check this page again later or contact the school admin.'
+      : 'Maaf, pendaftaran saat ini sedang ditutup. Silakan cek halaman ini kembali nanti atau hubungi admin sekolah.';
+  $ppdbClosedButton = $isEnglish ? 'I understand' : 'Saya Mengerti';
+@endphp
 
 @section('content')
+  <style>
+    .ppdb-closed-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.18s ease, visibility 0.18s ease;
+    }
+
+    .ppdb-closed-modal:target {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .ppdb-closed-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.52);
+      backdrop-filter: blur(7px);
+    }
+
+    .ppdb-closed-modal__panel {
+      position: relative;
+      z-index: 1;
+      width: min(440px, 100%);
+      padding: 28px;
+      border-radius: 28px;
+      background: #ffffff;
+      color: #20223f;
+      box-shadow: 0 26px 70px rgba(16, 24, 40, 0.24);
+      text-align: center;
+    }
+
+    .ppdb-closed-modal__icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      border-radius: 22px;
+      background: #fff2c6;
+      font-size: 1.9rem;
+    }
+
+    .ppdb-closed-modal__panel h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 4vw, 1.9rem);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+    }
+
+    .ppdb-closed-modal__panel p {
+      margin: 12px 0 0;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    .ppdb-closed-modal__close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      margin-top: 20px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #20223f;
+      color: #ffffff;
+      font-weight: 900;
+      text-decoration: none;
+    }
+  </style>
+
   <section class="public-hero public-hero--ppdb" aria-labelledby="ppdb-title">
     <div class="container public-hero__grid">
       <div class="public-hero__copy reveal">
@@ -11,7 +102,11 @@
         <p class="public-hero__subtitle">{{ $page['hero']['subtitle'] }}</p>
 
         <div class="public-hero__actions">
-          <a href="{{ __('pages.common.whatsapp_url') }}" class="btn btn--primary">{{ $page['hero']['primary_cta'] }}</a>
+          @if ($ppdbIsOpen && $ppdbFormUrl)
+            <a href="{{ $ppdbFormUrl }}" class="btn btn--primary" target="_blank" rel="noopener noreferrer">{{ $ppdbHeroButtonLabel }}</a>
+          @else
+            <a href="#ppdb-closed-modal" class="btn btn--primary">{{ $ppdbHeroButtonLabel }}</a>
+          @endif
           <a href="#alur-ppdb" class="btn btn--ghost">{{ $page['hero']['secondary_cta'] }}</a>
         </div>
 
@@ -202,8 +297,23 @@
         <span aria-hidden="true">📮</span>
         <h2>{{ $page['final_cta']['heading'] }}</h2>
         <p>{{ $page['final_cta']['subtitle'] }}</p>
-        <a href="{{ __('pages.common.whatsapp_url') }}" class="btn btn--white">{{ $page['final_cta']['button'] }}</a>
+        @if ($ppdbIsOpen && $ppdbFormUrl)
+          <a href="{{ $ppdbFormUrl }}" class="btn btn--white" target="_blank" rel="noopener noreferrer">{{ $ppdbFinalButtonLabel }}</a>
+        @else
+          <a href="#ppdb-closed-modal" class="btn btn--white">{{ $ppdbFinalButtonLabel }}</a>
+        @endif
       </div>
+    </div>
+  </section>
+
+  <section class="ppdb-closed-modal" id="ppdb-closed-modal" role="dialog" aria-modal="true" aria-labelledby="ppdb-closed-title" aria-describedby="ppdb-closed-description">
+    <a href="#" class="ppdb-closed-modal__backdrop" aria-label="{{ __('pages.common.close') }}"></a>
+
+    <div class="ppdb-closed-modal__panel">
+      <div class="ppdb-closed-modal__icon" aria-hidden="true">🕊️</div>
+      <h2 id="ppdb-closed-title">{{ $ppdbClosedTitle }}</h2>
+      <p id="ppdb-closed-description">{{ $ppdbClosedText }}</p>
+      <a href="#" class="ppdb-closed-modal__close">{{ $ppdbClosedButton }}</a>
     </div>
   </section>
 @endsection
