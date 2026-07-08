@@ -54,13 +54,14 @@
           </div>
 
           <div class="admin-field admin-field--wide">
+            <input type="hidden" name="is_active" value="0">
             <label class="admin-check-field" for="is_active">
               <input
                 id="is_active"
                 type="checkbox"
                 name="is_active"
                 value="1"
-                @checked(old('is_active', $setting->is_active))
+                @checked((bool) old('is_active', $setting->is_active))
               >
               <span>Aktifkan pendaftaran publik</span>
             </label>
