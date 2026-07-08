@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\GalleryItem;
+use App\Models\PpdbSetting;
 use App\Models\SiteStatistic;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
@@ -44,7 +45,37 @@ final class HomeController extends Controller
         $hero['visual_image_url'] = $this->publicAssetUrl($hero['visual_image'] ?? null);
         $hero['logo_image_url'] = $this->publicAssetUrl($hero['logo_image'] ?? null);
 
+        if (isset($hero['primary_cta']) && is_array($hero['primary_cta'])) {
+            $ppdbSetting = $this->currentPpdbSetting();
+            $registrationUrl = $ppdbSetting->isRegistrationOpen()
+                ? $ppdbSetting->publicRegistrationUrl()
+                : null;
+
+            $hero['primary_cta']['href'] = $registrationUrl ?: route('ppdb');
+        }
+
         return $hero;
+    }
+
+    private function currentPpdbSetting(): PpdbSetting
+    {
+        if (! Schema::hasTable('ppdb_settings')) {
+            return new PpdbSetting([
+                'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
+                'is_active' => true,
+            ]);
+        }
+
+        $setting = PpdbSetting::query()->first();
+
+        if ($setting instanceof PpdbSetting) {
+            return $setting;
+        }
+
+        return new PpdbSetting([
+            'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
+            'is_active' => true,
+        ]);
     }
 
     private function statsData(): array
