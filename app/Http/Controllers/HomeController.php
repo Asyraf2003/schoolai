@@ -51,6 +51,9 @@ final class HomeController extends Controller
                 ? $ppdbSetting->publicRegistrationUrl()
                 : null;
 
+            $hero['primary_cta']['label'] = app()->getLocale() === 'en'
+                ? 'Apply Online Now'
+                : 'Daftar PPDB Online';
             $hero['primary_cta']['href'] = $registrationUrl ?: route('ppdb');
         }
 
@@ -123,6 +126,13 @@ final class HomeController extends Controller
         }
 
         $navbar['logo']['image_url'] = $this->publicAssetUrl($navbar['logo']['image'] ?? null);
+
+        if (isset($navbar['cta']) && is_array($navbar['cta'])) {
+            $navbar['cta']['label'] = app()->getLocale() === 'en'
+                ? 'Admission Info'
+                : 'Info PPDB';
+            $navbar['cta']['href'] = route('ppdb');
+        }
 
         return $navbar;
     }
