@@ -8,7 +8,7 @@
   <header class="admin-topbar admin-topbar--compact">
     <div>
       <h1>Pengaturan PPDB</h1>
-      <p>Kelola link formulir pendaftaran publik dan status buka/tutup PPDB. Sederhana, karena kadang software memang tidak perlu pura-pura jadi pesawat luar angkasa.</p>
+      <p>Kelola link formulir pendaftaran, link info/brosur, dan status buka/tutup PPDB. Dua link, dua tujuan, satu admin yang semoga tidak panik.</p>
     </div>
 
     <div class="admin-inline-actions">
@@ -37,7 +37,7 @@
       <div class="gallery-lite-form__panel">
         <div class="gallery-lite-form__grid">
           <div class="admin-field admin-field--wide">
-            <label for="registration_url">Link formulir PPDB</label>
+            <label for="registration_url">Link formulir pendaftaran PPDB</label>
             <input
               id="registration_url"
               type="url"
@@ -47,8 +47,24 @@
               placeholder="https://forms.gle/..."
               required
             >
-            <em>Link ini dipakai oleh tombol daftar pada halaman publik /ppdb. Link lokal, admin, login, dan IP private ditolak.</em>
+            <em>Dipakai oleh tombol utama hero homepage dan tombol daftar di bagian akhir halaman /ppdb.</em>
             @error('registration_url')
+              <small>{{ $message }}</small>
+            @enderror
+          </div>
+
+          <div class="admin-field admin-field--wide">
+            <label for="information_url">Link info / brosur / PDF PPDB</label>
+            <input
+              id="information_url"
+              type="url"
+              name="information_url"
+              value="{{ old('information_url', $setting->information_url) }}"
+              maxlength="2048"
+              placeholder="https://example.com/brosur-ppdb.pdf"
+            >
+            <em>Dipakai oleh tombol pertama di hero halaman /ppdb. Boleh Google Drive PDF, halaman info, Notion publik, atau URL publik lain.</em>
+            @error('information_url')
               <small>{{ $message }}</small>
             @enderror
           </div>
@@ -65,7 +81,7 @@
               >
               <span>Aktifkan pendaftaran publik</span>
             </label>
-            <em>Jika dimatikan, pengunjung yang menekan tombol daftar akan melihat modal bahwa pendaftaran sedang ditutup.</em>
+            <em>Jika dimatikan, tombol daftar akan menampilkan modal bahwa pendaftaran sedang ditutup.</em>
           </div>
         </div>
       </div>
