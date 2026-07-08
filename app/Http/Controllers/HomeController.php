@@ -127,7 +127,9 @@ final class HomeController extends Controller
         $articles = Article::query()
             ->latestPublished()
             ->limit(4)
-            ->get();
+            ->get()
+            ->filter(fn (Article $article): bool => $this->publicArticleUrl($article->linkForLocale($locale)) !== null)
+            ->values();
 
         if ($articles->isEmpty()) {
             return $section;
@@ -151,7 +153,7 @@ final class HomeController extends Controller
                     'date' => $publishedDate?->translatedFormat('j F Y') ?? '',
                     'published_at' => $publishedDate?->toDateString() ?? '',
                     'reading_time' => $locale === 'en' ? 'External article' : 'Artikel eksternal',
-                    'href' => $article->linkForLocale($locale),
+                    'href' => $this->publicArticleUrl($article->linkForLocale($locale)),
                     'thumbnail_url' => $this->publicAssetUrl($article->thumbnail_url) ?? $article->thumbnail_url,
                     'emoji' => '📰',
                     'gradient_from' => 'var(--color-yellow-soft)',
@@ -333,6 +335,46 @@ final class HomeController extends Controller
         $host = parse_url($url, PHP_URL_HOST);
 
         if (! is_string($host) || ! str_ends_with(strtolower($host), 'instagram.com')) {
+            return null;
+        }
+
+        return $url;
+    }
+
+    private function publicArticleUrl(string $url): ?string
+    {
+        $url = trim($url);
+
+        if ($url === '' || ! filter_var($url, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = '/' . ltrim((string) parse_url($url, PHP_URL_PATH), '/');
+
+        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return null;
+        }
+
+        if (
+            $host === 'localhost' ||
+            $host === '127.0.0.1' ||
+            $host === '::1' ||
+            str_ends_with($host, '.local') ||
+            str_starts_with($host, '10.') ||
+            str_starts_with($host, '192.168.') ||
+            preg_match('/^172\.(1[6-9]|2\d|3[0-1])\./', $host) === 1
+        ) {
+            return null;
+        }
+
+        if (
+            $path === '/admin' ||
+            str_starts_with($path, '/admin/') ||
+            $path === '/login' ||
+            str_starts_with($path, '/auth/')
+        ) {
             return null;
         }
 

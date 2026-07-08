@@ -33,6 +33,8 @@ final class ArticlePageController extends Controller
         return Article::query()
             ->latestPublished()
             ->get()
+            ->filter(fn (Article $article): bool => $this->publicArticleUrl($article->linkForLocale($locale)) !== null)
+            ->values()
             ->map(function (Article $article, int $index) use ($locale): array {
                 $publishedDate = $article->published_date;
 
@@ -43,11 +45,51 @@ final class ArticlePageController extends Controller
                     'author' => $article->authorForDisplay(),
                     'date' => $publishedDate?->translatedFormat('j F Y') ?? '',
                     'published_at' => $publishedDate?->toDateString() ?? '',
-                    'href' => $article->linkForLocale($locale),
+                    'href' => $this->publicArticleUrl($article->linkForLocale($locale)),
                     'thumbnail_url' => $this->publicAssetUrl($article->thumbnail_url) ?? $article->thumbnail_url,
                 ];
             })
             ->all();
+    }
+
+    private function publicArticleUrl(string $url): ?string
+    {
+        $url = trim($url);
+
+        if ($url === '' || ! filter_var($url, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = '/' . ltrim((string) parse_url($url, PHP_URL_PATH), '/');
+
+        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return null;
+        }
+
+        if (
+            $host === 'localhost' ||
+            $host === '127.0.0.1' ||
+            $host === '::1' ||
+            str_ends_with($host, '.local') ||
+            str_starts_with($host, '10.') ||
+            str_starts_with($host, '192.168.') ||
+            preg_match('/^172\.(1[6-9]|2\d|3[0-1])\./', $host) === 1
+        ) {
+            return null;
+        }
+
+        if (
+            $path === '/admin' ||
+            str_starts_with($path, '/admin/') ||
+            $path === '/login' ||
+            str_starts_with($path, '/auth/')
+        ) {
+            return null;
+        }
+
+        return $url;
     }
 
     private function publicAssetUrl(mixed $path): ?string

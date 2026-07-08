@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 final class ArticleAdminController extends Controller
 {
@@ -98,7 +99,7 @@ final class ArticleAdminController extends Controller
     {
         $needsThumbnailFile = ! $article?->exists || ! $article->thumbnail_url;
 
-        $data = $request->validate([
+        $validator = validator($request->all(), [
             'title_id' => ['required', 'string', 'max:200'],
             'title_en' => ['nullable', 'string', 'max:200'],
             'description_id' => ['nullable', 'string', 'max:600'],
@@ -127,6 +128,18 @@ final class ArticleAdminController extends Controller
             'link_en.url' => 'Link artikel English tidak valid.',
             'published_date.date' => 'Tanggal publikasi tidak valid.',
         ]);
+
+        $validator->after(function (Validator $validator) use ($request): void {
+            foreach (['link_id' => 'Link artikel Indonesia', 'link_en' => 'Link artikel English'] as $field => $label) {
+                $url = $this->nullableText($request->input($field));
+
+                if ($url && ! $this->isPublicArticleUrl($url)) {
+                    $validator->errors()->add($field, $label . ' harus memakai URL publik, bukan localhost, IP lokal, login, atau halaman admin.');
+                }
+            }
+        });
+
+        $data = $validator->validate();
 
         unset($data['thumbnail_file']);
 
@@ -168,6 +181,36 @@ final class ArticleAdminController extends Controller
         }
 
         Storage::disk('public')->delete($path);
+    }
+
+    private function isPublicArticleUrl(string $url): bool
+    {
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = '/' . ltrim((string) parse_url($url, PHP_URL_PATH), '/');
+
+        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return false;
+        }
+
+        if (
+            $host === 'localhost' ||
+            $host === '127.0.0.1' ||
+            $host === '::1' ||
+            str_ends_with($host, '.local') ||
+            str_starts_with($host, '10.') ||
+            str_starts_with($host, '192.168.') ||
+            preg_match('/^172\.(1[6-9]|2\d|3[0-1])\./', $host) === 1
+        ) {
+            return false;
+        }
+
+        return ! (
+            $path === '/admin' ||
+            str_starts_with($path, '/admin/') ||
+            $path === '/login' ||
+            str_starts_with($path, '/auth/')
+        );
     }
 
     private function nullableText(mixed $value): ?string
