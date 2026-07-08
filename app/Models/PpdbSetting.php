@@ -13,6 +13,7 @@ final class PpdbSetting extends Model
 
     protected $fillable = [
         'registration_url',
+        'information_url',
         'is_active',
     ];
 
@@ -27,7 +28,17 @@ final class PpdbSetting extends Model
 
     public function publicRegistrationUrl(): ?string
     {
-        $url = trim((string) $this->registration_url);
+        return $this->publicUrl($this->registration_url);
+    }
+
+    public function publicInformationUrl(): ?string
+    {
+        return $this->publicUrl($this->information_url);
+    }
+
+    private function publicUrl(mixed $value): ?string
+    {
+        $url = trim((string) $value);
 
         if ($url === '' || ! filter_var($url, FILTER_VALIDATE_URL)) {
             return null;
