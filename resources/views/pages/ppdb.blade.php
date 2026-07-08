@@ -7,7 +7,6 @@
   <section class="public-hero public-hero--ppdb" aria-labelledby="ppdb-title">
     <div class="container public-hero__grid">
       <div class="public-hero__copy reveal">
-        <a href="{{ route('home') }}" class="link-arrow">{{ __('pages.common.back_home') }}</a>
         <h1 id="ppdb-title" class="public-hero__title">{{ $page['hero']['heading'] }}</h1>
         <p class="public-hero__subtitle">{{ $page['hero']['subtitle'] }}</p>
 

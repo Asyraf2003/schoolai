@@ -14,7 +14,6 @@
   <section class="public-hero public-hero--artikel article-index-hero" aria-labelledby="artikel-title">
     <div class="container">
       <div class="article-hero-card article-index-hero__card reveal">
-        <a href="{{ route('home') }}" class="link-arrow">{{ __('pages.common.back_home') }}</a>
 
         <h1 id="artikel-title" class="public-hero__title">
           {{ $hero['heading'] ?? $page['title'] ?? 'Artikel' }}

@@ -14,7 +14,6 @@
 
     <div class="container gallery-wall-hero__inner">
       <article class="gallery-wall-hero-card reveal">
-        <a href="{{ route('home') }}" class="link-arrow">{{ __('pages.common.back_home') }}</a>
         <h1 id="galeri-title">{{ $page['hero']['heading'] ?? '' }}</h1>
 
         @if(! empty($page['hero']['subtitle']))

@@ -1,4 +1,5 @@
 <?php
+
 /* PUBLIC_PAGES_LANG_DUMMY_FINAL */
 
 return [
@@ -10,7 +11,6 @@ return [
         'skip' => 'Lewati ke konten utama',
         'main_nav' => 'Navigasi utama',
         'language_label' => 'Pilih bahasa',
-        'back_home' => '← Kembali ke Beranda',
         'close' => 'Tutup',
         'all' => 'Semua',
         'read_more' => 'Baca Artikel',

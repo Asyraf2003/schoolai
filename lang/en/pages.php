@@ -10,7 +10,6 @@ return [
         'skip' => 'Skip to main content',
         'main_nav' => 'Main navigation',
         'language_label' => 'Choose language',
-        'back_home' => '← Back to Home',
         'close' => 'Close',
         'all' => 'All',
         'read_more' => 'Read Article',
