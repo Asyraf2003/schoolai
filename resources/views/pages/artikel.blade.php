@@ -81,34 +81,22 @@
           <div class="article-index-grid">
             @foreach($articleList as $article)
               <article class="article-index-card reveal" data-public-article>
-                <a href="{{ $article['href'] }}" class="article-index-card__media" target="_blank" rel="noopener">
-                  @if(! empty($article['thumbnail_url']))
-                    <img src="{{ $article['thumbnail_url'] }}" alt="{{ $article['title'] }}" loading="lazy" decoding="async">
-                  @else
-                    <span>{{ $article['number'] }}</span>
-                  @endif
-                </a>
-
-                <div class="article-index-card__body">
-                  <div class="article-meta article-index-meta">
-                    @if(! empty($article['date']))
-                      <span>{{ $article['date'] }}</span>
+                <a href="{{ $article['href'] }}" class="article-index-card__link" target="_blank" rel="noopener" aria-label="{{ $readLabel }}: {{ $article['title'] }}">
+                  <span class="article-index-card__media">
+                    @if(! empty($article['thumbnail_url']))
+                      <img src="{{ $article['thumbnail_url'] }}" alt="{{ $article['title'] }}" loading="lazy" decoding="async">
+                    @else
+                      <span>{{ $article['number'] }}</span>
                     @endif
-                    <span>{{ $article['author'] }}</span>
-                  </div>
+                  </span>
 
-                  <h2>
-                    <a href="{{ $article['href'] }}" target="_blank" rel="noopener">{{ $article['title'] }}</a>
-                  </h2>
-
-                  @if(! empty($article['description']))
-                    <p>{{ $article['description'] }}</p>
-                  @endif
-
-                  <a href="{{ $article['href'] }}" class="link-arrow" target="_blank" rel="noopener">
-                    {{ $readLabel }} →
-                  </a>
-                </div>
+                  <span class="article-index-card__overlay">
+                    @if(! empty($article['date']))
+                      <span class="article-index-card__date">{{ $article['date'] }}</span>
+                    @endif
+                    <strong>{{ $article['title'] }}</strong>
+                  </span>
+                </a>
               </article>
             @endforeach
           </div>
