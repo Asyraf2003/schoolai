@@ -498,7 +498,7 @@
           </div>
 
           @php
-            $articleItems = $articlesSection['items'] ?? [];
+            $articleItems = array_slice($articlesSection['items'] ?? [], 0, 3);
             $featuredArticle = $articleItems[0] ?? null;
             $digestArticles = array_slice($articleItems, 1);
           @endphp
@@ -553,15 +553,6 @@
                       {{ $featuredArticle['highlight'] }}
                     </p>
                   @endif
-
-                  <a
-                    href="{{ $featuredArticle['href'] }}"
-                    class="artikel-digest__cta"
-                    aria-label="{{ $articlesSection['read_more'] }}: {{ $featuredArticle['title'] }}"
-                  >
-                    {{ $articlesSection['read_more'] }}
-                    <span aria-hidden="true">→</span>
-                  </a>
                 </div>
               </article>
 
