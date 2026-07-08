@@ -8,7 +8,8 @@
   $ppdbInfoUrl = $ppdbAdmission?->publicInformationUrl();
   $ppdbIsOpen = (bool) ($ppdbAdmission?->isRegistrationOpen() ?? false);
   $isEnglish = app()->getLocale() === 'en';
-  $ppdbHeroButtonLabel = $isEnglish ? 'View Admission Info' : 'Lihat Info PPDB';
+  $ppdbRegisterButtonLabel = $isEnglish ? 'Apply Online Now' : 'Daftar PPDB Online';
+  $ppdbGuideButtonLabel = $isEnglish ? 'View Guide / Requirements' : 'Lihat Panduan / Syarat PPDB';
   $ppdbFinalButtonLabel = $isEnglish ? 'Apply Now' : 'Daftar Sekarang';
   $ppdbClosedTitle = $isEnglish ? 'Admission is currently closed' : 'Pendaftaran saat ini sedang ditutup';
   $ppdbClosedText = $isEnglish
@@ -19,6 +20,39 @@
 
 @section('content')
   <style>
+    .public-hero__actions .btn--ppdb-register {
+      background: #137a4c;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.72);
+      box-shadow: 0 16px 34px rgba(19, 122, 76, 0.34);
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.26);
+    }
+
+    .public-hero__actions .btn--ppdb-register:hover {
+      background: #0f6a41;
+      box-shadow: 0 20px 42px rgba(19, 122, 76, 0.42);
+    }
+
+    .public-hero__actions .btn--ppdb-guide {
+      background: #ffffff;
+      color: #20223f;
+      border: 2px solid rgba(19, 122, 76, 0.34);
+      box-shadow: 0 12px 26px rgba(32, 34, 63, 0.12);
+      font-weight: 900;
+    }
+
+    .public-hero__actions .btn--ppdb-guide:hover {
+      border-color: #137a4c;
+      box-shadow: 0 16px 34px rgba(32, 34, 63, 0.16);
+    }
+
+    .public-hero__actions .btn:focus-visible {
+      outline: 4px solid rgba(255, 201, 60, 0.75);
+      outline-offset: 4px;
+    }
+
     .ppdb-closed-modal {
       position: fixed;
       inset: 0;
@@ -103,12 +137,17 @@
         <p class="public-hero__subtitle">{{ $page['hero']['subtitle'] }}</p>
 
         <div class="public-hero__actions">
-          @if ($ppdbInfoUrl)
-            <a href="{{ $ppdbInfoUrl }}" class="btn btn--primary" target="_blank" rel="noopener noreferrer">{{ $ppdbHeroButtonLabel }}</a>
+          @if ($ppdbIsOpen && $ppdbFormUrl)
+            <a href="{{ $ppdbFormUrl }}" class="btn btn--primary btn--ppdb-register" target="_blank" rel="noopener noreferrer">{{ $ppdbRegisterButtonLabel }}</a>
           @else
-            <a href="#alur-ppdb" class="btn btn--primary">{{ $ppdbHeroButtonLabel }}</a>
+            <a href="#ppdb-closed-modal" class="btn btn--primary btn--ppdb-register">{{ $ppdbRegisterButtonLabel }}</a>
           @endif
-          <a href="#alur-ppdb" class="btn btn--ghost">{{ $page['hero']['secondary_cta'] }}</a>
+
+          @if ($ppdbInfoUrl)
+            <a href="{{ $ppdbInfoUrl }}" class="btn btn--ghost btn--ppdb-guide" target="_blank" rel="noopener noreferrer">{{ $ppdbGuideButtonLabel }}</a>
+          @else
+            <a href="#alur-ppdb" class="btn btn--ghost btn--ppdb-guide">{{ $ppdbGuideButtonLabel }}</a>
+          @endif
         </div>
 
         <p class="public-note">{{ $page['hero']['note'] }}</p>
