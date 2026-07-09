@@ -71,8 +71,6 @@
     .ppdb-liftoff__rail svg{width:100%;height:100%;overflow:visible}
     .ppdb-liftoff .reveal{transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
     .ppdb-liftoff__rail path{fill:none;stroke-linecap:round;stroke-linejoin:round}
-    .ppdb-liftoff__rail-base{stroke:rgba(24,18,41,.15);stroke-width:18;stroke-dasharray:2 28;filter:drop-shadow(0 14px 18px rgba(24,18,41,.12))}
-    .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__rail-base{stroke:rgba(255,255,255,.24)}
     .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);stroke-width:13;opacity:.98;filter:drop-shadow(0 12px 12px rgba(250,148,108,.32));transition:stroke-dashoffset .12s linear}
     .ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientSchool);filter:drop-shadow(0 12px 12px rgba(163,160,255,.34))}
     .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(150px,18vw,280px)}
@@ -80,12 +78,15 @@
     .ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}
     .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual{order:2}
     .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:1}
-    .ppdb-liftoff-card__visual{position:relative;min-height:clamp(350px,40vw,500px);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(255,46,125,.92),rgba(255,102,33,.84) 36%,rgba(210,231,255,.8) 100%),#f7f1f0;box-shadow:0 28px 72px rgba(24,18,41,.14);isolation:isolate}
+    .ppdb-liftoff-card__visual{position:relative;min-height:clamp(350px,40vw,500px);aspect-ratio:16/11;border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(255,46,125,.92),rgba(255,102,33,.84) 36%,rgba(210,231,255,.8) 100%),#f7f1f0;box-shadow:0 28px 72px rgba(24,18,41,.14);isolation:isolate}
     .ppdb-liftoff-card:nth-child(3n + 2) .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(210,231,255,.92),rgba(170,171,250,.9) 46%,rgba(250,148,108,.76) 100%),#f7f1f0}
     .ppdb-liftoff-card:nth-child(3n) .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(255,201,60,.78),rgba(126,217,180,.74) 42%,rgba(183,163,224,.82) 100%),#f7f1f0}
     .ppdb-liftoff-panel--school .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(163,160,255,.88),rgba(75,68,140,.9) 48%,rgba(249,115,22,.44) 100%),#221d3d;box-shadow:0 28px 72px rgba(0,0,0,.24)}
-    .ppdb-liftoff-media,.ppdb-liftoff-media img,.ppdb-liftoff-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:cover;background:#111827}
-    .ppdb-liftoff-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,18,41,.02),rgba(24,18,41,.28));pointer-events:none}
+    .ppdb-liftoff-media{position:absolute;inset:0;z-index:2;display:block;background:#111827;pointer-events:auto}
+    .ppdb-liftoff-media img,.ppdb-liftoff-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#111827}
+    .ppdb-liftoff-media img{object-fit:cover}
+    .ppdb-liftoff-media iframe{touch-action:manipulation;pointer-events:auto}
+    .ppdb-liftoff-media--image::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,18,41,.02),rgba(24,18,41,.18));pointer-events:none}
     .ppdb-liftoff-ui{position:absolute;inset:10% 9% auto;display:grid;gap:22px}
     .ppdb-liftoff-ui__panel{padding:clamp(20px,3vw,30px);border-radius:24px;background:#fff;box-shadow:0 18px 46px rgba(24,18,41,.16)}
     .ppdb-liftoff-ui__panel h3{margin:0 0 14px;font-size:clamp(1rem,1.4vw,1.2rem);letter-spacing:-.03em}
@@ -94,7 +95,6 @@
     .ppdb-liftoff-list{display:grid;gap:12px}
     .ppdb-liftoff-list__item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border-radius:16px;background:#fff;border:1px solid rgba(24,18,41,.06);box-shadow:0 10px 26px rgba(24,18,41,.07);color:rgba(24,18,41,.72);font-weight:800}
     .ppdb-liftoff-list__item span{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#181229;color:#fff;flex:0 0 auto}
-    .ppdb-liftoff-chip{position:absolute;right:8%;bottom:9%;max-width:74%;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.9);box-shadow:0 16px 44px rgba(24,18,41,.18);color:rgba(24,18,41,.76);font-weight:900;backdrop-filter:blur(10px)}
     .ppdb-liftoff-card__text{justify-self:center;max-width:480px}
     .ppdb-liftoff-step{width:42px;height:42px;display:grid;place-items:center;margin-bottom:22px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(135deg,#cfe6ff,#aaaafa 55%,#fa946c) border-box;border:3px solid transparent;color:#181229;font-weight:950}
     .ppdb-liftoff-panel--school .ppdb-liftoff-step{background:linear-gradient(#181229,#181229) padding-box,linear-gradient(135deg,#a3a0ff,#fff 55%,#fa946c) border-box;color:#fff}
@@ -104,7 +104,8 @@
     .ppdb-liftoff__cta{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;max-width:720px;margin:clamp(70px,8vw,110px) auto 0;text-align:center}
     .ppdb-liftoff__cta p{color:rgba(24,18,41,.68);font-size:1.04rem;line-height:1.7}
     @media (max-width:900px){.ppdb-liftoff::before{inset:16px;border-radius:28px}.ppdb-liftoff__rail{display:none}.ppdb-liftoff-panel{min-height:0}.ppdb-liftoff__stack{gap:72px}.ppdb-liftoff-card,.ppdb-liftoff-card:nth-child(even){grid-template-columns:1fr;min-height:0}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual,.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:initial}.ppdb-liftoff-card__text{max-width:none;justify-self:start}}
-    @media (max-width:620px){.ppdb-liftoff{padding-block:64px}.ppdb-liftoff__switch{width:100%}.ppdb-liftoff__tab{min-width:0;padding-inline:12px;font-size:.9rem}.ppdb-liftoff-card__visual{min-height:320px;border-radius:24px}.ppdb-liftoff-ui{inset:9% 7% auto}.ppdb-liftoff-chip{left:7%;right:7%;max-width:none}}
+    @media (max-width:900px){.ppdb-liftoff-card__visual{aspect-ratio:16/10}.ppdb-liftoff-media iframe{min-height:100%}}
+    @media (max-width:620px){.ppdb-liftoff{padding-block:64px}.ppdb-liftoff__switch{width:100%}.ppdb-liftoff__tab{min-width:0;padding-inline:12px;font-size:.9rem}.ppdb-liftoff-card__visual{min-height:320px;aspect-ratio:4/3;border-radius:24px}.ppdb-liftoff-ui{inset:9% 7% auto}}
   </style>
 
   <section class="public-hero public-hero--ppdb" aria-labelledby="ppdb-title">
@@ -168,7 +169,6 @@
                       @endif
                     </linearGradient>
                   </defs>
-                  <path class="ppdb-liftoff__rail-base" d="M 540 20 C 632 230 564 438 382 590 C 236 712 198 872 320 1010 C 478 1188 528 1368 406 1548 C 292 1718 328 1928 540 2180" />
                   <path class="ppdb-liftoff__rail-progress" data-ppdb-rail-progress d="M 540 20 C 632 230 564 438 382 590 C 236 712 198 872 320 1010 C 478 1188 528 1368 406 1548 C 292 1718 328 1928 540 2180" />
                 </svg>
               </div>
@@ -183,16 +183,24 @@
                   <article class="ppdb-liftoff-card reveal">
                     <div class="ppdb-liftoff-card__visual">
                       @if ($item->media_url && $item->is_video)
-                        <div class="ppdb-liftoff-media"><iframe src="{{ $item->media_url }}" loading="lazy" allowfullscreen title="{{ $itemTitle }}"></iframe></div>
+                        <div class="ppdb-liftoff-media ppdb-liftoff-media--video">
+                          <iframe
+                            src="{{ $item->media_url }}"
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="{{ $itemTitle }}"
+                          ></iframe>
+                        </div>
                       @elseif ($item->media_url)
-                        <div class="ppdb-liftoff-media"><img src="{{ $item->media_url }}" alt="{{ $itemTitle }}" loading="lazy"></div>
+                        <div class="ppdb-liftoff-media ppdb-liftoff-media--image"><img src="{{ $item->media_url }}" alt="{{ $itemTitle }}" loading="lazy" decoding="async"></div>
                       @else
                         <div class="ppdb-liftoff-ui" aria-hidden="true">
                           <div class="ppdb-liftoff-ui__panel"><h3>{{ $itemTitle }}</h3><div class="ppdb-liftoff-ui__line"></div><div class="ppdb-liftoff-ui__line"></div></div>
                           <div class="ppdb-liftoff-ui__panel"><div class="ppdb-liftoff-list"><div class="ppdb-liftoff-list__item"><span>{{ $itemNumber }}</span>{{ $audience === 'school' ? ($isEnglish ? 'School task' : 'Tugas sekolah') : ($isEnglish ? 'Family note' : 'Catatan keluarga') }}</div><div class="ppdb-liftoff-list__item"><span>✓</span>{{ $isEnglish ? 'Clear follow-up' : 'Follow-up jelas' }}</div></div></div>
                         </div>
                       @endif
-                      <div class="ppdb-liftoff-chip">{{ $audience === 'school' ? ($isEnglish ? 'Manage admission content without editing code.' : 'Kelola konten PPDB tanpa menyentuh kode.') : ($isEnglish ? 'Admission flow stays clear, warm, and easy to share.' : 'Alur PPDB tetap jelas, hangat, dan mudah dibagikan.') }}</div>
                     </div>
                     <div class="ppdb-liftoff-card__text"><div class="ppdb-liftoff-step">{{ $itemNumber }}</div><h3>{{ $itemTitle }}</h3><p>{{ $itemDescription }}</p></div>
                   </article>
