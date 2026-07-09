@@ -92,7 +92,7 @@ final class PpdbSettingController extends Controller
 
         $this->normalizeShowcaseSortOrders($data['audience']);
 
-        return $this->redirectToShowcase()->with('success', 'Item tampilan PPDB berhasil ditambahkan.');
+        return $this->redirectToShowcase()->with('success', 'Item konten PPDB berhasil ditambahkan.');
     }
 
     public function editShowcaseItem(PpdbShowcaseItem $ppdbShowcaseItem): View
@@ -115,7 +115,7 @@ final class PpdbSettingController extends Controller
         $this->normalizeShowcaseSortOrders($oldAudience);
         $this->normalizeShowcaseSortOrders($data['audience']);
 
-        return $this->redirectToShowcase()->with('success', 'Item tampilan PPDB berhasil diperbarui.');
+        return $this->redirectToShowcase()->with('success', 'Item konten PPDB berhasil diperbarui.');
     }
 
     public function destroyShowcaseItem(PpdbShowcaseItem $ppdbShowcaseItem): RedirectResponse
@@ -126,7 +126,7 @@ final class PpdbSettingController extends Controller
 
         $this->normalizeShowcaseSortOrders($audience);
 
-        return $this->redirectToShowcase()->with('success', 'Item tampilan PPDB berhasil dihapus.');
+        return $this->redirectToShowcase()->with('success', 'Item konten PPDB berhasil dihapus.');
     }
 
     public function moveShowcaseItemUp(PpdbShowcaseItem $ppdbShowcaseItem): RedirectResponse
@@ -146,7 +146,7 @@ final class PpdbSettingController extends Controller
             $this->normalizeShowcaseSortOrders($ppdbShowcaseItem->audience);
         }
 
-        return $this->redirectToShowcase()->with('success', 'Urutan item tampilan PPDB berhasil diperbarui.');
+        return $this->redirectToShowcase()->with('success', 'Urutan konten PPDB berhasil diperbarui.');
     }
 
     public function moveShowcaseItemDown(PpdbShowcaseItem $ppdbShowcaseItem): RedirectResponse
@@ -166,7 +166,7 @@ final class PpdbSettingController extends Controller
             $this->normalizeShowcaseSortOrders($ppdbShowcaseItem->audience);
         }
 
-        return $this->redirectToShowcase()->with('success', 'Urutan item tampilan PPDB berhasil diperbarui.');
+        return $this->redirectToShowcase()->with('success', 'Urutan konten PPDB berhasil diperbarui.');
     }
 
     private function editView(PpdbShowcaseItem $showcaseItemForm, string $showcaseFormMode): View
@@ -206,6 +206,11 @@ final class PpdbSettingController extends Controller
     private function validatedShowcaseData(Request $request, ?PpdbShowcaseItem $currentItem = null): array
     {
         $mediaType = (string) $request->input('media_type', PpdbShowcaseItem::MEDIA_PHOTO);
+        $needsPhotoFile = $mediaType === PpdbShowcaseItem::MEDIA_PHOTO && (
+            ! $currentItem?->exists ||
+            $currentItem->media_type !== PpdbShowcaseItem::MEDIA_PHOTO ||
+            ! $currentItem->media_url
+        );
 
         $validated = $request->validate([
             'audience' => ['required', Rule::in(PpdbShowcaseItem::AUDIENCES)],
@@ -215,6 +220,7 @@ final class PpdbSettingController extends Controller
             'description_en' => ['nullable', 'string', 'max:1200'],
             'media_type' => ['required', Rule::in(PpdbShowcaseItem::MEDIA_TYPES)],
             'media_file' => [
+                Rule::requiredIf(fn (): bool => $needsPhotoFile),
                 Rule::prohibitedIf(fn (): bool => $mediaType === PpdbShowcaseItem::MEDIA_VIDEO),
                 'nullable',
                 'file',
@@ -234,13 +240,14 @@ final class PpdbSettingController extends Controller
             'audience.in' => 'Tujuan tampilan PPDB tidak valid.',
             'title_id.required' => 'Judul Indonesia wajib diisi.',
             'description_id.required' => 'Deskripsi Indonesia wajib diisi.',
-            'media_file.prohibited' => 'Tipe Video tidak menerima upload file. Gunakan URL video.',
+            'media_file.required' => 'Upload foto wajib diisi jika tipe media Foto.',
+            'media_file.prohibited' => 'Tipe URL tidak menerima upload file. Gunakan kolom URL.',
             'media_file.image' => 'File harus berupa gambar.',
             'media_file.mimes' => 'Foto harus JPG, PNG, atau WebP.',
             'media_file.max' => 'Ukuran foto maksimal 10MB.',
-            'media_url.required' => 'URL video wajib diisi untuk tipe Video.',
-            'media_url.prohibited' => 'Tipe Foto tidak menerima URL video. Gunakan upload foto.',
-            'media_url.url' => 'URL video tidak valid.',
+            'media_url.required' => 'URL wajib diisi jika tipe media URL.',
+            'media_url.prohibited' => 'Tipe Foto tidak menerima URL. Gunakan upload foto.',
+            'media_url.url' => 'URL tidak valid.',
         ]);
 
         unset($validated['media_file']);
@@ -293,7 +300,7 @@ final class PpdbSettingController extends Controller
             ! filter_var($url, FILTER_VALIDATE_URL)
         ) {
             throw ValidationException::withMessages([
-                'media_url' => 'URL video tidak valid.',
+                'media_url' => 'URL tidak valid.',
             ]);
         }
 
@@ -326,7 +333,7 @@ final class PpdbSettingController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, atau Vimeo.',
+            'media_url' => 'URL belum didukung. Gunakan YouTube, TikTok, Instagram, atau Vimeo.',
         ]);
     }
 
@@ -426,8 +433,8 @@ final class PpdbSettingController extends Controller
     private function mediaTypeOptions(): array
     {
         return [
-            PpdbShowcaseItem::MEDIA_PHOTO => 'Foto / thumbnail',
-            PpdbShowcaseItem::MEDIA_VIDEO => 'Video embed',
+            PpdbShowcaseItem::MEDIA_PHOTO => 'Foto upload',
+            PpdbShowcaseItem::MEDIA_VIDEO => 'URL video / embed',
         ];
     }
 
