@@ -65,9 +65,9 @@
     .ppdb-liftoff__top p{max-width:640px;color:rgba(24,18,41,.68);font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.65}
     .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__top p,.ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__cta p{color:rgba(255,255,255,.72)}
 
-    .ppdb-liftoff-panel{position:relative;min-height:980px}
+    .ppdb-liftoff-panel{position:relative;min-height:1240px}
     .ppdb-liftoff-panel[hidden]{display:none}
-    .ppdb-liftoff__rail{position:absolute;left:50%;top:-18px;bottom:-18px;width:min(940px,86vw);transform:translateX(-50%);pointer-events:none;z-index:1}
+    .ppdb-liftoff__rail{position:absolute;left:50%;top:-28px;bottom:-28px;width:min(900px,82vw);transform:translateX(-50%);pointer-events:none;z-index:1}
     .ppdb-liftoff__rail svg{width:100%;height:100%;overflow:visible}
     .ppdb-liftoff .reveal{transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
     .ppdb-liftoff__rail path{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -75,10 +75,8 @@
     .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__rail-base{stroke:rgba(255,255,255,.24)}
     .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);stroke-width:13;opacity:.98;filter:drop-shadow(0 12px 12px rgba(250,148,108,.32));transition:stroke-dashoffset .12s linear}
     .ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientSchool);filter:drop-shadow(0 12px 12px rgba(163,160,255,.34))}
-    .ppdb-liftoff__rail-dot{fill:#ffffff;stroke:#fa946c;stroke-width:8;filter:drop-shadow(0 10px 10px rgba(250,148,108,.5));transition:cx .12s linear,cy .12s linear,opacity .16s ease}
-    .ppdb-liftoff-panel--school .ppdb-liftoff__rail-dot{stroke:#a3a0ff;filter:drop-shadow(0 10px 10px rgba(163,160,255,.52))}
-    .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(96px,13vw,190px)}
-    .ppdb-liftoff-card{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(42px,7vw,104px);min-height:560px}
+    .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(150px,18vw,280px)}
+    .ppdb-liftoff-card{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(54px,8vw,122px);min-height:640px}
     .ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}
     .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual{order:2}
     .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:1}
@@ -105,7 +103,7 @@
     .ppdb-liftoff-panel--school .ppdb-liftoff-card__text p{color:rgba(255,255,255,.72)}
     .ppdb-liftoff__cta{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;max-width:720px;margin:clamp(70px,8vw,110px) auto 0;text-align:center}
     .ppdb-liftoff__cta p{color:rgba(24,18,41,.68);font-size:1.04rem;line-height:1.7}
-    @media (max-width:900px){.ppdb-liftoff::before{inset:16px;border-radius:28px}.ppdb-liftoff__rail{display:none}.ppdb-liftoff-panel{min-height:0}.ppdb-liftoff__stack{gap:64px}.ppdb-liftoff-card,.ppdb-liftoff-card:nth-child(even){grid-template-columns:1fr;min-height:0}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual,.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:initial}.ppdb-liftoff-card__text{max-width:none;justify-self:start}}
+    @media (max-width:900px){.ppdb-liftoff::before{inset:16px;border-radius:28px}.ppdb-liftoff__rail{display:none}.ppdb-liftoff-panel{min-height:0}.ppdb-liftoff__stack{gap:72px}.ppdb-liftoff-card,.ppdb-liftoff-card:nth-child(even){grid-template-columns:1fr;min-height:0}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual,.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:initial}.ppdb-liftoff-card__text{max-width:none;justify-self:start}}
     @media (max-width:620px){.ppdb-liftoff{padding-block:64px}.ppdb-liftoff__switch{width:100%}.ppdb-liftoff__tab{min-width:0;padding-inline:12px;font-size:.9rem}.ppdb-liftoff-card__visual{min-height:320px;border-radius:24px}.ppdb-liftoff-ui{inset:9% 7% auto}.ppdb-liftoff-chip{left:7%;right:7%;max-width:none}}
   </style>
 
@@ -160,7 +158,7 @@
           @if ($items->isNotEmpty())
             <div class="ppdb-liftoff-panel ppdb-liftoff-panel--{{ $audience }}" data-ppdb-liftoff-panel="{{ $audience }}" @if($ppdbInitialAudience !== $audience) hidden @endif>
               <div class="ppdb-liftoff__rail" aria-hidden="true">
-                <svg viewBox="0 0 720 1800" preserveAspectRatio="none">
+                <svg viewBox="0 0 720 2200" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="ppdbLiftoffRailGradient{{ $audience === 'school' ? 'School' : 'Parents' }}" x1="0" x2="1" y1="0" y2="1">
                       @if ($audience === 'school')
@@ -170,9 +168,8 @@
                       @endif
                     </linearGradient>
                   </defs>
-                  <path class="ppdb-liftoff__rail-base" d="M 604 10 C 682 170 614 304 438 364 L 106 478 C 14 510 24 650 132 690 L 614 868 C 724 908 714 1072 562 1138 L 126 1326 C 18 1372 54 1534 196 1570 L 508 1650 C 634 1682 646 1750 558 1790" />
-                  <path class="ppdb-liftoff__rail-progress" data-ppdb-rail-progress d="M 604 10 C 682 170 614 304 438 364 L 106 478 C 14 510 24 650 132 690 L 614 868 C 724 908 714 1072 562 1138 L 126 1326 C 18 1372 54 1534 196 1570 L 508 1650 C 634 1682 646 1750 558 1790" />
-                  <circle class="ppdb-liftoff__rail-dot" data-ppdb-rail-dot r="15" cx="604" cy="10" />
+                  <path class="ppdb-liftoff__rail-base" d="M 540 20 C 632 230 564 438 382 590 C 236 712 198 872 320 1010 C 478 1188 528 1368 406 1548 C 292 1718 328 1928 540 2180" />
+                  <path class="ppdb-liftoff__rail-progress" data-ppdb-rail-progress d="M 540 20 C 632 230 564 438 382 590 C 236 712 198 872 320 1010 C 478 1188 528 1368 406 1548 C 292 1718 328 1928 540 2180" />
                 </svg>
               </div>
 
@@ -226,14 +223,6 @@
           path.style.strokeDasharray = String(length);
           path.style.strokeDashoffset = String(length);
 
-          const dot = path.parentElement.querySelector('[data-ppdb-rail-dot]');
-          if (dot) {
-            const point = path.getPointAtLength(0);
-            dot.dataset.progressPathLength = String(length);
-            dot.setAttribute('cx', String(point.x));
-            dot.setAttribute('cy', String(point.y));
-            dot.style.opacity = '0';
-          }
         });
 
         const revealVisibleItems = (scope = root) => {
@@ -268,14 +257,6 @@
           if (prefersReducedMotion) {
             progressPaths.forEach((path) => {
               path.style.strokeDashoffset = '0';
-
-              const dot = path.parentElement.querySelector('[data-ppdb-rail-dot]');
-              if (!dot) return;
-
-              const point = path.getPointAtLength(path.getTotalLength());
-              dot.setAttribute('cx', String(point.x));
-              dot.setAttribute('cy', String(point.y));
-              dot.style.opacity = '1';
             });
             return;
           }
@@ -294,16 +275,8 @@
           const current = Math.min(Math.max(start, 0), end);
           const progress = Math.min(Math.max(current / end, 0), 1);
           const drawnLength = length * progress;
-          const dot = path.parentElement.querySelector('[data-ppdb-rail-dot]');
 
           path.style.strokeDashoffset = String(length - drawnLength);
-
-          if (dot) {
-            const point = path.getPointAtLength(Math.min(Math.max(drawnLength, 0), length));
-            dot.setAttribute('cx', String(point.x));
-            dot.setAttribute('cy', String(point.y));
-            dot.style.opacity = progress > 0.015 ? '1' : '0';
-          }
 
           revealVisibleItems(activePanel);
         };
