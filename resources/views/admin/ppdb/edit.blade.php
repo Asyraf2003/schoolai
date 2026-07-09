@@ -1,4 +1,3 @@
-{{-- ADMIN_PPDB_SETTING_FINAL --}}
 @extends('layouts.admin', [
   'title' => 'Admin PPDB',
   'activeAdminPage' => 'ppdb',

@@ -1,4 +1,3 @@
-{{-- REAL_GALLERY_CRUD_SHOW_FINAL --}}
 @php($page = __('admin.gallery'))
 
 @extends('layouts.admin', [

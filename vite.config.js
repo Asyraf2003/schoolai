@@ -8,7 +8,10 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/pages/welcome.js',
-                'resources/css/pages/welcome.css','resources/css/app.css', 'resources/js/app.js'],
+                'resources/css/pages/welcome.css',
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {

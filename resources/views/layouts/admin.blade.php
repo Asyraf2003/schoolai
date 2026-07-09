@@ -1,4 +1,3 @@
-{{-- ADMIN_DESKTOP_DUMMY_LAYOUT_FINAL --}}
 @php
   $activeAdminPage = $activeAdminPage ?? ($adminPageKey ?? 'dashboard');
 
@@ -20,7 +19,6 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   <style>
-    /* ADMIN_DESKTOP_DUMMY_FINAL */
     :root {
       color-scheme: light;
       --admin-ink: #20223f;
@@ -353,7 +351,6 @@
       }
     }
 
-    /* ADMIN_GALLERY_DUMMY_FINAL */
     .admin-topbar--compact { margin-bottom: 18px; }
 
     .admin-inline-actions {
@@ -701,9 +698,7 @@
         display: grid;
       }
     }
-    /* /ADMIN_GALLERY_DUMMY_FINAL */
 
-    /* ADMIN_TOAST_NOTIFICATIONS_FINAL */
     .admin-toast-stack {
       position: fixed;
       top: 24px;
@@ -827,9 +822,7 @@
         width: auto;
       }
     }
-    /* /ADMIN_TOAST_NOTIFICATIONS_FINAL */
 
-    /* ADMIN_MINIMAL_PANEL_FINAL */
     body.admin-desktop-body {
       background: #f6f7f9;
       color: #111827;
@@ -930,7 +923,6 @@
       line-height: 1.6;
     }
 
-    /* ADMIN_GALLERY_PAGE_SECTIONS_FINAL */
     .admin-gallery-block {
       display: grid;
       gap: 16px;
@@ -1041,9 +1033,7 @@
         grid-template-columns: 1fr;
       }
     }
-    /* /ADMIN_GALLERY_PAGE_SECTIONS_FINAL */
 
-    /* ADMIN_GALLERY_BULK_MEDIA_REFINEMENT_FINAL */
     .gallery-media-review__head small {
       color: var(--admin-muted);
       font-size: 0.84rem;
@@ -1075,9 +1065,7 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
-    /* /ADMIN_GALLERY_BULK_MEDIA_REFINEMENT_FINAL */
 
-    /* ADMIN_GALLERY_MINIMAL_REFINEMENT_FINAL */
     .admin-gallery-toolbar {
       display: flex;
       justify-content: flex-end;
@@ -1159,11 +1147,8 @@
         display: grid;
       }
     }
-    /* /ADMIN_GALLERY_MINIMAL_REFINEMENT_FINAL */
 
-    /* /ADMIN_MINIMAL_PANEL_FINAL */
 
-    /* ADMIN_DELETE_MODAL_FINAL */
     .admin-delete-modal[hidden] {
       display: none;
     }
@@ -1255,9 +1240,7 @@
       outline: 3px solid rgba(185, 28, 28, 0.28);
       outline-offset: 3px;
     }
-    /* /ADMIN_DELETE_MODAL_FINAL */
 
-    /* /ADMIN_DESKTOP_DUMMY_FINAL */
   </style>
 </head>
 <body class="admin-desktop-body">
@@ -1332,7 +1315,6 @@
     </main>
   </div>
   <script>
-    /* ADMIN_TOAST_NOTIFICATIONS_FINAL */
     (() => {
       const stack = document.querySelector('[data-admin-toast-stack]');
       if (!stack) return;
@@ -1373,7 +1355,6 @@
     })();
   </script>
   <script>
-    /* ADMIN_DELETE_MODAL_SCRIPT_FINAL */
     (() => {
       const modal = document.querySelector('[data-admin-delete-modal]');
       if (!modal) return;

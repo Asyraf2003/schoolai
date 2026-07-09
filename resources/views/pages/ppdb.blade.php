@@ -1,4 +1,3 @@
-{{-- PUBLIC_PPDB_DUMMY_FINAL --}}
 @extends('layouts.public', ['title' => __('pages.ppdb.title'), 'description' => __('pages.ppdb.description')])
 
 @php
@@ -70,10 +69,14 @@
     .ppdb-liftoff-panel[hidden]{display:none}
     .ppdb-liftoff__rail{position:absolute;left:50%;top:-18px;bottom:-18px;width:min(940px,86vw);transform:translateX(-50%);pointer-events:none;z-index:1}
     .ppdb-liftoff__rail svg{width:100%;height:100%;overflow:visible}
-    .ppdb-liftoff__rail path{fill:none;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 10px 18px rgba(24,18,41,.12))}
-    .ppdb-liftoff__rail-base{opacity:0;stroke:transparent}
-    .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);opacity:.94;transition:stroke-dashoffset .08s linear}
+    .ppdb-liftoff .reveal{transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+    .ppdb-liftoff__rail path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .ppdb-liftoff__rail-base{stroke:rgba(24,18,41,.15);stroke-width:18;stroke-dasharray:2 28;filter:drop-shadow(0 14px 18px rgba(24,18,41,.12))}
+    .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__rail-base{stroke:rgba(255,255,255,.24)}
+    .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);stroke-width:13;opacity:.98;filter:url(#ppdbLiftoffRailGlow);transition:stroke-dashoffset .12s linear}
     .ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientSchool)}
+    .ppdb-liftoff__rail-dot{fill:#ffffff;stroke:#fa946c;stroke-width:8;filter:url(#ppdbLiftoffRailDotGlow);transition:cx .12s linear,cy .12s linear,opacity .16s ease}
+    .ppdb-liftoff-panel--school .ppdb-liftoff__rail-dot{stroke:#a3a0ff}
     .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(96px,13vw,190px)}
     .ppdb-liftoff-card{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(42px,7vw,104px);min-height:560px}
     .ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}
@@ -159,6 +162,12 @@
               <div class="ppdb-liftoff__rail" aria-hidden="true">
                 <svg viewBox="0 0 720 1800" preserveAspectRatio="none">
                   <defs>
+                    <filter id="ppdbLiftoffRailGlow" x="-35%" y="-35%" width="170%" height="170%">
+                      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="{{ $audience === 'school' ? '#a3a0ff' : '#fa946c' }}" flood-opacity=".34" />
+                    </filter>
+                    <filter id="ppdbLiftoffRailDotGlow" x="-80%" y="-80%" width="260%" height="260%">
+                      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="{{ $audience === 'school' ? '#a3a0ff' : '#fa946c' }}" flood-opacity=".52" />
+                    </filter>
                     <linearGradient id="ppdbLiftoffRailGradient{{ $audience === 'school' ? 'School' : 'Parents' }}" x1="0" x2="1" y1="0" y2="1">
                       @if ($audience === 'school')
                         <stop offset="0%" stop-color="#a3a0ff" /><stop offset="50%" stop-color="#ffffff" /><stop offset="100%" stop-color="#fa946c" />
@@ -169,6 +178,7 @@
                   </defs>
                   <path class="ppdb-liftoff__rail-base" d="M 604 10 C 682 170 614 304 438 364 L 106 478 C 14 510 24 650 132 690 L 614 868 C 724 908 714 1072 562 1138 L 126 1326 C 18 1372 54 1534 196 1570 L 508 1650 C 634 1682 646 1750 558 1790" />
                   <path class="ppdb-liftoff__rail-progress" data-ppdb-rail-progress d="M 604 10 C 682 170 614 304 438 364 L 106 478 C 14 510 24 650 132 690 L 614 868 C 724 908 714 1072 562 1138 L 126 1326 C 18 1372 54 1534 196 1570 L 508 1650 C 634 1682 646 1750 558 1790" />
+                  <circle class="ppdb-liftoff__rail-dot" data-ppdb-rail-dot r="15" cx="604" cy="10" />
                 </svg>
               </div>
 
@@ -213,6 +223,7 @@
         const tabs = Array.from(root.querySelectorAll('[data-ppdb-liftoff-tab]'));
         const panels = Array.from(root.querySelectorAll('[data-ppdb-liftoff-panel]'));
         const progressPaths = Array.from(root.querySelectorAll('[data-ppdb-rail-progress]'));
+        const liftoffReveals = Array.from(root.querySelectorAll('.reveal'));
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         progressPaths.forEach((path) => {
@@ -220,11 +231,58 @@
           path.dataset.length = String(length);
           path.style.strokeDasharray = String(length);
           path.style.strokeDashoffset = String(length);
+
+          const dot = path.parentElement.querySelector('[data-ppdb-rail-dot]');
+          if (dot) {
+            const point = path.getPointAtLength(0);
+            dot.dataset.progressPathLength = String(length);
+            dot.setAttribute('cx', String(point.x));
+            dot.setAttribute('cy', String(point.y));
+            dot.style.opacity = '0';
+          }
         });
+
+        const revealVisibleItems = (scope = root) => {
+          Array.from(scope.querySelectorAll('.reveal')).forEach((element) => {
+            const rect = element.getBoundingClientRect();
+            const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+            if (rect.top < viewportHeight * 1.08 && rect.bottom > -viewportHeight * 0.18) {
+              element.classList.add('is-visible');
+            }
+          });
+        };
+
+        if ('IntersectionObserver' in window && liftoffReveals.length) {
+          const earlyRevealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              entry.target.classList.add('is-visible');
+              earlyRevealObserver.unobserve(entry.target);
+            });
+          }, {
+            root: null,
+            rootMargin: '44% 0px 10% 0px',
+            threshold: 0.01,
+          });
+
+          liftoffReveals.forEach((element) => earlyRevealObserver.observe(element));
+        }
 
         const updateRail = () => {
           if (prefersReducedMotion) {
-            progressPaths.forEach((path) => { path.style.strokeDashoffset = '0'; });
+            progressPaths.forEach((path) => {
+              path.style.strokeDashoffset = '0';
+
+              const dot = path.parentElement.querySelector('[data-ppdb-rail-dot]');
+              if (!dot) return;
+
+              const point = path.getPointAtLength(path.getTotalLength());
+              dot.setAttribute('cx', String(point.x));
+              dot.setAttribute('cy', String(point.y));
+              dot.style.opacity = '1';
+            });
             return;
           }
 
@@ -237,12 +295,23 @@
           const length = Number(path.dataset.length || path.getTotalLength());
           const rect = activePanel.getBoundingClientRect();
           const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-          const start = (viewportHeight * 0.16) - rect.top;
-          const end = Math.max(activePanel.offsetHeight - (viewportHeight * 0.46), 1);
+          const start = (viewportHeight * 0.76) - rect.top;
+          const end = Math.max(activePanel.offsetHeight - (viewportHeight * 0.22), 1);
           const current = Math.min(Math.max(start, 0), end);
           const progress = Math.min(Math.max(current / end, 0), 1);
+          const drawnLength = length * progress;
+          const dot = path.parentElement.querySelector('[data-ppdb-rail-dot]');
 
-          path.style.strokeDashoffset = String(length * (1 - progress));
+          path.style.strokeDashoffset = String(length - drawnLength);
+
+          if (dot) {
+            const point = path.getPointAtLength(Math.min(Math.max(drawnLength, 0), length));
+            dot.setAttribute('cx', String(point.x));
+            dot.setAttribute('cy', String(point.y));
+            dot.style.opacity = progress > 0.015 ? '1' : '0';
+          }
+
+          revealVisibleItems(activePanel);
         };
 
         const activate = (audience) => {
@@ -256,7 +325,10 @@
             tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
           });
           panels.forEach((panel) => { panel.hidden = panel.dataset.ppdbLiftoffPanel !== audience; });
-          window.requestAnimationFrame(updateRail);
+          window.requestAnimationFrame(() => {
+            revealVisibleItems(targetPanel);
+            updateRail();
+          });
         };
 
         tabs.forEach((tab) => tab.addEventListener('click', () => {
@@ -267,12 +339,19 @@
         const queueUpdate = () => {
           if (ticking) return;
           ticking = true;
-          window.requestAnimationFrame(() => { updateRail(); ticking = false; });
+          window.requestAnimationFrame(() => {
+            revealVisibleItems();
+            updateRail();
+            ticking = false;
+          });
         };
 
         window.addEventListener('scroll', queueUpdate, { passive: true });
         window.addEventListener('resize', queueUpdate);
-        window.requestAnimationFrame(updateRail);
+        window.requestAnimationFrame(() => {
+          revealVisibleItems();
+          updateRail();
+        });
       })();
     </script>
   @endif

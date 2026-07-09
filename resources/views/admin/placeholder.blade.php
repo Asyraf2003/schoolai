@@ -1,4 +1,3 @@
-{{-- ADMIN_MINIMAL_PLACEHOLDER_FINAL --}}
 @php
   $adminPageKey = $adminPageKey ?? 'dashboard';
   $adminPage = __('admin.pages.' . $adminPageKey);

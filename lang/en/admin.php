@@ -1,5 +1,4 @@
 <?php
-/* ADMIN_DESKTOP_DUMMY_LANG_FINAL */
 
 return [
     'meta' => [
@@ -28,7 +27,6 @@ return [
         'notice' => 'This panel is still dummy. The structure comes first, real features can follow when humans stop changing scope every five minutes.',
     ],
 
-    /* ADMIN_GALLERY_DUMMY_LANG_FINAL */
     'gallery' => [
         'title' => 'Gallery Admin',
         'heading' => 'Gallery',
@@ -59,13 +57,15 @@ return [
         'media' => 'Media',
         'sort_order' => 'Position',
         'form' => [
-            'title' => 'Title',
+            'title_id' => 'Indonesian Title',
+            'title_en' => 'English Title',
             'type' => 'Type',
-            'category' => 'Category',
-            'caption' => 'Caption',
+            'category_id' => 'Indonesian Category',
+            'category_en' => 'English Category',
+            'caption_id' => 'Indonesian Caption',
+            'caption_en' => 'English Caption',
             'photo_file' => 'Upload Photo',
             'video_url' => 'Video URL',
-            'sort_order' => 'Position',
             'published_at' => 'Date',
             'is_published' => 'Active',
             'current_media' => 'Current media',
@@ -75,7 +75,6 @@ return [
             'review_empty' => 'Choose a photo or paste a video URL to preview it.',
         ],
     ],
-    /* /ADMIN_GALLERY_DUMMY_LANG_FINAL */
 
     'pages' => [
         'dashboard' => [

@@ -1,4 +1,3 @@
-{{-- ADMIN_ARTICLES_INDEX_FINAL --}}
 @extends('layouts.admin', [
   'title' => 'Admin Artikel',
   'activeAdminPage' => 'artikel',

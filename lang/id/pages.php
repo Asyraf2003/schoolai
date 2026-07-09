@@ -1,7 +1,5 @@
 <?php
 
-/* PUBLIC_PAGES_LANG_DUMMY_FINAL */
-
 return [
     'common' => [
         'site_title' => 'Al Mustaqbal School',
@@ -28,6 +26,7 @@ return [
             'artikel' => 'Artikel',
             'galeri' => 'Galeri',
             'contact' => 'Kontak',
+            'language' => 'Bahasa',
         ],
         'footer' => [
             'description' => 'Sekolah Islam ramah anak yang memadukan adab, akademik, tahfidz, dan pengalaman belajar yang hangat untuk keluarga.',
@@ -65,8 +64,6 @@ return [
                 ['icon' => '🧡', 'title' => 'Ramah Orang Tua', 'text' => 'Komunikasi hangat sejak proses daftar.'],
             ],
         ],
-
-        /* PPDB_PSB_INSPIRED_SECTION_FINAL */
         'psb_showcase' => [
             'title' => 'Alur Masuk Al Mustaqbal yang Ringan, Hangat, dan Terarah',
             'subtitle' => 'Bagian ini dummy, dibuat untuk memberi rasa seperti halaman PSB resmi: informatif, rapi, dan tetap hidup tanpa gambar eksternal.',
@@ -96,7 +93,6 @@ return [
             'note' => 'Ingin tahu gambaran PPDB lebih lengkap? Orang tua dapat lanjut melihat alur pendaftaran di bawah ini.',
             'button' => 'Lihat Alur PPDB',
         ],
-        /* /PPDB_PSB_INSPIRED_SECTION_FINAL */
 
         'steps_intro' => [
             'heading' => 'Empat langkah ringan sebelum anak mulai bersekolah.',

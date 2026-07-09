@@ -1,4 +1,3 @@
-{{-- REAL_GALLERY_CRUD_FORM_FINAL --}}
 @php
   $page = __('admin.gallery');
   $form = $page['form'];

@@ -1,4 +1,3 @@
-{{-- GALLERY_PAGE_MEDIA_SHOW_FINAL --}}
 @extends('layouts.admin', [
   'title' => 'Detail Media Galeri',
   'activeAdminPage' => 'galeri',

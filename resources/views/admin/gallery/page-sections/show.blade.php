@@ -1,4 +1,3 @@
-{{-- GALLERY_PAGE_SECTION_SHOW_FINAL --}}
 @extends('layouts.admin', [
   'title' => 'Detail Bagian Galeri',
   'activeAdminPage' => 'galeri',

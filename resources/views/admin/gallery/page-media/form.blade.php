@@ -1,4 +1,3 @@
-{{-- GALLERY_PAGE_MEDIA_CREATE_FINAL --}}
 @extends('layouts.admin', [
   'title' => 'Tambah Media Galeri',
   'activeAdminPage' => 'galeri',

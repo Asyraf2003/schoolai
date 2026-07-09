@@ -1,5 +1,4 @@
 <?php
-/* PUBLIC_PAGES_LANG_DUMMY_FINAL */
 
 return [
     'common' => [
@@ -27,6 +26,7 @@ return [
             'artikel' => 'Articles',
             'galeri' => 'Gallery',
             'contact' => 'Contact',
+            'language' => 'Language',
         ],
         'footer' => [
             'description' => 'A child-friendly Islamic school combining manners, academics, tahfidz, and warm learning experiences for families.',
@@ -64,8 +64,6 @@ return [
                 ['icon' => '🧡', 'title' => 'Parent Friendly', 'text' => 'Warm communication from the admission process onward.'],
             ],
         ],
-
-        /* PPDB_PSB_INSPIRED_SECTION_FINAL */
         'psb_showcase' => [
             'title' => 'A Light, Warm, and Guided Admission Flow at Al Mustaqbal',
             'subtitle' => 'This dummy section is designed to feel like an official admission page: informative, polished, and lively without external images.',
@@ -95,7 +93,6 @@ return [
             'note' => 'Want a clearer admission overview? Parents can continue to the registration flow below.',
             'button' => 'View Admission Flow',
         ],
-        /* /PPDB_PSB_INSPIRED_SECTION_FINAL */
 
         'steps_intro' => [
             'heading' => 'Four light steps before your child starts school.',

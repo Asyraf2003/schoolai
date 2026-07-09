@@ -1,5 +1,4 @@
 <?php
-/* ADMIN_DESKTOP_DUMMY_LANG_FINAL */
 
 return [
     'meta' => [
@@ -28,7 +27,6 @@ return [
         'notice' => 'Panel ini masih dummy. Struktur disiapkan dulu, fitur asli menyusul kalau manusia tidak berubah pikiran tiap lima menit.',
     ],
 
-    /* ADMIN_GALLERY_DUMMY_LANG_FINAL */
     'gallery' => [
         'title' => 'Admin Galeri',
         'heading' => 'Galeri',
@@ -77,7 +75,6 @@ return [
             'review_empty' => 'Pilih foto atau tempel URL video untuk preview.',
         ],
     ],
-    /* /ADMIN_GALLERY_DUMMY_LANG_FINAL */
 
     'pages' => [
         'dashboard' => [

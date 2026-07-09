@@ -1,4 +1,3 @@
-{{-- PUBLIC_GALERI_WALL_FINAL --}}
 @php
   $page = $page ?? __('pages.galeri');
   $dbItems = $galleryItems ?? [];

@@ -1,4 +1,3 @@
-{{-- SHARED_NAVBAR_COMPONENT_FINAL --}}
 @php
   $siteNavbar = $siteNavbar ?? ($navbar ?? __('home.navbar'));
   $siteNavbar = is_array($siteNavbar) ? $siteNavbar : [];
@@ -12,7 +11,7 @@
 
   if (! is_array($languageItem)) {
       $languageItem = [
-          'label' => __('pages.common.nav.language') !== 'pages.common.nav.language' ? __('pages.common.nav.language') : 'Bahasa',
+          'label' => __('pages.common.nav.language'),
           'type' => 'language',
           'options' => [
               ['locale' => 'id', 'label' => 'Indonesia', 'short' => 'ID'],
@@ -79,7 +78,6 @@
   $showCta = $isHomeNav && ! empty($siteNavbar['cta']);
 @endphp
 
-<!-- SHARED_NAVBAR_COMPONENT_FINAL -->
 <header class="navbar" id="navbar">
   <div class="navbar__inner container">
     <a href="{{ $logoHref }}" class="navbar__logo" aria-label="{{ $logoLabel }}">
@@ -190,4 +188,3 @@
 </header>
 
 <div class="nav-overlay" id="navOverlay"></div>
-<!-- /SHARED_NAVBAR_COMPONENT_FINAL -->

@@ -1,4 +1,3 @@
-{{-- PUBLIC_ARTICLE_DETAIL_DUMMY_FINAL --}}
 @extends('layouts.public', ['title' => __('pages.artikel_detail.title'), 'description' => __('pages.artikel_detail.description')])
 
 @php($article = __('pages.artikel_detail'))

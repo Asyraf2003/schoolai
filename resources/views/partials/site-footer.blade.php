@@ -1,4 +1,3 @@
-{{-- SHARED_FOOTER_COMPONENT_FINAL --}}
 @php
   $siteFooter = $siteFooter ?? ($footerSection ?? __('home.footer'));
   $siteFooter = is_array($siteFooter) ? $siteFooter : [];
@@ -27,7 +26,6 @@
   };
 @endphp
 
-<!-- SHARED_FOOTER_COMPONENT_FINAL -->
 <footer class="site-footer" id="kontak">
   <div class="container site-footer__grid">
     <div class="footer-brand">
@@ -168,4 +166,3 @@
     </p>
   </div>
 </footer>
-<!-- /SHARED_FOOTER_COMPONENT_FINAL -->

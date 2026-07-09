@@ -1,4 +1,3 @@
-{{-- PUBLIC_ARTIKEL_DB_FINAL --}}
 @extends('layouts.public', [
   'title' => $page['title'] ?? __('pages.artikel.title'),
   'description' => $page['description'] ?? __('pages.artikel.description'),

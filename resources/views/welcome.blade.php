@@ -29,7 +29,6 @@
       </defs>
     </svg>
 
-    {{-- WELCOME_SHARED_NAVBAR_COMPONENT_FINAL --}}
     @include('partials.site-navbar', ['navbar' => $navbar, 'siteNavMode' => 'home'])
 
     <main id="main-content">
@@ -631,7 +630,6 @@
 
     </main>
 
-    {{-- WELCOME_SHARED_FOOTER_COMPONENT_FINAL --}}
     @include('partials.site-footer', ['footerSection' => $footerSection])
 
   </body>

@@ -1,4 +1,3 @@
-{{-- PUBLIC_LAYOUT_DUMMY_FINAL --}}
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
   <head>

@@ -1,4 +1,3 @@
-{{-- GALLERY_PAGE_SECTION_FORM_FINAL --}}
 @php
   $isEdit = $mode === 'edit';
   $action = $isEdit ? route('admin.galeri.sections.update', $section) : route('admin.galeri.sections.store');

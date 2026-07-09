@@ -1,4 +1,3 @@
-{{-- ADMIN_ARTICLES_FORM_FINAL --}}
 @php
   $isEdit = $mode === 'edit';
   $action = $isEdit ? route('admin.artikel.update', $article) : route('admin.artikel.store');

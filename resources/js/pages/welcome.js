@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ---------- 3. SMOOTH SCROLL + NAV AKTIF ---------- */
-  /* NAV_CONTACT_ACTIVE_WHEN_FOOTER_VISIBLE_FINAL */
   var allNavLinks = document.querySelectorAll('.nav-link');
   var defaultActiveNavLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link.active'));
   var sections = [];
@@ -261,7 +260,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-/* HERO_RESPONSIVE_TILT_LOCK_FINAL */
 (function () {
   var tiltEl = document.getElementById('tiltIllustration');
   if (!tiltEl || !window.matchMedia) return;
@@ -329,7 +327,6 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 
 
-/* VISI_MISI_INTERACTIVE_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
   var missionCards = Array.prototype.slice.call(document.querySelectorAll('[data-mission-card]'));
 
@@ -361,7 +358,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-/* NILAI_SEKOLAH_INTERACTIVE_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
   var valueCards = Array.prototype.slice.call(document.querySelectorAll('[data-school-value-card]'));
 
@@ -393,7 +389,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-/* PROGRAM_UNGGULAN_INTERACTIVE_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
   var programCards = Array.prototype.slice.call(document.querySelectorAll('[data-featured-program-card]'));
 
@@ -425,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-/* GALLERY_STICKY_STORY_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
   var storyRoot = document.querySelector('[data-gallery-story]');
   if (!storyRoot) return;
@@ -694,7 +688,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-/* PUBLIC_PAGES_INTERACTION_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
   var articleFilters = Array.prototype.slice.call(document.querySelectorAll('[data-public-filter]'));
   var articleCards = Array.prototype.slice.call(document.querySelectorAll('[data-public-article]'));
@@ -816,12 +809,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-/* /PUBLIC_PAGES_INTERACTION_FINAL */
 
 
 
 
-/* PUBLIC_GALERI_WALL_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-wall-card]'));
   var lightbox = document.querySelector('[data-gallery-wall-lightbox]');
@@ -920,10 +911,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-/* /PUBLIC_GALERI_WALL_FINAL */
 
 
-/* MEDIA_SOURCE_LAZY_HYDRATION_FINAL */
 document.addEventListener('DOMContentLoaded', function () {
   var lazyMedia = Array.prototype.slice.call(document.querySelectorAll('[data-lazy-media][data-lazy-src]'));
 
@@ -985,5 +974,4 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(el);
   });
 });
-/* /MEDIA_SOURCE_LAZY_HYDRATION_FINAL */
 
