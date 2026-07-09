@@ -559,6 +559,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     lastFocused = document.activeElement;
     clearStoryMedia();
+    mediaLightbox.classList.toggle('is-video', isVideo);
 
     if (isVideo) {
       var iframe = document.createElement('iframe');
@@ -841,6 +842,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     lastFocused = document.activeElement;
     clearMedia();
+    lightbox.classList.toggle('is-video', isVideo);
 
     mediaBox.style.setProperty('--gallery-g1', g1);
     mediaBox.style.setProperty('--gallery-g2', g2);
@@ -850,8 +852,11 @@ document.addEventListener('DOMContentLoaded', function () {
       iframe.src = mediaUrl;
       iframe.title = title || wallVideoTitleFallback;
       iframe.loading = 'lazy';
-      iframe.allow = 'fullscreen; picture-in-picture';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.allowFullscreen = true;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('playsinline', '');
+      iframe.setAttribute('webkit-playsinline', '');
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       mediaBox.appendChild(iframe);
     } else if (mediaUrl) {
@@ -974,4 +979,3 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(el);
   });
 });
-

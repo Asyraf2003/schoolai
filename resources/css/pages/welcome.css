@@ -11302,10 +11302,48 @@ p {
         font-size: 1.08rem;
     }
 
-    .gallery-wall-lightbox__media,
+    .gallery-wall-lightbox {
+        align-items: center;
+        padding: 10px;
+    }
+
+    .gallery-wall-lightbox__panel {
+        width: min(100%, 680px);
+        max-height: calc(100dvh - 20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        padding: 14px;
+        border-radius: 24px;
+    }
+
+    .gallery-wall-lightbox__media {
+        width: 100%;
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+        flex: 0 0 auto;
+        margin: auto 0 12px;
+        border-radius: 18px;
+    }
+
     .gallery-wall-lightbox__media img,
     .gallery-wall-lightbox__media iframe {
-        min-height: 300px;
+        min-height: 0;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .gallery-wall-lightbox__badge,
+    .gallery-wall-lightbox__panel h2 {
+        flex: 0 0 auto;
+    }
+
+    .gallery-wall-lightbox__panel h2 {
+        max-height: 18dvh;
+        overflow: auto;
+        font-size: clamp(1.12rem, 5vw, 1.55rem);
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -11636,17 +11674,57 @@ p {
 @media (max-width: 640px) {
     .homepage-gallery-lightbox {
         padding: 10px;
+        align-items: center;
     }
 
     .homepage-gallery-lightbox__panel {
+        width: 100%;
+        max-height: calc(100dvh - 20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
         border-radius: 24px;
         padding: 14px;
     }
 
-    .homepage-gallery-lightbox__media,
+    .homepage-gallery-lightbox__media {
+        width: 100%;
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+        flex: 0 0 auto;
+        margin: auto 0 12px;
+        border-radius: 18px;
+    }
+
     .homepage-gallery-lightbox__media img,
     .homepage-gallery-lightbox__media iframe {
-        min-height: 260px;
+        min-height: 0;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .homepage-gallery-lightbox__badge,
+    .homepage-gallery-lightbox__panel h2 {
+        flex: 0 0 auto;
+    }
+
+    .homepage-gallery-lightbox__panel h2 {
+        max-height: 14dvh;
+        overflow: auto;
+        font-size: clamp(1.16rem, 5vw, 1.55rem);
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .homepage-gallery-lightbox__panel p {
+        max-height: 22dvh;
+        overflow: auto;
+        padding-right: 4px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .homepage-gallery-lightbox.is-video .homepage-gallery-lightbox__media {
+        margin-block: auto 12px;
     }
 }
 
