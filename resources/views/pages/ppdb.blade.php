@@ -73,10 +73,11 @@
     .ppdb-liftoff__rail path{fill:none;stroke-linecap:round;stroke-linejoin:round}
     .ppdb-liftoff__rail-base{stroke:rgba(24,18,41,.15);stroke-width:18;stroke-dasharray:2 28;filter:drop-shadow(0 14px 18px rgba(24,18,41,.12))}
     .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__rail-base{stroke:rgba(255,255,255,.24)}
-    .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);stroke-width:13;opacity:.98;filter:url(#ppdbLiftoffRailGlow);transition:stroke-dashoffset .12s linear}
+    .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);stroke-width:13;opacity:.98;filter:drop-shadow(0 12px 12px rgba(250,148,108,.32));transition:stroke-dashoffset .12s linear}
     .ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientSchool)}
-    .ppdb-liftoff__rail-dot{fill:#ffffff;stroke:#fa946c;stroke-width:8;filter:url(#ppdbLiftoffRailDotGlow);transition:cx .12s linear,cy .12s linear,opacity .16s ease}
-    .ppdb-liftoff-panel--school .ppdb-liftoff__rail-dot{stroke:#a3a0ff}
+    .ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{filter:drop-shadow(0 12px 12px rgba(163,160,255,.34))}
+    .ppdb-liftoff__rail-dot{fill:#ffffff;stroke:#fa946c;stroke-width:8;filter:drop-shadow(0 10px 10px rgba(250,148,108,.5));transition:cx .12s linear,cy .12s linear,opacity .16s ease}
+    .ppdb-liftoff-panel--school .ppdb-liftoff__rail-dot{stroke:#a3a0ff;filter:drop-shadow(0 10px 10px rgba(163,160,255,.52))}
     .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(96px,13vw,190px)}
     .ppdb-liftoff-card{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(42px,7vw,104px);min-height:560px}
     .ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}
@@ -162,12 +163,6 @@
               <div class="ppdb-liftoff__rail" aria-hidden="true">
                 <svg viewBox="0 0 720 1800" preserveAspectRatio="none">
                   <defs>
-                    <filter id="ppdbLiftoffRailGlow" x="-35%" y="-35%" width="170%" height="170%">
-                      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="{{ $audience === 'school' ? '#a3a0ff' : '#fa946c' }}" flood-opacity=".34" />
-                    </filter>
-                    <filter id="ppdbLiftoffRailDotGlow" x="-80%" y="-80%" width="260%" height="260%">
-                      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="{{ $audience === 'school' ? '#a3a0ff' : '#fa946c' }}" flood-opacity=".52" />
-                    </filter>
                     <linearGradient id="ppdbLiftoffRailGradient{{ $audience === 'school' ? 'School' : 'Parents' }}" x1="0" x2="1" y1="0" y2="1">
                       @if ($audience === 'school')
                         <stop offset="0%" stop-color="#a3a0ff" /><stop offset="50%" stop-color="#ffffff" /><stop offset="100%" stop-color="#fa946c" />
