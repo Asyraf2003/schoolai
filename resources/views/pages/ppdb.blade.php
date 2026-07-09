@@ -38,17 +38,72 @@
     .public-hero__actions .btn--ppdb-guide{background:#fff;color:#20223f;border:2px solid rgba(19,122,76,.34);box-shadow:0 12px 26px rgba(32,34,63,.12);font-weight:900}
     .public-hero__actions .btn--ppdb-guide:hover{border-color:#137a4c;box-shadow:0 16px 34px rgba(32,34,63,.16)}
     .public-hero__actions .btn:focus-visible{outline:4px solid rgba(255,201,60,.75);outline-offset:4px}
+
     .ppdb-closed-modal{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:24px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,visibility .18s ease}
-    .ppdb-closed-modal:target{opacity:1;visibility:visible;pointer-events:auto}.ppdb-closed-modal__backdrop{position:absolute;inset:0;background:rgba(16,24,40,.52);backdrop-filter:blur(7px)}
+    .ppdb-closed-modal:target{opacity:1;visibility:visible;pointer-events:auto}
+    .ppdb-closed-modal__backdrop{position:absolute;inset:0;background:rgba(16,24,40,.52);backdrop-filter:blur(7px)}
     .ppdb-closed-modal__panel{position:relative;z-index:1;width:min(440px,100%);padding:28px;border-radius:28px;background:#fff;color:#20223f;box-shadow:0 26px 70px rgba(16,24,40,.24);text-align:center}
-    .ppdb-closed-modal__icon{width:58px;height:58px;display:grid;place-items:center;margin:0 auto 14px;border-radius:22px;background:#fff2c6;font-size:1.9rem}.ppdb-closed-modal__panel h2{margin:0;font-size:clamp(1.45rem,4vw,1.9rem);line-height:1.12;letter-spacing:-.04em}.ppdb-closed-modal__panel p{margin:12px 0 0;color:#6b7280;line-height:1.7}.ppdb-closed-modal__close{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin-top:20px;padding:10px 18px;border-radius:999px;background:#20223f;color:#fff;font-weight:900;text-decoration:none}
-    .ppdb-liftoff{position:relative;overflow:hidden;padding:clamp(76px,9vw,126px) 0;background:radial-gradient(circle at 11% 18%,rgba(255,159,90,.28),transparent 28%),radial-gradient(circle at 90% 9%,rgba(127,199,224,.36),transparent 30%),linear-gradient(180deg,#fffbf4 0%,#fff8ec 100%);color:#181229;transition:background .28s ease,color .28s ease}.ppdb-liftoff[data-active-audience=school]{background:radial-gradient(circle at 12% 14%,rgba(163,160,255,.22),transparent 28%),radial-gradient(circle at 86% 8%,rgba(255,159,90,.16),transparent 28%),linear-gradient(180deg,#181229 0%,#201b35 100%);color:#fff}.ppdb-liftoff::before{content:"";position:absolute;inset:32px 10px;border:2px dashed rgba(24,18,41,.13);border-radius:38px;pointer-events:none}.ppdb-liftoff[data-active-audience=school]::before{border-color:rgba(255,255,255,.22)}
-    .ppdb-liftoff__top{position:relative;z-index:3;display:grid;justify-items:center;gap:22px;margin-bottom:clamp(58px,7vw,92px);text-align:center}.ppdb-liftoff__switch{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;padding:7px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(90deg,#cfe6ff,#aaaafa 45%,#fa946c) border-box;border:3px solid transparent;box-shadow:0 16px 34px rgba(24,18,41,.09);isolation:isolate}.ppdb-liftoff__switch::before{content:"";position:absolute;top:7px;left:7px;width:calc(50% - 9px);height:calc(100% - 14px);border-radius:999px;background:#181229;box-shadow:0 10px 22px rgba(24,18,41,.18);transform:translateX(0);transition:transform .24s ease,background .24s ease;z-index:-1}.ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__switch::before{transform:translateX(calc(100% + 4px));background:#fff}.ppdb-liftoff__tab{min-width:min(40vw,178px);padding:15px 20px;border-radius:999px;color:#181229;font-weight:900;line-height:1;white-space:nowrap;position:relative;z-index:1;transition:color .2s ease,opacity .2s ease}.ppdb-liftoff__tab.is-active{color:#fff}.ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__tab.is-active{color:#181229}.ppdb-liftoff__tab:disabled{opacity:.42;cursor:not-allowed}.ppdb-liftoff__top h2{max-width:780px;font-size:clamp(2rem,4.4vw,4.6rem);line-height:.98;letter-spacing:-.07em;font-weight:950}.ppdb-liftoff__top p{max-width:640px;color:rgba(24,18,41,.68);font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.65}.ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__top p,.ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__cta p{color:rgba(255,255,255,.72)}
-    .ppdb-liftoff-panel{position:relative;min-height:680px}.ppdb-liftoff-panel[hidden]{display:none}.ppdb-liftoff__rail{position:absolute;left:50%;top:10px;bottom:10px;width:min(720px,72vw);transform:translateX(-50%);pointer-events:none;z-index:1}.ppdb-liftoff__rail svg{width:100%;height:100%;overflow:visible}.ppdb-liftoff__rail path{fill:none;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 8px 12px rgba(24,18,41,.08))}.ppdb-liftoff__rail-base{opacity:.26;stroke:rgba(24,18,41,.26)}.ppdb-liftoff-panel--school .ppdb-liftoff__rail-base{stroke:rgba(255,255,255,.34)}.ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);opacity:.92;transition:stroke-dashoffset .08s linear}.ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientSchool)}.ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(46px,6.5vw,82px)}
-    .ppdb-liftoff-card{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(34px,6vw,80px);min-height:430px}.ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual{order:2}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:1}.ppdb-liftoff-card__visual{position:relative;min-height:clamp(300px,38vw,430px);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(255,46,125,.92),rgba(255,102,33,.84) 36%,rgba(210,231,255,.8) 100%),#f7f1f0;box-shadow:0 28px 72px rgba(24,18,41,.14);isolation:isolate}.ppdb-liftoff-card:nth-child(3n + 2) .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(210,231,255,.92),rgba(170,171,250,.9) 46%,rgba(250,148,108,.76) 100%),#f7f1f0}.ppdb-liftoff-card:nth-child(3n) .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(255,201,60,.78),rgba(126,217,180,.74) 42%,rgba(183,163,224,.82) 100%),#f7f1f0}.ppdb-liftoff-panel--school .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(163,160,255,.88),rgba(75,68,140,.9) 48%,rgba(249,115,22,.44) 100%),#221d3d;box-shadow:0 28px 72px rgba(0,0,0,.24)}
-    .ppdb-liftoff-media,.ppdb-liftoff-media img,.ppdb-liftoff-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:cover;background:#111827}.ppdb-liftoff-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,18,41,.02),rgba(24,18,41,.28));pointer-events:none}.ppdb-liftoff-ui{position:absolute;inset:10% 9% auto;display:grid;gap:22px}.ppdb-liftoff-ui__panel{padding:clamp(20px,3vw,30px);border-radius:24px;background:#fff;box-shadow:0 18px 46px rgba(24,18,41,.16)}.ppdb-liftoff-ui__panel h3{margin:0 0 14px;font-size:clamp(1rem,1.4vw,1.2rem);letter-spacing:-.03em}.ppdb-liftoff-ui__line{height:12px;border-radius:999px;background:rgba(170,171,250,.28)}.ppdb-liftoff-ui__line+.ppdb-liftoff-ui__line{width:72%;margin-top:10px}.ppdb-liftoff-list{display:grid;gap:12px}.ppdb-liftoff-list__item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border-radius:16px;background:#fff;border:1px solid rgba(24,18,41,.06);box-shadow:0 10px 26px rgba(24,18,41,.07);color:rgba(24,18,41,.72);font-weight:800}.ppdb-liftoff-list__item span{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#181229;color:#fff;flex:0 0 auto}.ppdb-liftoff-chip{position:absolute;right:8%;bottom:9%;max-width:74%;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.9);box-shadow:0 16px 44px rgba(24,18,41,.18);color:rgba(24,18,41,.76);font-weight:900;backdrop-filter:blur(10px)}
-    .ppdb-liftoff-card__text{justify-self:center;max-width:460px}.ppdb-liftoff-step{width:42px;height:42px;display:grid;place-items:center;margin-bottom:22px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(135deg,#cfe6ff,#aaaafa 55%,#fa946c) border-box;border:3px solid transparent;color:#181229;font-weight:950}.ppdb-liftoff-panel--school .ppdb-liftoff-step{background:linear-gradient(#181229,#181229) padding-box,linear-gradient(135deg,#a3a0ff,#fff 55%,#fa946c) border-box;color:#fff}.ppdb-liftoff-card__text h3{margin:0;font-size:clamp(1.8rem,3.2vw,3.2rem);line-height:1.02;letter-spacing:-.065em;font-weight:950}.ppdb-liftoff-card__text p{margin-top:20px;color:rgba(24,18,41,.68);font-size:clamp(1rem,1.35vw,1.16rem);line-height:1.65}.ppdb-liftoff-panel--school .ppdb-liftoff-card__text p{color:rgba(255,255,255,.72)}.ppdb-liftoff__cta{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;max-width:720px;margin:clamp(56px,7vw,92px) auto 0;text-align:center}.ppdb-liftoff__cta p{color:rgba(24,18,41,.68);font-size:1.04rem;line-height:1.7}
-    @media (max-width:900px){.ppdb-liftoff::before{inset:16px;border-radius:28px}.ppdb-liftoff__rail{display:none}.ppdb-liftoff-card,.ppdb-liftoff-card:nth-child(even){grid-template-columns:1fr;min-height:0}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual,.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:initial}.ppdb-liftoff-card__text{max-width:none;justify-self:start}}@media (max-width:620px){.ppdb-liftoff{padding-block:64px}.ppdb-liftoff__switch{width:100%}.ppdb-liftoff__tab{min-width:0;padding-inline:12px;font-size:.9rem}.ppdb-liftoff-card__visual{min-height:320px;border-radius:24px}.ppdb-liftoff-ui{inset:9% 7% auto}.ppdb-liftoff-chip{left:7%;right:7%;max-width:none}}
+    .ppdb-closed-modal__icon{width:58px;height:58px;display:grid;place-items:center;margin:0 auto 14px;border-radius:22px;background:#fff2c6;font-size:1.9rem}
+    .ppdb-closed-modal__panel h2{margin:0;font-size:clamp(1.45rem,4vw,1.9rem);line-height:1.12;letter-spacing:-.04em}
+    .ppdb-closed-modal__panel p{margin:12px 0 0;color:#6b7280;line-height:1.7}
+    .ppdb-closed-modal__close{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin-top:20px;padding:10px 18px;border-radius:999px;background:#20223f;color:#fff;font-weight:900;text-decoration:none}
+
+    .ppdb-liftoff{position:relative;overflow:hidden;padding:clamp(76px,9vw,126px) 0;background:radial-gradient(circle at 11% 18%,rgba(255,159,90,.28),transparent 28%),radial-gradient(circle at 90% 9%,rgba(127,199,224,.36),transparent 30%),linear-gradient(180deg,#fffbf4 0%,#fff8ec 100%);color:#181229;transition:background .28s ease,color .28s ease}
+    .ppdb-liftoff[data-active-audience=school]{background:radial-gradient(circle at 12% 14%,rgba(163,160,255,.22),transparent 28%),radial-gradient(circle at 86% 8%,rgba(255,159,90,.16),transparent 28%),linear-gradient(180deg,#181229 0%,#201b35 100%);color:#fff}
+    .ppdb-liftoff::before{content:"";position:absolute;inset:32px 10px;border:2px dashed rgba(24,18,41,.13);border-radius:38px;pointer-events:none}
+    .ppdb-liftoff[data-active-audience=school]::before{border-color:rgba(255,255,255,.22)}
+    .ppdb-liftoff__top{position:relative;z-index:3;display:grid;justify-items:center;gap:22px;margin-bottom:clamp(70px,8vw,112px);text-align:center}
+    .ppdb-liftoff__switch{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;padding:7px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(90deg,#cfe6ff,#aaaafa 45%,#fa946c) border-box;border:3px solid transparent;box-shadow:0 16px 34px rgba(24,18,41,.09);isolation:isolate;transition:background .24s ease,box-shadow .24s ease}
+    .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__switch{background:linear-gradient(#181229,#181229) padding-box,linear-gradient(90deg,#a3a0ff,#fff 48%,#fa946c) border-box;box-shadow:0 18px 40px rgba(0,0,0,.24)}
+    .ppdb-liftoff__switch::before{content:"";position:absolute;top:7px;left:7px;width:calc(50% - 9px);height:calc(100% - 14px);border-radius:999px;background:#181229;box-shadow:0 10px 22px rgba(24,18,41,.18);transform:translateX(0);transition:transform .24s ease,background .24s ease;z-index:-1}
+    .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__switch::before{transform:translateX(calc(100% + 4px));background:#fff;box-shadow:0 10px 22px rgba(255,255,255,.16)}
+    .ppdb-liftoff__tab{min-width:min(40vw,178px);padding:15px 20px;border:0;background:transparent;border-radius:999px;color:#181229;font:inherit;font-weight:900;line-height:1;white-space:nowrap;position:relative;z-index:1;transition:color .2s ease,opacity .2s ease;cursor:pointer}
+    .ppdb-liftoff__tab.is-active{color:#fff}
+    .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__tab{color:rgba(255,255,255,.86)}
+    .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__tab.is-active{color:#181229}
+    .ppdb-liftoff__tab:disabled{opacity:.42;cursor:not-allowed}
+    .ppdb-liftoff__top h2{max-width:780px;font-size:clamp(2rem,4.4vw,4.6rem);line-height:.98;letter-spacing:-.07em;font-weight:950}
+    .ppdb-liftoff__top p{max-width:640px;color:rgba(24,18,41,.68);font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.65}
+    .ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__top p,.ppdb-liftoff[data-active-audience=school] .ppdb-liftoff__cta p{color:rgba(255,255,255,.72)}
+
+    .ppdb-liftoff-panel{position:relative;min-height:980px}
+    .ppdb-liftoff-panel[hidden]{display:none}
+    .ppdb-liftoff__rail{position:absolute;left:50%;top:-18px;bottom:-18px;width:min(940px,86vw);transform:translateX(-50%);pointer-events:none;z-index:1}
+    .ppdb-liftoff__rail svg{width:100%;height:100%;overflow:visible}
+    .ppdb-liftoff__rail path{fill:none;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 10px 18px rgba(24,18,41,.12))}
+    .ppdb-liftoff__rail-base{opacity:0;stroke:transparent}
+    .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);opacity:.94;transition:stroke-dashoffset .08s linear}
+    .ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientSchool)}
+    .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(96px,13vw,190px)}
+    .ppdb-liftoff-card{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(42px,7vw,104px);min-height:560px}
+    .ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}
+    .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual{order:2}
+    .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:1}
+    .ppdb-liftoff-card__visual{position:relative;min-height:clamp(350px,40vw,500px);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(255,46,125,.92),rgba(255,102,33,.84) 36%,rgba(210,231,255,.8) 100%),#f7f1f0;box-shadow:0 28px 72px rgba(24,18,41,.14);isolation:isolate}
+    .ppdb-liftoff-card:nth-child(3n + 2) .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(210,231,255,.92),rgba(170,171,250,.9) 46%,rgba(250,148,108,.76) 100%),#f7f1f0}
+    .ppdb-liftoff-card:nth-child(3n) .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(255,201,60,.78),rgba(126,217,180,.74) 42%,rgba(183,163,224,.82) 100%),#f7f1f0}
+    .ppdb-liftoff-panel--school .ppdb-liftoff-card__visual{background:linear-gradient(135deg,rgba(163,160,255,.88),rgba(75,68,140,.9) 48%,rgba(249,115,22,.44) 100%),#221d3d;box-shadow:0 28px 72px rgba(0,0,0,.24)}
+    .ppdb-liftoff-media,.ppdb-liftoff-media img,.ppdb-liftoff-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:cover;background:#111827}
+    .ppdb-liftoff-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,18,41,.02),rgba(24,18,41,.28));pointer-events:none}
+    .ppdb-liftoff-ui{position:absolute;inset:10% 9% auto;display:grid;gap:22px}
+    .ppdb-liftoff-ui__panel{padding:clamp(20px,3vw,30px);border-radius:24px;background:#fff;box-shadow:0 18px 46px rgba(24,18,41,.16)}
+    .ppdb-liftoff-ui__panel h3{margin:0 0 14px;font-size:clamp(1rem,1.4vw,1.2rem);letter-spacing:-.03em}
+    .ppdb-liftoff-ui__line{height:12px;border-radius:999px;background:rgba(170,171,250,.28)}
+    .ppdb-liftoff-ui__line+.ppdb-liftoff-ui__line{width:72%;margin-top:10px}
+    .ppdb-liftoff-list{display:grid;gap:12px}
+    .ppdb-liftoff-list__item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border-radius:16px;background:#fff;border:1px solid rgba(24,18,41,.06);box-shadow:0 10px 26px rgba(24,18,41,.07);color:rgba(24,18,41,.72);font-weight:800}
+    .ppdb-liftoff-list__item span{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#181229;color:#fff;flex:0 0 auto}
+    .ppdb-liftoff-chip{position:absolute;right:8%;bottom:9%;max-width:74%;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.9);box-shadow:0 16px 44px rgba(24,18,41,.18);color:rgba(24,18,41,.76);font-weight:900;backdrop-filter:blur(10px)}
+    .ppdb-liftoff-card__text{justify-self:center;max-width:480px}
+    .ppdb-liftoff-step{width:42px;height:42px;display:grid;place-items:center;margin-bottom:22px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(135deg,#cfe6ff,#aaaafa 55%,#fa946c) border-box;border:3px solid transparent;color:#181229;font-weight:950}
+    .ppdb-liftoff-panel--school .ppdb-liftoff-step{background:linear-gradient(#181229,#181229) padding-box,linear-gradient(135deg,#a3a0ff,#fff 55%,#fa946c) border-box;color:#fff}
+    .ppdb-liftoff-card__text h3{margin:0;font-size:clamp(1.8rem,3.2vw,3.2rem);line-height:1.02;letter-spacing:-.065em;font-weight:950}
+    .ppdb-liftoff-card__text p{margin-top:20px;color:rgba(24,18,41,.68);font-size:clamp(1rem,1.35vw,1.16rem);line-height:1.65}
+    .ppdb-liftoff-panel--school .ppdb-liftoff-card__text p{color:rgba(255,255,255,.72)}
+    .ppdb-liftoff__cta{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;max-width:720px;margin:clamp(70px,8vw,110px) auto 0;text-align:center}
+    .ppdb-liftoff__cta p{color:rgba(24,18,41,.68);font-size:1.04rem;line-height:1.7}
+    @media (max-width:900px){.ppdb-liftoff::before{inset:16px;border-radius:28px}.ppdb-liftoff__rail{display:none}.ppdb-liftoff-panel{min-height:0}.ppdb-liftoff__stack{gap:64px}.ppdb-liftoff-card,.ppdb-liftoff-card:nth-child(even){grid-template-columns:1fr;min-height:0}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual,.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:initial}.ppdb-liftoff-card__text{max-width:none;justify-self:start}}
+    @media (max-width:620px){.ppdb-liftoff{padding-block:64px}.ppdb-liftoff__switch{width:100%}.ppdb-liftoff__tab{min-width:0;padding-inline:12px;font-size:.9rem}.ppdb-liftoff-card__visual{min-height:320px;border-radius:24px}.ppdb-liftoff-ui{inset:9% 7% auto}.ppdb-liftoff-chip{left:7%;right:7%;max-width:none}}
   </style>
 
   <section class="public-hero public-hero--ppdb" aria-labelledby="ppdb-title">
@@ -102,7 +157,7 @@
           @if ($items->isNotEmpty())
             <div class="ppdb-liftoff-panel ppdb-liftoff-panel--{{ $audience }}" data-ppdb-liftoff-panel="{{ $audience }}" @if($ppdbInitialAudience !== $audience) hidden @endif>
               <div class="ppdb-liftoff__rail" aria-hidden="true">
-                <svg viewBox="0 0 720 1200" preserveAspectRatio="none">
+                <svg viewBox="0 0 720 1800" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="ppdbLiftoffRailGradient{{ $audience === 'school' ? 'School' : 'Parents' }}" x1="0" x2="1" y1="0" y2="1">
                       @if ($audience === 'school')
@@ -112,8 +167,8 @@
                       @endif
                     </linearGradient>
                   </defs>
-                  <path class="ppdb-liftoff__rail-base" d="M 492 18 C 598 154 572 250 420 292 L 185 356 C 61 390 64 520 190 548 L 556 628 C 700 660 696 810 555 850 L 212 948 C 116 976 95 1040 164 1172" />
-                  <path class="ppdb-liftoff__rail-progress" data-ppdb-rail-progress d="M 492 18 C 598 154 572 250 420 292 L 185 356 C 61 390 64 520 190 548 L 556 628 C 700 660 696 810 555 850 L 212 948 C 116 976 95 1040 164 1172" />
+                  <path class="ppdb-liftoff__rail-base" d="M 604 10 C 682 170 614 304 438 364 L 106 478 C 14 510 24 650 132 690 L 614 868 C 724 908 714 1072 562 1138 L 126 1326 C 18 1372 54 1534 196 1570 L 508 1650 C 634 1682 646 1750 558 1790" />
+                  <path class="ppdb-liftoff__rail-progress" data-ppdb-rail-progress d="M 604 10 C 682 170 614 304 438 364 L 106 478 C 14 510 24 650 132 690 L 614 868 C 724 908 714 1072 562 1138 L 126 1326 C 18 1372 54 1534 196 1570 L 508 1650 C 634 1682 646 1750 558 1790" />
                 </svg>
               </div>
 
@@ -154,37 +209,67 @@
       (() => {
         const root = document.querySelector('[data-ppdb-liftoff]');
         if (!root) return;
+
         const tabs = Array.from(root.querySelectorAll('[data-ppdb-liftoff-tab]'));
         const panels = Array.from(root.querySelectorAll('[data-ppdb-liftoff-panel]'));
         const progressPaths = Array.from(root.querySelectorAll('[data-ppdb-rail-progress]'));
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        progressPaths.forEach((path) => { const length = path.getTotalLength(); path.dataset.length = String(length); path.style.strokeDasharray = String(length); path.style.strokeDashoffset = String(length); });
+
+        progressPaths.forEach((path) => {
+          const length = path.getTotalLength();
+          path.dataset.length = String(length);
+          path.style.strokeDasharray = String(length);
+          path.style.strokeDashoffset = String(length);
+        });
+
         const updateRail = () => {
-          if (prefersReducedMotion) { progressPaths.forEach((path) => { path.style.strokeDashoffset = '0'; }); return; }
+          if (prefersReducedMotion) {
+            progressPaths.forEach((path) => { path.style.strokeDashoffset = '0'; });
+            return;
+          }
+
           const activePanel = root.querySelector(`[data-ppdb-liftoff-panel="${root.dataset.activeAudience}"]`);
           if (!activePanel || activePanel.hidden) return;
+
           const path = activePanel.querySelector('[data-ppdb-rail-progress]');
           if (!path) return;
+
           const length = Number(path.dataset.length || path.getTotalLength());
           const rect = activePanel.getBoundingClientRect();
           const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-          const startLine = viewportHeight * 0.72;
-          const endLine = Math.max(activePanel.offsetHeight - viewportHeight * 0.32, 1);
-          const current = Math.min(Math.max(startLine - rect.top, 0), endLine);
-          const progress = Math.min(Math.max(current / endLine, 0), 1);
+          const start = (viewportHeight * 0.16) - rect.top;
+          const end = Math.max(activePanel.offsetHeight - (viewportHeight * 0.46), 1);
+          const current = Math.min(Math.max(start, 0), end);
+          const progress = Math.min(Math.max(current / end, 0), 1);
+
           path.style.strokeDashoffset = String(length * (1 - progress));
         };
+
         const activate = (audience) => {
           const targetPanel = root.querySelector(`[data-ppdb-liftoff-panel="${audience}"]`);
           if (!targetPanel) return;
+
           root.dataset.activeAudience = audience;
-          tabs.forEach((tab) => { const isActive = tab.dataset.ppdbLiftoffTab === audience; tab.classList.toggle('is-active', isActive); tab.setAttribute('aria-selected', isActive ? 'true' : 'false'); });
+          tabs.forEach((tab) => {
+            const isActive = tab.dataset.ppdbLiftoffTab === audience;
+            tab.classList.toggle('is-active', isActive);
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
           panels.forEach((panel) => { panel.hidden = panel.dataset.ppdbLiftoffPanel !== audience; });
           window.requestAnimationFrame(updateRail);
         };
-        tabs.forEach((tab) => tab.addEventListener('click', () => { if (!tab.disabled) activate(tab.dataset.ppdbLiftoffTab); }));
+
+        tabs.forEach((tab) => tab.addEventListener('click', () => {
+          if (!tab.disabled) activate(tab.dataset.ppdbLiftoffTab);
+        }));
+
         let ticking = false;
-        const queueUpdate = () => { if (ticking) return; ticking = true; window.requestAnimationFrame(() => { updateRail(); ticking = false; }); };
+        const queueUpdate = () => {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(() => { updateRail(); ticking = false; });
+        };
+
         window.addEventListener('scroll', queueUpdate, { passive: true });
         window.addEventListener('resize', queueUpdate);
         window.requestAnimationFrame(updateRail);
