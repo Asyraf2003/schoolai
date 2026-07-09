@@ -78,6 +78,26 @@ Route::middleware(['auth', 'admin.locale'])->group(function () {
     Route::patch('/admin/ppdb/toggle', [PpdbSettingController::class, 'toggle'])
         ->name('admin.ppdb.toggle');
 
+    /* PPDB_SHOWCASE_ADMIN_ROUTES */
+    Route::post('/admin/ppdb/showcase', [PpdbSettingController::class, 'storeShowcaseItem'])
+        ->name('admin.ppdb.showcase.store');
+
+    Route::get('/admin/ppdb/showcase/{ppdbShowcaseItem}/edit', [PpdbSettingController::class, 'editShowcaseItem'])
+        ->name('admin.ppdb.showcase.edit');
+
+    Route::put('/admin/ppdb/showcase/{ppdbShowcaseItem}', [PpdbSettingController::class, 'updateShowcaseItem'])
+        ->name('admin.ppdb.showcase.update');
+
+    Route::delete('/admin/ppdb/showcase/{ppdbShowcaseItem}', [PpdbSettingController::class, 'destroyShowcaseItem'])
+        ->name('admin.ppdb.showcase.destroy');
+
+    Route::patch('/admin/ppdb/showcase/{ppdbShowcaseItem}/move-up', [PpdbSettingController::class, 'moveShowcaseItemUp'])
+        ->name('admin.ppdb.showcase.move-up');
+
+    Route::patch('/admin/ppdb/showcase/{ppdbShowcaseItem}/move-down', [PpdbSettingController::class, 'moveShowcaseItemDown'])
+        ->name('admin.ppdb.showcase.move-down');
+    /* /PPDB_SHOWCASE_ADMIN_ROUTES */
+
     Route::get('/admin/artikel', [ArticleAdminController::class, 'index'])
         ->name('admin.artikel');
 
