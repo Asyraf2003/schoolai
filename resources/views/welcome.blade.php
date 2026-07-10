@@ -68,7 +68,8 @@
             </div>
           </div>
 
-          <div class="hero__visual reveal reveal--delay-1">
+          <template id="heroVisualTemplate">
+<div class="hero__visual reveal reveal--delay-1">
             <div class="hero__illustration" id="tiltIllustration">
               <div class="illustration-card">
                 @if (! empty($hero['visual_image_url']))
@@ -102,6 +103,7 @@
               </div>
             </div>
           </div>
+          </template>
         </div>
 
         <div class="hero-wave-divider" aria-hidden="true">

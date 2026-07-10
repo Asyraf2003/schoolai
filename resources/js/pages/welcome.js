@@ -260,6 +260,32 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+/* Media hero hanya dimasukkan ke DOM pada desktop dengan pointer presisi. */
+(function () {
+  var template = document.getElementById('heroVisualTemplate');
+  if (!template) return;
+
+  var desktopHero = window.matchMedia &&
+    window.matchMedia(
+      '(min-width: 768px) and (hover: hover) and (pointer: fine)'
+    ).matches;
+
+  if (!desktopHero || !template.content) {
+    template.remove();
+    return;
+  }
+
+  var heroVisual = template.content.firstElementChild;
+
+  if (!heroVisual) {
+    template.remove();
+    return;
+  }
+
+  template.replaceWith(heroVisual);
+})();
+
+
 (function () {
   var tiltEl = document.getElementById('tiltIllustration');
   if (!tiltEl || !window.matchMedia) return;

@@ -12126,7 +12126,9 @@ p {
     .article-index-card__overlay strong {
         transition: none !important;
     }
-}\n\n/* Mobile homepage: remove pointer-only hero media. */
+}
+
+/* Mobile homepage: remove pointer-only hero media. */
 @media (max-width: 767px) {
     .hero {
         min-height: auto;
