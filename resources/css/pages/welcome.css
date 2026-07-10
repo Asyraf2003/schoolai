@@ -12148,9 +12148,12 @@ p {
     }
 }
 
-/* Mobile performance: do not download the desktop hero background. */
+/* Mobile performance and layout: lightweight hero without pointer-only media. */
 @media (max-width: 767px) {
     .hero {
+        min-height: auto;
+        padding-top: calc(var(--nav-h) + 20px);
+        padding-bottom: 76px;
         background-color: var(--color-cream);
         background-image: linear-gradient(
             160deg,
@@ -12161,5 +12164,86 @@ p {
         background-size: auto !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
+    }
+
+    .hero__decor {
+        display: none;
+    }
+
+    .hero__inner {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .hero__content {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 !important;
+        text-align: center;
+    }
+
+    .hero .hero__title {
+        width: 100%;
+        max-width: 22ch;
+        margin-inline: auto;
+        padding: 0 !important;
+        color: #26223f !important;
+        font-size: clamp(1.72rem, 7.8vw, 2rem);
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        word-break: normal;
+        overflow-wrap: normal;
+        -webkit-text-stroke: 0 !important;
+        text-shadow: none !important;
+    }
+
+    .hero .text-highlight {
+        display: inline;
+        color: #c85b1a !important;
+        white-space: normal !important;
+        word-break: normal;
+        overflow-wrap: normal;
+        -webkit-text-stroke: 0 !important;
+        text-shadow: none !important;
+    }
+
+    .hero .text-highlight::after {
+        display: none !important;
+    }
+
+    .hero__subtitle {
+        display: block !important;
+        max-width: 32ch !important;
+        margin: 18px auto 0 !important;
+        padding: 0 !important;
+        color: #403b56 !important;
+        font-size: 0.98rem;
+        font-weight: 700 !important;
+        line-height: 1.55 !important;
+        -webkit-text-stroke: 0 !important;
+        text-shadow: none !important;
+    }
+
+    .hero__actions {
+        width: 100%;
+        max-width: 340px;
+        margin: 24px auto 0;
+        gap: 12px;
+    }
+
+    .hero__actions .btn {
+        width: 100%;
+        min-height: 54px;
+        padding: 14px 22px;
+    }
+
+    .hero__visual {
+        display: none !important;
+    }
+
+    .hero-wave-divider::before,
+    .hero-wave-divider::after,
+    .hero-wave {
+        animation: none !important;
     }
 }
