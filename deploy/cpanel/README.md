@@ -83,6 +83,7 @@ Builder akan:
 5. membuat token setup acak;
 6. membuat ZIP;
 7. memverifikasi struktur, vendor, manifest, cache, media, SQLite, symlink, dan file environment.
+8. menormalkan permission direktori menjadi `0755` dan file menjadi `0644` agar aset statis dapat dibaca web server.
 
 ## File yang tidak pernah masuk ZIP
 
@@ -270,6 +271,10 @@ Pastikan kedua folder berada tepat di:
 ### Build font gagal dengan `fetch failed`
 
 Build font membutuhkan internet. Ulangi `npm run build`; setelah berhasil, jalankan kembali `make deploy`.
+
+### HTML tampil tetapi CSS/JS mengembalikan 404
+
+Periksa permission di `public_html/build`. Direktori harus `0755` dan file CSS/JS harus `0644`. Builder dan verifier terbaru menormalkan serta memeriksa permission tersebut; buat ulang paket dan ganti folder `public_html/build` jika paket lama menghasilkan mode `0700/0600`.
 
 ### Runner menampilkan `APP_KEY is empty`
 
