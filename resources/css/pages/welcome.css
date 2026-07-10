@@ -7613,7 +7613,11 @@ p {
 }
 
 .artikel-digest__hero-title {
+    display: -webkit-box;
+    overflow: hidden;
     font-size: clamp(1.28rem, 1.45vw, 1.72rem);
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .artikel-digest-card__title {
