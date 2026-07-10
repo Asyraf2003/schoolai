@@ -12143,3 +12143,19 @@ p {
         display: none !important;
     }
 }
+
+/* Mobile performance: do not download the desktop hero background. */
+@media (max-width: 767px) {
+    .hero {
+        background-color: var(--color-cream);
+        background-image: linear-gradient(
+            160deg,
+            #fffdf7 0%,
+            #fff5e6 58%,
+            var(--color-cream) 100%
+        ) !important;
+        background-size: auto !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+}
