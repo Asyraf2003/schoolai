@@ -2,6 +2,24 @@
 
 Panduan ini digunakan untuk deployment SchoolAI ketika hosting hanya menyediakan cPanel dan File Manager tanpa terminal.
 
+## Layout hosting Al Mustaqbal saat ini
+
+Home directory cPanel:
+
+```text
+/home/almusta2
+```
+
+Struktur migrasi pertama:
+
+```text
+/home/almusta2/app1         # SchoolAI lama; dipertahankan sementara sebagai rollback
+/home/almusta2/schoolai     # SchoolAI baru dari paket deployment
+/home/almusta2/public_html  # document root domain
+```
+
+Jangan rename atau hapus `app1` sebelum versi baru selesai melewati smoke test. Karena data pada fase awal masih dummy dan boleh dibuang, pembuatan ZIP backup tambahan bersifat opsional selama `app1` tetap tidak diubah. Ketika data production sudah nyata, backup file, media, dan database kembali menjadi wajib.
+
 ## Hasil akhir
 
 Perintah lokal:
@@ -127,6 +145,21 @@ Template `schoolai/.env.production.example` boleh digunakan sebagai acuan, tetap
 9. Siapkan atau import database MySQL sebelum menjalankan runner setup.
 10. Buka file `schoolai-cpanel-001-setup.txt` di komputer lokal lalu kunjungi URL bertoken yang tertulis di dalamnya.
 
+### Migrasi khusus dari `app1` ke `schoolai`
+
+Untuk layout `/home/almusta2` yang sekarang:
+
+1. Biarkan `/home/almusta2/app1` tetap utuh.
+2. Ekstrak paket di folder sementara.
+3. Pindahkan folder hasil ekstraksi `schoolai` ke `/home/almusta2/schoolai`.
+4. Salin `.env` lama dari `app1/.env` ke `schoolai/.env`, lalu kosongkan konfigurasi Google OAuth jika tidak digunakan.
+5. Jika ada media yang perlu dipertahankan, salin isi `app1/storage/app/public` ke `schoolai/storage/app/public`.
+6. Salin isi folder hasil ekstraksi `public_html` ke `/home/almusta2/public_html`.
+7. Pastikan database siap, lalu jalankan URL token dari file setup lokal.
+8. Jalankan seluruh smoke test sebelum mempertimbangkan penghapusan `app1`.
+
+Jika versi baru gagal sebelum `app1` dihapus, rollback cukup dengan mengembalikan file `public_html/index.php` lama beserta aset publik lama agar kembali menunjuk ke `app1`.
+
 ## Runner setup sekali pakai
 
 `public_html/deploy_once.php` melakukan pemeriksaan berikut:
@@ -187,6 +220,21 @@ Periksa secara berurutan:
 - Salin isi `public_html/` baru.
 - Jalankan URL token baru dari file setup lokal.
 - Runner dapat digunakan kembali karena menerima symlink lama jika targetnya masih benar.
+
+Alur ringkas update berikutnya:
+
+```text
+git pull
+git status --short --branch
+make deploy
+upload ZIP baru
+pertahankan schoolai/.env dan schoolai/storage/app/public
+ganti kode aplikasi dan isi public_html
+jalankan token setup baru
+jalankan smoke test
+```
+
+File setup lokal selalu mengikuti nomor ZIP yang baru dan tidak boleh diunggah ke hosting.
 
 ## Rollback
 
