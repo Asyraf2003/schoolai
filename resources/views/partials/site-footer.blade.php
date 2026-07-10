@@ -35,6 +35,8 @@
             <img
               src="{{ $siteFooter['brand']['image'] }}"
               alt="{{ $siteFooter['brand']['image_alt'] ?? ($siteFooter['brand']['name'] ?? __('pages.common.school_name')) }}"
+              width="192"
+              height="192"
               class="footer-brand__logo-image"
               loading="lazy"
               decoding="async"

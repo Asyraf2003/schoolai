@@ -38,7 +38,7 @@ return [
         'logo' => [
             'href' => '#beranda',
             'icon' => '🌈',
-            'image' => 'media/home/logo.png',
+            'image' => 'media/home/logo-nav.webp',
             'image_alt' => 'Logo Al Mustaqbal School',
             'line_1' => 'Al Mustaqbal',
             'line_2' => 'School',
@@ -630,7 +630,7 @@ return [
 'footer' => [
         'brand' => [
             'href' => '#beranda',
-            'image' => '/media/home/logo.png',
+            'image' => '/media/home/logo-footer.webp',
             'image_alt' => 'Logo Al Mustaqbal',
             'name' => 'Al Mustaqbal',
             'description' => 'Sekolah Islam ramah anak yang mendampingi tumbuh kembang, adab, dan rasa ingin tahu siswa sejak usia dini.',

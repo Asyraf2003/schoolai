@@ -86,6 +86,8 @@
           <img
             src="{{ $logoImageUrl }}"
             alt="{{ $logo['image_alt'] ?? $logoLabel }}"
+            width="64"
+            height="64"
             class="navbar__logo-image"
           />
         @else
