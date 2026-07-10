@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -Eeuo pipefail
-umask 077
+umask 022
 
 ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
@@ -204,6 +204,11 @@ rm -f \
     "$app_stage/bootstrap/cache/events.php" \
     "$app_stage"/bootstrap/cache/routes*.php
 
+echo "==> Normalize shared-hosting permissions"
+find "$app_stage" "$public_stage" -type d -exec chmod 0755 {} +
+find "$app_stage" "$public_stage" -type f -exec chmod 0644 {} +
+chmod 0755 "$app_stage/artisan"
+
 echo "==> Create ZIP: $zip_file"
 zip_file_absolute="$ROOT_DIR/$zip_file"
 (
@@ -226,7 +231,7 @@ bash scripts/verify-cpanel-package.sh \
     echo "URL: $SITE_URL/deploy_once.php?token=$deploy_token"
     echo "The setup script deletes itself after a successful run."
 } > "$setup_file"
-chmod 600 "$setup_file"
+chmod 600 "$zip_file" "$setup_file"
 
 echo "==> Done"
 echo "ZIP: $zip_file"
