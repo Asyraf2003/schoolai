@@ -14,14 +14,16 @@ fi
 listing_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-zip-list.XXXXXX")"
 index_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-index.XXXXXX")"
 deploy_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-deploy-once.XXXXXX")"
+permissions_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-zip-permissions.XXXXXX")"
 
 cleanup() {
-    rm -f "$listing_file" "$index_file" "$deploy_file"
+    rm -f "$listing_file" "$index_file" "$deploy_file" "$permissions_file"
 }
 trap cleanup EXIT
 
 unzip -tq "$zip_file" >/dev/null
 unzip -Z1 "$zip_file" > "$listing_file"
+unzip -Z -l "$zip_file" > "$permissions_file"
 
 failures=0
 
@@ -53,6 +55,34 @@ require_entry "$public_dir/index.php"
 require_entry "$public_dir/.htaccess"
 require_entry "$public_dir/build/manifest.json"
 require_entry "$public_dir/deploy_once.php"
+
+require_mode() {
+    local entry="$1"
+    local expected_mode="$2"
+    local actual_mode
+
+    actual_mode="$(awk -v entry="$entry" '$NF == entry {print $1; exit}' "$permissions_file")"
+    if [[ "$actual_mode" != "$expected_mode" ]]; then
+        fail "permission ZIP salah untuk $entry: diharapkan $expected_mode, ditemukan ${actual_mode:-missing}"
+    fi
+}
+
+require_mode "$app_dir/" "drwxr-xr-x"
+require_mode "$public_dir/" "drwxr-xr-x"
+require_mode "$public_dir/index.php" "-rw-r--r--"
+require_mode "$public_dir/deploy_once.php" "-rw-r--r--"
+require_mode "$public_dir/build/" "drwxr-xr-x"
+require_mode "$public_dir/build/manifest.json" "-rw-r--r--"
+
+while IFS=$'\t' read -r mode entry; do
+    [[ -z "$entry" ]] && continue
+
+    if [[ "$entry" == */ ]]; then
+        [[ "$mode" == "drwxr-xr-x" ]] || fail "direktori aset tidak 0755: $entry ($mode)"
+    else
+        [[ "$mode" == "-rw-r--r--" ]] || fail "file aset tidak 0644: $entry ($mode)"
+    fi
+done < <(awk -v prefix="$public_dir/build/" 'index($NF, prefix) == 1 {print $1 "\t" $NF}' "$permissions_file")
 
 while IFS= read -r entry; do
     case "$entry" in
@@ -115,4 +145,3 @@ if (( failures > 0 )); then
 fi
 
 echo "OK: ZIP structure, secrets, caches, media, vendor, and Vite manifest verified."
-
