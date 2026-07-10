@@ -7613,7 +7613,7 @@ p {
 }
 
 .artikel-digest__hero-title {
-    font-size: clamp(1.55rem, 2.2vw, 2.35rem);
+    font-size: clamp(1.28rem, 1.45vw, 1.72rem);
 }
 
 .artikel-digest-card__title {
