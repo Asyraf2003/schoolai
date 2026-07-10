@@ -8,7 +8,7 @@ use App\Http\Middleware\ForceAdminLocale;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 
-return Application::configure(basePath: dirname(__DIR__))
+$app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
@@ -35,3 +35,19 @@ return Application::configure(basePath: dirname(__DIR__))
             return null;
         });
     })->create();
+
+$publicPathConfig = dirname(__DIR__).'/.public-path';
+
+if (is_file($publicPathConfig)) {
+    $configuredPublicPath = trim((string) file_get_contents($publicPathConfig));
+
+    if ($configuredPublicPath !== '') {
+        if (! str_starts_with($configuredPublicPath, DIRECTORY_SEPARATOR)) {
+            $configuredPublicPath = dirname(__DIR__).DIRECTORY_SEPARATOR.$configuredPublicPath;
+        }
+
+        $app->usePublicPath(realpath($configuredPublicPath) ?: $configuredPublicPath);
+    }
+}
+
+return $app;
