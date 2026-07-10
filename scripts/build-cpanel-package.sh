@@ -28,12 +28,24 @@ validate_name "APP_DIR_NAME" "$APP_DIR_NAME"
 validate_name "PUBLIC_DIR_NAME" "$PUBLIC_DIR_NAME"
 validate_name "DEPLOY_DIR" "$DEPLOY_DIR"
 
-for command_name in npm php composer rsync zip unzip sed; do
+for command_name in git npm php composer rsync zip unzip sed; do
     if ! command -v "$command_name" >/dev/null 2>&1; then
         echo "ERROR: command '$command_name' tidak tersedia." >&2
         exit 1
     fi
 done
+
+if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null || true)" != "true" ]]; then
+    echo "ERROR: builder harus dijalankan dari checkout Git SchoolAI." >&2
+    exit 1
+fi
+
+worktree_status="$(git status --porcelain --untracked-files=all)"
+if [[ -n "$worktree_status" ]]; then
+    echo "ERROR: working tree belum bersih. Commit, pindahkan, atau hapus file berikut sebelum membuat paket:" >&2
+    printf '%s\n' "$worktree_status" >&2
+    exit 1
+fi
 
 for required_file in \
     artisan \
