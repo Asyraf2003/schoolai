@@ -210,44 +210,278 @@ Periksa secara berurutan:
 8. Edit, toggle, urutan, dan hapus media tetap bekerja.
 9. `public_html/deploy_once.php` sudah tidak ada.
 
-## Deployment pembaruan
+## Deployment pembaruan tanpa kehilangan data file
 
-- Jangan menghapus `.env` production.
-- Jangan menghapus `schoolai/storage/app/public`; folder tersebut menyimpan upload production.
-- Jangan mengganti `APP_KEY` pada deployment biasa.
-- Backup database dan media sebelum mengganti kode.
-- Hapus atau ganti `public_html/build` dengan build baru agar aset lama tidak menumpuk.
-- Salin kode root Laravel baru dengan tetap mempertahankan `.env` dan media production.
-- Salin isi `public_html/` baru.
-- Jalankan URL token baru dari file setup lokal.
-- Runner dapat digunakan kembali karena menerima symlink lama jika targetnya masih benar.
+Bagian ini hanya menangani pergantian file aplikasi dan upload production. Perubahan struktur atau isi database ditangani terpisah melalui phpMyAdmin, SQL query, export, dan import yang sesuai dengan release tersebut.
 
-Alur ringkas update berikutnya:
+Jangan mengekstrak ZIP baru langsung ke `/home/almusta2` dan jangan menimpa folder aktif satu per satu. Overwrite dapat meninggalkan file kode lama yang sudah dihapus dari repository sehingga hosting berisi campuran dua release.
+
+### Data yang harus dipertahankan
+
+Wajib dibawa ke release baru:
+
+```text
+schoolai/.env
+schoolai/storage/app/public/
+schoolai/storage/app/private/
+```
+
+Ketentuan penting:
+
+- pertahankan `APP_KEY` production yang sudah digunakan;
+- jangan mengganti credential production hanya karena membuat ZIP baru;
+- `storage/app/public` berisi upload yang dapat diakses melalui `/storage/...`;
+- `storage/app/private` tidak boleh dipindahkan ke `public_html` atau dibuatkan symlink publik;
+- `storage/logs` boleh disimpan bersama backup release lama untuk diagnosis, tetapi tidak wajib disalin ke release baru;
+- `storage/framework`, `bootstrap/cache/*.php`, dan cache lama tidak perlu dipertahankan karena runner akan membuat ulang cache production.
+
+### File milik hosting di `public_html`
+
+Sebelum menukar `public_html`, periksa apakah ada file atau direktori yang bukan bagian paket SchoolAI, misalnya:
+
+```text
+.well-known/
+cgi-bin/
+file verifikasi domain
+file konfigurasi atau validasi milik provider
+```
+
+Jika ada dan masih diperlukan, salin item tersebut ke `public_html` staging sebelum swap. Jangan menganggap seluruh isi document root selalu milik aplikasi.
+
+### Layout staging dan backup
+
+Gunakan satu nama release yang mudah dikenali, misalnya nomor paket atau timestamp:
+
+```text
+/home/almusta2/deploy-stage-004/
+├── schoolai/
+└── public_html/
+
+/home/almusta2/schoolai
+/home/almusta2/public_html
+```
+
+Setelah swap, hasil sementara dapat berbentuk:
+
+```text
+/home/almusta2/schoolai
+/home/almusta2/public_html
+/home/almusta2/schoolai-backup-004
+/home/almusta2/public_html-backup-004
+```
+
+Gunakan nama yang konsisten. Jangan memakai nama backup yang sama untuk dua deployment berbeda.
+
+### Urutan deployment pembaruan
+
+#### A. Siapkan paket di komputer lokal
+
+1. Pastikan branch dan commit yang akan dideploy sudah benar.
+2. Pastikan working tree bersih.
+3. Buat paket baru:
+
+   ```bash
+   git status --short --branch
+   make deploy
+   ```
+
+4. Simpan pasangan file ZIP dan setup dengan nomor yang sama:
+
+   ```text
+   schoolai-cpanel-004.zip
+   schoolai-cpanel-004-setup.txt
+   ```
+
+5. Jangan unggah file `*-setup.txt`.
+
+#### B. Buat staging melalui cPanel File Manager
+
+1. Upload ZIP baru ke lokasi sementara, bukan ke dalam `schoolai` atau `public_html` aktif.
+2. Buat folder staging, misalnya:
+
+   ```text
+   /home/almusta2/deploy-stage-004
+   ```
+
+3. Ekstrak ZIP di dalam folder staging tersebut.
+4. Pastikan hasil ekstrak tepat:
+
+   ```text
+   /home/almusta2/deploy-stage-004/schoolai
+   /home/almusta2/deploy-stage-004/public_html
+   ```
+
+5. Jangan menjalankan `deploy_once.php` ketika folder masih berada di staging.
+
+#### C. Salin data persisten ke release staging
+
+Salin dari aplikasi aktif:
+
+```text
+/home/almusta2/schoolai/.env
+    -> /home/almusta2/deploy-stage-004/schoolai/.env
+
+/home/almusta2/schoolai/storage/app/public/*
+    -> /home/almusta2/deploy-stage-004/schoolai/storage/app/public/
+
+/home/almusta2/schoolai/storage/app/private/*
+    -> /home/almusta2/deploy-stage-004/schoolai/storage/app/private/
+```
+
+Periksa bahwa:
+
+- nama file tetap tepat `.env`, bukan `.env.txt`;
+- file tersembunyi ditampilkan di File Manager;
+- isi folder upload benar-benar tersalin, termasuk subfolder;
+- `.env` staging masih memakai `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL` production, `APP_KEY` lama, dan credential database production;
+- tidak ada `public_html/storage` hasil salinan manual di staging.
+
+Jika `public_html` aktif mempunyai file milik hosting yang masih dibutuhkan, salin file tersebut ke:
+
+```text
+/home/almusta2/deploy-stage-004/public_html
+```
+
+#### D. Tangani database secara terpisah
+
+Selesaikan prosedur database yang sesuai sebelum menjalankan runner release baru. Prosedur database tidak didokumentasikan sebagai bagian swap file ini karena dapat berbeda pada setiap perubahan schema.
+
+Minimal pastikan:
+
+- database target dan user MySQL masih sesuai dengan `.env`;
+- backup SQL yang sesuai sudah tersedia jika release mengubah schema atau data;
+- kode lama dan database baru tidak dicampur ketika kompatibilitasnya belum dibuktikan.
+
+#### E. Swap folder aktif
+
+Lakukan rename atau move melalui cPanel File Manager dengan urutan berikut:
+
+1. Rename aplikasi aktif:
+
+   ```text
+   /home/almusta2/schoolai
+       -> /home/almusta2/schoolai-backup-004
+   ```
+
+2. Rename document root aktif:
+
+   ```text
+   /home/almusta2/public_html
+       -> /home/almusta2/public_html-backup-004
+   ```
+
+3. Pindahkan aplikasi staging menjadi aktif:
+
+   ```text
+   /home/almusta2/deploy-stage-004/schoolai
+       -> /home/almusta2/schoolai
+   ```
+
+4. Pindahkan document root staging menjadi aktif:
+
+   ```text
+   /home/almusta2/deploy-stage-004/public_html
+       -> /home/almusta2/public_html
+   ```
+
+5. Jangan menghapus folder backup pada tahap ini.
+
+Downtime swap seharusnya hanya terjadi di antara rename folder aktif dan pemindahan folder staging. Siapkan seluruh staging dan data persisten sebelum memulai swap agar jeda tersebut sesingkat mungkin.
+
+#### F. Jalankan runner release baru
+
+1. Buka file setup bernomor sama di komputer lokal.
+2. Kunjungi URL token yang tercantum di dalamnya.
+3. Pastikan hasilnya diawali:
+
+   ```text
+   DEPLOYMENT COMPLETE
+   ```
+
+4. Runner akan:
+   - memeriksa struktur dan `.env`;
+   - memastikan direktori writable;
+   - memeriksa koneksi database;
+   - membuat atau memvalidasi symlink `public_html/storage`;
+   - membersihkan dan membuat cache production;
+   - mencoba menghapus `deploy_once.php`.
+5. Jika penghapusan otomatis gagal, hapus `public_html/deploy_once.php` secara manual.
+
+Runner dapat digunakan pada update karena `public_html` baru belum mempunyai symlink storage. Runner akan membuat symlink baru menuju `schoolai/storage/app/public` yang sudah berisi data production.
+
+#### G. Smoke test update
+
+Jalankan verifikasi pada bagian **Verifikasi setelah deployment**, lalu khusus update pastikan:
+
+- media lama masih dapat dibuka melalui `/storage/...`;
+- upload media baru berhasil;
+- media lama dapat diedit atau dihapus dari admin;
+- homepage memuat CSS dan JavaScript dari `public_html/build` baru;
+- `deploy_once.php` sudah tidak tersedia;
+- tidak ada error 500 pada halaman publik dan admin.
+
+Jangan hapus backup sebelum seluruh pemeriksaan tersebut lulus.
+
+### Alur ringkas update berikutnya
 
 ```text
 git pull
 git status --short --branch
 make deploy
 upload ZIP baru
-pertahankan schoolai/.env dan schoolai/storage/app/public
-ganti kode aplikasi dan isi public_html
-jalankan token setup baru
+extract ke deploy-stage-NNN
+salin .env + storage/app/public + storage/app/private
+salin file hosting non-aplikasi jika memang ada
+tangani database secara terpisah
+rename schoolai dan public_html aktif menjadi backup
+pindahkan schoolai dan public_html staging menjadi aktif
+jalankan token setup bernomor sama
 jalankan smoke test
+hapus staging kosong setelah terbukti aman
+simpan backup sampai release dinyatakan stabil
 ```
 
 File setup lokal selalu mengikuti nomor ZIP yang baru dan tidak boleh diunggah ke hosting.
 
-## Rollback
+## Rollback deployment pembaruan
 
-Sebelum deployment pembaruan, simpan:
+Rollback file hanya aman dilakukan langsung bila database masih kompatibel dengan kode lama. Jika release mengubah schema atau data, pulihkan juga backup SQL yang berasal dari waktu yang sama melalui prosedur database terpisah.
+
+Jika runner atau smoke test gagal:
+
+1. Jangan menghapus folder release baru; rename dahulu agar dapat diperiksa:
+
+   ```text
+   /home/almusta2/schoolai
+       -> /home/almusta2/schoolai-failed-004
+
+   /home/almusta2/public_html
+       -> /home/almusta2/public_html-failed-004
+   ```
+
+2. Kembalikan backup:
+
+   ```text
+   /home/almusta2/schoolai-backup-004
+       -> /home/almusta2/schoolai
+
+   /home/almusta2/public_html-backup-004
+       -> /home/almusta2/public_html
+   ```
+
+3. Periksa kembali `/up`, homepage, login, dan media lama.
+4. Jika database turut berubah, pulihkan SQL backup yang cocok dengan release lama sebelum menyatakan rollback selesai.
+
+Simpan untuk setiap deployment penting:
 
 - folder aplikasi Laravel lama;
-- `.env` production;
-- `storage/app/public`;
+- `.env` production di dalam backup aplikasi;
+- `storage/app/public` dan `storage/app/private` di dalam backup aplikasi;
 - isi `public_html` lama;
-- export database MySQL.
+- export database MySQL yang sesuai dengan waktu release;
+- nomor ZIP, commit Git, dan waktu deployment.
 
-Jika deployment baru gagal, kembalikan kode aplikasi, `public_html`, dan database dari backup yang berasal dari waktu yang sama. Jangan mencampur database baru dengan kode lama tanpa memastikan migration-nya kompatibel.
+Jangan menggabungkan kode dari satu release dengan `vendor`, build Vite, cache, atau database dari release lain tanpa bukti kompatibilitas.
 
 ## Troubleshooting singkat
 
