@@ -314,16 +314,47 @@ document.addEventListener('DOMContentLoaded', function () {
     tiltEl.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
   }
 
-  document.addEventListener('pointermove', applyHeroTilt, { passive: true });
-  window.addEventListener('resize', resetHeroTilt);
-  window.addEventListener('orientationchange', resetHeroTilt);
+  var heroTiltActive = false;
 
-  if (desktopMotion.addEventListener) {
-    desktopMotion.addEventListener('change', resetHeroTilt);
-    reduceMotion.addEventListener('change', resetHeroTilt);
+  function enableHeroTilt() {
+    if (heroTiltActive) return;
+
+    document.addEventListener('pointermove', applyHeroTilt, { passive: true });
+    window.addEventListener('resize', resetHeroTilt);
+    window.addEventListener('orientationchange', resetHeroTilt);
+    heroTiltActive = true;
   }
 
-  resetHeroTilt();
+  function disableHeroTilt() {
+    if (heroTiltActive) {
+      document.removeEventListener('pointermove', applyHeroTilt);
+      window.removeEventListener('resize', resetHeroTilt);
+      window.removeEventListener('orientationchange', resetHeroTilt);
+      heroTiltActive = false;
+    }
+
+    resetHeroTilt();
+  }
+
+  function syncHeroTilt() {
+    if (desktopMotion.matches && !reduceMotion.matches) {
+      enableHeroTilt();
+      resetHeroTilt();
+      return;
+    }
+
+    disableHeroTilt();
+  }
+
+  if (desktopMotion.addEventListener) {
+    desktopMotion.addEventListener('change', syncHeroTilt);
+    reduceMotion.addEventListener('change', syncHeroTilt);
+  } else {
+    desktopMotion.addListener(syncHeroTilt);
+    reduceMotion.addListener(syncHeroTilt);
+  }
+
+  syncHeroTilt();
 })();
 
 
