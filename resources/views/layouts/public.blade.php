@@ -3,8 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $title ?? __('pages.common.site_title') }}</title>
-    <meta name="description" content="{{ $description ?? __('pages.common.site_description') }}" />
+    @include('partials.site-head-meta', [
+      'pageTitle' => $title ?? __('pages.common.site_title'),
+      'pageDescription' => $description ?? __('pages.common.site_description'),
+    ])
     @vite(['resources/css/pages/welcome.css', 'resources/js/pages/welcome.js'])
   </head>
   <body class="public-page-body">

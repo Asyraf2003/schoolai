@@ -3,12 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $meta['title'] }}</title>
-    <meta name="description" content="{{ $meta['description'] }}" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 font-size=%2290%22>🎨</text></svg>"
-    />
+    @include('partials.site-head-meta', [
+      'pageTitle' => $meta['title'],
+      'pageDescription' => $meta['description'],
+    ])
     @vite(['resources/css/pages/welcome.css', 'resources/js/pages/welcome.js'])
   </head>
   <body>

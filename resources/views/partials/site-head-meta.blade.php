@@ -1,0 +1,109 @@
+@php
+  $headSiteName = 'Al Mustaqbal School';
+  $headTitle = trim((string) ($pageTitle ?? $headSiteName));
+  $headDescription = trim((string) ($pageDescription ?? ''));
+  $headCanonicalUrl = request()->url();
+  $headHomeUrl = route('home');
+  $headLogoUrl = asset('media/home/logo.png');
+  $headImageUrl = asset('media/home/og-home.jpg');
+  $headLanguage = app()->getLocale() === 'en' ? 'en' : 'id';
+  $headLocale = $headLanguage === 'en' ? 'en_US' : 'id_ID';
+  $headImageAlt = $headLanguage === 'en'
+      ? 'Al Mustaqbal School campus and learning environment'
+      : 'Lingkungan sekolah dan pembelajaran Al Mustaqbal School';
+
+  $headStructuredData = [
+      '@context' => 'https://schema.org',
+      '@graph' => [
+          [
+              '@type' => 'School',
+              '@id' => $headHomeUrl . '#school',
+              'name' => $headSiteName,
+              'url' => $headHomeUrl,
+              'logo' => [
+                  '@type' => 'ImageObject',
+                  'url' => $headLogoUrl,
+                  'contentUrl' => $headLogoUrl,
+                  'width' => 1080,
+                  'height' => 1080,
+              ],
+              'image' => [
+                  '@id' => $headImageUrl . '#primaryimage',
+              ],
+          ],
+          [
+              '@type' => 'ImageObject',
+              '@id' => $headImageUrl . '#primaryimage',
+              'url' => $headImageUrl,
+              'contentUrl' => $headImageUrl,
+              'caption' => $headImageAlt,
+              'width' => 1200,
+              'height' => 630,
+          ],
+          [
+              '@type' => 'WebSite',
+              '@id' => $headHomeUrl . '#website',
+              'url' => $headHomeUrl,
+              'name' => $headSiteName,
+              'inLanguage' => ['id', 'en'],
+              'publisher' => [
+                  '@id' => $headHomeUrl . '#school',
+              ],
+          ],
+          [
+              '@type' => 'WebPage',
+              '@id' => $headCanonicalUrl . '#webpage',
+              'url' => $headCanonicalUrl,
+              'name' => $headTitle,
+              'description' => $headDescription,
+              'inLanguage' => $headLanguage,
+              'isPartOf' => [
+                  '@id' => $headHomeUrl . '#website',
+              ],
+              'about' => [
+                  '@id' => $headHomeUrl . '#school',
+              ],
+              'primaryImageOfPage' => [
+                  '@id' => $headImageUrl . '#primaryimage',
+              ],
+          ],
+      ],
+  ];
+@endphp
+
+<title>{{ $headTitle }}</title>
+<meta name="description" content="{{ $headDescription }}" />
+<meta name="application-name" content="{{ $headSiteName }}" />
+<meta name="theme-color" content="#137a4c" />
+
+<link rel="canonical" href="{{ $headCanonicalUrl }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="{{ $headSiteName }}" />
+<meta property="og:locale" content="{{ $headLocale }}" />
+<meta property="og:title" content="{{ $headTitle }}" />
+<meta property="og:description" content="{{ $headDescription }}" />
+<meta property="og:url" content="{{ $headCanonicalUrl }}" />
+<meta property="og:image" content="{{ $headImageUrl }}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{ $headImageAlt }}" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ $headTitle }}" />
+<meta name="twitter:description" content="{{ $headDescription }}" />
+<meta name="twitter:image" content="{{ $headImageUrl }}" />
+<meta name="twitter:image:alt" content="{{ $headImageAlt }}" />
+
+<script type="application/ld+json">{!! json_encode(
+    $headStructuredData,
+    JSON_UNESCAPED_SLASHES
+    | JSON_UNESCAPED_UNICODE
+    | JSON_HEX_TAG
+    | JSON_HEX_AMP
+    | JSON_HEX_APOS
+    | JSON_HEX_QUOT
+) !!}</script>
