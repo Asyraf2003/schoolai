@@ -96,8 +96,6 @@
     <article class="gallery-wall-lightbox__panel">
       <button type="button" class="gallery-wall-lightbox__close" data-gallery-wall-lightbox-close>{{ __('pages.common.close') }}</button>
       <div class="gallery-wall-lightbox__media" data-gallery-wall-lightbox-media></div>
-      <span class="gallery-wall-lightbox__badge" data-gallery-wall-lightbox-badge></span>
-      <h2 data-gallery-wall-lightbox-title></h2>
     </article>
   </div>
 @endsection
