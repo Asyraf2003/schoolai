@@ -408,8 +408,12 @@ final class HomeController extends Controller
         };
     }
 
-    private function videoProviderLogoUrl(string $provider): ?string
+    private function videoProviderLogoUrl(?string $provider): ?string
     {
+        if ($provider === null || $provider === '') {
+            return null;
+        }
+
         $path = match ($provider) {
             'youtube' => 'media/home/youtube.png',
             'instagram' => 'media/home/instagram.svg',
