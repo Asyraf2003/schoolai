@@ -6,6 +6,7 @@
   $mediaUrl = $item['media_url'] ?? null;
   $thumbnailUrl = $item['thumbnail_url'] ?? null;
   $videoProvider = $item['video_provider'] ?? 'video';
+  $videoProviderLogoUrl = $item['video_provider_logo_url'] ?? null;
   $videoProviderLabel = $item['video_provider_label'] ?? __('pages.common.media_video');
   $emoji = $item['emoji'] ?? ($isVideo ? '▶️' : '📸');
   $badge = $item['badge'] ?? ($isVideo ? __('pages.common.media_video') : __('pages.common.media_photo'));
@@ -40,6 +41,16 @@
         class="gallery-wall-card__fallback social-video-cover social-video-cover--{{ $videoProvider }}"
         aria-hidden="true"
       >
+        @if($videoProviderLogoUrl)
+          <img
+            src="{{ $videoProviderLogoUrl }}"
+            alt=""
+            class="social-video-cover__logo"
+            loading="lazy"
+            decoding="async"
+          >
+        @endif
+
         <span class="social-video-cover__brand">{{ $videoProviderLabel }}</span>
         <span class="social-video-cover__hint">{{ __('pages.common.play_media') }}</span>
       </span>

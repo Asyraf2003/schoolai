@@ -381,6 +381,16 @@
                           class="galeri-story-card__mobile-fallback social-video-cover social-video-cover--{{ $item['video_provider'] ?? 'video' }}"
                           aria-hidden="true"
                         >
+                          @if (! empty($item['video_provider_logo_url']))
+                            <img
+                              src="{{ $item['video_provider_logo_url'] }}"
+                              alt=""
+                              class="social-video-cover__logo"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          @endif
+
                           <span class="social-video-cover__brand">
                             {{ $item['video_provider_label'] ?? __('pages.common.media_video') }}
                           </span>
@@ -460,6 +470,16 @@
                             class="galeri-story-visual__fallback social-video-cover social-video-cover--{{ $item['video_provider'] ?? 'video' }}"
                             aria-hidden="true"
                           >
+                            @if (! empty($item['video_provider_logo_url']))
+                              <img
+                                src="{{ $item['video_provider_logo_url'] }}"
+                                alt=""
+                                class="social-video-cover__logo"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            @endif
+
                             <span class="social-video-cover__brand">
                               {{ $item['video_provider_label'] ?? __('pages.common.media_video') }}
                             </span>

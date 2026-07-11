@@ -12187,20 +12187,15 @@ p {
     box-shadow: none !important;
 }
 
-.social-video-cover::before {
-    content: "▶";
-    display: grid;
-    place-items: center;
-    width: 58px;
-    height: 58px;
+.social-video-cover__logo {
+    display: block;
+    width: clamp(58px, 7vw, 82px);
+    height: clamp(58px, 7vw, 82px);
     margin-bottom: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.14);
-    color: #ffffff;
-    font-size: 1.15rem;
-    font-weight: 950;
-    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.2);
+    border-radius: 20px;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 24px rgba(15, 23, 42, 0.22));
+    pointer-events: none;
 }
 
 .social-video-cover__brand {
@@ -12235,10 +12230,6 @@ p {
         linear-gradient(135deg, #833ab4 0%, #fd1d1d 58%, #fcb045 100%);
 }
 
-.social-video-cover--instagram::before {
-    content: "IG";
-}
-
 .social-video-cover--facebook {
     background:
         radial-gradient(
@@ -12247,12 +12238,6 @@ p {
             transparent 30%
         ),
         linear-gradient(135deg, #1877f2, #0d47a1);
-}
-
-.social-video-cover--facebook::before {
-    content: "f";
-    font-family: Arial, sans-serif;
-    font-size: 2rem;
 }
 
 .social-video-cover--tiktok {
@@ -12270,10 +12255,6 @@ p {
         linear-gradient(135deg, #111827, #020617);
 }
 
-.social-video-cover--tiktok::before {
-    content: "TT";
-}
-
 .social-video-cover--vimeo {
     background:
         radial-gradient(
@@ -12282,10 +12263,6 @@ p {
             transparent 30%
         ),
         linear-gradient(135deg, #1ab7ea, #087ba5);
-}
-
-.social-video-cover--vimeo::before {
-    content: "V";
 }
 
 .gallery-wall-card__play.social-video-cover__play,
@@ -12305,9 +12282,9 @@ p {
         padding: 18px;
     }
 
-    .social-video-cover::before {
-        width: 52px;
-        height: 52px;
+    .social-video-cover__logo {
+        width: 58px;
+        height: 58px;
         border-radius: 16px;
     }
 

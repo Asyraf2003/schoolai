@@ -298,6 +298,7 @@ final class HomeController extends Controller
         $item['media_url'] = $mediaUrl;
         $item['thumbnail_url'] = $type === 'photo' ? $mediaUrl : $this->videoThumbnailUrl($mediaUrl);
         $item['video_provider'] = $videoProvider;
+        $item['video_provider_logo_url'] = $this->videoProviderLogoUrl($videoProvider);
         $item['video_provider_label'] = match ($videoProvider) {
             'youtube' => 'YouTube',
             'instagram' => 'Instagram',
@@ -405,6 +406,20 @@ final class HomeController extends Controller
             'player.vimeo.com' => 'vimeo',
             default => 'video',
         };
+    }
+
+    private function videoProviderLogoUrl(string $provider): ?string
+    {
+        $path = match ($provider) {
+            'youtube' => 'media/home/youtube.png',
+            'instagram' => 'media/home/instagram.svg',
+            'facebook' => 'media/home/facebook.png',
+            'tiktok' => 'media/home/tiktok.png',
+            'vimeo' => 'media/home/vimeo.png',
+            default => null,
+        };
+
+        return $this->publicAssetUrl($path);
     }
 
     private function videoThumbnailUrl(?string $embedUrl): ?string
