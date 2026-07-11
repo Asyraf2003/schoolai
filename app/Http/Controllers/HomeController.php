@@ -286,6 +286,9 @@ final class HomeController extends Controller
         $mediaUrl = $type === 'video'
             ? $this->trustedVideoEmbedUrl($rawMedia)
             : $this->publicAssetUrl($rawMedia);
+        $videoProvider = $type === 'video'
+            ? $this->videoProvider($mediaUrl)
+            : null;
 
         $item['type'] = $type;
         $item['type_label'] = (string) ($item['type_label'] ?? ($type === 'video' ? 'Video' : (app()->getLocale() === 'en' ? 'Photo' : 'Foto')));
@@ -294,6 +297,15 @@ final class HomeController extends Controller
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
         $item['media_url'] = $mediaUrl;
         $item['thumbnail_url'] = $type === 'photo' ? $mediaUrl : $this->videoThumbnailUrl($mediaUrl);
+        $item['video_provider'] = $videoProvider;
+        $item['video_provider_label'] = match ($videoProvider) {
+            'youtube' => 'YouTube',
+            'instagram' => 'Instagram',
+            'facebook' => 'Facebook',
+            'tiktok' => 'TikTok',
+            'vimeo' => 'Vimeo',
+            default => app()->getLocale() === 'en' ? 'Video' : 'Video',
+        };
         $item['published_at'] = (string) ($item['published_at'] ?? $item['date'] ?? '');
         $item['date'] = (string) ($item['date'] ?? $item['published_at']);
         $item['caption'] = (string) ($item['caption'] ?? '');
@@ -376,6 +388,24 @@ final class HomeController extends Controller
         return $facebookPath === 'watch' && preg_match('~^\d+$~', (string) ($facebookQuery['v'] ?? '')) === 1;
     }
 
+
+    private function videoProvider(?string $embedUrl): string
+    {
+        if (! is_string($embedUrl) || trim($embedUrl) === '') {
+            return 'video';
+        }
+
+        $host = strtolower((string) parse_url(trim($embedUrl), PHP_URL_HOST));
+
+        return match ($host) {
+            'www.youtube.com' => 'youtube',
+            'www.instagram.com' => 'instagram',
+            'www.facebook.com' => 'facebook',
+            'www.tiktok.com' => 'tiktok',
+            'player.vimeo.com' => 'vimeo',
+            default => 'video',
+        };
+    }
 
     private function videoThumbnailUrl(?string $embedUrl): ?string
     {

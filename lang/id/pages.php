@@ -15,6 +15,7 @@ return [
         'learn_more' => 'Lihat Detail',
         'view_gallery' => 'Lihat Galeri',
         'gallery_video_title' => 'Video galeri',
+        'play_media' => 'Klik untuk memutar',
         'mobile_menu_open' => 'Buka menu',
         'mobile_menu_close' => 'Tutup menu',
         'media_video' => 'Video',

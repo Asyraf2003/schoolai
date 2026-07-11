@@ -15,6 +15,7 @@ return [
         'learn_more' => 'View Details',
         'view_gallery' => 'View Gallery',
         'gallery_video_title' => 'Gallery video',
+        'play_media' => 'Click to play',
         'mobile_menu_open' => 'Open menu',
         'mobile_menu_close' => 'Close menu',
         'media_video' => 'Video',

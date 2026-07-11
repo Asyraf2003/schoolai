@@ -5,6 +5,8 @@
   $label = $item['label'] ?? $title;
   $mediaUrl = $item['media_url'] ?? null;
   $thumbnailUrl = $item['thumbnail_url'] ?? null;
+  $videoProvider = $item['video_provider'] ?? 'video';
+  $videoProviderLabel = $item['video_provider_label'] ?? __('pages.common.media_video');
   $emoji = $item['emoji'] ?? ($isVideo ? '▶️' : '📸');
   $badge = $item['badge'] ?? ($isVideo ? __('pages.common.media_video') : __('pages.common.media_photo'));
   $gradient = $item['gradient'] ?? ['#DCF1F7', '#FFC93C'];
@@ -34,8 +36,14 @@
       >
       <span class="gallery-wall-card__play" aria-hidden="true">▶</span>
     @elseif($isVideo)
-      <span class="gallery-wall-card__fallback" aria-hidden="true">{{ $emoji }}</span>
-      <span class="gallery-wall-card__play" aria-hidden="true">▶</span>
+      <span
+        class="gallery-wall-card__fallback social-video-cover social-video-cover--{{ $videoProvider }}"
+        aria-hidden="true"
+      >
+        <span class="social-video-cover__brand">{{ $videoProviderLabel }}</span>
+        <span class="social-video-cover__hint">{{ __('pages.common.play_media') }}</span>
+      </span>
+      <span class="gallery-wall-card__play social-video-cover__play" aria-hidden="true">▶</span>
     @elseif($mediaUrl)
       <img
         data-lazy-media

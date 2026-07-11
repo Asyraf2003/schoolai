@@ -377,9 +377,18 @@
                         />
                         <span class="galeri-story-card__mobile-play" aria-hidden="true">▶</span>
                       @else
-                        <span class="galeri-story-card__mobile-fallback">
-                          {{ $item['fallback_icon'] ?? '▶' }}
+                        <span
+                          class="galeri-story-card__mobile-fallback social-video-cover social-video-cover--{{ $item['video_provider'] ?? 'video' }}"
+                          aria-hidden="true"
+                        >
+                          <span class="social-video-cover__brand">
+                            {{ $item['video_provider_label'] ?? __('pages.common.media_video') }}
+                          </span>
+                          <span class="social-video-cover__hint">
+                            {{ __('pages.common.play_media') }}
+                          </span>
                         </span>
+                        <span class="galeri-story-card__mobile-play social-video-cover__play" aria-hidden="true">▶</span>
                       @endif
                     @elseif (! empty($item['media_url']))
                       <img
@@ -447,9 +456,18 @@
                           />
                           <span class="galeri-story-visual__play" aria-hidden="true">▶</span>
                         @else
-                          <span class="galeri-story-visual__fallback">
-                            {{ $item['fallback_icon'] ?? '▶' }}
+                          <span
+                            class="galeri-story-visual__fallback social-video-cover social-video-cover--{{ $item['video_provider'] ?? 'video' }}"
+                            aria-hidden="true"
+                          >
+                            <span class="social-video-cover__brand">
+                              {{ $item['video_provider_label'] ?? __('pages.common.media_video') }}
+                            </span>
+                            <span class="social-video-cover__hint">
+                              {{ __('pages.common.play_media') }}
+                            </span>
                           </span>
+                          <span class="galeri-story-visual__play social-video-cover__play" aria-hidden="true">▶</span>
                         @endif
                       @elseif (! empty($item['media_url']))
                         <img
