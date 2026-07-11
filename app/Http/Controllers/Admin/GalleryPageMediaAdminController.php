@@ -309,14 +309,48 @@ final class GalleryPageMediaAdminController extends Controller
             return 'https://www.instagram.com/' . $match[1] . '/' . rawurlencode($match[2]) . '/embed';
         }
 
+        if ($this->hostMatches($host, 'facebook.com')) {
+            if (preg_match('~^reel/(\d+)$~', $path, $match)) {
+                return $this->facebookReelEmbedUrl($match[1]);
+            }
+
+            if ($path === 'plugins/video.php' && ! empty($query['href'])) {
+                $facebookUrl = trim((string) $query['href']);
+                $facebookScheme = strtolower((string) parse_url($facebookUrl, PHP_URL_SCHEME));
+                $facebookHost = strtolower((string) parse_url($facebookUrl, PHP_URL_HOST));
+                $facebookPath = trim((string) parse_url($facebookUrl, PHP_URL_PATH), '/');
+
+                if (
+                    $facebookScheme === 'https' &&
+                    $this->hostMatches($facebookHost, 'facebook.com') &&
+                    preg_match('~^reel/(\d+)$~', $facebookPath, $match)
+                ) {
+                    return $this->facebookReelEmbedUrl($match[1]);
+                }
+            }
+        }
+
         if ($this->hostMatches($host, 'vimeo.com') && preg_match('~^(?:video/)?(\d+)$~', $path, $match)) {
             return 'https://player.vimeo.com/video/' . $match[1];
         }
 
         throw ValidationException::withMessages([
-            'media_urls' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, atau Vimeo.',
-            'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, atau Vimeo.',
+            'media_urls' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, Facebook, atau Vimeo.',
+            'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, Facebook, atau Vimeo.',
         ]);
+    }
+
+    private function facebookReelEmbedUrl(string $reelId): string
+    {
+        $reelUrl = 'https://www.facebook.com/reel/' . rawurlencode($reelId) . '/';
+
+        return 'https://www.facebook.com/plugins/video.php?' . http_build_query([
+            'height' => 476,
+            'href' => $reelUrl,
+            'show_text' => 'false',
+            'width' => 267,
+            't' => 0,
+        ], '', '&', PHP_QUERY_RFC3986);
     }
 
     private function hostMatches(string $host, string $domain): bool

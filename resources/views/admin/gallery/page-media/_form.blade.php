@@ -90,7 +90,7 @@ https://www.youtube.com/watch?v=..."
           >{{ old('media_urls') }}</textarea>
         @endif
 
-        <em>{{ $isEdit ? 'Tempel URL YouTube, TikTok, Instagram, atau Vimeo.' : 'Tempel banyak URL. Satu URL per baris. Sistem akan membuat satu media per URL.' }}</em>
+        <em>{{ $isEdit ? 'Tempel URL YouTube, TikTok, Instagram, Facebook Reel, atau Vimeo.' : 'Tempel banyak URL. Satu URL per baris. Mendukung YouTube, TikTok, Instagram, Facebook Reel, dan Vimeo.' }}</em>
         @error('media_url') <small>{{ $message }}</small> @enderror
         @error('media_urls') <small>{{ $message }}</small> @enderror
       </div>
@@ -235,6 +235,31 @@ https://www.youtube.com/watch?v=..."
           return match ? `https://www.instagram.com/${match[1]}/${encodeURIComponent(match[2])}/embed` : '';
         }
 
+        if (hostMatches('facebook.com')) {
+          const reelMatch = parsed.pathname.match(/^\/reel\/(\d+)\/?$/);
+
+          if (reelMatch) {
+            const reelUrl = `https://www.facebook.com/reel/${reelMatch[1]}/`;
+            const params = new URLSearchParams({
+              height: '476',
+              href: reelUrl,
+              show_text: 'false',
+              width: '267',
+              t: '0',
+            });
+
+            return `https://www.facebook.com/plugins/video.php?${params.toString()}`;
+          }
+
+          if (
+            host === 'www.facebook.com' &&
+            parsed.pathname === '/plugins/video.php' &&
+            parsed.searchParams.get('href')
+          ) {
+            return parsed.toString();
+          }
+        }
+
         if (hostMatches('vimeo.com')) {
           const match = parsed.pathname.match(/(?:\/video)?\/(\d+)/);
           return match ? `https://player.vimeo.com/video/${match[1]}` : '';
@@ -268,7 +293,7 @@ https://www.youtube.com/watch?v=..."
         iframe.src = url;
         iframe.title = 'Preview video';
         iframe.loading = 'lazy';
-        iframe.allow = 'fullscreen; picture-in-picture';
+        iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share';
         iframe.allowFullscreen = true;
         iframe.referrerPolicy = 'strict-origin-when-cross-origin';
         wrap.appendChild(iframe);

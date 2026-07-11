@@ -149,6 +149,23 @@ final class GalleryPageController extends Controller
             return $url;
         }
 
+        if ($host === 'www.facebook.com' && $path === 'plugins/video.php') {
+            parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+
+            $facebookUrl = trim((string) ($query['href'] ?? ''));
+            $facebookScheme = strtolower((string) parse_url($facebookUrl, PHP_URL_SCHEME));
+            $facebookHost = strtolower((string) parse_url($facebookUrl, PHP_URL_HOST));
+            $facebookPath = trim((string) parse_url($facebookUrl, PHP_URL_PATH), '/');
+
+            if (
+                $facebookScheme === 'https' &&
+                ($facebookHost === 'facebook.com' || str_ends_with($facebookHost, '.facebook.com')) &&
+                preg_match('~^reel/\d+$~', $facebookPath)
+            ) {
+                return $url;
+            }
+        }
+
         return null;
     }
 
