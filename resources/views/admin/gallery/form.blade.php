@@ -118,7 +118,7 @@
             data-gallery-video-url
             @disabled(! $isVideo)
           >
-          <em>{{ $form['video_hint'] }}</em>
+          <em>{{ $form['video_hint'] }} Facebook menerima URL Reel, Watch, atau Embed. Link share/r belum didukung.</em>
           @error('media_url') <small>{{ $message }}</small> @enderror
         </div>
 
@@ -144,7 +144,7 @@
         @if($isEdit && $item->is_photo && $item->media_url)
           <img src="{{ $item->media_url }}" alt="{{ $item->admin_title }}">
         @elseif($isEdit && $item->is_video && $item->media_url)
-          <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="{{ $item->media_url }}" title="{{ $item->admin_title }}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
         @else
           <span>{{ $form['review_empty'] }}</span>
         @endif
@@ -164,6 +164,7 @@
       const videoInput = form.querySelector('[data-gallery-video-url]');
       const stage = form.querySelector('[data-gallery-preview-stage]');
       const emptyText = @json($form['review_empty']);
+      const layoutClasses = ['is-landscape', 'is-portrait', 'is-square', 'is-image', 'is-empty'];
       let previewUrl = null;
 
       function clearPreviewUrl() {
@@ -178,7 +179,46 @@
 
         const placeholder = document.createElement('span');
         placeholder.textContent = emptyText;
+        setStageLayout('is-empty');
         stage.replaceChildren(placeholder);
+      }
+
+      function setStageLayout(layoutClass) {
+        stage.classList.remove(...layoutClasses);
+        stage.classList.add(layoutClass);
+      }
+
+      function facebookVideoId(url) {
+        try {
+          const parsed = new URL(url);
+          const host = parsed.hostname.toLowerCase();
+          const hostMatches = host === 'facebook.com' || host.endsWith('.facebook.com');
+
+          if (parsed.protocol !== 'https:' || !hostMatches) return '';
+
+          const reelMatch = parsed.pathname.match(/^\/reel\/(\d+)\/?$/);
+          if (reelMatch) return reelMatch[1];
+
+          const watchId = parsed.searchParams.get('v') || '';
+          return /^\/watch\/?$/.test(parsed.pathname) && /^\d+$/.test(watchId)
+            ? watchId
+            : '';
+        } catch {
+          return '';
+        }
+      }
+
+      function facebookEmbedUrl(videoId) {
+        const reelUrl = `https://www.facebook.com/reel/${videoId}/`;
+        const params = new URLSearchParams({
+          height: '476',
+          href: reelUrl,
+          show_text: 'false',
+          width: '267',
+          t: '0',
+        });
+
+        return `https://www.facebook.com/plugins/video.php?${params.toString()}`;
       }
 
       function updateFields({ clear = false } = {}) {
@@ -195,6 +235,16 @@
           if (!isVideo) videoInput.value = '';
           clearPreviewUrl();
           setEmpty();
+          return;
+        }
+
+        if (isVideo && videoInput.value.trim()) {
+          const embedUrl = toPreviewUrl(videoInput.value);
+          setStageLayout(embedUrl ? mediaLayoutClass(embedUrl) : 'is-empty');
+        } else if (!isVideo && stage.querySelector('img')) {
+          setStageLayout('is-image');
+        } else {
+          setStageLayout('is-empty');
         }
       }
 
@@ -217,6 +267,7 @@
         img.alt = file.name;
         img.src = previewUrl;
 
+        setStageLayout('is-image');
         stage.replaceChildren(img);
       }
 
@@ -243,13 +294,22 @@
           }
 
           if (hostMatches('tiktok.com')) {
-            const match = parsed.pathname.match(/\/video\/(\d+)/);
-            return match ? `https://www.tiktok.com/embed/v2/${match[1]}` : '';
+            const match = parsed.pathname.match(/(?:\/video\/|\/(?:player\/v1|embed\/v2)\/)(\d+)/);
+            return match ? `https://www.tiktok.com/player/v1/${match[1]}` : '';
           }
 
           if (hostMatches('instagram.com')) {
             const match = parsed.pathname.match(/^\/(p|reel|tv)\/([^/]+)/);
             return match ? `https://www.instagram.com/${match[1]}/${encodeURIComponent(match[2])}/embed` : '';
+          }
+
+          if (hostMatches('facebook.com') && parsed.protocol === 'https:') {
+            const sourceUrl = parsed.pathname === '/plugins/video.php'
+              ? parsed.searchParams.get('href') || ''
+              : parsed.toString();
+            const videoId = facebookVideoId(sourceUrl);
+
+            return videoId ? facebookEmbedUrl(videoId) : '';
           }
 
           if (hostMatches('vimeo.com')) {
@@ -260,6 +320,23 @@
           return '';
         } catch {
           return '';
+        }
+      }
+
+      function mediaLayoutClass(url) {
+        try {
+          const parsed = new URL(url);
+          const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+
+          if (host === 'facebook.com' || host === 'tiktok.com') return 'is-portrait';
+
+          if (host === 'instagram.com') {
+            return /^\/p\//.test(parsed.pathname) ? 'is-square' : 'is-portrait';
+          }
+
+          return 'is-landscape';
+        } catch {
+          return 'is-landscape';
         }
       }
 
@@ -277,10 +354,11 @@
         iframe.src = embedUrl;
         iframe.title = 'Preview video';
         iframe.loading = 'lazy';
-        iframe.allow = 'fullscreen; picture-in-picture';
+        iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share';
         iframe.allowFullscreen = true;
         iframe.referrerPolicy = 'strict-origin-when-cross-origin';
 
+        setStageLayout(mediaLayoutClass(embedUrl));
         stage.replaceChildren(iframe);
       }
 

@@ -14,6 +14,34 @@
    10. Tilt halus pada ilustrasi hero (opsional)
    ========================================================= */
 
+function galleryMediaLayoutClass(url, isVideo) {
+  if (!isVideo) return 'is-image';
+
+  try {
+    var parsed = new URL(url, window.location.href);
+    var host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+
+    if (host === 'facebook.com' || host === 'tiktok.com') {
+      return 'is-portrait';
+    }
+
+    if (host === 'instagram.com') {
+      return /^\/p\//.test(parsed.pathname) ? 'is-square' : 'is-portrait';
+    }
+
+    return 'is-landscape';
+  } catch (error) {
+    return 'is-landscape';
+  }
+}
+
+function applyGalleryMediaLayout(element, url, isVideo) {
+  if (!element) return;
+
+  element.classList.remove('is-landscape', 'is-portrait', 'is-square', 'is-image');
+  element.classList.add(galleryMediaLayoutClass(url, isVideo));
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- 1. TAHUN BERJALAN DI FOOTER ---------- */
@@ -489,9 +517,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var lastFocused = null;
   var mediaLightbox = null;
   var mediaStage = null;
-  var mediaTitle = null;
-  var mediaCaption = null;
-  var mediaBadge = null;
   var lightboxLabel = storyRoot.getAttribute('data-lightbox-label') || 'Homepage gallery media';
   var closeLabel = storyRoot.getAttribute('data-close-label') || 'Close';
   var videoTitleFallback = storyRoot.getAttribute('data-video-title') || 'Gallery video';
@@ -527,17 +552,11 @@ document.addEventListener('DOMContentLoaded', function () {
       '<article class="homepage-gallery-lightbox__panel">' +
         '<button type="button" class="homepage-gallery-lightbox__close" data-homepage-gallery-close></button>' +
         '<div class="homepage-gallery-lightbox__media" data-homepage-gallery-media></div>' +
-        '<span class="homepage-gallery-lightbox__badge" data-homepage-gallery-badge></span>' +
-        '<h2 data-homepage-gallery-title></h2>' +
-        '<p data-homepage-gallery-caption></p>' +
       '</article>';
 
     document.body.appendChild(mediaLightbox);
 
     mediaStage = mediaLightbox.querySelector('[data-homepage-gallery-media]');
-    mediaTitle = mediaLightbox.querySelector('[data-homepage-gallery-title]');
-    mediaCaption = mediaLightbox.querySelector('[data-homepage-gallery-caption]');
-    mediaBadge = mediaLightbox.querySelector('[data-homepage-gallery-badge]');
 
     Array.prototype.slice.call(mediaLightbox.querySelectorAll('[data-homepage-gallery-close]')).forEach(function (button) {
       button.setAttribute('aria-label', closeLabel);
@@ -553,6 +572,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function clearStoryMedia() {
     if (mediaStage) {
       mediaStage.replaceChildren();
+      mediaStage.classList.remove('is-landscape', 'is-portrait', 'is-square', 'is-image');
     }
   }
 
@@ -610,20 +630,20 @@ document.addEventListener('DOMContentLoaded', function () {
     ensureMediaLightbox();
 
     var title = card.getAttribute('data-title') || '';
-    var caption = card.getAttribute('data-caption') || '';
-    var typeLabel = card.getAttribute('data-type-label') || '';
     var isVideo = card.getAttribute('data-is-video') === '1';
+    var normalizedMediaUrl = isVideo ? normalizeStoryVideoUrl(mediaUrl) : mediaUrl;
 
     lastFocused = document.activeElement;
     clearStoryMedia();
     mediaLightbox.classList.toggle('is-video', isVideo);
+    applyGalleryMediaLayout(mediaStage, normalizedMediaUrl, isVideo);
 
     if (isVideo) {
       var iframe = document.createElement('iframe');
-      iframe.src = normalizeStoryVideoUrl(mediaUrl);
+      iframe.src = normalizedMediaUrl;
       iframe.title = title || videoTitleFallback;
       iframe.loading = 'eager';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; web-share';
       iframe.allowFullscreen = true;
       iframe.setAttribute('allowfullscreen', '');
       iframe.setAttribute('playsinline', '');
@@ -638,12 +658,6 @@ document.addEventListener('DOMContentLoaded', function () {
       image.decoding = 'async';
       mediaStage.appendChild(image);
     }
-
-    mediaTitle.textContent = title;
-    mediaCaption.textContent = caption;
-    mediaCaption.hidden = !caption;
-    mediaBadge.textContent = typeLabel;
-    mediaBadge.hidden = !typeLabel;
 
     mediaLightbox.hidden = false;
     document.body.style.overflow = '';
@@ -875,17 +889,16 @@ document.addEventListener('DOMContentLoaded', function () {
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-wall-card]'));
   var lightbox = document.querySelector('[data-gallery-wall-lightbox]');
   var mediaBox = document.querySelector('[data-gallery-wall-lightbox-media]');
-  var titleBox = document.querySelector('[data-gallery-wall-lightbox-title]');
-  var badgeBox = document.querySelector('[data-gallery-wall-lightbox-badge]');
   var closeButtons = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-wall-lightbox-close]'));
   var lastFocused = null;
 
-  if (!cards.length || !lightbox || !mediaBox || !titleBox || !badgeBox) return;
+  if (!cards.length || !lightbox || !mediaBox) return;
 
   var wallVideoTitleFallback = lightbox.getAttribute('data-gallery-wall-video-title') || 'Gallery video';
 
   function clearMedia() {
     mediaBox.replaceChildren();
+    mediaBox.classList.remove('is-landscape', 'is-portrait', 'is-square', 'is-image');
   }
 
   function openLightbox(card) {
@@ -893,13 +906,13 @@ document.addEventListener('DOMContentLoaded', function () {
     var mediaUrl = card.getAttribute('data-gallery-media-url') || '';
     var isVideo = card.getAttribute('data-gallery-is-video') === '1';
     var emoji = card.getAttribute('data-gallery-emoji') || '📸';
-    var badge = card.getAttribute('data-gallery-badge') || '';
     var g1 = getComputedStyle(card).getPropertyValue('--gallery-g1') || '#DCF1F7';
     var g2 = getComputedStyle(card).getPropertyValue('--gallery-g2') || '#FFC93C';
 
     lastFocused = document.activeElement;
     clearMedia();
     lightbox.classList.toggle('is-video', isVideo);
+    applyGalleryMediaLayout(mediaBox, mediaUrl, isVideo);
 
     mediaBox.style.setProperty('--gallery-g1', g1);
     mediaBox.style.setProperty('--gallery-g2', g2);
@@ -928,10 +941,6 @@ document.addEventListener('DOMContentLoaded', function () {
       fallback.setAttribute('aria-hidden', 'true');
       mediaBox.appendChild(fallback);
     }
-
-    titleBox.textContent = title;
-    badgeBox.textContent = badge;
-    badgeBox.hidden = !badge;
 
     lightbox.hidden = false;
     document.body.style.overflow = 'hidden';

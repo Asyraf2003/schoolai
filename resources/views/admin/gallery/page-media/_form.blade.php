@@ -90,7 +90,7 @@ https://www.youtube.com/watch?v=..."
           >{{ old('media_urls') }}</textarea>
         @endif
 
-        <em>{{ $isEdit ? 'Tempel URL YouTube, TikTok, Instagram, Facebook Reel, atau Vimeo.' : 'Tempel banyak URL. Satu URL per baris. Mendukung YouTube, TikTok, Instagram, Facebook Reel, dan Vimeo.' }}</em>
+        <em>{{ $isEdit ? 'Tempel URL YouTube, TikTok, Instagram, Vimeo, atau Facebook Reel/Watch/Embed. Link Facebook share/r belum didukung.' : 'Tempel banyak URL, satu per baris. Mendukung YouTube, TikTok, Instagram, Vimeo, dan Facebook Reel/Watch/Embed; link share/r belum didukung.' }}</em>
         @error('media_url') <small>{{ $message }}</small> @enderror
         @error('media_urls') <small>{{ $message }}</small> @enderror
       </div>
@@ -114,7 +114,7 @@ https://www.youtube.com/watch?v=..."
       @if($isEdit && $item->is_photo && $item->media_url)
         <img src="{{ $item->media_url }}" alt="{{ $section->admin_title }}">
       @elseif($isEdit && $item->is_video && $item->media_url)
-        <iframe src="{{ $item->media_url }}" title="{{ $section->admin_title }}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <iframe src="{{ $item->media_url }}" title="{{ $section->admin_title }}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       @else
         <span>{{ $isEdit ? 'Pilih foto atau tempel URL video untuk preview.' : 'Pilih banyak foto atau tempel banyak URL embed.' }}</span>
       @endif
@@ -139,6 +139,7 @@ https://www.youtube.com/watch?v=..."
     const videoInput = form.querySelector('[data-gallery-page-media-video-url]');
     const stage = form.querySelector('[data-gallery-page-media-preview-stage]');
     const countText = form.querySelector('[data-gallery-page-media-count]');
+    const layoutClasses = ['is-landscape', 'is-portrait', 'is-square', 'is-image', 'is-video-list', 'is-empty'];
     let previewUrls = [];
 
     function clearPreviewUrls() {
@@ -151,9 +152,48 @@ https://www.youtube.com/watch?v=..."
 
       const placeholder = document.createElement('span');
       placeholder.textContent = message;
+      setStageLayout('is-empty');
       stage.replaceChildren(placeholder);
 
       if (countText) countText.textContent = '';
+    }
+
+    function setStageLayout(layoutClass) {
+      stage.classList.remove(...layoutClasses);
+      stage.classList.add(layoutClass);
+    }
+
+    function facebookVideoId(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.toLowerCase();
+        const hostMatches = host === 'facebook.com' || host.endsWith('.facebook.com');
+
+        if (parsed.protocol !== 'https:' || !hostMatches) return '';
+
+        const reelMatch = parsed.pathname.match(/^\/reel\/(\d+)\/?$/);
+        if (reelMatch) return reelMatch[1];
+
+        const watchId = parsed.searchParams.get('v') || '';
+        return /^\/watch\/?$/.test(parsed.pathname) && /^\d+$/.test(watchId)
+          ? watchId
+          : '';
+      } catch {
+        return '';
+      }
+    }
+
+    function facebookEmbedUrl(videoId) {
+      const reelUrl = `https://www.facebook.com/reel/${videoId}/`;
+      const params = new URLSearchParams({
+        height: '476',
+        href: reelUrl,
+        show_text: 'false',
+        width: '267',
+        t: '0',
+      });
+
+      return `https://www.facebook.com/plugins/video.php?${params.toString()}`;
     }
 
     function updateFields({ clear = false } = {}) {
@@ -170,6 +210,23 @@ https://www.youtube.com/watch?v=..."
         videoInput.value = '';
         clearPreviewUrls();
         setEmpty(isBulk ? 'Pilih banyak foto atau tempel banyak URL embed.' : undefined);
+        return;
+      }
+
+      if (isVideo && videoInput.value.trim()) {
+        const embedUrl = toPreviewUrl(videoInput.value);
+        const currentIframe = stage.querySelector('iframe');
+
+        if (embedUrl && currentIframe) {
+          currentIframe.classList.add('gallery-media-review__video', mediaLayoutClass(embedUrl));
+          setStageLayout('is-video-list');
+        } else {
+          setStageLayout(embedUrl ? 'is-video-list' : 'is-empty');
+        }
+      } else if (!isVideo && stage.querySelector('img')) {
+        setStageLayout('is-image');
+      } else {
+        setStageLayout('is-empty');
       }
     }
 
@@ -196,6 +253,7 @@ https://www.youtube.com/watch?v=..."
         wrap.appendChild(img);
       });
 
+      setStageLayout('is-image');
       stage.replaceChildren(wrap);
 
       if (countText) {
@@ -226,8 +284,8 @@ https://www.youtube.com/watch?v=..."
         }
 
         if (hostMatches('tiktok.com')) {
-          const match = parsed.pathname.match(/\/video\/(\d+)/);
-          return match ? `https://www.tiktok.com/embed/v2/${match[1]}` : '';
+          const match = parsed.pathname.match(/(?:\/video\/|\/(?:player\/v1|embed\/v2)\/)(\d+)/);
+          return match ? `https://www.tiktok.com/player/v1/${match[1]}` : '';
         }
 
         if (hostMatches('instagram.com')) {
@@ -235,29 +293,13 @@ https://www.youtube.com/watch?v=..."
           return match ? `https://www.instagram.com/${match[1]}/${encodeURIComponent(match[2])}/embed` : '';
         }
 
-        if (hostMatches('facebook.com')) {
-          const reelMatch = parsed.pathname.match(/^\/reel\/(\d+)\/?$/);
+        if (hostMatches('facebook.com') && parsed.protocol === 'https:') {
+          const sourceUrl = parsed.pathname === '/plugins/video.php'
+            ? parsed.searchParams.get('href') || ''
+            : parsed.toString();
+          const videoId = facebookVideoId(sourceUrl);
 
-          if (reelMatch) {
-            const reelUrl = `https://www.facebook.com/reel/${reelMatch[1]}/`;
-            const params = new URLSearchParams({
-              height: '476',
-              href: reelUrl,
-              show_text: 'false',
-              width: '267',
-              t: '0',
-            });
-
-            return `https://www.facebook.com/plugins/video.php?${params.toString()}`;
-          }
-
-          if (
-            host === 'www.facebook.com' &&
-            parsed.pathname === '/plugins/video.php' &&
-            parsed.searchParams.get('href')
-          ) {
-            return parsed.toString();
-          }
+          return videoId ? facebookEmbedUrl(videoId) : '';
         }
 
         if (hostMatches('vimeo.com')) {
@@ -268,6 +310,23 @@ https://www.youtube.com/watch?v=..."
         return '';
       } catch {
         return '';
+      }
+    }
+
+    function mediaLayoutClass(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+
+        if (host === 'facebook.com' || host === 'tiktok.com') return 'is-portrait';
+
+        if (host === 'instagram.com') {
+          return /^\/p\//.test(parsed.pathname) ? 'is-square' : 'is-portrait';
+        }
+
+        return 'is-landscape';
+      } catch {
+        return 'is-landscape';
       }
     }
 
@@ -290,6 +349,7 @@ https://www.youtube.com/watch?v=..."
 
       embedUrls.slice(0, 6).forEach((url) => {
         const iframe = document.createElement('iframe');
+        iframe.classList.add('gallery-media-review__video', mediaLayoutClass(url));
         iframe.src = url;
         iframe.title = 'Preview video';
         iframe.loading = 'lazy';
@@ -299,6 +359,7 @@ https://www.youtube.com/watch?v=..."
         wrap.appendChild(iframe);
       });
 
+      setStageLayout('is-video-list');
       stage.replaceChildren(wrap);
 
       if (countText) {

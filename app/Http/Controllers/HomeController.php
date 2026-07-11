@@ -328,7 +328,7 @@ final class HomeController extends Controller
             return $url;
         }
 
-        if ($host === 'www.tiktok.com' && preg_match('~^embed/v2/\d+$~', $path)) {
+        if ($host === 'www.tiktok.com' && preg_match('~^(?:player/v1|embed/v2)/\d+$~', $path)) {
             return $url;
         }
 
@@ -340,7 +340,40 @@ final class HomeController extends Controller
             return $url;
         }
 
+        if ($host === 'www.facebook.com' && $path === 'plugins/video.php' && $this->isTrustedFacebookEmbedUrl($url)) {
+            return $url;
+        }
+
         return null;
+    }
+
+    private function isTrustedFacebookEmbedUrl(string $url): bool
+    {
+        parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+
+        $facebookUrl = trim((string) ($query['href'] ?? ''));
+
+        if ($facebookUrl === '' || ! filter_var($facebookUrl, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $facebookScheme = strtolower((string) parse_url($facebookUrl, PHP_URL_SCHEME));
+        $facebookHost = strtolower((string) parse_url($facebookUrl, PHP_URL_HOST));
+        $facebookPath = trim((string) parse_url($facebookUrl, PHP_URL_PATH), '/');
+        parse_str((string) parse_url($facebookUrl, PHP_URL_QUERY), $facebookQuery);
+
+        if (
+            $facebookScheme !== 'https' ||
+            ($facebookHost !== 'facebook.com' && ! str_ends_with($facebookHost, '.facebook.com'))
+        ) {
+            return false;
+        }
+
+        if (preg_match('~^reel/\d+$~', $facebookPath)) {
+            return true;
+        }
+
+        return $facebookPath === 'watch' && preg_match('~^\d+$~', (string) ($facebookQuery['v'] ?? '')) === 1;
     }
 
 
