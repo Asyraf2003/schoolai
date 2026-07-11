@@ -332,32 +332,22 @@ final class GalleryAdminController extends Controller
             }
         }
 
-        if ($this->hostMatches($host, 'tiktok.com') && preg_match('~(?:^|/)video/(\d+)(?:/|$)~', $path, $match)) {
-            return 'https://www.tiktok.com/embed/v2/' . $match[1];
+        if ($this->hostMatches($host, 'tiktok.com') && preg_match('~(?:^|/)(?:video|player/v1|embed/v2)/(\d+)(?:/|$)~', $path, $match)) {
+            return 'https://www.tiktok.com/player/v1/' . $match[1];
         }
 
         if ($this->hostMatches($host, 'instagram.com') && preg_match('~^(p|reel|tv)/([^/]+)~', $path, $match)) {
             return 'https://www.instagram.com/' . $match[1] . '/' . rawurlencode($match[2]) . '/embed';
         }
 
-        if ($this->hostMatches($host, 'facebook.com')) {
-            if (preg_match('~^reel/(\d+)$~', $path, $match)) {
-                return $this->facebookReelEmbedUrl($match[1]);
-            }
+        if ($scheme === 'https' && $this->hostMatches($host, 'facebook.com')) {
+            $facebookUrl = $path === 'plugins/video.php'
+                ? trim((string) ($query['href'] ?? ''))
+                : $url;
+            $facebookVideoId = $this->facebookVideoId($facebookUrl);
 
-            if ($path === 'plugins/video.php' && ! empty($query['href'])) {
-                $facebookUrl = trim((string) $query['href']);
-                $facebookScheme = strtolower((string) parse_url($facebookUrl, PHP_URL_SCHEME));
-                $facebookHost = strtolower((string) parse_url($facebookUrl, PHP_URL_HOST));
-                $facebookPath = trim((string) parse_url($facebookUrl, PHP_URL_PATH), '/');
-
-                if (
-                    $facebookScheme === 'https' &&
-                    $this->hostMatches($facebookHost, 'facebook.com') &&
-                    preg_match('~^reel/(\d+)$~', $facebookPath, $match)
-                ) {
-                    return $this->facebookReelEmbedUrl($match[1]);
-                }
+            if ($facebookVideoId !== null) {
+                return $this->facebookReelEmbedUrl($facebookVideoId);
             }
         }
 
@@ -366,8 +356,34 @@ final class GalleryAdminController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, Facebook, atau Vimeo.',
+            'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, Vimeo, atau Facebook Reel/Watch. Link Facebook share/r belum didukung.',
         ]);
+    }
+
+    private function facebookVideoId(string $url): ?string
+    {
+        if ($url === '' || ! filter_var($url, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
+        parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+
+        if ($scheme !== 'https' || ! $this->hostMatches($host, 'facebook.com')) {
+            return null;
+        }
+
+        if (preg_match('~^reel/(\d+)$~', $path, $match)) {
+            return $match[1];
+        }
+
+        $watchId = (string) ($query['v'] ?? '');
+
+        return $path === 'watch' && preg_match('~^\d+$~', $watchId)
+            ? $watchId
+            : null;
     }
 
     private function facebookReelEmbedUrl(string $reelId): string
