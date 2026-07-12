@@ -19,6 +19,7 @@ return [
         'ppdb' => 'PPDB',
         'artikel' => 'Artikel',
         'galery' => 'Galeri',
+        'stats' => 'Statistik',
         'view_site' => 'Lihat Website',
         'logout' => 'Logout',
     ],

@@ -200,8 +200,20 @@ Route::middleware(['auth', 'admin.locale'])->group(function () {
     Route::get('/admin/stats', [SiteStatisticController::class, 'edit'])
         ->name('admin.stats.edit');
 
-    Route::put('/admin/stats', [SiteStatisticController::class, 'update'])
+    Route::post('/admin/stats', [SiteStatisticController::class, 'store'])
+        ->name('admin.stats.store');
+
+    Route::put('/admin/stats/{siteStatistic}', [SiteStatisticController::class, 'update'])
         ->name('admin.stats.update');
+
+    Route::patch('/admin/stats/{siteStatistic}/move-up', [SiteStatisticController::class, 'moveUp'])
+        ->name('admin.stats.move-up');
+
+    Route::patch('/admin/stats/{siteStatistic}/move-down', [SiteStatisticController::class, 'moveDown'])
+        ->name('admin.stats.move-down');
+
+    Route::delete('/admin/stats/{siteStatistic}', [SiteStatisticController::class, 'destroy'])
+        ->name('admin.stats.destroy');
 
     Route::redirect('/dashboard', '/admin/dashboard')->name('dashboard');
 

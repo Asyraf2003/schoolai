@@ -6,6 +6,7 @@
       ['key' => 'ppdb', 'label' => __('admin.nav.ppdb'), 'route' => 'admin.ppdb'],
       ['key' => 'artikel', 'label' => __('admin.nav.artikel'), 'route' => 'admin.artikel'],
       ['key' => 'galeri', 'label' => __('admin.nav.galery'), 'route' => 'admin.galeri'],
+      ['key' => 'stats', 'label' => __('admin.nav.stats'), 'route' => 'admin.stats.edit'],
   ];
 @endphp
 
@@ -1209,6 +1210,110 @@
       }
     }
 
+
+
+    .stats-manager-shell {
+      display: grid;
+      gap: 22px;
+    }
+
+    .stats-manager-create {
+      padding: 26px;
+      overflow: visible;
+    }
+
+    .stats-manager-section-head {
+      margin-bottom: 18px;
+    }
+
+    .stats-manager-section-head h2 {
+      margin: 4px 0 0;
+      font-size: 1.45rem;
+      letter-spacing: -0.035em;
+    }
+
+    .stats-manager-section-head p {
+      margin: 8px 0 0;
+      color: var(--admin-muted);
+    }
+
+    .stats-manager-kicker {
+      color: var(--admin-orange);
+      font-size: 0.76rem;
+      font-weight: 950;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .stats-manager-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .stats-manager-card {
+      padding: 22px;
+      border: 1px solid var(--admin-line);
+      border-radius: 26px;
+      background: var(--admin-panel);
+      box-shadow: var(--admin-shadow);
+    }
+
+    .stats-manager-card__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .stats-manager-card__head strong,
+    .stats-manager-card__head small {
+      display: block;
+    }
+
+    .stats-manager-card__head strong {
+      margin-top: 7px;
+      font-size: 1.5rem;
+    }
+
+    .stats-manager-card__head small {
+      margin-top: 4px;
+      color: var(--admin-muted);
+      font-weight: 750;
+    }
+
+    .stats-manager-form {
+      margin: 0;
+    }
+
+    .stats-manager-fields {
+      display: grid;
+      grid-template-columns:
+        minmax(180px, 0.7fr)
+        minmax(280px, 1.3fr)
+        auto;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .stats-manager-card__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--admin-line);
+    }
+
+    .stats-manager-card__actions form {
+      margin: 0;
+    }
+
+    .stats-manager-card__actions button:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+    }
 
     .admin-delete-modal[hidden] {
       display: none;
