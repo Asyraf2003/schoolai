@@ -1212,6 +1212,7 @@
 
 
 
+
     .stats-manager-shell {
       display: grid;
       gap: 22px;
@@ -1235,6 +1236,7 @@
     .stats-manager-section-head p {
       margin: 8px 0 0;
       color: var(--admin-muted);
+      line-height: 1.65;
     }
 
     .stats-manager-kicker {
@@ -1273,11 +1275,12 @@
 
     .stats-manager-card__head strong {
       margin-top: 7px;
-      font-size: 1.5rem;
+      font-size: 1.15rem;
+      line-height: 1.4;
     }
 
     .stats-manager-card__head small {
-      margin-top: 4px;
+      margin-top: 5px;
       color: var(--admin-muted);
       font-weight: 750;
     }
@@ -1286,20 +1289,40 @@
       margin: 0;
     }
 
+    .stats-manager-language-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stats-manager-language {
+      padding: 17px;
+      border: 1px solid var(--admin-line);
+      border-radius: 20px;
+      background: #fffdf8;
+    }
+
+    .stats-manager-language h3 {
+      margin: 0 0 14px;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+    }
+
     .stats-manager-fields {
       display: grid;
-      grid-template-columns:
-        minmax(180px, 0.7fr)
-        minmax(280px, 1.3fr)
-        auto;
-      gap: 14px;
-      align-items: end;
+      grid-template-columns: minmax(130px, 0.65fr) minmax(210px, 1.35fr);
+      gap: 12px;
+    }
+
+    .stats-manager-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
     }
 
     .stats-manager-card__actions {
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
       margin-top: 16px;
       padding-top: 16px;
       border-top: 1px solid var(--admin-line);

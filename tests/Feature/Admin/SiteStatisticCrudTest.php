@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Models\SiteStatistic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,10 +19,16 @@ beforeEach(function (): void {
     $this->actingAs($user);
 });
 
-it('renders the statistic manager inside the admin panel', function (): void {
+afterEach(function (): void {
+    app()->setLocale('id');
+});
+
+it('renders bilingual statistics inside the admin panel', function (): void {
     SiteStatistic::query()->create([
         'value' => '100+',
+        'value_en' => '100+',
         'label' => 'Siswa aktif',
+        'label_en' => 'Active students',
         'sort_order' => 1,
     ]);
 
@@ -31,14 +38,18 @@ it('renders the statistic manager inside the admin panel', function (): void {
         ->assertOk()
         ->assertSee('Statistik Homepage')
         ->assertSee('Tambah Statistik')
-        ->assertSee('100+')
-        ->assertSee('Siswa aktif');
+        ->assertSee('Siswa aktif')
+        ->assertSee('Active students')
+        ->assertDontSee('Naik')
+        ->assertDontSee('Turun');
 });
 
-it('creates and updates a homepage statistic', function (): void {
+it('creates and updates a bilingual homepage statistic', function (): void {
     $createResponse = $this->post(route('admin.stats.store'), [
         'value' => '250+',
+        'value_en' => '250+',
         'label' => 'Siswa dan alumni',
+        'label_en' => 'Students and alumni',
     ]);
 
     $createResponse
@@ -48,14 +59,18 @@ it('creates and updates a homepage statistic', function (): void {
     $statistic = SiteStatistic::query()->firstOrFail();
 
     expect($statistic->value)->toBe('250+')
+        ->and($statistic->value_en)->toBe('250+')
         ->and($statistic->label)->toBe('Siswa dan alumni')
+        ->and($statistic->label_en)->toBe('Students and alumni')
         ->and($statistic->sort_order)->toBe(1);
 
     $updateResponse = $this->put(
         route('admin.stats.update', $statistic),
         [
             'value' => '300+',
+            'value_en' => '300+',
             'label' => 'Siswa aktif dan alumni',
+            'label_en' => 'Active students and alumni',
         ]
     );
 
@@ -66,23 +81,55 @@ it('creates and updates a homepage statistic', function (): void {
     $this->assertDatabaseHas('site_statistics', [
         'id' => $statistic->id,
         'value' => '300+',
+        'value_en' => '300+',
         'label' => 'Siswa aktif dan alumni',
+        'label_en' => 'Active students and alumni',
         'sort_order' => 1,
     ]);
+});
+
+it('returns statistic text for the active public locale', function (): void {
+    SiteStatistic::query()->create([
+        'value' => '100+',
+        'value_en' => '100+',
+        'label' => 'Siswa aktif',
+        'label_en' => 'Active students',
+        'sort_order' => 1,
+    ]);
+
+    app()->setLocale('id');
+
+    $indonesianView = app(HomeController::class)();
+    $indonesianStats = $indonesianView->getData()['stats'];
+
+    expect($indonesianStats[0]['value'])->toBe('100+')
+        ->and($indonesianStats[0]['label'])->toBe('Siswa aktif');
+
+    app()->setLocale('en');
+
+    $englishView = app(HomeController::class)();
+    $englishStats = $englishView->getData()['stats'];
+
+    expect($englishStats[0]['value'])->toBe('100+')
+        ->and($englishStats[0]['label'])->toBe('Active students');
 });
 
 it('prevents creating more than four statistics', function (): void {
     foreach (range(1, SiteStatistic::MAX_ITEMS) as $position) {
         SiteStatistic::query()->create([
             'value' => (string) ($position * 100),
+            'value_en' => (string) ($position * 100),
             'label' => "Statistik {$position}",
+            'label_en' => "Statistic {$position}",
             'sort_order' => $position,
         ]);
     }
 
     $response = $this->post(route('admin.stats.store'), [
         'value' => '500',
+        'value_en' => '500',
         'label' => 'Statistik kelima',
+        'label_en' => 'Fifth statistic',
     ]);
 
     $response->assertSessionHasErrors('value');
@@ -95,44 +142,12 @@ it('prevents creating more than four statistics', function (): void {
     ]);
 });
 
-it('moves statistics up and down while keeping sequential order', function (): void {
-    $first = SiteStatistic::query()->create([
-        'value' => 'A',
-        'label' => 'Pertama',
-        'sort_order' => 1,
-    ]);
-
-    $second = SiteStatistic::query()->create([
-        'value' => 'B',
-        'label' => 'Kedua',
-        'sort_order' => 2,
-    ]);
-
-    $third = SiteStatistic::query()->create([
-        'value' => 'C',
-        'label' => 'Ketiga',
-        'sort_order' => 3,
-    ]);
-
-    $this->patch(route('admin.stats.move-up', $third))
-        ->assertRedirect(route('admin.stats.edit'));
-
-    expect($first->fresh()->sort_order)->toBe(1)
-        ->and($third->fresh()->sort_order)->toBe(2)
-        ->and($second->fresh()->sort_order)->toBe(3);
-
-    $this->patch(route('admin.stats.move-down', $first))
-        ->assertRedirect(route('admin.stats.edit'));
-
-    expect($third->fresh()->sort_order)->toBe(1)
-        ->and($first->fresh()->sort_order)->toBe(2)
-        ->and($second->fresh()->sort_order)->toBe(3);
-});
-
 it('prevents deleting the final statistic and normalizes after deletion', function (): void {
     $first = SiteStatistic::query()->create([
         'value' => '1',
+        'value_en' => '1',
         'label' => 'Statistik wajib',
+        'label_en' => 'Required statistic',
         'sort_order' => 1,
     ]);
 
@@ -148,7 +163,9 @@ it('prevents deleting the final statistic and normalizes after deletion', functi
 
     $second = SiteStatistic::query()->create([
         'value' => '2',
+        'value_en' => '2',
         'label' => 'Statistik kedua',
+        'label_en' => 'Second statistic',
         'sort_order' => 2,
     ]);
 

@@ -42,10 +42,8 @@ final class SiteStatisticController extends Controller
             ]);
         }
 
-        $data = $this->validatedItem($request);
-
         SiteStatistic::query()->create([
-            ...$data,
+            ...$this->validatedItem($request),
             'sort_order' => $this->nextSortOrder(),
         ]);
 
@@ -84,65 +82,29 @@ final class SiteStatisticController extends Controller
             ->with('success', 'Statistik berhasil dihapus.');
     }
 
-    public function moveUp(
-        SiteStatistic $siteStatistic
-    ): RedirectResponse {
-        $this->normalizeSortOrders();
-        $siteStatistic->refresh();
-
-        $previous = SiteStatistic::query()
-            ->where('sort_order', '<', $siteStatistic->sort_order)
-            ->orderByDesc('sort_order')
-            ->orderByDesc('id')
-            ->first();
-
-        if ($previous) {
-            $this->swapSortOrder($siteStatistic, $previous);
-            $this->normalizeSortOrders();
-        }
-
-        return redirect()
-            ->route('admin.stats.edit')
-            ->with('success', 'Urutan statistik berhasil diperbarui.');
-    }
-
-    public function moveDown(
-        SiteStatistic $siteStatistic
-    ): RedirectResponse {
-        $this->normalizeSortOrders();
-        $siteStatistic->refresh();
-
-        $next = SiteStatistic::query()
-            ->where('sort_order', '>', $siteStatistic->sort_order)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->first();
-
-        if ($next) {
-            $this->swapSortOrder($siteStatistic, $next);
-            $this->normalizeSortOrders();
-        }
-
-        return redirect()
-            ->route('admin.stats.edit')
-            ->with('success', 'Urutan statistik berhasil diperbarui.');
-    }
-
     private function validatedItem(Request $request): array
     {
         $validated = $request->validate([
             'value' => ['required', 'string', 'max:80'],
+            'value_en' => ['required', 'string', 'max:80'],
             'label' => ['required', 'string', 'max:120'],
+            'label_en' => ['required', 'string', 'max:120'],
         ], [
-            'value.required' => 'Nilai statistik wajib diisi.',
-            'value.max' => 'Nilai statistik maksimal 80 karakter.',
-            'label.required' => 'Label statistik wajib diisi.',
-            'label.max' => 'Label statistik maksimal 120 karakter.',
+            'value.required' => 'Nilai Indonesia wajib diisi.',
+            'value.max' => 'Nilai Indonesia maksimal 80 karakter.',
+            'value_en.required' => 'Nilai English wajib diisi.',
+            'value_en.max' => 'Nilai English maksimal 80 karakter.',
+            'label.required' => 'Label Indonesia wajib diisi.',
+            'label.max' => 'Label Indonesia maksimal 120 karakter.',
+            'label_en.required' => 'Label English wajib diisi.',
+            'label_en.max' => 'Label English maksimal 120 karakter.',
         ]);
 
         return [
             'value' => trim($validated['value']),
+            'value_en' => trim($validated['value_en']),
             'label' => trim($validated['label']),
+            'label_en' => trim($validated['label_en']),
         ];
     }
 
@@ -152,25 +114,51 @@ final class SiteStatisticController extends Controller
             return;
         }
 
-        $items = __('home.stats.items');
+        $indonesianItems = trans('home.stats.items', [], 'id');
+        $englishItems = trans('home.stats.items', [], 'en');
 
-        if (! is_array($items)) {
+        if (! is_array($indonesianItems)) {
             return;
         }
 
+        $indonesianItems = array_values($indonesianItems);
+        $englishItems = is_array($englishItems)
+            ? array_values($englishItems)
+            : [];
+
         foreach (
-            array_slice($items, 0, SiteStatistic::MAX_ITEMS)
-            as $index => $item
+            array_slice(
+                $indonesianItems,
+                0,
+                SiteStatistic::MAX_ITEMS
+            )
+            as $index => $indonesianItem
         ) {
+            $englishItem = $englishItems[$index] ?? [];
+
             SiteStatistic::query()->create([
-                'value' => trim(
-                    (string) ($item['count'] ?? '')
-                    . (string) ($item['suffix'] ?? '')
+                'value' => $this->translatedValue($indonesianItem),
+                'value_en' => $this->translatedValue($englishItem)
+                    ?: $this->translatedValue($indonesianItem),
+                'label' => trim(
+                    (string) ($indonesianItem['label'] ?? '')
                 ),
-                'label' => trim((string) ($item['label'] ?? '')),
+                'label_en' => trim(
+                    (string) ($englishItem['label'] ?? '')
+                ) ?: trim(
+                    (string) ($indonesianItem['label'] ?? '')
+                ),
                 'sort_order' => $index + 1,
             ]);
         }
+    }
+
+    private function translatedValue(array $item): string
+    {
+        return trim(
+            (string) ($item['count'] ?? '')
+            . (string) ($item['suffix'] ?? '')
+        );
     }
 
     private function nextSortOrder(): int
@@ -200,44 +188,6 @@ final class SiteStatisticController extends Controller
                         'updated_at' => now(),
                     ]);
             }
-        });
-    }
-
-    private function swapSortOrder(
-        SiteStatistic $first,
-        SiteStatistic $second
-    ): void {
-        $firstOrder = (int) $first->sort_order;
-        $secondOrder = (int) $second->sort_order;
-        $temporaryOrder = SiteStatistic::MAX_ITEMS + 100;
-
-        DB::transaction(function () use (
-            $first,
-            $second,
-            $firstOrder,
-            $secondOrder,
-            $temporaryOrder
-        ): void {
-            DB::table('site_statistics')
-                ->where('id', $first->id)
-                ->update([
-                    'sort_order' => $temporaryOrder,
-                    'updated_at' => now(),
-                ]);
-
-            DB::table('site_statistics')
-                ->where('id', $second->id)
-                ->update([
-                    'sort_order' => $firstOrder,
-                    'updated_at' => now(),
-                ]);
-
-            DB::table('site_statistics')
-                ->where('id', $first->id)
-                ->update([
-                    'sort_order' => $secondOrder,
-                    'updated_at' => now(),
-                ]);
         });
     }
 }

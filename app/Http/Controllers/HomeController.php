@@ -87,10 +87,17 @@ final class HomeController extends Controller
             return $this->languageStatsData();
         }
 
+        $locale = app()->getLocale();
+
         $statistics = SiteStatistic::query()
             ->orderBy('sort_order')
             ->orderBy('id')
-            ->get(['value', 'label']);
+            ->get([
+                'value',
+                'value_en',
+                'label',
+                'label_en',
+            ]);
 
         if ($statistics->isEmpty()) {
             return $this->languageStatsData();
@@ -98,8 +105,8 @@ final class HomeController extends Controller
 
         return $statistics
             ->map(fn (SiteStatistic $statistic): array => [
-                'value' => $statistic->value,
-                'label' => $statistic->label,
+                'value' => $statistic->valueForLocale($locale),
+                'label' => $statistic->labelForLocale($locale),
             ])
             ->all();
     }

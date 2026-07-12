@@ -1,5 +1,6 @@
 @php
   $createFailed = old('form_context') === 'create';
+
   $editingId = old('form_context') === 'update'
       ? (int) old('editing_id')
       : null;
@@ -15,8 +16,8 @@
     <div>
       <h1>Statistik Homepage</h1>
       <p>
-        Kelola angka dan label pada pita statistik homepage.
-        Maksimal {{ $maxItems }} item agar tampilan publik tetap rapi.
+        Kelola nilai dan label dalam bahasa Indonesia dan English.
+        Maksimal {{ $maxItems }} item agar tampilan homepage tetap rapi.
       </p>
     </div>
 
@@ -56,7 +57,10 @@
       <div class="stats-manager-section-head">
         <span class="stats-manager-kicker">Tambah data</span>
         <h2 id="stats-create-title">Statistik baru</h2>
-        <p>Contoh nilai: 250+, A, 100%, atau 12 Tahun.</p>
+        <p>
+          Isi kedua bahasa agar halaman English tidak menampilkan
+          label Indonesia secara tidak sengaja.
+        </p>
       </div>
 
       @if($canCreate)
@@ -68,31 +72,77 @@
           @csrf
           <input type="hidden" name="form_context" value="create">
 
-          <div class="stats-manager-fields">
-            <div class="admin-field">
-              <label for="stats-create-value">Nilai</label>
-              <input
-                id="stats-create-value"
-                name="value"
-                maxlength="80"
-                value="{{ $createFailed ? old('value') : '' }}"
-                placeholder="Contoh: 250+"
-                required
-              >
-            </div>
+          <div class="stats-manager-language-grid">
+            <section class="stats-manager-language">
+              <h3>Indonesia</h3>
 
-            <div class="admin-field">
-              <label for="stats-create-label">Label</label>
-              <input
-                id="stats-create-label"
-                name="label"
-                maxlength="120"
-                value="{{ $createFailed ? old('label') : '' }}"
-                placeholder="Contoh: Siswa aktif"
-                required
-              >
-            </div>
+              <div class="stats-manager-fields">
+                <div class="admin-field">
+                  <label for="stats-create-value">
+                    Nilai Indonesia
+                  </label>
+                  <input
+                    id="stats-create-value"
+                    name="value"
+                    maxlength="80"
+                    value="{{ $createFailed ? old('value') : '' }}"
+                    placeholder="Contoh: 250+"
+                    required
+                  >
+                </div>
 
+                <div class="admin-field">
+                  <label for="stats-create-label">
+                    Label Indonesia
+                  </label>
+                  <input
+                    id="stats-create-label"
+                    name="label"
+                    maxlength="120"
+                    value="{{ $createFailed ? old('label') : '' }}"
+                    placeholder="Contoh: Siswa aktif"
+                    required
+                  >
+                </div>
+              </div>
+            </section>
+
+            <section class="stats-manager-language">
+              <h3>English</h3>
+
+              <div class="stats-manager-fields">
+                <div class="admin-field">
+                  <label for="stats-create-value-en">
+                    Nilai English
+                  </label>
+                  <input
+                    id="stats-create-value-en"
+                    name="value_en"
+                    maxlength="80"
+                    value="{{ $createFailed ? old('value_en') : '' }}"
+                    placeholder="Example: 250+"
+                    required
+                  >
+                </div>
+
+                <div class="admin-field">
+                  <label for="stats-create-label-en">
+                    Label English
+                  </label>
+                  <input
+                    id="stats-create-label-en"
+                    name="label_en"
+                    maxlength="120"
+                    value="{{ $createFailed ? old('label_en') : '' }}"
+                    placeholder="Example: Active students"
+                    required
+                  >
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="stats-manager-form-actions">
             <button type="submit" class="admin-primary-action">
               Tambah Statistik
             </button>
@@ -121,8 +171,19 @@
               <span class="stats-manager-kicker">
                 Posisi {{ $index + 1 }}
               </span>
-              <strong>{{ $statistic->value }}</strong>
-              <small>{{ $statistic->label }}</small>
+
+              <strong>
+                {{ $statistic->value }}
+                ·
+                {{ $statistic->label }}
+              </strong>
+
+              <small>
+                EN:
+                {{ $statistic->valueForLocale('en') }}
+                ·
+                {{ $statistic->labelForLocale('en') }}
+              </small>
             </div>
 
             <span class="gallery-lite-status is-active">Aktif</span>
@@ -143,66 +204,80 @@
               value="{{ $statistic->id }}"
             >
 
-            <div class="stats-manager-fields">
-              <div class="admin-field">
-                <label for="stat-value-{{ $statistic->id }}">Nilai</label>
-                <input
-                  id="stat-value-{{ $statistic->id }}"
-                  name="value"
-                  maxlength="80"
-                  value="{{ $isCurrentEdit ? old('value') : $statistic->value }}"
-                  required
-                >
-              </div>
+            <div class="stats-manager-language-grid">
+              <section class="stats-manager-language">
+                <h3>Indonesia</h3>
 
-              <div class="admin-field">
-                <label for="stat-label-{{ $statistic->id }}">Label</label>
-                <input
-                  id="stat-label-{{ $statistic->id }}"
-                  name="label"
-                  maxlength="120"
-                  value="{{ $isCurrentEdit ? old('label') : $statistic->label }}"
-                  required
-                >
-              </div>
+                <div class="stats-manager-fields">
+                  <div class="admin-field">
+                    <label for="stat-value-{{ $statistic->id }}">
+                      Nilai Indonesia
+                    </label>
+                    <input
+                      id="stat-value-{{ $statistic->id }}"
+                      name="value"
+                      maxlength="80"
+                      value="{{ $isCurrentEdit ? old('value') : $statistic->value }}"
+                      required
+                    >
+                  </div>
 
+                  <div class="admin-field">
+                    <label for="stat-label-{{ $statistic->id }}">
+                      Label Indonesia
+                    </label>
+                    <input
+                      id="stat-label-{{ $statistic->id }}"
+                      name="label"
+                      maxlength="120"
+                      value="{{ $isCurrentEdit ? old('label') : $statistic->label }}"
+                      required
+                    >
+                  </div>
+                </div>
+              </section>
+
+              <section class="stats-manager-language">
+                <h3>English</h3>
+
+                <div class="stats-manager-fields">
+                  <div class="admin-field">
+                    <label for="stat-value-en-{{ $statistic->id }}">
+                      Nilai English
+                    </label>
+                    <input
+                      id="stat-value-en-{{ $statistic->id }}"
+                      name="value_en"
+                      maxlength="80"
+                      value="{{ $isCurrentEdit ? old('value_en') : $statistic->valueForLocale('en') }}"
+                      required
+                    >
+                  </div>
+
+                  <div class="admin-field">
+                    <label for="stat-label-en-{{ $statistic->id }}">
+                      Label English
+                    </label>
+                    <input
+                      id="stat-label-en-{{ $statistic->id }}"
+                      name="label_en"
+                      maxlength="120"
+                      value="{{ $isCurrentEdit ? old('label_en') : $statistic->labelForLocale('en') }}"
+                      required
+                    >
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div class="stats-manager-form-actions">
               <button type="submit" class="admin-primary-action">
-                Simpan
+                Simpan Perubahan
               </button>
             </div>
           </form>
 
           <div class="stats-manager-card__actions">
-            <form
-              method="POST"
-              action="{{ route('admin.stats.move-up', $statistic) }}"
-            >
-              @csrf
-              @method('PATCH')
-              <button
-                type="submit"
-                class="admin-small-action admin-small-action--ghost"
-                @disabled($loop->first)
-              >
-                Naik
-              </button>
-            </form>
-
-            <form
-              method="POST"
-              action="{{ route('admin.stats.move-down', $statistic) }}"
-            >
-              @csrf
-              @method('PATCH')
-              <button
-                type="submit"
-                class="admin-small-action admin-small-action--ghost"
-                @disabled($loop->last)
-              >
-                Turun
-              </button>
-            </form>
-
             <form
               method="POST"
               action="{{ route('admin.stats.destroy', $statistic) }}"
