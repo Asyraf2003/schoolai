@@ -39,7 +39,7 @@ final class ArticleAdminController extends Controller
             'mode' => 'create',
             'article' => new Article([
                 'author' => Article::DEFAULT_AUTHOR,
-                'published_date' => today(),
+                'published_at' => now(),
             ]),
         ]);
     }
@@ -115,7 +115,7 @@ final class ArticleAdminController extends Controller
             'link_id' => ['required', 'url', 'max:2048'],
             'link_en' => ['nullable', 'url', 'max:2048'],
             'author' => ['nullable', 'string', 'max:120'],
-            'published_date' => ['nullable', 'date'],
+            'published_at' => ['nullable', 'date'],
         ], [
             'title_id.required' => 'Judul Indonesia wajib diisi.',
             'thumbnail_file.required' => 'Thumbnail wajib diupload.',
@@ -126,7 +126,7 @@ final class ArticleAdminController extends Controller
             'link_id.required' => 'Link artikel Indonesia wajib diisi.',
             'link_id.url' => 'Link artikel Indonesia tidak valid.',
             'link_en.url' => 'Link artikel English tidak valid.',
-            'published_date.date' => 'Tanggal publikasi tidak valid.',
+            'published_at.date' => 'Tanggal dan waktu publikasi tidak valid.',
         ]);
 
         $validator->after(function (Validator $validator) use ($request): void {
@@ -148,7 +148,9 @@ final class ArticleAdminController extends Controller
         $data['description_en'] = $this->nullableText($data['description_en'] ?? null);
         $data['link_en'] = $this->nullableText($data['link_en'] ?? null);
         $data['author'] = $this->nullableText($data['author'] ?? null) ?: Article::DEFAULT_AUTHOR;
-        $data['published_date'] = $data['published_date'] ?? optional($article?->published_date)->toDateString() ?? today()->toDateString();
+        $data['published_at'] = $data['published_at']
+            ?? optional($article?->published_at)->format('Y-m-d H:i:s')
+            ?? now()->format('Y-m-d H:i:s');
 
         return $data;
     }

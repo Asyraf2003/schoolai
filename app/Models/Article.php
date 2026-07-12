@@ -22,10 +22,12 @@ final class Article extends Model
         'link_en',
         'author',
         'published_date',
+        'published_at',
     ];
 
     protected $casts = [
         'published_date' => 'date',
+        'published_at' => 'datetime',
     ];
 
     protected static function booted(): void
@@ -34,17 +36,24 @@ final class Article extends Model
             if (! $article->author) {
                 $article->author = self::DEFAULT_AUTHOR;
             }
+        });
 
-            if (! $article->published_date) {
-                $article->published_date = today();
+        static::saving(function (Article $article): void {
+            if (! $article->published_at) {
+                $article->published_at = now();
             }
+
+            $article->published_date = $article->published_at
+                ->copy()
+                ->timezone(config('app.timezone'))
+                ->toDateString();
         });
     }
 
     public function scopeLatestPublished(Builder $query): Builder
     {
         return $query
-            ->orderByDesc('published_date')
+            ->orderByDesc('published_at')
             ->orderByDesc('id');
     }
 

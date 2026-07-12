@@ -29,7 +29,7 @@
       <div class="gallery-detail-summary__head">
         <div>
           <h1>{{ $article->admin_title }}</h1>
-          <p>{{ $article->authorForDisplay() }} · {{ optional($article->published_date)->format('d M Y') ?? '-' }}</p>
+          <p>{{ $article->authorForDisplay() }} · {{ $article->published_at ? $article->published_at->translatedFormat('d M Y, H:i').' WIB' : '-' }}</p>
         </div>
 
         <div class="admin-inline-actions">
@@ -41,7 +41,7 @@
       <dl class="gallery-detail-list gallery-detail-list--simple">
         <div><dt>Status</dt><dd>Aktif</dd></div>
         <div><dt>Author</dt><dd>{{ $article->authorForDisplay() }}</dd></div>
-        <div><dt>Tanggal</dt><dd>{{ optional($article->published_date)->format('d M Y') ?? '-' }}</dd></div>
+        <div><dt>Waktu Publikasi</dt><dd>{{ $article->published_at ? $article->published_at->translatedFormat('d M Y, H:i').' WIB' : '-' }}</dd></div>
         <div><dt>Judul English</dt><dd>{{ $article->title_en ?: '-' }}</dd></div>
         <div class="gallery-detail-list__wide"><dt>Thumbnail</dt><dd><a href="{{ $article->thumbnail_url }}" target="_blank" rel="noopener">{{ $article->thumbnail_url }}</a></dd></div>
         <div class="gallery-detail-list__wide"><dt>Link Indonesia</dt><dd><a href="{{ $article->link_id }}" target="_blank" rel="noopener">{{ $article->link_id }}</a></dd></div>

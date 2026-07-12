@@ -1,7 +1,7 @@
 @php
   $isEdit = $mode === 'edit';
   $action = $isEdit ? route('admin.artikel.update', $article) : route('admin.artikel.store');
-  $publishedDateValue = old('published_date', optional($article->published_date)->format('Y-m-d') ?? now()->toDateString());
+  $publishedAtValue = old('published_at', optional($article->published_at)->format('Y-m-d\TH:i') ?? now()->format('Y-m-d\TH:i'));
 @endphp
 
 @extends('layouts.admin', [
@@ -103,10 +103,10 @@
         </div>
 
         <div class="admin-field">
-          <label for="published_date">Tanggal Publikasi</label>
-          <input id="published_date" name="published_date" type="date" value="{{ $publishedDateValue }}">
-          <em>Opsional. Kalau kosong, otomatis hari ini.</em>
-          @error('published_date') <small>{{ $message }}</small> @enderror
+          <label for="published_at">Tanggal dan Waktu Publikasi</label>
+          <input id="published_at" name="published_at" type="datetime-local" value="{{ $publishedAtValue }}">
+          <em>Waktu WIB. Kalau kosong, otomatis memakai waktu saat ini.</em>
+          @error('published_at') <small>{{ $message }}</small> @enderror
         </div>
       </div>
     </section>

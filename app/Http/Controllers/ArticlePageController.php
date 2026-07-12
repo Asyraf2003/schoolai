@@ -36,15 +36,17 @@ final class ArticlePageController extends Controller
             ->filter(fn (Article $article): bool => $this->publicArticleUrl($article->linkForLocale($locale)) !== null)
             ->values()
             ->map(function (Article $article, int $index) use ($locale): array {
-                $publishedDate = $article->published_date;
+                $publishedAt = $article->published_at;
 
                 return [
                     'number' => str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT),
                     'title' => $article->titleForLocale($locale),
                     'description' => $article->descriptionForLocale($locale),
                     'author' => $article->authorForDisplay(),
-                    'date' => $publishedDate?->translatedFormat('j F Y') ?? '',
-                    'published_at' => $publishedDate?->toDateString() ?? '',
+                    'date' => $publishedAt
+                        ? $publishedAt->translatedFormat('j F Y, H:i').' WIB'
+                        : '',
+                    'published_at' => $publishedAt?->toIso8601String() ?? '',
                     'href' => $this->publicArticleUrl($article->linkForLocale($locale)),
                     'thumbnail_url' => $this->publicAssetUrl($article->thumbnail_url) ?? $article->thumbnail_url,
                 ];

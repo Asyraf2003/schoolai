@@ -39,7 +39,7 @@
               <strong>{{ $article->admin_title }}</strong>
               <small>
                 {{ $article->authorForDisplay() }}
-                · {{ optional($article->published_date)->format('d M Y') ?? '-' }}
+                · {{ $article->published_at ? $article->published_at->translatedFormat('d M Y, H:i').' WIB' : '-' }}
                 · {{ parse_url($article->link_id, PHP_URL_HOST) ?: 'link' }}
               </small>
             </span>

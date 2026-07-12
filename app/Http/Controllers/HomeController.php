@@ -179,7 +179,7 @@ final class HomeController extends Controller
         $section['items'] = $articles
             ->values()
             ->map(function (Article $article, int $index) use ($locale): array {
-                $publishedDate = $article->published_date;
+                $publishedAt = $article->published_at;
 
                 return [
                     'issue' => str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT),
@@ -191,8 +191,10 @@ final class HomeController extends Controller
                     ),
                     'highlight' => $article->authorForDisplay(),
                     'category' => $locale === 'en' ? 'Article' : 'Artikel',
-                    'date' => $publishedDate?->translatedFormat('j F Y') ?? '',
-                    'published_at' => $publishedDate?->toDateString() ?? '',
+                    'date' => $publishedAt
+                        ? $publishedAt->translatedFormat('j F Y, H:i').' WIB'
+                        : '',
+                    'published_at' => $publishedAt?->toIso8601String() ?? '',
                     'reading_time' => $locale === 'en' ? 'External article' : 'Artikel eksternal',
                     'href' => $this->publicArticleUrl($article->linkForLocale($locale)),
                     'thumbnail_url' => $this->publicAssetUrl($article->thumbnail_url) ?? $article->thumbnail_url,
