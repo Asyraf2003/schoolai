@@ -43,6 +43,13 @@ class GoogleAuthController extends Controller
 
         $googleId = trim((string) $googleUser->getId());
 
+        $bootstrapAdminId = trim(
+            (string) config(
+                'services.google.bootstrap_admin_id',
+                ''
+            )
+        );
+
         if ($email === '') {
             return redirect()
                 ->route('login')
@@ -94,7 +101,8 @@ class GoogleAuthController extends Controller
             function () use (
                 $email,
                 $googleId,
-                $name
+                $name,
+                $bootstrapAdminId
             ): ?User {
                 $state = DB::table('auth_bootstrap_states')
                     ->where('key', self::ADMIN_CLAIM_KEY)
@@ -171,7 +179,12 @@ class GoogleAuthController extends Controller
                 $claimIsOpen = $state
                     && $state->claimed_user_id === null;
 
-                if ($claimIsOpen && ! $adminExists) {
+                if (
+                    $claimIsOpen
+                    && ! $adminExists
+                    && $bootstrapAdminId !== ''
+                    && $googleId === $bootstrapAdminId
+                ) {
                     $user->role = User::ROLE_ADMIN;
                 } elseif (
                     ! in_array(
