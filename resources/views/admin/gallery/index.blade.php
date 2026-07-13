@@ -9,6 +9,7 @@
   <header class="admin-topbar admin-topbar--compact">
     <div>
       <h1>{{ $page['heading'] }}</h1>
+      <p>Item yang dihapus tetap disimpan sebagai arsip. Arsip tidak dapat diedit, tetapi dapat dipulihkan atau menggantikan media aktif yang identik.</p>
     </div>
 
     <div class="admin-inline-actions">
@@ -36,14 +37,17 @@
     <div class="admin-gallery-block__head">
       <div>
         <h2>Galeri Utama Homepage</h2>
+        <p>Hanya item aktif yang dihitung ke batas maksimal dan ditampilkan di homepage.</p>
       </div>
 
-      <span class="admin-counter">{{ $items->count() }}/{{ $limits['max_items'] ?? 6 }} item</span>
+      <span class="admin-counter">
+        {{ $activeItems->count() }}/{{ $limits['max_items'] ?? 6 }} aktif · {{ $archivedItems->count() }} arsip
+      </span>
     </div>
 
-    @if($items->isNotEmpty())
+    @if($activeItems->isNotEmpty() || $archivedItems->isNotEmpty())
       <div class="gallery-lite-list">
-        @foreach($items as $item)
+        @foreach($activeItems as $item)
           <article class="gallery-lite-row">
             <span class="gallery-lite-row__order">{{ str_pad((string) $item->sort_order, 2, '0', STR_PAD_LEFT) }}</span>
 
@@ -79,11 +83,61 @@
                 </button>
               </form>
 
-              <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Hapus item galeri utama ini?">
+              <form method="POST" action="{{ route('admin.galeri.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Hapus item galeri utama ini? Item dan medianya tetap disimpan sebagai arsip.">
                 @csrf
                 @method('DELETE')
                 <button type="button" data-admin-delete-trigger class="admin-small-action admin-small-action--danger">{{ $page['delete_button'] }}</button>
               </form>
+            </span>
+          </article>
+        @endforeach
+
+        @foreach($archivedItems as $item)
+          @php($replacementCandidates = $replacementCandidatesByArchivedId->get($item->getKey(), collect()))
+
+          <article class="gallery-lite-row is-deleted">
+            <span class="gallery-lite-row__order">A{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+
+            <span class="gallery-lite-row__body">
+              <strong>{{ $item->admin_title }}</strong>
+              <small>
+                {{ $item->type_label }} · {{ $item->admin_category }} · {{ $item->media_label }}
+                @if($item->deleted_at)
+                  · dihapus {{ $item->deleted_at->translatedFormat('d M Y, H:i') }} WIB
+                @endif
+              </small>
+            </span>
+
+            <span class="gallery-lite-status is-deleted">Dihapus</span>
+
+            <span class="gallery-lite-actions">
+              @if($canRestoreWithoutReplacement)
+                <form method="POST" action="{{ route('admin.galeri.restore', $item->getKey()) }}">
+                  @csrf
+                  @method('PATCH')
+                  <button type="submit" class="admin-small-action admin-small-action--restore">Pulihkan</button>
+                </form>
+              @endif
+
+              @foreach($replacementCandidates as $candidate)
+                <form
+                  method="POST"
+                  action="{{ route('admin.galeri.restore', $item->getKey()) }}"
+                  data-admin-delete-form
+                  data-admin-delete-message="Pulihkan arsip ini dan pindahkan item aktif #{{ $candidate->getKey() }} ke arsip? Tidak ada media yang dihapus permanen."
+                >
+                  @csrf
+                  @method('PATCH')
+                  <input type="hidden" name="replacement_gallery_item_id" value="{{ $candidate->getKey() }}">
+                  <button type="button" data-admin-delete-trigger class="admin-small-action admin-small-action--restore-swap">
+                    Pulihkan &amp; Gantikan #{{ $candidate->getKey() }}
+                  </button>
+                </form>
+              @endforeach
+
+              @if(! $canRestoreWithoutReplacement && $replacementCandidates->isEmpty())
+                <span class="admin-archive-note">Slot aktif penuh dan tidak ada media identik.</span>
+              @endif
             </span>
           </article>
         @endforeach
