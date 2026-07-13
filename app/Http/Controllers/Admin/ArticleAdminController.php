@@ -23,6 +23,7 @@ final class ArticleAdminController extends Controller
     public function index(): View
     {
         $articles = Article::query()
+            ->withTrashed()
             ->latestPublished()
             ->paginate(20);
 
@@ -87,12 +88,21 @@ final class ArticleAdminController extends Controller
 
     public function destroy(Article $article): RedirectResponse
     {
-        $this->deleteStoredPublicFile($article->thumbnail_url);
         $article->delete();
 
         return redirect()
             ->route('admin.artikel')
-            ->with('success', 'Artikel berhasil dihapus.');
+            ->with('success', 'Artikel dipindahkan ke arsip dan dapat dipulihkan.');
+    }
+
+    public function restore(int $article): RedirectResponse
+    {
+        $trashedArticle = Article::onlyTrashed()->findOrFail($article);
+        $trashedArticle->restore();
+
+        return redirect()
+            ->route('admin.artikel')
+            ->with('success', 'Artikel berhasil dipulihkan.');
     }
 
     private function validatedData(Request $request, ?Article $article = null): array
