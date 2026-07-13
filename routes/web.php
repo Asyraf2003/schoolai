@@ -8,6 +8,7 @@ use App\Http\Controllers\ArticlePageController;
 use App\Http\Controllers\GalleryPageController;
 use App\Http\Controllers\Admin\SiteStatisticController;
 use App\Http\Controllers\Admin\PpdbSettingController;
+use App\Http\Controllers\Admin\PpdbShowcaseAdminController;
 use App\Http\Controllers\Admin\GalleryAdminController;
 use App\Http\Controllers\Admin\ArticleAdminController;
 use App\Http\Controllers\Admin\GalleryPageSectionAdminController;
@@ -96,22 +97,25 @@ Route::middleware([
         ->name('admin.ppdb.toggle');
 
     /* PPDB_SHOWCASE_ADMIN_ROUTES */
-    Route::post('/admin/ppdb/showcase', [PpdbSettingController::class, 'storeShowcaseItem'])
+    Route::post('/admin/ppdb/showcase', [PpdbShowcaseAdminController::class, 'store'])
         ->name('admin.ppdb.showcase.store');
 
-    Route::get('/admin/ppdb/showcase/{ppdbShowcaseItem}/edit', [PpdbSettingController::class, 'editShowcaseItem'])
+    Route::get('/admin/ppdb/showcase/{ppdbShowcaseItem}/edit', [PpdbShowcaseAdminController::class, 'edit'])
         ->name('admin.ppdb.showcase.edit');
 
-    Route::put('/admin/ppdb/showcase/{ppdbShowcaseItem}', [PpdbSettingController::class, 'updateShowcaseItem'])
+    Route::put('/admin/ppdb/showcase/{ppdbShowcaseItem}', [PpdbShowcaseAdminController::class, 'update'])
         ->name('admin.ppdb.showcase.update');
 
-    Route::delete('/admin/ppdb/showcase/{ppdbShowcaseItem}', [PpdbSettingController::class, 'destroyShowcaseItem'])
+    Route::delete('/admin/ppdb/showcase/{ppdbShowcaseItem}', [PpdbShowcaseAdminController::class, 'destroy'])
         ->name('admin.ppdb.showcase.destroy');
 
-    Route::patch('/admin/ppdb/showcase/{ppdbShowcaseItem}/move-up', [PpdbSettingController::class, 'moveShowcaseItemUp'])
+    Route::patch('/admin/ppdb/showcase/{ppdbShowcaseItem}/restore', [PpdbShowcaseAdminController::class, 'restore'])
+        ->name('admin.ppdb.showcase.restore');
+
+    Route::patch('/admin/ppdb/showcase/{ppdbShowcaseItem}/move-up', [PpdbShowcaseAdminController::class, 'moveUp'])
         ->name('admin.ppdb.showcase.move-up');
 
-    Route::patch('/admin/ppdb/showcase/{ppdbShowcaseItem}/move-down', [PpdbSettingController::class, 'moveShowcaseItemDown'])
+    Route::patch('/admin/ppdb/showcase/{ppdbShowcaseItem}/move-down', [PpdbShowcaseAdminController::class, 'moveDown'])
         ->name('admin.ppdb.showcase.move-down');
     /* /PPDB_SHOWCASE_ADMIN_ROUTES */
 
@@ -237,5 +241,8 @@ Route::middleware([
 
     Route::delete('/admin/stats/{siteStatistic}', [SiteStatisticController::class, 'destroy'])
         ->name('admin.stats.destroy');
+
+    Route::patch('/admin/stats/{siteStatistic}/restore', [SiteStatisticController::class, 'restore'])
+        ->name('admin.stats.restore');
 
 });
