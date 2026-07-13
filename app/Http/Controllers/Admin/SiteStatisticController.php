@@ -27,9 +27,33 @@ final class SiteStatisticController extends Controller
             ->orderBy('id')
             ->get();
 
+        $archivedStatistics = SiteStatistic::onlyTrashed()
+            ->orderByDesc('deleted_at')
+            ->orderByDesc('id')
+            ->get();
+
+        $activeByIdentity = $statistics
+            ->filter(fn (SiteStatistic $statistic): bool => $statistic->replacementIdentity() !== null)
+            ->groupBy(fn (SiteStatistic $statistic): string => (string) $statistic->replacementIdentity());
+
+        $replacementCandidatesByArchivedId = $archivedStatistics->mapWithKeys(
+            function (SiteStatistic $archivedStatistic) use ($activeByIdentity): array {
+                $identity = $archivedStatistic->replacementIdentity();
+
+                return [
+                    $archivedStatistic->getKey() => $identity === null
+                        ? collect()
+                        : $activeByIdentity->get($identity, collect())->values(),
+                ];
+            }
+        );
+
         return view('admin.site-statistics.edit', [
             'statistics' => $statistics,
+            'archivedStatistics' => $archivedStatistics,
+            'replacementCandidatesByArchivedId' => $replacementCandidatesByArchivedId,
             'canCreate' => $statistics->count() < SiteStatistic::MAX_ITEMS,
+            'canRestoreWithoutReplacement' => $statistics->count() < SiteStatistic::MAX_ITEMS,
             'maxItems' => SiteStatistic::MAX_ITEMS,
         ]);
     }
@@ -38,7 +62,7 @@ final class SiteStatisticController extends Controller
     {
         if (SiteStatistic::query()->count() >= SiteStatistic::MAX_ITEMS) {
             throw ValidationException::withMessages([
-                'value' => 'Maksimal hanya boleh ada 4 statistik homepage.',
+                'value' => 'Maksimal hanya boleh ada 4 statistik homepage aktif.',
             ]);
         }
 
@@ -70,7 +94,7 @@ final class SiteStatisticController extends Controller
     ): RedirectResponse {
         if (SiteStatistic::query()->count() <= 1) {
             return back()->withErrors([
-                'delete' => 'Minimal harus ada 1 statistik homepage.',
+                'delete' => 'Minimal harus ada 1 statistik homepage aktif.',
             ]);
         }
 
@@ -79,7 +103,76 @@ final class SiteStatisticController extends Controller
 
         return redirect()
             ->route('admin.stats.edit')
-            ->with('success', 'Statistik berhasil dihapus.');
+            ->with('success', 'Statistik dipindahkan ke arsip dan dapat dipulihkan.');
+    }
+
+    public function restore(Request $request, int $siteStatistic): RedirectResponse
+    {
+        $data = $request->validate([
+            'replacement_site_statistic_id' => ['nullable', 'integer'],
+        ]);
+
+        $replacementId = isset($data['replacement_site_statistic_id'])
+            ? (int) $data['replacement_site_statistic_id']
+            : null;
+
+        if ($replacementId === null) {
+            DB::transaction(function () use ($siteStatistic): void {
+                SiteStatistic::query()->lockForUpdate()->get();
+
+                if (SiteStatistic::query()->count() >= SiteStatistic::MAX_ITEMS) {
+                    throw ValidationException::withMessages([
+                        'replacement_site_statistic_id' => 'Sudah ada 4 statistik aktif. Gunakan Pulihkan & Gantikan pada statistik dengan label identik.',
+                    ]);
+                }
+
+                $archivedStatistic = SiteStatistic::onlyTrashed()
+                    ->lockForUpdate()
+                    ->findOrFail($siteStatistic);
+
+                $archivedStatistic->forceFill([
+                    'sort_order' => $this->nextSortOrder(),
+                ])->save();
+                $archivedStatistic->restore();
+            });
+
+            $this->normalizeSortOrders();
+
+            return redirect()
+                ->route('admin.stats.edit')
+                ->with('success', 'Statistik berhasil dipulihkan.');
+        }
+
+        DB::transaction(function () use ($siteStatistic, $replacementId): void {
+            $archivedStatistic = SiteStatistic::onlyTrashed()
+                ->lockForUpdate()
+                ->findOrFail($siteStatistic);
+
+            $replacementStatistic = SiteStatistic::query()
+                ->lockForUpdate()
+                ->findOrFail($replacementId);
+
+            $archivedIdentity = $archivedStatistic->replacementIdentity();
+            $replacementIdentity = $replacementStatistic->replacementIdentity();
+
+            if ($archivedIdentity === null || $archivedIdentity !== $replacementIdentity) {
+                throw ValidationException::withMessages([
+                    'replacement_site_statistic_id' => 'Statistik pengganti harus aktif serta memiliki label Indonesia dan English yang identik.',
+                ]);
+            }
+
+            $sortOrder = $replacementStatistic->sort_order;
+
+            $replacementStatistic->delete();
+            $archivedStatistic->forceFill(['sort_order' => $sortOrder])->save();
+            $archivedStatistic->restore();
+        });
+
+        $this->normalizeSortOrders();
+
+        return redirect()
+            ->route('admin.stats.edit')
+            ->with('success', 'Statistik lama dipulihkan dan statistik aktif pengganti dipindahkan ke arsip.');
     }
 
     private function validatedItem(Request $request): array
@@ -110,7 +203,7 @@ final class SiteStatisticController extends Controller
 
     private function seedDefaultStatisticsIfEmpty(): void
     {
-        if (SiteStatistic::query()->exists()) {
+        if (SiteStatistic::withTrashed()->exists()) {
             return;
         }
 
