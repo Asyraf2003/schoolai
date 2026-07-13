@@ -21,6 +21,6 @@
     color: #4b5563;
 }
 
-.admin-small-action--restore {
+.admin-small-action.admin-small-action--restore {
     background: #166534;
 }
