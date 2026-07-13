@@ -136,6 +136,9 @@ Route::middleware([
     Route::delete('/admin/artikel/{article}', [ArticleAdminController::class, 'destroy'])
         ->name('admin.artikel.destroy');
 
+    Route::patch('/admin/artikel/{article}/restore', [ArticleAdminController::class, 'restore'])
+        ->name('admin.artikel.restore');
+
     /* REAL_GALLERY_CRUD_ROUTES_FINAL */
     Route::get('/admin/galeri', [GalleryAdminController::class, 'index'])
         ->name('admin.galeri');
