@@ -30,6 +30,7 @@ return [
             'google_failed' => 'Login Google gagal. Coba lagi.',
             'google_missing_email' => 'Akun Google tidak memiliki email yang bisa digunakan.',
             'google_unverified_email' => 'Email Google belum terverifikasi.',
+            'google_identity_conflict' => 'Identitas Google tidak cocok dengan akun yang tersimpan. Hubungi administrator.',
         ],
 
         'success' => [

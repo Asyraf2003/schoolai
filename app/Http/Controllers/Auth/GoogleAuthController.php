@@ -95,7 +95,7 @@ class GoogleAuthController extends Controller
                 $email,
                 $googleId,
                 $name
-            ): User {
+            ): ?User {
                 $state = DB::table('auth_bootstrap_states')
                     ->where('key', self::ADMIN_CLAIM_KEY)
                     ->lockForUpdate()
@@ -117,12 +117,32 @@ class GoogleAuthController extends Controller
 
                 $user = User::query()
                     ->where('google_id', $googleId)
+                    ->lockForUpdate()
                     ->first();
 
-                if (! $user) {
-                    $user = User::query()
-                        ->where('email', $email)
-                        ->first();
+                $emailOwner = User::query()
+                    ->where('email', $email)
+                    ->lockForUpdate()
+                    ->first();
+
+                /*
+                 * Jangan pernah menautkan identitas Google baru
+                 * ke akun lama hanya karena alamat email sama.
+                 *
+                 * Jika email sudah digunakan tetapi google_id
+                 * tidak cocok, proses harus ditolak dan diperbaiki
+                 * melalui prosedur administratif yang terpisah.
+                 */
+                if (! $user && $emailOwner) {
+                    return null;
+                }
+
+                if (
+                    $user
+                    && $emailOwner
+                    && $emailOwner->getKey() !== $user->getKey()
+                ) {
+                    return null;
                 }
 
                 if (! $user) {
@@ -181,6 +201,16 @@ class GoogleAuthController extends Controller
             },
             attempts: 3,
         );
+
+        if (! $user) {
+            return redirect()
+                ->route('login')
+                ->withErrors([
+                    'email' => __(
+                        'app.auth.errors.google_identity_conflict'
+                    ),
+                ]);
+        }
 
         Auth::login($user, remember: true);
         $request->session()->regenerate();

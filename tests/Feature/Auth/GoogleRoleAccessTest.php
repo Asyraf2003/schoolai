@@ -79,6 +79,56 @@ it('makes only the first Google account an admin', function (): void {
         )->toBe(1);
 });
 
+it('rejects automatic linking to an unlinked admin email', function (): void {
+    $admin = User::query()->forceCreate([
+        'name' => 'Unlinked Admin',
+        'email' => 'unlinked-admin@example.test',
+        'email_verified_at' => now(),
+        'password' => Hash::make('unused-password'),
+        'google_id' => null,
+        'role' => User::ROLE_ADMIN,
+    ]);
+
+    fakeVerifiedGoogleLogin(
+        'attacker-google-identity',
+        'unlinked-admin@example.test',
+        'Different Google Identity'
+    );
+
+    $this->get(route('google.callback'))
+        ->assertRedirect(route('login'))
+        ->assertSessionHasErrors('email');
+
+    $this->assertGuest();
+
+    $admin->refresh();
+
+    expect($admin->google_id)->toBeNull()
+        ->and($admin->role)->toBe(User::ROLE_ADMIN);
+});
+
+it('allows an identity already linked by Google ID', function (): void {
+    $admin = User::query()->forceCreate([
+        'name' => 'Linked Admin',
+        'email' => 'linked-admin@example.test',
+        'email_verified_at' => now(),
+        'password' => Hash::make('unused-password'),
+        'google_id' => 'linked-google-identity',
+        'role' => User::ROLE_ADMIN,
+    ]);
+
+    fakeVerifiedGoogleLogin(
+        'linked-google-identity',
+        'linked-admin@example.test',
+        'Linked Admin'
+    );
+
+    $this->get(route('google.callback'))
+        ->assertRedirect(route('admin.dashboard'));
+
+    $this->assertAuthenticatedAs($admin);
+});
+
 it('protects every named admin route with admin middleware', function (): void {
     $adminRoutes = collect(Route::getRoutes())
         ->filter(
