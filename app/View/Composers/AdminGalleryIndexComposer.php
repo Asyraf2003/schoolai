@@ -23,7 +23,13 @@ final class AdminGalleryIndexComposer
             return;
         }
 
-        $activeSections = collect($view->getData()['pageSections'] ?? []);
+        $viewData = $view->getData();
+        $activeSections = $viewData['pageSections'] ?? collect();
+
+        if (! $activeSections instanceof Collection) {
+            $activeSections = collect($activeSections);
+        }
+
         $archivedSections = GalleryPageSection::onlyTrashed()
             ->withCount(['mediaItemsWithTrashed as media_items_count'])
             ->orderByDesc('deleted_at')
