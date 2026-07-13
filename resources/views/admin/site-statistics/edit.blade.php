@@ -4,6 +4,9 @@
   $editingId = old('form_context') === 'update'
       ? (int) old('editing_id')
       : null;
+
+  $archivedStatistics = collect($archivedStatistics ?? []);
+  $replacementCandidatesByArchivedId = collect($replacementCandidatesByArchivedId ?? []);
 @endphp
 
 @extends('layouts.admin', [
@@ -17,13 +20,13 @@
       <h1>Statistik Homepage</h1>
       <p>
         Kelola nilai dan label dalam bahasa Indonesia dan English.
-        Maksimal {{ $maxItems }} item agar tampilan homepage tetap rapi.
+        Maksimal {{ $maxItems }} item aktif agar tampilan homepage tetap rapi.
       </p>
     </div>
 
     <div class="admin-inline-actions">
       <span class="admin-counter">
-        {{ $statistics->count() }}/{{ $maxItems }} statistik
+        {{ $statistics->count() }}/{{ $maxItems }} aktif · {{ $archivedStatistics->count() }} arsip
       </span>
 
       <a
@@ -59,7 +62,7 @@
         <h2 id="stats-create-title">Statistik baru</h2>
         <p>
           Isi kedua bahasa agar halaman English tidak menampilkan
-          label Indonesia secara tidak sengaja.
+          label Indonesia secara tidak sengaja. Arsip tidak dihitung ke batas aktif.
         </p>
       </div>
 
@@ -150,8 +153,8 @@
         </form>
       @else
         <p class="admin-notice">
-          Batas {{ $maxItems }} statistik sudah tercapai.
-          Hapus salah satu item sebelum menambahkan yang baru.
+          Batas {{ $maxItems }} statistik aktif sudah tercapai.
+          Arsipkan salah satu item aktif atau gunakan Pulihkan &amp; Gantikan pada arsip yang identik.
         </p>
       @endif
     </section>
@@ -282,7 +285,7 @@
               method="POST"
               action="{{ route('admin.stats.destroy', $statistic) }}"
               data-admin-delete-form
-              data-admin-delete-message="Hapus statistik {{ $statistic->value }} · {{ $statistic->label }}?"
+              data-admin-delete-message="Hapus statistik {{ $statistic->value }} · {{ $statistic->label }}? Data tetap disimpan sebagai arsip."
             >
               @csrf
               @method('DELETE')
@@ -299,6 +302,56 @@
           </div>
         </article>
       @endforeach
+
+      @if($archivedStatistics->isNotEmpty())
+        <div class="stats-manager-archive-head">
+          <span class="stats-manager-kicker">Arsip</span>
+          <h2>Statistik yang dihapus</h2>
+          <p>Arsip tidak muncul di homepage dan tidak dapat diedit sebelum dipulihkan.</p>
+        </div>
+
+        @foreach($archivedStatistics as $index => $statistic)
+          @php($replacementCandidates = $replacementCandidatesByArchivedId->get($statistic->getKey(), collect()))
+
+          <article class="stats-manager-card is-deleted">
+            <header class="stats-manager-card__head">
+              <div>
+                <span class="stats-manager-kicker">Arsip A{{ $index + 1 }}</span>
+                <strong>{{ $statistic->value }} · {{ $statistic->label }}</strong>
+                <small>
+                  EN: {{ $statistic->valueForLocale('en') }} · {{ $statistic->labelForLocale('en') }}
+                  · dihapus {{ optional($statistic->deleted_at)->translatedFormat('d M Y, H:i') }} WIB
+                </small>
+              </div>
+
+              <span class="gallery-lite-status is-deleted">Dihapus</span>
+            </header>
+
+            <div class="stats-manager-card__actions">
+              @if($canRestoreWithoutReplacement)
+                <form method="POST" action="{{ route('admin.stats.restore', $statistic->getKey()) }}">
+                  @csrf
+                  @method('PATCH')
+                  <button type="submit" class="admin-small-action admin-small-action--restore">Pulihkan</button>
+                </form>
+              @endif
+
+              @foreach($replacementCandidates as $candidate)
+                <form method="POST" action="{{ route('admin.stats.restore', $statistic->getKey()) }}" data-admin-delete-form data-admin-delete-message="Pulihkan statistik arsip ini dan pindahkan statistik aktif #{{ $candidate->getKey() }} ke arsip?">
+                  @csrf
+                  @method('PATCH')
+                  <input type="hidden" name="replacement_site_statistic_id" value="{{ $candidate->getKey() }}">
+                  <button type="button" data-admin-delete-trigger class="admin-small-action admin-small-action--restore-swap">Pulihkan &amp; Gantikan #{{ $candidate->getKey() }}</button>
+                </form>
+              @endforeach
+
+              @if(! $canRestoreWithoutReplacement && $replacementCandidates->isEmpty())
+                <span class="admin-archive-note">Empat slot aktif penuh dan tidak ada statistik berlabel identik.</span>
+              @endif
+            </div>
+          </article>
+        @endforeach
+      @endif
     </section>
   </div>
 @endsection
