@@ -10,10 +10,11 @@ use Laravel\Socialite\Two\User as GoogleUser;
 
 uses(RefreshDatabase::class);
 
-function fakeVerifiedGoogleLogin(
+function fakeGoogleLogin(
     string $id,
     string $email,
-    string $name
+    string $name,
+    array $rawUser
 ): void {
     $googleUser = (new GoogleUser())->map([
         'id' => $id,
@@ -22,9 +23,7 @@ function fakeVerifiedGoogleLogin(
         'nickname' => null,
     ]);
 
-    $googleUser->user = [
-        'email_verified' => true,
-    ];
+    $googleUser->user = $rawUser;
 
     $provider = Mockery::mock();
 
@@ -37,6 +36,123 @@ function fakeVerifiedGoogleLogin(
         ->once()
         ->andReturn($provider);
 }
+
+function fakeVerifiedGoogleLogin(
+    string $id,
+    string $email,
+    string $name
+): void {
+    fakeGoogleLogin(
+        $id,
+        $email,
+        $name,
+        ['email_verified' => true]
+    );
+}
+
+it(
+    'accepts explicit Google email verification attributes',
+    function (array $rawUser, string $googleId): void {
+        config([
+            'services.google.bootstrap_admin_id' => '',
+        ]);
+
+        $email = $googleId.'@example.test';
+
+        fakeGoogleLogin(
+            $googleId,
+            $email,
+            'Verified Google User',
+            $rawUser
+        );
+
+        $this->get(route('google.callback'))
+            ->assertRedirect(route('account.locked'));
+
+        $this->assertAuthenticated();
+
+        $user = User::query()
+            ->where('google_id', $googleId)
+            ->firstOrFail();
+
+        expect($user->email)->toBe($email);
+        expect($user->email_verified_at)->not->toBeNull();
+    }
+)->with([
+    'email_verified true' => [
+        ['email_verified' => true],
+        'verified-primary',
+    ],
+    'verified_email true' => [
+        ['verified_email' => true],
+        'verified-fallback',
+    ],
+]);
+
+it(
+    'rejects Google email verification unless explicitly true',
+    function (array $rawUser, string $googleId): void {
+        $email = $googleId.'@example.test';
+
+        fakeGoogleLogin(
+            $googleId,
+            $email,
+            'Unverified Google User',
+            $rawUser
+        );
+
+        $this->get(route('google.callback'))
+            ->assertRedirect(route('login'))
+            ->assertSessionHasErrors('email');
+
+        $this->assertGuest();
+
+        $this->assertDatabaseMissing('users', [
+            'google_id' => $googleId,
+        ]);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => $email,
+        ]);
+    }
+)->with([
+    'attribute missing' => [
+        [],
+        'verification-missing',
+    ],
+    'boolean false' => [
+        ['email_verified' => false],
+        'verification-false-bool',
+    ],
+    'string false' => [
+        ['email_verified' => 'false'],
+        'verification-false-string',
+    ],
+    'integer zero' => [
+        ['email_verified' => 0],
+        'verification-zero-int',
+    ],
+    'string zero' => [
+        ['email_verified' => '0'],
+        'verification-zero-string',
+    ],
+    'null value' => [
+        ['email_verified' => null],
+        'verification-null',
+    ],
+    'integer one' => [
+        ['email_verified' => 1],
+        'verification-one-int',
+    ],
+    'string true' => [
+        ['email_verified' => 'true'],
+        'verification-true-string',
+    ],
+    'unknown string' => [
+        ['email_verified' => 'yes'],
+        'verification-unknown-string',
+    ],
+]);
 
 it('allows only the configured Google ID to claim the first admin role', function (): void {
     config([
