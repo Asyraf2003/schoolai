@@ -122,9 +122,18 @@ it('blocks regular users from admin pages and actions', function (): void {
         'label' => 'Tidak boleh dibuat',
     ]);
 
-    $this->get(route('account.locked'))
+    $this->withSession([
+        'locale' => 'id',
+    ])->get(route('account.locked'))
         ->assertOk()
         ->assertSee('Konten belum tersedia di sini')
+        ->assertSee('regular@example.test');
+
+    $this->withSession([
+        'locale' => 'en',
+    ])->get(route('account.locked'))
+        ->assertOk()
+        ->assertSee('Content is not available here yet')
         ->assertSee('regular@example.test');
 });
 
