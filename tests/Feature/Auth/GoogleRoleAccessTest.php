@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -37,46 +38,119 @@ function fakeVerifiedGoogleLogin(
         ->andReturn($provider);
 }
 
-it('makes only the first Google account an admin', function (): void {
-    fakeVerifiedGoogleLogin(
-        'google-admin-1',
-        'first-admin@example.test',
-        'First Admin'
-    );
-
-    $this->get(route('google.callback'))
-        ->assertRedirect(route('admin.dashboard'));
-
-    $first = User::query()
-        ->where('email', 'first-admin@example.test')
-        ->firstOrFail();
-
-    expect($first->role)->toBe(User::ROLE_ADMIN)
-        ->and($first->google_id)->toBe('google-admin-1');
-
-    $this->post(route('logout'))
-        ->assertRedirect(route('login'));
+it('allows only the configured Google ID to claim the first admin role', function (): void {
+    config([
+        'services.google.bootstrap_admin_id' => 'google-admin-allowed',
+    ]);
 
     fakeVerifiedGoogleLogin(
-        'google-user-2',
-        'regular-user@example.test',
-        'Regular User'
+        'google-outsider',
+        'outsider@example.test',
+        'Outsider'
     );
 
     $this->get(route('google.callback'))
         ->assertRedirect(route('account.locked'));
 
-    $second = User::query()
-        ->where('email', 'regular-user@example.test')
+    $outsider = User::query()
+        ->where('google_id', 'google-outsider')
         ->firstOrFail();
 
-    expect($second->role)->toBe(User::ROLE_USER)
-        ->and($second->google_id)->toBe('google-user-2')
-        ->and(
-            User::query()
-                ->where('role', User::ROLE_ADMIN)
-                ->count()
-        )->toBe(1);
+    $stateAfterOutsider = DB::table('auth_bootstrap_states')
+        ->where('key', 'first_google_admin')
+        ->first();
+
+    expect($outsider->role)->toBe(User::ROLE_USER);
+    expect($stateAfterOutsider)->not->toBeNull();
+    expect($stateAfterOutsider->claimed_user_id)->toBeNull();
+
+    $this->post(route('logout'))
+        ->assertRedirect(route('login'));
+
+    fakeVerifiedGoogleLogin(
+        'google-admin-allowed',
+        'allowed-admin@example.test',
+        'Allowed Admin'
+    );
+
+    $this->get(route('google.callback'))
+        ->assertRedirect(route('admin.dashboard'));
+
+    $admin = User::query()
+        ->where('google_id', 'google-admin-allowed')
+        ->firstOrFail();
+
+    $claimedState = DB::table('auth_bootstrap_states')
+        ->where('key', 'first_google_admin')
+        ->first();
+
+    expect($admin->role)->toBe(User::ROLE_ADMIN);
+    expect($claimedState)->not->toBeNull();
+    expect($claimedState->claimed_user_id)->toBe($admin->id);
+
+    $this->post(route('logout'))
+        ->assertRedirect(route('login'));
+
+    config([
+        'services.google.bootstrap_admin_id' => 'google-second-candidate',
+    ]);
+
+    fakeVerifiedGoogleLogin(
+        'google-second-candidate',
+        'second-candidate@example.test',
+        'Second Candidate'
+    );
+
+    $this->get(route('google.callback'))
+        ->assertRedirect(route('account.locked'));
+
+    $secondCandidate = User::query()
+        ->where('google_id', 'google-second-candidate')
+        ->firstOrFail();
+
+    $finalState = DB::table('auth_bootstrap_states')
+        ->where('key', 'first_google_admin')
+        ->first();
+
+    expect($secondCandidate->role)->toBe(User::ROLE_USER);
+    expect(
+        User::query()
+            ->where('role', User::ROLE_ADMIN)
+            ->count()
+    )->toBe(1);
+    expect($finalState->claimed_user_id)->toBe($admin->id);
+});
+
+it('fails closed when bootstrap admin Google ID is empty', function (): void {
+    config([
+        'services.google.bootstrap_admin_id' => '',
+    ]);
+
+    fakeVerifiedGoogleLogin(
+        'google-unconfigured',
+        'unconfigured@example.test',
+        'Unconfigured User'
+    );
+
+    $this->get(route('google.callback'))
+        ->assertRedirect(route('account.locked'));
+
+    $user = User::query()
+        ->where('google_id', 'google-unconfigured')
+        ->firstOrFail();
+
+    $state = DB::table('auth_bootstrap_states')
+        ->where('key', 'first_google_admin')
+        ->first();
+
+    expect($user->role)->toBe(User::ROLE_USER);
+    expect($state)->not->toBeNull();
+    expect($state->claimed_user_id)->toBeNull();
+    expect(
+        User::query()
+            ->where('role', User::ROLE_ADMIN)
+            ->count()
+    )->toBe(0);
 });
 
 it('rejects automatic linking to an unlinked admin email', function (): void {
