@@ -70,16 +70,15 @@ class GoogleAuthController extends Controller
 
         $rawUser = $googleUser->user ?? [];
 
-        $emailVerified = $rawUser['email_verified']
-            ?? $rawUser['verified_email']
-            ?? true;
+        if (array_key_exists('email_verified', $rawUser)) {
+            $emailVerified = $rawUser['email_verified'];
+        } elseif (array_key_exists('verified_email', $rawUser)) {
+            $emailVerified = $rawUser['verified_email'];
+        } else {
+            $emailVerified = null;
+        }
 
-        if (
-            $emailVerified === false
-            || $emailVerified === 'false'
-            || $emailVerified === 0
-            || $emailVerified === '0'
-        ) {
+        if ($emailVerified !== true) {
             return redirect()
                 ->route('login')
                 ->withErrors([
