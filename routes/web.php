@@ -172,6 +172,9 @@ Route::middleware([
     Route::delete('/admin/galeri/bagian/{galleryPageSection}', [GalleryPageSectionAdminController::class, 'destroy'])
         ->name('admin.galeri.sections.destroy');
 
+    Route::patch('/admin/galeri/bagian/{galleryPageSection}/restore', [GalleryPageSectionAdminController::class, 'restore'])
+        ->name('admin.galeri.sections.restore');
+
     Route::get('/admin/galeri/bagian/{galleryPageSection}/media/create', [GalleryPageMediaAdminController::class, 'create'])
         ->name('admin.galeri.section-media.create');
 
@@ -192,6 +195,9 @@ Route::middleware([
 
     Route::delete('/admin/galeri/media/{galleryPageMediaItem}', [GalleryPageMediaAdminController::class, 'destroy'])
         ->name('admin.galeri.section-media.destroy');
+
+    Route::patch('/admin/galeri/media/{galleryPageMediaItem}/restore', [GalleryPageMediaAdminController::class, 'restore'])
+        ->name('admin.galeri.section-media.restore');
     /* /GALLERY_PAGE_SECTION_ADMIN_ROUTES_FINAL */
 
     Route::get('/admin/galeri/{galleryItem}', [GalleryAdminController::class, 'show'])
