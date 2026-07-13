@@ -48,3 +48,12 @@
     font: inherit;
     font-size: 0.82rem;
 }
+
+.admin-archive-note {
+    max-width: 230px;
+    color: var(--admin-muted);
+    font-size: 0.78rem;
+    font-weight: 750;
+    line-height: 1.35;
+    text-align: right;
+}
