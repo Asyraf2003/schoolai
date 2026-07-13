@@ -14,12 +14,8 @@ return [
         'login' => [
             'title' => 'Login',
             'heading' => 'Login',
+            'description' => 'Sign in with your Google account to continue.',
             'google_button' => 'Sign in with Google',
-            'separator' => 'or sign in with email and password',
-            'email_label' => 'Email',
-            'password_label' => 'Password',
-            'remember_label' => 'Remember me',
-            'submit' => 'Sign in',
         ],
 
         'account' => [
@@ -31,7 +27,6 @@ return [
         ],
 
         'errors' => [
-            'invalid_credentials' => 'The email or password is incorrect.',
             'google_failed' => 'Google login failed. Please try again.',
             'google_missing_email' => 'The Google account does not have a usable email address.',
             'google_unverified_email' => 'The Google email address is not verified yet.',

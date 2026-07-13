@@ -155,32 +155,29 @@ it('keeps admins out of the regular user page', function (): void {
         ->assertOk();
 });
 
-it('redirects password login according to role', function (): void {
-    User::query()->forceCreate([
-        'name' => 'Password User',
-        'email' => 'password-user@example.test',
-        'email_verified_at' => now(),
-        'password' => Hash::make('password'),
-        'role' => User::ROLE_USER,
-    ]);
+it('shows Google as the only login method', function (): void {
+    $this->withSession([
+        'locale' => 'id',
+    ])->get(route('login'))
+        ->assertOk()
+        ->assertSee('Masuk dengan Google')
+        ->assertDontSee('name="email"', false)
+        ->assertDontSee('name="password"', false);
 
-    $this->post(route('login.store'), [
-        'email' => 'password-user@example.test',
+    $this->withSession([
+        'locale' => 'en',
+    ])->get(route('login'))
+        ->assertOk()
+        ->assertSee('Sign in with Google')
+        ->assertDontSee('name="email"', false)
+        ->assertDontSee('name="password"', false);
+});
+
+it('does not expose a manual password login route', function (): void {
+    expect(Route::has('login.store'))->toBeFalse();
+
+    $this->post('/login', [
+        'email' => 'admin@example.test',
         'password' => 'password',
-    ])->assertRedirect(route('account.locked'));
-
-    $this->post(route('logout'));
-
-    User::query()->forceCreate([
-        'name' => 'Password Admin',
-        'email' => 'password-admin@example.test',
-        'email_verified_at' => now(),
-        'password' => Hash::make('password'),
-        'role' => User::ROLE_ADMIN,
-    ]);
-
-    $this->post(route('login.store'), [
-        'email' => 'password-admin@example.test',
-        'password' => 'password',
-    ])->assertRedirect(route('admin.dashboard'));
+    ])->assertStatus(405);
 });

@@ -14,12 +14,8 @@ return [
         'login' => [
             'title' => 'Login',
             'heading' => 'Login',
+            'description' => 'Masuk menggunakan akun Google untuk melanjutkan.',
             'google_button' => 'Masuk dengan Google',
-            'separator' => 'atau masuk dengan email dan password',
-            'email_label' => 'Email',
-            'password_label' => 'Password',
-            'remember_label' => 'Ingat saya',
-            'submit' => 'Masuk',
         ],
 
         'account' => [
@@ -31,7 +27,6 @@ return [
         ],
 
         'errors' => [
-            'invalid_credentials' => 'Email atau password salah.',
             'google_failed' => 'Login Google gagal. Coba lagi.',
             'google_missing_email' => 'Akun Google tidak memiliki email yang bisa digunakan.',
             'google_unverified_email' => 'Email Google belum terverifikasi.',
