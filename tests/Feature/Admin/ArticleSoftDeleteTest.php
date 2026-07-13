@@ -99,3 +99,131 @@ it('restores an archived article and makes it public again', function (): void {
         ->assertOk()
         ->assertSee('Artikel soft delete test');
 });
+
+it('normalizes equivalent article links for replacement matching', function (): void {
+    $first = Article::normalizedLinkIdentity(
+        'HTTPS://Example.COM:443/artikel-sama/?b=2&a=1#bagian'
+    );
+
+    $second = Article::normalizedLinkIdentity(
+        'https://example.com/artikel-sama?a=1&b=2'
+    );
+
+    expect($first)
+        ->toBe('https://example.com/artikel-sama?a=1&b=2')
+        ->and($second)
+        ->toBe($first);
+});
+
+it('offers restore and replace only for an active article with an identical normalized link', function (): void {
+    $this->article->update([
+        'link_id' => 'HTTPS://Example.COM:443/artikel-sama/?b=2&a=1#arsip',
+    ]);
+    $this->article->delete();
+
+    $identicalActive = Article::query()->create([
+        'title_id' => 'Artikel aktif identik',
+        'thumbnail_url' => '/storage/articles/thumbnails/identical.jpg',
+        'link_id' => 'https://example.com/artikel-sama?a=1&b=2',
+        'author' => 'Admin Test',
+        'published_at' => now()->addMinute(),
+    ]);
+
+    $unrelatedActive = Article::query()->create([
+        'title_id' => 'Artikel aktif berbeda',
+        'thumbnail_url' => '/storage/articles/thumbnails/unrelated.jpg',
+        'link_id' => 'https://example.com/artikel-berbeda',
+        'author' => 'Admin Test',
+        'published_at' => now()->addMinutes(2),
+    ]);
+
+    $this->get(route('admin.artikel'))
+        ->assertOk()
+        ->assertSee('Pulihkan &amp; Gantikan', false)
+        ->assertSee('Gantikan ID ' . $identicalActive->id)
+        ->assertDontSee('Gantikan ID ' . $unrelatedActive->id);
+});
+
+it('restores an archived article and archives the identical active replacement atomically', function (): void {
+    Storage::disk('public')->put(
+        'articles/thumbnails/replacement.jpg',
+        'replacement-thumbnail'
+    );
+
+    $this->article->update([
+        'link_id' => 'HTTPS://Example.COM:443/artikel-sama/?b=2&a=1#arsip',
+    ]);
+    $this->article->delete();
+
+    $replacement = Article::query()->create([
+        'title_id' => 'Artikel pengganti aktif',
+        'thumbnail_url' => '/storage/articles/thumbnails/replacement.jpg',
+        'link_id' => 'https://example.com/artikel-sama?a=1&b=2',
+        'author' => 'Admin Test',
+        'published_at' => now()->addMinute(),
+    ]);
+
+    $response = $this->patch(
+        route('admin.artikel.restore', $this->article->id),
+        ['replacement_article_id' => $replacement->id]
+    );
+
+    $response
+        ->assertRedirect(route('admin.artikel'))
+        ->assertSessionHas(
+            'success',
+            'Artikel lama dipulihkan dan artikel aktif pengganti dipindahkan ke arsip.'
+        );
+
+    $this->assertDatabaseHas('articles', [
+        'id' => $this->article->id,
+        'deleted_at' => null,
+    ]);
+    $this->assertSoftDeleted('articles', [
+        'id' => $replacement->id,
+    ]);
+
+    expect(Storage::disk('public')->exists('articles/thumbnails/soft-delete.jpg'))
+        ->toBeTrue()
+        ->and(Storage::disk('public')->exists('articles/thumbnails/replacement.jpg'))
+        ->toBeTrue();
+
+    $this->get(route('artikel'))
+        ->assertOk()
+        ->assertSee('Artikel soft delete test')
+        ->assertDontSee('Artikel pengganti aktif');
+});
+
+it('rejects replacing an unrelated active article without changing either status', function (): void {
+    $this->article->delete();
+
+    $unrelatedActive = Article::query()->create([
+        'title_id' => 'Artikel aktif tidak berkaitan',
+        'thumbnail_url' => '/storage/articles/thumbnails/unrelated.jpg',
+        'link_id' => 'https://example.com/artikel-tidak-berkaitan',
+        'author' => 'Admin Test',
+        'published_at' => now()->addMinute(),
+    ]);
+
+    $response = $this->from(route('admin.artikel'))->patch(
+        route('admin.artikel.restore', $this->article->id),
+        ['replacement_article_id' => $unrelatedActive->id]
+    );
+
+    $response
+        ->assertRedirect(route('admin.artikel'))
+        ->assertSessionHasErrors('replacement_article_id');
+
+    $this->assertSoftDeleted('articles', [
+        'id' => $this->article->id,
+    ]);
+    $this->assertDatabaseHas('articles', [
+        'id' => $unrelatedActive->id,
+        'deleted_at' => null,
+    ]);
+});
+
+it('does not allow the restore endpoint to act on an active article', function (): void {
+    $this->patch(route('admin.artikel.restore', $this->article->id))
+        ->assertNotFound();
+});
