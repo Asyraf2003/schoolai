@@ -32,7 +32,10 @@
     @if($articles->isNotEmpty())
       <div class="gallery-lite-list">
         @foreach($articles as $article)
-          @php($isDeleted = $article->trashed())
+          @php
+            $isDeleted = $article->trashed();
+            $replacementCandidates = $replacementCandidatesByArticle->get($article->getKey(), collect());
+          @endphp
 
           <article class="gallery-lite-row {{ $isDeleted ? 'is-deleted' : '' }}">
             <span class="gallery-lite-row__order">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
@@ -60,6 +63,37 @@
                   @method('PATCH')
                   <button type="submit" class="admin-small-action admin-small-action--restore">Pulihkan</button>
                 </form>
+
+                @if($replacementCandidates->isNotEmpty())
+                  <form
+                    method="POST"
+                    action="{{ route('admin.artikel.restore', $article->getKey()) }}"
+                    class="admin-replacement-form"
+                    data-admin-delete-form
+                    data-admin-delete-message="Pulihkan artikel arsip ini dan pindahkan artikel aktif yang dipilih ke arsip? Tidak ada data atau file yang dihapus permanen."
+                  >
+                    @csrf
+                    @method('PATCH')
+
+                    <label class="sr-only" for="replacement-article-{{ $article->getKey() }}">Artikel aktif yang digantikan</label>
+                    <select
+                      id="replacement-article-{{ $article->getKey() }}"
+                      name="replacement_article_id"
+                      class="admin-replacement-select"
+                      required
+                    >
+                      @foreach($replacementCandidates as $replacementCandidate)
+                        <option value="{{ $replacementCandidate->getKey() }}">
+                          Gantikan ID {{ $replacementCandidate->getKey() }} · {{ $replacementCandidate->admin_title }}
+                        </option>
+                      @endforeach
+                    </select>
+
+                    <button type="button" data-admin-delete-trigger class="admin-small-action admin-small-action--restore-swap">
+                      Pulihkan &amp; Gantikan
+                    </button>
+                  </form>
+                @endif
               @else
                 <a href="{{ route('admin.artikel.show', $article) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
                 <a href="{{ route('admin.artikel.edit', $article) }}" class="admin-small-action">Edit</a>
