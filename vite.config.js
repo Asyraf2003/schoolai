@@ -9,6 +9,7 @@ export default defineConfig({
             input: [
                 'resources/js/pages/welcome.js',
                 'resources/css/pages/welcome.css',
+                'resources/css/pages/account-locked.css',
                 'resources/css/app.css',
                 'resources/js/app.js',
             ],
