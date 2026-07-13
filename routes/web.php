@@ -206,6 +206,9 @@ Route::middleware([
     Route::delete('/admin/galeri/{galleryItem}', [GalleryAdminController::class, 'destroy'])
         ->name('admin.galeri.destroy');
 
+    Route::patch('/admin/galeri/{galleryItem}/restore', [GalleryAdminController::class, 'restore'])
+        ->name('admin.galeri.restore');
+
     Route::patch('/admin/galeri/{galleryItem}/toggle', [GalleryAdminController::class, 'toggle'])
         ->name('admin.galeri.toggle');
 
