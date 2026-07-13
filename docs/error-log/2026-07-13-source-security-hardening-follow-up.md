@@ -1,25 +1,15 @@
 # Error Log: Source Security Hardening Follow-up
-
-Tanggal pencatatan: 13 Juli 2026  
-Status: Belum selesai  
-Prioritas: Tinggi  
-Scope: Source code aplikasi Laravel SchoolAI  
-Tidak termasuk: VPC, firewall, reverse proxy, TLS termination, konfigurasi OS, dan keamanan provider
+Tanggal pencatatan: 13 Juli 2026  Status: Belum selesai  Prioritas: Tinggi  Scope: Source code aplikasi Laravel SchoolAI  Tidak termasuk: VPC, firewall, reverse proxy, TLS termination, konfigurasi OS, dan keamanan provider
 
 ## Tujuan sesi berikutnya
-
 Menyelesaikan hardening keamanan source code sebelum deployment production.
-
 Jangan mengklaim skor keamanan 92-93% hanya berdasarkan test yang sudah hijau. Nilai source-level saat ini diperkirakan sekitar 80-84% untuk keseluruhan aplikasi, sementara modul autentikasi dan otorisasi sudah mendekati 89-92%.
-
 Target setelah pekerjaan ini bukan angka kosmetik, tetapi seluruh acceptance criteria di bawah terbukti melalui kode dan test.
 
 ---
-
 ## Status yang sudah selesai
 
 ### Autentikasi
-
 - Login password sudah dihapus.
 - Login hanya melalui Google OAuth.
 - Route `POST /login` sudah tidak tersedia dan menghasilkan HTTP 405.
@@ -28,7 +18,6 @@ Target setelah pekerjaan ini bukan angka kosmetik, tetapi seluruh acceptance cri
 - Logout membatalkan session dan meregenerasi CSRF token.
 
 ### Role dan akses admin
-
 - Login Google pertama pada bootstrap database menjadi admin.
 - Login Google berikutnya menjadi user biasa.
 - User biasa diarahkan ke `/akun`.
@@ -37,7 +26,6 @@ Target setelah pekerjaan ini bukan angka kosmetik, tetapi seluruh acceptance cri
 - Semua route admin yang sudah ada memakai middleware `auth` dan `admin`.
 
 ### Klaim admin
-
 - Klaim admin pertama menggunakan tabel `auth_bootstrap_states`.
 - Klaim dijalankan dalam database transaction.
 - Row klaim dikunci menggunakan `lockForUpdate()`.
@@ -45,13 +33,9 @@ Target setelah pekerjaan ini bukan angka kosmetik, tetapi seluruh acceptance cri
 - Tidak ada admin aktif dengan `google_id = NULL`.
 
 ### Unsafe OAuth account linking
-
 Temuan sebelumnya:
-
 Aplikasi sempat mencari user berdasarkan `google_id`, lalu fallback mencari berdasarkan email. Jika ada akun admin lama dengan email sama tetapi `google_id` kosong, identitas Google baru dapat tertaut otomatis ke row admin tersebut.
-
 Perbaikan yang sudah diterapkan di worktree:
-
 - User login utama hanya dicari berdasarkan `google_id`.
 - Email hanya dipakai untuk mendeteksi konflik kepemilikan.
 - Jika email sudah dimiliki row lain tetapi identitas Google tidak cocok, login ditolak.
@@ -60,14 +44,12 @@ Perbaikan yang sudah diterapkan di worktree:
 - Login tetap diizinkan apabila `google_id` memang sudah tertaut ke user yang sama.
 
 File yang berubah untuk perbaikan ini:
-
 - `app/Http/Controllers/Auth/GoogleAuthController.php`
 - `lang/id/app.php`
 - `lang/en/app.php`
 - `tests/Feature/Auth/GoogleRoleAccessTest.php`
 
 Hasil test terakhir:
-
 - Auth test: 8 passed
 - Full test suite: 19 passed
 - Assertions: 209
@@ -75,40 +57,33 @@ Hasil test terakhir:
 - Admin dengan `google_id = NULL`: 0
 
 Catatan:
-
 Error `rg: regex parse error` pada audit terakhir berasal dari quoting command audit, bukan dari source code dan bukan kegagalan aplikasi.
-
 Perubahan unsafe account linking kemungkinan masih berada di worktree. Periksa `git status` sebelum memulai dan jangan menghapus perubahan tersebut.
 
 ---
-
 ## Masalah keamanan yang masih harus diselesaikan
 
 ### SEC-01: Batasi bootstrap admin ke identitas Google tertentu
-
 Prioritas: Kritis
-
 Masalah:
-
 Pada database baru atau setelah state klaim admin ter-reset, akun Google pertama yang login masih dapat menjadi admin.
-
 Risiko:
-
 - Salah akun login lebih dahulu.
 - Database hasil restore memiliki state bootstrap kosong.
 - Operator menjalankan reset akun tanpa sengaja.
 - Pengunjung luar menjadi admin pada deployment baru.
 
 Rencana:
-
 - Tambahkan konfigurasi identitas bootstrap admin melalui `.env`.
 - Gunakan Google subject ID, bukan email, sebagai identitas utama.
 - Contoh nama variabel:
-
 ```env
 GOOGLE_BOOTSTRAP_ADMIN_ID=
+```
+
 Pindahkan pembacaan variabel ke file config.
 Jangan memanggil env() langsung dari controller.
+
 Ketika klaim admin masih kosong:
 hanya Google ID yang cocok dengan konfigurasi boleh menjadi admin;
 akun lain tetap menjadi user biasa;
@@ -117,36 +92,32 @@ Setelah klaim selesai, konfigurasi bootstrap tidak boleh mengubah admin lain sec
 Jangan menaruh Google ID asli di repository atau dokumentasi.
 
 Test minimum:
-
 Google ID yang cocok menjadi admin pertama.
 Google ID lain tetap user saat klaim masih terbuka.
 Login user biasa tidak menutup klaim admin.
 Admin hanya dapat diklaim satu kali.
 Nilai config kosong harus fail-closed atau menghasilkan error konfigurasi yang jelas.
-SEC-02: Verifikasi email OAuth harus fail-closed
 
+### SEC-02: Verifikasi email OAuth harus fail-closed
 Prioritas: Tinggi
-
 Masalah saat ini:
-
 Kode menggunakan fallback verifikasi email yang pada kondisi atribut tidak tersedia dapat dianggap terverifikasi.
-
 Pola yang harus dihindari:
-
+```php
 $emailVerified = $rawUser['email_verified']
     ?? $rawUser['verified_email']
     ?? true;
+```
 
 Rencana:
-
 Gunakan default false:
-
+```php
 $emailVerified = $rawUser['email_verified']
     ?? $rawUser['verified_email']
     ?? false;
+```
 
 Login harus ditolak jika atribut verifikasi:
-
 tidak tersedia;
 false;
 'false';
@@ -155,65 +126,53 @@ false;
 bernilai tidak dikenal.
 
 Test minimum:
-
 email_verified = true diterima.
 verified_email = true diterima.
 Nilai false dalam bentuk boolean, string, dan integer ditolak.
 Atribut verifikasi tidak tersedia harus ditolak.
 User tidak dibuat ketika verifikasi gagal.
-SEC-03: Pindahkan konfigurasi Google dari controller
 
+### SEC-03: Pindahkan konfigurasi Google dari controller
 Prioritas: Tinggi
-
 Masalah:
-
 GoogleAuthController masih mengonfigurasi OAuth dengan memanggil env() langsung ketika request berjalan.
-
 Risiko:
-
 Laravel production biasanya memakai php artisan config:cache. Setelah config di-cache, akses env() di luar file config tidak boleh diandalkan.
 
 Rencana:
-
 Pastikan config/services.php memiliki:
-
+```php
 'google' => [
     'client_id' => env('GOOGLE_CLIENT_ID'),
     'client_secret' => env('GOOGLE_CLIENT_SECRET'),
     'redirect' => env('GOOGLE_REDIRECT_URI'),
 ],
+```
 
 Kemudian:
-
 hapus method configureGoogleOAuth();
 hapus semua pemanggilan method tersebut;
 controller cukup memakai Socialite::driver('google');
 jangan menulis nilai credential ke log atau test output.
 
 Test dan audit minimum:
-
 Login Google mock tetap lulus.
 php artisan config:cache berhasil.
 php artisan config:clear berhasil.
 Tidak ada env('GOOGLE_...') di controller atau service runtime.
 Credential hanya dibaca melalui file config.
-SEC-04: Tambahkan rate limit OAuth
 
+### SEC-04: Tambahkan rate limit OAuth
 Prioritas: Tinggi
-
 Masalah:
-
 Endpoint redirect dan callback Google belum memiliki limiter khusus.
-
 Risiko:
-
 spam callback;
 pembuatan banyak user valid;
 pembengkakan database;
 request abuse.
 
 Rencana:
-
 Buat limiter bernama, jangan sekadar menempel angka acak tanpa dokumentasi.
 Terapkan pada:
 /auth/google/redirect
@@ -222,51 +181,38 @@ Pertimbangkan key berdasarkan IP dan session.
 Jangan memblokir login normal secara agresif.
 
 Test minimum:
-
 request dalam batas diterima;
 request melewati batas menghasilkan HTTP 429;
 limiter tidak membocorkan credential atau data OAuth.
-SEC-05: Perkuat test proteksi route admin
 
+### SEC-05: Perkuat test proteksi route admin
 Prioritas: Tinggi
-
 Masalah:
-
 Test sekarang terutama mengumpulkan route berdasarkan nama admin.*.
-
 Risiko:
-
 Developer dapat membuat URI /admin/... tanpa nama admin.*, sehingga route tersebut tidak ikut diperiksa.
 
 Rencana:
-
 Test harus memeriksa seluruh route yang:
-
 URI-nya admin;
 URI-nya diawali admin/;
 memakai method POST, PUT, PATCH, atau DELETE di area admin.
-
 Seluruh route tersebut wajib mengandung middleware:
-
 web;
 auth;
 admin;
 admin.locale jika memang standar project.
 
 Test juga harus memastikan:
-
 guest diarahkan ke login;
 user biasa diarahkan ke /akun;
 request mutasi user biasa tidak mengubah database;
 route admin baru tanpa middleware menyebabkan test gagal.
-SEC-06: Tambahkan security headers berbasis middleware
 
+### SEC-06: Tambahkan security headers berbasis middleware
 Prioritas: Tinggi
-
 Scope ini masih source-level.
-
 Header minimum yang perlu dievaluasi dan diterapkan:
-
 X-Content-Type-Options: nosniff
 Referrer-Policy
 Permissions-Policy
@@ -275,42 +221,33 @@ perlindungan framing melalui CSP frame-ancestors
 Strict-Transport-Security hanya ketika production benar-benar HTTPS
 
 Catatan CSP:
-
 Aplikasi memakai embed dari beberapa provider. frame-src perlu mengizinkan hanya domain yang benar-benar digunakan, misalnya:
-
 YouTube
 TikTok
 Instagram
 Facebook
 Vimeo
-
 Jangan menggunakan wildcard luas tanpa alasan.
 
 Test minimum:
-
 public page menerima security headers;
 admin page menerima security headers;
 CSP tidak mematahkan asset Vite;
 CSP tidak mematahkan embed yang memang didukung;
 domain iframe asing ditolak oleh kebijakan.
-SEC-07: Emergency admin revocation
 
+### SEC-07: Emergency admin revocation
 Prioritas: Tinggi
-
 Masalah:
-
 Jika akun Google admin diambil alih, belum ada kontrol source-level untuk menonaktifkan admin dengan cepat selain mengubah database langsung.
 
 Rencana yang perlu dipilih dan didokumentasikan:
-
 kolom is_active;
 atau disabled_at;
 atau mekanisme revocation setara.
-
 Middleware autentikasi harus menolak akun nonaktif.
 
 Pertimbangkan pula:
-
 penghapusan session aktif;
 rotasi session;
 pencatatan waktu login terakhir;
@@ -318,17 +255,14 @@ pencatatan perubahan role;
 jangan membuat UI perubahan role sebelum model otorisasinya jelas.
 
 Test minimum:
-
 admin aktif dapat masuk;
 admin nonaktif ditolak;
 user nonaktif ditolak;
 session lama akun yang dinonaktifkan tidak tetap memiliki akses admin.
-SEC-08: Audit log untuk aktivitas admin penting
 
+### SEC-08: Audit log untuk aktivitas admin penting
 Prioritas: Menengah-Tinggi
-
 Aktivitas minimum yang layak dicatat:
-
 login admin berhasil;
 login admin ditolak;
 konflik identitas Google;
@@ -340,7 +274,6 @@ perubahan statistik;
 perubahan status akun apabila fitur revocation dibuat.
 
 Jangan mencatat:
-
 OAuth authorization code;
 access token;
 refresh token;
@@ -348,17 +281,16 @@ client secret;
 cookie session;
 password;
 isi .env.
-SEC-09: Dependency security audit
 
+### SEC-09: Dependency security audit
 Prioritas: Tinggi
-
 Jalankan:
-
+```bash
 composer audit
 npm audit
+```
 
 Kemudian:
-
 catat dependency rentan;
 bedakan production dependency dan development dependency;
 jangan melakukan upgrade mayor membabi buta;
@@ -366,17 +298,14 @@ jalankan test dan build setelah setiap perubahan dependency;
 dokumentasikan risiko yang sengaja diterima.
 
 Acceptance criteria:
-
 tidak ada vulnerability critical atau high yang tidak ditangani;
 build frontend berhasil;
 full test suite berhasil;
 lock files konsisten.
-SEC-10: Audit upload dan penyimpanan file
 
+### SEC-10: Audit upload dan penyimpanan file
 Prioritas: Menengah-Tinggi
-
 Yang sudah ada:
-
 validasi file;
 validasi image;
 daftar MIME/ekstensi;
@@ -385,7 +314,6 @@ penyimpanan menggunakan nama yang dibuat Laravel;
 pemeriksaan path traversal saat penghapusan.
 
 Yang masih perlu diperiksa:
-
 batas dimensi gambar;
 file gambar rusak atau polyglot;
 SVG harus tetap tidak diizinkan kecuali ada sanitizer;
@@ -396,7 +324,6 @@ content type saat file disajikan;
 public storage hanya berisi file yang memang boleh publik.
 
 Test minimum:
-
 upload file non-gambar ditolak;
 SVG ditolak;
 file dengan ekstensi palsu ditolak;
@@ -404,12 +331,10 @@ ukuran berlebih ditolak;
 gambar rusak ditolak;
 path traversal tidak dapat menghapus file di luar disk;
 kegagalan database tidak meninggalkan file yatim bila memungkinkan.
-SEC-11: Audit XSS dan output Blade
 
+### SEC-11: Audit XSS dan output Blade
 Prioritas: Tinggi
-
 Periksa seluruh Blade untuk:
-
 {!! ... !!};
 innerHTML;
 URL dari database;
@@ -420,7 +345,6 @@ JSON yang ditanam ke HTML;
 data attribute.
 
 Pastikan:
-
 teks menggunakan escaping Blade standar {{ ... }};
 URL hanya berasal dari normalizer atau validator yang sesuai;
 iframe tidak menerima URL arbitrer;
@@ -428,19 +352,16 @@ tidak ada HTML mentah dari input admin tanpa sanitizer;
 penggunaan target="_blank" memiliki rel="noopener noreferrer" jika relevan.
 
 Tambahkan test stored XSS dengan payload seperti:
-
+```html
 <script>alert(1)</script>
 "><img src=x onerror=alert(1)>
 javascript:alert(1)
-
+```
 Payload harus tampil sebagai teks aman atau ditolak, bukan dieksekusi.
 
-SEC-12: Audit CSRF dan method mutation
-
+### SEC-12: Audit CSRF dan method mutation
 Prioritas: Menengah-Tinggi
-
 Periksa:
-
 seluruh form mutasi memiliki @csrf;
 update memakai method spoofing yang benar;
 delete memakai method spoofing yang benar;
@@ -449,17 +370,14 @@ callback OAuth tetap menggunakan state bawaan Socialite;
 tidak ada penggunaan stateless() tanpa alasan.
 
 Test minimum:
-
 request mutasi tanpa CSRF ditolak pada environment web normal;
 GET tidak mengubah database;
 logout tetap POST;
 action admin tidak dapat dijalankan melalui URL GET.
-SEC-13: Session dan cookie source configuration
 
+### SEC-13: Session dan cookie source configuration
 Prioritas: Tinggi
-
 Periksa konfigurasi:
-
 secure cookie untuk production HTTPS;
 HTTP only;
 SameSite;
@@ -471,19 +389,14 @@ APP_URL dan redirect OAuth.
 
 Nilai production jangan di-hardcode di source. Dokumentasikan variabel .env yang diperlukan tanpa menyimpan nilainya.
 
-SEC-14: Pemeriksaan URL publik dan SSRF-related logic
-
+### SEC-14: Pemeriksaan URL publik dan SSRF-related logic
 Prioritas: Menengah
-
 Aplikasi menyimpan URL artikel, PPDB, dan embed.
-
 Yang sudah ada:
-
 sebagian URL localhost dan private IPv4 ditolak;
 embed video dibatasi ke provider yang didukung.
 
 Yang masih perlu diperiksa:
-
 IPv6 private/link-local;
 IPv4 dalam bentuk alternatif;
 hostname yang resolve ke IP privat;
@@ -494,13 +407,10 @@ punycode/homograph;
 skema selain HTTP/HTTPS.
 
 Catatan:
-
 Jika aplikasi hanya menyimpan URL dan browser pengguna yang membukanya, risikonya berbeda dari SSRF. Namun validasi tetap harus konsisten.
 
-Urutan eksekusi yang disarankan
-
+## Urutan eksekusi yang disarankan
 Kerjakan berurutan:
-
 Pastikan patch unsafe email account linking tersimpan dan test tetap hijau.
 SEC-01 bootstrap admin allowlist.
 SEC-02 verified email fail-closed.
@@ -512,10 +422,9 @@ SEC-07 emergency account revocation.
 SEC-08 audit log admin.
 SEC-09 dependency audit.
 SEC-10 sampai SEC-14 audit aplikasi menyeluruh.
-
 Jangan mencampur seluruh perubahan dalam satu patch besar. Setiap bagian harus memiliki test dan diff yang dapat diperiksa.
 
-Guardrails sesi berikutnya
+## Guardrails sesi berikutnya
 Jangan menjalankan migrate:fresh.
 Jangan menghapus akun admin atau user saat ini.
 Jangan mereset auth_bootstrap_states.
@@ -527,10 +436,9 @@ Jangan commit sebelum targeted test, full test, build, dan git diff --check lulu
 Gunakan command audit non-fatal yang tetap melanjutkan dan melaporkan kegagalan.
 Pertahankan Blade, vanilla CSS, dan vanilla JavaScript.
 Jangan menambah framework UI atau CDN eksternal.
-Acceptance criteria akhir
 
+## Acceptance criteria akhir
 Pekerjaan dinyatakan selesai hanya jika:
-
 unsafe email linking tetap tertutup;
 bootstrap admin dibatasi ke identitas yang dikonfigurasi;
 missing email verification ditolak;
@@ -549,10 +457,11 @@ full test suite berhasil;
 git diff --check bersih;
 browser smoke test admin dan user biasa berhasil;
 dokumentasi deployment diperbarui bila ada variabel .env baru.
-Command awal sesi berikutnya
 
+## Command awal sesi berikutnya
 Mulai dengan audit tanpa mengubah file:
 
+```bash
 {
   printf '%s\n' '--- CURRENT COMMIT ---'
   git log -3 --oneline --decorate
@@ -580,7 +489,7 @@ Mulai dengan audit tanpa mengubah file:
   npm run build || true
 
   printf '%s\n' '--- RUNTIME ENV USAGE ---'
-  rg -n "env\\(" app routes resources || true
+  rg -n "env\(" app routes resources || true
 
   printf '%s\n' '--- ROUTE SECURITY ---'
   php artisan route:list -v \
@@ -603,5 +512,6 @@ Mulai dengan audit tanpa mengubah file:
   printf '%s\n' '--- DIFF CHECK ---'
   git diff --check || true
 } 2>&1
+```
 
 Setelah membaca output tersebut, kerjakan SEC-01 sampai SEC-03 lebih dahulu.
