@@ -24,3 +24,27 @@
 .admin-small-action.admin-small-action--restore {
     background: #166534;
 }
+
+.admin-small-action.admin-small-action--restore-swap {
+    background: #92400e;
+}
+
+.admin-replacement-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-replacement-select {
+    max-width: 310px;
+    min-height: 34px;
+    padding: 7px 10px;
+    border: 1px solid var(--admin-line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--admin-ink);
+    font: inherit;
+    font-size: 0.82rem;
+}
