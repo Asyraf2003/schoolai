@@ -8,7 +8,8 @@ use App\Models\GalleryPageSection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 final class GalleryPageSectionAdminController extends Controller
 {
@@ -38,13 +39,32 @@ final class GalleryPageSectionAdminController extends Controller
     public function show(GalleryPageSection $galleryPageSection): View
     {
         $galleryPageSection->load([
-            'mediaItems' => fn ($query) => $query->orderByDesc('published_at')->orderByDesc('id'),
+            'mediaItemsWithTrashed' => fn ($query) => $query->orderByDesc('published_at')->orderByDesc('id'),
         ]);
+
+        $mediaItems = $galleryPageSection->mediaItemsWithTrashed;
+        $activeMediaByIdentity = $mediaItems
+            ->reject->trashed()
+            ->filter(fn ($item): bool => $item->replacementIdentity() !== null)
+            ->groupBy(fn ($item): string => (string) $item->replacementIdentity());
+
+        $replacementCandidatesByArchivedId = $mediaItems
+            ->filter->trashed()
+            ->mapWithKeys(function ($archivedItem) use ($activeMediaByIdentity): array {
+                $identity = $archivedItem->replacementIdentity();
+
+                return [
+                    $archivedItem->getKey() => $identity === null
+                        ? collect()
+                        : $activeMediaByIdentity->get($identity, collect())->values(),
+                ];
+            });
 
         return view('admin.gallery.page-sections.show', [
             'adminPageKey' => 'galeri',
             'section' => $galleryPageSection,
-            'mediaItems' => $galleryPageSection->mediaItems,
+            'mediaItems' => $mediaItems,
+            'replacementCandidatesByArchivedId' => $replacementCandidatesByArchivedId,
         ]);
     }
 
@@ -77,17 +97,56 @@ final class GalleryPageSectionAdminController extends Controller
 
     public function destroy(GalleryPageSection $galleryPageSection): RedirectResponse
     {
-        $galleryPageSection->load('mediaItems');
-
-        foreach ($galleryPageSection->mediaItems as $mediaItem) {
-            $this->deleteStoredPublicFile($mediaItem->media_url);
-        }
-
         $galleryPageSection->delete();
 
         return redirect()
             ->route('admin.galeri')
-            ->with('success', 'Bagian galeri berhasil dihapus.');
+            ->with('success', 'Bagian galeri dipindahkan ke arsip. Semua media tetap tersimpan.');
+    }
+
+    public function restore(Request $request, int $galleryPageSection): RedirectResponse
+    {
+        $data = $request->validate([
+            'replacement_gallery_page_section_id' => ['nullable', 'integer'],
+        ]);
+
+        $replacementId = isset($data['replacement_gallery_page_section_id'])
+            ? (int) $data['replacement_gallery_page_section_id']
+            : null;
+
+        if ($replacementId === null) {
+            GalleryPageSection::onlyTrashed()->findOrFail($galleryPageSection)->restore();
+
+            return redirect()
+                ->route('admin.galeri')
+                ->with('success', 'Bagian galeri berhasil dipulihkan beserta seluruh medianya.');
+        }
+
+        DB::transaction(function () use ($galleryPageSection, $replacementId): void {
+            $archivedSection = GalleryPageSection::onlyTrashed()
+                ->lockForUpdate()
+                ->findOrFail($galleryPageSection);
+
+            $replacementSection = GalleryPageSection::query()
+                ->lockForUpdate()
+                ->findOrFail($replacementId);
+
+            $archivedIdentity = $archivedSection->replacementIdentity();
+            $replacementIdentity = $replacementSection->replacementIdentity();
+
+            if ($archivedIdentity === null || $archivedIdentity !== $replacementIdentity) {
+                throw ValidationException::withMessages([
+                    'replacement_gallery_page_section_id' => 'Bagian pengganti harus merupakan bagian aktif dengan judul Indonesia yang identik.',
+                ]);
+            }
+
+            $replacementSection->delete();
+            $archivedSection->restore();
+        });
+
+        return redirect()
+            ->route('admin.galeri')
+            ->with('success', 'Bagian lama dipulihkan dan bagian aktif pengganti dipindahkan ke arsip. Semua media tetap tersimpan.');
     }
 
     private function validatedData(Request $request): array
@@ -105,20 +164,5 @@ final class GalleryPageSectionAdminController extends Controller
         $validated['is_published'] = $request->boolean('is_published');
 
         return $validated;
-    }
-
-    private function deleteStoredPublicFile(?string $url): void
-    {
-        if (! $url || ! str_starts_with($url, '/storage/')) {
-            return;
-        }
-
-        $path = substr($url, strlen('/storage/'));
-
-        if ($path === '' || str_contains($path, '..') || str_starts_with($path, '/')) {
-            return;
-        }
-
-        Storage::disk('public')->delete($path);
     }
 }
