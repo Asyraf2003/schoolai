@@ -58,6 +58,46 @@ final class Article extends Model
             ->orderByDesc('id');
     }
 
+    public static function normalizedLinkIdentity(?string $url): ?string
+    {
+        if (! is_string($url) || trim($url) === '') {
+            return null;
+        }
+
+        $parts = parse_url(trim($url));
+
+        if (! is_array($parts)) {
+            return null;
+        }
+
+        $scheme = strtolower((string) ($parts['scheme'] ?? ''));
+        $host = strtolower((string) ($parts['host'] ?? ''));
+
+        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return null;
+        }
+
+        $port = isset($parts['port']) ? (int) $parts['port'] : null;
+        $authority = $host;
+
+        if ($port !== null && ! (($scheme === 'http' && $port === 80) || ($scheme === 'https' && $port === 443))) {
+            $authority .= ':' . $port;
+        }
+
+        $path = '/' . ltrim((string) ($parts['path'] ?? ''), '/');
+        $path = $path === '/' ? '/' : rtrim($path, '/');
+
+        $query = '';
+
+        if (isset($parts['query']) && $parts['query'] !== '') {
+            parse_str($parts['query'], $queryParameters);
+            ksort($queryParameters);
+            $query = http_build_query($queryParameters, '', '&', PHP_QUERY_RFC3986);
+        }
+
+        return $scheme . '://' . $authority . $path . ($query !== '' ? '?' . $query : '');
+    }
+
     public function getAdminTitleAttribute(): string
     {
         return $this->firstFilled($this->title_id, $this->title_en, 'Artikel tanpa judul');
