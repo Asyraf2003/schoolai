@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class PpdbShowcaseItem extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public const AUDIENCE_PARENTS = 'parents';
     public const AUDIENCE_SCHOOL = 'school';
@@ -110,6 +111,33 @@ final class PpdbShowcaseItem extends Model
         $path = parse_url($this->media_url, PHP_URL_PATH);
 
         return basename(is_string($path) ? $path : $this->media_url);
+    }
+
+    public function replacementIdentity(): ?string
+    {
+        $title = self::normalizeIdentityText($this->title_id);
+        $audience = strtolower(trim((string) $this->audience));
+
+        if ($title === null || ! in_array($audience, self::AUDIENCES, true)) {
+            return null;
+        }
+
+        return $audience . '|' . $title;
+    }
+
+    public static function normalizeIdentityText(?string $value): ?string
+    {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = preg_replace('/\s+/u', ' ', trim($value));
+
+        if (! is_string($value) || $value === '') {
+            return null;
+        }
+
+        return mb_strtolower($value);
     }
 
     private function firstFilled(mixed ...$values): string
