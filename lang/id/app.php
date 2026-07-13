@@ -22,6 +22,14 @@ return [
             'submit' => 'Masuk',
         ],
 
+        'account' => [
+            'title' => 'Konten Belum Tersedia',
+            'status' => 'Pengguna biasa',
+            'heading' => 'Konten belum tersedia di sini',
+            'description' => 'Akun Anda berhasil masuk sebagai pengguna biasa. Area admin tidak tersedia untuk akun ini.',
+            'logout' => 'Keluar',
+        ],
+
         'errors' => [
             'invalid_credentials' => 'Email atau password salah.',
             'google_failed' => 'Login Google gagal. Coba lagi.',

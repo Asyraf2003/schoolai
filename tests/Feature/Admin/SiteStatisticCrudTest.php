@@ -14,6 +14,7 @@ beforeEach(function (): void {
         'email' => 'admin-statistik@example.test',
         'email_verified_at' => now(),
         'password' => Hash::make('password'),
+        'role' => User::ROLE_ADMIN,
     ]);
 
     $this->actingAs($user);

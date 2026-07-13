@@ -5,6 +5,8 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\ForceAdminLocale;
+use App\Http\Middleware\EnsureAdmin;
+use App\Http\Middleware\EnsureRegularUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 
@@ -18,6 +20,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [SetLocale::class]);
         $middleware->alias([
             'admin.locale' => ForceAdminLocale::class,
+            'admin' => EnsureAdmin::class,
+            'regular.user' => EnsureRegularUser::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -62,7 +62,28 @@ Route::middleware('guest')->group(function () {
         ->name('google.callback');
 });
 
-Route::middleware(['auth', 'admin.locale'])->group(function () {
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function (Request $request) {
+        return redirect()->route(
+            $request->user()?->isAdmin()
+                ? 'admin.dashboard'
+                : 'account.locked'
+        );
+    })->name('dashboard');
+
+    Route::view('/akun', 'account.locked')
+        ->middleware('regular.user')
+        ->name('account.locked');
+
+    Route::post('/logout', [LoginController::class, 'logout'])
+        ->name('logout');
+});
+
+Route::middleware([
+    'auth',
+    'admin',
+    'admin.locale',
+])->group(function () {
     /* ADMIN_DESKTOP_DUMMY_ROUTES_FINAL */
     Route::redirect('/admin', '/admin/dashboard')->name('admin.index');
 
@@ -209,7 +230,4 @@ Route::middleware(['auth', 'admin.locale'])->group(function () {
     Route::delete('/admin/stats/{siteStatistic}', [SiteStatisticController::class, 'destroy'])
         ->name('admin.stats.destroy');
 
-    Route::redirect('/dashboard', '/admin/dashboard')->name('dashboard');
-
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });

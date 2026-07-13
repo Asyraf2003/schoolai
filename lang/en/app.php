@@ -22,6 +22,14 @@ return [
             'submit' => 'Sign in',
         ],
 
+        'account' => [
+            'title' => 'Content Not Available',
+            'status' => 'Regular user',
+            'heading' => 'Content is not available here yet',
+            'description' => 'Your account signed in successfully as a regular user. The admin area is not available to this account.',
+            'logout' => 'Sign out',
+        ],
+
         'errors' => [
             'invalid_credentials' => 'The email or password is incorrect.',
             'google_failed' => 'Google login failed. Please try again.',

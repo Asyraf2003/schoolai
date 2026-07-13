@@ -1,0 +1,177 @@
+<?php
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\User as GoogleUser;
+
+uses(RefreshDatabase::class);
+
+function fakeVerifiedGoogleLogin(
+    string $id,
+    string $email,
+    string $name
+): void {
+    $googleUser = (new GoogleUser())->map([
+        'id' => $id,
+        'email' => $email,
+        'name' => $name,
+        'nickname' => null,
+    ]);
+
+    $googleUser->user = [
+        'email_verified' => true,
+    ];
+
+    $provider = Mockery::mock();
+
+    $provider->shouldReceive('user')
+        ->once()
+        ->andReturn($googleUser);
+
+    Socialite::shouldReceive('driver')
+        ->with('google')
+        ->once()
+        ->andReturn($provider);
+}
+
+it('makes only the first Google account an admin', function (): void {
+    fakeVerifiedGoogleLogin(
+        'google-admin-1',
+        'first-admin@example.test',
+        'First Admin'
+    );
+
+    $this->get(route('google.callback'))
+        ->assertRedirect(route('admin.dashboard'));
+
+    $first = User::query()
+        ->where('email', 'first-admin@example.test')
+        ->firstOrFail();
+
+    expect($first->role)->toBe(User::ROLE_ADMIN)
+        ->and($first->google_id)->toBe('google-admin-1');
+
+    $this->post(route('logout'))
+        ->assertRedirect(route('login'));
+
+    fakeVerifiedGoogleLogin(
+        'google-user-2',
+        'regular-user@example.test',
+        'Regular User'
+    );
+
+    $this->get(route('google.callback'))
+        ->assertRedirect(route('account.locked'));
+
+    $second = User::query()
+        ->where('email', 'regular-user@example.test')
+        ->firstOrFail();
+
+    expect($second->role)->toBe(User::ROLE_USER)
+        ->and($second->google_id)->toBe('google-user-2')
+        ->and(
+            User::query()
+                ->where('role', User::ROLE_ADMIN)
+                ->count()
+        )->toBe(1);
+});
+
+it('protects every named admin route with admin middleware', function (): void {
+    $adminRoutes = collect(Route::getRoutes())
+        ->filter(
+            fn ($route): bool => str_starts_with(
+                (string) $route->getName(),
+                'admin.'
+            )
+        );
+
+    expect($adminRoutes->count())->toBeGreaterThan(0);
+
+    foreach ($adminRoutes as $route) {
+        expect($route->gatherMiddleware())
+            ->toContain('auth')
+            ->toContain('admin');
+    }
+});
+
+it('blocks regular users from admin pages and actions', function (): void {
+    $user = User::query()->forceCreate([
+        'name' => 'Regular User',
+        'email' => 'regular@example.test',
+        'email_verified_at' => now(),
+        'password' => Hash::make('password'),
+        'role' => User::ROLE_USER,
+    ]);
+
+    $this->actingAs($user);
+
+    $this->get(route('admin.dashboard'))
+        ->assertRedirect(route('account.locked'));
+
+    $this->post(route('admin.stats.store'), [
+        'value' => '999',
+        'value_en' => '999',
+        'label' => 'Tidak boleh dibuat',
+        'label_en' => 'Must not be created',
+    ])->assertRedirect(route('account.locked'));
+
+    $this->assertDatabaseMissing('site_statistics', [
+        'label' => 'Tidak boleh dibuat',
+    ]);
+
+    $this->get(route('account.locked'))
+        ->assertOk()
+        ->assertSee('Konten belum tersedia di sini')
+        ->assertSee('regular@example.test');
+});
+
+it('keeps admins out of the regular user page', function (): void {
+    $admin = User::query()->forceCreate([
+        'name' => 'Admin',
+        'email' => 'admin@example.test',
+        'email_verified_at' => now(),
+        'password' => Hash::make('password'),
+        'role' => User::ROLE_ADMIN,
+    ]);
+
+    $this->actingAs($admin);
+
+    $this->get(route('account.locked'))
+        ->assertRedirect(route('admin.dashboard'));
+
+    $this->get(route('admin.dashboard'))
+        ->assertOk();
+});
+
+it('redirects password login according to role', function (): void {
+    User::query()->forceCreate([
+        'name' => 'Password User',
+        'email' => 'password-user@example.test',
+        'email_verified_at' => now(),
+        'password' => Hash::make('password'),
+        'role' => User::ROLE_USER,
+    ]);
+
+    $this->post(route('login.store'), [
+        'email' => 'password-user@example.test',
+        'password' => 'password',
+    ])->assertRedirect(route('account.locked'));
+
+    $this->post(route('logout'));
+
+    User::query()->forceCreate([
+        'name' => 'Password Admin',
+        'email' => 'password-admin@example.test',
+        'email_verified_at' => now(),
+        'password' => Hash::make('password'),
+        'role' => User::ROLE_ADMIN,
+    ]);
+
+    $this->post(route('login.store'), [
+        'email' => 'password-admin@example.test',
+        'password' => 'password',
+    ])->assertRedirect(route('admin.dashboard'));
+});

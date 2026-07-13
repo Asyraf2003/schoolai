@@ -29,9 +29,18 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
+        $user = $request->user();
+
         return redirect()
-            ->intended(route('dashboard'))
-            ->with('success', __('app.auth.success.logged_in'));
+            ->route(
+                $user && $user->isAdmin()
+                    ? 'admin.dashboard'
+                    : 'account.locked'
+            )
+            ->with(
+                'success',
+                __('app.auth.success.logged_in')
+            );
     }
 
     public function logout(Request $request)
