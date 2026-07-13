@@ -1,17 +1,26 @@
-.gallery-lite-row.is-deleted {
+.gallery-lite-row.is-deleted,
+.admin-section-card.is-deleted,
+.admin-media-card.is-deleted {
     background: #f8fafc;
 }
 
-.gallery-lite-row.is-deleted:hover {
+.gallery-lite-row.is-deleted:hover,
+.admin-section-card.is-deleted:hover,
+.admin-media-card.is-deleted:hover {
     background: #f1f5f9;
 }
 
-.gallery-lite-row.is-deleted > :not(.gallery-lite-actions) {
+.gallery-lite-row.is-deleted > :not(.gallery-lite-actions),
+.admin-section-card.is-deleted .admin-section-card__body,
+.admin-media-card.is-deleted .admin-media-card__preview,
+.admin-media-card.is-deleted .admin-media-card__body {
     opacity: 0.48;
     filter: grayscale(1);
 }
 
-.gallery-lite-row.is-deleted .gallery-lite-row__body strong {
+.gallery-lite-row.is-deleted .gallery-lite-row__body strong,
+.admin-section-card.is-deleted h3,
+.admin-media-card.is-deleted h3 {
     text-decoration: line-through;
     text-decoration-thickness: 1px;
 }
