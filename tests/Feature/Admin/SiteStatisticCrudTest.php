@@ -160,6 +160,7 @@ it('prevents deleting the final statistic and normalizes after deletion', functi
 
     $this->assertDatabaseHas('site_statistics', [
         'id' => $first->id,
+        'deleted_at' => null,
     ]);
 
     $second = SiteStatistic::query()->create([
@@ -178,7 +179,7 @@ it('prevents deleting the final statistic and normalizes after deletion', functi
         ->assertRedirect(route('admin.stats.edit'))
         ->assertSessionHas('success');
 
-    $this->assertDatabaseMissing('site_statistics', [
+    $this->assertSoftDeleted('site_statistics', [
         'id' => $first->id,
     ]);
 
