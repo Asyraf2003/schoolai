@@ -1,0 +1,26 @@
+.gallery-lite-row.is-deleted {
+    background: #f8fafc;
+}
+
+.gallery-lite-row.is-deleted:hover {
+    background: #f1f5f9;
+}
+
+.gallery-lite-row.is-deleted > :not(.gallery-lite-actions) {
+    opacity: 0.48;
+    filter: grayscale(1);
+}
+
+.gallery-lite-row.is-deleted .gallery-lite-row__body strong {
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+.gallery-lite-status.is-deleted {
+    background: #e5e7eb;
+    color: #4b5563;
+}
+
+.admin-small-action--restore {
+    background: #166534;
+}
