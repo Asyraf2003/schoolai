@@ -40,9 +40,7 @@ it('archives a PPDB showcase item without deleting its file and hides it publicl
         'media_url' => '/storage/ppdb/showcase/arsip.jpg',
     ]);
 
-    $response = $this->delete(route('admin.ppdb.showcase.destroy', $item));
-
-    $response
+    $this->delete(route('admin.ppdb.showcase.destroy', $item))
         ->assertRedirect(route('admin.ppdb') . '#ppdb-showcase-admin')
         ->assertSessionHas('success');
 
@@ -75,15 +73,14 @@ it('restores a PPDB showcase item into the next position of its audience', funct
     ]);
     $archived->delete();
 
-    $response = $this->patch(route('admin.ppdb.showcase.restore', $archived->id));
-
-    $response
+    $this->patch(route('admin.ppdb.showcase.restore', $archived->id))
         ->assertRedirect(route('admin.ppdb') . '#ppdb-showcase-admin')
         ->assertSessionHas('success');
 
-    expect($archived->fresh())
-        ->not->toBeNull()
-        ->sort_order->toBe(2);
+    $restored = $archived->fresh();
+
+    expect($restored)->not->toBeNull();
+    expect($restored->sort_order)->toBe(2);
 });
 
 it('atomically swaps PPDB items with identical audience and normalized Indonesian title', function (): void {
@@ -100,15 +97,14 @@ it('atomically swaps PPDB items with identical audience and normalized Indonesia
         'sort_order' => 1,
     ]);
 
-    $response = $this->patch(route('admin.ppdb.showcase.restore', $archived->id), [
+    $this->patch(route('admin.ppdb.showcase.restore', $archived->id), [
         'replacement_ppdb_showcase_item_id' => $replacement->id,
-    ]);
+    ])->assertSessionHas('success');
 
-    $response->assertSessionHas('success');
+    $restored = $archived->fresh();
 
-    expect($archived->fresh())
-        ->not->toBeNull()
-        ->sort_order->toBe(1);
+    expect($restored)->not->toBeNull();
+    expect($restored->sort_order)->toBe(1);
     expect(PpdbShowcaseItem::withTrashed()->findOrFail($replacement->id)->trashed())->toBeTrue();
 });
 
@@ -124,11 +120,9 @@ it('rejects an unrelated or cross-audience PPDB replacement without changing sta
         'audience' => PpdbShowcaseItem::AUDIENCE_SCHOOL,
     ]);
 
-    $response = $this->patch(route('admin.ppdb.showcase.restore', $archived->id), [
+    $this->patch(route('admin.ppdb.showcase.restore', $archived->id), [
         'replacement_ppdb_showcase_item_id' => $replacement->id,
-    ]);
-
-    $response->assertSessionHasErrors('replacement_ppdb_showcase_item_id');
+    ])->assertSessionHasErrors('replacement_ppdb_showcase_item_id');
 
     expect(PpdbShowcaseItem::withTrashed()->findOrFail($archived->id)->trashed())->toBeTrue();
     expect($replacement->fresh())->not->toBeNull();
@@ -148,7 +142,7 @@ it('keeps a PPDB photo that is still referenced by an archived item during activ
         'media_url' => '/storage/ppdb/showcase/shared.jpg',
     ]);
 
-    $response = $this->put(route('admin.ppdb.showcase.update', $active), [
+    $this->put(route('admin.ppdb.showcase.update', $active), [
         'audience' => PpdbShowcaseItem::AUDIENCE_PARENTS,
         'title_id' => 'Aktif pemilik foto bersama',
         'title_en' => 'Active shared photo owner',
@@ -156,9 +150,8 @@ it('keeps a PPDB photo that is still referenced by an archived item during activ
         'description_en' => 'Active description.',
         'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
         'media_file' => UploadedFile::fake()->image('baru.jpg'),
-    ]);
+    ])->assertSessionHas('success');
 
-    $response->assertSessionHas('success');
     expect(Storage::disk('public')->exists('ppdb/showcase/shared.jpg'))->toBeTrue();
 });
 
@@ -185,9 +178,7 @@ it('soft deletes a statistic, hides it publicly, and protects the final active s
         'sort_order' => 2,
     ]);
 
-    $response = $this->delete(route('admin.stats.destroy', $archived));
-
-    $response
+    $this->delete(route('admin.stats.destroy', $archived))
         ->assertRedirect(route('admin.stats.edit'))
         ->assertSessionHas('success');
 
@@ -222,12 +213,13 @@ it('restores an archived statistic under the active limit and normalizes its pos
     ]);
     $archived->delete();
 
-    $response = $this->patch(route('admin.stats.restore', $archived->id));
+    $this->patch(route('admin.stats.restore', $archived->id))
+        ->assertSessionHas('success');
 
-    $response->assertSessionHas('success');
-    expect($archived->fresh())
-        ->not->toBeNull()
-        ->sort_order->toBe(2);
+    $restored = $archived->fresh();
+
+    expect($restored)->not->toBeNull();
+    expect($restored->sort_order)->toBe(2);
 });
 
 it('requires statistic replacement when all four active slots are occupied', function (): void {
@@ -246,9 +238,9 @@ it('requires statistic replacement when all four active slots are occupied', fun
     ]);
     $archived->delete();
 
-    $response = $this->patch(route('admin.stats.restore', $archived->id));
+    $this->patch(route('admin.stats.restore', $archived->id))
+        ->assertSessionHasErrors('replacement_site_statistic_id');
 
-    $response->assertSessionHasErrors('replacement_site_statistic_id');
     expect(SiteStatistic::query()->count())->toBe(SiteStatistic::MAX_ITEMS);
     expect(SiteStatistic::withTrashed()->findOrFail($archived->id)->trashed())->toBeTrue();
 });
@@ -271,16 +263,15 @@ it('atomically swaps statistics with identical normalized bilingual labels', fun
         'sort_order' => 1,
     ]);
 
-    $response = $this->patch(route('admin.stats.restore', $archived->id), [
+    $this->patch(route('admin.stats.restore', $archived->id), [
         'replacement_site_statistic_id' => $replacement->id,
-    ]);
+    ])->assertSessionHas('success');
 
-    $response->assertSessionHas('success');
+    $restored = $archived->fresh();
 
-    expect($archived->fresh())
-        ->not->toBeNull()
-        ->value->toBe('100')
-        ->sort_order->toBe(1);
+    expect($restored)->not->toBeNull();
+    expect($restored->value)->toBe('100');
+    expect($restored->sort_order)->toBe(1);
     expect(SiteStatistic::withTrashed()->findOrFail($replacement->id)->trashed())->toBeTrue();
 });
 
@@ -296,11 +287,10 @@ it('rejects an unrelated statistic replacement and active restore endpoint use',
         'label_en' => 'Active teachers',
     ]);
 
-    $response = $this->patch(route('admin.stats.restore', $archived->id), [
+    $this->patch(route('admin.stats.restore', $archived->id), [
         'replacement_site_statistic_id' => $replacement->id,
-    ]);
+    ])->assertSessionHasErrors('replacement_site_statistic_id');
 
-    $response->assertSessionHasErrors('replacement_site_statistic_id');
     expect(SiteStatistic::withTrashed()->findOrFail($archived->id)->trashed())->toBeTrue();
     expect($replacement->fresh())->not->toBeNull();
 
