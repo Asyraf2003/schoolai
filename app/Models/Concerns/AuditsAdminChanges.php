@@ -5,6 +5,7 @@ namespace App\Models\Concerns;
 use App\Models\User;
 use App\Services\AuditLogger;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -30,11 +31,19 @@ trait AuditsAdminChanges
             )
         );
 
-        static::restored(
-            fn (Model $model) => $model->recordAdminChange(
-                'restored'
+        if (
+            in_array(
+                SoftDeletes::class,
+                class_uses_recursive(static::class),
+                true
             )
-        );
+        ) {
+            static::restored(
+                fn (Model $model) => $model->recordAdminChange(
+                    'restored'
+                )
+            );
+        }
     }
 
     private function recordAdminChange(string $action): void
