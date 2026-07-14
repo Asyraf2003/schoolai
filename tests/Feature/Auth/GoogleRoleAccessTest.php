@@ -359,22 +359,50 @@ it('rate limits repeated Google OAuth redirects without leaking credentials', fu
         ->assertDontSee('oauth-client-secret-do-not-leak');
 });
 
-it('protects every named admin route with admin middleware', function (): void {
+it('protects every admin URI and mutation with the full middleware stack', function (): void {
     $adminRoutes = collect(Route::getRoutes())
+        ->filter(function ($route): bool {
+            $uri = $route->uri();
+
+            return $uri === 'admin'
+                || str_starts_with($uri, 'admin/');
+        });
+
+    $mutationMethods = ['POST', 'PUT', 'PATCH', 'DELETE'];
+
+    $adminMutationRoutes = $adminRoutes
         ->filter(
-            fn ($route): bool => str_starts_with(
-                (string) $route->getName(),
-                'admin.'
-            )
+            fn ($route): bool => collect($route->methods())
+                ->intersect($mutationMethods)
+                ->isNotEmpty()
         );
 
     expect($adminRoutes->count())->toBeGreaterThan(0);
+    expect($adminMutationRoutes->count())->toBeGreaterThan(0);
 
     foreach ($adminRoutes as $route) {
         expect($route->gatherMiddleware())
+            ->toContain('web')
             ->toContain('auth')
-            ->toContain('admin');
+            ->toContain('admin')
+            ->toContain('admin.locale');
     }
+});
+
+it('blocks guests from admin pages and mutations without changing data', function (): void {
+    $this->get(route('admin.dashboard'))
+        ->assertRedirect(route('login'));
+
+    $this->post(route('admin.stats.store'), [
+        'value' => '999',
+        'value_en' => '999',
+        'label' => 'Tamu tidak boleh membuat',
+        'label_en' => 'Guest must not create',
+    ])->assertRedirect(route('login'));
+
+    $this->assertDatabaseMissing('site_statistics', [
+        'label' => 'Tamu tidak boleh membuat',
+    ]);
 });
 
 it('blocks regular users from admin pages and actions', function (): void {
