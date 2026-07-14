@@ -3,12 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\AuditLogger;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -38,6 +40,38 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return ! $this->isDisabled();
+    }
+
+    protected static function booted(): void
+    {
+        static::updated(function (User $user): void {
+            $actor = Auth::user();
+
+            if ($user->wasChanged('disabled_at')) {
+                app(AuditLogger::class)->record(
+                    $user->isDisabled()
+                        ? 'account.disabled'
+                        : 'account.enabled',
+                    actor: $actor instanceof User ? $actor : null,
+                    subject: $user,
+                    metadata: [
+                        'role' => $user->role,
+                    ],
+                );
+            }
+
+            if ($user->wasChanged('role')) {
+                app(AuditLogger::class)->record(
+                    'account.role_changed',
+                    actor: $actor instanceof User ? $actor : null,
+                    subject: $user,
+                    metadata: [
+                        'previous_role' => $user->getOriginal('role'),
+                        'current_role' => $user->role,
+                    ],
+                );
+            }
+        });
     }
 
     /**

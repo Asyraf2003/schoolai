@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\AuditsAdminChanges;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class SiteStatistic extends Model
 {
-    use HasFactory, SoftDeletes;
+    use AuditsAdminChanges, HasFactory, SoftDeletes;
 
     public const MAX_ITEMS = 4;
 

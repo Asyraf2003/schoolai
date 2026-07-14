@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\AuditsAdminChanges;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 final class PpdbSetting extends Model
 {
-    use HasFactory;
+    use AuditsAdminChanges, HasFactory;
 
     public const DEFAULT_REGISTRATION_URL = 'https://forms.gle/1huqPo24Et6pgUNh6';
 

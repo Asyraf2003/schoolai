@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,11 @@ use Throwable;
 class GoogleAuthController extends Controller
 {
     private const ADMIN_CLAIM_KEY = 'first_google_admin';
+
+    public function __construct(
+        private readonly AuditLogger $auditLogger
+    ) {
+    }
 
     public function redirect()
     {
@@ -28,6 +34,11 @@ class GoogleAuthController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (Throwable) {
+            $this->auditLogger->record(
+                'auth.google.login_failed',
+                metadata: ['reason' => 'provider_error'],
+            );
+
             return redirect()
                 ->route('login')
                 ->withErrors([
@@ -49,6 +60,11 @@ class GoogleAuthController extends Controller
         );
 
         if ($email === '') {
+            $this->auditLogger->record(
+                'auth.google.login_denied',
+                metadata: ['reason' => 'missing_email'],
+            );
+
             return redirect()
                 ->route('login')
                 ->withErrors([
@@ -59,6 +75,11 @@ class GoogleAuthController extends Controller
         }
 
         if ($googleId === '') {
+            $this->auditLogger->record(
+                'auth.google.login_denied',
+                metadata: ['reason' => 'missing_google_id'],
+            );
+
             return redirect()
                 ->route('login')
                 ->withErrors([
@@ -77,6 +98,11 @@ class GoogleAuthController extends Controller
         }
 
         if ($emailVerified !== true) {
+            $this->auditLogger->record(
+                'auth.google.login_denied',
+                metadata: ['reason' => 'unverified_email'],
+            );
+
             return redirect()
                 ->route('login')
                 ->withErrors([
@@ -213,6 +239,11 @@ class GoogleAuthController extends Controller
         );
 
         if (! $user) {
+            $this->auditLogger->record(
+                'auth.google.identity_conflict',
+                metadata: ['reason' => 'stored_identity_mismatch'],
+            );
+
             return redirect()
                 ->route('login')
                 ->withErrors([
@@ -223,6 +254,14 @@ class GoogleAuthController extends Controller
         }
 
         if ($user->isDisabled()) {
+            $this->auditLogger->record(
+                $user->isAdmin()
+                    ? 'auth.admin.login_denied'
+                    : 'auth.user.login_denied',
+                actor: $user,
+                subject: $user,
+                metadata: ['reason' => 'account_disabled'],
+            );
             return redirect()
                 ->route('login')
                 ->withErrors([
@@ -238,6 +277,14 @@ class GoogleAuthController extends Controller
 
         Auth::login($user, remember: true);
         $request->session()->regenerate();
+
+        if ($user->isAdmin()) {
+            $this->auditLogger->record(
+                'auth.admin.login_succeeded',
+                actor: $user,
+                subject: $user,
+            );
+        }
 
         return redirect()
             ->route(
