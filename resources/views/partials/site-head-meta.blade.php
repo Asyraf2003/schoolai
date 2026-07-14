@@ -98,7 +98,7 @@
 <meta name="twitter:image" content="{{ $headImageUrl }}" />
 <meta name="twitter:image:alt" content="{{ $headImageAlt }}" />
 
-<script type="application/ld+json">{!! json_encode(
+<script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" type="application/ld+json">{!! json_encode(
     $headStructuredData,
     JSON_UNESCAPED_SLASHES
     | JSON_UNESCAPED_UNICODE

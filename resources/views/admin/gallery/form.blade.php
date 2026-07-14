@@ -152,7 +152,7 @@
     </section>
   </form>
 
-  <script>
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     (() => {
       const form = document.querySelector('[data-gallery-video-form]');
       if (!form) return;

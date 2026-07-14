@@ -19,7 +19,7 @@
 
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-  <style>
+  <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     :root {
       color-scheme: light;
       --admin-ink: #20223f;
@@ -1503,7 +1503,7 @@
       @yield('content')
     </main>
   </div>
-  <script>
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     (() => {
       const stack = document.querySelector('[data-admin-toast-stack]');
       if (!stack) return;
@@ -1543,7 +1543,7 @@
       });
     })();
   </script>
-  <script>
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     (() => {
       const modal = document.querySelector('[data-admin-delete-modal]');
       if (!modal) return;

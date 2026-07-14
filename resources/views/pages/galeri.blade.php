@@ -8,7 +8,7 @@
 @extends('layouts.public', ['title' => $page['title'] ?? __('pages.galeri.title'), 'description' => $page['description'] ?? __('pages.galeri.description')])
 
 @section('content')
-  <style>
+  <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     .gallery-wall-subsection__head {
       display: grid !important;
       grid-template-columns: 1fr !important;

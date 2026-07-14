@@ -16,7 +16,7 @@
 @endphp
 
 @section('content')
-  <style>
+  <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     .ppdb-showcase-admin { margin-top: 22px; display: grid; gap: 18px; }
     .ppdb-showcase-admin__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.68fr); gap: 18px; align-items: start; }
     .ppdb-showcase-admin__panel { padding: 18px; }
@@ -334,7 +334,7 @@
     </div>
   </section>
 
-  <script>
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     (() => {
       const form = document.querySelector('[data-ppdb-showcase-form]');
       if (!form) return;

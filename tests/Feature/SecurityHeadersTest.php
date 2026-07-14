@@ -1,0 +1,116 @@
+<?php
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+
+uses(RefreshDatabase::class);
+
+it('adds nonce based security headers to public pages', function (): void {
+    $urls = [
+        route('home'),
+        route('ppdb'),
+        route('galeri'),
+    ];
+
+    foreach ($urls as $url) {
+        $response = $this->get($url)->assertOk();
+
+        $response
+            ->assertHeader('X-Content-Type-Options', 'nosniff')
+            ->assertHeader(
+                'Referrer-Policy',
+                'strict-origin-when-cross-origin'
+            )
+            ->assertHeader(
+                'Permissions-Policy',
+                'camera=(), microphone=(), geolocation=(), payment=(), usb=()'
+            )
+            ->assertHeader('X-Frame-Options', 'DENY');
+
+        $csp = (string) $response->headers->get(
+            'Content-Security-Policy'
+        );
+
+        expect($csp)
+            ->toContain("default-src 'self'")
+            ->toContain("frame-ancestors 'none'")
+            ->toContain("script-src-attr 'none'")
+            ->toContain(
+                "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com"
+            )
+            ->not->toContain('frame-src *')
+            ->not->toContain('frame-src https:');
+
+        expect(
+            preg_match(
+                "/script-src 'self' 'nonce-([^']+)'/",
+                $csp,
+                $matches
+            )
+        )->toBe(1);
+
+        $nonce = $matches[1];
+
+        expect($response->getContent())
+            ->toContain('nonce="'.$nonce.'"');
+
+        preg_match_all(
+            '/<(?:script|style)\b(?![^>]*\bnonce=)[^>]*>/i',
+            $response->getContent(),
+            $missingNonces
+        );
+
+        expect($missingNonces[0])->toBe([]);
+    }
+});
+
+it('adds the same security policy to authenticated admin pages', function (): void {
+    $admin = User::query()->forceCreate([
+        'name' => 'Security Header Admin',
+        'email' => 'security-header-admin@example.test',
+        'email_verified_at' => now(),
+        'password' => Hash::make('unused-password'),
+        'role' => User::ROLE_ADMIN,
+    ]);
+
+    $response = $this->actingAs($admin)
+        ->get(route('admin.dashboard'))
+        ->assertOk()
+        ->assertHeader('X-Content-Type-Options', 'nosniff')
+        ->assertHeader('X-Frame-Options', 'DENY');
+
+    $csp = (string) $response->headers->get(
+        'Content-Security-Policy'
+    );
+
+    expect($csp)
+        ->toContain("frame-ancestors 'none'")
+        ->toContain("script-src 'self' 'nonce-")
+        ->toContain("style-src 'self' 'nonce-");
+
+    preg_match_all(
+        '/<(?:script|style)\b(?![^>]*\bnonce=)[^>]*>/i',
+        $response->getContent(),
+        $missingNonces
+    );
+
+    expect($missingNonces[0])->toBe([]);
+});
+
+it('sends HSTS only for secure production requests', function (): void {
+    config(['app.env' => 'production']);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertHeaderMissing('Strict-Transport-Security');
+
+    $this->withServerVariables([
+        'HTTPS' => 'on',
+    ])->get(route('home'))
+        ->assertOk()
+        ->assertHeader(
+            'Strict-Transport-Security',
+            'max-age=31536000'
+        );
+});

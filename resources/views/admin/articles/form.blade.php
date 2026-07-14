@@ -126,7 +126,7 @@
     </section>
   </form>
 
-  <script>
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     (() => {
       const form = document.querySelector('[data-article-form]');
       if (!form) return;

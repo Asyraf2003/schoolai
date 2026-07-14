@@ -126,7 +126,7 @@ https://www.youtube.com/watch?v=..."
   </div>
 </form>
 
-<script>
+<script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
   (() => {
     const form = document.querySelector('[data-gallery-page-media-form]');
     if (!form) return;

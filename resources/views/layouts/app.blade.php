@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'SchoolAI' }}</title>
 
-    <style>
+    <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
         * {
             box-sizing: border-box;
         }

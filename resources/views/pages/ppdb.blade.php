@@ -31,7 +31,7 @@
 @endphp
 
 @section('content')
-  <style>
+  <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     .public-hero__actions .btn--ppdb-register{background:#137a4c;color:#fff;border:2px solid rgba(255,255,255,.72);box-shadow:0 16px 34px rgba(19,122,76,.34);font-weight:900;letter-spacing:.01em;text-shadow:0 1px 1px rgba(0,0,0,.26)}
     .public-hero__actions .btn--ppdb-register:hover{background:#0f6a41;box-shadow:0 20px 42px rgba(19,122,76,.42)}
     .public-hero__actions .btn--ppdb-guide{background:#fff;color:#20223f;border:2px solid rgba(19,122,76,.34);box-shadow:0 12px 26px rgba(32,34,63,.12);font-weight:900}
@@ -214,7 +214,7 @@
       </div>
     </section>
 
-    <script>
+    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
       (() => {
         const root = document.querySelector('[data-ppdb-liftoff]');
         if (!root) return;
