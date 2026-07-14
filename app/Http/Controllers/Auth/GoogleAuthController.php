@@ -222,6 +222,20 @@ class GoogleAuthController extends Controller
                 ]);
         }
 
+        if ($user->isDisabled()) {
+            return redirect()
+                ->route('login')
+                ->withErrors([
+                    'email' => __(
+                        'app.auth.errors.account_disabled'
+                    ),
+                ]);
+        }
+
+        $user->forceFill([
+            'last_login_at' => now(),
+        ])->save();
+
         Auth::login($user, remember: true);
         $request->session()->regenerate();
 

@@ -61,7 +61,7 @@ Route::middleware('guest')->group(function () {
         ->name('google.callback');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'active.account'])->group(function () {
     Route::get('/dashboard', function (Request $request) {
         return redirect()->route(
             $request->user()?->isAdmin()
@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware([
     'auth',
+    'active.account',
     'admin',
     'admin.locale',
 ])->group(function () {

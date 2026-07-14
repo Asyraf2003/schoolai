@@ -30,6 +30,16 @@ class User extends Authenticatable
         return $this->role === self::ROLE_USER;
     }
 
+    public function isDisabled(): bool
+    {
+        return $this->disabled_at !== null;
+    }
+
+    public function isActive(): bool
+    {
+        return ! $this->isDisabled();
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -39,6 +49,8 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'disabled_at' => 'datetime',
+            'last_login_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

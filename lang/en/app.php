@@ -31,6 +31,7 @@ return [
             'google_missing_email' => 'The Google account does not have a usable email address.',
             'google_unverified_email' => 'The Google email address is not verified yet.',
             'google_identity_conflict' => 'The Google identity does not match the stored account. Contact the administrator.',
+            'account_disabled' => 'This account has been disabled. Contact the administrator.',
         ],
 
         'success' => [

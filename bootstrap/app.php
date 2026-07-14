@@ -7,6 +7,7 @@ use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\ForceAdminLocale;
 use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\EnsureRegularUser;
+use App\Http\Middleware\EnsureAccountIsActive;
 use App\Http\Middleware\AddSecurityHeaders;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\PostTooLargeException;
@@ -26,6 +27,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
             'admin.locale' => ForceAdminLocale::class,
             'admin' => EnsureAdmin::class,
             'regular.user' => EnsureRegularUser::class,
+            'active.account' => EnsureAccountIsActive::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
