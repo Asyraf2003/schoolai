@@ -319,6 +319,46 @@ it('allows an identity already linked by Google ID', function (): void {
     $this->assertAuthenticatedAs($admin);
 });
 
+it('applies the named rate limiter to both Google OAuth endpoints', function (): void {
+    foreach (['google.redirect', 'google.callback'] as $routeName) {
+        $route = Route::getRoutes()->getByName($routeName);
+
+        expect($route)->not->toBeNull();
+        expect($route->gatherMiddleware())
+            ->toContain('throttle:google-oauth');
+    }
+});
+
+it('rate limits repeated Google OAuth redirects without leaking credentials', function (): void {
+    config([
+        'services.google.client_id' => 'oauth-client-id-do-not-leak',
+        'services.google.client_secret' => 'oauth-client-secret-do-not-leak',
+    ]);
+
+    $provider = Mockery::mock();
+
+    $provider->shouldReceive('redirect')
+        ->times(10)
+        ->andReturnUsing(
+            fn () => redirect('https://accounts.google.com')
+        );
+
+    Socialite::shouldReceive('driver')
+        ->with('google')
+        ->times(10)
+        ->andReturn($provider);
+
+    foreach (range(1, 10) as $attempt) {
+        $this->get(route('google.redirect'))
+            ->assertRedirect('https://accounts.google.com');
+    }
+
+    $this->get(route('google.redirect'))
+        ->assertStatus(429)
+        ->assertDontSee('oauth-client-id-do-not-leak')
+        ->assertDontSee('oauth-client-secret-do-not-leak');
+});
+
 it('protects every named admin route with admin middleware', function (): void {
     $adminRoutes = collect(Route::getRoutes())
         ->filter(
