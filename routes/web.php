@@ -53,9 +53,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
 
     Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])
+        ->middleware('throttle:google-oauth')
         ->name('google.redirect');
 
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])
+        ->middleware('throttle:google-oauth')
         ->name('google.callback');
 });
 
