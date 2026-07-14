@@ -166,6 +166,10 @@ final class HomeController extends Controller
             return ['items' => []];
         }
 
+        // Artikel homepage hanya berasal dari database.
+        // Item statis pada file bahasa tidak boleh tampil sebagai artikel palsu.
+        $section['items'] = [];
+
         if (! Schema::hasTable('articles')) {
             return $section;
         }
