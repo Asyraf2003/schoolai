@@ -109,7 +109,7 @@
 
     @if (! empty($siteFooter['links']))
       <nav class="footer-links" aria-label="{{ $siteFooter['links_title'] ?? __('pages.common.footer.links_title') }}">
-        <h4>{{ $siteFooter['links_title'] ?? __('pages.common.footer.links_title') }}</h4>
+        <strong class="footer-links__title">{{ $siteFooter['links_title'] ?? __('pages.common.footer.links_title') }}</strong>
         <ul>
           @foreach ($siteFooter['links'] as $link)
             <li><a href="{{ $normalizeFooterHref($link['href'] ?? '#') }}">{{ $link['label'] ?? '' }}</a></li>
@@ -120,7 +120,7 @@
 
     @if (! empty($siteFooter['gallery_links']))
       <nav class="footer-gallery-links" aria-label="{{ $siteFooter['gallery_links_title'] ?? __('pages.common.nav.galeri') }}">
-        <h4>{{ $siteFooter['gallery_links_title'] ?? __('pages.common.nav.galeri') }}</h4>
+        <strong class="footer-gallery-links__title">{{ $siteFooter['gallery_links_title'] ?? __('pages.common.nav.galeri') }}</strong>
         <ul>
           @foreach ($siteFooter['gallery_links'] as $link)
             <li><a href="{{ $normalizeFooterHref($link['href'] ?? '#') }}">{{ $link['label'] ?? '' }}</a></li>
@@ -130,8 +130,8 @@
     @endif
 
     @if (! empty($siteFooter['partners']))
-      <div class="footer-partners" aria-labelledby="footer-partners-heading">
-        <h4 id="footer-partners-heading">{{ $siteFooter['partners_title'] ?? 'Mitra' }}</h4>
+      <div class="footer-partners">
+        <strong class="footer-partners__title">{{ $siteFooter['partners_title'] ?? 'Mitra' }}</strong>
 
         <div class="footer-partners__grid">
           @foreach ($siteFooter['partners'] as $partner)
