@@ -9,6 +9,7 @@ use App\Models\GalleryPageSection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -48,22 +49,22 @@ final class GalleryPageMediaAdminController extends Controller
 
     public function show(GalleryPageMediaItem $galleryPageMediaItem): View
     {
-        $galleryPageMediaItem->load('section');
+        $section = $this->activeSectionOrFail($galleryPageMediaItem);
 
         return view('admin.gallery.page-media.show', [
             'adminPageKey' => 'galeri',
-            'section' => $galleryPageMediaItem->section,
+            'section' => $section,
             'item' => $galleryPageMediaItem,
         ]);
     }
 
     public function edit(GalleryPageMediaItem $galleryPageMediaItem): View
     {
-        $galleryPageMediaItem->load('section');
+        $section = $this->activeSectionOrFail($galleryPageMediaItem);
 
         return view('admin.gallery.page-media.edit', [
             'adminPageKey' => 'galeri',
-            'section' => $galleryPageMediaItem->section,
+            'section' => $section,
             'mode' => 'edit',
             'item' => $galleryPageMediaItem,
             'typeOptions' => $this->typeOptions(),
@@ -72,6 +73,8 @@ final class GalleryPageMediaAdminController extends Controller
 
     public function update(Request $request, GalleryPageMediaItem $galleryPageMediaItem): RedirectResponse
     {
+        $this->activeSectionOrFail($galleryPageMediaItem);
+
         $data = $this->validatedSingleData($request, $galleryPageMediaItem);
         $data = $this->applySingleMedia($request, $data, $galleryPageMediaItem);
 
@@ -84,6 +87,8 @@ final class GalleryPageMediaAdminController extends Controller
 
     public function toggle(GalleryPageMediaItem $galleryPageMediaItem): RedirectResponse
     {
+        $this->activeSectionOrFail($galleryPageMediaItem);
+
         $galleryPageMediaItem->update([
             'is_published' => ! $galleryPageMediaItem->is_published,
         ]);
@@ -93,14 +98,72 @@ final class GalleryPageMediaAdminController extends Controller
 
     public function destroy(GalleryPageMediaItem $galleryPageMediaItem): RedirectResponse
     {
-        $section = $galleryPageMediaItem->section;
+        $section = $this->activeSectionOrFail($galleryPageMediaItem);
 
-        $this->deleteStoredPublicFile($galleryPageMediaItem->media_url);
         $galleryPageMediaItem->delete();
 
         return redirect()
             ->route('admin.galeri.sections.show', $section)
-            ->with('success', 'Media halaman galeri berhasil dihapus.');
+            ->with('success', 'Media halaman galeri dipindahkan ke arsip dan dapat dipulihkan.');
+    }
+
+    public function restore(Request $request, int $galleryPageMediaItem): RedirectResponse
+    {
+        $data = $request->validate([
+            'replacement_gallery_page_media_item_id' => ['nullable', 'integer'],
+        ]);
+
+        $replacementId = isset($data['replacement_gallery_page_media_item_id'])
+            ? (int) $data['replacement_gallery_page_media_item_id']
+            : null;
+
+        $archivedItem = GalleryPageMediaItem::onlyTrashed()->findOrFail($galleryPageMediaItem);
+        $section = $archivedItem->sectionWithTrashed;
+
+        abort_if(! $section || $section->trashed(), 404);
+
+        if ($replacementId === null) {
+            $archivedItem->restore();
+
+            return redirect()
+                ->route('admin.galeri.sections.show', $section)
+                ->with('success', 'Media halaman galeri berhasil dipulihkan.');
+        }
+
+        DB::transaction(function () use ($galleryPageMediaItem, $replacementId, $section): void {
+            $archivedItem = GalleryPageMediaItem::onlyTrashed()
+                ->lockForUpdate()
+                ->findOrFail($galleryPageMediaItem);
+
+            $replacementItem = GalleryPageMediaItem::query()
+                ->lockForUpdate()
+                ->findOrFail($replacementId);
+
+            if (
+                (int) $archivedItem->gallery_page_section_id !== (int) $section->getKey() ||
+                (int) $replacementItem->gallery_page_section_id !== (int) $section->getKey()
+            ) {
+                throw ValidationException::withMessages([
+                    'replacement_gallery_page_media_item_id' => 'Media pengganti harus berada pada bagian galeri yang sama.',
+                ]);
+            }
+
+            $archivedIdentity = $archivedItem->replacementIdentity();
+            $replacementIdentity = $replacementItem->replacementIdentity();
+
+            if ($archivedIdentity === null || $archivedIdentity !== $replacementIdentity) {
+                throw ValidationException::withMessages([
+                    'replacement_gallery_page_media_item_id' => 'Media pengganti harus merupakan media aktif dengan tipe dan sumber yang identik.',
+                ]);
+            }
+
+            $replacementItem->delete();
+            $archivedItem->restore();
+        });
+
+        return redirect()
+            ->route('admin.galeri.sections.show', $section)
+            ->with('success', 'Media lama dipulihkan dan media aktif pengganti dipindahkan ke arsip.');
     }
 
     private function storeMany(Request $request, GalleryPageSection $section): int
@@ -249,7 +312,7 @@ final class GalleryPageMediaAdminController extends Controller
     private function applySingleMedia(Request $request, array $data, ?GalleryPageMediaItem $currentItem = null): array
     {
         if ($data['type'] === 'video') {
-            $this->deleteStoredPublicFile($currentItem?->media_url);
+            $this->deleteStoredPublicFile($currentItem?->media_url, $currentItem?->getKey());
             $data['media_url'] = $this->normalizeVideoUrl((string) ($data['media_url'] ?? ''));
 
             return $data;
@@ -258,7 +321,7 @@ final class GalleryPageMediaAdminController extends Controller
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $this->deleteStoredPublicFile($currentItem?->media_url);
+            $this->deleteStoredPublicFile($currentItem?->media_url, $currentItem?->getKey());
             $data['media_url'] = Storage::url($request->file('media_file')->store('gallery/page', 'public'));
         }
 
@@ -374,19 +437,40 @@ final class GalleryPageMediaAdminController extends Controller
         return $host === $domain || str_ends_with($host, '.' . $domain);
     }
 
-    private function deleteStoredPublicFile(?string $url): void
+    private function deleteStoredPublicFile(?string $url, int|string|null $exceptItemId = null): void
     {
         if (! $url || ! str_starts_with($url, '/storage/')) {
             return;
         }
 
+        $otherReference = GalleryPageMediaItem::withTrashed()
+            ->where('media_url', $url)
+            ->when(
+                $exceptItemId !== null,
+                fn ($query) => $query->where('id', '!=', $exceptItemId)
+            )
+            ->exists();
+
+        if ($otherReference) {
+            return;
+        }
+
         $path = substr($url, strlen('/storage/'));
 
-        if ($path === '' || str_contains($path, '..') || str_starts_with($path, '/')) {
+        if ($path === '' || str_contains($path, '..') || str_starts_with($path, '/') || str_contains($path, '\\')) {
             return;
         }
 
         Storage::disk('public')->delete($path);
+    }
+
+    private function activeSectionOrFail(GalleryPageMediaItem $item): GalleryPageSection
+    {
+        $section = $item->section;
+
+        abort_if(! $section, 404);
+
+        return $section;
     }
 
     private function typeOptions(): array

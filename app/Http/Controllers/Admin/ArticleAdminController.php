@@ -7,8 +7,10 @@ use App\Models\Article;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 
 final class ArticleAdminController extends Controller
@@ -23,12 +25,35 @@ final class ArticleAdminController extends Controller
     public function index(): View
     {
         $articles = Article::query()
+            ->withTrashed()
             ->latestPublished()
             ->paginate(20);
+
+        $activeArticlesByIdentity = Article::query()
+            ->latestPublished()
+            ->get(['id', 'title_id', 'title_en', 'link_id', 'published_at'])
+            ->groupBy(function (Article $article): string {
+                return Article::normalizedLinkIdentity($article->link_id)
+                    ?? '__invalid_active_' . $article->getKey();
+            });
+
+        $replacementCandidatesByArticle = $articles
+            ->getCollection()
+            ->filter(fn (Article $article): bool => $article->trashed())
+            ->mapWithKeys(function (Article $article) use ($activeArticlesByIdentity): array {
+                $identity = Article::normalizedLinkIdentity($article->link_id);
+
+                return [
+                    $article->getKey() => $identity
+                        ? $activeArticlesByIdentity->get($identity, collect())
+                        : collect(),
+                ];
+            });
 
         return view('admin.articles.index', [
             'adminPageKey' => 'artikel',
             'articles' => $articles,
+            'replacementCandidatesByArticle' => $replacementCandidatesByArticle,
         ]);
     }
 
@@ -87,12 +112,56 @@ final class ArticleAdminController extends Controller
 
     public function destroy(Article $article): RedirectResponse
     {
-        $this->deleteStoredPublicFile($article->thumbnail_url);
         $article->delete();
 
         return redirect()
             ->route('admin.artikel')
-            ->with('success', 'Artikel berhasil dihapus.');
+            ->with('success', 'Artikel dipindahkan ke arsip dan dapat dipulihkan.');
+    }
+
+    public function restore(Request $request, int $article): RedirectResponse
+    {
+        $data = $request->validate([
+            'replacement_article_id' => ['nullable', 'integer'],
+        ]);
+
+        $replacementArticleId = isset($data['replacement_article_id'])
+            ? (int) $data['replacement_article_id']
+            : null;
+
+        if ($replacementArticleId === null) {
+            Article::onlyTrashed()->findOrFail($article)->restore();
+
+            return redirect()
+                ->route('admin.artikel')
+                ->with('success', 'Artikel berhasil dipulihkan.');
+        }
+
+        DB::transaction(function () use ($article, $replacementArticleId): void {
+            $trashedArticle = Article::onlyTrashed()
+                ->lockForUpdate()
+                ->findOrFail($article);
+
+            $replacementArticle = Article::query()
+                ->lockForUpdate()
+                ->findOrFail($replacementArticleId);
+
+            $trashedIdentity = Article::normalizedLinkIdentity($trashedArticle->link_id);
+            $replacementIdentity = Article::normalizedLinkIdentity($replacementArticle->link_id);
+
+            if ($trashedIdentity === null || $trashedIdentity !== $replacementIdentity) {
+                throw ValidationException::withMessages([
+                    'replacement_article_id' => 'Artikel pengganti harus merupakan artikel aktif dengan link Indonesia yang identik.',
+                ]);
+            }
+
+            $replacementArticle->delete();
+            $trashedArticle->restore();
+        });
+
+        return redirect()
+            ->route('admin.artikel')
+            ->with('success', 'Artikel lama dipulihkan dan artikel aktif pengganti dipindahkan ke arsip.');
     }
 
     private function validatedData(Request $request, ?Article $article = null): array

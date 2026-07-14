@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Article extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public const DEFAULT_AUTHOR = 'Admin';
 
@@ -55,6 +56,46 @@ final class Article extends Model
         return $query
             ->orderByDesc('published_at')
             ->orderByDesc('id');
+    }
+
+    public static function normalizedLinkIdentity(?string $url): ?string
+    {
+        if (! is_string($url) || trim($url) === '') {
+            return null;
+        }
+
+        $parts = parse_url(trim($url));
+
+        if (! is_array($parts)) {
+            return null;
+        }
+
+        $scheme = strtolower((string) ($parts['scheme'] ?? ''));
+        $host = strtolower((string) ($parts['host'] ?? ''));
+
+        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return null;
+        }
+
+        $port = isset($parts['port']) ? (int) $parts['port'] : null;
+        $authority = $host;
+
+        if ($port !== null && ! (($scheme === 'http' && $port === 80) || ($scheme === 'https' && $port === 443))) {
+            $authority .= ':' . $port;
+        }
+
+        $path = '/' . ltrim((string) ($parts['path'] ?? ''), '/');
+        $path = $path === '/' ? '/' : rtrim($path, '/');
+
+        $query = '';
+
+        if (isset($parts['query']) && $parts['query'] !== '') {
+            parse_str($parts['query'], $queryParameters);
+            ksort($queryParameters);
+            $query = http_build_query($queryParameters, '', '&', PHP_QUERY_RFC3986);
+        }
+
+        return $scheme . '://' . $authority . $path . ($query !== '' ? '?' . $query : '');
     }
 
     public function getAdminTitleAttribute(): string

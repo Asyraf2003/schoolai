@@ -33,7 +33,7 @@
     <div class="admin-gallery-block__head">
       <div>
         <h2>Detail Bagian</h2>
-        <p>Judul dan deskripsi section. Media di bawah hanya foto atau embed.</p>
+        <p>Judul dan deskripsi section. Media yang dihapus tetap disimpan sebagai arsip.</p>
       </div>
 
       <span class="gallery-lite-status {{ $section->is_published ? 'is-active' : 'is-inactive' }}">
@@ -68,16 +68,24 @@
     <div class="admin-gallery-block__head">
       <div>
         <h2>Media</h2>
-        <p>Upload beberapa foto sekaligus atau tempel banyak URL embed dari tombol Tambah Media.</p>
+        <p>Media arsip tidak dapat diedit atau dihapus permanen, tetapi dapat dipulihkan atau menggantikan media aktif identik.</p>
       </div>
 
-      <a href="{{ route('admin.galeri.section-media.create', $section) }}" class="admin-primary-action">Tambah Media</a>
+      <div class="admin-inline-actions">
+        <span class="admin-counter">
+          {{ $mediaItems->reject->trashed()->count() }} aktif · {{ $mediaItems->filter->trashed()->count() }} arsip
+        </span>
+        <a href="{{ route('admin.galeri.section-media.create', $section) }}" class="admin-primary-action">Tambah Media</a>
+      </div>
     </div>
 
     @if($mediaItems->isNotEmpty())
       <div class="admin-media-grid">
         @foreach($mediaItems as $item)
-          <article class="admin-media-card">
+          @php($isDeleted = $item->trashed())
+          @php($replacementCandidates = $replacementCandidatesByArchivedId->get($item->getKey(), collect()))
+
+          <article class="admin-media-card {{ $isDeleted ? 'is-deleted' : '' }}">
             <div class="admin-media-card__preview">
               @if($item->is_photo && $item->media_url)
                 <img src="{{ $item->media_url }}" alt="{{ $section->admin_title }}">
@@ -89,29 +97,56 @@
             </div>
 
             <div class="admin-media-card__body">
-              <span class="gallery-lite-status {{ $item->is_published ? 'is-active' : 'is-inactive' }}">
-                {{ $item->is_published ? 'Aktif' : 'Nonaktif' }}
+              <span class="gallery-lite-status {{ $isDeleted ? 'is-deleted' : ($item->is_published ? 'is-active' : 'is-inactive') }}">
+                {{ $isDeleted ? 'Dihapus' : ($item->is_published ? 'Aktif' : 'Nonaktif') }}
               </span>
               <h3>{{ $item->type_label }}</h3>
               <p>{{ $item->media_label }}</p>
+              @if($isDeleted && $item->deleted_at)
+                <small>Dihapus {{ $item->deleted_at->translatedFormat('d M Y, H:i') }} WIB</small>
+              @endif
             </div>
 
             <div class="gallery-lite-actions">
-              <a href="{{ route('admin.galeri.section-media.show', $item) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
+              @if($isDeleted)
+                <form method="POST" action="{{ route('admin.galeri.section-media.restore', $item->getKey()) }}">
+                  @csrf
+                  @method('PATCH')
+                  <button type="submit" class="admin-small-action admin-small-action--restore">Pulihkan</button>
+                </form>
 
-              <form method="POST" action="{{ route('admin.galeri.section-media.toggle', $item) }}">
-                @csrf
-                @method('PATCH')
-                <button type="submit" class="admin-small-action">
-                  {{ $item->is_published ? 'Matikan' : 'Aktifkan' }}
-                </button>
-              </form>
+                @foreach($replacementCandidates as $candidate)
+                  <form
+                    method="POST"
+                    action="{{ route('admin.galeri.section-media.restore', $item->getKey()) }}"
+                    data-admin-delete-form
+                    data-admin-delete-message="Pulihkan media lama dan pindahkan media aktif #{{ $candidate->getKey() }} ke arsip? File tetap tersimpan."
+                  >
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" name="replacement_gallery_page_media_item_id" value="{{ $candidate->getKey() }}">
+                    <button type="button" data-admin-delete-trigger class="admin-small-action admin-small-action--restore-swap">
+                      Pulihkan &amp; Gantikan #{{ $candidate->getKey() }}
+                    </button>
+                  </form>
+                @endforeach
+              @else
+                <a href="{{ route('admin.galeri.section-media.show', $item) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
 
-              <form method="POST" action="{{ route('admin.galeri.section-media.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Hapus media ini?">
-                @csrf
-                @method('DELETE')
-                <button type="button" data-admin-delete-trigger class="admin-small-action admin-small-action--danger">Hapus</button>
-              </form>
+                <form method="POST" action="{{ route('admin.galeri.section-media.toggle', $item) }}">
+                  @csrf
+                  @method('PATCH')
+                  <button type="submit" class="admin-small-action">
+                    {{ $item->is_published ? 'Matikan' : 'Aktifkan' }}
+                  </button>
+                </form>
+
+                <form method="POST" action="{{ route('admin.galeri.section-media.destroy', $item) }}" data-admin-delete-form data-admin-delete-message="Arsipkan media ini? File tetap disimpan dan media dapat dipulihkan.">
+                  @csrf
+                  @method('DELETE')
+                  <button type="button" data-admin-delete-trigger class="admin-small-action admin-small-action--danger">Hapus</button>
+                </form>
+              @endif
             </div>
           </article>
         @endforeach
