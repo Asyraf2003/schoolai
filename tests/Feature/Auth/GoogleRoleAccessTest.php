@@ -338,17 +338,19 @@ it('rate limits repeated Google OAuth redirects without leaking credentials', fu
     $provider = Mockery::mock();
 
     $provider->shouldReceive('redirect')
-        ->times(10)
+        ->times(20)
         ->andReturnUsing(
             fn () => redirect('https://accounts.google.com')
         );
 
     Socialite::shouldReceive('driver')
         ->with('google')
-        ->times(10)
+        ->times(20)
         ->andReturn($provider);
 
-    foreach (range(1, 10) as $attempt) {
+    // The Socialite mock does not persist OAuth state, so this
+    // loop proves the independent per-IP limit.
+    foreach (range(1, 20) as $attempt) {
         $this->get(route('google.redirect'))
             ->assertRedirect('https://accounts.google.com');
     }

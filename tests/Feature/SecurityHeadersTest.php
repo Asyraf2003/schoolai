@@ -105,9 +105,7 @@ it('sends HSTS only for secure production requests', function (): void {
         ->assertOk()
         ->assertHeaderMissing('Strict-Transport-Security');
 
-    $this->withServerVariables([
-        'HTTPS' => 'on',
-    ])->get(route('home'))
+    $this->get('https://localhost/')
         ->assertOk()
         ->assertHeader(
             'Strict-Transport-Security',
