@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GalleryItem;
 use App\Models\GalleryPageSection;
+use App\Rules\SafeImageUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 final class GalleryAdminController extends Controller
 {
@@ -122,11 +124,17 @@ final class GalleryAdminController extends Controller
         }
 
         $data = $this->validatedData($request);
-        $data = $this->applyMedia($request, $data);
+        [$data, $newPath] = $this->applyMedia($request, $data);
         $sortOrder = $this->nextSortOrder();
 
-        $item = new GalleryItem($data);
-        $item->forceFill(['sort_order' => $sortOrder])->save();
+        try {
+            $item = new GalleryItem($data);
+            $item->forceFill(['sort_order' => $sortOrder])->save();
+        } catch (Throwable $exception) {
+            $this->deleteStoredPublicPath($newPath);
+
+            throw $exception;
+        }
 
         $this->normalizeSortOrders();
 
@@ -148,10 +156,21 @@ final class GalleryAdminController extends Controller
 
     public function update(Request $request, GalleryItem $galleryItem): RedirectResponse
     {
+        $oldMediaUrl = $galleryItem->media_url;
         $data = $this->validatedData($request, $galleryItem);
-        $data = $this->applyMedia($request, $data, $galleryItem);
+        [$data, $newPath, $replacesStoredFile] = $this->applyMedia($request, $data, $galleryItem);
 
-        $galleryItem->update($data);
+        try {
+            $galleryItem->update($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredPublicPath($newPath);
+
+            throw $exception;
+        }
+
+        if ($replacesStoredFile) {
+            $this->deleteStoredPublicFile($oldMediaUrl, $galleryItem->getKey());
+        }
 
         $this->normalizeSortOrders();
 
@@ -339,6 +358,7 @@ final class GalleryAdminController extends Controller
                 'file',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
+                new SafeImageUpload,
                 'max:' . self::MAX_PHOTO_KB,
             ],
             'media_url' => [
@@ -386,20 +406,35 @@ final class GalleryAdminController extends Controller
     private function applyMedia(Request $request, array $data, ?GalleryItem $currentItem = null): array
     {
         if ($data['type'] === 'video') {
-            $this->deleteStoredPublicFile($currentItem?->media_url, $currentItem?->getKey());
             $data['media_url'] = $this->normalizeVideoUrl((string) ($data['media_url'] ?? ''));
 
-            return $data;
+            return [$data, null, $currentItem?->type === 'photo'];
         }
 
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $this->deleteStoredPublicFile($currentItem?->media_url, $currentItem?->getKey());
-            $data['media_url'] = Storage::url($request->file('media_file')->store('gallery/photos', 'public'));
+            $path = $request->file('media_file')->store('gallery/photos', 'public');
+
+            if (! is_string($path) || $path === '') {
+                throw ValidationException::withMessages([
+                    'media_file' => 'Foto gagal disimpan. Silakan coba lagi.',
+                ]);
+            }
+
+            $data['media_url'] = Storage::url($path);
+
+            return [$data, $path, $currentItem?->type === 'photo'];
         }
 
-        return $data;
+        return [$data, null, false];
+    }
+
+    private function deleteStoredPublicPath(?string $path): void
+    {
+        if ($path !== null && $path !== '') {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function normalizeVideoUrl(string $url): string

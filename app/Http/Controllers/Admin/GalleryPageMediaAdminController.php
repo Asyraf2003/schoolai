@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GalleryPageMediaItem;
 use App\Models\GalleryPageSection;
+use App\Rules\SafeImageUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 final class GalleryPageMediaAdminController extends Controller
 {
@@ -75,10 +77,21 @@ final class GalleryPageMediaAdminController extends Controller
     {
         $this->activeSectionOrFail($galleryPageMediaItem);
 
+        $oldMediaUrl = $galleryPageMediaItem->media_url;
         $data = $this->validatedSingleData($request, $galleryPageMediaItem);
-        $data = $this->applySingleMedia($request, $data, $galleryPageMediaItem);
+        [$data, $newPath, $replacesStoredFile] = $this->applySingleMedia($request, $data, $galleryPageMediaItem);
 
-        $galleryPageMediaItem->update($data);
+        try {
+            $galleryPageMediaItem->update($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredPublicPath($newPath);
+
+            throw $exception;
+        }
+
+        if ($replacesStoredFile) {
+            $this->deleteStoredPublicFile($oldMediaUrl, $galleryPageMediaItem->getKey());
+        }
 
         return redirect()
             ->route('admin.galeri.section-media.show', $galleryPageMediaItem)
@@ -179,6 +192,7 @@ final class GalleryPageMediaAdminController extends Controller
                     'file',
                     'image',
                     'mimes:jpg,jpeg,png,webp',
+                    new SafeImageUpload,
                     'max:' . self::MAX_PHOTO_KB,
                 ],
                 'media_urls' => ['nullable'],
@@ -191,24 +205,45 @@ final class GalleryPageMediaAdminController extends Controller
                 'media_files.*.max' => 'Ukuran tiap foto maksimal 10MB.',
             ]);
 
-            $created = 0;
+            $storedPaths = [];
 
-            foreach ($request->file('media_files', []) as $file) {
-                $section->mediaItems()->create([
-                    'type' => 'photo',
-                    'media_url' => Storage::url($file->store('gallery/page', 'public')),
-                    'is_published' => $request->boolean('is_published'),
-                    'published_at' => $validated['published_at'] ?? null,
-                    'title_id' => null,
-                    'title_en' => null,
-                    'description_id' => null,
-                    'description_en' => null,
-                ]);
+            try {
+                return DB::transaction(function () use ($request, $section, $validated, &$storedPaths): int {
+                    $created = 0;
 
-                $created++;
+                    foreach ($request->file('media_files', []) as $file) {
+                        $path = $file->store('gallery/page', 'public');
+
+                        if (! is_string($path) || $path === '') {
+                            throw ValidationException::withMessages([
+                                'media_files' => 'Salah satu foto gagal disimpan. Silakan coba lagi.',
+                            ]);
+                        }
+
+                        $storedPaths[] = $path;
+                        $section->mediaItems()->create([
+                            'type' => 'photo',
+                            'media_url' => Storage::url($path),
+                            'is_published' => $request->boolean('is_published'),
+                            'published_at' => $validated['published_at'] ?? null,
+                            'title_id' => null,
+                            'title_en' => null,
+                            'description_id' => null,
+                            'description_en' => null,
+                        ]);
+
+                        $created++;
+                    }
+
+                    return $created;
+                });
+            } catch (Throwable $exception) {
+                foreach ($storedPaths as $path) {
+                    $this->deleteStoredPublicPath($path);
+                }
+
+                throw $exception;
             }
-
-            return $created;
         }
 
         $validated = $request->validate([
@@ -232,24 +267,26 @@ final class GalleryPageMediaAdminController extends Controller
             ]);
         }
 
-        $created = 0;
+        return DB::transaction(function () use ($urls, $section, $request, $validated): int {
+            $created = 0;
 
-        foreach ($urls as $url) {
-            $section->mediaItems()->create([
-                'type' => 'video',
-                'media_url' => $this->normalizeVideoUrl($url),
-                'is_published' => $request->boolean('is_published'),
-                'published_at' => $validated['published_at'] ?? null,
-                'title_id' => null,
-                'title_en' => null,
-                'description_id' => null,
-                'description_en' => null,
-            ]);
+            foreach ($urls as $url) {
+                $section->mediaItems()->create([
+                    'type' => 'video',
+                    'media_url' => $this->normalizeVideoUrl($url),
+                    'is_published' => $request->boolean('is_published'),
+                    'published_at' => $validated['published_at'] ?? null,
+                    'title_id' => null,
+                    'title_en' => null,
+                    'description_id' => null,
+                    'description_en' => null,
+                ]);
 
-            $created++;
-        }
+                $created++;
+            }
 
-        return $created;
+            return $created;
+        });
     }
 
     private function validatedSingleData(Request $request, ?GalleryPageMediaItem $mediaItem = null): array
@@ -272,6 +309,7 @@ final class GalleryPageMediaAdminController extends Controller
                 'file',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
+                new SafeImageUpload,
                 'max:' . self::MAX_PHOTO_KB,
             ],
             'media_url' => [
@@ -312,20 +350,35 @@ final class GalleryPageMediaAdminController extends Controller
     private function applySingleMedia(Request $request, array $data, ?GalleryPageMediaItem $currentItem = null): array
     {
         if ($data['type'] === 'video') {
-            $this->deleteStoredPublicFile($currentItem?->media_url, $currentItem?->getKey());
             $data['media_url'] = $this->normalizeVideoUrl((string) ($data['media_url'] ?? ''));
 
-            return $data;
+            return [$data, null, $currentItem?->type === 'photo'];
         }
 
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $this->deleteStoredPublicFile($currentItem?->media_url, $currentItem?->getKey());
-            $data['media_url'] = Storage::url($request->file('media_file')->store('gallery/page', 'public'));
+            $path = $request->file('media_file')->store('gallery/page', 'public');
+
+            if (! is_string($path) || $path === '') {
+                throw ValidationException::withMessages([
+                    'media_file' => 'Foto gagal disimpan. Silakan coba lagi.',
+                ]);
+            }
+
+            $data['media_url'] = Storage::url($path);
+
+            return [$data, $path, $currentItem?->type === 'photo'];
         }
 
-        return $data;
+        return [$data, null, false];
+    }
+
+    private function deleteStoredPublicPath(?string $path): void
+    {
+        if ($path !== null && $path !== '') {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function normalizeVideoUrl(string $url): string

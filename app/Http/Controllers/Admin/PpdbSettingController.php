@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PpdbSetting;
 use App\Models\PpdbShowcaseItem;
+use App\Rules\SafeImageUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
+use Throwable;
 
 final class PpdbSettingController extends Controller
 {
@@ -85,10 +87,16 @@ final class PpdbSettingController extends Controller
     public function storeShowcaseItem(Request $request): RedirectResponse
     {
         $data = $this->validatedShowcaseData($request);
-        $data = $this->applyShowcaseMedia($request, $data);
+        [$data, $newPath] = $this->applyShowcaseMedia($request, $data);
         $data['sort_order'] = $this->nextShowcaseSortOrder($data['audience']);
 
-        PpdbShowcaseItem::query()->create($data);
+        try {
+            PpdbShowcaseItem::query()->create($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredPublicPath($newPath);
+
+            throw $exception;
+        }
 
         $this->normalizeShowcaseSortOrders($data['audience']);
 
@@ -103,14 +111,25 @@ final class PpdbSettingController extends Controller
     public function updateShowcaseItem(Request $request, PpdbShowcaseItem $ppdbShowcaseItem): RedirectResponse
     {
         $oldAudience = $ppdbShowcaseItem->audience;
+        $oldMediaUrl = $ppdbShowcaseItem->media_url;
         $data = $this->validatedShowcaseData($request, $ppdbShowcaseItem);
-        $data = $this->applyShowcaseMedia($request, $data, $ppdbShowcaseItem);
+        [$data, $newPath, $replacesStoredFile] = $this->applyShowcaseMedia($request, $data, $ppdbShowcaseItem);
 
         if ($oldAudience !== $data['audience']) {
             $data['sort_order'] = $this->nextShowcaseSortOrder($data['audience']);
         }
 
-        $ppdbShowcaseItem->update($data);
+        try {
+            $ppdbShowcaseItem->update($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredPublicPath($newPath);
+
+            throw $exception;
+        }
+
+        if ($replacesStoredFile) {
+            $this->deleteStoredPublicFile($oldMediaUrl);
+        }
 
         $this->normalizeShowcaseSortOrders($oldAudience);
         $this->normalizeShowcaseSortOrders($data['audience']);
@@ -121,7 +140,6 @@ final class PpdbSettingController extends Controller
     public function destroyShowcaseItem(PpdbShowcaseItem $ppdbShowcaseItem): RedirectResponse
     {
         $audience = $ppdbShowcaseItem->audience;
-        $this->deleteStoredPublicFile($ppdbShowcaseItem->media_url);
         $ppdbShowcaseItem->delete();
 
         $this->normalizeShowcaseSortOrders($audience);
@@ -226,6 +244,7 @@ final class PpdbSettingController extends Controller
                 'file',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
+                new SafeImageUpload,
                 'max:' . PpdbShowcaseItem::MAX_PHOTO_KB,
             ],
             'media_url' => [
@@ -263,26 +282,39 @@ final class PpdbSettingController extends Controller
     private function applyShowcaseMedia(Request $request, array $data, ?PpdbShowcaseItem $currentItem = null): array
     {
         if ($data['media_type'] === PpdbShowcaseItem::MEDIA_VIDEO) {
-            $this->deleteStoredPublicFile($currentItem?->media_url);
             $data['media_url'] = $this->normalizeVideoUrl((string) ($data['media_url'] ?? ''));
 
-            return $data;
+            return [$data, null, $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO];
         }
 
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $this->deleteStoredPublicFile($currentItem?->media_url);
-            $data['media_url'] = Storage::url($request->file('media_file')->store('ppdb/showcase', 'public'));
+            $path = $request->file('media_file')->store('ppdb/showcase', 'public');
 
-            return $data;
+            if (! is_string($path) || $path === '') {
+                throw ValidationException::withMessages([
+                    'media_file' => 'Foto gagal disimpan. Silakan coba lagi.',
+                ]);
+            }
+
+            $data['media_url'] = Storage::url($path);
+
+            return [$data, $path, $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO];
         }
 
         $data['media_url'] = $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO
             ? $currentItem->media_url
             : null;
 
-        return $data;
+        return [$data, null, false];
+    }
+
+    private function deleteStoredPublicPath(?string $path): void
+    {
+        if ($path !== null && $path !== '') {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function normalizeVideoUrl(string $url): string
@@ -345,6 +377,10 @@ final class PpdbSettingController extends Controller
     private function deleteStoredPublicFile(?string $url): void
     {
         if (! $url || ! str_starts_with($url, '/storage/')) {
+            return;
+        }
+
+        if (PpdbShowcaseItem::withTrashed()->where('media_url', $url)->exists()) {
             return;
         }
 

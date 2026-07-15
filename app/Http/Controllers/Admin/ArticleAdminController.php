@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Rules\SafeImageUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
+use Throwable;
 
 final class ArticleAdminController extends Controller
 {
@@ -72,9 +74,15 @@ final class ArticleAdminController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $this->validatedData($request);
-        $data = $this->applyThumbnail($request, $data);
+        [$data, $newPath] = $this->applyThumbnail($request, $data);
 
-        $article = Article::query()->create($data);
+        try {
+            $article = Article::query()->create($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredPublicPath($newPath);
+
+            throw $exception;
+        }
 
         return redirect()
             ->route('admin.artikel.show', $article)
@@ -100,10 +108,21 @@ final class ArticleAdminController extends Controller
 
     public function update(Request $request, Article $article): RedirectResponse
     {
+        $oldThumbnailUrl = $article->thumbnail_url;
         $data = $this->validatedData($request, $article);
-        $data = $this->applyThumbnail($request, $data, $article);
+        [$data, $newPath] = $this->applyThumbnail($request, $data);
 
-        $article->update($data);
+        try {
+            $article->update($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredPublicPath($newPath);
+
+            throw $exception;
+        }
+
+        if ($newPath !== null) {
+            $this->deleteStoredPublicFile($oldThumbnailUrl);
+        }
 
         return redirect()
             ->route('admin.artikel.show', $article)
@@ -179,6 +198,7 @@ final class ArticleAdminController extends Controller
                 'file',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
+                new SafeImageUpload,
                 'max:' . self::MAX_THUMBNAIL_KB,
             ],
             'link_id' => ['required', 'url', 'max:2048'],
@@ -224,24 +244,39 @@ final class ArticleAdminController extends Controller
         return $data;
     }
 
-    private function applyThumbnail(Request $request, array $data, ?Article $currentArticle = null): array
+    private function applyThumbnail(Request $request, array $data): array
     {
         if (! $request->hasFile('thumbnail_file')) {
-            return $data;
+            return [$data, null];
         }
 
-        $this->deleteStoredPublicFile($currentArticle?->thumbnail_url);
+        $path = $request->file('thumbnail_file')->store('articles/thumbnails', 'public');
 
-        $data['thumbnail_url'] = Storage::url(
-            $request->file('thumbnail_file')->store('articles/thumbnails', 'public')
-        );
+        if (! is_string($path) || $path === '') {
+            throw ValidationException::withMessages([
+                'thumbnail_file' => 'Thumbnail gagal disimpan. Silakan coba lagi.',
+            ]);
+        }
 
-        return $data;
+        $data['thumbnail_url'] = Storage::url($path);
+
+        return [$data, $path];
+    }
+
+    private function deleteStoredPublicPath(?string $path): void
+    {
+        if ($path !== null && $path !== '') {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function deleteStoredPublicFile(?string $url): void
     {
         if (! $url || ! str_starts_with($url, '/storage/')) {
+            return;
+        }
+
+        if (Article::withTrashed()->where('thumbnail_url', $url)->exists()) {
             return;
         }
 
