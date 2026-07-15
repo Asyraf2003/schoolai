@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/bahasa/{locale}', function (string $locale, Request $request) {
+Route::post('/bahasa/{locale}', function (string $locale, Request $request) {
     abort_unless(in_array($locale, ['id', 'en'], true), 404);
 
     $request->session()->put('locale', $locale);

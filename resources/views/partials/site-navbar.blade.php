@@ -130,17 +130,20 @@
 
               <div class="nav-language__panel" role="menu" aria-label="{{ $item['label'] }}">
                 @foreach ($item['options'] ?? [] as $option)
-                  <a
-                    href="{{ route('language.switch', $option['locale']) }}"
-                    class="nav-language__option {{ $currentLocale === $option['locale'] ? 'is-active' : '' }}"
-                    role="menuitem"
-                    @if ($currentLocale === $option['locale'])
-                      aria-current="true"
-                    @endif
-                  >
-                    <span>{{ $option['label'] }}</span>
-                    <small>{{ $option['short'] }}</small>
-                  </a>
+                  <form method="POST" action="{{ route('language.switch', $option['locale']) }}" class="nav-language__form">
+                    @csrf
+                    <button
+                      type="submit"
+                      class="nav-language__option {{ $currentLocale === $option['locale'] ? 'is-active' : '' }}"
+                      role="menuitem"
+                      @if ($currentLocale === $option['locale'])
+                        aria-current="true"
+                      @endif
+                    >
+                      <span>{{ $option['label'] }}</span>
+                      <small>{{ $option['short'] }}</small>
+                    </button>
+                  </form>
                 @endforeach
               </div>
             @elseif (! empty($item['disabled']))

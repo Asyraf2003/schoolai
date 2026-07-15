@@ -9026,20 +9026,30 @@ p {
 }
 
 .nav-language__option {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     padding: 10px 11px;
+    border: 0;
     border-radius: 13px;
+    background: transparent;
     color: var(--color-ink);
+    cursor: pointer;
+    font-family: inherit;
     font-size: 0.86rem;
     font-weight: 850;
     text-decoration: none;
+    text-align: left;
     transition:
         background 0.2s ease,
         color 0.2s ease,
         transform 0.2s ease;
+}
+
+.nav-language__form {
+    margin: 0;
 }
 
 .nav-language__option small {
