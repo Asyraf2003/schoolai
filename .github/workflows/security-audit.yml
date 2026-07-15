@@ -1,0 +1,60 @@
+name: Security audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-and-regression-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install PHP dependencies from lock file
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Audit Composer lock file
+        run: composer audit --locked --no-interaction
+
+      - name: Install Node dependencies from lock file
+        run: npm ci
+
+      - name: Audit npm lock file
+        run: npm audit --audit-level=high
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Prepare test environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+
+      - name: Run Laravel regression suite
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test
