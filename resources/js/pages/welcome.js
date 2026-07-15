@@ -547,16 +547,27 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaLightbox.setAttribute('aria-label', lightboxLabel);
     mediaLightbox.hidden = true;
 
-    mediaLightbox.innerHTML =
-      '<button type="button" class="homepage-gallery-lightbox__backdrop" data-homepage-gallery-close aria-label=""></button>' +
-      '<article class="homepage-gallery-lightbox__panel">' +
-        '<button type="button" class="homepage-gallery-lightbox__close" data-homepage-gallery-close></button>' +
-        '<div class="homepage-gallery-lightbox__media" data-homepage-gallery-media></div>' +
-      '</article>';
+    var backdrop = document.createElement('button');
+    backdrop.type = 'button';
+    backdrop.className = 'homepage-gallery-lightbox__backdrop';
+    backdrop.setAttribute('data-homepage-gallery-close', '');
+
+    var panel = document.createElement('article');
+    panel.className = 'homepage-gallery-lightbox__panel';
+
+    var closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'homepage-gallery-lightbox__close';
+    closeButton.setAttribute('data-homepage-gallery-close', '');
+
+    mediaStage = document.createElement('div');
+    mediaStage.className = 'homepage-gallery-lightbox__media';
+    mediaStage.setAttribute('data-homepage-gallery-media', '');
+
+    panel.append(closeButton, mediaStage);
+    mediaLightbox.append(backdrop, panel);
 
     document.body.appendChild(mediaLightbox);
-
-    mediaStage = mediaLightbox.querySelector('[data-homepage-gallery-media]');
 
     Array.prototype.slice.call(mediaLightbox.querySelectorAll('[data-homepage-gallery-close]')).forEach(function (button) {
       button.setAttribute('aria-label', closeLabel);
