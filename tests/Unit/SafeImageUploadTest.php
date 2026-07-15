@@ -3,6 +3,9 @@
 use App\Rules\SafeImageUpload;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
+use Tests\TestCase;
+
+uses(TestCase::class);
 
 function uploadedPng(string $name = 'clean.png', string $suffix = ''): UploadedFile
 {
