@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Support\PublicUrl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,41 +40,9 @@ final class PpdbSetting extends Model
 
     private function publicUrl(mixed $value): ?string
     {
-        $url = trim((string) $value);
-
-        if ($url === '' || ! filter_var($url, FILTER_VALIDATE_URL)) {
-            return null;
-        }
-
-        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
-        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-        $path = '/' . ltrim((string) parse_url($url, PHP_URL_PATH), '/');
-
-        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
-            return null;
-        }
-
-        if (
-            $host === 'localhost' ||
-            $host === '127.0.0.1' ||
-            $host === '::1' ||
-            str_ends_with($host, '.local') ||
-            str_starts_with($host, '10.') ||
-            str_starts_with($host, '192.168.') ||
-            preg_match('/^172\.(1[6-9]|2\d|3[0-1])\./', $host) === 1
-        ) {
-            return null;
-        }
-
-        if (
-            $path === '/admin' ||
-            str_starts_with($path, '/admin/') ||
-            $path === '/login' ||
-            str_starts_with($path, '/auth/')
-        ) {
-            return null;
-        }
-
-        return $url;
+        return PublicUrl::normalize(
+            (string) $value,
+            ['/admin', '/login', '/auth']
+        );
     }
 }

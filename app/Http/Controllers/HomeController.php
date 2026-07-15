@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\GalleryItem;
 use App\Models\PpdbSetting;
 use App\Models\SiteStatistic;
+use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
 
@@ -338,7 +339,7 @@ final class HomeController extends Controller
 
         $url = trim($url);
 
-        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+        if (! PublicUrl::isSafe($url)) {
             return null;
         }
 
@@ -379,7 +380,7 @@ final class HomeController extends Controller
 
         $facebookUrl = trim((string) ($query['href'] ?? ''));
 
-        if ($facebookUrl === '' || ! filter_var($facebookUrl, FILTER_VALIDATE_URL)) {
+        if ($facebookUrl === '' || ! PublicUrl::isSafe($facebookUrl)) {
             return false;
         }
 
@@ -464,13 +465,13 @@ final class HomeController extends Controller
 
         $url = trim($url);
 
-        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+        if (! PublicUrl::isSafe($url)) {
             return null;
         }
 
-        $host = parse_url($url, PHP_URL_HOST);
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
 
-        if (! is_string($host) || ! str_ends_with(strtolower($host), 'instagram.com')) {
+        if ($host !== 'instagram.com' && ! str_ends_with($host, '.instagram.com')) {
             return null;
         }
 
@@ -479,42 +480,7 @@ final class HomeController extends Controller
 
     private function publicArticleUrl(string $url): ?string
     {
-        $url = trim($url);
-
-        if ($url === '' || ! filter_var($url, FILTER_VALIDATE_URL)) {
-            return null;
-        }
-
-        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
-        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-        $path = '/' . ltrim((string) parse_url($url, PHP_URL_PATH), '/');
-
-        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
-            return null;
-        }
-
-        if (
-            $host === 'localhost' ||
-            $host === '127.0.0.1' ||
-            $host === '::1' ||
-            str_ends_with($host, '.local') ||
-            str_starts_with($host, '10.') ||
-            str_starts_with($host, '192.168.') ||
-            preg_match('/^172\.(1[6-9]|2\d|3[0-1])\./', $host) === 1
-        ) {
-            return null;
-        }
-
-        if (
-            $path === '/admin' ||
-            str_starts_with($path, '/admin/') ||
-            $path === '/login' ||
-            str_starts_with($path, '/auth/')
-        ) {
-            return null;
-        }
-
-        return $url;
+        return PublicUrl::normalize($url, ['/admin', '/login', '/auth']);
     }
 
     private function publicAssetUrl(mixed $path): ?string
@@ -526,7 +492,7 @@ final class HomeController extends Controller
         $path = trim($path);
 
         if (filter_var($path, FILTER_VALIDATE_URL)) {
-            return $path;
+            return PublicUrl::normalize($path);
         }
 
         $relativePath = ltrim($path, '/');

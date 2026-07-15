@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PpdbSetting;
 use App\Models\PpdbShowcaseItem;
 use App\Rules\SafeImageUpload;
+use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -484,32 +485,7 @@ final class PpdbSettingController extends Controller
 
     private function isPublicUrl(string $url): bool
     {
-        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
-        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-        $path = '/' . ltrim((string) parse_url($url, PHP_URL_PATH), '/');
-
-        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
-            return false;
-        }
-
-        if (
-            $host === 'localhost' ||
-            $host === '127.0.0.1' ||
-            $host === '::1' ||
-            str_ends_with($host, '.local') ||
-            str_starts_with($host, '10.') ||
-            str_starts_with($host, '192.168.') ||
-            preg_match('/^172\.(1[6-9]|2\d|3[0-1])\./', $host) === 1
-        ) {
-            return false;
-        }
-
-        return ! (
-            $path === '/admin' ||
-            str_starts_with($path, '/admin/') ||
-            $path === '/login' ||
-            str_starts_with($path, '/auth/')
-        );
+        return PublicUrl::isSafe($url, ['/admin', '/login', '/auth']);
     }
 
     private function nullableText(mixed $value): ?string

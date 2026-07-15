@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\PublicUrl;
 use App\Models\GalleryItem;
 use App\Models\GalleryPageMediaItem;
 use App\Models\GalleryPageSection;
@@ -107,22 +108,16 @@ final class GalleryPageController extends Controller
 
         $url = trim($url);
 
-        if ($type === 'photo') {
-            if (str_starts_with($url, '/storage/')) {
-                return $url;
-            }
-
-            if (! filter_var($url, FILTER_VALIDATE_URL)) {
-                return null;
-            }
-
-            $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
-
-            return in_array($scheme, ['http', 'https'], true) ? $url : null;
+        if ($type === 'photo' && str_starts_with($url, '/storage/')) {
+            return $url;
         }
 
-        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+        if (! PublicUrl::isSafe($url)) {
             return null;
+        }
+
+        if ($type === 'photo') {
+            return $url;
         }
 
         $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
@@ -162,7 +157,7 @@ final class GalleryPageController extends Controller
 
         $facebookUrl = trim((string) ($query['href'] ?? ''));
 
-        if ($facebookUrl === '' || ! filter_var($facebookUrl, FILTER_VALIDATE_URL)) {
+        if ($facebookUrl === '' || ! PublicUrl::isSafe($facebookUrl)) {
             return false;
         }
 
