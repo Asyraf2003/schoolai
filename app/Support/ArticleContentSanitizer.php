@@ -13,7 +13,7 @@ final class ArticleContentSanitizer
     private const ALLOWED_TAGS = [
         'a', 'blockquote', 'br', 'code', 'div', 'em', 'figcaption', 'figure',
         'h2', 'h3', 'hr', 'iframe', 'img', 'li', 'mark', 'ol', 'p', 'pre', 's',
-        'strike', 'strong', 'ul',
+        'span', 'strike', 'strong', 'ul',
     ];
 
     private const DROP_WITH_CONTENT = [
@@ -109,6 +109,11 @@ final class ArticleContentSanitizer
         return $image instanceof DOMElement
             ? $this->safeImageUrl($image->getAttribute('src'))
             : null;
+    }
+
+    public function imageUrl(mixed $url): ?string
+    {
+        return is_string($url) ? $this->safeImageUrl($url) : null;
     }
 
     private function sanitizeChildren(DOMNode $parent): void
@@ -220,23 +225,51 @@ final class ArticleContentSanitizer
 
     private function allowedClass(string $tag, string $class): ?string
     {
+        $textColors = [
+            'article-color--default',
+            'article-color--muted',
+            'article-color--green',
+            'article-color--blue',
+            'article-color--red',
+            'article-color--amber',
+        ];
+        $blockBackgrounds = [
+            'article-bg--gray',
+            'article-bg--yellow',
+            'article-bg--green',
+            'article-bg--blue',
+            'article-bg--rose',
+        ];
+        $blockFormatting = [
+            'article-text-small',
+            'article-text-large',
+            'article-align-center',
+            'article-align-right',
+            'article-align-justify',
+            ...$textColors,
+            ...$blockBackgrounds,
+        ];
+
         $allowed = match ($tag) {
-            'figure' => ['article-image--inline', 'article-image--outset', 'article-image--screen'],
+            'figure' => [
+                'article-image--inline',
+                'article-image--compact',
+                'article-image--outset',
+                'article-image--screen',
+                'article-image-align--left',
+                'article-image-align--center',
+                'article-image-align--right',
+            ],
             'blockquote' => [
                 'article-quote',
                 'article-pull-quote',
-                'article-text-small',
-                'article-text-large',
-                'article-align-center',
-                'article-align-right',
+                ...$blockFormatting,
             ],
             'p', 'h2', 'h3', 'li' => [
                 'has-drop-cap',
-                'article-text-small',
-                'article-text-large',
-                'article-align-center',
-                'article-align-right',
+                ...$blockFormatting,
             ],
+            'span' => $textColors,
             'div' => ['article-embed', 'article-video'],
             default => [],
         };
@@ -272,7 +305,7 @@ final class ArticleContentSanitizer
     {
         $url = trim($url);
 
-        if (preg_match('~^/storage/articles/content/[A-Za-z0-9/_\-.]+$~', $url) === 1) {
+        if (preg_match('~^/storage/articles/(?:content|thumbnails)/[A-Za-z0-9/_\-.]+$~', $url) === 1) {
             return $url;
         }
 
