@@ -59,11 +59,11 @@ final class AddSecurityHeaders
             "script-src-attr 'none'",
             "style-src 'self' 'nonce-{$nonce}'",
             "style-src-attr 'unsafe-inline'",
-            "img-src 'self' data: blob: https://i.ytimg.com",
+            "img-src 'self' data: blob: https://i.ytimg.com https://images.unsplash.com",
             "font-src 'self' data:",
             "connect-src 'self'",
             "media-src 'self' blob:",
-            "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com",
+            "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com https://open.spotify.com https://codepen.io",
             "manifest-src 'self'",
         ]);
     }
