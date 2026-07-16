@@ -29,7 +29,7 @@ final class ArticleAdminController extends Controller
     {
         $articles = Article::query()
             ->withTrashed()
-            ->latestPublished()
+            ->latestForAdmin()
             ->paginate(20);
 
         $activeArticlesByIdentity = Article::query()
@@ -98,8 +98,12 @@ final class ArticleAdminController extends Controller
         ]);
     }
 
-    public function edit(Article $article): View
+    public function edit(Article $article): View|RedirectResponse
     {
+        if ($article->isNative()) {
+            return redirect()->route('admin.artikel.canvas.edit', $article);
+        }
+
         return view('admin.articles.form', [
             'adminPageKey' => 'artikel',
             'mode' => 'edit',
