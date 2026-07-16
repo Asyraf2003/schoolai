@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 final class NativeArticleController extends Controller
 {
-    public function show(Article $article): View
+    public function show(Request $request, Article $article): View
     {
-        abort_unless($article->isNative() && $article->isPubliclyVisibleNow(), 404);
+        $isPubliclyVisible = $article->isPubliclyVisibleNow();
+        $canPreview = $request->user()?->isAdmin() === true;
+
+        abort_unless($article->isNative() && ($isPubliclyVisible || $canPreview), 404);
 
         $locale = app()->getLocale();
         $content = $article->contentForLocale($locale);
@@ -56,6 +60,7 @@ final class NativeArticleController extends Controller
             'articleContent' => $content,
             'readingMinutes' => max(1, (int) ceil($wordCount / 220)),
             'relatedArticles' => $relatedArticles,
+            'isAdminPreview' => ! $isPubliclyVisible && $canPreview,
         ]);
     }
 
