@@ -331,7 +331,7 @@ function mountCanvas(app) {
         const blockRect = block.getBoundingClientRect();
         if (!workspaceRect || !blockMenu) return;
         blockMenu.hidden = false;
-        blockMenu.style.top = `${blockRect.top - workspaceRect.top + window.scrollY + Math.max(0, (blockRect.height - 34) / 2)}px`;
+        blockMenu.style.top = `${blockRect.top - workspaceRect.top + Math.max(0, (blockRect.height - 34) / 2)}px`;
     }
 
     function insertBlock(type) {
