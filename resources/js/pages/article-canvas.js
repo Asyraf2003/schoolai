@@ -705,10 +705,15 @@ function mountCanvas(app) {
         try {
             const response = await fetch(app.dataset.uploadUrl, {
                 method: 'POST',
-                headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': csrf },
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
                 body: formData,
             });
-            const payload = await response.json();
+            const payload = await readJsonResponse(response);
             if (!response.ok) throw new Error(errorMessage(payload));
 
             if (purpose === 'thumbnail') {
@@ -954,8 +959,14 @@ function mountCanvas(app) {
             if (error) error.hidden = true;
             results?.replaceChildren();
             try {
-                const response = await fetch(`${app.dataset.unsplashUrl}?query=${encodeURIComponent(query.value)}`, { headers: { 'Accept': 'application/json' } });
-                const payload = await response.json();
+                const response = await fetch(`${app.dataset.unsplashUrl}?query=${encodeURIComponent(query.value)}`, {
+                    credentials: 'same-origin',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                });
+                const payload = await readJsonResponse(response);
                 if (!response.ok) throw new Error(errorMessage(payload));
                 payload.results.forEach((photo) => {
                     const button = document.createElement('button');
@@ -1320,16 +1331,55 @@ function isSafeHttpUrl(value) {
 async function jsonRequest(url, method, payload, csrf) {
     const response = await fetch(url, {
         method,
+        credentials: 'same-origin',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrf,
+            'X-Requested-With': 'XMLHttpRequest',
         },
         body: JSON.stringify(payload),
     });
-    const data = await response.json();
+    const data = await readJsonResponse(response);
     if (!response.ok) throw new Error(errorMessage(data));
     return data;
+}
+
+async function readJsonResponse(response) {
+    const raw = await response.text();
+
+    if (raw.trim() === '') {
+        return {};
+    }
+
+    try {
+        return JSON.parse(raw);
+    } catch {
+        const contentType = response.headers.get('content-type') || '';
+        const looksLikeHtml = contentType.includes('text/html') || /^\s*<!doctype\s+html|^\s*<html/i.test(raw);
+
+        if (!looksLikeHtml) {
+            throw new Error(`Respons server tidak valid (HTTP ${response.status}).`);
+        }
+
+        if (response.status === 419) {
+            throw new Error('Sesi admin atau token keamanan sudah kedaluwarsa. Muat ulang halaman, lalu coba publish lagi.');
+        }
+
+        if (response.status === 401 || response.status === 403 || (response.redirected && response.url.includes('/login'))) {
+            throw new Error('Sesi login admin sudah berakhir. Login ulang, lalu buka kembali canvas artikel.');
+        }
+
+        if (response.status === 404) {
+            throw new Error('Endpoint canvas tidak ditemukan. Bersihkan cache route Laravel lalu muat ulang halaman.');
+        }
+
+        if (response.status >= 500) {
+            throw new Error(`Server gagal memproses artikel (HTTP ${response.status}). Periksa storage/logs/laravel.log untuk penyebabnya.`);
+        }
+
+        throw new Error(`Server mengembalikan halaman HTML, bukan data JSON (HTTP ${response.status}). Muat ulang canvas dan coba lagi.`);
+    }
 }
 
 function errorMessage(payload) {
