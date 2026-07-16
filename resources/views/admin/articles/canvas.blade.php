@@ -31,6 +31,25 @@
       <span data-character-count>0 karakter</span>
     </div>
 
+    <div class="canvas-format-bar" data-format-bar role="toolbar" aria-label="Format artikel">
+      <button type="button" data-format="paragraph" title="Paragraf">¶</button>
+      <button type="button" data-format="h2" title="Heading besar">T</button>
+      <button type="button" data-format="h3" title="Heading kecil">t</button>
+      <span aria-hidden="true"></span>
+      <button type="button" data-format="bold" title="Bold"><strong>B</strong></button>
+      <button type="button" data-format="italic" title="Italic"><em>i</em></button>
+      <button type="button" data-format="strike" title="Coret"><s>S</s></button>
+      <button type="button" data-format="highlight" title="Highlight">▣</button>
+      <button type="button" data-format="link" title="Link">↗</button>
+      <span aria-hidden="true"></span>
+      <button type="button" data-format="small" title="Teks kecil">A−</button>
+      <button type="button" data-format="large" title="Teks besar">A+</button>
+      <button type="button" data-format="align-left" title="Rata kiri">⇤</button>
+      <button type="button" data-format="align-center" title="Tengah">≡</button>
+      <button type="button" data-format="align-right" title="Rata kanan">⇥</button>
+      <button type="button" data-format="quote" title="Quote / Pull quote">“</button>
+    </div>
+
     <main class="canvas-workspace">
       <section class="canvas-document is-active" data-document-language="id" aria-label="Canvas artikel Indonesia">
         <textarea
@@ -103,12 +122,17 @@
     </main>
 
     <div class="canvas-inline-toolbar" data-inline-toolbar role="toolbar" aria-label="Format teks" hidden>
+      <button type="button" data-format="paragraph" aria-label="Paragraph">¶</button>
       <button type="button" data-format="bold" aria-label="Bold"><strong>B</strong></button>
       <button type="button" data-format="italic" aria-label="Italic"><em>i</em></button>
+      <button type="button" data-format="strike" aria-label="Coret"><s>S</s></button>
+      <button type="button" data-format="highlight" aria-label="Highlight">▣</button>
       <button type="button" data-format="link" aria-label="Link">↗</button>
       <span aria-hidden="true"></span>
       <button type="button" data-format="h2" aria-label="Title">T</button>
       <button type="button" data-format="h3" aria-label="Subtitle">t</button>
+      <button type="button" data-format="small" aria-label="Teks kecil">A−</button>
+      <button type="button" data-format="large" aria-label="Teks besar">A+</button>
       <button type="button" data-format="quote" aria-label="Quote">“</button>
     </div>
 
