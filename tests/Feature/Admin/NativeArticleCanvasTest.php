@@ -179,6 +179,13 @@ it('keeps a scheduled article private until its publication time', function (): 
 
     $article->refresh();
 
+    $this->get(route('artikel.native', ['article' => $article->slug]))
+        ->assertOk()
+        ->assertSee('Pratinjau admin')
+        ->assertSee('Artikel Besok');
+
+    $this->app['auth']->logout();
+
     $this->get(route('artikel.native', ['article' => $article->slug]))->assertNotFound();
     $this->get(route('artikel'))->assertDontSee('Artikel Besok');
 
