@@ -181,7 +181,8 @@ final class HomeController extends Controller
             ->latestPublished()
             ->limit(4)
             ->get()
-            ->filter(fn (Article $article): bool => $this->publicArticleUrl($article->linkForLocale($locale)) !== null)
+            ->filter(fn (Article $article): bool => $article->isNative()
+                || $this->publicArticleUrl($article->linkForLocale($locale)) !== null)
             ->values();
 
         if ($articles->isEmpty()) {
@@ -207,8 +208,12 @@ final class HomeController extends Controller
                         ? $publishedAt->translatedFormat('j F Y, H:i').' WIB'
                         : '',
                     'published_at' => $publishedAt?->toIso8601String() ?? '',
-                    'reading_time' => $locale === 'en' ? 'External article' : 'Artikel eksternal',
-                    'href' => $this->publicArticleUrl($article->linkForLocale($locale)),
+                    'reading_time' => $article->isNative()
+                        ? max(1, (int) ceil(max(1, $article->word_count) / 220)) . ($locale === 'en' ? ' min read' : ' menit baca')
+                        : ($locale === 'en' ? 'External article' : 'Artikel eksternal'),
+                    'href' => $article->isNative()
+                        ? $article->linkForLocale($locale)
+                        : $this->publicArticleUrl($article->linkForLocale($locale)),
                     'thumbnail_url' => $this->publicAssetUrl($article->thumbnail_url) ?? $article->thumbnail_url,
                     'emoji' => '📰',
                     'gradient_from' => 'var(--color-yellow-soft)',
