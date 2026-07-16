@@ -252,7 +252,10 @@ final class ArticleCanvasAdminController extends Controller
         $slug = $base;
         $suffix = 2;
 
-        while (Article::withTrashed()->where('slug', $slug)->whereKeyNot($article->getKey())->exists()) {
+        while (Article::withTrashed()
+            ->where('slug', $slug)
+            ->where($article->getKeyName(), '!=', $article->getKey())
+            ->exists()) {
             $slug = $base . '-' . $suffix;
             $suffix++;
         }
