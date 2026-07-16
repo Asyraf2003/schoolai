@@ -14,6 +14,7 @@ function mountCanvas(app) {
     const wordCount = app.querySelector('[data-word-count]');
     const characterCount = app.querySelector('[data-character-count]');
     const inlineToolbar = app.querySelector('[data-inline-toolbar]');
+    const formatBar = app.querySelector('[data-format-bar]');
     const linkInput = app.querySelector('[data-link-input]');
     const blockMenu = app.querySelector('[data-block-menu]');
     const blockToggle = app.querySelector('[data-block-toggle]');
@@ -53,7 +54,10 @@ function mountCanvas(app) {
             updateMetrics();
             updateBlockMenu();
         });
-        editor.addEventListener('focus', updateBlockMenu);
+        editor.addEventListener('focus', () => {
+            rememberSelection();
+            updateBlockMenu();
+        });
         editor.addEventListener('click', handleEditorClick);
         editor.addEventListener('keyup', (event) => {
             handleMarkdownShortcut(event, editor);
@@ -147,7 +151,7 @@ function mountCanvas(app) {
     });
 
     document.addEventListener('click', (event) => {
-        if (!inlineToolbar?.contains(event.target) && !activeEditor()?.contains(event.target)) {
+        if (!inlineToolbar?.contains(event.target) && !formatBar?.contains(event.target) && !activeEditor()?.contains(event.target)) {
             hideInlineToolbar();
         }
         if (!imageToolbar?.contains(event.target) && !(event.target instanceof HTMLImageElement)) {
@@ -259,11 +263,23 @@ function mountCanvas(app) {
 
         if (format === 'bold' || format === 'italic') {
             document.execCommand(format, false);
+        } else if (format === 'strike') {
+            document.execCommand('strikeThrough', false);
+        } else if (format === 'highlight') {
+            toggleInlineElement('mark');
         } else if (format === 'link') {
             openLinkInput();
             return;
+        } else if (format === 'paragraph') {
+            document.execCommand('formatBlock', false, 'P');
         } else if (format === 'h2' || format === 'h3') {
             document.execCommand('formatBlock', false, format.toUpperCase());
+        } else if (format === 'small' || format === 'large') {
+            toggleBlockClass(`article-text-${format}`, ['article-text-small', 'article-text-large']);
+        } else if (format === 'align-left') {
+            toggleBlockClass('', ['article-align-center', 'article-align-right']);
+        } else if (format === 'align-center' || format === 'align-right') {
+            toggleBlockClass(`article-${format}`, ['article-align-center', 'article-align-right']);
         } else if (format === 'quote') {
             toggleQuote();
         }
@@ -274,12 +290,19 @@ function mountCanvas(app) {
     }
 
     function openLinkInput() {
-        if (!linkInput || !inlineToolbar) return;
+        if (!linkInput) return;
         const input = linkInput.querySelector('input');
+        const anchorToolbar = inlineToolbar && !inlineToolbar.hidden ? inlineToolbar : formatBar;
         linkInput.hidden = false;
-        linkInput.style.left = inlineToolbar.style.left;
-        linkInput.style.top = inlineToolbar.style.top;
-        inlineToolbar.hidden = true;
+        if (anchorToolbar === inlineToolbar) {
+            linkInput.style.left = inlineToolbar.style.left;
+            linkInput.style.top = inlineToolbar.style.top;
+            inlineToolbar.hidden = true;
+        } else {
+            const rect = formatBar?.getBoundingClientRect();
+            linkInput.style.left = `${Math.max(8, Math.min(window.innerWidth - 286, rect?.left || 12))}px`;
+            linkInput.style.top = `${(rect?.bottom || 68) + 8}px`;
+        }
         input.value = '';
         input.focus();
         input.onkeydown = (event) => {
@@ -313,6 +336,35 @@ function mountCanvas(app) {
         lastQuoteBlock = nextBlock;
     }
 
+    function toggleInlineElement(tagName) {
+        const selection = window.getSelection();
+        const editor = activeEditor();
+        if (!selection || selection.rangeCount === 0 || !editor?.contains(selection.anchorNode)) return;
+
+        const selectedText = selection.toString();
+        if (!selectedText) {
+            document.execCommand(tagName === 'mark' ? 'backColor' : 'insertHTML', false, tagName === 'mark' ? '#fff3a3' : '');
+            return;
+        }
+
+        const range = selection.getRangeAt(0);
+        const wrapper = document.createElement(tagName);
+        wrapper.append(range.extractContents());
+        range.insertNode(wrapper);
+        selection.removeAllRanges();
+        const nextRange = document.createRange();
+        nextRange.selectNodeContents(wrapper);
+        selection.addRange(nextRange);
+    }
+
+    function toggleBlockClass(className, mutuallyExclusive = []) {
+        const block = closestBlock(window.getSelection()?.anchorNode || savedRange?.startContainer, activeEditor());
+        if (!block || ['FIGURE', 'PRE'].includes(block.tagName)) return;
+
+        mutuallyExclusive.forEach((candidate) => block.classList.remove(candidate));
+        if (className) block.classList.toggle(className);
+    }
+
     function updateBlockMenu() {
         const editor = activeEditor();
         const selection = window.getSelection();
@@ -322,7 +374,7 @@ function mountCanvas(app) {
         }
 
         const block = closestBlock(selection.anchorNode, editor);
-        if (!block || (block.textContent || '').trim() !== '' || block.querySelector('img, iframe')) {
+        if (!block || block.querySelector('img, iframe')) {
             if (blockMenu) blockMenu.hidden = true;
             return;
         }
@@ -331,6 +383,7 @@ function mountCanvas(app) {
         const blockRect = block.getBoundingClientRect();
         if (!workspaceRect || !blockMenu) return;
         blockMenu.hidden = false;
+        blockMenu.classList.toggle('is-on-filled-block', (block.textContent || '').trim() !== '');
         blockMenu.style.top = `${blockRect.top - workspaceRect.top + Math.max(0, (blockRect.height - 34) / 2)}px`;
     }
 
@@ -629,6 +682,11 @@ function mountCanvas(app) {
         if (key === 'b' || key === 'i') {
             event.preventDefault();
             document.execCommand(key === 'b' ? 'bold' : 'italic', false);
+            changed();
+        }
+        if (key === 'x' && event.shiftKey) {
+            event.preventDefault();
+            document.execCommand('strikeThrough', false);
             changed();
         }
         if (key === 'k') {
