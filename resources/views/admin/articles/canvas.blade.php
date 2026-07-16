@@ -8,6 +8,7 @@
     data-upload-url="{{ route('admin.artikel.canvas.image', $article) }}"
     data-unsplash-url="{{ route('admin.artikel.canvas.unsplash') }}"
     data-publish-url="{{ route('admin.artikel.canvas.publish', $article) }}"
+    data-thumbnail-url="{{ $article->thumbnail_url ?: \App\Models\Article::PLACEHOLDER_THUMBNAIL }}"
   >
     <header class="canvas-topbar">
       <div class="canvas-topbar__left">
@@ -29,25 +30,6 @@
     <div class="canvas-count-popover" data-count-popover hidden>
       <strong data-word-count>0 kata</strong>
       <span data-character-count>0 karakter</span>
-    </div>
-
-    <div class="canvas-format-bar" data-format-bar role="toolbar" aria-label="Format artikel">
-      <button type="button" data-format="paragraph" title="Paragraf">¶</button>
-      <button type="button" data-format="h2" title="Heading besar">T</button>
-      <button type="button" data-format="h3" title="Heading kecil">t</button>
-      <span aria-hidden="true"></span>
-      <button type="button" data-format="bold" title="Bold"><strong>B</strong></button>
-      <button type="button" data-format="italic" title="Italic"><em>i</em></button>
-      <button type="button" data-format="strike" title="Coret"><s>S</s></button>
-      <button type="button" data-format="highlight" title="Highlight">▣</button>
-      <button type="button" data-format="link" title="Link">↗</button>
-      <span aria-hidden="true"></span>
-      <button type="button" data-format="small" title="Teks kecil">A−</button>
-      <button type="button" data-format="large" title="Teks besar">A+</button>
-      <button type="button" data-format="align-left" title="Rata kiri">⇤</button>
-      <button type="button" data-format="align-center" title="Tengah">≡</button>
-      <button type="button" data-format="align-right" title="Rata kanan">⇥</button>
-      <button type="button" data-format="quote" title="Quote / Pull quote">“</button>
     </div>
 
     <main class="canvas-workspace">
@@ -110,30 +92,88 @@
       <div class="canvas-block-menu" data-block-menu hidden>
         <button type="button" class="canvas-plus" data-block-toggle aria-label="Tambahkan blok" aria-expanded="false">+</button>
         <div class="canvas-block-actions" data-block-actions hidden>
-          <button type="button" data-insert="image" title="Upload gambar">▧</button>
-          <button type="button" data-insert="unsplash" title="Cari Unsplash">⌕</button>
-          <button type="button" data-insert="video" title="Sematkan video">▶</button>
-          <button type="button" data-insert="embed" title="Sematkan media">&lt;&gt;</button>
-          <button type="button" data-insert="code" title="Blok kode">{ }</button>
-          <button type="button" data-insert="divider" title="Pemisah">•••</button>
-          <button type="button" data-insert="dropcap" title="Drop cap">D</button>
+          <div class="canvas-block-actions__group">
+            <span>Jenis blok</span>
+            <div>
+              <button type="button" data-format="paragraph" title="Paragraf">P</button>
+              <button type="button" data-format="h2" title="Heading besar">H2</button>
+              <button type="button" data-format="h3" title="Heading kecil">H3</button>
+              <button type="button" data-format="quote" title="Quote / pull quote">“</button>
+              <button type="button" data-insert="dropcap" title="Drop cap">D</button>
+            </div>
+          </div>
+
+          <div class="canvas-block-actions__group">
+            <span>Ukuran &amp; posisi</span>
+            <div>
+              <button type="button" data-format="small" title="Teks kecil">A−</button>
+              <button type="button" data-format="large" title="Teks besar">A+</button>
+              <button type="button" data-format="align-left" title="Rata kiri">⇤</button>
+              <button type="button" data-format="align-center" title="Rata tengah">≡</button>
+              <button type="button" data-format="align-right" title="Rata kanan">⇥</button>
+              <button type="button" data-format="align-justify" title="Rata kanan-kiri">☰</button>
+            </div>
+          </div>
+
+          <div class="canvas-block-actions__group canvas-block-colors">
+            <span>Warna teks</span>
+            <div>
+              <button type="button" class="color-default" data-block-color="default" title="Warna default">A</button>
+              <button type="button" class="color-muted" data-block-color="muted" title="Abu-abu"></button>
+              <button type="button" class="color-green" data-block-color="green" title="Hijau"></button>
+              <button type="button" class="color-blue" data-block-color="blue" title="Biru"></button>
+              <button type="button" class="color-red" data-block-color="red" title="Merah"></button>
+              <button type="button" class="color-amber" data-block-color="amber" title="Jingga"></button>
+            </div>
+          </div>
+
+          <div class="canvas-block-actions__group canvas-block-colors">
+            <span>Latar blok</span>
+            <div>
+              <button type="button" class="bg-default" data-block-background="default" title="Tanpa latar">×</button>
+              <button type="button" class="bg-gray" data-block-background="gray" title="Abu-abu"></button>
+              <button type="button" class="bg-yellow" data-block-background="yellow" title="Kuning"></button>
+              <button type="button" class="bg-green" data-block-background="green" title="Hijau"></button>
+              <button type="button" class="bg-blue" data-block-background="blue" title="Biru"></button>
+              <button type="button" class="bg-rose" data-block-background="rose" title="Merah muda"></button>
+            </div>
+          </div>
+
+          <div class="canvas-block-actions__group">
+            <span>Sisipkan</span>
+            <div>
+              <button type="button" data-insert="image" title="Upload gambar">▧</button>
+              <button type="button" data-insert="unsplash" title="Cari Unsplash">⌕</button>
+              <button type="button" data-insert="video" title="Sematkan video">▶</button>
+              <button type="button" data-insert="embed" title="Sematkan media">&lt;&gt;</button>
+              <button type="button" data-insert="code" title="Blok kode">{ }</button>
+              <button type="button" data-insert="divider" title="Pemisah">•••</button>
+            </div>
+          </div>
         </div>
       </div>
     </main>
 
     <div class="canvas-inline-toolbar" data-inline-toolbar role="toolbar" aria-label="Format teks" hidden>
-      <button type="button" data-format="paragraph" aria-label="Paragraph">¶</button>
       <button type="button" data-format="bold" aria-label="Bold"><strong>B</strong></button>
       <button type="button" data-format="italic" aria-label="Italic"><em>i</em></button>
       <button type="button" data-format="strike" aria-label="Coret"><s>S</s></button>
       <button type="button" data-format="highlight" aria-label="Highlight">▣</button>
       <button type="button" data-format="link" aria-label="Link">↗</button>
+      <button type="button" class="canvas-inline-color-button color-default" data-text-color="default" title="Warna default">A</button>
+      <button type="button" class="canvas-inline-color-button color-muted" data-text-color="muted" title="Abu-abu"></button>
+      <button type="button" class="canvas-inline-color-button color-green" data-text-color="green" title="Hijau"></button>
+      <button type="button" class="canvas-inline-color-button color-blue" data-text-color="blue" title="Biru"></button>
+      <button type="button" class="canvas-inline-color-button color-red" data-text-color="red" title="Merah"></button>
+      <button type="button" class="canvas-inline-color-button color-amber" data-text-color="amber" title="Jingga"></button>
       <span aria-hidden="true"></span>
-      <button type="button" data-format="h2" aria-label="Title">T</button>
-      <button type="button" data-format="h3" aria-label="Subtitle">t</button>
-      <button type="button" data-format="small" aria-label="Teks kecil">A−</button>
-      <button type="button" data-format="large" aria-label="Teks besar">A+</button>
-      <button type="button" data-format="quote" aria-label="Quote">“</button>
+      <button type="button" data-format="paragraph" aria-label="Paragraf">P</button>
+      <button type="button" data-format="h2" aria-label="Heading besar">H2</button>
+      <button type="button" data-format="h3" aria-label="Heading kecil">H3</button>
+      <button type="button" data-format="align-left" aria-label="Rata kiri">⇤</button>
+      <button type="button" data-format="align-center" aria-label="Rata tengah">≡</button>
+      <button type="button" data-format="align-right" aria-label="Rata kanan">⇥</button>
+      <button type="button" data-format="align-justify" aria-label="Rata kanan-kiri">☰</button>
     </div>
 
     <div class="canvas-link-input" data-link-input hidden>
@@ -141,13 +181,29 @@
     </div>
 
     <div class="canvas-image-toolbar" data-image-toolbar hidden>
+      <button type="button" data-image-layout="compact">Compact</button>
       <button type="button" data-image-layout="inline">In-line</button>
       <button type="button" data-image-layout="outset">Out-set</button>
       <button type="button" data-image-layout="screen">Screen-width</button>
+      <span aria-hidden="true"></span>
+      <button type="button" data-image-align="left" title="Gambar rata kiri">⇤</button>
+      <button type="button" data-image-align="center" title="Gambar rata tengah">≡</button>
+      <button type="button" data-image-align="right" title="Gambar rata kanan">⇥</button>
+      <span aria-hidden="true"></span>
       <button type="button" data-image-alt>Alt text</button>
+      <button type="button" data-image-thumbnail>Jadikan thumbnail</button>
+      <button type="button" data-image-replace>Ganti</button>
+      <button type="button" data-image-continue>Tulis di bawah</button>
+      <button type="button" data-image-delete aria-label="Hapus gambar">×</button>
+    </div>
+
+    <div class="canvas-code-toolbar" data-code-toolbar hidden>
+      <span>Code block</span>
+      <button type="button" data-code-exit>+ Paragraf di bawah</button>
     </div>
 
     <input type="file" accept="image/jpeg,image/png,image/webp" data-image-file hidden>
+    <input type="file" accept="image/jpeg,image/png,image/webp" data-thumbnail-file hidden>
 
     <div class="canvas-dialog" data-url-dialog hidden>
       <button type="button" class="canvas-dialog__backdrop" data-dialog-close aria-label="Tutup"></button>
@@ -191,21 +247,44 @@
         <article class="canvas-preview-card">
           <div class="canvas-preview-card__image" data-preview-image>
             <img src="{{ $article->thumbnail_url ?: \App\Models\Article::PLACEHOLDER_THUMBNAIL }}" alt="">
+            <button type="button" data-thumbnail-change>Ganti thumbnail</button>
           </div>
           <strong data-preview-title>{{ $article->admin_title }}</strong>
           <span data-preview-subtitle>{{ $article->subtitle_id }}</span>
+          <div class="canvas-preview-card__meta">
+            <span data-preview-author>{{ $article->authorForDisplay() }}</span>
+            <time data-preview-date datetime="{{ $article->published_at?->toIso8601String() }}">{{ $article->published_at?->translatedFormat('j M Y') }}</time>
+            <span data-preview-reading>{{ max(1, (int) ceil(max(1, $article->word_count) / 220)) }} menit baca</span>
+          </div>
         </article>
 
         <label class="canvas-publish-field">
-          <span>Tags <small>maksimal 5, pisahkan dengan koma</small></span>
-          <input type="text" data-publish-tags value="{{ implode(', ', $article->tags ?? []) }}" placeholder="Sekolah, Pendidikan">
+          <span>Author</span>
+          <input type="text" data-publish-author maxlength="120" value="{{ $article->authorForDisplay() }}" placeholder="Nama penulis">
         </label>
+
+        <div class="canvas-publish-field">
+          <span>Kategori <small>maksimal 5; pilihan lama akan disarankan otomatis</small></span>
+          <div class="canvas-category-editor" data-category-editor>
+            <div class="canvas-category-chips" data-category-chips></div>
+            <input type="text" data-category-input maxlength="40" autocomplete="off" placeholder="Ketik kategori lalu Enter">
+            <div class="canvas-category-suggestions" data-category-suggestions hidden></div>
+          </div>
+        </div>
+
+        <script type="application/json" data-category-data>{!! json_encode([
+          'selected' => array_values($article->tags ?? []),
+          'suggestions' => array_values($categorySuggestions ?? []),
+        ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>
 
         <fieldset class="canvas-publish-schedule">
           <legend>Waktu terbit</legend>
           <label><input type="radio" name="publish_mode" value="now" checked> Terbitkan sekarang</label>
           <label><input type="radio" name="publish_mode" value="schedule"> Jadwalkan</label>
-          <input type="datetime-local" data-scheduled-at hidden>
+          <label class="canvas-publish-date">
+            <span data-publish-date-label>Tanggal publikasi</span>
+            <input type="datetime-local" data-publish-at value="{{ ($article->published_at ?: now())->format('Y-m-d\TH:i') }}">
+          </label>
         </fieldset>
 
         <p class="canvas-publish-error" data-publish-error hidden></p>
