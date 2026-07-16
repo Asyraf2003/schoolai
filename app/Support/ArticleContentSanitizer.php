@@ -28,6 +28,12 @@ final class ArticleContentSanitizer
             return '';
         }
 
+        if (! class_exists(DOMDocument::class)) {
+            $text = htmlspecialchars(strip_tags($html), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
+
+            return '<p>'.nl2br($text, false).'</p>';
+        }
+
         if (strlen($html) > self::MAX_BYTES) {
             $html = substr($html, 0, self::MAX_BYTES);
         }
@@ -84,6 +90,10 @@ final class ArticleContentSanitizer
     public function firstImageUrl(?string $html): ?string
     {
         if (! is_string($html) || trim($html) === '') {
+            return null;
+        }
+
+        if (! class_exists(DOMDocument::class)) {
             return null;
         }
 
