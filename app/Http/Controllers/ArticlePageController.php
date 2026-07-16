@@ -34,7 +34,8 @@ final class ArticlePageController extends Controller
         return Article::query()
             ->latestPublished()
             ->get()
-            ->filter(fn (Article $article): bool => $this->publicArticleUrl($article->linkForLocale($locale)) !== null)
+            ->filter(fn (Article $article): bool => $article->isNative()
+                || $this->publicArticleUrl($article->linkForLocale($locale)) !== null)
             ->values()
             ->map(function (Article $article, int $index) use ($locale): array {
                 $publishedAt = $article->published_at;
@@ -48,7 +49,10 @@ final class ArticlePageController extends Controller
                         ? $publishedAt->translatedFormat('j F Y, H:i').' WIB'
                         : '',
                     'published_at' => $publishedAt?->toIso8601String() ?? '',
-                    'href' => $this->publicArticleUrl($article->linkForLocale($locale)),
+                    'href' => $article->isNative()
+                        ? $article->linkForLocale($locale)
+                        : $this->publicArticleUrl($article->linkForLocale($locale)),
+                    'external' => ! $article->isNative(),
                     'thumbnail_url' => $this->publicAssetUrl($article->thumbnail_url) ?? $article->thumbnail_url,
                 ];
             })
