@@ -13,23 +13,42 @@ final class Article extends Model
     use AuditsAdminChanges, HasFactory, SoftDeletes;
 
     public const DEFAULT_AUTHOR = 'Admin';
+    public const SOURCE_EXTERNAL = 'external';
+    public const SOURCE_NATIVE = 'native';
+    public const STATUS_DRAFT = 'draft';
+    public const STATUS_PUBLISHED = 'published';
+    public const STATUS_SCHEDULED = 'scheduled';
+    public const PLACEHOLDER_THUMBNAIL = '/images/article-placeholder.svg';
 
     protected $fillable = [
+        'article_source',
+        'article_status',
+        'slug',
         'title_id',
         'title_en',
+        'subtitle_id',
+        'subtitle_en',
         'description_id',
         'description_en',
+        'content_id',
+        'content_en',
+        'tags',
+        'word_count',
         'thumbnail_url',
         'link_id',
         'link_en',
         'author',
         'published_date',
         'published_at',
+        'scheduled_at',
     ];
 
     protected $casts = [
+        'tags' => 'array',
+        'word_count' => 'integer',
         'published_date' => 'date',
         'published_at' => 'datetime',
+        'scheduled_at' => 'datetime',
     ];
 
     protected static function booted(): void
@@ -38,6 +57,9 @@ final class Article extends Model
             if (! $article->author) {
                 $article->author = self::DEFAULT_AUTHOR;
             }
+
+            $article->article_source ??= self::SOURCE_EXTERNAL;
+            $article->article_status ??= self::STATUS_PUBLISHED;
         });
 
         static::saving(function (Article $article): void {
@@ -55,8 +77,31 @@ final class Article extends Model
     public function scopeLatestPublished(Builder $query): Builder
     {
         return $query
+            ->publiclyVisible()
             ->orderByDesc('published_at')
             ->orderByDesc('id');
+    }
+
+    public function scopeLatestForAdmin(Builder $query): Builder
+    {
+        return $query
+            ->orderByDesc('updated_at')
+            ->orderByDesc('id');
+    }
+
+    public function scopePubliclyVisible(Builder $query): Builder
+    {
+        return $query->where(function (Builder $visibility): void {
+            $visibility
+                ->where('article_source', self::SOURCE_EXTERNAL)
+                ->orWhere(function (Builder $native): void {
+                    $native
+                        ->where('article_source', self::SOURCE_NATIVE)
+                        ->whereIn('article_status', [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED])
+                        ->whereNotNull('published_at')
+                        ->where('published_at', '<=', now());
+                });
+        });
     }
 
     public static function normalizedLinkIdentity(?string $url): ?string
@@ -87,7 +132,6 @@ final class Article extends Model
 
         $path = '/' . ltrim((string) ($parts['path'] ?? ''), '/');
         $path = $path === '/' ? '/' : rtrim($path, '/');
-
         $query = '';
 
         if (isset($parts['query']) && $parts['query'] !== '') {
@@ -97,6 +141,48 @@ final class Article extends Model
         }
 
         return $scheme . '://' . $authority . $path . ($query !== '' ? '?' . $query : '');
+    }
+
+    public function isNative(): bool
+    {
+        return $this->article_source === self::SOURCE_NATIVE;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->isNative() && $this->article_status === self::STATUS_DRAFT;
+    }
+
+    public function isPubliclyVisibleNow(): bool
+    {
+        if (! $this->isNative()) {
+            return true;
+        }
+
+        return in_array($this->article_status, [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED], true)
+            && $this->published_at !== null
+            && $this->published_at->lessThanOrEqualTo(now());
+    }
+
+    public function statusLabel(): string
+    {
+        if ($this->trashed()) {
+            return 'Dihapus';
+        }
+
+        if (! $this->isNative()) {
+            return 'Eksternal';
+        }
+
+        if ($this->article_status === self::STATUS_DRAFT) {
+            return 'Draft';
+        }
+
+        if ($this->article_status === self::STATUS_SCHEDULED && ! $this->isPubliclyVisibleNow()) {
+            return 'Terjadwal';
+        }
+
+        return 'Terbit';
     }
 
     public function getAdminTitleAttribute(): string
@@ -111,6 +197,13 @@ final class Article extends Model
             : $this->firstFilled($this->title_id, $this->title_en, 'Artikel tanpa judul');
     }
 
+    public function subtitleForLocale(string $locale): string
+    {
+        return $locale === 'en'
+            ? $this->firstFilled($this->subtitle_en, $this->subtitle_id)
+            : $this->firstFilled($this->subtitle_id, $this->subtitle_en);
+    }
+
     public function descriptionForLocale(string $locale): string
     {
         return $locale === 'en'
@@ -118,8 +211,19 @@ final class Article extends Model
             : $this->firstFilled($this->description_id, $this->description_en);
     }
 
+    public function contentForLocale(string $locale): string
+    {
+        return $locale === 'en'
+            ? $this->firstFilled($this->content_en, $this->content_id)
+            : $this->firstFilled($this->content_id, $this->content_en);
+    }
+
     public function linkForLocale(string $locale): string
     {
+        if ($this->isNative() && $this->slug) {
+            return route('artikel.native', ['article' => $this->slug]);
+        }
+
         return $locale === 'en'
             ? $this->firstFilled($this->link_en, $this->link_id)
             : $this->firstFilled($this->link_id, $this->link_en);
