@@ -14,21 +14,31 @@ function mountCanvas(app) {
     const wordCount = app.querySelector('[data-word-count]');
     const characterCount = app.querySelector('[data-character-count]');
     const inlineToolbar = app.querySelector('[data-inline-toolbar]');
-    const formatBar = app.querySelector('[data-format-bar]');
+    const inlineColors = app.querySelector('[data-inline-colors]');
     const linkInput = app.querySelector('[data-link-input]');
     const blockMenu = app.querySelector('[data-block-menu]');
     const blockToggle = app.querySelector('[data-block-toggle]');
     const blockActions = app.querySelector('[data-block-actions]');
     const imageInput = app.querySelector('[data-image-file]');
+    const thumbnailInput = app.querySelector('[data-thumbnail-file]');
     const imageToolbar = app.querySelector('[data-image-toolbar]');
+    const codeToolbar = app.querySelector('[data-code-toolbar]');
     const publishDrawer = app.querySelector('[data-publish-drawer]');
+    const textColorClasses = ['muted', 'green', 'blue', 'red', 'amber'];
+    const backgroundClasses = ['gray', 'yellow', 'green', 'blue', 'rose'];
+    const imageLayoutClasses = ['compact', 'inline', 'outset', 'screen'];
+    const imageAlignClasses = ['left', 'center', 'right'];
     let activeLanguage = 'id';
     let savedRange = null;
     let selectedFigure = null;
+    let selectedCodeBlock = null;
+    let imageUploadIntent = 'insert';
     let autosaveTimer = null;
     let dirty = false;
     let saving = false;
-    let lastQuoteBlock = null;
+    let currentWords = 0;
+    let currentCharacters = 0;
+    let thumbnailUrl = app.dataset.thumbnailUrl || '';
 
     const activeDocument = () => documents.find((document) => document.dataset.documentLanguage === activeLanguage);
     const activeEditor = () => activeDocument()?.querySelector('[data-editor]');
@@ -53,6 +63,7 @@ function mountCanvas(app) {
             changed();
             updateMetrics();
             updateBlockMenu();
+            positionCodeToolbar();
         });
         editor.addEventListener('focus', () => {
             rememberSelection();
@@ -64,6 +75,7 @@ function mountCanvas(app) {
             rememberSelection();
             updateInlineToolbar();
             updateBlockMenu();
+            positionCodeToolbar();
         });
         editor.addEventListener('mouseup', () => {
             rememberSelection();
@@ -93,6 +105,7 @@ function mountCanvas(app) {
             });
             hideInlineToolbar();
             hideImageToolbar();
+            hideCodeToolbar();
             updateMetrics();
             updateBlockMenu();
         });
@@ -104,10 +117,13 @@ function mountCanvas(app) {
         countToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
+    blockToggle?.addEventListener('mousedown', (event) => event.preventDefault());
     blockToggle?.addEventListener('click', () => {
+        rememberSelection();
         const open = blockActions?.hidden ?? true;
         if (blockActions) blockActions.hidden = !open;
         blockToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        syncContextualControls();
     });
 
     app.querySelectorAll('[data-format]').forEach((button) => {
@@ -116,18 +132,51 @@ function mountCanvas(app) {
     });
 
     app.querySelectorAll('[data-insert]').forEach((button) => {
+        button.addEventListener('mousedown', (event) => event.preventDefault());
         button.addEventListener('click', () => insertBlock(button.dataset.insert));
+    });
+
+    app.querySelectorAll('[data-block-color]').forEach((button) => {
+        button.addEventListener('mousedown', (event) => event.preventDefault());
+        button.addEventListener('click', () => applyBlockPalette('article-color--', button.dataset.blockColor, textColorClasses));
+    });
+
+    app.querySelectorAll('[data-block-background]').forEach((button) => {
+        button.addEventListener('mousedown', (event) => event.preventDefault());
+        button.addEventListener('click', () => applyBlockPalette('article-bg--', button.dataset.blockBackground, backgroundClasses));
+    });
+
+    app.querySelector('[data-color-toggle]')?.addEventListener('mousedown', (event) => event.preventDefault());
+    app.querySelector('[data-color-toggle]')?.addEventListener('click', () => {
+        if (inlineColors) inlineColors.hidden = !inlineColors.hidden;
+    });
+
+    app.querySelectorAll('[data-text-color]').forEach((button) => {
+        button.addEventListener('mousedown', (event) => event.preventDefault());
+        button.addEventListener('click', () => applyTextColor(button.dataset.textColor));
     });
 
     imageInput?.addEventListener('change', async () => {
         const file = imageInput.files?.[0];
         if (!file) return;
-        await uploadImage(file);
+        await uploadImage(file, 'content', imageUploadIntent);
+        imageUploadIntent = 'insert';
         imageInput.value = '';
+    });
+
+    thumbnailInput?.addEventListener('change', async () => {
+        const file = thumbnailInput.files?.[0];
+        if (!file) return;
+        await uploadImage(file, 'thumbnail');
+        thumbnailInput.value = '';
     });
 
     app.querySelectorAll('[data-image-layout]').forEach((button) => {
         button.addEventListener('click', () => setImageLayout(button.dataset.imageLayout));
+    });
+
+    app.querySelectorAll('[data-image-align]').forEach((button) => {
+        button.addEventListener('click', () => setImageAlignment(button.dataset.imageAlign));
     });
 
     app.querySelector('[data-image-alt]')?.addEventListener('click', () => {
@@ -139,9 +188,45 @@ function mountCanvas(app) {
         changed();
     });
 
+    app.querySelector('[data-image-thumbnail]')?.addEventListener('click', () => {
+        const image = selectedFigure?.querySelector('img');
+        if (!image) return;
+        thumbnailUrl = image.getAttribute('src') || image.src;
+        app.dataset.thumbnailUrl = thumbnailUrl;
+        changed();
+        refreshPreview();
+        showTransientSaveState('Thumbnail dipilih · Menyimpan…');
+    });
+
+    app.querySelector('[data-image-replace]')?.addEventListener('click', () => {
+        if (!selectedFigure) return;
+        imageUploadIntent = 'replace';
+        imageInput?.click();
+    });
+
+    app.querySelector('[data-image-continue]')?.addEventListener('click', () => {
+        if (!selectedFigure) return;
+        ensureEditableBlockAfter(selectedFigure, true);
+        hideImageToolbar();
+    });
+
+    app.querySelector('[data-image-delete]')?.addEventListener('click', () => {
+        if (!selectedFigure) return;
+        const figure = selectedFigure;
+        const next = ensureEditableBlockAfter(figure, false);
+        figure.remove();
+        hideImageToolbar();
+        if (next) placeCaret(next);
+        changed();
+    });
+
+    app.querySelector('[data-code-exit]')?.addEventListener('click', () => exitCodeBlock());
+    app.querySelector('[data-thumbnail-change]')?.addEventListener('click', () => thumbnailInput?.click());
+
     setupUrlDialog();
     setupUnsplash();
-    setupPublish();
+    const categoryManager = setupCategories();
+    setupPublish(categoryManager);
 
     document.addEventListener('selectionchange', () => {
         const selection = window.getSelection();
@@ -151,12 +236,23 @@ function mountCanvas(app) {
     });
 
     document.addEventListener('click', (event) => {
-        if (!inlineToolbar?.contains(event.target) && !formatBar?.contains(event.target) && !activeEditor()?.contains(event.target)) {
+        if (!inlineToolbar?.contains(event.target) && !activeEditor()?.contains(event.target)) {
             hideInlineToolbar();
         }
-        if (!imageToolbar?.contains(event.target) && !(event.target instanceof HTMLImageElement)) {
+        if (!imageToolbar?.contains(event.target) && !(event.target instanceof HTMLImageElement) && !event.target?.closest?.('figure')) {
             hideImageToolbar();
         }
+        if (!codeToolbar?.contains(event.target) && !event.target?.closest?.('pre')) {
+            hideCodeToolbar();
+        }
+        if (!blockMenu?.contains(event.target) && !activeEditor()?.contains(event.target)) {
+            closeBlockActions();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (selectedFigure) positionImageToolbar(selectedFigure);
+        positionCodeToolbar();
     });
 
     window.addEventListener('beforeunload', (event) => {
@@ -169,12 +265,15 @@ function mountCanvas(app) {
 
     function changed() {
         dirty = true;
-        if (saveState) {
-            saveState.textContent = 'Draft · Menyimpan…';
-            saveState.className = 'canvas-save-state is-saving';
-        }
+        showTransientSaveState('Draft · Menyimpan…', 'is-saving');
         window.clearTimeout(autosaveTimer);
         autosaveTimer = window.setTimeout(saveNow, 900);
+    }
+
+    function showTransientSaveState(label, modifier = 'is-saving') {
+        if (!saveState) return;
+        saveState.textContent = label;
+        saveState.className = `canvas-save-state ${modifier}`.trim();
     }
 
     async function saveNow() {
@@ -182,7 +281,7 @@ function mountCanvas(app) {
         saving = true;
         window.clearTimeout(autosaveTimer);
 
-        const payload = {};
+        const payload = { thumbnail_url: thumbnailUrl };
         documents.forEach((document) => {
             const language = document.dataset.documentLanguage;
             payload[`title_${language}`] = document.querySelector('[data-title]')?.value || '';
@@ -193,11 +292,15 @@ function mountCanvas(app) {
         try {
             const response = await jsonRequest(app.dataset.autosaveUrl, 'PATCH', payload, csrf);
             dirty = false;
+            thumbnailUrl = response.thumbnail_url || thumbnailUrl;
+            app.dataset.thumbnailUrl = thumbnailUrl;
             if (saveState) {
                 saveState.textContent = response.saved_label || 'Draft · Tersimpan';
                 saveState.className = 'canvas-save-state';
+                saveState.removeAttribute('title');
             }
             updateMetrics(response.word_count, response.character_count);
+            refreshPreview();
             return true;
         } catch (error) {
             if (saveState) {
@@ -214,11 +317,12 @@ function mountCanvas(app) {
     function updateMetrics(serverWords = null, serverCharacters = null) {
         const editor = activeEditor();
         const text = (editor?.textContent || '').trim().replace(/\s+/g, ' ');
-        const words = serverWords ?? (text ? (text.match(/[\p{L}\p{N}]+(?:[’'\-][\p{L}\p{N}]+)*/gu) || []).length : 0);
-        const characters = serverCharacters ?? text.length;
-        if (countToggle) countToggle.textContent = `${words} kata`;
-        if (wordCount) wordCount.textContent = `${words} kata`;
-        if (characterCount) characterCount.textContent = `${characters} karakter`;
+        currentWords = serverWords ?? (text ? (text.match(/[\p{L}\p{N}]+(?:[’'\-][\p{L}\p{N}]+)*/gu) || []).length : 0);
+        currentCharacters = serverCharacters ?? text.length;
+        if (countToggle) countToggle.textContent = `${currentWords} kata`;
+        if (wordCount) wordCount.textContent = `${currentWords} kata`;
+        if (characterCount) characterCount.textContent = `${currentCharacters} karakter`;
+        refreshPreview();
     }
 
     function rememberSelection() {
@@ -229,17 +333,44 @@ function mountCanvas(app) {
     }
 
     function restoreSelection() {
-        if (!savedRange) return false;
+        const editor = activeEditor();
+        if (!savedRange || !editor?.contains(savedRange.startContainer)) return false;
         const selection = window.getSelection();
         selection.removeAllRanges();
         selection.addRange(savedRange);
         return true;
     }
 
+    function selectedBlocks(includeFigures = false) {
+        const editor = activeEditor();
+        if (!editor) return [];
+        const selection = window.getSelection();
+        const range = selection?.rangeCount ? selection.getRangeAt(0) : savedRange;
+        if (!range || !editor.contains(range.startContainer)) return [];
+
+        const selector = includeFigures
+            ? 'p,h2,h3,blockquote,li,pre,figure'
+            : 'p,h2,h3,blockquote,li,pre';
+        const candidates = Array.from(editor.querySelectorAll(selector));
+
+        if (range.collapsed) {
+            const block = closestBlock(range.startContainer, editor);
+            return block && block !== editor && (includeFigures || block.tagName !== 'FIGURE') ? [block] : [];
+        }
+
+        return candidates.filter((block) => {
+            try {
+                return range.intersectsNode(block);
+            } catch {
+                return false;
+            }
+        });
+    }
+
     function updateInlineToolbar() {
         const selection = window.getSelection();
         const editor = activeEditor();
-        if (!selection || selection.rangeCount === 0 || selection.isCollapsed || !editor?.contains(selection.anchorNode)) {
+        if (!inlineToolbar || !selection || selection.rangeCount === 0 || selection.isCollapsed || !editor?.contains(selection.anchorNode)) {
             hideInlineToolbar();
             return;
         }
@@ -247,13 +378,20 @@ function mountCanvas(app) {
         const rect = selection.getRangeAt(0).getBoundingClientRect();
         if (!rect.width && !rect.height) return;
         inlineToolbar.hidden = false;
-        const width = inlineToolbar.offsetWidth;
+        if (inlineColors) inlineColors.hidden = true;
+        const width = Math.min(inlineToolbar.scrollWidth, window.innerWidth - 16);
+        inlineToolbar.style.width = `${width}px`;
         inlineToolbar.style.left = `${Math.max(8, Math.min(window.innerWidth - width - 8, rect.left + rect.width / 2 - width / 2))}px`;
         inlineToolbar.style.top = `${Math.max(8, rect.top - inlineToolbar.offsetHeight - 10)}px`;
+        syncContextualControls();
     }
 
     function hideInlineToolbar() {
-        if (inlineToolbar) inlineToolbar.hidden = true;
+        if (inlineToolbar) {
+            inlineToolbar.hidden = true;
+            inlineToolbar.style.removeProperty('width');
+        }
+        if (inlineColors) inlineColors.hidden = true;
         if (linkInput) linkInput.hidden = true;
     }
 
@@ -270,39 +408,161 @@ function mountCanvas(app) {
         } else if (format === 'link') {
             openLinkInput();
             return;
-        } else if (format === 'paragraph') {
-            document.execCommand('formatBlock', false, 'P');
-        } else if (format === 'h2' || format === 'h3') {
-            document.execCommand('formatBlock', false, format.toUpperCase());
+        } else if (format === 'paragraph' || format === 'h2' || format === 'h3') {
+            setBlockType(format === 'paragraph' ? 'p' : format);
         } else if (format === 'small' || format === 'large') {
             toggleBlockClass(`article-text-${format}`, ['article-text-small', 'article-text-large']);
         } else if (format === 'align-left') {
-            toggleBlockClass('', ['article-align-center', 'article-align-right']);
-        } else if (format === 'align-center' || format === 'align-right') {
-            toggleBlockClass(`article-${format}`, ['article-align-center', 'article-align-right']);
+            toggleBlockClass('', ['article-align-center', 'article-align-right', 'article-align-justify']);
+        } else if (['align-center', 'align-right', 'align-justify'].includes(format)) {
+            toggleBlockClass(`article-${format}`, ['article-align-center', 'article-align-right', 'article-align-justify']);
         } else if (format === 'quote') {
-            toggleQuote();
+            toggleQuoteBlocks();
         }
 
         changed();
         rememberSelection();
+        syncContextualControls();
+        if (!window.getSelection()?.isCollapsed) updateInlineToolbar();
+    }
+
+    function setBlockType(tagName) {
+        const blocks = selectedBlocks().filter((block) => ['P', 'H2', 'H3', 'BLOCKQUOTE'].includes(block.tagName));
+        let last = null;
+
+        blocks.forEach((block) => {
+            if (block.tagName.toLowerCase() === tagName) {
+                last = block;
+                return;
+            }
+            const replacement = document.createElement(tagName);
+            replacement.innerHTML = block.innerHTML;
+            replacement.className = block.className;
+            replacement.classList.remove('article-quote', 'article-pull-quote');
+            if (tagName !== 'p') replacement.classList.remove('has-drop-cap');
+            block.replaceWith(replacement);
+            last = replacement;
+        });
+
+        if (last) {
+            placeCaret(last, true);
+            rememberSelection();
+        }
+    }
+
+    function toggleQuoteBlocks() {
+        const blocks = selectedBlocks().filter((block) => ['P', 'H2', 'H3', 'BLOCKQUOTE'].includes(block.tagName));
+        if (blocks.length === 1 && blocks[0].tagName === 'BLOCKQUOTE') {
+            const block = blocks[0];
+            if (block.classList.contains('article-pull-quote')) {
+                replaceBlock(block, 'p');
+            } else {
+                block.classList.remove('article-quote');
+                block.classList.add('article-pull-quote');
+            }
+            return;
+        }
+
+        const allQuotes = blocks.length > 0 && blocks.every((block) => block.tagName === 'BLOCKQUOTE');
+        blocks.forEach((block) => {
+            const replacement = replaceBlock(block, allQuotes ? 'p' : 'blockquote');
+            if (!allQuotes) replacement?.classList.add('article-quote');
+        });
+    }
+
+    function replaceBlock(block, tagName) {
+        const replacement = document.createElement(tagName);
+        replacement.innerHTML = block.innerHTML;
+        replacement.className = block.className;
+        replacement.classList.remove('article-quote', 'article-pull-quote');
+        block.replaceWith(replacement);
+        placeCaret(replacement, true);
+        rememberSelection();
+        return replacement;
+    }
+
+    function toggleBlockClass(className, mutuallyExclusive = []) {
+        const blocks = selectedBlocks().filter((block) => !['PRE'].includes(block.tagName));
+        if (blocks.length === 0) return;
+        const removeOnly = className !== '' && blocks.every((block) => block.classList.contains(className));
+
+        blocks.forEach((block) => {
+            mutuallyExclusive.forEach((candidate) => block.classList.remove(candidate));
+            if (className && !removeOnly) block.classList.add(className);
+        });
+    }
+
+    function applyBlockPalette(prefix, color, palette) {
+        restoreSelection();
+        const blocks = selectedBlocks().filter((block) => !['PRE'].includes(block.tagName));
+        if (blocks.length === 0) return;
+        blocks.forEach((block) => {
+            palette.forEach((name) => block.classList.remove(`${prefix}${name}`));
+            if (color && color !== 'default') block.classList.add(`${prefix}${color}`);
+        });
+        changed();
+        syncContextualControls();
+    }
+
+    function applyTextColor(color) {
+        restoreSelection();
+        const selection = window.getSelection();
+        const editor = activeEditor();
+        if (!selection || selection.rangeCount === 0 || !editor?.contains(selection.anchorNode)) return;
+        const range = selection.getRangeAt(0);
+        const blocks = selectedBlocks();
+        const startBlock = closestBlock(range.startContainer, editor);
+        const endBlock = closestBlock(range.endContainer, editor);
+
+        if (range.collapsed || blocks.length > 1 || startBlock !== endBlock) {
+            applyBlockPalette('article-color--', color, textColorClasses);
+            return;
+        }
+
+        const wrapper = document.createElement('span');
+        wrapper.className = `article-color--${color || 'default'}`;
+        wrapper.append(range.extractContents());
+        range.insertNode(wrapper);
+        selection.removeAllRanges();
+        const nextRange = document.createRange();
+        nextRange.selectNodeContents(wrapper);
+        selection.addRange(nextRange);
+        rememberSelection();
+        if (inlineColors) inlineColors.hidden = true;
+        changed();
         updateInlineToolbar();
     }
 
-    function openLinkInput() {
-        if (!linkInput) return;
-        const input = linkInput.querySelector('input');
-        const anchorToolbar = inlineToolbar && !inlineToolbar.hidden ? inlineToolbar : formatBar;
-        linkInput.hidden = false;
-        if (anchorToolbar === inlineToolbar) {
-            linkInput.style.left = inlineToolbar.style.left;
-            linkInput.style.top = inlineToolbar.style.top;
-            inlineToolbar.hidden = true;
-        } else {
-            const rect = formatBar?.getBoundingClientRect();
-            linkInput.style.left = `${Math.max(8, Math.min(window.innerWidth - 286, rect?.left || 12))}px`;
-            linkInput.style.top = `${(rect?.bottom || 68) + 8}px`;
+    function toggleInlineElement(tagName) {
+        const selection = window.getSelection();
+        const editor = activeEditor();
+        if (!selection || selection.rangeCount === 0 || selection.isCollapsed || !editor?.contains(selection.anchorNode)) return;
+        const range = selection.getRangeAt(0);
+        const existing = (range.commonAncestorContainer instanceof Element
+            ? range.commonAncestorContainer
+            : range.commonAncestorContainer.parentElement)?.closest(tagName);
+
+        if (existing && editor.contains(existing)) {
+            existing.replaceWith(...existing.childNodes);
+            return;
         }
+
+        const wrapper = document.createElement(tagName);
+        wrapper.append(range.extractContents());
+        range.insertNode(wrapper);
+        selection.removeAllRanges();
+        const nextRange = document.createRange();
+        nextRange.selectNodeContents(wrapper);
+        selection.addRange(nextRange);
+    }
+
+    function openLinkInput() {
+        if (!linkInput || !inlineToolbar) return;
+        const input = linkInput.querySelector('input');
+        linkInput.hidden = false;
+        linkInput.style.left = inlineToolbar.style.left || '12px';
+        linkInput.style.top = inlineToolbar.style.top || '68px';
+        inlineToolbar.hidden = true;
         input.value = '';
         input.focus();
         input.onkeydown = (event) => {
@@ -319,62 +579,63 @@ function mountCanvas(app) {
         };
     }
 
-    function toggleQuote() {
-        const block = closestBlock(window.getSelection()?.anchorNode, activeEditor());
-        if (block?.tagName === 'BLOCKQUOTE') {
-            if (block === lastQuoteBlock || block.classList.contains('article-quote')) {
-                block.className = 'article-pull-quote';
-            } else {
-                block.className = 'article-quote';
-            }
-            lastQuoteBlock = block;
-            return;
-        }
-        document.execCommand('formatBlock', false, 'BLOCKQUOTE');
-        const nextBlock = closestBlock(window.getSelection()?.anchorNode, activeEditor());
-        nextBlock?.classList.add('article-quote');
-        lastQuoteBlock = nextBlock;
-    }
+    function syncContextualControls() {
+        const blocks = selectedBlocks();
+        const first = blocks[0];
+        const stateMap = {
+            paragraph: first?.tagName === 'P',
+            h2: first?.tagName === 'H2',
+            h3: first?.tagName === 'H3',
+            quote: first?.tagName === 'BLOCKQUOTE',
+            small: blocks.length > 0 && blocks.every((block) => block.classList.contains('article-text-small')),
+            large: blocks.length > 0 && blocks.every((block) => block.classList.contains('article-text-large')),
+            'align-left': blocks.length > 0 && blocks.every((block) => !block.classList.contains('article-align-center') && !block.classList.contains('article-align-right') && !block.classList.contains('article-align-justify')),
+            'align-center': blocks.length > 0 && blocks.every((block) => block.classList.contains('article-align-center')),
+            'align-right': blocks.length > 0 && blocks.every((block) => block.classList.contains('article-align-right')),
+            'align-justify': blocks.length > 0 && blocks.every((block) => block.classList.contains('article-align-justify')),
+        };
 
-    function toggleInlineElement(tagName) {
-        const selection = window.getSelection();
-        const editor = activeEditor();
-        if (!selection || selection.rangeCount === 0 || !editor?.contains(selection.anchorNode)) return;
-
-        const selectedText = selection.toString();
-        if (!selectedText) {
-            document.execCommand(tagName === 'mark' ? 'backColor' : 'insertHTML', false, tagName === 'mark' ? '#fff3a3' : '');
-            return;
+        try {
+            stateMap.bold = document.queryCommandState('bold');
+            stateMap.italic = document.queryCommandState('italic');
+            stateMap.strike = document.queryCommandState('strikeThrough');
+        } catch {
+            // queryCommandState is not available in a few embedded browsers.
         }
 
-        const range = selection.getRangeAt(0);
-        const wrapper = document.createElement(tagName);
-        wrapper.append(range.extractContents());
-        range.insertNode(wrapper);
-        selection.removeAllRanges();
-        const nextRange = document.createRange();
-        nextRange.selectNodeContents(wrapper);
-        selection.addRange(nextRange);
-    }
+        app.querySelectorAll('[data-format]').forEach((button) => {
+            const active = Boolean(stateMap[button.dataset.format]);
+            button.classList.toggle('is-active', active);
+            button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
 
-    function toggleBlockClass(className, mutuallyExclusive = []) {
-        const block = closestBlock(window.getSelection()?.anchorNode || savedRange?.startContainer, activeEditor());
-        if (!block || ['FIGURE', 'PRE'].includes(block.tagName)) return;
+        app.querySelectorAll('[data-block-color]').forEach((button) => {
+            const color = button.dataset.blockColor;
+            const active = color === 'default'
+                ? blocks.length > 0 && blocks.every((block) => !textColorClasses.some((name) => block.classList.contains(`article-color--${name}`)))
+                : blocks.length > 0 && blocks.every((block) => block.classList.contains(`article-color--${color}`));
+            button.classList.toggle('is-active', active);
+        });
 
-        mutuallyExclusive.forEach((candidate) => block.classList.remove(candidate));
-        if (className) block.classList.toggle(className);
+        app.querySelectorAll('[data-block-background]').forEach((button) => {
+            const color = button.dataset.blockBackground;
+            const active = color === 'default'
+                ? blocks.length > 0 && blocks.every((block) => !backgroundClasses.some((name) => block.classList.contains(`article-bg--${name}`)))
+                : blocks.length > 0 && blocks.every((block) => block.classList.contains(`article-bg--${color}`));
+            button.classList.toggle('is-active', active);
+        });
     }
 
     function updateBlockMenu() {
         const editor = activeEditor();
         const selection = window.getSelection();
-        if (!editor || !selection || selection.rangeCount === 0 || !selection.isCollapsed || !editor.contains(selection.anchorNode)) {
+        if (!editor || !selection || selection.rangeCount === 0 || !editor.contains(selection.anchorNode)) {
             if (blockMenu) blockMenu.hidden = true;
             return;
         }
 
         const block = closestBlock(selection.anchorNode, editor);
-        if (!block || block.querySelector('img, iframe')) {
+        if (!block || block === editor || ['FIGURE', 'PRE'].includes(block.tagName) || block.querySelector('img, iframe')) {
             if (blockMenu) blockMenu.hidden = true;
             return;
         }
@@ -385,14 +646,20 @@ function mountCanvas(app) {
         blockMenu.hidden = false;
         blockMenu.classList.toggle('is-on-filled-block', (block.textContent || '').trim() !== '');
         blockMenu.style.top = `${blockRect.top - workspaceRect.top + Math.max(0, (blockRect.height - 34) / 2)}px`;
+        syncContextualControls();
+    }
+
+    function closeBlockActions() {
+        if (blockActions) blockActions.hidden = true;
+        blockToggle?.setAttribute('aria-expanded', 'false');
     }
 
     function insertBlock(type) {
         rememberSelection();
-        if (blockActions) blockActions.hidden = true;
-        blockToggle?.setAttribute('aria-expanded', 'false');
+        closeBlockActions();
 
         if (type === 'image') {
+            imageUploadIntent = 'insert';
             imageInput?.click();
             return;
         }
@@ -410,30 +677,31 @@ function mountCanvas(app) {
             code.append(document.createElement('br'));
             pre.append(code);
             insertNode(pre);
+            ensureEditableBlockAfter(pre, false);
             placeCaret(code);
+            showCodeToolbar(pre);
         }
         if (type === 'divider') {
-            insertNode(document.createElement('hr'));
-            insertParagraphAfterSelection();
+            const divider = document.createElement('hr');
+            insertNode(divider);
+            ensureEditableBlockAfter(divider, true);
         }
         if (type === 'dropcap') {
-            const block = closestBlock(savedRange?.startContainer, activeEditor());
+            const block = selectedBlocks()[0];
             if (block?.tagName === 'P') block.classList.toggle('has-drop-cap');
         }
         changed();
     }
 
-    async function uploadImage(file) {
+    async function uploadImage(file, purpose = 'content', intent = 'insert') {
         if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 10 * 1024 * 1024) {
             window.alert('Gambar harus JPG, PNG, atau WebP dan maksimal 10MB.');
             return;
         }
-        if (saveState) {
-            saveState.textContent = 'Mengupload gambar…';
-            saveState.className = 'canvas-save-state is-saving';
-        }
+        showTransientSaveState(purpose === 'thumbnail' ? 'Mengupload thumbnail…' : 'Mengupload gambar…');
         const formData = new FormData();
         formData.append('image', file);
+        formData.append('purpose', purpose);
         try {
             const response = await fetch(app.dataset.uploadUrl, {
                 method: 'POST',
@@ -442,6 +710,26 @@ function mountCanvas(app) {
             });
             const payload = await response.json();
             if (!response.ok) throw new Error(errorMessage(payload));
+
+            if (purpose === 'thumbnail') {
+                thumbnailUrl = payload.url;
+                app.dataset.thumbnailUrl = thumbnailUrl;
+                refreshPreview();
+                showTransientSaveState('Thumbnail · Tersimpan', '');
+                return;
+            }
+
+            if (intent === 'replace' && selectedFigure) {
+                const image = selectedFigure.querySelector('img');
+                if (image) {
+                    image.src = payload.url;
+                    image.alt = file.name || image.alt;
+                    changed();
+                    positionImageToolbar(selectedFigure);
+                }
+                return;
+            }
+
             insertImage(payload.url, file.name || 'Gambar artikel');
             changed();
         } catch (error) {
@@ -455,7 +743,7 @@ function mountCanvas(app) {
 
     function insertImage(url, alt = '') {
         const figure = document.createElement('figure');
-        figure.className = 'article-image--inline';
+        figure.className = 'article-image--inline article-image-align--center';
         const image = document.createElement('img');
         image.src = url;
         image.alt = alt;
@@ -463,18 +751,41 @@ function mountCanvas(app) {
         caption.contentEditable = 'true';
         figure.append(image, caption);
         insertNode(figure);
-        insertParagraphAfterSelection();
+        ensureEditableBlockAfter(figure, true);
     }
 
     function handleEditorClick(event) {
-        if (event.target instanceof HTMLImageElement && event.target.closest('figure')) {
-            selectedFigure = event.target.closest('figure');
-            const rect = event.target.getBoundingClientRect();
-            imageToolbar.hidden = false;
-            const width = imageToolbar.offsetWidth;
-            imageToolbar.style.left = `${Math.max(8, rect.left + rect.width / 2 - width / 2)}px`;
-            imageToolbar.style.top = `${Math.max(8, rect.top - imageToolbar.offsetHeight - 10)}px`;
+        const figure = event.target?.closest?.('figure');
+        const pre = event.target?.closest?.('pre');
+        if (figure?.querySelector('img')) {
+            showImageToolbar(figure);
+            hideCodeToolbar();
+        } else if (pre) {
+            showCodeToolbar(pre);
+            hideImageToolbar();
+        } else {
+            hideImageToolbar();
+            hideCodeToolbar();
         }
+        window.setTimeout(() => {
+            rememberSelection();
+            updateBlockMenu();
+        }, 0);
+    }
+
+    function showImageToolbar(figure) {
+        selectedFigure = figure;
+        if (!imageToolbar) return;
+        imageToolbar.hidden = false;
+        imageLayoutClasses.forEach((layout) => {
+            const button = imageToolbar.querySelector(`[data-image-layout="${layout}"]`);
+            button?.classList.toggle('is-active', figure.classList.contains(`article-image--${layout}`));
+        });
+        imageAlignClasses.forEach((alignment) => {
+            const button = imageToolbar.querySelector(`[data-image-align="${alignment}"]`);
+            button?.classList.toggle('is-active', figure.classList.contains(`article-image-align--${alignment}`));
+        });
+        positionImageToolbar(figure);
     }
 
     function hideImageToolbar() {
@@ -483,18 +794,67 @@ function mountCanvas(app) {
     }
 
     function setImageLayout(layout) {
-        if (!selectedFigure || !['inline', 'outset', 'screen'].includes(layout)) return;
-        selectedFigure.className = `article-image--${layout}`;
+        if (!selectedFigure || !imageLayoutClasses.includes(layout)) return;
+        imageLayoutClasses.forEach((candidate) => selectedFigure.classList.remove(`article-image--${candidate}`));
+        selectedFigure.classList.add(`article-image--${layout}`);
+        if (['outset', 'screen'].includes(layout)) {
+            imageAlignClasses.forEach((candidate) => selectedFigure.classList.remove(`article-image-align--${candidate}`));
+            selectedFigure.classList.add('article-image-align--center');
+        }
         changed();
-        positionImageToolbar(selectedFigure);
+        showImageToolbar(selectedFigure);
+    }
+
+    function setImageAlignment(alignment) {
+        if (!selectedFigure || !imageAlignClasses.includes(alignment)) return;
+        if (!selectedFigure.classList.contains('article-image--compact')) {
+            imageLayoutClasses.forEach((candidate) => selectedFigure.classList.remove(`article-image--${candidate}`));
+            selectedFigure.classList.add('article-image--compact');
+        }
+        imageAlignClasses.forEach((candidate) => selectedFigure.classList.remove(`article-image-align--${candidate}`));
+        selectedFigure.classList.add(`article-image-align--${alignment}`);
+        changed();
+        showImageToolbar(selectedFigure);
     }
 
     function positionImageToolbar(figure) {
-        const image = figure.querySelector('img');
-        if (!image || !imageToolbar) return;
-        const rect = image.getBoundingClientRect();
-        imageToolbar.style.left = `${Math.max(8, rect.left + rect.width / 2 - imageToolbar.offsetWidth / 2)}px`;
-        imageToolbar.style.top = `${Math.max(8, rect.top - imageToolbar.offsetHeight - 10)}px`;
+        const image = figure?.querySelector('img');
+        if (!image || !imageToolbar || imageToolbar.hidden) return;
+        positionFloatingElement(imageToolbar, image.getBoundingClientRect());
+    }
+
+    function showCodeToolbar(pre) {
+        selectedCodeBlock = pre;
+        if (!codeToolbar) return;
+        codeToolbar.hidden = false;
+        positionCodeToolbar();
+    }
+
+    function hideCodeToolbar() {
+        if (codeToolbar) codeToolbar.hidden = true;
+        selectedCodeBlock = null;
+    }
+
+    function positionCodeToolbar() {
+        if (!selectedCodeBlock || !codeToolbar || codeToolbar.hidden || !selectedCodeBlock.isConnected) return;
+        positionFloatingElement(codeToolbar, selectedCodeBlock.getBoundingClientRect());
+    }
+
+    function exitCodeBlock() {
+        if (!selectedCodeBlock) return;
+        const next = ensureEditableBlockAfter(selectedCodeBlock, true);
+        hideCodeToolbar();
+        if (next) {
+            rememberSelection();
+            updateBlockMenu();
+        }
+    }
+
+    function positionFloatingElement(element, rect) {
+        const width = Math.min(element.scrollWidth, window.innerWidth - 16);
+        element.style.maxWidth = `${window.innerWidth - 16}px`;
+        element.style.left = `${Math.max(8, Math.min(window.innerWidth - width - 8, rect.left + rect.width / 2 - width / 2))}px`;
+        element.style.top = `${Math.max(8, rect.top - element.offsetHeight - 10)}px`;
     }
 
     function setupUrlDialog() {
@@ -511,7 +871,7 @@ function mountCanvas(app) {
             }
             if (error) error.hidden = true;
             insertNode(result);
-            insertParagraphAfterSelection();
+            ensureEditableBlockAfter(result, true);
             dialog.hidden = true;
             changed();
         });
@@ -534,7 +894,7 @@ function mountCanvas(app) {
         try { url = new URL(raw.trim()); } catch { return null; }
         if (url.protocol !== 'https:') return null;
         let embedUrl = null;
-        let className = type === 'video' ? 'article-video' : 'article-embed';
+        const className = type === 'video' ? 'article-video' : 'article-embed';
 
         if (['youtube.com', 'www.youtube.com', 'youtu.be'].includes(url.hostname)) {
             const id = url.hostname === 'youtu.be' ? url.pathname.slice(1) : url.searchParams.get('v');
@@ -626,10 +986,105 @@ function mountCanvas(app) {
         window.setTimeout(() => dialog.querySelector('[data-unsplash-query]')?.focus(), 0);
     }
 
-    function setupPublish() {
+    function setupCategories() {
+        const dataElement = app.querySelector('[data-category-data]');
+        const chips = app.querySelector('[data-category-chips]');
+        const input = app.querySelector('[data-category-input]');
+        const suggestionBox = app.querySelector('[data-category-suggestions]');
+        let data = { selected: [], suggestions: [] };
+        try { data = JSON.parse(dataElement?.textContent || '{}'); } catch { /* Use empty defaults. */ }
+        let selected = Array.isArray(data.selected) ? data.selected.filter((item) => typeof item === 'string').slice(0, 5) : [];
+        const suggestions = Array.isArray(data.suggestions) ? data.suggestions.filter((item) => typeof item === 'string') : [];
+
+        const normalized = (value) => value.trim().replace(/\s+/g, ' ').toLocaleLowerCase('id');
+
+        function add(value) {
+            const clean = value.trim().replace(/\s+/g, ' ');
+            if (!clean || selected.length >= 5 || selected.some((item) => normalized(item) === normalized(clean))) return;
+            const canonical = suggestions.find((item) => normalized(item) === normalized(clean)) || clean;
+            selected.push(canonical.slice(0, 40));
+            if (input) input.value = '';
+            render();
+        }
+
+        function remove(index) {
+            selected.splice(index, 1);
+            render();
+            input?.focus();
+        }
+
+        function renderSuggestions() {
+            if (!suggestionBox || !input) return;
+            const query = normalized(input.value);
+            const matches = suggestions
+                .filter((item) => !selected.some((current) => normalized(current) === normalized(item)))
+                .filter((item) => query === '' || normalized(item).includes(query))
+                .slice(0, 8);
+            suggestionBox.replaceChildren();
+            matches.forEach((item) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = item;
+                button.addEventListener('mousedown', (event) => event.preventDefault());
+                button.addEventListener('click', () => add(item));
+                suggestionBox.append(button);
+            });
+            suggestionBox.hidden = matches.length === 0;
+        }
+
+        function render() {
+            chips?.replaceChildren();
+            selected.forEach((item, index) => {
+                const chip = document.createElement('span');
+                chip.textContent = item;
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.setAttribute('aria-label', `Hapus kategori ${item}`);
+                removeButton.textContent = '×';
+                removeButton.addEventListener('click', () => remove(index));
+                chip.append(removeButton);
+                chips?.append(chip);
+            });
+            if (input) input.disabled = selected.length >= 5;
+            renderSuggestions();
+            refreshPreview();
+        }
+
+        input?.addEventListener('focus', renderSuggestions);
+        input?.addEventListener('input', () => {
+            if (input.value.includes(',')) {
+                input.value.split(',').forEach(add);
+            }
+            renderSuggestions();
+        });
+        input?.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ',') {
+                event.preventDefault();
+                add(input.value.replace(/,$/, ''));
+            }
+            if (event.key === 'Backspace' && input.value === '' && selected.length > 0) {
+                remove(selected.length - 1);
+            }
+            if (event.key === 'Escape' && suggestionBox) suggestionBox.hidden = true;
+        });
+        input?.addEventListener('blur', () => {
+            window.setTimeout(() => {
+                if (input.value.trim()) add(input.value);
+                if (suggestionBox) suggestionBox.hidden = true;
+            }, 120);
+        });
+
+        render();
+        return { get: () => [...selected] };
+    }
+
+    function setupPublish(categoryManager) {
         const error = publishDrawer?.querySelector('[data-publish-error]');
         const submit = publishDrawer?.querySelector('[data-publish-submit]');
-        const scheduledAt = publishDrawer?.querySelector('[data-scheduled-at]');
+        const publishAt = publishDrawer?.querySelector('[data-publish-at]');
+        const dateLabel = publishDrawer?.querySelector('[data-publish-date-label]');
+        const author = publishDrawer?.querySelector('[data-publish-author]');
+
         app.querySelector('[data-publish-open]')?.addEventListener('click', async () => {
             if (dirty && !(await saveNow())) return;
             refreshPreview();
@@ -639,20 +1094,28 @@ function mountCanvas(app) {
         publishDrawer?.querySelectorAll('input[name="publish_mode"]').forEach((radio) => {
             radio.addEventListener('change', () => {
                 const schedule = radio.checked && radio.value === 'schedule';
-                if (scheduledAt) scheduledAt.hidden = !schedule;
+                if (dateLabel) dateLabel.textContent = schedule ? 'Jadwal publikasi' : 'Tanggal publikasi';
                 if (submit) submit.textContent = schedule ? 'Schedule to publish' : 'Publish now';
+                if (schedule && publishAt && new Date(publishAt.value).getTime() <= Date.now()) {
+                    publishAt.value = toDateTimeLocal(new Date(Date.now() + 60 * 60 * 1000));
+                }
+                refreshPreview();
             });
         });
+        author?.addEventListener('input', refreshPreview);
+        publishAt?.addEventListener('input', refreshPreview);
+
         submit?.addEventListener('click', async () => {
             const mode = publishDrawer.querySelector('input[name="publish_mode"]:checked')?.value || 'now';
-            const tags = (publishDrawer.querySelector('[data-publish-tags]')?.value || '').split(',').map((tag) => tag.trim()).filter(Boolean).slice(0, 5);
             if (error) error.hidden = true;
             submit.disabled = true;
             try {
                 const response = await jsonRequest(app.dataset.publishUrl, 'POST', {
                     publish_mode: mode,
-                    scheduled_at: mode === 'schedule' ? scheduledAt?.value : null,
-                    tags,
+                    published_at: mode === 'now' ? publishAt?.value : null,
+                    scheduled_at: mode === 'schedule' ? publishAt?.value : null,
+                    author: author?.value || '',
+                    tags: categoryManager?.get() || [],
                 }, csrf);
                 dirty = false;
                 window.location.assign(response.redirect);
@@ -667,16 +1130,46 @@ function mountCanvas(app) {
         const idDocument = documents.find((document) => document.dataset.documentLanguage === 'id');
         const title = idDocument?.querySelector('[data-title]')?.value.trim() || 'Artikel tanpa judul';
         const subtitle = idDocument?.querySelector('[data-subtitle]')?.value.trim() || '';
-        const firstImage = idDocument?.querySelector('[data-editor] img');
         const previewTitle = publishDrawer?.querySelector('[data-preview-title]');
         const previewSubtitle = publishDrawer?.querySelector('[data-preview-subtitle]');
         const previewImage = publishDrawer?.querySelector('[data-preview-image] img');
+        const previewAuthor = publishDrawer?.querySelector('[data-preview-author]');
+        const previewDate = publishDrawer?.querySelector('[data-preview-date]');
+        const previewReading = publishDrawer?.querySelector('[data-preview-reading]');
+        const author = publishDrawer?.querySelector('[data-publish-author]')?.value.trim() || 'Admin';
+        const publishAt = publishDrawer?.querySelector('[data-publish-at]')?.value;
         if (previewTitle) previewTitle.textContent = title;
-        if (previewSubtitle) previewSubtitle.textContent = subtitle;
-        if (previewImage && firstImage) previewImage.src = firstImage.src;
+        if (previewSubtitle) {
+            previewSubtitle.textContent = subtitle;
+            previewSubtitle.hidden = subtitle === '';
+        }
+        if (previewImage && thumbnailUrl) previewImage.src = thumbnailUrl;
+        if (previewAuthor) previewAuthor.textContent = author;
+        if (previewDate && publishAt) {
+            const date = new Date(publishAt);
+            if (!Number.isNaN(date.getTime())) {
+                previewDate.dateTime = date.toISOString();
+                previewDate.textContent = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
+            }
+        }
+        if (previewReading) previewReading.textContent = `${Math.max(1, Math.ceil(Math.max(1, currentWords) / 220))} menit baca`;
     }
 
     function handleEditorShortcut(event) {
+        const editor = activeEditor();
+        const block = closestBlock(window.getSelection()?.anchorNode, editor);
+
+        if (block?.tagName === 'PRE' && event.key === 'Enter' && !event.shiftKey) {
+            const code = block.querySelector('code') || block;
+            const shouldExit = event.ctrlKey || event.metaKey || (isCaretAtEnd(code) && (code.textContent || '').endsWith('\n'));
+            if (shouldExit) {
+                event.preventDefault();
+                selectedCodeBlock = block;
+                exitCodeBlock();
+                return;
+            }
+        }
+
         if (!(event.ctrlKey || event.metaKey)) return;
         const key = event.key.toLowerCase();
         if (key === 'b' || key === 'i') {
@@ -699,7 +1192,7 @@ function mountCanvas(app) {
     function handleMarkdownShortcut(event, editor) {
         if (event.key !== ' ' && event.key !== 'Enter') return;
         const block = closestBlock(window.getSelection()?.anchorNode, editor);
-        if (!block) return;
+        if (!block || block.tagName === 'PRE') return;
         const text = (block.textContent || '').replace(/\u00a0/g, ' ');
         if (event.key === ' ' && ['* ', '- '].includes(text)) {
             block.textContent = '';
@@ -715,7 +1208,9 @@ function mountCanvas(app) {
             code.append(document.createElement('br'));
             pre.append(code);
             block.replaceWith(pre);
+            ensureEditableBlockAfter(pre, false);
             placeCaret(code);
+            showCodeToolbar(pre);
             changed();
         } else if (event.key === ' ') {
             applyInlineCode(block);
@@ -740,10 +1235,10 @@ function mountCanvas(app) {
         restoreSelection();
         const editor = activeEditor();
         const selection = window.getSelection();
-        if (!editor) return;
+        if (!editor) return null;
         if (!selection || selection.rangeCount === 0 || !editor.contains(selection.anchorNode)) {
             editor.append(node);
-            return;
+            return node;
         }
         const block = closestBlock(selection.anchorNode, editor);
         if (block && (block.textContent || '').trim() === '' && block.tagName === 'P') {
@@ -753,16 +1248,19 @@ function mountCanvas(app) {
         } else {
             selection.getRangeAt(0).insertNode(node);
         }
+        return node;
     }
 
-    function insertParagraphAfterSelection() {
-        const editor = activeEditor();
-        if (!editor) return;
-        const paragraph = document.createElement('p');
-        paragraph.append(document.createElement('br'));
-        const last = editor.lastElementChild;
-        if (!last || last !== paragraph) editor.append(paragraph);
-        placeCaret(paragraph);
+    function ensureEditableBlockAfter(node, focus = true) {
+        const editableTags = ['P', 'H2', 'H3', 'BLOCKQUOTE', 'UL', 'OL'];
+        let next = node.nextElementSibling;
+        if (!next || !editableTags.includes(next.tagName)) {
+            next = document.createElement('p');
+            next.append(document.createElement('br'));
+            node.after(next);
+        }
+        if (focus) placeCaret(next);
+        return next;
     }
 
     function normalizeEmptyEditor(editor) {
@@ -793,6 +1291,21 @@ function placeCaret(element, atEnd = false) {
     selection.removeAllRanges();
     selection.addRange(range);
     element.closest('[contenteditable="true"]')?.focus();
+}
+
+function isCaretAtEnd(element) {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || !selection.isCollapsed) return false;
+    const range = selection.getRangeAt(0).cloneRange();
+    const tail = document.createRange();
+    tail.selectNodeContents(element);
+    tail.setStart(range.endContainer, range.endOffset);
+    return tail.toString() === '';
+}
+
+function toDateTimeLocal(date) {
+    const pad = (value) => String(value).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
 function isSafeHttpUrl(value) {
