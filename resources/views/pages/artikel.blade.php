@@ -42,7 +42,12 @@
         <div class="article-index-grid">
           @foreach($articleItems as $article)
             <article class="article-index-card reveal" data-public-article>
-              <a href="{{ $article['href'] }}" class="article-index-card__link" target="_blank" rel="noopener" aria-label="{{ $readLabel }}: {{ $article['title'] }}">
+              <a
+                href="{{ $article['href'] }}"
+                class="article-index-card__link"
+                @if(! empty($article['external'])) target="_blank" rel="noopener" @endif
+                aria-label="{{ $readLabel }}: {{ $article['title'] }}"
+              >
                 <span class="article-index-card__media">
                   @if(! empty($article['thumbnail_url']))
                     <img src="{{ $article['thumbnail_url'] }}" alt="{{ $article['title'] }}" loading="lazy" decoding="async">
