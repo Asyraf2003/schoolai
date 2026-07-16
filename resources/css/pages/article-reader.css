@@ -16,6 +16,27 @@
   margin-inline: auto;
 }
 
+.native-article__preview-banner {
+  position: sticky;
+  top: 12px;
+  z-index: 5;
+  width: min(100%, 680px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin: 0 auto 28px;
+  padding: 11px 14px;
+  border: 1px solid #f0cf72;
+  border-radius: 8px;
+  background: #fff8d8;
+  color: #684d00;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: .82rem;
+  box-shadow: 0 8px 24px rgba(104, 77, 0, .1);
+}
+
+.native-article__preview-banner strong { flex: 0 0 auto; }
+
 .native-article__back {
   display: inline-flex;
   margin-bottom: 32px;
