@@ -31,7 +31,7 @@
       @if(! empty($article->tags))
         <ul class="native-article__tags" aria-label="Tag artikel">
           @foreach($article->tags as $tag)
-            <li>{{ $tag }}</li>
+            <li><a href="{{ route('artikel', ['kategori' => $tag]) }}">{{ $tag }}</a></li>
           @endforeach
         </ul>
       @endif
@@ -48,5 +48,34 @@
         <p>Ikuti kabar dan cerita terbaru dari Al Mustaqbal School.</p>
       </div>
     </footer>
+
+    @if(! empty($relatedArticles))
+      <aside class="native-article__related" aria-labelledby="related-articles-title">
+        <span class="native-article__related-eyebrow">Lanjut membaca</span>
+        <h2 id="related-articles-title">Mungkin Anda juga suka</h2>
+
+        <div class="native-article__related-grid">
+          @foreach($relatedArticles as $related)
+            <article class="native-related-card">
+              <a href="{{ $related['href'] }}">
+                <span class="native-related-card__image">
+                  <img src="{{ $related['thumbnail_url'] }}" alt="" loading="lazy" decoding="async">
+                </span>
+                <span class="native-related-card__body">
+                  @if(! empty($related['categories']))
+                    <small>{{ implode(' · ', array_slice($related['categories'], 0, 2)) }}</small>
+                  @endif
+                  <strong>{{ $related['title'] }}</strong>
+                  @if(! empty($related['description']))
+                    <span>{{ $related['description'] }}</span>
+                  @endif
+                  <em>{{ $related['reading_minutes'] }} menit baca</em>
+                </span>
+              </a>
+            </article>
+          @endforeach
+        </div>
+      </aside>
+    @endif
   </article>
 @endsection
