@@ -279,16 +279,16 @@
 
         <fieldset class="canvas-publish-schedule">
           <legend>Waktu terbit</legend>
-          <label><input type="radio" name="publish_mode" value="now" checked> Terbitkan sekarang</label>
-          <label><input type="radio" name="publish_mode" value="schedule"> Jadwalkan</label>
+          <label><input type="radio" name="publish_mode" value="now" @checked($article->article_status !== \App\Models\Article::STATUS_SCHEDULED)> Terbitkan sekarang</label>
+          <label><input type="radio" name="publish_mode" value="schedule" @checked($article->article_status === \App\Models\Article::STATUS_SCHEDULED)> Jadwalkan</label>
           <label class="canvas-publish-date">
-            <span data-publish-date-label>Tanggal publikasi</span>
+            <span data-publish-date-label>{{ $article->article_status === \App\Models\Article::STATUS_SCHEDULED ? 'Jadwal publikasi' : 'Tanggal publikasi' }}</span>
             <input type="datetime-local" data-publish-at value="{{ ($article->published_at ?: now())->format('Y-m-d\TH:i') }}">
           </label>
         </fieldset>
 
         <p class="canvas-publish-error" data-publish-error hidden></p>
-        <button type="button" class="canvas-publish-submit" data-publish-submit>Publish now</button>
+        <button type="button" class="canvas-publish-submit" data-publish-submit>{{ $article->article_status === \App\Models\Article::STATUS_SCHEDULED ? 'Schedule to publish' : 'Publish now' }}</button>
       </aside>
     </div>
   </div>
