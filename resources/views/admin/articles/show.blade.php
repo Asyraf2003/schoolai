@@ -34,12 +34,13 @@
 
         <div class="admin-inline-actions">
           <a href="{{ route('admin.artikel') }}" class="admin-primary-action admin-primary-action--ghost">Kembali</a>
-          <a href="{{ route('admin.artikel.edit', $article) }}" class="admin-primary-action">Edit</a>
+          <a href="{{ $article->isNative() ? route('admin.artikel.canvas.edit', $article) : route('admin.artikel.edit', $article) }}" class="admin-primary-action">{{ $article->isNative() ? 'Buka Canvas' : 'Edit' }}</a>
         </div>
       </div>
 
       <dl class="gallery-detail-list gallery-detail-list--simple">
-        <div><dt>Status</dt><dd>Aktif</dd></div>
+        <div><dt>Status</dt><dd>{{ $article->statusLabel() }}</dd></div>
+        <div><dt>Sumber</dt><dd>{{ $article->isNative() ? 'Canvas internal' : 'Link eksternal' }}</dd></div>
         <div><dt>Author</dt><dd>{{ $article->authorForDisplay() }}</dd></div>
         <div><dt>Waktu Publikasi</dt><dd>{{ $article->published_at ? $article->published_at->translatedFormat('d M Y, H:i').' WIB' : '-' }}</dd></div>
         <div><dt>Judul English</dt><dd>{{ $article->title_en ?: '-' }}</dd></div>
@@ -49,7 +50,7 @@
       </dl>
 
       <section class="gallery-detail-actions gallery-detail-actions--simple">
-        <a href="{{ $article->link_id }}" target="_blank" rel="noopener" class="admin-small-action admin-small-action--ghost">Buka Artikel ID</a>
+        <a href="{{ $article->linkForLocale('id') }}" target="_blank" rel="noopener" class="admin-small-action admin-small-action--ghost">{{ $article->isNative() ? 'Preview Artikel' : 'Buka Artikel ID' }}</a>
 
         @if($article->link_en)
           <a href="{{ $article->link_en }}" target="_blank" rel="noopener" class="admin-small-action admin-small-action--ghost">Buka Artikel EN</a>
