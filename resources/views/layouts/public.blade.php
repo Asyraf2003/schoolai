@@ -8,6 +8,7 @@
       'pageDescription' => $description ?? __('pages.common.site_description'),
     ])
     @vite(['resources/css/pages/welcome.css', 'resources/js/pages/welcome.js'])
+    @stack('head')
   </head>
   <body class="public-page-body">
     <a href="#main-content" class="skip-link">{{ __('pages.common.skip') }}</a>
