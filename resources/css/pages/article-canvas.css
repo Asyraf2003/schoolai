@@ -129,10 +129,53 @@ button { color: inherit; }
 
 .canvas-count-popover strong { color: var(--canvas-ink); }
 
+.canvas-format-bar {
+  position: sticky;
+  top: 65px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 44px;
+  padding: 6px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(14px);
+  overflow-x: auto;
+}
+
+.canvas-format-bar button {
+  min-width: 34px;
+  height: 30px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--canvas-muted);
+  cursor: pointer;
+  font-size: .82rem;
+}
+
+.canvas-format-bar button:hover,
+.canvas-format-bar button:focus-visible {
+  background: #f2f2f2;
+  color: var(--canvas-ink);
+  outline: 0;
+}
+
+.canvas-format-bar > span {
+  flex: 0 0 1px;
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: var(--canvas-line);
+}
+
 .canvas-workspace {
   position: relative;
   width: min(100%, 1160px);
-  min-height: calc(100vh - 65px);
+  min-height: calc(100vh - 109px);
   margin: 0 auto;
   padding: 56px 28px 180px;
 }
@@ -207,7 +250,12 @@ button { color: inherit; }
 .canvas-body h2 { margin-top: 1.7em; font-size: 1.85em; line-height: 1.18; }
 .canvas-body h3 { margin-top: 1.55em; font-size: 1.35em; line-height: 1.25; }
 .canvas-body a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.canvas-body mark { padding: .03em .12em; border-radius: 3px; background: #fff3a3; color: inherit; }
 .canvas-body code { padding: .12em .3em; border-radius: 4px; background: #f2f2f2; font: .86em ui-monospace, SFMono-Regular, Menlo, monospace; }
+.canvas-body .article-text-small { font-size: .84em; line-height: 1.65; }
+.canvas-body .article-text-large { font-size: 1.22em; line-height: 1.55; }
+.canvas-body .article-align-center { text-align: center; }
+.canvas-body .article-align-right { text-align: right; }
 
 .canvas-body pre {
   padding: 20px;
@@ -303,6 +351,7 @@ button { color: inherit; }
 
 .canvas-plus { font-size: 1.7rem; font-weight: 300; line-height: 1; transition: transform .18s ease; }
 .canvas-plus[aria-expanded="true"] { transform: rotate(45deg); }
+.canvas-block-menu.is-on-filled-block .canvas-plus { opacity: .72; }
 .canvas-block-actions { display: flex; gap: 7px; }
 .canvas-block-actions button { font-size: .8rem; }
 
@@ -434,6 +483,7 @@ button { color: inherit; }
   .canvas-topbar { padding: 0 16px; }
   .canvas-divider,
   .canvas-count { display: none; }
+  .canvas-format-bar { justify-content: flex-start; }
   .canvas-workspace { padding: 38px 22px 120px; }
   .canvas-block-menu { position: fixed; left: 14px; bottom: 18px; top: auto !important; padding: 6px; border-radius: 999px; background: #fff; box-shadow: 0 8px 30px rgba(0,0,0,.14); }
   .canvas-block-actions { max-width: calc(100vw - 80px); overflow-x: auto; }
