@@ -119,7 +119,12 @@
 
 .native-article__body a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .native-article__body li { margin-bottom: .38em; padding-left: .2em; }
+.native-article__body mark { padding: .03em .12em; border-radius: 3px; background: #fff3a3; color: inherit; }
 .native-article__body code { padding: .12em .3em; border-radius: 4px; background: #f2f2f2; font: .84em ui-monospace, SFMono-Regular, Menlo, monospace; }
+.native-article__body .article-text-small { font-size: .86em; line-height: 1.65; }
+.native-article__body .article-text-large { font-size: 1.22em; line-height: 1.55; }
+.native-article__body .article-align-center { text-align: center; }
+.native-article__body .article-align-right { text-align: right; }
 
 .native-article__body pre {
   width: min(900px, calc(100vw - 32px));
