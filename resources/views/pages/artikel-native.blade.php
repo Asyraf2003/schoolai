@@ -9,6 +9,20 @@
 
 @section('content')
   <article class="native-article" aria-labelledby="native-article-title">
+    @if(! empty($isAdminPreview))
+      <div class="native-article__preview-banner" role="status">
+        <strong>Pratinjau admin</strong>
+        <span>
+          Artikel ini belum terlihat oleh pengunjung.
+          @if($article->article_status === \App\Models\Article::STATUS_SCHEDULED && $article->published_at)
+            Dijadwalkan terbit {{ $article->published_at->translatedFormat('j F Y, H:i') }} WIB.
+          @else
+            Status saat ini masih draft.
+          @endif
+        </span>
+      </div>
+    @endif
+
     <header class="native-article__header">
       <a href="{{ route('artikel') }}" class="native-article__back">← Semua artikel</a>
       <h1 id="native-article-title">{{ $articleTitle }}</h1>
