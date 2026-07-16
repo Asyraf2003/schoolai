@@ -1110,6 +1110,9 @@ function mountCanvas(app) {
                 if (schedule && publishAt && new Date(publishAt.value).getTime() <= Date.now()) {
                     publishAt.value = toDateTimeLocal(new Date(Date.now() + 60 * 60 * 1000));
                 }
+                if (!schedule && publishAt && new Date(publishAt.value).getTime() > Date.now() + 5 * 60 * 1000) {
+                    publishAt.value = toDateTimeLocal(new Date());
+                }
                 refreshPreview();
             });
         });
