@@ -12,7 +12,8 @@ final class ArticleContentSanitizer
 
     private const ALLOWED_TAGS = [
         'a', 'blockquote', 'br', 'code', 'div', 'em', 'figcaption', 'figure',
-        'h2', 'h3', 'hr', 'iframe', 'img', 'li', 'ol', 'p', 'pre', 'strong', 'ul',
+        'h2', 'h3', 'hr', 'iframe', 'img', 'li', 'mark', 'ol', 'p', 'pre', 's',
+        'strike', 'strong', 'ul',
     ];
 
     private const DROP_WITH_CONTENT = [
@@ -221,19 +222,31 @@ final class ArticleContentSanitizer
     {
         $allowed = match ($tag) {
             'figure' => ['article-image--inline', 'article-image--outset', 'article-image--screen'],
-            'blockquote' => ['article-quote', 'article-pull-quote'],
-            'p' => ['has-drop-cap'],
+            'blockquote' => [
+                'article-quote',
+                'article-pull-quote',
+                'article-text-small',
+                'article-text-large',
+                'article-align-center',
+                'article-align-right',
+            ],
+            'p', 'h2', 'h3', 'li' => [
+                'has-drop-cap',
+                'article-text-small',
+                'article-text-large',
+                'article-align-center',
+                'article-align-right',
+            ],
             'div' => ['article-embed', 'article-video'],
             default => [],
         };
 
-        foreach (preg_split('/\s+/', trim($class)) ?: [] as $candidate) {
-            if (in_array($candidate, $allowed, true)) {
-                return $candidate;
-            }
-        }
+        $clean = array_values(array_intersect(
+            preg_split('/\s+/', trim($class)) ?: [],
+            $allowed
+        ));
 
-        return null;
+        return $clean === [] ? null : implode(' ', $clean);
     }
 
     private function safeLinkUrl(string $url): ?string
