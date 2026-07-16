@@ -48,9 +48,21 @@ final class ArticleCanvasAdminController extends Controller
     {
         $this->ensureNative($article);
 
+        $categorySuggestions = Article::query()
+            ->whereNotNull('tags')
+            ->get(['tags'])
+            ->flatMap(fn (Article $candidate): array => array_values($candidate->tags ?? []))
+            ->filter(fn (mixed $tag): bool => is_string($tag) && trim($tag) !== '')
+            ->map(fn (string $tag): string => trim($tag))
+            ->unique(fn (string $tag): string => Str::lower($tag))
+            ->sort(fn (string $left, string $right): int => strnatcasecmp($left, $right))
+            ->values()
+            ->all();
+
         return view('admin.articles.canvas', [
             'article' => $article,
             'adminPageKey' => 'artikel',
+            'categorySuggestions' => $categorySuggestions,
         ]);
     }
 
@@ -65,6 +77,7 @@ final class ArticleCanvasAdminController extends Controller
             'subtitle_en' => ['nullable', 'string', 'max:300'],
             'content_id' => ['nullable', 'string', 'max:2000000'],
             'content_en' => ['nullable', 'string', 'max:2000000'],
+            'thumbnail_url' => ['nullable', 'string', 'max:2048'],
         ]);
 
         $contentId = $this->sanitizer->sanitize($data['content_id'] ?? '');
@@ -73,6 +86,13 @@ final class ArticleCanvasAdminController extends Controller
         $plainEn = $this->sanitizer->plainText($contentEn);
         $firstImage = $this->sanitizer->firstImageUrl($contentId)
             ?? $this->sanitizer->firstImageUrl($contentEn);
+        $requestedThumbnail = $this->sanitizer->imageUrl($data['thumbnail_url'] ?? null);
+        $currentThumbnail = trim((string) $article->thumbnail_url);
+        $thumbnailIsPlaceholder = $currentThumbnail === ''
+            || $currentThumbnail === Article::PLACEHOLDER_THUMBNAIL;
+        $thumbnail = $requestedThumbnail
+            ?? ($thumbnailIsPlaceholder ? $firstImage : null)
+            ?? ($currentThumbnail !== '' ? $currentThumbnail : Article::PLACEHOLDER_THUMBNAIL);
 
         $article->update([
             'title_id' => $this->text($data['title_id'] ?? null) ?? '',
@@ -87,7 +107,7 @@ final class ArticleCanvasAdminController extends Controller
                 $this->sanitizer->wordCount($contentId),
                 $this->sanitizer->wordCount($contentEn)
             ),
-            'thumbnail_url' => $firstImage ?: $article->thumbnail_url ?: Article::PLACEHOLDER_THUMBNAIL,
+            'thumbnail_url' => $thumbnail,
         ]);
 
         return response()->json([
@@ -96,6 +116,8 @@ final class ArticleCanvasAdminController extends Controller
             'saved_label' => 'Draft · Tersimpan',
             'word_count' => $article->word_count,
             'character_count' => mb_strlen($plainId),
+            'reading_minutes' => max(1, (int) ceil(max(1, $article->word_count) / 220)),
+            'thumbnail_url' => $article->thumbnail_url,
         ]);
     }
 
@@ -104,6 +126,7 @@ final class ArticleCanvasAdminController extends Controller
         $this->ensureNative($article);
 
         $data = $request->validate([
+            'purpose' => ['nullable', 'in:content,thumbnail'],
             'image' => [
                 'required',
                 'file',
@@ -119,7 +142,9 @@ final class ArticleCanvasAdminController extends Controller
             'image.max' => 'Ukuran gambar maksimal 10MB.',
         ]);
 
-        $path = $data['image']->store('articles/content/' . $article->getKey(), 'public');
+        $purpose = $data['purpose'] ?? 'content';
+        $directory = $purpose === 'thumbnail' ? 'articles/thumbnails/' : 'articles/content/';
+        $path = $data['image']->store($directory . $article->getKey(), 'public');
 
         if (! is_string($path) || $path === '') {
             throw ValidationException::withMessages([
@@ -127,9 +152,17 @@ final class ArticleCanvasAdminController extends Controller
             ]);
         }
 
+        $url = Storage::url($path);
+
+        if ($purpose === 'thumbnail') {
+            $article->update(['thumbnail_url' => $url]);
+        }
+
         return response()->json([
-            'url' => Storage::url($path),
+            'url' => $url,
             'name' => $data['image']->getClientOriginalName(),
+            'purpose' => $purpose,
+            'thumbnail_url' => $article->thumbnail_url,
         ], 201);
     }
 
@@ -188,6 +221,8 @@ final class ArticleCanvasAdminController extends Controller
         $data = $request->validate([
             'tags' => ['nullable', 'array', 'max:5'],
             'tags.*' => ['string', 'max:40', 'distinct'],
+            'author' => ['nullable', 'string', 'max:120'],
+            'published_at' => ['nullable', 'date'],
             'publish_mode' => ['required', 'in:now,schedule'],
             'scheduled_at' => ['nullable', 'required_if:publish_mode,schedule', 'date'],
         ]);
@@ -204,8 +239,16 @@ final class ArticleCanvasAdminController extends Controller
             ]);
         }
 
-        $publishedAt = now();
+        $publishedAt = isset($data['published_at'])
+            ? Carbon::parse((string) $data['published_at'], config('app.timezone'))
+            : now();
         $status = Article::STATUS_PUBLISHED;
+
+        if ($data['publish_mode'] === 'now' && $publishedAt->greaterThan(now()->addMinutes(5))) {
+            throw ValidationException::withMessages([
+                'published_at' => 'Untuk waktu terbit di masa depan, pilih opsi Jadwalkan.',
+            ]);
+        }
 
         if ($data['publish_mode'] === 'schedule') {
             $publishedAt = Carbon::parse((string) $data['scheduled_at'], config('app.timezone'));
@@ -224,7 +267,8 @@ final class ArticleCanvasAdminController extends Controller
         $article->update([
             'article_status' => $status,
             'slug' => $slug,
-            'tags' => array_values($data['tags'] ?? []),
+            'tags' => $this->normalizeTags($data['tags'] ?? []),
+            'author' => $this->text($data['author'] ?? null) ?: Article::DEFAULT_AUTHOR,
             'published_at' => $publishedAt,
             'scheduled_at' => $status === Article::STATUS_SCHEDULED ? $publishedAt : null,
             'link_id' => route('artikel.native', ['article' => $slug]),
@@ -272,5 +316,44 @@ final class ArticleCanvasAdminController extends Controller
         $value = trim($value);
 
         return $value === '' ? null : $value;
+    }
+
+    /**
+     * Keep category spelling consistent with categories that already exist.
+     *
+     * @param  array<int, mixed>  $tags
+     * @return array<int, string>
+     */
+    private function normalizeTags(array $tags): array
+    {
+        $existing = Article::query()
+            ->whereNotNull('tags')
+            ->get(['tags'])
+            ->flatMap(fn (Article $candidate): array => array_values($candidate->tags ?? []))
+            ->filter(fn (mixed $value): bool => is_string($value) && trim($value) !== '')
+            ->mapWithKeys(fn (string $value): array => [Str::lower(trim($value)) => trim($value)]);
+
+        $normalized = [];
+
+        foreach ($tags as $tag) {
+            if (! is_string($tag)) {
+                continue;
+            }
+
+            $tag = trim(preg_replace('/\s+/u', ' ', $tag) ?? '');
+            $key = Str::lower($tag);
+
+            if ($tag === '' || isset($normalized[$key])) {
+                continue;
+            }
+
+            $normalized[$key] = $existing->get($key, $tag);
+
+            if (count($normalized) === 5) {
+                break;
+            }
+        }
+
+        return array_values($normalized);
     }
 }
