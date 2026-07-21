@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/css/pages/welcome-hero.css',
                 'resources/css/pages/welcome-mega-menu.css',
                 'resources/css/pages/welcome-hero-motion.css',
+                'resources/css/pages/welcome-hero-visual.css',
                 'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/article-canvas.css',
                 'resources/css/pages/article-reader.css',
