@@ -144,6 +144,7 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
+          php artisan config:clear
           rm -f database/database.sqlite
           touch database/database.sqlite
 
@@ -158,8 +159,18 @@ jobs:
             grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php || { echo 'HOME_HERO_TEST_REVERTED'; exit 91; }
             test -f tests/Feature/Admin/HeroSlideAdminTest.php || { echo 'ADMIN_HERO_TEST_MISSING'; exit 92; }
             git diff --quiet HEAD -- tests/Feature/HomeHeroTest.php tests/Feature/Admin/HeroSlideAdminTest.php || { echo 'HERO_TESTS_NOT_COMMITTED'; exit 93; }
-            php artisan test tests/Feature/HomeHeroTest.php
-            php artisan test tests/Feature/Admin/HeroSlideAdminTest.php
+            printf '%s\n' '--- HOME HERO TEST HASH ---'
+            sha256sum tests/Feature/HomeHeroTest.php
+            printf '%s\n' '--- ADMIN HERO TEST HASH ---'
+            sha256sum tests/Feature/Admin/HeroSlideAdminTest.php
+            printf '%s\n' '--- HOME HERO TEST DEFINITIONS ---'
+            grep -n "^it(" tests/Feature/HomeHeroTest.php
+            printf '%s\n' '--- ADMIN HERO TEST DEFINITIONS ---'
+            grep -n "^it(" tests/Feature/Admin/HeroSlideAdminTest.php
+            printf '%s\n' '--- PEST VERSION ---'
+            ./vendor/bin/pest --version
+            ./vendor/bin/pest tests/Feature/HomeHeroTest.php --do-not-cache-result
+            ./vendor/bin/pest tests/Feature/Admin/HeroSlideAdminTest.php --do-not-cache-result
           } > /tmp/hero-focused-tests.log 2>&1
           status=$?
           set -e
@@ -181,7 +192,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          php artisan test > /tmp/hero-regression-suite.log 2>&1
+          ./vendor/bin/pest --do-not-cache-result > /tmp/hero-regression-suite.log 2>&1
           status=$?
           set -e
           if [ "$status" -ne 0 ]; then
