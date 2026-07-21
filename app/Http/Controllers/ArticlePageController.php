@@ -99,7 +99,9 @@ final class ArticlePageController extends Controller
                         : '',
                     'published_at' => $publishedAt?->toIso8601String() ?? '',
                     'reading_time' => $article->isNative()
-                        ? max(1, (int) ceil(max(1, $article->word_count) / 220)).' menit baca'
+                        ? __('runtime.article.min_read', [
+                            'count' => max(1, (int) ceil(max(1, $article->word_count) / 220)),
+                        ])
                         : null,
                     'categories' => array_values($article->tags ?? []),
                     'href' => $article->isNative()
