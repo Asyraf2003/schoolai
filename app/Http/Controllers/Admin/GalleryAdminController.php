@@ -346,11 +346,14 @@ final class GalleryAdminController extends Controller
         $validated = $request->validate([
             'title_id' => ['required', 'string', 'max:160'],
             'title_en' => ['nullable', 'string', 'max:160'],
+            'title_ar' => ['nullable', 'string', 'max:160'],
             'type' => ['required', Rule::in(['photo', 'video'])],
             'category_id' => ['required', 'string', 'max:80'],
             'category_en' => ['nullable', 'string', 'max:80'],
+            'category_ar' => ['nullable', 'string', 'max:80'],
             'caption_id' => ['nullable', 'string', 'max:1000'],
             'caption_en' => ['nullable', 'string', 'max:1000'],
+            'caption_ar' => ['nullable', 'string', 'max:1000'],
             'media_file' => [
                 Rule::requiredIf(fn (): bool => $needsPhotoFile),
                 Rule::prohibitedIf(fn (): bool => $type === 'video'),
@@ -385,9 +388,14 @@ final class GalleryAdminController extends Controller
 
         unset($validated['media_file']);
 
+        foreach (['title_en', 'title_ar', 'category_en', 'category_ar', 'caption_id', 'caption_en', 'caption_ar'] as $field) {
+            $value = $validated[$field] ?? null;
+            $validated[$field] = is_string($value) && trim($value) !== '' ? trim($value) : null;
+        }
+
         $validated['title'] = $validated['title_id'];
         $validated['category'] = $validated['category_id'];
-        $validated['caption'] = $validated['caption_id'] ?? null;
+        $validated['caption'] = $validated['caption_id'];
         $validated['is_published'] = $request->boolean('is_published');
 
         if (($validated['published_at'] ?? null) === '') {
