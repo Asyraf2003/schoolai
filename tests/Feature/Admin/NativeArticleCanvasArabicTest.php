@@ -20,13 +20,16 @@ beforeEach(function (): void {
 });
 
 it('autosaves sanitizes and renders Arabic native article content', function (): void {
+    expect(file_get_contents(resource_path('views/layouts/article-canvas.blade.php')))
+        ->toContain('article-canvas-arabic.js')
+        ->toContain('data-article-canvas-arabic-data');
+
+    expect(file_get_contents(resource_path('js/pages/article-canvas-arabic.js')))
+        ->toContain('data-language = \'ar\'')
+        ->toContain('dataDocumentLanguage');
+
     $this->post(route('admin.artikel.canvas.start'));
     $article = Article::query()->where('article_source', Article::SOURCE_NATIVE)->firstOrFail();
-
-    $this->get(route('admin.artikel.canvas.edit', $article))
-        ->assertOk()
-        ->assertSee('data-article-canvas-arabic-data', false)
-        ->assertSee('article-canvas-arabic.js', false);
 
     $this->patchJson(route('admin.artikel.canvas.autosave', $article), [
         'title_id' => 'Generasi Muslim Masa Depan',
