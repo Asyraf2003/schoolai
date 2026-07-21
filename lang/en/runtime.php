@@ -20,5 +20,9 @@ return [
         'closed_button' => 'I understand',
         'audience_parents' => 'For parents',
         'audience_school' => 'For school',
+        'audience_aria_label' => 'Admission flow audience',
+        'school_task' => 'School task',
+        'family_note' => 'Family note',
+        'clear_follow_up' => 'Clear follow-up',
     ],
 ];
