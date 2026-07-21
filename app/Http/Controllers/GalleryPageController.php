@@ -45,7 +45,7 @@ final class GalleryPageController extends Controller
                     'media_url' => $mediaUrl,
                     'thumbnail_url' => $type === 'video' ? $this->videoThumbnailUrl($mediaUrl) : $mediaUrl,
                     'emoji' => $type === 'video' ? '▶️' : '📸',
-                    'badge' => $type === 'video' ? 'Video' : ($locale === 'en' ? 'Photo' : 'Foto'),
+                    'badge' => $item->typeLabelForLocale($locale),
                 ];
             })
             ->filter(fn (array $item): bool => trim((string) ($item['title'] ?? '')) !== '')
