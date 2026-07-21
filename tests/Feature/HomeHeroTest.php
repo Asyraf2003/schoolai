@@ -18,8 +18,14 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
                 $slides = $hero['slides'] ?? [];
                 $declaredTypes = array_column($slides, 'type');
                 $mediaUrls = array_column($slides, 'media_url');
+                $firstSlide = $slides[0] ?? [];
+                $firstMediaUrl = $firstSlide['media_url'] ?? null;
 
                 return count($slides) >= 4
+                    && ($firstSlide['type'] ?? null) === 'video'
+                    && ($firstSlide['render_type'] ?? null) === 'video'
+                    && is_string($firstMediaUrl)
+                    && str_contains($firstMediaUrl, 'youtube-nocookie.com/embed/kb1dXcf3QQs')
                     && in_array('image', $declaredTypes, true)
                     && in_array('video', $declaredTypes, true)
                     && collect($slides)->every(
@@ -27,7 +33,7 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
                             && in_array($slide['render_type'] ?? null, ['image', 'video'], true)
                     )
                     && collect($mediaUrls)->contains(
-                        fn (mixed $url): bool => is_string($url) && str_contains($url, 'youtube-nocookie.com/embed/lNzvxnnEpjs')
+                        fn (mixed $url): bool => is_string($url) && str_contains($url, 'youtube-nocookie.com/embed/kb1dXcf3QQs')
                     )
                     && collect($mediaUrls)->contains(
                         fn (mixed $url): bool => is_string($url) && str_contains($url, 'resources.finalsite.net')
@@ -35,7 +41,8 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
             })
             ->assertSee('data-hero-slider', false)
             ->assertSee('data-media-type="video"', false)
-            ->assertSee('lNzvxnnEpjs', false)
+            ->assertSee('kb1dXcf3QQs', false)
+            ->assertDontSee('lNzvxnnEpjs', false)
             ->assertSee('HSFModuleatNight.jpg', false)
             ->assertSee('data-hero-ornaments', false)
             ->assertSee('data-nav-mega', false)
