@@ -1,0 +1,81 @@
+name: Verify hero database admin implementation
+
+on:
+  push:
+    branches: [agent/hero-db-admin-verify]
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-squash:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+
+    steps:
+      - name: Check out verification branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply implementation patch
+        run: |
+          cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
+          git apply --check /tmp/hero-db-admin.patch
+          git apply /tmp/hero-db-admin.patch
+          rm .github/hero-db-admin.patch.gz.b64.part*
+          rm .github/workflows/hero-db-admin-verify.yml
+          git diff --check
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Prepare test environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          rm -f database/database.sqlite
+          touch database/database.sqlite
+
+      - name: Verify migrations
+        run: php artisan migrate:fresh --force
+
+      - name: Run focused hero tests
+        run: php artisan test tests/Feature/HomeHeroTest.php tests/Feature/Admin/HeroSlideAdminTest.php
+
+      - name: Run Laravel regression suite
+        run: php artisan test
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Squash verified implementation into one commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git reset --soft d549247fb2a6727dfa16e5a3babe0d7fded36104
+          git add -A
+          git diff --cached --check
+          git commit -m "feat: manage homepage hero slides from admin"
+          git push --force origin HEAD:agent/hero-db-admin-verify
