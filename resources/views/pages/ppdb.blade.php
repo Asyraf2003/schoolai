@@ -6,23 +6,24 @@
   $ppdbFormUrl = $ppdbAdmission?->publicRegistrationUrl();
   $ppdbInfoUrl = $ppdbAdmission?->publicInformationUrl();
   $ppdbIsOpen = (bool) ($ppdbAdmission?->isRegistrationOpen() ?? false);
-  $isEnglish = app()->getLocale() === 'en';
-  $ppdbRegisterButtonLabel = $isEnglish ? 'Apply Online Now' : 'Daftar PPDB Online';
-  $ppdbGuideButtonLabel = $isEnglish ? 'View Guide / Requirements' : 'Lihat Panduan / Syarat PPDB';
-  $ppdbFinalButtonLabel = $isEnglish ? 'Apply Now' : 'Daftar Sekarang';
-  $ppdbClosedTitle = $isEnglish ? 'Admission is currently closed' : 'Pendaftaran saat ini sedang ditutup';
-  $ppdbClosedText = $isEnglish
-      ? 'Sorry, admission registration is not open at the moment. Please check this page again later or contact the school admin.'
-      : 'Maaf, pendaftaran saat ini sedang ditutup. Silakan cek halaman ini kembali nanti atau hubungi admin sekolah.';
-  $ppdbClosedButton = $isEnglish ? 'I understand' : 'Saya Mengerti';
+  $ppdbRegisterButtonLabel = __('runtime.ppdb.register_button');
+  $ppdbGuideButtonLabel = __('runtime.ppdb.guide_button');
+  $ppdbFinalButtonLabel = __('runtime.ppdb.final_button');
+  $ppdbClosedTitle = __('runtime.ppdb.closed_title');
+  $ppdbClosedText = __('runtime.ppdb.closed_text');
+  $ppdbClosedButton = __('runtime.ppdb.closed_button');
+  $ppdbAudienceAriaLabel = __('runtime.ppdb.audience_aria_label');
+  $ppdbSchoolTask = __('runtime.ppdb.school_task');
+  $ppdbFamilyNote = __('runtime.ppdb.family_note');
+  $ppdbClearFollowUp = __('runtime.ppdb.clear_follow_up');
   $ppdbShowcaseItems = collect($ppdbShowcaseItems ?? []);
   $ppdbShowcaseByAudience = [
       'parents' => $ppdbShowcaseItems->where('audience', 'parents')->values(),
       'school' => $ppdbShowcaseItems->where('audience', 'school')->values(),
   ];
   $ppdbAudienceLabels = [
-      'parents' => $isEnglish ? 'For parents' : 'Untuk orang tua',
-      'school' => $isEnglish ? 'For school' : 'Untuk sekolah',
+      'parents' => __('runtime.ppdb.audience_parents'),
+      'school' => __('runtime.ppdb.audience_school'),
   ];
   $ppdbAvailableAudiences = collect(array_keys($ppdbShowcaseByAudience))
       ->filter(fn (string $audience): bool => $ppdbShowcaseByAudience[$audience]->isNotEmpty())
@@ -145,7 +146,7 @@
     <section class="ppdb-liftoff" data-ppdb-liftoff data-active-audience="{{ $ppdbInitialAudience }}" aria-labelledby="ppdb-journey-title">
       <div class="container">
         <div class="ppdb-liftoff__top reveal">
-          <div class="ppdb-liftoff__switch" role="tablist" aria-label="{{ $isEnglish ? 'Admission flow audience' : 'Target alur PPDB' }}">
+          <div class="ppdb-liftoff__switch" role="tablist" aria-label="{{ $ppdbAudienceAriaLabel }}">
             @foreach (['parents', 'school'] as $audience)
               @php $hasAudienceItems = $ppdbShowcaseByAudience[$audience]->isNotEmpty(); @endphp
               <button type="button" class="ppdb-liftoff__tab {{ $ppdbInitialAudience === $audience ? 'is-active' : '' }}" data-ppdb-liftoff-tab="{{ $audience }}" role="tab" aria-selected="{{ $ppdbInitialAudience === $audience ? 'true' : 'false' }}" @disabled(! $hasAudienceItems)>{{ $ppdbAudienceLabels[$audience] }}</button>
@@ -198,7 +199,7 @@
                       @else
                         <div class="ppdb-liftoff-ui" aria-hidden="true">
                           <div class="ppdb-liftoff-ui__panel"><h3>{{ $itemTitle }}</h3><div class="ppdb-liftoff-ui__line"></div><div class="ppdb-liftoff-ui__line"></div></div>
-                          <div class="ppdb-liftoff-ui__panel"><div class="ppdb-liftoff-list"><div class="ppdb-liftoff-list__item"><span>{{ $itemNumber }}</span>{{ $audience === 'school' ? ($isEnglish ? 'School task' : 'Tugas sekolah') : ($isEnglish ? 'Family note' : 'Catatan keluarga') }}</div><div class="ppdb-liftoff-list__item"><span>✓</span>{{ $isEnglish ? 'Clear follow-up' : 'Follow-up jelas' }}</div></div></div>
+                          <div class="ppdb-liftoff-ui__panel"><div class="ppdb-liftoff-list"><div class="ppdb-liftoff-list__item"><span>{{ $itemNumber }}</span>{{ $audience === 'school' ? $ppdbSchoolTask : $ppdbFamilyNote }}</div><div class="ppdb-liftoff-list__item"><span>✓</span>{{ $ppdbClearFollowUp }}</div></div></div>
                         </div>
                       @endif
                     </div>
@@ -237,7 +238,6 @@
           Array.from(scope.querySelectorAll('.reveal')).forEach((element) => {
             const rect = element.getBoundingClientRect();
             const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
             if (rect.top < viewportHeight * 1.08 && rect.bottom > -viewportHeight * 0.18) {
               element.classList.add('is-visible');
             }
