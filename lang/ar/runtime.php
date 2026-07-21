@@ -20,5 +20,9 @@ return [
         'closed_button' => 'فهمت',
         'audience_parents' => 'لأولياء الأمور',
         'audience_school' => 'للمدرسة',
+        'audience_aria_label' => 'الفئة المستهدفة في مسار القبول',
+        'school_task' => 'مهمة المدرسة',
+        'family_note' => 'ملاحظة الأسرة',
+        'clear_follow_up' => 'متابعة واضحة',
     ],
 ];
