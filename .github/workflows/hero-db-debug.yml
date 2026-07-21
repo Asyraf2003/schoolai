@@ -20,16 +20,34 @@ jobs:
           fetch-depth: 0
 
       - name: Apply patch and capture expected hashes
+        shell: bash
         run: |
-          cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
-          git apply --check /tmp/hero-db-admin.patch
-          git apply /tmp/hero-db-admin.patch
-          grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
-          test -f tests/Feature/Admin/HeroSlideAdminTest.php
-          sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1 > /tmp/home-hero.sha
-          sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1 > /tmp/admin-hero.sha
-          echo "HOME=$(cat /tmp/home-hero.sha)"
-          echo "ADMIN=$(cat /tmp/admin-hero.sha)"
+          set +e
+          {
+            git status --short
+            cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
+            echo "PATCH_BYTES=$(wc -c < /tmp/hero-db-admin.patch)"
+            git apply --check /tmp/hero-db-admin.patch
+            git apply /tmp/hero-db-admin.patch
+            grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
+            test -f tests/Feature/Admin/HeroSlideAdminTest.php
+            sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1 > /tmp/home-hero.sha
+            sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1 > /tmp/admin-hero.sha
+            echo "HOME=$(cat /tmp/home-hero.sha)"
+            echo "ADMIN=$(cat /tmp/admin-hero.sha)"
+          } > /tmp/hero-debug-apply.log 2>&1
+          status=$?
+          set -e
+          cat /tmp/hero-debug-apply.log
+          exit "$status"
+
+      - name: Upload apply evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-debug-apply-${{ github.run_id }}
+          path: /tmp/hero-debug-apply.log
+          if-no-files-found: ignore
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
