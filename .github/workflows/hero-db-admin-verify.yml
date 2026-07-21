@@ -43,10 +43,10 @@ jobs:
             git apply /tmp/hero-db-admin.patch
             rm .github/hero-db-admin.patch.gz.b64.part*
             rm .github/hero-verification-started
-            rm -f .github/hero-verification-error.log
-            rm -f .github/hero-verification-test-error.log
-            rm -f .github/hero-verification-suite-error.log
-            rm -f .github/hero-verification-build-error.log
+            rm -f .github/hero-verification-error.txt
+            rm -f .github/hero-verification-test-error.txt
+            rm -f .github/hero-verification-suite-error.txt
+            rm -f .github/hero-verification-build-error.txt
             rm .github/workflows/hero-db-admin-verify.yml
             git diff --check
           }
@@ -61,8 +61,8 @@ jobs:
             git clean -fd
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            cp /tmp/hero-apply.log .github/hero-verification-error.log
-            git add .github/hero-verification-error.log
+            cp /tmp/hero-apply.log .github/hero-verification-error.txt
+            git add -f .github/hero-verification-error.txt
             git commit -m "chore: capture hero verification apply error"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-apply.log
@@ -111,8 +111,8 @@ jobs:
             git clean -fd
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            cp /tmp/hero-focused-tests.log .github/hero-verification-test-error.log
-            git add .github/hero-verification-test-error.log
+            cp /tmp/hero-focused-tests.log .github/hero-verification-test-error.txt
+            git add -f .github/hero-verification-test-error.txt
             git commit -m "chore: capture hero focused test failure"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-focused-tests.log
@@ -132,8 +132,8 @@ jobs:
             git clean -fd
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            cp /tmp/hero-regression-suite.log .github/hero-verification-suite-error.log
-            git add .github/hero-verification-suite-error.log
+            cp /tmp/hero-regression-suite.log .github/hero-verification-suite-error.txt
+            git add -f .github/hero-verification-suite-error.txt
             git commit -m "chore: capture hero regression test failure"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-regression-suite.log
@@ -153,8 +153,8 @@ jobs:
             git clean -fd
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            cp /tmp/hero-build.log .github/hero-verification-build-error.log
-            git add .github/hero-verification-build-error.log
+            cp /tmp/hero-build.log .github/hero-verification-build-error.txt
+            git add -f .github/hero-verification-build-error.txt
             git commit -m "chore: capture hero frontend build failure"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-build.log
