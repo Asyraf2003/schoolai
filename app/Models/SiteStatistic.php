@@ -3,21 +3,24 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class SiteStatistic extends Model
 {
-    use AuditsAdminChanges, HasFactory, SoftDeletes;
+    use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
     public const MAX_ITEMS = 4;
 
     protected $fillable = [
         'value',
         'value_en',
+        'value_ar',
         'label',
         'label_en',
+        'label_ar',
         'sort_order',
     ];
 
@@ -27,16 +30,22 @@ final class SiteStatistic extends Model
 
     public function valueForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->value_en, $this->value)
-            : $this->firstFilled($this->value, $this->value_en);
+        return $this->localizedValue(
+            $locale,
+            $this->value,
+            $this->value_en,
+            $this->value_ar,
+        );
     }
 
     public function labelForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->label_en, $this->label)
-            : $this->firstFilled($this->label, $this->label_en);
+        return $this->localizedValue(
+            $locale,
+            $this->label,
+            $this->label_en,
+            $this->label_ar,
+        );
     }
 
     public function replacementIdentity(): ?string
@@ -64,16 +73,5 @@ final class SiteStatistic extends Model
         }
 
         return mb_strtolower($value);
-    }
-
-    private function firstFilled(mixed ...$values): string
-    {
-        foreach ($values as $value) {
-            if (is_string($value) && trim($value) !== '') {
-                return trim($value);
-            }
-        }
-
-        return '';
     }
 }
