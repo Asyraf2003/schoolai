@@ -199,8 +199,10 @@ final class PpdbShowcaseAdminController extends Controller
             'audience' => ['required', Rule::in(PpdbShowcaseItem::AUDIENCES)],
             'title_id' => ['required', 'string', 'max:180'],
             'title_en' => ['nullable', 'string', 'max:180'],
+            'title_ar' => ['nullable', 'string', 'max:180'],
             'description_id' => ['required', 'string', 'max:1200'],
             'description_en' => ['nullable', 'string', 'max:1200'],
+            'description_ar' => ['nullable', 'string', 'max:1200'],
             'media_type' => ['required', Rule::in(PpdbShowcaseItem::MEDIA_TYPES)],
             'media_file' => [
                 Rule::requiredIf(fn (): bool => $needsPhotoFile),
@@ -238,8 +240,10 @@ final class PpdbShowcaseAdminController extends Controller
 
         $validated['title_id'] = trim((string) $validated['title_id']);
         $validated['title_en'] = $this->nullableText($validated['title_en'] ?? null);
+        $validated['title_ar'] = $this->nullableText($validated['title_ar'] ?? null);
         $validated['description_id'] = trim((string) $validated['description_id']);
         $validated['description_en'] = $this->nullableText($validated['description_en'] ?? null);
+        $validated['description_ar'] = $this->nullableText($validated['description_ar'] ?? null);
 
         return $validated;
     }
