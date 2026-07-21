@@ -130,6 +130,11 @@
     }
   }
 
+  .navbar.is-scrolled {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
   html[dir="rtl"] body {
     direction: rtl;
     text-align: start;
