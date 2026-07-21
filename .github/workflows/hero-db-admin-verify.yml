@@ -3,11 +3,13 @@ name: Verify hero database admin implementation
 on:
   push:
     branches: [agent/hero-db-admin-verify]
-  pull_request:
-    branches: [main]
 
 permissions:
   contents: write
+
+concurrency:
+  group: hero-db-admin-verify
+  cancel-in-progress: true
 
 jobs:
   verify-and-squash:
