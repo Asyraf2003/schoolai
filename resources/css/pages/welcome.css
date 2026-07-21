@@ -33,9 +33,13 @@
     box-sizing: border-box;
 }
 html {
+    width: 100%;
+    max-width: 100%;
     scroll-behavior: smooth;
 }
 body {
+    width: 100%;
+    max-width: 100%;
     margin: 0;
     background: var(--color-cream);
     color: var(--color-ink);
@@ -44,8 +48,16 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
 }
+
+@supports (overflow: clip) {
+    body {
+        overflow-x: clip;
+    }
+}
 img,
-svg {
+svg,
+video,
+iframe {
     max-width: 100%;
     display: block;
 }
@@ -59,6 +71,9 @@ a {
     text-decoration: none;
 }
 button {
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
     font: inherit;
     cursor: pointer;
     border: none;
@@ -267,6 +282,21 @@ p {
 :focus-visible {
     outline: 3px solid var(--color-orange);
     outline-offset: 3px;
+}
+
+.navbar__inner,
+.navbar__menu,
+.navbar__menu ul,
+.hero__inner,
+.hero__content,
+.public-main,
+.public-hero__grid,
+.ppdb-info-grid,
+.featured-article,
+.galeri-story,
+.artikel-digest,
+.site-footer__grid {
+    min-width: 0;
 }
 
 /* ---------- 4. NAVBAR ---------- */
@@ -8984,16 +9014,84 @@ p {
     }
 }
 
+/* Navbar beralih ke drawer sebelum menu, logo, dan CTA melampaui ruang tersedia. */
+@media (max-width: 1200px) {
+    .navbar__menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(82vw, 360px);
+        max-width: calc(100% - 24px);
+        height: 100vh;
+        height: 100dvh;
+        padding: max(100px, calc(72px + env(safe-area-inset-top)))
+            max(24px, env(safe-area-inset-right))
+            max(40px, env(safe-area-inset-bottom))
+            32px;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 32px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        background: var(--color-cream);
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.12);
+        visibility: hidden;
+        pointer-events: none;
+        transform: translate3d(100%, 0, 0);
+        transition:
+            transform 0.35s ease,
+            visibility 0s linear 0.35s;
+        will-change: transform;
+    }
+
+    .navbar__menu.active {
+        visibility: visible;
+        pointer-events: auto;
+        transform: translate3d(0, 0, 0);
+        transition-delay: 0s;
+    }
+
+    .navbar__menu ul {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+    }
+
+    .navbar__menu .nav-link {
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    .navbar__cta {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hamburger {
+        display: flex;
+        flex: 0 0 auto;
+    }
+}
+
 /* Switch bahasa server-side: session + cookie, tetap aktif setelah refresh/pindah halaman. */
 .nav-language {
     position: relative;
 }
 
 .nav-language__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     border: 0;
     background: transparent;
     font: inherit;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-language__panel {
@@ -9010,19 +9108,23 @@ p {
     background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 18px 42px rgba(31, 46, 43, 0.12);
     opacity: 0;
+    visibility: hidden;
     transform: translateY(8px) scale(0.98);
     pointer-events: none;
     transition:
         opacity 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        visibility 0s linear 0.2s;
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
 }
 
-.nav-language:hover .nav-language__panel,
-.nav-language:focus-within .nav-language__panel {
+.nav-language.is-open .nav-language__panel {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0) scale(1);
     pointer-events: auto;
+    transition-delay: 0s;
 }
 
 .nav-language__option {
@@ -9079,7 +9181,7 @@ p {
     transform: translateX(2px);
 }
 
-@media (max-width: 820px) {
+@media (max-width: 1200px) {
     .nav-language__button {
         width: 100%;
         justify-content: space-between;
@@ -9090,6 +9192,7 @@ p {
         min-width: 0;
         margin-top: 8px;
         opacity: 1;
+        visibility: visible;
         transform: none;
         pointer-events: auto;
         box-shadow: none;
@@ -9098,7 +9201,7 @@ p {
 }
 
 /* Mobile: language switch dibuat compact ID/EN, bukan card besar yang makan tempat. */
-@media (max-width: 820px) {
+@media (max-width: 1200px) {
     .nav-language {
         width: 100%;
         display: flex;
@@ -9115,6 +9218,7 @@ p {
         justify-content: flex-start;
         gap: 8px;
         color: var(--color-ink);
+        display: none;
         pointer-events: none;
     }
 
@@ -9131,6 +9235,7 @@ p {
         background: rgba(255, 244, 220, 0.9);
         box-shadow: none;
         opacity: 1;
+        visibility: visible;
         transform: none;
         pointer-events: auto;
         backdrop-filter: none;
