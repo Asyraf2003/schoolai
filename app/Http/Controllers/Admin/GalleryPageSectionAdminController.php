@@ -154,8 +154,10 @@ final class GalleryPageSectionAdminController extends Controller
         $validated = $request->validate([
             'title_id' => ['required', 'string'],
             'title_en' => ['nullable', 'string'],
+            'title_ar' => ['nullable', 'string'],
             'description_id' => ['nullable', 'string'],
             'description_en' => ['nullable', 'string'],
+            'description_ar' => ['nullable', 'string'],
             'is_published' => ['nullable', 'boolean'],
         ], [
             'title_id.required' => 'Judul Indonesia wajib diisi.',
