@@ -6,11 +6,19 @@
   $headHomeUrl = route('home');
   $headLogoUrl = asset('media/home/logo.png');
   $headImageUrl = asset('media/home/og-home.jpg');
-  $headLanguage = app()->getLocale() === 'en' ? 'en' : 'id';
-  $headLocale = $headLanguage === 'en' ? 'en_US' : 'id_ID';
-  $headImageAlt = $headLanguage === 'en'
-      ? 'Al Mustaqbal School campus and learning environment'
-      : 'Lingkungan sekolah dan pembelajaran Al Mustaqbal School';
+  $headLanguage = in_array(app()->getLocale(), ['id', 'en', 'ar'], true)
+      ? app()->getLocale()
+      : 'id';
+  $headLocale = match ($headLanguage) {
+      'en' => 'en_US',
+      'ar' => 'ar_AR',
+      default => 'id_ID',
+  };
+  $headImageAlt = match ($headLanguage) {
+      'en' => 'Al Mustaqbal School campus and learning environment',
+      'ar' => 'حرم مدرسة المستقبل وبيئة التعلم',
+      default => 'Lingkungan sekolah dan pembelajaran Al Mustaqbal School',
+  };
 
   $headStructuredData = [
       '@context' => 'https://schema.org',
@@ -45,7 +53,7 @@
               '@id' => $headHomeUrl . '#website',
               'url' => $headHomeUrl,
               'name' => $headSiteName,
-              'inLanguage' => ['id', 'en'],
+              'inLanguage' => ['id', 'en', 'ar'],
               'publisher' => [
                   '@id' => $headHomeUrl . '#school',
               ],
@@ -97,6 +105,14 @@
 <meta name="twitter:description" content="{{ $headDescription }}" />
 <meta name="twitter:image" content="{{ $headImageUrl }}" />
 <meta name="twitter:image:alt" content="{{ $headImageAlt }}" />
+
+@if ($headLanguage === 'ar')
+  <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+    html[lang="ar"] body {
+      direction: rtl;
+    }
+  </style>
+@endif
 
 <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" type="application/ld+json">{!! json_encode(
     $headStructuredData,
