@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
+                'resources/css/pages/welcome-mega-menu.css',
                 'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/article-canvas.css',
                 'resources/css/pages/article-reader.css',
