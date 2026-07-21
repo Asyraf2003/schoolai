@@ -52,6 +52,7 @@ final class PersistArabicArticleCanvas
         abort_unless($article->isNative(), 404);
 
         $updates = [];
+        $contentAr = (string) ($article->content_ar ?? '');
 
         if (array_key_exists('title_ar', $data)) {
             $updates['title_ar'] = $this->text($data['title_ar'] ?? null);
@@ -81,23 +82,17 @@ final class PersistArabicArticleCanvas
             }
         }
 
-        if ($updates !== []) {
-            $article->update($updates);
-        }
-
-        $article->refresh();
-
         $contentId = (string) ($article->content_id ?? '');
         $contentEn = (string) ($article->content_en ?? '');
-        $contentAr = (string) ($article->content_ar ?? '');
 
-        $article->update([
-            'word_count' => max(
-                $this->sanitizer->wordCount($contentId),
-                $this->sanitizer->wordCount($contentEn),
-                $this->sanitizer->wordCount($contentAr),
-            ),
-        ]);
+        $updates['word_count'] = max(
+            $this->sanitizer->wordCount($contentId),
+            $this->sanitizer->wordCount($contentEn),
+            $this->sanitizer->wordCount($contentAr),
+        );
+
+        $article->forceFill($updates)->saveQuietly();
+        $article->refresh();
 
         $plainLengths = [
             mb_strlen($this->sanitizer->plainText($contentId)),
@@ -107,6 +102,7 @@ final class PersistArabicArticleCanvas
 
         if ($response instanceof JsonResponse) {
             $payload = $response->getData(true);
+            $payload['saved_at'] = $article->updated_at?->toIso8601String();
             $payload['word_count'] = $article->word_count;
             $payload['character_count'] = max($plainLengths);
             $payload['reading_minutes'] = max(1, (int) ceil(max(1, $article->word_count) / 220));
