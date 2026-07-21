@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,18 +11,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Article extends Model
 {
-    use AuditsAdminChanges, HasFactory, SoftDeletes;
+    use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
     public const DEFAULT_AUTHOR = 'Admin';
 
     protected $fillable = [
         'title_id',
         'title_en',
+        'title_ar',
         'description_id',
         'description_en',
+        'description_ar',
         'thumbnail_url',
         'link_id',
         'link_en',
+        'link_ar',
         'author',
         'published_date',
         'published_at',
@@ -106,23 +110,34 @@ final class Article extends Model
 
     public function titleForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->title_en, $this->title_id, 'Untitled article')
-            : $this->firstFilled($this->title_id, $this->title_en, 'Artikel tanpa judul');
+        return $this->localizedValue(
+            $locale,
+            $this->title_id,
+            $this->title_en,
+            $this->title_ar,
+            'Artikel tanpa judul',
+            'Untitled article',
+        );
     }
 
     public function descriptionForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->description_en, $this->description_id)
-            : $this->firstFilled($this->description_id, $this->description_en);
+        return $this->localizedValue(
+            $locale,
+            $this->description_id,
+            $this->description_en,
+            $this->description_ar,
+        );
     }
 
     public function linkForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->link_en, $this->link_id)
-            : $this->firstFilled($this->link_id, $this->link_en);
+        return $this->localizedValue(
+            $locale,
+            $this->link_id,
+            $this->link_en,
+            $this->link_ar,
+        );
     }
 
     public function authorForDisplay(): string
