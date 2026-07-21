@@ -35,6 +35,18 @@
       ],
   };
 
+  $languageMobileTitle = match ($currentLocale) {
+      'ar' => 'اختر اللغة',
+      'en' => 'Choose language',
+      default => 'Pilih bahasa',
+  };
+
+  $languageMobileActive = match ($currentLocale) {
+      'ar' => 'اللغة الحالية',
+      'en' => 'Current language',
+      default => 'Bahasa aktif',
+  };
+
   $languageItem['options'] = [
       ['locale' => 'id', 'label' => $languageLabels['id'], 'short' => 'ID'],
       ['locale' => 'en', 'label' => $languageLabels['en'], 'short' => 'EN'],
@@ -108,6 +120,179 @@
   $showCta = $isHomeNav && ! empty($siteNavbar['cta']);
 @endphp
 
+<style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+  .nav-language__mobile-summary,
+  .nav-language__check {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .navbar__menu .nav-language {
+      width: 100%;
+      margin-top: 10px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(51, 49, 77, 0.1);
+    }
+
+    .navbar__menu .nav-language__button {
+      display: none;
+    }
+
+    .navbar__menu .nav-language__mobile-summary {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .nav-language__mobile-title {
+      display: block;
+      color: var(--color-ink);
+      font-size: 0.86rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .nav-language__mobile-current {
+      display: block;
+      margin-top: 3px;
+      color: var(--color-ink-soft);
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .nav-language__mobile-badge {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 30px;
+      padding-inline: 10px;
+      border: 1px solid rgba(194, 94, 30, 0.18);
+      border-radius: 999px;
+      background: var(--color-orange-soft);
+      color: #9e3f0d;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .navbar__menu .nav-language__panel,
+    .navbar__menu .nav-language.is-open .nav-language__panel {
+      position: static !important;
+      inset: auto !important;
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transform: none !important;
+    }
+
+    .navbar__menu .nav-language__form {
+      min-width: 0;
+      margin: 0;
+    }
+
+    .navbar__menu .nav-language__option {
+      position: relative;
+      width: 100%;
+      min-height: 76px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 10px 6px;
+      overflow: hidden;
+      border: 1px solid rgba(51, 49, 77, 0.1);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--color-ink);
+      box-shadow: 0 5px 14px rgba(51, 49, 77, 0.05);
+      text-align: center;
+      transition:
+        transform 0.16s ease,
+        border-color 0.16s ease,
+        background 0.16s ease,
+        box-shadow 0.16s ease;
+    }
+
+    .navbar__menu .nav-language__option > span:not(.nav-language__check) {
+      width: 100%;
+      overflow: hidden;
+      font-size: 0.76rem;
+      font-weight: 750;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .navbar__menu .nav-language__option > small {
+      order: -1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 26px;
+      padding-inline: 8px;
+      border-radius: 999px;
+      background: var(--color-cream-dark);
+      color: #7c3c16;
+      font-size: 0.68rem;
+      font-weight: 850;
+      letter-spacing: 0.06em;
+    }
+
+    .navbar__menu .nav-language__option.is-active {
+      border-color: rgba(184, 79, 18, 0.38);
+      background: linear-gradient(145deg, #fff8ec 0%, #ffe5d2 100%);
+      box-shadow: 0 9px 20px rgba(184, 79, 18, 0.12);
+    }
+
+    .navbar__menu .nav-language__option.is-active > small {
+      background: #b84f12;
+      color: #fff;
+    }
+
+    .navbar__menu .nav-language__option.is-active .nav-language__check {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #b84f12;
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    html[lang="ar"] .navbar__menu .nav-language__option.is-active .nav-language__check {
+      right: auto;
+      left: 7px;
+    }
+
+    .navbar__menu .nav-language__option:active {
+      transform: scale(0.97);
+    }
+  }
+</style>
+
 <header class="navbar" id="navbar">
   <div class="navbar__inner container">
     <a href="{{ $logoHref }}" class="navbar__logo" aria-label="{{ $logoLabel }}">
@@ -158,6 +343,16 @@
                 <small class="nav-link__badge">{{ $currentOption['short'] ?? strtoupper($currentLocale) }}</small>
               </button>
 
+              <div class="nav-language__mobile-summary" aria-hidden="true">
+                <div>
+                  <strong class="nav-language__mobile-title">{{ $languageMobileTitle }}</strong>
+                  <small class="nav-language__mobile-current">
+                    {{ $languageMobileActive }} · {{ $currentOption['label'] ?? strtoupper($currentLocale) }}
+                  </small>
+                </div>
+                <span class="nav-language__mobile-badge">{{ $currentOption['short'] ?? strtoupper($currentLocale) }}</span>
+              </div>
+
               <div class="nav-language__panel" role="menu" aria-label="{{ $item['label'] }}">
                 @foreach ($item['options'] ?? [] as $option)
                   <form method="POST" action="{{ route('language.switch', $option['locale']) }}" class="nav-language__form">
@@ -166,12 +361,14 @@
                       type="submit"
                       class="nav-language__option {{ $currentLocale === $option['locale'] ? 'is-active' : '' }}"
                       role="menuitem"
+                      lang="{{ $option['locale'] }}"
                       @if ($currentLocale === $option['locale'])
                         aria-current="true"
                       @endif
                     >
                       <span>{{ $option['label'] }}</span>
                       <small>{{ $option['short'] }}</small>
+                      <span class="nav-language__check" aria-hidden="true">✓</span>
                     </button>
                   </form>
                 @endforeach
