@@ -1,0 +1,115 @@
+/* Hero slide transition polish.
+ * Slides stay still while active. Motion only happens during slide changes:
+ * outgoing media grows + blurs, incoming media starts large + blurred then
+ * settles to normal size and sharp focus.
+ */
+
+.home-page .hero-cinema__media img,
+.home-page .hero-cinema__media video {
+    transform: scale(1);
+    filter: blur(0);
+    transition: none;
+}
+
+.home-page .hero-cinema__slide {
+    opacity: 0;
+}
+
+.home-page .hero-cinema__slide.is-active {
+    opacity: 1;
+}
+
+.home-page .hero-cinema__slide.is-leaving {
+    z-index: 2;
+    animation: hero-polish-slide-leave 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-page .hero-cinema__slide.is-entering {
+    z-index: 3;
+    animation: hero-polish-slide-enter 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-page .hero-cinema__slide.is-leaving .hero-cinema__media img,
+.home-page .hero-cinema__slide.is-leaving .hero-cinema__media video {
+    animation: hero-polish-media-leave 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-page .hero-cinema__slide.is-entering .hero-cinema__media img,
+.home-page .hero-cinema__slide.is-entering .hero-cinema__media video {
+    animation: hero-polish-media-enter 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-page .hero-cinema__slide.is-leaving .hero-cinema__copy {
+    animation: hero-polish-copy-leave 520ms ease both;
+}
+
+.home-page .hero-cinema__slide.is-entering .hero-cinema__copy {
+    animation: hero-polish-copy-enter 760ms cubic-bezier(0.22, 1, 0.36, 1) 170ms both;
+}
+
+@keyframes hero-polish-slide-leave {
+    0% { opacity: 1; }
+    42% { opacity: 0.9; }
+    100% { opacity: 0; }
+}
+
+@keyframes hero-polish-slide-enter {
+    0% { opacity: 0; }
+    22% { opacity: 0.16; }
+    100% { opacity: 1; }
+}
+
+@keyframes hero-polish-media-leave {
+    0% {
+        transform: scale(1);
+        filter: blur(0);
+    }
+    100% {
+        transform: scale(1.18);
+        filter: blur(18px);
+    }
+}
+
+@keyframes hero-polish-media-enter {
+    0% {
+        transform: scale(1.18);
+        filter: blur(18px);
+    }
+    100% {
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes hero-polish-copy-leave {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes hero-polish-copy-enter {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .hero-cinema__slide,
+    .home-page .hero-cinema__media img,
+    .home-page .hero-cinema__media video,
+    .home-page .hero-cinema__copy {
+        animation: none !important;
+        transform: none !important;
+        filter: none !important;
+    }
+}
