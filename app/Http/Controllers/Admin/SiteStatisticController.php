@@ -157,7 +157,7 @@ final class SiteStatisticController extends Controller
 
             if ($archivedIdentity === null || $archivedIdentity !== $replacementIdentity) {
                 throw ValidationException::withMessages([
-                    'replacement_site_statistic_id' => 'Statistik pengganti harus aktif serta memiliki label Indonesia dan English yang identik.',
+                    'replacement_site_statistic_id' => 'Statistik pengganti harus aktif serta memiliki label Indonesia yang identik.',
                 ]);
             }
 
@@ -179,25 +179,29 @@ final class SiteStatisticController extends Controller
     {
         $validated = $request->validate([
             'value' => ['required', 'string', 'max:80'],
-            'value_en' => ['required', 'string', 'max:80'],
+            'value_en' => ['nullable', 'string', 'max:80'],
+            'value_ar' => ['nullable', 'string', 'max:80'],
             'label' => ['required', 'string', 'max:120'],
-            'label_en' => ['required', 'string', 'max:120'],
+            'label_en' => ['nullable', 'string', 'max:120'],
+            'label_ar' => ['nullable', 'string', 'max:120'],
         ], [
             'value.required' => 'Nilai Indonesia wajib diisi.',
             'value.max' => 'Nilai Indonesia maksimal 80 karakter.',
-            'value_en.required' => 'Nilai English wajib diisi.',
             'value_en.max' => 'Nilai English maksimal 80 karakter.',
+            'value_ar.max' => 'Nilai Arabic maksimal 80 karakter.',
             'label.required' => 'Label Indonesia wajib diisi.',
             'label.max' => 'Label Indonesia maksimal 120 karakter.',
-            'label_en.required' => 'Label English wajib diisi.',
             'label_en.max' => 'Label English maksimal 120 karakter.',
+            'label_ar.max' => 'Label Arabic maksimal 120 karakter.',
         ]);
 
         return [
             'value' => trim($validated['value']),
-            'value_en' => trim($validated['value_en']),
+            'value_en' => $this->nullableText($validated['value_en'] ?? null),
+            'value_ar' => $this->nullableText($validated['value_ar'] ?? null),
             'label' => trim($validated['label']),
-            'label_en' => trim($validated['label_en']),
+            'label_en' => $this->nullableText($validated['label_en'] ?? null),
+            'label_ar' => $this->nullableText($validated['label_ar'] ?? null),
         ];
     }
 
@@ -252,6 +256,17 @@ final class SiteStatisticController extends Controller
             (string) ($item['count'] ?? '')
             . (string) ($item['suffix'] ?? '')
         );
+    }
+
+    private function nullableText(mixed $value): ?string
+    {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return $value === '' ? null : $value;
     }
 
     private function nextSortOrder(): int
