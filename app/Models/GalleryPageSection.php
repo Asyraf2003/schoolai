@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,13 +12,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class GalleryPageSection extends Model
 {
-    use AuditsAdminChanges, HasFactory, SoftDeletes;
+    use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
     protected $fillable = [
         'title_id',
         'title_en',
+        'title_ar',
         'description_id',
         'description_en',
+        'description_ar',
         'is_published',
     ];
 
@@ -47,16 +50,24 @@ final class GalleryPageSection extends Model
 
     public function titleForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->title_en, $this->title_id, 'Untitled section')
-            : $this->firstFilled($this->title_id, $this->title_en, 'Bagian tanpa judul');
+        return $this->localizedValue(
+            $locale,
+            $this->title_id,
+            $this->title_en,
+            $this->title_ar,
+            'Bagian tanpa judul',
+            'Untitled section',
+        );
     }
 
     public function descriptionForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->description_en, $this->description_id, '')
-            : $this->firstFilled($this->description_id, $this->description_en, '');
+        return $this->localizedValue(
+            $locale,
+            $this->description_id,
+            $this->description_en,
+            $this->description_ar,
+        );
     }
 
     public function replacementIdentity(): ?string
