@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class PpdbShowcaseItem extends Model
 {
-    use AuditsAdminChanges, HasFactory, SoftDeletes;
+    use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
     public const AUDIENCE_PARENTS = 'parents';
     public const AUDIENCE_SCHOOL = 'school';
@@ -32,8 +33,10 @@ final class PpdbShowcaseItem extends Model
         'audience',
         'title_id',
         'title_en',
+        'title_ar',
         'description_id',
         'description_en',
+        'description_ar',
         'media_type',
         'media_url',
         'sort_order',
@@ -85,16 +88,24 @@ final class PpdbShowcaseItem extends Model
 
     public function titleForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->title_en, $this->title_id, 'Untitled admission item')
-            : $this->firstFilled($this->title_id, $this->title_en, 'Item PPDB tanpa judul');
+        return $this->localizedValue(
+            $locale,
+            $this->title_id,
+            $this->title_en,
+            $this->title_ar,
+            'Item PPDB tanpa judul',
+            'Untitled admission item',
+        );
     }
 
     public function descriptionForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->description_en, $this->description_id, '')
-            : $this->firstFilled($this->description_id, $this->description_en, '');
+        return $this->localizedValue(
+            $locale,
+            $this->description_id,
+            $this->description_en,
+            $this->description_ar,
+        );
     }
 
     public function getMediaLabelAttribute(): string
