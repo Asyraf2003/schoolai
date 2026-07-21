@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class GalleryItem extends Model
 {
-    use AuditsAdminChanges, HasFactory, SoftDeletes;
+    use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
     public const MAX_ITEMS = 6;
     public const MAX_PHOTO_KB = 10240;
@@ -20,13 +21,16 @@ final class GalleryItem extends Model
         'title',
         'title_id',
         'title_en',
+        'title_ar',
         'type',
         'category',
         'category_id',
         'category_en',
+        'category_ar',
         'caption',
         'caption_id',
         'caption_en',
+        'caption_ar',
         'media_url',
         'is_published',
         'published_at',
@@ -78,23 +82,36 @@ final class GalleryItem extends Model
 
     public function titleForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->title_en, $this->title_id, $this->title, 'Untitled gallery')
-            : $this->firstFilled($this->title_id, $this->title, $this->title_en, 'Galeri tanpa judul');
+        return $this->localizedValue(
+            $locale,
+            $this->firstFilled($this->title_id, $this->title),
+            $this->title_en,
+            $this->title_ar,
+            'Galeri tanpa judul',
+            'Untitled gallery',
+        );
     }
 
     public function categoryForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->category_en, $this->category_id, $this->category, 'General')
-            : $this->firstFilled($this->category_id, $this->category, $this->category_en, 'Umum');
+        return $this->localizedValue(
+            $locale,
+            $this->firstFilled($this->category_id, $this->category),
+            $this->category_en,
+            $this->category_ar,
+            'Umum',
+            'General',
+        );
     }
 
     public function captionForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->caption_en, $this->caption_id, $this->caption, '')
-            : $this->firstFilled($this->caption_id, $this->caption, $this->caption_en, '');
+        return $this->localizedValue(
+            $locale,
+            $this->firstFilled($this->caption_id, $this->caption),
+            $this->caption_en,
+            $this->caption_ar,
+        );
     }
 
     public function typeLabelForLocale(string $locale): string
