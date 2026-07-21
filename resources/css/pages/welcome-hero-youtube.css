@@ -1,0 +1,47 @@
+/* Full-bleed YouTube background treatment for temporary hero demo media. */
+
+.home-page .hero-cinema__youtube-frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background-color: #071b18;
+    background-image: var(--hero-youtube-poster, none);
+    background-position: center;
+    background-size: cover;
+    transform: scale(1);
+    filter: blur(0);
+    will-change: transform, filter;
+}
+
+.home-page .hero-cinema__youtube-frame iframe {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    width: max(100vw, 177.78vh);
+    height: max(56.25vw, 100vh);
+    min-width: 100%;
+    min-height: 100%;
+    border: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+html[dir="rtl"] .home-page .hero-cinema__youtube-frame iframe {
+    transform: translate(50%, -50%);
+}
+
+.home-page .hero-cinema__slide.is-leaving .hero-cinema__youtube-frame {
+    animation: hero-polish-media-leave 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-page .hero-cinema__slide.is-entering .hero-cinema__youtube-frame {
+    animation: hero-polish-media-enter 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .hero-cinema__youtube-frame {
+        animation: none !important;
+        transform: none !important;
+        filter: none !important;
+    }
+}
