@@ -5,12 +5,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PpdbPageController;
 use App\Http\Controllers\ArticlePageController;
+use App\Http\Controllers\NativeArticleController;
 use App\Http\Controllers\GalleryPageController;
 use App\Http\Controllers\Admin\SiteStatisticController;
 use App\Http\Controllers\Admin\PpdbSettingController;
 use App\Http\Controllers\Admin\PpdbShowcaseAdminController;
 use App\Http\Controllers\Admin\GalleryAdminController;
 use App\Http\Controllers\Admin\ArticleAdminController;
+use App\Http\Controllers\Admin\ArticleCanvasAdminController;
 use App\Http\Controllers\Admin\GalleryPageSectionAdminController;
 use App\Http\Controllers\Admin\GalleryPageMediaAdminController;
 use Illuminate\Http\Request;
@@ -46,6 +48,8 @@ Route::post('/bahasa/{locale}', function (string $locale, Request $request) {
 Route::get('/ppdb', PpdbPageController::class)->name('ppdb');
 Route::get('/artikel', ArticlePageController::class)->name('artikel');
 Route::redirect('/artikel/adab-sebelum-prestasi', '/artikel', 301)->name('artikel.detail');
+Route::get('/artikel/{article:slug}', [NativeArticleController::class, 'show'])
+    ->name('artikel.native');
 Route::get('/galeri', GalleryPageController::class)->name('galeri');
 
 
@@ -130,6 +134,24 @@ Route::middleware([
 
     Route::post('/admin/artikel', [ArticleAdminController::class, 'store'])
         ->name('admin.artikel.store');
+
+    Route::post('/admin/artikel/canvas/start', [ArticleCanvasAdminController::class, 'start'])
+        ->name('admin.artikel.canvas.start');
+
+    Route::get('/admin/artikel/canvas/unsplash', [ArticleCanvasAdminController::class, 'searchUnsplash'])
+        ->name('admin.artikel.canvas.unsplash');
+
+    Route::get('/admin/artikel/{article}/canvas', [ArticleCanvasAdminController::class, 'edit'])
+        ->name('admin.artikel.canvas.edit');
+
+    Route::patch('/admin/artikel/{article}/canvas', [ArticleCanvasAdminController::class, 'autosave'])
+        ->name('admin.artikel.canvas.autosave');
+
+    Route::post('/admin/artikel/{article}/canvas/image', [ArticleCanvasAdminController::class, 'uploadImage'])
+        ->name('admin.artikel.canvas.image');
+
+    Route::post('/admin/artikel/{article}/canvas/publish', [ArticleCanvasAdminController::class, 'publish'])
+        ->name('admin.artikel.canvas.publish');
 
     Route::get('/admin/artikel/{article}', [ArticleAdminController::class, 'show'])
         ->name('admin.artikel.show');

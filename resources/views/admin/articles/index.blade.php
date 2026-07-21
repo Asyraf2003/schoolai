@@ -7,12 +7,16 @@
   <header class="admin-topbar admin-topbar--compact">
     <div>
       <h1>Artikel</h1>
-      <p>Kelola link artikel dari Medium atau platform lain. Artikel yang dihapus tetap disimpan sebagai arsip dan dapat dipulihkan.</p>
+      <p>Kelola artikel dari canvas sekolah maupun link Medium. Alur Medium lama tetap tersedia dan artikel yang dihapus tetap dapat dipulihkan.</p>
     </div>
 
     <div class="admin-inline-actions">
       <span class="admin-counter">{{ $articles->total() }} artikel termasuk arsip</span>
-      <a href="{{ route('admin.artikel.create') }}" class="admin-primary-action">Tambah Artikel</a>
+      <a href="{{ route('admin.artikel.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Link Medium</a>
+      <form method="POST" action="{{ route('admin.artikel.canvas.start') }}" style="margin:0">
+        @csrf
+        <button type="submit" class="admin-primary-action">Buat via Canvas</button>
+      </form>
     </div>
   </header>
 
@@ -35,6 +39,8 @@
           @php
             $isDeleted = $article->trashed();
             $replacementCandidates = $replacementCandidatesByArticle->get($article->getKey(), collect());
+            $statusLabel = $article->statusLabel();
+            $statusClass = $isDeleted || $article->isDraft() || $statusLabel === 'Terjadwal' ? 'is-deleted' : 'is-active';
           @endphp
 
           <article class="gallery-lite-row {{ $isDeleted ? 'is-deleted' : '' }}">
@@ -45,15 +51,15 @@
               <small>
                 {{ $article->authorForDisplay() }}
                 · {{ $article->published_at ? $article->published_at->translatedFormat('d M Y, H:i').' WIB' : '-' }}
-                · {{ parse_url($article->link_id, PHP_URL_HOST) ?: 'link' }}
+                · {{ $article->isNative() ? 'Canvas internal' : (parse_url($article->link_id, PHP_URL_HOST) ?: 'link') }}
                 @if($isDeleted && $article->deleted_at)
                   · dihapus {{ $article->deleted_at->translatedFormat('d M Y, H:i') }} WIB
                 @endif
               </small>
             </span>
 
-            <span class="gallery-lite-status {{ $isDeleted ? 'is-deleted' : 'is-active' }}">
-              {{ $isDeleted ? 'Dihapus' : 'Aktif' }}
+            <span class="gallery-lite-status {{ $statusClass }}">
+              {{ $statusLabel }}
             </span>
 
             <span class="gallery-lite-actions">
@@ -96,7 +102,7 @@
                 @endif
               @else
                 <a href="{{ route('admin.artikel.show', $article) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
-                <a href="{{ route('admin.artikel.edit', $article) }}" class="admin-small-action">Edit</a>
+                <a href="{{ $article->isNative() ? route('admin.artikel.canvas.edit', $article) : route('admin.artikel.edit', $article) }}" class="admin-small-action">{{ $article->isNative() ? 'Buka Canvas' : 'Edit' }}</a>
 
                 <form method="POST" action="{{ route('admin.artikel.destroy', $article) }}" data-admin-delete-form data-admin-delete-message="Hapus artikel ini dari website? Artikel tetap tersimpan dan dapat dipulihkan.">
                   @csrf
@@ -117,7 +123,7 @@
     @else
       <div class="gallery-lite-empty">
         <h2>Belum ada artikel.</h2>
-        <p>Tambahkan artikel pertama dari Medium atau sumber lain.</p>
+        <p>Buat artikel langsung melalui canvas sekolah atau tambahkan link dari Medium.</p>
       </div>
     @endif
   </section>
