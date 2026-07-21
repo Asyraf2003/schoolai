@@ -8,8 +8,10 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/pages/welcome.js',
+                'resources/js/pages/welcome-hero.js',
                 'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/css/pages/welcome.css',
+                'resources/css/pages/welcome-hero.css',
                 'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/article-canvas.css',
                 'resources/css/pages/article-reader.css',

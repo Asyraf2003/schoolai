@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,109 +7,200 @@
       'pageTitle' => $meta['title'],
       'pageDescription' => $meta['description'],
     ])
-    @vite(['resources/css/pages/welcome.css', 'resources/js/pages/welcome.js'])
+    @vite([
+      'resources/css/pages/welcome.css',
+      'resources/css/pages/welcome-hero.css',
+      'resources/js/pages/welcome.js',
+      'resources/js/pages/welcome-hero.js',
+    ])
   </head>
-  <body>
+  <body class="home-page">
     <!-- Skip link untuk aksesibilitas keyboard -->
     <a href="#main-content" class="skip-link">{{ __('home.accessibility.skip_to_content') }}</a>
-
-    <!-- Definisi SVG yang dipakai berulang (wave divider) agar file tetap ringan -->
-    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
-      <defs>
-        <path
-          id="wave-shape"
-          d="M0,40 C240,110 480,-20 720,40 C960,100 1200,-10 1440,40 L1440,120 L0,120 Z"
-        ></path>
-        <path
-          id="blob-shape"
-          d="M45.6,-58.3C58.4,-49.6,67.4,-33.9,71.6,-16.6C75.8,0.7,75.2,19.7,66.9,34.2C58.6,48.7,42.6,58.7,25.6,64.5C8.6,70.3,-9.4,71.9,-25.8,66.6C-42.2,61.3,-57,49.1,-65.4,33.4C-73.8,17.7,-75.8,-1.5,-70.4,-18.1C-65,-34.7,-52.2,-48.7,-37.3,-57C-22.4,-65.3,-11.2,-67.9,4.4,-74C20,-80.1,45.6,-67.1,45.6,-58.3Z"
-        ></path>
-      </defs>
-    </svg>
 
     @include('partials.site-navbar', ['navbar' => $navbar, 'siteNavMode' => 'home'])
 
     <main id="main-content">
       <!-- ======================= HERO ======================= -->
+      @php
+        $heroSlides = collect($hero['slides'] ?? [])->values();
+        $heroSlideCount = $heroSlides->count();
+        $heroStatus = static fn (int $current): string => strtr(
+            (string) ($hero['slide_label'] ?? 'Slide :current / :total'),
+            [
+                ':current' => (string) $current,
+                ':total' => (string) $heroSlideCount,
+            ],
+        );
+      @endphp
+
       <section
-        class="hero"
+        class="hero-cinema"
         id="beranda"
-        @if (! empty($hero['background_image_url']))
-          style="--hero-bg-image: url('{{ $hero['background_image_url'] }}')"
-        @endif
+        data-hero-slider
+        data-autoplay-interval="{{ $hero['autoplay_interval'] ?? 7000 }}"
+        data-slide-label="{{ $hero['slide_label'] ?? 'Slide :current / :total' }}"
+        aria-label="{{ $hero['section_label'] ?? 'Al Mustaqbal School' }}"
+        aria-roledescription="{{ $hero['carousel_roledescription'] ?? 'carousel' }}"
+        tabindex="-1"
       >
-        <div class="hero__decor" aria-hidden="true">
-          <div class="blob blob--yellow blob--1"></div>
-          <div class="blob blob--blue blob--2"></div>
-        </div>
-
-        <div class="container hero__inner">
-          <div class="hero__content reveal">
-            <h1 class="hero__title">
-              {{ $hero['title_before'] }}
-              <span class="text-highlight">{{ $hero['title_highlight'] }}</span>
-              {{ $hero['title_after'] }}
-            </h1>
-
-            <p class="hero__subtitle">
-              {{ $hero['subtitle'] }}
-            </p>
-
-            <div class="hero__actions">
-              <a href="{{ $hero['primary_cta']['href'] }}" class="btn btn--primary btn--lg">
-                {{ $hero['primary_cta']['label'] }}
-              </a>
-
-              <a href="{{ $hero['secondary_cta']['href'] }}" class="btn btn--ghost btn--lg">
-                {{ $hero['secondary_cta']['label'] }}
-              </a>
-            </div>
-          </div>
-
-          <template id="heroVisualTemplate">
-<div class="hero__visual reveal reveal--delay-1">
-            <div class="hero__illustration" id="tiltIllustration">
-              <div class="illustration-card">
-                @if (! empty($hero['visual_image_url']))
-                  <div class="hero-photo-stack" aria-label="{{ $hero['visual_image_alt'] ?? __('home.hero.visual_image_fallback_alt') }}">
-                    <img
-                      src="{{ $hero['visual_image_url'] }}"
-                      alt="{{ $hero['visual_image_alt'] ?? __('home.hero.visual_image_fallback_alt') }}"
-                      class="hero-photo-frame hero-photo-frame--main"
+        <div class="hero-cinema__viewport">
+          @foreach ($heroSlides as $slide)
+            <article
+              class="hero-cinema__slide{{ $loop->first ? ' is-active' : '' }}"
+              data-hero-slide
+              data-slide-index="{{ $loop->index }}"
+              data-media-type="{{ $slide['type'] }}"
+              data-slide-title="{{ $slide['title'] }}"
+              role="group"
+              aria-roledescription="{{ $hero['slide_roledescription'] ?? 'slide' }}"
+              aria-label="{{ $heroStatus($loop->iteration) }}"
+              aria-hidden="{{ $loop->first ? 'false' : 'true' }}"
+              @if (! $loop->first) inert @endif
+            >
+              <div
+                class="hero-cinema__media"
+                style="--hero-focal-position: {{ $slide['focal_position'] }}; --hero-overlay-strength: {{ $slide['overlay_strength'] }}"
+              >
+                @if (($slide['render_type'] ?? 'image') === 'video')
+                  <video
+                    data-hero-video
+                    muted
+                    loop
+                    playsinline
+                    webkit-playsinline
+                    preload="none"
+                    @if (! empty($slide['poster_url'])) poster="{{ $slide['poster_url'] }}" @endif
+                    @if ($loop->first) autoplay @endif
+                    aria-hidden="true"
+                    tabindex="-1"
+                  >
+                    <source
+                      data-src="{{ $slide['media_url'] }}"
+                      type="{{ $slide['video_mime_type'] ?? 'video/mp4' }}"
                     />
-
-                    <img
-                      src="{{ $hero['visual_image_url'] }}"
-                      alt=""
-                      class="hero-photo-frame hero-photo-frame--top"
-                      aria-hidden="true"
-                    />
-
-                    @if (! empty($hero['logo_image_url']))
-                      <img
-                        src="{{ $hero['logo_image_url'] }}"
-                        alt="{{ $hero['logo_image_alt'] ?? __('home.hero.logo_image_fallback_alt') }}"
-                        class="hero-photo-logo"
-                      />
-                    @endif
-                  </div>
+                  </video>
                 @else
-                  <div class="hero-photo-fallback">
-                    {{ $hero['visual_image_unavailable'] ?? __('home.hero.visual_image_unavailable') }}
-                  </div>
+                  <img
+                    @if ($loop->first)
+                      src="{{ $slide['media_url'] }}"
+                      fetchpriority="high"
+                      loading="eager"
+                    @else
+                      data-src="{{ $slide['media_url'] }}"
+                      loading="lazy"
+                    @endif
+                    alt="{{ $slide['media_alt'] ?? '' }}"
+                    width="1920"
+                    height="1080"
+                    decoding="async"
+                  />
                 @endif
               </div>
-            </div>
-          </div>
-          </template>
+
+              <div class="hero-cinema__content container">
+                <div class="hero-cinema__copy">
+                  @if (! empty($slide['eyebrow']))
+                    <p class="hero-cinema__eyebrow">{{ $slide['eyebrow'] }}</p>
+                  @endif
+
+                  @if ($loop->first)
+                    <h1 class="hero-cinema__title">{{ $slide['title'] }}</h1>
+                  @else
+                    <h2 class="hero-cinema__title">{{ $slide['title'] }}</h2>
+                  @endif
+
+                  @if (! empty($slide['description']))
+                    <p class="hero-cinema__description">{{ $slide['description'] }}</p>
+                  @endif
+
+                  @if (! empty($slide['cta']['label']) && ! empty($slide['cta']['href']))
+                    <a href="{{ $slide['cta']['href'] }}" class="hero-cinema__cta">
+                      <span>{{ $slide['cta']['label'] }}</span>
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </a>
+                  @endif
+                </div>
+              </div>
+            </article>
+          @endforeach
         </div>
 
-        <div class="hero-wave-divider" aria-hidden="true">
-          <span class="hero-wave hero-wave--1"></span>
-          <span class="hero-wave hero-wave--2"></span>
-          <span class="hero-wave hero-wave--3"></span>
-          <span class="hero-wave hero-wave--4"></span>
-        </div>
+        @if ($heroSlideCount > 1)
+          <button
+            type="button"
+            class="hero-cinema__arrow hero-cinema__arrow--previous"
+            data-hero-previous
+            aria-label="{{ $hero['previous_label'] ?? 'Previous slide' }}"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            class="hero-cinema__arrow hero-cinema__arrow--next"
+            data-hero-next
+            aria-label="{{ $hero['next_label'] ?? 'Next slide' }}"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <div class="hero-cinema__rail container">
+            <div class="hero-cinema__progress" aria-hidden="true">
+              <span class="hero-cinema__progress-bar" data-hero-progress></span>
+            </div>
+
+            <p class="hero-cinema__counter" aria-hidden="true">
+              <span class="hero-cinema__counter-current" data-hero-current>01</span>
+              <span>/</span>
+              <span>{{ str_pad((string) $heroSlideCount, 2, '0', STR_PAD_LEFT) }}</span>
+            </p>
+
+            <div
+              class="hero-cinema__dots"
+              role="tablist"
+              aria-label="{{ $hero['dots_label'] ?? 'Choose a slide' }}"
+            >
+              @foreach ($heroSlides as $slide)
+                <button
+                  type="button"
+                  class="hero-cinema__dot{{ $loop->first ? ' is-active' : '' }}"
+                  data-hero-dot
+                  data-slide-index="{{ $loop->index }}"
+                  role="tab"
+                  aria-label="{{ $heroStatus($loop->iteration) }}"
+                  aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                  tabindex="{{ $loop->first ? '0' : '-1' }}"
+                ></button>
+              @endforeach
+            </div>
+
+            <button
+              type="button"
+              class="hero-cinema__playback"
+              data-hero-playback
+              data-pause-label="{{ $hero['pause_label'] ?? 'Pause slideshow' }}"
+              data-play-label="{{ $hero['play_label'] ?? 'Play slideshow' }}"
+              aria-label="{{ $hero['pause_label'] ?? 'Pause slideshow' }}"
+              aria-pressed="false"
+            >
+              <svg class="hero-cinema__pause-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+              <svg class="hero-cinema__play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5l11 7-11 7V5z" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        @endif
+
+        <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
       </section>
 
       <!-- ======================= STATISTIK ======================= -->

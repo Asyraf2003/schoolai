@@ -293,7 +293,7 @@
   }
 </style>
 
-<header class="navbar" id="navbar">
+<header class="navbar {{ $isHomeNav ? 'navbar--hero' : 'navbar--public' }}" id="navbar">
   <div class="navbar__inner container">
     <a href="{{ $logoHref }}" class="navbar__logo" aria-label="{{ $logoLabel }}">
       <span class="navbar__logo-icon">
@@ -321,13 +321,21 @@
         @foreach ($menuItems as $item)
           @php
             $isLanguageItem = ($item['type'] ?? null) === 'language';
+            $hasMegaMenu = $isHomeNav
+              && ! $isLanguageItem
+              && ! empty($item['mega']['links'])
+              && is_array($item['mega']['links']);
             $routePatterns = $item['route_patterns'] ?? [];
             $isActiveRoute = ! empty($routePatterns) && request()->routeIs(...$routePatterns);
             $isActiveHomeAnchor = $isHomeNav && $loop->first && ! $isLanguageItem;
             $isActive = $isActiveRoute || $isActiveHomeAnchor;
+            $megaPanelId = 'navMegaPanel-' . $loop->index;
           @endphp
 
-          <li class="{{ $isLanguageItem ? 'nav-language' : '' }}">
+          <li
+            class="nav-item{{ $isLanguageItem ? ' nav-language' : '' }}{{ $hasMegaMenu ? ' nav-mega' : '' }}"
+            @if ($hasMegaMenu) data-nav-mega @endif
+          >
             @if ($isLanguageItem)
               @php
                 $currentOption = collect($item['options'] ?? [])->firstWhere('locale', $currentLocale);
@@ -372,6 +380,56 @@
                     </button>
                   </form>
                 @endforeach
+              </div>
+            @elseif ($hasMegaMenu)
+              <div class="nav-mega__trigger">
+                <a
+                  href="{{ $item['href'] }}"
+                  class="nav-link {{ $isActive ? 'active' : '' }}"
+                >
+                  {{ $item['label'] }}
+                </a>
+
+                <button
+                  type="button"
+                  class="nav-mega__toggle"
+                  data-nav-mega-toggle
+                  aria-label="{{ $item['mega']['toggle_label'] ?? $item['label'] }}"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="{{ $megaPanelId }}"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+
+              <div
+                class="nav-mega__panel"
+                id="{{ $megaPanelId }}"
+                data-nav-mega-panel
+                aria-hidden="true"
+                inert
+              >
+                <div class="nav-mega__intro">
+                  <p class="nav-mega__eyebrow">{{ $item['mega']['eyebrow'] ?? $item['label'] }}</p>
+                  <strong class="nav-mega__title">{{ $item['mega']['title'] ?? $item['label'] }}</strong>
+                  @if (! empty($item['mega']['description']))
+                    <p class="nav-mega__description">{{ $item['mega']['description'] }}</p>
+                  @endif
+                </div>
+
+                <div class="nav-mega__links">
+                  @foreach ($item['mega']['links'] as $megaLink)
+                    <a href="{{ $megaLink['href'] }}" class="nav-mega__link">
+                      <strong>{{ $megaLink['label'] }}</strong>
+                      @if (! empty($megaLink['description']))
+                        <small>{{ $megaLink['description'] }}</small>
+                      @endif
+                    </a>
+                  @endforeach
+                </div>
               </div>
             @elseif (! empty($item['disabled']))
               <span class="nav-link nav-link--dummy" aria-disabled="true">

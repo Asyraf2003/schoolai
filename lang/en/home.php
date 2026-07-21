@@ -13,22 +13,46 @@ return array_replace_recursive($id, [
     ],
 
     'hero' => [
-        'title_before' => 'An Islamic school that nurtures',
-        'title_highlight' => 'character, knowledge, and memorization',
-        'title_after' => 'from an early age',
-        'subtitle' => 'A warm learning environment where children grow with the Qur’an, good manners, language, creativity, and teachers who work closely with families.',
-        'visual_image_alt' => 'Al Mustaqbal School building',
-        'logo_image_alt' => 'Al Mustaqbal School',
-        'visual_image_fallback_alt' => 'School environment photo',
-        'logo_image_fallback_alt' => 'Al Mustaqbal Islamic School',
-        'visual_image_unavailable' => 'School photo is not available yet',
-        'primary_cta' => [
-            'label' => 'Apply for Admission',
-            'href' => '/ppdb',
-        ],
-        'secondary_cta' => [
-            'label' => 'View Programs',
-            'href' => '#program',
+        'section_label' => 'Al Mustaqbal School highlights',
+        'carousel_roledescription' => 'carousel',
+        'slide_roledescription' => 'slide',
+        'slide_label' => 'Slide :current of :total',
+        'dots_label' => 'Choose a highlight',
+        'previous_label' => 'Show the previous slide',
+        'next_label' => 'Show the next slide',
+        'pause_label' => 'Pause slideshow',
+        'play_label' => 'Play slideshow',
+        'fallback_image_alt' => 'Al Mustaqbal School environment',
+        'fallback_title' => 'Raising a Muslim generation ready to serve as Khalifatullah',
+        'fallback_description' => 'Holistic education that is Qur’anic, innovative, inspiring, and grounded in integrity.',
+        'slides' => [
+            [
+                'media_alt' => 'The Al Mustaqbal School building and learning environment',
+                'eyebrow' => 'Al Mustaqbal School',
+                'title' => 'Raising a Muslim Generation Ready to Serve as Khalifatullah',
+                'description' => 'A holistic education connecting the Qur’an, character, knowledge, language, creativity, and the courage to benefit others.',
+                'cta' => [
+                    'label' => 'Discover Our Educational Direction',
+                ],
+            ],
+            [
+                'media_alt' => 'Children learning together in a classroom',
+                'eyebrow' => 'Meaningful Learning',
+                'title' => 'Rooted in the Qur’an. Moving Forward through Innovation.',
+                'description' => 'Every learning experience invites children to question, create, collaborate, and grow with Islamic values as their compass.',
+                'cta' => [
+                    'label' => 'Explore Our Programs',
+                ],
+            ],
+            [
+                'media_alt' => 'A child focused on learning and writing',
+                'eyebrow' => 'Qur’anic · Inspiring · Innovative · Integrity',
+                'title' => 'Every Great Journey Begins in the Right Environment',
+                'description' => 'School and family grow as one team, preparing children to meet the world without losing their faith or identity.',
+                'cta' => [
+                    'label' => 'Begin the Admission Journey',
+                ],
+            ],
         ],
     ],
 
@@ -36,7 +60,34 @@ return array_replace_recursive($id, [
         'aria_label' => 'Main menu',
         'items' => [
             ['label' => 'Home', 'href' => '#beranda'],
-            ['label' => 'Education', 'href' => '#program'],
+            [
+                'label' => 'Education',
+                'href' => '#program',
+                'mega' => [
+                    'toggle_label' => 'Open the Education menu',
+                    'eyebrow' => 'Holistic Education',
+                    'title' => 'A pathway for faith, knowledge, and character.',
+                    'description' => 'Discover Al Mustaqbal’s educational direction and the learning experiences built together with families.',
+                    'links' => [
+                        [
+                            'label' => 'Vision & Mission',
+                            'description' => 'The guiding direction of Al Mustaqbal’s education.',
+                        ],
+                        [
+                            'label' => 'QIII Values',
+                            'description' => 'Qur’anic, inspiring, innovative, and grounded in integrity.',
+                        ],
+                        [
+                            'label' => 'Signature Programs',
+                            'description' => 'Core learning experiences designed for every child.',
+                        ],
+                        [
+                            'label' => 'Admissions',
+                            'description' => 'Your first steps toward joining Al Mustaqbal.',
+                        ],
+                    ],
+                ],
+            ],
             ['label' => 'Gallery', 'href' => '#galeri'],
             ['label' => 'Articles', 'href' => '#artikel'],
             ['label' => 'Contact', 'href' => '#kontak'],
