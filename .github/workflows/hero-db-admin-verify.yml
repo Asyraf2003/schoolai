@@ -82,3 +82,5 @@ jobs:
           git diff --cached --check
           git commit -m "feat: manage homepage hero slides from admin"
           git push --force origin HEAD:agent/hero-db-admin-verify
+
+# Verification workflow is intentionally temporary and removed before the final feature commit.
