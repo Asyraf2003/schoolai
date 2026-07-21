@@ -1,0 +1,77 @@
+/* Hero visual refinement: keep media vivid and move the Islamic geometry into a
+ * thin white line pattern aligned cleanly to the right edge.
+ */
+
+.home-page .hero-cinema__media::after,
+html[dir="rtl"] .home-page .hero-cinema__media::after {
+    background: linear-gradient(
+        to bottom,
+        rgb(2 13 12 / 0.04) 0%,
+        transparent 48%,
+        rgb(2 13 12 / 0.08) 100%
+    );
+}
+
+.home-page .hero-cinema__media img,
+.home-page .hero-cinema__media video {
+    filter: none;
+    image-rendering: auto;
+}
+
+.home-page .hero-cinema__title {
+    text-shadow:
+        0 3px 18px rgb(0 0 0 / 0.34),
+        0 10px 42px rgb(0 0 0 / 0.2);
+}
+
+.home-page .hero-cinema__description,
+.home-page .hero-cinema__eyebrow,
+.home-page .hero-cinema__cta {
+    text-shadow: 0 2px 14px rgb(0 0 0 / 0.42);
+}
+
+/* Replace the earlier mixed ornament cluster with a single repeating rosette
+ * field. The pattern remains transparent, extremely thin, and hugs the right
+ * edge rather than floating over the middle of the photograph.
+ */
+.home-page .hero-cinema__ornament {
+    display: none;
+}
+
+.home-page .hero-cinema__ornaments::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    width: clamp(250px, 31vw, 540px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240' fill='none'%3E%3Cg stroke='%23ffffff' stroke-width='0.72' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M120 12 138 72 192 48 168 102 228 120 168 138 192 192 138 168 120 228 102 168 48 192 72 138 12 120 72 102 48 48 102 72Z'/%3E%3Cpath d='M120 38 139 84 188 70 156 108 202 120 156 132 188 170 139 156 120 202 101 156 52 170 84 132 38 120 84 108 52 70 101 84Z'/%3E%3Cpath d='M120 72 132 101 162 90 144 114 174 120 144 126 162 150 132 139 120 168 108 139 78 150 96 126 66 120 96 114 78 90 108 101Z'/%3E%3Ccircle cx='120' cy='120' r='34'/%3E%3Cpath d='M120 86 130 110 154 120 130 130 120 154 110 130 86 120 110 110Z'/%3E%3Cpath d='M0 120 60 102 36 48 90 72 108 12M240 120 180 102 204 48 150 72 132 12M120 240 102 180 48 204 72 150 12 132M120 240 138 180 192 204 168 150 228 132'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: clamp(150px, 13vw, 220px) clamp(150px, 13vw, 220px);
+    background-position: top right;
+    opacity: 0.34;
+    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 0%, #000 62%, transparent 100%);
+}
+
+html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
+    inset-inline-end: auto;
+    inset-inline-start: 0;
+    background-position: top left;
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, #000 62%, transparent 100%);
+}
+
+@media (max-width: 767px) {
+    .home-page .hero-cinema__ornaments::before {
+        width: min(48vw, 220px);
+        background-size: 132px 132px;
+        opacity: 0.22;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .hero-cinema__media img,
+    .home-page .hero-cinema__media video {
+        filter: none !important;
+    }
+}
