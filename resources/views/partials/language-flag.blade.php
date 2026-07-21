@@ -35,6 +35,14 @@
       height: clamp(96px, 10vw, 142px);
     }
 
+    .navbar__menu .nav-language__button {
+      position: relative;
+      z-index: 2;
+      pointer-events: auto !important;
+      touch-action: manipulation;
+      cursor: pointer;
+    }
+
     @media (max-width: 640px) {
       .language-modal__dialog {
         width: auto;
@@ -53,6 +61,51 @@
       }
     }
   </style>
+
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+    /*
+     * Delegated fallback for the language trigger.
+     * This intentionally does not wait for DOMContentLoaded, so the mobile
+     * button remains reliable even when the navbar/menu scripts initialize
+     * in a different order.
+     */
+    document.addEventListener('click', function (event) {
+      var trigger = event.target.closest('[data-language-modal-open]');
+      if (!trigger) return;
+
+      var modal = document.getElementById('languageModal');
+      if (!modal) return;
+
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      var navMenu = document.getElementById('navMenu');
+      var navOverlay = document.getElementById('navOverlay');
+      var hamburger = document.getElementById('hamburgerBtn');
+
+      if (navMenu) navMenu.classList.remove('active');
+      if (navOverlay) navOverlay.classList.remove('active');
+
+      if (hamburger) {
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute(
+          'aria-label',
+          hamburger.getAttribute('data-mobile-open-label') || 'Open menu'
+        );
+      }
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      var dialog = modal.querySelector('.language-modal__dialog');
+      if (dialog) {
+        window.requestAnimationFrame(function () {
+          dialog.focus({ preventScroll: true });
+        });
+      }
+    }, true);
+  </script>
 @endonce
 
 <span class="nav-language__flag nav-language__flag--{{ $flagLocale }}" aria-hidden="true">
