@@ -7,6 +7,16 @@
 
   $archivedStatistics = collect($archivedStatistics ?? []);
   $replacementCandidatesByArchivedId = collect($replacementCandidatesByArchivedId ?? []);
+
+  $createLanguageCompletion = [
+    'id' => filled($createFailed ? old('value') : null) && filled($createFailed ? old('label') : null),
+    'en' => filled($createFailed ? old('value_en') : null) && filled($createFailed ? old('label_en') : null),
+    'ar' => filled($createFailed ? old('value_ar') : null) && filled($createFailed ? old('label_ar') : null),
+  ];
+
+  $createActiveLanguage = $createFailed && $errors->hasAny(['value_ar', 'label_ar'])
+      ? 'ar'
+      : ($createFailed && $errors->hasAny(['value_en', 'label_en']) ? 'en' : 'id');
 @endphp
 
 @extends('layouts.admin', [
@@ -19,7 +29,7 @@
     <div>
       <h1>Statistik Homepage</h1>
       <p>
-        Kelola nilai dan label dalam bahasa Indonesia dan English.
+        Indonesia adalah bahasa utama. English dan Arabic opsional dan akan memakai fallback jika belum diisi.
         Maksimal {{ $maxItems }} item aktif agar tampilan homepage tetap rapi.
       </p>
     </div>
@@ -61,8 +71,8 @@
         <span class="stats-manager-kicker">Tambah data</span>
         <h2 id="stats-create-title">Statistik baru</h2>
         <p>
-          Isi kedua bahasa agar halaman English tidak menampilkan
-          label Indonesia secara tidak sengaja. Arsip tidak dihitung ke batas aktif.
+          Isi Indonesia sebagai data utama. English dan Arabic dapat ditambahkan sekarang atau nanti.
+          Arsip tidak dihitung ke batas aktif.
         </p>
       </div>
 
@@ -75,15 +85,23 @@
           @csrf
           <input type="hidden" name="form_context" value="create">
 
-          <div class="stats-manager-language-grid">
-            <section class="stats-manager-language">
-              <h3>Indonesia</h3>
+          <div data-language-tabs>
+            <div class="admin-inline-actions" role="tablist" aria-label="Bahasa statistik baru">
+              <button type="button" class="admin-primary-action {{ $createActiveLanguage === 'id' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $createActiveLanguage === 'id' ? 'true' : 'false' }}" data-language-tab="id">
+                Indonesia · Utama {{ $createLanguageCompletion['id'] ? '✓' : 'Belum' }}
+              </button>
+              <button type="button" class="admin-primary-action {{ $createActiveLanguage === 'en' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $createActiveLanguage === 'en' ? 'true' : 'false' }}" data-language-tab="en">
+                English {{ $createLanguageCompletion['en'] ? '✓' : 'Belum' }}
+              </button>
+              <button type="button" class="admin-primary-action {{ $createActiveLanguage === 'ar' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $createActiveLanguage === 'ar' ? 'true' : 'false' }}" data-language-tab="ar">
+                العربية {{ $createLanguageCompletion['ar'] ? '✓' : 'Belum' }}
+              </button>
+            </div>
 
+            <section class="stats-manager-language" data-language-panel="id" @if($createActiveLanguage !== 'id') hidden @endif>
               <div class="stats-manager-fields">
                 <div class="admin-field">
-                  <label for="stats-create-value">
-                    Nilai Indonesia
-                  </label>
+                  <label for="stats-create-value">Nilai Indonesia</label>
                   <input
                     id="stats-create-value"
                     name="value"
@@ -92,12 +110,11 @@
                     placeholder="Contoh: 250+"
                     required
                   >
+                  @error('value')<small>{{ $message }}</small>@enderror
                 </div>
 
                 <div class="admin-field">
-                  <label for="stats-create-label">
-                    Label Indonesia
-                  </label>
+                  <label for="stats-create-label">Label Indonesia</label>
                   <input
                     id="stats-create-label"
                     name="label"
@@ -106,49 +123,78 @@
                     placeholder="Contoh: Siswa aktif"
                     required
                   >
+                  @error('label')<small>{{ $message }}</small>@enderror
                 </div>
               </div>
             </section>
 
-            <section class="stats-manager-language">
-              <h3>English</h3>
-
+            <section class="stats-manager-language" data-language-panel="en" @if($createActiveLanguage !== 'en') hidden @endif>
               <div class="stats-manager-fields">
                 <div class="admin-field">
-                  <label for="stats-create-value-en">
-                    Nilai English
-                  </label>
+                  <label for="stats-create-value-en">Nilai English</label>
                   <input
                     id="stats-create-value-en"
                     name="value_en"
                     maxlength="80"
                     value="{{ $createFailed ? old('value_en') : '' }}"
                     placeholder="Example: 250+"
-                    required
+                    lang="en"
                   >
+                  @error('value_en')<small>{{ $message }}</small>@enderror
                 </div>
 
                 <div class="admin-field">
-                  <label for="stats-create-label-en">
-                    Label English
-                  </label>
+                  <label for="stats-create-label-en">Label English</label>
                   <input
                     id="stats-create-label-en"
                     name="label_en"
                     maxlength="120"
                     value="{{ $createFailed ? old('label_en') : '' }}"
                     placeholder="Example: Active students"
-                    required
+                    lang="en"
                   >
+                  <em>Opsional. Jika kosong, publik English fallback ke Indonesia.</em>
+                  @error('label_en')<small>{{ $message }}</small>@enderror
+                </div>
+              </div>
+            </section>
+
+            <section class="stats-manager-language" data-language-panel="ar" @if($createActiveLanguage !== 'ar') hidden @endif>
+              <div class="stats-manager-fields">
+                <div class="admin-field">
+                  <label for="stats-create-value-ar">Nilai Arabic</label>
+                  <input
+                    id="stats-create-value-ar"
+                    name="value_ar"
+                    maxlength="80"
+                    value="{{ $createFailed ? old('value_ar') : '' }}"
+                    placeholder="مثال: +250"
+                    lang="ar"
+                    dir="rtl"
+                  >
+                  @error('value_ar')<small>{{ $message }}</small>@enderror
+                </div>
+
+                <div class="admin-field">
+                  <label for="stats-create-label-ar">Label Arabic</label>
+                  <input
+                    id="stats-create-label-ar"
+                    name="label_ar"
+                    maxlength="120"
+                    value="{{ $createFailed ? old('label_ar') : '' }}"
+                    placeholder="مثال: الطلاب النشطون"
+                    lang="ar"
+                    dir="rtl"
+                  >
+                  <em>Opsional. Jika kosong, publik Arabic fallback ke Indonesia lalu English.</em>
+                  @error('label_ar')<small>{{ $message }}</small>@enderror
                 </div>
               </div>
             </section>
           </div>
 
           <div class="stats-manager-form-actions">
-            <button type="submit" class="admin-primary-action">
-              Tambah Statistik
-            </button>
+            <button type="submit" class="admin-primary-action">Tambah Statistik</button>
           </div>
         </form>
       @else
@@ -166,26 +212,37 @@
       @foreach($statistics as $index => $statistic)
         @php
           $isCurrentEdit = $editingId === $statistic->id;
+
+          $editValues = [
+            'value' => $isCurrentEdit ? old('value') : $statistic->value,
+            'label' => $isCurrentEdit ? old('label') : $statistic->label,
+            'value_en' => $isCurrentEdit ? old('value_en') : $statistic->value_en,
+            'label_en' => $isCurrentEdit ? old('label_en') : $statistic->label_en,
+            'value_ar' => $isCurrentEdit ? old('value_ar') : $statistic->value_ar,
+            'label_ar' => $isCurrentEdit ? old('label_ar') : $statistic->label_ar,
+          ];
+
+          $editLanguageCompletion = [
+            'id' => filled($editValues['value']) && filled($editValues['label']),
+            'en' => filled($editValues['value_en']) && filled($editValues['label_en']),
+            'ar' => filled($editValues['value_ar']) && filled($editValues['label_ar']),
+          ];
+
+          $editActiveLanguage = $isCurrentEdit && $errors->hasAny(['value_ar', 'label_ar'])
+              ? 'ar'
+              : ($isCurrentEdit && $errors->hasAny(['value_en', 'label_en']) ? 'en' : 'id');
         @endphp
 
         <article class="stats-manager-card">
           <header class="stats-manager-card__head">
             <div>
-              <span class="stats-manager-kicker">
-                Posisi {{ $index + 1 }}
-              </span>
+              <span class="stats-manager-kicker">Posisi {{ $index + 1 }}</span>
 
-              <strong>
-                {{ $statistic->value }}
-                ·
-                {{ $statistic->label }}
-              </strong>
+              <strong>{{ $statistic->value }} · {{ $statistic->label }}</strong>
 
               <small>
-                EN:
-                {{ $statistic->valueForLocale('en') }}
-                ·
-                {{ $statistic->labelForLocale('en') }}
+                EN: {{ filled($statistic->value_en) && filled($statistic->label_en) ? $statistic->value_en . ' · ' . $statistic->label_en : 'belum diterjemahkan' }}
+                · AR: {{ filled($statistic->value_ar) && filled($statistic->label_ar) ? $statistic->value_ar . ' · ' . $statistic->label_ar : 'belum diterjemahkan' }}
               </small>
             </div>
 
@@ -201,82 +258,74 @@
             @method('PUT')
 
             <input type="hidden" name="form_context" value="update">
-            <input
-              type="hidden"
-              name="editing_id"
-              value="{{ $statistic->id }}"
-            >
+            <input type="hidden" name="editing_id" value="{{ $statistic->id }}">
 
-            <div class="stats-manager-language-grid">
-              <section class="stats-manager-language">
-                <h3>Indonesia</h3>
+            <div data-language-tabs>
+              <div class="admin-inline-actions" role="tablist" aria-label="Bahasa statistik posisi {{ $index + 1 }}">
+                <button type="button" class="admin-primary-action {{ $editActiveLanguage === 'id' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $editActiveLanguage === 'id' ? 'true' : 'false' }}" data-language-tab="id">
+                  Indonesia · Utama {{ $editLanguageCompletion['id'] ? '✓' : 'Belum' }}
+                </button>
+                <button type="button" class="admin-primary-action {{ $editActiveLanguage === 'en' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $editActiveLanguage === 'en' ? 'true' : 'false' }}" data-language-tab="en">
+                  English {{ $editLanguageCompletion['en'] ? '✓' : 'Belum' }}
+                </button>
+                <button type="button" class="admin-primary-action {{ $editActiveLanguage === 'ar' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $editActiveLanguage === 'ar' ? 'true' : 'false' }}" data-language-tab="ar">
+                  العربية {{ $editLanguageCompletion['ar'] ? '✓' : 'Belum' }}
+                </button>
+              </div>
 
+              <section class="stats-manager-language" data-language-panel="id" @if($editActiveLanguage !== 'id') hidden @endif>
                 <div class="stats-manager-fields">
                   <div class="admin-field">
-                    <label for="stat-value-{{ $statistic->id }}">
-                      Nilai Indonesia
-                    </label>
-                    <input
-                      id="stat-value-{{ $statistic->id }}"
-                      name="value"
-                      maxlength="80"
-                      value="{{ $isCurrentEdit ? old('value') : $statistic->value }}"
-                      required
-                    >
+                    <label for="stat-value-{{ $statistic->id }}">Nilai Indonesia</label>
+                    <input id="stat-value-{{ $statistic->id }}" name="value" maxlength="80" value="{{ $editValues['value'] }}" required>
+                    @if($isCurrentEdit) @error('value')<small>{{ $message }}</small>@enderror @endif
                   </div>
 
                   <div class="admin-field">
-                    <label for="stat-label-{{ $statistic->id }}">
-                      Label Indonesia
-                    </label>
-                    <input
-                      id="stat-label-{{ $statistic->id }}"
-                      name="label"
-                      maxlength="120"
-                      value="{{ $isCurrentEdit ? old('label') : $statistic->label }}"
-                      required
-                    >
+                    <label for="stat-label-{{ $statistic->id }}">Label Indonesia</label>
+                    <input id="stat-label-{{ $statistic->id }}" name="label" maxlength="120" value="{{ $editValues['label'] }}" required>
+                    @if($isCurrentEdit) @error('label')<small>{{ $message }}</small>@enderror @endif
                   </div>
                 </div>
               </section>
 
-              <section class="stats-manager-language">
-                <h3>English</h3>
-
+              <section class="stats-manager-language" data-language-panel="en" @if($editActiveLanguage !== 'en') hidden @endif>
                 <div class="stats-manager-fields">
                   <div class="admin-field">
-                    <label for="stat-value-en-{{ $statistic->id }}">
-                      Nilai English
-                    </label>
-                    <input
-                      id="stat-value-en-{{ $statistic->id }}"
-                      name="value_en"
-                      maxlength="80"
-                      value="{{ $isCurrentEdit ? old('value_en') : $statistic->valueForLocale('en') }}"
-                      required
-                    >
+                    <label for="stat-value-en-{{ $statistic->id }}">Nilai English</label>
+                    <input id="stat-value-en-{{ $statistic->id }}" name="value_en" maxlength="80" value="{{ $editValues['value_en'] }}" lang="en">
+                    @if($isCurrentEdit) @error('value_en')<small>{{ $message }}</small>@enderror @endif
                   </div>
 
                   <div class="admin-field">
-                    <label for="stat-label-en-{{ $statistic->id }}">
-                      Label English
-                    </label>
-                    <input
-                      id="stat-label-en-{{ $statistic->id }}"
-                      name="label_en"
-                      maxlength="120"
-                      value="{{ $isCurrentEdit ? old('label_en') : $statistic->labelForLocale('en') }}"
-                      required
-                    >
+                    <label for="stat-label-en-{{ $statistic->id }}">Label English</label>
+                    <input id="stat-label-en-{{ $statistic->id }}" name="label_en" maxlength="120" value="{{ $editValues['label_en'] }}" lang="en">
+                    <em>Opsional. Jika kosong, publik English fallback ke Indonesia.</em>
+                    @if($isCurrentEdit) @error('label_en')<small>{{ $message }}</small>@enderror @endif
+                  </div>
+                </div>
+              </section>
+
+              <section class="stats-manager-language" data-language-panel="ar" @if($editActiveLanguage !== 'ar') hidden @endif>
+                <div class="stats-manager-fields">
+                  <div class="admin-field">
+                    <label for="stat-value-ar-{{ $statistic->id }}">Nilai Arabic</label>
+                    <input id="stat-value-ar-{{ $statistic->id }}" name="value_ar" maxlength="80" value="{{ $editValues['value_ar'] }}" lang="ar" dir="rtl">
+                    @if($isCurrentEdit) @error('value_ar')<small>{{ $message }}</small>@enderror @endif
+                  </div>
+
+                  <div class="admin-field">
+                    <label for="stat-label-ar-{{ $statistic->id }}">Label Arabic</label>
+                    <input id="stat-label-ar-{{ $statistic->id }}" name="label_ar" maxlength="120" value="{{ $editValues['label_ar'] }}" lang="ar" dir="rtl">
+                    <em>Opsional. Jika kosong, publik Arabic fallback ke Indonesia lalu English.</em>
+                    @if($isCurrentEdit) @error('label_ar')<small>{{ $message }}</small>@enderror @endif
                   </div>
                 </div>
               </section>
             </div>
 
             <div class="stats-manager-form-actions">
-              <button type="submit" class="admin-primary-action">
-                Simpan Perubahan
-              </button>
+              <button type="submit" class="admin-primary-action">Simpan Perubahan</button>
             </div>
           </form>
 
@@ -319,7 +368,8 @@
                 <span class="stats-manager-kicker">Arsip A{{ $index + 1 }}</span>
                 <strong>{{ $statistic->value }} · {{ $statistic->label }}</strong>
                 <small>
-                  EN: {{ $statistic->valueForLocale('en') }} · {{ $statistic->labelForLocale('en') }}
+                  EN: {{ filled($statistic->value_en) && filled($statistic->label_en) ? $statistic->value_en . ' · ' . $statistic->label_en : 'belum diterjemahkan' }}
+                  · AR: {{ filled($statistic->value_ar) && filled($statistic->label_ar) ? $statistic->value_ar . ' · ' . $statistic->label_ar : 'belum diterjemahkan' }}
                   · dihapus {{ optional($statistic->deleted_at)->translatedFormat('d M Y, H:i') }} WIB
                 </small>
               </div>
@@ -346,7 +396,7 @@
               @endforeach
 
               @if(! $canRestoreWithoutReplacement && $replacementCandidates->isEmpty())
-                <span class="admin-archive-note">Empat slot aktif penuh dan tidak ada statistik berlabel identik.</span>
+                <span class="admin-archive-note">Empat slot aktif penuh dan tidak ada statistik berlabel Indonesia identik.</span>
               @endif
             </div>
           </article>
@@ -354,4 +404,29 @@
       @endif
     </section>
   </div>
+
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+    (() => {
+      document.querySelectorAll('[data-language-tabs]').forEach((tabsRoot) => {
+        const tabs = [...tabsRoot.querySelectorAll('[data-language-tab]')];
+        const panels = [...tabsRoot.querySelectorAll('[data-language-panel]')];
+
+        function activateLanguage(locale) {
+          tabs.forEach((tab) => {
+            const isActive = tab.dataset.languageTab === locale;
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            tab.classList.toggle('admin-primary-action--ghost', !isActive);
+          });
+
+          panels.forEach((panel) => {
+            panel.hidden = panel.dataset.languagePanel !== locale;
+          });
+        }
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => activateLanguage(tab.dataset.languageTab));
+        });
+      });
+    })();
+  </script>
 @endsection
