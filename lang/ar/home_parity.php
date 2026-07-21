@@ -4,13 +4,44 @@ return [
     'hero' => [
         'title_highlight' => 'الأدب والعلم وحفظ القرآن',
         'slides' => [
-            1 => [
+            0 => [
                 'type' => 'video',
-                'media' => 'https://www.youtube-nocookie.com/embed/lNzvxnnEpjs?autoplay=1&mute=1&controls=0&loop=1&playlist=lNzvxnnEpjs&playsinline=1&rel=0&modestbranding=1&enablejsapi=1',
-                'poster' => 'https://i.ytimg.com/vi/lNzvxnnEpjs/hqdefault.jpg',
+                'media' => 'https://www.youtube-nocookie.com/embed/kb1dXcf3QQs?autoplay=1&mute=1&controls=0&loop=1&playlist=kb1dXcf3QQs&playsinline=1&rel=0&modestbranding=1&enablejsapi=1',
+                'poster' => 'https://i.ytimg.com/vi/kb1dXcf3QQs/hqdefault.jpg',
+                'media_alt' => 'فيديو لأجواء المدرسة وتجربة التعلّم',
+                'eyebrow' => 'تعلّم ذو معنى',
+                'title' => 'راسخون في القرآن، منطلقون بالابتكار',
+                'description' => 'كل تجربة تعليمية تدعو الطفل إلى السؤال والإبداع والتعاون والنمو، والقيم الإسلامية بوصلته.',
+                'cta' => [
+                    'label' => 'استكشف برامجنا',
+                    'href' => '#program',
+                    'action' => 'anchor',
+                ],
+                'focal_position' => 'center center',
+                'overlay_strength' => 0.34,
                 'source' => [
                     'name' => 'YouTube',
-                    'url' => 'https://youtu.be/lNzvxnnEpjs',
+                    'url' => 'https://youtu.be/kb1dXcf3QQs',
+                ],
+            ],
+            1 => [
+                'type' => 'image',
+                'media' => 'media/home/hero-school.png',
+                'poster' => null,
+                'media_alt' => 'مبنى مدرسة المستقبل وبيئتها التعليمية',
+                'eyebrow' => 'مدرسة المستقبل',
+                'title' => 'نبني جيلاً مسلمًا مستعدًا لأداء دوره خليفةً لله',
+                'description' => 'تعليم شمولي يجمع القرآن والأدب والعلم واللغة والإبداع والشجاعة على نفع الآخرين.',
+                'cta' => [
+                    'label' => 'تعرّف على رؤيتنا التعليمية',
+                    'href' => '#visi-misi',
+                    'action' => 'anchor',
+                ],
+                'focal_position' => 'center center',
+                'overlay_strength' => 0.34,
+                'source' => [
+                    'name' => 'Al Mustaqbal School',
+                    'url' => null,
                 ],
             ],
             3 => [
