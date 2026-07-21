@@ -191,8 +191,10 @@ final class ArticleAdminController extends Controller
         $validator = validator($request->all(), [
             'title_id' => ['required', 'string', 'max:200'],
             'title_en' => ['nullable', 'string', 'max:200'],
+            'title_ar' => ['nullable', 'string', 'max:200'],
             'description_id' => ['nullable', 'string', 'max:600'],
             'description_en' => ['nullable', 'string', 'max:600'],
+            'description_ar' => ['nullable', 'string', 'max:600'],
             'thumbnail_file' => [
                 Rule::requiredIf(fn (): bool => $needsThumbnailFile),
                 'nullable',
@@ -204,6 +206,7 @@ final class ArticleAdminController extends Controller
             ],
             'link_id' => ['required', 'url', 'max:2048'],
             'link_en' => ['nullable', 'url', 'max:2048'],
+            'link_ar' => ['nullable', 'url', 'max:2048'],
             'author' => ['nullable', 'string', 'max:120'],
             'published_at' => ['nullable', 'date'],
         ], [
@@ -216,11 +219,16 @@ final class ArticleAdminController extends Controller
             'link_id.required' => 'Link artikel Indonesia wajib diisi.',
             'link_id.url' => 'Link artikel Indonesia tidak valid.',
             'link_en.url' => 'Link artikel English tidak valid.',
+            'link_ar.url' => 'Link artikel Arabic tidak valid.',
             'published_at.date' => 'Tanggal dan waktu publikasi tidak valid.',
         ]);
 
         $validator->after(function (Validator $validator) use ($request): void {
-            foreach (['link_id' => 'Link artikel Indonesia', 'link_en' => 'Link artikel English'] as $field => $label) {
+            foreach ([
+                'link_id' => 'Link artikel Indonesia',
+                'link_en' => 'Link artikel English',
+                'link_ar' => 'Link artikel Arabic',
+            ] as $field => $label) {
                 $url = $this->nullableText($request->input($field));
 
                 if ($url && ! $this->isPublicArticleUrl($url)) {
@@ -234,9 +242,12 @@ final class ArticleAdminController extends Controller
         unset($data['thumbnail_file']);
 
         $data['title_en'] = $this->nullableText($data['title_en'] ?? null);
+        $data['title_ar'] = $this->nullableText($data['title_ar'] ?? null);
         $data['description_id'] = $this->nullableText($data['description_id'] ?? null);
         $data['description_en'] = $this->nullableText($data['description_en'] ?? null);
+        $data['description_ar'] = $this->nullableText($data['description_ar'] ?? null);
         $data['link_en'] = $this->nullableText($data['link_en'] ?? null);
+        $data['link_ar'] = $this->nullableText($data['link_ar'] ?? null);
         $data['author'] = $this->nullableText($data['author'] ?? null) ?: Article::DEFAULT_AUTHOR;
         $data['published_at'] = $data['published_at']
             ?? optional($article?->published_at)->format('Y-m-d H:i:s')
