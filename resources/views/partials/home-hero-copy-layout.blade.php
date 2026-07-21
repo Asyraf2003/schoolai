@@ -2,6 +2,7 @@
   @vite([
     'resources/css/pages/welcome-mega-menu.css',
     'resources/css/pages/welcome-hero-motion.css',
+    'resources/css/pages/welcome-hero-visual.css',
   ])
 
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
