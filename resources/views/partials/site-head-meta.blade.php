@@ -107,3 +107,10 @@
     | JSON_HEX_APOS
     | JSON_HEX_QUOT
 ) !!}</script>
+
+@if (request()->routeIs('home'))
+  @vite([
+    'resources/css/pages/welcome-scroll-reveal.css',
+    'resources/js/pages/welcome-scroll-reveal.js',
+  ])
+@endif
