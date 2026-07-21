@@ -1,4 +1,6 @@
 @once
+  @vite('resources/css/pages/welcome-mega-menu.css')
+
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     .home-page .hero-cinema__content { padding-block-end: clamp(108px, 12vh, 142px); }
     .home-page .hero-cinema__copy { width: min(620px, 41vw); max-width: 620px; }
