@@ -54,17 +54,34 @@ jobs:
       - name: Apply and materialize hero implementation
         shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
-          echo "PATCH_BYTES=$(wc -c < /tmp/hero-db-admin.patch)"
-          git apply --check /tmp/hero-db-admin.patch
-          git apply /tmp/hero-db-admin.patch
-          grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
-          test -f tests/Feature/Admin/HeroSlideAdminTest.php
-          git diff --check
-          git add -A
-          git commit -m "chore: materialize hero implementation for verification"
+          set +e
+          {
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git status --short
+            cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
+            echo "PATCH_BYTES=$(wc -c < /tmp/hero-db-admin.patch)"
+            git apply --check /tmp/hero-db-admin.patch
+            git apply /tmp/hero-db-admin.patch
+            grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
+            test -f tests/Feature/Admin/HeroSlideAdminTest.php
+            git diff --check
+            git add -A
+            git status --short
+            git commit -m "chore: materialize hero implementation for verification"
+          } > /tmp/hero-materialize.log 2>&1
+          status=$?
+          set -e
+          cat /tmp/hero-materialize.log
+          exit "$status"
+
+      - name: Upload materialize evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-clean-materialize-${{ github.run_id }}
+          path: /tmp/hero-materialize.log
+          if-no-files-found: ignore
 
       - name: Recreate SQLite database
         run: |
