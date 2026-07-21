@@ -25,8 +25,8 @@ it('autosaves sanitizes and renders Arabic native article content', function ():
         ->toContain('data-article-canvas-arabic-data');
 
     expect(file_get_contents(resource_path('js/pages/article-canvas-arabic.js')))
-        ->toContain('data-language = \'ar\'')
-        ->toContain('dataDocumentLanguage');
+        ->toContain("button.dataset.language = 'ar'")
+        ->toContain("documentSection.dataset.documentLanguage = 'ar'");
 
     $this->post(route('admin.artikel.canvas.start'));
     $article = Article::query()->where('article_source', Article::SOURCE_NATIVE)->firstOrFail();
