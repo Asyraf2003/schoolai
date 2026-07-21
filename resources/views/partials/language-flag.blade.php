@@ -4,6 +4,8 @@
     : 'id';
 @endphp
 
+@include('partials.home-hero-copy-layout')
+
 @once
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     /* Keep the original flag-only chooser, but center it in the viewport modal. */
