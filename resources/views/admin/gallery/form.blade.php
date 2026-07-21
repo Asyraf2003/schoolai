@@ -6,6 +6,16 @@
   $publishedAtValue = old('published_at', optional($item->published_at)->format('Y-m-d\TH:i'));
   $currentType = old('type', $item->type ?: 'photo');
   $isVideo = $currentType === 'video';
+
+  $languageCompletion = [
+    'id' => filled(old('title_id', $item->title_id ?: $item->title)) && filled(old('category_id', $item->category_id ?: $item->category)),
+    'en' => filled(old('title_en', $item->title_en)) && filled(old('category_en', $item->category_en)),
+    'ar' => filled(old('title_ar', $item->title_ar)) && filled(old('category_ar', $item->category_ar)),
+  ];
+
+  $activeLanguage = $errors->hasAny(['title_ar', 'category_ar', 'caption_ar'])
+    ? 'ar'
+    : ($errors->hasAny(['title_en', 'category_en', 'caption_en']) ? 'en' : 'id');
 @endphp
 
 @extends('layouts.admin', [
@@ -23,6 +33,7 @@
     <header class="admin-topbar admin-topbar--compact">
       <div>
         <h1>{{ $isEdit ? $page['edit_title'] : $page['create_title'] }}</h1>
+        <p>Indonesia adalah bahasa utama. English dan Arabic opsional; jika kosong, galeri publik akan memakai fallback yang tersedia.</p>
       </div>
 
       <div class="admin-inline-actions">
@@ -39,20 +50,103 @@
       </div>
     @endif
 
-    <section class="gallery-lite-form__panel">
-      <div class="gallery-lite-form__grid">
-        <div class="admin-field">
+    <section class="gallery-lite-form__panel" data-language-tabs>
+      <div class="admin-inline-actions" role="tablist" aria-label="Bahasa konten galeri">
+        <button
+          type="button"
+          class="admin-primary-action {{ $activeLanguage === 'id' ? '' : 'admin-primary-action--ghost' }}"
+          role="tab"
+          aria-selected="{{ $activeLanguage === 'id' ? 'true' : 'false' }}"
+          data-language-tab="id"
+        >
+          Indonesia · Utama {{ $languageCompletion['id'] ? '✓' : 'Belum' }}
+        </button>
+        <button
+          type="button"
+          class="admin-primary-action {{ $activeLanguage === 'en' ? '' : 'admin-primary-action--ghost' }}"
+          role="tab"
+          aria-selected="{{ $activeLanguage === 'en' ? 'true' : 'false' }}"
+          data-language-tab="en"
+        >
+          English {{ $languageCompletion['en'] ? '✓' : 'Belum' }}
+        </button>
+        <button
+          type="button"
+          class="admin-primary-action {{ $activeLanguage === 'ar' ? '' : 'admin-primary-action--ghost' }}"
+          role="tab"
+          aria-selected="{{ $activeLanguage === 'ar' ? 'true' : 'false' }}"
+          data-language-tab="ar"
+        >
+          العربية {{ $languageCompletion['ar'] ? '✓' : 'Belum' }}
+        </button>
+      </div>
+
+      <div class="gallery-lite-form__grid" data-language-panel="id" @if($activeLanguage !== 'id') hidden @endif>
+        <div class="admin-field admin-field--wide">
           <label for="title_id">{{ $form['title_id'] }}</label>
           <input id="title_id" name="title_id" value="{{ old('title_id', $item->title_id ?: $item->title) }}" maxlength="160" required>
           @error('title_id') <small>{{ $message }}</small> @enderror
         </div>
 
-        <div class="admin-field">
+        <div class="admin-field admin-field--wide">
+          <label for="category_id">{{ $form['category_id'] }}</label>
+          <input id="category_id" name="category_id" value="{{ old('category_id', $item->category_id ?: $item->category) }}" maxlength="80" required>
+          @error('category_id') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="caption_id">{{ $form['caption_id'] }}</label>
+          <textarea id="caption_id" name="caption_id" rows="3" maxlength="1000">{{ old('caption_id', $item->caption_id ?: $item->caption) }}</textarea>
+          <em>Opsional.</em>
+          @error('caption_id') <small>{{ $message }}</small> @enderror
+        </div>
+      </div>
+
+      <div class="gallery-lite-form__grid" data-language-panel="en" @if($activeLanguage !== 'en') hidden @endif>
+        <div class="admin-field admin-field--wide">
           <label for="title_en">{{ $form['title_en'] }}</label>
-          <input id="title_en" name="title_en" value="{{ old('title_en', $item->title_en) }}" maxlength="160">
+          <input id="title_en" name="title_en" value="{{ old('title_en', $item->title_en) }}" maxlength="160" lang="en">
           @error('title_en') <small>{{ $message }}</small> @enderror
         </div>
 
+        <div class="admin-field admin-field--wide">
+          <label for="category_en">{{ $form['category_en'] }}</label>
+          <input id="category_en" name="category_en" value="{{ old('category_en', $item->category_en) }}" maxlength="80" lang="en">
+          @error('category_en') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="caption_en">{{ $form['caption_en'] }}</label>
+          <textarea id="caption_en" name="caption_en" rows="3" maxlength="1000" lang="en">{{ old('caption_en', $item->caption_en) }}</textarea>
+          <em>Opsional. Jika kosong, versi English fallback ke Indonesia.</em>
+          @error('caption_en') <small>{{ $message }}</small> @enderror
+        </div>
+      </div>
+
+      <div class="gallery-lite-form__grid" data-language-panel="ar" @if($activeLanguage !== 'ar') hidden @endif>
+        <div class="admin-field admin-field--wide">
+          <label for="title_ar">Judul Arabic</label>
+          <input id="title_ar" name="title_ar" value="{{ old('title_ar', $item->title_ar) }}" maxlength="160" lang="ar" dir="rtl">
+          @error('title_ar') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="category_ar">Kategori Arabic</label>
+          <input id="category_ar" name="category_ar" value="{{ old('category_ar', $item->category_ar) }}" maxlength="80" lang="ar" dir="rtl">
+          @error('category_ar') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="caption_ar">Caption Arabic</label>
+          <textarea id="caption_ar" name="caption_ar" rows="3" maxlength="1000" lang="ar" dir="rtl">{{ old('caption_ar', $item->caption_ar) }}</textarea>
+          <em>Opsional. Jika kosong, versi Arabic fallback ke Indonesia lalu English.</em>
+          @error('caption_ar') <small>{{ $message }}</small> @enderror
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-lite-form__panel">
+      <div class="gallery-lite-form__grid">
         <div class="admin-field">
           <label for="type">{{ $form['type'] }}</label>
           <select id="type" name="type" required data-gallery-type>
@@ -61,30 +155,6 @@
             @endforeach
           </select>
           @error('type') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field">
-          <label for="category_id">{{ $form['category_id'] }}</label>
-          <input id="category_id" name="category_id" value="{{ old('category_id', $item->category_id ?: $item->category) }}" maxlength="80" required>
-          @error('category_id') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field">
-          <label for="category_en">{{ $form['category_en'] }}</label>
-          <input id="category_en" name="category_en" value="{{ old('category_en', $item->category_en) }}" maxlength="80">
-          @error('category_en') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field admin-field--wide">
-          <label for="caption_id">{{ $form['caption_id'] }}</label>
-          <textarea id="caption_id" name="caption_id" rows="3" maxlength="1000">{{ old('caption_id', $item->caption_id ?: $item->caption) }}</textarea>
-          @error('caption_id') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field admin-field--wide">
-          <label for="caption_en">{{ $form['caption_en'] }}</label>
-          <textarea id="caption_en" name="caption_en" rows="3" maxlength="1000">{{ old('caption_en', $item->caption_en) }}</textarea>
-          @error('caption_en') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field admin-field--wide" data-gallery-photo-field @if($isVideo) hidden @endif>
@@ -156,6 +226,28 @@
     (() => {
       const form = document.querySelector('[data-gallery-video-form]');
       if (!form) return;
+
+      const tabsRoot = form.querySelector('[data-language-tabs]');
+      if (tabsRoot) {
+        const tabs = [...tabsRoot.querySelectorAll('[data-language-tab]')];
+        const panels = [...tabsRoot.querySelectorAll('[data-language-panel]')];
+
+        function activateLanguage(locale) {
+          tabs.forEach((tab) => {
+            const isActive = tab.dataset.languageTab === locale;
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            tab.classList.toggle('admin-primary-action--ghost', !isActive);
+          });
+
+          panels.forEach((panel) => {
+            panel.hidden = panel.dataset.languagePanel !== locale;
+          });
+        }
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => activateLanguage(tab.dataset.languageTab));
+        });
+      }
 
       const typeInput = form.querySelector('[data-gallery-type]');
       const photoField = form.querySelector('[data-gallery-photo-field]');
