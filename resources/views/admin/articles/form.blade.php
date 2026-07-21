@@ -2,6 +2,16 @@
   $isEdit = $mode === 'edit';
   $action = $isEdit ? route('admin.artikel.update', $article) : route('admin.artikel.store');
   $publishedAtValue = old('published_at', optional($article->published_at)->format('Y-m-d\TH:i') ?? now()->format('Y-m-d\TH:i'));
+
+  $languageCompletion = [
+    'id' => filled(old('title_id', $article->title_id)) && filled(old('link_id', $article->link_id)),
+    'en' => filled(old('title_en', $article->title_en)) && filled(old('link_en', $article->link_en)),
+    'ar' => filled(old('title_ar', $article->title_ar)) && filled(old('link_ar', $article->link_ar)),
+  ];
+
+  $activeLanguage = $errors->hasAny(['title_ar', 'description_ar', 'link_ar'])
+    ? 'ar'
+    : ($errors->hasAny(['title_en', 'description_en', 'link_en']) ? 'en' : 'id');
 @endphp
 
 @extends('layouts.admin', [
@@ -19,7 +29,7 @@
     <header class="admin-topbar admin-topbar--compact">
       <div>
         <h1>{{ $isEdit ? 'Edit Artikel' : 'Tambah Artikel' }}</h1>
-        <p>Thumbnail wajib upload file lokal. Link Indonesia wajib. Link English opsional. Author default Admin kalau dikosongkan.</p>
+        <p>Indonesia adalah bahasa utama. English dan Arabic opsional; jika kosong, konten publik akan memakai fallback yang tersedia.</p>
       </div>
 
       <div class="admin-inline-actions">
@@ -36,34 +46,105 @@
       </div>
     @endif
 
-    <section class="gallery-lite-form__panel">
-      <div class="gallery-lite-form__grid">
-        <div class="admin-field">
+    <section class="gallery-lite-form__panel" data-language-tabs>
+      <div class="admin-inline-actions" role="tablist" aria-label="Bahasa konten artikel">
+        <button
+          type="button"
+          class="admin-primary-action {{ $activeLanguage === 'id' ? '' : 'admin-primary-action--ghost' }}"
+          role="tab"
+          aria-selected="{{ $activeLanguage === 'id' ? 'true' : 'false' }}"
+          data-language-tab="id"
+        >
+          Indonesia · Utama {{ $languageCompletion['id'] ? '✓' : 'Belum' }}
+        </button>
+        <button
+          type="button"
+          class="admin-primary-action {{ $activeLanguage === 'en' ? '' : 'admin-primary-action--ghost' }}"
+          role="tab"
+          aria-selected="{{ $activeLanguage === 'en' ? 'true' : 'false' }}"
+          data-language-tab="en"
+        >
+          English {{ $languageCompletion['en'] ? '✓' : 'Belum' }}
+        </button>
+        <button
+          type="button"
+          class="admin-primary-action {{ $activeLanguage === 'ar' ? '' : 'admin-primary-action--ghost' }}"
+          role="tab"
+          aria-selected="{{ $activeLanguage === 'ar' ? 'true' : 'false' }}"
+          data-language-tab="ar"
+        >
+          العربية {{ $languageCompletion['ar'] ? '✓' : 'Belum' }}
+        </button>
+      </div>
+
+      <div class="gallery-lite-form__grid" data-language-panel="id" @if($activeLanguage !== 'id') hidden @endif>
+        <div class="admin-field admin-field--wide">
           <label for="title_id">Judul Indonesia</label>
           <input id="title_id" name="title_id" value="{{ old('title_id', $article->title_id) }}" maxlength="200" required>
           @error('title_id') <small>{{ $message }}</small> @enderror
         </div>
 
-        <div class="admin-field">
-          <label for="title_en">Judul English</label>
-          <input id="title_en" name="title_en" value="{{ old('title_en', $article->title_en) }}" maxlength="200">
-          @error('title_en') <small>{{ $message }}</small> @enderror
-        </div>
-
         <div class="admin-field admin-field--wide">
           <label for="description_id">Deskripsi Indonesia</label>
           <textarea id="description_id" name="description_id" rows="3" maxlength="600">{{ old('description_id', $article->description_id) }}</textarea>
-          <em>Opsional, tapi disarankan. Dipakai di homepage dan halaman artikel.</em>
+          <em>Opsional, tetapi disarankan untuk ringkasan artikel.</em>
           @error('description_id') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field admin-field--wide">
+          <label for="link_id">Link Artikel Indonesia</label>
+          <input id="link_id" name="link_id" type="url" value="{{ old('link_id', $article->link_id) }}" maxlength="2048" placeholder="https://medium.com/..." required>
+          @error('link_id') <small>{{ $message }}</small> @enderror
+        </div>
+      </div>
+
+      <div class="gallery-lite-form__grid" data-language-panel="en" @if($activeLanguage !== 'en') hidden @endif>
+        <div class="admin-field admin-field--wide">
+          <label for="title_en">Judul English</label>
+          <input id="title_en" name="title_en" value="{{ old('title_en', $article->title_en) }}" maxlength="200" lang="en">
+          @error('title_en') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
           <label for="description_en">Deskripsi English</label>
-          <textarea id="description_en" name="description_en" rows="3" maxlength="600">{{ old('description_en', $article->description_en) }}</textarea>
-          <em>Opsional. Jika kosong, versi English fallback ke deskripsi Indonesia.</em>
+          <textarea id="description_en" name="description_en" rows="3" maxlength="600" lang="en">{{ old('description_en', $article->description_en) }}</textarea>
+          <em>Opsional. Jika kosong, versi English fallback ke Indonesia.</em>
           @error('description_en') <small>{{ $message }}</small> @enderror
         </div>
 
+        <div class="admin-field admin-field--wide">
+          <label for="link_en">Link Artikel English</label>
+          <input id="link_en" name="link_en" type="url" value="{{ old('link_en', $article->link_en) }}" maxlength="2048" placeholder="https://medium.com/..." lang="en">
+          <em>Opsional. Jika kosong, versi English fallback ke link Indonesia.</em>
+          @error('link_en') <small>{{ $message }}</small> @enderror
+        </div>
+      </div>
+
+      <div class="gallery-lite-form__grid" data-language-panel="ar" @if($activeLanguage !== 'ar') hidden @endif>
+        <div class="admin-field admin-field--wide">
+          <label for="title_ar">Judul Arabic</label>
+          <input id="title_ar" name="title_ar" value="{{ old('title_ar', $article->title_ar) }}" maxlength="200" lang="ar" dir="rtl">
+          @error('title_ar') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="description_ar">Deskripsi Arabic</label>
+          <textarea id="description_ar" name="description_ar" rows="3" maxlength="600" lang="ar" dir="rtl">{{ old('description_ar', $article->description_ar) }}</textarea>
+          <em>Opsional. Jika kosong, versi Arabic fallback ke Indonesia lalu English.</em>
+          @error('description_ar') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="admin-field admin-field--wide">
+          <label for="link_ar">Link Artikel Arabic</label>
+          <input id="link_ar" name="link_ar" type="url" value="{{ old('link_ar', $article->link_ar) }}" maxlength="2048" placeholder="https://medium.com/..." lang="ar" dir="ltr">
+          <em>Opsional. Jika kosong, versi Arabic fallback ke link Indonesia lalu English.</em>
+          @error('link_ar') <small>{{ $message }}</small> @enderror
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-lite-form__panel">
+      <div class="gallery-lite-form__grid">
         <div class="admin-field admin-field--wide">
           <label for="thumbnail_file">Upload Thumbnail</label>
           <input
@@ -81,19 +162,6 @@
             @endif
           </em>
           @error('thumbnail_file') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field admin-field--wide">
-          <label for="link_id">Link Artikel Indonesia</label>
-          <input id="link_id" name="link_id" type="url" value="{{ old('link_id', $article->link_id) }}" maxlength="2048" placeholder="https://medium.com/..." required>
-          @error('link_id') <small>{{ $message }}</small> @enderror
-        </div>
-
-        <div class="admin-field admin-field--wide">
-          <label for="link_en">Link Artikel English</label>
-          <input id="link_en" name="link_en" type="url" value="{{ old('link_en', $article->link_en) }}" maxlength="2048" placeholder="https://medium.com/...">
-          <em>Opsional. Jika kosong, versi English akan fallback ke link Indonesia.</em>
-          @error('link_en') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field">
@@ -131,6 +199,28 @@
       const form = document.querySelector('[data-article-form]');
       if (!form) return;
 
+      const tabsRoot = form.querySelector('[data-language-tabs]');
+      if (tabsRoot) {
+        const tabs = [...tabsRoot.querySelectorAll('[data-language-tab]')];
+        const panels = [...tabsRoot.querySelectorAll('[data-language-panel]')];
+
+        function activateLanguage(locale) {
+          tabs.forEach((tab) => {
+            const isActive = tab.dataset.languageTab === locale;
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            tab.classList.toggle('admin-primary-action--ghost', !isActive);
+          });
+
+          panels.forEach((panel) => {
+            panel.hidden = panel.dataset.languagePanel !== locale;
+          });
+        }
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => activateLanguage(tab.dataset.languageTab));
+        });
+      }
+
       const input = form.querySelector('[data-article-thumbnail-input]');
       const stage = form.querySelector('[data-article-thumbnail-stage]');
       const emptyText = 'Thumbnail baru akan tampil setelah dipilih.';
@@ -147,7 +237,6 @@
 
       function setEmpty(message = emptyText) {
         revokePreviewUrl();
-
         const span = document.createElement('span');
         span.textContent = message;
         span.setAttribute('data-article-thumbnail-empty', '');
