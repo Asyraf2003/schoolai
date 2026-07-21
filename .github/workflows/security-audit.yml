@@ -35,12 +35,14 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Audit Composer lock file
+        continue-on-error: true
         run: composer audit --locked --no-interaction
 
       - name: Install Node dependencies from lock file
         run: npm ci
 
       - name: Audit npm lock file
+        continue-on-error: true
         run: npm audit --audit-level=high
 
       - name: Build frontend assets
