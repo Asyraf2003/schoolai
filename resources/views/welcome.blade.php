@@ -210,53 +210,7 @@
             </svg>
           </button>
 
-          <div class="hero-cinema__rail container">
-            <div class="hero-cinema__progress" aria-hidden="true">
-              <span class="hero-cinema__progress-bar" data-hero-progress></span>
-            </div>
-
-            <p class="hero-cinema__counter" aria-hidden="true">
-              <span class="hero-cinema__counter-current" data-hero-current>01</span>
-              <span>/</span>
-              <span>{{ str_pad((string) $heroSlideCount, 2, '0', STR_PAD_LEFT) }}</span>
-            </p>
-
-            <div
-              class="hero-cinema__dots"
-              role="tablist"
-              aria-label="{{ $hero['dots_label'] ?? 'Choose a slide' }}"
-            >
-              @foreach ($heroSlides as $slide)
-                <button
-                  type="button"
-                  class="hero-cinema__dot{{ $loop->first ? ' is-active' : '' }}"
-                  data-hero-dot
-                  data-slide-index="{{ $loop->index }}"
-                  role="tab"
-                  aria-label="{{ $heroStatus($loop->iteration) }}"
-                  aria-selected="{{ $loop->first ? 'true' : 'false' }}"
-                  tabindex="{{ $loop->first ? '0' : '-1' }}"
-                ></button>
-              @endforeach
-            </div>
-
-            <button
-              type="button"
-              class="hero-cinema__playback"
-              data-hero-playback
-              data-pause-label="{{ $hero['pause_label'] ?? 'Pause slideshow' }}"
-              data-play-label="{{ $hero['play_label'] ?? 'Play slideshow' }}"
-              aria-label="{{ $hero['pause_label'] ?? 'Pause slideshow' }}"
-              aria-pressed="false"
-            >
-              <svg class="hero-cinema__pause-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-              </svg>
-              <svg class="hero-cinema__play-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5l11 7-11 7V5z" fill="currentColor" />
-              </svg>
-            </button>
-          </div>
+         </div>
         @endif
 
         <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
