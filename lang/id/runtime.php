@@ -20,5 +20,9 @@ return [
         'closed_button' => 'Saya Mengerti',
         'audience_parents' => 'Untuk orang tua',
         'audience_school' => 'Untuk sekolah',
+        'audience_aria_label' => 'Target alur PPDB',
+        'school_task' => 'Tugas sekolah',
+        'family_note' => 'Catatan keluarga',
+        'clear_follow_up' => 'Tindak lanjut jelas',
     ],
 ];
