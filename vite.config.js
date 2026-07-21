@@ -9,6 +9,7 @@ export default defineConfig({
             input: [
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/welcome-hero.js',
+                'resources/js/pages/welcome-hero-youtube.js',
                 'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
