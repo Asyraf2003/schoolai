@@ -39,8 +39,13 @@ jobs:
         run: |
           apply_hero_patch() {
             cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
+            printf 'PATCH_BYTES=' && wc -c < /tmp/hero-db-admin.patch
             git apply --check /tmp/hero-db-admin.patch
             git apply /tmp/hero-db-admin.patch
+            grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
+            test -f tests/Feature/Admin/HeroSlideAdminTest.php
+            printf 'HOME_HERO_TEST_UPDATED=yes\n'
+            printf 'ADMIN_HERO_TEST_PRESENT=yes\n'
             rm .github/hero-db-admin.patch.gz.b64.part*
             rm .github/hero-verification-started
             rm -f .github/hero-verification-error.txt
@@ -125,8 +130,8 @@ jobs:
         run: |
           set +e
           {
-            test -f tests/Feature/HomeHeroTest.php
-            test -f tests/Feature/Admin/HeroSlideAdminTest.php
+            grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php || { echo 'HOME_HERO_TEST_REVERTED'; exit 91; }
+            test -f tests/Feature/Admin/HeroSlideAdminTest.php || { echo 'ADMIN_HERO_TEST_MISSING'; exit 92; }
             php artisan test tests/Feature/HomeHeroTest.php
             php artisan test tests/Feature/Admin/HeroSlideAdminTest.php
           } > /tmp/hero-focused-tests.log 2>&1
