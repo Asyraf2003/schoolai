@@ -30,11 +30,13 @@ final class Article extends Model
         'title_ar',
         'subtitle_id',
         'subtitle_en',
+        'subtitle_ar',
         'description_id',
         'description_en',
         'description_ar',
         'content_id',
         'content_en',
+        'content_ar',
         'tags',
         'word_count',
         'thumbnail_url',
@@ -191,7 +193,7 @@ final class Article extends Model
 
     public function getAdminTitleAttribute(): string
     {
-        return $this->firstFilled($this->title_id, $this->title_en, 'Artikel tanpa judul');
+        return $this->firstFilled($this->title_id, $this->title_en, $this->title_ar, 'Artikel tanpa judul');
     }
 
     public function titleForLocale(string $locale): string
@@ -208,9 +210,12 @@ final class Article extends Model
 
     public function subtitleForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->subtitle_en, $this->subtitle_id)
-            : $this->firstFilled($this->subtitle_id, $this->subtitle_en);
+        return $this->localizedValue(
+            $locale,
+            $this->subtitle_id,
+            $this->subtitle_en,
+            $this->subtitle_ar,
+        );
     }
 
     public function descriptionForLocale(string $locale): string
@@ -225,9 +230,12 @@ final class Article extends Model
 
     public function contentForLocale(string $locale): string
     {
-        return $locale === 'en'
-            ? $this->firstFilled($this->content_en, $this->content_id)
-            : $this->firstFilled($this->content_id, $this->content_en);
+        return $this->localizedValue(
+            $locale,
+            $this->content_id,
+            $this->content_en,
+            $this->content_ar,
+        );
     }
 
     public function linkForLocale(string $locale): string

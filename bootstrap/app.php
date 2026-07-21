@@ -9,6 +9,7 @@ use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\EnsureRegularUser;
 use App\Http\Middleware\EnsureAccountIsActive;
 use App\Http\Middleware\AddSecurityHeaders;
+use App\Http\Middleware\PersistArabicArticleCanvas;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 
@@ -38,6 +39,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             SetLocale::class,
             AddSecurityHeaders::class,
+            PersistArabicArticleCanvas::class,
         ]);
         $middleware->alias([
             'admin.locale' => ForceAdminLocale::class,
