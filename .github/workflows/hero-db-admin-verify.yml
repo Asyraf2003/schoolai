@@ -27,18 +27,11 @@ jobs:
           fetch-depth: 0
           ref: agent/hero-db-admin-verify
 
-      - name: Mark verification runner start
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          printf '%s\n' "$GITHUB_RUN_ID" > .github/hero-verification-started
-          git add .github/hero-verification-started
-          git commit -m "chore: mark hero verification start"
-          git push origin HEAD:agent/hero-db-admin-verify
-
       - name: Apply implementation patch
         shell: bash
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rev-parse HEAD > /tmp/hero-verification-branch-head
 
           apply_hero_patch() {
@@ -51,7 +44,7 @@ jobs:
             printf 'HOME_HERO_TEST_UPDATED=yes\n'
             printf 'ADMIN_HERO_TEST_PRESENT=yes\n'
             rm .github/hero-db-admin.patch.gz.b64.part*
-            rm .github/hero-verification-started
+            rm -f .github/hero-verification-started
             rm -f .github/hero-verification-error.txt
             rm -f .github/hero-verification-composer-error.txt
             rm -f .github/hero-verification-test-error.txt
@@ -71,11 +64,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             cp /tmp/hero-apply.log .github/hero-verification-error.txt
             git add -f .github/hero-verification-error.txt
-            git commit -m "chore: capture hero verification apply error"
+            git commit -m "chore: capture hero verification apply error [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-apply.log
             exit "$status"
@@ -105,11 +96,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             cp /tmp/hero-composer.log .github/hero-verification-composer-error.txt
             git add -f .github/hero-verification-composer-error.txt
-            git commit -m "chore: capture hero composer verification failure"
+            git commit -m "chore: capture hero composer verification failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-composer.log
             exit "$status"
@@ -129,11 +118,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             cp /tmp/hero-build.log .github/hero-verification-build-error.txt
             git add -f .github/hero-verification-build-error.txt
-            git commit -m "chore: capture hero frontend build failure"
+            git commit -m "chore: capture hero frontend build failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-build.log
             exit "$status"
@@ -177,11 +164,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             cp /tmp/hero-focused-tests.log .github/hero-verification-test-error.txt
             git add -f .github/hero-verification-test-error.txt
-            git commit -m "chore: capture hero focused test failure"
+            git commit -m "chore: capture hero focused test failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-focused-tests.log
             exit "$status"
@@ -198,11 +183,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             cp /tmp/hero-regression-suite.log .github/hero-verification-suite-error.txt
             git add -f .github/hero-verification-suite-error.txt
-            git commit -m "chore: capture hero regression test failure"
+            git commit -m "chore: capture hero regression test failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-regression-suite.log
             exit "$status"
