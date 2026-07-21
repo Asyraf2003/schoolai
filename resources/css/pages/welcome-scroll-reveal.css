@@ -1,9 +1,9 @@
 /* Directional scroll reveal layer for the public homepage.
-   Kept separate from welcome.css so the existing visual system stays untouched. */
+   Motion is intentionally short and compositor-friendly so scrolling stays stable in WebKit. */
 
 body [data-scroll-reveal] {
     --scroll-reveal-x: 0px;
-    --scroll-reveal-y: 38px;
+    --scroll-reveal-y: 26px;
     --scroll-reveal-scale: 0.985;
     --scroll-reveal-delay: 0ms;
 
@@ -15,38 +15,37 @@ body [data-scroll-reveal] {
         )
         scale(var(--scroll-reveal-scale));
     transition:
-        opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--scroll-reveal-delay);
-    will-change: opacity, transform;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
 body [data-scroll-reveal="left"] {
-    --scroll-reveal-x: -76px;
-    --scroll-reveal-y: 8px;
+    --scroll-reveal-x: -28px;
+    --scroll-reveal-y: 4px;
 }
 
 body [data-scroll-reveal="right"] {
-    --scroll-reveal-x: 76px;
-    --scroll-reveal-y: 8px;
+    --scroll-reveal-x: 28px;
+    --scroll-reveal-y: 4px;
 }
 
 body [data-scroll-reveal="top"] {
     --scroll-reveal-x: 0px;
-    --scroll-reveal-y: -54px;
+    --scroll-reveal-y: -24px;
 }
 
 body [data-scroll-reveal="bottom"] {
     --scroll-reveal-x: 0px;
-    --scroll-reveal-y: 58px;
+    --scroll-reveal-y: 30px;
 }
 
 body [data-scroll-reveal="zoom"] {
     --scroll-reveal-x: 0px;
-    --scroll-reveal-y: 24px;
-    --scroll-reveal-scale: 0.94;
+    --scroll-reveal-y: 16px;
+    --scroll-reveal-scale: 0.965;
 }
 
 body [data-scroll-reveal].scroll-reveal--visible {
@@ -54,22 +53,22 @@ body [data-scroll-reveal].scroll-reveal--visible {
     transform: translate3d(0, 0, 0) scale(1);
 }
 
-/* Keep wide horizontal movement from feeling excessive on smaller screens. */
+/* Smaller travel on narrow screens because scroll movement is visually stronger there. */
 @media (max-width: 767px) {
     body [data-scroll-reveal="left"] {
-        --scroll-reveal-x: -38px;
+        --scroll-reveal-x: -18px;
     }
 
     body [data-scroll-reveal="right"] {
-        --scroll-reveal-x: 38px;
+        --scroll-reveal-x: 18px;
     }
 
     body [data-scroll-reveal="top"] {
-        --scroll-reveal-y: -34px;
+        --scroll-reveal-y: -18px;
     }
 
     body [data-scroll-reveal="bottom"] {
-        --scroll-reveal-y: 42px;
+        --scroll-reveal-y: 22px;
     }
 }
 
@@ -78,6 +77,5 @@ body [data-scroll-reveal].scroll-reveal--visible {
         opacity: 1;
         transform: none;
         transition: none;
-        will-change: auto;
     }
 }
