@@ -42,6 +42,15 @@ jobs:
           node-version: '22'
           cache: npm
 
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
       - name: Apply hero implementation
         shell: bash
         run: |
@@ -68,36 +77,12 @@ jobs:
           path: /tmp/hero-clean-apply.log
           if-no-files-found: ignore
 
-      - name: Install PHP dependencies
-        run: composer install --no-interaction --prefer-dist --no-progress
-
-      - name: Guard implementation after Composer
-        run: |
-          grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
-          test -f tests/Feature/Admin/HeroSlideAdminTest.php
-
-      - name: Install frontend dependencies
-        run: npm ci
-
-      - name: Guard implementation after npm ci
-        run: |
-          grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
-          test -f tests/Feature/Admin/HeroSlideAdminTest.php
-
-      - name: Build frontend assets
-        run: npm run build
-
-      - name: Guard implementation after build
-        run: |
-          grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
-          test -f tests/Feature/Admin/HeroSlideAdminTest.php
-
       - name: Recreate SQLite database
         run: |
           rm -f database/database.sqlite
           touch database/database.sqlite
 
-      - name: Guard implementation after SQLite recreation
+      - name: Verify implementation after SQLite recreation
         run: |
           grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
           test -f tests/Feature/Admin/HeroSlideAdminTest.php
@@ -105,7 +90,7 @@ jobs:
       - name: Verify migrations
         run: php artisan migrate:fresh --force
 
-      - name: Guard implementation after migrations
+      - name: Verify implementation after migrations
         run: |
           grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
           test -f tests/Feature/Admin/HeroSlideAdminTest.php
