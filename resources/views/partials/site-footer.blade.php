@@ -1,5 +1,11 @@
 @php
-  $siteFooter = $siteFooter ?? ($footerSection ?? __('home.footer'));
+  $homeFooter = __('home.footer');
+  $homeFooterParity = __('home_parity.footer');
+  $homeFooter = is_array($homeFooter) ? $homeFooter : [];
+  $homeFooterParity = is_array($homeFooterParity) ? $homeFooterParity : [];
+  $homeFooter = array_replace_recursive($homeFooter, $homeFooterParity);
+
+  $siteFooter = $siteFooter ?? ($footerSection ?? $homeFooter);
   $siteFooter = is_array($siteFooter) ? $siteFooter : [];
   $isHomeFooter = request()->routeIs('home');
 
