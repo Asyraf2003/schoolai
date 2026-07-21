@@ -89,6 +89,27 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Build frontend assets
+        shell: bash
+        run: |
+          set +e
+          npm run build > /tmp/hero-build.log 2>&1
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            git reset --hard HEAD
+            git clean -fd
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            cp /tmp/hero-build.log .github/hero-verification-build-error.txt
+            git add -f .github/hero-verification-build-error.txt
+            git commit -m "chore: capture hero frontend build failure"
+            git push origin HEAD:agent/hero-db-admin-verify
+            cat /tmp/hero-build.log
+            exit "$status"
+          fi
+          cat /tmp/hero-build.log
+
       - name: Prepare test environment
         run: |
           cp .env.example .env
@@ -145,27 +166,6 @@ jobs:
             exit "$status"
           fi
           cat /tmp/hero-regression-suite.log
-
-      - name: Build frontend assets
-        shell: bash
-        run: |
-          set +e
-          npm run build > /tmp/hero-build.log 2>&1
-          status=$?
-          set -e
-          if [ "$status" -ne 0 ]; then
-            git reset --hard HEAD
-            git clean -fd
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            cp /tmp/hero-build.log .github/hero-verification-build-error.txt
-            git add -f .github/hero-verification-build-error.txt
-            git commit -m "chore: capture hero frontend build failure"
-            git push origin HEAD:agent/hero-db-admin-verify
-            cat /tmp/hero-build.log
-            exit "$status"
-          fi
-          cat /tmp/hero-build.log
 
       - name: Squash verified implementation into one commit
         run: |
