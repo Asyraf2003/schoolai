@@ -51,31 +51,20 @@ jobs:
       - name: Build frontend assets
         run: npm run build
 
-      - name: Apply hero implementation
+      - name: Apply and materialize hero implementation
         shell: bash
         run: |
-          set +e
-          {
-            cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
-            echo "PATCH_BYTES=$(wc -c < /tmp/hero-db-admin.patch)"
-            git apply --check /tmp/hero-db-admin.patch
-            git apply /tmp/hero-db-admin.patch
-            grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
-            test -f tests/Feature/Admin/HeroSlideAdminTest.php
-            git diff --check
-          } > /tmp/hero-clean-apply.log 2>&1
-          status=$?
-          set -e
-          cat /tmp/hero-clean-apply.log
-          exit "$status"
-
-      - name: Upload apply evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: hero-clean-apply-${{ github.run_id }}
-          path: /tmp/hero-clean-apply.log
-          if-no-files-found: ignore
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
+          echo "PATCH_BYTES=$(wc -c < /tmp/hero-db-admin.patch)"
+          git apply --check /tmp/hero-db-admin.patch
+          git apply /tmp/hero-db-admin.patch
+          grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
+          test -f tests/Feature/Admin/HeroSlideAdminTest.php
+          git diff --check
+          git add -A
+          git commit -m "chore: materialize hero implementation for verification"
 
       - name: Recreate SQLite database
         run: |
@@ -134,13 +123,14 @@ jobs:
           path: /tmp/hero-regression-suite.log
           if-no-files-found: ignore
 
-      - name: Commit verified implementation
+      - name: Squash and publish verified implementation
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           rm .github/hero-db-admin.patch.gz.b64.part*
           rm .github/workflows/hero-db-admin-clean-verify.yml
-          git diff --check
+          git reset --soft d549247fb2a6727dfa16e5a3babe0d7fded36104
           git add -A
+          git diff --cached --check
           git commit -m "feat: manage homepage hero slides from admin"
           git push --force origin HEAD:agent/hero-db-admin-clean
