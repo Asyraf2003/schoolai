@@ -103,7 +103,12 @@ jobs:
         shell: bash
         run: |
           set +e
-          php artisan test tests/Feature/HomeHeroTest.php tests/Feature/Admin/HeroSlideAdminTest.php > /tmp/hero-focused-tests.log 2>&1
+          {
+            test -f tests/Feature/HomeHeroTest.php
+            test -f tests/Feature/Admin/HeroSlideAdminTest.php
+            php artisan test tests/Feature/HomeHeroTest.php
+            php artisan test tests/Feature/Admin/HeroSlideAdminTest.php
+          } > /tmp/hero-focused-tests.log 2>&1
           status=$?
           set -e
           if [ "$status" -ne 0 ]; then
