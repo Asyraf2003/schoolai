@@ -10,7 +10,12 @@
     'subtitle' => $article->subtitle_ar ?? '',
     'content' => $article->content_ar ?? '',
   ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>
-  @vite(['resources/css/pages/article-canvas.css', 'resources/js/pages/article-canvas-arabic.js'])
+  @vite([
+    'resources/css/pages/article-canvas.css',
+    'resources/js/pages/article-canvas-arabic.js',
+    'resources/js/pages/article-canvas.js',
+    'resources/js/pages/article-canvas-context-ui.js',
+  ])
 </head>
 <body class="article-canvas-page">
   @yield('content')

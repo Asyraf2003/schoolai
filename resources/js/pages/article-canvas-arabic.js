@@ -75,5 +75,3 @@ if (root) {
         }
     }
 }
-
-void import('./article-canvas.js');
