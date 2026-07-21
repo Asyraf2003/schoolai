@@ -50,14 +50,7 @@ final class SiteStatistic extends Model
 
     public function replacementIdentity(): ?string
     {
-        $labelId = self::normalizeIdentityText($this->label);
-        $labelEn = self::normalizeIdentityText($this->label_en);
-
-        if ($labelId === null || $labelEn === null) {
-            return null;
-        }
-
-        return $labelId . '|' . $labelEn;
+        return self::normalizeIdentityText($this->label);
     }
 
     public static function normalizeIdentityText(?string $value): ?string
