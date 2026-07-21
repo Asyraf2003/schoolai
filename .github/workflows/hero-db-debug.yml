@@ -20,34 +20,14 @@ jobs:
           fetch-depth: 0
 
       - name: Apply patch and capture expected hashes
-        shell: bash
         run: |
-          set +e
-          {
-            git status --short
-            cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
-            echo "PATCH_BYTES=$(wc -c < /tmp/hero-db-admin.patch)"
-            git apply --check /tmp/hero-db-admin.patch
-            git apply /tmp/hero-db-admin.patch
-            grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
-            test -f tests/Feature/Admin/HeroSlideAdminTest.php
-            sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1 > /tmp/home-hero.sha
-            sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1 > /tmp/admin-hero.sha
-            echo "HOME=$(cat /tmp/home-hero.sha)"
-            echo "ADMIN=$(cat /tmp/admin-hero.sha)"
-          } > /tmp/hero-debug-apply.log 2>&1
-          status=$?
-          set -e
-          cat /tmp/hero-debug-apply.log
-          exit "$status"
-
-      - name: Upload apply evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: hero-debug-apply-${{ github.run_id }}
-          path: /tmp/hero-debug-apply.log
-          if-no-files-found: ignore
+          cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
+          git apply --check /tmp/hero-db-admin.patch
+          git apply /tmp/hero-db-admin.patch
+          grep -Fq "falls back to the locale hero contract" tests/Feature/HomeHeroTest.php
+          test -f tests/Feature/Admin/HeroSlideAdminTest.php
+          sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1 > /tmp/home-hero.sha
+          sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1 > /tmp/admin-hero.sha
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -57,22 +37,8 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Verify after PHP setup
-        run: |
-          echo "HOME=$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)"
-          echo "ADMIN=$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)"
-          test "$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)" = "$(cat /tmp/home-hero.sha)"
-          test "$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)" = "$(cat /tmp/admin-hero.sha)"
-
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
-
-      - name: Verify after Composer
-        run: |
-          echo "HOME=$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)"
-          echo "ADMIN=$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)"
-          test "$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)" = "$(cat /tmp/home-hero.sha)"
-          test "$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)" = "$(cat /tmp/admin-hero.sha)"
 
       - uses: actions/setup-node@v4
         with:
@@ -84,23 +50,49 @@ jobs:
           npm ci
           npm run build
 
-      - name: Verify after frontend build
+      - name: Verify before Laravel setup
         run: |
-          echo "HOME=$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)"
-          echo "ADMIN=$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)"
           test "$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)" = "$(cat /tmp/home-hero.sha)"
           test "$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)" = "$(cat /tmp/admin-hero.sha)"
 
-      - name: Prepare Laravel and migrate
+      - name: Copy environment
+        run: cp .env.example .env
+
+      - name: Verify after environment copy
         run: |
-          cp .env.example .env
-          php artisan key:generate
-          php artisan config:clear
+          test "$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)" = "$(cat /tmp/home-hero.sha)"
+          test "$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)" = "$(cat /tmp/admin-hero.sha)"
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Verify after key generation
+        run: |
+          test "$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)" = "$(cat /tmp/home-hero.sha)"
+          test "$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)" = "$(cat /tmp/admin-hero.sha)"
+
+      - name: Clear configuration
+        run: php artisan config:clear
+
+      - name: Verify after config clear
+        run: |
+          test "$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)" = "$(cat /tmp/home-hero.sha)"
+          test "$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)" = "$(cat /tmp/admin-hero.sha)"
+
+      - name: Recreate SQLite file
+        run: |
           rm -f database/database.sqlite
           touch database/database.sqlite
-          php artisan migrate:fresh --force
 
-      - name: Verify after Laravel setup
+      - name: Verify after SQLite recreation
+        run: |
+          test "$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)" = "$(cat /tmp/home-hero.sha)"
+          test "$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)" = "$(cat /tmp/admin-hero.sha)"
+
+      - name: Run migrations
+        run: php artisan migrate:fresh --force
+
+      - name: Verify after migrations
         run: |
           echo "HOME=$(sha256sum tests/Feature/HomeHeroTest.php | cut -d' ' -f1)"
           echo "ADMIN=$(sha256sum tests/Feature/Admin/HeroSlideAdminTest.php | cut -d' ' -f1)"
