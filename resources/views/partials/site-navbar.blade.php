@@ -13,25 +13,55 @@
       $languageItem = [
           'label' => __('pages.common.nav.language'),
           'type' => 'language',
-          'options' => [
-              ['locale' => 'id', 'label' => 'Indonesia', 'short' => 'ID'],
-              ['locale' => 'en', 'label' => 'English', 'short' => 'EN'],
-          ],
+          'options' => [],
       ];
   }
+
+  $languageLabels = match ($currentLocale) {
+      'ar' => [
+          'id' => 'الإندونيسية',
+          'en' => 'الإنجليزية',
+          'ar' => 'العربية',
+      ],
+      'en' => [
+          'id' => 'Indonesian',
+          'en' => 'English',
+          'ar' => 'Arabic',
+      ],
+      default => [
+          'id' => 'Indonesia',
+          'en' => 'English',
+          'ar' => 'Arab',
+      ],
+  };
+
+  $languageItem['options'] = [
+      ['locale' => 'id', 'label' => $languageLabels['id'], 'short' => 'ID'],
+      ['locale' => 'en', 'label' => $languageLabels['en'], 'short' => 'EN'],
+      ['locale' => 'ar', 'label' => $languageLabels['ar'], 'short' => 'AR'],
+  ];
 
   $homeUrl = route('home');
   $contactUrl = '#kontak';
 
   if ($isHomeNav) {
       $menuItems = $siteNavbar['items'] ?? [];
+
+      $languageItemIndex = collect($menuItems)
+          ->search(fn ($item) => ($item['type'] ?? null) === 'language');
+
+      if ($languageItemIndex !== false) {
+          $menuItems[$languageItemIndex] = array_replace($menuItems[$languageItemIndex], $languageItem);
+      } else {
+          $menuItems[] = $languageItem;
+      }
   } else {
       $menuItems = [
           [
               'label' => __('pages.common.nav.home'),
               'href' => $homeUrl,
               'route_patterns' => ['home'],
-          ],
+          ]
       ];
 
       if (! request()->routeIs('artikel', 'artikel.detail')) {
