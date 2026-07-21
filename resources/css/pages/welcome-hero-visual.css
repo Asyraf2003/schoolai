@@ -30,9 +30,9 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     text-shadow: 0 2px 14px rgb(0 0 0 / 0.42);
 }
 
-/* Replace the earlier mixed ornament cluster with a single repeating rosette
- * field. The pattern remains transparent, extremely thin, and hugs the right
- * edge rather than floating over the middle of the photograph.
+/* Hide the older ornament cluster and replace it with a cleaner 12-fold
+ * interlocking Islamic rosette field, closer to the supplied reference.
+ * The geometry remains aligned to the outer edge and never sits behind copy.
  */
 .home-page .hero-cinema__ornament {
     display: none;
@@ -43,29 +43,29 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     position: absolute;
     inset-block: 0;
     inset-inline-end: 0;
-    width: clamp(250px, 31vw, 540px);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240' fill='none'%3E%3Cg stroke='%23ffffff' stroke-width='0.72' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M120 12 138 72 192 48 168 102 228 120 168 138 192 192 138 168 120 228 102 168 48 192 72 138 12 120 72 102 48 48 102 72Z'/%3E%3Cpath d='M120 38 139 84 188 70 156 108 202 120 156 132 188 170 139 156 120 202 101 156 52 170 84 132 38 120 84 108 52 70 101 84Z'/%3E%3Cpath d='M120 72 132 101 162 90 144 114 174 120 144 126 162 150 132 139 120 168 108 139 78 150 96 126 66 120 96 114 78 90 108 101Z'/%3E%3Ccircle cx='120' cy='120' r='34'/%3E%3Cpath d='M120 86 130 110 154 120 130 130 120 154 110 130 86 120 110 110Z'/%3E%3Cpath d='M0 120 60 102 36 48 90 72 108 12M240 120 180 102 204 48 150 72 132 12M120 240 102 180 48 204 72 150 12 132M120 240 138 180 192 204 168 150 228 132'/%3E%3C/g%3E%3C/svg%3E");
+    width: clamp(260px, 32vw, 560px);
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMjAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgMzIwIDMyMCIgZmlsbD0ibm9uZSI+CjxkZWZzPgogIDxnIGlkPSJyIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPGcgaWQ9Im91dGVyIj4KICAgICAgPHBhdGggaWQ9Im9wIiBkPSJNMCA0OCBMMzAgLTEyNCBMNDAgLTgwIEwxOCAtNDQgTDAgLTMwIEwtMTggLTQ0IEwtNDAgLTgwIEwtMzAgLTEyNCBaIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgzMCkiLz4KICAgICAgPHVzZSBocmVmPSIjb3AiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgICA8dXNlIGhyZWY9IiNvcCIgdHJhbnNmb3JtPSJyb3RhdGUoOTApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgxNTApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgxODApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgyMTApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgyNzApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgzMDApIi8+CiAgICAgIDx1c2UgaHJlZj0iI29wIiB0cmFuc2Zvcm09InJvdGF0ZSgzMzApIi8+CiAgICA8L2c+CiAgICA8ZyBpZD0ibWlkIj4KICAgICAgPHBhdGggaWQ9Im1wIiBkPSJNMCA5MiBMMjAgLTY3IEwxOCAtMzQgTDAgLTE0IEwtMTggLTM0IEwtMjAgLTY3IFoiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDMwKSIvPgogICAgICA8dXNlIGhyZWY9IiNtcCIgdHJhbnNmb3JtPSJyb3RhdGUoNjApIi8+CiAgICAgIDx1c2UgaHJlZj0iI21wIiB0cmFuc2Zvcm09InJvdGF0ZSg5MCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDEyMCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDE1MCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDE4MCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDIxMCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDI0MCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDI3MCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDMwMCkiLz4KICAgICAgPHVzZSBocmVmPSIjbXAiIHRyYW5zZm9ybT0icm90YXRlKDMzMCkiLz4KICAgIDwvZz4KICAgIDxnIGlkPSJpbm5lciI+CiAgICAgIDxwYXRoIGlkPSJpcCIgZD0iTTAgLTU4IEwxMiAtMzcgTDEwIC0xOCBMMCAtNCBMLTEwIC0xOCBMLTEyIC0zNyBaIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgzMCkiLz4KICAgICAgPHVzZSBocmVmPSIjaXAiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgICA8dXNlIGhyZWY9IiNpcCIgdHJhbnNmb3JtPSJyb3RhdGUoOTApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgxNTApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgxODApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgyMTApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgyNzApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgzMDApIi8+CiAgICAgIDx1c2UgaHJlZj0iI2lwIiB0cmFuc2Zvcm09InJvdGF0ZSgzMzApIi8+CiAgICA8L2c+CiAgICA8cGF0aCBkPSJNMCAyOCBMNyAtMTAgTDI0IC0xNCBMMTIgMCBMMjQgMTQgTDcgMTAgTDAgMjggTC03IDEwIEwtMjQgMTQgTC0xMiAwIEwtMjQgLTE0IEwtNyAtMTAgWiIvPgogICAgPGNpcmNsZSByPSI2Ii8+CiAgPC9nPgo8L2RlZnM+Cjx1c2UgaHJlZj0iI3IiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2MCAxNjApIi8+Cjx1c2UgaHJlZj0iI3IiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiLz4KPHVzZSBocmVmPSIjciIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzIwIDApIi8+Cjx1c2UgaHJlZj0iI3IiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMzIwKSIvPgo8dXNlIGhyZWY9IiNyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjAgMzIwKSIvPgo8L3N2Zz4=");
     background-repeat: repeat;
-    background-size: clamp(150px, 13vw, 220px) clamp(150px, 13vw, 220px);
+    background-size: clamp(220px, 19vw, 320px) clamp(220px, 19vw, 320px);
     background-position: top right;
-    opacity: 0.34;
-    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 62%, transparent 100%);
-    mask-image: linear-gradient(to left, #000 0%, #000 62%, transparent 100%);
+    opacity: 0.4;
+    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 68%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 0%, #000 68%, transparent 100%);
 }
 
 html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
     inset-inline-end: auto;
     inset-inline-start: 0;
     background-position: top left;
-    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 62%, transparent 100%);
-    mask-image: linear-gradient(to right, #000 0%, #000 62%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 68%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, #000 68%, transparent 100%);
 }
 
 @media (max-width: 767px) {
     .home-page .hero-cinema__ornaments::before {
-        width: min(48vw, 220px);
-        background-size: 132px 132px;
-        opacity: 0.22;
+        width: min(50vw, 230px);
+        background-size: 176px 176px;
+        opacity: 0.28;
     }
 }
 
