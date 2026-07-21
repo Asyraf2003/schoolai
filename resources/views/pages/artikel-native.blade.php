@@ -11,20 +11,20 @@
   <article class="native-article" aria-labelledby="native-article-title">
     @if(! empty($isAdminPreview))
       <div class="native-article__preview-banner" role="status">
-        <strong>Pratinjau admin</strong>
+        <strong>{{ __('runtime.article.preview_admin') }}</strong>
         <span>
-          Artikel ini belum terlihat oleh pengunjung.
+          {{ __('runtime.article.preview_hidden') }}
           @if($article->article_status === \App\Models\Article::STATUS_SCHEDULED && $article->published_at)
-            Dijadwalkan terbit {{ $article->published_at->translatedFormat('j F Y, H:i') }} WIB.
+            {{ __('runtime.article.scheduled_publish', ['date' => $article->published_at->translatedFormat('j F Y, H:i')]) }}
           @else
-            Status saat ini masih draft.
+            {{ __('runtime.article.draft_status') }}
           @endif
         </span>
       </div>
     @endif
 
     <header class="native-article__header">
-      <a href="{{ route('artikel') }}" class="native-article__back">← Semua artikel</a>
+      <a href="{{ route('artikel') }}" class="native-article__back">{{ __('runtime.article.back_all') }}</a>
       <h1 id="native-article-title">{{ $articleTitle }}</h1>
 
       @if($articleSubtitle !== '')
@@ -37,13 +37,13 @@
           <strong>{{ $article->authorForDisplay() }}</strong>
           <small>
             {{ $article->published_at?->translatedFormat('j F Y') }}
-            · {{ $readingMinutes }} menit baca
+            · {{ __('runtime.article.min_read', ['count' => $readingMinutes]) }}
           </small>
         </span>
       </div>
 
       @if(! empty($article->tags))
-        <ul class="native-article__tags" aria-label="Tag artikel">
+        <ul class="native-article__tags" aria-label="{{ __('runtime.article.tag_aria') }}">
           @foreach($article->tags as $tag)
             <li><a href="{{ route('artikel', ['kategori' => $tag]) }}">{{ $tag }}</a></li>
           @endforeach
@@ -58,15 +58,15 @@
     <footer class="native-article__footer">
       <span class="native-article__avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr($article->authorForDisplay(), 0, 1)) }}</span>
       <div>
-        <strong>Ditulis oleh {{ $article->authorForDisplay() }}</strong>
-        <p>Ikuti kabar dan cerita terbaru dari Al Mustaqbal School.</p>
+        <strong>{{ __('runtime.article.written_by', ['author' => $article->authorForDisplay()]) }}</strong>
+        <p>{{ __('runtime.article.follow_updates') }}</p>
       </div>
     </footer>
 
     @if(! empty($relatedArticles))
       <aside class="native-article__related" aria-labelledby="related-articles-title">
-        <span class="native-article__related-eyebrow">Lanjut membaca</span>
-        <h2 id="related-articles-title">Mungkin Anda juga suka</h2>
+        <span class="native-article__related-eyebrow">{{ __('runtime.article.continue_reading') }}</span>
+        <h2 id="related-articles-title">{{ __('runtime.article.related_title') }}</h2>
 
         <div class="native-article__related-grid">
           @foreach($relatedArticles as $related)
@@ -83,7 +83,7 @@
                   @if(! empty($related['description']))
                     <span>{{ $related['description'] }}</span>
                   @endif
-                  <em>{{ $related['reading_minutes'] }} menit baca</em>
+                  <em>{{ __('runtime.article.min_read', ['count' => $related['reading_minutes']]) }}</em>
                 </span>
               </a>
             </article>
