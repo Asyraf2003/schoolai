@@ -13,6 +13,16 @@
   $showcaseFormIsEdit = $showcaseFormMode === 'edit' && $showcaseItemForm?->exists;
   $showcaseAudience = old('audience', $showcaseItemForm->audience ?? 'parents');
   $showcaseMediaType = old('media_type', $showcaseItemForm->media_type ?? 'photo');
+
+  $showcaseLanguageCompletion = [
+    'id' => filled(old('title_id', $showcaseItemForm->title_id ?? '')) && filled(old('description_id', $showcaseItemForm->description_id ?? '')),
+    'en' => filled(old('title_en', $showcaseItemForm->title_en ?? '')) && filled(old('description_en', $showcaseItemForm->description_en ?? '')),
+    'ar' => filled(old('title_ar', $showcaseItemForm->title_ar ?? '')) && filled(old('description_ar', $showcaseItemForm->description_ar ?? '')),
+  ];
+
+  $showcaseActiveLanguage = $errors->hasAny(['title_ar', 'description_ar'])
+    ? 'ar'
+    : ($errors->hasAny(['title_en', 'description_en']) ? 'en' : 'id');
 @endphp
 
 @section('content')
@@ -232,6 +242,7 @@
         <div class="ppdb-showcase-admin__head">
           <div>
             <h2>{{ $showcaseFormIsEdit ? 'Edit item' : 'Tambah item' }}</h2>
+            <p>Indonesia adalah bahasa utama. English dan Arabic opsional dan memakai fallback jika kosong.</p>
           </div>
           @if ($showcaseFormIsEdit)
             <a href="{{ route('admin.ppdb') }}#ppdb-showcase-admin" class="admin-small-action admin-small-action--ghost">Batal edit</a>
@@ -268,33 +279,67 @@
               </select>
               @error('media_type')<small>{{ $message }}</small>@enderror
             </div>
+          </div>
 
-            <div class="admin-field admin-field--wide">
-              <label for="showcase_title_id">Judul Indonesia</label>
-              <input id="showcase_title_id" type="text" name="title_id" value="{{ old('title_id', $showcaseItemForm->title_id ?? '') }}" maxlength="180" required>
-              @error('title_id')<small>{{ $message }}</small>@enderror
+          <div data-language-tabs>
+            <div class="admin-inline-actions" role="tablist" aria-label="Bahasa konten PPDB" style="margin: 14px 0;">
+              <button type="button" class="admin-primary-action {{ $showcaseActiveLanguage === 'id' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $showcaseActiveLanguage === 'id' ? 'true' : 'false' }}" data-language-tab="id">
+                Indonesia · Utama {{ $showcaseLanguageCompletion['id'] ? '✓' : 'Belum' }}
+              </button>
+              <button type="button" class="admin-primary-action {{ $showcaseActiveLanguage === 'en' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $showcaseActiveLanguage === 'en' ? 'true' : 'false' }}" data-language-tab="en">
+                English {{ $showcaseLanguageCompletion['en'] ? '✓' : 'Belum' }}
+              </button>
+              <button type="button" class="admin-primary-action {{ $showcaseActiveLanguage === 'ar' ? '' : 'admin-primary-action--ghost' }}" role="tab" aria-selected="{{ $showcaseActiveLanguage === 'ar' ? 'true' : 'false' }}" data-language-tab="ar">
+                العربية {{ $showcaseLanguageCompletion['ar'] ? '✓' : 'Belum' }}
+              </button>
             </div>
 
-            <div class="admin-field admin-field--wide">
-              <label for="showcase_title_en">Judul Inggris</label>
-              <input id="showcase_title_en" type="text" name="title_en" value="{{ old('title_en', $showcaseItemForm->title_en ?? '') }}" maxlength="180">
-              <em>Boleh kosong. Jika kosong, publik EN memakai judul Indonesia.</em>
-              @error('title_en')<small>{{ $message }}</small>@enderror
+            <div class="gallery-lite-form__grid" data-language-panel="id" @if($showcaseActiveLanguage !== 'id') hidden @endif>
+              <div class="admin-field admin-field--wide">
+                <label for="showcase_title_id">Judul Indonesia</label>
+                <input id="showcase_title_id" type="text" name="title_id" value="{{ old('title_id', $showcaseItemForm->title_id ?? '') }}" maxlength="180" required>
+                @error('title_id')<small>{{ $message }}</small>@enderror
+              </div>
+
+              <div class="admin-field admin-field--wide">
+                <label for="showcase_description_id">Deskripsi Indonesia</label>
+                <textarea id="showcase_description_id" name="description_id" rows="4" maxlength="1200" required>{{ old('description_id', $showcaseItemForm->description_id ?? '') }}</textarea>
+                @error('description_id')<small>{{ $message }}</small>@enderror
+              </div>
             </div>
 
-            <div class="admin-field admin-field--wide">
-              <label for="showcase_description_id">Deskripsi Indonesia</label>
-              <textarea id="showcase_description_id" name="description_id" rows="4" maxlength="1200" required>{{ old('description_id', $showcaseItemForm->description_id ?? '') }}</textarea>
-              @error('description_id')<small>{{ $message }}</small>@enderror
+            <div class="gallery-lite-form__grid" data-language-panel="en" @if($showcaseActiveLanguage !== 'en') hidden @endif>
+              <div class="admin-field admin-field--wide">
+                <label for="showcase_title_en">Judul English</label>
+                <input id="showcase_title_en" type="text" name="title_en" value="{{ old('title_en', $showcaseItemForm->title_en ?? '') }}" maxlength="180" lang="en">
+                @error('title_en')<small>{{ $message }}</small>@enderror
+              </div>
+
+              <div class="admin-field admin-field--wide">
+                <label for="showcase_description_en">Deskripsi English</label>
+                <textarea id="showcase_description_en" name="description_en" rows="4" maxlength="1200" lang="en">{{ old('description_en', $showcaseItemForm->description_en ?? '') }}</textarea>
+                <em>Opsional. Jika kosong, versi English fallback ke Indonesia.</em>
+                @error('description_en')<small>{{ $message }}</small>@enderror
+              </div>
             </div>
 
-            <div class="admin-field admin-field--wide">
-              <label for="showcase_description_en">Deskripsi Inggris</label>
-              <textarea id="showcase_description_en" name="description_en" rows="4" maxlength="1200">{{ old('description_en', $showcaseItemForm->description_en ?? '') }}</textarea>
-              <em>Boleh kosong. Jika kosong, publik EN memakai deskripsi Indonesia.</em>
-              @error('description_en')<small>{{ $message }}</small>@enderror
-            </div>
+            <div class="gallery-lite-form__grid" data-language-panel="ar" @if($showcaseActiveLanguage !== 'ar') hidden @endif>
+              <div class="admin-field admin-field--wide">
+                <label for="showcase_title_ar">Judul Arabic</label>
+                <input id="showcase_title_ar" type="text" name="title_ar" value="{{ old('title_ar', $showcaseItemForm->title_ar ?? '') }}" maxlength="180" lang="ar" dir="rtl">
+                @error('title_ar')<small>{{ $message }}</small>@enderror
+              </div>
 
+              <div class="admin-field admin-field--wide">
+                <label for="showcase_description_ar">Deskripsi Arabic</label>
+                <textarea id="showcase_description_ar" name="description_ar" rows="4" maxlength="1200" lang="ar" dir="rtl">{{ old('description_ar', $showcaseItemForm->description_ar ?? '') }}</textarea>
+                <em>Opsional. Jika kosong, versi Arabic fallback ke Indonesia lalu English.</em>
+                @error('description_ar')<small>{{ $message }}</small>@enderror
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-lite-form__grid" style="margin-top: 14px;">
             <div class="admin-field admin-field--wide ppdb-media-input" data-ppdb-media-photo>
               <label for="showcase_media_file">Upload foto</label>
               <input id="showcase_media_file" type="file" name="media_file" accept="image/jpeg,image/png,image/webp">
@@ -338,6 +383,28 @@
     (() => {
       const form = document.querySelector('[data-ppdb-showcase-form]');
       if (!form) return;
+
+      const tabsRoot = form.querySelector('[data-language-tabs]');
+      if (tabsRoot) {
+        const tabs = [...tabsRoot.querySelectorAll('[data-language-tab]')];
+        const panels = [...tabsRoot.querySelectorAll('[data-language-panel]')];
+
+        function activateLanguage(locale) {
+          tabs.forEach((tab) => {
+            const isActive = tab.dataset.languageTab === locale;
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            tab.classList.toggle('admin-primary-action--ghost', !isActive);
+          });
+
+          panels.forEach((panel) => {
+            panel.hidden = panel.dataset.languagePanel !== locale;
+          });
+        }
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => activateLanguage(tab.dataset.languageTab));
+        });
+      }
 
       const typeSelect = form.querySelector('[data-ppdb-media-type]');
       const photoBox = form.querySelector('[data-ppdb-media-photo]');
