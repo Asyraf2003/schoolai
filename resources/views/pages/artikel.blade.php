@@ -19,27 +19,27 @@
     <div class="container">
       <div class="article-hero-card article-index-hero__card reveal">
         <h1 id="artikel-title" class="public-hero__title">
-          {{ $hero['heading'] ?? $page['title'] ?? 'Artikel' }}
+          {{ $hero['heading'] ?? $page['title'] ?? __('runtime.article.title') }}
         </h1>
 
         @if(! empty($hero['subtitle']))
           <p class="public-hero__subtitle">{{ $hero['subtitle'] }}</p>
         @endif
 
-        <div class="article-toolbar article-toolbar--search-only" aria-label="{{ $hero['search_label'] ?? $hero['heading'] ?? $page['title'] ?? 'Artikel' }}">
-          <label class="public-sr-only" for="articleSearch">{{ $hero['search_placeholder'] ?? 'Cari artikel...' }}</label>
+        <div class="article-toolbar article-toolbar--search-only" aria-label="{{ $hero['search_label'] ?? $hero['heading'] ?? $page['title'] ?? __('runtime.article.title') }}">
+          <label class="public-sr-only" for="articleSearch">{{ $hero['search_placeholder'] ?? __('runtime.article.search_placeholder') }}</label>
           <input
             id="articleSearch"
             type="search"
             class="article-search article-search--wide"
             data-public-search
-            placeholder="{{ $hero['search_placeholder'] ?? 'Cari artikel...' }}"
+            placeholder="{{ $hero['search_placeholder'] ?? __('runtime.article.search_placeholder') }}"
           >
         </div>
 
         @if(! empty($categoryItems))
-          <nav class="article-category-filter" aria-label="Filter kategori artikel">
-            <a href="{{ route('artikel') }}" @class(['is-active' => empty($activeCategory)])>Semua</a>
+          <nav class="article-category-filter" aria-label="{{ __('runtime.article.category_filter_aria') }}">
+            <a href="{{ route('artikel') }}" @class(['is-active' => empty($activeCategory)])>{{ __('runtime.article.all') }}</a>
             @foreach($categoryItems as $category)
               <a
                 href="{{ route('artikel', ['kategori' => $category]) }}"
@@ -56,9 +56,9 @@
     <div class="container">
       @if(! empty($activeCategory))
         <div class="article-category-result">
-          <span>Kategori</span>
+          <span>{{ __('runtime.article.category') }}</span>
           <strong>{{ $activeCategory }}</strong>
-          <span>· {{ count($articleItems) }} artikel</span>
+          <span>· {{ __('runtime.article.article_count', ['count' => count($articleItems)]) }}</span>
         </div>
       @endif
 
@@ -115,8 +115,8 @@
         </div>
       @else
         <div class="article-index-empty reveal">
-          <h2>{{ ! empty($activeCategory) ? 'Belum ada artikel di kategori ini.' : ($page['empty_title'] ?? 'Belum ada artikel.') }}</h2>
-          <p>{{ ! empty($activeCategory) ? 'Pilih kategori lain atau tampilkan semua artikel.' : ($page['empty_description'] ?? 'Artikel sekolah akan tampil di sini setelah admin menambahkannya.') }}</p>
+          <h2>{{ ! empty($activeCategory) ? __('runtime.article.empty_category_title') : ($page['empty_title'] ?? __('runtime.article.empty_title')) }}</h2>
+          <p>{{ ! empty($activeCategory) ? __('runtime.article.empty_category_description') : ($page['empty_description'] ?? __('runtime.article.empty_description')) }}</p>
         </div>
       @endif
     </div>
