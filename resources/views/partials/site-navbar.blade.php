@@ -108,24 +108,25 @@
   $showCta = $isHomeNav && ! empty($siteNavbar['cta']);
   $megaMediaUrl = $siteNavbar['mega_media_url'] ?? asset('media/home/hero-school.png');
   $megaMediaAlt = $siteNavbar['mega_media_alt'] ?? $logoLabel;
+  $languageModalTitle = match ($currentLocale) {
+      'ar' => 'اختر اللغة',
+      'en' => 'Choose language',
+      default => 'Pilih bahasa',
+  };
+  $languageModalClose = match ($currentLocale) {
+      'ar' => 'إغلاق اختيار اللغة',
+      'en' => 'Close language chooser',
+      default => 'Tutup pilihan bahasa',
+  };
 @endphp
 
 <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-  .nav-language__mobile-summary,
-  .nav-language__check {
-    display: none;
-  }
-
-  .nav-language__flag,
-  .nav-language__option > .nav-language__flag {
+  .nav-language__flag {
     width: 100%;
     height: 100%;
     display: block;
-    position: static;
     overflow: hidden;
     border-radius: inherit;
-    clip-path: none;
-    white-space: normal;
   }
 
   .nav-language__flag svg {
@@ -135,109 +136,212 @@
   }
 
   .navbar--public .nav-language__current-flag {
-    width: 24px;
-    height: 24px;
-    flex: 0 0 24px;
-    overflow: hidden;
-    border: 2px solid rgba(31, 46, 43, 0.12);
-    border-radius: 50%;
+    border-color: rgba(31, 46, 43, 0.12);
   }
 
-  .navbar--public .nav-language__panel {
-    min-width: max-content;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 2px;
+  .language-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: grid;
+    place-items: center;
+    padding: clamp(20px, 4vw, 48px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 220ms ease,
+      visibility 0s linear 260ms;
+  }
+
+  .language-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .language-modal__backdrop {
+    position: absolute;
+    inset: 0;
     border: 0;
-    background: transparent;
-    box-shadow: none;
+    background: rgba(2, 16, 14, 0.76);
+    -webkit-backdrop-filter: blur(14px) saturate(115%);
+    backdrop-filter: blur(14px) saturate(115%);
   }
 
-  .navbar--public .nav-language__option {
-    width: 48px;
-    height: 48px;
-    min-height: 48px;
-    padding: 0;
+  .language-modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: min(760px, calc(100vw - 40px));
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(38px, 6vw, 72px) clamp(24px, 6vw, 64px);
     overflow: hidden;
-    border: 3px solid #fff;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 32px;
+    color: #17362f;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(247, 178, 75, 0.18), transparent 42%),
+      rgba(255, 250, 241, 0.98);
+    box-shadow: 0 36px 110px rgba(0, 0, 0, 0.38);
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+    transition:
+      opacity 220ms ease,
+      transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .language-modal.is-open .language-modal__dialog {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .language-modal__close {
+    position: absolute;
+    inset-block-start: 18px;
+    inset-inline-end: 18px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(23, 54, 47, 0.14);
     border-radius: 50%;
-    box-shadow: 0 8px 20px rgba(31, 46, 43, 0.14);
+    color: #17362f;
+    background: rgba(255, 255, 255, 0.72);
+    font-size: 1.65rem;
+    line-height: 1;
+    cursor: pointer;
   }
 
-  .navbar--public .nav-language__option.is-active {
-    border-color: #e9a53b;
+  .language-modal__title {
+    margin: 0 0 clamp(28px, 5vw, 48px);
+    color: #17362f;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 820;
+    text-align: center;
+  }
+
+  .language-modal__options {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: clamp(22px, 5vw, 54px);
+  }
+
+  .language-modal__form {
+    margin: 0;
+  }
+
+  .language-modal__option {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    border: 0;
+    color: #294c44;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .language-modal__flag {
+    width: clamp(96px, 10vw, 142px);
+    height: clamp(96px, 10vw, 142px);
+    display: block;
+    overflow: hidden;
+    border: 5px solid rgba(255, 255, 255, 0.96);
+    border-radius: 50%;
+    background: #fff;
     box-shadow:
-      0 0 0 3px rgba(233, 165, 59, 0.18),
-      0 8px 20px rgba(31, 46, 43, 0.16);
+      0 16px 38px rgba(20, 45, 39, 0.2),
+      0 0 0 1px rgba(23, 54, 47, 0.08);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
   }
 
-  @media (max-width: 767px) {
+  .language-modal__option:hover .language-modal__flag,
+  .language-modal__option:focus-visible .language-modal__flag {
+    border-color: #f7c66f;
+    box-shadow:
+      0 0 0 6px rgba(247, 198, 111, 0.18),
+      0 22px 46px rgba(20, 45, 39, 0.24);
+    transform: translateY(-5px) scale(1.03);
+  }
+
+  .language-modal__option.is-active .language-modal__flag {
+    border-color: #f7b24b;
+    box-shadow:
+      0 0 0 7px rgba(247, 178, 75, 0.2),
+      0 20px 42px rgba(20, 45, 39, 0.22);
+  }
+
+  .language-modal__label {
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 1180px) {
     .navbar__menu .nav-language {
       width: 100%;
-      margin-top: 10px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(51, 49, 77, 0.1);
+      margin-block-start: 10px;
+      padding-block-start: 16px;
+      border-block-start: 1px solid rgba(51, 49, 77, 0.1);
     }
 
-    .navbar__menu .nav-language__button,
-    .navbar__menu .nav-language__mobile-summary {
+    .navbar__menu .nav-language__button {
+      display: flex !important;
+      width: 100%;
+      justify-content: flex-start !important;
+      color: #17362f;
+    }
+
+    .navbar__menu .nav-language__current-flag {
       display: none;
     }
+  }
 
-    .navbar__menu .nav-language__panel,
-    .navbar__menu .nav-language.is-open .nav-language__panel {
-      position: static !important;
-      inset: auto !important;
-      width: auto !important;
-      min-width: 0 !important;
-      display: flex !important;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 12px;
-      margin: 0 !important;
-      padding: 2px !important;
-      border: 0 !important;
-      background: transparent !important;
-      box-shadow: none !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      pointer-events: auto !important;
-      transform: none !important;
+  @media (max-width: 640px) {
+    .language-modal {
+      padding: 16px;
     }
 
-    .navbar__menu .nav-language__form {
-      flex: 0 0 auto;
-      margin: 0;
+    .language-modal__dialog {
+      width: min(100%, 430px);
+      min-height: 300px;
+      padding: 58px 18px 38px;
+      border-radius: 26px;
     }
 
-    .navbar__menu .nav-language__option {
-      width: 52px;
-      height: 52px;
-      min-height: 52px;
-      display: grid;
-      place-items: center;
-      padding: 0;
-      overflow: hidden;
-      border: 3px solid rgba(255, 255, 255, 0.88);
-      border-radius: 50%;
-      background: transparent;
-      box-shadow: 0 8px 20px rgba(20, 45, 39, 0.14);
-      transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        border-color 0.18s ease;
+    .language-modal__title {
+      margin-bottom: 30px;
+      font-size: 1.45rem;
     }
 
-    .navbar__menu .nav-language__option.is-active {
-      border-color: #e9a53b;
-      box-shadow:
-        0 0 0 3px rgba(233, 165, 59, 0.2),
-        0 9px 22px rgba(20, 45, 39, 0.18);
+    .language-modal__options {
+      gap: clamp(12px, 4vw, 22px);
     }
 
-    .navbar__menu .nav-language__option:active {
-      transform: scale(0.94);
+    .language-modal__flag {
+      width: clamp(76px, 23vw, 104px);
+      height: clamp(76px, 23vw, 104px);
+      border-width: 4px;
+    }
+
+    .language-modal__label {
+      font-size: 0.72rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .language-modal,
+    .language-modal__dialog,
+    .language-modal__flag {
+      transition-duration: 0.01ms !important;
     }
   }
 </style>
@@ -293,36 +397,15 @@
               <button
                 type="button"
                 class="nav-link nav-language__button"
-                aria-haspopup="true"
-                aria-expanded="false"
+                data-language-modal-open
+                aria-haspopup="dialog"
+                aria-controls="languageModal"
               >
                 <span>{{ $item['label'] }}</span>
-                <span class="nav-language__current-flag">
+                <span class="nav-language__current-flag" aria-hidden="true">
                   @include('partials.language-flag', ['locale' => $currentOption['locale'] ?? $currentLocale])
                 </span>
               </button>
-
-              <div class="nav-language__panel" role="menu" aria-label="{{ $item['label'] }}">
-                @foreach ($item['options'] ?? [] as $option)
-                  <form method="POST" action="{{ route('language.switch', $option['locale']) }}" class="nav-language__form">
-                    @csrf
-                    <button
-                      type="submit"
-                      class="nav-language__option {{ $currentLocale === $option['locale'] ? 'is-active' : '' }}"
-                      role="menuitem"
-                      lang="{{ $option['locale'] }}"
-                      aria-label="{{ $option['label'] }}"
-                      title="{{ $option['label'] }}"
-                      @if ($currentLocale === $option['locale'])
-                        aria-current="true"
-                      @endif
-                    >
-                      @include('partials.language-flag', ['locale' => $option['locale']])
-                      <span class="sr-only">{{ $option['label'] }}</span>
-                    </button>
-                  </form>
-                @endforeach
-              </div>
             @elseif ($hasMegaMenu)
               <button
                 type="button"
@@ -424,3 +507,137 @@
 </header>
 
 <div class="nav-overlay" id="navOverlay"></div>
+
+<div
+  class="language-modal"
+  id="languageModal"
+  data-language-modal
+  aria-hidden="true"
+>
+  <button
+    type="button"
+    class="language-modal__backdrop"
+    data-language-modal-close
+    aria-label="{{ $languageModalClose }}"
+  ></button>
+
+  <div
+    class="language-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="languageModalTitle"
+    tabindex="-1"
+  >
+    <button
+      type="button"
+      class="language-modal__close"
+      data-language-modal-close
+      aria-label="{{ $languageModalClose }}"
+    >
+      ×
+    </button>
+
+    <h2 class="language-modal__title" id="languageModalTitle">{{ $languageModalTitle }}</h2>
+
+    <div class="language-modal__options">
+      @foreach ($languageItem['options'] ?? [] as $option)
+        <form method="POST" action="{{ route('language.switch', $option['locale']) }}" class="language-modal__form">
+          @csrf
+          <button
+            type="submit"
+            class="language-modal__option {{ $currentLocale === $option['locale'] ? 'is-active' : '' }}"
+            lang="{{ $option['locale'] }}"
+            aria-label="{{ $option['label'] }}"
+            @if ($currentLocale === $option['locale']) aria-current="true" @endif
+          >
+            <span class="language-modal__flag">
+              @include('partials.language-flag', ['locale' => $option['locale']])
+            </span>
+            <span class="language-modal__label">{{ $option['label'] }}</span>
+          </button>
+        </form>
+      @endforeach
+    </div>
+  </div>
+</div>
+
+<script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+  document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.querySelector('[data-language-modal]');
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-language-modal-open]'));
+
+    if (!modal || !triggers.length) return;
+
+    var dialog = modal.querySelector('.language-modal__dialog');
+    var closeControls = Array.prototype.slice.call(modal.querySelectorAll('[data-language-modal-close]'));
+    var hamburger = document.getElementById('hamburgerBtn');
+    var navMenu = document.getElementById('navMenu');
+    var navOverlay = document.getElementById('navOverlay');
+    var lastFocused = null;
+    var previousOverflow = '';
+
+    function closeMobileMenu() {
+      if (!navMenu || !navMenu.classList.contains('active')) return;
+
+      navMenu.classList.remove('active');
+      if (navOverlay) navOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+
+      if (hamburger) {
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute(
+          'aria-label',
+          hamburger.getAttribute('data-mobile-open-label') || 'Open menu'
+        );
+      }
+    }
+
+    function openLanguageModal(trigger) {
+      var openedFromMobileMenu = navMenu && navMenu.classList.contains('active');
+      lastFocused = openedFromMobileMenu && hamburger
+        ? hamburger
+        : (trigger || document.activeElement);
+
+      closeMobileMenu();
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+
+      window.requestAnimationFrame(function () {
+        if (dialog) dialog.focus({ preventScroll: true });
+      });
+    }
+
+    function closeLanguageModal() {
+      if (!modal.classList.contains('is-open')) return;
+
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = previousOverflow;
+
+      if (lastFocused && document.documentElement.contains(lastFocused)) {
+        lastFocused.focus({ preventScroll: true });
+      }
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openLanguageModal(trigger);
+      });
+    });
+
+    closeControls.forEach(function (control) {
+      control.addEventListener('click', closeLanguageModal);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+        event.preventDefault();
+        closeLanguageModal();
+      }
+    });
+  });
+</script>
