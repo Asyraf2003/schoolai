@@ -21,7 +21,7 @@ final class SetLocale
             ?? $request->cookie('site_locale')
             ?? config('app.locale');
 
-        if (! in_array($locale, ['id', 'en'], true)) {
+        if (! in_array($locale, ['id', 'en', 'ar'], true)) {
             $locale = config('app.locale');
         }
 
