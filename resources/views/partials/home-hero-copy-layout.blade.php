@@ -3,6 +3,7 @@
     'resources/css/pages/welcome-mega-menu.css',
     'resources/css/pages/welcome-hero-motion.css',
     'resources/css/pages/welcome-hero-visual.css',
+    'resources/css/pages/welcome-hero-youtube.css',
     'resources/js/pages/welcome-hero-youtube.js',
   ])
 
