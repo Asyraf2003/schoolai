@@ -44,6 +44,9 @@ jobs:
             rm .github/hero-db-admin.patch.gz.b64.part*
             rm .github/hero-verification-started
             rm -f .github/hero-verification-error.log
+            rm -f .github/hero-verification-test-error.log
+            rm -f .github/hero-verification-suite-error.log
+            rm -f .github/hero-verification-build-error.log
             rm .github/workflows/hero-db-admin-verify.yml
             git diff --check
           }
@@ -97,13 +100,67 @@ jobs:
         run: php artisan migrate:fresh --force
 
       - name: Run focused hero tests
-        run: php artisan test tests/Feature/HomeHeroTest.php tests/Feature/Admin/HeroSlideAdminTest.php
+        shell: bash
+        run: |
+          set +e
+          php artisan test tests/Feature/HomeHeroTest.php tests/Feature/Admin/HeroSlideAdminTest.php > /tmp/hero-focused-tests.log 2>&1
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            git reset --hard HEAD
+            git clean -fd
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            cp /tmp/hero-focused-tests.log .github/hero-verification-test-error.log
+            git add .github/hero-verification-test-error.log
+            git commit -m "chore: capture hero focused test failure"
+            git push origin HEAD:agent/hero-db-admin-verify
+            cat /tmp/hero-focused-tests.log
+            exit "$status"
+          fi
+          cat /tmp/hero-focused-tests.log
 
       - name: Run Laravel regression suite
-        run: php artisan test
+        shell: bash
+        run: |
+          set +e
+          php artisan test > /tmp/hero-regression-suite.log 2>&1
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            git reset --hard HEAD
+            git clean -fd
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            cp /tmp/hero-regression-suite.log .github/hero-verification-suite-error.log
+            git add .github/hero-verification-suite-error.log
+            git commit -m "chore: capture hero regression test failure"
+            git push origin HEAD:agent/hero-db-admin-verify
+            cat /tmp/hero-regression-suite.log
+            exit "$status"
+          fi
+          cat /tmp/hero-regression-suite.log
 
       - name: Build frontend assets
-        run: npm run build
+        shell: bash
+        run: |
+          set +e
+          npm run build > /tmp/hero-build.log 2>&1
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            git reset --hard HEAD
+            git clean -fd
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            cp /tmp/hero-build.log .github/hero-verification-build-error.log
+            git add .github/hero-verification-build-error.log
+            git commit -m "chore: capture hero frontend build failure"
+            git push origin HEAD:agent/hero-db-admin-verify
+            cat /tmp/hero-build.log
+            exit "$status"
+          fi
+          cat /tmp/hero-build.log
 
       - name: Squash verified implementation into one commit
         run: |
