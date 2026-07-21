@@ -22,9 +22,10 @@ final class PersistArabicArticleCanvas
             return $next($request);
         }
 
-        $hasArabicPayload = $request->exists('title_ar')
-            || $request->exists('subtitle_ar')
-            || $request->exists('content_ar');
+        $input = $request->all();
+        $hasArabicPayload = array_key_exists('title_ar', $input)
+            || array_key_exists('subtitle_ar', $input)
+            || array_key_exists('content_ar', $input);
 
         if (! $hasArabicPayload) {
             return $next($request);
