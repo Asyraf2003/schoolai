@@ -12,21 +12,25 @@ use Illuminate\Support\Facades\Schema;
 
 final class HomeController extends Controller
 {
+    private ?array $homeDataCache = null;
+
     public function __invoke(): View
     {
+        $home = $this->homeData();
+
         return view('welcome', [
-            'meta' => __('home.meta'),
+            'meta' => $home['meta'] ?? [],
             'hero' => $this->heroData(),
             'navbar' => $this->navbarData(),
             'stats' => $this->statsData(),
-            'quickInfo' => __('home.quick_info.items'),
-            'ppdb' => __('home.ppdb'),
-            'visiMisi' => __('home.visi_misi'),
-            'schoolValues' => __('home.nilai_sekolah'),
-            'featuredPrograms' => __('home.program_unggulan'),
+            'quickInfo' => $home['quick_info']['items'] ?? [],
+            'ppdb' => $home['ppdb'] ?? [],
+            'visiMisi' => $home['visi_misi'] ?? [],
+            'schoolValues' => $home['nilai_sekolah'] ?? [],
+            'featuredPrograms' => $home['program_unggulan'] ?? [],
             'gallerySection' => $this->gallerySectionData(),
             'articlesSection' => $this->articlesSectionData(),
-            'footerSection' => __('home.footer'),
+            'footerSection' => $home['footer'] ?? [],
         ]);
     }
 
@@ -36,9 +40,9 @@ final class HomeController extends Controller
      */
     private function heroData(): array
     {
-        $hero = __('home.hero');
+        $hero = $this->homeSection('hero');
 
-        if (! is_array($hero)) {
+        if ($hero === []) {
             return [];
         }
 
@@ -52,9 +56,7 @@ final class HomeController extends Controller
                 ? $ppdbSetting->publicRegistrationUrl()
                 : null;
 
-            $hero['primary_cta']['label'] = app()->getLocale() === 'en'
-                ? 'Apply Online Now'
-                : 'Daftar PPDB Online';
+            $hero['primary_cta']['label'] = __('runtime.home.apply_online_now');
             $hero['primary_cta']['href'] = $registrationUrl ?: route('ppdb');
         }
 
@@ -96,8 +98,10 @@ final class HomeController extends Controller
             ->get([
                 'value',
                 'value_en',
+                'value_ar',
                 'label',
                 'label_en',
+                'label_ar',
             ]);
 
         if ($statistics->isEmpty()) {
@@ -114,6 +118,13 @@ final class HomeController extends Controller
 
     private function languageStatsData(): array
     {
+        $stats = $this->homeSection('stats');
+        $items = $stats['items'] ?? [];
+
+        if (! is_array($items)) {
+            return [];
+        }
+
         return array_map(
             fn (array $item): array => [
                 'value' => trim((string) ($item['count'] ?? '') . (string) ($item['suffix'] ?? '')),
@@ -121,24 +132,22 @@ final class HomeController extends Controller
                 'suffix' => $item['suffix'] ?? '',
                 'label' => $item['label'] ?? '',
             ],
-            __('home.stats.items')
+            $items,
         );
     }
 
     private function navbarData(): array
     {
-        $navbar = __('home.navbar');
+        $navbar = $this->homeSection('navbar');
 
-        if (! is_array($navbar)) {
+        if ($navbar === []) {
             return [];
         }
 
         $navbar['logo']['image_url'] = $this->publicAssetUrl($navbar['logo']['image'] ?? null);
 
         if (isset($navbar['cta']) && is_array($navbar['cta'])) {
-            $navbar['cta']['label'] = app()->getLocale() === 'en'
-                ? 'Admission Info'
-                : 'Info PPDB';
+            $navbar['cta']['label'] = __('runtime.home.admission_info');
             $navbar['cta']['href'] = route('ppdb');
         }
 
@@ -147,9 +156,9 @@ final class HomeController extends Controller
 
     private function gallerySectionData(): array
     {
-        $gallery = __('home.galeri');
+        $gallery = $this->homeSection('galeri');
 
-        if (! is_array($gallery)) {
+        if ($gallery === []) {
             return ['items' => []];
         }
 
@@ -158,12 +167,11 @@ final class HomeController extends Controller
         return $gallery;
     }
 
-
     private function articlesSectionData(): array
     {
-        $section = __('home.artikel');
+        $section = $this->homeSection('artikel');
 
-        if (! is_array($section)) {
+        if ($section === []) {
             return ['items' => []];
         }
 
@@ -197,20 +205,19 @@ final class HomeController extends Controller
                 return [
                     'issue' => str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT),
                     'title' => $article->titleForLocale($locale),
-                    'description' => $article->descriptionForLocale($locale) ?: (
-                        $locale === 'en'
-                            ? 'Read the latest school story by ' . $article->authorForDisplay() . '.'
-                            : 'Baca cerita terbaru sekolah oleh ' . $article->authorForDisplay() . '.'
-                    ),
+                    'description' => $article->descriptionForLocale($locale)
+                        ?: __('runtime.home.latest_story_by', ['author' => $article->authorForDisplay()]),
                     'highlight' => $article->authorForDisplay(),
-                    'category' => $locale === 'en' ? 'Article' : 'Artikel',
+                    'category' => __('runtime.home.article'),
                     'date' => $publishedAt
                         ? $publishedAt->translatedFormat('j F Y, H:i').' WIB'
                         : '',
                     'published_at' => $publishedAt?->toIso8601String() ?? '',
                     'reading_time' => $article->isNative()
-                        ? max(1, (int) ceil(max(1, $article->word_count) / 220)) . ($locale === 'en' ? ' min read' : ' menit baca')
-                        : ($locale === 'en' ? 'External article' : 'Artikel eksternal'),
+                        ? __('runtime.home.min_read', [
+                            'count' => max(1, (int) ceil(max(1, $article->word_count) / 220)),
+                        ])
+                        : __('runtime.home.external_article'),
                     'href' => $article->isNative()
                         ? $article->linkForLocale($locale)
                         : $this->publicArticleUrl($article->linkForLocale($locale)),
@@ -259,7 +266,8 @@ final class HomeController extends Controller
                 ->all();
         }
 
-        $items = __('home.galeri.items');
+        $gallery = $this->homeSection('galeri');
+        $items = $gallery['items'] ?? [];
 
         if (! is_array($items)) {
             return [];
@@ -270,16 +278,16 @@ final class HomeController extends Controller
                 fn (mixed $item): ?array => is_array($item)
                     ? $this->normalizeGalleryItem($item)
                     : null,
-                $items
-            )
+                $items,
+            ),
         ));
 
         usort(
             $normalizedItems,
             fn (array $first, array $second): int => strcmp(
                 (string) ($second['published_at'] ?? ''),
-                (string) ($first['published_at'] ?? '')
-            )
+                (string) ($first['published_at'] ?? ''),
+            ),
         );
 
         return $normalizedItems;
@@ -310,7 +318,9 @@ final class HomeController extends Controller
             : null;
 
         $item['type'] = $type;
-        $item['type_label'] = (string) ($item['type_label'] ?? ($type === 'video' ? 'Video' : (app()->getLocale() === 'en' ? 'Photo' : 'Foto')));
+        $item['type_label'] = (string) ($item['type_label'] ?? (
+            $type === 'video' ? __('runtime.home.video') : __('runtime.home.photo')
+        ));
         $item['is_video'] = $type === 'video';
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
@@ -324,7 +334,7 @@ final class HomeController extends Controller
             'facebook' => 'Facebook',
             'tiktok' => 'TikTok',
             'vimeo' => 'Vimeo',
-            default => app()->getLocale() === 'en' ? 'Video' : 'Video',
+            default => __('runtime.home.video'),
         };
         $item['published_at'] = (string) ($item['published_at'] ?? $item['date'] ?? '');
         $item['date'] = (string) ($item['date'] ?? $item['published_at']);
@@ -408,7 +418,6 @@ final class HomeController extends Controller
         return $facebookPath === 'watch' && preg_match('~^\d+$~', (string) ($facebookQuery['v'] ?? '')) === 1;
     }
 
-
     private function videoProvider(?string $embedUrl): string
     {
         if (! is_string($embedUrl) || trim($embedUrl) === '') {
@@ -486,6 +495,28 @@ final class HomeController extends Controller
     private function publicArticleUrl(string $url): ?string
     {
         return PublicUrl::normalize($url, ['/admin', '/login', '/auth']);
+    }
+
+    private function homeData(): array
+    {
+        if ($this->homeDataCache !== null) {
+            return $this->homeDataCache;
+        }
+
+        $base = __('home');
+        $parity = __('home_parity');
+
+        $base = is_array($base) ? $base : [];
+        $parity = is_array($parity) ? $parity : [];
+
+        return $this->homeDataCache = array_replace_recursive($base, $parity);
+    }
+
+    private function homeSection(string $key): array
+    {
+        $section = $this->homeData()[$key] ?? [];
+
+        return is_array($section) ? $section : [];
     }
 
     private function publicAssetUrl(mixed $path): ?string
