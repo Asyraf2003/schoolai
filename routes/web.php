@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::post('/bahasa/{locale}', function (string $locale, Request $request) {
-    abort_unless(in_array($locale, ['id', 'en'], true), 404);
+    abort_unless(in_array($locale, ['id', 'en', 'ar'], true), 404);
 
     $request->session()->put('locale', $locale);
 
@@ -41,7 +41,7 @@ Route::post('/bahasa/{locale}', function (string $locale, Request $request) {
     }
 
     return redirect($previous)->withCookie(cookie('site_locale', $locale, 60 * 24 * 365));
-})->whereIn('locale', ['id', 'en'])->name('language.switch');
+})->whereIn('locale', ['id', 'en', 'ar'])->name('language.switch');
 
 Route::get('/ppdb', PpdbPageController::class)->name('ppdb');
 Route::get('/artikel', ArticlePageController::class)->name('artikel');
