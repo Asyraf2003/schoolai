@@ -3,6 +3,7 @@
     'resources/css/pages/welcome-mega-menu.css',
     'resources/css/pages/welcome-hero-motion.css',
     'resources/css/pages/welcome-hero-visual.css',
+    'resources/js/pages/welcome-hero-youtube.js',
   ])
 
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
