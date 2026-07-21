@@ -1,0 +1,149 @@
+/* Desktop mega menu surface inspired by full-width university navigation patterns.
+ * Keeps the Al Mustaqbal visual language while making header + menu read as one plane.
+ */
+
+@media (min-width: 1181px) {
+    .home-page .navbar.has-open-menu {
+        background: rgb(255 252 246 / 0.985);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        box-shadow: none;
+    }
+
+    .home-page .nav-mega__panel {
+        position: fixed;
+        inset-block-start: 78px;
+        inset-inline: 0;
+        width: 100vw;
+        min-height: clamp(360px, 47vh, 520px);
+        max-height: calc(100dvh - 78px);
+        grid-template-columns: minmax(0, 44vw) minmax(0, 1fr);
+        grid-template-rows: minmax(360px, 47vh);
+        overflow: auto;
+        border: 0;
+        border-radius: 0;
+        color: #172c28;
+        background: #fffaf1;
+        box-shadow: 0 24px 58px rgb(3 18 16 / 0.2);
+        transform: translateY(-10px);
+        transform-origin: top center;
+        clip-path: none;
+        transition:
+            opacity 180ms ease,
+            transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 300ms;
+    }
+
+    .home-page .nav-mega.is-open .nav-mega__panel {
+        transform: translateY(0);
+        clip-path: none;
+        transition-delay: 0s;
+    }
+
+    .home-page .nav-mega__media {
+        grid-column: 1;
+        grid-row: 1;
+        min-height: 100%;
+        height: 100%;
+        background: #103c33;
+    }
+
+    .home-page .nav-mega__media img {
+        height: 100%;
+        object-position: center;
+        transform: scale(1.035);
+    }
+
+    .home-page .nav-mega.is-open .nav-mega__media img {
+        transform: scale(1);
+    }
+
+    .home-page .nav-mega__media-shade {
+        background:
+            linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.2) 58%, transparent 100%),
+            linear-gradient(to right, transparent 68%, rgb(2 18 15 / 0.18));
+    }
+
+    html[dir="rtl"] .home-page .nav-mega__media-shade {
+        background:
+            linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.2) 58%, transparent 100%),
+            linear-gradient(to left, transparent 68%, rgb(2 18 15 / 0.18));
+    }
+
+    .home-page .nav-mega__intro {
+        grid-column: 1;
+        grid-row: 1;
+        z-index: 2;
+        min-height: 0;
+        align-self: end;
+        justify-content: flex-end;
+        padding: clamp(32px, 4vw, 68px);
+        pointer-events: none;
+        background: linear-gradient(to top, rgb(2 18 15 / 0.72), transparent 76%);
+    }
+
+    .home-page .nav-mega__intro::after {
+        display: none;
+    }
+
+    .home-page .nav-mega__eyebrow {
+        color: #f7c66f;
+    }
+
+    .home-page .nav-mega__title {
+        max-width: 15ch;
+        font-size: clamp(1.8rem, 2.8vw, 3rem);
+        line-height: 1.04;
+    }
+
+    .home-page .nav-mega__description {
+        max-width: 44ch;
+        color: rgb(255 255 255 / 0.82);
+        font-size: 0.9rem;
+    }
+
+    .home-page .nav-mega__links {
+        grid-column: 2;
+        grid-row: 1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-content: center;
+        gap: 0 clamp(34px, 4vw, 72px);
+        padding: clamp(38px, 5vw, 76px) clamp(48px, 7vw, 118px);
+        background: #fffaf1;
+    }
+
+    .home-page .nav-mega__link {
+        min-height: 78px;
+        align-content: center;
+        gap: 5px;
+        padding: 18px 0;
+        border: 0;
+        border-block-end: 1px solid rgb(23 79 66 / 0.16);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .home-page .nav-mega__link:hover,
+    .home-page .nav-mega__link:focus-visible {
+        border-block-end-color: #b85a1f;
+        box-shadow: none;
+        transform: translateX(6px);
+    }
+
+    html[dir="rtl"] .home-page .nav-mega__link:hover,
+    html[dir="rtl"] .home-page .nav-mega__link:focus-visible {
+        transform: translateX(-6px);
+    }
+
+    .home-page .nav-mega__link strong {
+        font-size: clamp(0.98rem, 1.05vw, 1.12rem);
+    }
+
+    .home-page .nav-mega__link small {
+        max-width: 38ch;
+        font-size: 0.78rem;
+        line-height: 1.5;
+    }
+}
