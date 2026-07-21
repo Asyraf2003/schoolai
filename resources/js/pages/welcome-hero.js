@@ -139,8 +139,11 @@ function initHeroSlider(root) {
         return slide.classList.contains('is-active');
     }));
     var timer = null;
+    var transitionTimer = null;
+    var transitionDuration = 1060;
     var userPaused = false;
     var pointerStart = null;
+    var hasPresentedInitialSlide = false;
 
     if (!slides.length) return;
     if (!Number.isFinite(duration) || duration < 4000) duration = 7000;
@@ -231,6 +234,17 @@ function initHeroSlider(root) {
         }
     }
 
+    function clearTransition() {
+        if (transitionTimer !== null) {
+            window.clearTimeout(transitionTimer);
+            transitionTimer = null;
+        }
+
+        slides.forEach(function (slide) {
+            slide.classList.remove('is-entering', 'is-leaving');
+        });
+    }
+
     function scheduleNext() {
         clearTimer();
         resetProgress();
@@ -258,14 +272,40 @@ function initHeroSlider(root) {
 
     function showSlide(requestedIndex, announce) {
         var nextIndex = (requestedIndex + slides.length) % slides.length;
+        var previousIndex = currentIndex;
+        var shouldAnimate = hasPresentedInitialSlide &&
+            nextIndex !== previousIndex &&
+            !reducedMotion.matches;
+
+        clearTransition();
         currentIndex = nextIndex;
 
         slides.forEach(function (slide, index) {
             var isActive = index === currentIndex;
+
             slide.classList.toggle('is-active', isActive);
             slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
             slide.inert = !isActive;
+
+            if (shouldAnimate && index === previousIndex) {
+                slide.classList.add('is-leaving');
+            }
+
+            if (shouldAnimate && isActive) {
+                slide.classList.add('is-entering');
+            }
         });
+
+        if (shouldAnimate) {
+            transitionTimer = window.setTimeout(function () {
+                slides.forEach(function (slide) {
+                    slide.classList.remove('is-entering', 'is-leaving');
+                });
+                transitionTimer = null;
+            }, transitionDuration);
+        }
+
+        hasPresentedInitialSlide = true;
 
         dots.forEach(function (dot, index) {
             var isActive = index === currentIndex;
@@ -368,6 +408,7 @@ function initHeroSlider(root) {
 
     window.addEventListener('pagehide', function () {
         clearTimer();
+        clearTransition();
         removeMotionListener();
         slides.forEach(function (slide) {
             var video = slide.querySelector('[data-hero-video]');

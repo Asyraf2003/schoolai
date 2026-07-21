@@ -28,6 +28,11 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
             })
             ->assertSee('data-hero-slider', false)
             ->assertSee('data-media-type="video"', false)
-            ->assertSee('data-nav-mega', false);
+            ->assertSee('data-hero-ornaments', false)
+            ->assertSee('data-nav-mega', false)
+            ->assertSee('nav-mega__media', false)
+            ->assertSee('nav-language__flag--id', false)
+            ->assertSee('nav-language__flag--en', false)
+            ->assertSee('nav-language__flag--ar', false);
     }
 });

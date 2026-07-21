@@ -35,18 +35,6 @@
       ],
   };
 
-  $languageMobileTitle = match ($currentLocale) {
-      'ar' => 'اختر اللغة',
-      'en' => 'Choose language',
-      default => 'Pilih bahasa',
-  };
-
-  $languageMobileActive = match ($currentLocale) {
-      'ar' => 'اللغة الحالية',
-      'en' => 'Current language',
-      default => 'Bahasa aktif',
-  };
-
   $languageItem['options'] = [
       ['locale' => 'id', 'label' => $languageLabels['id'], 'short' => 'ID'],
       ['locale' => 'en', 'label' => $languageLabels['en'], 'short' => 'EN'],
@@ -118,12 +106,70 @@
   $logoHref = $isHomeNav ? ($logo['href'] ?? '#beranda') : $homeUrl;
   $logoLabel = trim((string) (($logo['line_1'] ?? __('pages.common.school_name')) . ' ' . ($logo['line_2'] ?? '')));
   $showCta = $isHomeNav && ! empty($siteNavbar['cta']);
+  $megaMediaUrl = $siteNavbar['mega_media_url'] ?? asset('media/home/hero-school.png');
+  $megaMediaAlt = $siteNavbar['mega_media_alt'] ?? $logoLabel;
 @endphp
 
 <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
   .nav-language__mobile-summary,
   .nav-language__check {
     display: none;
+  }
+
+  .nav-language__flag,
+  .nav-language__option > .nav-language__flag {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: static;
+    overflow: hidden;
+    border-radius: inherit;
+    clip-path: none;
+    white-space: normal;
+  }
+
+  .nav-language__flag svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .navbar--public .nav-language__current-flag {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    overflow: hidden;
+    border: 2px solid rgba(31, 46, 43, 0.12);
+    border-radius: 50%;
+  }
+
+  .navbar--public .nav-language__panel {
+    min-width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .navbar--public .nav-language__option {
+    width: 48px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0;
+    overflow: hidden;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 8px 20px rgba(31, 46, 43, 0.14);
+  }
+
+  .navbar--public .nav-language__option.is-active {
+    border-color: #e9a53b;
+    box-shadow:
+      0 0 0 3px rgba(233, 165, 59, 0.18),
+      0 8px 20px rgba(31, 46, 43, 0.16);
   }
 
   @media (max-width: 767px) {
@@ -134,62 +180,23 @@
       border-top: 1px solid rgba(51, 49, 77, 0.1);
     }
 
-    .navbar__menu .nav-language__button {
-      display: none;
-    }
-
+    .navbar__menu .nav-language__button,
     .navbar__menu .nav-language__mobile-summary {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .nav-language__mobile-title {
-      display: block;
-      color: var(--color-ink);
-      font-size: 0.86rem;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .nav-language__mobile-current {
-      display: block;
-      margin-top: 3px;
-      color: var(--color-ink-soft);
-      font-size: 0.72rem;
-      font-weight: 600;
-    }
-
-    .nav-language__mobile-badge {
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 40px;
-      height: 30px;
-      padding-inline: 10px;
-      border: 1px solid rgba(194, 94, 30, 0.18);
-      border-radius: 999px;
-      background: var(--color-orange-soft);
-      color: #9e3f0d;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      display: none;
     }
 
     .navbar__menu .nav-language__panel,
     .navbar__menu .nav-language.is-open .nav-language__panel {
       position: static !important;
       inset: auto !important;
-      display: grid !important;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      width: 100% !important;
+      width: auto !important;
       min-width: 0 !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
       margin: 0 !important;
-      padding: 0 !important;
+      padding: 2px !important;
       border: 0 !important;
       background: transparent !important;
       box-shadow: none !important;
@@ -200,95 +207,37 @@
     }
 
     .navbar__menu .nav-language__form {
-      min-width: 0;
+      flex: 0 0 auto;
       margin: 0;
     }
 
     .navbar__menu .nav-language__option {
-      position: relative;
-      width: 100%;
-      min-height: 76px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      padding: 10px 6px;
+      width: 52px;
+      height: 52px;
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      padding: 0;
       overflow: hidden;
-      border: 1px solid rgba(51, 49, 77, 0.1);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.76);
-      color: var(--color-ink);
-      box-shadow: 0 5px 14px rgba(51, 49, 77, 0.05);
-      text-align: center;
+      border: 3px solid rgba(255, 255, 255, 0.88);
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: 0 8px 20px rgba(20, 45, 39, 0.14);
       transition:
-        transform 0.16s ease,
-        border-color 0.16s ease,
-        background 0.16s ease,
-        box-shadow 0.16s ease;
-    }
-
-    .navbar__menu .nav-language__option > span:not(.nav-language__check) {
-      width: 100%;
-      overflow: hidden;
-      font-size: 0.76rem;
-      font-weight: 750;
-      line-height: 1.15;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .navbar__menu .nav-language__option > small {
-      order: -1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 34px;
-      height: 26px;
-      padding-inline: 8px;
-      border-radius: 999px;
-      background: var(--color-cream-dark);
-      color: #7c3c16;
-      font-size: 0.68rem;
-      font-weight: 850;
-      letter-spacing: 0.06em;
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
     }
 
     .navbar__menu .nav-language__option.is-active {
-      border-color: rgba(184, 79, 18, 0.38);
-      background: linear-gradient(145deg, #fff8ec 0%, #ffe5d2 100%);
-      box-shadow: 0 9px 20px rgba(184, 79, 18, 0.12);
-    }
-
-    .navbar__menu .nav-language__option.is-active > small {
-      background: #b84f12;
-      color: #fff;
-    }
-
-    .navbar__menu .nav-language__option.is-active .nav-language__check {
-      position: absolute;
-      top: 7px;
-      right: 7px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #b84f12;
-      color: #fff;
-      font-size: 0.66rem;
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    html[lang="ar"] .navbar__menu .nav-language__option.is-active .nav-language__check {
-      right: auto;
-      left: 7px;
+      border-color: #e9a53b;
+      box-shadow:
+        0 0 0 3px rgba(233, 165, 59, 0.2),
+        0 9px 22px rgba(20, 45, 39, 0.18);
     }
 
     .navbar__menu .nav-language__option:active {
-      transform: scale(0.97);
+      transform: scale(0.94);
     }
   }
 </style>
@@ -347,19 +296,11 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {{ $item['label'] }}
-                <small class="nav-link__badge">{{ $currentOption['short'] ?? strtoupper($currentLocale) }}</small>
+                <span>{{ $item['label'] }}</span>
+                <span class="nav-language__current-flag">
+                  @include('partials.language-flag', ['locale' => $currentOption['locale'] ?? $currentLocale])
+                </span>
               </button>
-
-              <div class="nav-language__mobile-summary" aria-hidden="true">
-                <div>
-                  <strong class="nav-language__mobile-title">{{ $languageMobileTitle }}</strong>
-                  <small class="nav-language__mobile-current">
-                    {{ $languageMobileActive }} · {{ $currentOption['label'] ?? strtoupper($currentLocale) }}
-                  </small>
-                </div>
-                <span class="nav-language__mobile-badge">{{ $currentOption['short'] ?? strtoupper($currentLocale) }}</span>
-              </div>
 
               <div class="nav-language__panel" role="menu" aria-label="{{ $item['label'] }}">
                 @foreach ($item['options'] ?? [] as $option)
@@ -370,40 +311,33 @@
                       class="nav-language__option {{ $currentLocale === $option['locale'] ? 'is-active' : '' }}"
                       role="menuitem"
                       lang="{{ $option['locale'] }}"
+                      aria-label="{{ $option['label'] }}"
+                      title="{{ $option['label'] }}"
                       @if ($currentLocale === $option['locale'])
                         aria-current="true"
                       @endif
                     >
-                      <span>{{ $option['label'] }}</span>
-                      <small>{{ $option['short'] }}</small>
-                      <span class="nav-language__check" aria-hidden="true">✓</span>
+                      @include('partials.language-flag', ['locale' => $option['locale']])
+                      <span class="sr-only">{{ $option['label'] }}</span>
                     </button>
                   </form>
                 @endforeach
               </div>
             @elseif ($hasMegaMenu)
-              <div class="nav-mega__trigger">
-                <a
-                  href="{{ $item['href'] }}"
-                  class="nav-link {{ $isActive ? 'active' : '' }}"
-                >
-                  {{ $item['label'] }}
-                </a>
-
-                <button
-                  type="button"
-                  class="nav-mega__toggle"
-                  data-nav-mega-toggle
-                  aria-label="{{ $item['mega']['toggle_label'] ?? $item['label'] }}"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  aria-controls="{{ $megaPanelId }}"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
-              </div>
+              <button
+                type="button"
+                class="nav-link nav-mega__trigger {{ $isActive ? 'active' : '' }}"
+                data-nav-mega-toggle
+                aria-label="{{ $item['mega']['toggle_label'] ?? $item['label'] }}"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="{{ $megaPanelId }}"
+              >
+                <span>{{ $item['label'] }}</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
 
               <div
                 class="nav-mega__panel"
@@ -412,6 +346,18 @@
                 aria-hidden="true"
                 inert
               >
+                <div class="nav-mega__media">
+                  <img
+                    src="{{ $megaMediaUrl }}"
+                    alt="{{ $megaMediaAlt }}"
+                    width="720"
+                    height="540"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="nav-mega__media-shade" aria-hidden="true"></span>
+                </div>
+
                 <div class="nav-mega__intro">
                   <p class="nav-mega__eyebrow">{{ $item['mega']['eyebrow'] ?? $item['label'] }}</p>
                   <strong class="nav-mega__title">{{ $item['mega']['title'] ?? $item['label'] }}</strong>
