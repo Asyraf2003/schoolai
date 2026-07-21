@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/css/pages/article-canvas.css',
                 'resources/css/pages/article-reader.css',
                 'resources/js/pages/article-canvas.js',
+                'resources/js/pages/article-canvas-arabic.js',
                 'resources/css/pages/account-locked.css',
                 'resources/css/app.css',
                 'resources/js/app.js',
