@@ -1,5 +1,8 @@
 @once
-  @vite('resources/css/pages/welcome-mega-menu.css')
+  @vite([
+    'resources/css/pages/welcome-mega-menu.css',
+    'resources/css/pages/welcome-hero-motion.css',
+  ])
 
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     .home-page .hero-cinema__content { padding-block-end: clamp(108px, 12vh, 142px); }
