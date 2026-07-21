@@ -8,7 +8,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/pages/welcome.js',
+                'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/css/pages/welcome.css',
+                'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/account-locked.css',
                 'resources/css/app.css',
                 'resources/js/app.js',
