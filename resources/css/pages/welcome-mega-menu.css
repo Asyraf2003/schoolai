@@ -1,13 +1,15 @@
-/* Desktop mega menu surface inspired by full-width university navigation patterns.
- * Keeps the Al Mustaqbal visual language while making header + menu read as one plane.
+/* Homepage mega navigation polish.
+ * Desktop: full-width unified surface with an inset media card.
+ * Mobile/tablet: full-screen white navigation with simple text-only submenus.
  */
 
 @media (min-width: 1181px) {
     .home-page .navbar.has-open-menu {
-        background: rgb(255 252 246 / 0.985);
+        background: #fffaf1;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
         box-shadow: none;
+        border-block-end: 1px solid rgb(23 79 66 / 0.08);
     }
 
     .home-page .nav-mega__panel {
@@ -15,16 +17,23 @@
         inset-block-start: 78px;
         inset-inline: 0;
         width: 100vw;
-        min-height: clamp(360px, 47vh, 520px);
+        min-height: clamp(400px, 50vh, 540px);
         max-height: calc(100dvh - 78px);
-        grid-template-columns: minmax(0, 44vw) minmax(0, 1fr);
-        grid-template-rows: minmax(360px, 47vh);
-        overflow: auto;
+        grid-template-columns: minmax(360px, 560px) minmax(0, 1fr);
+        grid-template-rows: auto;
+        gap: clamp(38px, 5vw, 82px);
+        align-items: center;
+        padding: clamp(30px, 4vh, 48px) var(--hero-content-gutter) clamp(36px, 5vh, 58px);
+        overflow-y: auto;
+        overflow-x: hidden;
         border: 0;
         border-radius: 0;
         color: #172c28;
         background: #fffaf1;
-        box-shadow: 0 24px 58px rgb(3 18 16 / 0.2);
+        box-shadow: 0 26px 62px rgb(3 18 16 / 0.18);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
         transform: translateY(-10px);
         transform-origin: top center;
         clip-path: none;
@@ -35,6 +44,9 @@
     }
 
     .home-page .nav-mega.is-open .nav-mega__panel {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
         transform: translateY(0);
         clip-path: none;
         transition-delay: 0s;
@@ -43,15 +55,25 @@
     .home-page .nav-mega__media {
         grid-column: 1;
         grid-row: 1;
-        min-height: 100%;
-        height: 100%;
+        position: relative;
+        width: 100%;
+        height: clamp(280px, 34vh, 360px);
+        min-height: 0;
+        align-self: center;
+        overflow: hidden;
+        border-radius: 18px;
         background: #103c33;
+        box-shadow: 0 20px 48px rgb(3 18 16 / 0.18);
     }
 
     .home-page .nav-mega__media img {
+        width: 100%;
         height: 100%;
+        object-fit: cover;
         object-position: center;
         transform: scale(1.035);
+        filter: saturate(0.94) contrast(1.03);
+        transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .home-page .nav-mega.is-open .nav-mega__media img {
@@ -60,26 +82,26 @@
 
     .home-page .nav-mega__media-shade {
         background:
-            linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.2) 58%, transparent 100%),
-            linear-gradient(to right, transparent 68%, rgb(2 18 15 / 0.18));
+            linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.28) 52%, transparent 86%),
+            linear-gradient(to right, transparent 68%, rgb(2 18 15 / 0.14));
     }
 
     html[dir="rtl"] .home-page .nav-mega__media-shade {
         background:
-            linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.2) 58%, transparent 100%),
-            linear-gradient(to left, transparent 68%, rgb(2 18 15 / 0.18));
+            linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.28) 52%, transparent 86%),
+            linear-gradient(to left, transparent 68%, rgb(2 18 15 / 0.14));
     }
 
     .home-page .nav-mega__intro {
         grid-column: 1;
         grid-row: 1;
         z-index: 2;
-        min-height: 0;
         align-self: end;
+        min-height: 0;
         justify-content: flex-end;
-        padding: clamp(32px, 4vw, 68px);
+        padding: clamp(24px, 3vw, 38px);
         pointer-events: none;
-        background: linear-gradient(to top, rgb(2 18 15 / 0.72), transparent 76%);
+        background: transparent;
     }
 
     .home-page .nav-mega__intro::after {
@@ -88,18 +110,20 @@
 
     .home-page .nav-mega__eyebrow {
         color: #f7c66f;
+        font-size: 0.66rem;
     }
 
     .home-page .nav-mega__title {
-        max-width: 15ch;
-        font-size: clamp(1.8rem, 2.8vw, 3rem);
-        line-height: 1.04;
+        max-width: 16ch;
+        font-size: clamp(1.65rem, 2.45vw, 2.7rem);
+        line-height: 1.05;
     }
 
     .home-page .nav-mega__description {
-        max-width: 44ch;
+        max-width: 43ch;
         color: rgb(255 255 255 / 0.82);
-        font-size: 0.9rem;
+        font-size: 0.86rem;
+        line-height: 1.55;
     }
 
     .home-page .nav-mega__links {
@@ -108,12 +132,12 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         align-content: center;
         gap: 0 clamp(34px, 4vw, 72px);
-        padding: clamp(38px, 5vw, 76px) clamp(48px, 7vw, 118px);
-        background: #fffaf1;
+        padding: 0;
+        background: transparent;
     }
 
     .home-page .nav-mega__link {
-        min-height: 78px;
+        min-height: 82px;
         align-content: center;
         gap: 5px;
         padding: 18px 0;
@@ -145,5 +169,189 @@
         max-width: 38ch;
         font-size: 0.78rem;
         line-height: 1.5;
+    }
+}
+
+@media (max-width: 1180px) {
+    .home-page .nav-overlay {
+        display: none !important;
+    }
+
+    .home-page .navbar__menu {
+        position: fixed;
+        inset: 0;
+        z-index: calc(var(--hero-layer-header) - 1);
+        width: 100vw;
+        height: 100dvh;
+        max-height: none;
+        display: block;
+        padding: calc(var(--hero-nav-height) + 22px) clamp(20px, 5vw, 42px) 34px;
+        overflow-y: auto;
+        border: 0;
+        border-radius: 0;
+        color: #17362f;
+        background: #fffaf1;
+        box-shadow: none;
+        opacity: 1;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateX(100%);
+        transform-origin: center;
+        transition:
+            transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 320ms;
+    }
+
+    html[dir="rtl"] .home-page .navbar__menu {
+        transform: translateX(-100%);
+    }
+
+    .home-page .navbar__menu.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(0);
+        transition-delay: 0s;
+    }
+
+    .home-page .navbar__menu > ul {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .home-page .navbar__menu > ul > li {
+        width: 100%;
+    }
+
+    .home-page .nav-link {
+        width: 100%;
+        min-height: 54px;
+        justify-content: flex-start;
+        padding: 13px 0;
+        border-block-end: 1px solid rgb(23 79 66 / 0.1);
+        color: #17362f;
+        font-size: clamp(1rem, 3.8vw, 1.12rem);
+        font-weight: 780;
+    }
+
+    .home-page .nav-link::after {
+        display: none;
+    }
+
+    .home-page .nav-link.active {
+        color: #b85a1f;
+    }
+
+    .home-page .nav-mega__trigger {
+        justify-content: space-between;
+        padding-inline: 0;
+    }
+
+    .home-page .nav-mega__trigger svg {
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        border-radius: 0;
+        color: #31544c;
+        background: transparent;
+    }
+
+    .home-page .nav-mega__panel {
+        position: static;
+        width: 100%;
+        min-height: 0;
+        max-height: 0;
+        display: block;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: none;
+        transform: none;
+        clip-path: none;
+        transition: max-height 280ms ease;
+    }
+
+    .home-page .nav-mega.is-open .nav-mega__panel {
+        max-height: 420px;
+        margin: 0;
+        pointer-events: auto;
+        transform: none;
+        clip-path: none;
+    }
+
+    .home-page .nav-mega__media,
+    .home-page .nav-mega__intro {
+        display: none;
+    }
+
+    .home-page .nav-mega__links {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 4px 0 10px clamp(14px, 4vw, 26px);
+        background: transparent;
+    }
+
+    html[dir="rtl"] .home-page .nav-mega__links {
+        padding: 4px clamp(14px, 4vw, 26px) 10px 0;
+    }
+
+    .home-page .nav-mega__link {
+        min-height: 0;
+        display: block;
+        padding: 10px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .home-page .nav-mega__link:hover,
+    .home-page .nav-mega__link:focus-visible {
+        color: #b85a1f;
+        border: 0;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .home-page .nav-mega__link strong {
+        color: #31544c;
+        font-size: 0.9rem;
+        font-weight: 720;
+    }
+
+    .home-page .nav-mega__link small {
+        display: none;
+    }
+
+    .home-page .nav-language {
+        width: 100%;
+        margin-block-start: 0;
+        padding-block-start: 0;
+        border-block-start: 0;
+    }
+
+    .home-page .nav-language__button {
+        justify-content: flex-start;
+        color: #17362f;
+    }
+
+    .home-page .navbar__cta {
+        width: 100%;
+        margin-block-start: 24px;
+        min-height: 52px;
+        color: #ffffff;
+        border-color: #a64f18;
+        background: #b85a1f;
     }
 }
