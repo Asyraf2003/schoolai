@@ -45,11 +45,11 @@ jobs:
             printf 'ADMIN_HERO_TEST_PRESENT=yes\n'
             rm .github/hero-db-admin.patch.gz.b64.part*
             rm -f .github/hero-verification-started
-            rm -f .github/hero-verification-error.txt
-            rm -f .github/hero-verification-composer-error.txt
-            rm -f .github/hero-verification-test-error.txt
-            rm -f .github/hero-verification-suite-error.txt
-            rm -f .github/hero-verification-build-error.txt
+            rm -f .github/hero-verification-error*.txt
+            rm -f .github/hero-verification-composer-error*.txt
+            rm -f .github/hero-verification-test-error*.txt
+            rm -f .github/hero-verification-suite-error*.txt
+            rm -f .github/hero-verification-build-error*.txt
             rm .github/workflows/hero-db-admin-verify.yml
             git diff --check
             git add -A
@@ -64,8 +64,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            cp /tmp/hero-apply.log .github/hero-verification-error.txt
-            git add -f .github/hero-verification-error.txt
+            error_path=".github/hero-verification-error-${GITHUB_RUN_ID}.txt"
+            cp /tmp/hero-apply.log "$error_path"
+            git add -f "$error_path"
             git commit -m "chore: capture hero verification apply error [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-apply.log
@@ -96,8 +97,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            cp /tmp/hero-composer.log .github/hero-verification-composer-error.txt
-            git add -f .github/hero-verification-composer-error.txt
+            error_path=".github/hero-verification-composer-error-${GITHUB_RUN_ID}.txt"
+            cp /tmp/hero-composer.log "$error_path"
+            git add -f "$error_path"
             git commit -m "chore: capture hero composer verification failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-composer.log
@@ -118,8 +120,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            cp /tmp/hero-build.log .github/hero-verification-build-error.txt
-            git add -f .github/hero-verification-build-error.txt
+            error_path=".github/hero-verification-build-error-${GITHUB_RUN_ID}.txt"
+            cp /tmp/hero-build.log "$error_path"
+            git add -f "$error_path"
             git commit -m "chore: capture hero frontend build failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-build.log
@@ -164,8 +167,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            cp /tmp/hero-focused-tests.log .github/hero-verification-test-error.txt
-            git add -f .github/hero-verification-test-error.txt
+            error_path=".github/hero-verification-test-error-${GITHUB_RUN_ID}.txt"
+            cp /tmp/hero-focused-tests.log "$error_path"
+            git add -f "$error_path"
             git commit -m "chore: capture hero focused test failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-focused-tests.log
@@ -183,8 +187,9 @@ jobs:
           if [ "$status" -ne 0 ]; then
             git reset --hard "$(cat /tmp/hero-verification-branch-head)"
             git clean -fd
-            cp /tmp/hero-regression-suite.log .github/hero-verification-suite-error.txt
-            git add -f .github/hero-verification-suite-error.txt
+            error_path=".github/hero-verification-suite-error-${GITHUB_RUN_ID}.txt"
+            cp /tmp/hero-regression-suite.log "$error_path"
+            git add -f "$error_path"
             git commit -m "chore: capture hero regression test failure [skip ci]"
             git push origin HEAD:agent/hero-db-admin-verify
             cat /tmp/hero-regression-suite.log
