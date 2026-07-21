@@ -1,8 +1,8 @@
 name: Verify hero database admin implementation
 
 on:
-  push:
-    branches: [agent/hero-db-admin-verify]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
