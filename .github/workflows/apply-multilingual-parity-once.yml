@@ -1,0 +1,126 @@
+name: Apply multilingual parity once
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.head_commit.message == 'Run multilingual parity patch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          path: repo
+
+      - name: Checkout patch source
+        uses: actions/checkout@v4
+        with:
+          ref: agent/multilingual-parity-runner
+          path: runner
+
+      - name: Extract and apply exact-match patch
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          workflow = Path('runner/.github/workflows/one-off-multilingual-parity.yml').read_text(encoding='utf-8')
+          marker_start = "          python3 <<'PY'\n"
+          marker_end = "\n          PY\n"
+          start = workflow.index(marker_start) + len(marker_start)
+          end = workflow.index(marker_end, start)
+          block = workflow[start:end]
+          code = '\n'.join(line[10:] if line.startswith('          ') else line for line in block.splitlines()) + '\n'
+          Path('/tmp/multilingual-parity-patch.py').write_text(code, encoding='utf-8')
+          PY
+          cd repo
+          python3 /tmp/multilingual-parity-patch.py
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, sqlite3, pdo_sqlite
+          coverage: none
+
+      - name: Validate PHP syntax
+        working-directory: repo
+        shell: bash
+        run: |
+          php -l app/Http/Controllers/HomeController.php
+          php -l app/Models/GalleryItem.php
+          php -l app/Http/Controllers/GalleryPageController.php
+          php -l lang/id/home.php
+          php -l lang/en/home.php
+          php -l lang/ar/home.php
+          php -l lang/id/pages.php
+          php -l lang/en/pages.php
+          php -l lang/ar/pages.php
+          php -l lang/id/admin.php
+          php -l lang/en/admin.php
+          php -l lang/ar/admin.php
+
+      - name: Validate lang key parity
+        working-directory: repo
+        shell: bash
+        run: |
+          php <<'PHP'
+          <?php
+          function flattenKeys(array $array, string $prefix = ''): array
+          {
+              $keys = [];
+              foreach ($array as $key => $value) {
+                  $path = $prefix === '' ? (string) $key : $prefix.'.'.$key;
+                  $keys[] = $path;
+                  if (is_array($value)) {
+                      $keys = [...$keys, ...flattenKeys($value, $path)];
+                  }
+              }
+              sort($keys);
+              return $keys;
+          }
+
+          foreach (['app', 'admin', 'home', 'pages', 'validation'] as $file) {
+              $id = require __DIR__."/lang/id/{$file}.php";
+              $en = require __DIR__."/lang/en/{$file}.php";
+              $ar = require __DIR__."/lang/ar/{$file}.php";
+              $idKeys = flattenKeys($id);
+              foreach (['en' => $en, 'ar' => $ar] as $locale => $data) {
+                  if ($idKeys !== flattenKeys($data)) {
+                      fwrite(STDERR, "Key mismatch: {$file} id vs {$locale}\n");
+                      exit(1);
+                  }
+              }
+          }
+          echo "Language key parity OK\n";
+          PHP
+
+      - name: Install dependencies and run tests
+        working-directory: repo
+        shell: bash
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          cp .env.example .env
+          php artisan key:generate
+          php artisan test
+
+      - name: Commit final patch to main
+        working-directory: repo
+        shell: bash
+        run: |
+          rm -f .github/workflows/apply-multilingual-parity-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git diff --cached --quiet && { echo "No changes to commit" >&2; exit 1; }
+          git commit -m "Fix multilingual parity across public pages"
+          git push origin HEAD:main
