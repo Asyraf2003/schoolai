@@ -1,5 +1,5 @@
 /* Directional reveal-on-scroll for the public homepage.
-   Uses the platform IntersectionObserver API, so no animation dependency is added. */
+   Uses IntersectionObserver and keeps motion short enough to remain stable while the page is still scrolling. */
 
 (function () {
     'use strict';
@@ -18,33 +18,32 @@
         { selector: '.visi-misi__head', directions: ['zoom'], stagger: 0 },
         { selector: '.visi-card', directions: ['left'], stagger: 0 },
         { selector: '.misi-panel', directions: ['right'], stagger: 0 },
-        { selector: '.misi-list__item', directions: ['right', 'bottom'], stagger: 70 },
+        { selector: '.misi-list__item', directions: ['right', 'bottom'], stagger: 45 },
 
         { selector: '.nilai-section__intro', directions: ['left'], stagger: 0 },
-        { selector: '.nilai-card', directions: ['left', 'bottom', 'right', 'zoom'], stagger: 75 },
+        { selector: '.nilai-card', directions: ['left', 'bottom', 'right', 'zoom'], stagger: 45 },
 
         { selector: '.program-section__head', directions: ['zoom'], stagger: 0 },
         { selector: '.program-spotlight', directions: ['left'], stagger: 0 },
-        { selector: '.program-card', directions: ['right', 'bottom', 'left'], stagger: 80 },
+        { selector: '.program-card', directions: ['right', 'bottom', 'left'], stagger: 50 },
 
         { selector: '.galeri-section__head', directions: ['top'], stagger: 0 },
-        { selector: '.galeri-story-card', directions: ['left', 'right'], stagger: 65 },
+        { selector: '.galeri-story-card', directions: ['left', 'right'], stagger: 40 },
         { selector: '.galeri-story__visual', directions: ['right'], stagger: 0 },
         { selector: '.galeri-section__action', directions: ['bottom'], stagger: 0 },
 
         { selector: '.artikel-section__head', directions: ['left'], stagger: 0 },
         { selector: '.artikel-digest__hero', directions: ['left'], stagger: 0 },
-        { selector: '.artikel-digest-card', directions: ['right', 'bottom'], stagger: 90 },
+        { selector: '.artikel-digest-card', directions: ['right', 'bottom'], stagger: 50 },
         { selector: '.artikel-section__action', directions: ['bottom'], stagger: 0 },
 
-        { selector: '.site-footer__grid > *', directions: ['left', 'bottom', 'right'], stagger: 85 },
+        { selector: '.site-footer__grid > *', directions: ['left', 'bottom', 'right'], stagger: 50 },
         { selector: '.site-footer__bottom', directions: ['bottom'], stagger: 0 }
     ];
 
     function revealImmediately(element) {
         element.classList.add('scroll-reveal--visible');
 
-        // Existing homepage reveal elements also use this state class.
         if (element.classList.contains('reveal')) {
             element.classList.add('is-visible');
         }
@@ -68,7 +67,7 @@
         if (element.hasAttribute('data-scroll-reveal')) return;
 
         element.setAttribute('data-scroll-reveal', direction || 'bottom');
-        element.style.setProperty('--scroll-reveal-delay', Math.min(delay || 0, 320) + 'ms');
+        element.style.setProperty('--scroll-reveal-delay', Math.min(delay || 0, 180) + 'ms');
         observeElement(element);
     }
 
@@ -108,15 +107,14 @@
                     observer.unobserve(entry.target);
                 });
             }, {
-                threshold: 0.12,
-                rootMargin: '0px 0px -8% 0px'
+                threshold: 0.05,
+                rootMargin: '0px 0px 12% 0px'
             });
         }
 
         applyRevealRules(document);
 
         // The desktop hero visual is injected from a template by welcome.js.
-        // Watch lightweight DOM additions so it receives the same reveal treatment.
         if ('MutationObserver' in window) {
             var mutationObserver = new MutationObserver(function (mutations) {
                 mutations.forEach(function (mutation) {
