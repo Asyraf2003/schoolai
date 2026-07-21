@@ -35,12 +35,30 @@ jobs:
           git push origin HEAD:agent/hero-db-admin-verify
 
       - name: Apply implementation patch
+        shell: bash
         run: |
-          cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch
-          git apply --check /tmp/hero-db-admin.patch
+          set +e
+          cat .github/hero-db-admin.patch.gz.b64.part* | base64 --decode | gunzip > /tmp/hero-db-admin.patch 2> /tmp/hero-apply.log
+          status=$?
+          if [ "$status" -eq 0 ]; then
+            git apply --check /tmp/hero-db-admin.patch >> /tmp/hero-apply.log 2>&1
+            status=$?
+          fi
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            cp /tmp/hero-apply.log .github/hero-verification-error.log
+            git add .github/hero-verification-error.log
+            git commit -m "chore: capture hero verification apply error"
+            git push origin HEAD:agent/hero-db-admin-verify
+            cat /tmp/hero-apply.log
+            exit "$status"
+          fi
+          set -e
           git apply /tmp/hero-db-admin.patch
           rm .github/hero-db-admin.patch.gz.b64.part*
           rm .github/hero-verification-started
+          rm -f .github/hero-verification-error.log
           rm .github/workflows/hero-db-admin-verify.yml
           git diff --check
 
