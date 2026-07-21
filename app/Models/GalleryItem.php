@@ -116,11 +116,11 @@ final class GalleryItem extends Model
 
     public function typeLabelForLocale(string $locale): string
     {
-        if ($this->is_video) {
-            return 'Video';
-        }
-
-        return $locale === 'en' ? 'Photo' : 'Foto';
+        return trans(
+            $this->is_video ? 'pages.common.media_video' : 'pages.common.media_photo',
+            [],
+            $locale,
+        );
     }
 
     public function getMediaLabelAttribute(): string
