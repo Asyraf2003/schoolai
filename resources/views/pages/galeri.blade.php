@@ -15,7 +15,7 @@
       justify-items: start !important;
       align-items: start !important;
       gap: 10px !important;
-      text-align: left !important;
+      text-align: start !important;
     }
 
     .gallery-wall-subsection__head > div,
@@ -24,7 +24,7 @@
       width: 100%;
       max-width: 760px;
       margin-inline: 0 !important;
-      text-align: left !important;
+      text-align: start !important;
       justify-self: start !important;
     }
 
