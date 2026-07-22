@@ -85,12 +85,6 @@ final class SafeImageUpload implements ValidationRule
 
         if (str_contains($lower, '<?php') || str_contains($lower, '<script') || str_contains($lower, 'javascript:')) {
             $fail('File gambar mengandung payload aktif yang tidak diizinkan.');
-
-            return;
-        }
-
-        if ($type === IMAGETYPE_JPEG && preg_match('/\xFF\xE1..Exif\x00\x00/s', $contents) === 1) {
-            $fail('Metadata EXIF harus dihapus sebelum gambar diupload.');
         }
     }
 
