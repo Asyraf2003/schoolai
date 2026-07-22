@@ -3,7 +3,7 @@
 return [
     'required' => ':attribute is required.',
     'email' => ':attribute must be a valid email address.',
-    'string' => ':attribute must be text.',
+    'string' => ':attribute must be a string.',
 
     'attributes' => [
         'email' => 'Email',

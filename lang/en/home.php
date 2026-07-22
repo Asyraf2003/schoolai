@@ -1,11 +1,9 @@
 <?php
 
-$id = require __DIR__ . '/../id/home.php';
-
-return array_replace_recursive($id, [
+return [
     'meta' => [
         'title' => 'Al Mustaqbal School',
-        'description' => 'Official Al Mustaqbal School website for admission, programs, school activities, and contact information.',
+        'description' => 'The official Al Mustaqbal School website for information about education, admissions, programs, activities, and school contact details.',
     ],
 
     'accessibility' => [
@@ -13,44 +11,79 @@ return array_replace_recursive($id, [
     ],
 
     'hero' => [
-        'section_label' => 'Al Mustaqbal School highlights',
+        'section_label' => 'Al Mustaqbal School Highlights',
         'carousel_roledescription' => 'carousel',
         'slide_roledescription' => 'slide',
         'slide_label' => 'Slide :current of :total',
         'dots_label' => 'Choose a highlight',
-        'previous_label' => 'Show the previous slide',
-        'next_label' => 'Show the next slide',
+        'previous_label' => 'Show previous slide',
+        'next_label' => 'Show next slide',
         'pause_label' => 'Pause slideshow',
         'play_label' => 'Play slideshow',
+        'autoplay_interval' => 7200,
+        'fallback_image' => 'media/home/hero-school.png',
         'fallback_image_alt' => 'Al Mustaqbal School environment',
-        'fallback_title' => 'Raising a Muslim generation ready to serve as Khalifatullah',
-        'fallback_description' => 'Holistic education that is Qur’anic, innovative, inspiring, and grounded in integrity.',
+        'fallback_title' => 'Nurturing a Muslim generation ready to fulfill their role as Khalifatullah',
+        'fallback_description' => 'A holistic education rooted in the Qur’an, innovation, inspiration, and integrity.',
         'slides' => [
             [
-                'media_alt' => 'The Al Mustaqbal School building and learning environment',
+                'type' => 'image',
+                'media' => 'media/home/hero-school.png',
+                'poster' => null,
+                'media_alt' => 'Al Mustaqbal School building and surroundings',
                 'eyebrow' => 'Al Mustaqbal School',
-                'title' => 'Raising a Muslim Generation Ready to Serve as Khalifatullah',
-                'description' => 'A holistic education connecting the Qur’an, character, knowledge, language, creativity, and the courage to benefit others.',
+                'title' => 'Nurturing a Muslim Generation Ready to Become Khalifatullah',
+                'description' => 'A holistic education that brings together the Qur’an, character, knowledge, languages, creativity, and the courage to benefit others.',
                 'cta' => [
                     'label' => 'Discover Our Educational Direction',
+                    'href' => '#visi-misi',
+                    'action' => 'anchor',
+                ],
+                'focal_position' => 'center center',
+                'overlay_strength' => 0.46,
+                'source' => [
+                    'name' => 'Al Mustaqbal School',
+                    'url' => null,
                 ],
             ],
             [
+                'type' => 'video',
+                'media' => null,
+                'poster' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2400&q=82',
                 'media_alt' => 'Children learning together in a classroom',
                 'eyebrow' => 'Meaningful Learning',
-                'title' => 'Rooted in the Qur’an. Moving Forward through Innovation.',
-                'description' => 'Every learning experience invites children to question, create, collaborate, and grow with Islamic values as their compass.',
+                'title' => 'Rooted in the Qur’an. Moving Forward with Innovation.',
+                'description' => 'Every learning experience is designed to encourage children to ask questions, create, collaborate, and grow with Islamic values as their guiding compass.',
                 'cta' => [
                     'label' => 'Explore Our Programs',
+                    'href' => '#program',
+                    'action' => 'anchor',
+                ],
+                'focal_position' => 'center 46%',
+                'overlay_strength' => 0.50,
+                'source' => [
+                    'name' => 'Unsplash',
+                    'url' => 'https://unsplash.com/',
                 ],
             ],
             [
-                'media_alt' => 'A child focused on learning and writing',
-                'eyebrow' => 'Qur’anic · Inspiring · Innovative · Integrity',
+                'type' => 'image',
+                'media' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=2400&q=82',
+                'poster' => null,
+                'media_alt' => 'A child focused on studying and writing',
+                'eyebrow' => 'Qur’anic · Inspirational · Innovative · Integrity',
                 'title' => 'Every Great Journey Begins in the Right Environment',
-                'description' => 'School and family grow as one team, preparing children to meet the world without losing their faith or identity.',
+                'description' => 'School and family grow together as one team to prepare children for the world without losing their faith and sense of identity.',
                 'cta' => [
                     'label' => 'Begin the Admission Journey',
+                    'href' => '/ppdb',
+                    'action' => 'admission',
+                ],
+                'focal_position' => 'center 42%',
+                'overlay_strength' => 0.54,
+                'source' => [
+                    'name' => 'Unsplash',
+                    'url' => 'https://unsplash.com/',
                 ],
             ],
         ],
@@ -58,47 +91,79 @@ return array_replace_recursive($id, [
 
     'navbar' => [
         'aria_label' => 'Main menu',
+        'logo' => [
+            'href' => '#beranda',
+            'icon' => '🌈',
+            'image' => 'media/home/logo-nav.webp',
+            'image_alt' => 'Al Mustaqbal School logo',
+            'line_1' => 'Al Mustaqbal',
+            'line_2' => 'School',
+        ],
         'items' => [
-            ['label' => 'Home', 'href' => '#beranda'],
+            [
+                'label' => 'Home',
+                'href' => '#beranda',
+            ],
             [
                 'label' => 'Education',
                 'href' => '#program',
                 'mega' => [
-                    'toggle_label' => 'Open the Education menu',
+                    'toggle_label' => 'Open Education menu',
                     'eyebrow' => 'Holistic Education',
-                    'title' => 'A pathway for faith, knowledge, and character.',
-                    'description' => 'Discover Al Mustaqbal’s educational direction and the learning experiences built together with families.',
+                    'title' => 'A path of growth for faith, knowledge, and character.',
+                    'description' => 'Discover the educational direction of Al Mustaqbal and the learning experiences built together with families.',
                     'links' => [
                         [
                             'label' => 'Vision & Mission',
-                            'description' => 'The guiding direction of Al Mustaqbal’s education.',
+                            'description' => 'The broader educational direction of Al Mustaqbal.',
+                            'href' => '#visi-misi',
                         ],
                         [
                             'label' => 'QIII Values',
-                            'description' => 'Qur’anic, inspiring, innovative, and grounded in integrity.',
+                            'description' => 'Qur’anic, inspirational, innovative, and rooted in integrity.',
+                            'href' => '#nilai',
                         ],
                         [
-                            'label' => 'Signature Programs',
-                            'description' => 'Core learning experiences designed for every child.',
+                            'label' => 'Featured Programs',
+                            'description' => 'Core learning experiences for every child.',
+                            'href' => '#program',
                         ],
                         [
-                            'label' => 'Admissions',
-                            'description' => 'Your first steps toward joining Al Mustaqbal.',
+                            'label' => 'Admission Information',
+                            'description' => 'The first steps toward joining Al Mustaqbal.',
+                            'href' => '/ppdb',
                         ],
                     ],
                 ],
             ],
-            ['label' => 'Gallery', 'href' => '#galeri'],
-            ['label' => 'Articles', 'href' => '#artikel'],
-            ['label' => 'Contact', 'href' => '#kontak'],
+            [
+                'label' => 'Gallery',
+                'href' => '#galeri',
+            ],
+            [
+                'label' => 'Articles',
+                'href' => '#artikel',
+            ],
+            [
+                'label' => 'Contact',
+                'href' => '#kontak',
+            ],
             [
                 'label' => 'Language',
                 'href' => '#',
                 'type' => 'language',
-                'badge' => 'EN',
+                'badge' => 'ID',
                 'options' => [
-                    ['locale' => 'id', 'label' => 'Indonesia', 'short' => 'ID'],
-                    ['locale' => 'en', 'label' => 'English', 'short' => 'EN'],
+                    [
+                        'locale' => 'id',
+                        'label' => 'Indonesian',
+                        'short' => 'ID',
+                    ],
+                    [
+                        'locale' => 'en',
+                        'label' => 'English',
+                        'short' => 'EN',
+                    ],
                 ],
             ],
         ],
@@ -111,10 +176,26 @@ return array_replace_recursive($id, [
 
     'stats' => [
         'items' => [
-            ['count' => 320, 'suffix' => '+', 'label' => 'Students'],
-            ['count' => 24, 'suffix' => '+', 'label' => 'Achievements'],
-            ['count' => 1200, 'suffix' => '+', 'label' => 'Learning Hours'],
-            ['count' => 18, 'suffix' => '+', 'label' => 'Programs'],
+            [
+                'count' => 320,
+                'suffix' => '+',
+                'label' => 'Students',
+            ],
+            [
+                'count' => 24,
+                'suffix' => '+',
+                'label' => 'Prestigious Awards',
+            ],
+            [
+                'count' => 1200,
+                'suffix' => '+',
+                'label' => 'Hours',
+            ],
+            [
+                'count' => 18,
+                'suffix' => '+',
+                'label' => 'Programs',
+            ],
         ],
     ],
 
@@ -124,83 +205,100 @@ return array_replace_recursive($id, [
                 'icon' => '📚',
                 'background' => 'var(--color-yellow-soft)',
                 'title' => 'Academic Information',
-                'description' => 'Announcements, schedules, and school information are available in one place.',
+                'description' => 'School announcements, schedules, and grades are available in one place.',
             ],
             [
                 'icon' => '🎨',
                 'background' => 'var(--color-mint-soft)',
-                'title' => 'Student Activities',
-                'description' => 'Explore activities that help students develop their interests and talents.',
+                'title' => 'Extracurricular Activities',
+                'description' => 'Explore student activities designed to develop interests and talents.',
             ],
             [
                 'icon' => '📝',
                 'background' => 'var(--color-blue-soft)',
-                'title' => 'Online Admission',
-                'description' => 'New student registration can be completed more easily.',
+                'title' => 'Online Admissions',
+                'description' => 'New student registration can be completed more easily online.',
             ],
             [
                 'icon' => '🎒',
                 'background' => 'var(--color-pink-soft)',
                 'title' => 'Education Levels',
-                'description' => 'Programs are available for SDIT, kindergarten, tahfidz, and playgroup.',
+                'description' => 'Programs are available for Islamic elementary school, kindergarten, tahfidz, and playgroup.',
             ],
         ],
     ],
 
     'ppdb' => [
-        'title' => 'Apply Now at Al Mustaqbal School',
-        'description' => 'New student admission is easier to access. Academic information, activities, and registration steps are available in one place.',
+        'title' => 'Apply Now to Al Mustaqbal School',
+        'description' => 'New student registration is now easier. Academic information, activities, and the admission process are available in one place.',
         'cta' => [
             'label' => 'Apply Now',
             'href' => '/ppdb',
         ],
         'steps' => [
-            ['number' => '1', 'title' => 'Fill the Form', 'description' => 'Complete prospective student and parent data online.'],
-            ['number' => '2', 'title' => 'Data Verification', 'description' => 'The admin team reviews registration data and required documents.'],
-            ['number' => '3', 'title' => 'Registration Confirmation', 'description' => 'Parents receive further information from the school.'],
-            ['number' => '4', 'title' => 'Announcement', 'description' => 'Admission results are shared through the school’s official contact.'],
+            [
+                'number' => '1',
+                'title' => 'Complete the Form',
+                'description' => 'Submit prospective student and parent information online.',
+            ],
+            [
+                'number' => '2',
+                'title' => 'Data Verification',
+                'description' => 'The administrative team reviews the completeness of the submitted information and registration documents.',
+            ],
+            [
+                'number' => '3',
+                'title' => 'Registration Confirmation',
+                'description' => 'Parents receive further information from the school.',
+            ],
+            [
+                'number' => '4',
+                'title' => 'Announcement',
+                'description' => 'Registration results are communicated through the school’s official contact channels.',
+            ],
         ],
     ],
 
     'visi_misi' => [
-
         'section_title' => 'Educational Direction, Vision, and Mission',
 
-        'section_subtitle' => 'This section summarizes Al Mustaqbal’s educational direction: faith, knowledge, manners, language, independence, and whole-child character.',
+        'section_subtitle' => 'This section summarizes the broader educational direction of Al-Mustaqbal: faith, knowledge, character, languages, independence, and the holistic development of every child.',
 
         'vision' => [
-            'title' => 'The Educational Direction of Al Mustaqbal',
+            'title' => 'Al-Mustaqbal Educational Direction',
             'text_parts' => [
-                ['text' => 'Al Mustaqbal’s education program aims to nurture '],
-                ['text' => 'Muslim generations', 'mark' => 'blue'],
-                ['text' => ' with '],
-                ['text' => 'inspiring, innovative, and integrity-driven character', 'mark' => 'orange'],
-                ['text' => ', capable of carrying out their role as '],
+                ['text' => 'The Al-Mustaqbal Education Program aims to nurture a '],
+                ['text' => 'Muslim generation', 'mark' => 'blue'],
+                ['text' => ' with qualities that are '],
+                ['text' => 'inspiring, innovative, and rooted in integrity', 'mark' => 'orange'],
+                ['text' => ', capable of fulfilling their role as '],
                 ['text' => 'Khalifatullah', 'mark' => 'green'],
-                ['text' => ' through '],
+                ['text' => ' through the development of '],
                 ['text' => 'holistic education.', 'mark' => 'purple'],
             ],
         ],
+
         'missions_intro' => [
-            'title' => 'Four steps to shape a complete Islamic generation',
+            'title' => 'Four pathways to nurturing a well-rounded Muslim generation',
         ],
+
         'missions' => [
             [
                 'title' => 'Foundation of the Qur’an & Sunnah',
                 'accent' => '#22c55e',
                 'text_parts' => [
-                    ['text' => 'Shaping an Islamic generation based on '],
-                    ['text' => 'the Qur’an and the Sunnah of Rasulullah SAW', 'mark' => 'green'],
+                    ['text' => 'Nurturing a Muslim generation based on the '],
+                    ['text' => 'Qur’an and the Sunnah of the Prophet Muhammad ﷺ', 'mark' => 'green'],
                     ['text' => '.'],
                 ],
             ],
             [
-                'title' => 'Global Insight & Language',
+                'title' => 'Global Perspective & Languages',
                 'accent' => '#0ea5e9',
                 'text_parts' => [
-                    ['text' => 'Developing an inspiring spirit through '],
-                    ['text' => 'global insight', 'mark' => 'blue'],
-                    ['text' => ' and social communication skills by mastering '],
+                    ['text' => 'Developing an inspiring spirit through a '],
+                    ['text' => 'global perspective', 'mark' => 'blue'],
+                    ['text' => ' and strong social communication skills through mastery of '],
                     ['text' => 'more than one language', 'mark' => 'orange'],
                     ['text' => '.'],
                 ],
@@ -209,7 +307,7 @@ return array_replace_recursive($id, [
                 'title' => 'Critical & Innovative Learners',
                 'accent' => '#f97316',
                 'text_parts' => [
-                    ['text' => 'Creating '],
+                    ['text' => 'Developing a generation of '],
                     ['text' => 'lifelong learners', 'mark' => 'purple'],
                     ['text' => ' who think '],
                     ['text' => 'critically and innovatively', 'mark' => 'orange'],
@@ -217,64 +315,64 @@ return array_replace_recursive($id, [
                 ],
             ],
             [
-                'title' => 'Caring for the Environment & Integrity',
+                'title' => 'Environmentally Conscious & Rooted in Integrity',
                 'accent' => '#14b8a6',
                 'text_parts' => [
                     ['text' => 'Building character that is '],
                     ['text' => 'environmentally conscious', 'mark' => 'green'],
-                    ['text' => ' with '],
+                    ['text' => ' and grounded in '],
                     ['text' => 'integrity', 'mark' => 'blue'],
-                    ['text' => ', locally and globally.'],
+                    ['text' => ', both locally and globally.'],
                 ],
             ],
         ],
     ],
 
     'nilai_sekolah' => [
-        'title' => 'Values That Guide Children’s Growth',
-        'subtitle' => 'Four core values shape the learning culture of Al Mustaqbal: close to the Qur’an, brave in thinking, strong in character, and inspiring to the community.',
-        'aria_label' => 'Al Mustaqbal school values',
+        'title' => 'Values That Guide Every Child’s Growth',
+        'subtitle' => 'Four core values shape the learning culture at Al-Mustaqbal: closeness to the Qur’an, courage to think, unity of character, and the ability to inspire others.',
+        'aria_label' => 'Al-Mustaqbal school values',
         'items' => [
             [
                 'code' => 'Q',
-                'title' => 'Qur’ani',
+                'title' => 'Qur\'anic',
                 'accent' => '#22c55e',
                 'summary' => 'Rooted in the Qur’an and Sunnah.',
                 'text_parts' => [
-                    ['text' => 'Building student character based on '],
-                    ['text' => 'the Qur’an and the Sunnah of Rasulullah SAW', 'mark' => 'green'],
-                    ['text' => ' in daily learning habits and everyday life.'],
+                    ['text' => 'Building student character based on the '],
+                    ['text' => 'Qur’an and the Sunnah of the Prophet Muhammad ﷺ', 'mark' => 'green'],
+                    ['text' => ' through everyday learning habits and daily life.'],
                 ],
             ],
             [
                 'code' => 'I',
                 'title' => 'Innovative',
                 'accent' => '#f97316',
-                'summary' => 'Brave to think and try new solutions.',
+                'summary' => 'Courageous in thinking and exploring new solutions.',
                 'text_parts' => [
                     ['text' => 'Encouraging students to think '],
                     ['text' => 'critically, creatively, and openly', 'mark' => 'orange'],
-                    ['text' => ' toward new learning experiences.'],
+                    ['text' => ' when approaching new learning experiences.'],
                 ],
             ],
             [
                 'code' => 'G',
                 'title' => 'Integrative',
                 'accent' => '#0ea5e9',
-                'summary' => 'Knowledge, manners, language, and social care grow together.',
+                'summary' => 'Knowledge, character, languages, and social awareness grow together.',
                 'text_parts' => [
                     ['text' => 'Connecting '],
-                    ['text' => 'knowledge, character, language, and social care', 'mark' => 'blue'],
-                    ['text' => ' into a complete learning experience.'],
+                    ['text' => 'knowledge, character, languages, and social awareness', 'mark' => 'blue'],
+                    ['text' => ' through a holistic learning experience.'],
                 ],
             ],
             [
                 'code' => 'N',
                 'title' => 'Inspirational',
                 'accent' => '#a855f7',
-                'summary' => 'Growing into a person who brings benefit.',
+                'summary' => 'Growing into a person who brings benefit to others.',
                 'text_parts' => [
-                    ['text' => 'Nurturing the spirit to become someone who is '],
+                    ['text' => 'Nurturing the aspiration to become someone who is '],
                     ['text' => 'beneficial and inspiring', 'mark' => 'purple'],
                     ['text' => ' to the surrounding community.'],
                 ],
@@ -283,14 +381,15 @@ return array_replace_recursive($id, [
     ],
 
     'program_unggulan' => [
+        'section_title' => 'Al-Mustaqbal Education Programs',
 
-        'section_title' => 'Al Mustaqbal Educational Programs',
+        'section_subtitle' => 'Educational levels and learning programs are designed progressively, from early childhood until children are ready to become academically, socially, and Qur’anically independent.',
 
-        'section_subtitle' => 'Learning levels and programs are designed step by step, from early childhood to academic, social, and Qur’anic independence.',
-
-        'title' => 'A Learning Path from Early Years to Independence',
-        'subtitle' => 'Al Mustaqbal programs are designed to strengthen manners, academics, the Qur’an, language, literacy, and children’s independence step by step.',        'chips_aria_label' => 'Program summary',
+        'title' => 'A Learning Journey from Early Childhood to Independence',
+        'subtitle' => 'Al-Mustaqbal programs are designed to progressively strengthen character, academics, the Qur’an, languages, literacy, and children’s independence.',
+        'chips_aria_label' => 'Program summary',
         'flow_aria_label' => 'Featured program list',
+
         'chips' => [
             '6 Programs',
             'Kindergarten & Elementary',
@@ -300,49 +399,49 @@ return array_replace_recursive($id, [
         'items' => [
             [
                 'code' => 'KB',
-                'label' => 'Early Years',
+                'label' => 'Early Childhood',
                 'title' => 'Playgroup',
                 'accent' => '#a855f7',
-                'summary' => 'Guided play to build security, social confidence, and independence.',
+                'summary' => 'Guided play that builds a sense of security, social skills, and independence.',
                 'text_parts' => [
-                    ['text' => 'Warm play-based activities to nurture '],
+                    ['text' => 'Warm and purposeful play activities designed to nurture '],
                     ['text' => 'independence, social skills, and curiosity', 'mark' => 'purple'],
-                    ['text' => ' from the beginning.'],
+                    ['text' => ' from an early age.'],
                 ],
             ],
             [
                 'code' => 'TK',
-                'label' => 'Child Foundation',
+                'label' => 'Childhood Foundation',
                 'title' => 'Kindergarten',
                 'accent' => '#f97316',
-                'summary' => 'Active learning aligned with children’s developmental stages.',
+                'summary' => 'Active learning tailored to each stage of child development.',
                 'text_parts' => [
                     ['text' => 'Early childhood learning that is '],
-                    ['text' => 'warm, active, and gradual', 'mark' => 'orange'],
-                    ['text' => ' so children are ready for elementary school.'],
+                    ['text' => 'warm, active, and progressive', 'mark' => 'orange'],
+                    ['text' => ' to prepare children for elementary education.'],
                 ],
             ],
             [
                 'code' => 'SD',
                 'label' => 'Qur’anic Academics',
-                'title' => 'SDIT',
+                'title' => 'Islamic Elementary School',
                 'accent' => '#0ea5e9',
                 'summary' => 'An integrated Islamic elementary school that strengthens knowledge and character.',
                 'text_parts' => [
-                    ['text' => 'An integrated Islamic elementary program that strengthens '],
-                    ['text' => 'academics, manners, and Islamic character', 'mark' => 'blue'],
+                    ['text' => 'An integrated Islamic elementary education program focused on strengthening '],
+                    ['text' => 'academics, character, and Islamic values', 'mark' => 'blue'],
                     ['text' => '.'],
                 ],
             ],
             [
                 'code' => 'TQ',
-                'label' => 'Memorization & Manners',
-                'title' => 'Tahfidz Al-Qur’an',
+                'label' => 'Memorization & Character',
+                'title' => 'Qur’an Memorization',
                 'accent' => '#22c55e',
-                'summary' => 'Qur’an memorization is developed together with daily manners.',
+                'summary' => 'Qur’an memorization developed alongside consistent character-building habits.',
                 'text_parts' => [
-                    ['text' => 'A Qur’an memorization program with habits of '],
-                    ['text' => 'manners, murajaah, and closeness to the Qur’an', 'mark' => 'green'],
+                    ['text' => 'A Qur’an memorization program supported by consistent practice in '],
+                    ['text' => 'character, murajaah, and closeness to the Qur’an', 'mark' => 'green'],
                     ['text' => '.'],
                 ],
             ],
@@ -351,11 +450,11 @@ return array_replace_recursive($id, [
                 'label' => 'Arabic & English',
                 'title' => 'Language Partner',
                 'accent' => '#14b8a6',
-                'summary' => 'Language becomes a tool for confidence and global communication.',
+                'summary' => 'Languages become tools for confidence and global communication.',
                 'text_parts' => [
-                    ['text' => 'Arabic and English learning to build '],
+                    ['text' => 'Arabic and English learning designed to progressively develop '],
                     ['text' => 'global communication skills', 'mark' => 'green'],
-                    ['text' => ' gradually.'],
+                    ['text' => '.'],
                 ],
             ],
             [
@@ -363,25 +462,26 @@ return array_replace_recursive($id, [
                 'label' => 'Reading Culture',
                 'title' => 'Literacy & Library',
                 'accent' => '#eab308',
-                'summary' => 'A literacy space to grow reading interest and independent learning.',
+                'summary' => 'A literacy space that nurtures reading interest and independent learning.',
                 'text_parts' => [
-                    ['text' => 'A literacy space that encourages '],
-                    ['text' => 'reading interest and independent learning habits', 'mark' => 'yellow'],
+                    ['text' => 'A literacy environment that encourages '],
+                    ['text' => 'a love of reading and independent learning habits', 'mark' => 'yellow'],
                     ['text' => '.'],
                 ],
             ],
         ],
-        'empty' => 'Featured programs are not available yet',
+
+        'empty' => 'Featured Programs Are Not Available Yet',
     ],
 
     'galeri' => [
-
         'section_title' => 'School Activity Gallery',
 
-        'section_subtitle' => 'Snapshots of learning, worship, student work, and togetherness documented at school.',
+        'section_subtitle' => 'Highlights of learning, worship, creative work, and student togetherness documented at school.',
 
         'title' => 'Latest Moments from Al Mustaqbal School',
-        'subtitle' => 'Documentation of learning, worship, creativity, and student togetherness. For now, the gallery uses manual data and Instagram links, not an API.',        'aria_label' => 'Latest gallery moments list',
+        'subtitle' => 'Documentation of student learning, worship, creativity, and togetherness. The gallery currently uses manually managed data and Instagram links rather than an API.',
+        'aria_label' => 'Latest gallery moments',
         'visual_aria_label' => 'Gallery media preview',
         'open_media_prefix' => 'Open media',
         'fallback_item_label' => 'gallery',
@@ -391,23 +491,34 @@ return array_replace_recursive($id, [
         'default_type_label' => 'Photo',
 
         'cta' => [
-            'label' => 'View Full Gallery',
+            'label' => 'View All Gallery',
             'href' => '/galeri',
         ],
+
         'filters' => [
-            ['label' => 'All', 'value' => 'semua'],
-            ['label' => 'Photos', 'value' => 'photo'],
-            ['label' => 'Video/Reel', 'value' => 'video'],
+            [
+                'label' => 'All',
+                'value' => 'semua',
+            ],
+            [
+                'label' => 'Photo',
+                'value' => 'photo',
+            ],
+            [
+                'label' => 'Video/Reel',
+                'value' => 'video',
+            ],
         ],
+
         'items' => [
             [
-                'title' => 'SDIT Student Market Day',
+                'title' => 'Islamic Elementary Students Market Day',
                 'type' => 'reel',
                 'instagram_url' => 'https://www.instagram.com/',
                 'thumbnail' => '',
                 'published_at' => '2026-07-01',
-                'date' => 'July 1, 2026',
-                'caption' => 'Students learn confidence, simple counting, and interaction through market day activities.',
+                'date' => '1 July 2026',
+                'caption' => 'Students build confidence, practice basic arithmetic, and learn to interact through Market Day activities.',
                 'category' => 'Student Activities',
                 'variant' => 'feature',
                 'accent' => '#f97316',
@@ -423,8 +534,8 @@ return array_replace_recursive($id, [
                 'instagram_url' => '',
                 'thumbnail' => '',
                 'published_at' => '2026-06-27',
-                'date' => 'June 27, 2026',
-                'caption' => 'A morning murajaah and tahfidz atmosphere that builds closeness to the Qur’an.',
+                'date' => '27 June 2026',
+                'caption' => 'A morning atmosphere of murajaah and tahfidz that nurtures a close relationship with the Qur’an.',
                 'category' => 'Tahfidz',
                 'variant' => 'tall',
                 'accent' => '#22c55e',
@@ -440,8 +551,8 @@ return array_replace_recursive($id, [
                 'instagram_url' => '',
                 'thumbnail' => '',
                 'published_at' => '2026-06-22',
-                'date' => 'June 22, 2026',
-                'caption' => 'Children learn to observe, try, and conclude through simple experiments.',
+                'date' => '22 June 2026',
+                'caption' => 'Children learn to observe, experiment, and draw conclusions through simple science activities.',
                 'category' => 'Science',
                 'variant' => 'wide',
                 'accent' => '#0ea5e9',
@@ -452,13 +563,13 @@ return array_replace_recursive($id, [
                 'emoji' => '🔬📸',
             ],
             [
-                'title' => 'Cheerful Color Artworks',
+                'title' => 'Bright and Colorful Student Artwork',
                 'type' => 'photo',
                 'instagram_url' => '',
                 'thumbnail' => '',
                 'published_at' => '2026-06-18',
-                'date' => 'June 18, 2026',
-                'caption' => 'Student artwork documentation to train imagination, color, and self-expression.',
+                'date' => '18 June 2026',
+                'caption' => 'Student artwork that develops imagination, color awareness, and self-expression.',
                 'category' => 'Art',
                 'variant' => 'normal',
                 'accent' => '#ec4899',
@@ -474,9 +585,9 @@ return array_replace_recursive($id, [
                 'instagram_url' => '',
                 'thumbnail' => '',
                 'published_at' => '2026-06-12',
-                'date' => 'June 12, 2026',
-                'caption' => 'Light English activities through games, vocabulary, and simple conversations.',
-                'category' => 'Language',
+                'date' => '12 June 2026',
+                'caption' => 'Light and engaging English activities through games, vocabulary practice, and simple conversations.',
+                'category' => 'Languages',
                 'variant' => 'wide',
                 'accent' => '#14b8a6',
                 'fallback_icon' => '🌍',
@@ -486,13 +597,13 @@ return array_replace_recursive($id, [
                 'emoji' => '🌍🎥',
             ],
             [
-                'title' => 'Outbound and Teamwork',
+                'title' => 'Outdoor Activities and Teamwork',
                 'type' => 'photo',
                 'instagram_url' => '',
                 'thumbnail' => '',
                 'published_at' => '2026-06-05',
-                'date' => 'June 5, 2026',
-                'caption' => 'Outdoor activities to train courage, independence, and student teamwork.',
+                'date' => '5 June 2026',
+                'caption' => 'Outdoor activities designed to strengthen courage, independence, and teamwork.',
                 'category' => 'Outdoor',
                 'variant' => 'tall',
                 'accent' => '#eab308',
@@ -508,9 +619,9 @@ return array_replace_recursive($id, [
                 'instagram_url' => '',
                 'thumbnail' => '',
                 'published_at' => '2026-05-29',
-                'date' => 'May 29, 2026',
-                'caption' => 'Students perform in art, language, and stage confidence activities.',
-                'category' => 'School Event',
+                'date' => '29 May 2026',
+                'caption' => 'Students take the stage through art, language, and activities that build confidence in performing.',
+                'category' => 'School Events',
                 'variant' => 'feature',
                 'accent' => '#a855f7',
                 'fallback_icon' => '🎭',
@@ -525,8 +636,8 @@ return array_replace_recursive($id, [
                 'instagram_url' => '',
                 'thumbnail' => '',
                 'published_at' => '2026-05-20',
-                'date' => 'May 20, 2026',
-                'caption' => 'Students get to know books, stories, and reading habits in a comfortable atmosphere.',
+                'date' => '20 May 2026',
+                'caption' => 'Students discover books, stories, and reading habits in a comfortable environment.',
                 'category' => 'Literacy',
                 'variant' => 'normal',
                 'accent' => '#f59e0b',
@@ -540,65 +651,67 @@ return array_replace_recursive($id, [
     ],
 
     'artikel' => [
-        'title' => 'School Stories Close to Parents',
-        'subtitle' => 'Short updates, parenting insights, and children’s activity stories in a light format so parents can quickly understand the key message.',
+        'title' => 'School Stories That Keep Parents Connected',
+        'subtitle' => 'Short updates, parenting insights, and stories from children’s activities presented in an accessible format so parents can quickly understand the key information.',
         'read_more' => 'Read Article',
-        'empty' => 'No latest articles yet.',
+        'empty' => 'No recent articles yet.',
         'rail_aria_label' => 'More school stories',
+
         'cta' => [
             'label' => 'View All Stories',
             'href' => '/artikel',
         ],
+
         'items' => [
             [
                 'issue' => '01',
-                'date' => 'June 3, 2026',
-                'category' => 'Academic',
-                'reading_time' => '3 min',
+                'date' => '3 June 2026',
+                'category' => 'Academics',
+                'reading_time' => '3 min read',
                 'emoji' => '🧭',
                 'gradient_from' => 'var(--color-yellow-soft)',
                 'gradient_to' => 'var(--color-orange-soft)',
-                'title' => 'Children’s Learning Rhythm: Calm, Directed, and Not Rushed',
-                'description' => 'How the school structures daily activities so children have time to learn, play, pray, ask questions, and bravely try.',
+                'title' => 'A Child’s Learning Rhythm: Calm, Purposeful, and Unhurried',
+                'description' => 'How the school structures daily activities so children have time to learn, play, pray, ask questions, and confidently try new things.',
                 'highlight' => 'Focus: daily learning routines',
                 'href' => '/artikel',
             ],
             [
                 'issue' => '02',
-                'date' => 'May 18, 2026',
+                'date' => '18 May 2026',
                 'category' => 'Character',
-                'reading_time' => '4 min',
+                'reading_time' => '4 min read',
                 'emoji' => '🌱',
                 'gradient_from' => 'var(--color-mint-soft)',
                 'gradient_to' => 'var(--color-blue-soft)',
-                'title' => 'Small Manners Practiced Every Day',
-                'description' => 'From greetings, lining up, tidying belongings, to daring to apologize. Small things can have large effects.',
-                'highlight' => 'Focus: character habits',
+                'title' => 'Small Acts of Adab Practiced Every Day',
+                'description' => 'From greeting others and waiting in line to putting things away and having the courage to apologize. Small habits can create a remarkably lasting impact.',
+                'highlight' => 'Focus: character-building habits',
                 'href' => '/artikel',
             ],
             [
                 'issue' => '03',
-                'date' => 'May 2, 2026',
-                'category' => 'Program',
-                'reading_time' => '3 min',
+                'date' => '2 May 2026',
+                'category' => 'Programs',
+                'reading_time' => '3 min read',
                 'emoji' => '🏫',
                 'gradient_from' => 'var(--color-pink-soft)',
                 'gradient_to' => 'var(--color-purple-soft)',
-                'title' => 'Understanding the Flow of Kindergarten, SDIT, Tahfidz, and Literacy Programs',
-                'description' => 'A summary of learning programs that helps parents understand the school’s focus without reading endless documents.',
+                'title' => 'Understanding the Kindergarten, Islamic Elementary, Tahfidz, and Literacy Programs',
+                'description' => 'A concise overview that helps parents understand the focus of each school program without having to work through pages of dense documentation.',
                 'highlight' => 'Focus: school programs',
                 'href' => '/artikel',
             ],
             [
                 'issue' => '04',
-                'date' => 'April 20, 2026',
+                'date' => '20 April 2026',
                 'category' => 'Activities',
-                'reading_time' => '2 min',
+                'reading_time' => '2 min read',
                 'emoji' => '🎨',
                 'gradient_from' => 'var(--color-blue-soft)',
                 'gradient_to' => 'var(--color-yellow-soft)',
-                'title' => 'Learning Through Art, Stories, and the Courage to Perform',
-                'description' => 'Creative activities help children practice language, expression, cooperation, and confidence in a safe atmosphere.',
+                'title' => 'Learning Through Creativity, Stories, and the Courage to Perform',
+                'description' => 'Creative activities help children develop language, self-expression, teamwork, and confidence in a safe environment.',
                 'highlight' => 'Focus: children’s creativity',
                 'href' => '/galeri',
             ],
@@ -607,9 +720,15 @@ return array_replace_recursive($id, [
 
     'footer' => [
         'brand' => [
-            'description' => 'A child-friendly Islamic school that supports children’s growth, manners, and curiosity from an early age.',
+            'href' => '#beranda',
+            'image' => '/media/home/logo-footer.webp',
+            'image_alt' => 'Al Mustaqbal logo',
+            'name' => 'Al Mustaqbal',
+            'description' => 'A child-friendly Islamic school that supports students’ growth, character, and curiosity from an early age.',
         ],
-        'channels_title' => 'Social Media :',
+
+        'channels_title' => 'Social Media:',
+
         'channels' => [
             [
                 'label' => 'Location',
@@ -621,7 +740,7 @@ return array_replace_recursive($id, [
             ],
             [
                 'label' => 'WhatsApp',
-                'note' => 'Chat Admin',
+                'note' => 'Chat with Admin',
                 'icon' => 'whatsapp',
                 'asset' => '/media/home/wa.svg',
                 'asset_alt' => 'WhatsApp icon',
@@ -645,30 +764,95 @@ return array_replace_recursive($id, [
             ],
             [
                 'label' => 'Email',
-                'note' => 'Send Message',
+                'note' => 'Send a Message',
                 'icon' => 'email',
                 'asset' => '/media/home/gmail.png',
                 'asset_alt' => 'Gmail icon',
                 'href' => 'mailto:almustaqbal010@gmail.com',
             ],
         ],
+
         'links_title' => 'Our Pages',
+
         'links' => [
-            ['label' => 'Home', 'href' => '#beranda'],
-            ['label' => 'About', 'href' => '#visi-misi'],
-            ['label' => 'Articles', 'href' => '/artikel'],
-            ['label' => 'Gallery', 'href' => '/galeri'],
-            ['label' => 'Admission', 'href' => '/ppdb'],
+            [
+                'label' => 'Home',
+                'href' => '#beranda',
+            ],
+            [
+                'label' => 'About',
+                'href' => '#visi-misi',
+            ],
+            [
+                'label' => 'Articles',
+                'href' => '/artikel',
+            ],
+            [
+                'label' => 'Gallery',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Admissions',
+                'href' => '/ppdb',
+            ],
         ],
+
         'gallery_links_title' => 'Our Gallery',
+
         'gallery_links' => [
-            ['label' => 'SDIT', 'href' => '/galeri'],
-            ['label' => 'Language', 'href' => '/galeri'],
-            ['label' => 'Kindergarten', 'href' => '/galeri'],
-            ['label' => 'Tahfidz', 'href' => '/galeri'],
-            ['label' => 'Library', 'href' => '/galeri'],
+            [
+                'label' => 'Islamic Elementary School',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Languages',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Kindergarten',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Tahfidz',
+                'href' => '/galeri',
+            ],
+            [
+                'label' => 'Library',
+                'href' => '/galeri',
+            ],
         ],
+
         'partners_title' => 'Our Partners',
+
+        'partners' => [
+            [
+                'label' => 'Activity Documentation',
+                'image' => '/media/home/6.png',
+                'href' => 'https://www.instagram.com/reel/CzFSt1oyYGm',
+            ],
+            [
+                'label' => 'SDIT Al Mustaqbal',
+                'image' => '/media/home/2.png',
+                'href' => 'https://www.instagram.com/sdit.almustaqbal',
+            ],
+            [
+                'label' => 'DT Peduli',
+                'image' => '/media/home/3.png',
+                'href' => 'https://dtpeduli.org/',
+            ],
+            [
+                'label' => 'F1 Club Taekwondo Malang',
+                'image' => '/media/home/4.png',
+                'href' => 'https://www.instagram.com/f1clubtaekwondo_malang',
+            ],
+            [
+                'label' => 'Digido',
+                'image' => '/media/home/5.png',
+                'href' => 'https://digido.co.id/',
+            ],
+        ],
+
         'copyright' => 'Al Mustaqbal. All Rights Reserved.',
     ],
-]);
+];
+

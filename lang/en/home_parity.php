@@ -2,16 +2,16 @@
 
 return [
     'hero' => [
-        'title_highlight' => 'manners, knowledge, and memorization',
+        'title_highlight' => 'character, knowledge, and memorization',
         'slides' => [
             0 => [
                 'type' => 'video',
                 'media' => 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
                 'poster' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2400&q=82',
-                'media_alt' => 'Ambient learning background video',
+                'media_alt' => 'Background video of a learning environment',
                 'eyebrow' => 'Meaningful Learning',
-                'title' => 'Rooted in the Qur’an. Moving Forward through Innovation.',
-                'description' => 'Every learning experience invites children to question, create, collaborate, and grow with Islamic values as their compass.',
+                'title' => 'Rooted in the Qur’an. Moving Forward with Innovation.',
+                'description' => 'Every learning experience is designed to encourage children to ask questions, create, collaborate, and grow with Islamic values as their guiding compass.',
                 'cta' => [
                     'label' => 'Explore Our Programs',
                     'href' => '#program',
@@ -28,12 +28,12 @@ return [
                 'type' => 'image',
                 'media' => 'media/home/hero-school.png',
                 'poster' => null,
-                'media_alt' => 'The Al Mustaqbal School building and learning environment',
+                'media_alt' => 'Al Mustaqbal School building and surroundings',
                 'eyebrow' => 'Al Mustaqbal School',
-                'title' => 'Raising a Muslim Generation Ready to Serve as Khalifatullah',
-                'description' => 'A holistic education connecting the Qur’an, character, knowledge, language, creativity, and the courage to benefit others.',
+                'title' => 'Nurturing a Muslim Generation Ready to Fulfill Their Role as Khalifatullah',
+                'description' => 'A holistic education that brings together the Qur’an, character, knowledge, languages, creativity, and the courage to benefit others.',
                 'cta' => [
-                    'label' => 'Discover Our Educational Direction',
+                    'label' => 'Explore Our Educational Vision',
                     'href' => '#visi-misi',
                     'action' => 'anchor',
                 ],
@@ -48,12 +48,12 @@ return [
                 'type' => 'image',
                 'media' => 'https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_6/v1742884220/jiseduorg/vmaca0dvv3mnapr6y0b4/HSFModuleatNight.jpg',
                 'poster' => null,
-                'media_alt' => 'School architecture illuminated at night',
+                'media_alt' => 'School architecture at night',
                 'eyebrow' => 'Spaces That Bring Learning to Life',
                 'title' => 'An Environment That Invites Children to Grow and Discover Their Potential',
-                'description' => 'A thoughtful learning environment is more than a place. It becomes part of the experience that nurtures curiosity, courage, and belonging.',
+                'description' => 'A meaningful learning environment is more than just a place. It is part of an experience that nurtures curiosity, courage, and a sense of belonging.',
                 'cta' => [
-                    'label' => 'Explore School Life',
+                    'label' => 'Discover School Life',
                     'href' => '#galeri',
                     'action' => 'anchor',
                 ],
@@ -66,6 +66,7 @@ return [
             ],
         ],
     ],
+
     'navbar' => [
         'logo' => [
             'line_1' => 'Al Mustaqbal',
@@ -81,21 +82,24 @@ return [
             ],
         ],
     ],
+
     'stats' => [
         'items' => [
             1 => ['label' => 'Prestigious Awards'],
         ],
     ],
+
     'quick_info' => [
         'items' => [
             0 => [
-                'description' => 'Announcements, schedules, and school grades are available in one place.',
+                'description' => 'School announcements, schedules, and grades are available in one place.',
             ],
             1 => [
                 'title' => 'Extracurricular Activities',
             ],
         ],
     ],
+
     'footer' => [
         'partners' => [
             0 => ['label' => 'Activity Documentation'],

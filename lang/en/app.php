@@ -7,7 +7,7 @@ return [
         'title' => 'SchoolAI',
         'kicker' => 'SchoolAI',
         'heading' => 'Welcome',
-        'note' => 'The homepage is connected to Vite CSS and JavaScript.',
+        'note' => 'The home page is already connected to Vite CSS and JavaScript.',
     ],
 
     'auth' => [
@@ -15,28 +15,28 @@ return [
             'title' => 'Login',
             'heading' => 'Login',
             'description' => 'Sign in with your Google account to continue.',
-            'google_button' => 'Sign in with Google',
+            'google_button' => 'Continue with Google',
         ],
 
         'account' => [
-            'title' => 'Content Not Available',
-            'status' => 'Regular user',
+            'title' => 'Content Not Available Yet',
+            'status' => 'Standard user',
             'heading' => 'Content is not available here yet',
-            'description' => 'Your account signed in successfully as a regular user. The admin area is not available to this account.',
-            'logout' => 'Sign out',
+            'description' => 'You have successfully signed in as a standard user. The admin area is not available for this account.',
+            'logout' => 'Logout',
         ],
 
         'errors' => [
             'google_failed' => 'Google login failed. Please try again.',
-            'google_missing_email' => 'The Google account does not have a usable email address.',
-            'google_unverified_email' => 'The Google email address is not verified yet.',
-            'google_identity_conflict' => 'The Google identity does not match the stored account. Contact the administrator.',
-            'account_disabled' => 'This account has been disabled. Contact the administrator.',
+            'google_missing_email' => 'This Google account does not have a usable email address.',
+            'google_unverified_email' => 'The Google email address has not been verified.',
+            'google_identity_conflict' => 'The Google identity does not match the stored account. Please contact the administrator.',
+            'account_disabled' => 'This account has been disabled. Please contact the administrator.',
         ],
 
         'success' => [
-            'logged_in' => 'Signed in successfully.',
-            'logged_out' => 'Signed out successfully.',
+            'logged_in' => 'Successfully signed in.',
+            'logged_out' => 'Successfully signed out.',
         ],
     ],
 
