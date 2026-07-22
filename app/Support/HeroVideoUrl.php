@@ -30,8 +30,8 @@ final class HeroVideoUrl
             $encoded = rawurlencode($videoId);
 
             return 'https://www.youtube-nocookie.com/embed/'.$encoded
-                .'?autoplay=1&mute=1&controls=0&loop=1&playlist='.$encoded
-                .'&playsinline=1&rel=0&modestbranding=1&enablejsapi=1';
+                .'?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3'
+                .'&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&loop=0';
         }
 
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
