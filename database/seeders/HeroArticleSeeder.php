@@ -4,12 +4,13 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use App\Models\HeroSlide;
-use App\Support\HeroVideoUrl;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
 final class HeroArticleSeeder extends Seeder
 {
+    private const FEATURED_VIDEO_PATH = '/media/hero/shanghai-mega-city.mp4';
+
     public function run(): void
     {
         if (! Schema::hasColumn('hero_slides', 'article_id')) {
@@ -40,7 +41,7 @@ final class HeroArticleSeeder extends Seeder
             );
 
         foreach ($articles->values() as $index => $article) {
-            $isVideo = $index === 1;
+            $isVideo = $index === 0;
 
             $slide = HeroSlide::query()->firstOrNew([
                 'article_id' => $article->getKey(),
@@ -50,9 +51,7 @@ final class HeroArticleSeeder extends Seeder
                 'type' => $isVideo ? 'video' : 'image',
 
                 'media_url' => $isVideo
-                    ? HeroVideoUrl::normalize(
-                        'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
-                    )
+                    ? self::FEATURED_VIDEO_PATH
                     : $article->thumbnail_url,
 
                 'poster_url' => $article->thumbnail_url,
