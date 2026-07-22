@@ -151,6 +151,30 @@ function initHeroSlider(root) {
     root.style.setProperty('--hero-autoplay-duration', duration + 'ms');
     root.setAttribute('data-enhanced', 'true');
 
+    slides.forEach(function (slide) {
+        var title = slide.querySelector('.hero-cinema__title');
+        var cta = slide.querySelector('.hero-cinema__cta[href]');
+
+        if (!title || !cta) return;
+
+        title.setAttribute('role', 'link');
+        title.setAttribute('tabindex', '0');
+        title.style.cursor = 'pointer';
+
+        function openSlideLink() {
+            var href = cta.getAttribute('href');
+            if (href) window.location.assign(href);
+        }
+
+        title.addEventListener('click', openSlideLink);
+        title.addEventListener('keydown', function (event) {
+            if (event.key !== 'Enter') return;
+
+            event.preventDefault();
+            openSlideLink();
+        });
+    });
+
     function formatStatus(index) {
         return statusTemplate
             .replace(':current', String(index + 1))
@@ -374,7 +398,7 @@ function initHeroSlider(root) {
     });
 
     root.addEventListener('pointerdown', function (event) {
-        if (event.pointerType === 'mouse' || event.target.closest('a, button, form')) return;
+        if (event.pointerType === 'mouse' || event.target.closest('a, button, form, [role="link"]')) return;
         pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
     }, { passive: true });
 
