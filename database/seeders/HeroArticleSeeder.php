@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Schema;
 final class HeroArticleSeeder extends Seeder
 {
     private const FEATURED_VIDEO_PATH = '/media/hero/shanghai-mega-city.mp4';
+    private const FEATURED_VIDEO_POSTER = '/images/hero-video-poster.svg';
 
     public function run(): void
     {
@@ -54,7 +55,9 @@ final class HeroArticleSeeder extends Seeder
                     ? self::FEATURED_VIDEO_PATH
                     : $article->thumbnail_url,
 
-                'poster_url' => $article->thumbnail_url,
+                'poster_url' => $isVideo
+                    ? self::FEATURED_VIDEO_POSTER
+                    : $article->thumbnail_url,
 
                 'media_alt_id' => $article->title_id,
                 'media_alt_en' => $article->title_en,
