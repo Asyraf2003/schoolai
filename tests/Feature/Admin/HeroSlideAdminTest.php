@@ -52,6 +52,32 @@ it('creates and normalizes a youtube hero slide from admin', function (): void {
         ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['title'] ?? null) === 'Database Hero');
 });
 
+it('edits a seeded public image without forcing a replacement upload', function (): void {
+    $slide = HeroSlide::query()->create([
+        'type' => 'image',
+        'media_url' => 'media/home/hero-school.png',
+        'title_id' => 'Hero Lama',
+        'sort_order' => 1,
+        'is_active' => true,
+    ]);
+
+    $response = $this->put(route('admin.hero.update', $slide), [
+        'type' => 'image',
+        'media_url' => 'media/home/hero-school.png',
+        'title_id' => 'Hero Diperbarui',
+        'focal_position' => 'center center',
+        'overlay_strength' => '0.46',
+        'is_active' => '1',
+    ]);
+
+    $response
+        ->assertRedirect(route('admin.hero'))
+        ->assertSessionHasNoErrors();
+
+    expect($slide->fresh()->title_id)->toBe('Hero Diperbarui')
+        ->and($slide->fresh()->media_url)->toBe('media/home/hero-school.png');
+});
+
 it('reorders and toggles hero slides', function (): void {
     $first = HeroSlide::query()->create([
         'type' => 'image',
