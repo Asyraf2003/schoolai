@@ -16,6 +16,15 @@
     .home-page .hero-cinema__description { max-width: 48ch; margin-block-start: clamp(14px, 1.8vh, 20px); font-size: clamp(0.84rem, 0.92vw, 0.98rem); line-height: 1.5; }
     .home-page .hero-cinema__cta { min-height: 44px; margin-block-start: clamp(14px, 2vh, 22px); padding-block: 10px; font-size: 0.8rem; }
 
+    /* YouTube is presentation media here, not an interactive player. */
+    .home-page .hero-cinema__youtube-frame { background-image: none !important; }
+    .home-page .hero-cinema__youtube-frame iframe {
+      pointer-events: none !important;
+      user-select: none;
+    }
+    .home-page [data-hero-playback],
+    .home-page .hero-cinema__playback { display: none !important; }
+
     .home-page .hero-cinema__arrow {
       inset-block-start: auto;
       width: clamp(48px, 3.8vw, 58px);
@@ -78,4 +87,114 @@
       .home-page .hero-cinema__arrow--next { inset-inline-end: 18px; inset-block-end: 92px; }
     }
   </style>
+
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+    (function () {
+      function youtubeUrl(value) {
+        if (!value) return null;
+
+        try {
+          var url = new URL(value, window.location.origin);
+          var host = url.hostname.toLowerCase();
+
+          if (
+            host !== 'www.youtube.com' &&
+            host !== 'youtube.com' &&
+            host !== 'www.youtube-nocookie.com' &&
+            host !== 'youtube-nocookie.com'
+          ) {
+            return null;
+          }
+
+          if (!/^\/embed\/[A-Za-z0-9_-]{6,32}\/?$/.test(url.pathname)) return null;
+
+          url.searchParams.set('autoplay', '1');
+          url.searchParams.set('mute', '1');
+          url.searchParams.set('controls', '0');
+          url.searchParams.set('disablekb', '1');
+          url.searchParams.set('fs', '0');
+          url.searchParams.set('iv_load_policy', '3');
+          url.searchParams.set('playsinline', '1');
+          url.searchParams.set('rel', '0');
+          url.searchParams.set('modestbranding', '1');
+          url.searchParams.set('enablejsapi', '1');
+          url.searchParams.set('origin', window.location.origin);
+          url.searchParams.set('loop', '0');
+          url.searchParams.delete('playlist');
+
+          return url.toString();
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function prepareVideo(video) {
+        var source = video.querySelector('source[data-src], source[src]');
+        if (!source) return;
+
+        var attribute = source.hasAttribute('data-src') ? 'data-src' : 'src';
+        var normalized = youtubeUrl(source.getAttribute(attribute));
+        if (!normalized) return;
+
+        source.setAttribute(attribute, normalized);
+        video.removeAttribute('poster');
+        video.removeAttribute('controls');
+        video.removeAttribute('loop');
+        video.muted = true;
+        video.setAttribute('muted', '');
+      }
+
+      function prepareFrame(frame) {
+        ['data-src', 'src'].forEach(function (attribute) {
+          if (!frame.hasAttribute(attribute)) return;
+
+          var current = frame.getAttribute(attribute);
+          var normalized = youtubeUrl(current);
+          if (normalized && normalized !== current) {
+            frame.setAttribute(attribute, normalized);
+          }
+        });
+
+        frame.setAttribute('loading', 'eager');
+        frame.setAttribute('tabindex', '-1');
+        frame.setAttribute('aria-hidden', 'true');
+        frame.setAttribute('allow', 'autoplay; encrypted-media');
+        frame.style.setProperty('pointer-events', 'none', 'important');
+      }
+
+      function scan(root) {
+        if (!root || !root.querySelectorAll) return;
+
+        if (root.matches && root.matches('[data-hero-video]')) prepareVideo(root);
+        if (root.matches && root.matches('[data-hero-youtube]')) prepareFrame(root);
+
+        root.querySelectorAll('[data-hero-video]').forEach(prepareVideo);
+        root.querySelectorAll('[data-hero-youtube]').forEach(prepareFrame);
+        root.querySelectorAll('[data-hero-playback], .hero-cinema__playback').forEach(function (control) {
+          control.remove();
+        });
+      }
+
+      scan(document);
+
+      var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          mutation.addedNodes.forEach(function (node) {
+            if (node.nodeType === 1) scan(node);
+          });
+        });
+      });
+
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        scan(document);
+        window.requestAnimationFrame(function () { scan(document); });
+        window.setTimeout(function () {
+          scan(document);
+          observer.disconnect();
+        }, 2000);
+      }, { once: true });
+    })();
+  </script>
 @endonce
