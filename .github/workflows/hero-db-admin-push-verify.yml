@@ -3,6 +3,8 @@ name: Verify hero database admin delivery
 on:
   push:
     branches: [agent/hero-db-admin-final]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
