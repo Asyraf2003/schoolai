@@ -149,8 +149,7 @@
           $item['route_patterns'] = ['galeri'];
           $item['mega'] = array_replace($megaCopy['gallery'], [
               'toggle_label' => $megaCopy['gallery']['eyebrow'],
-              'media_url' => 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1400&q=82',
-              'media_video_url' => 'https://www.youtube-nocookie.com/embed/kb1dXcf3QQs?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=kb1dXcf3QQs&enablejsapi=1',
+              'media_url' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1400&q=82',
               'media_alt' => $megaCopy['gallery']['title'],
               'links' => array_map(
                   fn (array $link): array => array_merge($link, [
@@ -165,7 +164,6 @@
           $item['mega'] = array_replace($megaCopy['article'], [
               'toggle_label' => $megaCopy['article']['eyebrow'],
               'media_url' => 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1400&q=82',
-              'media_video_url' => 'https://www.youtube-nocookie.com/embed/kb1dXcf3QQs?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=kb1dXcf3QQs&enablejsapi=1&start=18',
               'media_alt' => $megaCopy['article']['title'],
               'links' => array_map(
                   fn (array $link): array => array_merge($link, [
@@ -471,7 +469,6 @@
             $isActive = $isActiveRoute || $isActiveHomeAnchor;
             $megaPanelId = 'navMegaPanel-' . $loop->index;
             $itemMegaMediaUrl = $item['mega']['media_url'] ?? $megaMediaUrl;
-            $itemMegaVideoUrl = $item['mega']['media_video_url'] ?? null;
             $itemMegaMediaAlt = $item['mega']['media_alt'] ?? $megaMediaAlt;
           @endphp
 
@@ -528,19 +525,6 @@
                     loading="lazy"
                     decoding="async"
                   />
-                  @if (! empty($itemMegaVideoUrl))
-                    <iframe
-                      class="nav-mega__video"
-                      data-nav-mega-video
-                      data-src="{{ $itemMegaVideoUrl }}"
-                      title="{{ $itemMegaMediaAlt }}"
-                      tabindex="-1"
-                      aria-hidden="true"
-                      loading="lazy"
-                      referrerpolicy="strict-origin-when-cross-origin"
-                      allow="autoplay; encrypted-media"
-                    ></iframe>
-                  @endif
                   <span class="nav-mega__media-shade" aria-hidden="true"></span>
                 </div>
 

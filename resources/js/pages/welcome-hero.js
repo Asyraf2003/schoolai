@@ -1,4 +1,4 @@
-/* Homepage mixed-media slider and deterministic desktop mega-menu. */
+/* Homepage native-media slider and deterministic desktop mega-menu. */
 
 function onMediaQueryChange(query, listener) {
     if (typeof query.addEventListener === 'function') {
@@ -16,34 +16,6 @@ function initMegaMenus() {
 
     if (!header || !menus.length) return;
 
-    function postMegaVideoCommand(frame, command) {
-        if (!frame || !frame.contentWindow || !frame.hasAttribute('src')) return;
-
-        frame.contentWindow.postMessage(JSON.stringify({
-            event: 'command',
-            func: command,
-            args: [],
-        }), '*');
-    }
-
-    function syncMegaVideo(panel, isOpen) {
-        var frame = panel.querySelector('[data-nav-mega-video]');
-        if (!frame || !window.matchMedia('(min-width: 1181px)').matches) return;
-
-        if (isOpen) {
-            if (!frame.hasAttribute('src')) {
-                var source = frame.getAttribute('data-src');
-                if (!source) return;
-
-                frame.setAttribute('src', source);
-            }
-
-            postMegaVideoCommand(frame, 'playVideo');
-        } else {
-            postMegaVideoCommand(frame, 'pauseVideo');
-        }
-    }
-
     function setMenuState(menu, isOpen, focusFirstLink) {
         var toggle = menu.querySelector('[data-nav-mega-toggle]');
         var panel = menu.querySelector('[data-nav-mega-panel]');
@@ -54,7 +26,6 @@ function initMegaMenus() {
         toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
         panel.inert = !isOpen;
-        syncMegaVideo(panel, isOpen);
 
         if (isOpen && focusFirstLink) {
             var firstLink = panel.querySelector('a[href]');
@@ -80,21 +51,6 @@ function initMegaMenus() {
         var panel = menu.querySelector('[data-nav-mega-panel]');
 
         if (!toggle || !panel) return;
-
-        var videoFrame = panel.querySelector('[data-nav-mega-video]');
-        if (videoFrame) {
-            videoFrame.addEventListener('load', function () {
-                var media = videoFrame.closest('.nav-mega__media');
-
-                window.setTimeout(function () {
-                    if (media) media.classList.add('is-video-ready');
-                }, 720);
-
-                if (menu.classList.contains('is-open')) {
-                    postMegaVideoCommand(videoFrame, 'playVideo');
-                }
-            });
-        }
 
         setMenuState(menu, false, false);
 

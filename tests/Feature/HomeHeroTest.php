@@ -25,7 +25,7 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
                     && ($firstSlide['type'] ?? null) === 'video'
                     && ($firstSlide['render_type'] ?? null) === 'video'
                     && is_string($firstMediaUrl)
-                    && str_contains($firstMediaUrl, 'youtube-nocookie.com/embed/kb1dXcf3QQs')
+                    && str_ends_with(parse_url($firstMediaUrl, PHP_URL_PATH) ?: '', '/flower.mp4')
                     && in_array('image', $declaredTypes, true)
                     && in_array('video', $declaredTypes, true)
                     && collect($slides)->every(
@@ -33,7 +33,7 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
                             && in_array($slide['render_type'] ?? null, ['image', 'video'], true)
                     )
                     && collect($mediaUrls)->contains(
-                        fn (mixed $url): bool => is_string($url) && str_contains($url, 'youtube-nocookie.com/embed/kb1dXcf3QQs')
+                        fn (mixed $url): bool => is_string($url) && str_ends_with(parse_url($url, PHP_URL_PATH) ?: '', '.mp4')
                     )
                     && collect($mediaUrls)->contains(
                         fn (mixed $url): bool => is_string($url) && str_contains($url, 'resources.finalsite.net')
@@ -41,7 +41,10 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
             })
             ->assertSee('data-hero-slider', false)
             ->assertSee('data-media-type="video"', false)
-            ->assertSee('kb1dXcf3QQs', false)
+            ->assertSee('data-hero-video', false)
+            ->assertSee('flower.mp4', false)
+            ->assertDontSee('youtube', false)
+            ->assertDontSee('<iframe', false)
             ->assertDontSee('lNzvxnnEpjs', false)
             ->assertSee('HSFModuleatNight.jpg', false)
             ->assertSee('data-hero-ornaments', false)

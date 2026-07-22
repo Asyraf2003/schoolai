@@ -4,8 +4,10 @@ use App\Models\Article;
 use App\Models\HeroSlide;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -37,11 +39,23 @@ beforeEach(function (): void {
     ]);
 });
 
-it('creates and normalizes a youtube hero slide from admin', function (): void {
-    $response = $this->post(route('admin.hero.store'), [
+it('rejects youtube and stores a raw uploaded hero video', function (): void {
+    $this->post(route('admin.hero.store'), [
         'article_id' => $this->heroArticle->getKey(),
         'type' => 'video',
         'media_url' => 'https://youtu.be/kb1dXcf3QQs',
+        'focal_position' => 'center center',
+        'overlay_strength' => '0.40',
+        'is_active' => '1',
+    ])->assertSessionHasErrors('media_url');
+
+    Storage::fake('public');
+
+    $response = $this->post(route('admin.hero.store'), [
+        'article_id' => $this->heroArticle->getKey(),
+        'type' => 'video',
+        'media_file' => UploadedFile::fake()->create('school-activity.mp4', 2048, 'video/mp4'),
+        'poster_url' => 'https://i.ytimg.com/vi/kb1dXcf3QQs/hqdefault.jpg',
         'focal_position' => 'center center',
         'overlay_strength' => '0.40',
         'is_active' => '1',
@@ -50,14 +64,20 @@ it('creates and normalizes a youtube hero slide from admin', function (): void {
     $response->assertRedirect(route('admin.hero'));
 
     $slide = HeroSlide::query()->firstOrFail();
+    $storedPath = str_replace('/storage/', '', $slide->media_url);
 
     expect($slide->media_url)
-        ->toContain('youtube-nocookie.com/embed/kb1dXcf3QQs')
+        ->toStartWith('/storage/hero/slides/')
+        ->toEndWith('.mp4')
+        ->and($slide->poster_url)->toBe($this->heroArticle->thumbnail_url)
         ->and($slide->is_active)->toBeTrue();
+    Storage::disk('public')->assertExists($storedPath);
 
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
         ->assertOk()
+        ->assertSee('data-hero-video', false)
+        ->assertDontSee('youtube', false)
         ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['title'] ?? null) === 'Database Hero');
 });
 

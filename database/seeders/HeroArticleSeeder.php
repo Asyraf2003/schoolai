@@ -16,6 +16,8 @@ final class HeroArticleSeeder extends Seeder
             return;
         }
 
+        HeroSlide::query()->whereNull('article_id')->delete();
+
         $articles = Article::query()
             ->whereIn('slug', [
                 'belajar-bermakna-dimulai-dari-rasa-ingin-tahu',
@@ -39,7 +41,7 @@ final class HeroArticleSeeder extends Seeder
             $slide->fill([
                 'type' => $isVideo ? 'video' : 'image',
                 'media_url' => $isVideo
-                    ? HeroVideoUrl::normalize('https://www.youtube.com/watch?v=kb1dXcf3QQs')
+                    ? HeroVideoUrl::normalize('https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4')
                     : $article->thumbnail_url,
                 'poster_url' => $article->thumbnail_url,
                 'media_alt_id' => $article->title_id,

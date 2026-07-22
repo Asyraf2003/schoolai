@@ -6,9 +6,9 @@ return [
         'slides' => [
             0 => [
                 'type' => 'video',
-                'media' => 'https://www.youtube-nocookie.com/embed/kb1dXcf3QQs?autoplay=1&mute=1&controls=0&loop=1&playlist=kb1dXcf3QQs&playsinline=1&rel=0&modestbranding=1&enablejsapi=1',
-                'poster' => 'https://i.ytimg.com/vi/kb1dXcf3QQs/hqdefault.jpg',
-                'media_alt' => 'School atmosphere and learning experience video',
+                'media' => 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+                'poster' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2400&q=82',
+                'media_alt' => 'Ambient learning background video',
                 'eyebrow' => 'Meaningful Learning',
                 'title' => 'Rooted in the Qur’an. Moving Forward through Innovation.',
                 'description' => 'Every learning experience invites children to question, create, collaborate, and grow with Islamic values as their compass.',
@@ -20,8 +20,8 @@ return [
                 'focal_position' => 'center center',
                 'overlay_strength' => 0.34,
                 'source' => [
-                    'name' => 'YouTube',
-                    'url' => 'https://youtu.be/kb1dXcf3QQs',
+                    'name' => 'MDN CC0 sample video',
+                    'url' => 'https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video',
                 ],
             ],
             1 => [

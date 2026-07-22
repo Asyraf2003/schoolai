@@ -21,6 +21,7 @@ use Throwable;
 final class HeroSlideAdminController extends Controller
 {
     private const MAX_IMAGE_KB = 10240;
+    private const MAX_VIDEO_KB = 51200;
 
     public function __construct()
     {
@@ -144,6 +145,9 @@ final class HeroSlideAdminController extends Controller
     private function validatedData(Request $request, ?HeroSlide $heroSlide = null): array
     {
         $type = (string) $request->input('type', 'image');
+        $mediaFileRules = $type === 'video'
+            ? ['nullable', 'file', 'mimes:mp4,webm,ogg,ogv', 'max:'.self::MAX_VIDEO_KB]
+            : ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', new SafeImageUpload, 'max:'.self::MAX_IMAGE_KB];
 
         $data = $request->validate([
             'article_id' => [
@@ -153,15 +157,7 @@ final class HeroSlideAdminController extends Controller
                 Rule::unique('hero_slides', 'article_id')->ignore($heroSlide?->getKey()),
             ],
             'type' => ['required', Rule::in(['image', 'video'])],
-            'media_file' => [
-                Rule::prohibitedIf(fn (): bool => $type === 'video'),
-                'nullable',
-                'file',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
-                new SafeImageUpload,
-                'max:'.self::MAX_IMAGE_KB,
-            ],
+            'media_file' => $mediaFileRules,
             'media_url' => ['nullable', 'string', 'max:2048'],
             'poster_file' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', new SafeImageUpload, 'max:'.self::MAX_IMAGE_KB],
             'poster_url' => ['nullable', 'string', 'max:2048'],
@@ -220,12 +216,18 @@ final class HeroSlideAdminController extends Controller
             'cta_action' => 'link',
         ]);
 
-        if ($type === 'video') {
-            $normalizedVideo = HeroVideoUrl::normalize($data['media_url'] ?? null);
+        if ($type === 'video' && ! $request->hasFile('media_file')) {
+            $candidate = trim((string) ($data['media_url'] ?? ''));
+
+            if ($candidate === '') {
+                $candidate = trim((string) ($heroSlide?->media_url ?? ''));
+            }
+
+            $normalizedVideo = $this->normalizeVideoUrl($candidate);
 
             if ($normalizedVideo === null) {
                 throw ValidationException::withMessages([
-                    'media_url' => 'Gunakan URL YouTube HTTPS atau file video publik HTTPS berformat MP4, WebM, OGG, atau OGV.',
+                    'media_url' => 'Upload file MP4/WebM/OGG atau gunakan URL HTTPS yang langsung berakhir dengan ekstensi video. Link YouTube tidak didukung pada hero.',
                 ]);
             }
 
@@ -235,6 +237,10 @@ final class HeroSlideAdminController extends Controller
 
             if ($candidate === '') {
                 $candidate = trim((string) ($heroSlide?->media_url ?? ''));
+            }
+
+            if (HeroVideoUrl::isYoutubeAsset($candidate)) {
+                $candidate = trim((string) $article->thumbnail_url);
             }
 
             if ($candidate === '') {
@@ -252,8 +258,8 @@ final class HeroSlideAdminController extends Controller
 
         if (! $request->hasFile('poster_file')) {
             $poster = trim((string) ($data['poster_url'] ?? ''));
-            $data['poster_url'] = $poster === ''
-                ? ($heroSlide?->poster_url ?: $article->thumbnail_url)
+            $data['poster_url'] = $poster === '' || HeroVideoUrl::isYoutubeAsset($poster)
+                ? $article->thumbnail_url
                 : $this->normalizeMediaUrl($poster, 'poster_url');
         }
 
@@ -297,6 +303,12 @@ final class HeroSlideAdminController extends Controller
 
     private function normalizeMediaUrl(string $url, string $field): string
     {
+        if (HeroVideoUrl::isYoutubeAsset($url)) {
+            throw ValidationException::withMessages([
+                $field => 'Media YouTube tidak didukung pada hero. Gunakan gambar atau video native.',
+            ]);
+        }
+
         if (str_starts_with($url, '/storage/')) {
             return $url;
         }
@@ -321,6 +333,29 @@ final class HeroSlideAdminController extends Controller
         }
 
         return $normalized;
+    }
+
+    private function normalizeVideoUrl(string $url): ?string
+    {
+        if ($url === '' || ! HeroVideoUrl::isDirectVideo($url)) {
+            return null;
+        }
+
+        if (str_starts_with($url, '/storage/')) {
+            return $url;
+        }
+
+        $relativePath = ltrim($url, '/');
+
+        if (
+            ! str_contains($relativePath, '..')
+            && preg_match('/^[A-Za-z0-9_\/. -]+$/', $relativePath) === 1
+            && file_exists(public_path($relativePath))
+        ) {
+            return $relativePath;
+        }
+
+        return HeroVideoUrl::normalize($url);
     }
 
     private function normalizeHeroLink(mixed $url): ?string

@@ -32,3 +32,23 @@ it('uses active database hero slides and falls back to locale slides when none a
         ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) >= 4
             && ($hero['slides'][0]['title'] ?? null) !== 'Hero dari Database');
 });
+
+it('never renders legacy youtube media or thumbnails in the hero', function (): void {
+    HeroSlide::query()->delete();
+
+    HeroSlide::query()->create([
+        'type' => 'video',
+        'media_url' => 'https://www.youtube-nocookie.com/embed/legacy123',
+        'poster_url' => 'https://i.ytimg.com/vi/legacy123/hqdefault.jpg',
+        'title_id' => 'Hero Lama',
+        'sort_order' => 1,
+        'is_active' => true,
+    ]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertDontSee('youtube', false)
+        ->assertDontSee('ytimg', false)
+        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['render_type'] ?? null) === 'image'
+            && ! str_contains(strtolower((string) ($hero['slides'][0]['media_url'] ?? '')), 'youtu'));
+});

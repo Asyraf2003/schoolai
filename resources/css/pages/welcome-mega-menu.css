@@ -3,19 +3,23 @@
  * Mobile/tablet: full-screen white navigation with simple text-only submenus.
  */
 
+.nav-shell {
+    --nav-mega-surface: #fffaf1;
+}
+
 @media (min-width: 1181px) {
     .nav-shell .navbar.has-open-menu {
         height: 78px;
-        background: #fffaf1;
+        background: var(--nav-mega-surface) !important;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
-        box-shadow: none;
-        border-block-end: 0;
+        box-shadow: none !important;
+        border-block-end: 0 !important;
     }
 
     .nav-shell .nav-mega__panel {
         position: fixed;
-        inset-block-start: 78px;
+        inset-block-start: 77px;
         inset-inline: 0;
         width: 100vw;
         min-height: clamp(400px, 50vh, 540px);
@@ -30,8 +34,8 @@
         border: 0;
         border-radius: 0;
         color: #172c28;
-        background: #fffaf1;
-        box-shadow: 0 26px 62px rgb(3 18 16 / 0.18);
+        background: var(--nav-mega-surface);
+        box-shadow: none;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
@@ -75,30 +79,6 @@
         transform: scale(1.035);
         filter: saturate(0.94) contrast(1.03);
         transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .nav-shell .nav-mega__video {
-        position: absolute;
-        inset-block-start: 50%;
-        inset-inline-start: 50%;
-        z-index: 1;
-        width: auto;
-        min-width: 100%;
-        height: 100%;
-        aspect-ratio: 16 / 9;
-        border: 0;
-        opacity: 0;
-        pointer-events: none;
-        transform: translate(-50%, -50%) scale(1.04);
-        transition: opacity 220ms ease 720ms;
-    }
-
-    html[dir="rtl"] .nav-shell .nav-mega__video {
-        transform: translate(50%, -50%) scale(1.04);
-    }
-
-    .nav-shell .nav-mega__media.is-video-ready .nav-mega__video {
-        opacity: 1;
     }
 
     .nav-shell .nav-mega.is-open .nav-mega__media img {
@@ -213,7 +193,7 @@
     min-height: 78px;
     height: 78px;
     color: #172c28;
-    background: #fffaf1;
+    background: var(--nav-mega-surface);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     box-shadow: 0 10px 30px rgb(7 27 24 / 0.08);
@@ -249,8 +229,8 @@
 
 @media (min-width: 1181px) {
     .public-content-page.nav-shell .nav-mega__panel {
-        inset-block-start: 78px;
-        background: #fffaf1;
+        inset-block-start: 77px;
+        background: var(--nav-mega-surface);
     }
 }
 

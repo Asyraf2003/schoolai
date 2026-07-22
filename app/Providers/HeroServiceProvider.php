@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HeroSlideAdminController;
 use App\Models\Article;
 use App\Models\HeroSlide;
 use App\Models\PpdbSetting;
+use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -99,7 +100,20 @@ final class HeroServiceProvider extends ServiceProvider
                 : 'image';
             $mediaUrl = $this->publicAssetUrl($slide['media'] ?? null);
             $posterUrl = $this->publicAssetUrl($slide['poster'] ?? null);
-            $renderType = $type === 'video' && $mediaUrl !== null ? 'video' : 'image';
+
+            if (HeroVideoUrl::isYoutubeAsset($mediaUrl)) {
+                $mediaUrl = null;
+            }
+
+            if (HeroVideoUrl::isYoutubeAsset($posterUrl)) {
+                $posterUrl = null;
+            }
+
+            $renderType = $type === 'video'
+                && $mediaUrl !== null
+                && HeroVideoUrl::isDirectVideo($mediaUrl)
+                    ? 'video'
+                    : 'image';
 
             if ($renderType === 'image') {
                 $mediaUrl = $type === 'image'

@@ -4,6 +4,8 @@ namespace App\Support;
 
 final class HeroVideoUrl
 {
+    private const VIDEO_EXTENSIONS = ['mp4', 'webm', 'ogg', 'ogv'];
+
     public static function normalize(?string $url): ?string
     {
         if (! is_string($url) || trim($url) === '') {
@@ -17,59 +19,41 @@ final class HeroVideoUrl
         }
 
         $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
-        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-        $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
+        $path = (string) parse_url($url, PHP_URL_PATH);
 
-        if ($scheme !== 'https') {
-            return null;
-        }
-
-        $videoId = self::youtubeVideoId($url, $host, $path);
-
-        if ($videoId !== null) {
-            $encoded = rawurlencode($videoId);
-
-            return 'https://www.youtube-nocookie.com/embed/'.$encoded
-                .'?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3'
-                .'&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&loop=0';
-        }
-
-        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-
-        if (! in_array($extension, ['mp4', 'webm', 'ogg', 'ogv'], true)) {
+        if ($scheme !== 'https' || ! self::isDirectVideo($path)) {
             return null;
         }
 
         return PublicUrl::normalize($url);
     }
 
-    private static function youtubeVideoId(string $url, string $host, string $path): ?string
+    public static function isDirectVideo(?string $urlOrPath): bool
     {
-        $youtubeHosts = [
-            'youtube.com',
-            'www.youtube.com',
-            'm.youtube.com',
-            'youtube-nocookie.com',
-            'www.youtube-nocookie.com',
-        ];
-
-        $videoId = null;
-
-        if ($host === 'youtu.be') {
-            $videoId = explode('/', $path)[0] ?? null;
-        } elseif (in_array($host, $youtubeHosts, true)) {
-            if (preg_match('~^(?:embed|shorts)/([^/?#]+)~', $path, $matches) === 1) {
-                $videoId = $matches[1];
-            } else {
-                parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
-                $videoId = $query['v'] ?? null;
-            }
+        if (! is_string($urlOrPath) || trim($urlOrPath) === '') {
+            return false;
         }
 
-        if (! is_string($videoId) || preg_match('/^[A-Za-z0-9_-]{6,32}$/', $videoId) !== 1) {
-            return null;
+        $path = (string) (parse_url(trim($urlOrPath), PHP_URL_PATH) ?: $urlOrPath);
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
+        return in_array($extension, self::VIDEO_EXTENSIONS, true);
+    }
+
+    public static function isYoutubeAsset(?string $url): bool
+    {
+        if (! is_string($url) || trim($url) === '') {
+            return false;
         }
 
-        return $videoId;
+        $host = strtolower((string) parse_url(trim($url), PHP_URL_HOST));
+
+        return $host === 'youtu.be'
+            || $host === 'youtube.com'
+            || str_ends_with($host, '.youtube.com')
+            || $host === 'youtube-nocookie.com'
+            || str_ends_with($host, '.youtube-nocookie.com')
+            || $host === 'ytimg.com'
+            || str_ends_with($host, '.ytimg.com');
     }
 }

@@ -61,16 +61,17 @@
           </select>
         </div>
 
-        <div class="admin-field admin-field--wide" data-hero-image-fields @if($currentType === 'video') hidden @endif>
-          <label for="media_file">Upload gambar</label>
-          <input id="media_file" name="media_file" type="file" accept="image/jpeg,image/png,image/webp">
-          <em>JPG, PNG, atau WebP. Maksimal 10 MB. Kosongkan untuk mempertahankan media existing.</em>
+        <div class="admin-field admin-field--wide">
+          <label for="media_file">Upload media</label>
+          <input id="media_file" name="media_file" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/ogg">
+          <em>Gambar: JPG/PNG/WebP maksimal 10 MB. Video native: MP4/WebM/OGG maksimal 50 MB. Kosongkan untuk mempertahankan media yang ada.</em>
+          @error('media_file') <small>{{ $message }}</small> @enderror
         </div>
 
         <div class="admin-field admin-field--wide">
           <label for="media_url">URL media</label>
-          <input id="media_url" name="media_url" value="{{ old('media_url', $slide->media_url) }}" maxlength="2048" placeholder="https://youtu.be/... atau https://.../image.webp">
-          <em>Untuk video gunakan YouTube HTTPS atau URL file MP4/WebM/OGG/OGV publik. Untuk gambar, kosongkan agar memakai thumbnail artikel.</em>
+          <input id="media_url" name="media_url" value="{{ old('media_url', $slide->media_url) }}" maxlength="2048" placeholder="https://.../video.mp4 atau https://.../gambar.webp">
+          <em>Video harus berupa URL HTTPS langsung ke MP4/WebM/OGG/OGV. Link YouTube sengaja ditolak agar tidak membawa player, tombol, atau thumbnail YouTube.</em>
           @error('media_url') <small>{{ $message }}</small> @enderror
         </div>
 
@@ -106,14 +107,4 @@
     </section>
   </form>
 
-  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-    (() => {
-      const type = document.querySelector('[data-hero-type]');
-      const imageFields = document.querySelector('[data-hero-image-fields]');
-      if (!type || !imageFields) return;
-      const sync = () => { imageFields.hidden = type.value === 'video'; };
-      type.addEventListener('change', sync);
-      sync();
-    })();
-  </script>
 @endsection

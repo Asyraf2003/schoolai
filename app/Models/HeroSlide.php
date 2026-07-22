@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
 use App\Models\Concerns\ResolvesLocalizedContent;
+use App\Support\HeroVideoUrl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -121,13 +122,16 @@ final class HeroSlide extends Model
             $article = $this->article;
             $articleTitle = $article->titleForLocale($locale);
             $articleDescription = $article->descriptionForLocale($locale);
+            $poster = HeroVideoUrl::isYoutubeAsset($this->poster_url)
+                ? $article->thumbnail_url
+                : ($this->poster_url ?: $article->thumbnail_url);
             $articleTag = collect($article->tags ?? [])
                 ->first(fn (mixed $tag): bool => is_string($tag) && trim($tag) !== '');
 
             return [
                 'type' => $this->type,
                 'media' => $this->media_url ?: $article->thumbnail_url,
-                'poster' => $this->poster_url ?: $article->thumbnail_url,
+                'poster' => $poster,
                 'media_alt' => $articleTitle,
                 'eyebrow' => is_string($articleTag) && trim($articleTag) !== ''
                     ? trim($articleTag)
