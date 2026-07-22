@@ -1,0 +1,172 @@
+name: Verify hero database admin delivery
+
+on:
+  push:
+    branches: [agent/hero-db-admin-final]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hero-db-admin-final-delivery
+  cancel-in-progress: true
+
+jobs:
+  verify-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+
+    steps:
+      - name: Check out implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/hero-db-admin-final
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Wire Hero into current application
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              file = Path(path)
+              text = file.read_text()
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"Expected one anchor in {path}, found {count}: {old[:100]!r}")
+              file.write_text(text.replace(old, new, 1))
+
+          replace_once(
+              'app/Http/Controllers/HomeController.php',
+              "use App\\Models\\GalleryItem;\n",
+              "use App\\Models\\GalleryItem;\nuse App\\Models\\HeroSlide;\n",
+          )
+
+          replace_once(
+              'app/Http/Controllers/HomeController.php',
+              "        $hero = $this->homeSection('hero');\n        $slides = $hero['slides'] ?? [];\n",
+              "        $hero = $this->homeSection('hero');\n        $slides = $hero['slides'] ?? [];\n\n        if (Schema::hasTable('hero_slides')) {\n            $locale = app()->getLocale();\n            $databaseSlides = HeroSlide::query()->activeOrdered()->get();\n\n            if ($databaseSlides->isNotEmpty()) {\n                $slides = $databaseSlides\n                    ->map(fn (HeroSlide $slide): array => $slide->toHeroArray($locale))\n                    ->all();\n            }\n        }\n",
+          )
+
+          replace_once(
+              'routes/web.php',
+              "use App\\Http\\Controllers\\Admin\\GalleryAdminController;\n",
+              "use App\\Http\\Controllers\\Admin\\GalleryAdminController;\nuse App\\Http\\Controllers\\Admin\\HeroSlideAdminController;\n",
+          )
+
+          hero_routes = """
+
+    /* HERO_SECTION_ADMIN_ROUTES */
+    Route::get('/admin/hero', [HeroSlideAdminController::class, 'index'])
+        ->name('admin.hero');
+
+    Route::get('/admin/hero/create', [HeroSlideAdminController::class, 'create'])
+        ->name('admin.hero.create');
+
+    Route::post('/admin/hero', [HeroSlideAdminController::class, 'store'])
+        ->name('admin.hero.store');
+
+    Route::get('/admin/hero/{heroSlide}/edit', [HeroSlideAdminController::class, 'edit'])
+        ->name('admin.hero.edit');
+
+    Route::put('/admin/hero/{heroSlide}', [HeroSlideAdminController::class, 'update'])
+        ->name('admin.hero.update');
+
+    Route::delete('/admin/hero/{heroSlide}', [HeroSlideAdminController::class, 'destroy'])
+        ->name('admin.hero.destroy');
+
+    Route::patch('/admin/hero/{heroSlide}/toggle', [HeroSlideAdminController::class, 'toggle'])
+        ->name('admin.hero.toggle');
+
+    Route::patch('/admin/hero/{heroSlide}/move-up', [HeroSlideAdminController::class, 'moveUp'])
+        ->name('admin.hero.move-up');
+
+    Route::patch('/admin/hero/{heroSlide}/move-down', [HeroSlideAdminController::class, 'moveDown'])
+        ->name('admin.hero.move-down');
+    /* /HERO_SECTION_ADMIN_ROUTES */
+"""
+
+          replace_once(
+              'routes/web.php',
+              "    Route::patch('/admin/artikel/{article}/restore', [ArticleAdminController::class, 'restore'])\n        ->name('admin.artikel.restore');\n",
+              "    Route::patch('/admin/artikel/{article}/restore', [ArticleAdminController::class, 'restore'])\n        ->name('admin.artikel.restore');\n" + hero_routes,
+          )
+
+          replace_once(
+              'resources/views/layouts/admin.blade.php',
+              "      ['key' => 'artikel', 'label' => __('admin.nav.artikel'), 'route' => 'admin.artikel'],\n",
+              "      ['key' => 'artikel', 'label' => __('admin.nav.artikel'), 'route' => 'admin.artikel'],\n      ['key' => 'hero', 'label' => 'Hero Section', 'route' => 'admin.hero'],\n",
+          )
+
+          replace_once(
+              'app/Http/Controllers/Admin/HeroSlideAdminController.php',
+              "        if (str_starts_with($url, '/storage/')) {\n            return $url;\n        }\n\n        $normalized = PublicUrl::normalize($url);\n",
+              "        if (str_starts_with($url, '/storage/')) {\n            return $url;\n        }\n\n        $relativePath = ltrim($url, '/');\n\n        if (\n            $relativePath !== ''\n            && ! str_contains($relativePath, '..')\n            && preg_match('/^[A-Za-z0-9_\\/. -]+$/', $relativePath) === 1\n            && file_exists(public_path($relativePath))\n        ) {\n            return $relativePath;\n        }\n\n        $normalized = PublicUrl::normalize($url);\n",
+          )
+          PY
+
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/Http/Controllers/HomeController.php app/Http/Controllers/Admin/HeroSlideAdminController.php routes/web.php resources/views/layouts/admin.blade.php
+          git commit -m "feat: wire hero slides into homepage and admin"
+
+      - name: Prepare test environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          rm -f database/database.sqlite
+          touch database/database.sqlite
+
+      - name: Verify migrations
+        run: php artisan migrate:fresh --force
+
+      - name: Run focused Hero tests
+        run: |
+          php artisan test tests/Feature/HomeHeroTest.php
+          php artisan test tests/Feature/Admin/HeroSlideAdminTest.php
+          php artisan test tests/Feature/HeroDatabaseFallbackTest.php
+          php artisan test tests/Unit/HeroVideoUrlTest.php
+
+      - name: Run full Laravel regression suite
+        run: php artisan test
+
+      - name: Publish one clean verified feature commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          rm -f .github/workflows/hero-db-admin-push-verify.yml
+          git reset --soft origin/main
+          git add -A
+          git diff --cached --check
+          git commit -m "feat: manage homepage hero slides from admin"
+          git push --force origin HEAD:agent/hero-db-admin-final
