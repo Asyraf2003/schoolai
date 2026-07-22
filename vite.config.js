@@ -34,6 +34,12 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    build: {
+        // Vite 8 defaults to Safari 16.4+. Keep the public site compatible
+        // with older Safari/WebKit clients that are still common on school Macs.
+        target: ['es2018', 'safari14'],
+        cssTarget: 'safari14',
+    },
     server: {
         watch: {
             ignored: ['**/storage/framework/views/**'],
