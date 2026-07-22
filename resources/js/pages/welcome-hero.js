@@ -19,7 +19,6 @@ function initMegaMenus() {
     function setMenuState(menu, isOpen, focusFirstLink) {
         var toggle = menu.querySelector('[data-nav-mega-toggle]');
         var panel = menu.querySelector('[data-nav-mega-panel]');
-
         if (!toggle || !panel) return;
 
         menu.classList.toggle('is-open', isOpen);
@@ -49,7 +48,6 @@ function initMegaMenus() {
     menus.forEach(function (menu) {
         var toggle = menu.querySelector('[data-nav-mega-toggle]');
         var panel = menu.querySelector('[data-nav-mega-panel]');
-
         if (!toggle || !panel) return;
 
         setMenuState(menu, false, false);
@@ -73,7 +71,6 @@ function initMegaMenus() {
 
         toggle.addEventListener('keydown', function (event) {
             if (event.key !== 'ArrowDown') return;
-
             event.preventDefault();
             closeMenus(menu);
             setMenuState(menu, true, true);
@@ -82,7 +79,6 @@ function initMegaMenus() {
 
         panel.addEventListener('keydown', function (event) {
             if (event.key !== 'Escape') return;
-
             event.preventDefault();
             event.stopPropagation();
             setMenuState(menu, false, false);
@@ -169,7 +165,6 @@ function initHeroSlider(root) {
         title.addEventListener('click', openSlideLink);
         title.addEventListener('keydown', function (event) {
             if (event.key !== 'Enter') return;
-
             event.preventDefault();
             openSlideLink();
         });
@@ -179,6 +174,11 @@ function initHeroSlider(root) {
         return statusTemplate
             .replace(':current', String(index + 1))
             .replace(':total', String(slides.length));
+    }
+
+    function currentVideo() {
+        var slide = slides[currentIndex];
+        return slide ? slide.querySelector('[data-hero-video]') : null;
     }
 
     function hydrateSlide(slide, allowVideo) {
@@ -192,7 +192,17 @@ function initHeroSlider(root) {
         if (!allowVideo) return;
 
         var video = slide.querySelector('[data-hero-video]');
-        if (!video || video.getAttribute('data-hydrated') === 'true') return;
+        if (!video) return;
+
+        video.loop = false;
+        video.removeAttribute('loop');
+
+        if (slide.classList.contains('is-active')) {
+            video.removeAttribute('poster');
+            video.preload = 'auto';
+        }
+
+        if (video.getAttribute('data-hydrated') === 'true') return;
 
         var hydratedSource = false;
         video.querySelectorAll('source[data-src]').forEach(function (source) {
@@ -203,15 +213,21 @@ function initHeroSlider(root) {
 
         if (hydratedSource) {
             video.setAttribute('data-hydrated', 'true');
-            video.preload = 'metadata';
             video.load();
         }
+    }
+
+    function canAutoplay() {
+        return slides.length > 1 && !userPaused && !reducedMotion.matches && !document.hidden;
     }
 
     function syncVideos() {
         slides.forEach(function (slide, index) {
             var video = slide.querySelector('[data-hero-video]');
             if (!video) return;
+
+            video.loop = false;
+            video.removeAttribute('loop');
 
             if (index !== currentIndex) {
                 video.pause();
@@ -220,8 +236,9 @@ function initHeroSlider(root) {
             }
 
             hydrateSlide(slide, true);
+            video.removeAttribute('poster');
 
-            if (reducedMotion.matches || document.hidden) {
+            if (userPaused || reducedMotion.matches || document.hidden) {
                 video.pause();
                 return;
             }
@@ -235,10 +252,6 @@ function initHeroSlider(root) {
         });
     }
 
-    function canAutoplay() {
-        return slides.length > 1 && !userPaused && !reducedMotion.matches && !document.hidden;
-    }
-
     function resetProgress() {
         root.classList.remove('is-autoplaying');
 
@@ -248,7 +261,9 @@ function initHeroSlider(root) {
             progressBar.style.animation = '';
         }
 
-        if (canAutoplay()) root.classList.add('is-autoplaying');
+        if (canAutoplay() && !currentVideo()) {
+            root.classList.add('is-autoplaying');
+        }
     }
 
     function clearTimer() {
@@ -274,6 +289,9 @@ function initHeroSlider(root) {
         resetProgress();
 
         if (!canAutoplay()) return;
+
+        // Video slides own their duration. They advance only after the media ends.
+        if (currentVideo()) return;
 
         timer = window.setTimeout(function () {
             showSlide(currentIndex + 1, false);
@@ -359,6 +377,23 @@ function initHeroSlider(root) {
         scheduleNext();
     }
 
+    slides.forEach(function (slide, index) {
+        var video = slide.querySelector('[data-hero-video]');
+        if (!video) return;
+
+        video.loop = false;
+        video.removeAttribute('loop');
+
+        video.addEventListener('ended', function () {
+            if (index !== currentIndex || !canAutoplay()) return;
+            showSlide(currentIndex + 1, false);
+        });
+
+        video.addEventListener('loadeddata', function () {
+            slide.classList.remove('has-video-playback-fallback');
+        });
+    });
+
     if (previousButton) {
         previousButton.addEventListener('click', function () {
             showSlide(currentIndex - 1, true);
@@ -381,6 +416,7 @@ function initHeroSlider(root) {
         playbackButton.addEventListener('click', function () {
             userPaused = !userPaused;
             updatePlaybackButton();
+            syncVideos();
             scheduleNext();
         });
     }
@@ -444,10 +480,16 @@ function initHeroSlider(root) {
     showSlide(currentIndex, false);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+function bootHomepageHero() {
     initMegaMenus();
 
     document.querySelectorAll('[data-hero-slider]').forEach(function (root) {
         initHeroSlider(root);
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootHomepageHero, { once: true });
+} else {
+    bootHomepageHero();
+}
