@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Controllers\Admin\HeroSlideAdminController;
+use App\Models\Article;
 use App\Models\HeroSlide;
 use App\Models\PpdbSetting;
 use App\Support\PublicUrl;
@@ -65,16 +66,6 @@ final class HeroServiceProvider extends ServiceProvider
 
     private function injectDatabaseHero(View $view): void
     {
-        if (! Schema::hasTable('hero_slides')) {
-            return;
-        }
-
-        $slides = HeroSlide::query()->activeOrdered()->get();
-
-        if ($slides->isEmpty()) {
-            return;
-        }
-
         $hero = $view->getData()['hero'] ?? [];
         $hero = is_array($hero) ? $hero : [];
         $fallbackImageUrl = is_string($hero['fallback_image_url'] ?? null)
@@ -83,9 +74,26 @@ final class HeroServiceProvider extends ServiceProvider
         $locale = app()->getLocale();
         $ppdbSetting = null;
         $normalizedSlides = [];
+        $slides = $this->articleHeroSlides($locale);
 
-        foreach ($slides as $slideModel) {
-            $slide = $slideModel->toHeroArray($locale);
+        if ($slides === [] && Schema::hasTable('hero_slides')) {
+            $legacySlides = HeroSlide::query()->activeOrdered();
+
+            if (Schema::hasColumn('hero_slides', 'article_id')) {
+                $legacySlides->whereNull('article_id');
+            }
+
+            $slides = $legacySlides
+                ->get()
+                ->map(fn (HeroSlide $slide): array => $slide->toHeroArray($locale))
+                ->all();
+        }
+
+        if ($slides === []) {
+            return;
+        }
+
+        foreach ($slides as $slide) {
             $type = in_array(($slide['type'] ?? null), ['image', 'video'], true)
                 ? $slide['type']
                 : 'image';
@@ -133,6 +141,85 @@ final class HeroServiceProvider extends ServiceProvider
 
         $hero['slides'] = $normalizedSlides;
         $view->with('hero', $hero);
+    }
+
+    /** @return array<int, array<string, mixed>> */
+    private function articleHeroSlides(string $locale): array
+    {
+        if (! Schema::hasTable('articles')) {
+            return [];
+        }
+
+        if (
+            Schema::hasTable('hero_slides')
+            && Schema::hasColumn('hero_slides', 'article_id')
+        ) {
+            $placements = HeroSlide::query()
+                ->with('article')
+                ->activeOrdered()
+                ->whereNotNull('article_id')
+                ->get()
+                ->filter(fn (HeroSlide $slide): bool => $slide->article?->isPubliclyVisibleNow() === true)
+                ->map(fn (HeroSlide $slide): array => $slide->toHeroArray($locale))
+                ->values()
+                ->all();
+
+            if ($placements !== []) {
+                return $placements;
+            }
+        }
+
+        return Article::query()
+            ->latestPublished()
+            ->limit(4)
+            ->get()
+            ->map(fn (Article $article): array => $this->articleToHeroArray($article, $locale))
+            ->all();
+    }
+
+    /** @return array<string, mixed> */
+    private function articleToHeroArray(Article $article, string $locale): array
+    {
+        $tag = collect($article->tags ?? [])
+            ->first(fn (mixed $value): bool => is_string($value) && trim($value) !== '');
+
+        return [
+            'type' => 'image',
+            'media' => $article->thumbnail_url ?: Article::PLACEHOLDER_THUMBNAIL,
+            'poster' => $article->thumbnail_url ?: Article::PLACEHOLDER_THUMBNAIL,
+            'media_alt' => $article->titleForLocale($locale),
+            'eyebrow' => is_string($tag) && trim($tag) !== ''
+                ? trim($tag)
+                : $this->articleEyebrow($locale),
+            'title' => $article->titleForLocale($locale),
+            'description' => $article->descriptionForLocale($locale),
+            'cta' => [
+                'label' => $this->articleCtaLabel($locale),
+                'href' => $article->linkForLocale($locale),
+                'action' => 'link',
+            ],
+            'focal_position' => 'center center',
+            'overlay_strength' => 0.52,
+            'article_id' => $article->getKey(),
+        ];
+    }
+
+    private function articleEyebrow(string $locale): string
+    {
+        return match ($locale) {
+            'ar' => 'أحدث المقالات',
+            'en' => 'Latest story',
+            default => 'Artikel Terbaru',
+        };
+    }
+
+    private function articleCtaLabel(string $locale): string
+    {
+        return match ($locale) {
+            'ar' => 'اقرأ المقال',
+            'en' => 'Read article',
+            default => 'Baca Artikel',
+        };
     }
 
     private function publicAssetUrl(mixed $path): ?string

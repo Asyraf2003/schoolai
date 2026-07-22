@@ -12,7 +12,7 @@
 
     <div class="admin-inline-actions">
       <span class="admin-counter">{{ $articles->total() }} artikel termasuk arsip</span>
-      <a href="{{ route('admin.hero') }}" class="admin-primary-action admin-primary-action--ghost">Hero Section</a>
+      <a href="{{ route('admin.hero') }}" class="admin-primary-action admin-primary-action--ghost">Atur Artikel Hero</a>
       <a href="{{ route('admin.artikel.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Link Medium</a>
       <form method="POST" action="{{ route('admin.artikel.canvas.start') }}" style="margin:0">
         @csrf

@@ -14,7 +14,7 @@
       'resources/js/pages/welcome-hero.js',
     ])
   </head>
-  <body class="home-page">
+  <body class="home-page nav-shell">
     <!-- Skip link untuk aksesibilitas keyboard -->
     <a href="#main-content" class="skip-link">{{ __('home.accessibility.skip_to_content') }}</a>
 
@@ -194,8 +194,10 @@
             data-hero-previous
             aria-label="{{ $hero['previous_label'] ?? 'Previous slide' }}"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <svg viewBox="0 0 128 72" aria-hidden="true">
+              <path d="M42 4 10 36l32 32 14-14-18-18 18-18Z" />
+              <path d="M78 4 46 36l32 32 14-14-18-18 18-18Z" />
+              <path d="M114 4 82 36l32 32 14-14-18-18 18-18Z" />
             </svg>
           </button>
 
@@ -205,12 +207,12 @@
             data-hero-next
             aria-label="{{ $hero['next_label'] ?? 'Next slide' }}"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <svg viewBox="0 0 128 72" aria-hidden="true">
+              <path d="m14 4 32 32-32 32L0 54l18-18L0 18Z" />
+              <path d="m50 4 32 32-32 32-14-14 18-18-18-18Z" />
+              <path d="m86 4 32 32-32 32-14-14 18-18-18-18Z" />
             </svg>
           </button>
-
-         </div>
         @endif
 
         <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>

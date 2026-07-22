@@ -7,12 +7,12 @@
   <header class="admin-topbar admin-topbar--compact">
     <div>
       <h1>Hero Section</h1>
-      <p>Kelola slide fullscreen homepage tanpa mengubah renderer hero yang sudah ada. Urutan di bawah sama dengan urutan tampil di website.</p>
+      <p>Kelola artikel pilihan di hero homepage. Konten tetap berasal dari artikel; halaman ini hanya mengatur media visual, status, dan urutan tampil.</p>
     </div>
 
     <div class="admin-inline-actions">
-      <span class="admin-counter">{{ $slides->count() }} slide</span>
-      <a href="{{ route('admin.hero.create') }}" class="admin-primary-action">Tambah Slide</a>
+      <span class="admin-counter">{{ $slides->count() }} penempatan</span>
+      <a href="{{ route('admin.hero.create') }}" class="admin-primary-action">Pilih Artikel</a>
     </div>
   </header>
 
@@ -39,6 +39,7 @@
               <strong>{{ $slide->admin_title }}</strong>
               <small>
                 {{ strtoupper($slide->type) }}
+                · {{ $slide->article ? 'Artikel #'.$slide->article->getKey() : 'Legacy' }}
                 · {{ $slide->focal_position }}
                 · overlay {{ number_format((float) $slide->overlay_strength, 2) }}
               </small>
@@ -80,8 +81,8 @@
       </div>
     @else
       <div class="gallery-lite-empty">
-        <h2>Belum ada hero slide di database.</h2>
-        <p>Homepage tetap memakai fallback locale existing sampai slide database dibuat dan diaktifkan.</p>
+        <h2>Belum ada artikel pilihan.</h2>
+        <p>Homepage otomatis memakai artikel terbit terbaru sampai penempatan manual dibuat.</p>
       </div>
     @endif
   </section>

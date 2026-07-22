@@ -7,12 +7,14 @@ use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class HeroSlide extends Model
 {
     use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent;
 
     protected $fillable = [
+        'article_id',
         'type',
         'media_url',
         'poster_url',
@@ -60,6 +62,11 @@ final class HeroSlide extends Model
             ->orderBy('id');
     }
 
+    public function article(): BelongsTo
+    {
+        return $this->belongsTo(Article::class);
+    }
+
     public function titleForLocale(string $locale): string
     {
         return $this->localizedValue($locale, $this->title_id, $this->title_en, $this->title_ar);
@@ -94,6 +101,10 @@ final class HeroSlide extends Model
 
     public function getAdminTitleAttribute(): string
     {
+        if ($this->article instanceof Article) {
+            return $this->article->admin_title;
+        }
+
         foreach ([$this->title_id, $this->title_en, $this->title_ar] as $value) {
             if (is_string($value) && trim($value) !== '') {
                 return trim($value);
@@ -106,6 +117,34 @@ final class HeroSlide extends Model
     /** @return array<string, mixed> */
     public function toHeroArray(string $locale): array
     {
+        if ($this->article instanceof Article && $this->article->isPubliclyVisibleNow()) {
+            $article = $this->article;
+            $articleTitle = $article->titleForLocale($locale);
+            $articleDescription = $article->descriptionForLocale($locale);
+            $articleTag = collect($article->tags ?? [])
+                ->first(fn (mixed $tag): bool => is_string($tag) && trim($tag) !== '');
+
+            return [
+                'type' => $this->type,
+                'media' => $this->media_url ?: $article->thumbnail_url,
+                'poster' => $this->poster_url ?: $article->thumbnail_url,
+                'media_alt' => $articleTitle,
+                'eyebrow' => is_string($articleTag) && trim($articleTag) !== ''
+                    ? trim($articleTag)
+                    : $this->articleEyebrow($locale),
+                'title' => $articleTitle,
+                'description' => $articleDescription,
+                'cta' => [
+                    'label' => $this->articleCtaLabel($locale),
+                    'href' => $article->linkForLocale($locale),
+                    'action' => 'link',
+                ],
+                'focal_position' => $this->focal_position ?: 'center center',
+                'overlay_strength' => $this->overlay_strength ?? 0.46,
+                'article_id' => $article->getKey(),
+            ];
+        }
+
         return [
             'type' => $this->type,
             'media' => $this->media_url,
@@ -122,5 +161,23 @@ final class HeroSlide extends Model
             'focal_position' => $this->focal_position ?: 'center center',
             'overlay_strength' => $this->overlay_strength ?? 0.46,
         ];
+    }
+
+    private function articleEyebrow(string $locale): string
+    {
+        return match ($locale) {
+            'ar' => 'مقال مميز',
+            'en' => 'Featured story',
+            default => 'Artikel Pilihan',
+        };
+    }
+
+    private function articleCtaLabel(string $locale): string
+    {
+        return match ($locale) {
+            'ar' => 'اقرأ المقال',
+            'en' => 'Read article',
+            default => 'Baca Artikel',
+        };
     }
 }

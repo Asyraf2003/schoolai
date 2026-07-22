@@ -4,15 +4,16 @@
  */
 
 @media (min-width: 1181px) {
-    .home-page .navbar.has-open-menu {
+    .nav-shell .navbar.has-open-menu {
+        height: 78px;
         background: #fffaf1;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
         box-shadow: none;
-        border-block-end: 1px solid rgb(23 79 66 / 0.08);
+        border-block-end: 0;
     }
 
-    .home-page .nav-mega__panel {
+    .nav-shell .nav-mega__panel {
         position: fixed;
         inset-block-start: 78px;
         inset-inline: 0;
@@ -43,7 +44,7 @@
             visibility 0s linear 300ms;
     }
 
-    .home-page .nav-mega.is-open .nav-mega__panel {
+    .nav-shell .nav-mega.is-open .nav-mega__panel {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -52,7 +53,7 @@
         transition-delay: 0s;
     }
 
-    .home-page .nav-mega__media {
+    .nav-shell .nav-mega__media {
         grid-column: 1;
         grid-row: 1;
         position: relative;
@@ -66,7 +67,7 @@
         box-shadow: 0 20px 48px rgb(3 18 16 / 0.18);
     }
 
-    .home-page .nav-mega__media img {
+    .nav-shell .nav-mega__media img {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -76,26 +77,51 @@
         transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .home-page .nav-mega.is-open .nav-mega__media img {
+    .nav-shell .nav-mega__video {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        z-index: 1;
+        width: auto;
+        min-width: 100%;
+        height: 100%;
+        aspect-ratio: 16 / 9;
+        border: 0;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, -50%) scale(1.04);
+        transition: opacity 220ms ease 720ms;
+    }
+
+    html[dir="rtl"] .nav-shell .nav-mega__video {
+        transform: translate(50%, -50%) scale(1.04);
+    }
+
+    .nav-shell .nav-mega__media.is-video-ready .nav-mega__video {
+        opacity: 1;
+    }
+
+    .nav-shell .nav-mega.is-open .nav-mega__media img {
         transform: scale(1);
     }
 
-    .home-page .nav-mega__media-shade {
+    .nav-shell .nav-mega__media-shade {
+        z-index: 2;
         background:
             linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.28) 52%, transparent 86%),
             linear-gradient(to right, transparent 68%, rgb(2 18 15 / 0.14));
     }
 
-    html[dir="rtl"] .home-page .nav-mega__media-shade {
+    html[dir="rtl"] .nav-shell .nav-mega__media-shade {
         background:
             linear-gradient(to top, rgb(2 18 15 / 0.82) 0%, rgb(2 18 15 / 0.28) 52%, transparent 86%),
             linear-gradient(to left, transparent 68%, rgb(2 18 15 / 0.14));
     }
 
-    .home-page .nav-mega__intro {
+    .nav-shell .nav-mega__intro {
         grid-column: 1;
         grid-row: 1;
-        z-index: 2;
+        z-index: 3;
         align-self: end;
         min-height: 0;
         justify-content: flex-end;
@@ -104,29 +130,29 @@
         background: transparent;
     }
 
-    .home-page .nav-mega__intro::after {
+    .nav-shell .nav-mega__intro::after {
         display: none;
     }
 
-    .home-page .nav-mega__eyebrow {
+    .nav-shell .nav-mega__eyebrow {
         color: #f7c66f;
         font-size: 0.66rem;
     }
 
-    .home-page .nav-mega__title {
+    .nav-shell .nav-mega__title {
         max-width: 16ch;
         font-size: clamp(1.65rem, 2.45vw, 2.7rem);
         line-height: 1.05;
     }
 
-    .home-page .nav-mega__description {
+    .nav-shell .nav-mega__description {
         max-width: 43ch;
         color: rgb(255 255 255 / 0.82);
         font-size: 0.86rem;
         line-height: 1.55;
     }
 
-    .home-page .nav-mega__links {
+    .nav-shell .nav-mega__links {
         grid-column: 2;
         grid-row: 1;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -136,7 +162,7 @@
         background: transparent;
     }
 
-    .home-page .nav-mega__link {
+    .nav-shell .nav-mega__link {
         min-height: 82px;
         align-content: center;
         gap: 5px;
@@ -149,35 +175,91 @@
         transform: none;
     }
 
-    .home-page .nav-mega__link:hover,
-    .home-page .nav-mega__link:focus-visible {
+    .nav-shell .nav-mega__link:hover,
+    .nav-shell .nav-mega__link:focus-visible {
         border-block-end-color: #b85a1f;
         box-shadow: none;
         transform: translateX(6px);
     }
 
-    html[dir="rtl"] .home-page .nav-mega__link:hover,
-    html[dir="rtl"] .home-page .nav-mega__link:focus-visible {
+    html[dir="rtl"] .nav-shell .nav-mega__link:hover,
+    html[dir="rtl"] .nav-shell .nav-mega__link:focus-visible {
         transform: translateX(-6px);
     }
 
-    .home-page .nav-mega__link strong {
+    .nav-shell .nav-mega__link strong {
         font-size: clamp(0.98rem, 1.05vw, 1.12rem);
     }
 
-    .home-page .nav-mega__link small {
+    .nav-shell .nav-mega__link small {
         max-width: 38ch;
         font-size: 0.78rem;
         line-height: 1.5;
     }
 }
 
+/* Public pages share the exact homepage navigation shell. The header and an
+ * opened mega panel use one continuous surface so there is no color seam. */
+.public-content-page.nav-shell {
+    background:
+        radial-gradient(circle at 8% 12%, rgb(255 201 60 / 0.24), transparent 28%),
+        radial-gradient(circle at 92% 0%, rgb(127 199 224 / 0.24), transparent 30%),
+        var(--color-cream);
+}
+
+.public-content-page.nav-shell .navbar,
+.public-content-page.nav-shell .navbar.is-scrolled,
+.public-content-page.nav-shell .navbar.has-open-menu {
+    min-height: 78px;
+    height: 78px;
+    color: #172c28;
+    background: #fffaf1;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 10px 30px rgb(7 27 24 / 0.08);
+}
+
+.public-content-page.nav-shell .navbar.has-open-menu {
+    box-shadow: none;
+}
+
+.public-content-page.nav-shell .navbar__logo-icon {
+    width: 54px;
+    height: 54px;
+    flex-basis: 54px;
+    border-color: rgb(19 122 76 / 0.12);
+    box-shadow:
+        0 0 0 6px rgb(255 255 255 / 0.5),
+        0 10px 26px rgb(7 27 24 / 0.13);
+}
+
+.public-content-page.nav-shell .nav-link.active {
+    color: #aa541a;
+}
+
+.public-content-page.nav-shell .navbar__cta {
+    color: #fff;
+    border-color: #a64f18;
+    background: #b85a1f;
+}
+
+.public-content-page.nav-shell .nav-language__current-flag {
+    border-color: rgb(23 79 66 / 0.16);
+}
+
+@media (min-width: 1181px) {
+    .public-content-page.nav-shell .nav-mega__panel {
+        inset-block-start: 78px;
+        background: #fffaf1;
+    }
+}
+
 @media (max-width: 1180px) {
-    .home-page .nav-overlay {
+    .nav-shell .nav-overlay {
         display: none !important;
     }
 
-    .home-page .navbar__menu {
+    .nav-shell .navbar__menu {
         position: fixed;
         inset: 0;
         z-index: calc(var(--hero-layer-header) - 1);
@@ -202,11 +284,11 @@
             visibility 0s linear 320ms;
     }
 
-    html[dir="rtl"] .home-page .navbar__menu {
+    html[dir="rtl"] .nav-shell .navbar__menu {
         transform: translateX(-100%);
     }
 
-    .home-page .navbar__menu.active {
+    .nav-shell .navbar__menu.active {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -214,7 +296,7 @@
         transition-delay: 0s;
     }
 
-    .home-page .navbar__menu > ul {
+    .nav-shell .navbar__menu > ul {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -222,11 +304,11 @@
         gap: 0;
     }
 
-    .home-page .navbar__menu > ul > li {
+    .nav-shell .navbar__menu > ul > li {
         width: 100%;
     }
 
-    .home-page .nav-link {
+    .nav-shell .nav-link {
         width: 100%;
         min-height: 54px;
         justify-content: flex-start;
@@ -237,20 +319,20 @@
         font-weight: 780;
     }
 
-    .home-page .nav-link::after {
+    .nav-shell .nav-link::after {
         display: none;
     }
 
-    .home-page .nav-link.active {
+    .nav-shell .nav-link.active {
         color: #b85a1f;
     }
 
-    .home-page .nav-mega__trigger {
+    .nav-shell .nav-mega__trigger {
         justify-content: space-between;
         padding-inline: 0;
     }
 
-    .home-page .nav-mega__trigger svg {
+    .nav-shell .nav-mega__trigger svg {
         width: 18px;
         height: 18px;
         padding: 0;
@@ -259,7 +341,7 @@
         background: transparent;
     }
 
-    .home-page .nav-mega__panel {
+    .nav-shell .nav-mega__panel {
         position: static;
         width: 100%;
         min-height: 0;
@@ -280,7 +362,7 @@
         transition: max-height 280ms ease;
     }
 
-    .home-page .nav-mega.is-open .nav-mega__panel {
+    .nav-shell .nav-mega.is-open .nav-mega__panel {
         max-height: 420px;
         margin: 0;
         pointer-events: auto;
@@ -288,12 +370,12 @@
         clip-path: none;
     }
 
-    .home-page .nav-mega__media,
-    .home-page .nav-mega__intro {
+    .nav-shell .nav-mega__media,
+    .nav-shell .nav-mega__intro {
         display: none;
     }
 
-    .home-page .nav-mega__links {
+    .nav-shell .nav-mega__links {
         display: grid;
         grid-template-columns: 1fr;
         gap: 0;
@@ -301,11 +383,11 @@
         background: transparent;
     }
 
-    html[dir="rtl"] .home-page .nav-mega__links {
+    html[dir="rtl"] .nav-shell .nav-mega__links {
         padding: 4px clamp(14px, 4vw, 26px) 10px 0;
     }
 
-    .home-page .nav-mega__link {
+    .nav-shell .nav-mega__link {
         min-height: 0;
         display: block;
         padding: 10px 0;
@@ -316,37 +398,37 @@
         transform: none;
     }
 
-    .home-page .nav-mega__link:hover,
-    .home-page .nav-mega__link:focus-visible {
+    .nav-shell .nav-mega__link:hover,
+    .nav-shell .nav-mega__link:focus-visible {
         color: #b85a1f;
         border: 0;
         box-shadow: none;
         transform: none;
     }
 
-    .home-page .nav-mega__link strong {
+    .nav-shell .nav-mega__link strong {
         color: #31544c;
         font-size: 0.9rem;
         font-weight: 720;
     }
 
-    .home-page .nav-mega__link small {
+    .nav-shell .nav-mega__link small {
         display: none;
     }
 
-    .home-page .nav-language {
+    .nav-shell .nav-language {
         width: 100%;
         margin-block-start: 0;
         padding-block-start: 0;
         border-block-start: 0;
     }
 
-    .home-page .nav-language__button {
+    .nav-shell .nav-language__button {
         justify-content: flex-start;
         color: #17362f;
     }
 
-    .home-page .navbar__cta {
+    .nav-shell .navbar__cta {
         width: 100%;
         margin-block-start: 24px;
         min-height: 52px;

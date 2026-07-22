@@ -55,6 +55,17 @@ function postYouTubeCommand(frame, command, args) {
     });
 }
 
+function youtubeFrameWrapper(frame) {
+    return frame ? frame.closest('.hero-cinema__youtube-frame') : null;
+}
+
+function setYouTubePlayingState(frame, isPlaying) {
+    var wrapper = youtubeFrameWrapper(frame);
+    if (!wrapper) return;
+
+    wrapper.classList.toggle('is-playing', isPlaying);
+}
+
 function subscribeToYouTubeState(frame) {
     if (!frame || frame.getAttribute('data-hydrated') !== 'true') return;
 
@@ -113,6 +124,7 @@ function syncYouTubeSlide(slide) {
         return;
     }
 
+    setYouTubePlayingState(frame, false);
     postYouTubeCommand(frame, 'pauseVideo');
     postYouTubeCommand(frame, 'seekTo', [0, true]);
 }
@@ -241,8 +253,12 @@ function handleYouTubeMessage(event) {
 
     if (state === 1) {
         frame.removeAttribute('data-hero-ended-dispatched');
+        setYouTubePlayingState(frame, true);
     } else if (state === 0) {
+        setYouTubePlayingState(frame, false);
         dispatchHeroMediaEnded(frame);
+    } else if (state === 2 || state === -1) {
+        setYouTubePlayingState(frame, false);
     }
 }
 

@@ -16,8 +16,28 @@
     .home-page .hero-cinema__description { max-width: 48ch; margin-block-start: clamp(14px, 1.8vh, 20px); font-size: clamp(0.84rem, 0.92vw, 0.98rem); line-height: 1.5; }
     .home-page .hero-cinema__cta { min-height: 44px; margin-block-start: clamp(14px, 2vh, 22px); padding-block: 10px; font-size: 0.8rem; }
 
+    .home-page .hero-cinema__eyebrow,
+    .home-page .hero-cinema__description,
+    .home-page .hero-cinema__cta {
+      width: fit-content;
+      max-width: min(100%, 52ch);
+      padding: 9px 13px;
+      border: 1px solid rgb(255 255 255 / 0.14);
+      border-radius: 12px;
+      color: #fff;
+      background: rgb(3 18 16 / 0.48);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: 0 10px 34px rgb(0 0 0 / 0.28);
+      font-weight: 820;
+      text-shadow: 0 2px 12px rgb(0 0 0 / 0.5);
+    }
+
+    .home-page .hero-cinema__description { padding: 11px 14px; }
+    .home-page .hero-cinema__cta { padding-inline: 14px; border-color: rgb(247 178 75 / 0.42); }
+    .home-page .hero-cinema__cta::after { inset-inline: 14px; }
+
     /* YouTube is presentation media here, not an interactive player. */
-    .home-page .hero-cinema__youtube-frame { background-image: none !important; }
     .home-page .hero-cinema__youtube-frame iframe {
       pointer-events: none !important;
       user-select: none;
@@ -27,10 +47,16 @@
 
     .home-page .hero-cinema__arrow {
       inset-block-start: auto;
-      width: clamp(48px, 3.8vw, 58px);
-      height: clamp(48px, 3.8vw, 58px);
-      border-width: 1.5px;
-      background: rgb(4 22 19 / 0.3);
+      width: clamp(92px, 7.4vw, 128px);
+      height: clamp(52px, 4.5vw, 72px);
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      color: #ffb20b;
+      background: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      filter: drop-shadow(0 8px 16px rgb(0 0 0 / 0.36));
       transform: none;
     }
     .home-page .hero-cinema__arrow--previous {
@@ -43,8 +69,11 @@
       inset-block-end: clamp(82px, 10vh, 126px);
     }
     .home-page .hero-cinema__arrow:hover,
-    .home-page .hero-cinema__arrow:focus-visible { transform: scale(1.08); }
-    .home-page .hero-cinema__arrow svg { width: 23px; height: 23px; }
+    .home-page .hero-cinema__arrow:focus-visible { color: #ffd166; background: transparent; transform: scale(1.08); }
+    .home-page .hero-cinema__arrow:focus-visible { outline: 3px solid rgb(255 255 255 / 0.92); outline-offset: 5px; }
+    .home-page .hero-cinema__arrow svg { width: 100%; height: 100%; overflow: visible; fill: currentColor; }
+    .home-page .hero-cinema__arrow svg path:nth-child(2) { opacity: 0.82; }
+    .home-page .hero-cinema__arrow svg path:nth-child(3) { opacity: 0.64; }
 
     @media (max-width: 1180px) {
       .home-page .hero-cinema__content { padding-block-end: clamp(104px, 12vh, 132px); }
@@ -66,15 +95,15 @@
 
       .home-page .hero-cinema__arrow {
         display: grid;
-        width: 44px;
+        width: 76px;
         height: 44px;
-        border: 1.5px solid rgb(255 255 255 / 0.72);
-        background: rgb(3 20 17 / 0.42);
-        box-shadow: 0 10px 26px rgb(0 0 0 / 0.2);
+        border: 0;
+        background: transparent;
+        box-shadow: none;
       }
       .home-page .hero-cinema__arrow--previous { inset-inline-start: auto; inset-inline-end: 76px; inset-block-end: 150px; }
       .home-page .hero-cinema__arrow--next { inset-inline-end: 20px; inset-block-end: 96px; }
-      .home-page .hero-cinema__arrow svg { width: 21px; height: 21px; }
+      .home-page .hero-cinema__arrow svg { width: 100%; height: 100%; }
     }
 
     @media (max-width: 440px) {
@@ -82,7 +111,7 @@
       .home-page .hero-cinema__copy { width: min(82vw, 315px); max-width: min(82vw, 315px); }
       .home-page .hero-cinema__title { max-width: 17ch; font-size: clamp(1.72rem, 7.8vw, 2.18rem); }
       .home-page .hero-cinema__description { max-width: 32ch; font-size: 0.74rem; -webkit-line-clamp: 3; }
-      .home-page .hero-cinema__arrow { width: 42px; height: 42px; }
+      .home-page .hero-cinema__arrow { width: 68px; height: 40px; }
       .home-page .hero-cinema__arrow--previous { inset-inline-end: 70px; inset-block-end: 144px; }
       .home-page .hero-cinema__arrow--next { inset-inline-end: 18px; inset-block-end: 92px; }
     }
@@ -137,7 +166,6 @@
         if (!normalized) return;
 
         source.setAttribute(attribute, normalized);
-        video.removeAttribute('poster');
         video.removeAttribute('controls');
         video.removeAttribute('loop');
         video.muted = true;

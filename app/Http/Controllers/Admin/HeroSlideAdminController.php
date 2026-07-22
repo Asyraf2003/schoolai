@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\HeroSlide;
 use App\Rules\SafeImageUpload;
 use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +33,7 @@ final class HeroSlideAdminController extends Controller
 
         return view('admin.hero.index', [
             'adminPageKey' => 'hero',
-            'slides' => HeroSlide::query()->ordered()->get(),
+            'slides' => HeroSlide::query()->with('article')->ordered()->get(),
         ]);
     }
 
@@ -48,6 +50,7 @@ final class HeroSlideAdminController extends Controller
                 'is_active' => true,
                 'cta_action' => 'anchor',
             ]),
+            'articles' => $this->articleOptions(),
         ]);
     }
 
@@ -75,6 +78,7 @@ final class HeroSlideAdminController extends Controller
             'adminPageKey' => 'hero',
             'mode' => 'edit',
             'slide' => $heroSlide,
+            'articles' => $this->articleOptions(),
         ]);
     }
 
@@ -142,6 +146,12 @@ final class HeroSlideAdminController extends Controller
         $type = (string) $request->input('type', 'image');
 
         $data = $request->validate([
+            'article_id' => [
+                'required',
+                'integer',
+                Rule::exists('articles', 'id')->whereNull('deleted_at'),
+                Rule::unique('hero_slides', 'article_id')->ignore($heroSlide?->getKey()),
+            ],
             'type' => ['required', Rule::in(['image', 'video'])],
             'media_file' => [
                 Rule::prohibitedIf(fn (): bool => $type === 'video'),
@@ -161,7 +171,7 @@ final class HeroSlideAdminController extends Controller
             'eyebrow_id' => ['nullable', 'string', 'max:160'],
             'eyebrow_en' => ['nullable', 'string', 'max:160'],
             'eyebrow_ar' => ['nullable', 'string', 'max:160'],
-            'title_id' => ['required', 'string', 'max:255'],
+            'title_id' => ['nullable', 'string', 'max:255'],
             'title_en' => ['nullable', 'string', 'max:255'],
             'title_ar' => ['nullable', 'string', 'max:255'],
             'description_id' => ['nullable', 'string', 'max:2000'],
@@ -182,6 +192,33 @@ final class HeroSlideAdminController extends Controller
         $data['overlay_strength'] = round((float) ($data['overlay_strength'] ?? 0.46), 2);
         $data['cta_action'] = $data['cta_action'] ?? null;
         $data['cta_url'] = $this->normalizeHeroLink($data['cta_url'] ?? null);
+        $article = Article::query()->findOrFail((int) $data['article_id']);
+
+        if (! $article->isPubliclyVisibleNow()) {
+            throw ValidationException::withMessages([
+                'article_id' => 'Pilih artikel yang sudah terbit dan dapat dibaca publik.',
+            ]);
+        }
+
+        $data = array_replace($data, [
+            'title_id' => $article->title_id ?: $article->admin_title,
+            'title_en' => $article->title_en,
+            'title_ar' => $article->title_ar,
+            'description_id' => $article->description_id,
+            'description_en' => $article->description_en,
+            'description_ar' => $article->description_ar,
+            'media_alt_id' => $article->title_id ?: $article->admin_title,
+            'media_alt_en' => $article->title_en,
+            'media_alt_ar' => $article->title_ar,
+            'eyebrow_id' => 'Artikel Pilihan',
+            'eyebrow_en' => 'Featured Story',
+            'eyebrow_ar' => 'مقال مميز',
+            'cta_label_id' => 'Baca Artikel',
+            'cta_label_en' => 'Read Article',
+            'cta_label_ar' => 'اقرأ المقال',
+            'cta_url' => $article->link_id,
+            'cta_action' => 'link',
+        ]);
 
         if ($type === 'video') {
             $normalizedVideo = HeroVideoUrl::normalize($data['media_url'] ?? null);
@@ -201,8 +238,12 @@ final class HeroSlideAdminController extends Controller
             }
 
             if ($candidate === '') {
+                $candidate = trim((string) $article->thumbnail_url);
+            }
+
+            if ($candidate === '') {
                 throw ValidationException::withMessages([
-                    'media_file' => 'Upload gambar hero atau isi URL gambar publik.',
+                    'media_file' => 'Artikel belum memiliki thumbnail. Upload gambar hero atau isi URL gambar publik.',
                 ]);
             }
 
@@ -212,13 +253,22 @@ final class HeroSlideAdminController extends Controller
         if (! $request->hasFile('poster_file')) {
             $poster = trim((string) ($data['poster_url'] ?? ''));
             $data['poster_url'] = $poster === ''
-                ? ($heroSlide?->poster_url)
+                ? ($heroSlide?->poster_url ?: $article->thumbnail_url)
                 : $this->normalizeMediaUrl($poster, 'poster_url');
         }
 
         unset($data['media_file'], $data['poster_file']);
 
         return $data;
+    }
+
+    /** @return Collection<int, Article> */
+    private function articleOptions(): Collection
+    {
+        return Article::query()
+            ->latestPublished()
+            ->limit(100)
+            ->get();
     }
 
     /** @param array<string, mixed> $data

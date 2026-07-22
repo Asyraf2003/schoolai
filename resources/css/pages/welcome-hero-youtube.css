@@ -22,8 +22,24 @@
     min-width: 100%;
     min-height: 100%;
     border: 0;
+    opacity: 0;
     pointer-events: none;
     transform: translate(-50%, -50%);
+    transition: opacity 260ms ease 760ms;
+}
+
+.home-page .hero-cinema__youtube-frame.is-playing iframe {
+    opacity: 1;
+}
+
+.home-page .hero-cinema__youtube-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: transparent;
+    pointer-events: auto;
+    touch-action: pan-y;
 }
 
 html[dir="rtl"] .home-page .hero-cinema__youtube-frame iframe {

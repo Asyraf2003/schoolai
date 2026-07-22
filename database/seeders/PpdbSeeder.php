@@ -1,0 +1,85 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\PpdbSetting;
+use App\Models\PpdbShowcaseItem;
+use Illuminate\Database\Seeder;
+
+final class PpdbSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $setting = PpdbSetting::query()->firstOrNew();
+        $setting->fill([
+            'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
+            'information_url' => 'https://almustaqbal.sch.id/ppdb',
+            'is_active' => true,
+        ])->save();
+
+        foreach ($this->showcaseItems() as $index => $attributes) {
+            $item = PpdbShowcaseItem::withTrashed()
+                ->firstOrNew([
+                    'audience' => $attributes['audience'],
+                    'title_id' => $attributes['title_id'],
+                ]);
+            $item->fill(array_merge($attributes, ['sort_order' => $index + 1]));
+            $item->save();
+
+            if ($item->trashed()) {
+                $item->restore();
+            }
+        }
+    }
+
+    /** @return array<int, array<string, mixed>> */
+    private function showcaseItems(): array
+    {
+        return [
+            [
+                'audience' => PpdbShowcaseItem::AUDIENCE_PARENTS,
+                'title_id' => 'Kenali Al Mustaqbal',
+                'title_en' => 'Discover Al Mustaqbal',
+                'title_ar' => 'تعرّف على المستقبل',
+                'description_id' => 'Pelajari nilai, program, dan lingkungan belajar sebelum mendaftar.',
+                'description_en' => 'Explore our values, programs, and learning environment before applying.',
+                'description_ar' => 'تعرّف على قيمنا وبرامجنا وبيئة التعلّم قبل التسجيل.',
+                'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
+                'media_url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=82',
+            ],
+            [
+                'audience' => PpdbShowcaseItem::AUDIENCE_PARENTS,
+                'title_id' => 'Siapkan Data Pendaftaran',
+                'title_en' => 'Prepare Registration Details',
+                'title_ar' => 'جهّز بيانات التسجيل',
+                'description_id' => 'Siapkan data calon siswa dan kontak orang tua agar proses lebih cepat.',
+                'description_en' => 'Prepare student details and parent contacts for a smoother process.',
+                'description_ar' => 'جهّز بيانات الطالب ووسائل تواصل ولي الأمر لتسريع الإجراءات.',
+                'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
+                'media_url' => 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=82',
+            ],
+            [
+                'audience' => PpdbShowcaseItem::AUDIENCE_SCHOOL,
+                'title_id' => 'Verifikasi dan Pendampingan',
+                'title_en' => 'Verification and Support',
+                'title_ar' => 'التحقق والمتابعة',
+                'description_id' => 'Tim sekolah memeriksa data dan mendampingi keluarga pada tahapan berikutnya.',
+                'description_en' => 'The school team verifies details and supports families through the next steps.',
+                'description_ar' => 'يتحقق فريق المدرسة من البيانات ويرافق الأسرة في الخطوات التالية.',
+                'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
+                'media_url' => 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1400&q=82',
+            ],
+            [
+                'audience' => PpdbShowcaseItem::AUDIENCE_SCHOOL,
+                'title_id' => 'Konfirmasi Hasil',
+                'title_en' => 'Confirm the Result',
+                'title_ar' => 'تأكيد النتيجة',
+                'description_id' => 'Informasi hasil dan tindak lanjut disampaikan melalui kontak resmi sekolah.',
+                'description_en' => 'Results and follow-up information are shared through official school contacts.',
+                'description_ar' => 'تُرسل النتيجة ومعلومات المتابعة عبر قنوات المدرسة الرسمية.',
+                'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
+                'media_url' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=82',
+            ],
+        ];
+    }
+}

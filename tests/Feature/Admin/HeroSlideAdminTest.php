@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Article;
 use App\Models\HeroSlide;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,19 +21,27 @@ beforeEach(function (): void {
     ]);
 
     $this->actingAs($admin);
+
+    $this->heroArticle = Article::query()->create([
+        'article_source' => Article::SOURCE_NATIVE,
+        'article_status' => Article::STATUS_PUBLISHED,
+        'slug' => 'hero-database-test',
+        'title_id' => 'Hero Database',
+        'title_en' => 'Database Hero',
+        'title_ar' => 'واجهة قاعدة البيانات',
+        'description_id' => 'Dikelola sebagai artikel dari admin.',
+        'description_en' => 'Managed as an article from admin.',
+        'thumbnail_url' => 'media/home/hero-school.png',
+        'author' => 'Admin Hero Test',
+        'published_at' => now(),
+    ]);
 });
 
 it('creates and normalizes a youtube hero slide from admin', function (): void {
     $response = $this->post(route('admin.hero.store'), [
+        'article_id' => $this->heroArticle->getKey(),
         'type' => 'video',
         'media_url' => 'https://youtu.be/kb1dXcf3QQs',
-        'title_id' => 'Hero Database',
-        'title_en' => 'Database Hero',
-        'title_ar' => 'واجهة قاعدة البيانات',
-        'description_id' => 'Dikelola dari admin.',
-        'cta_label_id' => 'Lihat Program',
-        'cta_url' => '#program',
-        'cta_action' => 'anchor',
         'focal_position' => 'center center',
         'overlay_strength' => '0.40',
         'is_active' => '1',
@@ -54,6 +63,7 @@ it('creates and normalizes a youtube hero slide from admin', function (): void {
 
 it('edits a seeded public image without forcing a replacement upload', function (): void {
     $slide = HeroSlide::query()->create([
+        'article_id' => $this->heroArticle->getKey(),
         'type' => 'image',
         'media_url' => 'media/home/hero-school.png',
         'title_id' => 'Hero Lama',
@@ -62,9 +72,9 @@ it('edits a seeded public image without forcing a replacement upload', function 
     ]);
 
     $response = $this->put(route('admin.hero.update', $slide), [
+        'article_id' => $this->heroArticle->getKey(),
         'type' => 'image',
         'media_url' => 'media/home/hero-school.png',
-        'title_id' => 'Hero Diperbarui',
         'focal_position' => 'center center',
         'overlay_strength' => '0.46',
         'is_active' => '1',
@@ -74,7 +84,7 @@ it('edits a seeded public image without forcing a replacement upload', function 
         ->assertRedirect(route('admin.hero'))
         ->assertSessionHasNoErrors();
 
-    expect($slide->fresh()->title_id)->toBe('Hero Diperbarui')
+    expect($slide->fresh()->title_id)->toBe('Hero Database')
         ->and($slide->fresh()->media_url)->toBe('media/home/hero-school.png');
 });
 

@@ -2,11 +2,7 @@
   $isEdit = $mode === 'edit';
   $action = $isEdit ? route('admin.hero.update', $slide) : route('admin.hero.store');
   $currentType = old('type', $slide->type ?: 'image');
-  $locales = [
-    'id' => ['label' => 'Indonesia · Utama', 'dir' => 'ltr'],
-    'en' => ['label' => 'English', 'dir' => 'ltr'],
-    'ar' => ['label' => 'العربية', 'dir' => 'rtl'],
-  ];
+  $currentArticleId = (int) old('article_id', $slide->article_id);
 @endphp
 
 @extends('layouts.admin', [
@@ -24,7 +20,7 @@
     <header class="admin-topbar admin-topbar--compact">
       <div>
         <h1>{{ $isEdit ? 'Edit Hero Slide' : 'Tambah Hero Slide' }}</h1>
-        <p>Indonesia adalah bahasa utama. English dan Arabic fallback ke konten yang tersedia. Media dapat berupa gambar atau video YouTube/file video HTTPS.</p>
+        <p>Hero adalah penempatan artikel, bukan konten kedua. Judul, ringkasan, bahasa, dan link baca selalu mengikuti artikel yang dipilih.</p>
       </div>
 
       <div class="admin-inline-actions">
@@ -43,6 +39,20 @@
 
     <section class="gallery-lite-form__panel">
       <div class="gallery-lite-form__grid">
+        <div class="admin-field admin-field--wide">
+          <label for="article_id">Artikel yang ditampilkan</label>
+          <select id="article_id" name="article_id" required>
+            <option value="">Pilih artikel terbit</option>
+            @foreach($articles as $articleOption)
+              <option value="{{ $articleOption->getKey() }}" @selected($currentArticleId === (int) $articleOption->getKey())>
+                {{ $articleOption->admin_title }} · {{ $articleOption->published_at?->translatedFormat('d M Y, H:i') ?? '-' }}
+              </option>
+            @endforeach
+          </select>
+          <em>Artikel terbaru otomatis dapat mengisi hero ketika belum ada penempatan manual. Daftar ini dipakai untuk mengatur pilihan dan urutannya.</em>
+          @error('article_id') <small>{{ $message }}</small> @enderror
+        </div>
+
         <div class="admin-field">
           <label for="type">Tipe media</label>
           <select id="type" name="type" required data-hero-type>
@@ -60,7 +70,7 @@
         <div class="admin-field admin-field--wide">
           <label for="media_url">URL media</label>
           <input id="media_url" name="media_url" value="{{ old('media_url', $slide->media_url) }}" maxlength="2048" placeholder="https://youtu.be/... atau https://.../image.webp">
-          <em>Untuk video gunakan YouTube HTTPS atau URL file MP4/WebM/OGG/OGV publik. Untuk gambar, upload file lebih disarankan.</em>
+          <em>Untuk video gunakan YouTube HTTPS atau URL file MP4/WebM/OGG/OGV publik. Untuk gambar, kosongkan agar memakai thumbnail artikel.</em>
           @error('media_url') <small>{{ $message }}</small> @enderror
         </div>
 
@@ -76,55 +86,8 @@
       </div>
     </section>
 
-    @foreach($locales as $locale => $meta)
-      <section class="gallery-lite-form__panel" lang="{{ $locale }}" dir="{{ $meta['dir'] }}">
-        <h2 style="margin-top:0">Konten {{ $meta['label'] }}</h2>
-        <div class="gallery-lite-form__grid">
-          <div class="admin-field admin-field--wide">
-            <label for="eyebrow_{{ $locale }}">Eyebrow</label>
-            <input id="eyebrow_{{ $locale }}" name="eyebrow_{{ $locale }}" value="{{ old('eyebrow_'.$locale, $slide->{'eyebrow_'.$locale}) }}" maxlength="160">
-          </div>
-
-          <div class="admin-field admin-field--wide">
-            <label for="title_{{ $locale }}">Judul</label>
-            <input id="title_{{ $locale }}" name="title_{{ $locale }}" value="{{ old('title_'.$locale, $slide->{'title_'.$locale}) }}" maxlength="255" @if($locale === 'id') required @endif>
-          </div>
-
-          <div class="admin-field admin-field--wide">
-            <label for="description_{{ $locale }}">Deskripsi</label>
-            <textarea id="description_{{ $locale }}" name="description_{{ $locale }}" rows="4" maxlength="2000">{{ old('description_'.$locale, $slide->{'description_'.$locale}) }}</textarea>
-          </div>
-
-          <div class="admin-field admin-field--wide">
-            <label for="media_alt_{{ $locale }}">Alt media</label>
-            <input id="media_alt_{{ $locale }}" name="media_alt_{{ $locale }}" value="{{ old('media_alt_'.$locale, $slide->{'media_alt_'.$locale}) }}" maxlength="255">
-          </div>
-
-          <div class="admin-field admin-field--wide">
-            <label for="cta_label_{{ $locale }}">Label CTA</label>
-            <input id="cta_label_{{ $locale }}" name="cta_label_{{ $locale }}" value="{{ old('cta_label_'.$locale, $slide->{'cta_label_'.$locale}) }}" maxlength="160">
-          </div>
-        </div>
-      </section>
-    @endforeach
-
     <section class="gallery-lite-form__panel">
       <div class="gallery-lite-form__grid">
-        <div class="admin-field admin-field--wide">
-          <label for="cta_url">CTA URL</label>
-          <input id="cta_url" name="cta_url" value="{{ old('cta_url', $slide->cta_url) }}" maxlength="2048" placeholder="#program atau /ppdb">
-        </div>
-
-        <div class="admin-field">
-          <label for="cta_action">CTA action</label>
-          <select id="cta_action" name="cta_action">
-            <option value="" @selected(old('cta_action', $slide->cta_action) === null)>Biasa</option>
-            <option value="anchor" @selected(old('cta_action', $slide->cta_action) === 'anchor')>Anchor</option>
-            <option value="link" @selected(old('cta_action', $slide->cta_action) === 'link')>Link</option>
-            <option value="admission" @selected(old('cta_action', $slide->cta_action) === 'admission')>PPDB / Admission</option>
-          </select>
-        </div>
-
         <div class="admin-field">
           <label for="focal_position">Focal position</label>
           <input id="focal_position" name="focal_position" value="{{ old('focal_position', $slide->focal_position ?: 'center center') }}" maxlength="60" placeholder="center center">
@@ -137,7 +100,7 @@
 
         <label class="admin-check-field">
           <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $slide->is_active ?? true))>
-          <span>Aktif di homepage</span>
+          <span>Tampilkan artikel ini di hero homepage</span>
         </label>
       </div>
     </section>
