@@ -99,6 +99,28 @@ final class ArticleSeeder extends Seeder
                 ['Pendidikan'],
                 'https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=1800&q=82',
             ),
+            $this->article(
+                'eksperimen-sains-melatih-cara-berpikir',
+                'Eksperimen Sains Melatih Cara Berpikir',
+                'Science Experiments Train the Way We Think',
+                'التجارب العلمية تنمّي طريقة التفكير',
+                'Eksperimen sederhana membantu siswa belajar mengamati, membuat dugaan, menguji ide, dan berani memperbaiki kesimpulan.',
+                'Simple experiments help students observe, form hypotheses, test ideas, and confidently revise their conclusions.',
+                'تساعد التجارب البسيطة الطلاب على الملاحظة ووضع الفرضيات واختبار الأفكار وتصحيح استنتاجاتهم بثقة.',
+                ['Sains', 'Pendidikan'],
+                'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1800&q=82',
+            ),
+            $this->article(
+                'literasi-tumbuh-dari-kebiasaan-kecil',
+                'Literasi Tumbuh dari Kebiasaan Kecil',
+                'Literacy Grows from Small Habits',
+                'تنمو القراءة من العادات الصغيرة',
+                'Kebiasaan membaca, bercerita, dan berdiskusi setiap hari membangun hubungan anak dengan ilmu secara alami dan berkelanjutan.',
+                'Daily habits of reading, storytelling, and discussion build a natural and lasting relationship between children and knowledge.',
+                'تبني عادات القراءة والسرد والنقاش اليومية علاقة طبيعية ومستدامة بين الطفل والمعرفة.',
+                ['Literasi', 'Pendidikan'],
+                'https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=1800&q=82',
+            ),
         ];
     }
 
@@ -129,7 +151,7 @@ final class ArticleSeeder extends Seeder
             'description_ar' => $descriptionAr,
             'content_id' => '<p>'.$descriptionId.'</p><p>Konten dummy ini dapat diganti melalui canvas artikel admin.</p>',
             'content_en' => '<p>'.$descriptionEn.'</p><p>This dummy content can be replaced in the admin article canvas.</p>',
-            'content_ar' => '<p>'.$descriptionAr.'</p><p>يمكن استبدال هذا المحتوى التجريبي من محرر المقالات.</p>',
+            'content_ar' => '<p>'.$descriptionAr.'</p><p>يمكن استبدال هذا المحتوى التجريبي من محرر المقالات في لوحة الإدارة.</p>',
             'tags' => $tags,
             'word_count' => 38,
             'thumbnail_url' => $thumbnail,
