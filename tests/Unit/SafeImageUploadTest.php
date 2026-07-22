@@ -20,9 +20,32 @@ function uploadedPng(string $name = 'clean.png', string $suffix = ''): UploadedF
     return new UploadedFile($path, $name, 'image/png', null, true);
 }
 
+function uploadedJpegWithExif(string $name = 'camera-photo.jpg'): UploadedFile
+{
+    $file = UploadedFile::fake()->image($name, 32, 32);
+    $path = $file->getRealPath();
+    $contents = file_get_contents($path);
+
+    // APP1 payload with a minimal EXIF header. Length includes the two-byte
+    // length field itself, so 0x0010 describes 14 bytes of payload.
+    $exifSegment = "\xFF\xE1\x00\x10Exif\x00\x00".str_repeat("\x00", 8);
+    file_put_contents($path, substr($contents, 0, 2).$exifSegment.substr($contents, 2));
+
+    return $file;
+}
+
 it('accepts a clean raster image whose extension and content match', function (): void {
     $validator = Validator::make(
         ['image' => uploadedPng()],
+        ['image' => [new SafeImageUpload]]
+    );
+
+    expect($validator->passes())->toBeTrue();
+});
+
+it('accepts a valid jpeg that contains ordinary exif metadata', function (): void {
+    $validator = Validator::make(
+        ['image' => uploadedJpegWithExif()],
         ['image' => [new SafeImageUpload]]
     );
 
