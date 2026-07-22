@@ -251,6 +251,17 @@ final class HeroSlideAdminController extends Controller
             return $url;
         }
 
+        $relativePath = ltrim($url, '/');
+
+        if (
+            $relativePath !== ''
+            && ! str_contains($relativePath, '..')
+            && preg_match('/^[A-Za-z0-9_\/. -]+$/', $relativePath) === 1
+            && file_exists(public_path($relativePath))
+        ) {
+            return $relativePath;
+        }
+
         $normalized = PublicUrl::normalize($url);
 
         if ($normalized === null || strtolower((string) parse_url($normalized, PHP_URL_SCHEME)) !== 'https') {
