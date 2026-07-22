@@ -59,6 +59,17 @@ final class PpdbSeeder extends Seeder
                 'media_url' => 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=82',
             ],
             [
+                'audience' => PpdbShowcaseItem::AUDIENCE_PARENTS,
+                'title_id' => 'Kunjungi dan Kenali Lingkungan',
+                'title_en' => 'Visit and Explore the Environment',
+                'title_ar' => 'زُر المدرسة وتعرّف على بيئتها',
+                'description_id' => 'Kenali suasana sekolah, ruang belajar, dan aktivitas siswa agar keluarga mendapat gambaran yang utuh.',
+                'description_en' => 'Explore the school atmosphere, learning spaces, and student activities to get a complete picture.',
+                'description_ar' => 'تعرّف على أجواء المدرسة ومساحات التعلّم وأنشطة الطلاب لتكوين صورة متكاملة قبل التسجيل.',
+                'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
+                'media_url' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=82',
+            ],
+            [
                 'audience' => PpdbShowcaseItem::AUDIENCE_SCHOOL,
                 'title_id' => 'Verifikasi dan Pendampingan',
                 'title_en' => 'Verification and Support',
@@ -78,7 +89,18 @@ final class PpdbSeeder extends Seeder
                 'description_en' => 'Results and follow-up information are shared through official school contacts.',
                 'description_ar' => 'تُرسل النتيجة ومعلومات المتابعة عبر قنوات المدرسة الرسمية.',
                 'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
-                'media_url' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=82',
+                'media_url' => 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1400&q=82',
+            ],
+            [
+                'audience' => PpdbShowcaseItem::AUDIENCE_SCHOOL,
+                'title_id' => 'Orientasi Awal Siswa',
+                'title_en' => 'Student Orientation',
+                'title_ar' => 'التهيئة الأولى للطالب',
+                'description_id' => 'Siswa dan keluarga mendapat arahan awal agar transisi menuju lingkungan belajar baru terasa lebih nyaman.',
+                'description_en' => 'Students and families receive initial guidance for a smoother transition into the new learning environment.',
+                'description_ar' => 'يحصل الطالب وأسرته على إرشاد أولي يساعدهما على الانتقال بسلاسة إلى بيئة التعلّم الجديدة.',
+                'media_type' => PpdbShowcaseItem::MEDIA_PHOTO,
+                'media_url' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=82',
             ],
         ];
     }
