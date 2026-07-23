@@ -1,4 +1,8 @@
-@php($page = __('admin.gallery'))
+@php
+  $page = __('admin.gallery');
+  $activePageSections = collect($pageSections ?? []);
+  $homepageLimit = $limits['max_items'] ?? 6;
+@endphp
 
 @extends('layouts.admin', [
   'title' => $page['title'],
@@ -13,8 +17,25 @@
     </div>
 
     <div class="admin-inline-actions">
+      @if($activePageSections->isNotEmpty())
+        <details class="admin-gallery-media-picker">
+          <summary class="admin-primary-action">Tambah Media Galeri</summary>
+          <div class="admin-gallery-media-picker__menu">
+            <span>Pilih bagian tujuan</span>
+            @foreach($activePageSections as $section)
+              <a href="{{ route('admin.galeri.section-media.create', $section) }}">
+                <strong>{{ $section->admin_title }}</strong>
+                <small>{{ $section->media_items_count }} media aktif</small>
+              </a>
+            @endforeach
+          </div>
+        </details>
+      @endif
+
       @if($canCreate)
-        <a href="{{ route('admin.galeri.create') }}" class="admin-primary-action">{{ $page['create_button'] }} Utama</a>
+        <a href="{{ route('admin.galeri.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Homepage</a>
+      @else
+        <span class="admin-counter">Homepage {{ $activeItems->count() }}/{{ $homepageLimit }} penuh</span>
       @endif
 
       <a href="{{ route('admin.galeri.sections.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Bagian</a>
@@ -36,12 +57,12 @@
   <section class="admin-gallery-block" aria-label="Galeri utama homepage">
     <div class="admin-gallery-block__head">
       <div>
-        <h2>Galeri Utama Homepage</h2>
+        <h2>Galeri Homepage</h2>
         <p>Hanya item aktif yang dihitung ke batas maksimal dan ditampilkan di homepage.</p>
       </div>
 
       <span class="admin-counter">
-        {{ $activeItems->count() }}/{{ $limits['max_items'] ?? 6 }} aktif · {{ $archivedItems->count() }} arsip
+        {{ $activeItems->count() }}/{{ $homepageLimit }} aktif · {{ $archivedItems->count() }} arsip
       </span>
     </div>
 
@@ -153,19 +174,19 @@
   <section class="admin-gallery-block" aria-label="Bagian halaman galeri">
     <div class="admin-gallery-block__head">
       <div>
-        <h2>Bagian Halaman Galeri</h2>
-        <p>Mengarsipkan bagian tidak menghapus media di dalamnya. Seluruh isi kembali ketika bagian dipulihkan.</p>
+        <h2>Galeri Halaman</h2>
+        <p>Media pada halaman galeri tidak memakai batas enam item homepage.</p>
       </div>
 
       <div class="admin-inline-actions">
-        <span class="admin-counter">{{ ($pageSections ?? collect())->count() }} aktif · {{ ($archivedPageSections ?? collect())->count() }} arsip</span>
+        <span class="admin-counter">{{ $activePageSections->count() }} aktif · {{ ($archivedPageSections ?? collect())->count() }} arsip</span>
         <a href="{{ route('admin.galeri.sections.create') }}" class="admin-primary-action">Tambah Bagian</a>
       </div>
     </div>
 
-    @if(($pageSections ?? collect())->isNotEmpty() || ($archivedPageSections ?? collect())->isNotEmpty())
+    @if($activePageSections->isNotEmpty() || ($archivedPageSections ?? collect())->isNotEmpty())
       <div class="admin-section-grid">
-        @foreach($pageSections as $section)
+        @foreach($activePageSections as $section)
           <article class="admin-section-card">
             <div class="admin-section-card__body">
               <span class="gallery-lite-status {{ $section->is_published ? 'is-active' : 'is-inactive' }}">
@@ -178,6 +199,7 @@
             </div>
 
             <div class="gallery-lite-actions admin-section-card__actions">
+              <a href="{{ route('admin.galeri.section-media.create', $section) }}" class="admin-small-action">Tambah Media</a>
               <a href="{{ route('admin.galeri.sections.show', $section) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
 
               <form method="POST" action="{{ route('admin.galeri.sections.toggle', $section) }}">
