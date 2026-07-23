@@ -10,8 +10,10 @@
     @vite([
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
+      'resources/css/pages/welcome-about-stats.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
+      'resources/js/pages/welcome-about-stats.js',
     ])
   </head>
   <body class="home-page nav-shell">
@@ -218,25 +220,119 @@
         <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
       </section>
 
-      <!-- ======================= STATISTIK ======================= -->
-      <section class="stats-ribbon reveal">
-        <div class="container stats-ribbon__grid">
-          @foreach ($stats as $stat)
-            @php
-              $statValue = trim((string) ($stat['value'] ?? (($stat['count'] ?? '') . ($stat['suffix'] ?? ''))));
-              $statCount = $stat['count'] ?? null;
-              $statSuffix = $stat['suffix'] ?? '';
-              $canAnimateCount = is_numeric($statCount);
-            @endphp
-            <div class="stat-item">
-              <span
-                class="stat-item__number"
-                @if ($canAnimateCount) data-count="{{ $statCount }}" @endif
-                @if ($canAnimateCount && $statSuffix !== '') data-suffix="{{ $statSuffix }}" @endif
-              >{{ $canAnimateCount ? '0' : $statValue }}</span>
-              <span class="stat-item__label">{{ $stat['label'] }}</span>
+      <!-- ======================= ABOUT + STATISTIK ======================= -->
+      <section
+        class="about-stats-story"
+        id="tentang"
+        data-about-stats-story
+        aria-labelledby="about-stats-title"
+        aria-label="{{ __('home.about_stats_story.section_label') }}"
+      >
+        <div class="about-stats-story__sticky">
+          <div class="about-stats-story__canvas">
+            <div class="about-stats-story__ornaments" aria-hidden="true">
+              <span class="about-stats-story__orb about-stats-story__orb--gold"></span>
+              <span class="about-stats-story__orb about-stats-story__orb--green"></span>
+
+              <svg
+                class="about-stats-story__ornament about-stats-story__ornament--one"
+                viewBox="0 0 220 220"
+                focusable="false"
+              >
+                <path d="M110 10 136 48 182 38 174 84 212 110 174 136 182 182 136 174 110 212 84 174 38 182 46 136 8 110 46 84 38 38 84 48Z" />
+                <path d="M110 35 132 72 175 68 151 104 185 132 142 137 132 180 104 146 68 170 72 127 35 105 78 95 83 52Z" />
+                <circle cx="110" cy="110" r="53" />
+                <path d="m110 58 16 36 39 16-39 16-16 36-16-36-39-16 39-16Z" />
+              </svg>
+
+              <svg
+                class="about-stats-story__ornament about-stats-story__ornament--two"
+                viewBox="0 0 260 260"
+                focusable="false"
+              >
+                <g transform="translate(130 130)">
+                  <path d="M0-116 22-61 76-91 67-31 126-26 78 12 119 55 57 53 54 116 12 69-26 126-31 67-91 76-61 22-116 0-61-22-91-76-31-67-26-126 12-78 55-119 53-57 116-54 69-12Z" />
+                  <circle r="82" />
+                  <circle r="48" />
+                  <path d="M0-82 20-35 70-42 36 0 70 42 20 35 0 82-20 35-70 42-36 0-70-42-20-35Z" />
+                </g>
+              </svg>
+
+              <svg
+                class="about-stats-story__ornament about-stats-story__ornament--three"
+                viewBox="0 0 180 180"
+                focusable="false"
+              >
+                <path d="m90 8 24 29 38-9-1 39 29 23-29 23 1 39-38-9-24 29-24-29-38 9 1-39L0 90l29-23-1-39 38 9Z" />
+                <path d="m90 35 18 26 31-3-3 31 26 18-31 8-8 31-23-22-23 22-8-31-31-8 26-18-3-31 31 3Z" />
+                <circle cx="90" cy="90" r="35" />
+              </svg>
             </div>
-          @endforeach
+
+            <div class="about-stats-story__stage">
+              <article
+                class="about-stats-story__about"
+                data-about-stats-about
+              >
+                <h2 class="about-stats-story__word" id="about-stats-title">
+                  {{ __('home.about_stats_story.eyebrow') }}
+                </h2>
+
+                <div class="about-stats-story__board">
+                  <p class="about-stats-story__board-kicker">
+                    {{ __('home.about_stats_story.board_title') }}
+                  </p>
+                  <p class="about-stats-story__board-copy">
+                    {{ __('home.about_stats_story.description') }}
+                  </p>
+                </div>
+              </article>
+
+              <ol
+                class="about-stats-story__stats"
+                aria-label="{{ __('home.about_stats_story.statistics_label') }}"
+              >
+                @foreach ($stats as $stat)
+                  @php
+                    $statValue = trim((string) ($stat['value'] ?? (($stat['count'] ?? '') . ($stat['suffix'] ?? ''))));
+                    $statAccents = ['#d99c18', '#147c68', '#dc7534', '#7359a8'];
+                    $statAccent = $statAccents[$loop->index % count($statAccents)];
+                  @endphp
+
+                  <li
+                    class="about-stats-story__stat"
+                    data-about-stats-item
+                    style="--stat-accent: {{ $statAccent }}"
+                  >
+                    <article class="about-stats-story__stat-card">
+                      <p
+                        class="about-stats-story__number"
+                        data-about-stats-number
+                        data-stat-value="{{ $statValue }}"
+                      >{{ $statValue }}</p>
+                      <h3
+                        class="about-stats-story__label"
+                        data-about-stats-label
+                      >{{ $stat['label'] }}</h3>
+                    </article>
+                  </li>
+                @endforeach
+              </ol>
+
+              <div class="about-stats-story__progress" aria-hidden="true">
+                @foreach ($stats as $stat)
+                  <span
+                    class="about-stats-story__progress-dot"
+                    data-about-stats-progress-dot
+                  ></span>
+                @endforeach
+              </div>
+
+              <p class="about-stats-story__scroll-hint" aria-hidden="true">
+                {{ __('home.about_stats_story.scroll_hint') }}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -435,35 +435,6 @@ p {
     pointer-events: auto;
 }
 
-/* ---------- 7. STATISTIK ---------- */
-.stats-ribbon {
-    background: var(--color-ink);
-    padding-block: 44px;
-    position: relative;
-}
-.stats-ribbon__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 24px;
-    text-align: center;
-}
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-.stat-item__number {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 2vw + 1rem, 2.6rem);
-    font-weight: 800;
-    color: var(--color-yellow);
-}
-.stat-item__label {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.75);
-    font-weight: 600;
-}
-
 /* ---------- 8. QUICK INFO ---------- */
 .quick-info {
     padding-top: 88px;
@@ -981,10 +952,6 @@ p {
     }
 
 
-    .stats-ribbon__grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 28px;
-    }
     .quick-info__grid {
         grid-template-columns: 1fr;
     }
@@ -1102,105 +1069,6 @@ p {
 
     .navbar__logo-text small {
         font-size: 0.66rem;
-    }
-}
-
-.stat-item {
-    padding: 16px 14px;
-    border-radius: 22px;
-    transition:
-        transform 0.28s ease,
-        background 0.28s ease,
-        box-shadow 0.28s ease;
-}
-
-.stat-item__number,
-.stat-item__label {
-    transition:
-        color 0.28s ease,
-        transform 0.28s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .stat-item:hover {
-        transform: translateY(-6px);
-        background: rgba(255, 255, 255, 0.1);
-        box-shadow:
-            inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-            0 18px 34px rgba(0, 0, 0, 0.18);
-    }
-
-    .stat-item:hover .stat-item__number {
-        color: #ffffff;
-        transform: scale(1.04);
-    }
-
-    .stat-item:hover .stat-item__label {
-        color: #ffe8a3;
-    }
-}
-
-@media (hover: none), (pointer: coarse) {
-    .stat-item {
-        transition: none;
-    }
-
-    .stat-item:hover {
-        transform: none;
-        background: transparent;
-        box-shadow: none;
-    }
-}
-
-.stat-item {
-    background: transparent !important;
-    box-shadow: none !important;
-    transform: none !important;
-}
-
-.stat-item__number,
-.stat-item__label {
-    display: inline-block;
-    transform-origin: center;
-    transition:
-        color 0.24s ease,
-        transform 0.24s ease,
-        text-shadow 0.24s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .stat-item:hover {
-        background: transparent !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    .stat-item:hover .stat-item__number {
-        color: #ffffff;
-        transform: scale(1.16);
-        text-shadow:
-            0 0 18px rgba(255, 209, 70, 0.34),
-            0 10px 24px rgba(0, 0, 0, 0.2);
-    }
-
-    .stat-item:hover .stat-item__label {
-        color: #ffffff;
-        transform: scale(1.08);
-        text-shadow:
-            0 0 14px rgba(255, 255, 255, 0.22),
-            0 8px 18px rgba(0, 0, 0, 0.18);
-    }
-}
-
-@media (hover: none), (pointer: coarse) {
-    .stat-item,
-    .stat-item:hover,
-    .stat-item__number,
-    .stat-item__label,
-    .stat-item:hover .stat-item__number,
-    .stat-item:hover .stat-item__label {
-        transform: none !important;
-        text-shadow: none !important;
     }
 }
 

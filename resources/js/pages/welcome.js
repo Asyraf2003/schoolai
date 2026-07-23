@@ -323,53 +323,6 @@ document.addEventListener('DOMContentLoaded', function () {
   handleNavbarScroll();
   updateActiveNavLink();
 
-  /* ---------- 5. ANIMASI ANGKA STATISTIK ---------- */
-  var statNumbers = document.querySelectorAll('.stat-item__number');
-
-  function animateCount(el) {
-    if (!el.hasAttribute('data-count')) return;
-    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
-    var suffix = el.getAttribute('data-suffix') || '';
-    var duration = 1400; // ms
-    var startTime = null;
-
-    function step(timestamp) {
-      if (!startTime) startTime = timestamp;
-      var progress = Math.min((timestamp - startTime) / duration, 1);
-      // easeOutQuad supaya animasi terasa halus di akhir
-      var eased = 1 - (1 - progress) * (1 - progress);
-      var current = Math.floor(eased * target);
-      el.textContent = current + suffix;
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      } else {
-        el.textContent = target + suffix;
-      }
-    }
-    window.requestAnimationFrame(step);
-  }
-
-  if ('IntersectionObserver' in window && statNumbers.length) {
-    var statObserver = new IntersectionObserver(function (entries, observer) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          animateCount(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(function (el) { statObserver.observe(el); });
-  } else {
-    // Fallback jika IntersectionObserver tidak tersedia
-    statNumbers.forEach(function (el) {
-      if (!el.hasAttribute('data-count')) return;
-      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
-      el.textContent = target + (el.getAttribute('data-suffix') || '');
-    });
-  }
-
-
   /* ---------- 9. ANIMASI REVEAL SAAT SCROLL ---------- */
   var revealEls = document.querySelectorAll('.reveal');
 

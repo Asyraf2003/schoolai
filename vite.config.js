@@ -9,9 +9,11 @@ export default defineConfig({
             input: [
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/welcome-hero.js',
+                'resources/js/pages/welcome-about-stats.js',
                 'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
+                'resources/css/pages/welcome-about-stats.css',
                 'resources/css/pages/welcome-mega-menu.css',
                 'resources/css/pages/welcome-hero-motion.css',
                 'resources/css/pages/welcome-hero-visual.css',

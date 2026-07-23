@@ -174,6 +174,15 @@ return [
         'mobile_open_label' => 'Buka menu',
     ],
 
+    'about_stats_story' => [
+        'section_label' => 'Tentang Al Mustaqbal dan statistik sekolah',
+        'eyebrow' => 'about',
+        'board_title' => 'Al Mustaqbal School',
+        'description' => 'Al Mustaqbal mendampingi anak bertumbuh melalui pendidikan holistik yang menyatukan Al-Qur’an, adab, ilmu, bahasa, kreativitas, dan keberanian—agar lahir generasi Muslim yang inspiratif, inovatif, berintegritas, serta siap menjalankan peran sebagai Khalifatullah.',
+        'statistics_label' => 'Statistik Al Mustaqbal School',
+        'scroll_hint' => 'Gulir untuk menjelajah',
+    ],
+
     'stats' => [
         'items' => [
             [
