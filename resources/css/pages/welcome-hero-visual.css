@@ -1,38 +1,4 @@
-/* Hero visual refinement: decorative image cluster mirrored for LTR / RTL. */
-
-.home-page .hero-cinema__media::after,
-html[dir="rtl"] .home-page .hero-cinema__media::after {
-    background: linear-gradient(
-        to bottom,
-        rgb(2 13 12 / 0.04) 0%,
-        transparent 48%,
-        rgb(2 13 12 / 0.08) 100%
-    );
-}
-
-.home-page .hero-cinema__media img,
-.home-page .hero-cinema__media video {
-    filter: none;
-    image-rendering: auto;
-}
-
-.home-page .hero-cinema__title {
-    text-shadow:
-        0 3px 18px rgb(0 0 0 / 0.34),
-        0 10px 42px rgb(0 0 0 / 0.2);
-}
-
-.home-page .hero-cinema__description,
-.home-page .hero-cinema__eyebrow,
-.home-page .hero-cinema__cta {
-    text-shadow: 0 2px 14px rgb(0 0 0 / 0.42);
-}
-
-.home-page .hero-cinema__ornament {
-    display: none;
-}
-
-/* Default = LTR: cluster di kanan. */
+/* Default = LTR : 3 decorative accents on the right */
 .home-page .hero-cinema__ornaments::before {
     content: "";
     position: absolute;
@@ -42,67 +8,75 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
 
     background-image:
         url("/media/home/9.png"), url("/media/home/10.png"),
-        url("/media/home/11.png"), url("/media/home/12.png");
-
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+        url("/media/home/11.png");
+    background-repeat: no-repeat, no-repeat, no-repeat;
 
     background-size:
-        clamp(160px, 16vw, 300px),
-        clamp(190px, 19vw, 350px),
-        clamp(210px, 21vw, 380px),
-        clamp(175px, 17vw, 320px);
+        clamp(152px, 13vw, 250px), clamp(122px, 10.5vw, 210px),
+        clamp(164px, 14vw, 270px);
 
-    /* Posisi fisik dicerminkan satu-per-satu antara LTR dan RTL. */
+    /* lebih rapi, tidak saling numpuk */
     background-position:
-        right -1% top 5%,
-        right 15% top 21%,
-        right 8% bottom 11%,
-        right -1% bottom 31%;
+        right 3% top 8%,
+        right 18% top 28%,
+        right 4% bottom 18%;
 
-    opacity: 0.34;
-    filter: blur(0.9px) saturate(0.82) contrast(0.98);
+    opacity: 0.24;
+    filter: blur(0.9px) saturate(0.82) contrast(0.95);
+
+    -webkit-mask-image: linear-gradient(
+        to left,
+        #000 0%,
+        rgb(0 0 0 / 0.96) 66%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to left,
+        #000 0%,
+        rgb(0 0 0 / 0.96) 66%,
+        transparent 100%
+    );
 }
 
-/* RTL: pindah ke kiri dengan jarak yang sama persis. */
+/* RTL : mirrored / simetris ke kiri */
 html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
     background-position:
-        left -1% top 5%,
-        left 15% top 21%,
-        left 8% bottom 11%,
-        left -1% bottom 31%;
+        left 3% top 8%,
+        left 18% top 28%,
+        left 4% bottom 18%;
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        #000 0%,
+        rgb(0 0 0 / 0.96) 66%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        #000 0%,
+        rgb(0 0 0 / 0.96) 66%,
+        transparent 100%
+    );
 }
 
-/* Mobile tetap lebih tenang agar tidak menutup konten utama. */
+/* Mobile: tetap ada, tapi lebih kalem */
 @media (max-width: 767px) {
     .home-page .hero-cinema__ornaments::before {
-        background-size:
-            108px,
-            136px,
-            148px,
-            122px;
+        background-size: 108px, 88px, 116px;
 
         background-position:
-            right -5% top 9%,
-            right 7% top 25%,
-            right 3% bottom 15%,
-            right -5% bottom 34%;
+            right -1% top 12%,
+            right 10% top 30%,
+            right 1% bottom 20%;
 
-        opacity: 0.2;
-        filter: blur(1.2px) saturate(0.76);
+        opacity: 0.15;
+        filter: blur(1.2px) saturate(0.78);
     }
 
     html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
         background-position:
-            left -5% top 9%,
-            left 7% top 25%,
-            left 3% bottom 15%,
-            left -5% bottom 34%;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .home-page .hero-cinema__media img,
-    .home-page .hero-cinema__media video {
-        filter: none !important;
+            left -1% top 12%,
+            left 10% top 30%,
+            left 1% bottom 20%;
     }
 }
