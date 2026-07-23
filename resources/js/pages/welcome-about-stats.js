@@ -36,7 +36,7 @@
         return from + (to - from) * progress;
     }
 
-    function smoothstep(edgeStart, edgeEnd, value) {
+    function smootherstep(edgeStart, edgeEnd, value) {
         if (edgeStart === edgeEnd) return value < edgeStart ? 0 : 1;
 
         var progress = clamp(
@@ -45,7 +45,9 @@
             1
         );
 
-        return progress * progress * (3 - 2 * progress);
+        return progress * progress * progress * (
+            progress * (progress * 6 - 15) + 10
+        );
     }
 
     function easeOutCubic(value) {
@@ -153,13 +155,17 @@
         var reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
         var state = {
             enhanced: false,
-            ticking: false,
             resizeTimer: null,
+            progressFrame: null,
+            lastFrameTime: 0,
+            targetProgress: 0,
+            renderedProgress: 0,
             pointerFrame: null,
             pointerListening: false,
             pointerX: 0,
             pointerY: 0,
             activeIndex: -1,
+            direction: isRtlDocument() ? -1 : 1,
             mobileObserver: null
         };
 
@@ -189,8 +195,8 @@
                 640
             );
             var screenCount = Math.max(
-                3.9,
-                1.65 + statElements.length * 0.75
+                5.4,
+                2.15 + statElements.length * 1.07
             );
 
             root.style.setProperty(
@@ -199,8 +205,19 @@
             );
         }
 
-        function renderDesktop() {
-            state.ticking = false;
+        function readScrollProgress() {
+            var viewportHeight = Math.max(
+                window.innerHeight || 0,
+                document.documentElement.clientHeight || 0,
+                1
+            );
+            var rect = track.getBoundingClientRect();
+            var scrollRange = Math.max(track.offsetHeight - viewportHeight, 1);
+
+            return clamp(-rect.top / scrollRange, 0, 1);
+        }
+
+        function renderScene(progress) {
             if (!state.enhanced) return;
 
             var viewportWidth = Math.max(
@@ -213,17 +230,12 @@
                 document.documentElement.clientHeight || 0,
                 1
             );
-            var rect = track.getBoundingClientRect();
-            var scrollRange = Math.max(track.offsetHeight - viewportHeight, 1);
-            var progress = clamp(-rect.top / scrollRange, 0, 1);
-            var rtlDirection = isRtlDocument() ? -1 : 1;
-            var introEntry = smoothstep(0, 0.038, progress);
-            var introEntryEase = easeOutCubic(introEntry);
-            var outro = smoothstep(0.95, 1, progress);
-            var statStart = 0.075;
-            var statEnd = 0.925;
+            var statStart = 0.22;
+            var statEnd = 0.93;
             var statCount = Math.max(statElements.length, 1);
             var segment = (statEnd - statStart) / statCount;
+            var introEntry = smootherstep(0, 0.14, progress);
+            var outro = smootherstep(0.965, 1, progress);
             var activeIndex = -1;
             var aboutSide = 0;
 
@@ -241,33 +253,31 @@
                     1
                 );
                 var currentSide =
-                    (activeIndex % 2 === 0 ? 1 : -1) * rtlDirection;
+                    (activeIndex % 2 === 0 ? 1 : -1) * state.direction;
                 var previousSide = activeIndex === 0
                     ? 0
                     : ((activeIndex - 1) % 2 === 0 ? 1 : -1) *
-                        rtlDirection;
-                var sideBlend = easeInOutCubic(
-                    smoothstep(0, 0.26, localProgress)
-                );
+                        state.direction;
+                var sideBlend = smootherstep(0.04, 0.5, localProgress);
 
                 aboutSide = lerp(previousSide, currentSide, sideBlend);
             }
 
-            var aboutMovePresence = smoothstep(
-                statStart - 0.018,
-                statStart + 0.045,
+            var aboutMovePresence = smootherstep(
+                statStart - 0.025,
+                statStart + segment * 0.44,
                 progress
             );
             var aboutX =
-                aboutSide * viewportWidth * 0.225 * aboutMovePresence;
-            var aboutY =
-                lerp(viewportHeight * 0.2, 0, introEntryEase) -
-                outro * viewportHeight * 0.07;
+                aboutSide * viewportWidth * 0.235 * aboutMovePresence;
+            var aboutY = lerp(
+                viewportHeight * 0.28,
+                0,
+                easeOutCubic(introEntry)
+            );
             var aboutScale =
-                lerp(0.94, 1, introEntryEase) -
-                aboutMovePresence * 0.18 -
-                outro * 0.035;
-            var aboutOpacity = introEntry * (1 - outro * 0.9);
+                lerp(0.94, 1, introEntry) - aboutMovePresence * 0.19;
+            var aboutOpacity = introEntry * (1 - outro);
             var storyStatProgress = clamp(
                 (progress - statStart) / (statEnd - statStart),
                 0,
@@ -276,49 +286,38 @@
 
             setPixelProperty(root, '--about-x', aboutX);
             setPixelProperty(root, '--about-y', aboutY);
-            setNumberProperty(root, '--about-scale', Math.max(aboutScale, 0.76));
+            setNumberProperty(root, '--about-scale', Math.max(aboutScale, 0.78));
             setNumberProperty(root, '--about-opacity', aboutOpacity);
             setNumberProperty(root, '--story-progress', storyStatProgress);
             setNumberProperty(
                 root,
                 '--progress-opacity',
-                smoothstep(statStart - 0.02, statStart + 0.035, progress) *
+                smootherstep(statStart - 0.03, statStart + 0.06, progress) *
                     (1 - outro)
             );
 
             statElements.forEach(function (statElement, index) {
                 var start = statStart + index * segment;
-                var end = start + segment;
-                var enter = smoothstep(
-                    start - segment * 0.08,
-                    start + segment * 0.22,
-                    progress
-                );
-                var exit = smoothstep(
-                    start + segment * 0.78,
-                    end + segment * 0.04,
-                    progress
-                );
+                var local = (progress - start) / segment;
+                var enter = smootherstep(-0.08, 0.34, local);
+                var exit = smootherstep(0.7, 1.08, local);
                 var presence = enter * (1 - exit) * (1 - outro);
                 var side =
-                    (index % 2 === 0 ? -1 : 1) * rtlDirection;
-                var entryX = side * viewportWidth * 0.48;
+                    (index % 2 === 0 ? -1 : 1) * state.direction;
+                var entryX = side * viewportWidth * 0.43;
                 var targetX = side * viewportWidth * 0.185;
-                var exitX = -side * viewportWidth * 0.42;
+                var exitX = -side * viewportWidth * 0.39;
                 var x = exit > 0
                     ? lerp(targetX, exitX, easeInOutCubic(exit))
                     : lerp(entryX, targetX, easeOutCubic(enter));
-                var y =
-                    lerp(viewportHeight * 0.17, 0, easeOutCubic(enter)) -
-                    exit * viewportHeight * 0.08;
                 var scale =
-                    lerp(0.84, 1, easeOutCubic(enter)) - exit * 0.07;
+                    lerp(0.88, 1, easeOutCubic(enter)) - exit * 0.055;
                 var blur =
-                    lerp(14, 0, easeOutCubic(enter)) + exit * 8;
+                    lerp(18, 0, easeOutCubic(enter)) + exit * 9;
 
                 setNumberProperty(statElement, '--stat-opacity', presence);
                 setPixelProperty(statElement, '--stat-x', x);
-                setPixelProperty(statElement, '--stat-y', y);
+                setPixelProperty(statElement, '--stat-y', 0);
                 setNumberProperty(statElement, '--stat-scale', scale);
                 setPixelProperty(statElement, '--stat-blur', blur);
             });
@@ -326,11 +325,63 @@
             updateActiveIndex(activeIndex);
         }
 
-        function requestDesktopRender() {
-            if (!state.enhanced || state.ticking) return;
+        function stopProgressLoop() {
+            if (state.progressFrame !== null) {
+                window.cancelAnimationFrame(state.progressFrame);
+                state.progressFrame = null;
+            }
 
-            state.ticking = true;
-            window.requestAnimationFrame(renderDesktop);
+            state.lastFrameTime = 0;
+        }
+
+        function progressLoop(timestamp) {
+            if (!state.enhanced) {
+                stopProgressLoop();
+                return;
+            }
+
+            var deltaFrames = state.lastFrameTime
+                ? clamp((timestamp - state.lastFrameTime) / 16.667, 0.5, 4)
+                : 1;
+            var smoothing = 1 - Math.pow(0.92, deltaFrames);
+            var difference = state.targetProgress - state.renderedProgress;
+
+            state.lastFrameTime = timestamp;
+            state.renderedProgress += difference * smoothing;
+
+            if (Math.abs(difference) < 0.00008) {
+                state.renderedProgress = state.targetProgress;
+            }
+
+            renderScene(state.renderedProgress);
+
+            if (state.renderedProgress !== state.targetProgress) {
+                state.progressFrame = window.requestAnimationFrame(progressLoop);
+                return;
+            }
+
+            state.progressFrame = null;
+            state.lastFrameTime = 0;
+        }
+
+        function startProgressLoop() {
+            if (!state.enhanced || state.progressFrame !== null) return;
+            state.progressFrame = window.requestAnimationFrame(progressLoop);
+        }
+
+        function syncScrollTarget(immediate) {
+            if (!state.enhanced) return;
+
+            state.targetProgress = readScrollProgress();
+
+            if (immediate) {
+                stopProgressLoop();
+                state.renderedProgress = state.targetProgress;
+                renderScene(state.renderedProgress);
+                return;
+            }
+
+            startProgressLoop();
         }
 
         function renderPointer() {
@@ -466,9 +517,10 @@
         }
 
         function teardownMode() {
-            window.removeEventListener('scroll', requestDesktopRender);
+            window.removeEventListener('scroll', onDesktopScroll);
             window.removeEventListener('resize', onDesktopResize);
             window.clearTimeout(state.resizeTimer);
+            stopProgressLoop();
             stopListeningForPointer();
 
             if (state.mobileObserver) {
@@ -477,15 +529,19 @@
             }
 
             state.enhanced = false;
-            state.ticking = false;
             clearDesktopProperties();
+        }
+
+        function onDesktopScroll() {
+            syncScrollTarget(false);
         }
 
         function onDesktopResize() {
             window.clearTimeout(state.resizeTimer);
             state.resizeTimer = window.setTimeout(function () {
+                state.direction = isRtlDocument() ? -1 : 1;
                 setStoryHeight();
-                requestDesktopRender();
+                syncScrollTarget(true);
             }, 120);
         }
 
@@ -494,19 +550,20 @@
 
             if (desktopMedia.matches && !reducedMotionMedia.matches) {
                 state.enhanced = true;
+                state.direction = isRtlDocument() ? -1 : 1;
                 root.setAttribute('data-enhanced', 'true');
                 root.setAttribute('data-mode', 'desktop');
                 setStoryHeight();
                 listenForPointer();
 
-                window.addEventListener('scroll', requestDesktopRender, {
+                window.addEventListener('scroll', onDesktopScroll, {
                     passive: true
                 });
                 window.addEventListener('resize', onDesktopResize, {
                     passive: true
                 });
 
-                requestDesktopRender();
+                syncScrollTarget(true);
                 return;
             }
 
