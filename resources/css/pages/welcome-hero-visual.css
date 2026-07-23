@@ -32,7 +32,7 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     display: none;
 }
 
-/* Default = LTR : cluster di kanan */
+/* Default = LTR: cluster di kanan. */
 .home-page .hero-cinema__ornaments::before {
     content: "";
     position: absolute;
@@ -47,50 +47,56 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 
     background-size:
-        clamp(96px, 9vw, 168px), clamp(126px, 12vw, 220px),
-        clamp(132px, 13vw, 236px), clamp(116px, 11vw, 198px);
+        clamp(160px, 16vw, 300px),
+        clamp(190px, 19vw, 350px),
+        clamp(210px, 21vw, 380px),
+        clamp(175px, 17vw, 320px);
 
-    /* cerminan dari area yang kamu tandai */
+    /* Posisi fisik dicerminkan satu-per-satu antara LTR dan RTL. */
     background-position:
-        right 2.5% top 9%,
-        right 19% top 23%,
-        right 11% bottom 18%,
-        right 3% bottom 34%;
+        right -1% top 5%,
+        right 15% top 21%,
+        right 8% bottom 11%,
+        right -1% bottom 31%;
 
-    opacity: 0.14;
-    filter: blur(2px) saturate(0.72) contrast(0.92);
+    opacity: 0.34;
+    filter: blur(0.9px) saturate(0.82) contrast(0.98);
 }
 
-/* RTL : pindah ke kiri, simetris */
+/* RTL: pindah ke kiri dengan jarak yang sama persis. */
 html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
     background-position:
-        left 2.5% top 9%,
-        left 19% top 23%,
-        left 11% bottom 18%,
-        left 3% bottom 34%;
+        left -1% top 5%,
+        left 15% top 21%,
+        left 8% bottom 11%,
+        left -1% bottom 31%;
 }
 
-/* Mobile tetap halus saja, tidak terlalu ramai */
+/* Mobile tetap lebih tenang agar tidak menutup konten utama. */
 @media (max-width: 767px) {
     .home-page .hero-cinema__ornaments::before {
-        background-size: 72px, 96px, 104px, 86px;
+        background-size:
+            108px,
+            136px,
+            148px,
+            122px;
 
         background-position:
-            right -2% top 12%,
-            right 10% top 26%,
-            right 6% bottom 19%,
-            right -1% bottom 36%;
+            right -5% top 9%,
+            right 7% top 25%,
+            right 3% bottom 15%,
+            right -5% bottom 34%;
 
-        opacity: 0.09;
-        filter: blur(2.4px) saturate(0.68);
+        opacity: 0.2;
+        filter: blur(1.2px) saturate(0.76);
     }
 
     html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
         background-position:
-            left -2% top 12%,
-            left 10% top 26%,
-            left 6% bottom 19%,
-            left -1% bottom 36%;
+            left -5% top 9%,
+            left 7% top 25%,
+            left 3% bottom 15%,
+            left -5% bottom 34%;
     }
 }
 
