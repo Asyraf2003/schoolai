@@ -9,9 +9,9 @@ final class TestimonialMediaSeeder extends Seeder
 {
     public function run(): void
     {
-        // Arsip lama tidak boleh menghalangi dummy aktif dibuat.
-        // Seeder hanya berhenti jika memang sudah ada media testimoni aktif.
-        if (TestimonialMedia::query()->exists()) {
+        $activeCount = TestimonialMedia::query()->count();
+
+        if ($activeCount >= TestimonialMedia::MAX_ITEMS) {
             return;
         }
 
@@ -24,13 +24,17 @@ final class TestimonialMediaSeeder extends Seeder
             '/media/home/10.png',
             '/media/home/11.png',
             '/media/home/12.png',
+            '/media/home/9.png',
+            '/media/home/10.png',
+            '/media/home/11.png',
+            '/media/home/12.png',
         ];
 
-        foreach ($media as $index => $mediaUrl) {
+        for ($index = $activeCount; $index < TestimonialMedia::MAX_ITEMS; $index++) {
             TestimonialMedia::query()->create([
                 'type' => 'photo',
                 'source' => 'upload',
-                'media_url' => $mediaUrl,
+                'media_url' => $media[$index % count($media)],
                 'sort_order' => $index + 1,
                 'is_published' => true,
             ]);
