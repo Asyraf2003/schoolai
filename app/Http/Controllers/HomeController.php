@@ -449,6 +449,23 @@ final class HomeController extends Controller
         $mediaUrl = $type === 'video'
             ? $this->trustedVideoEmbedUrl($rawMedia)
             : $this->publicAssetUrl($rawMedia);
+
+        if ($mediaUrl === null) {
+            $fallbackImages = [
+                'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=82',
+                'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=82',
+                'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1600&q=82',
+                'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1600&q=82',
+                'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=82',
+                'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1600&q=82',
+            ];
+            $fallbackKey = trim((string) ($item['title'] ?? $item['caption'] ?? 'Al Mustaqbal School'));
+            $fallbackIndex = ((int) sprintf('%u', crc32($fallbackKey))) % count($fallbackImages);
+
+            $mediaUrl = $fallbackImages[$fallbackIndex];
+            $type = 'photo';
+        }
+
         $videoProvider = $type === 'video'
             ? $this->videoProvider($mediaUrl)
             : null;
