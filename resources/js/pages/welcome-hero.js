@@ -260,7 +260,9 @@ function initHeroSlider(root) {
             hydrateSlide(slide, true);
             video.removeAttribute('poster');
 
-            if (userPaused || reducedMotion.matches || document.hidden) {
+            // Reduced-motion disables automatic carousel movement and animated
+            // transitions, but must not turn a valid active video into a black frame.
+            if (userPaused || document.hidden) {
                 video.pause();
                 return;
             }
