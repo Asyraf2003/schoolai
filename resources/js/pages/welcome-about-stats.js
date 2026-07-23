@@ -308,16 +308,25 @@
         var progressDots = Array.prototype.slice.call(
             root.querySelectorAll('[data-about-stats-progress-dot]')
         );
+        var pointerTarget =
+            root.querySelector('.about-stats-story__sticky') ||
+            root;
         var desktopMedia = window.matchMedia(DESKTOP_QUERY);
         var reducedMotionMedia = window.matchMedia(
             REDUCED_MOTION_QUERY
         );
-        var isRtl = document.documentElement.dir === 'rtl';
+        var documentLanguage = document.documentElement.lang || '';
+        var isRtl =
+            document.documentElement.dir === 'rtl' ||
+            /^ar(?:-|$)/i.test(documentLanguage);
         var state = {
             enhanced: false,
             ticking: false,
             mobileObserver: null,
             resizeTimer: null,
+            pointerFrame: null,
+            pointerClientX: 0,
+            pointerClientY: 0,
             activeIndex: -1,
             stats: []
         };
@@ -345,6 +354,18 @@
                 activeIndex >= 0 ? String(activeIndex) : ''
             );
 
+            var activeStat = activeIndex >= 0
+                ? state.stats[activeIndex]
+                : null;
+            var sceneAccent = activeStat
+                ? activeStat.element.style.getPropertyValue('--stat-accent')
+                : '';
+
+            root.style.setProperty(
+                '--scene-accent',
+                sceneAccent || '#f2a713'
+            );
+
             progressDots.forEach(function (dot, index) {
                 dot.classList.toggle('is-active', index === activeIndex);
             });
@@ -356,11 +377,22 @@
             root.style.removeProperty('--about-opacity');
             root.style.removeProperty('--about-word-opacity');
             root.style.removeProperty('--about-word-progress');
+            root.style.removeProperty('--about-word-clip');
+            root.style.removeProperty('--about-word-y');
+            root.style.removeProperty('--about-line-scale');
+            root.style.removeProperty('--about-art-opacity');
+            root.style.removeProperty('--about-art-scale');
+            root.style.removeProperty('--about-detail-opacity');
+            root.style.removeProperty('--about-copy-y');
             root.style.removeProperty('--about-x');
             root.style.removeProperty('--about-y');
             root.style.removeProperty('--about-scale');
             root.style.removeProperty('--about-rotate');
             root.style.removeProperty('--about-z-rotate');
+            root.style.removeProperty('--pointer-x');
+            root.style.removeProperty('--pointer-y');
+            root.style.removeProperty('--pointer-x-reverse');
+            root.style.removeProperty('--pointer-y-reverse');
 
             state.stats.forEach(function (statData) {
                 statData.element.style.removeProperty('--stat-opacity');
@@ -368,6 +400,11 @@
                 statData.element.style.removeProperty('--stat-y');
                 statData.element.style.removeProperty('--stat-scale');
                 statData.element.style.removeProperty('--stat-aura-opacity');
+                statData.element.style.removeProperty('--stat-swash-scale');
+                statData.element.style.removeProperty('--stat-orbit-opacity');
+                statData.element.style.removeProperty('--stat-orbit-scale');
+                statData.element.style.removeProperty('--stat-orbit-rotate');
+                statData.element.style.removeProperty('--stat-rotate');
             });
         }
 
@@ -379,7 +416,7 @@
                 document.documentElement.clientHeight || 0,
                 640
             );
-            var screenCount = Math.max(state.stats.length + 2.45, 4.8);
+            var screenCount = Math.max(state.stats.length + 0.9, 4.6);
             var storyHeight = Math.round(viewportHeight * screenCount);
 
             root.style.setProperty(
@@ -398,29 +435,28 @@
             var rect = root.getBoundingClientRect();
             var scrollRange = Math.max(root.offsetHeight - viewportHeight, 1);
             var progress = clamp(-rect.top / scrollRange, 0, 1);
-            var introStart = 0;
-            var introEnd = 0.2;
-            var storyEnd = 0.88;
+            var entryProgress = 1 - smoothstep(
+                viewportHeight * 0.3,
+                viewportHeight * 0.82,
+                rect.top
+            );
+            var introEnd = 0.085;
+            var storyEnd = 0.925;
             var segment = (storyEnd - introEnd) / state.stats.length;
-            var introProgress = smoothstep(
-                introStart,
-                introEnd * 0.72,
-                progress
-            );
             var sideProgress = smoothstep(
-                introEnd * 0.62,
-                introEnd + segment * 0.24,
+                introEnd * 0.46,
+                introEnd + segment * 0.2,
                 progress
             );
-            var outroProgress = smoothstep(storyEnd, 0.995, progress);
+            var outroProgress = smoothstep(storyEnd, 0.997, progress);
             var approximateIndex = clamp(
                 Math.floor(
-                    (progress - introEnd + segment * 0.18) / segment
+                    (progress - introEnd + segment * 0.16) / segment
                 ),
                 0,
                 state.stats.length - 1
             );
-            var activeIndex = progress < introEnd * 0.88
+            var activeIndex = progress < introEnd * 0.55
                 ? -1
                 : approximateIndex;
             var firstSide = -1;
@@ -435,28 +471,46 @@
                 : 0;
             var sideBlend = activeIndex === 0
                 ? sideProgress
-                : smoothstep(-0.08, 0.3, activeLocal);
+                : smoothstep(-0.12, 0.24, activeLocal);
             var aboutSide = activeIndex <= 0
                 ? lerp(0, targetSide, sideBlend)
                 : lerp(previousSide, targetSide, sideBlend);
-            var aboutHorizontal = aboutSide * viewportWidth * 0.255;
-            var aboutEnterY = lerp(
-                viewportHeight * 0.46,
+            var aboutHorizontal = aboutSide * viewportWidth * 0.275;
+            var prePinCompensation = -clamp(
+                rect.top,
                 0,
-                easeOutCubic(introProgress)
+                viewportHeight
+            ) * 0.52;
+            var aboutEnterY = lerp(
+                viewportHeight * 0.18,
+                0,
+                easeOutCubic(entryProgress)
             );
-            var aboutExitY = -viewportHeight * 0.55 * outroProgress;
+            var aboutExitY = -viewportHeight * 0.46 * outroProgress;
             var aboutOpacity = smoothstep(
-                0.012,
-                introEnd * 0.48,
-                progress
-            ) * (1 - smoothstep(0.91, 1, progress));
+                0.025,
+                0.38,
+                entryProgress
+            ) * (1 - smoothstep(0.94, 1, progress));
             var aboutScale = lerp(
-                0.9,
+                0.86,
                 1,
-                introProgress
-            ) - sideProgress * 0.31 - outroProgress * 0.05;
-            var aboutRotation = aboutSide * -6.4;
+                easeOutCubic(entryProgress)
+            ) - sideProgress * 0.44 - outroProgress * 0.08;
+            var aboutRotation = aboutSide * -1.7;
+            var artProgress = easeOutCubic(
+                smoothstep(0.02, 0.54, entryProgress)
+            );
+            var detailProgress = smoothstep(
+                0.16,
+                0.68,
+                entryProgress
+            );
+            var wordProgress = smoothstep(
+                0.04,
+                0.56,
+                entryProgress
+            );
 
             root.style.setProperty(
                 '--about-x',
@@ -464,7 +518,11 @@
             );
             root.style.setProperty(
                 '--about-y',
-                (aboutEnterY + aboutExitY).toFixed(2) + 'px'
+                (
+                    prePinCompensation +
+                    aboutEnterY +
+                    aboutExitY
+                ).toFixed(2) + 'px'
             );
             root.style.setProperty(
                 '--about-rotate',
@@ -472,31 +530,67 @@
             );
             root.style.setProperty(
                 '--about-z-rotate',
-                (aboutSide * 0.65).toFixed(2) + 'deg'
+                (aboutSide * 0.42).toFixed(2) + 'deg'
             );
             setNumberProperty(root, '--about-opacity', aboutOpacity);
             setNumberProperty(
                 root,
                 '--about-scale',
-                Math.max(aboutScale, 0.56)
+                Math.max(aboutScale, 0.43)
             );
-            setNumberProperty(root, '--about-word-progress', introProgress);
             setNumberProperty(
                 root,
                 '--about-word-opacity',
-                1 - outroProgress * 0.74
+                wordProgress * (1 - outroProgress * 0.74)
+            );
+            setNumberProperty(
+                root,
+                '--about-art-opacity',
+                smoothstep(0.02, 0.34, entryProgress) *
+                    (1 - outroProgress * 0.62)
+            );
+            setNumberProperty(
+                root,
+                '--about-art-scale',
+                lerp(0.72, 1, artProgress)
+            );
+            setNumberProperty(
+                root,
+                '--about-detail-opacity',
+                detailProgress *
+                    (1 - sideProgress * 0.24) *
+                    (1 - outroProgress * 0.82)
+            );
+            root.style.setProperty(
+                '--about-copy-y',
+                lerp(34, 0, easeOutCubic(detailProgress)).toFixed(2) +
+                    'px'
+            );
+            root.style.setProperty(
+                '--about-word-y',
+                lerp(48, 0, easeOutCubic(wordProgress)).toFixed(2) +
+                    'px'
+            );
+            root.style.setProperty(
+                '--about-word-clip',
+                ((1 - wordProgress) * 100).toFixed(2) + '%'
+            );
+            setNumberProperty(
+                root,
+                '--about-line-scale',
+                smoothstep(0.36, 0.9, entryProgress)
             );
             setNumberProperty(
                 root,
                 '--hint-opacity',
-                smoothstep(0.04, 0.1, progress) *
-                    (1 - smoothstep(0.13, introEnd, progress))
+                smoothstep(0.42, 0.82, entryProgress) *
+                    (1 - smoothstep(0.01, 0.065, progress))
             );
             setNumberProperty(
                 root,
                 '--progress-opacity',
-                smoothstep(introEnd * 0.83, introEnd + 0.03, progress) *
-                    (1 - smoothstep(0.9, 0.97, progress))
+                smoothstep(introEnd * 0.58, introEnd + 0.025, progress) *
+                    (1 - smoothstep(0.92, 0.98, progress))
             );
 
             var mostVisibleIndex = -1;
@@ -505,19 +599,21 @@
             state.stats.forEach(function (statData, index) {
                 var start = introEnd + index * segment;
                 var local = (progress - start) / segment;
-                var enter = smoothstep(-0.08, 0.28, local);
-                var leave = 1 - smoothstep(0.78, 1.16, local);
+                var enter = smoothstep(-0.16, 0.2, local);
+                var leave = 1 - smoothstep(0.72, 1.08, local);
                 var opacity = enter * leave;
                 var side = index % 2 === 0 ? 1 : -1;
-                var targetX = side * viewportWidth * 0.255;
-                var entryX = side * viewportWidth * 0.065 * (1 - enter);
-                var entryY = viewportHeight * 0.29 * (1 - enter);
-                var exitY = -viewportHeight * 0.3 *
-                    smoothstep(0.75, 1.16, local);
-                var scale = lerp(0.9, 1, enter) -
-                    smoothstep(0.8, 1.16, local) * 0.055;
-                var contentProgress = smoothstep(0.02, 0.52, local);
-                var labelProgress = smoothstep(0.16, 0.62, local);
+                var targetX = side * viewportWidth * 0.275;
+                var entryX = side * viewportWidth * 0.045 * (1 - enter);
+                var entryY = viewportHeight * 0.21 * (1 - enter);
+                var exitProgress = smoothstep(0.72, 1.08, local);
+                var exitY = -viewportHeight * 0.22 * exitProgress;
+                var scale = lerp(0.86, 1, enter) -
+                    exitProgress * 0.07;
+                var contentProgress = smoothstep(-0.03, 0.35, local);
+                var labelProgress = smoothstep(0.05, 0.49, local);
+                var auraProgress = smoothstep(-0.1, 0.3, local);
+                var orbitProgress = smoothstep(-0.02, 0.42, local);
 
                 statData.element.style.setProperty(
                     '--stat-x',
@@ -540,7 +636,36 @@
                 setNumberProperty(
                     statData.element,
                     '--stat-aura-opacity',
-                    opacity * smoothstep(0.12, 0.5, local)
+                    opacity * auraProgress
+                );
+                setNumberProperty(
+                    statData.element,
+                    '--stat-swash-scale',
+                    lerp(0.72, 1, auraProgress)
+                );
+                setNumberProperty(
+                    statData.element,
+                    '--stat-orbit-opacity',
+                    opacity * orbitProgress * 0.7
+                );
+                setNumberProperty(
+                    statData.element,
+                    '--stat-orbit-scale',
+                    lerp(0.72, 1, orbitProgress)
+                );
+                statData.element.style.setProperty(
+                    '--stat-orbit-rotate',
+                    (
+                        side * lerp(20, -8, orbitProgress) +
+                        exitProgress * side * 10
+                    ).toFixed(2) + 'deg'
+                );
+                statData.element.style.setProperty(
+                    '--stat-rotate',
+                    (
+                        side * lerp(2.2, 0, enter) -
+                        side * exitProgress * 1.4
+                    ).toFixed(2) + 'deg'
                 );
 
                 setOdometerProgress(statData.reels, contentProgress);
@@ -555,6 +680,67 @@
             updateProgressDots(
                 mostVisibleOpacity > 0.08 ? mostVisibleIndex : activeIndex
             );
+        }
+
+        function renderPointer() {
+            state.pointerFrame = null;
+
+            if (!state.enhanced) return;
+
+            var viewportWidth = Math.max(window.innerWidth || 1, 1);
+            var viewportHeight = Math.max(window.innerHeight || 1, 1);
+            var normalizedX = clamp(
+                (state.pointerClientX / viewportWidth - 0.5) * 2,
+                -1,
+                1
+            );
+            var normalizedY = clamp(
+                (state.pointerClientY / viewportHeight - 0.5) * 2,
+                -1,
+                1
+            );
+            var shiftX = normalizedX * 9;
+            var shiftY = normalizedY * 7;
+
+            root.style.setProperty(
+                '--pointer-x',
+                shiftX.toFixed(2) + 'px'
+            );
+            root.style.setProperty(
+                '--pointer-y',
+                shiftY.toFixed(2) + 'px'
+            );
+            root.style.setProperty(
+                '--pointer-x-reverse',
+                (-shiftX * 0.72).toFixed(2) + 'px'
+            );
+            root.style.setProperty(
+                '--pointer-y-reverse',
+                (-shiftY * 0.72).toFixed(2) + 'px'
+            );
+        }
+
+        function requestPointerRender(event) {
+            if (!state.enhanced || event.pointerType === 'touch') return;
+
+            state.pointerClientX = event.clientX;
+            state.pointerClientY = event.clientY;
+
+            if (state.pointerFrame !== null) return;
+
+            state.pointerFrame = window.requestAnimationFrame(renderPointer);
+        }
+
+        function resetPointer() {
+            if (state.pointerFrame !== null) {
+                window.cancelAnimationFrame(state.pointerFrame);
+                state.pointerFrame = null;
+            }
+
+            root.style.setProperty('--pointer-x', '0px');
+            root.style.setProperty('--pointer-y', '0px');
+            root.style.setProperty('--pointer-x-reverse', '0px');
+            root.style.setProperty('--pointer-y-reverse', '0px');
         }
 
         function requestDesktopRender() {
@@ -586,7 +772,7 @@
             }
 
             var startTime = null;
-            var duration = 1250;
+            var duration = 950;
 
             function frame(timestamp) {
                 if (!startTime) startTime = timestamp;
@@ -639,8 +825,8 @@
                     });
                 },
                 {
-                    threshold: 0.28,
-                    rootMargin: '0px 0px -8% 0px'
+                    threshold: 0.18,
+                    rootMargin: '0px 0px -4% 0px'
                 }
             );
 
@@ -652,7 +838,13 @@
         function teardownCurrentMode() {
             window.removeEventListener('scroll', requestDesktopRender);
             window.removeEventListener('resize', onDesktopResize);
+            pointerTarget.removeEventListener(
+                'pointermove',
+                requestPointerRender
+            );
+            pointerTarget.removeEventListener('pointerleave', resetPointer);
             window.clearTimeout(state.resizeTimer);
+            resetPointer();
 
             if (state.mobileObserver) {
                 state.mobileObserver.disconnect();
@@ -693,6 +885,16 @@
                 window.addEventListener('resize', onDesktopResize, {
                     passive: true
                 });
+                pointerTarget.addEventListener(
+                    'pointermove',
+                    requestPointerRender,
+                    { passive: true }
+                );
+                pointerTarget.addEventListener(
+                    'pointerleave',
+                    resetPointer,
+                    { passive: true }
+                );
                 requestDesktopRender();
                 return;
             }
