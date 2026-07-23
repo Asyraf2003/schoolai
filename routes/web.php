@@ -7,6 +7,7 @@ use App\Http\Controllers\PpdbPageController;
 use App\Http\Controllers\ArticlePageController;
 use App\Http\Controllers\NativeArticleController;
 use App\Http\Controllers\GalleryPageController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\SiteStatisticController;
 use App\Http\Controllers\Admin\PpdbSettingController;
 use App\Http\Controllers\Admin\PpdbShowcaseAdminController;
@@ -91,7 +92,7 @@ Route::middleware([
     /* ADMIN_DESKTOP_DUMMY_ROUTES_FINAL */
     Route::redirect('/admin', '/admin/dashboard')->name('admin.index');
 
-    Route::view('/admin/dashboard', 'admin.placeholder', ['adminPageKey' => 'dashboard'])
+    Route::get('/admin/dashboard', AdminDashboardController::class)
         ->name('admin.dashboard');
 
     Route::get('/admin/ppdb', [PpdbSettingController::class, 'edit'])
