@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/welcome-hero.js',
                 'resources/js/pages/welcome-about-stats.js',
+                'resources/js/pages/welcome-testimonial-story.js',
                 'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
