@@ -1,4 +1,38 @@
-/* Default = LTR : 3 decorative accents on the right */
+/* Hero visual refinement: decorative image cluster mirrored for LTR / RTL. */
+
+.home-page .hero-cinema__media::after,
+html[dir="rtl"] .home-page .hero-cinema__media::after {
+    background: linear-gradient(
+        to bottom,
+        rgb(2 13 12 / 0.04) 0%,
+        transparent 48%,
+        rgb(2 13 12 / 0.08) 100%
+    );
+}
+
+.home-page .hero-cinema__media img,
+.home-page .hero-cinema__media video {
+    filter: none;
+    image-rendering: auto;
+}
+
+.home-page .hero-cinema__title {
+    text-shadow:
+        0 3px 18px rgb(0 0 0 / 0.34),
+        0 10px 42px rgb(0 0 0 / 0.2);
+}
+
+.home-page .hero-cinema__description,
+.home-page .hero-cinema__eyebrow,
+.home-page .hero-cinema__cta {
+    text-shadow: 0 2px 14px rgb(0 0 0 / 0.42);
+}
+
+.home-page .hero-cinema__ornament {
+    display: none;
+}
+
+/* LTR: use only the provided 9, 10, and 11 images on the right. */
 .home-page .hero-cinema__ornaments::before {
     content: "";
     position: absolute;
@@ -7,76 +41,60 @@
     z-index: 1;
 
     background-image:
-        url("/media/home/9.png"), url("/media/home/10.png"),
+        url("/media/home/9.png"),
+        url("/media/home/10.png"),
         url("/media/home/11.png");
     background-repeat: no-repeat, no-repeat, no-repeat;
 
     background-size:
-        clamp(152px, 13vw, 250px), clamp(122px, 10.5vw, 210px),
-        clamp(164px, 14vw, 270px);
+        clamp(160px, 16vw, 300px),
+        clamp(190px, 19vw, 350px),
+        clamp(210px, 21vw, 380px);
 
-    /* lebih rapi, tidak saling numpuk */
     background-position:
-        right 3% top 8%,
-        right 18% top 28%,
-        right 4% bottom 18%;
+        right -1% top 5%,
+        right 15% top 21%,
+        right 8% bottom 11%;
 
-    opacity: 0.24;
-    filter: blur(0.9px) saturate(0.82) contrast(0.95);
-
-    -webkit-mask-image: linear-gradient(
-        to left,
-        #000 0%,
-        rgb(0 0 0 / 0.96) 66%,
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to left,
-        #000 0%,
-        rgb(0 0 0 / 0.96) 66%,
-        transparent 100%
-    );
+    opacity: 0.3;
+    filter: blur(0.8px) saturate(0.82) contrast(0.98);
 }
 
-/* RTL : mirrored / simetris ke kiri */
+/* RTL: exact physical mirror of the LTR positions. */
 html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
     background-position:
-        left 3% top 8%,
-        left 18% top 28%,
-        left 4% bottom 18%;
-
-    -webkit-mask-image: linear-gradient(
-        to right,
-        #000 0%,
-        rgb(0 0 0 / 0.96) 66%,
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to right,
-        #000 0%,
-        rgb(0 0 0 / 0.96) 66%,
-        transparent 100%
-    );
+        left -1% top 5%,
+        left 15% top 21%,
+        left 8% bottom 11%;
 }
 
-/* Mobile: tetap ada, tapi lebih kalem */
 @media (max-width: 767px) {
     .home-page .hero-cinema__ornaments::before {
-        background-size: 108px, 88px, 116px;
+        background-size:
+            108px,
+            136px,
+            148px;
 
         background-position:
-            right -1% top 12%,
-            right 10% top 30%,
-            right 1% bottom 20%;
+            right -5% top 9%,
+            right 7% top 25%,
+            right 3% bottom 15%;
 
-        opacity: 0.15;
-        filter: blur(1.2px) saturate(0.78);
+        opacity: 0.18;
+        filter: blur(1px) saturate(0.76);
     }
 
     html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
         background-position:
-            left -1% top 12%,
-            left 10% top 30%,
-            left 1% bottom 20%;
+            left -5% top 9%,
+            left 7% top 25%,
+            left 3% bottom 15%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .hero-cinema__media img,
+    .home-page .hero-cinema__media video {
+        filter: none !important;
     }
 }
