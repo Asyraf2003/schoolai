@@ -174,3 +174,7 @@
     </p>
   </div>
 </footer>
+
+@if ($isHomeFooter)
+  @vite('resources/js/pages/welcome-testimonial-story.js')
+@endif
