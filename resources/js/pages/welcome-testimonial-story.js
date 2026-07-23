@@ -31,6 +31,7 @@ import '../../css/pages/welcome-testimonial-story.css';
 
     function setNumberProperty(element, property, value, precision) {
         if (!element) return;
+
         element.style.setProperty(
             property,
             Number(value).toFixed(typeof precision === 'number' ? precision : 4)
@@ -53,37 +54,19 @@ import '../../css/pages/welcome-testimonial-story.css';
     function copyForLocale() {
         var copy = {
             id: {
-                eyebrow: 'Suara Keluarga Al Mustaqbal',
                 title: 'Apa Kata Mereka Tentang Al Mustaqbal?',
-                note: 'Sebuah ruang untuk melihat pengalaman, cerita, dan momen yang tumbuh bersama perjalanan sekolah.',
-                networkEyebrow: 'Cerita yang Terhubung',
-                networkTitle: 'Satu sekolah, banyak sudut pandang.',
-                networkNote: 'Scroll perlahan untuk membuka setiap potongan cerita. Klik media untuk melihatnya lebih dekat.',
-                scroll: 'Scroll untuk menjelajah',
                 openMedia: 'Buka media testimoni',
                 openVideo: 'Buka video testimoni',
                 close: 'Tutup'
             },
             en: {
-                eyebrow: 'Voices of Al Mustaqbal',
                 title: 'What Do People Say About Al Mustaqbal?',
-                note: 'A space for experiences, stories, and moments that grow alongside the school journey.',
-                networkEyebrow: 'Connected Stories',
-                networkTitle: 'One school, many perspectives.',
-                networkNote: 'Scroll slowly to reveal each piece of the story. Open any media for a closer look.',
-                scroll: 'Scroll to explore',
                 openMedia: 'Open testimonial media',
                 openVideo: 'Open testimonial video',
                 close: 'Close'
             },
             ar: {
-                eyebrow: 'أصوات من مجتمع المستقبل',
                 title: 'ماذا يقول الناس عن مدرسة المستقبل؟',
-                note: 'مساحة لعرض التجارب والقصص واللحظات التي تنمو مع رحلة المدرسة.',
-                networkEyebrow: 'قصص مترابطة',
-                networkTitle: 'مدرسة واحدة، ووجهات نظر متعددة.',
-                networkNote: 'مرر بهدوء لتظهر كل لقطة من القصة، واضغط على أي وسائط لمشاهدتها عن قرب.',
-                scroll: 'مرر للاستكشاف',
                 openMedia: 'افتح وسائط الشهادة',
                 openVideo: 'افتح فيديو الشهادة',
                 close: 'إغلاق'
@@ -143,31 +126,11 @@ import '../../css/pages/welcome-testimonial-story.css';
             '        </video>',
             '      </figure>',
             '',
-            '      <header class="testimonial-network-story__intro-copy">',
-            '        <p class="testimonial-network-story__eyebrow">' + copy.eyebrow + '</p>',
-            '        <h2 class="testimonial-network-story__intro-title">' + copy.title + '</h2>',
-            '        <p class="testimonial-network-story__intro-note">' + copy.note + '</p>',
+            '      <header class="testimonial-network-story__title-wrap">',
+            '        <h2 class="testimonial-network-story__title">' + copy.title + '</h2>',
             '      </header>',
             '',
-            '      <div class="testimonial-network-story__network-copy">',
-            '        <p class="testimonial-network-story__eyebrow">' + copy.networkEyebrow + '</p>',
-            '        <h3 class="testimonial-network-story__network-title">' + copy.networkTitle + '</h3>',
-            '        <p class="testimonial-network-story__network-note">' + copy.networkNote + '</p>',
-            '      </div>',
-            '',
-            '      <svg class="testimonial-network-story__connections" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="0" d="M1120 365 C930 315 790 205 610 165" />',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="1" d="M1060 405 C870 355 720 260 490 120" />',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="2" d="M1035 455 C820 445 570 430 300 430" />',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="3" d="M1055 490 C860 510 710 500 560 420" />',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="4" d="M1085 545 C890 625 690 705 430 735" />',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="5" d="M1160 330 C1110 220 1035 145 890 105" />',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="6" d="M1135 570 C1040 690 925 755 800 770" />',
-            '        <path class="testimonial-network-story__connection" data-testimonial-line data-testimonial-order="7" d="M1290 565 C1390 640 1470 720 1535 765" />',
-            '      </svg>',
-            '',
             '      <div class="testimonial-network-story__nodes">' + nodeMarkup + '</div>',
-            '      <p class="testimonial-network-story__scroll-cue" aria-hidden="true">' + copy.scroll + '</p>',
             '    </div>',
             '  </div>',
             '</div>'
@@ -175,7 +138,8 @@ import '../../css/pages/welcome-testimonial-story.css';
     }
 
     function insertStory() {
-        if (document.querySelector(ROOT_SELECTOR)) return document.querySelector(ROOT_SELECTOR);
+        var existing = document.querySelector(ROOT_SELECTOR);
+        if (existing) return existing;
 
         var articleSection = document.getElementById('artikel');
         var gallerySection = document.getElementById('galeri');
@@ -225,9 +189,12 @@ import '../../css/pages/welcome-testimonial-story.css';
 
         var track = root.querySelector('[data-testimonial-track]');
         var previewVideo = root.querySelector('[data-testimonial-preview-video]');
-        var lines = Array.prototype.slice.call(root.querySelectorAll('[data-testimonial-line]'));
-        var nodes = Array.prototype.slice.call(root.querySelectorAll('[data-testimonial-node]'));
-        var mediaTriggers = Array.prototype.slice.call(root.querySelectorAll('[data-testimonial-media-url]'));
+        var nodes = Array.prototype.slice.call(
+            root.querySelectorAll('[data-testimonial-node]')
+        );
+        var mediaTriggers = Array.prototype.slice.call(
+            root.querySelectorAll('[data-testimonial-media-url]')
+        );
         var desktopMedia = window.matchMedia(DESKTOP_QUERY);
         var reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
         var state = {
@@ -246,20 +213,6 @@ import '../../css/pages/welcome-testimonial-story.css';
         if (!track) return;
 
         root.setAttribute('data-testimonial-initialized', 'true');
-
-        lines.forEach(function (line) {
-            var length = 1;
-
-            try {
-                length = Math.max(line.getTotalLength(), 1);
-            } catch (error) {
-                length = 1;
-            }
-
-            line.setAttribute('data-testimonial-line-length', String(length));
-            line.style.strokeDasharray = String(length);
-            line.style.strokeDashoffset = String(length);
-        });
 
         function ensureModal() {
             if (state.modal) return;
@@ -373,7 +326,7 @@ import '../../css/pages/welcome-testimonial-story.css';
                             previewVideo.pause();
                         }
                     });
-                }, { threshold: 0.18 });
+                }, { threshold: 0.08 });
 
                 videoObserver.observe(root);
             } else {
@@ -393,7 +346,7 @@ import '../../css/pages/welcome-testimonial-story.css';
 
             root.style.setProperty(
                 '--testimonial-story-height',
-                Math.round(viewportHeight * 7.2) + 'px'
+                Math.round(viewportHeight * 6.8) + 'px'
             );
         }
 
@@ -422,51 +375,35 @@ import '../../css/pages/welcome-testimonial-story.css';
                 document.documentElement.clientHeight || 0,
                 1
             );
-            var intro = smootherstep(0, 0.12, progress);
-            var shrink = smootherstep(0.13, 0.34, progress);
-            var shift = smootherstep(0.25, 0.47, progress);
-            var dark = smootherstep(0.27, 0.52, progress);
-            var introExit = smootherstep(0.19, 0.36, progress);
-            var networkPresence = smootherstep(0.33, 0.5, progress);
-            var mediaScale = lerp(1.035, 0.455, shrink);
-            var mediaX = lerp(0, viewportWidth * 0.235, shift);
-            var mediaY = lerp(viewportHeight * 0.02, 0, shrink);
-            var mediaRadius = lerp(7, 30, shrink);
+            var shrink = smootherstep(0.08, 0.34, progress);
+            var titleLift = smootherstep(0.1, 0.39, progress);
+            var targetWidth = Math.min(
+                viewportWidth * 0.54,
+                viewportHeight * 1.12
+            );
+            var targetHeight = targetWidth * 9 / 16;
+            var mediaWidth = lerp(viewportWidth, targetWidth, shrink);
+            var mediaHeight = lerp(viewportHeight, targetHeight, shrink);
+            var mediaRadius = lerp(0, 28, shrink);
+            var titleTop = lerp(
+                viewportHeight * 0.72,
+                Math.max(64, viewportHeight * 0.095),
+                titleLift
+            );
+            var titleScale = lerp(1, 0.54, titleLift);
 
-            setNumberProperty(root, '--testimonial-dark', dark);
-            setPixelProperty(root, '--testimonial-media-x', mediaX);
-            setPixelProperty(root, '--testimonial-media-y', mediaY);
-            setNumberProperty(root, '--testimonial-media-scale', mediaScale);
+            setPixelProperty(root, '--testimonial-media-width', mediaWidth);
+            setPixelProperty(root, '--testimonial-media-height', mediaHeight);
             setPixelProperty(root, '--testimonial-media-radius', mediaRadius);
-            setNumberProperty(
-                root,
-                '--testimonial-intro-opacity',
-                intro * (1 - introExit)
-            );
-            setNumberProperty(
-                root,
-                '--testimonial-network-opacity',
-                networkPresence
-            );
-
-            lines.forEach(function (line, index) {
-                var start = 0.39 + index * 0.058;
-                var end = start + 0.07;
-                var lineProgress = smootherstep(start, end, progress);
-                var length = Number(
-                    line.getAttribute('data-testimonial-line-length') || 1
-                );
-
-                line.style.strokeDashoffset = String(length * (1 - lineProgress));
-            });
+            setPixelProperty(root, '--testimonial-title-top', titleTop);
+            setNumberProperty(root, '--testimonial-title-scale', titleScale);
 
             nodes.forEach(function (node, index) {
-                var lineStart = 0.39 + index * 0.058;
-                var nodeStart = lineStart + 0.045;
-                var nodeEnd = nodeStart + 0.075;
+                var nodeStart = 0.35 + index * 0.066;
+                var nodeEnd = nodeStart + 0.09;
                 var presence = smootherstep(nodeStart, nodeEnd, progress);
-                var y = lerp(34, 0, presence);
-                var scale = lerp(0.82, 1, presence);
+                var y = lerp(36, 0, presence);
+                var scale = lerp(0.8, 1, presence);
 
                 setNumberProperty(node, '--node-opacity', presence);
                 setPixelProperty(node, '--node-y', y);
@@ -577,14 +514,6 @@ import '../../css/pages/welcome-testimonial-story.css';
                 'data-mode',
                 reducedMotionMedia.matches ? 'static' : 'mobile'
             );
-
-            setNumberProperty(root, '--testimonial-dark', 1);
-            setNumberProperty(root, '--testimonial-intro-opacity', 1);
-            setNumberProperty(root, '--testimonial-network-opacity', 1);
-
-            lines.forEach(function (line) {
-                line.style.strokeDashoffset = '0';
-            });
 
             nodes.forEach(function (node) {
                 setNumberProperty(node, '--node-opacity', 1);
