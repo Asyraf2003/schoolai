@@ -37,9 +37,7 @@
     }
 
     function smoothstep(edgeStart, edgeEnd, value) {
-        if (edgeStart === edgeEnd) {
-            return value < edgeStart ? 0 : 1;
-        }
+        if (edgeStart === edgeEnd) return value < edgeStart ? 0 : 1;
 
         var progress = clamp(
             (value - edgeStart) / (edgeEnd - edgeStart),
@@ -84,17 +82,10 @@
     }
 
     function isRtlDocument() {
-        var explicitDirection = document.documentElement.dir;
-
-        if (explicitDirection) {
-            return explicitDirection.toLowerCase() === 'rtl';
-        }
-
-        if (window.getComputedStyle) {
-            return window.getComputedStyle(document.documentElement).direction === 'rtl';
-        }
-
-        return localeKey() === 'ar';
+        return (
+            (document.documentElement.dir || '').toLowerCase() === 'rtl' ||
+            localeKey() === 'ar'
+        );
     }
 
     function ensureStatDescription(statElement, index) {
@@ -105,10 +96,9 @@
         );
         if (!callout) return;
 
-        var existing = callout.querySelector(
-            '.about-stats-story__stat-description'
-        );
-        if (existing) return;
+        if (callout.querySelector('.about-stats-story__stat-description')) {
+            return;
+        }
 
         var descriptions = STAT_DESCRIPTIONS[localeKey()] || STAT_DESCRIPTIONS.id;
         var description = document.createElement('p');
@@ -119,10 +109,9 @@
 
         if (line) {
             callout.insertBefore(description, line);
-            return;
+        } else {
+            callout.appendChild(description);
         }
-
-        callout.appendChild(description);
     }
 
     function addMediaListener(mediaQuery, listener) {
@@ -154,7 +143,6 @@
 
         var track = root.querySelector(TRACK_SELECTOR);
         var sticky = root.querySelector('.about-stats-story__sticky') || root;
-        var intro = root.querySelector('.about-stats-story__intro');
         var statElements = Array.prototype.slice.call(
             root.querySelectorAll(STAT_SELECTOR)
         );
@@ -163,8 +151,6 @@
         );
         var desktopMedia = window.matchMedia(DESKTOP_QUERY);
         var reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
-        var rtl = isRtlDocument();
-        var layoutDirection = rtl ? -1 : 1;
         var state = {
             enhanced: false,
             ticking: false,
@@ -181,36 +167,6 @@
 
         root.setAttribute('data-about-stats-initialized', 'true');
         statElements.forEach(ensureStatDescription);
-
-        function applyPhysicalCentering(enabled) {
-            var introTransform =
-                'translate3d(calc(-50% + var(--about-x)), ' +
-                'calc(-50% + var(--about-y)), 0) ' +
-                'scale(var(--about-scale))';
-            var statTransform =
-                'translate3d(calc(-50% + var(--stat-x)), ' +
-                'calc(-50% + var(--stat-y)), 0) ' +
-                'scale(var(--stat-scale))';
-
-            if (!enabled || !rtl) {
-                if (intro) intro.style.removeProperty('transform');
-                statElements.forEach(function (statElement) {
-                    statElement.style.removeProperty('transform');
-                });
-                return;
-            }
-
-            /*
-             * The scene is physically centered with left: 50%. RTL should
-             * mirror motion direction, not change translateX(-50%) to +50%.
-             * Keeping this inline prevents an older RTL override from pushing
-             * the entire Arabic scene one full element-width off screen.
-             */
-            if (intro) intro.style.transform = introTransform;
-            statElements.forEach(function (statElement) {
-                statElement.style.transform = statTransform;
-            });
-        }
 
         function updateActiveIndex(index) {
             if (state.activeIndex === index) return;
@@ -233,8 +189,8 @@
                 640
             );
             var screenCount = Math.max(
-                5.2,
-                3.6 + statElements.length * 0.68
+                3.9,
+                1.65 + statElements.length * 0.75
             );
 
             root.style.setProperty(
@@ -260,25 +216,16 @@
             var rect = track.getBoundingClientRect();
             var scrollRange = Math.max(track.offsetHeight - viewportHeight, 1);
             var progress = clamp(-rect.top / scrollRange, 0, 1);
-            var introEntry = smoothstep(0.01, 0.135, progress);
+            var rtlDirection = isRtlDocument() ? -1 : 1;
+            var introEntry = smoothstep(0, 0.038, progress);
             var introEntryEase = easeOutCubic(introEntry);
-            var outro = smoothstep(0.94, 1, progress);
-            var statStart = 0.18;
-            var statEnd = 0.91;
+            var outro = smoothstep(0.95, 1, progress);
+            var statStart = 0.075;
+            var statEnd = 0.925;
             var statCount = Math.max(statElements.length, 1);
             var segment = (statEnd - statStart) / statCount;
-            var storyStatProgress = clamp(
-                (progress - statStart) / (statEnd - statStart),
-                0,
-                1
-            );
             var activeIndex = -1;
             var aboutSide = 0;
-            var aboutPresence = smoothstep(
-                statStart - 0.025,
-                statStart + 0.055,
-                progress
-            );
 
             if (progress >= statStart && statElements.length) {
                 activeIndex = clamp(
@@ -294,38 +241,48 @@
                     1
                 );
                 var currentSide =
-                    (activeIndex % 2 === 0 ? 1 : -1) * layoutDirection;
+                    (activeIndex % 2 === 0 ? 1 : -1) * rtlDirection;
                 var previousSide = activeIndex === 0
                     ? 0
                     : ((activeIndex - 1) % 2 === 0 ? 1 : -1) *
-                        layoutDirection;
+                        rtlDirection;
                 var sideBlend = easeInOutCubic(
-                    smoothstep(0, 0.28, localProgress)
+                    smoothstep(0, 0.26, localProgress)
                 );
 
                 aboutSide = lerp(previousSide, currentSide, sideBlend);
             }
 
-            var aboutX = aboutSide * viewportWidth * 0.235 * aboutPresence;
+            var aboutMovePresence = smoothstep(
+                statStart - 0.018,
+                statStart + 0.045,
+                progress
+            );
+            var aboutX =
+                aboutSide * viewportWidth * 0.225 * aboutMovePresence;
             var aboutY =
-                lerp(viewportHeight * 0.3, 0, introEntryEase) -
-                aboutPresence * viewportHeight * 0.028 -
-                outro * viewportHeight * 0.08;
+                lerp(viewportHeight * 0.2, 0, introEntryEase) -
+                outro * viewportHeight * 0.07;
             var aboutScale =
-                lerp(0.93, 1, introEntryEase) -
-                aboutPresence * 0.205 -
-                outro * 0.04;
-            var aboutOpacity = introEntry * (1 - outro * 0.82);
+                lerp(0.94, 1, introEntryEase) -
+                aboutMovePresence * 0.18 -
+                outro * 0.035;
+            var aboutOpacity = introEntry * (1 - outro * 0.9);
+            var storyStatProgress = clamp(
+                (progress - statStart) / (statEnd - statStart),
+                0,
+                1
+            );
 
             setPixelProperty(root, '--about-x', aboutX);
             setPixelProperty(root, '--about-y', aboutY);
-            setNumberProperty(root, '--about-scale', Math.max(aboutScale, 0.7));
+            setNumberProperty(root, '--about-scale', Math.max(aboutScale, 0.76));
             setNumberProperty(root, '--about-opacity', aboutOpacity);
             setNumberProperty(root, '--story-progress', storyStatProgress);
             setNumberProperty(
                 root,
                 '--progress-opacity',
-                smoothstep(statStart - 0.015, statStart + 0.04, progress) *
+                smoothstep(statStart - 0.02, statStart + 0.035, progress) *
                     (1 - outro)
             );
 
@@ -333,32 +290,31 @@
                 var start = statStart + index * segment;
                 var end = start + segment;
                 var enter = smoothstep(
-                    start,
-                    start + segment * 0.26,
+                    start - segment * 0.08,
+                    start + segment * 0.22,
                     progress
                 );
                 var exit = smoothstep(
-                    start + segment * 0.7,
-                    end,
+                    start + segment * 0.78,
+                    end + segment * 0.04,
                     progress
                 );
                 var presence = enter * (1 - exit) * (1 - outro);
-                var side = (index % 2 === 0 ? -1 : 1) * layoutDirection;
-                var entryX = side * viewportWidth * 0.5;
-                var targetX = side * viewportWidth * 0.17;
-                var exitX = -side * viewportWidth * 0.44;
+                var side =
+                    (index % 2 === 0 ? -1 : 1) * rtlDirection;
+                var entryX = side * viewportWidth * 0.48;
+                var targetX = side * viewportWidth * 0.185;
+                var exitX = -side * viewportWidth * 0.42;
                 var x = exit > 0
                     ? lerp(targetX, exitX, easeInOutCubic(exit))
                     : lerp(entryX, targetX, easeOutCubic(enter));
                 var y =
-                    lerp(viewportHeight * 0.23, 0, easeOutCubic(enter)) -
-                    exit * viewportHeight * 0.09;
+                    lerp(viewportHeight * 0.17, 0, easeOutCubic(enter)) -
+                    exit * viewportHeight * 0.08;
                 var scale =
-                    lerp(0.82, 1, easeOutCubic(enter)) -
-                    exit * 0.08;
+                    lerp(0.84, 1, easeOutCubic(enter)) - exit * 0.07;
                 var blur =
-                    lerp(12, 0, easeOutCubic(enter)) +
-                    exit * 8;
+                    lerp(14, 0, easeOutCubic(enter)) + exit * 8;
 
                 setNumberProperty(statElement, '--stat-opacity', presence);
                 setPixelProperty(statElement, '--stat-x', x);
@@ -394,10 +350,10 @@
                 1
             );
 
-            setPixelProperty(root, '--ambient-x', normalizedX * 12);
-            setPixelProperty(root, '--ambient-y', normalizedY * 9);
-            setPixelProperty(root, '--ambient-x-reverse', normalizedX * -9);
-            setPixelProperty(root, '--ambient-y-reverse', normalizedY * -7);
+            setPixelProperty(root, '--ambient-x', normalizedX * 11);
+            setPixelProperty(root, '--ambient-y', normalizedY * 8);
+            setPixelProperty(root, '--ambient-x-reverse', normalizedX * -8);
+            setPixelProperty(root, '--ambient-y-reverse', normalizedY * -6);
         }
 
         function requestPointerRender(event) {
@@ -457,7 +413,6 @@
             root.setAttribute('data-mode', mode);
             root.style.removeProperty('--story-scroll-height');
             updateActiveIndex(-1);
-            applyPhysicalCentering(false);
 
             statElements.forEach(function (statElement) {
                 statElement.removeAttribute('data-mobile-animated');
@@ -514,7 +469,6 @@
             window.removeEventListener('scroll', requestDesktopRender);
             window.removeEventListener('resize', onDesktopResize);
             window.clearTimeout(state.resizeTimer);
-
             stopListeningForPointer();
 
             if (state.mobileObserver) {
@@ -524,16 +478,12 @@
 
             state.enhanced = false;
             state.ticking = false;
-            applyPhysicalCentering(false);
             clearDesktopProperties();
         }
 
         function onDesktopResize() {
             window.clearTimeout(state.resizeTimer);
             state.resizeTimer = window.setTimeout(function () {
-                rtl = isRtlDocument();
-                layoutDirection = rtl ? -1 : 1;
-                applyPhysicalCentering(state.enhanced);
                 setStoryHeight();
                 requestDesktopRender();
             }, 120);
@@ -542,14 +492,10 @@
         function setupMode() {
             teardownMode();
 
-            rtl = isRtlDocument();
-            layoutDirection = rtl ? -1 : 1;
-
             if (desktopMedia.matches && !reducedMotionMedia.matches) {
                 state.enhanced = true;
                 root.setAttribute('data-enhanced', 'true');
                 root.setAttribute('data-mode', 'desktop');
-                applyPhysicalCentering(true);
                 setStoryHeight();
                 listenForPointer();
 
