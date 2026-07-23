@@ -154,6 +154,7 @@
 
         var track = root.querySelector(TRACK_SELECTOR);
         var sticky = root.querySelector('.about-stats-story__sticky') || root;
+        var intro = root.querySelector('.about-stats-story__intro');
         var statElements = Array.prototype.slice.call(
             root.querySelectorAll(STAT_SELECTOR)
         );
@@ -180,6 +181,36 @@
 
         root.setAttribute('data-about-stats-initialized', 'true');
         statElements.forEach(ensureStatDescription);
+
+        function applyPhysicalCentering(enabled) {
+            var introTransform =
+                'translate3d(calc(-50% + var(--about-x)), ' +
+                'calc(-50% + var(--about-y)), 0) ' +
+                'scale(var(--about-scale))';
+            var statTransform =
+                'translate3d(calc(-50% + var(--stat-x)), ' +
+                'calc(-50% + var(--stat-y)), 0) ' +
+                'scale(var(--stat-scale))';
+
+            if (!enabled || !rtl) {
+                if (intro) intro.style.removeProperty('transform');
+                statElements.forEach(function (statElement) {
+                    statElement.style.removeProperty('transform');
+                });
+                return;
+            }
+
+            /*
+             * The scene is physically centered with left: 50%. RTL should
+             * mirror motion direction, not change translateX(-50%) to +50%.
+             * Keeping this inline prevents an older RTL override from pushing
+             * the entire Arabic scene one full element-width off screen.
+             */
+            if (intro) intro.style.transform = introTransform;
+            statElements.forEach(function (statElement) {
+                statElement.style.transform = statTransform;
+            });
+        }
 
         function updateActiveIndex(index) {
             if (state.activeIndex === index) return;
@@ -426,6 +457,7 @@
             root.setAttribute('data-mode', mode);
             root.style.removeProperty('--story-scroll-height');
             updateActiveIndex(-1);
+            applyPhysicalCentering(false);
 
             statElements.forEach(function (statElement) {
                 statElement.removeAttribute('data-mobile-animated');
@@ -492,6 +524,7 @@
 
             state.enhanced = false;
             state.ticking = false;
+            applyPhysicalCentering(false);
             clearDesktopProperties();
         }
 
@@ -500,6 +533,7 @@
             state.resizeTimer = window.setTimeout(function () {
                 rtl = isRtlDocument();
                 layoutDirection = rtl ? -1 : 1;
+                applyPhysicalCentering(state.enhanced);
                 setStoryHeight();
                 requestDesktopRender();
             }, 120);
@@ -515,6 +549,7 @@
                 state.enhanced = true;
                 root.setAttribute('data-enhanced', 'true');
                 root.setAttribute('data-mode', 'desktop');
+                applyPhysicalCentering(true);
                 setStoryHeight();
                 listenForPointer();
 
