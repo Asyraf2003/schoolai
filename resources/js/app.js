@@ -1,3 +1,4 @@
+import '../css/pages/welcome-testimonial-layout.css';
 import { ready } from './core/dom.js';
 import { loadPage } from './core/page-loader.js';
 import { installTestimonialAdminNav } from './admin/testimonial-nav.js';
