@@ -173,23 +173,22 @@ function initHeroSlider(root) {
         var title = slide.querySelector('.hero-cinema__title');
         var cta = slide.querySelector('.hero-cinema__cta[href]');
 
-        if (!title || !cta) return;
+        if (!title || !cta || title.querySelector('a[href]')) return;
 
-        title.setAttribute('role', 'link');
-        title.setAttribute('tabindex', '0');
-        title.style.cursor = 'pointer';
+        var href = cta.getAttribute('href');
+        if (!href) return;
 
-        function openSlideLink() {
-            var href = cta.getAttribute('href');
-            if (href) window.location.assign(href);
+        var link = document.createElement('a');
+        link.href = href;
+        link.className = 'hero-cinema__title-link';
+        link.style.color = 'inherit';
+        link.style.textDecoration = 'none';
+
+        while (title.firstChild) {
+            link.appendChild(title.firstChild);
         }
 
-        title.addEventListener('click', openSlideLink);
-        title.addEventListener('keydown', function (event) {
-            if (event.key !== 'Enter') return;
-            event.preventDefault();
-            openSlideLink();
-        });
+        title.appendChild(link);
     });
 
     function formatStatus(index) {
