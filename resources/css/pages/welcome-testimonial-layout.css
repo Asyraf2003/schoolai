@@ -1,0 +1,69 @@
+/* Homepage testimonial composition override.
+   Keeps the center video fixed while testimonial media surrounds and overlaps it. */
+
+@media (min-width: 961px) {
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node {
+        width: clamp(118px, 10vw, 184px);
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node:nth-child(2n) {
+        width: clamp(108px, 9vw, 168px);
+    }
+
+    /* Same visual composition for LTR and RTL. */
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--1 {
+        left: 6% !important;
+        right: auto !important;
+        top: 8% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--2 {
+        left: 31% !important;
+        right: auto !important;
+        top: 25% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--3 {
+        left: auto !important;
+        right: 32% !important;
+        top: 19% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--4 {
+        left: auto !important;
+        right: 7% !important;
+        top: 8% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--5 {
+        left: 12% !important;
+        right: auto !important;
+        top: 40% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--6 {
+        left: auto !important;
+        right: 6% !important;
+        top: 40% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--7 {
+        left: 4% !important;
+        right: auto !important;
+        top: 75% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--8 {
+        left: auto !important;
+        right: 7% !important;
+        top: 74% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__main-media {
+        z-index: 5;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__nodes {
+        z-index: 8;
+    }
+}
