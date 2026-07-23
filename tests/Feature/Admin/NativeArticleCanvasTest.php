@@ -148,13 +148,15 @@ it('filters clickable categories and shows related native articles', function ()
         'published_at' => now(),
     ]);
 
-    $this->get(route('artikel', ['kategori' => 'Adab']))
+    $this->withSession(['locale' => 'id'])
+        ->get(route('artikel', ['kategori' => 'Adab']))
         ->assertOk()
         ->assertSee('Adab di Kelas')
         ->assertDontSee('Budaya Sekolah')
         ->assertSee(route('artikel', ['kategori' => 'Sekolah']), false);
 
-    $this->get(route('artikel.native', ['article' => $first->slug]))
+    $this->withSession(['locale' => 'id'])
+        ->get(route('artikel.native', ['article' => $first->slug]))
         ->assertOk()
         ->assertSee('Mungkin Anda juga suka')
         ->assertSee('Budaya Sekolah');

@@ -34,6 +34,7 @@ beforeEach(function (): void {
         'description_id' => 'Dikelola sebagai artikel dari admin.',
         'description_en' => 'Managed as an article from admin.',
         'thumbnail_url' => 'media/home/hero-school.png',
+        'link_id' => '/artikel/hero-database-test',
         'author' => 'Admin Hero Test',
         'published_at' => now(),
     ]);

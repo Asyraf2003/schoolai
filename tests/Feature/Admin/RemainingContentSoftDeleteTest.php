@@ -192,7 +192,7 @@ it('soft deletes a statistic, hides it publicly, and protects the final active s
     $this->get(route('admin.stats.edit'))
         ->assertOk()
         ->assertSee('Label statistik arsip unik')
-        ->assertSee('Dihapus')
+        ->assertSee('Arsip')
         ->assertSee('Pulihkan');
 
     $this->delete(route('admin.stats.destroy', $survivor))

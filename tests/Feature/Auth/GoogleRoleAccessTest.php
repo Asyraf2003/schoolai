@@ -478,7 +478,7 @@ it('shows Google as the only login method', function (): void {
         'locale' => 'en',
     ])->get(route('login'))
         ->assertOk()
-        ->assertSee('Sign in with Google')
+        ->assertSee('Continue with Google')
         ->assertDontSee('name="email"', false)
         ->assertDontSee('name="password"', false);
 });

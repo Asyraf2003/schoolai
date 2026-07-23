@@ -15,7 +15,7 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
     $ppdb = DB::table('ppdb_showcase_items')->whereNull('deleted_at')->get();
     $statistics = DB::table('site_statistics')->whereNull('deleted_at')->get();
 
-    expect($articles)->toHaveCount(6)
+    expect($articles)->toHaveCount(10)
         ->and($articles->every(fn (object $article): bool => $filled($article->title_id)
             && $filled($article->title_en)
             && $filled($article->title_ar)
@@ -25,7 +25,7 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
             && $filled($article->content_id)
             && $filled($article->content_en)
             && $filled($article->content_ar)))->toBeTrue()
-        ->and($heroes)->toHaveCount(4)
+        ->and($heroes)->toHaveCount(5)
         ->and($heroes->every(fn (object $hero): bool => $filled($hero->title_id)
             && $filled($hero->title_en)
             && $filled($hero->title_ar)
@@ -41,7 +41,7 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
             && $filled($item->caption_en)
             && $filled($item->caption_ar)
             && ! str_contains(strtolower((string) $item->media_url), 'youtu')))->toBeTrue()
-        ->and($ppdb)->toHaveCount(4)
+        ->and($ppdb)->toHaveCount(6)
         ->and($ppdb->every(fn (object $item): bool => $filled($item->title_id)
             && $filled($item->title_en)
             && $filled($item->title_ar)

@@ -11,6 +11,8 @@ final class HeroArticleSeeder extends Seeder
 {
     private const FEATURED_VIDEO_PATH = '/media/hero/shanghai-mega-city.mp4';
     private const FEATURED_VIDEO_POSTER = '/images/hero-video-poster.svg';
+    private const CREATIVE_PROJECT_SLUG = 'proyek-kreatif-yang-melatih-keberanian-anak';
+    private const CREATIVE_PROJECT_IMAGE_PATH = '/media/seed/hero/creative-project.webp';
 
     public function run(): void
     {
@@ -27,6 +29,7 @@ final class HeroArticleSeeder extends Seeder
             'prestasi-tumbuh-dari-proses-yang-konsisten',
             'qiii-menjadi-kompas-kehidupan-sekolah',
             'sekolah-dan-keluarga-bertumbuh-sebagai-satu-tim',
+            self::CREATIVE_PROJECT_SLUG,
         ];
 
         $articles = Article::query()
@@ -43,6 +46,7 @@ final class HeroArticleSeeder extends Seeder
 
         foreach ($articles->values() as $index => $article) {
             $isVideo = $index === 0;
+            $isCreativeProject = $article->slug === self::CREATIVE_PROJECT_SLUG;
 
             $slide = HeroSlide::query()->firstOrNew([
                 'article_id' => $article->getKey(),
@@ -53,7 +57,9 @@ final class HeroArticleSeeder extends Seeder
 
                 'media_url' => $isVideo
                     ? self::FEATURED_VIDEO_PATH
-                    : $article->thumbnail_url,
+                    : ($isCreativeProject
+                        ? self::CREATIVE_PROJECT_IMAGE_PATH
+                        : $article->thumbnail_url),
 
                 'poster_url' => $isVideo
                     ? self::FEATURED_VIDEO_POSTER
