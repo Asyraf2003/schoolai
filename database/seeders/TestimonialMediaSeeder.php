@@ -9,7 +9,9 @@ final class TestimonialMediaSeeder extends Seeder
 {
     public function run(): void
     {
-        if (TestimonialMedia::withTrashed()->exists()) {
+        // Arsip lama tidak boleh menghalangi dummy aktif dibuat.
+        // Seeder hanya berhenti jika memang sudah ada media testimoni aktif.
+        if (TestimonialMedia::query()->exists()) {
             return;
         }
 
