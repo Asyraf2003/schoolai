@@ -176,5 +176,9 @@
 </footer>
 
 @if ($isHomeFooter)
-  @vite('resources/js/pages/welcome-testimonial-story.js')
+  @vite([
+    'resources/js/pages/welcome-testimonial-story.js',
+    'resources/css/pages/welcome-testimonial-layout.css',
+    'resources/js/pages/welcome-testimonial-extra-nodes.js',
+  ])
 @endif
