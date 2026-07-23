@@ -12,9 +12,10 @@ function onMediaQueryChange(query, listener) {
 
 function initMegaMenus() {
     var header = document.getElementById('navbar');
+    var mobileMenu = document.getElementById('navMenu');
     var menus = Array.prototype.slice.call(document.querySelectorAll('[data-nav-mega]'));
 
-    if (!header || !menus.length) return;
+    if (!header) return;
 
     function setMenuState(menu, isOpen, focusFirstLink) {
         var toggle = menu.querySelector('[data-nav-mega-toggle]');
@@ -33,9 +34,20 @@ function initMegaMenus() {
     }
 
     function syncHeaderState() {
-        header.classList.toggle('has-open-menu', menus.some(function (menu) {
+        var hasOpenMegaMenu = menus.some(function (menu) {
             return menu.classList.contains('is-open');
-        }));
+        });
+        var hasOpenMobileMenu = mobileMenu && mobileMenu.classList.contains('active');
+
+        header.classList.toggle('has-open-menu', hasOpenMegaMenu || hasOpenMobileMenu);
+    }
+
+    if (mobileMenu && typeof MutationObserver === 'function') {
+        var mobileMenuObserver = new MutationObserver(syncHeaderState);
+        mobileMenuObserver.observe(mobileMenu, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
     }
 
     function closeMenus(exceptMenu) {
@@ -117,6 +129,8 @@ function initMegaMenus() {
         closeMenus();
         if (toggle) toggle.focus();
     });
+
+    syncHeaderState();
 }
 
 function initHeroSlider(root) {
@@ -143,6 +157,14 @@ function initHeroSlider(root) {
 
     if (!slides.length) return;
     if (!Number.isFinite(duration) || duration < 4000) duration = 7000;
+
+    // <article> does not permit role="group". Use a valid landmark-like
+    // role while keeping the carousel slide roledescription and label.
+    slides.forEach(function (slide) {
+        if (slide.tagName.toLowerCase() === 'article' && slide.getAttribute('role') === 'group') {
+            slide.setAttribute('role', 'region');
+        }
+    });
 
     root.style.setProperty('--hero-autoplay-duration', duration + 'ms');
     root.setAttribute('data-enhanced', 'true');
