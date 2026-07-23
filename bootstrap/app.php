@@ -60,6 +60,12 @@ $app = Application::configure(basePath: dirname(__DIR__))
                 ]);
             }
 
+            if ($request->is('admin/testimoni*')) {
+                return back()->withErrors([
+                    'media_file' => 'Ukuran file terlalu besar. Foto maksimal 10MB dan video maksimal 100MB. Batas server PHP juga harus lebih besar dari file yang diunggah.',
+                ]);
+            }
+
             return null;
         });
     })->create();
