@@ -19,7 +19,7 @@
     <div class="admin-inline-actions">
       @if($activePageSections->isNotEmpty())
         <details class="admin-gallery-media-picker">
-          <summary class="admin-primary-action">Tambah Media Galeri</summary>
+          <summary class="admin-primary-action">Tambah Galeri</summary>
           <div class="admin-gallery-media-picker__menu">
             <span>Pilih bagian tujuan</span>
             @foreach($activePageSections as $section)
@@ -28,8 +28,14 @@
                 <small>{{ $section->media_items_count }} media aktif</small>
               </a>
             @endforeach
+            <a href="{{ route('admin.galeri.sections.create', ['continue' => 'media']) }}">
+              <strong>+ Buat Bagian Baru</strong>
+              <small>Lanjut langsung ke tambah media</small>
+            </a>
           </div>
         </details>
+      @else
+        <a href="{{ route('admin.galeri.sections.create', ['continue' => 'media']) }}" class="admin-primary-action">Tambah Galeri</a>
       @endif
 
       @if($canCreate)

@@ -1,6 +1,10 @@
 @php
   $isEdit = $mode === 'edit';
+  $continueToMedia = ! $isEdit && (bool) ($continueToMedia ?? false);
   $action = $isEdit ? route('admin.galeri.sections.update', $section) : route('admin.galeri.sections.store');
+  $formTitle = $isEdit
+    ? 'Edit Bagian Galeri'
+    : ($continueToMedia ? 'Tambah Galeri' : 'Tambah Bagian Galeri');
 
   $languageCompletion = [
     'id' => filled(old('title_id', $section->title_id)),
@@ -14,7 +18,7 @@
 @endphp
 
 @extends('layouts.admin', [
-  'title' => $isEdit ? 'Edit Bagian Galeri' : 'Tambah Bagian Galeri',
+  'title' => $formTitle,
   'activeAdminPage' => 'galeri',
 ])
 
@@ -24,16 +28,21 @@
     @if($isEdit)
       @method('PUT')
     @endif
+    @if($continueToMedia)
+      <input type="hidden" name="continue_to_media" value="1">
+    @endif
 
     <header class="admin-topbar admin-topbar--compact">
       <div>
-        <h1>{{ $isEdit ? 'Edit Bagian Galeri' : 'Tambah Bagian Galeri' }}</h1>
+        <h1>{{ $formTitle }}</h1>
         <p>Indonesia adalah bahasa utama. English dan Arabic opsional; jika kosong, halaman galeri publik akan memakai fallback yang tersedia.</p>
       </div>
 
       <div class="admin-inline-actions">
         <a href="{{ $isEdit ? route('admin.galeri.sections.show', $section) : route('admin.galeri') }}" class="admin-primary-action admin-primary-action--ghost">Kembali</a>
-        <button type="submit" class="admin-primary-action">{{ $isEdit ? 'Update' : 'Simpan' }}</button>
+        <button type="submit" class="admin-primary-action">
+          {{ $isEdit ? 'Update' : ($continueToMedia ? 'Simpan & Tambah Media' : 'Simpan') }}
+        </button>
       </div>
     </header>
 
