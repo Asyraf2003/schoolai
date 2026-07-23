@@ -55,14 +55,6 @@
         return 1 - inverse * inverse * inverse;
     }
 
-    function easeInOutCubic(value) {
-        var progress = clamp(value, 0, 1);
-
-        return progress < 0.5
-            ? 4 * progress * progress * progress
-            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-    }
-
     function setNumberProperty(element, property, value, precision) {
         if (!element) return;
 
@@ -195,8 +187,8 @@
                 640
             );
             var screenCount = Math.max(
-                5.4,
-                2.15 + statElements.length * 1.07
+                4.9,
+                2 + statElements.length * 0.82
             );
 
             root.style.setProperty(
@@ -230,12 +222,12 @@
                 document.documentElement.clientHeight || 0,
                 1
             );
-            var statStart = 0.22;
-            var statEnd = 0.93;
+            var statStart = 0.105;
+            var statEnd = 0.94;
             var statCount = Math.max(statElements.length, 1);
             var segment = (statEnd - statStart) / statCount;
-            var introEntry = smootherstep(0, 0.14, progress);
-            var outro = smootherstep(0.965, 1, progress);
+            var introEntry = smootherstep(0, 0.075, progress);
+            var outro = smootherstep(0.972, 1, progress);
             var activeIndex = -1;
             var aboutSide = 0;
 
@@ -258,25 +250,25 @@
                     ? 0
                     : ((activeIndex - 1) % 2 === 0 ? 1 : -1) *
                         state.direction;
-                var sideBlend = smootherstep(0.04, 0.5, localProgress);
+                var sideBlend = smootherstep(0, 0.55, localProgress);
 
                 aboutSide = lerp(previousSide, currentSide, sideBlend);
             }
 
             var aboutMovePresence = smootherstep(
-                statStart - 0.025,
-                statStart + segment * 0.44,
+                statStart - 0.02,
+                statStart + segment * 0.34,
                 progress
             );
             var aboutX =
                 aboutSide * viewportWidth * 0.235 * aboutMovePresence;
             var aboutY = lerp(
-                viewportHeight * 0.28,
+                viewportHeight * 0.24,
                 0,
                 easeOutCubic(introEntry)
             );
             var aboutScale =
-                lerp(0.94, 1, introEntry) - aboutMovePresence * 0.19;
+                lerp(0.95, 1, introEntry) - aboutMovePresence * 0.18;
             var aboutOpacity = introEntry * (1 - outro);
             var storyStatProgress = clamp(
                 (progress - statStart) / (statEnd - statStart),
@@ -286,38 +278,36 @@
 
             setPixelProperty(root, '--about-x', aboutX);
             setPixelProperty(root, '--about-y', aboutY);
-            setNumberProperty(root, '--about-scale', Math.max(aboutScale, 0.78));
+            setNumberProperty(root, '--about-scale', Math.max(aboutScale, 0.8));
             setNumberProperty(root, '--about-opacity', aboutOpacity);
             setNumberProperty(root, '--story-progress', storyStatProgress);
             setNumberProperty(
                 root,
                 '--progress-opacity',
-                smootherstep(statStart - 0.03, statStart + 0.06, progress) *
+                smootherstep(statStart - 0.025, statStart + 0.05, progress) *
                     (1 - outro)
             );
 
             statElements.forEach(function (statElement, index) {
                 var start = statStart + index * segment;
                 var local = (progress - start) / segment;
-                var enter = smootherstep(-0.08, 0.34, local);
-                var exit = smootherstep(0.7, 1.08, local);
+                var enter = smootherstep(-0.2, 0.28, local);
+                var exit = smootherstep(0.72, 1.12, local);
                 var presence = enter * (1 - exit) * (1 - outro);
                 var side =
                     (index % 2 === 0 ? -1 : 1) * state.direction;
-                var entryX = side * viewportWidth * 0.43;
-                var targetX = side * viewportWidth * 0.185;
-                var exitX = -side * viewportWidth * 0.39;
-                var x = exit > 0
-                    ? lerp(targetX, exitX, easeInOutCubic(exit))
-                    : lerp(entryX, targetX, easeOutCubic(enter));
+                var x = side * viewportWidth * 0.185;
+                var y =
+                    (1 - enter) * viewportHeight * 0.26 -
+                    exit * viewportHeight * 0.28;
                 var scale =
-                    lerp(0.88, 1, easeOutCubic(enter)) - exit * 0.055;
+                    lerp(0.92, 1, easeOutCubic(enter)) - exit * 0.045;
                 var blur =
-                    lerp(18, 0, easeOutCubic(enter)) + exit * 9;
+                    lerp(14, 0, easeOutCubic(enter)) + exit * 9;
 
                 setNumberProperty(statElement, '--stat-opacity', presence);
                 setPixelProperty(statElement, '--stat-x', x);
-                setPixelProperty(statElement, '--stat-y', 0);
+                setPixelProperty(statElement, '--stat-y', y);
                 setNumberProperty(statElement, '--stat-scale', scale);
                 setPixelProperty(statElement, '--stat-blur', blur);
             });
@@ -343,7 +333,7 @@
             var deltaFrames = state.lastFrameTime
                 ? clamp((timestamp - state.lastFrameTime) / 16.667, 0.5, 4)
                 : 1;
-            var smoothing = 1 - Math.pow(0.92, deltaFrames);
+            var smoothing = 1 - Math.pow(0.925, deltaFrames);
             var difference = state.targetProgress - state.renderedProgress;
 
             state.lastFrameTime = timestamp;
@@ -463,6 +453,7 @@
             root.setAttribute('data-enhanced', 'false');
             root.setAttribute('data-mode', mode);
             root.style.removeProperty('--story-scroll-height');
+            root.style.removeProperty('overflow');
             updateActiveIndex(-1);
 
             statElements.forEach(function (statElement) {
@@ -514,6 +505,14 @@
             ].forEach(function (property) {
                 root.style.removeProperty(property);
             });
+
+            statElements.forEach(function (statElement) {
+                statElement.style.removeProperty('--stat-opacity');
+                statElement.style.removeProperty('--stat-x');
+                statElement.style.removeProperty('--stat-y');
+                statElement.style.removeProperty('--stat-scale');
+                statElement.style.removeProperty('--stat-blur');
+            });
         }
 
         function teardownMode() {
@@ -529,6 +528,7 @@
             }
 
             state.enhanced = false;
+            root.style.removeProperty('overflow');
             clearDesktopProperties();
         }
 
@@ -553,6 +553,14 @@
                 state.direction = isRtlDocument() ? -1 : 1;
                 root.setAttribute('data-enhanced', 'true');
                 root.setAttribute('data-mode', 'desktop');
+
+                /*
+                 * Runtime proof confirmed that overflow:hidden on the story root
+                 * prevents the sticky scene from pinning. overflow:clip preserves
+                 * visual clipping without creating the sticky containment bug.
+                 */
+                root.style.overflow = 'clip';
+
                 setStoryHeight();
                 listenForPointer();
 
