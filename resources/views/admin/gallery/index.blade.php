@@ -17,34 +17,13 @@
     </div>
 
     <div class="admin-inline-actions">
-      @if($activePageSections->isNotEmpty())
-        <details class="admin-gallery-media-picker">
-          <summary class="admin-primary-action">Tambah Galeri</summary>
-          <div class="admin-gallery-media-picker__menu">
-            <span>Pilih bagian tujuan</span>
-            @foreach($activePageSections as $section)
-              <a href="{{ route('admin.galeri.section-media.create', $section) }}">
-                <strong>{{ $section->admin_title }}</strong>
-                <small>{{ $section->media_items_count }} media aktif</small>
-              </a>
-            @endforeach
-            <a href="{{ route('admin.galeri.sections.create', ['continue' => 'media']) }}">
-              <strong>+ Buat Bagian Baru</strong>
-              <small>Lanjut langsung ke tambah media</small>
-            </a>
-          </div>
-        </details>
-      @else
-        <a href="{{ route('admin.galeri.sections.create', ['continue' => 'media']) }}" class="admin-primary-action">Tambah Galeri</a>
-      @endif
+      <a href="{{ route('admin.galeri.sections.create', ['continue' => 'media']) }}" class="admin-primary-action">Tambah Galeri</a>
 
       @if($canCreate)
         <a href="{{ route('admin.galeri.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Homepage</a>
       @else
         <span class="admin-counter">Homepage {{ $activeItems->count() }}/{{ $homepageLimit }} penuh</span>
       @endif
-
-      <a href="{{ route('admin.galeri.sections.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Bagian</a>
     </div>
   </header>
 
@@ -184,10 +163,7 @@
         <p>Media pada halaman galeri tidak memakai batas enam item homepage.</p>
       </div>
 
-      <div class="admin-inline-actions">
-        <span class="admin-counter">{{ $activePageSections->count() }} aktif · {{ ($archivedPageSections ?? collect())->count() }} arsip</span>
-        <a href="{{ route('admin.galeri.sections.create') }}" class="admin-primary-action">Tambah Bagian</a>
-      </div>
+      <span class="admin-counter">{{ $activePageSections->count() }} aktif · {{ ($archivedPageSections ?? collect())->count() }} arsip</span>
     </div>
 
     @if($activePageSections->isNotEmpty() || ($archivedPageSections ?? collect())->isNotEmpty())
@@ -269,8 +245,8 @@
       </div>
     @else
       <div class="gallery-lite-empty">
-        <h2>Belum ada bagian galeri.</h2>
-        <p>Tambahkan bagian seperti Prestasi, Fasilitas, Testimoni, Laporan, atau Media.</p>
+        <h2>Belum ada galeri halaman.</h2>
+        <p>Gunakan tombol Tambah Galeri untuk membuat galeri baru beserta medianya.</p>
       </div>
     @endif
   </section>
