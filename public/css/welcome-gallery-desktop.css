@@ -1,0 +1,124 @@
+/*
+ * Homepage gallery desktop layout.
+ *
+ * The desktop composition uses the full viewport as five proportional tracks:
+ * 2 | 7 | 2 | 7 | 2
+ *
+ * LTR: empty | copy | gap | visual | empty
+ * RTL: the grid's native direction mirrors those same logical tracks, so no
+ * manual RTL column swap is needed.
+ *
+ * Tablet and mobile remain owned by resources/css/pages/welcome.css.
+ */
+
+@media (min-width: 1025px) {
+    .home-page .galeri-section > .container {
+        width: 100%;
+        max-width: none;
+        padding-inline: 0;
+    }
+
+    .home-page .galeri-section .galeri-story {
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+        display: grid;
+        grid-template-columns: 2fr 7fr 2fr 7fr 2fr;
+        gap: 0;
+        align-items: start;
+        direction: inherit;
+    }
+
+    .home-page .galeri-section .galeri-story::before {
+        display: none;
+    }
+
+    .home-page .galeri-section .galeri-story__copy {
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%;
+        max-width: none;
+        padding-block: 8vh 14vh;
+    }
+
+    .home-page .galeri-section .galeri-story-card {
+        min-height: 72vh;
+        display: grid;
+        grid-template-columns: minmax(38px, 0.5fr) minmax(0, 6.5fr);
+        gap: 0;
+        align-items: center;
+        padding: 0;
+        transition:
+            opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.58s cubic-bezier(0.22, 1, 0.36, 1),
+            filter 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home-page .galeri-section .galeri-story-card__number {
+        justify-self: start;
+    }
+
+    .home-page .galeri-section .galeri-story-card__content {
+        width: 100%;
+        max-width: none;
+        gap: 16px;
+    }
+
+    .home-page .galeri-section .galeri-story-card h3,
+    .home-page .galeri-section .galeri-story-card p {
+        width: 100%;
+        max-width: none;
+    }
+
+    .home-page .galeri-section .galeri-story-card h3 {
+        font-size: clamp(2rem, 1.8vw + 1rem, 3.25rem);
+        line-height: 1.06;
+    }
+
+    .home-page .galeri-section .galeri-story-card p {
+        font-size: clamp(1.12rem, 0.46vw + 1rem, 1.42rem);
+        line-height: 1.76;
+    }
+
+    .home-page .galeri-section .galeri-story__visual {
+        grid-column: 4;
+        grid-row: 1;
+        min-width: 0;
+        min-height: calc(100svh - var(--nav-h) - 120px);
+        transform: none;
+    }
+
+    .home-page .galeri-section .galeri-story-visual__track {
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 1.5 / 1;
+    }
+
+    .home-page .galeri-section .galeri-story-visual__panel {
+        transform: translateY(22px) scale(0.96);
+        transition:
+            opacity 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+            filter 0.78s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home-page .galeri-section .galeri-story-visual__panel.is-active {
+        transform: translateY(0) scale(1);
+    }
+
+    .home-page .galeri-section .galeri-story-visual__media {
+        border-radius: 32px;
+    }
+
+    .home-page .galeri-section .galeri-story-visual__badge {
+        left: auto;
+        right: auto;
+        inset-inline-start: 18px;
+    }
+
+    .home-page .galeri-section .galeri-story-visual__play {
+        left: auto;
+        right: auto;
+        inset-inline-end: 18px;
+    }
+}
