@@ -4,6 +4,11 @@
     var ROOT_SELECTOR = '[data-testimonial-network-story]';
     var FEED_URL = '/testimoni/media';
     var MAX_NODES = 12;
+    var DESKTOP_QUERY = '(min-width: 961px)';
+    var REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+
+    // Reveal from the video outward, rather than marching around the DOM order.
+    var REVEAL_ORDER = [2, 1, 3, 7, 8, 5, 6, 0, 4, 9, 10, 11];
 
     function clamp(value, minimum, maximum) {
         return Math.min(Math.max(value, minimum), maximum);
@@ -78,17 +83,19 @@
             wrapper.appendChild(video);
         }
 
-        var play = document.createElement('span');
-        play.setAttribute('aria-hidden', 'true');
-        play.textContent = item.type === 'video' ? '▶' : '';
-        play.style.position = 'absolute';
-        play.style.inset = '0';
-        play.style.display = 'grid';
-        play.style.placeItems = 'center';
-        play.style.fontSize = '1.6rem';
-        play.style.color = '#fff';
-        play.style.textShadow = '0 3px 18px #000';
-        wrapper.appendChild(play);
+        if (item.type === 'video') {
+            var play = document.createElement('span');
+            play.setAttribute('aria-hidden', 'true');
+            play.textContent = '▶';
+            play.style.position = 'absolute';
+            play.style.inset = '0';
+            play.style.display = 'grid';
+            play.style.placeItems = 'center';
+            play.style.fontSize = '1.6rem';
+            play.style.color = '#fff';
+            play.style.textShadow = '0 3px 18px #000';
+            wrapper.appendChild(play);
+        }
 
         return wrapper;
     }
@@ -148,8 +155,10 @@
             media.appendChild(image);
         }
 
+        var previousOverflow = document.body.style.overflow;
+
         function destroy() {
-            document.body.style.overflow = '';
+            document.body.style.overflow = previousOverflow;
             modal.remove();
         }
 
@@ -174,9 +183,6 @@
         button.className = 'testimonial-network-story__node testimonial-network-story__node--' + (index + 1);
         button.setAttribute('data-testimonial-node', '');
         button.setAttribute('aria-label', 'Media testimoni ' + (index + 1));
-        button.style.setProperty('--node-opacity', '0');
-        button.style.setProperty('--node-y', '34px');
-        button.style.setProperty('--node-scale', '0.82');
         button.appendChild(createNodeMedia(item));
         button.addEventListener('click', function () {
             openModal(item);
@@ -184,69 +190,139 @@
         return button;
     }
 
-    function enhanceExtraNodes(root, items) {
-        var nodesContainer = root.querySelector('.testimonial-network-story__nodes');
-        var track = root.querySelector('[data-testimonial-track]');
-        if (!nodesContainer || !track) return;
-
-        var databaseItems = items.filter(function (item) {
+    function databaseItemsOnly(items) {
+        return items.filter(function (item) {
             return item && item.id !== null && item.id !== undefined && item.media_url;
         }).slice(0, MAX_NODES);
+    }
 
+    function ensureAllNodes(root, items) {
+        var nodesContainer = root.querySelector('.testimonial-network-story__nodes');
+        if (!nodesContainer) return [];
+
+        var databaseItems = databaseItemsOnly(items);
         var existingCount = nodesContainer.querySelectorAll('[data-testimonial-node]').length;
-        if (existingCount >= databaseItems.length) return;
-
-        var extraNodes = [];
 
         databaseItems.slice(existingCount).forEach(function (item, offset) {
-            var index = existingCount + offset;
-            var node = createNode(item, index);
-            nodesContainer.appendChild(node);
-            extraNodes.push({ node: node, index: index });
+            nodesContainer.appendChild(createNode(item, existingCount + offset));
         });
 
-        if (!extraNodes.length) return;
+        return Array.prototype.slice.call(
+            nodesContainer.querySelectorAll('[data-testimonial-node]')
+        ).slice(0, MAX_NODES);
+    }
+
+    function installPolishedTimeline(root, nodes) {
+        var track = root.querySelector('[data-testimonial-track]');
+        if (!track || !nodes.length) return;
+
+        var desktopMedia = window.matchMedia(DESKTOP_QUERY);
+        var reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
+        var frame = null;
+
+        root.classList.add('is-testimonial-polished');
+
+        function setStoryHeight() {
+            var viewportHeight = Math.max(
+                window.innerHeight || 0,
+                document.documentElement.clientHeight || 0,
+                640
+            );
+            var screens = Math.max(6.2, 4.7 + nodes.length * 0.23);
+
+            root.style.setProperty(
+                '--testimonial-polished-height',
+                Math.round(viewportHeight * screens) + 'px'
+            );
+        }
 
         function readProgress() {
-            var viewportHeight = Math.max(window.innerHeight || 0, document.documentElement.clientHeight || 0, 1);
+            var viewportHeight = Math.max(
+                window.innerHeight || 0,
+                document.documentElement.clientHeight || 0,
+                1
+            );
             var rect = track.getBoundingClientRect();
             var range = Math.max(track.offsetHeight - viewportHeight, 1);
             return clamp(-rect.top / range, 0, 1);
         }
 
+        function sequenceForIndex(index) {
+            var orderIndex = REVEAL_ORDER.indexOf(index);
+            return orderIndex >= 0 ? orderIndex : index;
+        }
+
         function render() {
-            if (root.getAttribute('data-mode') !== 'desktop') {
-                extraNodes.forEach(function (entry) {
-                    entry.node.style.setProperty('--node-opacity', '1');
-                    entry.node.style.setProperty('--node-y', '0px');
-                    entry.node.style.setProperty('--node-scale', '1');
+            frame = null;
+
+            if (!desktopMedia.matches || reducedMotionMedia.matches) {
+                nodes.forEach(function (node) {
+                    node.style.setProperty('--polish-opacity', '1');
+                    node.style.setProperty('--polish-x', '0px');
+                    node.style.setProperty('--polish-y', '0px');
+                    node.style.setProperty('--polish-scale', '1');
+                    node.style.setProperty('--polish-rotate', '0deg');
+                    node.style.pointerEvents = 'auto';
+                    node.removeAttribute('aria-hidden');
                 });
                 return;
             }
 
             var progress = readProgress();
+            var viewportWidth = Math.max(window.innerWidth || 0, 1);
 
-            extraNodes.forEach(function (entry) {
-                var localIndex = entry.index - 8;
-                var start = 0.70 + localIndex * 0.055;
-                var presence = smootherstep(start, start + 0.085, progress);
-                var y = 34 * (1 - presence);
-                var scale = 0.82 + 0.18 * presence;
+            nodes.forEach(function (node, index) {
+                var sequence = sequenceForIndex(index);
+                var start = 0.34 + sequence * 0.043;
+                var end = start + 0.095;
+                var presence = smootherstep(start, end, progress);
+                var rect = node.getBoundingClientRect();
+                var nodeCenter = rect.left + rect.width / 2;
+                var side = nodeCenter < viewportWidth / 2 ? 1 : -1;
+                var enterX = Math.abs(nodeCenter - viewportWidth / 2) < viewportWidth * 0.12
+                    ? 0
+                    : side * 46;
+                var x = enterX * (1 - presence);
+                var y = 48 * (1 - presence);
+                var scale = 0.72 + 0.28 * presence;
+                var rotate = (index % 2 === 0 ? -2.4 : 2.1) * (1 - presence);
 
-                entry.node.style.setProperty('--node-opacity', presence.toFixed(4));
-                entry.node.style.setProperty('--node-y', y.toFixed(2) + 'px');
-                entry.node.style.setProperty('--node-scale', scale.toFixed(4));
+                node.style.setProperty('--polish-opacity', presence.toFixed(4));
+                node.style.setProperty('--polish-x', x.toFixed(2) + 'px');
+                node.style.setProperty('--polish-y', y.toFixed(2) + 'px');
+                node.style.setProperty('--polish-scale', scale.toFixed(4));
+                node.style.setProperty('--polish-rotate', rotate.toFixed(2) + 'deg');
+                node.style.pointerEvents = presence > 0.2 ? 'auto' : 'none';
+
+                if (presence > 0.2) {
+                    node.removeAttribute('aria-hidden');
+                } else {
+                    node.setAttribute('aria-hidden', 'true');
+                }
             });
         }
 
+        function queueRender() {
+            if (frame !== null) return;
+            frame = window.requestAnimationFrame(render);
+        }
+
+        function onResize() {
+            setStoryHeight();
+            queueRender();
+        }
+
+        setStoryHeight();
         render();
-        window.addEventListener('scroll', render, { passive: true });
-        window.addEventListener('resize', render, { passive: true });
+        window.addEventListener('scroll', queueRender, { passive: true });
+        window.addEventListener('resize', onResize, { passive: true });
     }
 
     async function initialize() {
         var results = await Promise.all([waitForRoot(), loadItems()]);
-        enhanceExtraNodes(results[0], results[1]);
+        var root = results[0];
+        var nodes = ensureAllNodes(root, results[1]);
+        installPolishedTimeline(root, nodes);
     }
 
     if (document.readyState === 'loading') {
