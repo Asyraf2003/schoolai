@@ -9,10 +9,20 @@ use Illuminate\Support\Facades\Schema;
 
 final class TestimonialMediaController extends Controller
 {
+    private const PRIMARY_MEDIA = [
+        'id' => null,
+        'type' => 'video',
+        'source' => 'upload',
+        'media_url' => '/media/hero/shanghai-mega-city.mp4',
+        'thumbnail_url' => '/images/hero-video-poster.svg',
+    ];
+
     public function __invoke(): JsonResponse
     {
         if (! Schema::hasTable('testimonial_media')) {
-            return response()->json(['items' => []]);
+            return response()->json([
+                'items' => [self::PRIMARY_MEDIA],
+            ]);
         }
 
         $items = TestimonialMedia::query()
@@ -28,9 +38,12 @@ final class TestimonialMediaController extends Controller
                 'thumbnail_url' => $item->is_photo
                     ? $item->media_url
                     : TestimonialVideoUrl::thumbnail($item->media_url),
-            ])
-            ->values();
+            ]);
 
-        return response()->json(['items' => $items]);
+        return response()->json([
+            'items' => collect([self::PRIMARY_MEDIA])
+                ->concat($items)
+                ->values(),
+        ]);
     }
 }
