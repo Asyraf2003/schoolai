@@ -7,6 +7,20 @@
     var DESKTOP_QUERY = '(min-width: 961px)';
     var REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
+    var TIMING = {
+        intro: 0.65,
+        firstShift: 0.75,
+        preStat: 0.15,
+        statEnter: 0.75,
+        statHold: 0.65,
+        statExit: 0.7,
+        gapAfterExit: 0.18,
+        aboutShift: 0.85,
+        preNextStat: 0.18,
+        finalPause: 0.16,
+        outro: 0.45
+    };
+
     var STAT_DESCRIPTIONS = {
         id: [
             'Ruang belajar yang terus bertumbuh bersama anak, keluarga, dan komunitas sekolah.',
@@ -130,6 +144,68 @@
         }
     }
 
+    function buildTimeline(statCount) {
+        var stats = [];
+        var shifts = [];
+        var introEnd = TIMING.intro;
+        var firstShiftEnd = introEnd + TIMING.firstShift;
+        var cursor = firstShiftEnd + TIMING.preStat;
+
+        shifts.push({
+            start: introEnd,
+            end: firstShiftEnd,
+            fromIndex: -1,
+            toIndex: 0
+        });
+
+        for (var index = 0; index < statCount; index += 1) {
+            var enterStart = cursor;
+            var enterEnd = enterStart + TIMING.statEnter;
+            var holdEnd = enterEnd + TIMING.statHold;
+            var exitEnd = holdEnd + TIMING.statExit;
+
+            stats.push({
+                enterStart: enterStart,
+                enterEnd: enterEnd,
+                holdEnd: holdEnd,
+                exitEnd: exitEnd
+            });
+
+            cursor = exitEnd;
+
+            if (index < statCount - 1) {
+                var shiftStart = cursor + TIMING.gapAfterExit;
+                var shiftEnd = shiftStart + TIMING.aboutShift;
+
+                shifts.push({
+                    start: shiftStart,
+                    end: shiftEnd,
+                    fromIndex: index,
+                    toIndex: index + 1
+                });
+
+                cursor = shiftEnd + TIMING.preNextStat;
+            }
+        }
+
+        var lastExit = stats.length
+            ? stats[stats.length - 1].exitEnd
+            : firstShiftEnd;
+        var outroStart = lastExit + TIMING.finalPause;
+        var total = outroStart + TIMING.outro;
+
+        return {
+            introEnd: introEnd,
+            firstShiftEnd: firstShiftEnd,
+            firstStatStart: stats.length ? stats[0].enterStart : firstShiftEnd,
+            lastExit: lastExit,
+            outroStart: outroStart,
+            total: total,
+            stats: stats,
+            shifts: shifts
+        };
+    }
+
     function initializeStory(root) {
         if (root.getAttribute('data-about-stats-initialized') === 'true') {
             return;
@@ -145,6 +221,7 @@
         );
         var desktopMedia = window.matchMedia(DESKTOP_QUERY);
         var reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
+        var timeline = buildTimeline(statElements.length);
         var state = {
             enhanced: false,
             resizeTimer: null,
@@ -165,6 +242,15 @@
 
         root.setAttribute('data-about-stats-initialized', 'true');
         statElements.forEach(ensureStatDescription);
+
+        function sideForAbout(index) {
+            if (index < 0) return 0;
+            return (index % 2 === 0 ? 1 : -1) * state.direction;
+        }
+
+        function sideForStat(index) {
+            return -sideForAbout(index);
+        }
 
         function updateActiveIndex(index) {
             if (state.activeIndex === index) return;
@@ -187,8 +273,8 @@
                 640
             );
             var screenCount = Math.max(
-                4.9,
-                2 + statElements.length * 0.82
+                5.4,
+                1 + timeline.total * 0.38
             );
 
             root.style.setProperty(
@@ -209,6 +295,34 @@
             return clamp(-rect.top / scrollRange, 0, 1);
         }
 
+        function resolveAboutSide(timelinePosition) {
+            var resolvedSide = 0;
+
+            for (var index = 0; index < timeline.shifts.length; index += 1) {
+                var shift = timeline.shifts[index];
+                var fromSide = sideForAbout(shift.fromIndex);
+                var toSide = sideForAbout(shift.toIndex);
+
+                if (timelinePosition < shift.start) {
+                    break;
+                }
+
+                if (timelinePosition <= shift.end) {
+                    var shiftProgress = smootherstep(
+                        shift.start,
+                        shift.end,
+                        timelinePosition
+                    );
+
+                    return lerp(fromSide, toSide, shiftProgress);
+                }
+
+                resolvedSide = toSide;
+            }
+
+            return resolvedSide;
+        }
+
         function renderScene(progress) {
             if (!state.enhanced) return;
 
@@ -222,59 +336,34 @@
                 document.documentElement.clientHeight || 0,
                 1
             );
-            var statStart = 0.105;
-            var statEnd = 0.94;
-            var statCount = Math.max(statElements.length, 1);
-            var segment = (statEnd - statStart) / statCount;
-            var introEntry = smootherstep(0, 0.075, progress);
-            var outro = smootherstep(0.972, 1, progress);
-            var activeIndex = -1;
-            var aboutSide = 0;
-
-            if (progress >= statStart && statElements.length) {
-                activeIndex = clamp(
-                    Math.floor((progress - statStart) / segment),
-                    0,
-                    statElements.length - 1
-                );
-
-                var segmentStart = statStart + activeIndex * segment;
-                var localProgress = clamp(
-                    (progress - segmentStart) / segment,
-                    0,
-                    1
-                );
-                var currentSide =
-                    (activeIndex % 2 === 0 ? 1 : -1) * state.direction;
-                var previousSide = activeIndex === 0
-                    ? 0
-                    : ((activeIndex - 1) % 2 === 0 ? 1 : -1) *
-                        state.direction;
-                var sideBlend = smootherstep(0, 0.55, localProgress);
-
-                aboutSide = lerp(previousSide, currentSide, sideBlend);
-            }
-
-            var aboutMovePresence = smootherstep(
-                statStart - 0.02,
-                statStart + segment * 0.34,
-                progress
+            var timelinePosition = progress * timeline.total;
+            var intro = smootherstep(0, timeline.introEnd, timelinePosition);
+            var firstShift = smootherstep(
+                timeline.introEnd,
+                timeline.firstShiftEnd,
+                timelinePosition
             );
-            var aboutX =
-                aboutSide * viewportWidth * 0.235 * aboutMovePresence;
+            var outro = smootherstep(
+                timeline.outroStart,
+                timeline.total,
+                timelinePosition
+            );
+            var aboutSide = resolveAboutSide(timelinePosition);
+            var aboutX = aboutSide * viewportWidth * 0.235;
             var aboutY = lerp(
                 viewportHeight * 0.24,
                 0,
-                easeOutCubic(introEntry)
+                easeOutCubic(intro)
             );
-            var aboutScale =
-                lerp(0.95, 1, introEntry) - aboutMovePresence * 0.18;
-            var aboutOpacity = introEntry * (1 - outro);
+            var aboutScale = lerp(0.95, 1, intro) - firstShift * 0.18;
+            var aboutOpacity = intro * (1 - outro);
             var storyStatProgress = clamp(
-                (progress - statStart) / (statEnd - statStart),
+                (timelinePosition - timeline.firstStatStart) /
+                    Math.max(timeline.lastExit - timeline.firstStatStart, 0.001),
                 0,
                 1
             );
+            var activeIndex = -1;
 
             setPixelProperty(root, '--about-x', aboutX);
             setPixelProperty(root, '--about-y', aboutY);
@@ -284,26 +373,46 @@
             setNumberProperty(
                 root,
                 '--progress-opacity',
-                smootherstep(statStart - 0.025, statStart + 0.05, progress) *
-                    (1 - outro)
+                smootherstep(
+                    timeline.firstShiftEnd - 0.08,
+                    timeline.firstStatStart,
+                    timelinePosition
+                ) * (1 - outro)
             );
 
             statElements.forEach(function (statElement, index) {
-                var start = statStart + index * segment;
-                var local = (progress - start) / segment;
-                var enter = smootherstep(-0.2, 0.28, local);
-                var exit = smootherstep(0.72, 1.12, local);
+                var phase = timeline.stats[index];
+                var enter = phase
+                    ? smootherstep(
+                        phase.enterStart,
+                        phase.enterEnd,
+                        timelinePosition
+                    )
+                    : 0;
+                var exit = phase
+                    ? smootherstep(
+                        phase.holdEnd,
+                        phase.exitEnd,
+                        timelinePosition
+                    )
+                    : 1;
                 var presence = enter * (1 - exit) * (1 - outro);
-                var side =
-                    (index % 2 === 0 ? -1 : 1) * state.direction;
-                var x = side * viewportWidth * 0.185;
+                var x = sideForStat(index) * viewportWidth * 0.185;
                 var y =
-                    (1 - enter) * viewportHeight * 0.26 -
-                    exit * viewportHeight * 0.28;
+                    (1 - enter) * viewportHeight * 0.28 -
+                    exit * viewportHeight * 0.3;
                 var scale =
-                    lerp(0.92, 1, easeOutCubic(enter)) - exit * 0.045;
+                    lerp(0.93, 1, easeOutCubic(enter)) - exit * 0.05;
                 var blur =
-                    lerp(14, 0, easeOutCubic(enter)) + exit * 9;
+                    lerp(16, 0, easeOutCubic(enter)) + exit * 10;
+
+                if (
+                    phase &&
+                    timelinePosition >= phase.enterStart &&
+                    timelinePosition < phase.exitEnd
+                ) {
+                    activeIndex = index;
+                }
 
                 setNumberProperty(statElement, '--stat-opacity', presence);
                 setPixelProperty(statElement, '--stat-x', x);
@@ -333,7 +442,7 @@
             var deltaFrames = state.lastFrameTime
                 ? clamp((timestamp - state.lastFrameTime) / 16.667, 0.5, 4)
                 : 1;
-            var smoothing = 1 - Math.pow(0.925, deltaFrames);
+            var smoothing = 1 - Math.pow(0.94, deltaFrames);
             var difference = state.targetProgress - state.renderedProgress;
 
             state.lastFrameTime = timestamp;
@@ -540,6 +649,7 @@
             window.clearTimeout(state.resizeTimer);
             state.resizeTimer = window.setTimeout(function () {
                 state.direction = isRtlDocument() ? -1 : 1;
+                timeline = buildTimeline(statElements.length);
                 setStoryHeight();
                 syncScrollTarget(true);
             }, 120);
@@ -551,14 +661,10 @@
             if (desktopMedia.matches && !reducedMotionMedia.matches) {
                 state.enhanced = true;
                 state.direction = isRtlDocument() ? -1 : 1;
+                timeline = buildTimeline(statElements.length);
                 root.setAttribute('data-enhanced', 'true');
                 root.setAttribute('data-mode', 'desktop');
 
-                /*
-                 * Runtime proof confirmed that overflow:hidden on the story root
-                 * prevents the sticky scene from pinning. overflow:clip preserves
-                 * visual clipping without creating the sticky containment bug.
-                 */
                 root.style.overflow = 'clip';
 
                 setStoryHeight();
