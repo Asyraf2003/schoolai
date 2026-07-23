@@ -18,18 +18,25 @@ final class GalleryPageSectionAdminController extends Controller
         app()->setLocale('id');
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
         return view('admin.gallery.page-sections.form', [
             'adminPageKey' => 'galeri',
             'mode' => 'create',
             'section' => new GalleryPageSection(['is_published' => true]),
+            'continueToMedia' => $request->query('continue') === 'media',
         ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
         $section = GalleryPageSection::create($this->validatedData($request));
+
+        if ($request->boolean('continue_to_media')) {
+            return redirect()
+                ->route('admin.galeri.section-media.create', $section)
+                ->with('success', 'Bagian galeri berhasil dibuat. Sekarang tambahkan medianya.');
+        }
 
         return redirect()
             ->route('admin.galeri.sections.show', $section)
