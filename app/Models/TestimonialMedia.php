@@ -12,7 +12,7 @@ final class TestimonialMedia extends Model
 {
     use AuditsAdminChanges, HasFactory, SoftDeletes;
 
-    public const MAX_ITEMS = 9;
+    public const MAX_ITEMS = 8;
     public const MAX_PHOTO_KB = 10240;
     public const MAX_VIDEO_KB = 102400;
 
