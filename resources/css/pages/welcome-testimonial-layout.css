@@ -1,62 +1,96 @@
 /* Homepage testimonial composition override.
-   Keeps the center video fixed while testimonial media surrounds and overlaps it. */
+   The center video stays fixed while up to 12 testimonial media orbit around it.
+   Several cards intentionally overlap the video, matching the supplied composition sketch. */
 
 @media (min-width: 961px) {
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node {
-        width: clamp(118px, 10vw, 184px);
+        width: clamp(116px, 9.4vw, 178px);
     }
 
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node:nth-child(2n) {
-        width: clamp(108px, 9vw, 168px);
+        width: clamp(104px, 8.5vw, 160px);
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node:nth-child(3n) {
+        width: clamp(110px, 8.9vw, 170px);
     }
 
     /* Same visual composition for LTR and RTL. */
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--1 {
-        left: 6% !important;
+        left: 5% !important;
         right: auto !important;
-        top: 8% !important;
+        top: 7% !important;
     }
 
+    /* Overlaps the upper-left edge of the video. */
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--2 {
-        left: 31% !important;
+        left: 30% !important;
         right: auto !important;
-        top: 25% !important;
+        top: 24% !important;
     }
 
+    /* Sits directly over the video surface. */
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--3 {
-        left: auto !important;
-        right: 32% !important;
-        top: 19% !important;
+        left: 44% !important;
+        right: auto !important;
+        top: 43% !important;
     }
 
+    /* Overlaps the upper-right edge of the video. */
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--4 {
         left: auto !important;
-        right: 7% !important;
-        top: 8% !important;
+        right: 30% !important;
+        top: 18% !important;
     }
 
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--5 {
-        left: 12% !important;
-        right: auto !important;
-        top: 40% !important;
+        left: auto !important;
+        right: 5% !important;
+        top: 7% !important;
     }
 
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--6 {
-        left: auto !important;
-        right: 6% !important;
-        top: 40% !important;
+        left: 11% !important;
+        right: auto !important;
+        top: 39% !important;
     }
 
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--7 {
-        left: 4% !important;
-        right: auto !important;
-        top: 75% !important;
+        left: auto !important;
+        right: 8% !important;
+        top: 39% !important;
     }
 
+    /* Lower-left overlap. */
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--8 {
+        left: 28% !important;
+        right: auto !important;
+        top: 58% !important;
+    }
+
+    /* Lower-right overlap. */
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--9 {
         left: auto !important;
-        right: 7% !important;
-        top: 74% !important;
+        right: 27% !important;
+        top: 50% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--10 {
+        left: 3% !important;
+        right: auto !important;
+        top: 73% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--11 {
+        left: 46% !important;
+        right: auto !important;
+        top: 78% !important;
+    }
+
+    .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__node--12 {
+        left: auto !important;
+        right: 5% !important;
+        top: 72% !important;
     }
 
     .testimonial-network-story[data-mode="desktop"] .testimonial-network-story__main-media {
