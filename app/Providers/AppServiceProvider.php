@@ -7,6 +7,7 @@ use App\View\Composers\AdminPpdbEditComposer;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
                     ->by('google-oauth:session:'.$sessionId),
             ];
         });
+
+        Route::middleware('web')->group(base_path('routes/testimonials.php'));
 
         View::composer('admin.gallery.index', AdminGalleryIndexComposer::class);
         View::composer('admin.ppdb.edit', AdminPpdbEditComposer::class);
