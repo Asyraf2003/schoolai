@@ -171,11 +171,18 @@
   }
 
   @media (min-width: 1025px) {
+    .galeri-section > .container {
+      padding-inline: 0;
+    }
+
     .galeri-story {
-      max-width: min(1360px, calc(100vw - (var(--page-x-gap) * 2)));
-      grid-template-columns: minmax(360px, 500px) minmax(480px, 620px);
-      --gallery-story-gap: clamp(64px, 7vw, 118px);
-      --gallery-visual-shift-x: clamp(20px, 2.5vw, 44px);
+      width: 100%;
+      max-width: none;
+      grid-template-columns: 2fr 7fr 2fr 7fr 2fr;
+      gap: 0;
+      align-items: start;
+      --gallery-story-gap: 0px;
+      --gallery-visual-shift-x: 0px;
     }
 
     .galeri-story::before {
@@ -183,13 +190,19 @@
     }
 
     .galeri-story__copy {
-      max-width: 500px;
+      grid-column: 4;
+      grid-row: 1;
+      width: 100%;
+      max-width: none;
       padding-block: 8vh 14vh;
     }
 
     .galeri-story-card {
       min-height: 72vh;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: minmax(38px, 0.5fr) minmax(0, 6.5fr);
+      gap: 0;
+      align-items: center;
       transition:
         opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1),
         transform 0.58s cubic-bezier(0.22, 1, 0.36, 1),
@@ -197,33 +210,37 @@
     }
 
     .galeri-story-card__content {
-      max-width: 500px;
+      width: 100%;
+      max-width: none;
       gap: 16px;
     }
 
+    .galeri-story-card h3,
+    .galeri-story-card p {
+      width: 100%;
+      max-width: none;
+    }
+
     .galeri-story-card h3 {
-      max-width: 500px;
       font-size: clamp(1.9rem, 1.65vw + 1.08rem, 3rem);
     }
 
     .galeri-story-card p {
-      max-width: 500px;
       font-size: clamp(1.12rem, 0.42vw + 1rem, 1.36rem);
       line-height: 1.78;
     }
 
     .galeri-story__visual {
+      grid-column: 2;
+      grid-row: 1;
       min-height: calc(100svh - var(--nav-h) - 120px);
-      transform: translateX(var(--gallery-visual-shift-x));
-    }
-
-    html[dir="rtl"] .galeri-story__visual {
-      transform: translateX(calc(-1 * var(--gallery-visual-shift-x)));
+      transform: none;
     }
 
     .galeri-story-visual__track {
-      width: min(100%, 620px);
-      aspect-ratio: 1.38 / 1;
+      width: 100%;
+      max-width: none;
+      aspect-ratio: 1.5 / 1;
     }
 
     .galeri-story-visual__panel {
@@ -252,6 +269,15 @@
       left: auto;
       right: auto;
       inset-inline-end: 18px;
+    }
+
+    html[dir="rtl"] .galeri-story__copy {
+      grid-column: 2;
+    }
+
+    html[dir="rtl"] .galeri-story__visual {
+      grid-column: 4;
+      transform: none;
     }
   }
 
