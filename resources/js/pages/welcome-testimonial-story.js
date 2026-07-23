@@ -96,7 +96,6 @@ import '../../css/pages/welcome-testimonial-story.css';
                 ' type="button"',
                 ' class="testimonial-network-story__node testimonial-network-story__node--' + (index + 1) + '"',
                 ' data-testimonial-node',
-                ' data-testimonial-order="' + index + '"',
                 ' data-testimonial-media-type="' + item.type + '"',
                 ' data-testimonial-media-url="' + item.url + '"',
                 ' aria-label="' + label + ' ' + (index + 1) + '"',
@@ -378,19 +377,20 @@ import '../../css/pages/welcome-testimonial-story.css';
             var shrink = smootherstep(0.08, 0.34, progress);
             var titleLift = smootherstep(0.1, 0.39, progress);
             var targetWidth = Math.min(
-                viewportWidth * 0.54,
-                viewportHeight * 1.12
+                viewportWidth * 0.42,
+                viewportHeight * 0.82,
+                720
             );
             var targetHeight = targetWidth * 9 / 16;
             var mediaWidth = lerp(viewportWidth, targetWidth, shrink);
             var mediaHeight = lerp(viewportHeight, targetHeight, shrink);
             var mediaRadius = lerp(0, 28, shrink);
             var titleTop = lerp(
-                viewportHeight * 0.72,
-                Math.max(64, viewportHeight * 0.095),
+                viewportHeight * 0.6,
+                Math.max(150, viewportHeight * 0.2),
                 titleLift
             );
-            var titleScale = lerp(1, 0.54, titleLift);
+            var titleScale = lerp(1, 0.5, titleLift);
 
             setPixelProperty(root, '--testimonial-media-width', mediaWidth);
             setPixelProperty(root, '--testimonial-media-height', mediaHeight);
