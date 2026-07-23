@@ -2,9 +2,11 @@
     'use strict';
 
     var ROOT_SELECTOR = '[data-about-stats-story]';
+    var TRACK_SELECTOR = '[data-about-stats-track]';
     var STAT_SELECTOR = '[data-about-stats-item]';
     var NUMBER_SELECTOR = '[data-about-stats-number]';
     var LABEL_SELECTOR = '[data-about-stats-label]';
+    var VIDEO_SELECTOR = '[data-about-stats-video]';
     var DESKTOP_QUERY = '(min-width: 961px)';
     var REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
@@ -46,11 +48,29 @@
         return 1 - inverse * inverse * inverse * inverse * inverse;
     }
 
+    function easeInOutCubic(value) {
+        var progress = clamp(value, 0, 1);
+
+        return progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    }
+
     function setNumberProperty(element, property, value, precision) {
         if (!element) return;
 
         var digits = typeof precision === 'number' ? precision : 4;
         element.style.setProperty(property, Number(value).toFixed(digits));
+    }
+
+    function setPixelProperty(element, property, value) {
+        if (!element) return;
+        element.style.setProperty(property, Number(value).toFixed(2) + 'px');
+    }
+
+    function setDegreeProperty(element, property, value) {
+        if (!element) return;
+        element.style.setProperty(property, Number(value).toFixed(3) + 'deg');
     }
 
     function digitDetails(character) {
@@ -91,7 +111,7 @@
                     return entry.segment;
                 });
             } catch (error) {
-                // Array.from remains a safe Unicode-aware fallback.
+                // Array.from is still Unicode aware for this fallback.
             }
         }
 
@@ -102,7 +122,7 @@
         var details = digitDetails(character);
         var reel = document.createElement('span');
         var track = document.createElement('span');
-        var turns = 2 + ((totalDigits - digitIndex) % 4);
+        var turns = 2 + ((totalDigits - digitIndex) % 3);
         var maximumStep = turns * 10 + details.value;
         var fragment = document.createDocumentFragment();
 
@@ -110,7 +130,7 @@
         reel.setAttribute('aria-hidden', 'true');
 
         track.className = 'about-stats-story__digit-track';
-        track.style.setProperty('--reel-step', '0');
+        track.style.setProperty('--reel-offset', '0em');
 
         for (var step = 0; step <= maximumStep; step += 1) {
             var cell = document.createElement('span');
@@ -130,9 +150,7 @@
     }
 
     function buildOdometer(numberElement) {
-        if (!numberElement) {
-            return [];
-        }
+        if (!numberElement) return [];
 
         var rawValue = (
             numberElement.getAttribute('data-stat-value') ||
@@ -188,15 +206,27 @@
 
     function letterizeLabel(labelElement, isRtl) {
         if (!labelElement) {
-            return [];
+            return {
+                letters: [],
+                count: 1
+            };
         }
 
         var text = (labelElement.textContent || '').trim();
-        var units = isRtl
-            ? text.split(/(\s+)/)
-            : graphemesForText(text);
+
+        /*
+         * Arabic must remain shaped. Splitting Arabic into graphemes detaches
+         * joined letters, so RTL labels animate word-by-word instead.
+         */
+        var units = text.split(/(\s+)/);
         var visibleCount = units.reduce(function (total, unit) {
-            return total + (/\s/.test(unit) ? 0 : 1);
+            if (/^\s+$/.test(unit)) return total;
+
+            return total + (
+                isRtl
+                    ? 1
+                    : graphemesForText(unit).length
+            );
         }, 0);
         var visibleIndex = 0;
         var accessibleLabel = document.createElement('span');
@@ -211,29 +241,44 @@
         labelElement.appendChild(accessibleLabel);
 
         units.forEach(function (unit) {
-            var letter = document.createElement('span');
             var isSpace = /^\s+$/.test(unit);
 
-            letter.className = 'about-stats-story__letter';
-            letter.setAttribute('aria-hidden', 'true');
-            letter.textContent = unit;
-
             if (isSpace) {
-                letter.classList.add('about-stats-story__letter--space');
-            } else {
+                var space = document.createElement('span');
+                space.className =
+                    'about-stats-story__letter ' +
+                    'about-stats-story__letter--space';
+                space.setAttribute('aria-hidden', 'true');
+                space.textContent = unit;
+                fragment.appendChild(space);
+                return;
+            }
+
+            var word = document.createElement('span');
+            var wordUnits = isRtl
+                ? [unit]
+                : graphemesForText(unit);
+
+            word.className = 'about-stats-story__label-word';
+            word.setAttribute('aria-hidden', 'true');
+
+            wordUnits.forEach(function (wordUnit) {
+                var letter = document.createElement('span');
+
+                letter.className = 'about-stats-story__letter';
+                letter.setAttribute('aria-hidden', 'true');
+                letter.textContent = wordUnit;
                 letter.style.setProperty(
                     '--letter-order',
                     String(visibleIndex)
                 );
+                letter.style.setProperty('--letter-progress', '0');
                 visibleIndex += 1;
-            }
-
-            letter.style.setProperty('--letter-progress', '0');
-            fragment.appendChild(letter);
-
-            if (!isSpace) {
                 letters.push(letter);
-            }
+                word.appendChild(letter);
+            });
+
+            fragment.appendChild(word);
         });
 
         labelElement.appendChild(fragment);
@@ -248,7 +293,7 @@
         var baseProgress = clamp(progress, 0, 1);
 
         reels.forEach(function (reel, index) {
-            var delay = Math.min(index * 0.045, 0.2);
+            var delay = Math.min(index * 0.045, 0.18);
             var localProgress = clamp(
                 (baseProgress - delay) / Math.max(1 - delay, 0.01),
                 0,
@@ -256,7 +301,10 @@
             );
             var step = reel.maximumStep * easeOutQuint(localProgress);
 
-            reel.track.style.setProperty('--reel-step', step.toFixed(4));
+            reel.track.style.setProperty(
+                '--reel-offset',
+                (-step).toFixed(4) + 'em'
+            );
         });
     }
 
@@ -267,16 +315,39 @@
         var count = letterData.count;
 
         letterData.letters.forEach(function (letter, index) {
-            var delay = (index / count) * 0.48;
+            var delay = (index / count) * 0.44;
             var localProgress = clamp(
                 (baseProgress - delay) / Math.max(1 - delay, 0.01),
                 0,
                 1
             );
 
+            var progress = easeOutCubic(localProgress);
+            var outlineProgress = clamp(
+                1 - Math.abs(progress - 0.44) * 2.25,
+                0,
+                1
+            );
+
             letter.style.setProperty(
                 '--letter-progress',
-                easeOutCubic(localProgress).toFixed(4)
+                progress.toFixed(4)
+            );
+            letter.style.setProperty(
+                '--letter-outline-alpha',
+                (outlineProgress * 0.68).toFixed(4)
+            );
+            letter.style.setProperty(
+                '--letter-opacity',
+                lerp(0.22, 1, progress).toFixed(4)
+            );
+            letter.style.setProperty(
+                '--letter-y',
+                lerp(18, 0, progress).toFixed(2) + 'px'
+            );
+            letter.style.setProperty(
+                '--letter-glow-size',
+                (progress * 14).toFixed(2) + 'px'
             );
         });
     }
@@ -297,20 +368,33 @@
         }
     }
 
+    function removeMediaListener(mediaQuery, listener) {
+        if (typeof mediaQuery.removeEventListener === 'function') {
+            mediaQuery.removeEventListener('change', listener);
+            return;
+        }
+
+        if (typeof mediaQuery.removeListener === 'function') {
+            mediaQuery.removeListener(listener);
+        }
+    }
+
     function initializeStory(root) {
         if (root.getAttribute('data-about-stats-initialized') === 'true') {
             return;
         }
 
+        var track = root.querySelector(TRACK_SELECTOR);
+        var sticky =
+            root.querySelector('.about-stats-story__sticky') ||
+            root;
+        var video = root.querySelector(VIDEO_SELECTOR);
         var statElements = Array.prototype.slice.call(
             root.querySelectorAll(STAT_SELECTOR)
         );
         var progressDots = Array.prototype.slice.call(
             root.querySelectorAll('[data-about-stats-progress-dot]')
         );
-        var pointerTarget =
-            root.querySelector('.about-stats-story__sticky') ||
-            root;
         var desktopMedia = window.matchMedia(DESKTOP_QUERY);
         var reducedMotionMedia = window.matchMedia(
             REDUCED_MOTION_QUERY
@@ -322,14 +406,20 @@
         var state = {
             enhanced: false,
             ticking: false,
-            mobileObserver: null,
             resizeTimer: null,
             pointerFrame: null,
             pointerClientX: 0,
             pointerClientY: 0,
+            pointerListening: false,
+            mobileObserver: null,
+            videoObserver: null,
+            videoVisible: false,
+            videoHydrated: false,
             activeIndex: -1,
             stats: []
         };
+
+        if (!track) return;
 
         root.setAttribute('data-about-stats-initialized', 'true');
 
@@ -345,7 +435,83 @@
             });
         });
 
-        function updateProgressDots(activeIndex) {
+        function hydrateVideo() {
+            if (!video || state.videoHydrated) return;
+
+            var hydrated = false;
+
+            video.querySelectorAll('source[data-src]').forEach(
+                function (source) {
+                    var sourceUrl = source.getAttribute('data-src');
+                    if (!sourceUrl) return;
+
+                    source.src = sourceUrl;
+                    source.removeAttribute('data-src');
+                    hydrated = true;
+                }
+            );
+
+            if (hydrated) {
+                state.videoHydrated = true;
+                video.setAttribute('data-hydrated', 'true');
+                video.load();
+            }
+        }
+
+        function syncVideo() {
+            if (!video) return;
+
+            var shouldPlay =
+                state.videoVisible &&
+                !document.hidden &&
+                !reducedMotionMedia.matches;
+
+            if (!shouldPlay) {
+                video.pause();
+                return;
+            }
+
+            hydrateVideo();
+
+            var playAttempt = video.play();
+            if (
+                playAttempt &&
+                typeof playAttempt.catch === 'function'
+            ) {
+                playAttempt.catch(function () {
+                    root.classList.add('has-media-playback-fallback');
+                });
+            }
+        }
+
+        function setupVideoObserver() {
+            if (!video || typeof IntersectionObserver !== 'function') {
+                return;
+            }
+
+            state.videoObserver = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.target !== root) return;
+
+                        state.videoVisible =
+                            entry.isIntersecting &&
+                            entry.intersectionRatio > 0.08;
+
+                        if (state.videoVisible) hydrateVideo();
+                        syncVideo();
+                    });
+                },
+                {
+                    threshold: [0, 0.08, 0.24],
+                    rootMargin: '80% 0px 80% 0px'
+                }
+            );
+
+            state.videoObserver.observe(root);
+        }
+
+        function updateActiveIndex(activeIndex) {
             if (activeIndex === state.activeIndex) return;
 
             state.activeIndex = activeIndex;
@@ -354,332 +520,270 @@
                 activeIndex >= 0 ? String(activeIndex) : ''
             );
 
-            var activeStat = activeIndex >= 0
-                ? state.stats[activeIndex]
-                : null;
-            var sceneAccent = activeStat
-                ? activeStat.element.style.getPropertyValue('--stat-accent')
-                : '';
-
-            root.style.setProperty(
-                '--scene-accent',
-                sceneAccent || '#f2a713'
-            );
-
             progressDots.forEach(function (dot, index) {
                 dot.classList.toggle('is-active', index === activeIndex);
             });
         }
 
-        function resetVisualProperties() {
-            root.style.removeProperty('--progress-opacity');
-            root.style.removeProperty('--hint-opacity');
-            root.style.removeProperty('--about-opacity');
-            root.style.removeProperty('--about-word-opacity');
-            root.style.removeProperty('--about-word-progress');
-            root.style.removeProperty('--about-word-clip');
-            root.style.removeProperty('--about-word-y');
-            root.style.removeProperty('--about-line-scale');
-            root.style.removeProperty('--about-art-opacity');
-            root.style.removeProperty('--about-art-scale');
-            root.style.removeProperty('--about-detail-opacity');
-            root.style.removeProperty('--about-copy-y');
-            root.style.removeProperty('--about-x');
-            root.style.removeProperty('--about-y');
-            root.style.removeProperty('--about-scale');
-            root.style.removeProperty('--about-rotate');
-            root.style.removeProperty('--about-z-rotate');
-            root.style.removeProperty('--pointer-x');
-            root.style.removeProperty('--pointer-y');
-            root.style.removeProperty('--pointer-x-reverse');
-            root.style.removeProperty('--pointer-y-reverse');
-
-            state.stats.forEach(function (statData) {
-                statData.element.style.removeProperty('--stat-opacity');
-                statData.element.style.removeProperty('--stat-x');
-                statData.element.style.removeProperty('--stat-y');
-                statData.element.style.removeProperty('--stat-scale');
-                statData.element.style.removeProperty('--stat-aura-opacity');
-                statData.element.style.removeProperty('--stat-swash-scale');
-                statData.element.style.removeProperty('--stat-orbit-opacity');
-                statData.element.style.removeProperty('--stat-orbit-scale');
-                statData.element.style.removeProperty('--stat-orbit-rotate');
-                statData.element.style.removeProperty('--stat-rotate');
-            });
-        }
-
-        function measureDesktopHeight() {
-            if (!state.enhanced) return;
-
+        function setStoryHeight() {
             var viewportHeight = Math.max(
                 window.innerHeight || 0,
                 document.documentElement.clientHeight || 0,
                 640
             );
-            var screenCount = Math.max(state.stats.length + 0.9, 4.6);
-            var storyHeight = Math.round(viewportHeight * screenCount);
+            var screenCount = Math.max(
+                3.65,
+                2.9 + state.stats.length * 0.19
+            );
 
             root.style.setProperty(
                 '--story-scroll-height',
-                storyHeight + 'px'
+                Math.round(viewportHeight * screenCount) + 'px'
             );
         }
 
-        function renderDesktopStory() {
+        function renderDesktop() {
             state.ticking = false;
 
-            if (!state.enhanced || !state.stats.length) return;
+            if (!state.enhanced) return;
 
-            var viewportHeight = Math.max(window.innerHeight || 1, 1);
-            var viewportWidth = Math.max(window.innerWidth || 1, 1);
-            var rect = root.getBoundingClientRect();
-            var scrollRange = Math.max(root.offsetHeight - viewportHeight, 1);
+            var viewportWidth = Math.max(
+                window.innerWidth || 0,
+                document.documentElement.clientWidth || 0,
+                1
+            );
+            var viewportHeight = Math.max(
+                window.innerHeight || 0,
+                document.documentElement.clientHeight || 0,
+                1
+            );
+            var rect = track.getBoundingClientRect();
+            var scrollRange = Math.max(
+                track.offsetHeight - viewportHeight,
+                1
+            );
             var progress = clamp(-rect.top / scrollRange, 0, 1);
-            var entryProgress = 1 - smoothstep(
-                viewportHeight * 0.3,
-                viewportHeight * 0.82,
+            var approach = 1 - smoothstep(
+                viewportHeight * 0.08,
+                viewportHeight * 0.72,
                 rect.top
             );
-            var introEnd = 0.085;
-            var storyEnd = 0.925;
-            var segment = (storyEnd - introEnd) / state.stats.length;
-            var sideProgress = smoothstep(
-                introEnd * 0.46,
-                introEnd + segment * 0.2,
-                progress
+            var entry = Math.max(
+                approach,
+                smoothstep(0, 0.09, progress)
             );
-            var outroProgress = smoothstep(storyEnd, 0.997, progress);
-            var approximateIndex = clamp(
-                Math.floor(
-                    (progress - introEnd + segment * 0.16) / segment
-                ),
-                0,
-                state.stats.length - 1
+            var entryEase = easeOutCubic(entry);
+            var shrink = easeInOutCubic(
+                smoothstep(0.08, 0.25, progress)
             );
-            var activeIndex = progress < introEnd * 0.55
-                ? -1
-                : approximateIndex;
-            var firstSide = -1;
-            var targetSide = activeIndex >= 0
-                ? (activeIndex % 2 === 0 ? -1 : 1)
-                : firstSide;
-            var previousSide = activeIndex > 0
-                ? ((activeIndex - 1) % 2 === 0 ? -1 : 1)
+            var outro = smoothstep(0.94, 1, progress);
+            var entryScale = lerp(0.79, 1.025, entryEase);
+            var mediaScale = lerp(entryScale, 0.57, shrink);
+            var mediaY =
+                lerp(viewportHeight * 0.31, 0, entryEase) +
+                lerp(0, viewportHeight * 0.008, shrink) -
+                viewportHeight * 0.16 * outro;
+            var mediaOpacity =
+                smoothstep(0.04, 0.38, entry) *
+                (1 - outro * 0.74);
+            var introPresence =
+                smoothstep(0.2, 0.7, entry) *
+                (1 - smoothstep(0.12, 0.24, progress)) *
+                (1 - outro);
+            var introY =
+                lerp(viewportHeight * 0.19, 0, entryEase) -
+                shrink * viewportHeight * 0.17;
+            var introScale =
+                lerp(0.92, 1, entryEase) -
+                shrink * 0.055;
+            var ambientOpacity =
+                lerp(0.08, 0.88, smoothstep(0.2, 0.46, progress)) *
+                (1 - outro * 0.35);
+            var statStart = 0.27;
+            var statInterval = state.stats.length > 1
+                ? Math.min(0.145, 0.5 / (state.stats.length - 1))
                 : 0;
-            var activeLocal = activeIndex >= 0
-                ? (progress - (introEnd + activeIndex * segment)) / segment
-                : 0;
-            var sideBlend = activeIndex === 0
-                ? sideProgress
-                : smoothstep(-0.12, 0.24, activeLocal);
-            var aboutSide = activeIndex <= 0
-                ? lerp(0, targetSide, sideBlend)
-                : lerp(previousSide, targetSide, sideBlend);
-            var aboutHorizontal = aboutSide * viewportWidth * 0.275;
-            var prePinCompensation = -clamp(
-                rect.top,
+            var activeIndex = -1;
+            var activeSide = 0;
+            var storyStatProgress = clamp(
+                (progress - statStart) /
+                    Math.max(
+                        0.58,
+                        statInterval * Math.max(state.stats.length - 1, 1) +
+                            0.12
+                    ),
                 0,
-                viewportHeight
-            ) * 0.52;
-            var aboutEnterY = lerp(
-                viewportHeight * 0.18,
-                0,
-                easeOutCubic(entryProgress)
-            );
-            var aboutExitY = -viewportHeight * 0.46 * outroProgress;
-            var aboutOpacity = smoothstep(
-                0.025,
-                0.38,
-                entryProgress
-            ) * (1 - smoothstep(0.94, 1, progress));
-            var aboutScale = lerp(
-                0.86,
-                1,
-                easeOutCubic(entryProgress)
-            ) - sideProgress * 0.44 - outroProgress * 0.08;
-            var aboutRotation = aboutSide * -1.7;
-            var artProgress = easeOutCubic(
-                smoothstep(0.02, 0.54, entryProgress)
-            );
-            var detailProgress = smoothstep(
-                0.16,
-                0.68,
-                entryProgress
-            );
-            var wordProgress = smoothstep(
-                0.04,
-                0.56,
-                entryProgress
+                1
             );
 
-            root.style.setProperty(
-                '--about-x',
-                aboutHorizontal.toFixed(2) + 'px'
-            );
-            root.style.setProperty(
-                '--about-y',
-                (
-                    prePinCompensation +
-                    aboutEnterY +
-                    aboutExitY
-                ).toFixed(2) + 'px'
-            );
-            root.style.setProperty(
-                '--about-rotate',
-                aboutRotation.toFixed(2) + 'deg'
-            );
-            root.style.setProperty(
-                '--about-z-rotate',
-                (aboutSide * 0.42).toFixed(2) + 'deg'
-            );
-            setNumberProperty(root, '--about-opacity', aboutOpacity);
+            if (progress >= statStart - 0.018 && state.stats.length) {
+                activeIndex = clamp(
+                    Math.floor(
+                        (progress - statStart + statInterval * 0.28) /
+                            Math.max(statInterval, 0.001)
+                    ),
+                    0,
+                    state.stats.length - 1
+                );
+                activeSide = activeIndex % 2 === 0 ? -1 : 1;
+                if (isRtl) activeSide *= -1;
+            }
+
+            var mediaShift =
+                activeIndex >= 0
+                    ? -activeSide * viewportWidth * 0.012
+                    : 0;
+
+            setNumberProperty(root, '--story-progress', storyStatProgress);
+            setNumberProperty(root, '--ambient-opacity', ambientOpacity);
+            setNumberProperty(root, '--media-scale', mediaScale);
+            setPixelProperty(root, '--media-x', mediaShift);
+            setPixelProperty(root, '--media-y', mediaY);
+            setNumberProperty(root, '--media-opacity', mediaOpacity);
+            setNumberProperty(root, '--frame-progress', shrink);
+            setPixelProperty(root, '--frame-radius', shrink * 32);
+            setPixelProperty(root, '--frame-border-dark', shrink * 11);
+            setPixelProperty(root, '--frame-border-light', shrink * 12);
+            setPixelProperty(root, '--frame-shadow-y', shrink * 38);
+            setPixelProperty(root, '--frame-shadow-blur', shrink * 84);
             setNumberProperty(
                 root,
-                '--about-scale',
-                Math.max(aboutScale, 0.43)
-            );
-            setNumberProperty(
-                root,
-                '--about-word-opacity',
-                wordProgress * (1 - outroProgress * 0.74)
-            );
-            setNumberProperty(
-                root,
-                '--about-art-opacity',
-                smoothstep(0.02, 0.34, entryProgress) *
-                    (1 - outroProgress * 0.62)
-            );
-            setNumberProperty(
-                root,
-                '--about-art-scale',
-                lerp(0.72, 1, artProgress)
+                '--frame-shadow-alpha',
+                shrink * 0.25
             );
             setNumberProperty(
                 root,
-                '--about-detail-opacity',
-                detailProgress *
-                    (1 - sideProgress * 0.24) *
-                    (1 - outroProgress * 0.82)
-            );
-            root.style.setProperty(
-                '--about-copy-y',
-                lerp(34, 0, easeOutCubic(detailProgress)).toFixed(2) +
-                    'px'
-            );
-            root.style.setProperty(
-                '--about-word-y',
-                lerp(48, 0, easeOutCubic(wordProgress)).toFixed(2) +
-                    'px'
-            );
-            root.style.setProperty(
-                '--about-word-clip',
-                ((1 - wordProgress) * 100).toFixed(2) + '%'
+                '--media-image-scale',
+                lerp(1.055, 1.02, shrink)
             );
             setNumberProperty(
                 root,
-                '--about-line-scale',
-                smoothstep(0.36, 0.9, entryProgress)
+                '--media-shade',
+                lerp(0.64, 0.09, shrink)
             );
+            setNumberProperty(
+                root,
+                '--media-shade-soft',
+                lerp(0.45, 0.06, shrink)
+            );
+            setNumberProperty(
+                root,
+                '--media-shade-mid',
+                lerp(0.15, 0.02, shrink)
+            );
+            setNumberProperty(
+                root,
+                '--media-glint-opacity',
+                shrink * 0.7
+            );
+            setNumberProperty(root, '--tv-opacity', shrink);
+            setNumberProperty(root, '--intro-opacity', introPresence);
+            setPixelProperty(root, '--intro-y', introY);
+            setNumberProperty(root, '--intro-scale', introScale);
             setNumberProperty(
                 root,
                 '--hint-opacity',
-                smoothstep(0.42, 0.82, entryProgress) *
-                    (1 - smoothstep(0.01, 0.065, progress))
+                smoothstep(0.22, 0.56, entry) *
+                    (1 - smoothstep(0.075, 0.16, progress))
             );
             setNumberProperty(
                 root,
                 '--progress-opacity',
-                smoothstep(introEnd * 0.58, introEnd + 0.025, progress) *
-                    (1 - smoothstep(0.92, 0.98, progress))
+                smoothstep(0.22, 0.31, progress) *
+                    (1 - smoothstep(0.93, 0.985, progress))
+            );
+            setDegreeProperty(
+                root,
+                '--orbit-rotate',
+                lerp(-5, 7, progress)
             );
 
-            var mostVisibleIndex = -1;
-            var mostVisibleOpacity = 0;
-
             state.stats.forEach(function (statData, index) {
-                var start = introEnd + index * segment;
-                var local = (progress - start) / segment;
-                var enter = smoothstep(-0.16, 0.2, local);
-                var leave = 1 - smoothstep(0.72, 1.08, local);
-                var opacity = enter * leave;
-                var side = index % 2 === 0 ? 1 : -1;
-                var targetX = side * viewportWidth * 0.275;
-                var entryX = side * viewportWidth * 0.045 * (1 - enter);
-                var entryY = viewportHeight * 0.21 * (1 - enter);
-                var exitProgress = smoothstep(0.72, 1.08, local);
-                var exitY = -viewportHeight * 0.22 * exitProgress;
-                var scale = lerp(0.86, 1, enter) -
-                    exitProgress * 0.07;
-                var contentProgress = smoothstep(-0.03, 0.35, local);
-                var labelProgress = smoothstep(0.05, 0.49, local);
-                var auraProgress = smoothstep(-0.1, 0.3, local);
-                var orbitProgress = smoothstep(-0.02, 0.42, local);
+                var start = statStart + index * statInterval;
+                var enter = smoothstep(start - 0.025, start + 0.075, progress);
+                var nextStart = index < state.stats.length - 1
+                    ? statStart + (index + 1) * statInterval
+                    : 2;
+                var passed = smoothstep(
+                    nextStart + 0.015,
+                    nextStart + 0.09,
+                    progress
+                );
+                var side = index % 2 === 0 ? -1 : 1;
+                if (isRtl) side *= -1;
 
-                statData.element.style.setProperty(
-                    '--stat-x',
-                    (targetX + entryX).toFixed(2) + 'px'
+                var opacity =
+                    enter *
+                    lerp(1, 0.54, passed) *
+                    (1 - outro);
+                var translateY =
+                    lerp(viewportHeight * 0.09, 0, easeOutCubic(enter)) -
+                    outro * viewportHeight * 0.05;
+                var translateX =
+                    side *
+                    lerp(viewportWidth * 0.025, 0, easeOutCubic(enter));
+                var scale =
+                    lerp(0.78, 1, easeOutCubic(enter)) -
+                    passed * 0.055;
+                var contentProgress = smoothstep(
+                    start - 0.015,
+                    start + 0.08,
+                    progress
                 );
-                statData.element.style.setProperty(
-                    '--stat-y',
-                    (entryY + exitY).toFixed(2) + 'px'
+                var labelProgress = smoothstep(
+                    start + 0.005,
+                    start + 0.095,
+                    progress
                 );
+
                 setNumberProperty(
                     statData.element,
                     '--stat-opacity',
                     opacity
                 );
+                setPixelProperty(
+                    statData.element,
+                    '--stat-x',
+                    translateX
+                );
+                setPixelProperty(
+                    statData.element,
+                    '--stat-y',
+                    translateY
+                );
                 setNumberProperty(
                     statData.element,
                     '--stat-scale',
-                    Math.max(scale, 0.82)
+                    Math.max(scale, 0.7)
                 );
                 setNumberProperty(
                     statData.element,
-                    '--stat-aura-opacity',
-                    opacity * auraProgress
+                    '--stat-line-scale',
+                    smoothstep(start + 0.015, start + 0.09, progress)
                 );
                 setNumberProperty(
                     statData.element,
-                    '--stat-swash-scale',
-                    lerp(0.72, 1, auraProgress)
+                    '--stat-glow',
+                    enter * (1 - passed * 0.72)
                 );
-                setNumberProperty(
+                setPixelProperty(
                     statData.element,
-                    '--stat-orbit-opacity',
-                    opacity * orbitProgress * 0.7
-                );
-                setNumberProperty(
-                    statData.element,
-                    '--stat-orbit-scale',
-                    lerp(0.72, 1, orbitProgress)
-                );
-                statData.element.style.setProperty(
-                    '--stat-orbit-rotate',
-                    (
-                        side * lerp(20, -8, orbitProgress) +
-                        exitProgress * side * 10
-                    ).toFixed(2) + 'deg'
-                );
-                statData.element.style.setProperty(
-                    '--stat-rotate',
-                    (
-                        side * lerp(2.2, 0, enter) -
-                        side * exitProgress * 1.4
-                    ).toFixed(2) + 'deg'
+                    '--stat-glow-size',
+                    enter * (1 - passed * 0.72) * 32
                 );
 
                 setOdometerProgress(statData.reels, contentProgress);
                 setLetterProgress(statData.letterData, labelProgress);
-
-                if (opacity > mostVisibleOpacity) {
-                    mostVisibleOpacity = opacity;
-                    mostVisibleIndex = index;
-                }
             });
 
-            updateProgressDots(
-                mostVisibleOpacity > 0.08 ? mostVisibleIndex : activeIndex
-            );
+            updateActiveIndex(activeIndex);
+        }
+
+        function requestDesktopRender() {
+            if (!state.enhanced || state.ticking) return;
+
+            state.ticking = true;
+            window.requestAnimationFrame(renderDesktop);
         }
 
         function renderPointer() {
@@ -699,25 +803,41 @@
                 -1,
                 1
             );
-            var shiftX = normalizedX * 9;
-            var shiftY = normalizedY * 7;
 
-            root.style.setProperty(
-                '--pointer-x',
-                shiftX.toFixed(2) + 'px'
-            );
-            root.style.setProperty(
-                '--pointer-y',
-                shiftY.toFixed(2) + 'px'
-            );
-            root.style.setProperty(
+            setPixelProperty(root, '--pointer-x', normalizedX * 13);
+            setPixelProperty(root, '--pointer-y', normalizedY * 10);
+            setPixelProperty(
+                root,
                 '--pointer-x-reverse',
-                (-shiftX * 0.72).toFixed(2) + 'px'
+                normalizedX * -9
             );
-            root.style.setProperty(
+            setPixelProperty(
+                root,
                 '--pointer-y-reverse',
-                (-shiftY * 0.72).toFixed(2) + 'px'
+                normalizedY * -7
             );
+            setPixelProperty(
+                root,
+                '--pointer-x-soft',
+                normalizedX * 5
+            );
+            setPixelProperty(
+                root,
+                '--pointer-y-soft',
+                normalizedY * -4
+            );
+            setPixelProperty(
+                root,
+                '--pointer-x-media',
+                normalizedX * 1.2
+            );
+            setPixelProperty(
+                root,
+                '--pointer-y-media',
+                normalizedY * 0.9
+            );
+            setDegreeProperty(root, '--media-tilt-x', normalizedY * -0.7);
+            setDegreeProperty(root, '--media-tilt-y', normalizedX * 0.9);
         }
 
         function requestPointerRender(event) {
@@ -741,29 +861,46 @@
             root.style.setProperty('--pointer-y', '0px');
             root.style.setProperty('--pointer-x-reverse', '0px');
             root.style.setProperty('--pointer-y-reverse', '0px');
+            root.style.setProperty('--pointer-x-soft', '0px');
+            root.style.setProperty('--pointer-y-soft', '0px');
+            root.style.setProperty('--pointer-x-media', '0px');
+            root.style.setProperty('--pointer-y-media', '0px');
+            root.style.setProperty('--media-tilt-x', '0deg');
+            root.style.setProperty('--media-tilt-y', '0deg');
         }
 
-        function requestDesktopRender() {
-            if (!state.enhanced || state.ticking) return;
+        function listenForPointer() {
+            if (state.pointerListening) return;
 
-            state.ticking = true;
-            window.requestAnimationFrame(renderDesktopStory);
+            sticky.addEventListener(
+                'pointermove',
+                requestPointerRender,
+                { passive: true }
+            );
+            sticky.addEventListener(
+                'pointerleave',
+                resetPointer,
+                { passive: true }
+            );
+            state.pointerListening = true;
         }
 
-        function onDesktopResize() {
-            if (!state.enhanced) return;
+        function stopListeningForPointer() {
+            if (!state.pointerListening) return;
 
-            window.clearTimeout(state.resizeTimer);
-            state.resizeTimer = window.setTimeout(function () {
-                measureDesktopHeight();
-                requestDesktopRender();
-            }, 120);
+            sticky.removeEventListener(
+                'pointermove',
+                requestPointerRender
+            );
+            sticky.removeEventListener('pointerleave', resetPointer);
+            state.pointerListening = false;
+            resetPointer();
         }
 
         function animateMobileStat(statData) {
             if (statData.mobileAnimated) return;
-
             statData.mobileAnimated = true;
+
             statData.element.classList.add('is-mobile-visible');
 
             if (reducedMotionMedia.matches) {
@@ -772,7 +909,7 @@
             }
 
             var startTime = null;
-            var duration = 950;
+            var duration = 880;
 
             function frame(timestamp) {
                 if (!startTime) startTime = timestamp;
@@ -783,7 +920,7 @@
                     1
                 );
 
-                setStatContentProgress(statData, easeOutCubic(progress));
+                setStatContentProgress(statData, progress);
 
                 if (progress < 1) {
                     window.requestAnimationFrame(frame);
@@ -793,20 +930,30 @@
             window.requestAnimationFrame(frame);
         }
 
-        function setupLinearStory() {
+        function setupLinearMode(mode) {
+            root.setAttribute('data-enhanced', 'false');
+            root.setAttribute('data-mode', mode);
+            root.style.removeProperty('--story-scroll-height');
+            updateActiveIndex(-1);
+
             state.stats.forEach(function (statData) {
                 statData.mobileAnimated = false;
                 statData.element.classList.remove('is-mobile-visible');
+                statData.element.style.removeProperty('--stat-opacity');
+                statData.element.style.removeProperty('--stat-x');
+                statData.element.style.removeProperty('--stat-y');
+                statData.element.style.removeProperty('--stat-scale');
+                statData.element.style.removeProperty('--stat-line-scale');
+                statData.element.style.removeProperty('--stat-glow');
+                statData.element.style.removeProperty('--stat-glow-size');
                 setStatContentProgress(statData, 0);
             });
 
             if (
-                reducedMotionMedia.matches ||
-                !('IntersectionObserver' in window)
+                mode === 'static' ||
+                typeof IntersectionObserver !== 'function'
             ) {
-                state.stats.forEach(function (statData) {
-                    animateMobileStat(statData);
-                });
+                state.stats.forEach(animateMobileStat);
                 return;
             }
 
@@ -815,114 +962,172 @@
                     entries.forEach(function (entry) {
                         if (!entry.isIntersecting) return;
 
-                        var index = statElements.indexOf(entry.target);
+                        var statData = state.stats.find(
+                            function (candidate) {
+                                return candidate.element === entry.target;
+                            }
+                        );
 
-                        if (index >= 0) {
-                            animateMobileStat(state.stats[index]);
-                        }
+                        if (!statData) return;
 
+                        animateMobileStat(statData);
                         observer.unobserve(entry.target);
                     });
                 },
                 {
-                    threshold: 0.18,
+                    threshold: 0.16,
                     rootMargin: '0px 0px -4% 0px'
                 }
             );
 
-            statElements.forEach(function (statElement) {
-                state.mobileObserver.observe(statElement);
+            state.stats.forEach(function (statData) {
+                state.mobileObserver.observe(statData.element);
             });
         }
 
-        function teardownCurrentMode() {
+        function clearDesktopProperties() {
+            [
+                '--story-progress',
+                '--ambient-opacity',
+                '--media-scale',
+                '--media-x',
+                '--media-y',
+                '--media-opacity',
+                '--frame-progress',
+                '--frame-radius',
+                '--frame-border-dark',
+                '--frame-border-light',
+                '--frame-shadow-y',
+                '--frame-shadow-blur',
+                '--frame-shadow-alpha',
+                '--media-image-scale',
+                '--media-shade',
+                '--media-shade-soft',
+                '--media-shade-mid',
+                '--media-glint-opacity',
+                '--tv-opacity',
+                '--intro-opacity',
+                '--intro-y',
+                '--intro-scale',
+                '--hint-opacity',
+                '--progress-opacity',
+                '--orbit-rotate'
+            ].forEach(function (property) {
+                root.style.removeProperty(property);
+            });
+        }
+
+        function teardownMode() {
             window.removeEventListener('scroll', requestDesktopRender);
             window.removeEventListener('resize', onDesktopResize);
-            pointerTarget.removeEventListener(
-                'pointermove',
-                requestPointerRender
-            );
-            pointerTarget.removeEventListener('pointerleave', resetPointer);
             window.clearTimeout(state.resizeTimer);
-            resetPointer();
+
+            stopListeningForPointer();
 
             if (state.mobileObserver) {
                 state.mobileObserver.disconnect();
                 state.mobileObserver = null;
             }
 
+            state.enhanced = false;
             state.ticking = false;
-            root.style.removeProperty('--story-scroll-height');
-            resetVisualProperties();
-            updateProgressDots(-1);
+            clearDesktopProperties();
         }
 
-        function applyMode() {
-            teardownCurrentMode();
+        function onDesktopResize() {
+            window.clearTimeout(state.resizeTimer);
+            state.resizeTimer = window.setTimeout(function () {
+                setStoryHeight();
+                requestDesktopRender();
+            }, 120);
+        }
 
-            state.enhanced =
+        function setupMode() {
+            teardownMode();
+
+            var shouldEnhance =
                 desktopMedia.matches &&
-                !reducedMotionMedia.matches &&
-                state.stats.length > 0;
+                !reducedMotionMedia.matches;
 
-            root.setAttribute(
-                'data-enhanced',
-                state.enhanced ? 'true' : 'false'
-            );
+            if (shouldEnhance) {
+                state.enhanced = true;
+                root.setAttribute('data-enhanced', 'true');
+                root.setAttribute('data-mode', 'desktop');
 
-            if (state.enhanced) {
                 state.stats.forEach(function (statData) {
-                    statData.element.classList.remove(
-                        'is-mobile-visible'
-                    );
+                    statData.mobileAnimated = false;
+                    statData.element.classList.remove('is-mobile-visible');
                     setStatContentProgress(statData, 0);
                 });
 
-                measureDesktopHeight();
-                window.addEventListener('scroll', requestDesktopRender, {
-                    passive: true
-                });
-                window.addEventListener('resize', onDesktopResize, {
-                    passive: true
-                });
-                pointerTarget.addEventListener(
-                    'pointermove',
-                    requestPointerRender,
+                setStoryHeight();
+                listenForPointer();
+                window.addEventListener(
+                    'scroll',
+                    requestDesktopRender,
                     { passive: true }
                 );
-                pointerTarget.addEventListener(
-                    'pointerleave',
-                    resetPointer,
+                window.addEventListener(
+                    'resize',
+                    onDesktopResize,
                     { passive: true }
                 );
                 requestDesktopRender();
+                syncVideo();
                 return;
             }
 
-            setupLinearStory();
+            setupLinearMode(
+                reducedMotionMedia.matches ? 'static' : 'mobile'
+            );
+            syncVideo();
         }
 
-        addMediaListener(desktopMedia, applyMode);
-        addMediaListener(reducedMotionMedia, applyMode);
-        window.addEventListener('pageshow', function () {
-            if (state.enhanced) {
-                measureDesktopHeight();
-                requestDesktopRender();
-            }
-        });
+        function onVisibilityChange() {
+            syncVideo();
+        }
 
-        applyMode();
+        setupVideoObserver();
+        setupMode();
+
+        addMediaListener(desktopMedia, setupMode);
+        addMediaListener(reducedMotionMedia, setupMode);
+        document.addEventListener(
+            'visibilitychange',
+            onVisibilityChange
+        );
+
+        window.addEventListener(
+            'pagehide',
+            function cleanup() {
+                teardownMode();
+
+                if (state.videoObserver) {
+                    state.videoObserver.disconnect();
+                }
+
+                if (video) video.pause();
+
+                removeMediaListener(desktopMedia, setupMode);
+                removeMediaListener(reducedMotionMedia, setupMode);
+                document.removeEventListener(
+                    'visibilitychange',
+                    onVisibilityChange
+                );
+            },
+            { once: true }
+        );
     }
 
-    function boot() {
-        var roots = document.querySelectorAll(ROOT_SELECTOR);
-
-        Array.prototype.forEach.call(roots, initializeStory);
+    function initialize() {
+        document.querySelectorAll(ROOT_SELECTOR).forEach(initializeStory);
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', boot, { once: true });
+        document.addEventListener('DOMContentLoaded', initialize, {
+            once: true
+        });
     } else {
-        boot();
+        initialize();
     }
 })();
