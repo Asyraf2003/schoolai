@@ -5,11 +5,32 @@
   $label = $item['label'] ?? $title;
   $mediaUrl = $item['media_url'] ?? null;
   $thumbnailUrl = $item['thumbnail_url'] ?? null;
+
+  $fallbackImages = [
+    'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=82',
+    'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=82',
+    'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1400&q=82',
+    'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1400&q=82',
+    'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=82',
+    'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1400&q=82',
+  ];
+
+  if (! is_string($mediaUrl) || trim($mediaUrl) === '') {
+    $fallbackKey = $label !== '' ? $label : 'Al Mustaqbal School';
+    $fallbackIndex = ((int) sprintf('%u', crc32($fallbackKey))) % count($fallbackImages);
+    $mediaUrl = $fallbackImages[$fallbackIndex];
+    $thumbnailUrl = $mediaUrl;
+    $type = 'photo';
+    $isVideo = false;
+  }
+
   $videoProvider = $item['video_provider'] ?? 'video';
   $videoProviderLogoUrl = $item['video_provider_logo_url'] ?? null;
   $videoProviderLabel = $item['video_provider_label'] ?? __('pages.common.media_video');
   $emoji = $item['emoji'] ?? ($isVideo ? '▶️' : '📸');
-  $badge = $item['badge'] ?? ($isVideo ? __('pages.common.media_video') : __('pages.common.media_photo'));
+  $badge = $isVideo
+    ? ($item['badge'] ?? __('pages.common.media_video'))
+    : __('pages.common.media_photo');
   $gradient = $item['gradient'] ?? ['#DCF1F7', '#FFC93C'];
 @endphp
 
@@ -19,7 +40,7 @@
   role="button"
   data-gallery-wall-card
   data-gallery-title="{{ $label }}"
-  data-gallery-media-url="{{ $mediaUrl ?? '' }}"
+  data-gallery-media-url="{{ $mediaUrl }}"
   data-gallery-thumb-url="{{ $thumbnailUrl ?? '' }}"
   data-gallery-is-video="{{ $isVideo ? '1' : '0' }}"
   data-gallery-emoji="{{ $emoji }}"
@@ -55,7 +76,7 @@
         <span class="social-video-cover__hint">{{ __('pages.common.play_media') }}</span>
       </span>
       <span class="gallery-wall-card__play social-video-cover__play" aria-hidden="true">▶</span>
-    @elseif($mediaUrl)
+    @else
       <img
         data-lazy-media
         data-lazy-src="{{ $mediaUrl }}"
@@ -63,8 +84,6 @@
         loading="lazy"
         decoding="async"
       >
-    @else
-      <span class="gallery-wall-card__fallback" aria-hidden="true">{{ $emoji }}</span>
     @endif
   </div>
 </div>
