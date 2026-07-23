@@ -89,6 +89,10 @@
 <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
 
+@if (request()->routeIs('home'))
+  <link rel="stylesheet" href="{{ asset('css/welcome-gallery-desktop.css') }}" />
+@endif
+
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="{{ $headSiteName }}" />
 <meta property="og:locale" content="{{ $headLocale }}" />
@@ -168,117 +172,6 @@
   html[dir="rtl"] .skip-link:focus {
     right: 0;
     left: auto;
-  }
-
-  @media (min-width: 1025px) {
-    .galeri-section > .container {
-      padding-inline: 0;
-    }
-
-    .galeri-story {
-      width: 100%;
-      max-width: none;
-      grid-template-columns: 2fr 7fr 2fr 7fr 2fr;
-      gap: 0;
-      align-items: start;
-      --gallery-story-gap: 0px;
-      --gallery-visual-shift-x: 0px;
-    }
-
-    .galeri-story::before {
-      display: none;
-    }
-
-    .galeri-story__copy {
-      grid-column: 4;
-      grid-row: 1;
-      width: 100%;
-      max-width: none;
-      padding-block: 8vh 14vh;
-    }
-
-    .galeri-story-card {
-      min-height: 72vh;
-      display: grid;
-      grid-template-columns: minmax(38px, 0.5fr) minmax(0, 6.5fr);
-      gap: 0;
-      align-items: center;
-      transition:
-        opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.58s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.58s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .galeri-story-card__content {
-      width: 100%;
-      max-width: none;
-      gap: 16px;
-    }
-
-    .galeri-story-card h3,
-    .galeri-story-card p {
-      width: 100%;
-      max-width: none;
-    }
-
-    .galeri-story-card h3 {
-      font-size: clamp(1.9rem, 1.65vw + 1.08rem, 3rem);
-    }
-
-    .galeri-story-card p {
-      font-size: clamp(1.12rem, 0.42vw + 1rem, 1.36rem);
-      line-height: 1.78;
-    }
-
-    .galeri-story__visual {
-      grid-column: 2;
-      grid-row: 1;
-      min-height: calc(100svh - var(--nav-h) - 120px);
-      transform: none;
-    }
-
-    .galeri-story-visual__track {
-      width: 100%;
-      max-width: none;
-      aspect-ratio: 1.5 / 1;
-    }
-
-    .galeri-story-visual__panel {
-      transform: translateY(22px) scale(0.96);
-      transition:
-        opacity 0.78s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.78s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .galeri-story-visual__panel.is-active {
-      transform: translateY(0) scale(1);
-    }
-
-    .galeri-story-visual__media {
-      border-radius: 32px;
-    }
-
-    .galeri-story-visual__badge {
-      left: auto;
-      right: auto;
-      inset-inline-start: 18px;
-    }
-
-    .galeri-story-visual__play {
-      left: auto;
-      right: auto;
-      inset-inline-end: 18px;
-    }
-
-    html[dir="rtl"] .galeri-story__copy {
-      grid-column: 2;
-    }
-
-    html[dir="rtl"] .galeri-story__visual {
-      grid-column: 4;
-      transform: none;
-    }
   }
 
   @media (max-width: 720px) {
