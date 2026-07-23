@@ -6,4 +6,8 @@ import { installTestimonialAdminNav } from './admin/testimonial-nav.js';
 ready(() => {
     installTestimonialAdminNav();
     loadPage(document.body?.dataset?.page);
+
+    if (document.getElementById('galeri') && document.getElementById('artikel')) {
+        import('./pages/welcome-testimonial-extra-nodes.js');
+    }
 });
