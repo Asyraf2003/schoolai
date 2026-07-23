@@ -276,6 +276,10 @@
         transition-delay: 0s;
     }
 
+    html[dir="rtl"] .nav-shell .navbar__menu.active {
+        transform: translateX(0);
+    }
+
     .nav-shell .navbar__menu > ul {
         width: 100%;
         display: flex;
