@@ -222,6 +222,5 @@
   @vite([
     'resources/css/pages/welcome-scroll-reveal.css',
     'resources/js/pages/welcome-scroll-reveal.js',
-    'resources/js/pages/welcome-about-flow.js',
   ])
 @endif
