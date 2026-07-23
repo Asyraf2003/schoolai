@@ -240,7 +240,7 @@ function initHeroSlider(root) {
     }
 
     function canAutoplay() {
-        return slides.length > 1 && !userPaused && !reducedMotion.matches && !document.hidden;
+        return slides.length > 1 && !userPaused && !document.hidden;
     }
 
     function syncVideos() {
