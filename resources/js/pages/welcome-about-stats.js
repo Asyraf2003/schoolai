@@ -143,6 +143,7 @@
         var totalDigits = characters.reduce(function (total, character) {
             return total + (digitDetails(character) ? 1 : 0);
         }, 0);
+        var accessibleValue = document.createElement('span');
         var reels = [];
         var digitIndex = 0;
         var fragment = document.createDocumentFragment();
@@ -173,9 +174,13 @@
             fragment.appendChild(token);
         });
 
+        accessibleValue.className = 'sr-only';
+        accessibleValue.textContent = rawValue;
+
         numberElement.textContent = '';
-        numberElement.setAttribute('aria-label', rawValue);
+        numberElement.removeAttribute('aria-label');
         numberElement.setAttribute('data-odometer-ready', 'true');
+        numberElement.appendChild(accessibleValue);
         numberElement.appendChild(fragment);
 
         return reels;
@@ -194,11 +199,16 @@
             return total + (/\s/.test(unit) ? 0 : 1);
         }, 0);
         var visibleIndex = 0;
+        var accessibleLabel = document.createElement('span');
         var letters = [];
         var fragment = document.createDocumentFragment();
 
+        accessibleLabel.className = 'sr-only';
+        accessibleLabel.textContent = text;
+
         labelElement.textContent = '';
-        labelElement.setAttribute('aria-label', text);
+        labelElement.removeAttribute('aria-label');
+        labelElement.appendChild(accessibleLabel);
 
         units.forEach(function (unit) {
             var letter = document.createElement('span');
