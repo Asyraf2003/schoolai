@@ -7,11 +7,11 @@
   <header class="admin-topbar admin-topbar--compact">
     <div>
       <h1>Testimoni</h1>
-      <p>Kelola media untuk section “Apa Kata Mereka Tentang Al Mustaqbal?”. Urutan video menentukan video utama pertama yang tampil di tengah.</p>
     </div>
 
     <div class="admin-inline-actions">
       <span class="admin-counter">{{ $activeItems->count() }}/{{ $maxItems }} aktif · {{ $archivedItems->count() }} arsip</span>
+
       @if($canCreate)
         <a href="{{ route('admin.testimoni.create') }}" class="admin-primary-action">Tambah Media</a>
       @endif
@@ -30,15 +30,15 @@
     </div>
   @endif
 
-  <section class="admin-gallery-block" aria-label="Media testimoni aktif">
+  <section class="admin-gallery-block" aria-label="Daftar media testimoni">
     <div class="admin-gallery-block__head">
       <div>
-        <h2>Media Aktif</h2>
-        <p>Foto menjadi media pendamping. Video aktif dengan urutan paling atas menjadi video utama section testimoni.</p>
+        <h2>Daftar Media</h2>
       </div>
+      <span class="admin-counter">{{ $activeItems->count() + $archivedItems->count() }} data</span>
     </div>
 
-    @if($activeItems->isNotEmpty())
+    @if($activeItems->isNotEmpty() || $archivedItems->isNotEmpty())
       <div class="gallery-lite-list">
         @foreach($activeItems as $item)
           <article class="gallery-lite-row">
@@ -84,47 +84,43 @@
             </span>
           </article>
         @endforeach
+
+        @if($archivedItems->isNotEmpty())
+          <div class="admin-stat-archive-title">
+            <strong>Arsip</strong>
+            <small>{{ $archivedItems->count() }} data</small>
+          </div>
+
+          @foreach($archivedItems as $item)
+            <article class="gallery-lite-row is-deleted">
+              <span class="gallery-lite-row__order">A{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+
+              <span class="gallery-lite-row__body">
+                <strong>{{ $item->type_label }} · {{ $item->source_label }}</strong>
+                <small>{{ $item->media_label }}</small>
+              </span>
+
+              <span class="gallery-lite-status is-deleted">Arsip</span>
+
+              <span class="gallery-lite-actions">
+                @if($canCreate)
+                  <form method="POST" action="{{ route('admin.testimoni.restore', $item->getKey()) }}">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="admin-small-action admin-small-action--restore">Pulihkan</button>
+                  </form>
+                @else
+                  <span class="admin-archive-note">Slot aktif penuh.</span>
+                @endif
+              </span>
+            </article>
+          @endforeach
+        @endif
       </div>
     @else
       <div class="gallery-lite-empty">
         <h2>Belum ada media testimoni.</h2>
-        <p>Homepage tetap memakai media dummy sampai media testimoni aktif ditambahkan.</p>
       </div>
     @endif
   </section>
-
-  @if($archivedItems->isNotEmpty())
-    <section class="admin-gallery-block" aria-label="Arsip media testimoni" style="margin-top: 22px;">
-      <div class="admin-gallery-block__head">
-        <div>
-          <h2>Arsip</h2>
-          <p>Media yang dihapus dari daftar aktif tetap dapat dipulihkan.</p>
-        </div>
-      </div>
-
-      <div class="gallery-lite-list">
-        @foreach($archivedItems as $item)
-          <article class="gallery-lite-row is-deleted">
-            <span class="gallery-lite-row__order">A{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-            <span class="gallery-lite-row__body">
-              <strong>{{ $item->type_label }} · {{ $item->source_label }}</strong>
-              <small>{{ $item->media_label }}</small>
-            </span>
-            <span class="gallery-lite-status is-deleted">Dihapus</span>
-            <span class="gallery-lite-actions">
-              @if($canCreate)
-                <form method="POST" action="{{ route('admin.testimoni.restore', $item->getKey()) }}">
-                  @csrf
-                  @method('PATCH')
-                  <button type="submit" class="admin-small-action admin-small-action--restore">Pulihkan</button>
-                </form>
-              @else
-                <span class="admin-archive-note">Slot aktif penuh.</span>
-              @endif
-            </span>
-          </article>
-        @endforeach
-      </div>
-    </section>
-  @endif
 @endsection
