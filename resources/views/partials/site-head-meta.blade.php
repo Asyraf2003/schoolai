@@ -224,6 +224,7 @@
 
 @if (request()->routeIs('home'))
   @vite([
+    'resources/css/pages/welcome-hero-visual.css',
     'resources/css/pages/welcome-scroll-reveal.css',
     'resources/js/pages/welcome-scroll-reveal.js',
   ])
