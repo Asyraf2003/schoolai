@@ -1,5 +1,5 @@
-/* Hero visual refinement: keep media vivid and move the Islamic geometry into a
- * clean white line pattern aligned to the outer edge.
+/* Hero visual refinement: keep media vivid and replace the geometric edge
+ * pattern with a restrained local image accent.
  */
 
 .home-page .hero-cinema__media::after,
@@ -37,31 +37,43 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
 .home-page .hero-cinema__ornaments::before {
     content: "";
     position: absolute;
-    inset-block: 0;
-    inset-inline-end: 0;
-    width: clamp(260px, 32vw, 560px);
-    background-image: url('/media/home/hero-islamic-pattern.svg');
-    background-repeat: repeat;
-    background-size: clamp(220px, 19vw, 320px) clamp(220px, 19vw, 320px);
-    background-position: top right;
-    opacity: 0.4;
-    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 68%, transparent 100%);
-    mask-image: linear-gradient(to left, #000 0%, #000 68%, transparent 100%);
+    inset-block: 8% 5%;
+    inset-inline-end: -2.5%;
+    width: clamp(220px, 27vw, 470px);
+    background-image: url('/media/home/6.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center right;
+    opacity: 0.16;
+    filter: blur(1.2px) saturate(0.72) contrast(0.92);
+    transform: rotate(-3deg) scale(1.04);
+    transform-origin: center right;
+    -webkit-mask-image: linear-gradient(to left, #000 0%, rgb(0 0 0 / 0.92) 54%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 0%, rgb(0 0 0 / 0.92) 54%, transparent 100%);
 }
 
 html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
     inset-inline-end: auto;
-    inset-inline-start: 0;
-    background-position: top left;
-    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 68%, transparent 100%);
-    mask-image: linear-gradient(to right, #000 0%, #000 68%, transparent 100%);
+    inset-inline-start: -2.5%;
+    background-position: center left;
+    transform: rotate(3deg) scaleX(-1) scale(1.04);
+    transform-origin: center left;
+    -webkit-mask-image: linear-gradient(to right, #000 0%, rgb(0 0 0 / 0.92) 54%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, rgb(0 0 0 / 0.92) 54%, transparent 100%);
 }
 
 @media (max-width: 767px) {
     .home-page .hero-cinema__ornaments::before {
-        width: min(50vw, 230px);
-        background-size: 176px 176px;
-        opacity: 0.28;
+        inset-block: 18% 12%;
+        inset-inline-end: -10%;
+        width: min(46vw, 220px);
+        opacity: 0.1;
+        filter: blur(1.4px) saturate(0.68);
+    }
+
+    html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
+        inset-inline-end: auto;
+        inset-inline-start: -10%;
     }
 }
 
