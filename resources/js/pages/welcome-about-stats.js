@@ -7,18 +7,24 @@
     var DESKTOP_QUERY = '(min-width: 961px)';
     var REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
+    /*
+     * The story deliberately spends more scroll distance on each transition.
+     * Each statistic now enters slowly, settles for a beat, breathes once, and
+     * only then leaves before the About panel travels to the opposite side.
+     */
     var TIMING = {
-        intro: 0.65,
-        firstShift: 0.75,
-        preStat: 0.15,
-        statEnter: 0.75,
-        statHold: 0.65,
-        statExit: 0.7,
-        gapAfterExit: 0.18,
-        aboutShift: 0.85,
-        preNextStat: 0.18,
-        finalPause: 0.16,
-        outro: 0.45
+        intro: 1.05,
+        firstShift: 1.4,
+        preStat: 0.32,
+        statEnter: 1.25,
+        statSettle: 0.48,
+        statHold: 1.05,
+        statExit: 0.95,
+        gapAfterExit: 0.34,
+        aboutShift: 1.4,
+        preNextStat: 0.34,
+        finalPause: 0.5,
+        outro: 0.72
     };
 
     var STAT_DESCRIPTIONS = {
@@ -161,12 +167,14 @@
         for (var index = 0; index < statCount; index += 1) {
             var enterStart = cursor;
             var enterEnd = enterStart + TIMING.statEnter;
-            var holdEnd = enterEnd + TIMING.statHold;
+            var settleEnd = enterEnd + TIMING.statSettle;
+            var holdEnd = settleEnd + TIMING.statHold;
             var exitEnd = holdEnd + TIMING.statExit;
 
             stats.push({
                 enterStart: enterStart,
                 enterEnd: enterEnd,
+                settleEnd: settleEnd,
                 holdEnd: holdEnd,
                 exitEnd: exitEnd
             });
@@ -273,8 +281,8 @@
                 640
             );
             var screenCount = Math.max(
-                5.4,
-                1 + timeline.total * 0.38
+                7.2,
+                1 + timeline.total * 0.31
             );
 
             root.style.setProperty(
@@ -349,13 +357,13 @@
                 timelinePosition
             );
             var aboutSide = resolveAboutSide(timelinePosition);
-            var aboutX = aboutSide * viewportWidth * 0.235;
+            var aboutX = aboutSide * viewportWidth * 0.225;
             var aboutY = lerp(
-                viewportHeight * 0.24,
+                viewportHeight * 0.26,
                 0,
                 easeOutCubic(intro)
             );
-            var aboutScale = lerp(0.95, 1, intro) - firstShift * 0.18;
+            var baseAboutScale = lerp(0.96, 1, intro) - firstShift * 0.12;
             var aboutOpacity = intro * (1 - outro);
             var storyStatProgress = clamp(
                 (timelinePosition - timeline.firstStatStart) /
@@ -364,17 +372,17 @@
                 1
             );
             var activeIndex = -1;
+            var activeSettle = 0;
 
             setPixelProperty(root, '--about-x', aboutX);
             setPixelProperty(root, '--about-y', aboutY);
-            setNumberProperty(root, '--about-scale', Math.max(aboutScale, 0.8));
             setNumberProperty(root, '--about-opacity', aboutOpacity);
             setNumberProperty(root, '--story-progress', storyStatProgress);
             setNumberProperty(
                 root,
                 '--progress-opacity',
                 smootherstep(
-                    timeline.firstShiftEnd - 0.08,
+                    timeline.firstShiftEnd - 0.12,
                     timeline.firstStatStart,
                     timelinePosition
                 ) * (1 - outro)
@@ -397,14 +405,37 @@
                     )
                     : 1;
                 var presence = enter * (1 - exit) * (1 - outro);
-                var x = sideForStat(index) * viewportWidth * 0.185;
+                var x = sideForStat(index) * viewportWidth * 0.18;
                 var y =
-                    (1 - enter) * viewportHeight * 0.28 -
-                    exit * viewportHeight * 0.3;
+                    (1 - enter) * viewportHeight * 0.32 -
+                    exit * viewportHeight * 0.28;
                 var scale =
-                    lerp(0.93, 1, easeOutCubic(enter)) - exit * 0.05;
+                    lerp(0.94, 1, easeOutCubic(enter)) - exit * 0.045;
                 var blur =
-                    lerp(16, 0, easeOutCubic(enter)) + exit * 10;
+                    lerp(18, 0, easeOutCubic(enter)) + exit * 9;
+                var settle = 0;
+
+                if (phase) {
+                    var settleIn = smootherstep(
+                        phase.enterEnd,
+                        phase.settleEnd,
+                        timelinePosition
+                    );
+                    var settleOut = smootherstep(
+                        phase.holdEnd - 0.22,
+                        phase.holdEnd,
+                        timelinePosition
+                    );
+                    var holdProgress = clamp(
+                        (timelinePosition - phase.enterEnd) /
+                            Math.max(phase.holdEnd - phase.enterEnd, 0.001),
+                        0,
+                        1
+                    );
+                    var breathe = 0.55 + 0.45 * Math.sin(holdProgress * Math.PI);
+
+                    settle = settleIn * (1 - settleOut) * breathe;
+                }
 
                 if (
                     phase &&
@@ -412,6 +443,7 @@
                     timelinePosition < phase.exitEnd
                 ) {
                     activeIndex = index;
+                    activeSettle = Math.max(activeSettle, settle);
                 }
 
                 setNumberProperty(statElement, '--stat-opacity', presence);
@@ -419,8 +451,14 @@
                 setPixelProperty(statElement, '--stat-y', y);
                 setNumberProperty(statElement, '--stat-scale', scale);
                 setPixelProperty(statElement, '--stat-blur', blur);
+                setNumberProperty(statElement, '--stat-settle', settle);
             });
 
+            setNumberProperty(
+                root,
+                '--about-scale',
+                Math.max(baseAboutScale + activeSettle * 0.008, 0.84)
+            );
             updateActiveIndex(activeIndex);
         }
 
@@ -442,13 +480,13 @@
             var deltaFrames = state.lastFrameTime
                 ? clamp((timestamp - state.lastFrameTime) / 16.667, 0.5, 4)
                 : 1;
-            var smoothing = 1 - Math.pow(0.94, deltaFrames);
+            var smoothing = 1 - Math.pow(0.96, deltaFrames);
             var difference = state.targetProgress - state.renderedProgress;
 
             state.lastFrameTime = timestamp;
             state.renderedProgress += difference * smoothing;
 
-            if (Math.abs(difference) < 0.00008) {
+            if (Math.abs(difference) < 0.00006) {
                 state.renderedProgress = state.targetProgress;
             }
 
@@ -500,10 +538,10 @@
                 1
             );
 
-            setPixelProperty(root, '--ambient-x', normalizedX * 11);
-            setPixelProperty(root, '--ambient-y', normalizedY * 8);
-            setPixelProperty(root, '--ambient-x-reverse', normalizedX * -8);
-            setPixelProperty(root, '--ambient-y-reverse', normalizedY * -6);
+            setPixelProperty(root, '--ambient-x', normalizedX * 9);
+            setPixelProperty(root, '--ambient-y', normalizedY * 7);
+            setPixelProperty(root, '--ambient-x-reverse', normalizedX * -7);
+            setPixelProperty(root, '--ambient-y-reverse', normalizedY * -5);
         }
 
         function requestPointerRender(event) {
@@ -558,7 +596,14 @@
             statElement.classList.add('is-mobile-visible');
         }
 
+        function disconnectMobileObserver() {
+            if (!state.mobileObserver) return;
+            state.mobileObserver.disconnect();
+            state.mobileObserver = null;
+        }
+
         function setupLinearMode(mode) {
+            disconnectMobileObserver();
             root.setAttribute('data-enhanced', 'false');
             root.setAttribute('data-mode', mode);
             root.style.removeProperty('--story-scroll-height');
@@ -573,6 +618,7 @@
                 statElement.style.removeProperty('--stat-y');
                 statElement.style.removeProperty('--stat-scale');
                 statElement.style.removeProperty('--stat-blur');
+                statElement.style.removeProperty('--stat-settle');
             });
 
             if (
@@ -593,7 +639,7 @@
                     });
                 },
                 {
-                    threshold: 0.16,
+                    threshold: 0.15,
                     rootMargin: '0px 0px -4% 0px'
                 }
             );
@@ -621,6 +667,7 @@
                 statElement.style.removeProperty('--stat-y');
                 statElement.style.removeProperty('--stat-scale');
                 statElement.style.removeProperty('--stat-blur');
+                statElement.style.removeProperty('--stat-settle');
             });
         }
 
@@ -630,11 +677,7 @@
             window.clearTimeout(state.resizeTimer);
             stopProgressLoop();
             stopListeningForPointer();
-
-            if (state.mobileObserver) {
-                state.mobileObserver.disconnect();
-                state.mobileObserver = null;
-            }
+            disconnectMobileObserver();
 
             state.enhanced = false;
             root.style.removeProperty('overflow');
@@ -652,7 +695,7 @@
                 timeline = buildTimeline(statElements.length);
                 setStoryHeight();
                 syncScrollTarget(true);
-            }, 120);
+            }, 140);
         }
 
         function setupMode() {
@@ -664,7 +707,6 @@
                 timeline = buildTimeline(statElements.length);
                 root.setAttribute('data-enhanced', 'true');
                 root.setAttribute('data-mode', 'desktop');
-
                 root.style.overflow = 'clip';
 
                 setStoryHeight();
