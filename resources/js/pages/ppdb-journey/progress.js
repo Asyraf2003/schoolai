@@ -9,9 +9,8 @@ const createTimeline = (stepCount) => {
     for (let index = 0; index < stepCount; index += 1) {
         const step = { index };
         if (index === 0) {
-            step.enterStart = cursor;
-            cursor += PHASE.enter;
-            step.enterEnd = cursor;
+            step.enterStart = -PHASE.enter;
+            step.enterEnd = 0;
         } else {
             step.enterStart = pendingEnter.start;
             step.enterEnd = pendingEnter.end;
