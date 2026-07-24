@@ -1,0 +1,187 @@
+@media (max-width: 1180px) {
+    .nav-shell .nav-overlay {
+        display: none !important;
+    }
+
+    .nav-shell .navbar__menu {
+        position: fixed;
+        inset: 0;
+        z-index: calc(var(--hero-layer-header) - 1);
+        width: 100vw;
+        height: 100dvh;
+        max-height: none;
+        display: block;
+        padding: calc(var(--hero-nav-height) + 22px) clamp(20px, 5vw, 42px) 34px;
+        overflow-y: auto;
+        border: 0;
+        border-radius: 0;
+        color: #17362f;
+        background: #fffaf1;
+        box-shadow: none;
+        opacity: 1;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateX(100%);
+        transform-origin: center;
+        transition:
+            transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 320ms;
+    }
+
+    html[dir="rtl"] .nav-shell .navbar__menu {
+        transform: translateX(-100%);
+    }
+
+    .nav-shell .navbar__menu.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(0);
+        transition-delay: 0s;
+    }
+
+    html[dir="rtl"] .nav-shell .navbar__menu.active {
+        transform: translateX(0);
+    }
+
+    .nav-shell .navbar__menu > ul {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .nav-shell .navbar__menu > ul > li {
+        width: 100%;
+    }
+
+    .nav-shell .nav-link {
+        width: 100%;
+        min-height: 54px;
+        justify-content: flex-start;
+        padding: 13px 0;
+        border-block-end: 1px solid rgb(23 79 66 / 0.1);
+        color: #17362f;
+        font-size: clamp(1rem, 3.8vw, 1.12rem);
+        font-weight: 780;
+    }
+
+    .nav-shell .nav-link::after {
+        display: none;
+    }
+
+    .nav-shell .nav-link.active {
+        color: #b85a1f;
+    }
+
+    .nav-shell .nav-mega__trigger {
+        justify-content: space-between;
+        padding-inline: 0;
+    }
+
+    .nav-shell .nav-mega__trigger svg {
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        border-radius: 0;
+        color: #31544c;
+        background: transparent;
+    }
+
+    .nav-shell .nav-mega__panel {
+        position: static;
+        width: 100%;
+        min-height: 0;
+        max-height: 0;
+        display: block;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: none;
+        transform: none;
+        clip-path: none;
+        transition: max-height 280ms ease;
+    }
+
+    .nav-shell .nav-mega.is-open .nav-mega__panel {
+        max-height: 420px;
+        margin: 0;
+        pointer-events: auto;
+        transform: none;
+        clip-path: none;
+    }
+
+    .nav-shell .nav-mega__media,
+    .nav-shell .nav-mega__intro {
+        display: none;
+    }
+
+    .nav-shell .nav-mega__links {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 4px 0 10px clamp(14px, 4vw, 26px);
+        background: transparent;
+    }
+
+    html[dir="rtl"] .nav-shell .nav-mega__links {
+        padding: 4px clamp(14px, 4vw, 26px) 10px 0;
+    }
+
+    .nav-shell .nav-mega__link {
+        min-height: 0;
+        display: block;
+        padding: 10px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .nav-shell .nav-mega__link:hover,
+    .nav-shell .nav-mega__link:focus-visible {
+        color: #b85a1f;
+        border: 0;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .nav-shell .nav-mega__link strong {
+        color: #31544c;
+        font-size: 0.9rem;
+        font-weight: 720;
+    }
+
+    .nav-shell .nav-mega__link small {
+        display: none;
+    }
+
+    .nav-shell .nav-language {
+        width: 100%;
+        margin-block-start: 0;
+        padding-block-start: 0;
+        border-block-start: 0;
+    }
+
+    .nav-shell .nav-language__button {
+        justify-content: flex-start;
+        color: #17362f;
+    }
+
+    .nav-shell .navbar__cta {
+        width: 100%;
+        margin-block-start: 24px;
+        min-height: 52px;
+        color: #ffffff;
+        border-color: #a64f18;
+        background: #b85a1f;
+    }
+}

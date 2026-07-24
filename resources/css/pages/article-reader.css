@@ -1,2 +1,2 @@
-/* @fragment ./article-reader/001-source.css.part */
-/* @fragment ./article-reader/002-source.css.part */
+@import "./article-reader/001-article-reader-cascade-001.css";
+@import "./article-reader/002-article-reader-cascade-002.css";

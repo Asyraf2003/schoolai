@@ -1,47 +1,47 @@
-/* @fragment ./welcome/001-sekolah-ceria-nusantara-stylesheet.css.part */
-/* @fragment ./welcome/002-tombol.css.part */
-/* @fragment ./welcome/003-8-quick-info.css.part */
-/* @fragment ./welcome/004-10-visi-misi.css.part */
-/* @fragment ./welcome/005-15-artikel.css.part */
-/* @fragment ./welcome/006-mobile.css.part */
-/* @fragment ./welcome/007-source.css.part */
-/* @fragment ./welcome/008-source.css.part */
-/* @fragment ./welcome/009-source.css.part */
-/* @fragment ./welcome/010-source.css.part */
-/* @fragment ./welcome/011-source.css.part */
-/* @fragment ./welcome/012-source.css.part */
-/* @fragment ./welcome/013-source.css.part */
-/* @fragment ./welcome/014-gallery-teaser-data-ready-local.css.part */
-/* @fragment ./welcome/015-premium-compact-gallery-buffer-like-centered.css.part */
-/* @fragment ./welcome/016-edit-di-sini-jarak-antara-teks-kiri-dan-gamb.css.part */
-/* @fragment ./welcome/017-edit-di-sini-mobile-jangan-geser-gambar-di-t.css.part */
-/* @fragment ./welcome/018-mobile-tablet-only-each-gallery-desc-owns-it.css.part */
-/* @fragment ./welcome/019-source.css.part */
-/* @fragment ./welcome/020-kartu-program-dipindah-ke-kiri-spotlight-bes.css.part */
-/* @fragment ./welcome/021-source.css.part */
-/* @fragment ./welcome/022-footer-putih-mitra-kami-logo-dijaga-proporsi.css.part */
-/* @fragment ./welcome/023-footer-model-screenshot-putih-kolom-rapi-gal.css.part */
-/* @fragment ./welcome/024-source.css.part */
-/* @fragment ./welcome/025-footer-kontak-ringkas-lokasi-klik-ke-google-.css.part */
-/* @fragment ./welcome/026-logo-digido-sedikit-lebih-lebar-secara-natur.css.part */
-/* @fragment ./welcome/027-channel-footer-pakai-asset-lokal-public-lazy.css.part */
-/* @fragment ./welcome/028-lokasi-pakai-maps-png-facebook-aktif-semua-c.css.part */
-/* @fragment ./welcome/029-navbar-beralih-ke-drawer-sebelum-menu-logo-d.css.part */
-/* @fragment ./welcome/030-mobile-language-switch-dibuat-compact-id-en-.css.part */
-/* @fragment ./welcome/031-source.css.part */
-/* @fragment ./welcome/032-source.css.part */
-/* @fragment ./welcome/033-source.css.part */
-/* @fragment ./welcome/034-source.css.part */
-/* @fragment ./welcome/035-source.css.part */
-/* @fragment ./welcome/036-source.css.part */
-/* @fragment ./welcome/037-source.css.part */
-/* @fragment ./welcome/038-source.css.part */
-/* @fragment ./welcome/039-source.css.part */
-/* @fragment ./welcome/040-source.css.part */
-/* @fragment ./welcome/041-source.css.part */
-/* @fragment ./welcome/042-source.css.part */
-/* @fragment ./welcome/043-source.css.part */
-/* @fragment ./welcome/044-source.css.part */
-/* @fragment ./welcome/045-scoped-typography-rhythm-only-do-not-touch-g.css.part */
-/* @fragment ./welcome/046-social-video-covers-provider-identity-withou.css.part */
-/* @fragment ./welcome/047-source.css.part */
+@import "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css";
+@import "./welcome/002-tombol.css";
+@import "./welcome/003-8-quick-info.css";
+@import "./welcome/004-11-nilai-sekolah.css";
+@import "./welcome/005-19-footer.css";
+@import "./welcome/006-23-aksesibilitas.css";
+@import "./welcome/007-welcome-cascade-007.css";
+@import "./welcome/008-welcome-cascade-008.css";
+@import "./welcome/009-welcome-cascade-009.css";
+@import "./welcome/010-welcome-cascade-010.css";
+@import "./welcome/011-welcome-cascade-011.css";
+@import "./welcome/012-welcome-cascade-012.css";
+@import "./welcome/013-welcome-cascade-013.css";
+@import "./welcome/014-gallery-teaser-data-ready-local.css";
+@import "./welcome/015-premium-compact-gallery-buffer-like-centered-header.css";
+@import "./welcome/016-edit-di-sini-jarak-antara-teks-kiri-dan-gambar-kanan.css";
+@import "./welcome/017-edit-di-sini-mobile-jangan-geser-gambar-di-tablet-hp.css";
+@import "./welcome/018-editorial-article-layout-featured-story-compact-side.css";
+@import "./welcome/019-welcome-cascade-019.css";
+@import "./welcome/020-kartu-program-dipindah-ke-kiri-spotlight-besar-ke-ka.css";
+@import "./welcome/021-footer-putih-mitra-kami-logo-dijaga-proporsinya-heig.css";
+@import "./welcome/022-welcome-cascade-022.css";
+@import "./welcome/023-footer-model-screenshot-putih-kolom-rapi-galeri-hany.css";
+@import "./welcome/024-welcome-cascade-024.css";
+@import "./welcome/025-footer-kontak-ringkas-lokasi-klik-ke-google-maps-det.css";
+@import "./welcome/026-wa-ig-fb-email-jadi-satu-ui-seragam-berbasis-inline.css";
+@import "./welcome/027-channel-footer-pakai-asset-lokal-public-lazy-img-aga.css";
+@import "./welcome/028-urutan-footer-logo-sekolah-media-sosial-halaman-kami.css";
+@import "./welcome/029-switch-bahasa-server-side-session-cookie-tetap-aktif.css";
+@import "./welcome/030-welcome-cascade-030.css";
+@import "./welcome/031-welcome-cascade-031.css";
+@import "./welcome/032-welcome-cascade-032.css";
+@import "./welcome/033-welcome-cascade-033.css";
+@import "./welcome/034-welcome-cascade-034.css";
+@import "./welcome/035-welcome-cascade-035.css";
+@import "./welcome/036-welcome-cascade-036.css";
+@import "./welcome/037-welcome-cascade-037.css";
+@import "./welcome/038-welcome-cascade-038.css";
+@import "./welcome/039-welcome-cascade-039.css";
+@import "./welcome/040-welcome-cascade-040.css";
+@import "./welcome/041-welcome-cascade-041.css";
+@import "./welcome/042-welcome-cascade-042.css";
+@import "./welcome/043-welcome-cascade-043.css";
+@import "./welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css";
+@import "./welcome/045-halaman-artikel-clean-editorial-grid-3-2-1-gambar-ko.css";
+@import "./welcome/046-social-video-covers-provider-identity-without-loadin.css";
+@import "./welcome/047-welcome-cascade-047.css";

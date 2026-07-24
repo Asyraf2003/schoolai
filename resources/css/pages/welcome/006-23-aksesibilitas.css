@@ -1,0 +1,183 @@
+@media (max-width: 720px) {
+    .section {
+        padding-block: 64px;
+    }
+    .container {
+        padding-inline: 20px;
+    }
+
+    .navbar__menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: min(78vw, 320px);
+        background: var(--color-cream);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 100px 32px 40px;
+        gap: 32px;
+        transform: translateX(100%);
+        transition: transform 0.35s ease;
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.12);
+    }
+    .navbar__menu.active {
+        transform: translateX(0);
+    }
+    .navbar__menu ul {
+        flex-direction: column;
+        gap: 22px;
+    }
+    .hamburger {
+        display: flex;
+    }
+
+
+    .quick-info__grid {
+        grid-template-columns: 1fr;
+    }
+    .quick-info {
+        padding-top: 64px;
+    }
+    .nilai-grid {
+        grid-template-columns: 1fr;
+    }
+    .program-flow {
+        grid-template-columns: 1fr;
+    }
+    .program-card--rot-1,
+    .program-card--rot-2 {
+        transform: none;
+    }
+    .artikel-grid {
+        grid-template-columns: 1fr;
+    }
+    .galeri-grid {
+        columns: 1;
+    }
+
+    .ppdb-panel {
+        padding: 28px;
+        border-radius: var(--radius-md);
+    }
+    .ppdb-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .visi-card__text {
+        font-size: 1.1rem;
+    }
+
+    .site-footer__grid {
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+}
+
+/* ---------- 23. AKSESIBILITAS ---------- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+.navbar__logo {
+    gap: 12px;
+    min-width: 0;
+}
+
+.navbar__logo-icon {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.92);
+    border: 2px solid rgba(255, 255, 255, 0.96);
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(24, 22, 36, 0.1);
+}
+
+.navbar__logo-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
+
+.navbar__logo-text {
+    font-size: 1rem;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.navbar__logo-text small {
+    display: inline-block;
+    margin-top: 2px;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+    .navbar__logo {
+        gap: 9px;
+    }
+
+    .navbar__logo-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+    }
+
+    .navbar__logo-image {
+        padding: 3px;
+    }
+
+    .navbar__logo-text {
+        font-size: 0.92rem;
+    }
+
+    .navbar__logo-text small {
+        font-size: 0.66rem;
+    }
+}
+
+.visi-misi {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 8% 12%,
+            rgba(255, 213, 79, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 92% 18%,
+            rgba(14, 165, 233, 0.16),
+            transparent 32%
+        ),
+        linear-gradient(180deg, var(--color-cream), #fffaf0);
+}
+
+.visi-misi::before,
+.visi-misi::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-radius: 999px;
+    filter: blur(2px);
+    opacity: 0.48;
+}
+

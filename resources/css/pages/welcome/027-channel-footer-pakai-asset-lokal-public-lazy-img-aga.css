@@ -1,0 +1,184 @@
+.footer-channel__icon {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.footer-channel--facebook .footer-channel__icon {
+    fill: currentColor;
+    stroke: none;
+}
+
+.footer-channel__dot {
+    fill: currentColor;
+    stroke: none;
+}
+
+.footer-channel__body {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+}
+
+.footer-channel__label {
+    color: inherit;
+    font-size: 0.84rem;
+    font-weight: 950;
+    line-height: 1.1;
+}
+
+.footer-channel__note {
+    color: #777;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.footer-channel:hover .footer-channel__note,
+.footer-channel:focus-visible .footer-channel__note {
+    color: rgba(31, 31, 31, 0.72);
+}
+
+@media (max-width: 560px) {
+    .footer-channel-grid {
+        max-width: none;
+    }
+
+    .footer-channel {
+        min-height: 56px;
+        padding: 10px;
+    }
+
+    .footer-channel__icon {
+        width: 21px;
+        height: 21px;
+    }
+}
+
+/* Channel footer pakai asset lokal public + lazy img agar render awal tetap ringan. */
+.footer-channel {
+    min-height: 60px;
+}
+
+.footer-channel__asset {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    display: block;
+    object-fit: contain;
+    transform: translateZ(0);
+    transition:
+        transform 0.22s ease,
+        filter 0.22s ease,
+        opacity 0.22s ease;
+}
+
+.footer-channel:hover .footer-channel__asset,
+.footer-channel:focus-visible .footer-channel__asset {
+    transform: translateY(-1px) scale(1.08) rotate(-3deg);
+}
+
+.footer-channel--disabled .footer-channel__asset {
+    filter: saturate(0.55) opacity(0.72);
+}
+
+.footer-channel__fallback {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(31, 46, 43, 0.08);
+    color: #444;
+    font-size: 0.7rem;
+    font-weight: 950;
+}
+
+@media (max-width: 560px) {
+    .footer-channel__asset,
+    .footer-channel__fallback {
+        width: 26px;
+        height: 26px;
+        flex-basis: 26px;
+    }
+}
+
+/* Lokasi pakai maps.png, Facebook aktif, semua channel tetap satu UI lazy asset. */
+.footer-location-line {
+    display: none;
+}
+
+.footer-channel--maps {
+    --channel-accent: #34a853;
+}
+
+.footer-channel-grid {
+    max-width: 340px;
+}
+
+.footer-channel-grid .footer-channel:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+}
+
+.footer-channel__asset {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    display: block;
+    object-fit: contain;
+    transform: translateZ(0);
+    transition:
+        transform 0.22s ease,
+        filter 0.22s ease,
+        opacity 0.22s ease;
+}
+
+.footer-channel:hover .footer-channel__asset,
+.footer-channel:focus-visible .footer-channel__asset {
+    transform: translateY(-1px) scale(1.08) rotate(-3deg);
+}
+
+.footer-channel__fallback {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(31, 46, 43, 0.08);
+    color: #444;
+    font-size: 0.7rem;
+    font-weight: 950;
+}
+
+@media (max-width: 560px) {
+    .footer-channel-grid {
+        max-width: none;
+    }
+
+    .footer-channel__asset,
+    .footer-channel__fallback {
+        width: 26px;
+        height: 26px;
+        flex-basis: 26px;
+    }
+}
+
+/* Deskripsi singkat di bawah logo footer agar kolom brand tidak terasa kosong. */
+.footer-brand__description {
+    max-width: 300px;
+    margin: -10px 0 22px;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+

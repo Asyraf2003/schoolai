@@ -1,0 +1,190 @@
+@media (max-width: 767px) {
+    .article-detail-hero {
+        padding: 52px 0 46px;
+    }
+
+    .article-detail-hero__copy,
+    .article-detail-card,
+    .article-detail-section,
+    .article-detail-quote,
+    .article-detail-related {
+        border-radius: 28px;
+    }
+
+    .article-detail-content {
+        padding: 56px 0 72px;
+    }
+
+    .article-detail-meta {
+        gap: 8px;
+    }
+
+    .article-detail-meta span {
+        font-size: 0.78rem;
+    }
+}
+
+.ppdb-journey-section {
+    position: relative;
+    padding: 92px 0 84px;
+    background:
+        radial-gradient(
+            circle at 15% 24%,
+            rgba(25, 199, 232, 0.1),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 82% 18%,
+            rgba(255, 201, 60, 0.16),
+            transparent 24%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.72),
+            rgba(255, 248, 236, 0.42)
+        );
+    overflow: hidden;
+}
+
+.ppdb-journey-section::before,
+.ppdb-journey-section::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+.ppdb-journey-section::before {
+    width: 260px;
+    height: 260px;
+    left: -90px;
+    top: 60px;
+    background: rgba(220, 241, 247, 0.7);
+    filter: blur(2px);
+}
+
+.ppdb-journey-section::after {
+    width: 340px;
+    height: 190px;
+    right: -120px;
+    bottom: 20px;
+    background: rgba(220, 246, 234, 0.82);
+    transform: rotate(-8deg);
+}
+
+.ppdb-journey-head {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto 28px;
+    text-align: center;
+}
+
+.ppdb-title-effect {
+    position: relative;
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 14px;
+}
+
+.ppdb-title-effect .bar {
+    position: absolute;
+    display: block;
+    background: #19c7e8;
+    border-radius: 999px;
+    opacity: 0.18;
+    animation: ppdb-title-bar-pulse 2.4s ease-in-out infinite;
+}
+
+.ppdb-title-effect .bar-top,
+.ppdb-title-effect .bar-bottom {
+    left: 11px;
+    width: 32px;
+    height: 6px;
+}
+
+.ppdb-title-effect .bar-left,
+.ppdb-title-effect .bar-right {
+    top: 11px;
+    width: 6px;
+    height: 32px;
+}
+
+.ppdb-title-effect .bar-top {
+    top: 0;
+}
+.ppdb-title-effect .bar-right {
+    right: 0;
+    animation-delay: 0.2s;
+}
+.ppdb-title-effect .bar-bottom {
+    bottom: 0;
+    animation-delay: 0.4s;
+}
+.ppdb-title-effect .bar-left {
+    left: 0;
+    animation-delay: 0.6s;
+}
+
+@keyframes ppdb-title-bar-pulse {
+    0%,
+    100% {
+        opacity: 0.16;
+        transform: scale(0.92);
+    }
+
+    50% {
+        opacity: 0.48;
+        transform: scale(1.06);
+    }
+}
+
+.ppdb-journey-kicker {
+    color: #171733;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.86rem;
+}
+
+.ppdb-journey-head h2 {
+    max-width: 760px;
+    margin: 18px auto 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 3.4rem);
+    line-height: 1.1;
+    color: #1f2147;
+    letter-spacing: 0.04em;
+}
+
+.ppdb-journey-head p:last-child {
+    max-width: 680px;
+    margin: 18px auto 0;
+    color: var(--color-ink-soft);
+}
+
+.ppdb-flight-stage {
+    position: relative;
+    z-index: 1;
+    width: min(980px, 100%);
+    height: 154px;
+    margin: 10px auto -112px;
+    pointer-events: none;
+}
+
+.ppdb-flight-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ppdb-flight-path {
+    fill: none;
+    stroke: rgba(31, 33, 71, 0.15);
+    stroke-width: 3;
+    stroke-dasharray: 9 18;
+    stroke-linecap: round;
+    animation: ppdb-dash-run 8s linear infinite;
+}
+

@@ -1,0 +1,167 @@
+.artikel-card {
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+.artikel-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
+}
+.artikel-card__thumb {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.6rem;
+}
+.artikel-card__body {
+    padding: 24px;
+}
+.artikel-card__date {
+    font-size: 0.8rem;
+    color: var(--color-ink-soft);
+    font-weight: 600;
+}
+.artikel-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    margin: 8px 0 10px;
+    line-height: 1.35;
+}
+.artikel-card p {
+    font-size: 0.9rem;
+    color: var(--color-ink-soft);
+    margin-bottom: 16px;
+}
+
+/* ---------- 19. FOOTER ---------- */
+.site-footer {
+    background: var(--color-ink);
+    color: rgba(255, 255, 255, 0.8);
+    padding-top: 72px;
+}
+.site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.footer-brand p {
+    margin: 16px 0 20px;
+    font-size: 0.9rem;
+    max-width: 320px;
+}
+.navbar__logo--footer {
+    color: var(--color-white);
+}
+.footer-social {
+    display: flex;
+    gap: 12px;
+}
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+.footer-social a:hover {
+    background: var(--color-orange);
+    transform: translateY(-3px);
+}
+.footer-links h4,
+.footer-contact h4 {
+    font-family: var(--font-display);
+    color: var(--color-white);
+    margin-bottom: 18px;
+    font-size: 1rem;
+}
+.footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.footer-links a {
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+.footer-links a:hover {
+    color: var(--color-yellow);
+}
+.footer-contact p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+.site-footer__bottom {
+    text-align: center;
+    padding: 24px 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------- 21. ANIMASI REVEAL ---------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal--delay-1.is-visible {
+    transition-delay: 0.1s;
+}
+.reveal--delay-2.is-visible {
+    transition-delay: 0.2s;
+}
+.reveal--delay-3.is-visible {
+    transition-delay: 0.3s;
+}
+
+/* ---------- 22. RESPONSIVE ---------- */
+
+/* Tablet */
+@media (max-width: 1024px) {
+
+    .quick-info__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .nilai-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .program-flow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .artikel-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .galeri-grid {
+        columns: 2;
+    }
+
+    .ppdb-panel {
+        grid-template-columns: 1fr;
+        padding: 40px;
+    }
+    .visi-misi__grid {
+        grid-template-columns: 1fr;
+    }
+    .site-footer__grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Mobile */

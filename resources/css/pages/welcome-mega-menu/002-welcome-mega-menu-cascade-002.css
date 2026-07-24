@@ -1,0 +1,47 @@
+.public-content-page.nav-shell .navbar,
+.public-content-page.nav-shell .navbar.is-scrolled,
+.public-content-page.nav-shell .navbar.has-open-menu {
+    min-height: 78px;
+    height: 78px;
+    color: #172c28;
+    background: var(--nav-mega-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 10px 30px rgb(7 27 24 / 0.08);
+}
+
+.public-content-page.nav-shell .navbar.has-open-menu {
+    box-shadow: none;
+}
+
+.public-content-page.nav-shell .navbar__logo-icon {
+    width: 54px;
+    height: 54px;
+    flex-basis: 54px;
+    border-color: rgb(19 122 76 / 0.12);
+    box-shadow:
+        0 0 0 6px rgb(255 255 255 / 0.5),
+        0 10px 26px rgb(7 27 24 / 0.13);
+}
+
+.public-content-page.nav-shell .nav-link.active {
+    color: #aa541a;
+}
+
+.public-content-page.nav-shell .navbar__cta {
+    color: #fff;
+    border-color: #a64f18;
+    background: #b85a1f;
+}
+
+.public-content-page.nav-shell .nav-language__current-flag {
+    border-color: rgb(23 79 66 / 0.16);
+}
+
+@media (min-width: 1181px) {
+    .public-content-page.nav-shell .nav-mega__panel {
+        inset-block-start: 77px;
+        background: var(--nav-mega-surface);
+    }
+}
+

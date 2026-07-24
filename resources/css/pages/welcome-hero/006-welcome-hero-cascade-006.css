@@ -1,0 +1,186 @@
+html[dir="rtl"] .hero-cinema__cta::after {
+    transform-origin: right center;
+    background: linear-gradient(270deg, #f7b24b, rgb(247 178 75 / 0.18));
+}
+
+.hero-cinema__cta:hover::after,
+.hero-cinema__cta:focus-visible::after {
+    transform: scaleX(0.68);
+}
+
+.hero-cinema__cta svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 200ms ease;
+}
+
+.hero-cinema__cta:hover svg,
+.hero-cinema__cta:focus-visible svg {
+    transform: translateX(5px);
+}
+
+html[dir="rtl"] .hero-cinema__cta svg {
+    transform: scaleX(-1);
+}
+
+html[dir="rtl"] .hero-cinema__cta:hover svg,
+html[dir="rtl"] .hero-cinema__cta:focus-visible svg {
+    transform: scaleX(-1) translateX(5px);
+}
+
+.hero-cinema__arrow {
+    position: absolute;
+    inset-block-start: 50%;
+    z-index: var(--hero-layer-controls);
+    width: clamp(46px, 4.2vw, 64px);
+    height: clamp(46px, 4.2vw, 64px);
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 0.46);
+    border-radius: 50%;
+    color: #ffffff;
+    background: rgb(4 22 19 / 0.14);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transform: translateY(-50%);
+    transition:
+        color 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease,
+        transform 180ms ease;
+}
+
+.hero-cinema__arrow--previous {
+    inset-inline-start: clamp(18px, 2.8vw, 48px);
+}
+
+.hero-cinema__arrow--next {
+    inset-inline-end: clamp(18px, 2.8vw, 48px);
+}
+
+.hero-cinema__arrow:hover,
+.hero-cinema__arrow:focus-visible {
+    color: #182f2a;
+    border-color: #f7b24b;
+    background: #f7b24b;
+    transform: translateY(-50%) scale(1.06);
+}
+
+.hero-cinema__arrow svg {
+    width: 21px;
+    height: 21px;
+}
+
+html[dir="rtl"] .hero-cinema__arrow svg {
+    transform: scaleX(-1);
+}
+
+.hero-cinema__rail {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: clamp(32px, 5vh, 58px);
+    z-index: var(--hero-layer-controls);
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) auto auto auto;
+    align-items: center;
+    gap: clamp(16px, 2.5vw, 34px);
+}
+
+.hero-cinema__progress {
+    position: relative;
+    height: 1px;
+    overflow: hidden;
+    background: rgb(255 255 255 / 0.3);
+}
+
+.hero-cinema__progress-bar {
+    position: absolute;
+    inset: 0;
+    background: #f7b24b;
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+html[dir="rtl"] .hero-cinema__progress-bar {
+    transform-origin: right center;
+}
+
+.hero-cinema.is-autoplaying .hero-cinema__progress-bar {
+    animation: hero-cinema-progress var(--hero-autoplay-duration, 7000ms) linear forwards;
+}
+
+.hero-cinema__counter {
+    min-width: 62px;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
+    color: rgb(255 255 255 / 0.55);
+    font-size: 0.68rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+}
+
+.hero-cinema__counter-current {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.hero-cinema__dots {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.hero-cinema__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 0.7);
+    border-radius: 999px;
+    background: transparent;
+    transition:
+        width 200ms ease,
+        border-color 200ms ease,
+        background-color 200ms ease;
+}
+
+.hero-cinema__dot.is-active,
+.hero-cinema__dot[aria-selected="true"] {
+    width: 28px;
+    border-color: #f7b24b;
+    background: #f7b24b;
+}
+
+.hero-cinema__playback {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: 50%;
+    color: #ffffff;
+    background: rgb(4 22 19 / 0.18);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.hero-cinema__playback:hover,
+.hero-cinema__playback:focus-visible {
+    border-color: #f7b24b;
+    color: #f7b24b;
+}
+
+.hero-cinema__playback svg {
+    width: 15px;
+    height: 15px;
+}
+
+.hero-cinema__play-icon,
+.hero-cinema__playback.is-paused .hero-cinema__pause-icon {
+    display: none;
+}
+
+.hero-cinema__playback.is-paused .hero-cinema__play-icon {
+    display: block;
+}
+

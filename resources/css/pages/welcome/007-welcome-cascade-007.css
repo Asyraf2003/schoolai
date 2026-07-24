@@ -1,0 +1,186 @@
+.visi-misi::before {
+    width: 260px;
+    height: 260px;
+    left: -110px;
+    top: 48px;
+    background: rgba(255, 159, 90, 0.26);
+}
+
+.visi-misi::after {
+    width: 320px;
+    height: 320px;
+    right: -150px;
+    bottom: 18px;
+    background: rgba(46, 213, 175, 0.22);
+}
+
+.visi-misi__shell {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 34px;
+    align-items: stretch;
+}
+
+.visi-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+    padding: clamp(30px, 4vw, 48px);
+    border-radius: 34px;
+    background:
+        linear-gradient(135deg, rgba(33, 31, 59, 0.96), rgba(39, 37, 73, 0.92)),
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 255, 255, 0.2),
+            transparent 36%
+        );
+    color: #fff;
+    box-shadow: 0 26px 70px rgba(33, 31, 59, 0.22);
+    isolation: isolate;
+    transition:
+        transform 0.34s ease,
+        box-shadow 0.34s ease;
+}
+
+.visi-card::before {
+    content: "";
+    position: absolute;
+    inset: -45%;
+    z-index: -1;
+    background: conic-gradient(
+        from 120deg,
+        rgba(255, 209, 70, 0.28),
+        rgba(46, 213, 175, 0.22),
+        rgba(14, 165, 233, 0.24),
+        rgba(255, 159, 90, 0.26),
+        rgba(255, 209, 70, 0.28)
+    );
+    animation: visi-glow-spin 12s linear infinite;
+    opacity: 0.75;
+}
+
+.visi-card::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: 33px;
+    background: linear-gradient(
+        135deg,
+        rgba(33, 31, 59, 0.96),
+        rgba(48, 45, 85, 0.94)
+    );
+}
+
+.visi-card__topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.visi-card__kicker,
+.misi-panel__kicker {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.13);
+    color: #fff2b9;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    font-size: 0.76rem;
+}
+
+.visi-card__pulse {
+    width: 13px;
+    height: 13px;
+    border-radius: 999px;
+    background: #2ed5af;
+    box-shadow: 0 0 0 0 rgba(46, 213, 175, 0.55);
+    animation: visi-pulse 1.9s ease-out infinite;
+}
+
+.visi-card__title {
+    margin: 0 0 18px;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
+    color: #fff;
+}
+
+.visi-card__text {
+    margin: 0;
+    max-width: 680px;
+    font-family: var(--font-display);
+    font-size: clamp(1.16rem, 1.3vw + 0.84rem, 1.62rem);
+    font-weight: 720;
+    line-height: 1.54;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.vm-mark {
+    position: relative;
+    display: inline;
+    font-weight: 950;
+    color: var(--vm-mark-color, #fff);
+    text-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+}
+
+.vm-mark::after {
+    content: "";
+    position: absolute;
+    left: -0.05em;
+    right: -0.05em;
+    bottom: 0.02em;
+    height: 0.34em;
+    z-index: -1;
+    border-radius: 999px;
+    background: var(--vm-mark-bg, rgba(255, 255, 255, 0.18));
+    transform: rotate(-1deg);
+    opacity: 0.88;
+}
+
+.vm-mark--blue {
+    --vm-mark-color: #7dd3fc;
+    --vm-mark-bg: rgba(14, 165, 233, 0.22);
+}
+
+.vm-mark--orange {
+    --vm-mark-color: #ffb15f;
+    --vm-mark-bg: rgba(249, 115, 22, 0.22);
+}
+
+.vm-mark--green {
+    --vm-mark-color: #86efac;
+    --vm-mark-bg: rgba(34, 197, 94, 0.22);
+}
+
+.vm-mark--purple {
+    --vm-mark-color: #d8b4fe;
+    --vm-mark-bg: rgba(168, 85, 247, 0.2);
+}
+
+.misi-panel {
+    position: relative;
+    padding: clamp(22px, 3vw, 32px);
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.92);
+    box-shadow: 0 24px 60px rgba(33, 31, 59, 0.12);
+    backdrop-filter: blur(18px);
+}
+
+.misi-panel__head {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+

@@ -1,0 +1,157 @@
+@media (min-width: 961px) {
+    .about-stats-story[data-enhanced="true"] .about-stats-story__track {
+        height: var(--story-scroll-height, 760svh);
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__sticky {
+        position: sticky;
+        z-index: 1;
+        top: 0;
+        height: 100svh;
+        overflow: hidden;
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__stage {
+        min-height: 100svh;
+        display: block;
+        padding: 0;
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__ambient {
+        z-index: 0;
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__intro {
+        position: absolute;
+        z-index: 4;
+        width: min(43vw, 700px);
+        left: 50%;
+        top: 50%;
+        margin: 0;
+        opacity: var(--about-opacity);
+        transform:
+            translate3d(calc(-50% + var(--about-x)), calc(-50% + var(--about-y)), 0)
+            scale(var(--about-scale));
+        transform-origin: center;
+        will-change: transform, opacity;
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__stats {
+        position: absolute;
+        z-index: 5;
+        inset: 0;
+        display: block;
+        pointer-events: none;
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__stat {
+        position: absolute;
+        width: min(37vw, 540px);
+        left: 50%;
+        top: 50%;
+        opacity: var(--stat-opacity);
+        filter: blur(var(--stat-blur));
+        transform:
+            translate3d(calc(-50% + var(--stat-x)), calc(-50% + var(--stat-y)), 0)
+            scale(var(--stat-scale));
+        transform-origin: center;
+        will-change: transform, opacity, filter;
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__number {
+        font-size: clamp(5rem, 7.5vw, 8.8rem);
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__progress {
+        position: absolute;
+        z-index: 7;
+        width: min(32vw, 350px);
+        left: 50%;
+        bottom: clamp(24px, 4svh, 42px);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        opacity: var(--progress-opacity);
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    .about-stats-story__progress-track {
+        position: relative;
+        height: 2px;
+        flex: 1 1 auto;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgb(17 58 51 / 0.1);
+    }
+
+    .about-stats-story__progress-fill {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--story-orange), var(--story-yellow), var(--story-green), var(--story-blue), var(--story-violet));
+        transform: scaleX(var(--story-progress));
+        transform-origin: left center;
+    }
+
+    [dir="rtl"] .about-stats-story__progress-fill {
+        transform-origin: right center;
+    }
+
+    .about-stats-story__progress-count {
+        display: flex;
+        gap: 7px;
+    }
+
+    .about-stats-story__progress-count i {
+        width: 6px;
+        aspect-ratio: 1;
+        display: block;
+        border-radius: 50%;
+        background: rgb(17 58 51 / 0.18);
+        transform: scale(0.8);
+        transition: transform 300ms ease, background-color 300ms ease;
+    }
+
+    .about-stats-story__progress-count i.is-active {
+        background: var(--story-orange);
+        transform: scale(1.22);
+    }
+
+    .about-stats-story[data-enhanced="true"] .about-stats-story__scroll-hint {
+        position: absolute;
+        z-index: 6;
+        left: 50%;
+        bottom: clamp(64px, 8svh, 88px);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        color: rgb(17 58 51 / 0.52);
+        font-size: 0.72rem;
+        font-weight: 760;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    [dir="rtl"] .about-stats-story[data-enhanced="true"] .about-stats-story__scroll-hint {
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    .about-stats-story__scroll-hint i {
+        width: 22px;
+        height: 2px;
+        display: block;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--story-orange), var(--story-green));
+        animation: about-scroll-cue 2s ease-in-out infinite;
+    }
+}
+
+/* ========================================================================== 
+   MOBILE / TABLET
+   ========================================================================== */
+

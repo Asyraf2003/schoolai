@@ -1,3 +1,3 @@
-/* @fragment ./welcome-testimonial-story/001-home-testimonial-media-story.css.part */
-/* @fragment ./welcome-testimonial-story/002-the-visual-composition-intentionally-stays-i.css.part */
-/* @fragment ./welcome-testimonial-story/003-source.css.part */
+@import "./welcome-testimonial-story/001-home-testimonial-media-story-full-screen-video-contr.css";
+@import "./welcome-testimonial-story/002-the-visual-composition-intentionally-stays-identical.css";
+@import "./welcome-testimonial-story/003-welcome-testimonial-story-cascade-003.css";

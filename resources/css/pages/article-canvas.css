@@ -1,4 +1,4 @@
-/* @fragment ./article-canvas/001-source.css.part */
-/* @fragment ./article-canvas/002-source.css.part */
-/* @fragment ./article-canvas/003-source.css.part */
-/* @fragment ./article-canvas/004-source.css.part */
+@import "./article-canvas/001-article-canvas-cascade-001.css";
+@import "./article-canvas/002-article-canvas-cascade-002.css";
+@import "./article-canvas/003-article-canvas-cascade-003.css";
+@import "./article-canvas/004-article-canvas-cascade-004.css";

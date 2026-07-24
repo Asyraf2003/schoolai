@@ -1,3 +1,3 @@
-/* @fragment ./welcome-mega-menu/001-homepage-mega-navigation-polish.css.part */
-/* @fragment ./welcome-mega-menu/002-public-pages-share-the-exact-homepage-naviga.css.part */
-/* @fragment ./welcome-mega-menu/003-source.css.part */
+@import "./welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css";
+@import "./welcome-mega-menu/002-welcome-mega-menu-cascade-002.css";
+@import "./welcome-mega-menu/003-welcome-mega-menu-cascade-003.css";

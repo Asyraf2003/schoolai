@@ -1,0 +1,188 @@
+/* Unified admin UI. Scoped to the admin shell so public pages are untouched. */
+body.admin-desktop-body .admin-side-link__icon,
+body.admin-desktop-body .admin-side-site__icon {
+    display: none !important;
+}
+
+body.admin-desktop-body .admin-side-link,
+body.admin-desktop-body .admin-side-site,
+body.admin-desktop-body .admin-side-logout {
+    gap: 0;
+}
+
+body.admin-desktop-body .admin-main {
+    padding-top: 24px;
+}
+
+body.admin-desktop-body .admin-topbar {
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+body.admin-desktop-body .admin-topbar > div:first-child > p,
+body.admin-desktop-body .admin-gallery-block__head p,
+body.admin-desktop-body .stats-manager-section-head p,
+body.admin-desktop-body .ppdb-showcase-admin__head p,
+body.admin-desktop-body .admin-section-card__body > p,
+body.admin-desktop-body .gallery-lite-empty > p {
+    display: none;
+}
+
+body.admin-desktop-body .admin-topbar h1 {
+    font-size: 1.85rem;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+}
+
+body.admin-desktop-body .admin-inline-actions {
+    gap: 7px;
+}
+
+body.admin-desktop-body .admin-counter,
+body.admin-desktop-body .admin-primary-action {
+    min-height: 36px;
+    padding: 7px 12px;
+    border-radius: 9px;
+    box-shadow: none;
+    font-size: 0.86rem;
+    line-height: 1.15;
+}
+
+body.admin-desktop-body .admin-small-action {
+    min-height: 30px;
+    padding: 5px 9px;
+    border-radius: 8px;
+    font-size: 0.79rem;
+    line-height: 1.15;
+}
+
+body.admin-desktop-body .admin-content-panel,
+body.admin-desktop-body .gallery-lite-panel,
+body.admin-desktop-body .gallery-detail-panel,
+body.admin-desktop-body .gallery-lite-form__panel,
+body.admin-desktop-body .gallery-media-review,
+body.admin-desktop-body .admin-gallery-block {
+    border-color: #e5e7eb;
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+body.admin-desktop-body .admin-gallery-block {
+    gap: 0;
+    margin-bottom: 14px;
+    padding: 0;
+    overflow: hidden;
+}
+
+body.admin-desktop-body .admin-gallery-block__head {
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+body.admin-desktop-body .admin-gallery-block__head h2 {
+    font-size: 0.98rem;
+    letter-spacing: -0.015em;
+}
+
+body.admin-desktop-body .gallery-lite-list {
+    gap: 0;
+}
+
+body.admin-desktop-body .gallery-lite-row {
+    grid-template-columns: 46px minmax(0, 1fr) 92px minmax(260px, auto);
+    gap: 10px;
+    min-height: 58px;
+    padding: 10px 14px;
+    border-bottom-color: #e5e7eb;
+}
+
+body.admin-desktop-body .gallery-lite-row:last-child {
+    border-bottom: 0;
+}
+
+body.admin-desktop-body .gallery-lite-row__order {
+    font-size: 0.83rem;
+}
+
+body.admin-desktop-body .gallery-lite-row__body {
+    gap: 2px;
+}
+
+body.admin-desktop-body .gallery-lite-row__body strong {
+    font-size: 0.91rem;
+    line-height: 1.3;
+}
+
+body.admin-desktop-body .gallery-lite-row__body small {
+    font-size: 0.76rem;
+    line-height: 1.35;
+}
+
+body.admin-desktop-body .gallery-lite-status {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+}
+
+body.admin-desktop-body .gallery-lite-actions {
+    gap: 6px;
+}
+
+body.admin-desktop-body .gallery-lite-empty {
+    padding: 18px 14px;
+}
+
+body.admin-desktop-body .gallery-lite-empty h2 {
+    font-size: 0.94rem;
+}
+
+body.admin-desktop-body .admin-section-grid,
+body.admin-desktop-body .admin-media-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+body.admin-desktop-body .admin-section-card,
+body.admin-desktop-body .admin-media-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 0;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 0;
+    background: #fff;
+}
+
+body.admin-desktop-body .admin-section-card:last-child,
+body.admin-desktop-body .admin-media-card:last-child {
+    border-bottom: 0;
+}
+
+body.admin-desktop-body .admin-section-card__body {
+    grid-template-columns: 88px minmax(0, 1fr) 120px;
+    align-items: center;
+    gap: 10px;
+}
+
+body.admin-desktop-body .admin-section-card__body h3,
+body.admin-desktop-body .admin-media-card__body h3 {
+    font-size: 0.91rem;
+}
+
+body.admin-desktop-body .admin-section-card__body small {
+    justify-self: end;
+    font-size: 0.76rem;
+}
+
+body.admin-desktop-body .admin-section-card__actions {
+    justify-content: flex-end;
+    padding-top: 0;
+    border-top: 0;
+}
+

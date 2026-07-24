@@ -1,0 +1,180 @@
+.nav-link__badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 24px;
+    height: 20px;
+    padding-inline: 7px;
+    border-radius: 999px;
+    background: rgba(245, 166, 35, 0.14);
+    color: #c47a00;
+    font-size: 0.66rem;
+    font-weight: 950;
+    line-height: 1;
+    letter-spacing: 0.04em;
+}
+
+.footer-social a {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    color: #5f5f5f;
+}
+
+.footer-social a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #ffc04d, #ff8a3d);
+    opacity: 0;
+    transition: opacity 0.24s ease;
+    z-index: -1;
+}
+
+.footer-social a:hover::before,
+.footer-social a:focus-visible::before {
+    opacity: 1;
+}
+
+.footer-social__icon {
+    width: 18px;
+    height: 18px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.footer-social__dot {
+    fill: currentColor;
+    stroke: none;
+}
+
+.footer-social__fallback {
+    position: relative;
+    z-index: 1;
+    font-size: 0.76rem;
+    font-weight: 950;
+}
+
+@media (max-width: 560px) {
+    .nav-link--dummy {
+        opacity: 0.72;
+    }
+
+    .footer-social a {
+        width: 42px;
+        height: 42px;
+    }
+
+    .footer-social__icon {
+        width: 19px;
+        height: 19px;
+    }
+}
+
+/* WA, IG, FB, Email jadi satu UI seragam berbasis inline SVG. */
+.footer-channel-group {
+    margin-top: 22px;
+}
+
+.footer-channel-group > strong {
+    display: block;
+    margin-bottom: 12px;
+    color: #444;
+    font-size: 0.92rem;
+    font-weight: 900;
+}
+
+.footer-channel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 310px;
+}
+
+.footer-channel {
+    --channel-accent: #f5a623;
+    position: relative;
+    min-width: 0;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgba(31, 46, 43, 0.08);
+    border-radius: 16px;
+    background: #f7f7f7;
+    color: #3f3f3f;
+    text-decoration: none;
+    box-shadow: 0 10px 26px rgba(31, 46, 43, 0.04);
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.footer-channel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at 18% 12%,
+            rgba(255, 255, 255, 0.56),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--channel-accent) 28%, #ffffff),
+            #ffffff
+        );
+    opacity: 0;
+    transition: opacity 0.22s ease;
+    z-index: -1;
+}
+
+.footer-channel:hover,
+.footer-channel:focus-visible {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--channel-accent) 42%, transparent);
+    color: #1f1f1f;
+    box-shadow: 0 16px 34px rgba(31, 46, 43, 0.08);
+    outline: none;
+}
+
+.footer-channel:hover::before,
+.footer-channel:focus-visible::before {
+    opacity: 1;
+}
+
+.footer-channel--whatsapp {
+    --channel-accent: #25d366;
+}
+
+.footer-channel--instagram {
+    --channel-accent: #e1306c;
+}
+
+.footer-channel--facebook {
+    --channel-accent: #1877f2;
+}
+
+.footer-channel--email {
+    --channel-accent: #f5a623;
+}
+
+.footer-channel--disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+}
+
+.footer-channel--disabled:hover {
+    transform: none;
+    box-shadow: 0 10px 26px rgba(31, 46, 43, 0.04);
+}
+
