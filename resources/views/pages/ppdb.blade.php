@@ -39,7 +39,6 @@
 
   @if ($ppdbAvailableAudiences->isNotEmpty())
     @include("pages.ppdb.showcase")
-    @include("pages.ppdb.storyline-script")
   @endif
 
   @include("pages.ppdb.steps")
