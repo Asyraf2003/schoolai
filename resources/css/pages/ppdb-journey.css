@@ -23,7 +23,8 @@
         --ppdb-journey-nav-offset: 84px;
         --ppdb-journey-stage-height: calc(100vh - var(--ppdb-journey-nav-offset));
         --ppdb-journey-stage-height: calc(100svh - var(--ppdb-journey-nav-offset));
-        min-height: calc(var(--ppdb-journey-stage-height) + clamp(240px, 42vh, 480px));
+        --ppdb-journey-release-runway: clamp(64px, 8vh, 104px);
+        min-height: calc(var(--ppdb-journey-stage-height) + var(--ppdb-journey-release-runway));
         padding: 0;
         overflow: clip;
         isolation: isolate;
