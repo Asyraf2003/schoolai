@@ -26,7 +26,7 @@
         --ppdb-journey-capture-runway: clamp(280px, 42vh, 480px);
         min-height: calc(var(--ppdb-journey-stage-height) + var(--ppdb-journey-capture-runway));
         padding: 0;
-        overflow: clip;
+        overflow: visible;
         isolation: isolate;
     }
     .ppdb-liftoff.ppdb-journey-native.is-journey-released {
