@@ -1,0 +1,180 @@
+/* Homepage native-media slider and deterministic desktop mega-menu. */
+
+function onMediaQueryChange(query, listener) {
+    if (typeof query.addEventListener === 'function') {
+        query.addEventListener('change', listener);
+        return function () { query.removeEventListener('change', listener); };
+    }
+
+    query.addListener(listener);
+    return function () { query.removeListener(listener); };
+}
+
+function initMegaMenus() {
+    var header = document.getElementById('navbar');
+    var mobileMenu = document.getElementById('navMenu');
+    var menus = Array.prototype.slice.call(document.querySelectorAll('[data-nav-mega]'));
+
+    if (!header) return;
+
+    function setMenuState(menu, isOpen, focusFirstLink) {
+        var toggle = menu.querySelector('[data-nav-mega-toggle]');
+        var panel = menu.querySelector('[data-nav-mega-panel]');
+        if (!toggle || !panel) return;
+
+        menu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        panel.inert = !isOpen;
+
+        if (isOpen && focusFirstLink) {
+            var firstLink = panel.querySelector('a[href]');
+            if (firstLink) firstLink.focus();
+        }
+    }
+
+    function syncHeaderState() {
+        var hasOpenMegaMenu = menus.some(function (menu) {
+            return menu.classList.contains('is-open');
+        });
+        var hasOpenMobileMenu = mobileMenu && mobileMenu.classList.contains('active');
+
+        header.classList.toggle('has-open-menu', hasOpenMegaMenu || hasOpenMobileMenu);
+    }
+
+    if (mobileMenu && typeof MutationObserver === 'function') {
+        var mobileMenuObserver = new MutationObserver(syncHeaderState);
+        mobileMenuObserver.observe(mobileMenu, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+
+    function closeMenus(exceptMenu) {
+        menus.forEach(function (menu) {
+            if (menu !== exceptMenu) setMenuState(menu, false, false);
+        });
+        syncHeaderState();
+    }
+
+    menus.forEach(function (menu) {
+        var toggle = menu.querySelector('[data-nav-mega-toggle]');
+        var panel = menu.querySelector('[data-nav-mega-panel]');
+        if (!toggle || !panel) return;
+
+        setMenuState(menu, false, false);
+
+        toggle.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var shouldOpen = !menu.classList.contains('is-open');
+            closeMenus(menu);
+            setMenuState(menu, shouldOpen, false);
+            syncHeaderState();
+
+            var languageMenu = document.querySelector('.nav-language.is-open');
+            if (languageMenu) {
+                languageMenu.classList.remove('is-open');
+                var languageButton = languageMenu.querySelector('.nav-language__button');
+                if (languageButton) languageButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        toggle.addEventListener('keydown', function (event) {
+            if (event.key !== 'ArrowDown') return;
+            event.preventDefault();
+            closeMenus(menu);
+            setMenuState(menu, true, true);
+            syncHeaderState();
+        });
+
+        panel.addEventListener('keydown', function (event) {
+            if (event.key !== 'Escape') return;
+            event.preventDefault();
+            event.stopPropagation();
+            setMenuState(menu, false, false);
+            syncHeaderState();
+            toggle.focus();
+        });
+
+        panel.querySelectorAll('a[href]').forEach(function (link) {
+            link.addEventListener('click', function () {
+                setMenuState(menu, false, false);
+                syncHeaderState();
+            });
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        if (event.target.closest('[data-nav-mega]')) return;
+        closeMenus();
+    });
+
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('.nav-language__button')) return;
+        closeMenus();
+    }, true);
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+
+        var openMenu = menus.find(function (menu) {
+            return menu.classList.contains('is-open');
+        });
+
+        if (!openMenu) return;
+
+        var toggle = openMenu.querySelector('[data-nav-mega-toggle]');
+        closeMenus();
+        if (toggle) toggle.focus();
+    });
+
+    syncHeaderState();
+}
+
+function initHeroSlider(root) {
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-hero-slide]'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-hero-dot]'));
+    var previousButton = root.querySelector('[data-hero-previous]');
+    var nextButton = root.querySelector('[data-hero-next]');
+    var playbackButton = root.querySelector('[data-hero-playback]');
+    var currentLabel = root.querySelector('[data-hero-current]');
+    var liveRegion = root.querySelector('[data-hero-live]');
+    var progressBar = root.querySelector('[data-hero-progress]');
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var statusTemplate = root.getAttribute('data-slide-label') || 'Slide :current of :total';
+    var duration = parseInt(root.getAttribute('data-autoplay-interval'), 10);
+    var currentIndex = Math.max(0, slides.findIndex(function (slide) {
+        return slide.classList.contains('is-active');
+    }));
+    var timer = null;
+    var transitionTimer = null;
+    var transitionDuration = 1060;
+    var userPaused = false;
+    var pointerStart = null;
+    var hasPresentedInitialSlide = false;
+
+    if (!slides.length) return;
+    if (!Number.isFinite(duration) || duration < 4000) duration = 7000;
+
+    // <article> does not permit role="group". Use a valid landmark-like
+    // role while keeping the carousel slide roledescription and label.
+    slides.forEach(function (slide) {
+        if (slide.tagName.toLowerCase() === 'article' && slide.getAttribute('role') === 'group') {
+            slide.setAttribute('role', 'region');
+        }
+    });
+
+    root.style.setProperty('--hero-autoplay-duration', duration + 'ms');
+    root.setAttribute('data-enhanced', 'true');
+
+    slides.forEach(function (slide) {
+        var title = slide.querySelector('.hero-cinema__title');
+        var cta = slide.querySelector('.hero-cinema__cta[href]');
+
+        if (!title || !cta || title.querySelector('a[href]')) return;
+
+        var href = cta.getAttribute('href');
+        if (!href) return;
+

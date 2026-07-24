@@ -1,0 +1,166 @@
+            var titleLift = smootherstep(0.1, 0.39, progress);
+            var targetWidth = Math.min(
+                viewportWidth * 0.42,
+                viewportHeight * 0.82,
+                720
+            );
+            var targetHeight = targetWidth * 9 / 16;
+            var mediaWidth = lerp(viewportWidth, targetWidth, shrink);
+            var mediaHeight = lerp(viewportHeight, targetHeight, shrink);
+            var mediaRadius = lerp(0, 28, shrink);
+            var titleTop = lerp(
+                viewportHeight * 0.6,
+                Math.max(150, viewportHeight * 0.2),
+                titleLift
+            );
+            var titleScale = lerp(1, 0.5, titleLift);
+
+            setPixelProperty(root, '--testimonial-media-width', mediaWidth);
+            setPixelProperty(root, '--testimonial-media-height', mediaHeight);
+            setPixelProperty(root, '--testimonial-media-radius', mediaRadius);
+            setPixelProperty(root, '--testimonial-title-top', titleTop);
+            setNumberProperty(root, '--testimonial-title-scale', titleScale);
+
+            nodes.forEach(function (node, index) {
+                var nodeStart = 0.35 + index * 0.066;
+                var nodeEnd = nodeStart + 0.09;
+                var presence = smootherstep(nodeStart, nodeEnd, progress);
+                var y = lerp(36, 0, presence);
+                var scale = lerp(0.8, 1, presence);
+
+                setNumberProperty(node, '--node-opacity', presence);
+                setPixelProperty(node, '--node-y', y);
+                setNumberProperty(node, '--node-scale', scale);
+            });
+        }
+
+        function stopProgressLoop() {
+            if (state.progressFrame !== null) {
+                window.cancelAnimationFrame(state.progressFrame);
+                state.progressFrame = null;
+            }
+
+            state.lastFrameTime = 0;
+        }
+
+        function progressLoop(timestamp) {
+            if (!state.enhanced) {
+                stopProgressLoop();
+                return;
+            }
+
+            var deltaFrames = state.lastFrameTime
+                ? clamp((timestamp - state.lastFrameTime) / 16.667, 0.5, 4)
+                : 1;
+            var smoothing = 1 - Math.pow(0.935, deltaFrames);
+            var difference = state.targetProgress - state.renderedProgress;
+
+            state.lastFrameTime = timestamp;
+            state.renderedProgress += difference * smoothing;
+
+            if (Math.abs(difference) < 0.00008) {
+                state.renderedProgress = state.targetProgress;
+            }
+
+            renderScene(state.renderedProgress);
+
+            if (state.renderedProgress !== state.targetProgress) {
+                state.progressFrame = window.requestAnimationFrame(progressLoop);
+                return;
+            }
+
+            state.progressFrame = null;
+            state.lastFrameTime = 0;
+        }
+
+        function startProgressLoop() {
+            if (!state.enhanced || state.progressFrame !== null) return;
+            state.progressFrame = window.requestAnimationFrame(progressLoop);
+        }
+
+        function syncScrollTarget(immediate) {
+            if (!state.enhanced) return;
+
+            state.targetProgress = readScrollProgress();
+
+            if (immediate) {
+                stopProgressLoop();
+                state.renderedProgress = state.targetProgress;
+                renderScene(state.renderedProgress);
+                return;
+            }
+
+            startProgressLoop();
+        }
+
+        function onDesktopScroll() {
+            syncScrollTarget(false);
+        }
+
+        function onDesktopResize() {
+            window.clearTimeout(state.resizeTimer);
+            state.resizeTimer = window.setTimeout(function () {
+                setStoryHeight();
+                syncScrollTarget(true);
+            }, 120);
+        }
+
+        function teardownMode() {
+            window.removeEventListener('scroll', onDesktopScroll);
+            window.removeEventListener('resize', onDesktopResize);
+            window.clearTimeout(state.resizeTimer);
+            stopProgressLoop();
+            state.enhanced = false;
+            root.style.removeProperty('--testimonial-story-height');
+        }
+
+        function setupMode() {
+            teardownMode();
+
+            if (desktopMedia.matches && !reducedMotionMedia.matches) {
+                state.enhanced = true;
+                root.setAttribute('data-mode', 'desktop');
+                setStoryHeight();
+
+                window.addEventListener('scroll', onDesktopScroll, { passive: true });
+                window.addEventListener('resize', onDesktopResize, { passive: true });
+
+                syncScrollTarget(true);
+                return;
+            }
+
+            root.setAttribute(
+                'data-mode',
+                reducedMotionMedia.matches ? 'static' : 'mobile'
+            );
+
+            nodes.forEach(function (node) {
+                setNumberProperty(node, '--node-opacity', 1);
+                setPixelProperty(node, '--node-y', 0);
+                setNumberProperty(node, '--node-scale', 1);
+            });
+        }
+
+        setupMode();
+        addMediaListener(desktopMedia, setupMode);
+        addMediaListener(reducedMotionMedia, setupMode);
+
+        window.addEventListener('pagehide', function cleanup() {
+            teardownMode();
+            removeMediaListener(desktopMedia, setupMode);
+            removeMediaListener(reducedMotionMedia, setupMode);
+        }, { once: true });
+    }
+
+    async function initialize() {
+        var items = await loadMediaFeed();
+        var root = insertStory(buildStoryData(items));
+        initializeStory(root);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize, { once: true });
+    } else {
+        initialize();
+    }
+})();

@@ -1,0 +1,37 @@
+
+                syncScrollTarget(true);
+                return;
+            }
+
+            setupLinearMode(
+                reducedMotionMedia.matches ? 'static' : 'mobile'
+            );
+        }
+
+        setupMode();
+        addMediaListener(desktopMedia, setupMode);
+        addMediaListener(reducedMotionMedia, setupMode);
+
+        window.addEventListener(
+            'pagehide',
+            function cleanup() {
+                teardownMode();
+                removeMediaListener(desktopMedia, setupMode);
+                removeMediaListener(reducedMotionMedia, setupMode);
+            },
+            { once: true }
+        );
+    }
+
+    function initialize() {
+        document.querySelectorAll(ROOT_SELECTOR).forEach(initializeStory);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize, {
+            once: true
+        });
+    } else {
+        initialize();
+    }
+})();

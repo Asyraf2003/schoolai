@@ -1,0 +1,180 @@
+
+    app.querySelector('[data-image-alt]')?.addEventListener('click', () => {
+        const image = selectedFigure?.querySelector('img');
+        if (!image) return;
+        const value = window.prompt('Alt text untuk aksesibilitas dan SEO:', image.alt || '');
+        if (value === null) return;
+        image.alt = value.slice(0, 300);
+        changed();
+    });
+
+    app.querySelector('[data-image-thumbnail]')?.addEventListener('click', () => {
+        const image = selectedFigure?.querySelector('img');
+        if (!image) return;
+        thumbnailUrl = image.getAttribute('src') || image.src;
+        app.dataset.thumbnailUrl = thumbnailUrl;
+        changed();
+        refreshPreview();
+        showTransientSaveState('Thumbnail dipilih · Menyimpan…');
+    });
+
+    app.querySelector('[data-image-replace]')?.addEventListener('click', () => {
+        if (!selectedFigure) return;
+        imageUploadIntent = 'replace';
+        imageInput?.click();
+    });
+
+    app.querySelector('[data-image-continue]')?.addEventListener('click', () => {
+        if (!selectedFigure) return;
+        ensureEditableBlockAfter(selectedFigure, true);
+        hideImageToolbar();
+    });
+
+    app.querySelector('[data-image-delete]')?.addEventListener('click', () => {
+        if (!selectedFigure) return;
+        const figure = selectedFigure;
+        const next = ensureEditableBlockAfter(figure, false);
+        figure.remove();
+        hideImageToolbar();
+        if (next) placeCaret(next);
+        changed();
+    });
+
+    app.querySelector('[data-code-exit]')?.addEventListener('click', () => exitCodeBlock());
+    app.querySelector('[data-thumbnail-change]')?.addEventListener('click', () => thumbnailInput?.click());
+
+    setupUrlDialog();
+    setupUnsplash();
+    const categoryManager = setupCategories();
+    setupPublish(categoryManager);
+
+    document.addEventListener('selectionchange', () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        const editor = activeEditor();
+        if (editor?.contains(selection.anchorNode)) rememberSelection();
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!inlineToolbar?.contains(event.target) && !activeEditor()?.contains(event.target)) {
+            hideInlineToolbar();
+        }
+        if (!imageToolbar?.contains(event.target) && !(event.target instanceof HTMLImageElement) && !event.target?.closest?.('figure')) {
+            hideImageToolbar();
+        }
+        if (!codeToolbar?.contains(event.target) && !event.target?.closest?.('pre')) {
+            hideCodeToolbar();
+        }
+        if (!blockMenu?.contains(event.target) && !activeEditor()?.contains(event.target)) {
+            closeBlockActions();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (selectedFigure) positionImageToolbar(selectedFigure);
+        positionCodeToolbar();
+    });
+
+    window.addEventListener('beforeunload', (event) => {
+        if (!dirty) return;
+        event.preventDefault();
+        event.returnValue = '';
+    });
+
+    updateMetrics();
+
+    function changed() {
+        dirty = true;
+        showTransientSaveState('Draft · Menyimpan…', 'is-saving');
+        window.clearTimeout(autosaveTimer);
+        autosaveTimer = window.setTimeout(saveNow, 900);
+    }
+
+    function showTransientSaveState(label, modifier = 'is-saving') {
+        if (!saveState) return;
+        saveState.textContent = label;
+        saveState.className = `canvas-save-state ${modifier}`.trim();
+    }
+
+    async function saveNow() {
+        if (saving) return false;
+        saving = true;
+        window.clearTimeout(autosaveTimer);
+
+        const payload = { thumbnail_url: thumbnailUrl };
+        documents.forEach((document) => {
+            const language = document.dataset.documentLanguage;
+            payload[`title_${language}`] = document.querySelector('[data-title]')?.value || '';
+            payload[`subtitle_${language}`] = document.querySelector('[data-subtitle]')?.value || '';
+            payload[`content_${language}`] = document.querySelector('[data-editor]')?.innerHTML || '';
+        });
+
+        try {
+            const response = await jsonRequest(app.dataset.autosaveUrl, 'PATCH', payload, csrf);
+            dirty = false;
+            thumbnailUrl = response.thumbnail_url || thumbnailUrl;
+            app.dataset.thumbnailUrl = thumbnailUrl;
+            if (saveState) {
+                saveState.textContent = response.saved_label || 'Draft · Tersimpan';
+                saveState.className = 'canvas-save-state';
+                saveState.removeAttribute('title');
+            }
+            updateMetrics(response.word_count, response.character_count);
+            refreshPreview();
+            return true;
+        } catch (error) {
+            if (saveState) {
+                saveState.textContent = 'Draft · Gagal menyimpan';
+                saveState.className = 'canvas-save-state is-error';
+                saveState.title = error.message;
+            }
+            return false;
+        } finally {
+            saving = false;
+        }
+    }
+
+    function updateMetrics(serverWords = null, serverCharacters = null) {
+        const editor = activeEditor();
+        const text = (editor?.textContent || '').trim().replace(/\s+/g, ' ');
+        currentWords = serverWords ?? (text ? (text.match(/[\p{L}\p{N}]+(?:[’'\-][\p{L}\p{N}]+)*/gu) || []).length : 0);
+        currentCharacters = serverCharacters ?? text.length;
+        if (countToggle) countToggle.textContent = `${currentWords} kata`;
+        if (wordCount) wordCount.textContent = `${currentWords} kata`;
+        if (characterCount) characterCount.textContent = `${currentCharacters} karakter`;
+        refreshPreview();
+    }
+
+    function rememberSelection() {
+        const selection = window.getSelection();
+        const editor = activeEditor();
+        if (!selection || selection.rangeCount === 0 || !editor?.contains(selection.anchorNode)) return;
+        savedRange = selection.getRangeAt(0).cloneRange();
+    }
+
+    function restoreSelection() {
+        const editor = activeEditor();
+        if (!savedRange || !editor?.contains(savedRange.startContainer)) return false;
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(savedRange);
+        return true;
+    }
+
+    function selectedBlocks(includeFigures = false) {
+        const editor = activeEditor();
+        if (!editor) return [];
+        const selection = window.getSelection();
+        const range = selection?.rangeCount ? selection.getRangeAt(0) : savedRange;
+        if (!range || !editor.contains(range.startContainer)) return [];
+
+        const selector = includeFigures
+            ? 'p,h2,h3,blockquote,li,pre,figure'
+            : 'p,h2,h3,blockquote,li,pre';
+        const candidates = Array.from(editor.querySelectorAll(selector));
+
+        if (range.collapsed) {
+            const block = closestBlock(range.startContainer, editor);
+            return block && block !== editor && (includeFigures || block.tagName !== 'FIGURE') ? [block] : [];
+        }
+

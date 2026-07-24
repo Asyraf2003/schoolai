@@ -1,0 +1,180 @@
+        input?.addEventListener('blur', () => {
+            window.setTimeout(() => {
+                if (input.value.trim()) add(input.value);
+                if (suggestionBox) suggestionBox.hidden = true;
+            }, 120);
+        });
+
+        render();
+        return { get: () => [...selected] };
+    }
+
+    function setupPublish(categoryManager) {
+        const error = publishDrawer?.querySelector('[data-publish-error]');
+        const submit = publishDrawer?.querySelector('[data-publish-submit]');
+        const publishAt = publishDrawer?.querySelector('[data-publish-at]');
+        const dateLabel = publishDrawer?.querySelector('[data-publish-date-label]');
+        const author = publishDrawer?.querySelector('[data-publish-author]');
+
+        app.querySelector('[data-publish-open]')?.addEventListener('click', async () => {
+            if (dirty && !(await saveNow())) return;
+            refreshPreview();
+            publishDrawer.hidden = false;
+        });
+        publishDrawer?.querySelectorAll('[data-publish-close]').forEach((button) => button.addEventListener('click', () => { publishDrawer.hidden = true; }));
+        publishDrawer?.querySelectorAll('input[name="publish_mode"]').forEach((radio) => {
+            radio.addEventListener('change', () => {
+                const schedule = radio.checked && radio.value === 'schedule';
+                if (dateLabel) dateLabel.textContent = schedule ? 'Jadwal publikasi' : 'Tanggal publikasi';
+                if (submit) submit.textContent = schedule ? 'Schedule to publish' : 'Publish now';
+                if (schedule && publishAt && new Date(publishAt.value).getTime() <= Date.now()) {
+                    publishAt.value = toDateTimeLocal(new Date(Date.now() + 60 * 60 * 1000));
+                }
+                if (!schedule && publishAt && new Date(publishAt.value).getTime() > Date.now() + 5 * 60 * 1000) {
+                    publishAt.value = toDateTimeLocal(new Date());
+                }
+                refreshPreview();
+            });
+        });
+        author?.addEventListener('input', refreshPreview);
+        publishAt?.addEventListener('input', refreshPreview);
+
+        submit?.addEventListener('click', async () => {
+            const mode = publishDrawer.querySelector('input[name="publish_mode"]:checked')?.value || 'now';
+            if (error) error.hidden = true;
+            submit.disabled = true;
+            try {
+                const response = await jsonRequest(app.dataset.publishUrl, 'POST', {
+                    publish_mode: mode,
+                    published_at: mode === 'now' ? publishAt?.value : null,
+                    scheduled_at: mode === 'schedule' ? publishAt?.value : null,
+                    author: author?.value || '',
+                    tags: categoryManager?.get() || [],
+                }, csrf);
+                dirty = false;
+                window.location.assign(response.redirect);
+            } catch (caught) {
+                if (error) { error.textContent = caught.message; error.hidden = false; }
+                submit.disabled = false;
+            }
+        });
+    }
+
+    function refreshPreview() {
+        const idDocument = documents.find((document) => document.dataset.documentLanguage === 'id');
+        const title = idDocument?.querySelector('[data-title]')?.value.trim() || 'Artikel tanpa judul';
+        const subtitle = idDocument?.querySelector('[data-subtitle]')?.value.trim() || '';
+        const previewTitle = publishDrawer?.querySelector('[data-preview-title]');
+        const previewSubtitle = publishDrawer?.querySelector('[data-preview-subtitle]');
+        const previewImage = publishDrawer?.querySelector('[data-preview-image] img');
+        const previewAuthor = publishDrawer?.querySelector('[data-preview-author]');
+        const previewDate = publishDrawer?.querySelector('[data-preview-date]');
+        const previewReading = publishDrawer?.querySelector('[data-preview-reading]');
+        const author = publishDrawer?.querySelector('[data-publish-author]')?.value.trim() || 'Admin';
+        const publishAt = publishDrawer?.querySelector('[data-publish-at]')?.value;
+        if (previewTitle) previewTitle.textContent = title;
+        if (previewSubtitle) {
+            previewSubtitle.textContent = subtitle;
+            previewSubtitle.hidden = subtitle === '';
+        }
+        if (previewImage && thumbnailUrl) previewImage.src = thumbnailUrl;
+        if (previewAuthor) previewAuthor.textContent = author;
+        if (previewDate && publishAt) {
+            const date = new Date(publishAt);
+            if (!Number.isNaN(date.getTime())) {
+                previewDate.dateTime = date.toISOString();
+                previewDate.textContent = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
+            }
+        }
+        if (previewReading) previewReading.textContent = `${Math.max(1, Math.ceil(Math.max(1, currentWords) / 220))} menit baca`;
+    }
+
+    function handleEditorShortcut(event) {
+        const editor = activeEditor();
+        const block = closestBlock(window.getSelection()?.anchorNode, editor);
+
+        if (block?.tagName === 'PRE' && event.key === 'Enter' && !event.shiftKey) {
+            const code = block.querySelector('code') || block;
+            const shouldExit = event.ctrlKey || event.metaKey || (isCaretAtEnd(code) && (code.textContent || '').endsWith('\n'));
+            if (shouldExit) {
+                event.preventDefault();
+                selectedCodeBlock = block;
+                exitCodeBlock();
+                return;
+            }
+        }
+
+        if (!(event.ctrlKey || event.metaKey)) return;
+        const key = event.key.toLowerCase();
+        if (key === 'b' || key === 'i') {
+            event.preventDefault();
+            document.execCommand(key === 'b' ? 'bold' : 'italic', false);
+            changed();
+        }
+        if (key === 'x' && event.shiftKey) {
+            event.preventDefault();
+            document.execCommand('strikeThrough', false);
+            changed();
+        }
+        if (key === 'k') {
+            event.preventDefault();
+            rememberSelection();
+            openLinkInput();
+        }
+    }
+
+    function handleMarkdownShortcut(event, editor) {
+        if (event.key !== ' ' && event.key !== 'Enter') return;
+        const block = closestBlock(window.getSelection()?.anchorNode, editor);
+        if (!block || block.tagName === 'PRE') return;
+        const text = (block.textContent || '').replace(/\u00a0/g, ' ');
+        if (event.key === ' ' && ['* ', '- '].includes(text)) {
+            block.textContent = '';
+            document.execCommand('insertUnorderedList', false);
+            changed();
+        } else if (event.key === ' ' && text === '1. ') {
+            block.textContent = '';
+            document.execCommand('insertOrderedList', false);
+            changed();
+        } else if (text.trim() === '```') {
+            const pre = document.createElement('pre');
+            const code = document.createElement('code');
+            code.append(document.createElement('br'));
+            pre.append(code);
+            block.replaceWith(pre);
+            ensureEditableBlockAfter(pre, false);
+            placeCaret(code);
+            showCodeToolbar(pre);
+            changed();
+        } else if (event.key === ' ') {
+            applyInlineCode(block);
+        }
+    }
+
+    function applyInlineCode(block) {
+        if (block.children.length > 0) return;
+        const text = block.textContent || '';
+        const match = text.match(/`([^`\n]+)`\s$/);
+        if (!match) return;
+        const before = text.slice(0, match.index);
+        const after = text.slice((match.index || 0) + match[0].length);
+        const code = document.createElement('code');
+        code.textContent = match[1];
+        block.replaceChildren(document.createTextNode(before), code, document.createTextNode(` ${after}`));
+        placeCaret(block, true);
+        changed();
+    }
+
+    function insertNode(node) {
+        restoreSelection();
+        const editor = activeEditor();
+        const selection = window.getSelection();
+        if (!editor) return null;
+        if (!selection || selection.rangeCount === 0 || !editor.contains(selection.anchorNode)) {
+            editor.append(node);
+            return node;
+        }
+        const block = closestBlock(selection.anchorNode, editor);
+        if (block && (block.textContent || '').trim() === '' && block.tagName === 'P') {
+            block.replaceWith(node);
+        } else if (block && block !== editor) {

@@ -1,0 +1,92 @@
+
+    if (lastFocused && lastFocused.focus) {
+      lastFocused.focus();
+    }
+  }
+
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      openLightbox(card);
+    });
+
+    card.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLightbox(card);
+      }
+    });
+  });
+
+  closeButtons.forEach(function (button) {
+    button.addEventListener('click', closeLightbox);
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !lightbox.hidden) {
+      closeLightbox();
+    }
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  var lazyMedia = Array.prototype.slice.call(document.querySelectorAll('[data-lazy-media][data-lazy-src]'));
+
+  if (!lazyMedia.length) return;
+
+  function reveal(el) {
+    el.classList.add('is-lazy-loaded');
+  }
+
+  function hydrate(el) {
+    if (!el || el.getAttribute('data-lazy-hydrated') === '1') return;
+
+    var src = el.getAttribute('data-lazy-src');
+    if (!src) return;
+
+    el.setAttribute('data-lazy-hydrated', '1');
+
+    if (el.tagName === 'IMG') {
+      el.setAttribute('loading', 'lazy');
+      el.setAttribute('decoding', 'async');
+      el.addEventListener('load', function () { reveal(el); }, { once: true });
+      el.addEventListener('error', function () { reveal(el); }, { once: true });
+      el.setAttribute('src', src);
+      el.removeAttribute('data-lazy-src');
+      return;
+    }
+
+    if (el.tagName === 'IFRAME') {
+      el.addEventListener('load', function () { reveal(el); }, { once: true });
+      el.setAttribute('src', src);
+      el.removeAttribute('data-lazy-src');
+      return;
+    }
+
+    el.setAttribute('src', src);
+    el.removeAttribute('data-lazy-src');
+    reveal(el);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    lazyMedia.forEach(hydrate);
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+
+      hydrate(entry.target);
+      observer.unobserve(entry.target);
+    });
+  }, {
+    root: null,
+    rootMargin: '32px 0px',
+    threshold: 0.01
+  });
+
+  lazyMedia.forEach(function (el) {
+    observer.observe(el);
+  });
+});

@@ -1,0 +1,180 @@
+
+            cursor = exitEnd;
+
+            if (index < statCount - 1) {
+                var shiftStart = cursor + TIMING.gapAfterExit;
+                var shiftEnd = shiftStart + TIMING.aboutShift;
+
+                shifts.push({
+                    start: shiftStart,
+                    end: shiftEnd,
+                    fromIndex: index,
+                    toIndex: index + 1
+                });
+
+                cursor = shiftEnd + TIMING.preNextStat;
+            }
+        }
+
+        var lastExit = stats.length
+            ? stats[stats.length - 1].exitEnd
+            : firstShiftEnd;
+        var outroStart = lastExit + TIMING.finalPause;
+        var total = outroStart + TIMING.outro;
+
+        return {
+            introEnd: introEnd,
+            firstShiftEnd: firstShiftEnd,
+            firstStatStart: stats.length ? stats[0].enterStart : firstShiftEnd,
+            lastExit: lastExit,
+            outroStart: outroStart,
+            total: total,
+            stats: stats,
+            shifts: shifts
+        };
+    }
+
+    function initializeStory(root) {
+        if (root.getAttribute('data-about-stats-initialized') === 'true') {
+            return;
+        }
+
+        var track = root.querySelector(TRACK_SELECTOR);
+        var sticky = root.querySelector('.about-stats-story__sticky') || root;
+        var statElements = Array.prototype.slice.call(
+            root.querySelectorAll(STAT_SELECTOR)
+        );
+        var progressDots = Array.prototype.slice.call(
+            root.querySelectorAll('[data-about-stats-progress-dot]')
+        );
+        var desktopMedia = window.matchMedia(DESKTOP_QUERY);
+        var reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
+        var timeline = buildTimeline(statElements.length);
+        var state = {
+            enhanced: false,
+            resizeTimer: null,
+            progressFrame: null,
+            lastFrameTime: 0,
+            targetProgress: 0,
+            renderedProgress: 0,
+            pointerFrame: null,
+            pointerListening: false,
+            pointerX: 0,
+            pointerY: 0,
+            activeIndex: -1,
+            direction: isRtlDocument() ? -1 : 1,
+            mobileObserver: null
+        };
+
+        if (!track) return;
+
+        root.setAttribute('data-about-stats-initialized', 'true');
+        statElements.forEach(ensureStatDescription);
+
+        function sideForAbout(index) {
+            if (index < 0) return 0;
+            return (index % 2 === 0 ? 1 : -1) * state.direction;
+        }
+
+        function sideForStat(index) {
+            return -sideForAbout(index);
+        }
+
+        function updateActiveIndex(index) {
+            if (state.activeIndex === index) return;
+
+            state.activeIndex = index;
+            root.setAttribute(
+                'data-active-stat',
+                index >= 0 ? String(index) : ''
+            );
+
+            progressDots.forEach(function (dot, dotIndex) {
+                dot.classList.toggle('is-active', dotIndex === index);
+            });
+        }
+
+        function setStoryHeight() {
+            var viewportHeight = Math.max(
+                window.innerHeight || 0,
+                document.documentElement.clientHeight || 0,
+                640
+            );
+            var screenCount = Math.max(
+                7.2,
+                1 + timeline.total * 0.31
+            );
+
+            root.style.setProperty(
+                '--story-scroll-height',
+                Math.round(viewportHeight * screenCount) + 'px'
+            );
+        }
+
+        function readScrollProgress() {
+            var viewportHeight = Math.max(
+                window.innerHeight || 0,
+                document.documentElement.clientHeight || 0,
+                1
+            );
+            var rect = track.getBoundingClientRect();
+            var scrollRange = Math.max(track.offsetHeight - viewportHeight, 1);
+
+            return clamp(-rect.top / scrollRange, 0, 1);
+        }
+
+        function resolveAboutSide(timelinePosition) {
+            var resolvedSide = 0;
+
+            for (var index = 0; index < timeline.shifts.length; index += 1) {
+                var shift = timeline.shifts[index];
+                var fromSide = sideForAbout(shift.fromIndex);
+                var toSide = sideForAbout(shift.toIndex);
+
+                if (timelinePosition < shift.start) {
+                    break;
+                }
+
+                if (timelinePosition <= shift.end) {
+                    var shiftProgress = smootherstep(
+                        shift.start,
+                        shift.end,
+                        timelinePosition
+                    );
+
+                    return lerp(fromSide, toSide, shiftProgress);
+                }
+
+                resolvedSide = toSide;
+            }
+
+            return resolvedSide;
+        }
+
+        function renderScene(progress) {
+            if (!state.enhanced) return;
+
+            var viewportWidth = Math.max(
+                window.innerWidth || 0,
+                document.documentElement.clientWidth || 0,
+                1
+            );
+            var viewportHeight = Math.max(
+                window.innerHeight || 0,
+                document.documentElement.clientHeight || 0,
+                1
+            );
+            var timelinePosition = progress * timeline.total;
+            var intro = smootherstep(0, timeline.introEnd, timelinePosition);
+            var firstShift = smootherstep(
+                timeline.introEnd,
+                timeline.firstShiftEnd,
+                timelinePosition
+            );
+            var outro = smootherstep(
+                timeline.outroStart,
+                timeline.total,
+                timelinePosition
+            );
+            var aboutSide = resolveAboutSide(timelinePosition);
+            var aboutX = aboutSide * viewportWidth * 0.225;

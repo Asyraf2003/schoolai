@@ -1,0 +1,180 @@
+.nav-language__option:hover,
+.nav-language__option:focus-visible,
+.nav-language__option.is-active {
+    background: rgba(245, 166, 35, 0.13);
+    color: #a86000;
+    outline: none;
+}
+
+.nav-language__option:hover,
+.nav-language__option:focus-visible {
+    transform: translateX(2px);
+}
+
+@media (max-width: 1200px) {
+    .nav-language__button {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .nav-language__panel {
+        position: static;
+        min-width: 0;
+        margin-top: 8px;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        pointer-events: auto;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.74);
+    }
+}
+
+/* Mobile: language switch dibuat compact ID/EN, bukan card besar yang makan tempat. */
+@media (max-width: 1200px) {
+    .nav-language {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 2px 0 10px;
+    }
+
+    .nav-language__button {
+        width: auto;
+        min-height: 0;
+        padding: 0;
+        justify-content: flex-start;
+        gap: 8px;
+        color: var(--color-ink);
+        display: none;
+        pointer-events: none;
+    }
+
+    .nav-language__panel {
+        position: static;
+        width: fit-content;
+        min-width: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 0;
+        padding: 4px;
+        border-radius: 999px;
+        background: rgba(255, 244, 220, 0.9);
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        pointer-events: auto;
+        backdrop-filter: none;
+    }
+
+    .nav-language__option {
+        min-width: 0;
+        padding: 0;
+        border-radius: 999px;
+        transform: none;
+    }
+
+    .nav-language__option span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .nav-language__option small {
+        min-width: 40px;
+        height: 30px;
+        padding-inline: 10px;
+        background: transparent;
+        color: #9a6a20;
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .nav-language__option.is-active small,
+    .nav-language__option:hover small,
+    .nav-language__option:focus-visible small {
+        background: #ff9955;
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+}
+
+.public-page-body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 8% 12%,
+            rgba(255, 201, 60, 0.24),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 92% 0%,
+            rgba(127, 199, 224, 0.24),
+            transparent 30%
+        ),
+        var(--color-cream);
+}
+
+.public-main {
+    overflow: hidden;
+}
+
+.public-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 253, 247, 0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(51, 49, 77, 0.08);
+}
+
+.public-topbar__inner {
+    width: 100%;
+    padding: 14px var(--page-x-gap);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.public-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+}
+
+.public-brand__mark {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: var(--color-yellow-soft);
+    box-shadow: var(--shadow-soft);
+}
+
+.public-brand strong,
+.public-footer__brand {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: var(--color-ink);
+}
+
+.public-brand small {
+    display: block;
+    color: var(--color-ink-soft);
+    font-size: 0.78rem;
+}
+
+.public-nav {

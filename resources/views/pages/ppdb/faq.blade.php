@@ -1,0 +1,1 @@
+  <section class="public-section public-section--soft"><div class="container"><div class="public-section-head"><h2>{{ $page['faq_intro']['heading'] }}</h2></div><div class="faq-grid">@foreach($page['faq'] as $faq)<details class="faq-card reveal"><summary>{{ $faq['q'] }}</summary><p>{{ $faq['a'] }}</p></details>@endforeach</div></div></section>

@@ -1,0 +1,180 @@
+
+.article-index-card__meta span + span::before {
+    content: "—";
+    margin-right: 8px;
+    color: rgba(31, 31, 31, 0.34);
+}
+
+.article-index-card__date {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.article-index-card__overlay strong {
+    display: -webkit-box;
+    overflow: hidden;
+    color: #171717;
+    font-family: var(--font-body);
+    font-size: clamp(1.28rem, 1.55vw, 1.84rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    transition: color 0.22s ease;
+}
+
+.article-index-card__description {
+    display: -webkit-box;
+    overflow: hidden;
+    color: rgba(31, 31, 31, 0.72);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.article-index-empty {
+    padding: clamp(28px, 5vw, 56px);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.article-index-empty h2 {
+    font-family: var(--font-body);
+    color: #171717;
+}
+
+.article-index-empty p {
+    margin-top: 10px;
+    color: rgba(31, 31, 31, 0.72);
+}
+
+.article-index-featured,
+.article-index-featured__media,
+.article-index-featured__body {
+    box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .article-index-card__link:hover .article-index-card__media img,
+    .article-index-card__link:focus-visible .article-index-card__media img {
+        transform: scale(1.045);
+        filter: saturate(1.05) contrast(1.03);
+    }
+
+    .article-index-card__link:hover .article-index-card__overlay strong,
+    .article-index-card__link:focus-visible .article-index-card__overlay strong {
+        color: #d95d1e;
+    }
+}
+
+.article-index-card__link:focus-visible {
+    outline: 3px solid rgba(255, 159, 90, 0.38);
+    outline-offset: 5px;
+}
+
+@media (max-width: 1024px) {
+    .article-index-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .article-index-section,
+    .article-index-list-section {
+        padding-top: 38px;
+    }
+
+    .article-index-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .article-index-card__overlay {
+        padding-top: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .article-index-card__media img,
+    .article-index-card__overlay strong {
+        transition: none !important;
+    }
+}
+
+
+/* Social video covers: provider identity without loading third-party iframes. */
+.social-video-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100%;
+    padding: 24px;
+    border-radius: inherit !important;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 1rem !important;
+    text-align: center;
+    background:
+        radial-gradient(
+            circle at 20% 16%,
+            rgba(255, 255, 255, 0.2),
+            transparent 34%
+        ),
+        linear-gradient(135deg, #334155, #111827);
+    box-shadow: none !important;
+}
+
+.social-video-cover__logo {
+    display: block;
+    width: clamp(58px, 7vw, 82px);
+    height: clamp(58px, 7vw, 82px);
+    margin-bottom: 2px;
+    border-radius: 20px;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 24px rgba(15, 23, 42, 0.22));
+    pointer-events: none;
+}
+
+.social-video-cover__brand {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.5vw, 1.75rem);
+    font-weight: 950;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 3px 14px rgba(15, 23, 42, 0.24);
+}
+
+.social-video-cover__hint {
+    display: block;
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius-pill);
+    background: rgba(15, 23, 42, 0.18);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.74rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.social-video-cover--instagram {
+    background:
+        radial-gradient(
+            circle at 22% 18%,
+            rgba(255, 214, 98, 0.42),
+            transparent 30%
+        ),
+        linear-gradient(135deg, #833ab4 0%, #fd1d1d 58%, #fcb045 100%);

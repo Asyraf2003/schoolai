@@ -4,6 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
+        "check:structure": "node scripts/verify-source-structure.mjs",
+        "prebuild": "npm run check:structure",
         "dev": "vite"
     },
     "devDependencies": {

@@ -1,0 +1,655 @@
+{
+  "invariant": "Each listed partial is an exact line-range extraction from the original Blade source.",
+  "extractions": [
+    {
+      "source": "resources/views/admin/hero/form.blade.php",
+      "target": "resources/views/admin/hero/partials/fields.blade.php",
+      "source_lines": [
+        14,
+        145
+      ],
+      "lines": 132,
+      "sha256": "5edb8ae3096216ac2f3c6a37f3f702ddc95b4a96c3b2a56c7b1b1b6aef5d0eac"
+    },
+    {
+      "source": "resources/views/admin/hero/form.blade.php",
+      "target": "resources/views/admin/hero/partials/behavior.blade.php",
+      "source_lines": [
+        147,
+        221
+      ],
+      "lines": 75,
+      "sha256": "3cbf34fff5d4425a42bd6de7d846b87088a98c511ee88f6c8abd8c267c48f72d"
+    },
+    {
+      "source": "resources/views/partials/site-head-meta.blade.php",
+      "target": "resources/views/partials/site-head-meta/base-styles.blade.php",
+      "source_lines": [
+        118,
+        213
+      ],
+      "lines": 96,
+      "sha256": "12fac3ea409cc97fb07dec027535ca616e09459fcfb8d221fc83fad4ac6f1a38"
+    },
+    {
+      "source": "resources/views/admin/gallery/index.blade.php",
+      "target": "resources/views/admin/gallery/index/header.blade.php",
+      "source_lines": [
+        13,
+        40
+      ],
+      "lines": 28,
+      "sha256": "f5157b79f70fb80ddd8f240d9f674b0afa9d380c852673c3e3179a81e7007c99"
+    },
+    {
+      "source": "resources/views/admin/gallery/index.blade.php",
+      "target": "resources/views/admin/gallery/index/homepage-items.blade.php",
+      "source_lines": [
+        42,
+        157
+      ],
+      "lines": 116,
+      "sha256": "f8021ec2b8c833cc5b9e70d91104765c581173e167e36b1482fcb51416516195"
+    },
+    {
+      "source": "resources/views/admin/gallery/index.blade.php",
+      "target": "resources/views/admin/gallery/index/page-sections.blade.php",
+      "source_lines": [
+        159,
+        252
+      ],
+      "lines": 94,
+      "sha256": "db73a1bb040c65b8e9e540f0f238923511473b5bb38ebd08098eaa3881cfd7a9"
+    },
+    {
+      "source": "resources/views/admin/articles/form.blade.php",
+      "target": "resources/views/admin/articles/form/fields.blade.php",
+      "source_lines": [
+        23,
+        195
+      ],
+      "lines": 173,
+      "sha256": "86d59a81e5c2195805cf95f5b07d2a702adfdf84c1adbfd4958e518cd9e70df4"
+    },
+    {
+      "source": "resources/views/admin/articles/form.blade.php",
+      "target": "resources/views/admin/articles/form/behavior.blade.php",
+      "source_lines": [
+        197,
+        279
+      ],
+      "lines": 83,
+      "sha256": "1404e0657210d41382c918ba30fa67b41d433fb115b322d6cc81c673a14a1032"
+    },
+    {
+      "source": "resources/views/admin/articles/canvas.blade.php",
+      "target": "resources/views/admin/articles/canvas/topbar.blade.php",
+      "source_lines": [
+        13,
+        33
+      ],
+      "lines": 21,
+      "sha256": "ca8f6c6ca80ca3a47277464b2c25960ba16798098c655a0b434abee3461474d4"
+    },
+    {
+      "source": "resources/views/admin/articles/canvas.blade.php",
+      "target": "resources/views/admin/articles/canvas/workspace.blade.php",
+      "source_lines": [
+        35,
+        155
+      ],
+      "lines": 121,
+      "sha256": "e03c823d01a1bc60dbb43b1aa51ccc69b6b6cc7302306d60bad19776b72c07bf"
+    },
+    {
+      "source": "resources/views/admin/articles/canvas.blade.php",
+      "target": "resources/views/admin/articles/canvas/toolbars.blade.php",
+      "source_lines": [
+        157,
+        206
+      ],
+      "lines": 50,
+      "sha256": "00fcdcfef0b3ff0433ffb6eafc5a8b501e5e398b7fa1f582be7614560d9b1854"
+    },
+    {
+      "source": "resources/views/admin/articles/canvas.blade.php",
+      "target": "resources/views/admin/articles/canvas/dialogs.blade.php",
+      "source_lines": [
+        208,
+        238
+      ],
+      "lines": 31,
+      "sha256": "2c1c55cfa7cac73e0be0e25760d8dcf8508d446b3286e2a8bd73fca97c84bfb5"
+    },
+    {
+      "source": "resources/views/admin/articles/canvas.blade.php",
+      "target": "resources/views/admin/articles/canvas/publish-drawer.blade.php",
+      "source_lines": [
+        240,
+        293
+      ],
+      "lines": 54,
+      "sha256": "1d7417359f873321f616f9944f1afde7202c918ca9e24f4fe1b28b772b3d6bac"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/styles.blade.php",
+      "source_lines": [
+        35,
+        115
+      ],
+      "lines": 81,
+      "sha256": "cb0cf6ae2d193b066b8c102d1a2b70684100995d7be1bb33fdbe3609595a6e92"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/hero.blade.php",
+      "source_lines": [
+        117,
+        148
+      ],
+      "lines": 32,
+      "sha256": "72e044ebc5866d0aa8f5d5d65a6d70997d6a52a2d4d7ea63b251bb601a0741b6"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/showcase.blade.php",
+      "source_lines": [
+        151,
+        208
+      ],
+      "lines": 58,
+      "sha256": "d81a271a763ed2990941c4a281e9252d81d51bd85a1456c68bdae50523bc3782"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/scripts/storyline-setup.blade.php",
+      "source_lines": [
+        212,
+        301
+      ],
+      "lines": 90,
+      "sha256": "671e874a17e03d43427293b0cea04b3a8409a5201a5e183203f0fee938e730c0"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/scripts/storyline-build.blade.php",
+      "source_lines": [
+        303,
+        426
+      ],
+      "lines": 124,
+      "sha256": "0ab01738d59134ea121629defab886dbf989bcb733d50d0e4ae73ed610e06911"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/scripts/storyline-interaction.blade.php",
+      "source_lines": [
+        428,
+        533
+      ],
+      "lines": 106,
+      "sha256": "0706ca467460b7889b72164c32ac18b26f93773d375902d46f232c053f97ac03"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/steps.blade.php",
+      "source_lines": [
+        538,
+        538
+      ],
+      "lines": 1,
+      "sha256": "cd4295ebef1f772face0ca92adae1b02d793e95253de0e28dbe1fb5bb96b889e"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/programs.blade.php",
+      "source_lines": [
+        539,
+        539
+      ],
+      "lines": 1,
+      "sha256": "539a097539f661313b692bb2a56ef8d199b82dc2430b5de71c5941cb78c2422d"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/information.blade.php",
+      "source_lines": [
+        540,
+        540
+      ],
+      "lines": 1,
+      "sha256": "3819459080dceef3d23f47119e38d3e62b4969306499d8c389295b538c7131d3"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/faq.blade.php",
+      "source_lines": [
+        541,
+        541
+      ],
+      "lines": 1,
+      "sha256": "93fe125179388075ad3561c861b2cce447df6b2397a01baee772fa09ce30527b"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/final-cta.blade.php",
+      "source_lines": [
+        542,
+        542
+      ],
+      "lines": 1,
+      "sha256": "235f9532f60c9d873cd83a3d45f450f99ed338eed59c58cf5a25d608dee2091a"
+    },
+    {
+      "source": "resources/views/pages/ppdb.blade.php",
+      "target": "resources/views/pages/ppdb/closed-modal.blade.php",
+      "source_lines": [
+        543,
+        543
+      ],
+      "lines": 1,
+      "sha256": "ef6dc896a6812b13044e6c55243b079fe71db86ceea2e9d1d7533858590265b6"
+    },
+    {
+      "source": "resources/views/admin/site-statistics/edit.blade.php",
+      "target": "resources/views/admin/site-statistics/edit/header.blade.php",
+      "source_lines": [
+        37,
+        65
+      ],
+      "lines": 29,
+      "sha256": "bb7017b39f98375efeaf991598b0b46e4f18e5dc20d256e10ef6daff7f18c088"
+    },
+    {
+      "source": "resources/views/admin/site-statistics/edit.blade.php",
+      "target": "resources/views/admin/site-statistics/edit/create-form.blade.php",
+      "source_lines": [
+        68,
+        151
+      ],
+      "lines": 84,
+      "sha256": "cb935c06adaf8b0936fce96ff1938416aa719624a1058baf82bb6324059068fc"
+    },
+    {
+      "source": "resources/views/admin/site-statistics/edit.blade.php",
+      "target": "resources/views/admin/site-statistics/edit/statistics-list.blade.php",
+      "source_lines": [
+        153,
+        333
+      ],
+      "lines": 181,
+      "sha256": "fa22001e345c11db539149d1b1ca3e2eadd308a7d4ec9b26aada97ad544bd666"
+    },
+    {
+      "source": "resources/views/admin/site-statistics/edit.blade.php",
+      "target": "resources/views/admin/site-statistics/edit/behavior.blade.php",
+      "source_lines": [
+        336,
+        369
+      ],
+      "lines": 34,
+      "sha256": "dd6939237128a08483b4093a9f2babac730aefa5dcaef8698c544d22d7f31042"
+    },
+    {
+      "source": "resources/views/admin/gallery/page-media/_form.blade.php",
+      "target": "resources/views/admin/gallery/page-media/form/fields.blade.php",
+      "source_lines": [
+        9,
+        127
+      ],
+      "lines": 119,
+      "sha256": "c92aae31e84e0e4b0117a5d270a94395ff87ac9a58a6bf80053d51ab3b334326"
+    },
+    {
+      "source": "resources/views/admin/gallery/page-media/_form.blade.php",
+      "target": "resources/views/admin/gallery/page-media/form/scripts/inputs-and-photos.blade.php",
+      "source_lines": [
+        130,
+        263
+      ],
+      "lines": 134,
+      "sha256": "e8e81042ed365cbb41573f8d4d3bd705dc4b50303d40b411b67a6c3e94f06439"
+    },
+    {
+      "source": "resources/views/admin/gallery/page-media/_form.blade.php",
+      "target": "resources/views/admin/gallery/page-media/form/scripts/video-preview.blade.php",
+      "source_lines": [
+        264,
+        375
+      ],
+      "lines": 112,
+      "sha256": "201d462381b468e1b4f36019618dd09fd6b6397d2a52a9e841b041e29a5582a9"
+    },
+    {
+      "source": "resources/views/admin/ppdb/edit.blade.php",
+      "target": "resources/views/admin/ppdb/edit/styles.blade.php",
+      "source_lines": [
+        29,
+        52
+      ],
+      "lines": 24,
+      "sha256": "f3f339ecb08e88639e8844f9d899b4f2cf527c297684c773c94b1e7a258ba0f7"
+    },
+    {
+      "source": "resources/views/admin/ppdb/edit.blade.php",
+      "target": "resources/views/admin/ppdb/edit/overview.blade.php",
+      "source_lines": [
+        54,
+        131
+      ],
+      "lines": 78,
+      "sha256": "187725c41f8ea96dcc76b1a0c8de368144ab11882ee3eeeddfe0fe5f97813aa4"
+    },
+    {
+      "source": "resources/views/admin/ppdb/edit.blade.php",
+      "target": "resources/views/admin/ppdb/edit/showcase-list.blade.php",
+      "source_lines": [
+        143,
+        240
+      ],
+      "lines": 98,
+      "sha256": "810ac4a91e0998b4d713336fb4b99dd095c6d2aa9efd579f59f71b6971f8f983"
+    },
+    {
+      "source": "resources/views/admin/ppdb/edit.blade.php",
+      "target": "resources/views/admin/ppdb/edit/showcase-form.blade.php",
+      "source_lines": [
+        241,
+        378
+      ],
+      "lines": 138,
+      "sha256": "3222a174fe22bd62cd19682bf1f8f4e5328c7f4d182b747b025ab6660e539153"
+    },
+    {
+      "source": "resources/views/admin/ppdb/edit.blade.php",
+      "target": "resources/views/admin/ppdb/edit/behavior.blade.php",
+      "source_lines": [
+        382,
+        427
+      ],
+      "lines": 46,
+      "sha256": "0aee39f91f9a3bf02f0e58d2de7928a05bfc0af81903745e405e175e26a15e55"
+    },
+    {
+      "source": "resources/views/admin/gallery/form.blade.php",
+      "target": "resources/views/admin/gallery/form/fields.blade.php",
+      "source_lines": [
+        27,
+        223
+      ],
+      "lines": 197,
+      "sha256": "fc1ac66a3bb9c25eb89f47c2cc4a26ad092db17704f32c1cd16423c7f1457926"
+    },
+    {
+      "source": "resources/views/admin/gallery/form.blade.php",
+      "target": "resources/views/admin/gallery/form/scripts/form-and-photo.blade.php",
+      "source_lines": [
+        226,
+        365
+      ],
+      "lines": 140,
+      "sha256": "779ba909cba61304be0795d4f19ffca9e5908ba040517b667eac5e529cb34f90"
+    },
+    {
+      "source": "resources/views/admin/gallery/form.blade.php",
+      "target": "resources/views/admin/gallery/form/scripts/video-preview.blade.php",
+      "source_lines": [
+        366,
+        462
+      ],
+      "lines": 97,
+      "sha256": "dedaf11546cc4e4902114f3265984fce401d3bc5d250f65e1899cc8a5ac13d57"
+    },
+    {
+      "source": "resources/views/partials/site-navbar.blade.php",
+      "target": "resources/views/partials/site-navbar/styles/language-modal.blade.php",
+      "source_lines": [
+        210,
+        373
+      ],
+      "lines": 164,
+      "sha256": "28dc39055c157b16ee0ccea0fe027e7e392b4bb1c1e13f218e7775d377f3cc90"
+    },
+    {
+      "source": "resources/views/partials/site-navbar.blade.php",
+      "target": "resources/views/partials/site-navbar/styles/responsive.blade.php",
+      "source_lines": [
+        374,
+        432
+      ],
+      "lines": 59,
+      "sha256": "373140fcd7812401b712efae2ec0178b0bf23333638631b87b1d1ccb8ce0000a"
+    },
+    {
+      "source": "resources/views/partials/site-navbar.blade.php",
+      "target": "resources/views/partials/site-navbar/header.blade.php",
+      "source_lines": [
+        435,
+        594
+      ],
+      "lines": 160,
+      "sha256": "e43374824ca989abac5553a969c778a237c996bb114a266ac2206f9a1603482c"
+    },
+    {
+      "source": "resources/views/partials/site-navbar.blade.php",
+      "target": "resources/views/partials/site-navbar/language-modal.blade.php",
+      "source_lines": [
+        596,
+        649
+      ],
+      "lines": 54,
+      "sha256": "471fffb82da2ab93bbafa78ffbb4edcab7cdde57daf41e500373b3cec2de0dc2"
+    },
+    {
+      "source": "resources/views/partials/site-navbar.blade.php",
+      "target": "resources/views/partials/site-navbar/behavior.blade.php",
+      "source_lines": [
+        651,
+        730
+      ],
+      "lines": 80,
+      "sha256": "d0f5526879b66ba3a0f15006aa73ad47c7e62cf8eef4c09429565a5290bcbe1d"
+    },
+    {
+      "source": "resources/views/welcome.blade.php",
+      "target": "resources/views/home/sections/hero.blade.php",
+      "source_lines": [
+        39,
+        221
+      ],
+      "lines": 183,
+      "sha256": "87951933527859f27ab0c9bc7f3e8bb894225b9da07fe9ee6517eb044f187a23"
+    },
+    {
+      "source": "resources/views/welcome.blade.php",
+      "target": "resources/views/home/sections/about-statistics.blade.php",
+      "source_lines": [
+        223,
+        380
+      ],
+      "lines": 158,
+      "sha256": "9bfabbdad2eb722e4368b4f2ba21efd22b1496c9a6f9884843ae3e05e00497be"
+    },
+    {
+      "source": "resources/views/welcome.blade.php",
+      "target": "resources/views/home/sections/vision-mission.blade.php",
+      "source_lines": [
+        382,
+        447
+      ],
+      "lines": 66,
+      "sha256": "c0977f4cb1d19ab7ec07bbe94685bf5168f972d128674083982a7956de3343aa"
+    },
+    {
+      "source": "resources/views/welcome.blade.php",
+      "target": "resources/views/home/sections/school-values.blade.php",
+      "source_lines": [
+        449,
+        493
+      ],
+      "lines": 45,
+      "sha256": "fc25837895b42cda942a375c92b07e219f611596b49e9e4dd8c9b9c6bd186055"
+    },
+    {
+      "source": "resources/views/welcome.blade.php",
+      "target": "resources/views/home/sections/featured-programs.blade.php",
+      "source_lines": [
+        495,
+        561
+      ],
+      "lines": 67,
+      "sha256": "2028ca6079acdaa42c306e6402043013510457c01a56ea46358991908869900c"
+    },
+    {
+      "source": "resources/views/welcome.blade.php",
+      "target": "resources/views/home/sections/gallery-story.blade.php",
+      "source_lines": [
+        581,
+        758
+      ],
+      "lines": 178,
+      "sha256": "eb7f2220b814ed8d03ed2d4ca87c0b6469106e4f8130910c9873fcaea5fa1e32"
+    },
+    {
+      "source": "resources/views/welcome.blade.php",
+      "target": "resources/views/home/sections/articles.blade.php",
+      "source_lines": [
+        770,
+        912
+      ],
+      "lines": 143,
+      "sha256": "15fb20c8602ef17ea456fd5722a5a62f5ae477b83b0754135f9053e4eb09cc92"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/foundation.blade.php",
+      "source_lines": [
+        23,
+        210
+      ],
+      "lines": 188,
+      "sha256": "6988fe193d0450f48fa9da06904b081bf484cde4de8c11342521a9d4d6441eb0"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/topbar.blade.php",
+      "source_lines": [
+        211,
+        354
+      ],
+      "lines": 144,
+      "sha256": "c3196239e857702f3d5029cd6db168ac4fc86292c16c6f7b6082af0d470116ff"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/gallery-list.blade.php",
+      "source_lines": [
+        355,
+        500
+      ],
+      "lines": 146,
+      "sha256": "4af6bbc086b7acb3aeccba4e29fde2eb001b7193289f740f0c9591b0cc3134ce"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/gallery-detail.blade.php",
+      "source_lines": [
+        501,
+        610
+      ],
+      "lines": 110,
+      "sha256": "956768d17188ffe55cce45951a619638787441658434cf4df91c73f2830bce97"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/forms.blade.php",
+      "source_lines": [
+        611,
+        742
+      ],
+      "lines": 132,
+      "sha256": "d347c4ecb858d428e50ad6853541ae3c0290ff3d3e32d4b09b05bf6d3b11260d"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/notifications.blade.php",
+      "source_lines": [
+        743,
+        871
+      ],
+      "lines": 129,
+      "sha256": "d895c6ce0790c4661004db707beb8606a82e0c08f50a765471a1e47e272f0e46"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/desktop-shell.blade.php",
+      "source_lines": [
+        872,
+        966
+      ],
+      "lines": 95,
+      "sha256": "8e023129a658f86800eb8b1736244c3070f4e69fb38219bd355c573177b271d4"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/gallery-management.blade.php",
+      "source_lines": [
+        967,
+        1077
+      ],
+      "lines": 111,
+      "sha256": "9a04466609bbe910990245ddff21700fb1ae52539f500505f338d2102a90a776"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/media-detail.blade.php",
+      "source_lines": [
+        1078,
+        1215
+      ],
+      "lines": 138,
+      "sha256": "6f8319445b56c23e6951087f0a39210edef3a5acb57123dec5775b31c69ad944"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/statistics.blade.php",
+      "source_lines": [
+        1216,
+        1340
+      ],
+      "lines": 125,
+      "sha256": "872d65c0e2390262d687dd5483a4336e697b8f238f6c21dd15788b7ba560e11d"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/styles/delete-dialog.blade.php",
+      "source_lines": [
+        1341,
+        1432
+      ],
+      "lines": 92,
+      "sha256": "6252c71793211455823fca75faedfe9073a165bef553352c9127d8fe152a49dd"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/scripts/notifications.blade.php",
+      "source_lines": [
+        1506,
+        1545
+      ],
+      "lines": 40,
+      "sha256": "5912a84c2ee5dd702a903500050e9f912e2075a219f9427ac60a58ab78935b77"
+    },
+    {
+      "source": "resources/views/layouts/admin.blade.php",
+      "target": "resources/views/layouts/admin/scripts/delete-dialog.blade.php",
+      "source_lines": [
+        1546,
+        1629
+      ],
+      "lines": 84,
+      "sha256": "c66dc2fdd6f499260ae6a74d51b99dbd9f0e64373663ab4a65132705b29eadbd"
+    }
+  ]
+}

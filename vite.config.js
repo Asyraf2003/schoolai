@@ -2,9 +2,11 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import tailwindcss from '@tailwindcss/vite';
+import { orderedFragments } from './build/vite/ordered-fragments.js';
 
 export default defineConfig({
     plugins: [
+        orderedFragments(),
         laravel({
             input: [
                 'resources/js/pages/welcome.js',

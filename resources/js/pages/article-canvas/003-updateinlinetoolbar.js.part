@@ -1,0 +1,180 @@
+        return candidates.filter((block) => {
+            try {
+                return range.intersectsNode(block);
+            } catch {
+                return false;
+            }
+        });
+    }
+
+    function updateInlineToolbar() {
+        const selection = window.getSelection();
+        const editor = activeEditor();
+        if (!inlineToolbar || !selection || selection.rangeCount === 0 || selection.isCollapsed || !editor?.contains(selection.anchorNode)) {
+            hideInlineToolbar();
+            return;
+        }
+
+        const rect = selection.getRangeAt(0).getBoundingClientRect();
+        if (!rect.width && !rect.height) return;
+        inlineToolbar.hidden = false;
+        if (inlineColors) inlineColors.hidden = true;
+        const width = Math.min(inlineToolbar.scrollWidth, window.innerWidth - 16);
+        inlineToolbar.style.width = `${width}px`;
+        inlineToolbar.style.left = `${Math.max(8, Math.min(window.innerWidth - width - 8, rect.left + rect.width / 2 - width / 2))}px`;
+        inlineToolbar.style.top = `${Math.max(8, rect.top - inlineToolbar.offsetHeight - 10)}px`;
+        syncContextualControls();
+    }
+
+    function hideInlineToolbar() {
+        if (inlineToolbar) {
+            inlineToolbar.hidden = true;
+            inlineToolbar.style.removeProperty('width');
+        }
+        if (inlineColors) inlineColors.hidden = true;
+        if (linkInput) linkInput.hidden = true;
+    }
+
+    function applyFormat(format) {
+        restoreSelection();
+        activeEditor()?.focus();
+
+        if (format === 'bold' || format === 'italic') {
+            document.execCommand(format, false);
+        } else if (format === 'strike') {
+            document.execCommand('strikeThrough', false);
+        } else if (format === 'highlight') {
+            toggleInlineElement('mark');
+        } else if (format === 'link') {
+            openLinkInput();
+            return;
+        } else if (format === 'paragraph' || format === 'h2' || format === 'h3') {
+            setBlockType(format === 'paragraph' ? 'p' : format);
+        } else if (format === 'small' || format === 'large') {
+            toggleBlockClass(`article-text-${format}`, ['article-text-small', 'article-text-large']);
+        } else if (format === 'align-left') {
+            toggleBlockClass('', ['article-align-center', 'article-align-right', 'article-align-justify']);
+        } else if (['align-center', 'align-right', 'align-justify'].includes(format)) {
+            toggleBlockClass(`article-${format}`, ['article-align-center', 'article-align-right', 'article-align-justify']);
+        } else if (format === 'quote') {
+            toggleQuoteBlocks();
+        }
+
+        changed();
+        rememberSelection();
+        syncContextualControls();
+        if (!window.getSelection()?.isCollapsed) updateInlineToolbar();
+    }
+
+    function setBlockType(tagName) {
+        const blocks = selectedBlocks().filter((block) => ['P', 'H2', 'H3', 'BLOCKQUOTE'].includes(block.tagName));
+        let last = null;
+
+        blocks.forEach((block) => {
+            if (block.tagName.toLowerCase() === tagName) {
+                last = block;
+                return;
+            }
+            const replacement = document.createElement(tagName);
+            replacement.innerHTML = block.innerHTML;
+            replacement.className = block.className;
+            replacement.classList.remove('article-quote', 'article-pull-quote');
+            if (tagName !== 'p') replacement.classList.remove('has-drop-cap');
+            block.replaceWith(replacement);
+            last = replacement;
+        });
+
+        if (last) {
+            placeCaret(last, true);
+            rememberSelection();
+        }
+    }
+
+    function toggleQuoteBlocks() {
+        const blocks = selectedBlocks().filter((block) => ['P', 'H2', 'H3', 'BLOCKQUOTE'].includes(block.tagName));
+        if (blocks.length === 1 && blocks[0].tagName === 'BLOCKQUOTE') {
+            const block = blocks[0];
+            if (block.classList.contains('article-pull-quote')) {
+                replaceBlock(block, 'p');
+            } else {
+                block.classList.remove('article-quote');
+                block.classList.add('article-pull-quote');
+            }
+            return;
+        }
+
+        const allQuotes = blocks.length > 0 && blocks.every((block) => block.tagName === 'BLOCKQUOTE');
+        blocks.forEach((block) => {
+            const replacement = replaceBlock(block, allQuotes ? 'p' : 'blockquote');
+            if (!allQuotes) replacement?.classList.add('article-quote');
+        });
+    }
+
+    function replaceBlock(block, tagName) {
+        const replacement = document.createElement(tagName);
+        replacement.innerHTML = block.innerHTML;
+        replacement.className = block.className;
+        replacement.classList.remove('article-quote', 'article-pull-quote');
+        block.replaceWith(replacement);
+        placeCaret(replacement, true);
+        rememberSelection();
+        return replacement;
+    }
+
+    function toggleBlockClass(className, mutuallyExclusive = []) {
+        const blocks = selectedBlocks().filter((block) => !['PRE'].includes(block.tagName));
+        if (blocks.length === 0) return;
+        const removeOnly = className !== '' && blocks.every((block) => block.classList.contains(className));
+
+        blocks.forEach((block) => {
+            mutuallyExclusive.forEach((candidate) => block.classList.remove(candidate));
+            if (className && !removeOnly) block.classList.add(className);
+        });
+    }
+
+    function applyBlockPalette(prefix, color, palette) {
+        restoreSelection();
+        const blocks = selectedBlocks().filter((block) => !['PRE'].includes(block.tagName));
+        if (blocks.length === 0) return;
+        blocks.forEach((block) => {
+            palette.forEach((name) => block.classList.remove(`${prefix}${name}`));
+            if (color && color !== 'default') block.classList.add(`${prefix}${color}`);
+        });
+        changed();
+        syncContextualControls();
+    }
+
+    function applyTextColor(color) {
+        restoreSelection();
+        const selection = window.getSelection();
+        const editor = activeEditor();
+        if (!selection || selection.rangeCount === 0 || !editor?.contains(selection.anchorNode)) return;
+        const range = selection.getRangeAt(0);
+        const blocks = selectedBlocks();
+        const startBlock = closestBlock(range.startContainer, editor);
+        const endBlock = closestBlock(range.endContainer, editor);
+
+        if (range.collapsed || blocks.length > 1 || startBlock !== endBlock) {
+            applyBlockPalette('article-color--', color, textColorClasses);
+            return;
+        }
+
+        const wrapper = document.createElement('span');
+        wrapper.className = `article-color--${color || 'default'}`;
+        wrapper.append(range.extractContents());
+        range.insertNode(wrapper);
+        selection.removeAllRanges();
+        const nextRange = document.createRange();
+        nextRange.selectNodeContents(wrapper);
+        selection.addRange(nextRange);
+        rememberSelection();
+        if (inlineColors) inlineColors.hidden = true;
+        changed();
+        updateInlineToolbar();
+    }
+
+    function toggleInlineElement(tagName) {
+        const selection = window.getSelection();
+        const editor = activeEditor();
+        if (!selection || selection.rangeCount === 0 || selection.isCollapsed || !editor?.contains(selection.anchorNode)) return;
+        const range = selection.getRangeAt(0);
