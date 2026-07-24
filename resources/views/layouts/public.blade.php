@@ -13,6 +13,12 @@
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
     ])
+    @if (request()->routeIs('ppdb'))
+      @vite([
+        'resources/css/pages/ppdb-journey.css',
+        'resources/js/pages/ppdb-journey.js',
+      ])
+    @endif
     @stack('head')
   </head>
   <body class="public-page-body public-content-page nav-shell">
