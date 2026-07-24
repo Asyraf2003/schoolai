@@ -105,19 +105,21 @@ export const advanceTarget = (state, pixelDelta) => {
     );
     state.targetProgress = clamp(state.targetProgress + ((pixelDelta * RESISTANCE) / inputRange));
 };
+export const isJourneyReleaseReady = (state) => {
+    if (!state || state.targetProgress < 1 - BOUNDARY_EPSILON) return false;
+    const timeline = ensureTimeline(state);
+    const final = timeline.finalStep;
+    if (!final) return state.renderedProgress >= 1 - BOUNDARY_EPSILON;
+    return (clamp(state.renderedProgress) * timeline.total)
+        >= final.outroEnd - SETTLED_EPSILON;
+};
 export const canConsumeDirection = (state, direction) => {
     if (!state || !direction) return false;
     if (direction < 0) {
         return state.targetProgress > BOUNDARY_EPSILON
             || state.renderedProgress > BOUNDARY_EPSILON;
     }
-    const timeline = ensureTimeline(state);
-    const final = timeline.finalStep;
-    const renderedUnit = clamp(state.renderedProgress) * timeline.total;
-    const outroComplete = final
-        ? renderedUnit >= final.outroEnd - SETTLED_EPSILON
-        : state.renderedProgress >= 1 - BOUNDARY_EPSILON;
-    return state.targetProgress < 1 - BOUNDARY_EPSILON || !outroComplete;
+    return !isJourneyReleaseReady(state);
 };
 const dampProgress = (state, timestamp) => {
     const elapsed = state.lastRenderTime
