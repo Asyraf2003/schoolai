@@ -1,0 +1,146 @@
+import { copyForLocale, escapeAttribute } from './core.js';
+
+function autoplayEmbedUrl(url) {
+        try {
+            var parsed = new URL(url, window.location.href);
+            var host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+
+            if (host === 'youtube.com' || host === 'youtube-nocookie.com') {
+                parsed.searchParams.set('autoplay', '1');
+                parsed.searchParams.set('mute', '1');
+                parsed.searchParams.set('playsinline', '1');
+                parsed.searchParams.set('rel', '0');
+            } else if (host === 'player.vimeo.com') {
+                parsed.searchParams.set('autoplay', '1');
+                parsed.searchParams.set('muted', '1');
+                parsed.searchParams.set('loop', '1');
+                parsed.searchParams.set('background', '1');
+            }
+
+            return parsed.toString();
+        } catch (error) {
+            return url;
+        }
+    }
+
+function mainMediaMarkup(item) {
+        var url = escapeAttribute(item.media_url);
+
+        if (item.type === 'photo') {
+            return '<img src="' + url + '" alt="" decoding="async" />';
+        }
+
+        if (item.source === 'embed') {
+            return [
+                '<iframe',
+                ' src="' + escapeAttribute(autoplayEmbedUrl(item.media_url)) + '"',
+                ' title="Testimonial video"',
+                ' loading="eager"',
+                ' allow="autoplay; encrypted-media; fullscreen; picture-in-picture; web-share"',
+                ' allowfullscreen',
+                ' referrerpolicy="strict-origin-when-cross-origin"',
+                ' style="width:100%;height:100%;display:block;border:0;pointer-events:none"',
+                '></iframe>'
+            ].join('');
+        }
+
+        return [
+            '<video muted loop autoplay playsinline webkit-playsinline preload="metadata" data-testimonial-preview-video>',
+            '<source src="' + url + '" type="video/mp4" />',
+            '</video>'
+        ].join('');
+    }
+
+function nodeMediaMarkup(item) {
+        var thumbnail = item.thumbnail_url || '';
+        var url = escapeAttribute(item.media_url);
+
+        if (thumbnail) {
+            return '<img src="' + escapeAttribute(thumbnail) + '" alt="" loading="lazy" decoding="async" />';
+        }
+
+        if (item.type === 'video' && item.source === 'upload') {
+            return [
+                '<video muted playsinline webkit-playsinline preload="metadata"',
+                ' src="' + url + '"',
+                ' style="width:100%;height:100%;display:block;object-fit:cover"',
+                '></video>',
+                '<span aria-hidden="true" style="position:absolute;inset:0;display:grid;place-items:center;font-size:1.6rem;color:#fff;text-shadow:0 3px 18px #000">▶</span>'
+            ].join('');
+        }
+
+        return '<span aria-hidden="true" style="position:absolute;inset:0;display:grid;place-items:center;font-size:2rem;color:#fff;background:linear-gradient(135deg,#26251f,#11110f)">▶</span>';
+    }
+
+function createStoryMarkup(copy, storyData) {
+        var primary = storyData.primary;
+        var nodeMarkup = storyData.nodes.map(function (item, index) {
+            var label = item.type === 'video' ? copy.openVideo : copy.openMedia;
+
+            return [
+                '<button',
+                ' type="button"',
+                ' class="testimonial-network-story__node testimonial-network-story__node--' + (index + 1) + '"',
+                ' data-testimonial-node',
+                ' data-testimonial-media-type="' + escapeAttribute(item.type) + '"',
+                ' data-testimonial-media-source="' + escapeAttribute(item.source) + '"',
+                ' data-testimonial-media-url="' + escapeAttribute(item.media_url) + '"',
+                ' aria-label="' + escapeAttribute(label + ' ' + (index + 1)) + '"',
+                '>',
+                '<span class="testimonial-network-story__node-media">',
+                nodeMediaMarkup(item),
+                '</span>',
+                '</button>'
+            ].join('');
+        }).join('');
+
+        return [
+            '<div class="testimonial-network-story__track" data-testimonial-track>',
+            '  <div class="testimonial-network-story__sticky">',
+            '    <div class="testimonial-network-story__stage">',
+            '      <figure',
+            '        class="testimonial-network-story__main-media"',
+            '        data-testimonial-main-media',
+            '        data-testimonial-media-type="' + escapeAttribute(primary.type) + '"',
+            '        data-testimonial-media-source="' + escapeAttribute(primary.source) + '"',
+            '        data-testimonial-media-url="' + escapeAttribute(primary.media_url) + '"',
+            '        role="button"',
+            '        tabindex="0"',
+            '        aria-label="' + escapeAttribute(primary.type === 'video' ? copy.openVideo : copy.openMedia) + '"',
+            '      >',
+            mainMediaMarkup(primary),
+            '      </figure>',
+            '',
+            '      <header class="testimonial-network-story__title-wrap">',
+            '        <h2 class="testimonial-network-story__title">' + copy.title + '</h2>',
+            '      </header>',
+            '',
+            '      <div class="testimonial-network-story__nodes">' + nodeMarkup + '</div>',
+            '    </div>',
+            '  </div>',
+            '</div>'
+        ].join('\n');
+    }
+
+export function insertStory(storyData) {
+        var existing = document.querySelector(ROOT_SELECTOR);
+        if (existing) return existing;
+
+        var articleSection = document.getElementById('artikel');
+        var gallerySection = document.getElementById('galeri');
+
+        if (!articleSection || !gallerySection || !articleSection.parentNode) {
+            return null;
+        }
+
+        var copy = copyForLocale();
+        var section = document.createElement('section');
+        section.className = 'testimonial-network-story';
+        section.id = 'testimoni';
+        section.setAttribute('data-testimonial-network-story', '');
+        section.setAttribute('aria-label', copy.title);
+        section.innerHTML = createStoryMarkup(copy, storyData);
+
+        articleSection.parentNode.insertBefore(section, articleSection);
+        return section;
+    }

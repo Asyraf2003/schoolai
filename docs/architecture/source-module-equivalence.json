@@ -3,37 +3,38 @@
   "description": "Native source modules in exact runtime order.",
   "css": {
     "resources/css/pages/admin-panel.css": {
-      "sourceSha256": "cc28b4428b0db96c49e970f761172c02c3a74317952ce855cb58ec3c4fb6b7fd",
+      "sourceSha256": "9b09b4347d118f4899e2a17362a4f97f2c69b7c8c847e4d0f36a464079698549",
       "orderedModules": [
         {
           "path": "./admin-panel/001-unified-admin-ui-scoped-to-the-admin-shell-so-public.css",
-          "lines": 188,
-          "sha256": "3f72db68f16e3aa61b77bf52ab04df77617287457a8477eabe72b9d4563bcac1"
+          "lines": 187,
+          "sha256": "61aa101a835450610b34385d45d0a3196f1282468d4978bb1d40d8ae9ee9cd6b"
         },
         {
           "path": "./admin-panel/002-admin-panel-cascade-002.css",
-          "lines": 189,
-          "sha256": "c03ba0c4f140015c5d6818ae822c920c244c0e692b4556ad7e8568e89a3c54ce"
+          "lines": 188,
+          "sha256": "1f60135baaeb0a8923707b934563d05d8e6e99b57a30087103965dbb1e2f60aa"
         },
         {
           "path": "./admin-panel/003-admin-panel-cascade-003.css",
           "lines": 32,
           "sha256": "ba96b4f22dd7640eeaadb259f4d40089cff83ba30887e0443926887320ec2816"
         }
-      ]
+      ],
+      "originalSourceSha256": "cc28b4428b0db96c49e970f761172c02c3a74317952ce855cb58ec3c4fb6b7fd"
     },
     "resources/css/pages/article-canvas.css": {
-      "sourceSha256": "53ee290c6f1e5cfb2f363e278239f64ca102011b3b4e0d91bbb5a49bc41bb9b1",
+      "sourceSha256": "8901eb1335379b89d3618ff7cf7ef3439d5dc0d3d46db81b0227f908f61e04c8",
       "orderedModules": [
         {
           "path": "./article-canvas/001-article-canvas-cascade-001.css",
-          "lines": 190,
-          "sha256": "4b38093ddd0f8e95d8255126e4aa8e0f78b68b59be2b929f8b5edeab552a374e"
+          "lines": 189,
+          "sha256": "66cd0be7a82dd81f0caad02b63172eefaf92ff26b1d62227f3f7058f0db56753"
         },
         {
           "path": "./article-canvas/002-article-canvas-cascade-002.css",
-          "lines": 183,
-          "sha256": "4fd8c2c071b01aeaa2e097bc7b7eb6950a79073dc71a2784424ef8eb059f982b"
+          "lines": 182,
+          "sha256": "7b71bf42d6aca08671bb8663da062b1a636599f8317ef24a718572ac78190d30"
         },
         {
           "path": "./article-canvas/003-article-canvas-cascade-003.css",
@@ -45,105 +46,109 @@
           "lines": 77,
           "sha256": "2a05b90fb646036412196b59b32fcc558b04c2d6569edee3a91e5751cb2af354"
         }
-      ]
+      ],
+      "originalSourceSha256": "53ee290c6f1e5cfb2f363e278239f64ca102011b3b4e0d91bbb5a49bc41bb9b1"
     },
     "resources/css/pages/article-reader.css": {
-      "sourceSha256": "4b7f03530bcd38b5d6879a70acd8b6d19200937e6e55ed8bf388076f82bb6e9b",
+      "sourceSha256": "53f0b18b8d96c48909d073a90cceeae61a253df61dacfaa4f9fd03b0fa664f7c",
       "orderedModules": [
         {
           "path": "./article-reader/001-article-reader-cascade-001.css",
-          "lines": 190,
-          "sha256": "b0776c0879e268a0ef3314a113a45f5698611d18b23fcea31b44ce1ffe74db5e"
+          "lines": 189,
+          "sha256": "5be5bbf9a310da541dcef772c821d644aaf7cbb63255fb06d9ddb3e5e9279f13"
         },
         {
           "path": "./article-reader/002-article-reader-cascade-002.css",
           "lines": 130,
           "sha256": "8900f368c313d6c25e7d356389a65add7d95f3c511a06bee8ed81f99204a750b"
         }
-      ]
+      ],
+      "originalSourceSha256": "4b7f03530bcd38b5d6879a70acd8b6d19200937e6e55ed8bf388076f82bb6e9b"
     },
     "resources/css/pages/dashboard.css": {
-      "sourceSha256": "0d5efbb25bb69830cbd2cc7d434eb5156dd26dff1328b3365fb7d7ba78cb4f90",
+      "sourceSha256": "ae5104e66d884642d88b233e0ae0b2541f99ac1fc5c61a8e5330251f510b6b32",
       "orderedModules": [
         {
           "path": "./dashboard/001-page-css-dashboard-umum-dan-dashboard-admin.css",
-          "lines": 186,
-          "sha256": "119a61d641cc4e4b9245f51f1701c0061c78eecffd82d03b568cadc3d9bb3b6c"
+          "lines": 185,
+          "sha256": "f2c42d6bbae31e27e408112835dc7ce1f260347684612ecad7392871fb5bfeed"
         },
         {
           "path": "./dashboard/002-dashboard-cascade-002.css",
           "lines": 48,
           "sha256": "79d88b90c36e2714135d3d900a61f0c19a37b0f7abb814a2e43c70df54fbb96c"
         }
-      ]
+      ],
+      "originalSourceSha256": "0d5efbb25bb69830cbd2cc7d434eb5156dd26dff1328b3365fb7d7ba78cb4f90"
     },
     "resources/css/pages/welcome-about-stats.css": {
-      "sourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db",
+      "sourceSha256": "7a4ae1a18392a568309cde77dff563fdedbed1267e17d6ffaf41217fa89f7a95",
       "orderedModules": [
         {
           "path": "./welcome-about-stats/001-home-about-statistics-scroll-story-a-restrained-rain.css",
           "lines": 165,
-          "sha256": "9135413b3b7a17117ecfeec13765278025336986ade356864102241aa4ea117b"
+          "sha256": "cb9a7d6502d82feb16d70504f528bfaabf90c7223868e11979836a5e91f10c6e"
         },
         {
           "path": "./welcome-about-stats/002-the-small-al-mustaqbal-school-line-above-the-title-i.css",
-          "lines": 177,
-          "sha256": "b676119925b7381e6561b9f57b711ff4c492794dc9c8741f4c4363dbda099f38"
+          "lines": 176,
+          "sha256": "00a2f8682e70049751e5630d6d67fc09c2f37e0aeadf81e8283a110d108fcd90"
         },
         {
           "path": "./welcome-about-stats/003-enhanced-desktop-scene.css",
-          "lines": 54,
-          "sha256": "7e0d502ed8c4708b4e8502817cf1fcf4ad29050f10a590b82e46644891362194"
+          "lines": 53,
+          "sha256": "8ca82aa81c5440a315c3a7835ef4cddfe1bcc8bfe723bf9839215193bb34c558"
         },
         {
           "path": "./welcome-about-stats/004-mobile-tablet.css",
-          "lines": 157,
-          "sha256": "c1cf28ce7cb36cf887e602908ec44dae42f9adc4f9a3a98c8d1db79f52e7b6ea"
+          "lines": 156,
+          "sha256": "a3872f8ff14e21af7c8e96361fc6ceff6bf5b0ddef5101c390fe7e484bf28a70"
         },
         {
           "path": "./welcome-about-stats/005-welcome-about-stats-cascade-005.css",
           "lines": 142,
           "sha256": "05562cbd26eb2083d9bdf6626cc88d073c8e2f1a7066d57d32633139fc3258fc"
         }
-      ]
+      ],
+      "originalSourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db"
     },
     "resources/css/pages/welcome-hero.css": {
-      "sourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a",
+      "sourceSha256": "ec779eb2c0771b118f6a92756ab88be4de325f9154ead5d9c3a3c4325b7e8752",
       "orderedModules": [
         {
           "path": "./welcome-hero/001-homepage-hero-and-overlay-navigation-this-file-inten.css",
-          "lines": 178,
-          "sha256": "55906ea00c1e288c6c191d380f85b57af280310e374c9030659cebc6db187774"
+          "lines": 177,
+          "sha256": "e67016e9fb5bc3d004a20b45529c85413e63b9ced6961b5177c8c7bd571911dd"
         },
         {
           "path": "./welcome-hero/002-welcome-hero-cascade-002.css",
-          "lines": 182,
-          "sha256": "46b1f85eb94a759bc5b97409c676c1deb52a6544cdb8b9783f071b42e3dab72d"
+          "lines": 181,
+          "sha256": "dc56796d421890f1bfdc39177ca60d9d20df98e842725f82ea97a70cd9965bc9"
         },
         {
           "path": "./welcome-hero/003-welcome-hero-cascade-003.css",
-          "lines": 183,
-          "sha256": "c9287be7b6731517b11057853f3c9170f49297e965674209cd2546686fe3372d"
+          "lines": 182,
+          "sha256": "58ad8b49fb594410d2dd351445ad2f81b7f0863bbb0684c30c82998ca4bf5630"
         },
         {
           "path": "./welcome-hero/004-full-viewport-mixed-media-hero.css",
-          "lines": 188,
-          "sha256": "e70408d864b814434d416d78592cd5cff694da50e86e7f64fbff0b9335747cde"
+          "lines": 187,
+          "sha256": "f5f8d672301bceabeec06e8611cdabe1a481465316c98d040f4d434f4d57124c"
         },
         {
           "path": "./welcome-hero/005-welcome-hero-cascade-005.css",
-          "lines": 187,
-          "sha256": "f568cf216d185bde373a842e3c19f73fd8fefb0ada8eeb1d56ed37d68c5e6ad2"
+          "lines": 186,
+          "sha256": "697768d7ab66906c2ab412ef79f16a0a9bda9f16a2b607497f107bd9a0eaedbc"
         },
         {
           "path": "./welcome-hero/006-welcome-hero-cascade-006.css",
-          "lines": 186,
-          "sha256": "49c2cbcba09ab2ce36faa227d516a23b837a6913c73ace94dc8db8cc5e6d621c"
+          "lines": 185,
+          "sha256": "4d2284852164bd3459ab22f3749bf0594a183bfd247802b2a99bb8e320e1b4bb"
         },
         {
           "path": "./welcome-hero/007-tablet-and-mobile-navigation-hero-behavior.css",
-          "lines": 66,
-          "sha256": "b2ac1ee670a681343307eb8d767417fe6e0158744391e8d542cfcb096795f30a"
+          "lines": 65,
+          "sha256": "372ba319289898b602edb7265c95b97b5e91ed197027e741f2871a59201d6387"
         },
         {
           "path": "./welcome-hero/008-welcome-hero-cascade-008.css",
@@ -152,53 +157,56 @@
         },
         {
           "path": "./welcome-hero/009-welcome-hero-cascade-009.css",
-          "lines": 140,
-          "sha256": "31134b39675ff3d04d58f2729104f35aff5d0eb7c0812f0e8d14d68c8dab4f58"
+          "lines": 139,
+          "sha256": "fc7dfd7d29917b36d1183b621f9262947d2524f163426cd3b8da9b1b3fd3eb46"
         }
-      ]
+      ],
+      "originalSourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a"
     },
     "resources/css/pages/welcome-mega-menu.css": {
-      "sourceSha256": "cd273206685efc7db07abebe2f24a5fc65469ff8c431200949bdc86addcec0fa",
+      "sourceSha256": "13d938164ce781f38d88058e9a9aee459090793517a2753f37078591d626caf6",
       "orderedModules": [
         {
           "path": "./welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css",
-          "lines": 189,
-          "sha256": "e03f22692bb05d2739811b431c48450e2f59b803da066c53a1ad84758e6ed720"
+          "lines": 188,
+          "sha256": "2d18497e15baab0177a5adf9f6cc305159d3c4dca90a038628caa6ce316c13e8"
         },
         {
           "path": "./welcome-mega-menu/002-welcome-mega-menu-cascade-002.css",
-          "lines": 47,
-          "sha256": "07a432c310b2d9e6b424895a93f9d94cda791ea91093649b3fda079f79b801b4"
+          "lines": 46,
+          "sha256": "e6cf9b648f6e1d24f45f86deae4052428f91dda011990ccda08c1d260c303ac0"
         },
         {
           "path": "./welcome-mega-menu/003-welcome-mega-menu-cascade-003.css",
           "lines": 187,
           "sha256": "1cfb44a395841c1a1d3aa707d838ff3932950092ab3625e3f56817194e801625"
         }
-      ]
+      ],
+      "originalSourceSha256": "cd273206685efc7db07abebe2f24a5fc65469ff8c431200949bdc86addcec0fa"
     },
     "resources/css/pages/welcome-testimonial-story.css": {
-      "sourceSha256": "e8c0330c670122a378d6eb0f11fcdab928e257c1e15ee72bc74479a89257fd5e",
+      "sourceSha256": "8e52594007ba641503a65da540dd09d342557b36211e99ed14b4c2448f92dfad",
       "orderedModules": [
         {
           "path": "./welcome-testimonial-story/001-home-testimonial-media-story-full-screen-video-contr.css",
-          "lines": 185,
-          "sha256": "175d0194212cdd4fe3c1ce591fa409129480d969ec716ca9aab2a401a0a3f3ee"
+          "lines": 184,
+          "sha256": "8dc44a4223ea016b6b43f086c2dff2ef6fd9cba81a20c48fcac7417acae17ca6"
         },
         {
           "path": "./welcome-testimonial-story/002-the-visual-composition-intentionally-stays-identical.css",
-          "lines": 182,
-          "sha256": "e6aec856ef0946945b2d3cd1d1258fbc6b88009ace7a323b401e83dbf9b39e0f"
+          "lines": 181,
+          "sha256": "86cd35aa874b7a39c7f82b53c454e48b0f14e7becb0f83670484549a585e393e"
         },
         {
           "path": "./welcome-testimonial-story/003-welcome-testimonial-story-cascade-003.css",
           "lines": 69,
           "sha256": "a6aae5c6a2e76e3b8cc66bdf650e159d0e7887f4ce8b6a4e84f0557bc01d6d84"
         }
-      ]
+      ],
+      "originalSourceSha256": "e8c0330c670122a378d6eb0f11fcdab928e257c1e15ee72bc74479a89257fd5e"
     },
     "resources/css/pages/welcome.css": {
-      "sourceSha256": "dff73225f718b861c3c331303b1e97bf82796d444d88d2ab4323364cafbf54ed",
+      "sourceSha256": "e2710fd450411450648b6f1e542d5b9ce4cadcf27fccf2d9f7e8414589961fa7",
       "orderedModules": [
         {
           "path": "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css",
@@ -227,113 +235,113 @@
         },
         {
           "path": "./welcome/006-23-aksesibilitas.css",
-          "lines": 183,
-          "sha256": "75c0b881343b460544210a079ce7cb39315c3e47ff03aaafdef08f25ab99f06e"
+          "lines": 182,
+          "sha256": "0fd9d0102bfd2210c3a0551008c87418a5a9a03f6f9447a69a788d90dbfa9192"
         },
         {
           "path": "./welcome/007-welcome-cascade-007.css",
-          "lines": 186,
-          "sha256": "e3075403af4f2a884029c001cc73078947055827af91abbaea46b8629b723d96"
+          "lines": 185,
+          "sha256": "dac3d4cc0f62765e35642a3394c98ae73fbe23bf43995372d780400d29d0b215"
         },
         {
           "path": "./welcome/008-welcome-cascade-008.css",
-          "lines": 190,
-          "sha256": "bdc3440dc6e78614708ce6f78d31478d41666fe84260f8a5629840bd574518cf"
+          "lines": 189,
+          "sha256": "6ee0d58f11866bb65e51283a5ceccb776b332d56070476f8560e5641d0089bc2"
         },
         {
           "path": "./welcome/009-welcome-cascade-009.css",
-          "lines": 185,
-          "sha256": "c775655397fb38ebfd2866cd853ad218808d673f3a926411ee14bc0b6764ddaf"
+          "lines": 184,
+          "sha256": "979028d37799a35b441584e28affc42d670804bc1f19b08e4407358d3545e63b"
         },
         {
           "path": "./welcome/010-welcome-cascade-010.css",
-          "lines": 188,
-          "sha256": "5782d10c1d209c6af67bb5fd5194ee636be3ce8ef38fb956bbdac9edce731775"
+          "lines": 187,
+          "sha256": "1655db8adac9d166bcf3b83a15d2d2384d3abddf659db2cc50fca0b71dc9bf23"
         },
         {
           "path": "./welcome/011-welcome-cascade-011.css",
-          "lines": 174,
-          "sha256": "c372ec24eedb593efe4c3a9836445b92ffd7a4352e3a93236ee1d5608f46aacb"
+          "lines": 173,
+          "sha256": "e63a278dea826d0ef704da524a094299b36d056c555c1f423146be96543c2e62"
         },
         {
           "path": "./welcome/012-welcome-cascade-012.css",
-          "lines": 180,
-          "sha256": "0ed7a97eddee103d1989023c0c396be7ec2d8ed7489b4c096fd77b9f4f5f8c5c"
+          "lines": 179,
+          "sha256": "0ce7dbee084834b56169d863c1bd7cc23439d8e3ceac747b6b463e1f08ddd8bc"
         },
         {
           "path": "./welcome/013-welcome-cascade-013.css",
-          "lines": 175,
-          "sha256": "331be86d149ce4d470ad40bc70351e344127c603dec1601e5c7ab6586f97ba7d"
+          "lines": 174,
+          "sha256": "f10c17ac004a537d187f876ffbbd59d77fe36d1256f9e666d0c9e4fe19d0defe"
         },
         {
           "path": "./welcome/014-gallery-teaser-data-ready-local.css",
-          "lines": 181,
-          "sha256": "d33683487ac31765e5311a4812200242afaaa92b58c9a87e667a394bf6bc5114"
+          "lines": 180,
+          "sha256": "43da17c30905e6036e09ddd1e1b58d249d4a6f8494c52e299ed0041aaa929932"
         },
         {
           "path": "./welcome/015-premium-compact-gallery-buffer-like-centered-header.css",
-          "lines": 186,
-          "sha256": "13738162fc4bebe35b0e7448cd67019f524a6b09187ea1b6d01f5e06bd4e6efe"
+          "lines": 185,
+          "sha256": "aad9d05f9468c042219c36a0e3247208235f0763d2e5a48ce7a6b7c9f4355b6d"
         },
         {
           "path": "./welcome/016-edit-di-sini-jarak-antara-teks-kiri-dan-gambar-kanan.css",
-          "lines": 190,
-          "sha256": "6b2bb8e6815a08aa12d28bdcc81c8f47bb33b62d7b5e97f447359899242d67b8"
+          "lines": 189,
+          "sha256": "0d3e8f039202f0bb8f37735d04e3460c23a9acbbb841078e2edc1f9b34291cf0"
         },
         {
           "path": "./welcome/017-edit-di-sini-mobile-jangan-geser-gambar-di-tablet-hp.css",
-          "lines": 153,
-          "sha256": "1bb487143b312e9370d6c11ed2bb587180b11aad365b3aa8966d709369118d44"
+          "lines": 152,
+          "sha256": "0ed8a6c26716e2456bf12bda116bf47bde1b3f3efcd3b8015ce17122044aa24a"
         },
         {
           "path": "./welcome/018-editorial-article-layout-featured-story-compact-side.css",
-          "lines": 187,
-          "sha256": "23809c8d2ce09a5e01e7de0f951225c57ad05b4161b4d52b99ddc2d6c195ad07"
+          "lines": 186,
+          "sha256": "9e7b358af7b048302a0c49409e8d5a8395657a8f2346023cd976aadea2bc0401"
         },
         {
           "path": "./welcome/019-welcome-cascade-019.css",
-          "lines": 189,
-          "sha256": "02b466608fb869b2cae4080067386b8519bb69dfed6507d84fd328b2ef59e1cf"
+          "lines": 188,
+          "sha256": "a525477055d84cab1328e9d18af21dbfad58f833e32f364e2792723558483bc5"
         },
         {
           "path": "./welcome/020-kartu-program-dipindah-ke-kiri-spotlight-besar-ke-ka.css",
-          "lines": 186,
-          "sha256": "4df77f41a0328e3905330c8621aac3f6379a93f37bb20bf669a144a757d294fb"
+          "lines": 185,
+          "sha256": "f668302ca1227be199f188b81359a6c27812b1770c6b09aa3db0d07b8e7f3f4a"
         },
         {
           "path": "./welcome/021-footer-putih-mitra-kami-logo-dijaga-proporsinya-heig.css",
-          "lines": 183,
-          "sha256": "333b98f558e8ee0c8c2500d2680c95539a695cf436ef289899c55f4f5e117968"
+          "lines": 182,
+          "sha256": "1a9e8c4d1564d3c0a507976eb20d37ef3829a2a6fe51c626e8e75f604ec3fac4"
         },
         {
           "path": "./welcome/022-welcome-cascade-022.css",
-          "lines": 182,
-          "sha256": "037c440dd96a8d8b88f9b52977fc63b164af970b8302cc81cf781a06382c7a05"
+          "lines": 181,
+          "sha256": "d3dd49353e36e9ee66101e640fea324b241466459f7499174d63ccb4f82b611a"
         },
         {
           "path": "./welcome/023-footer-model-screenshot-putih-kolom-rapi-galeri-hany.css",
-          "lines": 180,
-          "sha256": "badaa6a04404fe0e63c30a96a82889a68929bb8b1f8c66de8c636f5c80adf7e7"
+          "lines": 179,
+          "sha256": "e74b3080818f06dd3c834de91081ce64035039fee707a5b9843fb47c0ccd3f59"
         },
         {
           "path": "./welcome/024-welcome-cascade-024.css",
-          "lines": 186,
-          "sha256": "e2e4c5293b1046c21e8cfbb081145873382128bee634a1cf0d616c8a5aec90ac"
+          "lines": 185,
+          "sha256": "c92f853d166fa569480035a64efd9eddf7614b413aaf1a9585356e7b266b66e9"
         },
         {
           "path": "./welcome/025-footer-kontak-ringkas-lokasi-klik-ke-google-maps-det.css",
-          "lines": 187,
-          "sha256": "de03293caf9928fe75a9c31dbe4b70c3b2ace1263abd94624c58541a229553d9"
+          "lines": 186,
+          "sha256": "023592e39d60a4d7260c6d51ef56aa7d2c13a0a935764451b091fdd01f93b5a2"
         },
         {
           "path": "./welcome/026-wa-ig-fb-email-jadi-satu-ui-seragam-berbasis-inline.css",
-          "lines": 180,
-          "sha256": "d2f4f9413e1a7c52012e8262b29b8226b1ed6f1cfe3223e6d251f5649553cecc"
+          "lines": 179,
+          "sha256": "d71b36490a8465b15fd1f8529a06bce12529f2e7e3d5b0a2f49ac05cb2759ab5"
         },
         {
           "path": "./welcome/027-channel-footer-pakai-asset-lokal-public-lazy-img-aga.css",
-          "lines": 184,
-          "sha256": "863a3d599bef80635b025023d82c35878e982585443674a34b5530fe900d3dc8"
+          "lines": 183,
+          "sha256": "9f5d71e7618bb8f346ef4c92145112e53f4dafeb8bae1c5b365c6244fd5238fb"
         },
         {
           "path": "./welcome/028-urutan-footer-logo-sekolah-media-sosial-halaman-kami.css",
@@ -347,95 +355,96 @@
         },
         {
           "path": "./welcome/030-welcome-cascade-030.css",
-          "lines": 188,
-          "sha256": "9af5ea37c0a9e45c94b8ceb7ba2159c317a40023c4f392d3fd2e17d2592d9331"
+          "lines": 187,
+          "sha256": "8ee8e20cda66b0dfcbd1a37a559adfcd6d66d6117a86c7943af8fea3dc3ef6bd"
         },
         {
           "path": "./welcome/031-welcome-cascade-031.css",
-          "lines": 183,
-          "sha256": "8b20306db78f1e314d99279048dbf45374069a89b8f5898eeaea60e77a75baf9"
+          "lines": 182,
+          "sha256": "ea5f29be9767a1d6a41450180acd1469d6c888ccab86866eec8e9f99f3fce76a"
         },
         {
           "path": "./welcome/032-welcome-cascade-032.css",
-          "lines": 179,
-          "sha256": "9c988ba4abb7b96f2e1bfeaf52c7d0932143443d2d937709ee9b82bc59e4cd4d"
+          "lines": 178,
+          "sha256": "1aa5dcd060e416c8e5029c29075d15f37d657644834c2b5d83266e7d4fa0421a"
         },
         {
           "path": "./welcome/033-welcome-cascade-033.css",
-          "lines": 190,
-          "sha256": "d879d4450bb73b03d5cd3c204f4e70f897fc6681a9bd0e64acd92de60095b5e6"
+          "lines": 189,
+          "sha256": "825a3b3335ecc1b1018819c9c4a9d354dadad14038bf7dffc0552c4d8620be6d"
         },
         {
           "path": "./welcome/034-welcome-cascade-034.css",
-          "lines": 121,
-          "sha256": "62410a79f979d1908be94f11da744630f5cb06025831d86fe5e148241a047f05"
+          "lines": 120,
+          "sha256": "5819d0b72176f6895be16e5c88e5f15f8b570f918559ee4839ebcfb784777281"
         },
         {
           "path": "./welcome/035-welcome-cascade-035.css",
-          "lines": 190,
-          "sha256": "9e17773d055cd71a4113c7b3c019544f2d2c5dcdfe62505b2c9c7d1ca8a6e470"
+          "lines": 189,
+          "sha256": "19ed04eb67430db0669dfd035c82cf5fa2ff8dbd4dc04b457fdf29e6af9e329f"
         },
         {
           "path": "./welcome/036-welcome-cascade-036.css",
-          "lines": 172,
-          "sha256": "c0adee2775f863337533e51912b7ee6434b41fe8db369a297625fc278485612b"
+          "lines": 171,
+          "sha256": "44f40be2934d80ada89f5006bd401f58bd41c8e868e2b4b5580745d7413ef615"
         },
         {
           "path": "./welcome/037-welcome-cascade-037.css",
-          "lines": 190,
-          "sha256": "756d04083b73e0b8952d0c1936e00de82bb1d097fb2cce97b110b7971b5fe14d"
+          "lines": 189,
+          "sha256": "46504a646fad1b5bb0076a006771bf1264a3ebb77549f2536d6d1eded90aa844"
         },
         {
           "path": "./welcome/038-welcome-cascade-038.css",
-          "lines": 184,
-          "sha256": "46d6368665b8d84d3cc7a354342a9a578301164de2a0ca80bfaea5d034a8b9a4"
+          "lines": 183,
+          "sha256": "ed2b55e8edd02294f79752b93b02659d80083a7886535041c352b831afb74aab"
         },
         {
           "path": "./welcome/039-welcome-cascade-039.css",
-          "lines": 186,
-          "sha256": "722bd9d223d69f14465a87818678bcc8e17d06ce1d2dfa397e2136260d801355"
+          "lines": 185,
+          "sha256": "a716b444421a43f6924ed40d596eed2480e00bfd38b7f7e32578fa953ca3851d"
         },
         {
           "path": "./welcome/040-welcome-cascade-040.css",
-          "lines": 177,
-          "sha256": "46c902165ed7c732c025281edba2b31a89e9a047c4a612cc3b343fcf0d2db8fb"
+          "lines": 176,
+          "sha256": "0b54193de0992d6cf42dec74548ef63d4dc6da306e9e20f08c2acbbd81fc1308"
         },
         {
           "path": "./welcome/041-welcome-cascade-041.css",
-          "lines": 182,
-          "sha256": "7ae31b075e042ce8d5308efac340e7f266425427ac80e222880ec8928e7ae74d"
+          "lines": 181,
+          "sha256": "1f34f18d0a4a1f54e0b8158587c71349ab92ee979214945b18e1cc8ef416355c"
         },
         {
           "path": "./welcome/042-welcome-cascade-042.css",
-          "lines": 187,
-          "sha256": "23bc68e34396a19744283fe74261abc271cbaebfec0c7b474b50cc0ef5a38840"
+          "lines": 186,
+          "sha256": "ccb1972f5a7e90ef8622696eeb342ed75f2c6ea26440c3969b2849fbb0eeac42"
         },
         {
           "path": "./welcome/043-welcome-cascade-043.css",
-          "lines": 183,
-          "sha256": "ac0f05192513b7d4ee60785de3e02e0ebb0ae57941d09e9d63027d44afcdde61"
+          "lines": 182,
+          "sha256": "8b5d96ea3355d38ba4ebc6d5e01c2ad83da0e41c42814fde481a46295e172e18"
         },
         {
           "path": "./welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css",
-          "lines": 189,
-          "sha256": "4a87874eb216649c9512eabc3df57f398e055a4191a22b8e5a430daa08e3fcab"
+          "lines": 188,
+          "sha256": "8aa5851dbda27a2be2afdaa6edcb1ed9e0ec3bb9a65551aaa78afb13e99e654e"
         },
         {
           "path": "./welcome/045-halaman-artikel-clean-editorial-grid-3-2-1-gambar-ko.css",
-          "lines": 185,
-          "sha256": "6559572a2af845f1a67a6476aae754cf5b0c9e420631520fe8ba5b5ac19e8417"
+          "lines": 184,
+          "sha256": "08e7f82db30214319019144770ce74397d3e34102110130142830fe621348b6d"
         },
         {
           "path": "./welcome/046-social-video-covers-provider-identity-without-loadin.css",
-          "lines": 190,
-          "sha256": "b96c20bbb02c6ceae7c59ec55d306efdbaedec752c463fcffda52f9f36bd4b29"
+          "lines": 189,
+          "sha256": "23a67497c99b146f44a8608fb626fa57351aa01cd327fb857a33d2ff94835762"
         },
         {
           "path": "./welcome/047-welcome-cascade-047.css",
           "lines": 24,
           "sha256": "e7308a01c84ce7969314f9951d674abc35f277b874ab4aa3607d0da1eca8cd7d"
         }
-      ]
+      ],
+      "originalSourceSha256": "dff73225f718b861c3c331303b1e97bf82796d444d88d2ab4323364cafbf54ed"
     }
   }
 }

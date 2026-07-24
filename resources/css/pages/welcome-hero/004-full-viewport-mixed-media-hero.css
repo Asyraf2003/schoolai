@@ -185,4 +185,3 @@
 .hero-cinema__slide.is-leaving .hero-cinema__media video {
     animation: hero-media-leave 1060ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-

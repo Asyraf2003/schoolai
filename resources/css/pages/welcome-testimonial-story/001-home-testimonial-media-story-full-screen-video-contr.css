@@ -1,4 +1,4 @@
-/* ========================================================================== 
+/* ==========================================================================
    HOME — TESTIMONIAL MEDIA STORY
    Full-screen video contracts into a centered frame while the title rises
    out of the video. Testimonial media then appears one by one around it.
@@ -182,4 +182,3 @@
     object-fit: cover;
     transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), filter 320ms ease;
 }
-
