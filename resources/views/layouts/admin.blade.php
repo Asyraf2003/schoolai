@@ -17,7 +17,11 @@
   <meta name="viewport" content="width=1200, initial-scale=1">
   <title>{{ $title ?? __('admin.meta.title') }}</title>
 
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite([
+    'resources/css/app.css',
+    'resources/css/arabic-typography.css',
+    'resources/js/app.js',
+  ])
 
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
 
