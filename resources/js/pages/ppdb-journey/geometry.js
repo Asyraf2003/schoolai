@@ -60,6 +60,37 @@ export const roundedFramePath = (width, height, radius) => {
     ].join(' ');
 };
 
+export const relativeBox = (element, ancestor) => {
+    let x = 0;
+    let y = 0;
+    let current = element;
+
+    while (current && current !== ancestor) {
+        x += current.offsetLeft;
+        y += current.offsetTop;
+        current = current.offsetParent;
+    }
+
+    if (current === ancestor) {
+        return {
+            x,
+            y,
+            width: Math.max(element.offsetWidth, 1),
+            height: Math.max(element.offsetHeight, 1),
+        };
+    }
+
+    const rect = element.getBoundingClientRect();
+    const ancestorRect = ancestor.getBoundingClientRect();
+    return {
+        x: rect.left - ancestorRect.left,
+        y: rect.top - ancestorRect.top,
+        width: Math.max(rect.width, 1),
+        height: Math.max(rect.height, 1),
+    };
+};
+
+
 export const quarterArcPath = (startX, startY, endX, endY) => {
     const horizontal = endX - startX;
     const vertical = Math.max(endY - startY, 1);
@@ -67,10 +98,22 @@ export const quarterArcPath = (startX, startY, endX, endY) => {
     const radius = clamp(Math.min(Math.abs(horizontal) * 0.72, vertical * 0.48), 96, 230);
     const drop = clamp(vertical * 0.34, 90, 210);
     const approach = Math.min(radius, Math.max(Math.abs(horizontal) * 0.42, 82));
+    return `M ${startX} ${startY} C ${startX} ${startY + drop}, ${endX - (direction * approach)} ${endY}, ${endX} ${endY}`;
+};
+
+export const hangingConnectorPath = ({ start, end, visual, sceneHeight }) => {
+    const visualCenterX = visual.x + (visual.width / 2);
+    const visualCenterY = visual.y + (visual.height * 0.56);
+    const lowerEdge = Math.max(start.y, end.y, visual.y + visual.height);
+    const sagY = clamp(lowerEdge + (sceneHeight * 0.16), lowerEdge + 74, sceneHeight - 8);
+    const firstDrop = clamp((visualCenterY - start.y) * 0.7, 72, 180);
+    const approachDirection = visualCenterX >= end.x ? 1 : -1;
+    const approachX = end.x + (approachDirection * clamp(Math.abs(visualCenterX - end.x) * 0.42, 82, 210));
 
     return [
-        `M ${startX} ${startY}`,
-        `C ${startX} ${startY + drop}, ${endX - (direction * approach)} ${endY}, ${endX} ${endY}`,
+        `M ${start.x} ${start.y}`,
+        `C ${start.x} ${start.y + firstDrop}, ${visualCenterX} ${visualCenterY - 44}, ${visualCenterX} ${visualCenterY}`,
+        `C ${visualCenterX} ${sagY}, ${approachX} ${sagY}, ${end.x} ${end.y}`,
     ].join(' ');
 };
 
