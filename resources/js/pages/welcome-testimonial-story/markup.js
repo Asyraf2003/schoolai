@@ -1,4 +1,4 @@
-import { copyForLocale, escapeAttribute } from './core.js';
+import { ROOT_SELECTOR, copyForLocale, escapeAttribute } from './core.js';
 
 function autoplayEmbedUrl(url) {
         try {
