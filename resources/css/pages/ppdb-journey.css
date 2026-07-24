@@ -11,6 +11,13 @@
 }
 .ppdb-journey-native-layer { display: none; }
 
+[dir="rtl"] .ppdb-liftoff .ppdb-liftoff__switch::before {
+    transform: translateX(calc(100% + 4px)) !important;
+}
+[dir="rtl"] .ppdb-liftoff[data-active-audience="school"] .ppdb-liftoff__switch::before {
+    transform: translateX(0) !important;
+}
+
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
     .ppdb-liftoff.ppdb-journey-native {
         --ppdb-journey-nav-offset: 84px;
