@@ -23,8 +23,7 @@
         --ppdb-journey-nav-offset: 84px;
         --ppdb-journey-stage-height: calc(100vh - var(--ppdb-journey-nav-offset));
         --ppdb-journey-stage-height: calc(100svh - var(--ppdb-journey-nav-offset));
-        --ppdb-journey-release-runway: clamp(64px, 8vh, 104px);
-        min-height: calc(var(--ppdb-journey-stage-height) + var(--ppdb-journey-release-runway));
+        min-height: var(--ppdb-journey-stage-height);
         padding: 0;
         overflow: clip;
         isolation: isolate;
@@ -41,7 +40,16 @@
         padding-block: clamp(16px, 2.5vh, 30px);
         overflow: hidden;
     }
-    .ppdb-journey-native .ppdb-liftoff__top { z-index: 8; gap: clamp(8px, 1.2vh, 16px); margin: 0; }
+    .ppdb-liftoff.ppdb-journey-native .ppdb-liftoff__top {
+        z-index: 8;
+        gap: clamp(8px, 1.2vh, 16px);
+        margin: 0;
+        opacity: var(--ppdb-journey-top-opacity, 1);
+        transform: translate3d(0, var(--ppdb-journey-top-y, 0), 0);
+        filter: blur(var(--ppdb-journey-top-blur, 0));
+        transition: none;
+        will-change: opacity, transform, filter;
+    }
     .ppdb-journey-native .ppdb-liftoff__top h2 { max-width: 900px; font-size: clamp(2rem, 4vw, 4rem); line-height: 1; }
     .ppdb-journey-native .ppdb-liftoff__top p { max-width: 720px; font-size: clamp(.92rem, 1.25vw, 1.08rem); line-height: 1.5; }
     .ppdb-journey-native .ppdb-liftoff__switch { z-index: 10; }
