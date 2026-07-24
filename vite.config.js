@@ -25,6 +25,7 @@ export default defineConfig({
                 'resources/css/pages/ppdb-journey.css',
                 'resources/css/pages/article-canvas.css',
                 'resources/css/pages/article-reader.css',
+                'resources/css/arabic-typography.css',
                 'resources/js/pages/article-canvas.js',
                 'resources/js/pages/article-canvas-arabic.js',
                 'resources/js/pages/article-canvas-context-ui.js',

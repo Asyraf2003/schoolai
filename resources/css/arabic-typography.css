@@ -1,0 +1,108 @@
+@import "@fontsource/cairo/arabic-500.css";
+@import "@fontsource/cairo/arabic-600.css";
+@import "@fontsource/cairo/arabic-700.css";
+@import "@fontsource/lateef/arabic-400.css";
+@import "@fontsource/lateef/arabic-700.css";
+
+:root {
+  --font-ar-display: "Cairo", sans-serif;
+  --font-ar-body: "Lateef", serif;
+}
+
+html[lang="ar"] {
+  --font-display: var(--font-ar-display);
+  --font-body: var(--font-ar-body);
+  --font-app: var(--font-ar-body);
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-ar-body);
+}
+
+html[lang="ar"] :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  nav,
+  button,
+  label,
+  [role="button"]
+) {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+html[lang="ar"] :where(
+  p,
+  li,
+  blockquote,
+  figcaption
+) {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}
+
+html[lang="ar"] :where(
+  .hero-cinema__eyebrow,
+  .hero-cinema__title,
+  .section-kicker,
+  .section-title,
+  .native-article__back,
+  .native-article__byline,
+  .native-article__tags,
+  .native-article__related-eyebrow,
+  .native-article__related h2,
+  .native-related-card__body strong
+) {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+html[lang="ar"] .native-article {
+  --reader-serif: var(--font-ar-body);
+}
+
+html[lang="ar"] :where(
+  .native-article__subtitle,
+  .native-article__body,
+  .native-article__footer p,
+  .native-related-card__body > span
+) {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}
+
+html[lang="ar"] :where(
+  .native-article__header h1,
+  .native-article__body h2,
+  .native-article__body h3
+) {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+input[lang="ar"]:not([dir="ltr"]) {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+textarea[lang="ar"] {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}
+
+[data-document-language="ar"] .canvas-title {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+[data-document-language="ar"] :where(
+  .canvas-subtitle,
+  .canvas-body
+) {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}
