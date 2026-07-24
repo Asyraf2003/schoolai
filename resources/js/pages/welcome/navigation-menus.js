@@ -1,49 +1,4 @@
-
-/* =========================================================
-   SEKOLAH CERIA NUSANTARA — SCRIPT.JS
-   Daftar isi:
-   1. Tahun berjalan di footer
-   2. Mobile hamburger menu
-   3. Smooth scroll menu + nav aktif saat scroll
-   4. Navbar berubah saat discroll
-   5. Animasi angka statistik (counter)
-   6. Filter ekstrakurikuler
-   7. Lightbox galeri
-   8. Tombol scroll-to-top
-   9. Animasi reveal saat elemen masuk viewport
-   10. Tilt halus pada ilustrasi hero (opsional)
-   ========================================================= */
-
-function galleryMediaLayoutClass(url, isVideo) {
-  if (!isVideo) return 'is-image';
-
-  try {
-    var parsed = new URL(url, window.location.href);
-    var host = parsed.hostname.toLowerCase().replace(/^www\./, '');
-
-    if (host === 'facebook.com' || host === 'tiktok.com') {
-      return 'is-portrait';
-    }
-
-    if (host === 'instagram.com') {
-      return /^\/p\//.test(parsed.pathname) ? 'is-square' : 'is-portrait';
-    }
-
-    return 'is-landscape';
-  } catch (error) {
-    return 'is-landscape';
-  }
-}
-
-function applyGalleryMediaLayout(element, url, isVideo) {
-  if (!element) return;
-
-  element.classList.remove('is-landscape', 'is-portrait', 'is-square', 'is-image');
-  element.classList.add(galleryMediaLayoutClass(url, isVideo));
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-
+export function initializeNavigationMenus() {
   /* ---------- 1. TAHUN BERJALAN DI FOOTER ---------- */
   var yearEl = document.getElementById('currentYear');
   if (yearEl) {
@@ -178,3 +133,25 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();
 
       var direction = event.key === 'ArrowDown' ? 1 : -1;
+      var nextIndex = currentIndex < 0
+        ? 0
+        : (currentIndex + direction + options.length) % options.length;
+
+      options[nextIndex].focus();
+    });
+  });
+
+  document.addEventListener('click', function (event) {
+    languageMenus.forEach(function (languageMenu) {
+      if (!languageMenu.contains(event.target)) {
+        setLanguageMenuState(languageMenu, false);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closeLanguageMenus();
+    }
+  });
+}

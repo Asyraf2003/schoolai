@@ -1,38 +1,19 @@
-        var button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'testimonial-network-story__node testimonial-network-story__node--' + (index + 1);
-        button.setAttribute('data-testimonial-node', '');
-        button.setAttribute('aria-label', 'Media testimoni ' + (index + 1));
-        button.appendChild(createNodeMedia(item));
-        button.addEventListener('click', function () {
-            openModal(item);
-        });
-        return button;
+var DESKTOP_QUERY = '(min-width: 961px)';
+var REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+var REVEAL_ORDER = [2, 1, 3, 7, 8, 5, 6, 0, 4, 9, 10, 11];
+
+function clamp(value, minimum, maximum) {
+        return Math.min(Math.max(value, minimum), maximum);
     }
 
-    function databaseItemsOnly(items) {
-        return items.filter(function (item) {
-            return item && item.id !== null && item.id !== undefined && item.media_url;
-        }).slice(0, MAX_NODES);
+function smootherstep(edgeStart, edgeEnd, value) {
+        if (edgeStart === edgeEnd) return value < edgeStart ? 0 : 1;
+
+        var progress = clamp((value - edgeStart) / (edgeEnd - edgeStart), 0, 1);
+        return progress * progress * progress * (progress * (progress * 6 - 15) + 10);
     }
 
-    function ensureAllNodes(root, items) {
-        var nodesContainer = root.querySelector('.testimonial-network-story__nodes');
-        if (!nodesContainer) return [];
-
-        var databaseItems = databaseItemsOnly(items);
-        var existingCount = nodesContainer.querySelectorAll('[data-testimonial-node]').length;
-
-        databaseItems.slice(existingCount).forEach(function (item, offset) {
-            nodesContainer.appendChild(createNode(item, existingCount + offset));
-        });
-
-        return Array.prototype.slice.call(
-            nodesContainer.querySelectorAll('[data-testimonial-node]')
-        ).slice(0, MAX_NODES);
-    }
-
-    function installPolishedTimeline(root, nodes) {
+export function installPolishedTimeline(root, nodes) {
         var track = root.querySelector('[data-testimonial-track]');
         if (!track || !nodes.length) return;
 
@@ -137,17 +118,3 @@
         window.addEventListener('scroll', queueRender, { passive: true });
         window.addEventListener('resize', onResize, { passive: true });
     }
-
-    async function initialize() {
-        var results = await Promise.all([waitForRoot(), loadItems()]);
-        var root = results[0];
-        var nodes = ensureAllNodes(root, results[1]);
-        installPolishedTimeline(root, nodes);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize, { once: true });
-    } else {
-        initialize();
-    }
-})();

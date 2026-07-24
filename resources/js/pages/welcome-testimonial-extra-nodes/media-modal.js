@@ -1,62 +1,4 @@
-(function () {
-    'use strict';
-
-    var ROOT_SELECTOR = '[data-testimonial-network-story]';
-    var FEED_URL = '/testimoni/media';
-    var MAX_NODES = 12;
-    var DESKTOP_QUERY = '(min-width: 961px)';
-    var REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-
-    // Reveal from the video outward, rather than marching around the DOM order.
-    var REVEAL_ORDER = [2, 1, 3, 7, 8, 5, 6, 0, 4, 9, 10, 11];
-
-    function clamp(value, minimum, maximum) {
-        return Math.min(Math.max(value, minimum), maximum);
-    }
-
-    function smootherstep(edgeStart, edgeEnd, value) {
-        if (edgeStart === edgeEnd) return value < edgeStart ? 0 : 1;
-
-        var progress = clamp((value - edgeStart) / (edgeEnd - edgeStart), 0, 1);
-        return progress * progress * progress * (progress * (progress * 6 - 15) + 10);
-    }
-
-    function waitForRoot() {
-        var existing = document.querySelector(ROOT_SELECTOR);
-        if (existing) return Promise.resolve(existing);
-
-        return new Promise(function (resolve) {
-            var observer = new MutationObserver(function () {
-                var root = document.querySelector(ROOT_SELECTOR);
-                if (!root) return;
-                observer.disconnect();
-                resolve(root);
-            });
-
-            observer.observe(document.documentElement, {
-                childList: true,
-                subtree: true
-            });
-        });
-    }
-
-    async function loadItems() {
-        try {
-            var response = await fetch(FEED_URL, {
-                credentials: 'same-origin',
-                headers: { Accept: 'application/json' }
-            });
-
-            if (!response.ok) return [];
-
-            var payload = await response.json();
-            return Array.isArray(payload.items) ? payload.items : [];
-        } catch (error) {
-            return [];
-        }
-    }
-
-    function createNodeMedia(item) {
+export function createNodeMedia(item) {
         var wrapper = document.createElement('span');
         wrapper.className = 'testimonial-network-story__node-media';
 
@@ -100,14 +42,14 @@
         return wrapper;
     }
 
-    function localizedCloseLabel() {
+function localizedCloseLabel() {
         var language = (document.documentElement.lang || '').toLowerCase();
         if (language.indexOf('ar') === 0) return 'إغلاق';
         if (language.indexOf('en') === 0) return 'Close';
         return 'Tutup';
     }
 
-    function openModal(item) {
+export function openModal(item) {
         var closeLabel = localizedCloseLabel();
         var modal = document.createElement('div');
         modal.className = 'testimonial-media-modal';
@@ -176,5 +118,3 @@
         document.body.style.overflow = 'hidden';
         close.focus();
     }
-
-    function createNode(item, index) {

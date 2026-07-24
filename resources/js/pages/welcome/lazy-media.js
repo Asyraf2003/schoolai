@@ -1,34 +1,3 @@
-
-    if (lastFocused && lastFocused.focus) {
-      lastFocused.focus();
-    }
-  }
-
-  cards.forEach(function (card) {
-    card.addEventListener('click', function () {
-      openLightbox(card);
-    });
-
-    card.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openLightbox(card);
-      }
-    });
-  });
-
-  closeButtons.forEach(function (button) {
-    button.addEventListener('click', closeLightbox);
-  });
-
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape' && !lightbox.hidden) {
-      closeLightbox();
-    }
-  });
-});
-
-
 document.addEventListener('DOMContentLoaded', function () {
   var lazyMedia = Array.prototype.slice.call(document.querySelectorAll('[data-lazy-media][data-lazy-src]'));
 

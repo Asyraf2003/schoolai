@@ -1,25 +1,4 @@
-      var nextIndex = currentIndex < 0
-        ? 0
-        : (currentIndex + direction + options.length) % options.length;
-
-      options[nextIndex].focus();
-    });
-  });
-
-  document.addEventListener('click', function (event) {
-    languageMenus.forEach(function (languageMenu) {
-      if (!languageMenu.contains(event.target)) {
-        setLanguageMenuState(languageMenu, false);
-      }
-    });
-  });
-
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-      closeLanguageMenus();
-    }
-  });
-
+export function initializeNavigationState() {
   /* ---------- 4. SMOOTH SCROLL + NAV AKTIF ---------- */
   var allNavLinks = document.querySelectorAll('.nav-link');
   var defaultActiveNavLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link.active'));
@@ -160,21 +139,4 @@
   } else {
     revealEls.forEach(function (el) { el.classList.add('is-visible'); });
   }
-
-});
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  var missionCards = Array.prototype.slice.call(document.querySelectorAll('[data-mission-card]'));
-
-  if (!missionCards.length) return;
-
-  function activateMissionCard(activeCard) {
-    missionCards.forEach(function (card) {
-      var isActive = card === activeCard;
-      card.classList.toggle('is-active', isActive);
-      card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    });
-  }
+}
