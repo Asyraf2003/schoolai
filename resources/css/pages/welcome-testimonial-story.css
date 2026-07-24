@@ -308,16 +308,33 @@
 
 @media (max-width: 560px) {
     .testimonial-network-story__stage {
-        padding-top: 54px;
-        padding-bottom: 68px;
+        gap: 26px;
+        padding: 54px 14px 68px;
     }
 
     .testimonial-network-story__main-media {
-        border-radius: 18px;
+        display: none;
+    }
+
+    .testimonial-network-story__title-wrap {
+        margin-bottom: 4px;
+    }
+
+    .testimonial-network-story__title {
+        font-size: clamp(2.35rem, 11vw, 3.8rem);
+        line-height: 0.96;
     }
 
     .testimonial-network-story__nodes {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .testimonial-network-story__node,
+    .testimonial-network-story__node:nth-child(2n),
+    .testimonial-network-story__node:nth-child(3n) {
+        width: 100%;
+        aspect-ratio: 4 / 3;
     }
 }
 
