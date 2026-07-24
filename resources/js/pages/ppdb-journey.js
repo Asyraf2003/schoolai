@@ -1,105 +1,198 @@
-import { createPanelState, rebuildGeometry, updateConnectorGeometry } from './ppdb-journey/panel-state.js';
-import { drawState, updateTargets } from './ppdb-journey/progress.js';
-
-const desktopJourney = window.matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)');
-
-if (desktopJourney.matches) {
-    const originalRoot = document.querySelector('[data-ppdb-liftoff]');
-
-    if (originalRoot) {
-        const root = originalRoot.cloneNode(true);
-        originalRoot.replaceWith(root);
-        root.classList.add('ppdb-journey-v3');
-
-        root.querySelectorAll('[data-ppdb-storyline]').forEach((storyline) => {
-            storyline.replaceChildren();
-            storyline.setAttribute('hidden', '');
+import {
+    createPanelState,
+    destroyPanelState,
+    rebuildGeometry,
+    resetPanelState,
+} from './ppdb-journey/panel-state.js';
+import {
+    advanceTarget,
+    canConsumeDirection,
+    renderFrame,
+    renderProgress,
+} from './ppdb-journey/progress.js';
+const mediaQuery = window.matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)');
+const root = document.querySelector('[data-ppdb-liftoff]');
+if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
+    root.dataset.ppdbJourneyInitialized = 'true';
+    const stage = root.querySelector('[data-ppdb-journey-stage]');
+    const status = root.querySelector('[data-ppdb-journey-status]');
+    const cta = root.querySelector('.ppdb-liftoff__cta');
+    const tabs = Array.from(root.querySelectorAll('[data-ppdb-liftoff-tab]'));
+    const panels = Array.from(root.querySelectorAll('[data-ppdb-liftoff-panel]'));
+    const states = new Map();
+    let enhanced = false;
+    let pinned = false;
+    let inputAttached = false;
+    let renderRequest = 0;
+    let pinRequest = 0;
+    const activePanel = () => root.querySelector(
+        `[data-ppdb-liftoff-panel="${root.dataset.activeAudience}"]`,
+    );
+    const ensureState = (panel) => {
+        if (!panel) return null;
+        if (!states.has(panel)) states.set(panel, createPanelState(panel));
+        return states.get(panel);
+    };
+    const activeState = () => ensureState(activePanel());
+    const render = (timestamp) => {
+        renderRequest = 0;
+        if (!enhanced) return;
+        const state = activeState();
+        if (!state) return;
+        if (state.geometryDirty) rebuildGeometry(state);
+        if (renderFrame(state, timestamp, status, cta)) {
+            renderRequest = window.requestAnimationFrame(render);
+        }
+    };
+    const scheduleRender = () => {
+        if (!renderRequest) renderRequest = window.requestAnimationFrame(render);
+    };
+    const markGeometry = () => {
+        states.forEach((state) => {
+            if (state) state.geometryDirty = true;
         });
-
-        root.querySelectorAll('[data-ppdb-story-node]').forEach((node) => {
-            node.classList.remove('is-story-lit', 'is-story-holding');
-        });
-
-        const tabs = Array.from(root.querySelectorAll('[data-ppdb-liftoff-tab]'));
-        const panels = Array.from(root.querySelectorAll('[data-ppdb-liftoff-panel]'));
-        const panelStates = new WeakMap();
-        let frameRequest = 0;
-        let needsGeometry = true;
-        let needsTargets = true;
-
-        const activePanel = () => root.querySelector(`[data-ppdb-liftoff-panel="${root.dataset.activeAudience}"]`);
-
-        const render = () => {
-            frameRequest = 0;
-            const panel = activePanel();
-            const state = panel ? panelStates.get(panel) : null;
-            if (!state) return;
-
-            if (needsGeometry) {
-                rebuildGeometry(state);
-                needsGeometry = false;
-                needsTargets = true;
-            }
-
-            if (needsTargets) {
-                updateTargets(state);
-                needsTargets = false;
-            }
-
-            updateConnectorGeometry(state);
-            const unsettled = drawState(state);
-            if (unsettled) frameRequest = window.requestAnimationFrame(render);
-        };
-
-        const schedule = ({ geometry = false } = {}) => {
-            needsGeometry = needsGeometry || geometry;
-            needsTargets = true;
-            if (!frameRequest) frameRequest = window.requestAnimationFrame(render);
-        };
-
-        const activate = (audience) => {
-            const target = root.querySelector(`[data-ppdb-liftoff-panel="${audience}"]`);
-            if (!target) return;
-
-            root.dataset.activeAudience = audience;
-            tabs.forEach((tab) => {
-                const selected = tab.dataset.ppdbLiftoffTab === audience;
-                tab.classList.toggle('is-active', selected);
-                tab.setAttribute('aria-selected', selected ? 'true' : 'false');
-            });
-            panels.forEach((panel) => {
-                panel.hidden = panel !== target;
-            });
-
-            window.requestAnimationFrame(() => schedule({ geometry: true }));
-        };
-
-        panels.forEach((panel) => createPanelState(panel, panelStates));
+        scheduleRender();
+    };
+    const normalizeWheel = (event) => {
+        let delta = event.deltaY;
+        if (event.deltaMode === 1) delta *= 16;
+        if (event.deltaMode === 2) delta *= window.innerHeight;
+        return Math.min(Math.max(delta, -96), 96);
+    };
+    const keyboardDelta = (event) => ({
+        ArrowDown: 240,
+        ArrowUp: -240,
+        PageDown: 720,
+        PageUp: -720,
+        ' ': event.shiftKey ? -720 : 720,
+    })[event.key] || 0;
+    const typingTarget = (target) => target instanceof Element && Boolean(
+        target.closest('input, textarea, select, [contenteditable="true"], [role="tablist"]'),
+    );
+    const consume = (delta, event) => {
+        const state = activeState();
+        if (!delta || !pinned || !canConsumeDirection(state, Math.sign(delta))) return;
+        event.preventDefault();
+        advanceTarget(state, delta);
+        scheduleRender();
+    };
+    const onWheel = (event) => {
+        if (event.ctrlKey || event.metaKey) return;
+        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+        consume(normalizeWheel(event), event);
+    };
+    const onKeyDown = (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey || typingTarget(event.target)) return;
+        consume(keyboardDelta(event), event);
+    };
+    const attachInput = () => {
+        if (inputAttached) return;
+        inputAttached = true;
+        window.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('keydown', onKeyDown);
+    };
+    const detachInput = () => {
+        if (!inputAttached) return;
+        inputAttached = false;
+        window.removeEventListener('wheel', onWheel);
+        window.removeEventListener('keydown', onKeyDown);
+    };
+    const measurePinned = () => {
+        pinRequest = 0;
+        if (!enhanced || !stage) return;
+        const navbar = document.getElementById('navbar');
+        const offset = Math.max(navbar?.getBoundingClientRect().height || 0, 0);
+        root.style.setProperty('--ppdb-journey-nav-offset', `${offset}px`);
+        const rootRect = root.getBoundingClientRect();
+        const stageRect = stage.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const next = Math.abs(stageRect.top - offset) <= 2
+            && rootRect.top <= offset + 2
+            && rootRect.bottom >= viewportHeight - 2;
+        if (next === pinned) return;
+        pinned = next;
+        root.classList.toggle('is-journey-pinned', pinned);
+        if (pinned) attachInput();
+        else detachInput();
+    };
+    const schedulePin = () => {
+        if (!pinRequest) pinRequest = window.requestAnimationFrame(measurePinned);
+    };
+    const activate = (audience) => {
+        const target = root.querySelector(`[data-ppdb-liftoff-panel="${audience}"]`);
+        if (!target) return;
+        root.dataset.activeAudience = audience;
         tabs.forEach((tab) => {
-            tab.addEventListener('click', () => {
-                if (!tab.disabled) activate(tab.dataset.ppdbLiftoffTab);
-            });
+            const selected = tab.dataset.ppdbLiftoffTab === audience;
+            tab.classList.toggle('is-active', selected);
+            tab.setAttribute('aria-selected', selected ? 'true' : 'false');
         });
-
-        if ('IntersectionObserver' in window) {
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
-                });
-            }, { rootMargin: '20% 0px 20% 0px', threshold: 0.01 });
-            root.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
-        } else {
-            root.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
-        }
-
-        window.addEventListener('scroll', () => schedule(), { passive: true });
-        window.addEventListener('resize', () => schedule({ geometry: true }));
-
-        if ('ResizeObserver' in window) {
-            const resizeObserver = new ResizeObserver(() => schedule({ geometry: true }));
-            panels.forEach((panel) => resizeObserver.observe(panel));
-        }
-
-        schedule({ geometry: true });
+        panels.forEach((panel) => {
+            panel.hidden = panel !== target;
+        });
+        if (!enhanced) return;
+        const state = ensureState(target);
+        resetPanelState(state);
+        if (cta) cta.removeAttribute('style');
+        window.requestAnimationFrame(() => {
+            rebuildGeometry(state);
+            renderProgress(state, status, cta);
+            schedulePin();
+            scheduleRender();
+        });
+    };
+    tabs.forEach((tab) => tab.addEventListener('click', () => {
+        if (!tab.disabled) activate(tab.dataset.ppdbLiftoffTab);
+    }));
+    const reveal = Array.from(root.querySelectorAll('.reveal'));
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { rootMargin: '24% 0px 24% 0px', threshold: 0.01 });
+        reveal.forEach((element) => observer.observe(element));
+    } else {
+        reveal.forEach((element) => element.classList.add('is-visible'));
     }
+    const enable = () => {
+        if (enhanced || !stage) return;
+        enhanced = true;
+        root.classList.add('ppdb-journey-native');
+        reveal.forEach((element) => element.classList.add('is-visible'));
+        resetPanelState(activeState());
+        markGeometry();
+        schedulePin();
+    };
+    const disable = () => {
+        if (!enhanced) return;
+        enhanced = false;
+        pinned = false;
+        detachInput();
+        if (renderRequest) window.cancelAnimationFrame(renderRequest);
+        states.forEach((state) => destroyPanelState(state));
+        states.clear();
+        root.classList.remove('ppdb-journey-native', 'is-journey-pinned');
+        root.style.removeProperty('--ppdb-journey-nav-offset');
+        root.querySelectorAll('[data-ppdb-journey-card]').forEach((card) => {
+            card.inert = false;
+            card.removeAttribute('style');
+        });
+        if (cta) cta.removeAttribute('style');
+        if (status) status.textContent = '';
+    };
+    const syncMode = () => (mediaQuery.matches ? enable() : disable());
+    window.addEventListener('scroll', schedulePin, { passive: true });
+    window.addEventListener('resize', () => {
+        markGeometry();
+        schedulePin();
+    });
+    if ('ResizeObserver' in window && stage) {
+        const resizeObserver = new ResizeObserver(markGeometry);
+        resizeObserver.observe(stage);
+        panels.forEach((panel) => resizeObserver.observe(panel));
+    }
+    if (mediaQuery.addEventListener) mediaQuery.addEventListener('change', syncMode);
+    else mediaQuery.addListener?.(syncMode);
+    syncMode();
 }
