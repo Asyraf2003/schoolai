@@ -1,0 +1,105 @@
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+    .ppdb-liftoff.ppdb-journey-v3 {
+        overflow: visible;
+        isolation: isolate;
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-panel {
+        min-height: 0;
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff__stack {
+        gap: 0;
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-card {
+        min-height: 155vh;
+        align-items: start;
+        isolation: isolate;
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-card__visual,
+    .ppdb-journey-v3 .ppdb-liftoff-card__text {
+        position: sticky;
+        top: clamp(116px, 18vh, 188px);
+        align-self: start;
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-card__visual {
+        z-index: 3;
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-card__text {
+        z-index: 4;
+        overflow: visible;
+        transition: box-shadow .42s ease, filter .42s ease, transform .42s ease;
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-card__text.is-story-lit {
+        box-shadow: 0 0 24px rgba(255, 77, 141, .16), 0 0 42px rgba(76, 201, 240, .17), 0 0 60px rgba(199, 125, 255, .13);
+        filter: drop-shadow(0 16px 24px rgba(108, 99, 255, .09));
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-card__text.is-story-holding {
+        box-shadow: 0 0 32px rgba(255, 77, 141, .31), 0 0 58px rgba(76, 201, 240, .3), 0 0 86px rgba(199, 125, 255, .23);
+        filter: drop-shadow(0 22px 34px rgba(108, 99, 255, .18));
+        transform: translateY(-3px);
+    }
+
+    .ppdb-journey-v3 .ppdb-liftoff-card__text > :not(.ppdb-journey-v3__frame) {
+        position: relative;
+        z-index: 2;
+    }
+
+    .ppdb-journey-v3__frame {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .ppdb-journey-v3__frame-path,
+    .ppdb-journey-v3__connector-path {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+        will-change: stroke-dashoffset, opacity, filter;
+    }
+
+    .ppdb-journey-v3__frame-path {
+        stroke-width: 4.5;
+        filter: drop-shadow(0 0 8px rgba(170, 171, 250, .3));
+        transition: filter .38s ease;
+    }
+
+    .ppdb-journey-v3__frame-path.is-story-lit {
+        filter: drop-shadow(0 0 13px rgba(255, 77, 141, .36)) drop-shadow(0 0 19px rgba(76, 201, 240, .31));
+    }
+
+    .ppdb-journey-v3__frame-path.is-story-holding {
+        filter: drop-shadow(0 0 20px rgba(255, 77, 141, .58)) drop-shadow(0 0 31px rgba(76, 201, 240, .48)) drop-shadow(0 0 42px rgba(199, 125, 255, .36));
+    }
+
+    .ppdb-journey-v3__connectors {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .ppdb-journey-v3__connector-path {
+        stroke-width: 5.5;
+        filter: drop-shadow(0 0 9px rgba(76, 201, 240, .34));
+    }
+
+    .ppdb-journey-v3 [data-ppdb-storyline] {
+        display: none !important;
+    }
+}
