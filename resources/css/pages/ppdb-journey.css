@@ -19,6 +19,7 @@
 }
 
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+    .public-main { overflow: visible; }
     .ppdb-liftoff.ppdb-journey-native {
         --ppdb-journey-nav-offset: 84px;
         --ppdb-journey-stage-height: calc(100vh - var(--ppdb-journey-nav-offset));
