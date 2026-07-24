@@ -1,57 +1,103 @@
+.ppdb-journey-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+.ppdb-journey-native-layer { display: none; }
+
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-    .ppdb-liftoff.ppdb-journey-v3 {
-        overflow: visible;
+    .ppdb-liftoff.ppdb-journey-native {
+        --ppdb-journey-nav-offset: 84px;
+        --ppdb-journey-stage-height: calc(100vh - var(--ppdb-journey-nav-offset));
+        --ppdb-journey-stage-height: calc(100svh - var(--ppdb-journey-nav-offset));
+        min-height: calc(var(--ppdb-journey-stage-height) + clamp(240px, 42vh, 480px));
+        padding: 0;
+        overflow: clip;
         isolation: isolate;
     }
-
-    .ppdb-journey-v3 .ppdb-liftoff-panel {
-        min-height: 0;
-    }
-
-    .ppdb-journey-v3 .ppdb-liftoff__stack {
-        gap: 0;
-    }
-
-    .ppdb-journey-v3 .ppdb-liftoff-card {
-        min-height: 155vh;
-        align-items: start;
-        isolation: isolate;
-    }
-
-    .ppdb-journey-v3 .ppdb-liftoff-card__visual,
-    .ppdb-journey-v3 .ppdb-liftoff-card__text {
+    .ppdb-journey-native .ppdb-liftoff__stage {
         position: sticky;
-        top: clamp(116px, 18vh, 188px);
-        align-self: start;
+        top: var(--ppdb-journey-nav-offset);
+        z-index: 2;
+        height: var(--ppdb-journey-stage-height);
+        min-height: min(520px, var(--ppdb-journey-stage-height));
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(10px, 1.8vh, 22px);
+        padding-block: clamp(16px, 2.5vh, 30px);
+        overflow: hidden;
     }
-
-    .ppdb-journey-v3 .ppdb-liftoff-card__visual {
+    .ppdb-journey-native .ppdb-liftoff__top { z-index: 8; gap: clamp(8px, 1.2vh, 16px); margin: 0; }
+    .ppdb-journey-native .ppdb-liftoff__top h2 { max-width: 900px; font-size: clamp(2rem, 4vw, 4rem); line-height: 1; }
+    .ppdb-journey-native .ppdb-liftoff__top p { max-width: 720px; font-size: clamp(.92rem, 1.25vw, 1.08rem); line-height: 1.5; }
+    .ppdb-journey-native .ppdb-liftoff__switch { z-index: 10; }
+    .ppdb-journey-native .ppdb-liftoff__scene { position: relative; min-height: 0; overflow: hidden; }
+    .ppdb-journey-native .ppdb-liftoff-panel { position: absolute; inset: 0; min-height: 0; }
+    .ppdb-journey-native .ppdb-liftoff-panel[hidden] { display: none; }
+    .ppdb-journey-native .ppdb-liftoff__stack {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        display: block;
+    }
+    .ppdb-journey-native .ppdb-liftoff-card {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(300px, .95fr) minmax(280px, .78fr);
+        align-items: center;
+        gap: clamp(48px, 7vw, 112px);
+        direction: ltr;
+        opacity: 0;
+        pointer-events: none;
+        transform-origin: center;
+        will-change: transform, opacity, filter;
+    }
+    .ppdb-journey-native .ppdb-liftoff-card:nth-child(even) { grid-template-columns: minmax(280px, .78fr) minmax(300px, .95fr); }
+    .ppdb-journey-native .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual { order: 2; }
+    .ppdb-journey-native .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text { order: 1; }
+    .ppdb-journey-native .ppdb-liftoff-card__visual {
+        position: relative;
         z-index: 3;
+        width: 100%;
+        height: min(46vh, 460px);
+        min-height: 280px;
+        max-height: 100%;
+        align-self: center;
     }
-
-    .ppdb-journey-v3 .ppdb-liftoff-card__text {
+    .ppdb-journey-native .ppdb-liftoff-card__text {
+        position: relative;
         z-index: 4;
+        width: 100%;
+        max-width: 520px;
+        align-self: center;
+        justify-self: center;
         overflow: visible;
-        transition: box-shadow .42s ease, filter .42s ease, transform .42s ease;
+        direction: ltr;
+        transition: box-shadow .28s ease, filter .28s ease;
     }
-
-    .ppdb-journey-v3 .ppdb-liftoff-card__text.is-story-lit {
+    [dir="rtl"] .ppdb-journey-native .ppdb-liftoff-card__text { direction: rtl; text-align: right; }
+    .ppdb-journey-native .ppdb-liftoff-card__text.is-story-lit {
         box-shadow: 0 0 24px rgba(255, 77, 141, .16), 0 0 42px rgba(76, 201, 240, .17), 0 0 60px rgba(199, 125, 255, .13);
         filter: drop-shadow(0 16px 24px rgba(108, 99, 255, .09));
     }
-
-    .ppdb-journey-v3 .ppdb-liftoff-card__text.is-story-holding {
-        box-shadow: 0 0 32px rgba(255, 77, 141, .31), 0 0 58px rgba(76, 201, 240, .3), 0 0 86px rgba(199, 125, 255, .23);
-        filter: drop-shadow(0 22px 34px rgba(108, 99, 255, .18));
-        transform: translateY(-3px);
+    .ppdb-journey-native .ppdb-liftoff-card__text.is-story-holding {
+        box-shadow: 0 0 32px rgba(255, 77, 141, .28), 0 0 58px rgba(76, 201, 240, .28), 0 0 82px rgba(199, 125, 255, .21);
+        filter: drop-shadow(0 20px 32px rgba(108, 99, 255, .16));
     }
-
-    .ppdb-journey-v3 .ppdb-liftoff-card__text > :not(.ppdb-journey-v3__frame) {
-        position: relative;
-        z-index: 2;
-    }
-
-    .ppdb-journey-v3__frame {
+    .ppdb-journey-native .ppdb-liftoff-card__text > :not(.ppdb-journey-v4__frame) { position: relative; z-index: 2; }
+    .ppdb-journey-native .ppdb-journey-native-layer { display: block; }
+    .ppdb-journey-v4__frame {
         position: absolute;
         inset: 0;
         z-index: 1;
@@ -60,31 +106,18 @@
         overflow: visible;
         pointer-events: none;
     }
-
-    .ppdb-journey-v3__frame-path,
-    .ppdb-journey-v3__connector-path {
+    .ppdb-journey-v4__frame-path,
+    .ppdb-journey-v4__connector-path {
         fill: none;
         stroke-linecap: round;
         stroke-linejoin: round;
         vector-effect: non-scaling-stroke;
         will-change: stroke-dashoffset, opacity, filter;
     }
-
-    .ppdb-journey-v3__frame-path {
-        stroke-width: 4.5;
-        filter: drop-shadow(0 0 8px rgba(170, 171, 250, .3));
-        transition: filter .38s ease;
-    }
-
-    .ppdb-journey-v3__frame-path.is-story-lit {
-        filter: drop-shadow(0 0 13px rgba(255, 77, 141, .36)) drop-shadow(0 0 19px rgba(76, 201, 240, .31));
-    }
-
-    .ppdb-journey-v3__frame-path.is-story-holding {
-        filter: drop-shadow(0 0 20px rgba(255, 77, 141, .58)) drop-shadow(0 0 31px rgba(76, 201, 240, .48)) drop-shadow(0 0 42px rgba(199, 125, 255, .36));
-    }
-
-    .ppdb-journey-v3__connectors {
+    .ppdb-journey-v4__frame-path { stroke-width: 4.5; filter: drop-shadow(0 0 8px rgba(170, 171, 250, .3)); transition: filter .32s ease; }
+    .ppdb-journey-v4__frame-path.is-story-lit { filter: drop-shadow(0 0 13px rgba(255, 77, 141, .36)) drop-shadow(0 0 19px rgba(76, 201, 240, .31)); }
+    .ppdb-journey-v4__frame-path.is-story-holding { filter: drop-shadow(0 0 20px rgba(255, 77, 141, .58)) drop-shadow(0 0 31px rgba(76, 201, 240, .48)) drop-shadow(0 0 42px rgba(199, 125, 255, .36)); }
+    .ppdb-journey-v4__connectors {
         position: absolute;
         inset: 0;
         z-index: 1;
@@ -93,13 +126,23 @@
         overflow: visible;
         pointer-events: none;
     }
-
-    .ppdb-journey-v3__connector-path {
-        stroke-width: 5.5;
-        filter: drop-shadow(0 0 9px rgba(76, 201, 240, .34));
+    .ppdb-journey-v4__connector-path { stroke-width: 5.5; filter: drop-shadow(0 0 9px rgba(76, 201, 240, .34)); }
+    .ppdb-journey-native [data-ppdb-storyline] { display: none !important; }
+    .ppdb-journey-native .ppdb-liftoff__cta {
+        z-index: 8;
+        min-height: 48px;
+        margin: 0;
+        opacity: 0;
+        pointer-events: none;
+        will-change: transform, opacity;
     }
+}
 
-    .ppdb-journey-v3 [data-ppdb-storyline] {
-        display: none !important;
-    }
+@media (min-width: 901px) and (max-height: 720px) and (prefers-reduced-motion: no-preference) {
+    .ppdb-journey-native .ppdb-liftoff__stage { gap: 8px; padding-block: 10px; }
+    .ppdb-journey-native .ppdb-liftoff__top { gap: 6px; }
+    .ppdb-journey-native .ppdb-liftoff__top h2 { font-size: clamp(1.7rem, 3vw, 2.7rem); }
+    .ppdb-journey-native .ppdb-liftoff__top p { max-width: 760px; font-size: .84rem; line-height: 1.32; }
+    .ppdb-journey-native .ppdb-liftoff-card__visual { height: min(40vh, 315px); min-height: 230px; }
+    .ppdb-journey-native .ppdb-liftoff-card__text { padding: 20px 24px; }
 }
