@@ -106,3 +106,67 @@ textarea[lang="ar"] {
   font-family: var(--font-ar-body);
   letter-spacing: normal;
 }
+
+/* Arabic vision-mission typography normalization */
+html[lang="ar"] :where(
+  .visi-misi__head .section-title,
+  .visi-card__title,
+  .misi-panel__head h3,
+  .misi-card__title,
+  .misi-card__number
+) {
+  font-family: var(--font-ar-display);
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+html[lang="ar"] .visi-misi__head .section-title {
+  line-height: 1.25;
+}
+
+html[lang="ar"] .visi-misi__head .section-subtitle {
+  font-family: var(--font-ar-body);
+  font-size: clamp(1.12rem, 0.35vw + 1rem, 1.3rem);
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: normal;
+}
+
+html[lang="ar"] .visi-card__title {
+  line-height: 1.18;
+}
+
+html[lang="ar"] .misi-panel__head h3 {
+  line-height: 1.3;
+}
+
+html[lang="ar"] .misi-card__title {
+  font-size: clamp(1.08rem, 0.2vw + 1.02rem, 1.18rem);
+  line-height: 1.35;
+}
+
+html[lang="ar"] :where(
+  .visi-card__text,
+  .misi-card__text
+) {
+  font-family: var(--font-ar-body);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+html[lang="ar"] .visi-card__text {
+  font-size: clamp(1.25rem, 0.45vw + 1.08rem, 1.42rem);
+  line-height: 1.78;
+}
+
+html[lang="ar"] .misi-card__text {
+  font-size: clamp(1.08rem, 0.22vw + 1rem, 1.2rem);
+  line-height: 1.75;
+}
+
+html[lang="ar"] .visi-misi .vm-mark {
+  font-family: var(--font-ar-body);
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
