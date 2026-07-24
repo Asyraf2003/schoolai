@@ -68,14 +68,14 @@
 
     .ppdb-liftoff-panel{position:relative;min-height:1240px}
     .ppdb-liftoff-panel[hidden]{display:none}
-    .ppdb-liftoff__rail{position:absolute;left:50%;top:-28px;bottom:-28px;width:min(900px,82vw);transform:translateX(-50%);pointer-events:none;z-index:1}
-    .ppdb-liftoff__rail svg{width:100%;height:100%;overflow:visible}
     .ppdb-liftoff .reveal{transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
-    .ppdb-liftoff__rail path{fill:none;stroke-linecap:round;stroke-linejoin:round}
-    .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientParents);stroke-width:13;opacity:.98;filter:drop-shadow(0 12px 12px rgba(250,148,108,.32));transition:stroke-dashoffset .12s linear}
-    .ppdb-liftoff-panel--school .ppdb-liftoff__rail-progress{stroke:url(#ppdbLiftoffRailGradientSchool);filter:drop-shadow(0 12px 12px rgba(163,160,255,.34))}
     .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(150px,18vw,280px)}
-    .ppdb-liftoff-card{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(54px,8vw,122px);min-height:640px}
+    .ppdb-liftoff__storyline{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
+    .ppdb-liftoff__storyline svg{display:block;width:100%;height:100%;overflow:visible}
+    .ppdb-liftoff-story-path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:0;will-change:stroke-dashoffset,opacity}
+    .ppdb-liftoff-story-frame{stroke-width:4.5;filter:drop-shadow(0 0 8px rgba(170,171,250,.28))}
+    .ppdb-liftoff-story-connector{stroke-width:5.5;filter:drop-shadow(0 0 9px rgba(76,201,240,.3))}
+    .ppdb-liftoff-card{position:relative;z-index:2;display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(54px,8vw,122px);min-height:640px}
     .ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}
     .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual{order:2}
     .ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:1}
@@ -96,7 +96,7 @@
     .ppdb-liftoff-list{display:grid;gap:12px}
     .ppdb-liftoff-list__item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border-radius:16px;background:#fff;border:1px solid rgba(24,18,41,.06);box-shadow:0 10px 26px rgba(24,18,41,.07);color:rgba(24,18,41,.72);font-weight:800}
     .ppdb-liftoff-list__item span{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#181229;color:#fff;flex:0 0 auto}
-    .ppdb-liftoff-card__text{justify-self:center;max-width:480px}
+    .ppdb-liftoff-card__text{position:relative;justify-self:center;width:100%;max-width:520px;padding:clamp(24px,3vw,38px);box-sizing:border-box;border-radius:clamp(24px,3vw,34px)}
     .ppdb-liftoff-step{width:42px;height:42px;display:grid;place-items:center;margin-bottom:22px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(135deg,#cfe6ff,#aaaafa 55%,#fa946c) border-box;border:3px solid transparent;color:#181229;font-weight:950}
     .ppdb-liftoff-panel--school .ppdb-liftoff-step{background:linear-gradient(#181229,#181229) padding-box,linear-gradient(135deg,#a3a0ff,#fff 55%,#fa946c) border-box;color:#fff}
     .ppdb-liftoff-card__text h3{margin:0;font-size:clamp(1.8rem,3.2vw,3.2rem);line-height:1.02;letter-spacing:-.065em;font-weight:950}
@@ -104,9 +104,9 @@
     .ppdb-liftoff-panel--school .ppdb-liftoff-card__text p{color:rgba(255,255,255,.72)}
     .ppdb-liftoff__cta{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;max-width:720px;margin:clamp(70px,8vw,110px) auto 0;text-align:center}
     .ppdb-liftoff__cta p{color:rgba(24,18,41,.68);font-size:1.04rem;line-height:1.7}
-    @media (max-width:900px){.ppdb-liftoff::before{inset:16px;border-radius:28px}.ppdb-liftoff__rail{display:none}.ppdb-liftoff-panel{min-height:0}.ppdb-liftoff__stack{gap:72px}.ppdb-liftoff-card,.ppdb-liftoff-card:nth-child(even){grid-template-columns:1fr;min-height:0}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual,.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:initial}.ppdb-liftoff-card__text{max-width:none;justify-self:start}}
+    @media (max-width:900px){.ppdb-liftoff::before{inset:16px;border-radius:28px}.ppdb-liftoff-panel{min-height:0}.ppdb-liftoff__stack{gap:72px}.ppdb-liftoff-card,.ppdb-liftoff-card:nth-child(even){grid-template-columns:1fr;min-height:0}.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__visual,.ppdb-liftoff-card:nth-child(even) .ppdb-liftoff-card__text{order:initial}.ppdb-liftoff-card__text{max-width:none;justify-self:start}}
     @media (max-width:900px){.ppdb-liftoff-card__visual{aspect-ratio:16/10}.ppdb-liftoff-media iframe{min-height:100%}}
-    @media (max-width:620px){.ppdb-liftoff{padding-block:64px}.ppdb-liftoff__switch{width:100%}.ppdb-liftoff__tab{min-width:0;padding-inline:12px;font-size:.9rem}.ppdb-liftoff-card__visual{min-height:320px;aspect-ratio:4/3;border-radius:24px}.ppdb-liftoff-ui{inset:9% 7% auto}}
+    @media (max-width:620px){.ppdb-liftoff{padding-block:64px}.ppdb-liftoff__switch{width:100%}.ppdb-liftoff__tab{min-width:0;padding-inline:12px;font-size:.9rem}.ppdb-liftoff-card__visual{min-height:320px;aspect-ratio:4/3;border-radius:24px}.ppdb-liftoff-ui{inset:9% 7% auto}.ppdb-liftoff-card__text{padding:24px 22px;border-radius:24px}}
   </style>
 
   <section class="public-hero public-hero--ppdb" aria-labelledby="ppdb-title">
@@ -159,20 +159,7 @@
         @foreach ($ppdbShowcaseByAudience as $audience => $items)
           @if ($items->isNotEmpty())
             <div class="ppdb-liftoff-panel ppdb-liftoff-panel--{{ $audience }}" data-ppdb-liftoff-panel="{{ $audience }}" @if($ppdbInitialAudience !== $audience) hidden @endif>
-              <div class="ppdb-liftoff__rail" aria-hidden="true">
-                <svg viewBox="0 0 720 2200" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="ppdbLiftoffRailGradient{{ $audience === 'school' ? 'School' : 'Parents' }}" x1="0" x2="1" y1="0" y2="1">
-                      @if ($audience === 'school')
-                        <stop offset="0%" stop-color="#a3a0ff" /><stop offset="50%" stop-color="#ffffff" /><stop offset="100%" stop-color="#fa946c" />
-                      @else
-                        <stop offset="0%" stop-color="#d2e7ff" /><stop offset="45%" stop-color="#aaaafa" /><stop offset="100%" stop-color="#fa946c" />
-                      @endif
-                    </linearGradient>
-                  </defs>
-                  <path class="ppdb-liftoff__rail-progress" data-ppdb-rail-progress d="M 540 20 C 632 230 564 438 382 590 C 236 712 198 872 320 1010 C 478 1188 528 1368 406 1548 C 292 1718 328 1928 540 2180" />
-                </svg>
-              </div>
+              <div class="ppdb-liftoff__storyline" data-ppdb-storyline aria-hidden="true"></div>
 
               <div class="ppdb-liftoff__stack">
                 @foreach($items as $item)
@@ -203,7 +190,7 @@
                         </div>
                       @endif
                     </div>
-                    <div class="ppdb-liftoff-card__text"><div class="ppdb-liftoff-step">{{ $itemNumber }}</div><h3>{{ $itemTitle }}</h3><p>{{ $itemDescription }}</p></div>
+                    <div class="ppdb-liftoff-card__text" data-ppdb-story-node><div class="ppdb-liftoff-step">{{ $itemNumber }}</div><h3>{{ $itemTitle }}</h3><p>{{ $itemDescription }}</p></div>
                   </article>
                 @endforeach
               </div>
@@ -222,17 +209,16 @@
 
         const tabs = Array.from(root.querySelectorAll('[data-ppdb-liftoff-tab]'));
         const panels = Array.from(root.querySelectorAll('[data-ppdb-liftoff-panel]'));
-        const progressPaths = Array.from(root.querySelectorAll('[data-ppdb-rail-progress]'));
         const liftoffReveals = Array.from(root.querySelectorAll('.reveal'));
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const svgNamespace = 'http://www.w3.org/2000/svg';
+        const storylineState = new WeakMap();
+        let storylineSequence = 0;
+        let rebuildFrame = 0;
 
-        progressPaths.forEach((path) => {
-          const length = path.getTotalLength();
-          path.dataset.length = String(length);
-          path.style.strokeDasharray = String(length);
-          path.style.strokeDashoffset = String(length);
-
-        });
+        const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+        const smoothstep = (value) => value * value * (3 - (2 * value));
+        const createSvgElement = (name) => document.createElementNS(svgNamespace, name);
 
         const revealVisibleItems = (scope = root) => {
           Array.from(scope.querySelectorAll('.reveal')).forEach((element) => {
@@ -261,32 +247,188 @@
           liftoffReveals.forEach((element) => earlyRevealObserver.observe(element));
         }
 
-        const updateRail = () => {
+        const roundedFramePath = (x, y, width, height, radius) => {
+          const right = x + width;
+          const bottom = y + height;
+          const centerX = x + (width / 2);
+
+          return [
+            `M ${centerX} ${y}`,
+            `H ${right - radius}`,
+            `Q ${right} ${y} ${right} ${y + radius}`,
+            `V ${bottom - radius}`,
+            `Q ${right} ${bottom} ${right - radius} ${bottom}`,
+            `H ${x + radius}`,
+            `Q ${x} ${bottom} ${x} ${bottom - radius}`,
+            `V ${y + radius}`,
+            `Q ${x} ${y} ${x + radius} ${y}`,
+            `H ${centerX}`,
+          ].join(' ');
+        };
+
+        const connectorPath = (startX, startY, endX, endY) => {
+          const verticalDistance = Math.max(endY - startY, 1);
+          const horizontalDistance = endX - startX;
+          const direction = horizontalDistance >= 0 ? 1 : -1;
+          const bend = Math.min(Math.max(Math.abs(horizontalDistance) * 0.32, 54), 170);
+          const firstControlX = startX + (direction * bend);
+          const secondControlX = endX - (direction * bend);
+          const firstControlY = startY + (verticalDistance * 0.34);
+          const secondControlY = endY - (verticalDistance * 0.34);
+
+          return `M ${startX} ${startY} C ${firstControlX} ${firstControlY}, ${secondControlX} ${secondControlY}, ${endX} ${endY}`;
+        };
+
+        const preparePath = (path, start, end) => {
+          const length = path.getTotalLength();
+          path.style.strokeDasharray = String(length);
+          path.style.strokeDashoffset = String(length);
+          path.style.opacity = prefersReducedMotion ? '1' : '0';
+
+          return {
+            path,
+            length,
+            start,
+            end: Math.max(end, start + 1),
+          };
+        };
+
+        const buildStoryline = (panel) => {
+          if (!panel || panel.hidden) return;
+
+          const mount = panel.querySelector('[data-ppdb-storyline]');
+          const stack = panel.querySelector('.ppdb-liftoff__stack');
+          const nodes = Array.from(panel.querySelectorAll('[data-ppdb-story-node]'));
+          if (!mount || !stack || !nodes.length) return;
+
+          const stackRect = stack.getBoundingClientRect();
+          const width = Math.max(stack.clientWidth, 1);
+          const height = Math.max(stack.scrollHeight, stack.clientHeight, 1);
+          const gradientId = `ppdbStoryRainbow-${panel.dataset.ppdbLiftoffPanel || 'panel'}-${storylineSequence += 1}`;
+          const svg = createSvgElement('svg');
+          svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+          svg.setAttribute('preserveAspectRatio', 'none');
+          svg.setAttribute('focusable', 'false');
+
+          const defs = createSvgElement('defs');
+          const gradient = createSvgElement('linearGradient');
+          gradient.setAttribute('id', gradientId);
+          gradient.setAttribute('gradientUnits', 'userSpaceOnUse');
+          gradient.setAttribute('x1', '0');
+          gradient.setAttribute('y1', '0');
+          gradient.setAttribute('x2', String(width));
+          gradient.setAttribute('y2', String(height));
+
+          [
+            ['0%', '#ff4d8d'],
+            ['16%', '#ff8a3d'],
+            ['32%', '#ffd84d'],
+            ['48%', '#57d68d'],
+            ['64%', '#4cc9f0'],
+            ['80%', '#6c63ff'],
+            ['92%', '#c77dff'],
+            ['100%', '#ff4d8d'],
+          ].forEach(([offset, color]) => {
+            const stop = createSvgElement('stop');
+            stop.setAttribute('offset', offset);
+            stop.setAttribute('stop-color', color);
+            gradient.appendChild(stop);
+          });
+
+          defs.appendChild(gradient);
+          svg.appendChild(defs);
+
+          const stages = [];
+          let previousStageEnd = 0;
+
+          nodes.forEach((node, index) => {
+            const rect = node.getBoundingClientRect();
+            const x = rect.left - stackRect.left;
+            const y = rect.top - stackRect.top;
+            const frameInset = 3;
+            const frameWidth = Math.max(rect.width - (frameInset * 2), 1);
+            const frameHeight = Math.max(rect.height - (frameInset * 2), 1);
+            const radius = Math.min(34, Math.max(22, Math.min(frameWidth, frameHeight) * 0.12));
+            const frame = createSvgElement('path');
+            frame.setAttribute('class', 'ppdb-liftoff-story-path ppdb-liftoff-story-frame');
+            frame.setAttribute('stroke', `url(#${gradientId})`);
+            frame.setAttribute('d', roundedFramePath(x + frameInset, y + frameInset, frameWidth, frameHeight, radius));
+            svg.appendChild(frame);
+
+            const frameStart = index === 0
+              ? Math.max(y - 70, 0)
+              : previousStageEnd;
+            const frameDuration = clamp(frameHeight * 0.92, 150, 280);
+            const frameEnd = frameStart + frameDuration;
+            stages.push(preparePath(frame, frameStart, frameEnd));
+            previousStageEnd = frameEnd;
+
+            if (index >= nodes.length - 1) return;
+
+            const nextRect = nodes[index + 1].getBoundingClientRect();
+            const nextX = nextRect.left - stackRect.left;
+            const nextY = nextRect.top - stackRect.top;
+            const connector = createSvgElement('path');
+            connector.setAttribute('class', 'ppdb-liftoff-story-path ppdb-liftoff-story-connector');
+            connector.setAttribute('stroke', `url(#${gradientId})`);
+            connector.setAttribute('d', connectorPath(
+              x + (rect.width / 2),
+              y + rect.height,
+              nextX + (nextRect.width / 2),
+              nextY,
+            ));
+            svg.appendChild(connector);
+
+            const connectorStart = previousStageEnd;
+            const connectorEnd = Math.max(nextY - 72, connectorStart + 140);
+            stages.push(preparePath(connector, connectorStart, connectorEnd));
+            previousStageEnd = connectorEnd;
+          });
+
+          mount.replaceChildren(svg);
+          storylineState.set(panel, { stages });
+        };
+
+        const updateStoryline = (panel) => {
+          const state = storylineState.get(panel);
+          if (!state) return;
+
           if (prefersReducedMotion) {
-            progressPaths.forEach((path) => {
+            state.stages.forEach(({ path }) => {
               path.style.strokeDashoffset = '0';
+              path.style.opacity = '1';
             });
             return;
           }
 
-          const activePanel = root.querySelector(`[data-ppdb-liftoff-panel="${root.dataset.activeAudience}"]`);
-          if (!activePanel || activePanel.hidden) return;
-
-          const path = activePanel.querySelector('[data-ppdb-rail-progress]');
-          if (!path) return;
-
-          const length = Number(path.dataset.length || path.getTotalLength());
-          const rect = activePanel.getBoundingClientRect();
           const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-          const start = (viewportHeight * 0.76) - rect.top;
-          const end = Math.max(activePanel.offsetHeight - (viewportHeight * 0.22), 1);
-          const current = Math.min(Math.max(start, 0), end);
-          const progress = Math.min(Math.max(current / end, 0), 1);
-          const drawnLength = length * progress;
+          const panelRect = panel.getBoundingClientRect();
+          const traveled = (viewportHeight * 0.78) - panelRect.top;
 
-          path.style.strokeDashoffset = String(length - drawnLength);
+          state.stages.forEach(({ path, length, start, end }) => {
+            const rawProgress = clamp((traveled - start) / (end - start));
+            const progress = smoothstep(rawProgress);
+            path.style.strokeDashoffset = String(length * (1 - progress));
+            path.style.opacity = rawProgress > 0 ? '1' : '0';
+          });
+        };
 
-          revealVisibleItems(activePanel);
+        const activePanel = () => root.querySelector(`[data-ppdb-liftoff-panel="${root.dataset.activeAudience}"]`);
+
+        const rebuildActiveStoryline = () => {
+          const panel = activePanel();
+          if (!panel || panel.hidden) return;
+
+          buildStoryline(panel);
+          updateStoryline(panel);
+        };
+
+        const queueRebuild = () => {
+          if (rebuildFrame) window.cancelAnimationFrame(rebuildFrame);
+          rebuildFrame = window.requestAnimationFrame(() => {
+            rebuildFrame = 0;
+            rebuildActiveStoryline();
+          });
         };
 
         const activate = (audience) => {
@@ -302,7 +444,8 @@
           panels.forEach((panel) => { panel.hidden = panel.dataset.ppdbLiftoffPanel !== audience; });
           window.requestAnimationFrame(() => {
             revealVisibleItems(targetPanel);
-            updateRail();
+            buildStoryline(targetPanel);
+            updateStoryline(targetPanel);
           });
         };
 
@@ -316,16 +459,26 @@
           ticking = true;
           window.requestAnimationFrame(() => {
             revealVisibleItems();
-            updateRail();
+            const panel = activePanel();
+            if (panel && !panel.hidden) updateStoryline(panel);
             ticking = false;
           });
         };
 
         window.addEventListener('scroll', queueUpdate, { passive: true });
-        window.addEventListener('resize', queueUpdate);
+        window.addEventListener('resize', queueRebuild);
+
+        if ('ResizeObserver' in window) {
+          const resizeObserver = new ResizeObserver(queueRebuild);
+          panels.forEach((panel) => {
+            const stack = panel.querySelector('.ppdb-liftoff__stack');
+            if (stack) resizeObserver.observe(stack);
+          });
+        }
+
         window.requestAnimationFrame(() => {
           revealVisibleItems();
-          updateRail();
+          rebuildActiveStoryline();
         });
       })();
     </script>
