@@ -1,15 +1,6 @@
-import {
-    createPanelState,
-    destroyPanelState,
-    rebuildGeometry,
-    resetPanelState,
-} from './ppdb-journey/panel-state.js';
-import {
-    advanceTarget,
-    canConsumeDirection,
-    renderFrame,
-    renderProgress,
-} from './ppdb-journey/progress.js';
+import { createPanelState, destroyPanelState, rebuildGeometry, resetPanelState } from './ppdb-journey/panel-state.js';
+import { advanceTarget, canConsumeDirection, isJourneyReleaseReady, renderFrame, renderProgress } from './ppdb-journey/progress.js';
+import { createJourneyReleaseState } from './ppdb-journey/release-state.js';
 const mediaQuery = window.matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)');
 const root = document.querySelector('[data-ppdb-liftoff]');
 if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
@@ -20,6 +11,7 @@ if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
     const tabs = Array.from(root.querySelectorAll('[data-ppdb-liftoff-tab]'));
     const panels = Array.from(root.querySelectorAll('[data-ppdb-liftoff-panel]'));
     const states = new Map();
+    const releaseState = createJourneyReleaseState(root);
     let enhanced = false;
     let pinned = false;
     let inputAttached = false;
@@ -40,9 +32,9 @@ if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
         const state = activeState();
         if (!state) return;
         if (state.geometryDirty) rebuildGeometry(state);
-        if (renderFrame(state, timestamp, status, cta)) {
-            renderRequest = window.requestAnimationFrame(render);
-        }
+        const unsettled = renderFrame(state, timestamp, status, cta);
+        releaseState.setReleased(isJourneyReleaseReady(state));
+        if (unsettled) renderRequest = window.requestAnimationFrame(render);
     };
     const scheduleRender = () => {
         if (!renderRequest) renderRequest = window.requestAnimationFrame(render);
@@ -106,7 +98,8 @@ if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
         const rootRect = root.getBoundingClientRect();
         const stageRect = stage.getBoundingClientRect();
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-        const next = Math.abs(stageRect.top - offset) <= 2
+        const next = !releaseState.isReleased()
+            && Math.abs(stageRect.top - offset) <= 2
             && rootRect.top <= offset + 2
             && rootRect.bottom >= viewportHeight - 2;
         if (next === pinned) return;
@@ -121,6 +114,7 @@ if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
     const activate = (audience) => {
         const target = root.querySelector(`[data-ppdb-liftoff-panel="${audience}"]`);
         if (!target) return;
+        releaseState.reset();
         root.dataset.activeAudience = audience;
         tabs.forEach((tab) => {
             const selected = tab.dataset.ppdbLiftoffTab === audience;
@@ -158,6 +152,7 @@ if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
     const enable = () => {
         if (enhanced || !stage) return;
         enhanced = true;
+        releaseState.reset();
         root.classList.add('ppdb-journey-native');
         reveal.forEach((element) => element.classList.add('is-visible'));
         resetPanelState(activeState());
@@ -168,6 +163,7 @@ if (root && root.dataset.ppdbJourneyInitialized !== 'true') {
         if (!enhanced) return;
         enhanced = false;
         pinned = false;
+        releaseState.reset();
         detachInput();
         if (renderRequest) window.cancelAnimationFrame(renderRequest);
         states.forEach((state) => destroyPanelState(state));
