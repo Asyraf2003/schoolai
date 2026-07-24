@@ -72,8 +72,10 @@
     .ppdb-liftoff__stack{position:relative;z-index:2;display:grid;gap:clamp(150px,18vw,280px)}
     .ppdb-liftoff__storyline{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
     .ppdb-liftoff__storyline svg{display:block;width:100%;height:100%;overflow:visible}
-    .ppdb-liftoff-story-path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:0;will-change:stroke-dashoffset,opacity}
-    .ppdb-liftoff-story-frame{stroke-width:4.5;filter:drop-shadow(0 0 8px rgba(170,171,250,.28))}
+    .ppdb-liftoff-story-path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:0;will-change:stroke-dashoffset,opacity,filter}
+    .ppdb-liftoff-story-frame{stroke-width:4.5;filter:drop-shadow(0 0 8px rgba(170,171,250,.28));transition:filter .28s ease}
+    .ppdb-liftoff-story-frame.is-story-lit{filter:drop-shadow(0 0 12px rgba(255,77,141,.32)) drop-shadow(0 0 18px rgba(76,201,240,.28))}
+    .ppdb-liftoff-story-frame.is-story-holding{filter:drop-shadow(0 0 18px rgba(255,77,141,.52)) drop-shadow(0 0 28px rgba(76,201,240,.44)) drop-shadow(0 0 36px rgba(199,125,255,.32))}
     .ppdb-liftoff-story-connector{stroke-width:5.5;filter:drop-shadow(0 0 9px rgba(76,201,240,.3))}
     .ppdb-liftoff-card{position:relative;z-index:2;display:grid;grid-template-columns:minmax(300px,.95fr) minmax(260px,.75fr);align-items:center;gap:clamp(54px,8vw,122px);min-height:640px}
     .ppdb-liftoff-card:nth-child(even){grid-template-columns:minmax(260px,.75fr) minmax(300px,.95fr)}
@@ -96,8 +98,11 @@
     .ppdb-liftoff-list{display:grid;gap:12px}
     .ppdb-liftoff-list__item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border-radius:16px;background:#fff;border:1px solid rgba(24,18,41,.06);box-shadow:0 10px 26px rgba(24,18,41,.07);color:rgba(24,18,41,.72);font-weight:800}
     .ppdb-liftoff-list__item span{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#181229;color:#fff;flex:0 0 auto}
-    .ppdb-liftoff-card__text{position:relative;justify-self:center;width:100%;max-width:520px;padding:clamp(24px,3vw,38px);box-sizing:border-box;border-radius:clamp(24px,3vw,34px)}
-    .ppdb-liftoff-step{width:42px;height:42px;display:grid;place-items:center;margin-bottom:22px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(135deg,#cfe6ff,#aaaafa 55%,#fa946c) border-box;border:3px solid transparent;color:#181229;font-weight:950}
+    .ppdb-liftoff-card__text{position:relative;justify-self:center;width:100%;max-width:520px;padding:clamp(24px,3vw,38px);box-sizing:border-box;border-radius:clamp(24px,3vw,34px);transition:box-shadow .3s ease,filter .3s ease}
+    .ppdb-liftoff-card__text.is-story-lit{box-shadow:0 0 22px rgba(255,77,141,.12),0 0 36px rgba(76,201,240,.14),0 0 52px rgba(199,125,255,.11);filter:drop-shadow(0 14px 22px rgba(108,99,255,.08))}
+    .ppdb-liftoff-card__text.is-story-holding{box-shadow:0 0 28px rgba(255,77,141,.24),0 0 48px rgba(76,201,240,.25),0 0 70px rgba(199,125,255,.2);filter:drop-shadow(0 18px 28px rgba(108,99,255,.14))}
+    .ppdb-liftoff-step{width:42px;height:42px;display:grid;place-items:center;margin-bottom:22px;border-radius:999px;background:linear-gradient(#fffbf4,#fffbf4) padding-box,linear-gradient(135deg,#cfe6ff,#aaaafa 55%,#fa946c) border-box;border:3px solid transparent;color:#181229;font-weight:950;transition:box-shadow .3s ease}
+    .ppdb-liftoff-card__text.is-story-holding .ppdb-liftoff-step{box-shadow:0 0 18px rgba(255,77,141,.3),0 0 30px rgba(76,201,240,.26)}
     .ppdb-liftoff-panel--school .ppdb-liftoff-step{background:linear-gradient(#181229,#181229) padding-box,linear-gradient(135deg,#a3a0ff,#fff 55%,#fa946c) border-box;color:#fff}
     .ppdb-liftoff-card__text h3{margin:0;font-size:clamp(1.8rem,3.2vw,3.2rem);line-height:1.02;letter-spacing:-.065em;font-weight:950}
     .ppdb-liftoff-card__text p{margin-top:20px;color:rgba(24,18,41,.68);font-size:clamp(1rem,1.35vw,1.16rem);line-height:1.65}
@@ -266,17 +271,19 @@
           ].join(' ');
         };
 
-        const connectorPath = (startX, startY, endX, endY) => {
-          const verticalDistance = Math.max(endY - startY, 1);
-          const horizontalDistance = endX - startX;
-          const direction = horizontalDistance >= 0 ? 1 : -1;
-          const bend = Math.min(Math.max(Math.abs(horizontalDistance) * 0.32, 54), 170);
-          const firstControlX = startX + (direction * bend);
-          const secondControlX = endX - (direction * bend);
-          const firstControlY = startY + (verticalDistance * 0.34);
-          const secondControlY = endY - (verticalDistance * 0.34);
+        const connectorPath = ({ startX, startY, endX, endY, viaX, viaY, visualHeight }) => {
+          const firstDrop = clamp((viaY - startY) * 0.58, 150, 330);
+          const hangingDepth = clamp(visualHeight * 0.55, 180, 340);
+          const approachDirection = viaX >= endX ? 1 : -1;
+          const approachReach = clamp(Math.abs(viaX - endX) * 0.48, 100, 240);
+          const controlEndX = endX + (approachDirection * approachReach);
+          const controlEndY = endY + clamp(hangingDepth * 0.42, 80, 150);
 
-          return `M ${startX} ${startY} C ${firstControlX} ${firstControlY}, ${secondControlX} ${secondControlY}, ${endX} ${endY}`;
+          return [
+            `M ${startX} ${startY}`,
+            `C ${startX} ${startY + firstDrop}, ${viaX} ${viaY - (firstDrop * 0.24)}, ${viaX} ${viaY}`,
+            `C ${viaX} ${viaY + hangingDepth}, ${controlEndX} ${controlEndY}, ${endX} ${endY}`,
+          ].join(' ');
         };
 
         const preparePath = (path, start, end) => {
@@ -339,6 +346,7 @@
           svg.appendChild(defs);
 
           const stages = [];
+          const glowStages = [];
           let previousStageEnd = 0;
 
           nodes.forEach((node, index) => {
@@ -360,33 +368,61 @@
               : previousStageEnd;
             const frameDuration = clamp(frameHeight * 0.92, 150, 280);
             const frameEnd = frameStart + frameDuration;
+            const glowHold = clamp(frameHeight * 0.46, 120, 190);
+            const glowEnd = frameEnd + glowHold;
             stages.push(preparePath(frame, frameStart, frameEnd));
-            previousStageEnd = frameEnd;
+            glowStages.push({ node, frame, start: frameEnd, holdEnd: glowEnd });
+            previousStageEnd = glowEnd;
 
             if (index >= nodes.length - 1) return;
 
-            const nextRect = nodes[index + 1].getBoundingClientRect();
+            const nextNode = nodes[index + 1];
+            const nextRect = nextNode.getBoundingClientRect();
             const nextX = nextRect.left - stackRect.left;
             const nextY = nextRect.top - stackRect.top;
+            const nextCard = nextNode.closest('.ppdb-liftoff-card');
+            const nextVisual = nextCard?.querySelector('.ppdb-liftoff-card__visual');
+            const nextVisualRect = nextVisual?.getBoundingClientRect();
+            const nextTextCenterX = nextX + (nextRect.width / 2);
+            const visualCenterX = nextVisualRect
+              ? (nextVisualRect.left - stackRect.left) + (nextVisualRect.width / 2)
+              : (x + (rect.width / 2) + nextTextCenterX) / 2;
+            const visualCenterY = nextVisualRect
+              ? (nextVisualRect.top - stackRect.top) + (nextVisualRect.height * 0.5)
+              : y + rect.height + ((nextY - (y + rect.height)) * 0.56);
+            const visualHeight = nextVisualRect?.height ?? Math.max(nextY - y, 220);
+            const horizontalRelation = visualCenterX - nextTextCenterX;
+            const isRtl = document.documentElement.dir === 'rtl';
+            const enterFromLeft = Math.abs(horizontalRelation) > 24
+              ? horizontalRelation < 0
+              : ((index + (isRtl ? 1 : 0)) % 2 === 0);
+            const endX = enterFromLeft
+              ? nextX + frameInset
+              : nextX + nextRect.width - frameInset;
+            const endY = nextY + (nextRect.height * 0.52);
             const connector = createSvgElement('path');
             connector.setAttribute('class', 'ppdb-liftoff-story-path ppdb-liftoff-story-connector');
             connector.setAttribute('stroke', `url(#${gradientId})`);
-            connector.setAttribute('d', connectorPath(
-              x + (rect.width / 2),
-              y + rect.height,
-              nextX + (nextRect.width / 2),
-              nextY,
-            ));
+            connector.setAttribute('d', connectorPath({
+              startX: x + (rect.width / 2),
+              startY: y + rect.height - frameInset,
+              endX,
+              endY,
+              viaX: visualCenterX,
+              viaY: visualCenterY,
+              visualHeight,
+            }));
             svg.appendChild(connector);
 
             const connectorStart = previousStageEnd;
-            const connectorEnd = Math.max(nextY - 72, connectorStart + 140);
+            const connectorDuration = clamp((nextY - y) * 0.5, 230, 460);
+            const connectorEnd = Math.max(nextY - 84, connectorStart + connectorDuration);
             stages.push(preparePath(connector, connectorStart, connectorEnd));
             previousStageEnd = connectorEnd;
           });
 
           mount.replaceChildren(svg);
-          storylineState.set(panel, { stages });
+          storylineState.set(panel, { stages, glowStages });
         };
 
         const updateStoryline = (panel) => {
@@ -397,6 +433,12 @@
             state.stages.forEach(({ path }) => {
               path.style.strokeDashoffset = '0';
               path.style.opacity = '1';
+            });
+            state.glowStages.forEach(({ node, frame }) => {
+              node.classList.add('is-story-lit');
+              node.classList.remove('is-story-holding');
+              frame.classList.add('is-story-lit');
+              frame.classList.remove('is-story-holding');
             });
             return;
           }
@@ -410,6 +452,15 @@
             const progress = smoothstep(rawProgress);
             path.style.strokeDashoffset = String(length * (1 - progress));
             path.style.opacity = rawProgress > 0 ? '1' : '0';
+          });
+
+          state.glowStages.forEach(({ node, frame, start, holdEnd }) => {
+            const isLit = traveled >= start;
+            const isHolding = isLit && traveled < holdEnd;
+            node.classList.toggle('is-story-lit', isLit);
+            node.classList.toggle('is-story-holding', isHolding);
+            frame.classList.toggle('is-story-lit', isLit);
+            frame.classList.toggle('is-story-holding', isHolding);
           });
         };
 
