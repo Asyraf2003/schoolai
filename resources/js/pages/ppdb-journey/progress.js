@@ -1,5 +1,4 @@
 import { clamp, ease, segment } from './geometry.js';
-
 const PHASE = {
     enter: 0.9,
     settle: 0.42,
@@ -16,12 +15,10 @@ const DAMPING = 0.085;
 const SETTLED_EPSILON = 0.00035;
 const BOUNDARY_EPSILON = 0.004;
 const VISUAL_OUTRO_LIMIT = 0.72;
-
 const createTimeline = (stepCount) => {
     const steps = [];
     let cursor = 0;
     let pendingEnter = null;
-
     for (let index = 0; index < stepCount; index += 1) {
         const step = { index };
         if (index === 0) {
@@ -31,7 +28,6 @@ const createTimeline = (stepCount) => {
             step.enterStart = pendingEnter.start;
             step.enterEnd = pendingEnter.end;
         }
-
         step.settleStart = cursor;
         cursor += PHASE.settle;
         step.settleEnd = cursor;
@@ -41,7 +37,6 @@ const createTimeline = (stepCount) => {
         step.holdStart = cursor;
         cursor += PHASE.hold;
         step.holdEnd = cursor;
-
         if (index < stepCount - 1) {
             step.connectorStart = cursor;
             cursor += PHASE.connector;
@@ -58,18 +53,14 @@ const createTimeline = (stepCount) => {
             cursor += PHASE.outro;
             step.outroEnd = cursor;
         }
-
         steps.push(step);
     }
-
     return { steps, total: Math.max(cursor, 1), finalStep: steps.at(-1) };
 };
-
 const ensureTimeline = (state) => {
     if (!state.timeline) state.timeline = createTimeline(state.frames.length);
     return state.timeline;
 };
-
 const sampleTimeline = (state) => {
     const timeline = ensureTimeline(state);
     const unit = clamp(state.renderedProgress) * timeline.total;
@@ -106,7 +97,6 @@ const sampleTimeline = (state) => {
     const cta = finish * (1 - (outro * 0.78));
     return { steps, activeIndex, cta, outro };
 };
-
 export const advanceTarget = (state, pixelDelta) => {
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
     const inputRange = Math.max(
@@ -115,7 +105,6 @@ export const advanceTarget = (state, pixelDelta) => {
     );
     state.targetProgress = clamp(state.targetProgress + ((pixelDelta * RESISTANCE) / inputRange));
 };
-
 export const canConsumeDirection = (state, direction) => {
     if (!state || !direction) return false;
     if (direction < 0) {
@@ -130,7 +119,6 @@ export const canConsumeDirection = (state, direction) => {
         : state.renderedProgress >= 1 - BOUNDARY_EPSILON;
     return state.targetProgress < 1 - BOUNDARY_EPSILON || !outroComplete;
 };
-
 const dampProgress = (state, timestamp) => {
     const elapsed = state.lastRenderTime
         ? Math.min(Math.max(timestamp - state.lastRenderTime, 4), 40)
@@ -143,7 +131,6 @@ const dampProgress = (state, timestamp) => {
     state.renderedProgress = state.targetProgress;
     return false;
 };
-
 const renderCard = (frame, sample) => {
     const side = frame.index % 2 === 0 ? 1 : -1;
     const x = ((1 - sample.entering) * side * 48) - (sample.exiting * side * 46);
@@ -161,7 +148,6 @@ const renderCard = (frame, sample) => {
     frame.path.classList.toggle('is-story-lit', sample.lit);
     frame.path.classList.toggle('is-story-holding', sample.holding);
 };
-
 const updateAccessibility = (state, activeIndex, status) => {
     state.frames.forEach((frame, index) => {
         frame.element.inert = index !== activeIndex;
@@ -174,7 +160,6 @@ const updateAccessibility = (state, activeIndex, status) => {
     const title = active.node.querySelector('h3')?.textContent?.trim() || '';
     status.textContent = [number, title].filter(Boolean).join(' — ');
 };
-
 const renderStageOutro = (state, outro) => {
     const root = state.panel.closest('[data-ppdb-liftoff]');
     if (!root) return;
@@ -183,7 +168,6 @@ const renderStageOutro = (state, outro) => {
     root.style.setProperty('--ppdb-journey-top-blur', `${(4 * outro).toFixed(2)}px`);
     root.classList.toggle('is-journey-outro', outro > 0.002);
 };
-
 export const renderProgress = (state, status, cta) => {
     if (!state) return;
     const sample = sampleTimeline(state);
@@ -201,7 +185,6 @@ export const renderProgress = (state, status, cta) => {
     renderStageOutro(state, sample.outro);
     updateAccessibility(state, sample.activeIndex, status);
 };
-
 export const renderFrame = (state, timestamp, status, cta) => {
     const unsettled = dampProgress(state, timestamp);
     renderProgress(state, status, cta);
