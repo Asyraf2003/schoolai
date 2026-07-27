@@ -5,9 +5,26 @@ html[lang="ar"] {
   --text-ar-lead: 1.25rem;
   --text-ar-feature: 1.5rem;
 
+  --text-ar-naskhi-micro: 1.75rem;
+  --text-ar-naskhi-small: 2rem;
+  --text-ar-naskhi-body: 2.25rem;
+  --text-ar-naskhi-lead: 2.75rem;
+  --text-ar-naskhi-feature: 3.25rem;
+
   --leading-ar-ui: 1.45;
   --leading-ar-body: 1.75;
   --leading-ar-longform: 1.9;
+}
+
+/* Fallback skala untuk elemen yang memakai tema Naskhi. */
+html[lang="ar"] :where(
+  p,
+  li,
+  blockquote,
+  figcaption
+) {
+  font-size: var(--text-ar-naskhi-body);
+  line-height: var(--leading-ar-body);
 }
 
 /* UI kecil. */
@@ -53,8 +70,8 @@ html[lang="ar"] :is(
   .footer-channel__note,
   .site-footer__bottom p
 ) {
-  font-size: var(--text-ar-micro);
-  line-height: var(--leading-ar-ui);
+  font-size: var(--text-ar-naskhi-micro);
+  line-height: var(--leading-ar-body);
 }
 
 /* Body Lateef. */
@@ -70,7 +87,7 @@ html[lang="ar"] :is(
   .artikel-digest-card__description,
   .footer-brand__description
 ) {
-  font-size: var(--text-ar-body);
+  font-size: var(--text-ar-naskhi-body);
   line-height: var(--leading-ar-body);
 }
 
@@ -78,7 +95,7 @@ html[lang="ar"] :is(
   .program-card__summary,
   .nilai-card__summary
 ) {
-  font-size: var(--text-ar-small);
+  font-size: var(--text-ar-naskhi-small);
   line-height: 1.65;
 }
 
@@ -86,7 +103,7 @@ html[lang="ar"] :is(
 html[lang="ar"] .galeri-section
   .galeri-section__head
   .section-subtitle--white {
-  font-size: var(--text-ar-body);
+  font-size: var(--text-ar-naskhi-body);
   line-height: var(--leading-ar-body);
 }
 
@@ -96,12 +113,12 @@ html[lang="ar"] :is(
   .visi-misi__head .section-subtitle,
   .misi-card__text
 ) {
-  font-size: var(--text-ar-lead);
+  font-size: var(--text-ar-naskhi-lead);
   line-height: var(--leading-ar-body);
 }
 
 html[lang="ar"] .visi-card__text {
-  font-size: var(--text-ar-feature);
+  font-size: var(--text-ar-naskhi-feature);
   line-height: 1.82;
 }
 
@@ -130,7 +147,7 @@ html[lang="ar"] .galeri-section :is(
   .public-gallery-card__caption,
   p:not(.section-subtitle)
 ) {
-  font-size: var(--text-ar-small);
+  font-size: var(--text-ar-naskhi-small);
   line-height: var(--leading-ar-body);
 }
 
@@ -140,27 +157,27 @@ html[lang="ar"] :is(
   .native-article__footer p,
   .native-related-card__body > span
 ) {
-  font-size: var(--text-ar-body);
+  font-size: var(--text-ar-naskhi-body);
   line-height: var(--leading-ar-body);
 }
 
 html[lang="ar"] .native-article__body {
-  font-size: var(--text-ar-lead);
+  font-size: var(--text-ar-naskhi-lead);
   line-height: var(--leading-ar-longform);
 }
 
 /* Form dan canvas. */
 textarea[lang="ar"] {
-  font-size: var(--text-ar-body);
+  font-size: var(--text-ar-naskhi-body);
   line-height: var(--leading-ar-body);
 }
 
 [data-document-language="ar"] .canvas-subtitle {
-  font-size: var(--text-ar-lead);
+  font-size: var(--text-ar-naskhi-lead);
   line-height: var(--leading-ar-body);
 }
 
 [data-document-language="ar"] .canvas-body {
-  font-size: var(--text-ar-body);
+  font-size: var(--text-ar-naskhi-body);
   line-height: var(--leading-ar-longform);
 }
