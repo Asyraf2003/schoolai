@@ -13,8 +13,10 @@ html[lang="ar"] {
 /* UI kecil. */
 html[lang="ar"] :is(
   .btn,
+  .nav-link,
   .nav-mega__eyebrow,
   .galeri-story-card__mobile-badge,
+  .galeri-story-visual__badge,
   .galeri-story-card__meta > span,
   .program-card__label,
   .program-spotlight__chips > span,
@@ -47,6 +49,7 @@ html[lang="ar"] :is(
 /* Microcopy Lateef. */
 html[lang="ar"] :is(
   .nav-mega__link > small,
+  .about-stats-story__scroll-hint > span,
   .footer-channel__note,
   .site-footer__bottom p
 ) {
