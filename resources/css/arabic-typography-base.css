@@ -1,0 +1,162 @@
+:root {
+  --font-ar-display: "Cairo", sans-serif;
+  --font-ar-body: "Lateef", serif;
+}
+
+html[lang="ar"] {
+  --font-display: var(--font-ar-display);
+  --font-body: var(--font-ar-body);
+  --font-app: var(--font-ar-body);
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-ar-body);
+}
+
+/* Fallback lama dipertahankan selama audit semantic role. */
+html[lang="ar"] :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  nav,
+  button,
+  label,
+  [role="button"]
+) {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+html[lang="ar"] :where(
+  p,
+  li,
+  blockquote,
+  figcaption
+) {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}
+
+/* Display, heading, dan UI. */
+html[lang="ar"] :where(
+  .hero-cinema__eyebrow,
+  .hero-cinema__title,
+  .section-kicker,
+  .section-title,
+  .nav-link,
+  .navbar__cta,
+  .nav-mega__eyebrow,
+  .nav-mega__title,
+  .nav-mega__link > strong,
+  .btn,
+  .about-stats-story__stat-index,
+  .about-stats-story__number,
+  .program-spotlight__chips > span,
+  .artikel-digest__meta > span,
+  .artikel-digest__issue,
+  .artikel-digest-card__issue,
+  .artikel-digest-card__title,
+  .footer-channel-group > strong,
+  .footer-channel__label,
+  .footer-links__title,
+  .footer-gallery-links__title,
+  .footer-partners__title,
+  .footer-links a,
+  .footer-gallery-links a,
+  .native-article__back,
+  .native-article__byline,
+  .native-article__tags,
+  .native-article__related-eyebrow,
+  .native-article__related h2,
+  .native-related-card__body strong,
+  .native-article__header h1,
+  .native-article__body h2,
+  .native-article__body h3,
+  .visi-card__title,
+  .misi-panel__head h3,
+  .misi-card__title,
+  .misi-card__number
+) {
+  font-family: var(--font-ar-display);
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+/* Body dan long-form. */
+html[lang="ar"] :where(
+  .nav-mega__link > small,
+  .nav-mega__description,
+  .hero-cinema__description,
+  .about-stats-story__description,
+  .about-stats-story__stat-description,
+  .section-subtitle,
+  .program-spotlight__subtitle,
+  .program-card__description,
+  .nilai-card__description,
+  .artikel-digest__hero-description,
+  .artikel-digest-card__description,
+  .footer-brand__description,
+  .footer-channel__note,
+  .site-footer__bottom p,
+  .visi-card__text,
+  .misi-card__text,
+  .native-article__subtitle,
+  .native-article__body,
+  .native-article__footer p,
+  .native-related-card__body > span
+) {
+  font-family: var(--font-ar-body);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+html[lang="ar"] :where(
+  .program-card__summary,
+  .nilai-card__summary,
+  .vm-mark,
+  .program-mark,
+  .nilai-mark
+) {
+  font-family: var(--font-ar-body);
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+html[lang="ar"] .galeri-section :where(
+  .galeri-card__caption,
+  .public-gallery-card__caption,
+  p:not(.section-subtitle)
+) {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}
+
+html[lang="ar"] .native-article {
+  --reader-serif: var(--font-ar-body);
+}
+
+input[lang="ar"]:not([dir="ltr"]) {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+textarea[lang="ar"] {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}
+
+[data-document-language="ar"] .canvas-title {
+  font-family: var(--font-ar-display);
+  letter-spacing: normal;
+}
+
+[data-document-language="ar"] :where(
+  .canvas-subtitle,
+  .canvas-body
+) {
+  font-family: var(--font-ar-body);
+  letter-spacing: normal;
+}

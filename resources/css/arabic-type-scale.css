@@ -10,34 +10,7 @@ html[lang="ar"] {
   --leading-ar-longform: 1.9;
 }
 
-/* UI dan display memakai Cairo. */
-html[lang="ar"] :where(
-  .nav-link,
-  .navbar__cta,
-  .nav-mega__eyebrow,
-  .nav-mega__title,
-  .nav-mega__link > strong,
-  .btn,
-  .about-stats-story__stat-index,
-  .about-stats-story__number,
-  .program-spotlight__chips > span,
-  .artikel-digest__meta > span,
-  .artikel-digest__issue,
-  .artikel-digest-card__issue,
-  .artikel-digest-card__title,
-  .footer-channel-group > strong,
-  .footer-channel__label,
-  .footer-links__title,
-  .footer-gallery-links__title,
-  .footer-partners__title,
-  .footer-links a,
-  .footer-gallery-links a
-) {
-  font-family: var(--font-ar-display);
-  font-weight: 700;
-  letter-spacing: normal;
-}
-
+/* UI kecil. */
 html[lang="ar"] :where(
   .nav-mega__eyebrow,
   .program-spotlight__chips > span,
@@ -55,20 +28,17 @@ html[lang="ar"] .nav-mega__link > strong {
   line-height: var(--leading-ar-ui);
 }
 
-/* Teks kecil Lateef. */
+/* Microcopy Lateef. */
 html[lang="ar"] :where(
   .nav-mega__link > small,
   .footer-channel__note,
   .site-footer__bottom p
 ) {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-micro);
-  font-weight: 400;
   line-height: var(--leading-ar-ui);
-  letter-spacing: normal;
 }
 
-/* Teks body Lateef. */
+/* Body Lateef. */
 html[lang="ar"] :where(
   .nav-mega__description,
   .hero-cinema__description,
@@ -81,66 +51,59 @@ html[lang="ar"] :where(
   .artikel-digest-card__description,
   .footer-brand__description
 ) {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-body);
-  font-weight: 400;
   line-height: var(--leading-ar-body);
-  letter-spacing: normal;
 }
 
-/* Ringkasan kartu sedikit lebih padat. */
 html[lang="ar"] :where(
   .program-card__summary,
   .nilai-card__summary
 ) {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-small);
-  font-weight: 700;
   line-height: 1.65;
-  letter-spacing: normal;
 }
 
-/* Intro dan teks utama. */
+/* Lead dan feature text. */
 html[lang="ar"] :where(
   .about-stats-story__description,
   .visi-misi__head .section-subtitle,
   .misi-card__text
 ) {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-lead);
-  font-weight: 400;
   line-height: var(--leading-ar-body);
-  letter-spacing: normal;
 }
 
 html[lang="ar"] .visi-card__text {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-feature);
-  font-weight: 400;
   line-height: 1.82;
-  letter-spacing: normal;
 }
 
-html[lang="ar"] :where(
-  .vm-mark,
-  .program-mark,
-  .nilai-mark
-) {
-  font-family: var(--font-ar-body);
-  font-weight: 700;
-  letter-spacing: normal;
+/* Visi dan misi heading rhythm. */
+html[lang="ar"] .visi-misi__head .section-title {
+  line-height: 1.25;
 }
 
-/* Galeri dan konten deskriptif. */
+html[lang="ar"] .visi-card__title {
+  line-height: 1.18;
+}
+
+html[lang="ar"] .misi-panel__head h3 {
+  line-height: 1.3;
+}
+
+html[lang="ar"] .misi-card__title {
+  font-size: var(--text-ar-small);
+  line-height: 1.35;
+}
+
+/* Galeri. */
 html[lang="ar"] .galeri-section :where(
   .galeri-card__caption,
   .public-gallery-card__caption,
   p:not(.section-subtitle)
 ) {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-small);
   line-height: var(--leading-ar-body);
-  letter-spacing: normal;
 }
 
 /* Artikel panjang. */
@@ -149,33 +112,27 @@ html[lang="ar"] :where(
   .native-article__footer p,
   .native-related-card__body > span
 ) {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-body);
   line-height: var(--leading-ar-body);
-  letter-spacing: normal;
 }
 
 html[lang="ar"] .native-article__body {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-lead);
   line-height: var(--leading-ar-longform);
-  letter-spacing: normal;
 }
 
-/* Form dan canvas Arab. */
+/* Form dan canvas. */
 textarea[lang="ar"] {
   font-size: var(--text-ar-body);
   line-height: var(--leading-ar-body);
 }
 
 [data-document-language="ar"] .canvas-subtitle {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-lead);
   line-height: var(--leading-ar-body);
 }
 
 [data-document-language="ar"] .canvas-body {
-  font-family: var(--font-ar-body);
   font-size: var(--text-ar-body);
   line-height: var(--leading-ar-longform);
 }
