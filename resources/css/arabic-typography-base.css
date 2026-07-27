@@ -147,6 +147,13 @@ html[lang="ar"] .galeri-section :is(
   letter-spacing: normal;
 }
 
+/* Arabic gallery heading spacing override. */
+html[lang="ar"] .galeri-section
+  .galeri-section__head
+  .section-title--white {
+  letter-spacing: normal;
+}
+
 html[lang="ar"] .native-article {
   --reader-serif: var(--font-ar-body);
 }

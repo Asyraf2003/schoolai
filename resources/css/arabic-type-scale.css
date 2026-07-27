@@ -12,6 +12,7 @@ html[lang="ar"] {
 
 /* UI kecil. */
 html[lang="ar"] :is(
+  .btn,
   .nav-mega__eyebrow,
   .galeri-story-card__mobile-badge,
   .galeri-story-card__meta > span,
@@ -20,7 +21,9 @@ html[lang="ar"] :is(
   .artikel-digest__meta > span,
   .artikel-digest__issue,
   .artikel-digest-card__issue,
-  .footer-channel__label
+  .footer-channel__label,
+  .footer-links a,
+  .footer-gallery-links a
 ) {
   font-size: var(--text-ar-micro);
   line-height: var(--leading-ar-ui);
