@@ -41,7 +41,7 @@ html[lang="ar"] :where(
 }
 
 /* Display, heading, dan UI. */
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .hero-cinema__eyebrow,
   .hero-cinema__title,
   .section-kicker,
@@ -52,6 +52,18 @@ html[lang="ar"] :where(
   .nav-mega__title,
   .nav-mega__link > strong,
   .btn,
+  .skip-link,
+  .about-stats-story__title,
+  .about-stats-story__label,
+  .program-spotlight__title,
+  .program-card__label,
+  .program-card__title,
+  .nilai-card__title,
+  .testimonial-network-story__title,
+  .galeri-story-card__mobile-badge,
+  .galeri-story-card__meta > span,
+  .galeri-story-card__content > h3,
+  .artikel-digest__hero-title a,
   .about-stats-story__stat-index,
   .about-stats-story__number,
   .program-spotlight__chips > span,
@@ -86,10 +98,11 @@ html[lang="ar"] :where(
 }
 
 /* Body dan long-form. */
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .nav-mega__link > small,
   .nav-mega__description,
   .hero-cinema__description,
+  .galeri-story-card__content > p,
   .about-stats-story__description,
   .about-stats-story__stat-description,
   .section-subtitle,
@@ -113,7 +126,7 @@ html[lang="ar"] :where(
   letter-spacing: normal;
 }
 
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .program-card__summary,
   .nilai-card__summary,
   .vm-mark,
@@ -125,7 +138,7 @@ html[lang="ar"] :where(
   letter-spacing: normal;
 }
 
-html[lang="ar"] .galeri-section :where(
+html[lang="ar"] .galeri-section :is(
   .galeri-card__caption,
   .public-gallery-card__caption,
   p:not(.section-subtitle)
@@ -153,7 +166,7 @@ textarea[lang="ar"] {
   letter-spacing: normal;
 }
 
-[data-document-language="ar"] :where(
+[data-document-language="ar"] :is(
   .canvas-subtitle,
   .canvas-body
 ) {

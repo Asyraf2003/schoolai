@@ -11,8 +11,11 @@ html[lang="ar"] {
 }
 
 /* UI kecil. */
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .nav-mega__eyebrow,
+  .galeri-story-card__mobile-badge,
+  .galeri-story-card__meta > span,
+  .program-card__label,
   .program-spotlight__chips > span,
   .artikel-digest__meta > span,
   .artikel-digest__issue,
@@ -28,8 +31,18 @@ html[lang="ar"] .nav-mega__link > strong {
   line-height: var(--leading-ar-ui);
 }
 
+html[lang="ar"] :is(
+  .footer-channel-group > strong,
+  .footer-links__title,
+  .footer-gallery-links__title,
+  .footer-partners__title
+) {
+  font-size: var(--text-ar-small);
+  line-height: var(--leading-ar-ui);
+}
+
 /* Microcopy Lateef. */
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .nav-mega__link > small,
   .footer-channel__note,
   .site-footer__bottom p
@@ -39,7 +52,7 @@ html[lang="ar"] :where(
 }
 
 /* Body Lateef. */
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .nav-mega__description,
   .hero-cinema__description,
   .about-stats-story__stat-description,
@@ -55,7 +68,7 @@ html[lang="ar"] :where(
   line-height: var(--leading-ar-body);
 }
 
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .program-card__summary,
   .nilai-card__summary
 ) {
@@ -64,7 +77,7 @@ html[lang="ar"] :where(
 }
 
 /* Lead dan feature text. */
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .about-stats-story__description,
   .visi-misi__head .section-subtitle,
   .misi-card__text
@@ -97,7 +110,8 @@ html[lang="ar"] .misi-card__title {
 }
 
 /* Galeri. */
-html[lang="ar"] .galeri-section :where(
+html[lang="ar"] .galeri-section :is(
+  .galeri-story-card__content > p,
   .galeri-card__caption,
   .public-gallery-card__caption,
   p:not(.section-subtitle)
@@ -107,7 +121,7 @@ html[lang="ar"] .galeri-section :where(
 }
 
 /* Artikel panjang. */
-html[lang="ar"] :where(
+html[lang="ar"] :is(
   .native-article__subtitle,
   .native-article__footer p,
   .native-related-card__body > span
