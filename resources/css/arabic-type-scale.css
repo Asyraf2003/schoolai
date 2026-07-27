@@ -76,6 +76,14 @@ html[lang="ar"] :is(
   line-height: 1.65;
 }
 
+/* Arabic gallery subtitle legacy override. */
+html[lang="ar"] .galeri-section
+  .galeri-section__head
+  .section-subtitle--white {
+  font-size: var(--text-ar-body);
+  line-height: var(--leading-ar-body);
+}
+
 /* Lead dan feature text. */
 html[lang="ar"] :is(
   .about-stats-story__description,
