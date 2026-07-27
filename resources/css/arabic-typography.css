@@ -3,6 +3,7 @@
 @import "@fontsource/cairo/arabic-700.css";
 @import "@fontsource/lateef/arabic-400.css";
 @import "@fontsource/lateef/arabic-700.css";
+@import "./arabic-type-scale.css";
 
 :root {
   --font-ar-display: "Cairo", sans-serif;
