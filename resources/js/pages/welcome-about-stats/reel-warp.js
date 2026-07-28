@@ -14,9 +14,13 @@ function phase(progress, start, end) {
 }
 
 function bendAt(progress) {
-    var arrival = Math.sin(Math.PI * phase(progress, 0.36, 0.58));
-    var expansion = Math.sin(Math.PI * phase(progress, 0.7, 1));
-    return arrival * 0.72 + expansion * 0.38;
+    var arrival = Math.sin(Math.PI * phase(progress, 0.26, 0.48));
+    var expansion = Math.sin(Math.PI * phase(progress, 0.62, 0.86));
+    return arrival * 0.18 + expansion * 0.72;
+}
+
+function pullAt(progress) {
+    return Math.sin(Math.PI * phase(progress, 0.62, 0.86)) * 0.94;
 }
 
 export function createReelWarp(root) {
@@ -43,16 +47,20 @@ export function createReelWarp(root) {
         'attribute vec2 aUv;',
         'uniform float uProgress;',
         'uniform float uBend;',
+        'uniform float uPull;',
         'varying vec2 vUv;',
         'void main() {',
         '  vec2 pos = aPosition;',
-        '  float flow = sin((aUv.x * 1.35 + aUv.y * 0.42 + uProgress * 0.55) * 6.2831853);',
-        '  float crossFlow = sin((aUv.y * 1.2 - uProgress * 0.35) * 3.14159265);',
-        '  pos *= 1.0 - uBend * 0.075;',
-        '  pos.y += flow * uBend * (0.065 + abs(pos.x) * 0.015);',
-        '  pos.x += crossFlow * uBend * 0.025;',
+        '  float cloth = sin(aUv.x * 3.14159265) * sin(aUv.y * 3.14159265);',
+        '  float flow = sin((aUv.x * 1.4 + aUv.y * 0.32 + uProgress * 0.35) * 6.2831853);',
+        '  float crossFlow = sin((aUv.y * 1.25 - uProgress * 0.28) * 3.14159265);',
+        '  pos *= 1.0 - max(uBend, uPull) * 0.045;',
+        '  pos.y += flow * uBend * (0.035 + abs(pos.x) * 0.012);',
+        '  pos.x += crossFlow * uBend * 0.018;',
+        '  float depth = cloth * uPull;',
+        '  pos.y -= depth * 0.035;',
         '  vUv = aUv;',
-        '  gl_Position = vec4(pos, 0.0, 1.0);',
+        '  gl_Position = vec4(pos, 0.0, 1.0 - depth * 0.11);',
         '}'
     ].join('');
     var fragmentSource = [
@@ -109,6 +117,7 @@ export function createReelWarp(root) {
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.uniform1f(resources.progressUniform, progress);
         gl.uniform1f(resources.bendUniform, bendAt(progress));
+        gl.uniform1f(resources.pullUniform, pullAt(progress));
         gl.drawElements(gl.TRIANGLES, resources.indexCount, gl.UNSIGNED_SHORT, 0);
         if (video) requestDraw();
     }
