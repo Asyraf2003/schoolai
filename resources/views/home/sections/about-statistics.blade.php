@@ -43,8 +43,6 @@
         </svg>
 
         <div class="about-reel__editorial">
-          <p class="about-reel__eyebrow">{{ __('home.about_stats_story.board_title') }}</p>
-
           <h2 class="about-reel__headline" id="about-reel-title">
             <span class="about-reel__headline-clip">
               <span class="about-reel__headline-line about-reel__headline-line--one">
