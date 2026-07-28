@@ -19,6 +19,7 @@
 
   @vite([
     'resources/css/app.css',
+    'resources/css/text-system.css',
     'resources/css/arabic-typography.css',
     'resources/js/app.js',
   ])
@@ -117,4 +118,3 @@
 
 </body>
 </html>
-
