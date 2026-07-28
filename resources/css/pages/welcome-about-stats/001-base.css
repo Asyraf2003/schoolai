@@ -151,11 +151,6 @@
     vector-effect: non-scaling-stroke;
 }
 
-.about-reel__spline-underlay {
-    stroke: rgb(255 255 255 / 0.74);
-    stroke-width: 13;
-}
-
 .about-reel__spline-line {
     stroke: url("#about-reel-rainbow");
     stroke-width: 6;
