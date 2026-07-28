@@ -1,0 +1,32 @@
+@media (min-width: 1024px) and (pointer: fine) {
+    .about-reel--enhanced .about-reel__media-frame > img,
+    .about-reel--enhanced .about-reel__media-frame > video {
+        border-radius: inherit;
+        opacity: 0;
+    }
+
+    .about-reel--enhanced .about-reel__warp {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        display: block;
+        overflow: visible;
+        border-radius: inherit;
+        filter: drop-shadow(0 24px 32px rgb(28 48 43 / 0.22));
+    }
+
+    .about-reel--enhanced .about-reel__warp[hidden] {
+        display: none;
+    }
+
+    .about-reel--enhanced .about-reel__media-frame:has(.about-reel__warp[hidden]) > img,
+    .about-reel--enhanced .about-reel__media-frame:has(.about-reel__warp[hidden]) > video {
+        opacity: 1;
+    }
+
+    .about-reel--enhanced .about-reel__video {
+        display: block;
+    }
+}
