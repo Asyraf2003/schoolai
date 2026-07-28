@@ -51,6 +51,7 @@
                 type="button"
                 class="nav-link nav-language__button"
                 data-language-modal-open
+                data-text-role="action"
                 aria-haspopup="dialog"
                 aria-controls="languageModal"
               >
@@ -64,6 +65,7 @@
                 type="button"
                 class="nav-link nav-mega__trigger {{ $isActive ? 'active' : '' }}"
                 data-nav-mega-toggle
+                data-text-role="action"
                 aria-label="{{ $item['mega']['toggle_label'] ?? $item['label'] }}"
                 aria-haspopup="true"
                 aria-expanded="false"
@@ -95,26 +97,26 @@
                 </div>
 
                 <div class="nav-mega__intro">
-                  <p class="nav-mega__eyebrow">{{ $item['mega']['eyebrow'] ?? $item['label'] }}</p>
-                  <strong class="nav-mega__title">{{ $item['mega']['title'] ?? $item['label'] }}</strong>
+                  <p class="nav-mega__eyebrow" data-text-role="label">{{ $item['mega']['eyebrow'] ?? $item['label'] }}</p>
+                  <strong class="nav-mega__title" data-text-role="component-title">{{ $item['mega']['title'] ?? $item['label'] }}</strong>
                   @if (! empty($item['mega']['description']))
-                    <p class="nav-mega__description">{{ $item['mega']['description'] }}</p>
+                    <p class="nav-mega__description" data-text-role="description">{{ $item['mega']['description'] }}</p>
                   @endif
                 </div>
 
                 <div class="nav-mega__links">
                   @foreach ($item['mega']['links'] as $megaLink)
                     <a href="{{ $megaLink['href'] }}" class="nav-mega__link">
-                      <strong>{{ $megaLink['label'] }}</strong>
+                      <strong data-text-role="action">{{ $megaLink['label'] }}</strong>
                       @if (! empty($megaLink['description']))
-                        <small>{{ $megaLink['description'] }}</small>
+                        <small data-text-role="description">{{ $megaLink['description'] }}</small>
                       @endif
                     </a>
                   @endforeach
                 </div>
               </div>
             @elseif (! empty($item['disabled']))
-              <span class="nav-link nav-link--dummy" aria-disabled="true">
+              <span class="nav-link nav-link--dummy" data-text-role="action" aria-disabled="true">
                 {{ $item['label'] }}
                 @if (! empty($item['badge']))
                   <small class="nav-link__badge">{{ $item['badge'] }}</small>
@@ -124,6 +126,7 @@
               <a
                 href="{{ $item['href'] }}"
                 class="nav-link {{ $isActive ? 'active' : '' }}"
+                data-text-role="action"
                 @if ($isActiveRoute)
                   aria-current="page"
                 @endif
@@ -139,7 +142,7 @@
       </ul>
 
       @if ($showCta)
-        <a href="{{ $siteNavbar['cta']['href'] }}" class="btn btn--primary navbar__cta">
+        <a href="{{ $siteNavbar['cta']['href'] }}" class="btn btn--primary navbar__cta" data-text-role="action">
           {{ $siteNavbar['cta']['label'] }}
         </a>
       @endif
