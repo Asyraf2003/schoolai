@@ -29,7 +29,7 @@
       ×
     </button>
 
-    <h2 class="language-modal__title" id="languageModalTitle">{{ $languageModalTitle }}</h2>
+    <h2 class="language-modal__title" id="languageModalTitle" data-text-role="component-title">{{ $languageModalTitle }}</h2>
 
     <div class="language-modal__options">
       @foreach ($languageItem['options'] ?? [] as $option)
@@ -45,7 +45,7 @@
             <span class="language-modal__flag">
               @include('partials.language-flag', ['locale' => $option['locale']])
             </span>
-            <span class="language-modal__label">{{ $option['label'] }}</span>
+            <span class="language-modal__label" data-text-role="action">{{ $option['label'] }}</span>
           </button>
         </form>
       @endforeach
