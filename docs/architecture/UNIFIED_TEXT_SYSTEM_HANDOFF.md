@@ -122,24 +122,41 @@ PASS:
 
 Therefore public M00 coverage corresponding to M02-M07 is **100%**.
 
-### Remaining M00 surfaces
+### M08 admin desktop
+
+PASS:
+
+- protected admin route/provider tree discovered from current `main`;
+- Dashboard, PPDB, non-canvas Articles, Gallery + nested section/media management, Statistics, Testimonials, and Hero admin entry views mapped;
+- shared `layouts.admin` render tree mapped;
+- major visible and accessibility-relevant text groups classified;
+- Blade/lang/DB/controller/runtime/JS content sources separated;
+- CSS ownership recorded, including the statistics `Buka`/`Tutup` CSS pseudo-content exception;
+- admin chrome proven source-level to be forced Indonesian by `ForceAdminLocale`;
+- desktop-only contract preserved;
+- no M08 styling/implementation performed.
+
+Authoritative evidence:
+
+- `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
+
+### Remaining M00 surface
 
 Not yet baselined to PASS:
 
-- M08 admin desktop UI;
 - M09 article canvas/editor UI.
 
-For progress reporting, M00 is measured against the 8 implementation surface groups M02-M09. Six of eight are baselined, so:
+For progress reporting, M00 is measured against the 8 implementation surface groups M02-M09. Seven of eight are baselined, so:
 
-**M00 progress = 75%.**
+**M00 progress = 87.5%.**
 
 ### Whole Unified Text System project
 
-M01-M10 implementation has not started. M00 itself is 75% complete.
+M01-M10 implementation has not started. M00 itself is 87.5% complete.
 
 Using milestone-level progress rather than pretending documentation equals implementation:
 
-**overall project progress ≈ 7%.**
+**overall project progress ≈ 8%.**
 
 This is intentionally conservative.
 
@@ -157,6 +174,7 @@ Read these, in this order when needed:
 8. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_GALLERY.md`.
 9. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ARTICLES.md`.
 10. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_PPDB.md`.
+11. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
 
 Do not create duplicate M00 docs for already-covered surfaces.
 
@@ -167,6 +185,7 @@ Do not create duplicate M00 docs for already-covered surfaces.
 - `6307dd958934ed518fb19f3f81c5a71a38dc9791` — gallery M00 closure.
 - `5aa76f9eb75c5a9e4da0ce9e9dd8c1a0116bda86` — articles/native reader M00 closure.
 - `4bfc02e6c145b498e3520dbd53be90cc68b38af2` — PPDB M00 runtime closure.
+- `111b8b5349e80e5eb292ef6eb08544ed360009cd` — M08 admin desktop M00 evidence closure.
 
 Use current `main` as truth; commit list is historical orientation, not a reason to checkout old commits.
 
@@ -252,6 +271,23 @@ Arabic PPDB baseline:
 
 These inconsistencies are intentionally preserved as baseline evidence for later M07 implementation.
 
+### Admin desktop
+
+Source baseline from current `main` proves:
+
+- admin route tree includes the five `routes/admin/*.php` modules plus provider-backed Testimoni and Hero admin routes;
+- active M08 entry views use `layouts.admin`;
+- admin chrome is forced to locale `id` by `ForceAdminLocale`;
+- English/Arabic are content-entry languages in selected admin forms, not current admin-shell locales;
+- Dashboard statistic values map to `display`; page/section/card/form/action/meta groups are mapped in the dedicated evidence doc;
+- topbar descriptions and several panel/card description selectors are source-present but currently hidden by scoped admin CSS and therefore are not counted as visible/a11y text groups;
+- shared JS creates/replaces limited preview/toast/modal text but contains no typography logic;
+- statistics currently emits `Buka` / `Tutup` as CSS pseudo-content;
+- current CSS ownership is layered but materially resolvable from source specificity/order, so M08 did not require a redundant browser `getComputedStyle()` command;
+- M09 canvas/editor internals were not audited as part of M08.
+
+These are later M08 implementation targets/evidence, not reasons to change code during M00.
+
 ## 9. What is NOT yet done
 
 Do not claim any of the following has started:
@@ -261,31 +297,38 @@ Do not claim any of the following has started:
 - no Arabic selector cleanup;
 - no legacy typography deletion;
 - no M01 implementation;
-- no admin M00 baseline;
 - no article canvas/editor M00 baseline;
 - no final build/test gates for implementation because implementation has not started.
 
+M08 admin desktop M00 **is complete and PASS**. Do not rediscover it unless later code changes invalidate `UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
+
 ## 10. Exact next scope
 
-Continue **M00 with M08 admin desktop UI only**.
+Continue **M00 with M09 article canvas/editor UI only**.
 
 Goal for the next session:
 
-1. inspect the current admin route/view/layout/render tree from `main`;
-2. classify visible/accessibility-relevant admin text by canonical role;
-3. identify content source: Blade / lang / DB / runtime / JS;
-4. identify CSS ownership and only request runtime `getComputedStyle()` where winner is ambiguous;
-5. validate at the supported desktop surface only;
-6. persist evidence in a dedicated M00 admin doc;
-7. mark admin M00 PASS only when no major visible admin text group is unclassified;
-8. then move to M09 article canvas/editor M00.
+1. start from the existing article canvas routes/controllers/views on current `main`;
+2. map the canvas/editor render tree without re-auditing non-canvas Article admin surfaces already covered by M08;
+3. classify every major visible/accessibility-relevant editor text group using the canonical roles;
+4. distinguish editor document content (`longform` where applicable) from toolbar/action/label/meta UI;
+5. identify Blade / lang / DB / controller/runtime / JS content sources;
+6. identify CSS ownership and use runtime `getComputedStyle()` only where source cannot establish the winning behavior;
+7. respect the current desktop admin product contract;
+8. persist a dedicated M00 canvas/editor evidence doc;
+9. mark M09 PASS only when no major visible editor text group remains unclassified.
 
-Admin scope explicitly excludes responsive redesign.
-
-Do not start M01 until both M08 admin and M09 article canvas/editor M00 baselines are PASS.
+Do not start M01 until M09 baseline is PASS.
 
 ## 11. First action for a new AI session
 
-Read this handoff and the DOD from `main`, then inspect current admin entry points using the GitHub connector. Do not ask the user to repeat prior evidence and do not rerun public runtime audits.
+Read this handoff and the DOD from `main`, then inspect the current M09 article canvas/editor entry points using the GitHub connector.
+
+Do not:
+
+- repeat homepage, gallery, article list/native reader, PPDB, or M08 admin source/runtime audits;
+- ask the user to repeat evidence already stored in the authoritative M00 docs;
+- rediscover the Brave/CDP capability;
+- start M01 styling before M09 PASS.
 
 Use GitHub for repository facts first. Ask for one CLI/runtime proof only when GitHub/source evidence cannot establish the winning runtime behavior.
