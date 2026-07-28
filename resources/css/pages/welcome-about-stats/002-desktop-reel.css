@@ -33,7 +33,7 @@
         --spline-p: clamp(0, calc((var(--reel-p) - 0.025) * 1.08), 1);
     }
     .about-reel--enhanced .about-reel__track {
-        height: 360svh;
+        height: 300svh;
     }
     .about-reel--enhanced .about-reel__stage {
         height: 100svh;
