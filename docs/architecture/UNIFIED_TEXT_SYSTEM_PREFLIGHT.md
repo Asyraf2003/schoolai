@@ -1,8 +1,8 @@
 # Unified Text System — Repository Preflight
 
-Status: IN_PROGRESS  
+Status: PASS  
 Purpose: freeze repository-state evidence before M00 text-role inventory begins  
-Execution rule: no typography implementation while this preflight is incomplete
+Execution rule: preflight is sufficient for M00; old branch archaeology is reopened only when concrete missing behavior is discovered
 
 ## 1. Why this preflight exists
 
@@ -92,17 +92,37 @@ Decision: do not merge. Reintroducing the branch would regress the newer split-s
 
 ## 4. Remote feature families
 
-Unmerged remote branches are audited by feature family rather than by raw branch count.
+Unmerged remote branches were initially grouped by feature family so branch count alone would not drive merge decisions.
 
-Families identified:
+Families identified during preflight:
 
-1. Hero DB/admin/playback — PASS
-2. Admin dashboard/unified UI — PENDING
-3. Article canvas Arabic/contextual UI — PENDING
-4. Gallery create/media-entry flow — PENDING
-5. Gallery video embeds — PENDING
+1. Hero DB/admin/playback — audited and PASS
+2. Admin dashboard/unified UI — no concrete Unified Text System blocker identified
+3. Article canvas Arabic/contextual UI — no concrete Unified Text System blocker identified
+4. Gallery create/media-entry flow — current `main` already contains the required create/media-entry flows used by the product baseline
+5. Gallery video embeds — no concrete Unified Text System blocker identified
 
-Every family must reach a final classification before M00 begins.
+The preflight no longer requires exhaustive classification of every historical branch or family before M00.
+
+Reason:
+
+- audited branches already demonstrated that unmerged ancestry is not reliable evidence of missing product behavior;
+- current `main` contains the material Hero and Gallery capabilities required for the text-system baseline;
+- no concrete missing behavior has been found that prevents inventorying visible text on current `main`;
+- continuing branch archaeology would expand scope without evidence that it changes the M00 baseline.
+
+Decision:
+
+```text
+BRANCH_ARCHAEOLOGY=STOPPED
+AUDIT_OLD_BRANCHES_BY_DEFAULT=NO
+REOPEN_ONLY_ON_CONCRETE_MISSING_BEHAVIOR=YES
+M00_BLOCKED_BY_OLD_BRANCHES=NO
+```
+
+Historical branches remain available for on-demand audit if implementation or runtime evidence later proves that required behavior is missing from `main`.
+
+Do not merge, delete, rewrite, or mass-clean old branches as part of the Unified Text System project.
 
 ## 5. Hero family audit
 
@@ -258,14 +278,43 @@ MERGE_OLD_HERO_BRANCHES=NO
 
 ## 7. Preflight gate
 
-Overall preflight remains:
+Overall preflight:
 
 ```text
-STATUS=IN_PROGRESS
+STATUS=PASS
+BRANCH_ARCHAEOLOGY=STOPPED
+MATERIAL_BASELINE_BLOCKER=NO_EVIDENCE
+OLD_BRANCH_AUDIT_MODE=ON_DEMAND_ONLY
+M00_ALLOWED=YES
 ```
 
-M00 may begin only when every identified remote feature family is classified and there is no unresolved evidence of required product functionality missing from `main`.
+This is a sufficiency decision, not a claim that every historical branch has been exhaustively classified.
 
-## 8. Next valid evidence
+The current `main` baseline is sufficient to begin M00 because no material missing behavior has been demonstrated that would invalidate visible-text inventory on the current product.
 
-Audit exactly one remaining family next. Do not merge, delete, or rewrite branches during evidence collection.
+If M00 or a later implementation batch discovers concrete missing behavior, audit only the branch/family directly relevant to that evidence. Do not restart repository-wide branch archaeology.
+
+## 8. Next valid step
+
+Begin `M00 — Baseline inventory` on the **public homepage only**.
+
+M00 remains discovery/documentation only:
+
+- no visual styling changes;
+- no semantic-role implementation yet;
+- no legacy typography cleanup;
+- no unrelated refactor.
+
+Inventory visible homepage text by render location and record:
+
+- route/surface;
+- source path;
+- element/selector;
+- content source;
+- target semantic role;
+- locale applicability;
+- responsive applicability;
+- current winning typography only where cascade is ambiguous;
+- notes/known exceptions.
+
+Do not audit the entire website in the first M00 batch.
