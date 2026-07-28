@@ -65,21 +65,21 @@
               <div class="hero-cinema__content container">
                 <div class="hero-cinema__copy">
                   @if (! empty($slide['eyebrow']))
-                    <p class="hero-cinema__eyebrow">{{ $slide['eyebrow'] }}</p>
+                    <p class="hero-cinema__eyebrow" data-text-role="label">{{ $slide['eyebrow'] }}</p>
                   @endif
 
                   @if ($loop->first)
-                    <h1 class="hero-cinema__title">{{ $slide['title'] }}</h1>
+                    <h1 class="hero-cinema__title" data-text-role="display">{{ $slide['title'] }}</h1>
                   @else
-                    <h2 class="hero-cinema__title">{{ $slide['title'] }}</h2>
+                    <h2 class="hero-cinema__title" data-text-role="display">{{ $slide['title'] }}</h2>
                   @endif
 
                   @if (! empty($slide['description']))
-                    <p class="hero-cinema__description">{{ $slide['description'] }}</p>
+                    <p class="hero-cinema__description" data-text-role="description">{{ $slide['description'] }}</p>
                   @endif
 
                   @if (! empty($slide['cta']['label']) && ! empty($slide['cta']['href']))
-                    <a href="{{ $slide['cta']['href'] }}" class="hero-cinema__cta">
+                    <a href="{{ $slide['cta']['href'] }}" class="hero-cinema__cta" data-text-role="action">
                       <span>{{ $slide['cta']['label'] }}</span>
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
