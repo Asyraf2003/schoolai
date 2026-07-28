@@ -1,255 +1,224 @@
 # Unified Text System — M00 PPDB Evidence
 
-Status: IN_PROGRESS
+Status: PASS
 Scope: public `/ppdb` page only
-Purpose: persist factual baseline evidence so future sessions continue from proof instead of repeating source discovery.
-Implementation rule: M00 is discovery/documentation only. No visual/text-system implementation or CSS cleanup is performed here.
+Purpose: factual baseline for later M07 implementation. M00 performs discovery/documentation only and makes no typography or layout changes.
 
-## 1. Route and controller
-
-Route:
+## 1. Route, controller, and render tree
 
 - `GET /ppdb` -> `PpdbPageController`.
+- Controller: `app/Http/Controllers/PpdbPageController.php`.
+- Main view: `resources/views/pages/ppdb.blade.php`.
+- Controller supplies current `PpdbSetting` and ordered `PpdbShowcaseItem` rows.
+- `PpdbSetting` controls registration/information URLs and open/closed state. It does not own typography.
 
-Controller:
+Rendered PPDB sections:
 
-- `app/Http/Controllers/PpdbPageController.php`.
+1. Hero.
+2. DB-backed showcase/journey when audience items exist.
+3. Admission steps.
+4. Programs.
+5. Documents and timeline.
+6. FAQ.
+7. Final CTA.
+8. Closed-registration modal.
 
-View:
+The public layout also loads PPDB journey CSS/JS.
 
-- `resources/views/pages/ppdb.blade.php`.
+## 2. Content-source contract
 
-The controller supplies:
+### Locale-backed page shell
 
-- current `PpdbSetting` as `ppdbAdmission`;
-- ordered `PpdbShowcaseItem` collection as `ppdbShowcaseItems` when the table exists.
+`__('pages.ppdb')` supplies Hero, showcase shell, steps, programs, documents, timeline, FAQ, and final CTA copy for ID/EN/AR.
 
-`PpdbSetting` controls registration/information URLs and open/closed state. It does not carry typography.
+### Runtime translation labels
 
-## 2. Render tree
+Runtime keys supply registration/guide/final CTA labels, closed-modal copy, audience labels, and showcase fallback UI text.
 
-`resources/views/pages/ppdb.blade.php` renders:
+### DB-backed showcase
 
-1. page-scoped styles;
-2. Hero;
-3. Showcase, only when at least one DB audience has items;
-4. admission steps;
-5. programs;
-6. document/timeline information;
-7. FAQ;
-8. final CTA;
-9. closed-registration modal.
+`PpdbShowcaseItem` supplies localized title/description and media state. DB values are content only. Render location determines semantic role.
 
-The shared public layout also loads `resources/css/pages/ppdb-journey.css` and `resources/js/pages/ppdb-journey.js` on the PPDB route.
+### PPDB settings
 
-## 3. Content-source map
+`PpdbSetting` decides action destination/state only. No font family, font size, CSS class, breakpoint styling, or typography role is stored in DB.
 
-### 3.1 Locale-backed page shell
+## 3. Semantic role inventory
 
-`resources/views/pages/ppdb.blade.php` loads `__('pages.ppdb')` into `$page`.
+### Hero
 
-This provides the page shell and static section content, including:
-
-- Hero heading/subtitle/note/stats/mini cards;
-- Showcase shell heading/subtitle/note/button;
-- steps;
-- programs;
-- documents;
-- timeline;
-- FAQ;
-- final CTA.
-
-Locale files are under:
-
-- `lang/id/pages.php`;
-- `lang/en/pages.php`;
-- `lang/ar/pages.php`.
-
-### 3.2 Runtime translation labels
-
-Runtime translation keys provide:
-
-- register button;
-- guide button;
-- final CTA button;
-- closed-registration modal title/body/button;
-- audience labels/aria label;
-- showcase fallback task/note/follow-up text.
-
-These are content strings, not typography ownership.
-
-### 3.3 DB-backed PPDB showcase
-
-`PpdbShowcaseItem` records are grouped by `audience` (`parents` / `school`).
-
-Per current render locale the showcase uses:
-
-- `titleForLocale()`;
-- `descriptionForLocale()`;
-- media URL / video state.
-
-DB showcase title/description remain content. Their render location determines semantic role.
-
-### 3.4 PPDB settings
-
-`PpdbSetting` supplies registration state/URLs. It influences which action target/modal is used, but does not define text role or typography.
-
-## 4. Rendered role inventory
-
-### 4.1 Hero
-
-| Render location | Selector / element | Source | Proposed role |
+| Render location | Selector | Source | Role |
 |---|---|---|---|
-| Page heading | `#ppdb-title.public-hero__title` | `pages.ppdb` | `page-title` |
-| Hero subtitle | `.public-hero__subtitle` | `pages.ppdb` | `subtitle` |
+| Page heading | `#ppdb-title` | lang | `page-title` |
+| Hero subtitle | `.public-hero__subtitle` | lang | `subtitle` |
 | Registration button | `.btn--ppdb-register` | runtime lang | `action` |
 | Guide button | `.btn--ppdb-guide` | runtime lang | `action` |
-| Hero note | `.public-note` | `pages.ppdb` | `description` / `body` |
-| Statistic value | `.public-stat-row strong` | `pages.ppdb` | `display` / `meta` according to final contract |
-| Statistic label | `.public-stat-row span` | `pages.ppdb` | `label` |
-| Mini-card title | `.ppdb-mini-card h2` | `pages.ppdb` | `component-title` |
-| Mini-card text | `.ppdb-mini-card p` | `pages.ppdb` | `description` |
+| Hero note | `.public-note` | lang | `description` |
+| Statistic value | `.public-stat-row strong` | lang | `display` / `meta` pending final token decision |
+| Statistic label | `.public-stat-row span` | lang | `label` |
+| Mini-card title | `.ppdb-mini-card h2` | lang | `component-title` |
+| Mini-card text | `.ppdb-mini-card p` | lang | `description` |
 
-### 4.2 Showcase / journey
+### Showcase / journey
 
-This section renders only when DB showcase audience items exist.
-
-| Render location | Selector / element | Source | Proposed role |
+| Render location | Selector | Source | Role |
 |---|---|---|---|
-| Audience tabs | `.ppdb-liftoff__tab` | runtime lang | `action` |
-| Showcase heading | `.ppdb-liftoff__top h2` | `pages.ppdb` | `section-title` |
-| Showcase subtitle | `.ppdb-liftoff__top p` | `pages.ppdb` | `subtitle` |
+| Audience tab | `.ppdb-liftoff__tab` | runtime lang | `action` |
+| Showcase heading | `.ppdb-liftoff__top h2` | lang | `section-title` |
+| Showcase subtitle | `.ppdb-liftoff__top p` | lang | `subtitle` |
 | Step number | `.ppdb-liftoff-step` | render index | `meta` |
-| DB card title | `.ppdb-liftoff-card__text h3` | DB `PpdbShowcaseItem` | `component-title` |
-| DB card description | `.ppdb-liftoff-card__text p` | DB `PpdbShowcaseItem` | `description` |
-| Fallback visual title | `.ppdb-liftoff-ui__panel h3` | DB item title | visual-only duplicate / component text |
-| Fallback task/follow-up text | `.ppdb-liftoff-list__item` | runtime lang | `label` / `body` |
-| Showcase CTA note | `.ppdb-liftoff__cta p` | `pages.ppdb` | `description` |
-| Showcase CTA link | `.ppdb-liftoff__cta .btn` | `pages.ppdb` | `action` |
+| DB card title | `.ppdb-liftoff-card__text h3` | DB | `component-title` |
+| DB card description | `.ppdb-liftoff-card__text p` | DB | `description` |
+| Showcase CTA note | `.ppdb-liftoff__cta p` | lang | `description` |
+| Showcase CTA link | `.ppdb-liftoff__cta .btn` | lang | `action` |
 
-The desktop journey can change position, opacity, blur, and pointer state through JS. JS does not own font sizing.
+Fallback visual copies remain component/UI duplicates and are not a new semantic role.
 
-### 4.3 Admission steps
+### Steps / programs / information / FAQ / final CTA
 
-| Render location | Selector / element | Source | Proposed role |
-|---|---|---|---|
-| Section heading | `#alur-ppdb .public-section-head h2` | `pages.ppdb` | `section-title` |
-| Section subtitle | `#alur-ppdb .public-section-head p` | `pages.ppdb` | `subtitle` |
-| Step number | `.public-step-card__number` | render index | `meta` |
-| Step title | `.public-step-card h3` | `pages.ppdb` | `component-title` |
-| Step text | `.public-step-card p` | `pages.ppdb` | `description` |
+| Render location | Selector | Role |
+|---|---|---|
+| Admission section heading | `#alur-ppdb .public-section-head h2` | `section-title` |
+| Admission section subtitle | `#alur-ppdb .public-section-head p` | `subtitle` |
+| Admission step number | `.public-step-card__number` | `meta` |
+| Admission step title | `.public-step-card h3` | `component-title` |
+| Admission step description | `.public-step-card p` | `description` |
+| Program age | `.program-public-card__age` | `meta` / `label` |
+| Program title | `.program-public-card h3` | `component-title` |
+| Program description | `.program-public-card > p:not(.program-public-card__age)` | `description` |
+| Document item | `.document-list li` | `body` / `label` |
+| Timeline date | `.timeline-card > span` | `meta` |
+| Timeline title | `.timeline-card h3` | `component-title` |
+| Timeline description | `.timeline-card p` | `description` |
+| FAQ question | `.faq-card summary` | `action` / `component-title` |
+| FAQ answer | `.faq-card p` | `description` |
+| Final CTA heading | `.public-final-cta__box h2` | `section-title` |
+| Final CTA copy | `.public-final-cta__box p` | `description` |
+| Final CTA button | `.public-final-cta__box .btn` | `action` |
+| Closed modal heading | `.ppdb-closed-modal__panel h2` | `component-title` |
+| Closed modal copy | `.ppdb-closed-modal__panel p` | `description` |
+| Closed modal close | `.ppdb-closed-modal__close` | `action` |
 
-### 4.4 Programs
+FAQ proves again that role cannot be inferred from tag name alone: `summary` is interactive wording and a local title at once.
 
-| Render location | Selector / element | Source | Proposed role |
-|---|---|---|---|
-| Section heading | `.program-public-grid` preceding section head `h2` | `pages.ppdb` | `section-title` |
-| Program age | `.program-public-card__age` | `pages.ppdb` | `meta` / `label` |
-| Program title | `.program-public-card h3` | `pages.ppdb` | `component-title` |
-| Program text | `.program-public-card > p:not(.program-public-card__age)` | `pages.ppdb` | `description` |
+## 4. Accessibility / JS behavior
 
-### 4.5 Documents and timeline
-
-| Render location | Selector / element | Source | Proposed role |
-|---|---|---|---|
-| Documents heading | `.ppdb-info-grid .public-section-head h2` first group | `pages.ppdb` | `section-title` |
-| Document item | `.document-list li` | `pages.ppdb` | `body` / `label` |
-| Timeline heading | `.ppdb-info-grid .public-section-head h2` second group | `pages.ppdb` | `section-title` |
-| Timeline date | `.timeline-card > span` | `pages.ppdb` | `meta` |
-| Timeline title | `.timeline-card h3` | `pages.ppdb` | `component-title` |
-| Timeline text | `.timeline-card p` | `pages.ppdb` | `description` |
-
-### 4.6 FAQ
-
-| Render location | Selector / element | Source | Proposed role |
-|---|---|---|---|
-| FAQ heading | FAQ section `.public-section-head h2` | `pages.ppdb` | `section-title` |
-| FAQ question | `.faq-card summary` | `pages.ppdb` | `action` / `component-title` |
-| FAQ answer | `.faq-card p` | `pages.ppdb` | `description` / `body` |
-
-The FAQ question is interactive semantics and must not be mapped by tag name alone.
-
-### 4.7 Final CTA and closed modal
-
-| Render location | Selector / element | Source | Proposed role |
-|---|---|---|---|
-| Final CTA heading | `.public-final-cta__box h2` | `pages.ppdb` | `section-title` |
-| Final CTA subtitle | `.public-final-cta__box p` | `pages.ppdb` | `description` |
-| Final CTA button | `.public-final-cta__box .btn` | runtime lang | `action` |
-| Closed modal heading | `.ppdb-closed-modal__panel h2` | runtime lang | `component-title` |
-| Closed modal description | `.ppdb-closed-modal__panel p` | runtime lang | `description` |
-| Closed modal close link | `.ppdb-closed-modal__close` | runtime lang | `action` |
-
-## 5. Accessibility / JS-created text
-
-The showcase includes `.ppdb-journey-status` with `aria-live="polite"` and `aria-atomic="true"`.
-
-`resources/css/pages/ppdb-journey.css` visually hides this node with the standard 1px/clipped pattern.
-
-`resources/js/pages/ppdb-journey/progress.js` updates its `textContent` to the currently active step number and title.
+`.ppdb-journey-status` is `aria-live="polite"`, visually clipped to 1px, and updated by journey JS from active step number/title.
 
 Classification:
 
 - accessibility-relevant dynamic status;
 - not visible typography;
-- content derived from existing rendered step number/title;
-- JS does not assign font sizing.
+- content derived from existing rendered step content;
+- JS does not set font sizing.
 
-The journey JS also toggles panels, inert state, opacity, transforms, blur, and CTA visibility. These are interaction/layout behavior and are outside typography ownership.
+Journey JS may toggle panel visibility, inert state, opacity, transforms, blur, pointer state, and CTA visibility. These are interaction/layout concerns, not typography ownership.
 
-## 6. CSS ownership evidence
+## 5. Runtime proof
 
-PPDB typography currently comes from multiple layers:
+Read-only Brave/CDP proof completed against the real `/ppdb` route and real language-switch forms.
 
-1. shared public/welcome CSS inherited through the public layout;
-2. page-scoped inline CSS in `resources/views/pages/ppdb/styles.blade.php`;
-3. route-specific `resources/css/pages/ppdb-journey.css`;
-4. Arabic typography adapter loaded by the public layout.
+Required matrix completed:
 
-Examples:
+- ID: 1440 / 768 / 390, `dir=ltr`.
+- EN: 1440 / 768 / 390, `dir=ltr`.
+- AR: 1440 / 768 / 390, `dir=rtl`.
 
-- PPDB registration/guide buttons set heavy weight in page-scoped CSS;
-- closed modal heading has its own clamp scale;
-- showcase tabs/headings/card text have PPDB-specific rules;
-- desktop journey has additional heading/subtitle sizing in `ppdb-journey.css`;
-- RTL journey layout adjusts direction/alignment;
-- Arabic family/scale may override shared/PPDB rules.
+All representative selectors were present in the current runtime.
 
-Therefore source declaration discovery does not establish winners. Runtime computed style is required.
+### Current state facts
 
-## 7. Current M00 PPDB status
+- `showcasePresent=true` at all tested locales/widths.
+- `journeyNative=true` at 1440 and `false` at 768/390. This matches the existing desktop enhancement threshold (`min-width: 901px`) and is behavior evidence, not a typography bug.
+- Registration currently resolves directly to `https://forms.gle/1huqPo24Et6pgUNh6` with `_blank`.
+- Guide currently resolves directly to `https://almustaqbal.sch.id/ppdb`.
+- Closed modal exists in DOM but is hidden in the current open-registration state.
+- `.document-list li` was present but measured with `opacity:0` because reveal animation had not intersected during the audit. It is not a missing text node.
 
-Completed:
+## 6. Winning typography baseline
 
-- route/controller discovery;
-- render-tree discovery;
-- locale/runtime/DB content-source classification;
-- role inventory for Hero, showcase, steps, programs, information, FAQ, final CTA, and closed modal;
-- accessibility-only journey status identified;
-- JS interaction vs typography ownership separated;
-- CSS ownership layers identified.
+### ID / EN parity
 
-Pending:
+ID and EN resolve to the same numeric typography for the sampled roles at equivalent widths.
 
-- runtime ID/EN/AR proof at 1440 / 768 / 390;
-- confirm whether showcase is present in current DB runtime;
-- confirm open/closed registration state and therefore which CTA target is active;
-- computed typography for representative visible roles;
-- record responsive/locale baseline findings;
-- close `/ppdb` M00 surface.
+Representative values:
 
-Approximate PPDB M00 progress: 65%.
+- page title: 60.48px at 1440, 33.6px at 768, 50.7px at 390;
+- Hero subtitle: 19.2px / 18.304px / 17.17px;
+- registration/guide actions: 15.68px;
+- showcase heading: 57.6px / 33.792px / 32px;
+- showcase card title: 46.08px / 28.8px / 28.8px;
+- admission step title: 18.72px;
+- ordinary step/program/timeline/FAQ descriptions: 16px;
+- final CTA heading: 43.2px / 28.8px / 28.8px.
 
-## 8. Next valid step
+Important baseline anomaly:
 
-Run one read-only Brave/CDP runtime batch on `/ppdb` using the already-proven real locale-switch forms.
+- public page title sizing is non-monotonic: mobile 390 resolves to 50.7px while tablet 768 resolves to 33.6px. M00 records this only; later semantic-token implementation decides the intended scale.
 
-Measure representative nodes only. Optional showcase nodes may be `found=false` if the current DB has no audience items; that is a runtime-data fact, not an automatic failure.
+### Arabic adapter baseline
 
-Required locales/widths:
+Arabic correctly resolves `dir=rtl` and uses Cairo/Lateef, but the current selector cascade is inconsistent by role.
 
-- ID: 1440 / 768 / 390;
-- EN: 1440 / 768 / 390;
-- AR: 1440 / 768 / 390 with `dir=rtl`.
+Observed examples:
 
-Do not repeat browser capability checks or source discovery.
+- page title: Cairo, same numeric size as ID/EN;
+- register/guide/final actions: generally Cairo 16px;
+- Hero subtitle, Hero note, mini-card description, admission step descriptions, program descriptions, document items, timeline descriptions, FAQ answers, and final CTA description: Lateef 36px / 63px line-height;
+- showcase heading/card title: Cairo but still inherits negative letter-spacing from PPDB component CSS (`-4.032px`, `-2.9952px`, responsive variants);
+- showcase subtitle/card description stay much smaller than the generic Arabic prose scale because PPDB-specific selectors win (`17.28px` desktop, 16px smaller widths for showcase subtitle; 18.56px desktop, 16px smaller widths for card description);
+- statistic label uses Lateef at only 14.72px;
+- timeline date uses Lateef 16px;
+- closed-modal action currently resolves to Lateef 16px rather than the usual Cairo action family.
+
+These are M07 implementation targets/evidence, not reasons to alter code during M00.
+
+## 7. CSS ownership evidence
+
+Current PPDB typography can be won by several layers:
+
+1. shared public/welcome CSS;
+2. PPDB page-scoped inline CSS;
+3. `resources/css/pages/ppdb-journey.css`;
+4. Arabic typography adapter.
+
+Source declarations alone therefore do not prove the winner. The computed-style matrix above is the authoritative baseline.
+
+## 8. M00 conclusion
+
+FACT:
+
+- source paths, content origins, semantic roles, locale behavior, responsive behavior, current state, and representative computed typography are proven for `/ppdb`.
+
+GAP:
+
+- no material PPDB baseline gap remains for M00.
+
+GOAL:
+
+- preserve this evidence for M07 implementation.
+
+IMPACT:
+
+- none in runtime; documentation only.
+
+DECISION:
+
+- close `/ppdb` M00.
+
+EXECUTION:
+
+- documentation updated only.
+
+PROOF:
+
+- runtime ID/EN/AR at 1440/768/390 completed;
+- showcase and action-state presence confirmed;
+- computed typography recorded.
+
+STATUS: PASS
+
+NEXT VALID STEP:
+
+- continue M00 with the remaining non-public surfaces: M08 admin desktop baseline, then M09 article canvas/editor baseline.
+- do not repeat PPDB source discovery or runtime proof unless later code changes invalidate this baseline.
