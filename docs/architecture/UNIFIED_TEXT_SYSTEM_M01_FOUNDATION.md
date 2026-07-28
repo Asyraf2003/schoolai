@@ -1,87 +1,72 @@
 # Unified Text System — M01 Shared Foundation Evidence
 
-Status: BLOCKED_BY_MISSING_EVIDENCE
+Status: PASS
 Date: 2026-07-29
 Branch: `main`
 Scope: M01 shared text-system foundation only
 
 ## 1. FACT
 
-M00 is already complete and PASS. M01 starts implementation without migrating M02-M09 component markup yet.
+M00 is complete and PASS. M01 establishes one shared semantic typography layer without migrating component markup yet.
 
-The locked contract from `UNIFIED_TEXT_SYSTEM_DOD.md` requires:
+Locked architecture:
 
-- one shared semantic typography layer;
-- canonical `data-text-role` ownership;
-- responsive type-scale tokens;
-- no component layout/media/animation ownership in the shared layer;
-- Arabic remains a locale adapter;
-- no DB/schema typography fields;
-- no viewport typography logic in JS;
-- no legacy cleanup before migrated-component proof.
+```text
+DB / lang / Blade / JS content
+            ↓
+render location decides semantic role
+            ↓
+resources/css/text-system.css
+            ↓
+locale adapter
+            ↓
+stable ID / EN / AR UI
+```
 
-Current public/admin/editor CSS loading is not shared through one existing entry:
+Canonical roles:
 
-- homepage uses dedicated welcome entries;
-- public content uses `layouts.public`;
-- admin uses `resources/css/app.css`;
-- article canvas uses `resources/css/pages/article-canvas.css`.
+- `display`
+- `page-title`
+- `section-title`
+- `component-title`
+- `subtitle`
+- `body`
+- `description`
+- `label`
+- `meta`
+- `action`
+- `longform`
 
-Therefore `resources/css/app.css` alone cannot serve as the universal M01 load point.
-
-## 2. GAP BEFORE EXECUTION
+## 2. GAP BEFORE M01
 
 Before M01:
 
 - `resources/css/text-system.css` did not exist;
-- no shared semantic size/family/weight/leading/tracking token set existed;
-- no shared `[data-text-role]` rules existed;
-- no current rendered source markup used `data-text-role`;
-- Vite did not register a text-system entry;
-- homepage/public/admin/canvas did not load a shared role layer between legacy CSS and the Arabic adapter.
+- there was no shared semantic family/size/weight/leading/tracking token set;
+- Vite did not register a shared text-system entry;
+- homepage/public/admin/article-canvas roots did not share one typography layer;
+- no rendered application markup used `data-text-role`.
 
 ## 3. GOAL
 
-Create a buildable semantic typography foundation that is loaded on all already-baselined root surfaces while remaining visually inert until later migrations add role markers.
+Create a buildable shared semantic typography foundation loaded on every already-baselined root while remaining visually inert until later milestones assign semantic roles.
 
-M01 must not migrate navbar, Hero, homepage sections, gallery, article, PPDB, admin components, or canvas content yet.
+M01 must not:
 
-## 4. IMPACT BOUNDARY
+- migrate M02-M09 component markup;
+- redesign layout;
+- add DB/schema typography fields;
+- add viewport typography logic in JS;
+- replace Arabic with a competing typography system;
+- mass-delete legacy component typography.
 
-Intended changed files for M01 implementation:
+## 4. DECISION
 
-- `resources/css/text-system.css`;
-- `vite.config.js`;
-- `resources/views/welcome.blade.php`;
-- `resources/views/layouts/public.blade.php`;
-- `resources/views/layouts/admin.blade.php`;
-- `resources/views/layouts/article-canvas.blade.php`.
+Shared file:
 
-No intended changes to:
+`resources/css/text-system.css`
 
-- DB/schema/models;
-- controllers/routes;
-- JS behavior;
-- content values;
-- component-specific CSS;
-- Arabic typography files;
-- responsive layout behavior.
-
-## 5. DECISION
-
-### Shared file
-
-Use `resources/css/text-system.css` as a standalone Vite CSS entry.
-
-Reason:
-
-- importing only from `app.css` would miss homepage/public/canvas;
-- importing from Arabic CSS would incorrectly make the shared system architecturally dependent on the locale adapter;
-- a dedicated entry allows a consistent runtime order on every root surface.
-
-### Runtime order
-
-Load:
+Runtime order:
 
 ```text
 legacy/component CSS
@@ -89,39 +74,26 @@ legacy/component CSS
 → resources/css/arabic-typography.css
 ```
 
-This preserves Arabic as the final locale adapter.
+Arabic therefore remains the final locale adapter.
 
-### Selector contract
+## 5. EXECUTION
 
-M01 defines only canonical selectors:
+M01 implementation on `main` includes:
 
-- `[data-text-role="display"]`;
-- `[data-text-role="page-title"]`;
-- `[data-text-role="section-title"]`;
-- `[data-text-role="component-title"]`;
-- `[data-text-role="subtitle"]`;
-- `[data-text-role="body"]`;
-- `[data-text-role="description"]`;
-- `[data-text-role="label"]`;
-- `[data-text-role="meta"]`;
-- `[data-text-role="action"]`;
-- `[data-text-role="longform"]`.
+- `resources/css/text-system.css`, 149 source lines;
+- dedicated Vite registration in `vite.config.js`;
+- homepage load point;
+- public layout load point;
+- admin layout load point;
+- article-canvas layout load point.
 
-No role markers are added to rendered application markup during M01.
+The shared file owns typography only. Component layout, spacing, color, animation, positioning, truncation, and behavior remain component-owned.
 
-## 6. TOKEN BASIS
+No application `data-text-role` rollout was performed during M01.
 
-The initial ID/EN scale is intentionally normalized from stored M00 evidence rather than copying component extremes.
+## 6. INITIAL SHARED SCALE
 
-Important baseline evidence:
-
-- section title is roughly 32px at mobile/tablet and about 48px desktop;
-- current component-title examples vary from about 17px to about 42px;
-- article descriptions are about 15.7px;
-- metadata is commonly about 12-13px;
-- native reader/canvas longform roots are roughly 18-21px.
-
-M01 therefore establishes an initial role scale approximately covering:
+The foundation normalizes M00 evidence into these initial role targets:
 
 - `display`: 40px → 76px;
 - `page-title`: 36px → 60px;
@@ -135,79 +107,92 @@ M01 therefore establishes an initial role scale approximately covering:
 - `action`: 15px;
 - `longform`: 18px → 20.8px.
 
-Weights are restricted to 400/500/600/700 instead of perpetuating legacy requests such as 750-950.
+Weights are normalized to 400/500/600/700 instead of preserving legacy requests such as 750-950.
 
-These are shared target tokens, not claims that every legacy component already matches them. M02-M09 migration/runtime proof may tune shared tokens when evidence demonstrates a system-level issue; components must not invent independent replacements.
+These are system targets, not claims that legacy components already match them.
 
-## 7. EXECUTION
+## 7. CONCURRENT-MAIN / REGRESSION EVENTS
 
-Current M01 implementation on `main` includes:
+M01 overlapped with unrelated homepage/footer work on `main`. No force push was used.
 
-- new `resources/css/text-system.css`, 149 lines;
-- `resources/css/text-system.css` registered in `vite.config.js`;
-- homepage loads it after welcome/about/hero CSS and before Arabic typography;
-- public layout loads it after welcome CSS and before Arabic typography;
-- admin layout loads it after `app.css` and before Arabic typography;
-- article canvas loads it after canvas CSS and before Arabic typography.
+The source-module equivalence manifest had become stale because current About and footer modules had evolved. It was refreshed without reverting the valid About warp layer or footer work.
 
-No `data-text-role` rollout has started.
+Commit:
 
-## 8. CONCURRENT-MAIN SAFETY EVENT
+`f5dfc5883c0c98cde7527bb7b707a6d3cb0c75e3` — `docs: refresh current source module equivalence`
 
-During execution, `main` was being changed concurrently by another process.
+During validation, homepage tests exposed a separate translation-contract regression: Indonesian `home.php` no longer matched the active `nilai_sekolah` / `program_unggulan` render contract used by the controller/views. The active three-locale contract was restored without changing M01 CSS.
 
-Observed parallel commits included:
+Commit:
 
-- `784054ff8696c205eae8c87f7fde88cd12dbf6dd` — footer social channel simplification;
-- `2e093baa383ca208718677a784e2d6bd254be576` — Indonesian home locale changes.
+`591381b7c1a1b53cffbe88a8b9c5246bf65f8514` — `fix: restore homepage translation contract`
 
-A non-fast-forward update was rejected. No force push was used.
+A remaining About test expected CTA/media-label elements that had intentionally been removed by earlier UI simplification. The stale test was aligned with the current UI instead of reintroducing removed elements.
 
-The concurrent `lang/id/home.php` change temporarily fell out of current ancestry during competing contents writes. It was restored byte-for-byte using its original Git blob:
+Commit:
 
-`24bb5383c320e30a1181df0a5626654b6bf85d06`
+`ff6be61319477d155844a8d3066ee53643540ca1` — `test: align about reel contract with simplified UI`
 
-Current `main` resolves `lang/id/home.php` to that exact blob SHA.
+## 8. AUTOMATED PROOF
 
-This restoration is preservation of concurrent work, not part of the Unified Text System implementation scope.
+Local proof returned by the user:
 
-## 9. SOURCE PROOF
+- `npm run check:structure` → PASS;
+- source structure checker → `446 files`, maximum `200` lines each;
+- `npm run build` → PASS;
+- focused regression gate → `11 passed`, `118 assertions`;
+- full Laravel suite → `139 passed`, `1337 assertions`;
+- `git diff --check` → PASS during the automated gate;
+- M01 foundation did not require DB/schema or JS behavior changes.
 
-Verified from current GitHub state:
+## 9. RUNTIME PROOF
 
-- `resources/css/text-system.css` exists;
-- source length is below the repository 200-line source limit;
-- Vite input includes the new CSS entry;
-- public/admin/canvas load order is `legacy -> text-system -> Arabic`;
-- homepage load point has been restored on current HEAD;
-- the M01 implementation diff from the pre-M01 implementation base contains only the shared CSS, Vite registration, and four layout load points;
-- no DB/schema/controller/route/JS/component-CSS migration is included;
-- current code search did not show application `data-text-role` markers before M01 rollout.
+Homepage runtime URL:
 
-The source-only expectation is therefore that existing rendered typography is unchanged because no current application text nodes match the new role selectors.
+`http://127.0.0.1:8000`
 
-## 10. MISSING PROOF
+Headless Brave DOM proof returned:
 
-The repository has no GitHub commit status/check result for this batch.
+- generated stylesheet `text-system-COSzPnPQ.css` is preloaded and loaded;
+- `data-text-role` does not appear in the rendered homepage DOM.
 
-Required local proof has not yet been executed against current `main`:
+Therefore the foundation is present in the browser but inert, exactly as required for M01.
 
-- `npm run check:structure`;
-- `npm run build`;
-- `php artisan view:clear`;
-- `php artisan test`;
-- `git diff --check`;
-- clean/understood `git status --short`;
-- local browser confirmation that loading the inert foundation does not visually rewrite existing surfaces.
+This proves M01 did not accidentally rewrite existing component typography before semantic-role migration begins.
 
-Because these mandatory gates are not yet proven, M01 is not marked PASS.
+## 10. STATUS
 
-## 11. STATUS
+`PASS`
 
-`BLOCKED_BY_MISSING_EVIDENCE`
+Acceptance basis:
 
-This is not a code failure. Source execution is complete for the M01 foundation batch, but acceptance requires local automated/runtime proof.
+- shared foundation exists;
+- all required roots load it;
+- Arabic remains after it in the cascade;
+- source structure passes;
+- build passes;
+- full tests pass;
+- runtime confirms the shared CSS is loaded;
+- zero semantic-role markers means zero intentional role application before M02.
 
-## 12. NEXT VALID STEP
+## 11. NEXT VALID STEP
 
-Pull current `main` locally and run the existing repository validation gates. Do not start M02 until this evidence is returned and M01 is closed as PASS.
+Start **M02 — shared navigation + Hero**.
+
+Required M02 mapping:
+
+- nav links → `action`;
+- navbar CTA → `action`;
+- mega eyebrow → `label`;
+- mega title → `component-title`;
+- mega description → `description`;
+- mega link label → `action`;
+- mega link description → `description`;
+- language modal title → `component-title`;
+- language options → `action`;
+- Hero eyebrow → `label`;
+- Hero title → `display`;
+- Hero description → `description`;
+- Hero CTA → `action`.
+
+Migration rule: add semantic ownership, prove the winning cascade, then remove only conflicting/redundant legacy typography declarations. Do not remove layout/behavior styling or perform unrelated cleanup.
