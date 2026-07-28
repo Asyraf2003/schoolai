@@ -5,3 +5,96 @@
 @import "@fontsource/lateef/arabic-700.css";
 @import "./arabic-typography-base.css";
 @import "./arabic-type-scale.css";
+
+/* Semantic role adapter.
+ * Loaded after the legacy Arabic fallbacks so migrated nodes use the shared
+ * role scale while Arabic only adapts family and tracking directionally.
+ */
+html[lang="ar"] :is(
+    [data-text-role="display"],
+    [data-text-role="page-title"],
+    [data-text-role="section-title"],
+    [data-text-role="component-title"],
+    [data-text-role="label"],
+    [data-text-role="meta"],
+    [data-text-role="action"]
+) {
+    font-family: var(--font-ar-display);
+    letter-spacing: normal;
+}
+
+html[lang="ar"] :is(
+    [data-text-role="subtitle"],
+    [data-text-role="body"],
+    [data-text-role="description"],
+    [data-text-role="longform"]
+) {
+    font-family: var(--font-ar-body);
+    letter-spacing: normal;
+}
+
+html[lang="ar"] [data-text-role="display"] {
+    font-size: var(--text-size-display);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-leading-display);
+}
+
+html[lang="ar"] [data-text-role="page-title"] {
+    font-size: var(--text-size-page-title);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-leading-page-title);
+}
+
+html[lang="ar"] [data-text-role="section-title"] {
+    font-size: var(--text-size-section-title);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-leading-section-title);
+}
+
+html[lang="ar"] [data-text-role="component-title"] {
+    font-size: var(--text-size-component-title);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-leading-component-title);
+}
+
+html[lang="ar"] [data-text-role="subtitle"] {
+    font-size: var(--text-size-subtitle);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-subtitle);
+}
+
+html[lang="ar"] [data-text-role="body"] {
+    font-size: var(--text-size-body);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-body);
+}
+
+html[lang="ar"] [data-text-role="description"] {
+    font-size: var(--text-size-description);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-description);
+}
+
+html[lang="ar"] [data-text-role="label"] {
+    font-size: var(--text-size-label);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-leading-label);
+}
+
+html[lang="ar"] [data-text-role="meta"] {
+    font-size: var(--text-size-meta);
+    font-weight: var(--text-weight-medium);
+    line-height: var(--text-leading-meta);
+}
+
+html[lang="ar"] [data-text-role="action"] {
+    font-size: var(--text-size-action);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-leading-action);
+}
+
+html[lang="ar"] [data-text-role="longform"] {
+    font-size: var(--text-size-longform);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-longform);
+}
