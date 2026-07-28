@@ -175,12 +175,14 @@ return [
     ],
 
     'about_stats_story' => [
-        'section_label' => 'About Al Mustaqbal and school statistics',
-        'eyebrow' => 'about',
+        'section_label' => 'About Al Mustaqbal School',
         'board_title' => 'Al Mustaqbal School',
+        'headline_line_one' => 'Bold Ideas,',
+        'headline_line_two' => 'Brought to Life',
         'description' => 'Al Mustaqbal supports every child through a holistic education that unites the Qur’an, character, knowledge, languages, creativity, and courage—nurturing a Muslim generation that inspires, innovates, acts with integrity, and is ready to fulfil its role as Khalifatullah.',
-        'statistics_label' => 'Al Mustaqbal School statistics',
-        'scroll_hint' => 'Scroll to explore',
+        'cta' => 'Our Approach',
+        'media_label' => 'Explore Our Journey',
+        'media_alt' => 'The learning journey at Al Mustaqbal School',
     ],
 
     'stats' => [
@@ -864,4 +866,3 @@ return [
         'copyright' => 'Al Mustaqbal. All Rights Reserved.',
     ],
 ];
-

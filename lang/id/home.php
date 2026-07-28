@@ -175,12 +175,14 @@ return [
     ],
 
     'about_stats_story' => [
-        'section_label' => 'Tentang Al Mustaqbal dan statistik sekolah',
-        'eyebrow' => 'about',
+        'section_label' => 'Tentang Al Mustaqbal School',
         'board_title' => 'Al Mustaqbal School',
+        'headline_line_one' => 'Gagasan Berani,',
+        'headline_line_two' => 'Dihidupkan Bersama',
         'description' => 'Al Mustaqbal mendampingi anak bertumbuh melalui pendidikan holistik yang menyatukan Al-Qur’an, adab, ilmu, bahasa, kreativitas, dan keberanian—agar lahir generasi Muslim yang inspiratif, inovatif, berintegritas, serta siap menjalankan peran sebagai Khalifatullah.',
-        'statistics_label' => 'Statistik Al Mustaqbal School',
-        'scroll_hint' => 'Gulir untuk menjelajah',
+        'cta' => 'Arah Pendidikan Kami',
+        'media_label' => 'Lihat Perjalanan Kami',
+        'media_alt' => 'Perjalanan belajar di Al Mustaqbal School',
     ],
 
     'stats' => [
