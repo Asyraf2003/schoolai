@@ -9,15 +9,39 @@
   $aboutMediaAlt = (string) ($aboutMedia['media_alt'] ?? __('home.about_stats_story.media_alt'));
 @endphp
 
-<section
-  class="about-reel"
-  id="tentang"
-  data-about-reel
-  aria-labelledby="about-reel-title"
->
+<section class="about-reel" id="tentang" data-about-reel aria-labelledby="about-reel-title">
   <div class="about-reel__track" data-about-reel-track>
     <div class="about-reel__stage">
       <div class="about-reel__canvas">
+        <svg
+          class="about-reel__spline"
+          viewBox="0 0 1000 1000"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <defs>
+            <linearGradient id="about-reel-rainbow" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff0055" />
+              <stop offset="20%" stop-color="#ff7700" />
+              <stop offset="40%" stop-color="#ffdd00" />
+              <stop offset="60%" stop-color="#00ff88" />
+              <stop offset="80%" stop-color="#0099ff" />
+              <stop offset="100%" stop-color="#b000ff" />
+            </linearGradient>
+          </defs>
+          <path
+            class="about-reel__spline-underlay"
+            d="M -50,80 C 200,80 300,220 300,380 C 300,520 200,680 400,680 C 600,680 650,320 480,320 C 320,320 320,520 500,520 C 680,520 750,700 850,820 C 920,890 980,950 1050,950"
+            pathLength="1"
+          />
+          <path
+            class="about-reel__spline-line"
+            d="M -50,80 C 200,80 300,220 300,380 C 300,520 200,680 400,680 C 600,680 650,320 480,320 C 320,320 320,520 500,520 C 680,520 750,700 850,820 C 920,890 980,950 1050,950"
+            pathLength="1"
+          />
+        </svg>
+
         <div class="about-reel__editorial">
           <p class="about-reel__eyebrow">{{ __('home.about_stats_story.board_title') }}</p>
 
@@ -35,10 +59,7 @@
           </h2>
 
           <div class="about-reel__details">
-            <p class="about-reel__description">
-              {{ __('home.about_stats_story.description') }}
-            </p>
-
+            <p class="about-reel__description">{{ __('home.about_stats_story.description') }}</p>
             <a class="about-reel__cta" href="#visi-misi">
               <span>{{ __('home.about_stats_story.cta') }}</span>
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -47,36 +68,6 @@
             </a>
           </div>
         </div>
-
-        <svg
-          class="about-reel__spline"
-          viewBox="0 0 1600 520"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <defs>
-            <linearGradient id="about-reel-rainbow" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#3979b8" />
-              <stop offset=".17" stop-color="#7166ad" />
-              <stop offset=".34" stop-color="#c76687" />
-              <stop offset=".5" stop-color="#df793f" />
-              <stop offset=".66" stop-color="#d9aa35" />
-              <stop offset=".83" stop-color="#55a06d" />
-              <stop offset="1" stop-color="#3f99a2" />
-            </linearGradient>
-          </defs>
-          <path
-            class="about-reel__spline-underlay"
-            d="M-50 390C190 70 410 80 570 260s300 300 470-10S1330-20 1660 170"
-            pathLength="1"
-          />
-          <path
-            class="about-reel__spline-line"
-            d="M-50 390C190 70 410 80 570 260s300 300 470-10S1330-20 1660 170"
-            pathLength="1"
-          />
-        </svg>
 
         @if ($aboutMedia && $aboutImageFallback)
           <figure class="about-reel__media">
@@ -87,6 +78,7 @@
 
             <div class="about-reel__media-frame">
               <img
+                data-about-reel-image
                 src="{{ $aboutImageFallback }}"
                 alt="{{ $aboutMediaAlt }}"
                 width="1920"
@@ -95,7 +87,6 @@
                 decoding="async"
                 style="object-position: {{ $aboutMedia['focal_position'] ?? 'center center' }}"
               />
-
               @if ($aboutMediaRenderType === 'video')
                 <video
                   class="about-reel__video"
@@ -110,12 +101,10 @@
                   tabindex="-1"
                   style="object-position: {{ $aboutMedia['focal_position'] ?? 'center center' }}"
                 >
-                  <source
-                    data-src="{{ $aboutMedia['media_url'] }}"
-                    type="{{ $aboutMedia['video_mime_type'] ?? 'video/mp4' }}"
-                  />
+                  <source data-src="{{ $aboutMedia['media_url'] }}" type="{{ $aboutMedia['video_mime_type'] ?? 'video/mp4' }}" />
                 </video>
               @endif
+              <canvas class="about-reel__warp" data-about-reel-warp aria-hidden="true"></canvas>
             </div>
           </figure>
         @endif
