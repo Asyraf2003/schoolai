@@ -76,7 +76,7 @@
                 calc(-50% + (1 - var(--pair-enter-p)) * 18svh - var(--scene-exit-p) * 3svh),
                 0
             )
-            rotate(calc((1 - var(--pair-enter-p)) * 8deg))
+            rotate(calc((1 - var(--pair-enter-p)) * 3deg))
             scale(calc(0.34 + var(--pair-enter-p) * 0.22 + var(--scene-exit-p) * 0.44));
     }
 }
