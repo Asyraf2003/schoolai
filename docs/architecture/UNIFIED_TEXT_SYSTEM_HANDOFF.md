@@ -1,12 +1,12 @@
 # Unified Text System — Session Handoff
 
 Status: ACTIVE
-Date: 2026-07-28
+Date: 2026-07-29
 Branch: `main`
 Repository: `Asyraf2003/schoolai`
 Local checkout: `/home/asyraf/Code/laravel/school/schoolai`
 
-This file is the primary continuation point for a new AI/session. Read it before doing new discovery. Do not repeat work already marked PASS unless a later code change invalidates the evidence.
+This file is the primary continuation point for the next AI/session. Read it before doing new discovery. Do not repeat work already marked PASS unless a later code change invalidates the stored evidence.
 
 ## 1. Goal
 
@@ -42,13 +42,13 @@ Canonical roles:
 - `action`
 - `longform`
 
-Target marker later during implementation:
+Target marker during implementation:
 
 ```html
 <h2 class="section-title" data-text-role="section-title">...</h2>
 ```
 
-Existing component classes stay for layout/behavior. `data-text-role` will own typography.
+Existing component classes stay for layout/behavior. `data-text-role` will express typography ownership.
 
 ## 2. Hard workflow rules
 
@@ -75,20 +75,21 @@ Allowed STATUS values only:
 Rules:
 
 - zero assumption;
-- evidence first;
+- repository/runtime evidence first;
 - one atomic surface/batch;
-- one valid next action at a time when user CLI proof is required;
+- one valid next CLI action at a time only when user runtime proof is genuinely required;
 - no unrelated cleanup;
-- no visual redesign during M00;
+- no visual redesign as part of typography work;
 - no mass-delete legacy typography;
 - no typography fields/classes in DB;
 - no viewport-based typography logic in JS;
-- admin remains intentionally desktop-only;
-- use `rg` and `fd` rather than `grep` / `find` in CLI guidance;
+- admin remains intentionally desktop-only unless separately approved;
+- use `rg` and `fd`, not `grep` / `find`, for CLI guidance;
 - GitHub writes may go directly to `main` after proof;
 - do not merge/audit old branches unless a concrete missing behavior requires it;
-- do not install Playwright/Puppeteer merely for this audit;
-- existing Brave CDP harness is already proven and must not be rediscovered.
+- do not install Playwright/Puppeteer for this workflow;
+- existing Brave + CDP + Node native WebSocket capability is already proven and must not be rediscovered;
+- `getComputedStyle()` is authoritative when source order/specificity cannot establish the runtime winner.
 
 ## 3. Locked migration order
 
@@ -106,7 +107,7 @@ M09 article canvas/editor
 M10 legacy cleanup + final audit
 ```
 
-M00 is discovery/documentation only. No typography implementation yet.
+M00 is complete. Typography implementation has not started.
 
 ## 4. Progress
 
@@ -120,52 +121,70 @@ PASS:
 - `/artikel/{article:slug}` native reader;
 - `/ppdb`.
 
-Therefore public M00 coverage corresponding to M02-M07 is **100%**.
+Public M00 coverage corresponding to M02-M07 is **100%**.
 
 ### M08 admin desktop
 
 PASS:
 
-- protected admin route/provider tree discovered from current `main`;
+- protected admin route/provider tree mapped;
 - Dashboard, PPDB, non-canvas Articles, Gallery + nested section/media management, Statistics, Testimonials, and Hero admin entry views mapped;
 - shared `layouts.admin` render tree mapped;
-- major visible and accessibility-relevant text groups classified;
-- Blade/lang/DB/controller/runtime/JS content sources separated;
-- CSS ownership recorded, including the statistics `Buka`/`Tutup` CSS pseudo-content exception;
-- admin chrome proven source-level to be forced Indonesian by `ForceAdminLocale`;
-- desktop-only contract preserved;
-- no M08 styling/implementation performed.
+- major visible/accessibility text groups classified;
+- Blade/lang/DB/controller/runtime/JS sources separated;
+- CSS ownership recorded;
+- admin shell locale is forced to Indonesian by `ForceAdminLocale`;
+- desktop-only product contract preserved;
+- no M08 implementation performed.
 
 Authoritative evidence:
 
 - `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
 
-### Remaining M00 surface
+### M09 article canvas/editor
 
-Not yet baselined to PASS:
+PASS:
 
-- M09 article canvas/editor UI.
+- active canvas route/controller/trait tree mapped;
+- dedicated `layouts.article-canvas` render tree mapped;
+- topbar, workspace, block menu, inline/image/code toolbars, dialogs, Unsplash, publish drawer, category editor, and browser-native feedback inventoried;
+- ID/EN document content is Blade-rendered from Article DB values;
+- AR document/button is created by `article-canvas-arabic.js` from persisted DB values before main canvas mount;
+- Arabic autosave persistence through `PersistArabicArticleCanvas` is mapped;
+- all active canvas JS modules were inspected for human-visible/accessibility text creation or mutation;
+- document title/subtitle/body and nested editorial content are mapped to page-title/subtitle/longform hierarchy;
+- CSS pseudo-content and browser-native alert/prompt copy are documented;
+- canvas CSS ownership and Arabic adapter ownership are deterministic from source load order, so no redundant M00 computed-style run was required;
+- no M09 implementation performed.
 
-For progress reporting, M00 is measured against the 8 implementation surface groups M02-M09. Seven of eight are baselined, so:
+Authoritative evidence:
 
-**M00 progress = 87.5%.**
+- `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ARTICLE_CANVAS.md`.
+
+### M00 overall
+
+M00 is measured against the 8 implementation surface groups M02-M09.
+
+All 8 groups are baselined:
+
+**M00 progress = 100%.**
 
 ### Whole Unified Text System project
 
-M01-M10 implementation has not started. M00 itself is 87.5% complete.
+M01-M10 implementation has not started.
 
-Using milestone-level progress rather than pretending documentation equals implementation:
+Using the same conservative milestone-level method as earlier handoffs:
 
-**overall project progress ≈ 8%.**
+**overall project progress ≈ 9%.**
 
-This is intentionally conservative.
+This intentionally does not pretend baseline documentation equals implementation.
 
 ## 5. Authoritative docs
 
-Read these, in this order when needed:
+Read these in this order when needed:
 
-1. `docs/architecture/UNIFIED_TEXT_SYSTEM_HANDOFF.md` — this continuation file.
-2. `docs/architecture/UNIFIED_TEXT_SYSTEM_DOD.md` — workflow, roles, proof gates, migration order.
+1. `docs/architecture/UNIFIED_TEXT_SYSTEM_HANDOFF.md` — primary continuation file.
+2. `docs/architecture/UNIFIED_TEXT_SYSTEM_DOD.md` — workflow, canonical roles, proof gates, migration order.
 3. `docs/architecture/UNIFIED_TEXT_SYSTEM_RATIONALE.md` — architectural rationale.
 4. `docs/architecture/UNIFIED_TEXT_SYSTEM_PREFLIGHT.md` — branch archaeology/preflight closure.
 5. `docs/architecture/ARABIC_TYPOGRAPHY_REFACTOR.md` — Arabic adapter constraints.
@@ -175,10 +194,13 @@ Read these, in this order when needed:
 9. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ARTICLES.md`.
 10. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_PPDB.md`.
 11. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
+12. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ARTICLE_CANVAS.md`.
 
 Do not create duplicate M00 docs for already-covered surfaces.
 
 ## 6. Important commits
+
+Historical orientation only; current `main` remains truth.
 
 - `e5f19131a481d979193588eaa03dcf97be16c599` — preflight closed, M00 allowed.
 - `3a55341601c60a4b9468465797e19b6a93b0f195` — homepage M00 closure.
@@ -186,36 +208,32 @@ Do not create duplicate M00 docs for already-covered surfaces.
 - `5aa76f9eb75c5a9e4da0ce9e9dd8c1a0116bda86` — articles/native reader M00 closure.
 - `4bfc02e6c145b498e3520dbd53be90cc68b38af2` — PPDB M00 runtime closure.
 - `111b8b5349e80e5eb292ef6eb08544ed360009cd` — M08 admin desktop M00 evidence closure.
-
-Use current `main` as truth; commit list is historical orientation, not a reason to checkout old commits.
+- `67373618cff149ccd99f9010cf0e7333268919a4` — M09 article canvas/editor M00 evidence closure.
 
 ## 7. Browser/runtime proof infrastructure already established
-
-No Python websocket packages are installed, but Node runtime provides native `WebSocket`.
 
 Proven environment:
 
 - Brave available at `/usr/local/bin/brave`;
 - headless Chromium/CDP works on fixed port `9222`;
-- CDP protocol reachable via Node native `WebSocket`;
-- real language switch uses `POST /bahasa/{locale}` forms rendered in the navbar;
-- temporary Brave profiles are used so user browser state is untouched.
+- CDP protocol is reachable through Node native `WebSocket`;
+- temporary Brave profiles keep user browser state untouched.
 
 Do not repeat capability detection.
 
-Public proof widths:
+Public proof widths already used:
 
 - 390px;
 - 768px;
 - 1440px.
 
-Locales:
+Public locales:
 
 - ID -> `ltr`;
 - EN -> `ltr`;
 - AR -> `rtl`.
 
-For admin, respect current desktop-only product contract. Do not create mobile/tablet admin scope.
+Admin remains desktop-only. Article canvas has responsive declarations in its dedicated CSS, but this typography workflow must not silently redefine admin/editor product support.
 
 ## 8. Baseline findings already proven
 
@@ -223,70 +241,52 @@ For admin, respect current desktop-only product contract. Do not create mobile/t
 
 - ID and EN representative computed typography match numerically.
 - Arabic adapter uses Cairo for heading/UI-like text and Lateef for prose/description.
-- Arabic baseline has very large prose scales in several components, e.g. 36px descriptions and 44px subtitles in some contexts.
-- These are later implementation targets, not M00 blockers.
+- Arabic baseline contains very large prose scales in several components; those are implementation evidence, not baseline blockers.
 
 ### Gallery
 
 - ID/EN parity proven at 390/768/1440.
 - AR/RTL proven.
-- Card partial does not currently render visual title/caption in the same way implied by some legacy CSS; do not invent dead UI from selectors alone.
+- Do not invent dead gallery title/caption UI from legacy selectors that are not rendered.
 
 ### Articles / native reader
 
-- Real native slug was discovered from rendered DOM, not guessed.
 - ID/EN list and reader typography match numerically.
 - Public page title has a non-monotonic responsive baseline: 60.48px at 1440, 33.6px at 768, 50.7px at 390.
-- Native reader uses a distinct editorial/`longform` contract.
-- AR reader uses Cairo for title/UI and Lateef for prose, with very large longform values: root 44px/83.6px and paragraphs 36px/63px in the sampled article.
-- Some DB tags/categories remain Indonesian (`Pendidikan`, `Program`) in AR. This is content/localization evidence, not a typography role change.
+- Native reader has a distinct editorial `longform` contract.
+- Arabic reader uses Cairo for title/UI and Lateef for prose with large longform values.
+- DB category/tag localization issues are content evidence, not typography role changes.
 
 ### PPDB
 
-Current runtime state:
-
-- showcase exists for current DB data;
-- desktop 1440 enables `ppdb-journey-native`;
-- 768/390 do not, matching the existing `min-width: 901px` enhancement behavior;
-- registration currently links directly to Google Forms in a new tab;
-- guide currently links to `https://almustaqbal.sch.id/ppdb`;
-- closed modal exists but is hidden in the current open-registration state.
-
-ID/EN computed typography matches numerically at equivalent widths.
-
-PPDB page title has the same non-monotonic baseline:
-
-- 1440: 60.48px;
-- 768: 33.6px;
-- 390: 50.7px.
-
-Arabic PPDB baseline:
-
-- Cairo for many headings/actions;
-- Lateef for prose;
-- many generic prose nodes resolve to 36px/63px;
-- PPDB-specific showcase selectors can override that and remain much smaller (e.g. 17.28px or 16px);
-- showcase heading/card title retain negative letter-spacing in Arabic from PPDB component CSS;
-- closed-modal action currently resolves to Lateef rather than the usual Cairo action family.
-
-These inconsistencies are intentionally preserved as baseline evidence for later M07 implementation.
+- showcase exists in current runtime data;
+- 1440 enables the existing desktop journey enhancement; 768/390 do not;
+- registration and guide actions were proven against their current destinations;
+- ID/EN computed typography matches numerically at equivalent widths;
+- Arabic uses Cairo/Lateef with several documented size/cascade inconsistencies preserved as M07 implementation evidence.
 
 ### Admin desktop
 
-Source baseline from current `main` proves:
-
-- admin route tree includes the five `routes/admin/*.php` modules plus provider-backed Testimoni and Hero admin routes;
-- active M08 entry views use `layouts.admin`;
-- admin chrome is forced to locale `id` by `ForceAdminLocale`;
-- English/Arabic are content-entry languages in selected admin forms, not current admin-shell locales;
-- Dashboard statistic values map to `display`; page/section/card/form/action/meta groups are mapped in the dedicated evidence doc;
-- topbar descriptions and several panel/card description selectors are source-present but currently hidden by scoped admin CSS and therefore are not counted as visible/a11y text groups;
+- active route tree includes route modules plus provider-backed Testimoni and Hero admin routes;
+- admin shell is forced to locale `id`;
+- topbar descriptions and some panel/card descriptions are source-present but currently hidden by scoped CSS;
 - shared JS creates/replaces limited preview/toast/modal text but contains no typography logic;
-- statistics currently emits `Buka` / `Tutup` as CSS pseudo-content;
-- current CSS ownership is layered but materially resolvable from source specificity/order, so M08 did not require a redundant browser `getComputedStyle()` command;
-- M09 canvas/editor internals were not audited as part of M08.
+- Statistics currently emits `Buka` / `Tutup` through CSS pseudo-content;
+- CSS ownership was source-resolvable for M00.
 
-These are later M08 implementation targets/evidence, not reasons to change code during M00.
+### Article canvas/editor
+
+- dedicated layout loads only canvas CSS, Arabic typography, Arabic injection JS, main canvas JS, and context UI JS;
+- shell `<html>` is fixed `lang="id"` while document content supports ID/EN/AR;
+- ID/EN documents are Blade/DB; AR document is JS-created/DB-persisted;
+- `.canvas-title` -> article `page-title`;
+- `.canvas-subtitle` -> `subtitle`;
+- `.canvas-body` -> `longform` with nested editorial hierarchy/exceptions preserved;
+- save/count/upload/publish/category/Unsplash/error text may be created or mutated by JS/runtime;
+- empty body and empty figcaption have CSS-created placeholder text;
+- Arabic title resolves through the dedicated canvas Arabic family adapter; Arabic subtitle/body use Lateef Arabic lead/longform rules;
+- browser-native alert/prompt copy exists outside app CSS ownership;
+- source load order made M09 cascade ownership deterministic.
 
 ## 9. What is NOT yet done
 
@@ -294,41 +294,54 @@ Do not claim any of the following has started:
 
 - no `resources/css/text-system.css` foundation;
 - no `data-text-role` rollout;
-- no Arabic selector cleanup;
+- no semantic token implementation;
+- no Arabic selector cleanup for the Unified Text System;
 - no legacy typography deletion;
 - no M01 implementation;
-- no article canvas/editor M00 baseline;
-- no final build/test gates for implementation because implementation has not started.
+- no M02-M10 implementation migration;
+- no final implementation build/test/runtime acceptance gate.
 
-M08 admin desktop M00 **is complete and PASS**. Do not rediscover it unless later code changes invalidate `UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
+M00 is complete. Do not rediscover its surfaces unless a later code change invalidates a stored baseline.
 
 ## 10. Exact next scope
 
-Continue **M00 with M09 article canvas/editor UI only**.
+Continue with **M01 — shared text-system foundation only**.
 
-Goal for the next session:
+M01 goal from the DOD:
 
-1. start from the existing article canvas routes/controllers/views on current `main`;
-2. map the canvas/editor render tree without re-auditing non-canvas Article admin surfaces already covered by M08;
-3. classify every major visible/accessibility-relevant editor text group using the canonical roles;
-4. distinguish editor document content (`longform` where applicable) from toolbar/action/label/meta UI;
-5. identify Blade / lang / DB / controller/runtime / JS content sources;
-6. identify CSS ownership and use runtime `getComputedStyle()` only where source cannot establish the winning behavior;
-7. respect the current desktop admin product contract;
-8. persist a dedicated M00 canvas/editor evidence doc;
-9. mark M09 PASS only when no major visible editor text group remains unclassified.
+- create one focused shared typography ownership layer, expected path `resources/css/text-system.css`;
+- define shared semantic typography tokens and role rules;
+- load the foundation without migrating unrelated surfaces yet;
+- do not perform M02-M09 component rollout in the same batch;
+- do not remove legacy component typography before a migrated component has runtime proof;
+- do not change DB/schema;
+- do not add viewport typography logic in JS;
+- preserve Arabic as the locale adapter rather than creating a competing Arabic system.
 
-Do not start M01 until M09 baseline is PASS.
+Required M01 workflow:
 
-## 11. First action for a new AI session
+FACT
+→ GAP
+→ GOAL
+→ IMPACT
+→ DECISION
+→ EXECUTION
+→ PROOF
+→ STATUS
+→ NEXT VALID STEP
 
-Read this handoff and the DOD from `main`, then inspect the current M09 article canvas/editor entry points using the GitHub connector.
+M01 should PASS only after the foundation is loaded and automated/runtime proof shows it does not accidentally rewrite existing UI before component migration begins.
+
+## 11. First action for the next session
+
+Read this handoff and the M01 sections of `UNIFIED_TEXT_SYSTEM_DOD.md`.
+
+Then inspect the current CSS entry/import architecture from `main` to determine the smallest safe load point for the shared foundation.
 
 Do not:
 
-- repeat homepage, gallery, article list/native reader, PPDB, or M08 admin source/runtime audits;
-- ask the user to repeat evidence already stored in the authoritative M00 docs;
-- rediscover the Brave/CDP capability;
-- start M01 styling before M09 PASS.
-
-Use GitHub for repository facts first. Ask for one CLI/runtime proof only when GitHub/source evidence cannot establish the winning runtime behavior.
+- repeat M00 homepage/gallery/article/PPDB/admin/canvas discovery;
+- ask the user to repeat stored baseline evidence;
+- start M02 migration before M01 itself passes;
+- mass-clean legacy typography;
+- add semantic markers across all surfaces before the foundation proof is closed.
