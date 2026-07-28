@@ -22,8 +22,16 @@
           <p class="about-reel__eyebrow">{{ __('home.about_stats_story.board_title') }}</p>
 
           <h2 class="about-reel__headline" id="about-reel-title">
-            <span>{{ __('home.about_stats_story.headline_line_one') }}</span>
-            <span>{{ __('home.about_stats_story.headline_line_two') }}</span>
+            <span class="about-reel__headline-clip">
+              <span class="about-reel__headline-line about-reel__headline-line--one">
+                {{ __('home.about_stats_story.headline_line_one') }}
+              </span>
+            </span>
+            <span class="about-reel__headline-clip">
+              <span class="about-reel__headline-line about-reel__headline-line--two">
+                {{ __('home.about_stats_story.headline_line_two') }}
+              </span>
+            </span>
           </h2>
 
           <div class="about-reel__details">
