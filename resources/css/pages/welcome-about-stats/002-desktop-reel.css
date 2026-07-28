@@ -27,8 +27,8 @@
         --reel-p: var(--about-progress);
         --title-enter-p: clamp(0, calc((var(--reel-p) - 0.02) * 7.7), 1);
         --title-shift-p: clamp(0, calc((var(--reel-p) - 0.14) * 8.34), 1);
-        --pair-enter-p: clamp(0, calc((var(--reel-p) - 0.3) * 4.55), 1);
-        --scene-exit-p: clamp(0, calc((var(--reel-p) - 0.64) * 2.78), 1);
+        --pair-enter-p: clamp(0, calc((var(--reel-p) - 0.36) * 4.55), 1);
+        --scene-exit-p: clamp(0, calc((var(--reel-p) - 0.7) * 3.34), 1);
         --title-exit-p: var(--scene-exit-p);
         --spline-p: clamp(0, calc((var(--reel-p) - 0.025) * 1.08), 1);
     }
@@ -67,7 +67,7 @@
         max-width: none;
         position: absolute;
         z-index: 4;
-        inset-block-start: clamp(92px, 12svh, 132px);
+        inset-block-start: clamp(132px, 17svh, 182px);
         inset-inline-start: clamp(44px, 6.8vw, 108px);
         margin: 0;
         font-size: clamp(4rem, 6vw, 7.1rem);
@@ -145,20 +145,11 @@
         pointer-events: none;
     }
 
-    .about-reel--enhanced .about-reel__spline-underlay,
     .about-reel--enhanced .about-reel__spline-line {
         stroke-dasharray: 1;
         stroke-dashoffset: calc(1 - var(--spline-p));
+        stroke-width: 28;
         will-change: stroke-dashoffset;
-    }
-
-    .about-reel--enhanced .about-reel__spline-underlay {
-        stroke-width: 34;
-        opacity: 0.34;
-    }
-
-    .about-reel--enhanced .about-reel__spline-line {
-        stroke-width: 24;
     }
 
     .about-reel--enhanced .about-reel__media {
@@ -175,7 +166,7 @@
                 calc(-50% + (1 - var(--pair-enter-p)) * 18svh - var(--scene-exit-p) * 3svh),
                 0
             )
-            rotate(calc((1 - var(--pair-enter-p)) * -8deg))
+            rotate(calc((1 - var(--pair-enter-p)) * -3deg))
             scale(calc(0.34 + var(--pair-enter-p) * 0.22 + var(--scene-exit-p) * 0.44));
         transform-origin: center;
         will-change: transform;
@@ -189,7 +180,7 @@
     .about-reel--enhanced .about-reel__media-frame {
         aspect-ratio: 16 / 9;
         overflow: visible;
-        border-radius: calc(22px + var(--scene-exit-p) * 16px);
+        border-radius: 16px;
         background: transparent;
         box-shadow: 0 30px 80px rgb(42 65 60 / calc(0.1 + var(--scene-exit-p) * 0.09));
     }
