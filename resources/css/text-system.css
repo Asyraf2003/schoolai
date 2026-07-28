@@ -1,0 +1,149 @@
+/* Shared semantic typography foundation.
+ *
+ * This file owns typography only. Component layout, color, spacing,
+ * animation, positioning, and truncation remain with component CSS.
+ *
+ * M01 intentionally adds no data-text-role markers. Until a later
+ * migration assigns a role in rendered markup, these rules are inert.
+ */
+
+:root {
+    --text-family-heading: var(
+        --font-display,
+        var(--font-app, ui-rounded, "Segoe UI Rounded", system-ui, -apple-system, "Segoe UI", sans-serif)
+    );
+    --text-family-ui: var(
+        --font-body,
+        var(--font-app, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif)
+    );
+    --text-family-longform: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+
+    --text-size-display: clamp(2.5rem, 1.75rem + 3vw, 4.75rem);
+    --text-size-page-title: clamp(2.25rem, 1.75rem + 2vw, 3.75rem);
+    --text-size-section-title: clamp(2rem, 1.7rem + 1.2vw, 3rem);
+    --text-size-component-title: clamp(1.125rem, 1.05rem + 0.35vw, 1.4rem);
+    --text-size-subtitle: clamp(1.05rem, 1rem + 0.25vw, 1.25rem);
+    --text-size-body: 1rem;
+    --text-size-description: clamp(0.95rem, 0.925rem + 0.15vw, 1.05rem);
+    --text-size-label: 0.8125rem;
+    --text-size-meta: 0.8125rem;
+    --text-size-action: 0.9375rem;
+    --text-size-longform: clamp(1.125rem, 1.08rem + 0.25vw, 1.3rem);
+
+    --text-weight-regular: 400;
+    --text-weight-medium: 500;
+    --text-weight-semibold: 600;
+    --text-weight-bold: 700;
+
+    --text-leading-display: 0.98;
+    --text-leading-page-title: 1.08;
+    --text-leading-section-title: 1.12;
+    --text-leading-component-title: 1.25;
+    --text-leading-subtitle: 1.5;
+    --text-leading-body: 1.65;
+    --text-leading-description: 1.65;
+    --text-leading-label: 1.3;
+    --text-leading-meta: 1.45;
+    --text-leading-action: 1.3;
+    --text-leading-longform: 1.75;
+
+    --text-tracking-display: -0.035em;
+    --text-tracking-page-title: -0.03em;
+    --text-tracking-section-title: -0.02em;
+    --text-tracking-component-title: -0.015em;
+    --text-tracking-subtitle: 0;
+    --text-tracking-body: 0;
+    --text-tracking-description: 0;
+    --text-tracking-label: 0.02em;
+    --text-tracking-meta: 0;
+    --text-tracking-action: 0;
+    --text-tracking-longform: 0;
+}
+
+[data-text-role="display"] {
+    font-family: var(--text-family-heading);
+    font-size: var(--text-size-display);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-leading-display);
+    letter-spacing: var(--text-tracking-display);
+}
+
+[data-text-role="page-title"] {
+    font-family: var(--text-family-heading);
+    font-size: var(--text-size-page-title);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-leading-page-title);
+    letter-spacing: var(--text-tracking-page-title);
+}
+
+[data-text-role="section-title"] {
+    font-family: var(--text-family-heading);
+    font-size: var(--text-size-section-title);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-leading-section-title);
+    letter-spacing: var(--text-tracking-section-title);
+}
+
+[data-text-role="component-title"] {
+    font-family: var(--text-family-heading);
+    font-size: var(--text-size-component-title);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-leading-component-title);
+    letter-spacing: var(--text-tracking-component-title);
+}
+
+[data-text-role="subtitle"] {
+    font-family: var(--text-family-ui);
+    font-size: var(--text-size-subtitle);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-subtitle);
+    letter-spacing: var(--text-tracking-subtitle);
+}
+
+[data-text-role="body"] {
+    font-family: var(--text-family-ui);
+    font-size: var(--text-size-body);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-body);
+    letter-spacing: var(--text-tracking-body);
+}
+
+[data-text-role="description"] {
+    font-family: var(--text-family-ui);
+    font-size: var(--text-size-description);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-description);
+    letter-spacing: var(--text-tracking-description);
+}
+
+[data-text-role="label"] {
+    font-family: var(--text-family-ui);
+    font-size: var(--text-size-label);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-leading-label);
+    letter-spacing: var(--text-tracking-label);
+}
+
+[data-text-role="meta"] {
+    font-family: var(--text-family-ui);
+    font-size: var(--text-size-meta);
+    font-weight: var(--text-weight-medium);
+    line-height: var(--text-leading-meta);
+    letter-spacing: var(--text-tracking-meta);
+}
+
+[data-text-role="action"] {
+    font-family: var(--text-family-ui);
+    font-size: var(--text-size-action);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-leading-action);
+    letter-spacing: var(--text-tracking-action);
+}
+
+[data-text-role="longform"] {
+    font-family: var(--text-family-longform);
+    font-size: var(--text-size-longform);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-leading-longform);
+    letter-spacing: var(--text-tracking-longform);
+}
