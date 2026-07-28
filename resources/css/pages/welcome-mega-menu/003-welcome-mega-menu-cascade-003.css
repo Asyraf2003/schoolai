@@ -63,8 +63,6 @@
         padding: 13px 0;
         border-block-end: 1px solid rgb(23 79 66 / 0.1);
         color: #17362f;
-        font-size: clamp(1rem, 3.8vw, 1.12rem);
-        font-weight: 780;
     }
 
     .nav-shell .nav-link::after {
@@ -156,8 +154,6 @@
 
     .nav-shell .nav-mega__link strong {
         color: #31544c;
-        font-size: 0.9rem;
-        font-weight: 720;
     }
 
     .nav-shell .nav-mega__link small {
