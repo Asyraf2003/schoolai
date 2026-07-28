@@ -18,10 +18,7 @@
     box-sizing: border-box;
 }
 
-.about-reel__track,
-.about-reel__stage {
-    position: relative;
-}
+.about-reel__track, .about-reel__stage { position: relative; }
 
 .about-reel__stage {
     padding-block: clamp(76px, 12vw, 124px) clamp(92px, 14vw, 144px);
@@ -78,9 +75,7 @@
     margin-block: -0.08em;
 }
 
-.about-reel__headline-line {
-    display: block;
-}
+.about-reel__headline-line { display: block; }
 
 .about-reel__details {
     max-width: 36rem;
@@ -116,10 +111,7 @@
     transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
 }
 
-.about-reel__cta svg {
-    width: 18px;
-    height: 18px;
-}
+.about-reel__cta svg { width: 18px; height: 18px; }
 
 .about-reel__cta path {
     fill: none;
