@@ -169,12 +169,12 @@
       "originalSourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a"
     },
     "resources/css/pages/welcome-mega-menu.css": {
-      "sourceSha256": "13d938164ce781f38d88058e9a9aee459090793517a2753f37078591d626caf6",
+      "sourceSha256": "9f8672c430a52b07ca299301c4d8d83ac21bcbc372a199ad5dacd6d19bb31a41",
       "orderedModules": [
         {
           "path": "./welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css",
-          "lines": 188,
-          "sha256": "2d18497e15baab0177a5adf9f6cc305159d3c4dca90a038628caa6ce316c13e8"
+          "lines": 177,
+          "sha256": "63f92e2bb0750997758e495a09dfede9f0288020d8291dc5f602f9074bb5bdff"
         },
         {
           "path": "./welcome-mega-menu/002-welcome-mega-menu-cascade-002.css",
@@ -183,8 +183,8 @@
         },
         {
           "path": "./welcome-mega-menu/003-welcome-mega-menu-cascade-003.css",
-          "lines": 187,
-          "sha256": "1cfb44a395841c1a1d3aa707d838ff3932950092ab3625e3f56817194e801625"
+          "lines": 183,
+          "sha256": "5c3c0ca69efa1799017f51ef5cc9cf79a6e2ebb3ece5af91d6a1e235c71ecf1b"
         }
       ],
       "originalSourceSha256": "cd273206685efc7db07abebe2f24a5fc65469ff8c431200949bdc86addcec0fa"
