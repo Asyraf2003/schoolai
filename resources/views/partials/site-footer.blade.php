@@ -73,7 +73,7 @@
               @endphp
 
               @if ($isDisabled)
-                <span class="footer-channel footer-channel--{{ $channel['icon'] ?? 'link' }} footer-channel--disabled" aria-disabled="true">
+                <span class="footer-channel footer-channel--{{ $channel['icon'] ?? 'link' }} footer-channel--disabled" aria-disabled="true" aria-label="{{ $channel['label'] ?? '' }}">
               @else
                 <a
                   href="{{ $channelHref }}"
@@ -86,7 +86,8 @@
                 @if (! empty($channel['asset']))
                   <img
                     src="{{ $channel['asset'] }}"
-                    alt="{{ $channel['asset_alt'] ?? ($channel['label'] ?? '') }}"
+                    alt=""
+                    aria-hidden="true"
                     class="footer-channel__asset"
                     loading="lazy"
                     decoding="async"
@@ -95,13 +96,8 @@
                     height="28"
                   />
                 @else
-                  <span class="footer-channel__fallback">{{ substr((string) ($channel['label'] ?? 'LK'), 0, 2) }}</span>
+                  <span class="footer-channel__fallback" aria-hidden="true">{{ substr((string) ($channel['label'] ?? 'LK'), 0, 2) }}</span>
                 @endif
-
-                <span class="footer-channel__body">
-                  <span class="footer-channel__label">{{ $channel['label'] ?? '' }}</span>
-                  <small class="footer-channel__note">{{ $channel['note'] ?? '' }}</small>
-                </span>
               @if ($isDisabled)
                 </span>
               @else
