@@ -116,20 +116,15 @@
 
     .nav-shell .nav-mega__eyebrow {
         color: #f7c66f;
-        font-size: 0.66rem;
     }
 
     .nav-shell .nav-mega__title {
         max-width: 16ch;
-        font-size: clamp(1.65rem, 2.45vw, 2.7rem);
-        line-height: 1.05;
     }
 
     .nav-shell .nav-mega__description {
         max-width: 43ch;
         color: rgb(255 255 255 / 0.82);
-        font-size: 0.86rem;
-        line-height: 1.55;
     }
 
     .nav-shell .nav-mega__links {
@@ -167,14 +162,8 @@
         transform: translateX(-6px);
     }
 
-    .nav-shell .nav-mega__link strong {
-        font-size: clamp(0.98rem, 1.05vw, 1.12rem);
-    }
-
     .nav-shell .nav-mega__link small {
         max-width: 38ch;
-        font-size: 0.78rem;
-        line-height: 1.5;
     }
 }
 
