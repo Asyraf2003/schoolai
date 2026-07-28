@@ -29,6 +29,7 @@
 @media (min-width: 1024px) and (pointer: fine) {
     .about-reel--enhanced {
         --reel-p: var(--about-progress);
+        --spline-p: clamp(0, calc((var(--reel-p) - 0.06) * 1.45), 1);
     }
 
     .about-reel--enhanced .about-reel__track {
@@ -110,19 +111,19 @@
         inset-block-start: 34svh;
         inset-inline-start: -4%;
         margin: 0;
-        opacity: clamp(0.5, calc(0.74 + var(--reel-p) * 0.2), 0.94);
+        opacity: clamp(0, calc(var(--spline-p) * 1.12), 0.94);
         transform: translate3d(
-            calc(var(--reel-p) * 2vw),
+            calc((1 - var(--spline-p)) * -10vw + var(--reel-p) * 2vw),
             calc(var(--reel-p) * -5svh),
             0
         );
-        will-change: transform;
+        will-change: transform, opacity;
     }
 
     .about-reel--enhanced .about-reel__spline-underlay,
     .about-reel--enhanced .about-reel__spline-line {
         stroke-dasharray: 1;
-        stroke-dashoffset: calc(0.34 - var(--reel-p) * 0.34);
+        stroke-dashoffset: calc(1 - var(--spline-p));
     }
 
     .about-reel--enhanced .about-reel__media {
