@@ -742,7 +742,6 @@ return [
         'channels' => [
             [
                 'label' => 'الموقع',
-                'note' => 'خرائط Google',
                 'icon' => 'maps',
                 'asset' => '/media/home/maps.png',
                 'asset_alt' => 'أيقونة الموقع في خرائط Google',
@@ -750,7 +749,6 @@ return [
             ],
             [
                 'label' => 'واتساب',
-                'note' => 'محادثة الإدارة',
                 'icon' => 'whatsapp',
                 'asset' => '/media/home/wa.svg',
                 'asset_alt' => 'أيقونة واتساب',
@@ -758,7 +756,6 @@ return [
             ],
             [
                 'label' => 'إنستغرام',
-                'note' => 'أنشطة المدرسة',
                 'icon' => 'instagram',
                 'asset' => '/media/home/instagram.svg',
                 'asset_alt' => 'أيقونة إنستغرام',
@@ -766,7 +763,6 @@ return [
             ],
             [
                 'label' => 'فيسبوك',
-                'note' => 'صفحة المدرسة',
                 'icon' => 'facebook',
                 'asset' => '/media/home/facebook.png',
                 'asset_alt' => 'أيقونة فيسبوك',
@@ -774,7 +770,6 @@ return [
             ],
             [
                 'label' => 'البريد الإلكتروني',
-                'note' => 'إرسال رسالة',
                 'icon' => 'email',
                 'asset' => '/media/home/gmail.png',
                 'asset_alt' => 'أيقونة Gmail',
