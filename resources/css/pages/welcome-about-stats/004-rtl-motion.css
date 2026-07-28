@@ -56,11 +56,11 @@
     .about-reel:dir(rtl).about-reel--enhanced .about-reel__media {
         transform:
             translate3d(
-                calc(-50% + (1 - var(--reel-p)) * 26vw),
-                calc(-50% + (1 - var(--reel-p)) * 28svh),
+                calc(-50% + (1 - var(--media-p)) * 26vw),
+                calc(-50% + (1 - var(--media-p)) * 28svh),
                 0
             )
-            scale(calc(0.44 + var(--reel-p) * 0.56));
+            scale(calc(0.44 + var(--media-p) * 0.56));
     }
 }
 
