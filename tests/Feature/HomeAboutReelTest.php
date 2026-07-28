@@ -9,20 +9,14 @@ it('renders the localized about reel contract without legacy statistics markup',
         'id' => [
             'line_one' => 'Gagasan Berani,',
             'line_two' => 'Dihidupkan Bersama',
-            'cta' => 'Arah Pendidikan Kami',
-            'media' => 'Lihat Perjalanan Kami',
         ],
         'en' => [
             'line_one' => 'Bold Ideas,',
             'line_two' => 'Brought to Life',
-            'cta' => 'Our Approach',
-            'media' => 'Explore Our Journey',
         ],
         'ar' => [
             'line_one' => 'أفكار جريئة،',
             'line_two' => 'نحوّلها إلى واقع',
-            'cta' => 'نهجنا التعليمي',
-            'media' => 'اكتشف رحلتنا',
         ],
     ];
 
@@ -40,10 +34,9 @@ it('renders the localized about reel contract without legacy statistics markup',
             ->assertSee('aria-labelledby="about-reel-title"', false)
             ->assertSee($expected['line_one'])
             ->assertSee($expected['line_two'])
-            ->assertSee($expected['cta'])
-            ->assertSee($expected['media'])
-            ->assertSee('href="#visi-misi"', false)
             ->assertSee('pathLength="1"', false)
+            ->assertDontSee('about-reel__cta', false)
+            ->assertDontSee('about-reel__media-label', false)
             ->assertDontSee('about-stats-story', false)
             ->assertDontSee('data-about-stats-item', false)
             ->assertDontSee('about-stats-story__tv-neck', false);
