@@ -6,9 +6,6 @@
     min-height: 44px;
     padding-block: 10px;
     color: inherit;
-    font-size: clamp(0.78rem, 0.86vw, 0.93rem);
-    font-weight: 760;
-    letter-spacing: 0.015em;
     white-space: nowrap;
 }
 
@@ -55,8 +52,6 @@ html[dir="rtl"] .nav-shell .nav-link::after {
     color: #ffffff;
     background: rgb(255 255 255 / 0.08);
     box-shadow: none;
-    font-size: 0.83rem;
-    font-weight: 820;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
