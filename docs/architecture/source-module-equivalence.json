@@ -82,7 +82,7 @@
       "originalSourceSha256": "0d5efbb25bb69830cbd2cc7d434eb5156dd26dff1328b3365fb7d7ba78cb4f90"
     },
     "resources/css/pages/welcome-about-stats.css": {
-      "sourceSha256": "076f16a465d9f3df4197fb3ff128e187d93909055dc29fdebea012a050e3568e",
+      "sourceSha256": "ed17b0e7464f6852c3980c18ddad339a15f45ddfc6d039619d020fb19c13d70b",
       "orderedModules": [
         {
           "path": "./welcome-about-stats/001-base.css",
@@ -108,6 +108,11 @@
           "path": "./welcome-about-stats/005-reduced-motion.css",
           "lines": 25,
           "sha256": "de55f75df88be3c0032244292c124385f4393c7b6bc6a3e04c51a3e74aecdfe2"
+        },
+        {
+          "path": "./welcome-about-stats/006-warp-layer.css",
+          "lines": 32,
+          "sha256": "1436e6162f57acd9a57e37954ceef4dabd51f5ec9b9ba05827225bb9d2a38841"
         }
       ],
       "originalSourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db"
@@ -206,7 +211,7 @@
       "originalSourceSha256": "e8c0330c670122a378d6eb0f11fcdab928e257c1e15ee72bc74479a89257fd5e"
     },
     "resources/css/pages/welcome.css": {
-      "sourceSha256": "e2710fd450411450648b6f1e542d5b9ce4cadcf27fccf2d9f7e8414589961fa7",
+      "sourceSha256": "103910236e8f16a360a9047a8187ee70c6bd51ef23e40456b6b407d3e72abd71",
       "orderedModules": [
         {
           "path": "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css",
@@ -345,8 +350,8 @@
         },
         {
           "path": "./welcome/028-urutan-footer-logo-sekolah-media-sosial-halaman-kami.css",
-          "lines": 134,
-          "sha256": "9182506d38ba2411ef590d4339803d7039435b870899669606d660743e9ba6ab"
+          "lines": 162,
+          "sha256": "ccef90a90d72561b7cf51dfa7b3ebb4d8f6ef4e7fe366efc93299d463aa9d9ef"
         },
         {
           "path": "./welcome/029-switch-bahasa-server-side-session-cookie-tetap-aktif.css",
