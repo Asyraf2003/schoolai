@@ -96,9 +96,6 @@
   .language-modal__title {
     margin: 0 0 clamp(28px, 5vw, 48px);
     color: #17362f;
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    font-weight: 820;
     text-align: center;
   }
 
@@ -155,9 +152,4 @@
     box-shadow:
       0 0 0 7px rgba(247, 178, 75, 0.2),
       0 20px 42px rgba(20, 45, 39, 0.22);
-  }
-
-  .language-modal__label {
-    font-size: 0.82rem;
-    font-weight: 800;
   }
