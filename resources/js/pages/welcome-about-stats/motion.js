@@ -48,6 +48,7 @@ export function createReelMotion(root, callbacks) {
         var progress = clamp(-rect.top / range, 0, 1);
 
         root.style.setProperty('--about-progress', progress.toFixed(4));
+        callbacks.onProgress(progress);
     }
 
     function requestRender() {
@@ -64,24 +65,16 @@ export function createReelMotion(root, callbacks) {
     function onIntersection(entries) {
         var entry = entries[entries.length - 1];
         publishProximity(Boolean(entry && entry.isIntersecting));
-
-        if (near) {
-            renderProgress();
-        } else {
-            cancelRender();
-        }
+        if (near) renderProgress();
+        else cancelRender();
     }
 
     function enable() {
         enhanced = true;
         root.classList.add('about-reel--enhanced');
         callbacks.onModeChange(true);
-
-        observer = new IntersectionObserver(onIntersection, {
-            rootMargin: '65% 0px'
-        });
+        observer = new IntersectionObserver(onIntersection, { rootMargin: '65% 0px' });
         observer.observe(track);
-
         window.addEventListener('scroll', requestRender, { passive: true });
         window.addEventListener('resize', requestRender, { passive: true });
         renderProgress();
@@ -91,28 +84,25 @@ export function createReelMotion(root, callbacks) {
         cancelRender();
         window.removeEventListener('scroll', requestRender);
         window.removeEventListener('resize', requestRender);
-
         if (observer) {
             observer.disconnect();
             observer = null;
         }
-
         enhanced = false;
         publishProximity(false);
         callbacks.onModeChange(false);
+        callbacks.onProgress(0);
         root.classList.remove('about-reel--enhanced');
         root.style.setProperty('--about-progress', '0');
     }
 
     function synchronizeMode() {
         if (destroyed) return;
-
         var nextEnhanced = canEnhance();
         if (nextEnhanced === enhanced) {
             if (enhanced) renderProgress();
             return;
         }
-
         disable();
         if (nextEnhanced) enable();
     }
@@ -128,6 +118,5 @@ export function createReelMotion(root, callbacks) {
     addMediaListener(desktopMedia, synchronizeMode);
     addMediaListener(reducedMotionMedia, synchronizeMode);
     synchronizeMode();
-
     return { destroy: destroy };
 }
