@@ -1,6 +1,7 @@
 import { ROOT_SELECTOR, onDocumentReady } from './welcome-about-stats/core.js';
 import { createMediaController } from './welcome-about-stats/media.js';
 import { createReelMotion } from './welcome-about-stats/motion.js';
+import { createReelWarp } from './welcome-about-stats/reel-warp.js';
 
 var destroyReels = null;
 
@@ -10,13 +11,19 @@ function initializeReels() {
     var cleanups = Array.from(document.querySelectorAll(ROOT_SELECTOR)).map(
         function initializeReel(root) {
             var media = createMediaController(root);
+            var warp = createReelWarp(root);
             var motion = createReelMotion(root, {
-                onModeChange: media.setEnabled,
-                onProximityChange: media.setNear
+                onModeChange: function onModeChange(enabled) {
+                    media.setEnabled(enabled);
+                    warp.setEnabled(enabled);
+                },
+                onProximityChange: media.setNear,
+                onProgress: warp.render
             });
 
             return function destroyReel() {
                 motion.destroy();
+                warp.destroy();
                 media.destroy();
             };
         }
