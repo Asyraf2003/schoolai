@@ -742,6 +742,7 @@ return [
         'channels' => [
             [
                 'label' => 'Location',
+                'note' => 'Google Maps',
                 'icon' => 'maps',
                 'asset' => '/media/home/maps.png',
                 'asset_alt' => 'Google Maps location icon',
@@ -749,6 +750,7 @@ return [
             ],
             [
                 'label' => 'WhatsApp',
+                'note' => 'Chat with Admin',
                 'icon' => 'whatsapp',
                 'asset' => '/media/home/wa.svg',
                 'asset_alt' => 'WhatsApp icon',
@@ -756,6 +758,7 @@ return [
             ],
             [
                 'label' => 'Instagram',
+                'note' => 'School Activities',
                 'icon' => 'instagram',
                 'asset' => '/media/home/instagram.svg',
                 'asset_alt' => 'Instagram icon',
@@ -763,6 +766,7 @@ return [
             ],
             [
                 'label' => 'Facebook',
+                'note' => 'School Page',
                 'icon' => 'facebook',
                 'asset' => '/media/home/facebook.png',
                 'asset_alt' => 'Facebook icon',
@@ -770,6 +774,7 @@ return [
             ],
             [
                 'label' => 'Email',
+                'note' => 'Send a Message',
                 'icon' => 'email',
                 'asset' => '/media/home/gmail.png',
                 'asset_alt' => 'Gmail icon',
