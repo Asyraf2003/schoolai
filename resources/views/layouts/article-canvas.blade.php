@@ -12,6 +12,7 @@
   ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>
   @vite([
     'resources/css/pages/article-canvas.css',
+    'resources/css/text-system.css',
     'resources/css/arabic-typography.css',
     'resources/js/pages/article-canvas-arabic.js',
     'resources/js/pages/article-canvas.js',
