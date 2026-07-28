@@ -31,8 +31,8 @@ export function createWarpResources(gl, vertexSource, fragmentSource) {
     if (!program) return null;
     gl.useProgram(program);
 
-    var columns = 28;
-    var rows = 16;
+    var columns = 40;
+    var rows = 24;
     var vertices = [];
     var indices = [];
     for (var row = 0; row <= rows; row += 1) {
@@ -81,6 +81,7 @@ export function createWarpResources(gl, vertexSource, fragmentSource) {
         indexCount: indices.length,
         progressUniform: gl.getUniformLocation(program, 'uProgress'),
         bendUniform: gl.getUniformLocation(program, 'uBend'),
+        pullUniform: gl.getUniformLocation(program, 'uPull'),
         texture: texture
     };
 }
