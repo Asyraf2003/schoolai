@@ -32,7 +32,6 @@
 
     .language-modal__title {
       margin-bottom: 30px;
-      font-size: 1.45rem;
     }
 
     .language-modal__options {
@@ -43,10 +42,6 @@
       width: clamp(76px, 23vw, 104px);
       height: clamp(76px, 23vw, 104px);
       border-width: 4px;
-    }
-
-    .language-modal__label {
-      font-size: 0.72rem;
     }
   }
 
