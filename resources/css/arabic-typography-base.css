@@ -1,6 +1,6 @@
 :root {
   --font-ar-display: "Cairo", sans-serif;
-  --font-ar-body: "Lateef", serif;
+  --font-ar-body: "Cairo", sans-serif;
 }
 
 html[lang="ar"] {
