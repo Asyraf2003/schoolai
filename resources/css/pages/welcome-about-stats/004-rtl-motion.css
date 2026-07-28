@@ -45,22 +45,30 @@
         transform-origin: start top;
     }
 
+    .about-reel:dir(rtl).about-reel--enhanced .about-reel__headline-line--one {
+        transform: translate3d(
+            calc(var(--title-shift-p) * clamp(-70px, -4.4vw, -24px)),
+            calc((1 - var(--title-enter-p)) * 112%),
+            0
+        );
+    }
+
     .about-reel:dir(rtl).about-reel--enhanced .about-reel__details {
         width: min(29vw, 420px);
     }
 
     .about-reel:dir(rtl).about-reel--enhanced .about-reel__spline {
-        inset-block-start: 44svh;
+        inset-block-start: 0;
     }
 
     .about-reel:dir(rtl).about-reel--enhanced .about-reel__media {
         transform:
             translate3d(
-                calc(-50% + (1 - var(--media-p)) * 26vw),
-                calc(-50% + (1 - var(--media-p)) * 28svh),
+                calc(-50% + (1 - var(--media-p)) * 38vw),
+                calc(-50% + (1 - var(--media-p)) * 16svh),
                 0
             )
-            scale(calc(0.44 + var(--media-p) * 0.56));
+            scale(calc(0.28 + var(--media-p) * 0.72));
     }
 }
 
