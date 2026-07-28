@@ -1,6 +1,6 @@
 # Unified Text System — M00 Public Articles Evidence
 
-Status: IN_PROGRESS
+Status: PASS
 Scope: `/artikel` list page and `/artikel/{article:slug}` native reader
 Purpose: persist factual baseline evidence so later sessions continue from proof instead of repeating source discovery.
 Implementation rule: M00 is discovery/documentation only. No text-system implementation or styling cleanup is performed here.
@@ -54,7 +54,9 @@ DB remains content-only. The list render location determines typography roles.
 | Thumbnail fallback number | `.article-index-card__media span` | controller index | `meta` / visual index |
 | Empty-state title | `.article-index-empty h2` | lang/runtime | `component-title` |
 | Empty-state description | `.article-index-empty p` | lang/runtime | `description` |
-| Card link aria-label | `aria-label` on card link | lang + DB title | accessibility action |
+| Card link aria-label | card link `aria-label` | lang + DB title | accessibility action |
+
+Runtime note: in the audited default list state `.article-category-result`, empty title, and empty description were not rendered because no category filter was active and article rows were present. Their absence is data/state-dependent, not an audit failure.
 
 ## 4. Native reader content sources
 
@@ -71,6 +73,12 @@ Locale-selected DB content:
 - related article title/description/href/categories/reading time.
 
 Runtime translation copy supplies navigation, preview state, reading time, related-section labels, and author/footer copy.
+
+The runtime-discovered native reader used for baseline proof was:
+
+`/artikel/belajar-bermakna-dimulai-dari-rasa-ingin-tahu`
+
+It was discovered from the rendered `/artikel` card DOM, not guessed.
 
 ## 5. Native reader role inventory
 
@@ -96,6 +104,8 @@ Runtime translation copy supplies navigation, preview state, reading time, relat
 | Related card description | `.native-related-card__body > span` | DB Article description | `description` |
 | Related read time | `.native-related-card__body em` | runtime | `meta` |
 | Admin preview banner, when applicable | `.native-article__preview-banner` | runtime | `label` / `meta` state UI |
+
+In the sampled current article body, paragraph content was present while `h2`, `h3`, and `figcaption` were absent. Those optional longform descendants remain valid classified roles from source evidence but were not falsely claimed as runtime-present.
 
 ## 6. Important longform decision
 
@@ -135,36 +145,124 @@ M00 records this distinction so later normalization does not flatten article con
 
 Article index card typography is also defined in late shared welcome CSS, especially `045-halaman-artikel-clean-editorial-grid-3-2-1-gambar-ko.css`.
 
-Therefore runtime computed style is still required for both list and reader surfaces.
+Therefore runtime computed style was required for both list and reader surfaces and has now been captured.
 
-## 8. Current M00 article status
+## 8. Runtime proof matrix
 
-Completed:
+Valid runtime computed-style proof exists for both surfaces at all required public widths:
 
-- route/controller discovery;
-- list/reader Blade discovery;
-- DB/lang/runtime content-source classification;
-- initial list role inventory;
-- initial native-reader role inventory;
-- explicit `longform` distinction;
-- reader CSS ownership discovery;
-- article-index late-cascade ownership discovery.
+- ID/LTR: 1440 / 768 / 390;
+- EN/LTR: 1440 / 768 / 390;
+- AR/RTL: 1440 / 768 / 390.
 
-Pending:
+Representative `/artikel` list nodes successfully measured:
 
-- runtime proof for `/artikel` in ID/EN/AR at 1440 / 768 / 390;
-- discover a real current native article href from runtime rather than guessing a slug;
-- runtime proof for that native reader in ID/EN/AR at 1440 / 768 / 390;
-- confirm which optional nodes are present in current data;
-- record locale/responsive baseline findings;
-- close this M00 surface.
+- page title;
+- subtitle;
+- search input;
+- category filter action;
+- card category;
+- card metadata;
+- DB-backed card title;
+- DB-backed card description.
 
-## 9. Next valid step
+Representative native reader nodes successfully measured:
 
-Run one read-only Brave/CDP batch that:
+- back action;
+- DB-backed page title/subtitle;
+- author/byline metadata;
+- tag action;
+- longform root and paragraph;
+- author footer;
+- related label/title;
+- related card metadata/title/description/read-time.
 
-1. audits `/artikel` at all three locales and widths;
-2. discovers a current same-origin native `/artikel/{slug}` href from rendered cards;
-3. audits that native reader at all three locales and widths;
-4. uses the already-proven real language-switch POST forms;
-5. does not repeat browser capability or shared homepage discovery.
+## 9. ID / EN baseline findings
+
+ID and EN resolve to the same typography numerics for equivalent audited list and reader roles. Content length differs, but the role styling baseline is equivalent.
+
+Important list values:
+
+| Role | 1440 | 768 | 390 | Family summary |
+|---|---:|---:|---:|---|
+| list page title | 60.48px | 33.6px | 50.7px | ui-rounded |
+| list subtitle | 19.2px | 18.304px | 17.17px | system-ui |
+| card title | 22.32px | 20.48px | 20.48px | system-ui |
+| card description | 15.68px | 15.68px | 15.68px | system-ui |
+
+The page title is non-monotonic: `50.7px` at 390px is materially larger than `33.6px` at 768px. This is baseline evidence of current responsive cascade behavior, not an M00 fix.
+
+Important reader values:
+
+| Role | 1440 | 768 | 390 | Family summary |
+|---|---:|---:|---:|---|
+| reader page title | 66.4px | 53.76px | 43.2px | Charter-style reader serif |
+| reader subtitle | 24.8px | 23.04px | 20px | Charter-style reader serif |
+| longform paragraph | 20.8px | 18.08px | 18.08px | Charter-style reader serif |
+| related section title | 37.6px | 30.72px | 27.2px | Charter-style reader serif |
+| related card title | 18.88px | 18.88px | 18.88px | Charter-style reader serif |
+
+## 10. Arabic / RTL baseline findings
+
+Arabic runtime correctly renders `lang="ar"` and `dir="rtl"` on list and reader at all three widths.
+
+The Arabic adapter is active, but the baseline is not yet role-normalized.
+
+Observed list behavior:
+
+- page title uses Cairo;
+- subtitle uses Lateef at 36px / 63px line-height across all widths;
+- search input uses Lateef;
+- category action uses Cairo;
+- DB card category/meta use Lateef;
+- **DB card title also uses Lateef**, despite its target role being `component-title`;
+- card description uses Lateef.
+
+Observed reader behavior:
+
+- back action and page title use Cairo;
+- reader subtitle uses Lateef 36px / 63px;
+- author/byline metadata use Cairo;
+- tag action uses Lateef;
+- `.native-article__body` root resolves Lateef 44px / 83.6px;
+- actual longform `<p>` resolves Lateef 36px / 63px;
+- author-footer description resolves Lateef 36px / 63px;
+- related section heading and related-card title use Cairo;
+- related-card description resolves Lateef 36px / 63px.
+
+These differences are baseline evidence for the future locale adapter normalization. M00 does not select replacement numeric values.
+
+## 11. Content parity observation outside typography ownership
+
+The AR runtime still displayed some DB tags/author values such as `Pendidikan`, `Program`, and `Tim Al Mustaqbal` unchanged.
+
+This proves those values are DB/content data rather than locale typography rules. M00 records the fact but does not silently translate or rewrite DB content as part of the text-system refactor.
+
+## 12. M00 article conclusion
+
+FACT:
+
+- list and native reader source ownership are mapped;
+- major visible/accessibility text groups are classified;
+- DB/render-context separation is proven;
+- longform is explicitly separated from ordinary body/description roles;
+- runtime ID/EN/AR and 1440/768/390 proof is complete;
+- optional nodes absent in the sampled state/content are documented rather than invented.
+
+GAP:
+
+- no material M00 evidence gap remains for `/artikel` or the sampled native reader.
+
+DECISION:
+
+- close this surface at M00;
+- preserve the non-monotonic list title, Arabic family/scale differences, and untranslated DB content as baseline findings for later implementation/content work;
+- do not add implementation changes during M00.
+
+STATUS: PASS
+
+## 13. Next valid step
+
+Proceed to M00 discovery for the next locked public surface: `/ppdb`.
+
+Do not repeat article list/reader source discovery or the completed 3-locale × 3-width runtime audit unless later implementation changes this surface.
