@@ -31,11 +31,6 @@
             </linearGradient>
           </defs>
           <path
-            class="about-reel__spline-underlay"
-            d="M -50,80 C 200,80 300,220 300,380 C 300,520 200,680 400,680 C 600,680 650,320 480,320 C 320,320 320,520 500,520 C 680,520 750,700 850,820 C 920,890 980,950 1050,950"
-            pathLength="1"
-          />
-          <path
             class="about-reel__spline-line"
             d="M -50,80 C 200,80 300,220 300,380 C 300,520 200,680 400,680 C 600,680 650,320 480,320 C 320,320 320,520 500,520 C 680,520 750,700 850,820 C 920,890 980,950 1050,950"
             pathLength="1"
@@ -58,22 +53,11 @@
 
           <div class="about-reel__details">
             <p class="about-reel__description">{{ __('home.about_stats_story.description') }}</p>
-            <a class="about-reel__cta" href="#visi-misi">
-              <span>{{ __('home.about_stats_story.cta') }}</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M5 12h13M13 7l5 5-5 5" />
-              </svg>
-            </a>
           </div>
         </div>
 
         @if ($aboutMedia && $aboutImageFallback)
           <figure class="about-reel__media">
-            <figcaption class="about-reel__media-label">
-              <span aria-hidden="true"></span>
-              {{ __('home.about_stats_story.media_label') }}
-            </figcaption>
-
             <div class="about-reel__media-frame">
               <img
                 data-about-reel-image
