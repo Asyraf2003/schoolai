@@ -6,13 +6,11 @@ Branch: `main`
 Repository: `Asyraf2003/schoolai`
 Local checkout: `/home/asyraf/Code/laravel/school/schoolai`
 
-This file is the primary continuation point for the next AI/session. Read it before doing new discovery. Do not repeat work already marked PASS unless a later code change invalidates the stored evidence.
+This file is the primary continuation point. Do not repeat work already marked PASS unless later code changes invalidate stored evidence.
 
 ## 1. Goal
 
 Create one predictable semantic text presentation system for SchoolAI.
-
-Target flow:
 
 ```text
 DB / lang / Blade / JS content
@@ -21,7 +19,7 @@ render location decides semantic role
             ↓
 shared text-system tokens own typography
             ↓
-locale adapter may adjust family/optical scale
+locale adapter may adjust family / optical scale
             ↓
 stable ID / EN / AR UI
 ```
@@ -42,17 +40,11 @@ Canonical roles:
 - `action`
 - `longform`
 
-Target marker during implementation:
-
-```html
-<h2 class="section-title" data-text-role="section-title">...</h2>
-```
-
-Existing component classes stay for layout/behavior. `data-text-role` will express typography ownership.
+Existing component classes continue to own layout/behavior. `data-text-role` expresses typography ownership.
 
 ## 2. Hard workflow rules
 
-Use this chain:
+Use:
 
 ```text
 FACT
@@ -66,7 +58,7 @@ FACT
 → NEXT VALID STEP
 ```
 
-Allowed STATUS values only:
+Allowed statuses only:
 
 - `PASS`
 - `FAIL`
@@ -77,19 +69,18 @@ Rules:
 - zero assumption;
 - repository/runtime evidence first;
 - one atomic surface/batch;
-- one valid next CLI action at a time only when user runtime proof is genuinely required;
+- one valid next CLI action at a time when local runtime proof is required;
 - no unrelated cleanup;
-- no visual redesign as part of typography work;
+- no visual redesign hidden inside typography work;
 - no mass-delete legacy typography;
 - no typography fields/classes in DB;
 - no viewport-based typography logic in JS;
-- admin remains intentionally desktop-only unless separately approved;
+- admin remains desktop-only unless separately approved;
 - use `rg` and `fd`, not `grep` / `find`, for CLI guidance;
-- GitHub writes may go directly to `main` after proof;
-- do not merge/audit old branches unless a concrete missing behavior requires it;
-- do not install Playwright/Puppeteer for this workflow;
-- existing Brave + CDP + Node native WebSocket capability is already proven and must not be rediscovered;
-- `getComputedStyle()` is authoritative when source order/specificity cannot establish the runtime winner.
+- GitHub writes may go directly to `main` after evidence;
+- do not install Playwright/Puppeteer;
+- Brave/CDP/Node native WebSocket browser proof is already established;
+- `getComputedStyle()` is authoritative when source cascade ownership is ambiguous.
 
 ## 3. Locked migration order
 
@@ -107,241 +98,208 @@ M09 article canvas/editor
 M10 legacy cleanup + final audit
 ```
 
-M00 is complete. Typography implementation has not started.
-
 ## 4. Progress
 
-### M00 public surfaces
+### M00 — PASS
 
-PASS:
+All implementation surface groups M02-M09 are baselined.
 
-- homepage `/`, including navbar, Hero, About, core sections, homepage gallery/articles/footer;
+Authoritative evidence exists for:
+
+- homepage `/`;
 - `/galeri`;
 - `/artikel`;
-- `/artikel/{article:slug}` native reader;
-- `/ppdb`.
+- native article reader;
+- `/ppdb`;
+- admin desktop;
+- article canvas/editor.
 
-Public M00 coverage corresponding to M02-M07 is **100%**.
+M00 progress = **100%**.
 
-### M08 admin desktop
+### M01 — PASS
 
-PASS:
+`resources/css/text-system.css` now exists as a focused standalone Vite CSS entry.
 
-- protected admin route/provider tree mapped;
-- Dashboard, PPDB, non-canvas Articles, Gallery + nested section/media management, Statistics, Testimonials, and Hero admin entry views mapped;
-- shared `layouts.admin` render tree mapped;
-- major visible/accessibility text groups classified;
-- Blade/lang/DB/controller/runtime/JS sources separated;
-- CSS ownership recorded;
-- admin shell locale is forced to Indonesian by `ForceAdminLocale`;
-- desktop-only product contract preserved;
-- no M08 implementation performed.
+Runtime order is:
 
-Authoritative evidence:
+```text
+legacy/component CSS
+→ text-system.css
+→ arabic-typography.css
+```
 
-- `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
+Loaded roots:
 
-### M09 article canvas/editor
+- homepage;
+- shared public layout;
+- admin layout;
+- article-canvas layout.
 
-PASS:
+M01 proof returned locally:
 
-- active canvas route/controller/trait tree mapped;
-- dedicated `layouts.article-canvas` render tree mapped;
-- topbar, workspace, block menu, inline/image/code toolbars, dialogs, Unsplash, publish drawer, category editor, and browser-native feedback inventoried;
-- ID/EN document content is Blade-rendered from Article DB values;
-- AR document/button is created by `article-canvas-arabic.js` from persisted DB values before main canvas mount;
-- Arabic autosave persistence through `PersistArabicArticleCanvas` is mapped;
-- all active canvas JS modules were inspected for human-visible/accessibility text creation or mutation;
-- document title/subtitle/body and nested editorial content are mapped to page-title/subtitle/longform hierarchy;
-- CSS pseudo-content and browser-native alert/prompt copy are documented;
-- canvas CSS ownership and Arabic adapter ownership are deterministic from source load order, so no redundant M00 computed-style run was required;
-- no M09 implementation performed.
+- `npm run check:structure` PASS;
+- source checker: 446 files, max 200 lines;
+- `npm run build` PASS;
+- focused regression: 11 passed / 118 assertions;
+- full suite: 139 passed / 1337 assertions;
+- browser DOM loaded generated `text-system-COSzPnPQ.css`;
+- rendered homepage contained zero `data-text-role` markers, proving the foundation remained inert before M02.
 
-Authoritative evidence:
+M01 evidence:
 
-- `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ARTICLE_CANVAS.md`.
+- `docs/architecture/UNIFIED_TEXT_SYSTEM_M01_FOUNDATION.md`.
 
-### M00 overall
+M01 closure commit:
 
-M00 is measured against the 8 implementation surface groups M02-M09.
+- `f3697425600fe0122d59b6f42fe0e76302b14cee` — `docs: close M01 shared text foundation`.
 
-All 8 groups are baselined:
+### Whole project
 
-**M00 progress = 100%.**
+Using the conservative 11-milestone M00-M10 method:
 
-### Whole Unified Text System project
+**overall project progress ≈ 18%.**
 
-M01-M10 implementation has not started.
+M02 is the active milestone.
 
-Using the same conservative milestone-level method as earlier handoffs:
+## 5. Important M01 regression evidence
 
-**overall project progress ≈ 9%.**
+During M01 validation, unrelated/concurrent homepage work exposed two non-text-system issues:
 
-This intentionally does not pretend baseline documentation equals implementation.
+1. source-module equivalence manifest had become stale after valid About/footer evolution;
+2. Indonesian homepage translation structure had diverged from the active controller/view contract.
 
-## 5. Authoritative docs
+Resolved without reverting valid About/footer work:
 
-Read these in this order when needed:
+- `f5dfc5883c0c98cde7527bb7b707a6d3cb0c75e3` — refresh source-module equivalence;
+- `591381b7c1a1b53cffbe88a8b9c5246bf65f8514` — restore homepage translation contract;
+- `ff6be61319477d155844a8d3066ee53643540ca1` — align stale About reel test with intentionally simplified current UI.
 
-1. `docs/architecture/UNIFIED_TEXT_SYSTEM_HANDOFF.md` — primary continuation file.
-2. `docs/architecture/UNIFIED_TEXT_SYSTEM_DOD.md` — workflow, canonical roles, proof gates, migration order.
-3. `docs/architecture/UNIFIED_TEXT_SYSTEM_RATIONALE.md` — architectural rationale.
-4. `docs/architecture/UNIFIED_TEXT_SYSTEM_PREFLIGHT.md` — branch archaeology/preflight closure.
-5. `docs/architecture/ARABIC_TYPOGRAPHY_REFACTOR.md` — Arabic adapter constraints.
-6. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_HOME.md`.
-7. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_HOME_HANDOFF.md`.
-8. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_GALLERY.md`.
-9. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ARTICLES.md`.
-10. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_PPDB.md`.
-11. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ADMIN.md`.
-12. `docs/architecture/UNIFIED_TEXT_SYSTEM_M00_ARTICLE_CANVAS.md`.
+Do not reintroduce the removed About CTA/media label merely to satisfy old expectations.
 
-Do not create duplicate M00 docs for already-covered surfaces.
+The valid About warp module `006-warp-layer.css` must remain.
 
-## 6. Important commits
+## 6. Browser/runtime proof infrastructure
 
-Historical orientation only; current `main` remains truth.
+Already proven:
 
-- `e5f19131a481d979193588eaa03dcf97be16c599` — preflight closed, M00 allowed.
-- `3a55341601c60a4b9468465797e19b6a93b0f195` — homepage M00 closure.
-- `6307dd958934ed518fb19f3f81c5a71a38dc9791` — gallery M00 closure.
-- `5aa76f9eb75c5a9e4da0ce9e9dd8c1a0116bda86` — articles/native reader M00 closure.
-- `4bfc02e6c145b498e3520dbd53be90cc68b38af2` — PPDB M00 runtime closure.
-- `111b8b5349e80e5eb292ef6eb08544ed360009cd` — M08 admin desktop M00 evidence closure.
-- `67373618cff149ccd99f9010cf0e7333268919a4` — M09 article canvas/editor M00 evidence closure.
+- Brave: `/usr/local/bin/brave`;
+- local app: `http://127.0.0.1:8000`;
+- CDP fixed port 9222 works;
+- Node native `WebSocket` works;
+- no Playwright/Puppeteer needed.
 
-## 7. Browser/runtime proof infrastructure already established
-
-Proven environment:
-
-- Brave available at `/usr/local/bin/brave`;
-- headless Chromium/CDP works on fixed port `9222`;
-- CDP protocol is reachable through Node native `WebSocket`;
-- temporary Brave profiles keep user browser state untouched.
-
-Do not repeat capability detection.
-
-Public proof widths already used:
+Required public proof widths:
 
 - 390px;
 - 768px;
 - 1440px.
 
-Public locales:
+Locales:
 
-- ID -> `ltr`;
-- EN -> `ltr`;
-- AR -> `rtl`.
+- ID → LTR;
+- EN → LTR;
+- AR → RTL.
 
-Admin remains desktop-only. Article canvas has responsive declarations in its dedicated CSS, but this typography workflow must not silently redefine admin/editor product support.
+## 7. Baseline facts relevant to M02
 
-## 8. Baseline findings already proven
+M00 semantic mapping for shared navigation:
 
-### Homepage
+- nav links → `action`;
+- navbar CTA → `action`;
+- mega eyebrow → `label`;
+- mega title → `component-title`;
+- mega description → `description`;
+- mega link labels → `action`;
+- mega link descriptions → `description`;
+- language modal title → `component-title`;
+- language options → `action`.
 
-- ID and EN representative computed typography match numerically.
-- Arabic adapter uses Cairo for heading/UI-like text and Lateef for prose/description.
-- Arabic baseline contains very large prose scales in several components; those are implementation evidence, not baseline blockers.
+M00 semantic mapping for Hero:
 
-### Gallery
+- eyebrow → `label`;
+- title → `display`;
+- description → `description`;
+- CTA → `action`.
 
-- ID/EN parity proven at 390/768/1440.
-- AR/RTL proven.
-- Do not invent dead gallery title/caption UI from legacy selectors that are not rendered.
+Representative EN baseline before M02:
 
-### Articles / native reader
+- nav action at 1440: 12.48px / weight 760;
+- nav action at 768: 17.92px / weight 780;
+- nav action at 390: 16px / weight 780;
+- Hero title at 1440: 43.2px / weight 760 / ui-rounded;
+- Hero title at 768: 36.096px;
+- Hero title at 390: 30.42px;
+- Hero description at 1440/768: 13.44px / weight 820;
+- Hero description at 390: 11.84px / weight 820.
 
-- ID/EN list and reader typography match numerically.
-- Public page title has a non-monotonic responsive baseline: 60.48px at 1440, 33.6px at 768, 50.7px at 390.
-- Native reader has a distinct editorial `longform` contract.
-- Arabic reader uses Cairo for title/UI and Lateef for prose with large longform values.
-- DB category/tag localization issues are content evidence, not typography role changes.
+The shared M01 targets are intentionally normalized rather than copying these per-component values.
 
-### PPDB
+## 8. Current M02 source facts
 
-- showcase exists in current runtime data;
-- 1440 enables the existing desktop journey enhancement; 768/390 do not;
-- registration and guide actions were proven against their current destinations;
-- ID/EN computed typography matches numerically at equivalent widths;
-- Arabic uses Cairo/Lateef with several documented size/cascade inconsistencies preserved as M07 implementation evidence.
+Hero markup is in:
 
-### Admin desktop
+`resources/views/home/sections/hero.blade.php`
 
-- active route tree includes route modules plus provider-backed Testimoni and Hero admin routes;
-- admin shell is forced to locale `id`;
-- topbar descriptions and some panel/card descriptions are source-present but currently hidden by scoped CSS;
-- shared JS creates/replaces limited preview/toast/modal text but contains no typography logic;
-- Statistics currently emits `Buka` / `Tutup` through CSS pseudo-content;
-- CSS ownership was source-resolvable for M00.
+Shared navbar markup is in:
 
-### Article canvas/editor
+- `resources/views/partials/site-navbar/header.blade.php`;
+- `resources/views/partials/site-navbar/language-modal.blade.php`.
 
-- dedicated layout loads only canvas CSS, Arabic typography, Arabic injection JS, main canvas JS, and context UI JS;
-- shell `<html>` is fixed `lang="id"` while document content supports ID/EN/AR;
-- ID/EN documents are Blade/DB; AR document is JS-created/DB-persisted;
-- `.canvas-title` -> article `page-title`;
-- `.canvas-subtitle` -> `subtitle`;
-- `.canvas-body` -> `longform` with nested editorial hierarchy/exceptions preserved;
-- save/count/upload/publish/category/Unsplash/error text may be created or mutated by JS/runtime;
-- empty body and empty figcaption have CSS-created placeholder text;
-- Arabic title resolves through the dedicated canvas Arabic family adapter; Arabic subtitle/body use Lateef Arabic lead/longform rules;
-- browser-native alert/prompt copy exists outside app CSS ownership;
-- source load order made M09 cascade ownership deterministic.
+Hero has high-specificity legacy typography in `resources/views/partials/home-hero-copy-layout.blade.php`, including `.home-page .hero-cinema__*` rules.
 
-## 9. What is NOT yet done
+Responsive Hero/nav cascades also contain typography declarations, including:
 
-Do not claim any of the following has started:
+- `resources/css/pages/welcome-hero/008-welcome-hero-cascade-008.css`;
+- `resources/css/pages/welcome-hero/009-welcome-hero-cascade-009.css`;
+- `resources/css/pages/welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css`;
+- `resources/css/pages/welcome-mega-menu/003-welcome-mega-menu-cascade-003.css`;
+- navbar inline style partials, including language-modal typography.
 
-- no `resources/css/text-system.css` foundation;
-- no `data-text-role` rollout;
-- no semantic token implementation;
-- no Arabic selector cleanup for the Unified Text System;
-- no legacy typography deletion;
-- no M01 implementation;
-- no M02-M10 implementation migration;
-- no final implementation build/test/runtime acceptance gate.
+Therefore adding `data-text-role` markers alone is not sufficient. M02 must add semantic markers and then remove only the legacy typography declarations that still win over the shared role layer.
 
-M00 is complete. Do not rediscover its surfaces unless a later code change invalidates a stored baseline.
+Layout, spacing, colors, shadows, dimensions, positioning, transforms, animation, truncation, and interaction behavior must remain component-owned.
 
-## 10. Exact next scope
+## 9. Arabic constraint
 
-Continue with **M01 — shared text-system foundation only**.
+Arabic stays a locale adapter.
 
-M01 goal from the DOD:
+Target ownership:
 
-- create one focused shared typography ownership layer, expected path `resources/css/text-system.css`;
-- define shared semantic typography tokens and role rules;
-- load the foundation without migrating unrelated surfaces yet;
-- do not perform M02-M09 component rollout in the same batch;
-- do not remove legacy component typography before a migrated component has runtime proof;
-- do not change DB/schema;
-- do not add viewport typography logic in JS;
-- preserve Arabic as the locale adapter rather than creating a competing Arabic system.
+- Cairo for display/heading/UI roles;
+- Lateef for prose/description/longform roles.
 
-Required M01 workflow:
+M02 may add semantic-role-aware Arabic adapter rules in the existing Arabic typography layer if required by runtime proof. Do not create a second competing Arabic text system.
 
-FACT
-→ GAP
-→ GOAL
-→ IMPACT
-→ DECISION
-→ EXECUTION
-→ PROOF
-→ STATUS
-→ NEXT VALID STEP
+## 10. Authoritative docs
 
-M01 should PASS only after the foundation is loaded and automated/runtime proof shows it does not accidentally rewrite existing UI before component migration begins.
+Read only as needed:
 
-## 11. First action for the next session
+1. `UNIFIED_TEXT_SYSTEM_HANDOFF.md` — this file;
+2. `UNIFIED_TEXT_SYSTEM_DOD.md`;
+3. `UNIFIED_TEXT_SYSTEM_M01_FOUNDATION.md`;
+4. `UNIFIED_TEXT_SYSTEM_RATIONALE.md`;
+5. `UNIFIED_TEXT_SYSTEM_M00_HOME.md`;
+6. `UNIFIED_TEXT_SYSTEM_M00_HOME_HANDOFF.md`;
+7. `ARABIC_TYPOGRAPHY_REFACTOR.md`;
+8. remaining M00 surface ledgers for later milestones.
 
-Read this handoff and the M01 sections of `UNIFIED_TEXT_SYSTEM_DOD.md`.
+Do not repeat already-proven M00 browser/tooling discovery.
 
-Then inspect the current CSS entry/import architecture from `main` to determine the smallest safe load point for the shared foundation.
+## 11. Exact next scope
 
-Do not:
+Continue **M02 — shared navigation + Hero**.
 
-- repeat M00 homepage/gallery/article/PPDB/admin/canvas discovery;
-- ask the user to repeat stored baseline evidence;
-- start M02 migration before M01 itself passes;
-- mass-clean legacy typography;
-- add semantic markers across all surfaces before the foundation proof is closed.
+Atomic process:
+
+```text
+existing rendered node
+→ assign canonical data-text-role
+→ determine actual winning typography
+→ remove only conflicting legacy typography declarations
+→ runtime proof ID/EN/AR at 390/768/1440
+→ preserve layout/behavior
+→ automated gates
+→ M02 PASS
+```
+
+Do not start M03 before M02 PASS.
