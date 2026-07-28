@@ -468,8 +468,8 @@
         223,
         380
       ],
-      "lines": 158,
-      "sha256": "9bfabbdad2eb722e4368b4f2ba21efd22b1496c9a6f9884843ae3e05e00497be"
+      "lines": 117,
+      "sha256": "3b87f97c7421fec17f53069bf2ed8cde93e19d16a91c28bf4d54ccd2bd15e6cd"
     },
     {
       "source": "resources/views/welcome.blade.php",

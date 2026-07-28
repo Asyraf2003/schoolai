@@ -82,32 +82,32 @@
       "originalSourceSha256": "0d5efbb25bb69830cbd2cc7d434eb5156dd26dff1328b3365fb7d7ba78cb4f90"
     },
     "resources/css/pages/welcome-about-stats.css": {
-      "sourceSha256": "7a4ae1a18392a568309cde77dff563fdedbed1267e17d6ffaf41217fa89f7a95",
+      "sourceSha256": "076f16a465d9f3df4197fb3ff128e187d93909055dc29fdebea012a050e3568e",
       "orderedModules": [
         {
-          "path": "./welcome-about-stats/001-home-about-statistics-scroll-story-a-restrained-rain.css",
-          "lines": 165,
-          "sha256": "cb9a7d6502d82feb16d70504f528bfaabf90c7223868e11979836a5e91f10c6e"
+          "path": "./welcome-about-stats/001-base.css",
+          "lines": 200,
+          "sha256": "d1a9a97ffbcb695457dea6f95ec160997b4a7be002c1a64b39e5d21b815c3898"
         },
         {
-          "path": "./welcome-about-stats/002-the-small-al-mustaqbal-school-line-above-the-title-i.css",
-          "lines": 176,
-          "sha256": "00a2f8682e70049751e5630d6d67fc09c2f37e0aeadf81e8283a110d108fcd90"
+          "path": "./welcome-about-stats/002-desktop-reel.css",
+          "lines": 161,
+          "sha256": "2521fb5167800bf54f5032d962c7ada07eb5c2944f999c8fafa64fcc5cf5c277"
         },
         {
-          "path": "./welcome-about-stats/003-enhanced-desktop-scene.css",
-          "lines": 53,
-          "sha256": "8ca82aa81c5440a315c3a7835ef4cddfe1bcc8bfe723bf9839215193bb34c558"
+          "path": "./welcome-about-stats/003-mobile-static.css",
+          "lines": 90,
+          "sha256": "2aff335a289f7979d470932dfccb06cc768429fa02e31f3d283f8e95952e7fe1"
         },
         {
-          "path": "./welcome-about-stats/004-mobile-tablet.css",
-          "lines": 156,
-          "sha256": "a3872f8ff14e21af7c8e96361fc6ceff6bf5b0ddef5101c390fe7e484bf28a70"
+          "path": "./welcome-about-stats/004-rtl-motion.css",
+          "lines": 71,
+          "sha256": "a93f2d3b3d978af7ade1260458f52d01475b595e09931d57dfd82791b106f70a"
         },
         {
-          "path": "./welcome-about-stats/005-welcome-about-stats-cascade-005.css",
-          "lines": 142,
-          "sha256": "05562cbd26eb2083d9bdf6626cc88d073c8e2f1a7066d57d32633139fc3258fc"
+          "path": "./welcome-about-stats/005-reduced-motion.css",
+          "lines": 25,
+          "sha256": "de55f75df88be3c0032244292c124385f4393c7b6bc6a3e04c51a3e74aecdfe2"
         }
       ],
       "originalSourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db"

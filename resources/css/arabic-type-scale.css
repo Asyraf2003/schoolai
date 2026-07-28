@@ -66,7 +66,6 @@ html[lang="ar"] :is(
 /* Microcopy Lateef. */
 html[lang="ar"] :is(
   .nav-mega__link > small,
-  .about-stats-story__scroll-hint > span,
   .footer-channel__note,
   .site-footer__bottom p
 ) {
@@ -78,7 +77,6 @@ html[lang="ar"] :is(
 html[lang="ar"] :is(
   .nav-mega__description,
   .hero-cinema__description,
-  .about-stats-story__stat-description,
   .section-subtitle,
   .program-spotlight__subtitle,
   .program-card__description,
@@ -109,12 +107,16 @@ html[lang="ar"] .galeri-section
 
 /* Lead dan feature text. */
 html[lang="ar"] :is(
-  .about-stats-story__description,
   .visi-misi__head .section-subtitle,
   .misi-card__text
 ) {
   font-size: var(--text-ar-naskhi-lead);
   line-height: var(--leading-ar-body);
+}
+
+html[lang="ar"] .about-reel__description {
+  font-size: 1.45rem;
+  line-height: 1.82;
 }
 
 html[lang="ar"] .visi-card__text {

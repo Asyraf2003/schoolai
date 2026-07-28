@@ -1,82 +1,42 @@
-import {
-    DESKTOP_QUERY,
-    REDUCED_MOTION_QUERY,
-    ROOT_SELECTOR,
-    STAT_SELECTOR,
-    TRACK_SELECTOR,
-    ensureStatDescription,
-    isRtlDocument,
-} from './welcome-about-stats/core.js';
-import { createLayoutActions } from './welcome-about-stats/layout.js';
-import { installStoryMode } from './welcome-about-stats/mode.js';
-import { createProgressPointerActions } from './welcome-about-stats/progress-pointer.js';
-import { createSceneRenderer } from './welcome-about-stats/renderer.js';
-import { buildTimeline } from './welcome-about-stats/timeline.js';
+import { ROOT_SELECTOR, onDocumentReady } from './welcome-about-stats/core.js';
+import { createMediaController } from './welcome-about-stats/media.js';
+import { createReelMotion } from './welcome-about-stats/motion.js';
 
-(function () {
-    'use strict';
+var destroyReels = null;
 
-    function initializeStory(root) {
-        if (root.getAttribute('data-about-stats-initialized') === 'true') {
-            return;
+function initializeReels() {
+    if (typeof destroyReels === 'function') destroyReels();
+
+    var cleanups = Array.from(document.querySelectorAll(ROOT_SELECTOR)).map(
+        function initializeReel(root) {
+            var media = createMediaController(root);
+            var motion = createReelMotion(root, {
+                onModeChange: media.setEnabled,
+                onProximityChange: media.setNear
+            });
+
+            return function destroyReel() {
+                motion.destroy();
+                media.destroy();
+            };
         }
+    );
 
-        var track = root.querySelector(TRACK_SELECTOR);
-        var sticky = root.querySelector('.about-stats-story__sticky') || root;
-        var statElements = Array.prototype.slice.call(
-            root.querySelectorAll(STAT_SELECTOR)
-        );
-        var progressDots = Array.prototype.slice.call(
-            root.querySelectorAll('[data-about-stats-progress-dot]')
-        );
-        var desktopMedia = window.matchMedia(DESKTOP_QUERY);
-        var reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
-        var context = {
-            root: root,
-            track: track,
-            sticky: sticky,
-            statElements: statElements,
-            progressDots: progressDots,
-            desktopMedia: desktopMedia,
-            reducedMotionMedia: reducedMotionMedia,
-            timeline: buildTimeline(statElements.length),
-            state: {
-                enhanced: false,
-                resizeTimer: null,
-                progressFrame: null,
-                lastFrameTime: 0,
-                targetProgress: 0,
-                renderedProgress: 0,
-                pointerFrame: null,
-                pointerListening: false,
-                pointerX: 0,
-                pointerY: 0,
-                activeIndex: -1,
-                direction: isRtlDocument() ? -1 : 1,
-                mobileObserver: null
-            }
-        };
-
-        if (!track) return;
-
-        root.setAttribute('data-about-stats-initialized', 'true');
-        statElements.forEach(ensureStatDescription);
-
-        var layout = createLayoutActions(context);
-        var renderScene = createSceneRenderer(context, layout);
-        var progress = createProgressPointerActions(context, layout, renderScene);
-        installStoryMode(context, layout, progress);
-    }
-
-    function initialize() {
-        document.querySelectorAll(ROOT_SELECTOR).forEach(initializeStory);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize, {
-            once: true
+    destroyReels = function destroyAllReels() {
+        cleanups.forEach(function cleanupReel(cleanup) {
+            cleanup();
         });
-    } else {
-        initialize();
-    }
-})();
+        cleanups = [];
+        destroyReels = null;
+    };
+}
+
+onDocumentReady(initializeReels);
+
+window.addEventListener('pagehide', function cleanupAboutReels() {
+    if (typeof destroyReels === 'function') destroyReels();
+});
+
+window.addEventListener('pageshow', function restoreAboutReels(event) {
+    if (event.persisted) initializeReels();
+});

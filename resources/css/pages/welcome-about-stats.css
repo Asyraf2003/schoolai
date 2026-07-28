@@ -1,5 +1,5 @@
-@import "./welcome-about-stats/001-home-about-statistics-scroll-story-a-restrained-rain.css";
-@import "./welcome-about-stats/002-the-small-al-mustaqbal-school-line-above-the-title-i.css";
-@import "./welcome-about-stats/003-enhanced-desktop-scene.css";
-@import "./welcome-about-stats/004-mobile-tablet.css";
-@import "./welcome-about-stats/005-welcome-about-stats-cascade-005.css";
+@import "./welcome-about-stats/001-base.css";
+@import "./welcome-about-stats/002-desktop-reel.css";
+@import "./welcome-about-stats/003-mobile-static.css";
+@import "./welcome-about-stats/004-rtl-motion.css";
+@import "./welcome-about-stats/005-reduced-motion.css";

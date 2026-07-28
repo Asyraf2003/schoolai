@@ -175,7 +175,6 @@ return [
     ],
 
     'about_stats_story' => [
-        'section_label' => 'عن مدرسة المستقبل',
         'board_title' => 'مدرسة المستقبل',
         'headline_line_one' => 'أفكار جريئة،',
         'headline_line_two' => 'نحوّلها إلى واقع',

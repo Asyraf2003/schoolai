@@ -175,7 +175,6 @@ return [
     ],
 
     'about_stats_story' => [
-        'section_label' => 'Tentang Al Mustaqbal School',
         'board_title' => 'Al Mustaqbal School',
         'headline_line_one' => 'Gagasan Berani,',
         'headline_line_two' => 'Dihidupkan Bersama',

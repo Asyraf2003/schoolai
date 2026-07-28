@@ -175,7 +175,6 @@ return [
     ],
 
     'about_stats_story' => [
-        'section_label' => 'About Al Mustaqbal School',
         'board_title' => 'Al Mustaqbal School',
         'headline_line_one' => 'Bold Ideas,',
         'headline_line_two' => 'Brought to Life',

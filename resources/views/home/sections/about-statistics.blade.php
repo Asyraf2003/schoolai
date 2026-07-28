@@ -13,7 +13,6 @@
   class="about-reel"
   id="tentang"
   data-about-reel
-  data-media-kind="{{ $aboutMediaRenderType }}"
   aria-labelledby="about-reel-title"
 >
   <div class="about-reel__track" data-about-reel-track>
@@ -72,7 +71,7 @@
         </svg>
 
         @if ($aboutMedia && $aboutImageFallback)
-          <figure class="about-reel__media" data-about-reel-media>
+          <figure class="about-reel__media">
             <figcaption class="about-reel__media-label">
               <span aria-hidden="true"></span>
               {{ __('home.about_stats_story.media_label') }}
@@ -80,7 +79,6 @@
 
             <div class="about-reel__media-frame">
               <img
-                class="about-reel__media-fallback"
                 src="{{ $aboutImageFallback }}"
                 alt="{{ $aboutMediaAlt }}"
                 width="1920"
