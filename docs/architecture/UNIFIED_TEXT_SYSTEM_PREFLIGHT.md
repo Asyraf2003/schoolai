@@ -6,44 +6,49 @@ Execution rule: no typography implementation while this preflight is incomplete
 
 ## 1. Why this preflight exists
 
-The unified text-system project depends on `main` being the correct product baseline. Old agent branches may be unmerged by ancestry even when their intent has already been absorbed or superseded by later work. Therefore branch ancestry alone is not sufficient evidence that functionality is missing.
+The unified text-system project depends on `main` being the correct product baseline. Old agent branches may be unmerged by ancestry even when their intent has already been absorbed, reimplemented, or deliberately superseded by later work.
 
-Classification must be based on:
+Branch ancestry alone is therefore not evidence that functionality is missing.
+
+Classification uses:
 
 ```text
 branch ancestry
-+ patch uniqueness
++ patch uniqueness/equivalence
 + current-main feature evidence
++ later product policy
 + architectural intent
 = branch status
 ```
 
-Possible statuses:
+Allowed statuses:
 
 - `PRESENT_IN_MAIN`
 - `SUPERSEDED_BY_MAIN`
+- `SUPERSEDED_BY_MAIN_POLICY`
 - `MERGE_ONLY_NO_UNIQUE_PATCH`
 - `NEEDS_DEEP_AUDIT`
 - `MISSING_FROM_MAIN`
 
 No old branch is merged merely because `git branch --no-merged` or `git cherry` reports unique history.
 
-## 2. Confirmed main baseline
+## 2. Product baseline
 
-Confirmed local/remote baseline after fetch/pull:
+The code baseline confirmed before preflight documentation began was:
 
 ```text
 branch: main
-local main: a1ccaea180d5e2e7780f23c9fabe71d5b2dc6353
-origin/main: a1ccaea180d5e2e7780f23c9fabe71d5b2dc6353
-divergence: 0 / 0
+product HEAD: a1ccaea180d5e2e7780f23c9fabe71d5b2dc6353
 working tree: clean
 ```
 
-This baseline includes:
+Later `main` commits in this preflight are documentation-only unless explicitly recorded otherwise.
+
+The unified-text planning documents are:
 
 - `docs/architecture/UNIFIED_TEXT_SYSTEM_DOD.md`
 - `docs/architecture/UNIFIED_TEXT_SYSTEM_RATIONALE.md`
+- this preflight document
 
 ## 3. Local branch audit
 
@@ -65,17 +70,17 @@ Decision: do not merge.
 
 ### `agent/admin-ui-foundation`
 
-Unique historical intent:
+Historical intent:
 
 - create one `resources/css/pages/admin.css` file;
 - load it through `resources/css/app.css`;
 - remove the large inline admin stylesheet from `layouts/admin.blade.php`.
 
-Evidence from current `main`:
+Current-main evidence:
 
-- the old branch creates a monolithic `admin.css` of 1,863 lines;
-- current `main` instead has a newer split admin architecture under `resources/views/layouts/admin/styles/*` plus current admin panel CSS entries;
-- `layouts/admin.blade.php` explicitly includes focused style fragments such as foundation, topbar, forms, desktop shell, gallery management, statistics, notifications, and delete dialog.
+- the historical branch creates a monolithic `admin.css` of 1,863 lines;
+- current `main` instead has the newer split architecture under `resources/views/layouts/admin/styles/*` plus current admin-panel CSS entries;
+- `layouts/admin.blade.php` explicitly includes focused style fragments for foundation, topbar, forms, desktop shell, gallery management, statistics, notifications, delete dialog, and related admin surfaces.
 
 Status:
 
@@ -85,47 +90,54 @@ SUPERSEDED_BY_MAIN
 
 Decision: do not merge. Reintroducing the branch would regress the newer split-source hardening architecture.
 
-## 4. Remote branch families detected
+## 4. Remote feature families
 
-Unmerged remote branches are being audited by feature family rather than individually.
+Unmerged remote branches are audited by feature family rather than by raw branch count.
 
-Families currently identified:
+Families identified:
 
-1. Hero DB/admin/playback
-2. Admin dashboard/unified UI
-3. Article canvas Arabic/contextual UI
-4. Gallery create/media-entry flow
-5. Gallery video embeds
+1. Hero DB/admin/playback — PASS
+2. Admin dashboard/unified UI — PENDING
+3. Article canvas Arabic/contextual UI — PENDING
+4. Gallery create/media-entry flow — PENDING
+5. Gallery video embeds — PENDING
 
-Each family must reach a final classification before M00 begins.
+Every family must reach a final classification before M00 begins.
 
 ## 5. Hero family audit
 
-### Current main evidence
+Family status:
 
-Current `main` already contains a mature Hero implementation, including:
+```text
+PASS
+```
 
-- `app/Models/HeroSlide.php`
-- `app/Http/Controllers/Admin/HeroSlideAdminController.php`
-- focused Hero controller concerns
-- `app/Providers/HeroServiceProvider.php`
-- Hero provider concerns for article-backed slides, DB injection, normalization, and route integration
-- Hero migrations and seeder
-- admin Hero index/form/partials
-- homepage Hero rendering
-- Hero JS split into slider-media and slider-playback modules
-- feature/unit tests for admin Hero, database fallback, article placement, homepage rendering, and Hero video URLs
+No Hero branch currently provides evidence of required product functionality missing from `main`.
 
-Current Hero behavior also explicitly rejects YouTube as Hero background media and uses native/direct video or image media. Current tests assert that legacy YouTube Hero media does not render.
+### 5.1 Current-main Hero evidence
 
-### `origin/agent/hero-db-admin-clean`
+Current `main` contains:
 
-Unique files are verification payload/workflow artifacts only:
+- `HeroSlide` model;
+- Hero migrations and seeding;
+- Hero admin controller split into focused concerns;
+- Hero admin index/form/partials;
+- `HeroServiceProvider` and focused provider concerns;
+- article-backed Hero placement;
+- DB Hero injection and fallback behavior;
+- homepage Hero rendering;
+- Hero JS split into media and playback modules;
+- focused feature/unit coverage for admin Hero, DB fallback, article placement, homepage Hero, and Hero video URL rules.
 
-- `.github/hero-db-admin.patch.gz.b64.part*`
-- `.github/workflows/hero-db-admin-clean-verify.yml`
+Current policy also explicitly rejects YouTube as Hero background media and removes legacy YouTube Hero media. Native/direct video or image media is the current supported Hero policy.
 
-Unique commits are all verification/materialization chores rather than product implementation.
+### 5.2 `origin/agent/hero-db-admin-clean`
+
+Unique branch content is verification/materialization infrastructure:
+
+- encoded patch payload chunks;
+- temporary Hero clean-verification workflow;
+- verification/debug chores.
 
 Status:
 
@@ -135,15 +147,14 @@ SUPERSEDED_BY_MAIN
 
 Decision: do not merge.
 
-### `origin/agent/hero-db-admin-verify`
+### 5.3 `origin/agent/hero-db-admin-verify`
 
-Unique files are verification/debug payloads only:
+Unique branch content is verification/debug infrastructure:
 
 - patch payload chunks;
-- verification markers/error capture files;
-- temporary GitHub Actions verification workflows.
-
-Unique commits are verification/debug/retrigger commits rather than product implementation.
+- verification markers and captured failures;
+- temporary verification/debug workflows;
+- repeated verification/retrigger commits.
 
 Status:
 
@@ -153,9 +164,9 @@ SUPERSEDED_BY_MAIN
 
 Decision: do not merge.
 
-### `origin/agent/hero-db-admin-final`
+### 5.4 `origin/agent/hero-db-admin-final`
 
-Historical branch intent includes:
+Historical product intent includes:
 
 - HeroSlide model/migration;
 - Hero admin controller/index/form;
@@ -164,9 +175,7 @@ Historical branch intent includes:
 - tests for admin Hero, DB fallback, and video normalization;
 - admin link to Hero manager.
 
-Current `main` contains all of those product-level capabilities and has evolved them further into smaller concerns, article-backed Hero placement, additional migrations, seeding, and current tests.
-
-Patch identity differs because the implementation continued evolving after the branch, but current-main functional evidence covers the branch's product intent.
+Current `main` contains those capabilities and has evolved them further into smaller concerns, article-backed placement, additional migrations, seeding, and current tests.
 
 Status:
 
@@ -176,25 +185,87 @@ SUPERSEDED_BY_MAIN
 
 Decision: do not merge.
 
-### Pending Hero branches
+### 5.5 `origin/agent/hero-media-duration`
 
-The following branches still require evidence because the previous CLI audit was interrupted by the terminal pager before their output was captured:
+Patch evidence:
 
-- `origin/agent/hero-media-duration`
-- `origin/agent/hero-youtube-background-clean`
+```text
+- 06c19e0 feat: wait for hero media playback before advancing
++ 5aee09e chore: continue hero timing verification after dependency advisories
+```
 
-Do not classify them solely from branch names or commit counts.
+The actual product patch is patch-equivalent to `main`. The only patch-unique commit is verification/audit continuation.
 
-## 6. Preflight gate
+Current-main runtime source further confirms the intent: `resources/js/pages/welcome-hero/slider-playback.js` states that video slides own their duration and advance after the media ends, while ordinary slides use the configured timer.
 
-Preflight remains:
+Status:
+
+```text
+PRESENT_IN_MAIN
+```
+
+Decision: do not merge.
+
+### 5.6 `origin/agent/hero-youtube-background-clean`
+
+Patch evidence:
+
+```text
+- 61b3922 fix: harden YouTube hero background playback
+- aabdbfa test: cover clean YouTube hero playback parameters
+- a9f202f fix: render YouTube hero as clean background media
++ f4771ed ci: continue audits for temporary hero verification
+```
+
+All three product/test patches are patch-equivalent in repository history. The only patch-unique commit is temporary CI continuation.
+
+However, current `main` intentionally moved beyond that behavior:
+
+- Hero admin validation rejects YouTube media;
+- Hero media management reports YouTube as unsupported;
+- migration `2026_07_22_000003_remove_legacy_youtube_hero_media.php` removes/replaces legacy YouTube Hero content;
+- current tests assert Hero output does not render YouTube media.
+
+Therefore the historical YouTube-background capability is not missing. It was later superseded by an explicit product policy.
+
+Status:
+
+```text
+SUPERSEDED_BY_MAIN_POLICY
+```
+
+Decision: do not merge. Reintroducing this branch would conflict with current Hero media policy.
+
+## 6. Hero family conclusion
+
+Classification matrix:
+
+| Branch | Status | Action |
+| --- | --- | --- |
+| `hero-db-admin-clean` | `SUPERSEDED_BY_MAIN` | do not merge |
+| `hero-db-admin-final` | `SUPERSEDED_BY_MAIN` | do not merge |
+| `hero-db-admin-verify` | `SUPERSEDED_BY_MAIN` | do not merge |
+| `hero-media-duration` | `PRESENT_IN_MAIN` | do not merge |
+| `hero-youtube-background-clean` | `SUPERSEDED_BY_MAIN_POLICY` | do not merge |
+
+Hero family gate:
+
+```text
+HERO_PREFLIGHT=PASS
+MISSING_REQUIRED_HERO_FUNCTIONALITY=NO_EVIDENCE
+MERGE_OLD_HERO_BRANCHES=NO
+```
+
+## 7. Preflight gate
+
+Overall preflight remains:
 
 ```text
 STATUS=IN_PROGRESS
 ```
 
-M00 may begin only when every identified remote feature family is classified and there is no unresolved evidence of product functionality missing from `main`.
+M00 may begin only when every identified remote feature family is classified and there is no unresolved evidence of required product functionality missing from `main`.
 
-## 7. Next valid evidence
+## 8. Next valid evidence
 
-Capture the remaining two Hero branches with the Git pager disabled. Only after those two are classified may the Hero family be marked complete.
+Audit exactly one remaining family next. Do not merge, delete, or rewrite branches during evidence collection.
