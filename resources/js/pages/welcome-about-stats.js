@@ -17,7 +17,10 @@ function initializeReels() {
                     media.setEnabled(enabled);
                     warp.setEnabled(enabled);
                 },
-                onProximityChange: media.setNear,
+                onProximityChange: function onProximityChange(near) {
+                    media.setNear(near);
+                    warp.setNear(near);
+                },
                 onProgress: warp.render
             });
 
