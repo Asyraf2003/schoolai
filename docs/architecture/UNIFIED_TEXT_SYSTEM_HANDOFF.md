@@ -4,13 +4,10 @@ Status: ACTIVE
 Date: 2026-07-29
 Branch: `main`
 Repository: `Asyraf2003/schoolai`
-Local checkout: `/home/asyraf/Code/laravel/school/schoolai`
 
-This file is the primary continuation point. Do not repeat work already marked PASS unless later code changes invalidate stored evidence.
+This is the primary continuation point. Do not repeat work already proven unless later code changes invalidate the evidence.
 
 ## 1. Goal
-
-Create one predictable semantic text presentation system for SchoolAI.
 
 ```text
 DB / lang / Blade / JS content
@@ -19,12 +16,12 @@ render location decides semantic role
             ↓
 shared text-system tokens own typography
             ↓
-locale adapter may adjust family / optical scale
+locale adapter adapts family/tracking/direction only as needed
             ↓
 stable ID / EN / AR UI
 ```
 
-`Seragam` means equivalent semantic hierarchy, not identical numeric font sizes.
+`Seragam` means equivalent semantic hierarchy, not identical numeric size for every node.
 
 Canonical roles:
 
@@ -40,7 +37,7 @@ Canonical roles:
 - `action`
 - `longform`
 
-Existing component classes continue to own layout/behavior. `data-text-role` expresses typography ownership.
+Existing component classes keep layout/behavior ownership. `data-text-role` owns typography.
 
 ## 2. Hard workflow rules
 
@@ -66,28 +63,26 @@ Allowed statuses only:
 
 Rules:
 
-- zero assumption;
-- repository/runtime evidence first;
+- evidence first;
 - one atomic surface/batch;
-- one valid next CLI action at a time when local runtime proof is required;
+- one safe local CLI action at a time when runtime proof is required;
 - no unrelated cleanup;
-- no visual redesign hidden inside typography work;
-- no mass-delete legacy typography;
-- no typography fields/classes in DB;
-- no viewport-based typography logic in JS;
-- admin remains desktop-only unless separately approved;
-- use `rg` and `fd`, not `grep` / `find`, for CLI guidance;
+- no hidden layout/animation redesign;
+- no DB typography fields;
+- no viewport typography in JS;
+- no mass-delete legacy CSS;
+- admin remains desktop-only;
+- use `rg`/`fd`, not `grep`/`find`;
 - GitHub writes may go directly to `main` after evidence;
-- do not install Playwright/Puppeteer;
-- Brave/CDP/Node native WebSocket browser proof is already established;
-- `getComputedStyle()` is authoritative when source cascade ownership is ambiguous.
+- Brave + CDP + native Node WebSocket are already proven;
+- `getComputedStyle()` is authoritative for resolved typography.
 
 ## 3. Locked migration order
 
 ```text
-M00 baseline text-role inventory
+M00 baseline inventory
 M01 shared text-system foundation
-M02 shared navigation + hero
+M02 shared navigation + Hero
 M03 homepage core
 M04 homepage gallery/article/footer
 M05 public gallery
@@ -98,29 +93,19 @@ M09 article canvas/editor
 M10 legacy cleanup + final audit
 ```
 
+Do not start M03 before M02 PASS.
+
 ## 4. Progress
 
 ### M00 — PASS
 
-All implementation surface groups M02-M09 are baselined.
+All M02-M09 surfaces have baseline role inventories.
 
-Authoritative evidence exists for:
-
-- homepage `/`;
-- `/galeri`;
-- `/artikel`;
-- native article reader;
-- `/ppdb`;
-- admin desktop;
-- article canvas/editor.
-
-M00 progress = **100%**.
+M00 is historical evidence. Old Arabic measurements/family observations are not automatically target values.
 
 ### M01 — PASS
 
-`resources/css/text-system.css` now exists as a focused standalone Vite CSS entry.
-
-Runtime order is:
+`resources/css/text-system.css` exists and loads in this order:
 
 ```text
 legacy/component CSS
@@ -128,67 +113,219 @@ legacy/component CSS
 → arabic-typography.css
 ```
 
-Loaded roots:
+Stored proof:
 
-- homepage;
-- shared public layout;
-- admin layout;
-- article-canvas layout.
-
-M01 proof returned locally:
-
-- `npm run check:structure` PASS;
-- source checker: 446 files, max 200 lines;
-- `npm run build` PASS;
-- focused regression: 11 passed / 118 assertions;
-- full suite: 139 passed / 1337 assertions;
-- browser DOM loaded generated `text-system-COSzPnPQ.css`;
-- rendered homepage contained zero `data-text-role` markers, proving the foundation remained inert before M02.
+- structure PASS, 446 source files, max 200 lines;
+- build PASS;
+- focused regression 11 passed / 118 assertions;
+- full suite 139 passed / 1337 assertions;
+- browser confirmed generated text-system CSS loaded;
+- pre-M02 homepage had zero role markers, proving M01 foundation was inert.
 
 M01 evidence:
 
-- `docs/architecture/UNIFIED_TEXT_SYSTEM_M01_FOUNDATION.md`.
+`docs/architecture/UNIFIED_TEXT_SYSTEM_M01_FOUNDATION.md`
 
-M01 closure commit:
+### M02 — ACTIVE
 
-- `f3697425600fe0122d59b6f42fe0e76302b14cee` — `docs: close M01 shared text foundation`.
+Semantic mapping is implemented for shared Navbar/Mega Menu/Language Modal and Hero.
 
-### Whole project
+Representative roles:
 
-Using the conservative 11-milestone M00-M10 method:
+Navbar:
 
-**overall project progress ≈ 18%.**
+- normal nav link → `action`;
+- language trigger → `action`;
+- mega eyebrow → `label`;
+- mega title → `component-title`;
+- mega description → `description`;
+- mega link label → `action`;
+- mega link description → `description`;
+- navbar CTA → `action`.
 
-M02 is the active milestone.
+Hero:
 
-## 5. Important M01 regression evidence
+- eyebrow → `label`;
+- title → `display`;
+- description → `description`;
+- CTA → `action` when present.
 
-During M01 validation, unrelated/concurrent homepage work exposed two non-text-system issues:
+Language modal:
 
-1. source-module equivalence manifest had become stale after valid About/footer evolution;
-2. Indonesian homepage translation structure had diverged from the active controller/view contract.
+- title → `component-title`;
+- option label → `action`.
 
-Resolved without reverting valid About/footer work:
+## 5. M02 source work already done
 
-- `f5dfc5883c0c98cde7527bb7b707a6d3cb0c75e3` — refresh source-module equivalence;
-- `591381b7c1a1b53cffbe88a8b9c5246bf65f8514` — restore homepage translation contract;
-- `ff6be61319477d155844a8d3066ee53643540ca1` — align stale About reel test with intentionally simplified current UI.
+Relevant M02 commits include:
 
-Do not reintroduce the removed About CTA/media label merely to satisfy old expectations.
+- `f1153695` — Hero semantic roles;
+- `f633f56c` — Navbar semantic roles;
+- `452cf6b0` — Language modal roles;
+- `9e905eb9` — remove Hero typography ownership from local inline layer;
+- `98a9a229` — desktop mega typography handoff;
+- `ed9cecd4` — responsive nav typography handoff;
+- `00831af4` — language-modal typography handoff;
+- `e17ade53` — responsive modal typography cleanup;
+- `ce46f56f` — Arabic semantic adapter;
+- `c0999826` — remove winning legacy Navbar typography from `welcome-hero/002`;
+- `9f83de93` — retire legacy Arabic optical scale.
 
-The valid About warp module `006-warp-layer.css` must remain.
+Manifest source-equivalence was refreshed with exact local hashes after module edits.
 
-## 6. Browser/runtime proof infrastructure
+## 6. M02 automated proof already returned
 
-Already proven:
+Before the latest Cairo-only adjustment:
+
+- structure PASS;
+- `git diff --check` PASS;
+- Vite build PASS;
+- full PHP test suite PASS.
+
+After Navbar cascade fix:
+
+- structure PASS;
+- rebuild PASS.
+
+Because `arabic-type-scale.css` changed again under the Cairo-only decision, automated gates must be rerun after pulling current `main` before M02 closure.
+
+## 7. M02 runtime proof already returned
+
+### EN / 1440 — PASS
+
+Browser computed-style evidence after Navbar fix:
+
+Navbar action:
+
+```text
+role: action
+size: 15px
+weight: 600
+line-height: 19.5px
+letter-spacing: normal
+family: system-ui...
+```
+
+Hero eyebrow:
+
+```text
+role: label
+size: 13px
+weight: 600
+line-height: 16.9px
+```
+
+Hero title:
+
+```text
+role: display
+size: 71.2px
+weight: 700
+line-height: 69.776px
+family: ui-rounded...
+```
+
+Hero description:
+
+```text
+role: description
+size: 16.8px
+weight: 400
+line-height: 27.72px
+```
+
+This proves the shared semantic system now wins for representative EN Navbar + Hero nodes at 1440px.
+
+Hero CTA was absent on the active rendered slide and was therefore not a failure.
+
+Still missing for M02 closure:
+
+- EN 768/390;
+- ID 1440/768/390;
+- AR 1440/768/390 under the new Cairo-only contract;
+- representative Mega Menu/Language Modal runtime proof where needed;
+- final automated gates after current Cairo-only runtime adjustment.
+
+## 8. Arabic contract changed on 2026-07-29
+
+This is a major intentional contract update.
+
+Old target, now retired:
+
+```text
+Cairo → display/UI
+Lateef → prose/description/longform
+Arabic-only enlarged optical scale → compensate for Lateef
+```
+
+Current target:
+
+```text
+ALL Arabic semantic roles → Cairo
+shared text-system → size/weight/line-height
+Arabic adapter → family + normal tracking + RTL/directional behavior
+```
+
+Facts:
+
+- `--font-ar-display` resolves to Cairo;
+- `--font-ar-body` resolves to Cairo;
+- `arabic-type-scale.css` no longer contains the old enlarged Arabic/Naskhi scale;
+- role adapter continues to use shared semantic size tokens;
+- Lateef is not an M02 acceptance target.
+
+The old scale included values up to 2.25rem / 2.75rem / 3.25rem to compensate for Lateef. Those values must not return.
+
+Historical M00 docs may still mention Lateef. Treat those as historical baseline only.
+
+Canonical Arabic doc:
+
+`docs/architecture/ARABIC_TYPOGRAPHY_REFACTOR.md`
+
+Canonical DOD has also been rewritten to the Cairo-only contract.
+
+`@fontsource/lateef` may remain temporarily as an unused package dependency. It is not imported at runtime. Dead dependency cleanup belongs to M10 unless package validation requires earlier removal.
+
+## 9. Repository hygiene incident resolved
+
+Commit `82ac0cd` accidentally created 207 empty root files named after translation keys such as `articles.cta,`, `hero.slides.0,`, and `Indonesian`.
+
+They were proven unrelated and removed in:
+
+- `c9c3738` — `chore: remove accidental translation-key files`.
+
+Do not recreate them.
+
+The intentional changes from `82ac0cd` that remain are:
+
+- Arabic body/display aliases both resolve to Cairo;
+- Arabic typography entry no longer imports Lateef faces;
+- source-module-equivalence update.
+
+## 10. Concurrent About work
+
+Do not revert unrelated valid About evolution.
+
+Known valid state includes:
+
+- simplified About reel without stale CTA/media label;
+- continuous reel/line work;
+- `006-warp-layer.css` is intentional;
+- About motion/layout work is separate from Unified Text M02.
+
+Typography migration may touch About only starting M03 and only for semantic text ownership.
+
+## 11. Browser proof infrastructure
+
+Already established:
 
 - Brave: `/usr/local/bin/brave`;
-- local app: `http://127.0.0.1:8000`;
-- CDP fixed port 9222 works;
+- app: `http://127.0.0.1:8000`;
+- CDP works;
 - Node native `WebSocket` works;
 - no Playwright/Puppeteer needed.
 
-Required public proof widths:
+Required public widths:
 
 - 390px;
 - 768px;
@@ -200,106 +337,35 @@ Locales:
 - EN → LTR;
 - AR → RTL.
 
-## 7. Baseline facts relevant to M02
+## 12. Authoritative documents
 
-M00 semantic mapping for shared navigation:
+Priority:
 
-- nav links → `action`;
-- navbar CTA → `action`;
-- mega eyebrow → `label`;
-- mega title → `component-title`;
-- mega description → `description`;
-- mega link labels → `action`;
-- mega link descriptions → `description`;
-- language modal title → `component-title`;
-- language options → `action`.
+1. `UNIFIED_TEXT_SYSTEM_HANDOFF.md` — current continuation state;
+2. `UNIFIED_TEXT_SYSTEM_DOD.md` — workflow and DoD;
+3. `ARABIC_TYPOGRAPHY_REFACTOR.md` — Cairo-only Arabic contract;
+4. `UNIFIED_TEXT_SYSTEM_M01_FOUNDATION.md` — M01 evidence;
+5. M00 ledgers — historical baseline/evidence for each surface.
 
-M00 semantic mapping for Hero:
+If an older M00 Arabic statement says Lateef should be the target, ignore the target interpretation. M00 only records the old runtime state.
 
-- eyebrow → `label`;
-- title → `display`;
-- description → `description`;
-- CTA → `action`.
+## 13. Exact next valid step
 
-Representative EN baseline before M02:
+Current M02 status:
 
-- nav action at 1440: 12.48px / weight 760;
-- nav action at 768: 17.92px / weight 780;
-- nav action at 390: 16px / weight 780;
-- Hero title at 1440: 43.2px / weight 760 / ui-rounded;
-- Hero title at 768: 36.096px;
-- Hero title at 390: 30.42px;
-- Hero description at 1440/768: 13.44px / weight 820;
-- Hero description at 390: 11.84px / weight 820.
+`BLOCKED_BY_MISSING_EVIDENCE`
 
-The shared M01 targets are intentionally normalized rather than copying these per-component values.
+Reason:
 
-## 8. Current M02 source facts
+- EN/1440 is proven;
+- Cairo-only runtime contract has just changed;
+- latest source/build/test state after `9f83de93` is not yet proven locally;
+- responsive and AR locale proof is incomplete.
 
-Hero markup is in:
-
-`resources/views/home/sections/hero.blade.php`
-
-Shared navbar markup is in:
-
-- `resources/views/partials/site-navbar/header.blade.php`;
-- `resources/views/partials/site-navbar/language-modal.blade.php`.
-
-Hero has high-specificity legacy typography in `resources/views/partials/home-hero-copy-layout.blade.php`, including `.home-page .hero-cinema__*` rules.
-
-Responsive Hero/nav cascades also contain typography declarations, including:
-
-- `resources/css/pages/welcome-hero/008-welcome-hero-cascade-008.css`;
-- `resources/css/pages/welcome-hero/009-welcome-hero-cascade-009.css`;
-- `resources/css/pages/welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css`;
-- `resources/css/pages/welcome-mega-menu/003-welcome-mega-menu-cascade-003.css`;
-- navbar inline style partials, including language-modal typography.
-
-Therefore adding `data-text-role` markers alone is not sufficient. M02 must add semantic markers and then remove only the legacy typography declarations that still win over the shared role layer.
-
-Layout, spacing, colors, shadows, dimensions, positioning, transforms, animation, truncation, and interaction behavior must remain component-owned.
-
-## 9. Arabic constraint
-
-Arabic stays a locale adapter.
-
-Target ownership:
-
-- Cairo for display/heading/UI roles;
-- Lateef for prose/description/longform roles.
-
-M02 may add semantic-role-aware Arabic adapter rules in the existing Arabic typography layer if required by runtime proof. Do not create a second competing Arabic text system.
-
-## 10. Authoritative docs
-
-Read only as needed:
-
-1. `UNIFIED_TEXT_SYSTEM_HANDOFF.md` — this file;
-2. `UNIFIED_TEXT_SYSTEM_DOD.md`;
-3. `UNIFIED_TEXT_SYSTEM_M01_FOUNDATION.md`;
-4. `UNIFIED_TEXT_SYSTEM_RATIONALE.md`;
-5. `UNIFIED_TEXT_SYSTEM_M00_HOME.md`;
-6. `UNIFIED_TEXT_SYSTEM_M00_HOME_HANDOFF.md`;
-7. `ARABIC_TYPOGRAPHY_REFACTOR.md`;
-8. remaining M00 surface ledgers for later milestones.
-
-Do not repeat already-proven M00 browser/tooling discovery.
-
-## 11. Exact next scope
-
-Continue **M02 — shared navigation + Hero**.
-
-Atomic process:
+Next action after pulling current `main`:
 
 ```text
-existing rendered node
-→ assign canonical data-text-role
-→ determine actual winning typography
-→ remove only conflicting legacy typography declarations
-→ runtime proof ID/EN/AR at 390/768/1440
-→ preserve layout/behavior
-→ automated gates
-→ M02 PASS
+structure + build + full tests
 ```
 
-Do not start M03 before M02 PASS.
+Only after those gates PASS, continue runtime proof at 768/390 and Arabic Cairo/RTL.
