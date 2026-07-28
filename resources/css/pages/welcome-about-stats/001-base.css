@@ -71,7 +71,14 @@
     text-wrap: balance;
 }
 
-.about-reel__headline span {
+.about-reel__headline-clip {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.08em;
+    margin-block: -0.08em;
+}
+
+.about-reel__headline-line {
     display: block;
 }
 
