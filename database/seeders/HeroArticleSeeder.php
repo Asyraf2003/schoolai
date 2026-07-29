@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 
 final class HeroArticleSeeder extends Seeder
 {
-    private const FEATURED_VIDEO_PATH = '/media/hero/shanghai-mega-city.mp4';
+    private const FEATURED_VIDEO_PATH = '/media/hero/202607290837.mp4';
     private const FEATURED_VIDEO_POSTER = '/images/hero-video-poster.svg';
     private const CREATIVE_PROJECT_SLUG = 'proyek-kreatif-yang-melatih-keberanian-anak';
     private const CREATIVE_PROJECT_IMAGE_PATH = '/media/seed/hero/creative-project.webp';

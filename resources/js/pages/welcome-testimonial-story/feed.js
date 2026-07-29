@@ -3,7 +3,7 @@ var FEED_URL = '/testimoni/media';
 var FALLBACK_PRIMARY = {
         type: 'video',
         source: 'upload',
-        media_url: '/media/hero/shanghai-mega-city.mp4',
+        media_url: '/media/hero/202607290837.mp4',
         thumbnail_url: '/images/hero-video-poster.svg'
     };
 
