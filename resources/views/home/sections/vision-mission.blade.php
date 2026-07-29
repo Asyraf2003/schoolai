@@ -1,12 +1,12 @@
       <!-- ======================= VISI MISI ======================= -->
-      <section class="visi-misi section" id="visi-misi">
+      <section class="visi-misi section" id="visi-misi" aria-labelledby="visi-misi-heading">
         <div class="container">
-          <header class="section-head section-head--center visi-misi__head reveal">
-            <h2 class="section-title">{{ $visiMisi['section_title'] ?? $visiMisi['vision']['title'] }}</h2>
-            @if (! empty($visiMisi['section_subtitle']))
-              <p class="section-subtitle">{{ $visiMisi['section_subtitle'] }}</p>
-            @endif
-          </header>
+          @include('home.partials.editorial-section-heading', [
+            'title' => $visiMisi['section_title'] ?? $visiMisi['vision']['title'],
+            'description' => $visiMisi['section_subtitle'] ?? '',
+            'headingId' => 'visi-misi-heading',
+            'className' => 'visi-misi__head',
+          ])
 
           <div class="visi-misi__shell">
             <article class="visi-card reveal" tabindex="0">
