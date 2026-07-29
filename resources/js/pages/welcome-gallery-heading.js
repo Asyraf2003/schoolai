@@ -1,4 +1,4 @@
-/* One-shot gallery heading motion. It animates only when first entered while scrolling down. */
+/* Repeatable gallery heading motion. Replays after returning above the section. */
 (function () {
     'use strict';
 
@@ -16,15 +16,8 @@
             return;
         }
 
-        var initialRect = heading.getBoundingClientRect();
-        if (initialRect.top < 0 || initialRect.bottom <= 0) {
-            heading.classList.add('gallery-heading-motion--static');
-            return;
-        }
-
         var lastScrollY = window.scrollY || window.pageYOffset || 0;
         var direction = 'down';
-        var hasScrolled = false;
 
         function recordDirection() {
             var currentScrollY = window.scrollY || window.pageYOffset || 0;
@@ -33,33 +26,67 @@
             if (Math.abs(delta) <= 2) return;
 
             direction = delta > 0 ? 'down' : 'up';
-            hasScrolled = true;
             lastScrollY = currentScrollY;
+        }
+
+        function prepareForNextEntry() {
+            heading.classList.remove(
+                'gallery-heading-motion--animated',
+                'gallery-heading-motion--static'
+            );
+        }
+
+        function showStatic() {
+            heading.classList.remove('gallery-heading-motion--animated');
+            heading.classList.add('gallery-heading-motion--static');
+        }
+
+        function replayAnimation() {
+            heading.classList.remove(
+                'gallery-heading-motion--animated',
+                'gallery-heading-motion--static'
+            );
+
+            void heading.offsetWidth;
+            heading.classList.add('gallery-heading-motion--animated');
         }
 
         window.addEventListener('scroll', recordDirection, { passive: true });
 
         var observer = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                if (!entry.isIntersecting) return;
+                if (entry.isIntersecting) {
+                    var enteredFromBelow = entry.boundingClientRect.top >= 0;
 
-                var shouldAnimate = hasScrolled
-                    && direction === 'down'
-                    && entry.boundingClientRect.top >= 0;
+                    if (direction === 'down' && enteredFromBelow) {
+                        replayAnimation();
+                    } else {
+                        showStatic();
+                    }
 
-                heading.classList.add(
-                    shouldAnimate
-                        ? 'gallery-heading-motion--animated'
-                        : 'gallery-heading-motion--static'
-                );
+                    return;
+                }
 
-                observer.unobserve(heading);
-                window.removeEventListener('scroll', recordDirection);
+                var isBelowViewport = entry.boundingClientRect.top >= window.innerHeight;
+
+                if (isBelowViewport) {
+                    prepareForNextEntry();
+                }
             });
         }, {
-            threshold: 0.16,
-            rootMargin: '0px 0px -10% 0px'
+            threshold: 0.14,
+            rootMargin: '0px 0px -8% 0px'
         });
+
+        var initialRect = heading.getBoundingClientRect();
+
+        if (initialRect.top < window.innerHeight && initialRect.bottom > 0) {
+            showStatic();
+        } else if (initialRect.bottom <= 0) {
+            showStatic();
+        } else {
+            prepareForNextEntry();
+        }
 
         observer.observe(heading);
     }
