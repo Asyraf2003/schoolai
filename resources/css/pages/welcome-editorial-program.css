@@ -1,10 +1,24 @@
-/* Three-line, smaller editorial heading for the education programs section. */
+/* Program heading: language-aware scale, ordered copy, and character sweep. */
 .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
     --editorial-shift: clamp(2.25rem, 6.5vw, 8rem);
     --program-middle-shift: clamp(1.125rem, 3.25vw, 4rem);
+    --program-stage-x: clamp(4rem, 10vw, 11rem);
+    --program-final-y: clamp(-4rem, -3.6vw, -1.5rem);
 }
 .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
     font-size: clamp(2.025rem, 3.825vw, 4.5rem);
+}
+.home-page .welcome-editorial-heading--program .welcome-editorial-heading__heading {
+    --program-final-x: 0rem;
+    --program-sweep-delay: 260ms;
+}
+.home-page .welcome-editorial-heading--program > .welcome-editorial-heading__clip--middle {
+    --program-final-x: var(--program-middle-shift);
+    --program-sweep-delay: 360ms;
+}
+.home-page .welcome-editorial-heading--program > .welcome-editorial-heading__clip--third {
+    --program-final-x: var(--editorial-shift);
+    --program-sweep-delay: 460ms;
 }
 .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--middle {
     margin-top: clamp(12px, 1vw, 18px);
@@ -12,49 +26,108 @@
 .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--third {
     margin-top: clamp(10px, 0.8vw, 16px);
 }
-.home-page .welcome-editorial-heading--program.welcome-editorial-heading--ready:not(.welcome-editorial-heading--animated):not(.welcome-editorial-heading--static) .welcome-editorial-heading__line--third {
-    opacity: 0;
-    transform: translate3d(0, -116%, 0);
+.home-page .welcome-editorial-heading--program .program-heading-letter {
+    position: relative;
 }
-.home-page .welcome-editorial-heading--program.welcome-editorial-heading--animated .welcome-editorial-heading__line--bottom {
-    animation: editorial-program-middle 1750ms 190ms both;
-}
-.home-page .welcome-editorial-heading--program.welcome-editorial-heading--animated .welcome-editorial-heading__line--third {
-    animation: editorial-program-third 1900ms 320ms both;
-}
-.home-page .welcome-editorial-heading--program.welcome-editorial-heading--static .welcome-editorial-heading__line--bottom {
-    transform: translate3d(var(--program-middle-shift), 0, 0);
-}
-.home-page .welcome-editorial-heading--program.welcome-editorial-heading--static .welcome-editorial-heading__line--third {
+.home-page .welcome-editorial-heading.welcome-editorial-heading--program .welcome-editorial-heading__line {
     opacity: 1;
-    transform: translate3d(var(--editorial-shift), 0, 0);
+    transform: none;
     animation: none;
 }
-@keyframes editorial-program-middle {
-    0% { opacity: 0; transform: translate3d(0, -116%, 0); }
-    42%, 58% { opacity: 1; transform: translate3d(0, 0, 0); }
-    100% { opacity: 1; transform: translate3d(var(--program-middle-shift), 0, 0); }
+.home-page .welcome-editorial-heading--program.welcome-editorial-heading--ready:not(.welcome-editorial-heading--animated):not(.welcome-editorial-heading--static) .welcome-editorial-heading__heading,
+.home-page .welcome-editorial-heading--program.welcome-editorial-heading--ready:not(.welcome-editorial-heading--animated):not(.welcome-editorial-heading--static) > .welcome-editorial-heading__clip {
+    transform: translate3d(var(--program-stage-x), 0, 0);
 }
-@keyframes editorial-program-third {
-    0% { opacity: 0; transform: translate3d(0, -116%, 0); }
-    42%, 58% { opacity: 1; transform: translate3d(0, 0, 0); }
-    100% { opacity: 1; transform: translate3d(var(--editorial-shift), 0, 0); }
+.home-page .welcome-editorial-heading--program.welcome-editorial-heading--ready:not(.welcome-editorial-heading--animated):not(.welcome-editorial-heading--static) .program-heading-letter {
+    top: 1.12em;
+    opacity: 0;
+}
+.home-page .welcome-editorial-heading.welcome-editorial-heading--program.welcome-editorial-heading--animated .welcome-editorial-heading__heading,
+.home-page .welcome-editorial-heading.welcome-editorial-heading--program.welcome-editorial-heading--animated > .welcome-editorial-heading__clip {
+    animation: program-heading-sweep 1450ms var(--program-sweep-delay) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.home-page .welcome-editorial-heading--program.welcome-editorial-heading--animated .program-heading-letter {
+    animation: program-letter-rise 580ms var(--program-letter-delay) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.home-page .welcome-editorial-heading--program.welcome-editorial-heading--static .welcome-editorial-heading__heading,
+.home-page .welcome-editorial-heading--program.welcome-editorial-heading--static > .welcome-editorial-heading__clip {
+    transform: translate3d(var(--program-final-x), var(--program-final-y), 0);
+    animation: none;
+}
+.home-page .welcome-editorial-heading--program.welcome-editorial-heading--static .program-heading-letter {
+    top: 0;
+    opacity: 1;
+    animation: none;
+}
+@keyframes program-letter-rise {
+    from { top: 1.12em; opacity: 0; }
+    to { top: 0; opacity: 1; }
+}
+@keyframes program-heading-sweep {
+    0%, 18% { transform: translate3d(var(--program-stage-x), 0, 0); }
+    100% { transform: translate3d(var(--program-final-x), var(--program-final-y), 0); }
 }
 html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
     --editorial-shift: clamp(-8rem, -6.5vw, -2.25rem);
     --program-middle-shift: clamp(-4rem, -3.25vw, -1.125rem);
+    --program-stage-x: clamp(-11rem, -10vw, -4rem);
 }
-@media (max-width: 900px) {
+html[dir="rtl"] .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
+    font-size: clamp(4.4rem, 9.8vw, 11.5rem);
+}
+@media (min-width: 641px) {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 44ch);
+        align-items: start;
+        column-gap: clamp(48px, 6vw, 120px);
+    }
+    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__row {
+        display: contents;
+    }
+    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__heading,
+    .home-page .welcome-editorial-heading--program > .welcome-editorial-heading__clip {
+        grid-column: 1;
+    }
+    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__heading { grid-row: 1; }
+    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--middle { grid-row: 2; }
+    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--third { grid-row: 3; }
+    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__description {
+        grid-column: 2;
+        grid-row: 4;
+        width: min(100%, 44ch);
+        margin-top: clamp(24px, 2.4vw, 46px);
+    }
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
+        grid-template-columns: minmax(320px, 44ch) minmax(0, 1fr);
+    }
+    html[dir="rtl"] .home-page .welcome-editorial-heading--program .welcome-editorial-heading__heading,
+    html[dir="rtl"] .home-page .welcome-editorial-heading--program > .welcome-editorial-heading__clip {
+        grid-column: 2;
+    }
+    html[dir="rtl"] .home-page .welcome-editorial-heading--program .welcome-editorial-heading__description {
+        grid-column: 1;
+    }
+}
+@media (min-width: 641px) and (max-width: 900px) {
     .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
         --editorial-shift: clamp(1.5rem, 5vw, 3.5rem);
         --program-middle-shift: clamp(0.75rem, 2.5vw, 1.75rem);
+        --program-stage-x: clamp(3rem, 8vw, 5rem);
+        --program-final-y: clamp(-2rem, -3vw, -1rem);
+        grid-template-columns: minmax(0, 1fr) minmax(240px, 38ch);
     }
     html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
         --editorial-shift: clamp(-3.5rem, -5vw, -1.5rem);
         --program-middle-shift: clamp(-1.75rem, -2.5vw, -0.75rem);
+        --program-stage-x: clamp(-5rem, -8vw, -3rem);
+        grid-template-columns: minmax(240px, 38ch) minmax(0, 1fr);
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
         font-size: clamp(1.6125rem, 4.5vw, 3.3rem);
+    }
+    html[dir="rtl"] .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
+        font-size: clamp(3.2rem, 9.7vw, 7rem);
     }
 }
 @media (max-width: 640px) {
@@ -62,9 +135,18 @@ html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading-
     html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
         --editorial-shift: 0rem;
         --program-middle-shift: 0rem;
+        --program-stage-x: 2.5rem;
+        --program-final-y: -0.9rem;
+        display: flex;
+    }
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
+        --program-stage-x: -2.5rem;
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
         font-size: clamp(1.35rem, 5.55vw, 2.25rem);
+    }
+    html[dir="rtl"] .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
+        font-size: clamp(2.6rem, 11vw, 4.35rem);
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--middle,
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--third {
@@ -75,12 +157,18 @@ html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading-
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__description { order: 4; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line--bottom {
-        transform: translate3d(var(--program-middle-shift), 0, 0) !important;
+    .home-page .welcome-editorial-heading.welcome-editorial-heading--program .welcome-editorial-heading__heading,
+    .home-page .welcome-editorial-heading.welcome-editorial-heading--program > .welcome-editorial-heading__clip {
+        transform: translate3d(var(--program-final-x), var(--program-final-y), 0) !important;
+        animation: none !important;
     }
-    .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line--third {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading--program .welcome-editorial-heading__line {
+        transform: none !important;
+        animation: none !important;
+    }
+    .home-page .welcome-editorial-heading.welcome-editorial-heading--program .program-heading-letter {
+        top: 0 !important;
         opacity: 1 !important;
-        transform: translate3d(var(--editorial-shift), 0, 0) !important;
         animation: none !important;
     }
 }
