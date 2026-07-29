@@ -13,9 +13,12 @@
       'resources/css/pages/welcome-about-stats.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
+      'resources/css/public-latin-montserrat.css',
+      'resources/css/pages/welcome-editorial-headings.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
       'resources/js/pages/welcome-about-stats.js',
+      'resources/js/pages/welcome-editorial-headings.js',
     ])
   </head>
   <body class="home-page nav-shell">
