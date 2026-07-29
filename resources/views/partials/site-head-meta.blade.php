@@ -89,13 +89,16 @@
 <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
 
-@if (request()->routeIs('home'))
+@if ($headLanguage !== 'ar')
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap"
   />
+@endif
+
+@if (request()->routeIs('home'))
   <link rel="stylesheet" href="{{ asset('css/welcome-gallery-desktop.css') }}" />
 @endif
 
