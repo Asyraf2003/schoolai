@@ -7,9 +7,25 @@
       ? ($aboutMedia['poster_url'] ?? ($hero['fallback_image_url'] ?? null))
       : ($aboutMedia['media_url'] ?? ($hero['fallback_image_url'] ?? null));
   $aboutMediaAlt = (string) ($aboutMedia['media_alt'] ?? __('home.about_stats_story.media_alt'));
+  $aboutHeadingTitle = trim(
+      (string) __('home.about_stats_story.headline_line_one')
+      .' '
+      .(string) __('home.about_stats_story.headline_line_two')
+  );
 @endphp
 
 <section class="about-reel" id="tentang" data-about-reel aria-labelledby="about-reel-title">
+  <div class="container about-reel__heading-shell">
+    @include('home.partials.editorial-section-heading', [
+      'title' => $aboutHeadingTitle,
+      'description' => __('home.about_stats_story.description'),
+      'headingId' => 'about-reel-title',
+      'className' => 'about-reel__shared-heading',
+      'lineOne' => __('home.about_stats_story.headline_line_one'),
+      'lineTwo' => __('home.about_stats_story.headline_line_two'),
+    ])
+  </div>
+
   <div class="about-reel__track" data-about-reel-track>
     <div class="about-reel__stage">
       <div class="about-reel__canvas">
@@ -36,25 +52,6 @@
             pathLength="1"
           />
         </svg>
-
-        <div class="about-reel__editorial">
-          <h2 class="about-reel__headline" id="about-reel-title">
-            <span class="about-reel__headline-clip">
-              <span class="about-reel__headline-line about-reel__headline-line--one">
-                {{ __('home.about_stats_story.headline_line_one') }}
-              </span>
-            </span>
-            <span class="about-reel__headline-clip">
-              <span class="about-reel__headline-line about-reel__headline-line--two">
-                {{ __('home.about_stats_story.headline_line_two') }}
-              </span>
-            </span>
-          </h2>
-
-          <div class="about-reel__details">
-            <p class="about-reel__description">{{ __('home.about_stats_story.description') }}</p>
-          </div>
-        </div>
 
         @if ($aboutMedia && $aboutImageFallback)
           <figure class="about-reel__media">
