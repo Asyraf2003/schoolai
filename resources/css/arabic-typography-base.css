@@ -13,7 +13,7 @@ html[lang="ar"] body {
   font-family: var(--font-ar-body);
 }
 
-/* Fallback lama dipertahankan selama audit semantic role. */
+/* Fallback lama dipertahankan hanya untuk node yang belum dimigrasi. */
 html[lang="ar"] :where(
   h1,
   h2,
@@ -25,7 +25,7 @@ html[lang="ar"] :where(
   button,
   label,
   [role="button"]
-) {
+):not([data-text-role]) {
   font-family: var(--font-ar-display);
   letter-spacing: normal;
 }
@@ -35,12 +35,12 @@ html[lang="ar"] :where(
   li,
   blockquote,
   figcaption
-) {
+):not([data-text-role]) {
   font-family: var(--font-ar-body);
   letter-spacing: normal;
 }
 
-/* Display, heading, dan UI. */
+/* Display, heading, dan UI yang belum memakai semantic role. */
 html[lang="ar"] :is(
   .hero-cinema__eyebrow,
   .hero-cinema__title,
@@ -92,13 +92,13 @@ html[lang="ar"] :is(
   .misi-panel__head h3,
   .misi-card__title,
   .misi-card__number
-) {
+):not([data-text-role]) {
   font-family: var(--font-ar-display);
   font-weight: 700;
   letter-spacing: normal;
 }
 
-/* Body dan long-form. */
+/* Body dan long-form yang belum memakai semantic role. */
 html[lang="ar"] :is(
   .nav-mega__link > small,
   .nav-mega__description,
@@ -120,7 +120,7 @@ html[lang="ar"] :is(
   .native-article__body,
   .native-article__footer p,
   .native-related-card__body > span
-) {
+):not([data-text-role]) {
   font-family: var(--font-ar-body);
   font-weight: 400;
   letter-spacing: normal;
@@ -132,7 +132,7 @@ html[lang="ar"] :is(
   .vm-mark,
   .program-mark,
   .nilai-mark
-) {
+):not([data-text-role]) {
   font-family: var(--font-ar-body);
   font-weight: 700;
   letter-spacing: normal;
