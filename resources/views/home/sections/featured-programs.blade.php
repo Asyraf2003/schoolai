@@ -1,11 +1,36 @@
       <!-- ======================= PROGRAM UNGGULAN ======================= -->
+      @php
+        $programEditorialHeading = match (app()->getLocale()) {
+          'en' => [
+            'title' => 'Al-Mustaqbal Education Programs',
+            'line_one' => 'Al-Mustaqbal',
+            'line_two' => 'Education',
+            'line_three' => 'Programs',
+          ],
+          'ar' => [
+            'title' => 'برامج التعليم في المستقبل',
+            'line_one' => 'برامج',
+            'line_two' => 'التعليم',
+            'line_three' => 'المستقبل',
+          ],
+          default => [
+            'title' => 'Program-Program Pendidikan Al-Mustaqbal',
+            'line_one' => 'Program-Program',
+            'line_two' => 'Pendidikan',
+            'line_three' => 'Al-Mustaqbal',
+          ],
+        };
+      @endphp
       <section class="program-section section" id="program" aria-labelledby="program-heading">
         <div class="container">
           @include('home.partials.editorial-section-heading', [
-            'title' => $featuredPrograms['section_title'] ?? $featuredPrograms['title'],
+            'title' => $programEditorialHeading['title'],
             'description' => $featuredPrograms['section_subtitle'] ?? ($featuredPrograms['subtitle'] ?? ''),
             'headingId' => 'program-heading',
-            'className' => 'program-section__head',
+            'className' => 'program-section__head welcome-editorial-heading--program',
+            'lineOne' => $programEditorialHeading['line_one'],
+            'lineTwo' => $programEditorialHeading['line_two'],
+            'lineThree' => $programEditorialHeading['line_three'],
           ])
 
           <div class="program-section__shell">
