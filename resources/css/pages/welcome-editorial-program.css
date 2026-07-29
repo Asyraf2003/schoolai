@@ -1,6 +1,7 @@
 /* Three-line, smaller editorial heading for the education programs section. */
 .home-page .welcome-editorial-heading--program {
     --editorial-shift: clamp(2.25rem, 6.5vw, 8rem);
+    --program-middle-shift: clamp(1.125rem, 3.25vw, 4rem);
 }
 .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
     font-size: clamp(2.7rem, 5.1vw, 6rem);
@@ -22,7 +23,7 @@
     animation: editorial-program-third 1900ms 320ms both;
 }
 .home-page .welcome-editorial-heading--program.welcome-editorial-heading--static .welcome-editorial-heading__line--bottom {
-    transform: translate3d(calc(var(--editorial-shift) * 0.5), 0, 0);
+    transform: translate3d(var(--program-middle-shift), 0, 0);
 }
 .home-page .welcome-editorial-heading--program.welcome-editorial-heading--static .welcome-editorial-heading__line--third {
     opacity: 1;
@@ -32,7 +33,7 @@
 @keyframes editorial-program-middle {
     0% { opacity: 0; transform: translate3d(0, -116%, 0); }
     42%, 58% { opacity: 1; transform: translate3d(0, 0, 0); }
-    100% { opacity: 1; transform: translate3d(calc(var(--editorial-shift) * 0.5), 0, 0); }
+    100% { opacity: 1; transform: translate3d(var(--program-middle-shift), 0, 0); }
 }
 @keyframes editorial-program-third {
     0% { opacity: 0; transform: translate3d(0, -116%, 0); }
@@ -40,14 +41,17 @@
     100% { opacity: 1; transform: translate3d(var(--editorial-shift), 0, 0); }
 }
 html[dir="rtl"] .home-page .welcome-editorial-heading--program {
-    --editorial-shift: calc(clamp(2.25rem, 6.5vw, 8rem) * -1);
+    --editorial-shift: clamp(-8rem, -6.5vw, -2.25rem);
+    --program-middle-shift: clamp(-4rem, -3.25vw, -1.125rem);
 }
 @media (max-width: 900px) {
     .home-page .welcome-editorial-heading--program {
         --editorial-shift: clamp(1.5rem, 5vw, 3.5rem);
+        --program-middle-shift: clamp(0.75rem, 2.5vw, 1.75rem);
     }
     html[dir="rtl"] .home-page .welcome-editorial-heading--program {
-        --editorial-shift: calc(clamp(1.5rem, 5vw, 3.5rem) * -1);
+        --editorial-shift: clamp(-3.5rem, -5vw, -1.5rem);
+        --program-middle-shift: clamp(-1.75rem, -2.5vw, -0.75rem);
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
         font-size: clamp(2.15rem, 6vw, 4.4rem);
@@ -57,6 +61,7 @@ html[dir="rtl"] .home-page .welcome-editorial-heading--program {
     .home-page .welcome-editorial-heading--program,
     html[dir="rtl"] .home-page .welcome-editorial-heading--program {
         --editorial-shift: 0rem;
+        --program-middle-shift: 0rem;
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
         font-size: clamp(1.8rem, 7.4vw, 3rem);
@@ -71,7 +76,7 @@ html[dir="rtl"] .home-page .welcome-editorial-heading--program {
 }
 @media (prefers-reduced-motion: reduce) {
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line--bottom {
-        transform: translate3d(calc(var(--editorial-shift) * 0.5), 0, 0) !important;
+        transform: translate3d(var(--program-middle-shift), 0, 0) !important;
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line--third {
         opacity: 1 !important;
