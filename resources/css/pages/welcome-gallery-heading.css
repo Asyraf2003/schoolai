@@ -130,7 +130,10 @@ html[dir="rtl"] .gallery-heading-motion__description {
     text-align: right;
 }
 html[dir="rtl"] .gallery-heading-motion__description-clip {
-    padding-block: 0.22em 0.58em;
+    padding-block: 0.22em 0.38em;
+}
+@media (min-width: 901px) {
+    .gallery-heading-motion__description { margin-top: clamp(42px, 3.2vw, 64px); }
 }
 @media (max-width: 900px) {
     .home-page .galeri-section__head.gallery-heading-motion {
@@ -159,12 +162,27 @@ html[dir="rtl"] .gallery-heading-motion__description-clip {
     .gallery-heading-motion__clip--bottom { margin-top: 20px; }
     .gallery-heading-motion__line { font-size: clamp(2.6rem, 11vw, 4.35rem); }
     .gallery-heading-motion__description {
+        display: block;
         width: min(100%, 34ch);
         margin: 0;
         justify-self: start;
         font-size: clamp(0.62rem, 1.7vw, 0.74rem);
+        line-height: 1.55;
+        text-transform: none;
     }
-    .gallery-heading-motion__description-line { white-space: normal; }
+    .gallery-heading-motion__description-clip {
+        display: inline;
+        overflow: visible;
+        padding: 0 !important;
+    }
+    .gallery-heading-motion__description-clip:not(:last-child)::after { content: " "; }
+    .gallery-heading-motion__description-line {
+        display: inline;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        white-space: normal;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
     .gallery-heading-motion__line,
