@@ -1,6 +1,42 @@
-/* Replay each shared homepage heading at the 20% viewport crossing. */
+/* Replay shared headings and add the Program character cascade. */
 (function () {
     'use strict';
+
+    function prepareProgramLetters(heading) {
+        if (!heading.classList.contains('welcome-editorial-heading--program')) return;
+
+        var lines = Array.prototype.slice.call(
+            heading.querySelectorAll('.welcome-editorial-heading__line')
+        );
+
+        lines.forEach(function (line, lineIndex) {
+            if (line.dataset.programLettersReady === 'true') return;
+
+            var characters = Array.from(line.textContent.trim());
+            var fragment = document.createDocumentFragment();
+
+            characters.forEach(function (character, characterIndex) {
+                var letter = document.createElement('span');
+                var reverseIndex = characters.length - characterIndex - 1;
+                var delay = (lineIndex * 85) + (reverseIndex * 18);
+
+                letter.className = 'program-heading-letter';
+                if (character === ' ') {
+                    letter.classList.add('program-heading-letter--space');
+                    letter.textContent = '\u00a0';
+                } else {
+                    letter.textContent = character;
+                }
+
+                letter.style.setProperty('--program-letter-delay', delay + 'ms');
+                fragment.appendChild(letter);
+            });
+
+            line.textContent = '';
+            line.appendChild(fragment);
+            line.dataset.programLettersReady = 'true';
+        });
+    }
 
     function initialise() {
         var headings = Array.prototype.slice.call(
@@ -18,6 +54,7 @@
             var section = heading.closest('section') || heading;
             var top = section.getBoundingClientRect().top;
 
+            prepareProgramLetters(heading);
             heading.classList.add('welcome-editorial-heading--ready');
 
             return {
