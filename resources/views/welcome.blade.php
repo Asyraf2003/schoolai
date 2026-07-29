@@ -15,6 +15,7 @@
       'resources/css/arabic-typography.css',
       'resources/css/public-latin-montserrat.css',
       'resources/css/pages/welcome-editorial-headings.css',
+      'resources/css/pages/welcome-about-editorial-override.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
       'resources/js/pages/welcome-about-stats.js',
