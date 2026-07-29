@@ -1,14 +1,12 @@
       <!-- ======================= PROGRAM UNGGULAN ======================= -->
       <section class="program-section section" id="program" aria-labelledby="program-heading">
         <div class="container">
-          <header class="section-head section-head--center program-section__head reveal">
-            <h2 class="section-title" id="program-heading">{{ $featuredPrograms['section_title'] ?? $featuredPrograms['title'] }}</h2>
-            @if (! empty($featuredPrograms['section_subtitle']))
-              <p class="section-subtitle">{{ $featuredPrograms['section_subtitle'] }}</p>
-            @elseif (! empty($featuredPrograms['subtitle']))
-              <p class="section-subtitle">{{ $featuredPrograms['subtitle'] }}</p>
-            @endif
-          </header>
+          @include('home.partials.editorial-section-heading', [
+            'title' => $featuredPrograms['section_title'] ?? $featuredPrograms['title'],
+            'description' => $featuredPrograms['section_subtitle'] ?? ($featuredPrograms['subtitle'] ?? ''),
+            'headingId' => 'program-heading',
+            'className' => 'program-section__head',
+          ])
 
           <div class="program-section__shell">
             <aside class="program-spotlight reveal">
