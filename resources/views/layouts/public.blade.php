@@ -12,6 +12,7 @@
       'resources/css/pages/welcome-hero.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
+      'resources/css/public-latin-montserrat.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
     ])
