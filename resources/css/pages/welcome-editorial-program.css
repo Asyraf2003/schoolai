@@ -4,7 +4,7 @@
     --program-middle-shift: clamp(1.125rem, 3.25vw, 4rem);
 }
 .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
-    font-size: clamp(2.7rem, 5.1vw, 6rem);
+    font-size: clamp(1.35rem, 2.55vw, 3rem);
 }
 .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--middle {
     margin-top: clamp(12px, 1vw, 18px);
@@ -54,7 +54,7 @@ html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading-
         --program-middle-shift: clamp(-1.75rem, -2.5vw, -0.75rem);
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
-        font-size: clamp(2.15rem, 6vw, 4.4rem);
+        font-size: clamp(1.075rem, 3vw, 2.2rem);
     }
 }
 @media (max-width: 640px) {
@@ -64,7 +64,7 @@ html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading-
         --program-middle-shift: 0rem;
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__line {
-        font-size: clamp(1.8rem, 7.4vw, 3rem);
+        font-size: clamp(0.9rem, 3.7vw, 1.5rem);
     }
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--middle,
     .home-page .welcome-editorial-heading--program .welcome-editorial-heading__clip--third {
