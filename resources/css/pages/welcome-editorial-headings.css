@@ -1,4 +1,4 @@
-/* Shared Gallery-style headings for homepage sections except testimonials. */
+@import "./welcome-editorial-program.css";
 .home-page .welcome-editorial-heading {
     --editorial-shift: clamp(5rem, 14.5vw, 17.5rem);
     box-sizing: border-box;
