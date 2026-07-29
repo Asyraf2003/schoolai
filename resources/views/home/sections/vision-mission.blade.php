@@ -1,11 +1,20 @@
       <!-- ======================= VISI MISI ======================= -->
+      @php
+        $visionEditorialHeading = match (app()->getLocale()) {
+          'en' => ['title' => 'Direction, Vision and Mission', 'line_one' => 'Direction', 'line_two' => 'Vision and Mission'],
+          'ar' => ['title' => 'التوجه والرؤية والرسالة', 'line_one' => 'التوجه', 'line_two' => 'الرؤية والرسالة'],
+          default => ['title' => 'Arah Visi dan Misi', 'line_one' => 'Arah', 'line_two' => 'Visi dan Misi'],
+        };
+      @endphp
       <section class="visi-misi section" id="visi-misi" aria-labelledby="visi-misi-heading">
         <div class="container">
           @include('home.partials.editorial-section-heading', [
-            'title' => $visiMisi['section_title'] ?? $visiMisi['vision']['title'],
+            'title' => $visionEditorialHeading['title'],
             'description' => $visiMisi['section_subtitle'] ?? '',
             'headingId' => 'visi-misi-heading',
             'className' => 'visi-misi__head',
+            'lineOne' => $visionEditorialHeading['line_one'],
+            'lineTwo' => $visionEditorialHeading['line_two'],
           ])
 
           <div class="visi-misi__shell">
