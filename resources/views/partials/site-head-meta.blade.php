@@ -90,6 +90,12 @@
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
 
 @if (request()->routeIs('home'))
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap"
+  />
   <link rel="stylesheet" href="{{ asset('css/welcome-gallery-desktop.css') }}" />
 @endif
 
@@ -135,4 +141,3 @@
     'resources/js/pages/welcome-scroll-reveal.js',
   ])
 @endif
-
