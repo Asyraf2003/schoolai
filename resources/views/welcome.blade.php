@@ -10,16 +10,13 @@
     @vite([
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
-      'resources/css/pages/welcome-about-stats.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
       'resources/css/public-latin-montserrat.css',
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
-      'resources/css/pages/welcome-about-editorial-override.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
-      'resources/js/pages/welcome-about-stats.js',
       'resources/js/pages/welcome-editorial-headings.js',
     ])
   </head>
@@ -44,8 +41,6 @@
       @endphp
 
       @include('home.sections.hero')
-
-      @include('home.sections.about-statistics')
 
       @include('home.sections.vision-mission')
 
