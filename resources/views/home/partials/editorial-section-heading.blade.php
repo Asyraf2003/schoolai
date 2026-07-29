@@ -5,6 +5,7 @@
   $headingExtraClass = trim((string) ($className ?? ''));
   $headingLineOne = trim((string) ($lineOne ?? ''));
   $headingLineTwo = trim((string) ($lineTwo ?? ''));
+  $headingLineThree = trim((string) ($lineThree ?? ''));
 
   if ($headingLineOne === '' && $headingTitle !== '') {
       $headingWords = preg_split('/\s+/u', $headingTitle, -1, PREG_SPLIT_NO_EMPTY) ?: [];
@@ -43,9 +44,17 @@
   </div>
 
   @if ($headingLineTwo !== '')
-    <span class="welcome-editorial-heading__clip welcome-editorial-heading__clip--bottom" aria-hidden="true">
+    <span class="welcome-editorial-heading__clip welcome-editorial-heading__clip--bottom{{ $headingLineThree !== '' ? ' welcome-editorial-heading__clip--middle' : '' }}" aria-hidden="true">
       <span class="welcome-editorial-heading__line welcome-editorial-heading__line--bottom">
         {{ $headingLineTwo }}
+      </span>
+    </span>
+  @endif
+
+  @if ($headingLineThree !== '')
+    <span class="welcome-editorial-heading__clip welcome-editorial-heading__clip--bottom welcome-editorial-heading__clip--third" aria-hidden="true">
+      <span class="welcome-editorial-heading__line welcome-editorial-heading__line--third">
+        {{ $headingLineThree }}
       </span>
     </span>
   @endif
