@@ -28,6 +28,18 @@
       @endphp
 
       <section class="galeri-section section" id="galeri" aria-labelledby="homepage-gallery-heading">
+        <div class="gallery-backdrop" aria-hidden="true">
+          @foreach ([9, 10, 11, 12] as $galleryBackdropImage)
+            <img
+              class="gallery-backdrop__image gallery-backdrop__image--{{ $loop->iteration }}"
+              src="{{ asset('media/home/'.$galleryBackdropImage.'.png') }}"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          @endforeach
+        </div>
+
         <div class="container">
           <header class="galeri-section__head gallery-heading-motion" data-gallery-heading>
             <div class="gallery-heading-motion__row gallery-heading-motion__row--top">
