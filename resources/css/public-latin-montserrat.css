@@ -1,6 +1,6 @@
 /* Public Latin typography adapter. Arabic remains owned by Cairo and Lateef. */
-html[lang="id"] body.public-page-body,
-html[lang="en"] body.public-page-body {
+html[lang="id"] body:is(.public-page-body, .home-page),
+html[lang="en"] body:is(.public-page-body, .home-page) {
     --font-app: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-display: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-body: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -9,12 +9,12 @@ html[lang="en"] body.public-page-body {
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-html[lang="id"] body.public-page-body :where(
+html[lang="id"] body:is(.public-page-body, .home-page) :where(
     h1, h2, h3, h4, h5, h6, p, a, span, strong, small, button,
     label, input, select, textarea, optgroup, summary, li, dt, dd,
     figcaption, time
 ),
-html[lang="en"] body.public-page-body :where(
+html[lang="en"] body:is(.public-page-body, .home-page) :where(
     h1, h2, h3, h4, h5, h6, p, a, span, strong, small, button,
     label, input, select, textarea, optgroup, summary, li, dt, dd,
     figcaption, time
