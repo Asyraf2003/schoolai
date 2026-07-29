@@ -1,14 +1,12 @@
       <!-- ======================= ARTIKEL ======================= -->
       <section class="artikel-section section artikel-section--digest" id="artikel" aria-labelledby="artikel-heading">
         <div class="container">
-          <div class="section-head artikel-section__head">
-            <h2 class="section-title" id="artikel-heading">{{ $articlesSection['title'] }}</h2>
-            @if (! empty($articlesSection['subtitle']))
-              <p class="section-subtitle artikel-section__subtitle">
-                {{ $articlesSection['subtitle'] }}
-              </p>
-            @endif
-          </div>
+          @include('home.partials.editorial-section-heading', [
+            'title' => $articlesSection['title'],
+            'description' => $articlesSection['subtitle'] ?? '',
+            'headingId' => 'artikel-heading',
+            'className' => 'artikel-section__head',
+          ])
 
           @php
             $articleItems = array_slice($articlesSection['items'] ?? [], 0, 3);
