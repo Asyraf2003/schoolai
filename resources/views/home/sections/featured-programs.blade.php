@@ -9,9 +9,9 @@
           ],
           'ar' => [
             'title' => 'برامج التعليم في المستقبل',
-            'line_one' => 'برامج',
-            'line_two' => 'التعليم',
-            'line_three' => 'المستقبل',
+            'line_one' => 'برامج التعليم',
+            'line_two' => 'المستقبل',
+            'line_three' => '',
           ],
           default => [
             'title' => 'Program-Program Pendidikan Al-Mustaqbal',
