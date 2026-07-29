@@ -1,3 +1,5 @@
+import './welcome-gallery-heading.js';
+
 /* Directional reveal-on-scroll for the public homepage.
    Uses IntersectionObserver and keeps motion short enough to remain stable while the page is still scrolling. */
 
@@ -96,71 +98,6 @@
         });
     }
 
-    function initialiseGalleryHeading() {
-        var heading = document.querySelector('[data-gallery-heading]');
-        if (!heading) return;
-
-        heading.classList.add('gallery-heading-motion--ready');
-
-        if (prefersReducedMotion && prefersReducedMotion.matches) {
-            heading.classList.add('gallery-heading-motion--static');
-            return;
-        }
-
-        var lastScrollY = window.scrollY || window.pageYOffset || 0;
-        var scrollDirection = 'down';
-        var hasScrolled = false;
-
-        function updateScrollDirection() {
-            var currentScrollY = window.scrollY || window.pageYOffset || 0;
-            var difference = currentScrollY - lastScrollY;
-
-            if (Math.abs(difference) > 2) {
-                scrollDirection = difference > 0 ? 'down' : 'up';
-                hasScrolled = true;
-                lastScrollY = currentScrollY;
-            }
-        }
-
-        window.addEventListener('scroll', updateScrollDirection, { passive: true });
-
-        var initialRect = heading.getBoundingClientRect();
-        if (initialRect.top < 0 || initialRect.bottom <= 0) {
-            heading.classList.add('gallery-heading-motion--static');
-            return;
-        }
-
-        if (!('IntersectionObserver' in window)) {
-            heading.classList.add('gallery-heading-motion--static');
-            return;
-        }
-
-        var galleryHeadingObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (!entry.isIntersecting) return;
-
-                var enteredFromBelow = entry.boundingClientRect.top >= 0;
-                var shouldAnimate = hasScrolled
-                    && scrollDirection === 'down'
-                    && enteredFromBelow;
-
-                heading.classList.add(
-                    shouldAnimate
-                        ? 'gallery-heading-motion--animated'
-                        : 'gallery-heading-motion--static'
-                );
-
-                galleryHeadingObserver.unobserve(heading);
-                window.removeEventListener('scroll', updateScrollDirection);
-            });
-        }, {
-            threshold: 0.16,
-            rootMargin: '0px 0px -10% 0px'
-        });
-
-        galleryHeadingObserver.observe(heading);
-    }
-
     function initialise() {
         if ('IntersectionObserver' in window) {
             observer = new IntersectionObserver(function (entries) {
@@ -177,7 +114,6 @@
         }
 
         applyRevealRules(document);
-        initialiseGalleryHeading();
 
         // The desktop hero visual is injected from a template by welcome.js.
         if ('MutationObserver' in window) {
