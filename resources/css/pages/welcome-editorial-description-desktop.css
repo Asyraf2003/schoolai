@@ -1,14 +1,17 @@
-/* Desktop description placement and wrapping for shared homepage headings. */
+/* Desktop description placement and wrapping for shared and Gallery headings. */
 @media (min-width: 641px) {
-    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row,
+    .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__row--top {
         grid-template-columns: minmax(0, 1fr) minmax(320px, 44ch);
     }
 
-    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__heading {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__heading,
+    .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__heading {
         grid-column: 1;
     }
 
-    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description,
+    .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__description {
         grid-column: 2;
         width: min(100%, 44ch);
         justify-self: end;
@@ -16,20 +19,24 @@
         text-align: left;
     }
 
-    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description-line {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description-line,
+    .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__description-line {
         white-space: normal;
         overflow-wrap: normal;
     }
 
-    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row {
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row,
+    html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__row--top {
         grid-template-columns: minmax(320px, 44ch) minmax(0, 1fr);
     }
 
-    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__heading {
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__heading,
+    html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__heading {
         grid-column: 2;
     }
 
-    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description {
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description,
+    html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__description {
         grid-column: 1;
         justify-self: start;
         margin: clamp(42px, 3.2vw, 64px) 0 0 clamp(18px, 2vw, 38px);
@@ -38,15 +45,18 @@
 }
 
 @media (min-width: 641px) and (max-width: 900px) {
-    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row,
+    .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__row--top {
         grid-template-columns: minmax(0, 1fr) minmax(240px, 38ch);
     }
 
-    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description,
+    .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__description {
         width: min(100%, 38ch);
     }
 
-    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row {
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__row,
+    html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion .gallery-heading-motion__row--top {
         grid-template-columns: minmax(240px, 38ch) minmax(0, 1fr);
     }
 }
