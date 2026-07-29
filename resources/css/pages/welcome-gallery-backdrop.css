@@ -1,0 +1,100 @@
+/* Decorative gallery backdrop using the existing public artwork set. */
+.galeri-section {
+    isolation: isolate;
+}
+
+.gallery-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.gallery-backdrop__image {
+    --gb-x: 10px;
+    --gb-y: -14px;
+    --gb-rotate: -5deg;
+    position: absolute;
+    width: clamp(180px, 17vw, 340px);
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: clamp(20px, 2vw, 34px);
+    opacity: 0.14;
+    filter: saturate(0.84) contrast(0.94);
+    box-shadow: 0 28px 70px rgba(18, 18, 24, 0.1);
+    transform: translate3d(0, 0, 0) rotate(var(--gb-rotate));
+    animation: gallery-backdrop-float 16s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.gallery-backdrop__image--1 {
+    top: 5%;
+    left: -4%;
+    --gb-x: 13px;
+    --gb-y: -18px;
+    --gb-rotate: -7deg;
+}
+
+.gallery-backdrop__image--2 {
+    top: 9%;
+    right: 3%;
+    --gb-x: -11px;
+    --gb-y: 16px;
+    --gb-rotate: 6deg;
+    animation-duration: 19s;
+    animation-delay: -7s;
+}
+
+.gallery-backdrop__image--3 {
+    top: 45%;
+    left: 4%;
+    --gb-x: 9px;
+    --gb-y: 17px;
+    --gb-rotate: 4deg;
+    animation-duration: 21s;
+    animation-delay: -11s;
+}
+
+.gallery-backdrop__image--4 {
+    right: -3%;
+    bottom: 5%;
+    --gb-x: -14px;
+    --gb-y: -15px;
+    --gb-rotate: -6deg;
+    animation-duration: 18s;
+    animation-delay: -4s;
+}
+
+@keyframes gallery-backdrop-float {
+    from {
+        transform: translate3d(0, 0, 0) rotate(var(--gb-rotate));
+    }
+
+    to {
+        transform: translate3d(var(--gb-x), var(--gb-y), 0) rotate(var(--gb-rotate));
+    }
+}
+
+@media (max-width: 900px) {
+    .gallery-backdrop__image {
+        width: clamp(130px, 24vw, 230px);
+        opacity: 0.11;
+    }
+}
+
+@media (max-width: 640px) {
+    .gallery-backdrop__image {
+        width: clamp(105px, 31vw, 170px);
+        opacity: 0.09;
+    }
+
+    .gallery-backdrop__image--2 { right: -10%; }
+    .gallery-backdrop__image--3 { left: -10%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-backdrop__image {
+        animation: none;
+    }
+}
