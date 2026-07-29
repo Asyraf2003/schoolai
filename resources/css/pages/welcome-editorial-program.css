@@ -1,5 +1,5 @@
 /* Three-line, smaller editorial heading for the education programs section. */
-.home-page .welcome-editorial-heading--program {
+.home-page .welcome-editorial-heading.welcome-editorial-heading--program {
     --editorial-shift: clamp(2.25rem, 6.5vw, 8rem);
     --program-middle-shift: clamp(1.125rem, 3.25vw, 4rem);
 }
@@ -40,16 +40,16 @@
     42%, 58% { opacity: 1; transform: translate3d(0, 0, 0); }
     100% { opacity: 1; transform: translate3d(var(--editorial-shift), 0, 0); }
 }
-html[dir="rtl"] .home-page .welcome-editorial-heading--program {
+html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
     --editorial-shift: clamp(-8rem, -6.5vw, -2.25rem);
     --program-middle-shift: clamp(-4rem, -3.25vw, -1.125rem);
 }
 @media (max-width: 900px) {
-    .home-page .welcome-editorial-heading--program {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
         --editorial-shift: clamp(1.5rem, 5vw, 3.5rem);
         --program-middle-shift: clamp(0.75rem, 2.5vw, 1.75rem);
     }
-    html[dir="rtl"] .home-page .welcome-editorial-heading--program {
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
         --editorial-shift: clamp(-3.5rem, -5vw, -1.5rem);
         --program-middle-shift: clamp(-1.75rem, -2.5vw, -0.75rem);
     }
@@ -58,8 +58,8 @@ html[dir="rtl"] .home-page .welcome-editorial-heading--program {
     }
 }
 @media (max-width: 640px) {
-    .home-page .welcome-editorial-heading--program,
-    html[dir="rtl"] .home-page .welcome-editorial-heading--program {
+    .home-page .welcome-editorial-heading.welcome-editorial-heading--program,
+    html[dir="rtl"] .home-page .welcome-editorial-heading.welcome-editorial-heading--program {
         --editorial-shift: 0rem;
         --program-middle-shift: 0rem;
     }
