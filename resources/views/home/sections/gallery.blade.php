@@ -17,11 +17,14 @@
             -1,
             PREG_SPLIT_NO_EMPTY
         ) ?: [];
-        $galleryDescriptionSplit = max(1, (int) ceil(count($galleryDescriptionWords) / 2));
-        $galleryDescriptionLines = array_values(array_filter([
-            implode(' ', array_slice($galleryDescriptionWords, 0, $galleryDescriptionSplit)),
-            implode(' ', array_slice($galleryDescriptionWords, $galleryDescriptionSplit)),
-        ]));
+        $galleryDescriptionChunkSize = max(
+            1,
+            (int) ceil(count($galleryDescriptionWords) / 3)
+        );
+        $galleryDescriptionLines = array_values(array_filter(array_map(
+            static fn (array $words): string => implode(' ', $words),
+            array_chunk($galleryDescriptionWords, $galleryDescriptionChunkSize)
+        )));
       @endphp
 
       <section class="galeri-section section" id="galeri" aria-labelledby="homepage-gallery-heading">
