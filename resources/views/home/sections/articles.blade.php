@@ -1,11 +1,35 @@
       <!-- ======================= ARTIKEL ======================= -->
+      @php
+        $articleEditorialHeading = match (app()->getLocale()) {
+          'en' => [
+            'title' => 'Al-Mustaqbal Articles',
+            'line_one' => 'Al-Mustaqbal',
+            'line_two' => 'Articles',
+            'description' => 'School news, educational insights, and stories from student activities that help parents follow learning developments at Al-Mustaqbal.',
+          ],
+          'ar' => [
+            'title' => 'مقالات مدرسة المستقبل',
+            'line_one' => 'مقالات',
+            'line_two' => 'المستقبل',
+            'description' => 'أخبار المدرسة ورؤى تربوية وقصص من أنشطة الطلاب تساعد أولياء الأمور على متابعة تطورات التعلم في مدرسة المستقبل.',
+          ],
+          default => [
+            'title' => 'Artikel Al-Mustaqbal',
+            'line_one' => 'Artikel',
+            'line_two' => 'Al-Mustaqbal',
+            'description' => 'Kabar sekolah, wawasan pendidikan, dan cerita kegiatan anak untuk membantu orang tua mengikuti perkembangan pembelajaran di Al-Mustaqbal.',
+          ],
+        };
+      @endphp
       <section class="artikel-section section artikel-section--digest" id="artikel" aria-labelledby="artikel-heading">
         <div class="container">
           @include('home.partials.editorial-section-heading', [
-            'title' => $articlesSection['title'],
-            'description' => $articlesSection['subtitle'] ?? '',
+            'title' => $articleEditorialHeading['title'],
+            'description' => $articleEditorialHeading['description'],
             'headingId' => 'artikel-heading',
             'className' => 'artikel-section__head',
+            'lineOne' => $articleEditorialHeading['line_one'],
+            'lineTwo' => $articleEditorialHeading['line_two'],
           ])
 
           @php
