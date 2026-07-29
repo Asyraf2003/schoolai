@@ -16,7 +16,7 @@
         width: min(100%, 44ch);
         justify-self: end;
         margin: clamp(42px, 3.2vw, 64px) clamp(18px, 2vw, 38px) 0 0;
-        text-align: left;
+        text-align: right;
     }
 
     .home-page .welcome-editorial-heading.welcome-editorial-heading .welcome-editorial-heading__description-line,
@@ -40,7 +40,7 @@
         grid-column: 1;
         justify-self: start;
         margin: clamp(42px, 3.2vw, 64px) 0 0 clamp(18px, 2vw, 38px);
-        text-align: right;
+        text-align: left;
     }
 }
 
