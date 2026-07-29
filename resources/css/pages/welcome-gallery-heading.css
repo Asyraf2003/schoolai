@@ -114,12 +114,12 @@ html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion {
     --gh-shift: calc(clamp(10rem, 29vw, 35rem) * -1);
 }
 html[dir="rtl"] .gallery-heading-motion__clip {
-    padding-block: 0.16em 0.34em;
+    padding-block: 0.28em 0.82em;
 }
 html[dir="rtl"] .gallery-heading-motion__line {
     font-family: "Cairo", Arial, sans-serif;
     font-weight: 300;
-    line-height: 0.9;
+    line-height: 1.1;
     letter-spacing: -0.035em;
 }
 html[dir="rtl"] .gallery-heading-motion__description {
