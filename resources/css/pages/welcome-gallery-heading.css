@@ -152,22 +152,21 @@ html[dir="rtl"] .gallery-heading-motion__description-clip {
 }
 @media (max-width: 640px) {
     .home-page .galeri-section__head.gallery-heading-motion {
-        --gh-shift: clamp(1.5rem, 7.5vw, 2.5rem);
+        --gh-shift: 0rem;
         margin: 0 18px 52px;
     }
-    html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion {
-        --gh-shift: calc(clamp(1.5rem, 7.5vw, 2.5rem) * -1);
-    }
-    .gallery-heading-motion__row--top { grid-template-columns: 1fr; gap: 24px; }
-    .gallery-heading-motion__clip--bottom { margin-top: 20px; }
+    html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion { --gh-shift: 0rem; }
+    html[dir="rtl"] .gallery-heading-motion__clip { padding-block: 0.18em 0.42em; }
+    .gallery-heading-motion__row--top { grid-template-columns: 1fr; gap: 10px; }
+    .gallery-heading-motion__clip--bottom { margin-top: 12px; }
     .gallery-heading-motion__line { font-size: clamp(2.6rem, 11vw, 4.35rem); }
     .gallery-heading-motion__description {
         display: block;
-        width: min(100%, 34ch);
-        margin: 0;
+        width: min(82%, 34ch);
+        margin: 0 0 2px;
         justify-self: start;
         font-size: clamp(0.62rem, 1.7vw, 0.74rem);
-        line-height: 1.55;
+        line-height: 1.5;
         text-transform: none;
     }
     .gallery-heading-motion__description-clip {
