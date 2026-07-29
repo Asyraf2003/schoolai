@@ -1,12 +1,21 @@
       <!-- ======================= NILAI SEKOLAH ======================= -->
+      @php
+        $valuesEditorialHeading = match (app()->getLocale()) {
+          'en' => ['title' => 'School Values', 'line_one' => 'School', 'line_two' => 'Values'],
+          'ar' => ['title' => 'قيم المدرسة', 'line_one' => 'قيم', 'line_two' => 'المدرسة'],
+          default => ['title' => 'Nilai-Nilai Sekolah', 'line_one' => 'Nilai-Nilai', 'line_two' => 'Sekolah'],
+        };
+      @endphp
       <section class="nilai-section section" id="nilai" aria-labelledby="nilai-heading">
         <div class="container">
           <div class="nilai-section__shell">
             @include('home.partials.editorial-section-heading', [
-              'title' => $schoolValues['title'],
+              'title' => $valuesEditorialHeading['title'],
               'description' => $schoolValues['subtitle'],
               'headingId' => 'nilai-heading',
               'className' => 'nilai-section__intro',
+              'lineOne' => $valuesEditorialHeading['line_one'],
+              'lineTwo' => $valuesEditorialHeading['line_two'],
             ])
 
             <div class="nilai-grid" aria-label="{{ $schoolValues['aria_label'] ?? __('home.nilai_sekolah.aria_label') }}">
