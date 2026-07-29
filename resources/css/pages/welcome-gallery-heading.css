@@ -123,9 +123,14 @@ html[dir="rtl"] .gallery-heading-motion__line {
     letter-spacing: -0.035em;
 }
 html[dir="rtl"] .gallery-heading-motion__description {
+    gap: clamp(7px, 0.5vw, 11px);
     margin-right: 0;
     margin-left: clamp(18px, 2vw, 38px);
+    line-height: 1.55;
     text-align: right;
+}
+html[dir="rtl"] .gallery-heading-motion__description-clip {
+    padding-block: 0.22em 0.58em;
 }
 @media (max-width: 900px) {
     .home-page .galeri-section__head.gallery-heading-motion {
