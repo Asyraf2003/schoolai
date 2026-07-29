@@ -24,6 +24,7 @@ export default defineConfig({
                 'resources/css/pages/welcome-hero-visual.css',
                 'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/welcome-editorial-headings.css',
+                'resources/css/pages/welcome-editorial-description-desktop.css',
                 'resources/css/pages/welcome-about-editorial-override.css',
                 'resources/css/pages/ppdb-journey.css',
                 'resources/css/pages/article-canvas.css',
