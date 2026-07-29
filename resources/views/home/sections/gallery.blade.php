@@ -6,6 +6,22 @@
             default => ['top' => 'AREA UNTUK', 'bottom' => 'GALERI'],
         };
         $galleryHeadingLabel = trim($galleryHeadingCopy['top'].' '.$galleryHeadingCopy['bottom']);
+        $galleryDescription = trim((string) (
+            $gallerySection['section_subtitle']
+            ?? $gallerySection['subtitle']
+            ?? ''
+        ));
+        $galleryDescriptionWords = preg_split(
+            '/\s+/u',
+            $galleryDescription,
+            -1,
+            PREG_SPLIT_NO_EMPTY
+        ) ?: [];
+        $galleryDescriptionSplit = max(1, (int) ceil(count($galleryDescriptionWords) / 2));
+        $galleryDescriptionLines = array_values(array_filter([
+            implode(' ', array_slice($galleryDescriptionWords, 0, $galleryDescriptionSplit)),
+            implode(' ', array_slice($galleryDescriptionWords, $galleryDescriptionSplit)),
+        ]));
       @endphp
 
       <section class="galeri-section section" id="galeri" aria-labelledby="homepage-gallery-heading">
@@ -24,13 +40,18 @@
                 </span>
               </h2>
 
-              @if (! empty($gallerySection['section_subtitle']))
-                <p class="gallery-heading-motion__description">
-                  {{ $gallerySection['section_subtitle'] }}
-                </p>
-              @elseif (! empty($gallerySection['subtitle']))
-                <p class="gallery-heading-motion__description">
-                  {{ $gallerySection['subtitle'] }}
+              @if ($galleryDescription !== '')
+                <p
+                  class="gallery-heading-motion__description"
+                  aria-label="{{ $galleryDescription }}"
+                >
+                  @foreach ($galleryDescriptionLines as $galleryDescriptionLine)
+                    <span class="gallery-heading-motion__description-clip" aria-hidden="true">
+                      <span class="gallery-heading-motion__description-line">
+                        {{ $galleryDescriptionLine }}
+                      </span>
+                    </span>
+                  @endforeach
                 </p>
               @endif
             </div>
