@@ -1,13 +1,13 @@
       <!-- ======================= NILAI SEKOLAH ======================= -->
-      <section class="nilai-section section" id="nilai">
+      <section class="nilai-section section" id="nilai" aria-labelledby="nilai-heading">
         <div class="container">
           <div class="nilai-section__shell">
-            <div class="nilai-section__intro reveal">
-              <h2 class="section-title">{{ $schoolValues['title'] }}</h2>
-              <p class="section-subtitle">
-                {{ $schoolValues['subtitle'] }}
-              </p>
-            </div>
+            @include('home.partials.editorial-section-heading', [
+              'title' => $schoolValues['title'],
+              'description' => $schoolValues['subtitle'],
+              'headingId' => 'nilai-heading',
+              'className' => 'nilai-section__intro',
+            ])
 
             <div class="nilai-grid" aria-label="{{ $schoolValues['aria_label'] ?? __('home.nilai_sekolah.aria_label') }}">
               @foreach ($schoolValues['items'] as $value)
