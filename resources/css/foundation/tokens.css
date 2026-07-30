@@ -1,6 +1,6 @@
 /* Global design tokens: warna, radius, shadow, spacing, dan font dasar seluruh aplikasi. */
 :root {
-    --font-app: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-app: 'Inter', ui-sans-serif, system-ui, sans-serif;
 
     --color-cream-50: #fff7ed;
     --color-blue-50: #eff6ff;
