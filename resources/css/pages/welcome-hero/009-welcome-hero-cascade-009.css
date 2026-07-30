@@ -81,26 +81,6 @@
         width: 38px;
         height: 38px;
     }
-
-    .hero-cinema__ornament--lattice {
-        inset-inline-end: -120px;
-        width: 270px;
-        height: 52vh;
-        opacity: 0.13;
-    }
-
-    .hero-cinema__ornament--rosette {
-        inset-inline-end: 22px;
-        inset-block-end: 118px;
-        width: 116px;
-        opacity: 0.18;
-    }
-
-    .hero-cinema__ornament--corner {
-        inset-inline-end: -78px;
-        width: 330px;
-        opacity: 0.18;
-    }
 }
 
 @media (max-width: 440px) {
