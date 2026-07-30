@@ -1,40 +1,43 @@
 import '../../css/pages/mobile-navigation-cinematic.css';
 
 const MOBILE_BREAKPOINT = 1180;
-const CLOSE_DURATION_MS = 820;
+const CLOSE_DURATION_MS = 920;
 
-function getAnimatedItems(navMenu) {
-  var items = [];
-  Array.prototype.slice.call(navMenu.children).forEach(function (child) {
-    if (child.tagName === 'UL') {
-      items = items.concat(Array.prototype.slice.call(child.children));
-      return;
+function getAnimatedItems(navLayer) {
+  return Array.prototype.slice.call(
+    navLayer.querySelectorAll('[data-mobile-navigation-item]')
+  );
+}
+
+function resetNestedMenus(navLayer) {
+  navLayer.querySelectorAll('[data-nav-mega].is-open').forEach(function (menu) {
+    var toggle = menu.querySelector('[data-nav-mega-toggle]');
+    var panel = menu.querySelector('[data-nav-mega-panel]');
+
+    menu.classList.remove('is-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    if (panel) {
+      panel.setAttribute('aria-hidden', 'true');
+      panel.inert = true;
     }
-
-    if (child.classList.contains('navbar__cta')) items.push(child);
   });
-
-  return items;
 }
 
 export function initializeCinematicMobileNavigation(elements) {
   var hamburgerBtn = elements.hamburgerBtn;
-  var navMenu = elements.navMenu;
-  var navOverlay = elements.navOverlay;
+  var navLayer = elements.navLayer;
+  var header = document.getElementById('navbar');
 
-  if (!hamburgerBtn || !navMenu || !navOverlay) {
+  if (!hamburgerBtn || !navLayer) {
     return { toggle: function () {} };
   }
 
-  var animatedItems = getAnimatedItems(navMenu);
+  var animatedItems = getAnimatedItems(navLayer);
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var closeTimer = 0;
   var openFrame = 0;
   var previousOverflow = '';
   var state = 'closed';
-
-  navMenu.setAttribute('data-cinematic-mobile-nav', '');
-  navOverlay.setAttribute('data-cinematic-mobile-overlay', '');
 
   animatedItems.forEach(function (item, index) {
     item.style.setProperty('--mobile-menu-order', String(index));
@@ -54,6 +57,12 @@ export function initializeCinematicMobileNavigation(elements) {
     );
   }
 
+  function setLayerAccessibility(isOpen) {
+    navLayer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    navLayer.inert = !isOpen;
+    navLayer.hidden = !isOpen;
+  }
+
   function clearPendingMotion() {
     window.clearTimeout(closeTimer);
     window.cancelAnimationFrame(openFrame);
@@ -63,9 +72,11 @@ export function initializeCinematicMobileNavigation(elements) {
 
   function finalizeClose(restoreFocus) {
     clearPendingMotion();
-    navMenu.classList.remove('active', 'is-closing');
-    navOverlay.classList.remove('active', 'is-closing');
+    navLayer.classList.remove('active', 'is-closing');
+    resetNestedMenus(navLayer);
+    setLayerAccessibility(false);
     document.body.style.overflow = previousOverflow;
+    if (header) header.classList.remove('has-open-menu');
     setHamburgerState(false);
     state = 'closed';
 
@@ -79,14 +90,14 @@ export function initializeCinematicMobileNavigation(elements) {
     state = 'opening';
     previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    navMenu.classList.remove('is-closing');
-    navOverlay.classList.remove('is-closing');
+    setLayerAccessibility(true);
+    navLayer.classList.remove('is-closing');
+    if (header) header.classList.add('has-open-menu');
     setHamburgerState(true);
 
-    void navMenu.offsetWidth;
+    void navLayer.offsetWidth;
     openFrame = window.requestAnimationFrame(function () {
-      navOverlay.classList.add('active');
-      navMenu.classList.add('active');
+      navLayer.classList.add('active');
       state = 'open';
       openFrame = 0;
     });
@@ -105,8 +116,7 @@ export function initializeCinematicMobileNavigation(elements) {
     }
 
     state = 'closing';
-    navMenu.classList.add('is-closing');
-    navOverlay.classList.add('is-closing');
+    navLayer.classList.add('is-closing');
     closeTimer = window.setTimeout(function () {
       finalizeClose(Boolean(settings.restoreFocus));
     }, CLOSE_DURATION_MS);
@@ -121,11 +131,13 @@ export function initializeCinematicMobileNavigation(elements) {
     openMenu();
   }
 
-  navOverlay.addEventListener('click', function () {
-    closeMenu({ restoreFocus: true });
+  navLayer.querySelectorAll('[data-mobile-navigation-close]').forEach(function (control) {
+    control.addEventListener('click', function () {
+      closeMenu({ restoreFocus: true });
+    });
   });
 
-  navMenu.querySelectorAll('a[href]').forEach(function (link) {
+  navLayer.querySelectorAll('a[href]').forEach(function (link) {
     link.addEventListener('click', function () {
       closeMenu();
     });
@@ -139,22 +151,15 @@ export function initializeCinematicMobileNavigation(elements) {
     if (window.innerWidth > MOBILE_BREAKPOINT) closeMenu({ immediate: true });
   });
 
-  document.addEventListener('mobile-navigation:request-close', function () {
-    closeMenu();
+  document.addEventListener('mobile-navigation:request-close', function (event) {
+    closeMenu({
+      immediate: Boolean(event.detail && event.detail.immediate),
+      restoreFocus: Boolean(event.detail && event.detail.restoreFocus)
+    });
   });
 
-  if (typeof MutationObserver === 'function') {
-    new MutationObserver(function () {
-      if (state !== 'open' || navMenu.classList.contains('active')) return;
-
-      clearPendingMotion();
-      navMenu.classList.remove('is-closing');
-      navOverlay.classList.remove('active', 'is-closing');
-      document.body.style.overflow = previousOverflow;
-      setHamburgerState(false);
-      state = 'closed';
-    }).observe(navMenu, { attributes: true, attributeFilter: ['class'] });
-  }
+  setLayerAccessibility(false);
+  setHamburgerState(false);
 
   return {
     toggle: toggleMenu,
