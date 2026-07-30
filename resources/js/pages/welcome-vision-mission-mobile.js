@@ -15,37 +15,30 @@
         query.addListener(listener);
     }
 
-    function clamp(value, minimum, maximum) {
-        return Math.min(maximum, Math.max(minimum, value));
-    }
-
-    function fitMobileHeading(current) {
+    function fitLargestWord(current) {
         if (!current || !mobileQuery.matches) return;
 
-        var title = current.title;
-        var line = current.line;
-        var words = current.words;
-        var available = title.clientWidth;
+        var maximumSize = 93;
+        var available = current.title.clientWidth * 0.98;
 
-        if (available < 1 || !words.length) return;
+        if (available < 1) return;
 
-        line.style.setProperty('--vision-mobile-scale', '1');
-        line.style.setProperty('--vision-mobile-word-gap', '0px');
+        current.heading.style.setProperty(
+            '--vision-mobile-heading-size',
+            maximumSize + 'px'
+        );
 
-        var wordsWidth = words.reduce(function (total, word) {
-            return total + word.getBoundingClientRect().width;
+        var widestWord = current.words.reduce(function (largest, word) {
+            return Math.max(largest, word.getBoundingClientRect().width);
         }, 0);
 
-        if (wordsWidth < 1) return;
+        if (widestWord < 1 || widestWord <= available) return;
 
-        var visibleGap = clamp(available * 0.028, 8, 14);
-        var gapCount = Math.max(0, words.length - 1);
-        var usableWidth = Math.max(1, (available * 0.985) - (visibleGap * gapCount));
-        var scale = Math.min(1, usableWidth / wordsWidth);
-        var sourceGap = scale > 0 ? visibleGap / scale : visibleGap;
-
-        line.style.setProperty('--vision-mobile-scale', scale.toFixed(4));
-        line.style.setProperty('--vision-mobile-word-gap', sourceGap.toFixed(2) + 'px');
+        var fittedSize = maximumSize * (available / widestWord);
+        current.heading.style.setProperty(
+            '--vision-mobile-heading-size',
+            fittedSize.toFixed(2) + 'px'
+        );
     }
 
     function revealMobileHeading(current) {
@@ -78,8 +71,8 @@
                 current.observer = null;
             });
         }, {
-            threshold: 0.28,
-            rootMargin: '0px 0px -12% 0px'
+            threshold: 0.18,
+            rootMargin: '0px 0px -8% 0px'
         });
 
         window.requestAnimationFrame(function () {
@@ -98,24 +91,25 @@
         if (!heading) return;
 
         var title = heading.querySelector('.vision-mission-heading__title');
-        var line = heading.querySelector('.vision-mission-heading__line');
         var words = Array.prototype.slice.call(
             heading.querySelectorAll('[data-vision-word]')
         );
 
-        if (!title || !line || !words.length) return;
+        if (!title || !words.length) return;
 
         state = {
             heading: heading,
             title: title,
-            line: line,
             words: words,
             observer: null,
             revealed: false
         };
 
         words.forEach(function (word, index) {
-            word.style.setProperty('--vision-rainbow-offset', String(index * -34) + '%');
+            word.style.setProperty(
+                '--vision-rainbow-offset',
+                String(index * -34) + '%'
+            );
         });
 
         heading.classList.remove('is-mobile-visible');
@@ -123,14 +117,14 @@
 
         window.requestAnimationFrame(function () {
             if (!state) return;
-            fitMobileHeading(state);
+            fitLargestWord(state);
             void heading.offsetWidth;
             observeMobileHeading(state);
         });
 
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(function () {
-                if (state) fitMobileHeading(state);
+                if (state) fitLargestWord(state);
             });
         }
     }
@@ -142,9 +136,11 @@
             state.observer.disconnect();
         }
 
-        state.heading.classList.remove('is-mobile-ready', 'is-mobile-visible');
-        state.line.style.removeProperty('--vision-mobile-scale');
-        state.line.style.removeProperty('--vision-mobile-word-gap');
+        state.heading.classList.remove(
+            'is-mobile-ready',
+            'is-mobile-visible'
+        );
+        state.heading.style.removeProperty('--vision-mobile-heading-size');
         state = null;
     }
 
@@ -162,9 +158,7 @@
 
         onQueryChange(mobileQuery, handleModeChange);
         onQueryChange(reducedQuery, function () {
-            if (!state) return;
-
-            if (reducedQuery.matches) {
+            if (state && reducedQuery.matches) {
                 revealMobileHeading(state);
             }
         });
@@ -172,7 +166,7 @@
         window.addEventListener('resize', function () {
             window.clearTimeout(resizeTimer);
             resizeTimer = window.setTimeout(function () {
-                if (state) fitMobileHeading(state);
+                if (state) fitLargestWord(state);
             }, 140);
         }, { passive: true });
     }
