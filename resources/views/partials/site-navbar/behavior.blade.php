@@ -8,17 +8,26 @@
     var dialog = modal.querySelector('.language-modal__dialog');
     var closeControls = Array.prototype.slice.call(modal.querySelectorAll('[data-language-modal-close]'));
     var hamburger = document.getElementById('hamburgerBtn');
-    var navMenu = document.getElementById('navMenu');
-    var navOverlay = document.getElementById('navOverlay');
+    var navLayer = document.getElementById('navMenu');
+    var header = document.getElementById('navbar');
     var lastFocused = null;
     var previousOverflow = '';
 
     function closeMobileMenu() {
-      if (!navMenu || !navMenu.classList.contains('active')) return;
+      if (!navLayer || !navLayer.classList.contains('active')) return;
 
-      navMenu.classList.remove('active');
-      if (navOverlay) navOverlay.classList.remove('active');
+      document.dispatchEvent(new CustomEvent('mobile-navigation:request-close', {
+        detail: { immediate: true }
+      }));
+
+      if (!navLayer.classList.contains('active')) return;
+
+      navLayer.classList.remove('active', 'is-closing');
+      navLayer.setAttribute('aria-hidden', 'true');
+      navLayer.inert = true;
+      navLayer.hidden = true;
       document.body.style.overflow = '';
+      if (header) header.classList.remove('has-open-menu');
 
       if (hamburger) {
         hamburger.setAttribute('aria-expanded', 'false');
@@ -30,7 +39,7 @@
     }
 
     function openLanguageModal(trigger) {
-      var openedFromMobileMenu = navMenu && navMenu.classList.contains('active');
+      var openedFromMobileMenu = navLayer && navLayer.classList.contains('active');
       lastFocused = openedFromMobileMenu && hamburger
         ? hamburger
         : (trigger || document.activeElement);
