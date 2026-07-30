@@ -1,4 +1,7 @@
 .vision-mission-heading {
+    --vision-heading-size: clamp(2.5rem, 4.4vw, 6rem);
+    --vision-heading-weight: 300;
+    --vision-heading-word-gap: clamp(0.45rem, 1.4vw, 1.5rem);
     position: relative;
     z-index: 2;
     margin-bottom: clamp(32px, 5vw, 64px);
@@ -6,34 +9,39 @@
 
 .vision-mission-heading__row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
-    align-items: end;
-    gap: clamp(24px, 3.2vw, 48px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(14px, 1.6vw, 22px);
 }
 
 .vision-mission-heading__title {
+    width: 100%;
     min-width: 0;
     margin: 0;
     color: #211f3b;
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 4vw, 4.8rem);
-    font-weight: 840;
+    font-size: var(--vision-heading-size);
+    font-weight: var(--vision-heading-weight);
     line-height: 0.96;
     letter-spacing: -0.055em;
+    text-transform: uppercase;
     white-space: nowrap;
 }
 
 .vision-mission-heading__line {
-    display: inline-flex;
+    display: flex;
+    width: 100%;
     max-width: 100%;
     align-items: baseline;
+    justify-content: space-between;
+    gap: var(--vision-heading-word-gap);
     overflow: hidden;
-    padding-block: 0.12em;
+    padding-block: 0.18em;
     white-space: nowrap;
 }
 
 .vision-mission-heading__word {
-    display: inline-block;
+    display: inline-flex;
+    flex: 0 0 auto;
     background-image: linear-gradient(
         90deg,
         #ff5d73,
@@ -70,21 +78,41 @@
 }
 
 .vision-mission-heading__space {
-    width: 0.28em;
-    flex: 0 0 0.28em;
+    display: none;
 }
 
 .vision-mission-heading__char {
     display: inline-block;
+    height: 1em;
     min-width: 0.01em;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: -0.08em;
+    transform: translateZ(0);
 }
 
-.vision-mission-heading__char.is-rolling {
-    animation: vision-heading-character-roll 150ms steps(2, end) both;
+.vision-mission-heading__char-track {
+    display: flex;
+    flex-direction: column;
+    height: 5em;
+    line-height: 1;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+}
+
+.vision-mission-heading__char-glyph {
+    display: block;
+    flex: 0 0 1em;
+    height: 1em;
+    line-height: 1;
+}
+
+.vision-mission-heading__char.is-rolling .vision-mission-heading__char-track {
+    animation: vision-heading-character-roll 760ms cubic-bezier(0.22, 0.72, 0.24, 1) both;
 }
 
 .vision-mission-heading__description {
-    max-width: 34rem;
+    width: min(100%, 64rem);
     margin: 0;
     color: rgba(33, 31, 59, 0.7);
     font-size: clamp(0.98rem, 0.3vw + 0.92rem, 1.08rem);
@@ -93,8 +121,9 @@
 
 html[lang="ar"] .vision-mission-heading__title {
     font-family: var(--font-ar-display);
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: normal;
+    text-transform: none;
 }
 
 @keyframes vision-heading-rainbow {
@@ -105,39 +134,44 @@ html[lang="ar"] .vision-mission-heading__title {
 
 @keyframes vision-heading-character-roll {
     0% {
-        opacity: 1;
         transform: translate3d(0, 0, 0);
     }
 
-    48% {
-        opacity: 0.2;
-        transform: translate3d(0, -0.54em, 0);
+    24% {
+        transform: translate3d(0, -1em, 0);
     }
 
-    52% {
-        opacity: 0.2;
-        transform: translate3d(0, 0.54em, 0);
+    49% {
+        transform: translate3d(0, -2em, 0);
+    }
+
+    74% {
+        transform: translate3d(0, -3em, 0);
     }
 
     100% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(0, -4em, 0);
     }
 }
 
 @media (max-width: 1180px) {
-    .vision-mission-heading__row {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 20px;
+    .vision-mission-heading {
+        --vision-heading-size: clamp(1.8rem, 4.7vw, 3.5rem);
+    }
+
+    .vision-mission-heading__line {
+        justify-content: flex-start;
     }
 
     .vision-mission-heading__description {
-        max-width: 48rem;
+        width: min(100%, 48rem);
     }
 }
 
 @media (max-width: 767px) {
     .vision-mission-heading {
+        --vision-heading-size: clamp(0.98rem, 4.4vw, 1.45rem);
+        --vision-heading-word-gap: 0.24em;
         margin-bottom: 30px;
     }
 
@@ -146,9 +180,13 @@ html[lang="ar"] .vision-mission-heading__title {
     }
 
     .vision-mission-heading__title {
-        font-size: clamp(1.35rem, 5.75vw, 2.15rem);
         line-height: 1;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.035em;
+    }
+
+    .vision-mission-heading__line {
+        overflow: visible;
+        padding-block: 0.12em;
     }
 
     .vision-mission-heading__word {
@@ -159,7 +197,7 @@ html[lang="ar"] .vision-mission-heading__title {
     }
 
     .vision-mission-heading__description {
-        max-width: 42rem;
+        width: 100%;
         font-size: 0.96rem;
         line-height: 1.65;
     }
@@ -167,7 +205,7 @@ html[lang="ar"] .vision-mission-heading__title {
 
 @media (prefers-reduced-motion: reduce) {
     .vision-mission-heading__word,
-    .vision-mission-heading__char {
+    .vision-mission-heading__char-track {
         animation: none !important;
         transition: none !important;
     }
