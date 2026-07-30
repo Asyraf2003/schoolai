@@ -10,23 +10,15 @@
         z-index: calc(var(--hero-layer-header) - 1);
         display: block;
         background: rgb(255 255 255 / 0.04);
-        -webkit-backdrop-filter: blur(0) saturate(100%);
-        backdrop-filter: blur(0) saturate(100%);
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
         transition:
-            background-color 620ms var(--mobile-nav-soft-ease),
-            -webkit-backdrop-filter 620ms var(--mobile-nav-soft-ease),
-            backdrop-filter 620ms var(--mobile-nav-soft-ease),
             opacity 360ms ease,
             visibility 0s linear 620ms;
     }
 
     .nav-shell .nav-overlay[data-cinematic-mobile-overlay].active {
-        background: #ffffff;
-        -webkit-backdrop-filter: blur(28px) saturate(112%);
-        backdrop-filter: blur(28px) saturate(112%);
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -34,12 +26,9 @@
     }
 
     .nav-shell .nav-overlay[data-cinematic-mobile-overlay].is-closing {
-        background: rgb(255 255 255 / 0.04);
-        -webkit-backdrop-filter: blur(0) saturate(100%);
-        backdrop-filter: blur(0) saturate(100%);
         opacity: 0;
         pointer-events: none;
-        transition-delay: 220ms, 220ms, 220ms, 220ms, 0s;
+        transition-delay: 220ms, 0s;
     }
 
     .nav-shell .navbar__menu[data-cinematic-mobile-nav] {
@@ -65,21 +54,39 @@
         border: 0;
         border-radius: 0;
         color: #121212;
-        background: transparent;
+        background-color: rgb(255 255 255 / 0.04);
+        -webkit-backdrop-filter: blur(0) saturate(100%);
+        backdrop-filter: blur(0) saturate(100%);
         box-shadow: none;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
         transform: none;
-        transition: visibility 0s linear 900ms;
+        transition:
+            background-color 620ms var(--mobile-nav-soft-ease),
+            -webkit-backdrop-filter 620ms var(--mobile-nav-soft-ease),
+            backdrop-filter 620ms var(--mobile-nav-soft-ease),
+            opacity 360ms ease,
+            visibility 0s linear 900ms;
     }
 
     .nav-shell .navbar__menu[data-cinematic-mobile-nav].active {
+        color: #121212;
+        background-color: #ffffff;
+        -webkit-backdrop-filter: blur(28px) saturate(112%);
+        backdrop-filter: blur(28px) saturate(112%);
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
         transform: none;
         transition-delay: 0s;
+    }
+
+    .nav-shell .navbar__menu[data-cinematic-mobile-nav].is-closing {
+        background-color: rgb(255 255 255 / 0.04);
+        -webkit-backdrop-filter: blur(0) saturate(100%);
+        backdrop-filter: blur(0) saturate(100%);
+        transition-delay: 220ms, 220ms, 220ms, 220ms, 0s;
     }
 
     .nav-shell .navbar__menu[data-cinematic-mobile-nav] > ul {
