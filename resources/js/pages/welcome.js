@@ -15,7 +15,6 @@
    ========================================================= */
 
 import './welcome/navigation.js';
-import './welcome/mission-cards.js';
 import './welcome/value-cards.js';
 import './welcome/program-cards.js';
 import './welcome/gallery-story.js';
