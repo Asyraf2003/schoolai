@@ -77,7 +77,10 @@
 
             mobileLine.className = 'vision-mission-heading__mobile-line';
             mobileLine.setAttribute('data-vision-mobile-line', '');
-            mobileLine.style.setProperty('--vision-mobile-line-index', String(lineIndex));
+            mobileLine.style.setProperty(
+                '--vision-mobile-line-index',
+                String(lineIndex)
+            );
 
             if (localeKey(current.locale) === 'ar' && lineIndex === 1) {
                 mobileLine.classList.add(
@@ -102,16 +105,35 @@
 
     function measuredLineWidth(mobileLine) {
         var style = window.getComputedStyle(mobileLine);
+        var gap = parseFloat(style.columnGap || style.gap) || 0;
         var marginStart = parseFloat(style.marginInlineStart) || 0;
         var marginEnd = parseFloat(style.marginInlineEnd) || 0;
+        var words = Array.prototype.slice.call(
+            mobileLine.querySelectorAll(':scope > [data-vision-word]')
+        );
+        var contentWidth = words.reduce(function (total, word) {
+            return total + Math.max(
+                word.scrollWidth || 0,
+                word.getBoundingClientRect().width
+            );
+        }, 0);
 
-        return mobileLine.getBoundingClientRect().width + marginStart + marginEnd;
+        contentWidth += gap * Math.max(0, words.length - 1);
+
+        return Math.max(
+            contentWidth,
+            mobileLine.scrollWidth || 0,
+            mobileLine.getBoundingClientRect().width
+        ) + marginStart + marginEnd;
     }
 
     function fitMobileLines(current) {
-        if (!current || !mobileQuery.matches || !current.mobileLines.length) return;
+        if (!current || !mobileQuery.matches || !current.mobileLines.length) {
+            return;
+        }
 
         var maximumSize = 93;
+        var minimumSize = 42;
         var available = current.title.clientWidth * 0.96;
 
         if (available < 1) return;
@@ -121,7 +143,7 @@
             maximumSize + 'px'
         );
 
-        for (var pass = 0; pass < 2; pass += 1) {
+        for (var pass = 0; pass < 3; pass += 1) {
             var widestLine = current.mobileLines.reduce(function (largest, mobileLine) {
                 return Math.max(largest, measuredLineWidth(mobileLine));
             }, 0);
@@ -131,7 +153,10 @@
             var currentSize = parseFloat(
                 window.getComputedStyle(current.title).fontSize
             ) || maximumSize;
-            var fittedSize = currentSize * (available / widestLine);
+            var fittedSize = Math.max(
+                minimumSize,
+                currentSize * (available / widestLine)
+            );
 
             current.heading.style.setProperty(
                 '--vision-mobile-heading-size',
@@ -219,6 +244,7 @@
                 '--vision-rainbow-offset',
                 String(index * -34) + '%'
             );
+            word.classList.toggle('is-mobile-accent', index === 1);
         });
 
         composeMobileLines(current);
@@ -250,6 +276,10 @@
         if (current.observer) {
             current.observer.disconnect();
         }
+
+        current.words.forEach(function (word) {
+            word.classList.remove('is-mobile-accent');
+        });
 
         current.heading.classList.remove(
             'is-mobile-ready',
