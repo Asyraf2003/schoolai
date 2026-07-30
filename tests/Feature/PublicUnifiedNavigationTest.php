@@ -27,3 +27,24 @@ it('keeps the same education gallery and article mega menus on every public page
         expect(substr_count($response->getContent(), 'data-nav-mega'))->toBeGreaterThanOrEqual(3);
     }
 });
+
+it('mounts the mobile navigation layer after the fixed header', function (): void {
+    $response = $this
+        ->withSession(['locale' => 'id'])
+        ->get(route('home'));
+
+    $response
+        ->assertOk()
+        ->assertSee('id="desktopNavMenu"', false)
+        ->assertSee('data-mobile-navigation-layer', false)
+        ->assertDontSee('id="navOverlay"', false);
+
+    $content = $response->getContent();
+    $headerEnd = strpos($content, '</header>');
+    $mobileLayer = strpos($content, 'data-mobile-navigation-layer');
+
+    expect(substr_count($content, 'id="navMenu"'))->toBe(1)
+        ->and($headerEnd)->not->toBeFalse()
+        ->and($mobileLayer)->not->toBeFalse()
+        ->and($mobileLayer)->toBeGreaterThan($headerEnd);
+});
