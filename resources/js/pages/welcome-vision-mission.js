@@ -56,12 +56,25 @@
                 var fragment = document.createDocumentFragment();
 
                 characters.forEach(function (character) {
-                    var span = document.createElement('span');
-                    span.className = 'vision-mission-heading__char';
-                    span.setAttribute('data-vision-char', '');
-                    span.setAttribute('data-original', character);
-                    span.textContent = character;
-                    fragment.appendChild(span);
+                    var windowElement = document.createElement('span');
+                    var track = document.createElement('span');
+
+                    windowElement.className = 'vision-mission-heading__char';
+                    windowElement.setAttribute('data-vision-char', '');
+                    windowElement.setAttribute('data-original', character);
+
+                    track.className = 'vision-mission-heading__char-track';
+                    track.setAttribute('aria-hidden', 'true');
+
+                    for (var index = 0; index < 5; index += 1) {
+                        var glyph = document.createElement('span');
+                        glyph.className = 'vision-mission-heading__char-glyph';
+                        glyph.textContent = character;
+                        track.appendChild(glyph);
+                    }
+
+                    windowElement.appendChild(track);
+                    fragment.appendChild(windowElement);
                 });
 
                 word.textContent = '';
@@ -69,30 +82,25 @@
             });
         }
 
-        function randomLetter(original) {
-            var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var letter = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-            return original === original.toLowerCase() ? letter.toLowerCase() : letter;
-        }
-
         function rollCharacter(character) {
-            var original = character.getAttribute('data-original') || character.textContent;
-            var step = 0;
-            var steps = 6;
-            var interval = window.setInterval(function () {
-                step += 1;
-                character.classList.remove('is-rolling');
-                void character.offsetWidth;
-                character.classList.add('is-rolling');
-                character.textContent = step >= steps ? original : randomLetter(original);
+            if (character.classList.contains('is-rolling')) return;
 
-                if (step >= steps) {
-                    window.clearInterval(interval);
-                    window.setTimeout(function () {
-                        character.classList.remove('is-rolling');
-                    }, 160);
-                }
-            }, 58);
+            var track = character.querySelector('.vision-mission-heading__char-track');
+            if (!track) return;
+
+            var finished = false;
+
+            function cleanup() {
+                if (finished) return;
+                finished = true;
+                character.classList.remove('is-rolling');
+            }
+
+            character.classList.remove('is-rolling');
+            void character.offsetWidth;
+            character.classList.add('is-rolling');
+            track.addEventListener('animationend', cleanup, { once: true });
+            window.setTimeout(cleanup, 900);
         }
 
         function scheduleRoll() {
