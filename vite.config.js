@@ -8,6 +8,7 @@ export default defineConfig({
             input: [
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/welcome-hero.js',
+                'resources/js/pages/welcome-vision-mission.js',
                 // About section is temporarily disabled.
                 // 'resources/js/pages/welcome-about-stats.js',
                 'resources/js/pages/welcome-testimonial-story.js',
@@ -17,6 +18,8 @@ export default defineConfig({
                 'resources/js/pages/ppdb-journey.js',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
+                'resources/css/pages/welcome-vision-mission.css',
+                // About section is temporarily disabled.
                 // 'resources/css/pages/welcome-about-stats.css',
                 'resources/css/pages/welcome-testimonial-layout.css',
                 'resources/css/pages/welcome-mega-menu.css',
