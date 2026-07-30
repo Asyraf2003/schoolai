@@ -1,8 +1,8 @@
 @media (max-width: 767px) {
     .vision-mission-heading {
         --vision-mobile-heading-size: 93px;
-        --vision-mobile-scale: 1;
-        --vision-mobile-word-gap: 24px;
+        --vision-mobile-column-gap: 0.18em;
+        --vision-mobile-row-gap: 0.04em;
         --vision-mobile-tracking: -0.055em;
         margin-bottom: 32px;
     }
@@ -13,34 +13,31 @@
 
     .vision-mission-heading__title {
         width: 100%;
-        overflow: hidden;
+        overflow: visible;
         font-size: var(--vision-mobile-heading-size);
         font-weight: var(--vision-heading-weight, 300);
-        line-height: 1;
+        line-height: 0.92;
         letter-spacing: var(--vision-mobile-tracking);
-        white-space: nowrap;
+        white-space: normal;
     }
 
     .vision-mission-heading__line {
         display: flex;
-        width: max-content;
-        max-width: none;
+        width: 100%;
+        max-width: 100%;
+        flex-wrap: wrap;
         align-items: baseline;
         justify-content: flex-start;
-        gap: var(--vision-mobile-word-gap);
+        column-gap: var(--vision-mobile-column-gap);
+        row-gap: var(--vision-mobile-row-gap);
         overflow: visible;
         padding-block: 0.24em 0.32em;
-        transform: scaleX(var(--vision-mobile-scale));
-        transform-origin: left center;
-        white-space: nowrap;
-        will-change: transform;
-    }
-
-    html[dir="rtl"] .vision-mission-heading__line {
-        transform-origin: right center;
+        transform: none;
+        white-space: normal;
     }
 
     .vision-mission-heading__word {
+        max-width: 100%;
         flex: 0 0 auto;
         background-image: linear-gradient(
             90deg,
@@ -93,12 +90,13 @@
     }
 
     html[lang="ar"] .vision-mission-heading {
-        --vision-mobile-heading-size: 93px;
+        --vision-mobile-column-gap: 0.24em;
+        --vision-mobile-row-gap: 0.08em;
         --vision-mobile-tracking: 0em;
     }
 
     html[lang="ar"] .vision-mission-heading__title {
-        line-height: 1.3;
+        line-height: 1.22;
         letter-spacing: normal;
     }
 
