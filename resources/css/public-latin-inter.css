@@ -1,4 +1,4 @@
-/* Public Latin typography adapter. Arabic remains owned by Cairo and Lateef. */
+/* Public Latin typography adapter. Arabic remains owned by Cairo. */
 html[lang="id"] body:is(.public-page-body, .home-page),
 html[lang="en"] body:is(.public-page-body, .home-page) {
     --font-app: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
