@@ -18,12 +18,14 @@
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
       'resources/css/pages/welcome-vision-mission.css',
+      'resources/css/pages/welcome-vision-mission-mobile.css',
       // 'resources/css/pages/welcome-about-editorial-override.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
       // 'resources/js/pages/welcome-about-stats.js',
       'resources/js/pages/welcome-editorial-headings.js',
       'resources/js/pages/welcome-vision-mission.js',
+      'resources/js/pages/welcome-vision-mission-mobile.js',
     ])
   </head>
   <body class="home-page nav-shell">
