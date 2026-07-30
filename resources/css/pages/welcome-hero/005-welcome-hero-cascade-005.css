@@ -35,62 +35,6 @@ html[dir="rtl"] .hero-cinema__media::after {
         rgb(2 13 12 / var(--hero-overlay-strength));
 }
 
-.hero-cinema__ornaments {
-    position: absolute;
-    inset: 0;
-    z-index: calc(var(--hero-layer-content) - 1);
-    overflow: hidden;
-    color: #f3c877;
-    pointer-events: none;
-}
-
-.hero-cinema__ornament {
-    position: absolute;
-    display: block;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.15;
-    vector-effect: non-scaling-stroke;
-}
-
-.hero-cinema__ornament--lattice {
-    inset-block-start: -38px;
-    inset-inline-end: -72px;
-    width: clamp(250px, 24vw, 420px);
-    height: min(74vh, 690px);
-    opacity: 0.16;
-    transform: rotate(-8deg);
-}
-
-.hero-cinema__ornament--rosette {
-    inset-inline-end: clamp(30px, 7vw, 140px);
-    inset-block-end: clamp(70px, 10vh, 130px);
-    width: clamp(120px, 13vw, 230px);
-    opacity: 0.22;
-    stroke-width: 1.35;
-    transform: rotate(7deg);
-}
-
-.hero-cinema__ornament--corner {
-    inset-inline-end: -34px;
-    inset-block-end: -8px;
-    width: clamp(300px, 34vw, 620px);
-    opacity: 0.22;
-    stroke-width: 1.3;
-}
-
-html[dir="rtl"] .hero-cinema__ornament--lattice {
-    transform: scaleX(-1) rotate(-8deg);
-}
-
-html[dir="rtl"] .hero-cinema__ornament--rosette {
-    transform: scaleX(-1) rotate(7deg);
-}
-
-html[dir="rtl"] .hero-cinema__ornament--corner {
-    transform: scaleX(-1);
-}
-
 .hero-cinema__content {
     position: relative;
     z-index: var(--hero-layer-content);
