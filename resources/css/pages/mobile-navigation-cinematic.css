@@ -27,10 +27,10 @@
         visibility: hidden;
         pointer-events: none;
         transition:
-            background-color 620ms var(--mobile-nav-soft-ease),
-            -webkit-backdrop-filter 620ms var(--mobile-nav-soft-ease),
-            backdrop-filter 620ms var(--mobile-nav-soft-ease),
-            opacity 360ms ease,
+            background-color 360ms var(--mobile-nav-soft-ease),
+            -webkit-backdrop-filter 280ms var(--mobile-nav-soft-ease),
+            backdrop-filter 280ms var(--mobile-nav-soft-ease),
+            opacity 240ms ease,
             visibility 0s linear 920ms;
     }
 
@@ -41,7 +41,7 @@
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        transition-delay: 0s;
+        transition-delay: 120ms, 0s, 0s, 0s, 0s;
     }
 
     .mobile-navigation-layer.is-closing {
@@ -50,7 +50,8 @@
         backdrop-filter: blur(0) saturate(100%);
         opacity: 0;
         pointer-events: none;
-        transition-delay: 220ms, 220ms, 220ms, 220ms, 0s;
+        transition-duration: 180ms, 180ms, 180ms, 180ms, 0s;
+        transition-delay: 720ms, 720ms, 720ms, 720ms, 0s;
     }
 
     .mobile-navigation-layer__backdrop {
@@ -108,7 +109,7 @@
             transform 920ms var(--mobile-nav-fluid-ease),
             opacity 560ms ease-out,
             filter 760ms var(--mobile-nav-soft-ease);
-        transition-delay: calc(300ms + (var(--mobile-menu-order, 0) * 72ms));
+        transition-delay: calc(480ms + (var(--mobile-menu-order, 0) * 72ms));
     }
 
     .mobile-navigation-layer.active:not(.is-closing) [data-mobile-navigation-item] {
