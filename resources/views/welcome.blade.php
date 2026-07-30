@@ -17,11 +17,13 @@
       'resources/css/public-latin-inter.css',
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
+      'resources/css/pages/welcome-vision-mission.css',
       // 'resources/css/pages/welcome-about-editorial-override.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
       // 'resources/js/pages/welcome-about-stats.js',
       'resources/js/pages/welcome-editorial-headings.js',
+      'resources/js/pages/welcome-vision-mission.js',
     ])
   </head>
   <body class="home-page nav-shell">
@@ -58,10 +60,8 @@
       @include('home.sections.gallery')
 
       @include('home.sections.articles')
-
     </main>
 
     @include('partials.site-footer', ['footerSection' => $footerSection])
-
   </body>
 </html>
