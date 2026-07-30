@@ -6,9 +6,9 @@
 
 .vision-mission-heading__row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
     align-items: end;
-    gap: clamp(28px, 5vw, 72px);
+    gap: clamp(24px, 3.2vw, 48px);
 }
 
 .vision-mission-heading__title {
@@ -16,7 +16,7 @@
     margin: 0;
     color: #211f3b;
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 4.4vw, 4.8rem);
+    font-size: clamp(2.4rem, 4vw, 4.8rem);
     font-weight: 840;
     line-height: 0.96;
     letter-spacing: -0.055em;
@@ -125,13 +125,23 @@ html[lang="ar"] .vision-mission-heading__title {
     }
 }
 
+@media (max-width: 1180px) {
+    .vision-mission-heading__row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .vision-mission-heading__description {
+        max-width: 48rem;
+    }
+}
+
 @media (max-width: 767px) {
     .vision-mission-heading {
         margin-bottom: 30px;
     }
 
     .vision-mission-heading__row {
-        grid-template-columns: minmax(0, 1fr);
         gap: 16px;
     }
 
