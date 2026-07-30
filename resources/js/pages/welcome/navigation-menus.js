@@ -7,26 +7,45 @@ export function initializeNavigationMenus() {
 
   /* ---------- 2. LAZY MOBILE HAMBURGER MENU ---------- */
   var hamburgerBtn = document.getElementById('hamburgerBtn');
-  var navMenu = document.getElementById('navMenu');
-  var navOverlay = document.getElementById('navOverlay');
+  var navLayer = document.getElementById('navMenu');
+  var header = document.getElementById('navbar');
 
-  if (hamburgerBtn && navMenu && navOverlay) {
+  if (hamburgerBtn && navLayer) {
     var controllerPromise = null;
 
     function createFallbackController() {
+      var fallbackMenu = navLayer.querySelector('.mobile-navigation-layer__menu');
+
+      function setOpen(shouldOpen) {
+        navLayer.hidden = !shouldOpen;
+        navLayer.inert = !shouldOpen;
+        navLayer.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+        navLayer.classList.toggle('active', shouldOpen);
+        hamburgerBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        hamburgerBtn.setAttribute(
+          'aria-label',
+          hamburgerBtn.getAttribute(
+            shouldOpen ? 'data-mobile-close-label' : 'data-mobile-open-label'
+          ) || (shouldOpen ? 'Close menu' : 'Open menu')
+        );
+        if (header) header.classList.toggle('has-open-menu', shouldOpen);
+        document.body.style.overflow = shouldOpen ? 'hidden' : '';
+        navLayer.style.cssText = shouldOpen
+          ? 'position:fixed;inset:0;z-index:400;display:block;overflow:hidden;background:#fff;color:#121212;'
+          : '';
+        if (fallbackMenu) {
+          fallbackMenu.style.cssText = shouldOpen
+            ? 'position:relative;z-index:1;height:100%;overflow:auto;padding:110px 24px 40px;box-sizing:border-box;'
+            : '';
+        }
+      }
+
       return {
         toggle: function () {
-          var shouldOpen = !navMenu.classList.contains('active');
-          navMenu.classList.toggle('active', shouldOpen);
-          navOverlay.classList.toggle('active', shouldOpen);
-          hamburgerBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
-          hamburgerBtn.setAttribute(
-            'aria-label',
-            hamburgerBtn.getAttribute(
-              shouldOpen ? 'data-mobile-close-label' : 'data-mobile-open-label'
-            ) || (shouldOpen ? 'Close menu' : 'Open menu')
-          );
-          document.body.style.overflow = shouldOpen ? 'hidden' : '';
+          setOpen(!navLayer.classList.contains('active'));
+        },
+        close: function () {
+          setOpen(false);
         }
       };
     }
@@ -41,8 +60,7 @@ export function initializeNavigationMenus() {
           .then(function (module) {
             return module.initializeCinematicMobileNavigation({
               hamburgerBtn: hamburgerBtn,
-              navMenu: navMenu,
-              navOverlay: navOverlay
+              navLayer: navLayer
             });
           })
           .catch(createFallbackController);
