@@ -1,10 +1,11 @@
 @media (max-width: 767px) {
     .vision-mission-heading {
         --vision-mobile-heading-size: 93px;
-        --vision-mobile-heading-weight: 400;
+        --vision-mobile-heading-weight: 450;
         --vision-mobile-column-gap: 0.18em;
         --vision-mobile-row-gap: 0.035em;
-        --vision-mobile-tracking: -0.05em;
+        --vision-mobile-tracking: -0.045em;
+        --vision-heading-ink: #211f3b;
         margin-bottom: 32px;
     }
 
@@ -15,6 +16,7 @@
     .vision-mission-heading__title {
         width: 100%;
         overflow: visible;
+        color: var(--vision-heading-ink);
         font-size: var(--vision-mobile-heading-size);
         font-weight: var(--vision-mobile-heading-weight);
         line-height: 0.92;
@@ -48,7 +50,7 @@
     .vision-mission-heading__mobile-line {
         display: inline-flex;
         width: max-content;
-        max-width: 100%;
+        max-width: none;
         flex: 0 0 auto;
         align-items: baseline;
         justify-content: flex-start;
@@ -57,8 +59,18 @@
     }
 
     .vision-mission-heading__word {
-        max-width: 100%;
+        max-width: none;
         flex: 0 0 auto;
+        color: var(--vision-heading-ink);
+        background: none;
+        -webkit-background-clip: border-box;
+        background-clip: border-box;
+        -webkit-text-fill-color: currentColor;
+        animation: none;
+        will-change: transform, opacity, filter;
+    }
+
+    .vision-mission-heading__word.is-mobile-accent {
         background-image: linear-gradient(
             90deg,
             #ff5d73,
@@ -70,14 +82,13 @@
             #e056fd,
             #ff5d73
         );
-        background-position: var(--vision-rainbow-offset, 0%) 50%;
+        background-position: var(--vision-rainbow-offset, -34%) 50%;
         background-size: 320% 100%;
         color: transparent;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: vision-heading-rainbow 7s linear infinite;
-        will-change: transform, opacity, filter, background-position;
+        animation: vision-heading-rainbow 10s linear infinite;
     }
 
     .vision-mission-heading.is-mobile-ready:not(.is-mobile-visible)
@@ -110,6 +121,7 @@
     }
 
     html[lang="ar"] .vision-mission-heading {
+        --vision-mobile-heading-weight: 400;
         --vision-mobile-column-gap: 0.24em;
         --vision-mobile-row-gap: 0.015em;
         --vision-mobile-tracking: 0em;
@@ -137,7 +149,8 @@
 }
 
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
-    .vision-mission-heading__word {
+    .vision-mission-heading__word,
+    .vision-mission-heading__word.is-mobile-accent {
         animation: none !important;
         transition: none !important;
     }
