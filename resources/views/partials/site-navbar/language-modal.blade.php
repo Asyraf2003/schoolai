@@ -1,5 +1,3 @@
-<div class="nav-overlay" id="navOverlay"></div>
-
 <div
   class="language-modal"
   id="languageModal"
