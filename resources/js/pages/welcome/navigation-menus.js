@@ -5,50 +5,69 @@ export function initializeNavigationMenus() {
     yearEl.textContent = new Date().getFullYear();
   }
 
-  /* ---------- 2. MOBILE HAMBURGER MENU ---------- */
+  /* ---------- 2. LAZY MOBILE HAMBURGER MENU ---------- */
   var hamburgerBtn = document.getElementById('hamburgerBtn');
   var navMenu = document.getElementById('navMenu');
   var navOverlay = document.getElementById('navOverlay');
 
-  function openMenu() {
-    navMenu.classList.add('active');
-    navOverlay.classList.add('active');
-    hamburgerBtn.setAttribute('aria-expanded', 'true');
-    hamburgerBtn.setAttribute('aria-label', closeMenuLabel);
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenu() {
-    navMenu.classList.remove('active');
-    navOverlay.classList.remove('active');
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-    hamburgerBtn.setAttribute('aria-label', openMenuLabel);
-    document.body.style.overflow = '';
-  }
-
   if (hamburgerBtn && navMenu && navOverlay) {
-    var openMenuLabel = hamburgerBtn.getAttribute('data-mobile-open-label') || hamburgerBtn.getAttribute('aria-label') || 'Open menu';
-    var closeMenuLabel = hamburgerBtn.getAttribute('data-mobile-close-label') || 'Close menu';
-    hamburgerBtn.addEventListener('click', function () {
-      var isOpen = navMenu.classList.contains('active');
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
+    var controllerPromise = null;
+
+    function createFallbackController() {
+      return {
+        toggle: function () {
+          var shouldOpen = !navMenu.classList.contains('active');
+          navMenu.classList.toggle('active', shouldOpen);
+          navOverlay.classList.toggle('active', shouldOpen);
+          hamburgerBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+          hamburgerBtn.setAttribute(
+            'aria-label',
+            hamburgerBtn.getAttribute(
+              shouldOpen ? 'data-mobile-close-label' : 'data-mobile-open-label'
+            ) || (shouldOpen ? 'Close menu' : 'Open menu')
+          );
+          document.body.style.overflow = shouldOpen ? 'hidden' : '';
+        }
+      };
+    }
+
+    function loadMobileNavigation() {
+      if (!window.matchMedia('(max-width: 1180px)').matches) {
+        return Promise.resolve(null);
       }
+
+      if (!controllerPromise) {
+        controllerPromise = import('../mobile-navigation-cinematic.js')
+          .then(function (module) {
+            return module.initializeCinematicMobileNavigation({
+              hamburgerBtn: hamburgerBtn,
+              navMenu: navMenu,
+              navOverlay: navOverlay
+            });
+          })
+          .catch(createFallbackController);
+      }
+
+      return controllerPromise;
+    }
+
+    function warmMobileNavigation() {
+      loadMobileNavigation();
+    }
+
+    hamburgerBtn.addEventListener('pointerenter', warmMobileNavigation, { once: true });
+    hamburgerBtn.addEventListener('focus', warmMobileNavigation, { once: true });
+    hamburgerBtn.addEventListener('touchstart', warmMobileNavigation, {
+      once: true,
+      passive: true
     });
-
-    navOverlay.addEventListener('click', closeMenu);
-
-    // Tutup menu mobile setiap kali link menu diklik
-    var navLinks = navMenu.querySelectorAll('a');
-    navLinks.forEach(function (link) {
-      link.addEventListener('click', closeMenu);
-    });
-
-    // Tutup menu dengan tombol Escape
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeMenu();
+    hamburgerBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      hamburgerBtn.setAttribute('aria-busy', 'true');
+      loadMobileNavigation().then(function (controller) {
+        hamburgerBtn.removeAttribute('aria-busy');
+        if (controller) controller.toggle();
+      });
     });
   }
 
