@@ -34,6 +34,38 @@
         });
     }
 
+    function localeKey(locale) {
+        return String(locale || 'id').toLowerCase().split('-')[0];
+    }
+
+    function linePlan(locale, wordCount) {
+        var key = localeKey(locale);
+
+        if ((key === 'id' || key === 'en') && wordCount === 4) {
+            return [[0, 1], [2, 3]];
+        }
+
+        if (key === 'ar' && wordCount === 3) {
+            return [[0, 1], [2]];
+        }
+
+        var splitAt = Math.ceil(wordCount / 2);
+        var first = [];
+        var second = [];
+
+        for (var index = 0; index < wordCount; index += 1) {
+            (index < splitAt ? first : second).push(index);
+        }
+
+        return second.length ? [first, second] : [first];
+    }
+
+    function clearChildren(element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
     function initialise() {
         var section = document.querySelector('[data-vision-mission]');
         if (!section) return;
@@ -48,15 +80,23 @@
         var words = Array.prototype.slice.call(
             heading.querySelectorAll('[data-vision-word]')
         );
+
+        if (!title || !line || !words.length) return;
+
         var locale = heading.getAttribute('data-locale') || document.documentElement.lang || 'id';
         var desktopQuery = window.matchMedia('(min-width: 1181px)');
         var tabletQuery = window.matchMedia('(min-width: 768px) and (max-width: 1180px)');
+        var mobileQuery = window.matchMedia('(max-width: 767px)');
         var reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        var originalNodes = Array.prototype.slice.call(line.children);
+        var layoutLines = [];
+        var observer = null;
         var rollTimer = 0;
         var resizeTimer = 0;
         var revealWaitTimer = 0;
         var reelsPrepared = false;
         var fontsReady = !document.fonts || !document.fonts.ready;
+        var active = false;
         var revealRequested = false;
         var revealStarted = false;
         var revealed = false;
@@ -64,7 +104,7 @@
 
         words.forEach(function (word, index) {
             word.dataset.originalText = word.textContent.trim();
-            word.style.setProperty('--vision-rainbow-offset', String(index * -34) + '%');
+            word.dataset.visionWordIndex = String(index);
         });
 
         function restorePlainWords() {
@@ -76,25 +116,62 @@
             reelsPrepared = false;
         }
 
+        function restoreOriginalStructure() {
+            clearChildren(line);
+            originalNodes.forEach(function (node) {
+                line.appendChild(node);
+            });
+
+            layoutLines = [];
+            heading.classList.remove('is-layout-composed');
+        }
+
+        function composeLayout() {
+            var plan = linePlan(locale, words.length);
+            var fragment = document.createDocumentFragment();
+
+            restoreOriginalStructure();
+            clearChildren(line);
+
+            plan.forEach(function (wordIndexes, lineIndex) {
+                var layoutLine = document.createElement('span');
+
+                layoutLine.className = 'vision-mission-heading__layout-line';
+                layoutLine.setAttribute('data-vision-layout-line', '');
+
+                if (lineIndex > 0) {
+                    layoutLine.classList.add(
+                        'vision-mission-heading__layout-line--secondary'
+                    );
+                }
+
+                wordIndexes.forEach(function (wordIndex) {
+                    if (words[wordIndex]) {
+                        layoutLine.appendChild(words[wordIndex]);
+                    }
+                });
+
+                layoutLines.push(layoutLine);
+                fragment.appendChild(layoutLine);
+            });
+
+            line.appendChild(fragment);
+            heading.classList.add('is-layout-composed');
+        }
+
         function clamp(value, minimum, maximum) {
             return Math.min(maximum, Math.max(minimum, value));
         }
 
         function headingSizeLimits() {
             if (desktopQuery.matches) {
-                return { minimum: 48, maximum: 180 };
+                return { minimum: 52, maximum: 180 };
             }
 
-            if (tabletQuery.matches) {
-                return { minimum: 30, maximum: 96 };
-            }
-
-            return { minimum: 16, maximum: 42 };
+            return { minimum: 34, maximum: 104 };
         }
 
         function availableLineWidth() {
-            if (!line) return 0;
-
             var style = window.getComputedStyle(line);
             var paddingStart = parseFloat(style.paddingInlineStart) || 0;
             var paddingEnd = parseFloat(style.paddingInlineEnd) || 0;
@@ -102,54 +179,69 @@
             return Math.max(0, line.clientWidth - paddingStart - paddingEnd);
         }
 
-        function plainWordsWidth() {
-            if (!line || !words.length) return 0;
-
-            var style = window.getComputedStyle(line);
+        function measuredLineWidth(layoutLine) {
+            var style = window.getComputedStyle(layoutLine);
             var gap = parseFloat(style.columnGap || style.gap) || 0;
-            var width = words.reduce(function (total, word) {
-                return total + word.getBoundingClientRect().width;
+            var marginStart = parseFloat(style.marginInlineStart) || 0;
+            var marginEnd = parseFloat(style.marginInlineEnd) || 0;
+            var children = Array.prototype.slice.call(
+                layoutLine.querySelectorAll(':scope > [data-vision-word]')
+            );
+            var contentWidth = children.reduce(function (total, word) {
+                return total + Math.max(
+                    word.scrollWidth || 0,
+                    word.getBoundingClientRect().width
+                );
             }, 0);
 
-            return width + (gap * Math.max(0, words.length - 1));
+            contentWidth += gap * Math.max(0, children.length - 1);
+
+            return Math.max(
+                contentWidth,
+                layoutLine.scrollWidth || 0,
+                layoutLine.getBoundingClientRect().width
+            ) + marginStart + marginEnd;
         }
 
-        function fitHeadingToLine() {
-            if (!title || !line || !words.length) return;
+        function fitHeadingToLines() {
+            if (!active || mobileQuery.matches || !layoutLines.length) return;
 
             title.style.removeProperty('--vision-heading-fitted-size');
 
             var available = availableLineWidth();
-            var content = plainWordsWidth();
-            if (available < 1 || content < 1) return;
+            if (available < 1) return;
 
             var limits = headingSizeLimits();
-            var safetyRatio = locale === 'ar' ? 0.94 : 0.98;
-            var currentSize = parseFloat(window.getComputedStyle(title).fontSize) || limits.minimum;
-            var target = clamp(
-                currentSize * ((available * safetyRatio) / content),
-                limits.minimum,
-                limits.maximum
-            );
+            var safetyRatio = localeKey(locale) === 'ar' ? 0.93 : 0.96;
 
-            title.style.setProperty('--vision-heading-fitted-size', target.toFixed(2) + 'px');
+            for (var pass = 0; pass < 3; pass += 1) {
+                var widestLine = layoutLines.reduce(function (largest, layoutLine) {
+                    return Math.max(largest, measuredLineWidth(layoutLine));
+                }, 0);
 
-            var correctedContent = plainWordsWidth();
-            if (correctedContent < 1) return;
+                if (widestLine < 1) return;
 
-            var correctedSize = parseFloat(window.getComputedStyle(title).fontSize) || target;
-            var correctedTarget = clamp(
-                correctedSize * ((available * safetyRatio) / correctedContent),
-                limits.minimum,
-                limits.maximum
-            );
+                var currentSize = parseFloat(
+                    window.getComputedStyle(title).fontSize
+                ) || limits.minimum;
+                var target = clamp(
+                    currentSize * ((available * safetyRatio) / widestLine),
+                    limits.minimum,
+                    limits.maximum
+                );
 
-            title.style.setProperty('--vision-heading-fitted-size', correctedTarget.toFixed(2) + 'px');
+                title.style.setProperty(
+                    '--vision-heading-fitted-size',
+                    target.toFixed(2) + 'px'
+                );
+
+                if (Math.abs(widestLine - (available * safetyRatio)) < 1) {
+                    break;
+                }
+            }
         }
 
         function measureCharacters(characters) {
-            if (!title) return null;
-
             var measure = document.createElement('span');
             var widths = [];
 
@@ -176,7 +268,8 @@
         function buildDesktopReels() {
             if (
                 reelsPrepared
-                || locale === 'ar'
+                || !active
+                || localeKey(locale) === 'ar'
                 || reducedQuery.matches
                 || !desktopQuery.matches
                 || !fontsReady
@@ -186,7 +279,9 @@
 
             var plans = words.map(function (word, wordIndex) {
                 var original = word.dataset.originalText || '';
-                var displayText = original.toLocaleUpperCase(locale === 'en' ? 'en-US' : 'id-ID');
+                var displayText = original.toLocaleUpperCase(
+                    localeKey(locale) === 'en' ? 'en-US' : 'id-ID'
+                );
                 var characters = Array.from(displayText);
                 var widths = measureCharacters(characters);
 
@@ -211,14 +306,24 @@
                 plan.characters.forEach(function (character, characterIndex) {
                     var windowElement = document.createElement('span');
                     var track = document.createElement('span');
-                    var measuredWidth = Math.ceil(plan.widths[characterIndex] * 100) / 100;
-                    var rainbowOffset = -((plan.wordIndex * 34) + (characterIndex * 8));
+                    var measuredWidth = Math.ceil(
+                        plan.widths[characterIndex] * 100
+                    ) / 100;
+                    var rainbowOffset = -(
+                        (plan.wordIndex * 34) + (characterIndex * 8)
+                    );
 
                     windowElement.className = 'vision-mission-heading__char';
                     windowElement.setAttribute('data-vision-char', '');
                     windowElement.setAttribute('data-original', character);
-                    windowElement.style.setProperty('--vision-char-width', measuredWidth + 'px');
-                    windowElement.style.setProperty('--vision-rainbow-offset', rainbowOffset + '%');
+                    windowElement.style.setProperty(
+                        '--vision-char-width',
+                        measuredWidth + 'px'
+                    );
+                    windowElement.style.setProperty(
+                        '--vision-rainbow-offset',
+                        rainbowOffset + '%'
+                    );
 
                     track.className = 'vision-mission-heading__char-track';
                     track.setAttribute('aria-hidden', 'true');
@@ -244,9 +349,10 @@
         }
 
         function canRoll() {
-            return revealed
+            return active
+                && revealed
                 && reelsPrepared
-                && locale !== 'ar'
+                && localeKey(locale) !== 'ar'
                 && desktopQuery.matches
                 && !reducedQuery.matches;
         }
@@ -275,11 +381,10 @@
             window.clearTimeout(rollTimer);
             if (!canRoll()) return;
 
-            var delay = firstRollPending
-                ? 900
-                : 3800 + Math.random() * 2200;
-
-            rollTimer = window.setTimeout(runLetterRoll, delay);
+            rollTimer = window.setTimeout(
+                runLetterRoll,
+                firstRollPending ? 900 : 3800 + Math.random() * 2200
+            );
         }
 
         function runLetterRoll() {
@@ -291,7 +396,9 @@
             var eligible = Array.prototype.slice.call(
                 heading.querySelectorAll('[data-vision-char]')
             ).filter(function (character) {
-                return /^[A-Z]$/.test(character.getAttribute('data-original') || '');
+                return /^[A-Z]$/.test(
+                    character.getAttribute('data-original') || ''
+                );
             });
 
             for (var index = eligible.length - 1; index > 0; index -= 1) {
@@ -301,7 +408,11 @@
                 eligible[randomIndex] = temporary;
             }
 
-            var count = Math.min(eligible.length, 2 + Math.floor(Math.random() * 2));
+            var count = Math.min(
+                eligible.length,
+                2 + Math.floor(Math.random() * 2)
+            );
+
             firstRollPending = false;
 
             eligible.slice(0, count).forEach(function (character, index) {
@@ -316,12 +427,19 @@
         function syncLayout(resetFirstRoll) {
             window.clearTimeout(rollTimer);
             restorePlainWords();
-            fitHeadingToLine();
+
+            if (!active || mobileQuery.matches) return;
+
+            if (!layoutLines.length) {
+                composeLayout();
+            }
+
+            fitHeadingToLines();
 
             if (
                 fontsReady
                 && desktopQuery.matches
-                && locale !== 'ar'
+                && localeKey(locale) !== 'ar'
                 && !reducedQuery.matches
             ) {
                 buildDesktopReels();
@@ -336,14 +454,21 @@
             }
         }
 
+        function disconnectObserver() {
+            if (!observer) return;
+            observer.disconnect();
+            observer = null;
+        }
+
         function completeReveal() {
-            if (revealStarted) return;
+            if (!active || revealStarted) return;
             revealStarted = true;
 
             syncLayout(true);
 
             window.requestAnimationFrame(function () {
                 window.requestAnimationFrame(function () {
+                    if (!active) return;
                     revealed = true;
                     heading.classList.add('is-visible');
                     scheduleRoll();
@@ -352,6 +477,7 @@
         }
 
         function requestReveal() {
+            if (!active) return;
             revealRequested = true;
 
             if (fontsReady || reducedQuery.matches) {
@@ -363,16 +489,19 @@
             revealWaitTimer = window.setTimeout(completeReveal, 800);
         }
 
-        heading.classList.add('is-ready');
+        function observeHeading() {
+            disconnectObserver();
 
-        if (reducedQuery.matches || !('IntersectionObserver' in window)) {
-            requestReveal();
-        } else {
-            var observer = new IntersectionObserver(function (entries) {
+            if (reducedQuery.matches || !('IntersectionObserver' in window)) {
+                requestReveal();
+                return;
+            }
+
+            observer = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (!entry.isIntersecting) return;
                     requestReveal();
-                    observer.disconnect();
+                    disconnectObserver();
                 });
             }, {
                 threshold: 0.16,
@@ -380,14 +509,67 @@
             });
 
             window.requestAnimationFrame(function () {
-                observer.observe(heading);
+                if (active && observer) observer.observe(heading);
             });
+        }
+
+        function activateHeading() {
+            if (active || mobileQuery.matches) return;
+
+            active = true;
+            revealRequested = false;
+            revealStarted = false;
+            revealed = false;
+            firstRollPending = true;
+
+            composeLayout();
+            heading.classList.remove('is-visible');
+            heading.classList.add('is-ready');
+            syncLayout(true);
+            observeHeading();
+        }
+
+        function deactivateHeading() {
+            if (!active) return;
+
+            active = false;
+            window.clearTimeout(rollTimer);
+            window.clearTimeout(revealWaitTimer);
+            disconnectObserver();
+            restorePlainWords();
+            restoreOriginalStructure();
+            title.style.removeProperty('--vision-heading-fitted-size');
+            heading.classList.remove('is-ready', 'is-visible');
+        }
+
+        function handleModeChange() {
+            if (mobileQuery.matches) {
+                deactivateHeading();
+                return;
+            }
+
+            window.requestAnimationFrame(function () {
+                if (mobileQuery.matches) return;
+
+                if (!active) {
+                    activateHeading();
+                    return;
+                }
+
+                syncLayout(true);
+            });
+        }
+
+        if (!mobileQuery.matches) {
+            activateHeading();
         }
 
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(function () {
                 fontsReady = true;
                 window.clearTimeout(revealWaitTimer);
+
+                if (!active) return;
 
                 if (revealRequested && !revealStarted) {
                     completeReveal();
@@ -398,21 +580,20 @@
             });
         } else {
             fontsReady = true;
-            syncLayout(true);
-        }
-
-        function handleModeChange() {
-            syncLayout(true);
+            if (active) syncLayout(true);
         }
 
         onQueryChange(desktopQuery, handleModeChange);
         onQueryChange(tabletQuery, handleModeChange);
-        onQueryChange(reducedQuery, handleModeChange);
+        onQueryChange(mobileQuery, handleModeChange);
+        onQueryChange(reducedQuery, function () {
+            if (active) syncLayout(true);
+        });
 
         window.addEventListener('resize', function () {
             window.clearTimeout(resizeTimer);
             resizeTimer = window.setTimeout(function () {
-                syncLayout(false);
+                if (active) syncLayout(false);
             }, 180);
         }, { passive: true });
 
