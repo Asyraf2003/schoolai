@@ -14,7 +14,7 @@
       // 'resources/css/pages/welcome-about-stats.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
-      'resources/css/public-latin-montserrat.css',
+      'resources/css/public-latin-inter.css',
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
       // 'resources/css/pages/welcome-about-editorial-override.css',
