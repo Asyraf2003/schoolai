@@ -15,11 +15,104 @@
         query.addListener(listener);
     }
 
-    function fitLargestWord(current) {
+    function localeKey(locale) {
+        return String(locale || 'id').toLowerCase().split('-')[0];
+    }
+
+    function linePlan(locale, wordCount) {
+        var key = localeKey(locale);
+
+        if (key === 'id' && wordCount === 4) {
+            return [[0, 1], [2, 3]];
+        }
+
+        if (key === 'en' && wordCount === 4) {
+            return [[0], [1, 2], [3]];
+        }
+
+        if (key === 'ar' && wordCount === 3) {
+            return [[0, 1], [2]];
+        }
+
+        var splitAt = Math.ceil(wordCount / 2);
+        var first = [];
+        var second = [];
+
+        for (var index = 0; index < wordCount; index += 1) {
+            (index < splitAt ? first : second).push(index);
+        }
+
+        return second.length ? [first, second] : [first];
+    }
+
+    function clearChildren(element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
+    function restoreOriginalStructure(current) {
+        if (!current || !current.line) return;
+
+        clearChildren(current.line);
+        current.originalNodes.forEach(function (node) {
+            current.line.appendChild(node);
+        });
+
+        current.mobileLines = [];
+        current.heading.classList.remove('is-mobile-composed');
+    }
+
+    function composeMobileLines(current) {
         if (!current || !mobileQuery.matches) return;
 
+        var plan = linePlan(current.locale, current.words.length);
+        var fragment = document.createDocumentFragment();
+        var mobileLines = [];
+
+        clearChildren(current.line);
+
+        plan.forEach(function (wordIndexes, lineIndex) {
+            var mobileLine = document.createElement('span');
+
+            mobileLine.className = 'vision-mission-heading__mobile-line';
+            mobileLine.setAttribute('data-vision-mobile-line', '');
+            mobileLine.style.setProperty('--vision-mobile-line-index', String(lineIndex));
+
+            if (localeKey(current.locale) === 'ar' && lineIndex === 1) {
+                mobileLine.classList.add(
+                    'vision-mission-heading__mobile-line--secondary'
+                );
+            }
+
+            wordIndexes.forEach(function (wordIndex) {
+                if (current.words[wordIndex]) {
+                    mobileLine.appendChild(current.words[wordIndex]);
+                }
+            });
+
+            mobileLines.push(mobileLine);
+            fragment.appendChild(mobileLine);
+        });
+
+        current.line.appendChild(fragment);
+        current.mobileLines = mobileLines;
+        current.heading.classList.add('is-mobile-composed');
+    }
+
+    function measuredLineWidth(mobileLine) {
+        var style = window.getComputedStyle(mobileLine);
+        var marginStart = parseFloat(style.marginInlineStart) || 0;
+        var marginEnd = parseFloat(style.marginInlineEnd) || 0;
+
+        return mobileLine.getBoundingClientRect().width + marginStart + marginEnd;
+    }
+
+    function fitMobileLines(current) {
+        if (!current || !mobileQuery.matches || !current.mobileLines.length) return;
+
         var maximumSize = 93;
-        var available = current.title.clientWidth * 0.98;
+        var available = current.title.clientWidth * 0.96;
 
         if (available < 1) return;
 
@@ -28,17 +121,23 @@
             maximumSize + 'px'
         );
 
-        var widestWord = current.words.reduce(function (largest, word) {
-            return Math.max(largest, word.getBoundingClientRect().width);
-        }, 0);
+        for (var pass = 0; pass < 2; pass += 1) {
+            var widestLine = current.mobileLines.reduce(function (largest, mobileLine) {
+                return Math.max(largest, measuredLineWidth(mobileLine));
+            }, 0);
 
-        if (widestWord < 1 || widestWord <= available) return;
+            if (widestLine < 1 || widestLine <= available) break;
 
-        var fittedSize = maximumSize * (available / widestWord);
-        current.heading.style.setProperty(
-            '--vision-mobile-heading-size',
-            fittedSize.toFixed(2) + 'px'
-        );
+            var currentSize = parseFloat(
+                window.getComputedStyle(current.title).fontSize
+            ) || maximumSize;
+            var fittedSize = currentSize * (available / widestLine);
+
+            current.heading.style.setProperty(
+                '--vision-mobile-heading-size',
+                fittedSize.toFixed(2) + 'px'
+            );
+        }
     }
 
     function revealMobileHeading(current) {
@@ -46,7 +145,9 @@
 
         current.revealed = true;
         window.requestAnimationFrame(function () {
-            current.heading.classList.add('is-mobile-visible');
+            if (state === current) {
+                current.heading.classList.add('is-mobile-visible');
+            }
         });
     }
 
@@ -76,8 +177,9 @@
         });
 
         window.requestAnimationFrame(function () {
-            if (!state || state !== current) return;
-            current.observer.observe(current.heading);
+            if (state === current && current.observer) {
+                current.observer.observe(current.heading);
+            }
         });
     }
 
@@ -91,19 +193,26 @@
         if (!heading) return;
 
         var title = heading.querySelector('.vision-mission-heading__title');
+        var line = heading.querySelector('.vision-mission-heading__line');
         var words = Array.prototype.slice.call(
             heading.querySelectorAll('[data-vision-word]')
         );
 
-        if (!title || !words.length) return;
+        if (!title || !line || !words.length) return;
 
-        state = {
+        var current = {
             heading: heading,
             title: title,
+            line: line,
             words: words,
+            locale: heading.getAttribute('data-locale') || document.documentElement.lang || 'id',
+            originalNodes: Array.prototype.slice.call(line.children),
+            mobileLines: [],
             observer: null,
             revealed: false
         };
+
+        state = current;
 
         words.forEach(function (word, index) {
             word.style.setProperty(
@@ -112,19 +221,23 @@
             );
         });
 
+        composeMobileLines(current);
         heading.classList.remove('is-mobile-visible');
         heading.classList.add('is-mobile-ready');
 
         window.requestAnimationFrame(function () {
-            if (!state) return;
-            fitLargestWord(state);
+            if (state !== current) return;
+
+            fitMobileLines(current);
             void heading.offsetWidth;
-            observeMobileHeading(state);
+            observeMobileHeading(current);
         });
 
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(function () {
-                if (state) fitLargestWord(state);
+                if (state === current) {
+                    fitMobileLines(current);
+                }
             });
         }
     }
@@ -132,15 +245,19 @@
     function deactivateMobileHeading() {
         if (!state) return;
 
-        if (state.observer) {
-            state.observer.disconnect();
+        var current = state;
+
+        if (current.observer) {
+            current.observer.disconnect();
         }
 
-        state.heading.classList.remove(
+        current.heading.classList.remove(
             'is-mobile-ready',
-            'is-mobile-visible'
+            'is-mobile-visible',
+            'is-mobile-composed'
         );
-        state.heading.style.removeProperty('--vision-mobile-heading-size');
+        current.heading.style.removeProperty('--vision-mobile-heading-size');
+        restoreOriginalStructure(current);
         state = null;
     }
 
@@ -166,7 +283,7 @@
         window.addEventListener('resize', function () {
             window.clearTimeout(resizeTimer);
             resizeTimer = window.setTimeout(function () {
-                if (state) fitLargestWord(state);
+                if (state) fitMobileLines(state);
             }, 140);
         }, { passive: true });
     }
