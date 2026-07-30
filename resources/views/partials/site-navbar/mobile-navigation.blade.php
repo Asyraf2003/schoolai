@@ -2,9 +2,6 @@
   class="mobile-navigation-layer"
   id="navMenu"
   data-mobile-navigation-layer
-  role="dialog"
-  aria-modal="true"
-  aria-label="{{ $siteNavbar['aria_label'] ?? __('pages.common.main_nav') }}"
   aria-hidden="true"
   inert
   hidden
