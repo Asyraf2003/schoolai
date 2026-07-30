@@ -47,7 +47,8 @@
       object-position: center;
     }
 
-    .navbar__menu .nav-language__button {
+    .navbar__menu .nav-language__button,
+    .mobile-navigation-layer .nav-language__button {
       position: relative;
       z-index: 2;
       pointer-events: auto !important;
@@ -75,12 +76,7 @@
   </style>
 
   <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-    /*
-     * Delegated fallback for the language trigger.
-     * This intentionally does not wait for DOMContentLoaded, so the mobile
-     * button remains reliable even when the navbar/menu scripts initialize
-     * in a different order.
-     */
+    /* Delegated fallback keeps the language trigger reliable across load order. */
     document.addEventListener('click', function (event) {
       var trigger = event.target.closest('[data-language-modal-open]');
       if (!trigger) return;
@@ -91,12 +87,23 @@
       event.preventDefault();
       event.stopImmediatePropagation();
 
-      var navMenu = document.getElementById('navMenu');
-      var navOverlay = document.getElementById('navOverlay');
+      var navLayer = document.getElementById('navMenu');
       var hamburger = document.getElementById('hamburgerBtn');
+      var header = document.getElementById('navbar');
 
-      if (navMenu) navMenu.classList.remove('active');
-      if (navOverlay) navOverlay.classList.remove('active');
+      if (navLayer && navLayer.classList.contains('active')) {
+        document.dispatchEvent(new CustomEvent('mobile-navigation:request-close', {
+          detail: { immediate: true }
+        }));
+
+        if (navLayer.classList.contains('active')) {
+          navLayer.classList.remove('active', 'is-closing');
+          navLayer.setAttribute('aria-hidden', 'true');
+          navLayer.inert = true;
+          navLayer.hidden = true;
+          if (header) header.classList.remove('has-open-menu');
+        }
+      }
 
       if (hamburger) {
         hamburger.setAttribute('aria-expanded', 'false');
