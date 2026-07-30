@@ -92,65 +92,6 @@
           @endforeach
         </div>
 
-        <div class="hero-cinema__ornaments" data-hero-ornaments aria-hidden="true">
-          <svg
-            class="hero-cinema__ornament hero-cinema__ornament--lattice"
-            viewBox="0 0 360 620"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <defs>
-              <pattern id="hero-geometric-lattice" width="72" height="72" patternUnits="userSpaceOnUse">
-                <path d="M36 2 46 26 70 36 46 46 36 70 26 46 2 36 26 26Z" />
-                <path d="M0 0 26 26M72 0 46 26M72 72 46 46M0 72 26 46" />
-                <circle cx="36" cy="36" r="17" />
-              </pattern>
-              <linearGradient id="hero-lattice-fade" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#fff" stop-opacity="0" />
-                <stop offset="0.22" stop-color="#fff" stop-opacity="0.9" />
-                <stop offset="0.76" stop-color="#fff" stop-opacity="0.72" />
-                <stop offset="1" stop-color="#fff" stop-opacity="0" />
-              </linearGradient>
-              <mask id="hero-lattice-mask">
-                <rect width="360" height="620" fill="url(#hero-lattice-fade)" />
-              </mask>
-            </defs>
-            <rect
-              width="360"
-              height="620"
-              fill="url(#hero-geometric-lattice)"
-              mask="url(#hero-lattice-mask)"
-            />
-          </svg>
-
-          <svg
-            class="hero-cinema__ornament hero-cinema__ornament--rosette"
-            viewBox="0 0 260 260"
-            focusable="false"
-          >
-            <g fill="none" stroke="currentColor">
-              <path d="M130 16 149 73 206 54 187 111 244 130 187 149 206 206 149 187 130 244 111 187 54 206 73 149 16 130 73 111 54 54 111 73Z" />
-              <path d="M130 46 154 96 214 100 164 130 214 160 154 164 130 214 106 164 46 160 96 130 46 100 106 96Z" />
-              <circle cx="130" cy="130" r="67" />
-              <circle cx="130" cy="130" r="31" />
-            </g>
-          </svg>
-
-          <svg
-            class="hero-cinema__ornament hero-cinema__ornament--corner"
-            viewBox="0 0 420 240"
-            focusable="false"
-          >
-            <g fill="none" stroke="currentColor">
-              <path d="M418 14H242l-36 36h-62l-38 38H42L4 126" />
-              <path d="M418 34H252l-36 36h-62l-38 38H52l-38 38" />
-              <path d="M418 54H262l-36 36h-62l-38 38H62l-38 38" />
-              <path d="m222 50 18 18-18 18-18-18Z" />
-              <path d="m122 108 18 18-18 18-18-18Z" />
-            </g>
-          </svg>
-        </div>
-
         @if ($heroSlideCount > 1)
           <button
             type="button"
