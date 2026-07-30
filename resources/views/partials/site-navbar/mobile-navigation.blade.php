@@ -10,6 +10,7 @@
     type="button"
     class="mobile-navigation-layer__backdrop"
     data-mobile-navigation-close
+    tabindex="-1"
     aria-label="{{ $siteNavbar['mobile_close_label'] ?? __('pages.common.mobile_menu_close') }}"
   ></button>
 
