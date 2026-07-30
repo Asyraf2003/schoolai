@@ -21,7 +21,7 @@
       </span>
     </a>
 
-    <nav class="navbar__menu" id="navMenu" aria-label="{{ $siteNavbar['aria_label'] ?? __('pages.common.main_nav') }}">
+    <nav class="navbar__menu" id="desktopNavMenu" aria-label="{{ $siteNavbar['aria_label'] ?? __('pages.common.main_nav') }}">
       <ul>
         @foreach ($menuItems as $item)
           @php
