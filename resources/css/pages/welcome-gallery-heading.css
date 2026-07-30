@@ -24,7 +24,7 @@
     width: max-content;
     max-width: 100%;
     color: #000;
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(4.4rem, 9.8vw, 11.5rem);
     font-weight: 200;
     font-style: normal;
@@ -45,7 +45,7 @@
     margin: clamp(18px, 1.6vw, 32px) clamp(18px, 2vw, 38px) 0 0;
     justify-self: end;
     color: #000;
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(0.78rem, 0.24vw + 0.75rem, 1rem);
     font-weight: 400;
     line-height: 1.16;
