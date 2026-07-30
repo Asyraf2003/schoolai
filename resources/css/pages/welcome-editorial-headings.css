@@ -22,9 +22,7 @@
     overflow: hidden;
     padding-block: 0.1em;
 }
-.home-page .welcome-editorial-heading__clip--bottom {
-    margin-top: clamp(18px, 1.35vw, 26px);
-}
+.home-page .welcome-editorial-heading__clip--bottom { margin-top: clamp(18px, 1.35vw, 26px); }
 .home-page .welcome-editorial-heading__line {
     display: block;
     width: max-content;
