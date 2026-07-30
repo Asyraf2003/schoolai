@@ -1,4 +1,4 @@
-/* Hero visual refinement: decorative image cluster mirrored for LTR / RTL. */
+/* Hero visual refinement. */
 
 .home-page .hero-cinema__media::after,
 html[dir="rtl"] .home-page .hero-cinema__media::after {
@@ -26,70 +26,6 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
 .home-page .hero-cinema__eyebrow,
 .home-page .hero-cinema__cta {
     text-shadow: 0 2px 14px rgb(0 0 0 / 0.42);
-}
-
-.home-page .hero-cinema__ornament {
-    display: none;
-}
-
-/* LTR: use only the provided 9, 10, and 11 images on the right. */
-.home-page .hero-cinema__ornaments::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-
-    background-image:
-        url("/media/home/9.png"),
-        url("/media/home/10.png"),
-        url("/media/home/11.png");
-    background-repeat: no-repeat, no-repeat, no-repeat;
-
-    background-size:
-        clamp(160px, 16vw, 300px),
-        clamp(190px, 19vw, 350px),
-        clamp(210px, 21vw, 380px);
-
-    background-position:
-        right -1% top 5%,
-        right 15% top 21%,
-        right 8% bottom 11%;
-
-    opacity: 0.3;
-    filter: blur(0.8px) saturate(0.82) contrast(0.98);
-}
-
-/* RTL: exact physical mirror of the LTR positions. */
-html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
-    background-position:
-        left -1% top 5%,
-        left 15% top 21%,
-        left 8% bottom 11%;
-}
-
-@media (max-width: 767px) {
-    .home-page .hero-cinema__ornaments::before {
-        background-size:
-            108px,
-            136px,
-            148px;
-
-        background-position:
-            right -5% top 9%,
-            right 7% top 25%,
-            right 3% bottom 15%;
-
-        opacity: 0.18;
-        filter: blur(1px) saturate(0.76);
-    }
-
-    html[dir="rtl"] .home-page .hero-cinema__ornaments::before {
-        background-position:
-            left -5% top 9%,
-            left 7% top 25%,
-            left 3% bottom 15%;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
