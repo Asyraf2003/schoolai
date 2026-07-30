@@ -1,9 +1,10 @@
 @media (max-width: 767px) {
     .vision-mission-heading {
         --vision-mobile-heading-size: 93px;
+        --vision-mobile-heading-weight: 400;
         --vision-mobile-column-gap: 0.18em;
-        --vision-mobile-row-gap: 0.04em;
-        --vision-mobile-tracking: -0.055em;
+        --vision-mobile-row-gap: 0.035em;
+        --vision-mobile-tracking: -0.05em;
         margin-bottom: 32px;
     }
 
@@ -15,7 +16,7 @@
         width: 100%;
         overflow: visible;
         font-size: var(--vision-mobile-heading-size);
-        font-weight: var(--vision-heading-weight, 300);
+        font-weight: var(--vision-mobile-heading-weight);
         line-height: 0.92;
         letter-spacing: var(--vision-mobile-tracking);
         white-space: normal;
@@ -34,6 +35,25 @@
         padding-block: 0.24em 0.32em;
         transform: none;
         white-space: normal;
+    }
+
+    .vision-mission-heading.is-mobile-composed
+        .vision-mission-heading__line {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: var(--vision-mobile-row-gap) 0;
+    }
+
+    .vision-mission-heading__mobile-line {
+        display: inline-flex;
+        width: max-content;
+        max-width: 100%;
+        flex: 0 0 auto;
+        align-items: baseline;
+        justify-content: flex-start;
+        column-gap: var(--vision-mobile-column-gap);
+        white-space: nowrap;
     }
 
     .vision-mission-heading__word {
@@ -91,19 +111,28 @@
 
     html[lang="ar"] .vision-mission-heading {
         --vision-mobile-column-gap: 0.24em;
-        --vision-mobile-row-gap: 0.08em;
+        --vision-mobile-row-gap: 0.015em;
         --vision-mobile-tracking: 0em;
     }
 
     html[lang="ar"] .vision-mission-heading__title {
-        line-height: 1.22;
+        line-height: 1.18;
         letter-spacing: normal;
     }
 
     html[lang="ar"] .vision-mission-heading__line {
-        align-items: center;
+        align-items: flex-start;
         padding-block: 0.34em 0.5em;
         padding-inline: 0.08em;
+    }
+
+    html[lang="ar"] .vision-mission-heading__mobile-line {
+        align-items: center;
+    }
+
+    html[lang="ar"]
+        .vision-mission-heading__mobile-line--secondary {
+        margin-inline-start: clamp(1.25rem, 10vw, 3.5rem);
     }
 }
 
