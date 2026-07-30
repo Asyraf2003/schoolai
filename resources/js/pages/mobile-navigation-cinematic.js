@@ -143,6 +143,19 @@ export function initializeCinematicMobileNavigation(elements) {
     closeMenu();
   });
 
+  if (typeof MutationObserver === 'function') {
+    new MutationObserver(function () {
+      if (state !== 'open' || navMenu.classList.contains('active')) return;
+
+      clearPendingMotion();
+      navMenu.classList.remove('is-closing');
+      navOverlay.classList.remove('active', 'is-closing');
+      document.body.style.overflow = previousOverflow;
+      setHamburgerState(false);
+      state = 'closed';
+    }).observe(navMenu, { attributes: true, attributeFilter: ['class'] });
+  }
+
   return {
     toggle: toggleMenu,
     close: closeMenu,
