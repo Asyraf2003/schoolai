@@ -1,21 +1,51 @@
       <!-- ======================= VISI MISI ======================= -->
       @php
-        $visionEditorialHeading = match (app()->getLocale()) {
-          'en' => ['title' => 'Direction, Vision and Mission', 'line_one' => 'Direction', 'line_two' => 'Vision and Mission'],
-          'ar' => ['title' => 'التوجه والرؤية والرسالة', 'line_one' => 'التوجه', 'line_two' => 'الرؤية والرسالة'],
-          default => ['title' => 'Arah Visi dan Misi', 'line_one' => 'Arah', 'line_two' => 'Visi dan Misi'],
+        $visionHeadingTitle = match (app()->getLocale()) {
+          'en' => 'Direction, Vision and Mission',
+          'ar' => 'التوجه والرؤية والرسالة',
+          default => 'Arah Visi dan Misi',
         };
+        $visionHeadingWords = preg_split('/\s+/u', $visionHeadingTitle, -1, PREG_SPLIT_NO_EMPTY) ?: [];
       @endphp
-      <section class="visi-misi section" id="visi-misi" aria-labelledby="visi-misi-heading">
+      <section
+        class="visi-misi section"
+        id="visi-misi"
+        aria-labelledby="visi-misi-heading"
+        data-vision-mission
+      >
         <div class="container">
-          @include('home.partials.editorial-section-heading', [
-            'title' => $visionEditorialHeading['title'],
-            'description' => $visiMisi['section_subtitle'] ?? '',
-            'headingId' => 'visi-misi-heading',
-            'className' => 'visi-misi__head',
-            'lineOne' => $visionEditorialHeading['line_one'],
-            'lineTwo' => $visionEditorialHeading['line_two'],
-          ])
+          <header
+            class="vision-mission-heading"
+            data-vision-mission-heading
+            data-locale="{{ app()->getLocale() }}"
+          >
+            <div class="vision-mission-heading__row">
+              <h2
+                class="vision-mission-heading__title"
+                id="visi-misi-heading"
+                aria-label="{{ $visionHeadingTitle }}"
+              >
+                <span class="vision-mission-heading__line" aria-hidden="true">
+                  @foreach ($visionHeadingWords as $word)
+                    <span
+                      class="vision-mission-heading__word"
+                      data-vision-word
+                      style="--vision-word-index: {{ $loop->index }}"
+                    >{{ $word }}</span>
+                    @if (! $loop->last)
+                      <span class="vision-mission-heading__space" aria-hidden="true">&nbsp;</span>
+                    @endif
+                  @endforeach
+                </span>
+              </h2>
+
+              @if (! empty($visiMisi['section_subtitle']))
+                <p class="vision-mission-heading__description" data-text-role="description">
+                  {{ $visiMisi['section_subtitle'] }}
+                </p>
+              @endif
+            </div>
+          </header>
 
           <div class="visi-misi__shell">
             <article class="visi-card reveal" tabindex="0">
