@@ -65,7 +65,7 @@ html[dir="rtl"] .home-page .about-reel__headline-clip {
     padding-block: 0.28em 0.82em;
 }
 html[dir="rtl"] .home-page .about-reel__description {
-    font-family: "Lateef", "Cairo", serif;
+    font-family: "Cairo", Arial, sans-serif;
     line-height: 1.55;
     text-align: right;
     text-transform: none;
