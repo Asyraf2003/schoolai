@@ -15,6 +15,8 @@
 
 @include('partials.site-navbar.header')
 
+@include('partials.site-navbar.mobile-navigation')
+
 @include('partials.site-navbar.language-modal')
 
 @include('partials.site-navbar.behavior')
