@@ -47,7 +47,7 @@ it('renders the mixed-media homepage hero contract for every public locale', fun
             ->assertDontSee('<iframe', false)
             ->assertDontSee('lNzvxnnEpjs', false)
             ->assertSee('HSFModuleatNight.jpg', false)
-            ->assertSee('data-hero-ornaments', false)
+            ->assertDontSee('data-hero-ornaments', false)
             ->assertSee('viewBox="0 0 128 72"', false)
             ->assertDontSee('class="hero-cinema__playback"', false)
             ->assertSee('data-nav-mega', false)
