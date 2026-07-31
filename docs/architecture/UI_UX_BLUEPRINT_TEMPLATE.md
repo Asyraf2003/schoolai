@@ -1,10 +1,9 @@
-# UI/UX Surface and Frame Blueprint Template
+# UI/UX Surface and Cinematic Scene Blueprint Template
 
 Status: TEMPLATE
 Updated: 2026-07-31
 
-Copy this into `docs/architecture/blueprints/YYYY-MM-DD-surface-name.md`.
-One blueprint owns one surface or tightly coupled capability.
+Copy this into `docs/architecture/blueprints/YYYY-MM-DD-surface-name.md`; one blueprint owns one surface or tightly coupled capability.
 
 ## 1. Metadata
 
@@ -43,7 +42,7 @@ Smallest missing proof/owner decision:
 Decision blocked by it:
 ```
 
-An unresolved owner-level art/engine/frame GAP keeps status `DRAFT`.
+An unresolved owner-level art/engine/scene GAP keeps status `DRAFT`.
 
 ## 4. Scope
 
@@ -87,8 +86,7 @@ Important content and actions remain outside canvas.
 | motion | | | |
 | renderer/assets/Vite | | | |
 
-Record CSS winners/import order and all controllers/listeners before changing
-ownership.
+Record CSS winners/import order and all controllers/listeners before changing ownership.
 
 ## 7. Storyboard/state machine
 
@@ -127,19 +125,20 @@ Record component-specific boundaries and navigation 1180/1181 impact.
 
 Define ID/EN/AR switch while this surface is idle, active, loading, and failed.
 
-## 10. Six-frame map, when applicable
+## 10. Cinematic scene contract, when applicable
 
-| Frame | School purpose | Semantic fallback | Shared assets | Unique assets | Enter/active/exit | Next frame |
-|---|---|---|---|---|---|---|
-| 1 | | | | | | |
-| 2 | | | | | | |
-| 3 | | | | | | |
-| 4 | | | | | | |
-| 5 | | | | | | |
-| 6 | | | | | | |
+```text
+Scene ID and school purpose:
+Owning semantic surface:
+DOM/poster fallback:
+Shared runtime/assets:
+Unique assets:
+Idle/enter/active/exit/reverse:
+Suspend/failure/dispose:
+Previous/next scene, if any:
+```
 
-State whether the accepted architecture is A, B, C, or Hybrid from
-`FRAME-GAP-001`.
+There is no required scene count. Adapt the same scene across all six tiers; do not create a scene copy per tier.
 
 ## 11. Capability/browser contract
 
@@ -162,8 +161,9 @@ Unsupported/context-loss fallback:
 | model | | | | | | | |
 | textures | | | | | | | |
 
-Record baseline and accepted delta; LCP/CLS/INP/long-task rule; Tier 2/3 frame
-time; DPR cap; PageSpeed profile/run count; and reject/downgrade condition.
+Record baseline and accepted delta; LCP/CLS/INP/long-task rule; Tier 2/3
+render-frame time; DPR cap; PageSpeed profile/run count; and reject/downgrade
+condition.
 
 ## 13. Accessibility
 

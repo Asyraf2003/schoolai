@@ -23,4 +23,7 @@ historical milestone noise.
 
 ## Active blueprints
 
-None. The next frame blueprint is blocked by `FRAME-GAP-001`.
+- `2026-07-31-execution-foundation.md`
+  - `PROVEN` for its docs-only scope;
+  - owns terminology, target source structure, atomic migration, isolated labs,
+    prompt templates, and the path to the first read-only baseline.

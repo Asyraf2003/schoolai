@@ -1,17 +1,28 @@
-# WebGL, 3D Asset, and Six-Frame Pipeline
+# WebGL, 3D Asset, and Cinematic Scene Pipeline
 
 Status: ACTIVE
 Updated: 2026-07-31
 
 ## 1. Product position
 
-WebGL is required for owner-approved cinematic frames because the target
-experience needs spatial storytelling beyond normal DOM motion.
+WebGL is required for owner-approved cinematic scenes when spatial storytelling
+adds product value beyond DOM motion.
 
-WebGL is not required to read content, navigate, switch locale, submit a CTA,
-or understand the school. It is progressive fidelity, never progressive access.
+WebGL is not required to read content, navigate, switch locale, submit a CTA, or
+understand the school. It is progressive fidelity, never progressive access.
 
-## 2. Architecture
+## 2. Vocabulary
+
+Use `UI_UX_EXECUTION_FOUNDATION.md`:
+
+- six viewport tiers are XS through 2XL;
+- a cinematic scene is a bounded spatial story owned by a semantic surface;
+- a render frame is one timing sample.
+
+There is no required count of scenes or models. Six tiers never mean six
+canvases, engines, bundles, contexts, scene copies, or render loops.
+
+## 3. Architecture
 
 ```text
 semantic Blade + poster/DOM fallback
@@ -19,135 +30,130 @@ semantic Blade + poster/DOM fallback
 -> deferred engine import
 -> shared asset registry
 -> one page-level renderer/context
--> one frame director
--> six frame states
+-> scene director
+-> active surface scene
 -> suspend/dispose/fallback
 ```
 
 Defaults:
 
 - one canvas, WebGL context, renderer, and RAF scheduler per page;
-- one active high-fidelity frame;
-- optional adjacent-frame prewarm within accepted memory/network budget;
-- shared scene/world, materials, lighting, loaders, and asset cache where useful;
-- frame modules own state/configuration, not engine copies.
+- one active high-fidelity scene;
+- optional adjacent-scene prewarm only within accepted memory/network budget;
+- shared world, materials, lighting, loaders, and asset cache where useful;
+- scene modules own configuration/state, not engine copies.
 
 Another simultaneous renderer/context requires measured necessity, an accepted
 blueprint exception, and full lifecycle proof.
 
-## 3. Six-frame contract
+## 4. Cinematic scene contract
 
-The exact content of “six model frames” is `FRAME-GAP-001`. Until resolved, an
-agent may design the reusable lifecycle but cannot invent frame subjects,
-models, order, or school narrative.
+Each accepted scene defines:
 
-Each accepted frame defines its ID/school purpose, semantic content/CTA,
-reference/storyboard, enter/active/exit/reverse, camera/object/DOM alignment,
-ID/EN/AR and LTR/RTL composition, six-tier camera/crop, normal/reduced/static
-results, assets/LODs, activation/prewarm/unload, budget, failure, and proof.
+- school purpose and semantic surface/content/CTA;
+- reference/storyboard and what is not copied;
+- idle, enter, active, exit/reverse, suspended, failed, and disposed states;
+- DOM/camera/object alignment and interruption behavior;
+- XS/SM/MD/LG/XL/2XL camera, crop, input, and fallback;
+- ID/EN/AR plus LTR/RTL composition;
+- normal, reduced-motion, and static results;
+- assets/LODs, activation/prewarm/unload, budgets, failure, and proof.
 
-Six frames must not mean six critical bundles, canvases, contexts, or loops.
+Scene count and narrative order are surface blueprint decisions, not global
+architecture.
 
-## 4. Engine decision
+## 5. Engine decision
 
 No engine exists in current `package.json`. Resolve `ENGINE-GAP-001` only after
-the baseline and frame definition.
-
-Candidate ADR:
+the baseline and an accepted first scene blueprint.
 
 | Path | Strength | Risk |
 |---|---|---|
-| targeted Three.js imports | custom visuals, ecosystem, mature loaders | accidental bundle growth and global abstractions |
+| targeted Three.js | custom visuals, ecosystem, mature loaders | accidental bundle/API growth |
 | Babylon.js | integrated engine/tooling | larger framework surface |
 | raw WebGL2 | low-level control | highest implementation/browser/test cost |
-| recommended hybrid | minimal Three.js core + project-owned lifecycle + measured custom shaders | import and ownership discipline required |
+| evaluation hybrid | minimal Three.js core + project-owned lifecycle + measured shaders | strict import/ownership discipline |
 
-Do not install multiple engines for comparison in production. Prototype
-comparisons must be isolated and removed after the ADR.
+Do not install multiple engines in production. Comparisons use the isolated lab
+contract and are removed after the ADR.
 
-## 5. Critical-path gate
+## 6. Critical-path gate
 
-The initial route must request zero renderer, model, texture, shader, or decoder
-bytes as render-blocking critical resources unless comparative proof accepts an
+The initial route requests zero renderer, model, texture, shader, or decoder
+bytes as render-blocking resources unless comparative proof accepts an
 exception.
 
 Activation requires:
 
 - semantic DOM and fallback already usable;
-- `prefers-reduced-motion` and user preference evaluated;
+- reduced-motion/user preference evaluated;
 - WebGL capability/context creation tested safely;
 - surface near viewport or explicit user intent;
 - critical content/LCP not competing for the same load window;
 - asset budget available;
 - abort path for navigation/locale change.
 
-Dynamic import is mandatory for engine and frame code.
+Dynamic import is mandatory for engine and scene code.
 
-## 6. Asset pipeline
+## 7. Asset pipeline
 
-Every asset group records purpose/owner frame, provenance/license, runtime
-format, compressed transfer, decoded CPU/GPU cost, LOD variants,
-critical/deferred status, activation/prewarm, poster fallback, cache/version
-policy, and unload/disposal behavior.
+Every asset group records surface/scene owner, purpose, provenance/license,
+runtime format, compressed transfer, decoded CPU/GPU cost, LOD variants,
+critical/deferred state, activation/prewarm, poster fallback, cache/version, and
+unload/disposal behavior.
 
 Preferred measured techniques:
 
 - glTF/GLB runtime delivery;
-- geometry compression such as Meshopt or Draco where decode tradeoff passes;
-- KTX2/Basis texture compression with supported fallback;
+- Meshopt or Draco only when decode tradeoff passes;
+- KTX2/Basis textures with supported fallback;
 - instancing for repeated geometry;
-- atlas/merge only when it improves measured draw/load cost;
+- atlas/merge only when measured;
 - baked lighting or selective real-time effects;
-- right-sized texture/model LODs;
-- worker/off-main-thread decode only when browser support and transfer cost pass.
+- right-sized model/texture LODs;
+- workers only when support and transfer costs pass.
 
-Lusion's reported 3.5 MB case study is evidence of a custom optimization
-pipeline, not an approved SchoolAI asset budget.
+Lusion's reported 3.5 MB case is evidence of a custom pipeline, not a SchoolAI
+budget.
 
-## 7. Quality ladder
+## 8. Quality ladder
 
-Fidelity is selected by combined measured capability, not a single user-agent,
-width, DPR, core, memory, connection, or battery heuristic.
+Fidelity uses combined measured capability, never a single user-agent, width,
+DPR, core, memory, connection, or battery heuristic.
 
 | Tier | Rendering contract |
 |---|---|
 | 0 static | semantic HTML + poster; no continuous renderer |
-| 1 motion | DOM/CSS transform/opacity; no WebGL requirement |
-| 2 efficient WebGL | reduced LOD/effects, bounded DPR/update rate |
-| 3 high fidelity | richer LOD/shaders/effects after target-profile proof |
+| 1 motion | bounded DOM/CSS motion; no WebGL requirement |
+| 2 efficient WebGL | reduced LOD/effects, bounded DPR/update |
+| 3 high fidelity | richer assets/effects after target-profile proof |
 
-Provisional DPR:
+- Tier 2 defaults to `min(devicePixelRatio, 1.5)`.
+- Tier 3 may use up to `2` only after profile proof.
+- Native DPR is never unbounded.
 
-- Tier 2 defaults to `min(devicePixelRatio, 1.5)`;
-- Tier 3 may use up to `2` only after profile proof;
-- native DPR is never used unbounded.
+Downgrade post-processing, shadows, particles, texture/geometry LOD, DPR, and
+update rate before changing story meaning.
 
-Downgrade order normally reduces post-processing, shadows, particles, texture
-LOD, geometry LOD, DPR, and update frequency before changing story meaning.
+## 9. Runtime targets
 
-## 8. Runtime targets
+Numeric transfer/memory budgets follow `BASELINE-GAP-001` per scene/profile.
+They cannot be quietly relaxed.
 
-Numeric transfer/memory budgets are assigned after `BASELINE-GAP-001`, per
-surface and profile. They cannot be quietly relaxed.
-
-Runtime gates:
-
-- no WebGL-attributable long task over 50 ms during critical input without an
-  accepted breakdown/fix;
-- Tier 3 targets p95 active-frame work within 16.7 ms on its declared profile;
-- Tier 2 targets p95 within 33.3 ms;
-- scroll/input handlers do not synchronously parse/compile heavy assets;
-- layout reads are batched before writes;
-- inactive/offscreen/hidden frames do no continuous rendering;
-- repeated entry/exit does not grow contexts, listeners, observers, buffers,
+- No WebGL-attributable long task over 50 ms during critical input without a
+  breakdown and fix.
+- Tier 3 targets p95 render-frame work within 16.7 ms on its declared profile.
+- Tier 2 targets p95 within 33.3 ms.
+- Input handlers never synchronously parse/compile heavy assets.
+- Layout reads are batched before writes.
+- Inactive/offscreen/hidden scenes perform no continuous rendering.
+- Repeated entry/exit cannot grow contexts, listeners, observers, buffers,
   textures, media, or memory without bound.
 
-Frame rate alone is not proof; record long tasks, interaction latency, GPU/CPU
-time where available, memory/resource counts, and visual correctness.
+FPS alone is not proof; record long tasks, input latency, GPU/CPU time where
+available, memory/resource counts, and visual correctness.
 
-## 9. Lifecycle
-
-Required states:
+## 10. Lifecycle
 
 ```text
 idle -> eligible -> loading -> ready -> active
@@ -156,44 +162,35 @@ loading/active -> failed -> fallback
 ready/active/failed -> disposed
 ```
 
-Suspend on offscreen, hidden tab, open blocking overlay where appropriate,
-locale unload, and page transition. Dispose on permanent removal/navigation.
+Suspend on offscreen, hidden tab, blocking overlay when appropriate, locale
+unload, and page transition. Dispose on permanent removal/navigation.
 
-Disposal covers RAF, observers, listeners, timers, loaders/abort controllers,
-geometries, materials, textures, render targets, video textures, audio,
-workers, caches owned only by the frame, and context when page ownership ends.
+Disposal covers RAF, observers, listeners, timers, abort controllers,
+geometries, materials, textures, render targets, video/audio, workers, owned
+caches, and context when page ownership ends.
 
-Handle `webglcontextlost` and restoration without an infinite loader, scroll
-lock, lost focus, or missing content.
+Handle context loss/restoration without an infinite loader, scroll lock, lost
+focus, layout shift, or missing content.
 
-## 10. Locale, direction, and responsive
+## 11. Locale, responsive, browser, and failure
 
-- Text remains DOM unless a proven 3D label is decorative and accessible.
-- Camera anchors tied to inline-start/inline-end mirror for RTL.
-- Neutral orbit, time, physics, and real-world orientation do not auto-mirror.
-- On locale reload, suspend before unload and rebuild measurements/anchors after
-  new fonts, `lang`, `dir`, and layout are ready.
-- Every frame defines six-tier camera, canvas, crop, touch, and fallback behavior.
-- Resize/orientation preserves logical state and avoids context recreation when
-  a resize is sufficient.
-
-## 11. Browser and failure
-
-Feature-detect WebGL2 and required extensions. A WebGL1 path is allowed only when
-the accepted visual/maintenance budget justifies it; otherwise use Tier 0/1.
-
-Verify Chromium and Safari/WebKit for:
-
-- context creation/loss, canvas sizing, color, shader precision, texture limits;
-- resize, safe areas, viewport units, touch/pointer, page hide/show, BFCache;
-- video texture autoplay/`playsinline`;
-- memory/resource cleanup.
-
-Failure always restores poster/DOM, content, CTA, scroll, and focus without
-layout shift. Retry is bounded and user-driven when appropriate.
+- Text stays in DOM unless a decorative 3D label remains accessible.
+- Inline-start/end camera anchors mirror for RTL; neutral orbit/time/physics and
+  real-world orientation do not.
+- Locale reload suspends before unload and rebuilds anchors after fonts,
+  `lang`, `dir`, and layout are ready.
+- One scene defines fluid camera/canvas/crop/touch/fallback across all six
+  viewport tiers; resize/orientation preserves logical state.
+- Feature-detect WebGL2/extensions. Use WebGL1 only from an accepted maintenance
+  budget; otherwise use Tier 0/1.
+- Verify Chromium and Safari/WebKit context, sizing, color, shader precision,
+  texture limits, viewport/touch/BFCache, video texture, and cleanup.
+- Failure restores poster/DOM, content, CTA, scroll, and focus; retry is bounded
+  and user-driven when appropriate.
 
 ## 12. Acceptance
 
-No frame is `PASS` until semantic fallback, all six tiers, ID/EN/AR, LTR/RTL,
-reduced motion, Chromium/WebKit, asset ledger, activation, frame-time/long-task,
-context-loss, suspend, dispose, and PageSpeed impact have proof.
+No cinematic scene is `PASS` until semantic fallback, six tiers, ID/EN/AR,
+LTR/RTL, reduced motion, Chromium/WebKit, asset ledger, activation,
+render-frame/long-task evidence, context loss, suspend, dispose, and PageSpeed
+delta all have proof.

@@ -49,8 +49,9 @@ required content, navigation, locale access, or accessibility.
 - Do not copy Lusion code, assets, shaders, branding, or exact compositions.
 - Do not hide a conflict with override chains or duplicate state owners.
 - Do not claim PageSpeed/CWV/browser/RTL success without declared proof.
-- Do not allow six frames to create six simultaneous renderers or loops by
-  default.
+- Do not let six viewport tiers create parallel DOM, controller, bundle,
+  renderer, or scene implementations.
+- Do not let production import, route to, preload, or bundle experiment code.
 
 ## P1 rules
 
@@ -67,7 +68,7 @@ required content, navigation, locale access, or accessibility.
 
 Before choosing an implementation:
 
-1. Name active surface/frame and owner goal.
+1. Name active surface/cinematic scene and owner goal.
 2. State FACT and GAP.
 3. State scope in and scope out.
 4. Identify semantic content and fallback.
@@ -99,11 +100,13 @@ Example:
 
 | Option | Choose when | Benefit | Cost/risk |
 |---|---|---|---|
-| A | one strong focal scene is enough | smallest runtime | less continuity |
-| B | every frame needs unique 3D | maximum variation | payload/GPU pressure |
-| Hybrid | frames share a world and stream unique assets | balance | needs asset discipline |
+| A | current ownership and behavior are proven | fastest production path | unsafe when art/physics are uncertain |
+| B | a visual or graphics hypothesis is unproven | isolated learning | promotion requires a fresh production patch |
+| C | only composition intent is unknown | cheapest storyboard validation | no runtime-cost evidence |
+| Hybrid | validate uncertainty in a lab, then implement from a production blueprint | controlled risk and clean ownership | two explicit stages |
 
-Do not cross an unresolved owner-level art-direction or engine decision.
+Do not cross an unresolved owner-level art-direction, scene, engine, or data
+decision.
 
 ## Blueprint acceptance
 

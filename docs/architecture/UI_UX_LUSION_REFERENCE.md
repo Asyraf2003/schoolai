@@ -38,7 +38,7 @@ asset/runtime pipeline. The reported 3.5 MB is not a SchoolAI budget.
 | focal 3D world/object | meaningful campus, science, learning, or growth metaphor |
 | immersive projects | real school programs, articles, and gallery content |
 | full-screen navigation | accessible unified public navigation |
-| continuity | shared frame director, motion grammar, color/type tokens |
+| continuity | shared scene director, motion grammar, color/type tokens |
 
 The result should feel confident, warm, exploratory, credible, and recognizably
 Al Mustaqbal. It must not feel like an agency portfolio with school text pasted
@@ -46,7 +46,7 @@ into it.
 
 ## 3. Accepted ambition
 
-For owner-approved cinematic frames, WebGL is an intended required medium—not
+For owner-approved cinematic scenes, WebGL is an intended required medium—not
 an optional decorative experiment. Normal DOM/CSS motion remains appropriate
 where spatial rendering adds no product value.
 
@@ -64,7 +64,7 @@ Lusion-class spatial ambition
 ```
 
 If a high-fidelity profile cannot meet the gate, lower its fidelity tier while
-preserving the narrative frame, content, and controls.
+  preserving the narrative scene, content, and controls.
 
 ## 4. What must not be copied
 
@@ -93,7 +93,7 @@ For each requested effect:
 7. State the school story and semantic fallback.
 8. Define all six tiers, ID/EN/AR, LTR/RTL, and reduced motion.
 9. Assign asset/runtime/PageSpeed budgets.
-10. Implement one isolated accepted frame/surface.
+10. Implement one isolated accepted surface/scene.
 11. Prove the full matrix before reuse.
 
 A recording proves chronology. Screenshots prove composition. DOM/computed
@@ -126,7 +126,7 @@ ADAPTERS
 
 PIPELINE
 - semantic fallback
-- renderer/frame/assets/LOD
+- renderer/scene/assets/LOD
 - loading/suspend/dispose/failure
 
 PROOF
@@ -135,35 +135,34 @@ PROOF
 
 Then move accepted decisions into `UI_UX_BLUEPRINT_TEMPLATE.md`.
 
-## 7. Six-frame guidance
+## 7. Scene and six-tier guidance
 
-Until `FRAME-GAP-001` is resolved, Lusion observations cannot define the
-owner's six frame subjects.
+The owner's “six frames” means six viewport tiers, not six Lusion-inspired
+scenes. Lusion observations cannot invent SchoolAI story content.
 
-Recommended architecture, pending owner confirmation:
+For each owner-approved cinematic scene:
 
-- one shared school world/renderer;
-- six narrative states;
-- frame-specific camera, DOM composition, and selectively streamed assets;
-- only one high-fidelity frame active;
-- adjacent prewarm only within budget;
-- complete poster/DOM story for every frame.
+- use one shared page renderer/world when useful;
+- adapt camera, DOM composition, crop, input, and fallback across all six tiers;
+- keep only one high-fidelity scene active;
+- prewarm another scene only within measured budget;
+- preserve a complete poster/DOM story.
 
-This recommendation is not approval to invent frame content.
+Scene count, subjects, and order come from accepted SchoolAI surface blueprints.
 
 ## 8. Adoption order
 
 1. Prove current source/performance/browser baseline.
-2. Resolve six-frame purpose/content.
-3. Accept one frame blueprint and engine ADR.
+2. Select the smallest safe ownership-migration pilot.
+3. Accept one cinematic scene blueprint and engine ADR when WebGL is relevant.
 4. Stabilize selected surface ownership.
 5. Implement semantic/static experience.
 6. Implement shared motion grammar.
-7. Add one WebGL frame with lifecycle and quality ladder.
+7. Add one WebGL scene with lifecycle and quality ladder.
 8. Prove all tiers/locales/engines/accessibility/PageSpeed.
 9. Reuse only after measured value and cost are accepted.
 
-Do not begin with a site-wide renderer or six-scene payload.
+Do not begin with a site-wide renderer or an assumed multi-scene payload.
 
 ## 9. Acceptance
 

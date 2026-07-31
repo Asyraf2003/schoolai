@@ -12,8 +12,7 @@ FACT -> GAP -> GOAL -> IMPACT -> DECISION -> BLUEPRINT
 -> ACTIVE STEP -> EXECUTION -> PROOF -> PROGRESS -> STATUS -> NEXT
 ```
 
-Only one surface or capability is active. Read and apply
-`UI_UX_SESSION_PROTOCOL.md`.
+Only one surface or capability is active. Apply `UI_UX_SESSION_PROTOCOL.md` and `UI_UX_EXECUTION_FOUNDATION.md`.
 
 ## 2. Discovery gate
 
@@ -27,6 +26,7 @@ Before editing the active scope, inspect:
 - JS controllers, listeners, timers, observers, state classes, fallback, BFCache
   and lifecycle;
 - Vite entry and dynamic-import graph;
+- production/lab dependency direction when experiments exist;
 - media/model loading, dimensions, crop, poster, cache, and fallback;
 - six tiers, component boundaries, orientation, and short heights;
 - ID/EN/AR, LTR/RTL, locale switch, and text metrics;
@@ -34,8 +34,7 @@ Before editing the active scope, inspect:
 - accessibility tree, keyboard, touch/pointer, focus, zoom, reduced motion;
 - existing tests and accepted blueprint.
 
-Translate screenshots/videos into trigger, geometry, progression, easing, final,
-reverse/interruption, responsive/direction, reduced-motion, and cleanup states.
+Translate screenshots/videos into trigger, geometry, progression, easing, final, reverse/interruption, adapters, reduced-motion, and cleanup.
 
 Do not edit before root ownership and the smallest safe change are stated.
 
@@ -51,9 +50,9 @@ Use `UI_UX_BLUEPRINT_TEMPLATE.md`. Implementation requires:
 - Chromium/WebKit and capability downgrade;
 - asset/performance/accessibility budgets;
 - state lifecycle and proof plan;
-- `OWNER_ACCEPTED` for material art-direction/engine/frame decisions.
+- `OWNER_ACCEPTED` for material art-direction/engine/scene decisions.
 
-An unresolved `FRAME-GAP-001` blocks frame implementation.
+An unresolved owner-level scene, model, engine, asset, or art-direction decision blocks only its dependent implementation.
 
 ## 4. Execution rules
 
@@ -65,8 +64,10 @@ An unresolved `FRAME-GAP-001` blocks frame implementation.
 - Keep source files at or below 200 lines.
 - Add/update tests for durable DOM/state/accessibility contracts.
 - Update `UI_UX_CURRENT_STATE.md` when FACT/GAP/decision/progress/NEXT changes.
-- Do not mix baseline, engine selection, site-wide refactor, and frame
+- Do not mix baseline, engine selection, site-wide refactor, and scene
   implementation in one active step.
+- Do not create empty target folders or move source before ownership proof.
+- Production must never import, route to, preload, or bundle lab code.
 
 ## 5. Automated proof
 
@@ -80,8 +81,7 @@ npm run build
 php artisan test
 ```
 
-Use focused tests while iterating. If the channel cannot run a required command,
-record `BLOCKED_BY_MISSING_EVIDENCE`; do not translate it into `PASS`.
+If the channel cannot run a required command, record `BLOCKED_BY_MISSING_EVIDENCE`; never translate it into `PASS`.
 
 ## 6. Responsive/locale runtime matrix
 
@@ -104,7 +104,7 @@ Core release proof:
 | Viewport | relevant orientation and short-height case |
 
 Verify no unintended overflow/clipping, hidden content, stale direction, broken
-crop, inaccessible controls, state loss, or mixed-locale frame.
+crop, inaccessible controls, state loss, or mixed-locale surface state.
 
 ## 7. Interaction/lifecycle proof
 
@@ -152,13 +152,13 @@ In addition to the full matrix, record:
 - engine and initial/deferred transfer;
 - model/texture/decoder asset ledger and LOD;
 - canvas bounds, resolution, DPR cap, camera per tier/direction;
-- long tasks and p95 frame time on declared profiles;
+- long tasks and p95 render-frame time on declared profiles;
 - offscreen/hidden/locale/page lifecycle;
 - context loss/failure;
 - buffers/textures/targets/workers/listeners disposed;
 - PageSpeed delta against baseline.
 
-No frame is `PASS` from high-end desktop observation alone.
+No cinematic scene is `PASS` from high-end desktop observation alone.
 
 ## 10. Accessibility proof
 
@@ -172,7 +172,7 @@ announcements where relevant.
 A surface/capability is `PASS` only when:
 
 1. source/state ownership and accepted blueprint are explicit;
-2. no anonymous cascade or duplicate controller/renderer was added;
+2. no anonymous cascade, duplicate controller/renderer, or old/new owner overlap;
 3. semantic content and primary actions work without enhancement;
 4. all six tiers and affected boundaries have proof;
 5. ID/EN/AR and LTR/RTL switch behavior have proof;
@@ -182,7 +182,7 @@ A surface/capability is `PASS` only when:
 9. PageSpeed/CWV claims match actual evidence;
 10. diff, structure, build, focused tests, and PHP tests pass;
 11. source files obey 200-line and ownership rules;
-12. no unrelated area changed;
+12. no unrelated area or production-to-lab dependency changed;
 13. owner feedback for active scope is resolved;
 14. current state/progress/NEXT are accurate.
 

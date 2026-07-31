@@ -23,21 +23,27 @@ authority.
    - verified repo facts, active gaps, accepted decisions, progress, and NEXT.
 4. `UI_UX_ENGINEERING.md`
    - ownership for Blade, CSS, JS, locale, browser, motion, and graphics.
-5. `UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
+5. `UI_UX_EXECUTION_FOUNDATION.md`
+   - vocabulary, target ownership, fluid migration, labs, and promotion.
+6. `UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
    - six width tiers, 360px minimum, ID/EN/AR, LTR/RTL, and transition proof.
-6. `UI_UX_DOD.md`
+7. `UI_UX_DOD.md`
    - execution, automated proof, runtime matrix, and completion gates.
 
 Read when relevant:
 
-7. `UI_UX_PERFORMANCE_BROWSER_MATRIX.md`
+8. `UI_UX_PERFORMANCE_BROWSER_MATRIX.md`
    - PageSpeed/CWV, capability tiers, budgets, Chromium, and WebKit.
-8. `UI_UX_WEBGL_3D_PIPELINE.md`
-   - renderer, six-frame architecture, models, shaders, lifecycle, and fallback.
-9. `UI_UX_LUSION_REFERENCE.md`
+9. `UI_UX_WEBGL_3D_PIPELINE.md`
+   - renderer, cinematic scenes, models, shaders, lifecycle, and fallback.
+10. `UI_UX_LUSION_REFERENCE.md`
    - reference analysis and translation into Al Mustaqbal identity.
-10. `UI_UX_BLUEPRINT_TEMPLATE.md`
-    - required surface/frame blueprint before implementation.
+11. `UI_UX_BLUEPRINT_TEMPLATE.md`
+    - required surface/scene blueprint before implementation.
+12. `UI_UX_PROMPT_TEMPLATES.md`
+    - bounded audit, edit, build, experiment, and continuation prompts.
+13. `UI_UX_HANDOFF_TEMPLATE.md`
+    - durable cross-session and cross-agent transfer.
 
 ## Live typography sources
 
@@ -59,6 +65,7 @@ No old milestone percentage or `PASS` status survives without new evidence.
 - `*_SESSION_PROTOCOL.md`: how a session starts, works, and hands off.
 - `*_CURRENT_STATE.md`: active progress ledger and one valid NEXT.
 - `*_ENGINEERING.md`: normative ownership and architecture.
+- `*_EXECUTION_FOUNDATION.md`: source migration and experiment boundaries.
 - `*_MATRIX.md`: declared support and required proof combinations.
 - `*_PIPELINE.md`: advanced asset/runtime lifecycle.
 - `*_DOD.md`: acceptance and completion gates.
@@ -67,6 +74,9 @@ No old milestone percentage or `PASS` status survives without new evidence.
 
 Accepted surface blueprints belong under `docs/architecture/blueprints/`.
 Blueprints are plans, not evidence or handoffs.
+
+Durable continuation packets belong under `docs/architecture/handoffs/` and
+start from `UI_UX_HANDOFF_TEMPLATE.md`.
 
 ## Authority
 
@@ -103,7 +113,8 @@ change product intent but cannot turn an unrun proof gate into `PASS`.
 SchoolAI targets a distinctive Al Mustaqbal cinematic experience informed by
 Lusion's design/motion/3D principles, with:
 
-- WebGL for approved cinematic frames;
+- WebGL for approved cinematic scenes;
+- isolated experiments outside the production graph;
 - semantic and static fallbacks;
 - six responsive width tiers from 360px upward;
 - ID/EN in Inter/LTR and AR in Cairo/RTL;

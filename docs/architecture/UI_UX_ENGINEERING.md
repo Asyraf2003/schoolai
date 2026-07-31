@@ -5,9 +5,8 @@ Scope: SchoolAI public UI, motion, responsive behavior, and graphics
 
 ## 1. Product architecture
 
-SchoolAI may be cinematic, spatial, and memorable without becoming an opaque
-demo. School identity, content, navigation, locale switching, and primary
-actions remain the product.
+SchoolAI may be cinematic, spatial, and memorable without becoming an opaque demo.
+School identity, content, navigation, locale switching, and actions remain the product.
 
 ```text
 content and DB/lang source
@@ -16,7 +15,7 @@ content and DB/lang source
 -> section/component layout
 -> responsive + locale/direction adapters
 -> capability-gated motion
--> approved WebGL frame renderer
+-> approved WebGL cinematic scene
 ```
 
 Every later layer must preserve a usable earlier result.
@@ -53,7 +52,8 @@ Every later layer must preserve a usable earlier result.
 - Use explicit states where relevant:
   `idle -> loading -> ready -> active -> suspended -> failed -> disposed`.
 - Use event delegation where appropriate and one scheduler per motion system.
-- Cancel frames, observers, timers, listeners, media, and renderer work when
+- Cancel animation frames, observers, timers, listeners, media, and renderer
+  work when
   inactive.
 - Re-entry, resize, locale reload, BFCache, and repeated open/close must not
   accumulate state owners.
@@ -61,14 +61,16 @@ Every later layer must preserve a usable earlier result.
 ### Graphics
 
 - `UI_UX_WEBGL_3D_PIPELINE.md` owns renderer/model/shader rules.
-- One page-level renderer/context/frame director is the default.
-- A frame owns purpose and scene state, not its own unbounded engine copy.
-- Assets have an owner, activation, fallback, budget, cache, and disposal path.
+- One page-level renderer/context/scene director is the default.
+- A scene owns purpose and state, not its own unbounded engine copy.
+- Assets have a surface/scene owner, activation, fallback, budget, cache, and
+  disposal path.
 - WebGL integration must be removable without breaking semantic layout.
 
 ## 3. Responsive architecture
 
 `UI_UX_RESPONSIVE_LOCALE_MATRIX.md` is normative.
+`UI_UX_EXECUTION_FOUNDATION.md` owns fluid migration and dependency direction.
 
 - Certified minimum is 360px.
 - Six global tiers start at 360, 640, 768, 1024, 1280, and 1536px.
@@ -98,8 +100,7 @@ Every later layer must preserve a usable earlier result.
   non-directional 3D rotation merely because layout is RTL.
 - Verify ID->AR, EN->AR, AR->ID, and AR->EN transitions.
 
-Current locale switching is server-rendered. Enhancements may animate exit/load,
-but must:
+Current locale switching is server-rendered. Enhancements may animate exit/load, but must:
 
 1. keep the form/navigation path functional without JS;
 2. block duplicate submits accessibly;
@@ -118,9 +119,7 @@ but must:
 - Prefixes supplement a usable fallback.
 - Engine-specific code requires a reproduced minimal defect, narrow scope,
   proof, and removal condition.
-- Explicitly test fixed/sticky/overflow, filters/backdrops, viewport units,
-  autoplay/`playsinline`, touch/pointer/keyboard, focus/inert, font metrics,
-  canvas/context loss, and lifecycle.
+- Explicitly test fixed/sticky/overflow, filters/backdrops, viewport units, autoplay/`playsinline`, touch/pointer/keyboard, focus/inert, font metrics, canvas/context loss, and lifecycle.
 
 ## 6. Motion grammar
 
@@ -134,33 +133,33 @@ Every motion pattern has a storyboard:
 - duration, easing, distance, scale, blur/filter, and layer ownership;
 - activation and cleanup.
 
-Prefer transform and opacity for frequent animation. Profile masks, filters,
-blur, clip paths, large backdrops, and layout animation. Scroll storytelling
-cannot hijack navigation, trap input, or make content unreachable.
+Prefer transform and opacity for frequent animation. Profile masks, filters, blur,
+clip paths, large backdrops, and layout animation. Scroll storytelling cannot hijack navigation, trap input, or make content unreachable.
 
-## 7. WebGL and six frames
+## 7. WebGL and cinematic scenes
 
-- WebGL is required for owner-approved cinematic frames.
+- WebGL is required for owner-approved cinematic scenes.
 - WebGL is progressive fidelity, not progressive access.
-- Six frames share one director/renderer by default; only an accepted measured
-  exception permits another simultaneous context.
-- Frame content/meaning must resolve `FRAME-GAP-001` before implementation.
-- Engine selection must resolve `ENGINE-GAP-001` after baseline.
+- Cinematic scenes share one director/renderer by default; only an accepted
+  measured exception permits another simultaneous context.
+- No scene count is implied by the six viewport tiers.
+- Engine selection resolves `ENGINE-GAP-001` after baseline and an accepted
+  first scene blueprint.
 - Canvas is decorative/interactive enhancement around semantic content.
 - Reduced motion, unsupported graphics, context loss, or constrained runtime
   uses an equivalent poster/DOM path.
 - Quality tiers may reduce DPR, texture/model LOD, effects, shadows, particles,
-  or update rate while preserving the frame's story and controls.
+  or update rate while preserving the scene's story and controls.
 
 ## 8. Performance
 
 - Primary HTML exposes content/navigation/CTA immediately.
 - The real LCP resource is discoverable and not wrongly lazy-loaded.
 - Reserve image/video/canvas dimensions.
-- Do not preload all frames, slides, videos, models, fonts, or decoders.
+- Do not preload all scenes, slides, videos, models, fonts, or decoders.
 - WebGL engine/assets stay outside the initial critical path.
 - Dynamic import is required for non-critical cinematic systems.
-- One feature owns initial/deferred bytes, long tasks, frame time, memory,
+- One feature owns initial/deferred bytes, long tasks, render-frame time, memory,
   activation, suspension, failure, and disposal.
 - A visual improvement that misses its accepted budget or PageSpeed gate is not
   complete; reduce fidelity or revisit architecture.
@@ -187,14 +186,14 @@ Forbidden without a separate accepted migration:
 - arbitrary timeouts or unexplained z-index escalation;
 - inline fallback that silently differs from the owned module;
 - renderer/media initialization for hidden/disabled surfaces;
-- one render loop/context per frame;
+- one render loop/context per scene;
 - mass deletion before computed winners and behavior are proven.
 
 Name files by owner/purpose, for example:
 
 ```text
-home/hero-layout.css
-home/hero-controller.js
-graphics/home-frame-director.js
+surfaces/home/hero/layout.css
+surfaces/home/hero/controller.js
+graphics/scenes/hero.js
 ```
 Split by responsibility, not line count alone.

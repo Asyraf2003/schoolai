@@ -6,11 +6,11 @@ Certified minimum width: `360px`
 
 ## 1. Principle
 
-Responsive architecture answers available space, content, input, orientation,
-and capability. Tier names are convenient labels, not device detection.
+Responsive architecture answers space, content, input, orientation, and capability; tier names are labels, not device detection.
 
-One semantic DOM and controller are shared by default. CSS owns layout changes;
-component container queries may add measured local boundaries.
+One semantic DOM/controller is shared by default. CSS owns layout; container queries may add measured local boundaries.
+
+The owner's “six frames” means these tiers, never six scenes, models, DOM trees, or renderers.
 
 ## 2. Six global tiers
 
@@ -23,8 +23,7 @@ component container queries may add measured local boundaries.
 | XL | 1280–1535px | standard laptop/desktop | full desktop art direction |
 | 2XL | >=1536px | large/ultra-wide display | bounded content with expandable cinematic field |
 
-Below 360px must not be intentionally broken, but it is outside certified
-release proof until the owner expands support.
+Below 360px must not be intentionally broken, but is outside certified proof until support expands.
 
 CSS global boundaries:
 
@@ -37,8 +36,7 @@ base: 360+
 @media (min-width: 1536px)
 ```
 
-Do not add all six queries when fluid/base CSS already satisfies a tier.
-Contracts and proof are mandatory; redundant rules are not.
+Do not add all six queries when fluid/base CSS satisfies a tier; contracts and proof are mandatory, redundant rules are not.
 
 ## 3. Navigation sub-boundary
 
@@ -49,8 +47,7 @@ Navigation has an existing product contract:
 >=1181px: desktop navigation
 ```
 
-This boundary lives inside LG. Any navigation or containing-layout change must
-prove 1180px and 1181px in every locale and both required engines.
+This LG sub-boundary requires 1180px/1181px proof in every locale and both engines when navigation or its container changes.
 
 ## 4. Required visual proof widths
 
@@ -77,8 +74,7 @@ Also prove both sides of every affected boundary:
 1535/1536
 ```
 
-Boundary proof may be automated screenshot/layout assertions. It must still be
-reviewed for wrapping, overlap, crop, focus, motion, and overflow.
+Automated boundary screenshots/assertions still require review for wrapping, overlap, crop, focus, motion, and overflow.
 
 ## 5. Surface tier contract
 
@@ -103,13 +99,16 @@ Do not encode full layout decisions in tier names alone.
 
 - Prefer `min()`, `max()`, `clamp()`, grid/flex, logical properties, and
   intrinsic sizing.
+- Treat inline size, block size, content length, orientation, safe area, input,
+  and capability as independent constraints.
 - Use container queries when a component's own width—not viewport width—causes
   the change.
 - Record local boundary and test one pixel below/at it.
-- DOM order follows semantic reading order; visual reordering cannot corrupt
-  keyboard/screen-reader order.
-- 2XL cinematic backgrounds may widen, but copy and actions use readable max
-  widths and cannot drift into empty ultra-wide space.
+- Test an interior width too; boundary-only proof does not prove fluid behavior.
+- Clamp motion distance and derive media/canvas/camera fit from owned container
+  geometry rather than hardcoded device coordinates.
+- DOM order follows semantic reading order; visual reordering cannot corrupt keyboard/screen-reader order.
+- 2XL backgrounds may widen; copy/actions keep readable max widths and cannot drift into empty ultra-wide space.
 - Test short viewports, browser chrome, notches/safe areas, orientation change,
   virtual keyboard where relevant, and 200% zoom.
 

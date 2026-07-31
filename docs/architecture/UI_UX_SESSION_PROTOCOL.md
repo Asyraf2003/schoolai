@@ -5,10 +5,8 @@ Updated: 2026-07-31
 
 ## Purpose
 
-Every SchoolAI design session starts with scope and evidence control, then
-executes one bounded surface/capability. This protocol adapts the strict
-`docs-private/engineering` work model to visual, motion, responsive, locale,
-browser, and WebGL work.
+Every SchoolAI design session starts with scope/evidence control and executes one
+bounded capability. This adapts `docs-private/engineering` rigor to UI/UX work.
 
 ## Mandatory session start
 
@@ -16,16 +14,17 @@ browser, and WebGL work.
 2. Read the mandatory chain in `docs/architecture/README.md`.
 3. Verify every mandatory file exists; stop on a broken dependency.
 4. Identify the latest user-named surface, file, route, screenshot, video,
-   frame, model, issue, commit, or command output.
+   viewport tier, cinematic scene, model, issue, commit, or command output.
 5. Classify each reference:
    - `ACTIVE`: may change in this step;
    - `CONSTRAINT`: must remain true;
    - `REFERENCE`: informs design only;
    - `DEFERRED`: explicitly outside this step.
 6. Inspect source/runtime owners before repo-state claims.
-7. Prepare or load one surface blueprint.
-8. State exactly one active step and its proof.
-9. Apply the Progress Write Gate before naming NEXT.
+7. Select the matching task template from `UI_UX_PROMPT_TEMPLATES.md`.
+8. Prepare or load one surface blueprint.
+9. State exactly one active step and its proof.
+10. Apply the Progress Write Gate before naming NEXT.
 
 ## Required work sections
 
@@ -48,13 +47,11 @@ NEXT VALID STEP
 
 ## FACT and GAP
 
-FACT is limited to inspected source/docs, visible runtime/tool output, and
-explicit owner decisions. Reference-site behavior may be a reference FACT but
-is not a SchoolAI implementation fact.
+FACT is inspected source/docs, runtime/tool output, or explicit owner decisions;
+reference-site behavior is never a SchoolAI implementation fact.
 
-GAP includes unknown ownership, absent models/assets, unclear frame meaning,
-missing browser/runtime evidence, missing budgets, and unaccepted art direction.
-Use the decision/data-request rule in `UI_UX_DECISION_POLICY.md`.
+GAP includes unknown ownership, assets, scene purpose, budgets, browser/runtime
+evidence, or art direction. Apply `UI_UX_DECISION_POLICY.md`.
 
 ## Surface scope packet
 
@@ -103,9 +100,9 @@ It may contain the largest safe cohesive patch for that one capability.
 Valid examples:
 
 - establish the read-only homepage baseline;
-- implement one approved hero frame plus fallback;
+- implement one approved Hero scene plus fallback;
 - replace one proven CSS owner for Gallery layout;
-- add the renderer lifecycle for one approved scene;
+- add renderer lifecycle for one approved scene;
 - prove one surface across the six-tier/locale/engine matrix.
 
 Invalid examples:
@@ -151,7 +148,8 @@ a governance step but cannot increase visual/runtime progress.
 
 ## Handoff triggers
 
-Create/update a durable handoff or current-state entry when:
+Create/update a durable handoff or current-state entry using
+`UI_UX_HANDOFF_TEMPLATE.md` when:
 
 - work crosses sessions/agents;
 - context is running low;
@@ -181,6 +179,7 @@ update all affected entrypoints in the same batch:
 - root `AGENTS.md`;
 - `docs/architecture/README.md`;
 - the normative contract/matrix;
+- `UI_UX_EXECUTION_FOUNDATION.md` when ownership, labs, or migration changes;
 - `UI_UX_CURRENT_STATE.md`;
 - DOD/template when its gate changes.
 
@@ -193,7 +192,7 @@ Stop and mark `BLOCKED_BY_MISSING_EVIDENCE` when:
 - mandatory docs or named source cannot be found;
 - source and docs conflict materially;
 - active ownership/root cause is unknown;
-- the six-frame meaning or required asset is unknown for frame implementation;
+- a required scene purpose, model, asset, or fallback is unknown;
 - owner-level art direction/engine choice is unresolved;
 - a required proof gate cannot run;
 - direct GitHub mutation lacks exact authorization;

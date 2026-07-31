@@ -36,7 +36,8 @@ be mistaken for application behavior.
 
 ## 3. Baseline before feature budgets
 
-Resolve `BASELINE-GAP-001` before selecting the first WebGL engine/frame.
+Resolve `BASELINE-GAP-001` before selecting the first WebGL engine or
+implementing a cinematic scene.
 
 Record:
 
@@ -62,7 +63,7 @@ requires evidence; do not quietly relax a failed budget.
 - Preload only measured critical resources.
 - Load only required script subsets/weights; avoid invisible critical text.
 - Defer non-critical section code/media by relevance.
-- Hidden slides/frames do not preload full media/models.
+- Hidden slides/scenes do not preload full media/models.
 - Renderer, models, textures, shaders, and decoders are not critical-path
   resources by default.
 - Third-party embeds use a local cover/intent path when product permits.
@@ -89,13 +90,13 @@ or executing inactive WebGL.
 After activation, WebGL still owns real-user INP, long-task, memory, and
 lifecycle impact. “Deferred” does not mean “free.”
 
-Before accepting a frame:
+Before accepting a cinematic scene:
 
 1. compare baseline and feature runs under the same profile;
 2. attribute transfer/chunks, long tasks, CLS, and LCP change;
 3. prove no offscreen/hidden loop;
 4. prove quality downgrade;
-5. prove cleanup after locale/page/frame exit;
+5. prove cleanup after locale/page/scene exit;
 6. reduce fidelity or redesign when the gate fails.
 
 ## 7. Runtime rules

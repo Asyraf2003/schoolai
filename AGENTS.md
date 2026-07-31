@@ -12,16 +12,20 @@ Before UI/UX analysis, planning, editing, or command suggestions, read:
 3. `docs/architecture/UI_UX_SESSION_PROTOCOL.md`
 4. `docs/architecture/UI_UX_CURRENT_STATE.md`
 5. `docs/architecture/UI_UX_ENGINEERING.md`
-6. `docs/architecture/UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
-7. `docs/architecture/UI_UX_DOD.md`
+6. `docs/architecture/UI_UX_EXECUTION_FOUNDATION.md`
+7. `docs/architecture/UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
+8. `docs/architecture/UI_UX_DOD.md`
 
 Also read:
 
 - `UI_UX_LUSION_REFERENCE.md` for visual, motion, or 3D work;
 - `UI_UX_PERFORMANCE_BROWSER_MATRIX.md` for performance, media, browser,
   animation, canvas, WebGL, or responsive work;
-- `UI_UX_WEBGL_3D_PIPELINE.md` for any 3D, model, shader, canvas, or frame work;
+- `UI_UX_WEBGL_3D_PIPELINE.md` for 3D, models, shaders, canvas, cinematic
+  scenes, or render-frame timing;
 - `UI_UX_BLUEPRINT_TEMPLATE.md` before proposing or implementing a surface.
+- `UI_UX_PROMPT_TEMPLATES.md` when starting a bounded agent task;
+- `UI_UX_HANDOFF_TEMPLATE.md` when work crosses sessions or agents.
 
 When visible text or Arabic is affected, inspect the current semantic DOM, lang
 files/DB source, and live typography owners:
@@ -63,7 +67,8 @@ Rules:
 - Fetch and inspect current `main`; never trust an old SHA or chat state.
 - Validate that every mandatory document exists before continuing.
 - The latest user-named file, route, screenshot, video, issue, commit, command
-  output, frame, or section defines active scope until the user changes it.
+  output, viewport tier, cinematic scene, or section defines active scope until
+  the user changes it.
 - Audit read-only before editing. Inspect the actual Blade DOM, CSS
   winners/import order, JS state, assets, locale source, and Vite entry path.
 - A screenshot proves a symptom or composition, not ownership or root cause.
@@ -126,11 +131,11 @@ ADR-level decision.
 
 ## WebGL, performance, and accessibility
 
-- WebGL is an intended required capability for owner-approved cinematic frames.
+- WebGL is an intended required capability for owner-approved cinematic scenes.
   It is never required for semantic content, navigation, locale switching, or
   primary actions.
-- Use one page-level renderer/context and scheduler by default. Six frames must
-  not become six simultaneous contexts, bundles, or animation loops.
+- Use one page-level renderer/context and scheduler by default. Six viewport
+  tiers must not become six DOMs, bundles, contexts, or animation loops.
 - Renderer, models, textures, and decoders stay outside the initial critical
   path and load by capability plus proximity or intent.
 - A static semantic fallback is always present. Reduced motion, context loss,
@@ -152,8 +157,10 @@ ADR-level decision.
   claim their old progress without new source/runtime evidence.
 - Current absence of a 3D dependency is a fact, not permission to choose an
   engine without a blueprint.
-- The meaning/content of the owner's “six model frames” remains an explicit GAP
-  until the owner resolves `FRAME-GAP-001` in `UI_UX_CURRENT_STATE.md`.
+- The owner's “six frames” means the six responsive viewport tiers. It never
+  means six required models, scenes, renderers, or parallel implementations.
+- Experiments must use the isolated lab contract. Production must never import,
+  route to, preload, or bundle lab code.
 
 ## Required proof before completion
 
