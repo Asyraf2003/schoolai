@@ -2,28 +2,38 @@
 
 ## Canonical instruction source
 
-This repository uses `docs/architecture/` as the canonical UI/UX engineering
-rulebook. These rules apply to Codex, Web AI with GitHub access, and human
-contributors.
+`docs/architecture/` is the canonical UI/UX rulebook for Codex, Web AI with
+GitHub access, humans, and future agents.
 
 Before UI/UX analysis, planning, editing, or command suggestions, read:
 
 1. `docs/architecture/README.md`
-2. `docs/architecture/UI_UX_CURRENT_STATE.md`
-3. `docs/architecture/UI_UX_ENGINEERING.md`
-4. `docs/architecture/UI_UX_DOD.md`
+2. `docs/architecture/UI_UX_DECISION_POLICY.md`
+3. `docs/architecture/UI_UX_SESSION_PROTOCOL.md`
+4. `docs/architecture/UI_UX_CURRENT_STATE.md`
+5. `docs/architecture/UI_UX_ENGINEERING.md`
+6. `docs/architecture/UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
+7. `docs/architecture/UI_UX_DOD.md`
 
 Also read:
 
-- `docs/architecture/UI_UX_LUSION_REFERENCE.md` for visual, motion, or 3D work;
-- `docs/architecture/UI_UX_PERFORMANCE_BROWSER_MATRIX.md` for performance,
-  media, browser, animation, canvas, WebGL, or responsive work;
-- `docs/architecture/UNIFIED_TEXT_SYSTEM_HANDOFF.md` and
-  `docs/architecture/UNIFIED_TEXT_SYSTEM_DOD.md` when visible text is affected;
-- `docs/architecture/ARABIC_TYPOGRAPHY_REFACTOR.md` when Arabic is affected.
+- `UI_UX_LUSION_REFERENCE.md` for visual, motion, or 3D work;
+- `UI_UX_PERFORMANCE_BROWSER_MATRIX.md` for performance, media, browser,
+  animation, canvas, WebGL, or responsive work;
+- `UI_UX_WEBGL_3D_PIPELINE.md` for any 3D, model, shader, canvas, or frame work;
+- `UI_UX_BLUEPRINT_TEMPLATE.md` before proposing or implementing a surface.
 
-A user-named file, section, route, screenshot, video, issue, commit, or command
-output defines the active scope until the user changes it.
+When visible text or Arabic is affected, inspect the current semantic DOM, lang
+files/DB source, and live typography owners:
+
+- `resources/css/text-system.css`
+- `resources/css/public-latin-inter.css`
+- `resources/css/arabic-typography.css`
+- `resources/css/arabic-typography-base.css`
+- `resources/css/arabic-type-scale.css`
+
+Do not depend on deleted Unified Text System milestone documents. Current source
+and runtime proof are authoritative.
 
 ## Mandatory working protocol
 
@@ -35,86 +45,115 @@ FACT
 -> GOAL
 -> IMPACT
 -> DECISION
+-> BLUEPRINT
+-> ACTIVE STEP
 -> EXECUTION
 -> PROOF
+-> PROGRESS
 -> STATUS
 -> NEXT VALID STEP
 ```
 
-Allowed statuses:
-
-- `PASS`
-- `FAIL`
-- `BLOCKED_BY_MISSING_EVIDENCE`
+Allowed work statuses are `PASS`, `FAIL`, and
+`BLOCKED_BY_MISSING_EVIDENCE`. Blueprint states are separate:
+`DRAFT`, `OWNER_ACCEPTED`, `IMPLEMENTING`, and `PROVEN`.
 
 Rules:
 
-- Fetch and inspect current `main`; never trust an old SHA or old chat state.
-- Audit read-only before editing.
-- Inspect the actual Blade DOM, CSS winners/import order, JavaScript state,
-  assets, locale source, and Vite entry path for the active surface.
-- Prove root cause before patching. A screenshot proves a symptom, not the
-  cascade, containing block, stacking context, or state owner.
-- Change one atomic surface or capability at a time.
-- Do not perform unrelated cleanup or redesign.
-- Do not add a stronger selector, later import, inline fallback, timeout, or
-  duplicate controller merely to hide an unexplained conflict.
-- Remove or migrate the proven losing/conflicting owner when safe; do not grow
-  the patch chain.
+- Fetch and inspect current `main`; never trust an old SHA or chat state.
+- Validate that every mandatory document exists before continuing.
+- The latest user-named file, route, screenshot, video, issue, commit, command
+  output, frame, or section defines active scope until the user changes it.
+- Audit read-only before editing. Inspect the actual Blade DOM, CSS
+  winners/import order, JS state, assets, locale source, and Vite entry path.
+- A screenshot proves a symptom or composition, not ownership or root cause.
+- Write or accept one bounded blueprint before implementation.
+- Execute one atomic surface or capability at a time.
+- Do not perform unrelated cleanup, activation, deactivation, or redesign.
+- Do not hide an unexplained conflict with a stronger selector, later import,
+  inline fallback, timeout, z-index escalation, or duplicate controller.
+- Remove or migrate a proven losing/conflicting owner when safe.
 - Keep source files under the enforced 200-line limit.
 - Use `rg` and `fd` for local discovery.
-- Never claim a build, test, browser, responsive, RTL, accessibility,
-  Lighthouse, PageSpeed, or Core Web Vitals result without actual proof.
+- Never claim build, browser, responsive, RTL, accessibility, Lighthouse,
+  PageSpeed, or Core Web Vitals results without actual proof.
+
+If missing information changes architecture or art direction, record a GAP and
+ask for the smallest proof or owner decision. Offer two or three viable options
+plus tradeoffs and a recommended hybrid when useful. Do not silently choose an
+ADR-level decision.
+
+## Agent and mutation boundaries
+
+- Local Codex may inspect, edit, run proof, and publish only within explicit
+  repository and branch authorization.
+- Web AI with GitHub access is read-only by default.
+- GitHub mutation requires exact owner permission naming action, repository,
+  branch, scope, and intended result.
+- Cross-agent work requires a scope packet with editable, read-only, and
+  forbidden files, accepted blueprint, proof gates, and exactly one next
+  execution channel.
+- Durable proof that changes status must update
+  `UI_UX_CURRENT_STATE.md` before a new implementation step is named.
 
 ## UI/UX architecture guardrails
 
 - One semantic DOM is the default across ID, EN, and AR.
-- ID and EN share the Latin system. AR uses the approved Cairo/RTL adapter.
+- ID and EN share Inter/LTR; AR uses Cairo/RTL through a narrow adapter.
 - Locale may adapt direction, family, tracking, line composition, and a proven
-  optical exception. It must not become a parallel component architecture.
-- Motion meaning is shared across locales by default. Mirror directional motion
-  with logical direction where appropriate; use locale-specific choreography
-  only when an approved storyboard requires it.
-- Responsive behavior is CSS-first. Do not create complete phone, tablet, and
-  desktop implementations unless the interaction model is proven different.
+  optical exception; it must not become a parallel component architecture.
+- Motion meaning is shared. Mirror directional meaning for RTL; use
+  locale-specific choreography only from an owner-accepted storyboard.
+- Responsive behavior is CSS-first and governed by six width tiers. Do not
+  create full phone, tablet, desktop, browser, or locale forks.
 - Browser support is capability-based with `@supports`, feature detection, and
-  a usable fallback. Do not create Safari and Chromium forks or use user-agent
-  sniffing as the primary architecture.
-- Component CSS owns layout and visual treatment. The Unified Text System owns
-  migrated typography. JavaScript owns state and orchestration, not breakpoint
-  typography or duplicate content.
-- Advanced motion and 3D are progressive enhancement. Semantic content,
-  navigation, and primary actions must remain usable without them.
-- Do not copy Lusion code, assets, branding, or exact compositions. Translate
-  interaction principles into the Al Mustaqbal identity.
+  a usable fallback; user-agent forks require a reproduced engine defect.
+- Component CSS owns layout and treatment. Typography owners own type. JS owns
+  state/orchestration, not breakpoint typography or duplicate content.
+- Do not copy Lusion code, assets, branding, shaders, or exact compositions.
+  Translate its storytelling principles into Al Mustaqbal identity.
 
-## Performance and accessibility
+## Responsive and locale contracts
 
-- Product target: Lighthouse/PageSpeed 100 for Performance, Accessibility,
-  Best Practices, and SEO on the declared test profile.
-- Field target: good LCP, INP, and CLS. Field `3/3` requires real-user/CrUX
-  evidence and cannot be proven by Lighthouse alone.
-- A 3D or cinematic feature is not accepted if it blocks initial semantic
-  rendering, delays the LCP resource without approval, causes layout shift,
-  traps input, or has no static fallback.
-- Lazy-load non-critical motion, media, and renderers by proximity or intent.
-- Pause and release inactive video, animation loops, observers, listeners, and
-  graphics resources.
-- Respect `prefers-reduced-motion`; preserve keyboard, focus, contrast,
-  touch/pointer, and screen-reader behavior.
-- Canvas/WebGL must not be the sole carrier of important text or actions.
+- Certified minimum viewport width is `360px`; `390px` remains the primary XS
+  baseline.
+- Global tiers start at `360`, `640`, `768`, `1024`, `1280`, and `1536px`.
+- The existing navigation contract remains hamburger through `1180px` and
+  desktop from `1181px`; test both exact widths when navigation is affected.
+- Every surface blueprint must define behavior in all six tiers and ID, EN,
+  and AR, including LTR/RTL motion and locale-switch lifecycle.
+- Width tiers describe available space, not guessed device identity.
+
+## WebGL, performance, and accessibility
+
+- WebGL is an intended required capability for owner-approved cinematic frames.
+  It is never required for semantic content, navigation, locale switching, or
+  primary actions.
+- Use one page-level renderer/context and scheduler by default. Six frames must
+  not become six simultaneous contexts, bundles, or animation loops.
+- Renderer, models, textures, and decoders stay outside the initial critical
+  path and load by capability plus proximity or intent.
+- A static semantic fallback is always present. Reduced motion, context loss,
+  unsupported graphics, and constrained devices downgrade fidelity, not access.
+- Product target: Lighthouse/PageSpeed `100/100/100/100` on declared profiles.
+- Field target: good LCP, INP, and CLS. Field `3/3` requires p75 RUM/CrUX
+  evidence and cannot be proven by Lighthouse.
+- Reserve geometry for media/canvas, cap DPR from measured budgets, pause
+  offscreen/hidden work, and dispose graphics, media, observers, and listeners.
+- Preserve keyboard, focus, contrast, touch/pointer, screen-reader, zoom, and
+  `prefers-reduced-motion` behavior.
 
 ## Known scope protections
 
-- About may be disabled in the rendered homepage while source remains present.
-- Testimonial source may exist without being rendered. Do not alter either
-  section unless the active task names it.
-- The Unified Text System is active work. Do not invalidate its evidence or
-  migration order while changing UI/UX.
-- The `1180px` navigation boundary is an existing explicit contract. Test
-  `1180px` and `1181px` when navigation is touched.
-- Public baseline widths are `390px`, `768px`, and `1440px`; add component
-  boundary widths when the active change requires them.
+- About may be disabled in rendered homepage while source remains present.
+- Testimonial source may exist without rendering. Do not alter either unless
+  active scope names it.
+- Typography milestone docs were intentionally removed; do not resurrect or
+  claim their old progress without new source/runtime evidence.
+- Current absence of a 3D dependency is a fact, not permission to choose an
+  engine without a blueprint.
+- The meaning/content of the owner's “six model frames” remains an explicit GAP
+  until the owner resolves `FRAME-GAP-001` in `UI_UX_CURRENT_STATE.md`.
 
 ## Required proof before completion
 
@@ -127,9 +166,9 @@ npm run build
 php artisan test
 ```
 
-Runtime proof must cover the matrix required by `UI_UX_DOD.md`. If the current
-execution channel cannot run a gate, report it as missing evidence.
+Runtime proof must cover `UI_UX_DOD.md`. An unavailable gate is
+`BLOCKED_BY_MISSING_EVIDENCE`, never `PASS`.
 
-GitHub writes may go directly to `main` only when the user explicitly authorizes
-that exact repository and branch. Never force-push. Fetch current `main` again
-immediately before writing and report the resulting commit SHA.
+Direct writes to `main` require explicit permission for the exact repository and
+branch. Fetch `main` immediately before writing, update only by fast-forward,
+never force-push, then report and verify the resulting commit SHA.

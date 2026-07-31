@@ -5,72 +5,72 @@ Target branch: `main`
 
 ## 1. Required workflow
 
-Every UI/UX batch follows:
+Every batch follows:
 
 ```text
-FACT
--> GAP
--> GOAL
--> IMPACT
--> DECISION
--> EXECUTION
--> PROOF
--> STATUS
--> NEXT VALID STEP
+FACT -> GAP -> GOAL -> IMPACT -> DECISION -> BLUEPRINT
+-> ACTIVE STEP -> EXECUTION -> PROOF -> PROGRESS -> STATUS -> NEXT
 ```
 
-Only one surface or capability is active at a time.
+Only one surface or capability is active. Read and apply
+`UI_UX_SESSION_PROTOCOL.md`.
 
-## 2. Discovery before editing
+## 2. Discovery gate
 
-Inspect only the active scope:
+Before editing the active scope, inspect:
 
-- current `main` commit and working diff;
-- rendered Blade and full relevant parent chain;
-- locale/lang/DB sources for visible content;
-- all CSS selectors/import order affecting the nodes;
-- computed winners when runtime is available;
-- all JS controllers, listeners, timers, observers, fallbacks, and state classes;
-- Vite entry and dynamic-import path;
-- media loading, sizing, autoplay, poster, and fallback;
-- viewport/direction/browser behavior;
-- accessibility tree, focus, keyboard, touch, and reduced motion;
-- existing tests and active architecture/handoff documents.
+- current `main`, working diff, and mandatory document chain;
+- rendered Blade and relevant parent/partial chain;
+- lang/DB source for visible content;
+- CSS selectors, import order, specificity, inherited values, computed winners,
+  containing/stacking contexts;
+- JS controllers, listeners, timers, observers, state classes, fallback, BFCache
+  and lifecycle;
+- Vite entry and dynamic-import graph;
+- media/model loading, dimensions, crop, poster, cache, and fallback;
+- six tiers, component boundaries, orientation, and short heights;
+- ID/EN/AR, LTR/RTL, locale switch, and text metrics;
+- Chromium/WebKit capabilities;
+- accessibility tree, keyboard, touch/pointer, focus, zoom, reduced motion;
+- existing tests and accepted blueprint.
 
-A screenshot or reference video must be translated into observable states:
+Translate screenshots/videos into trigger, geometry, progression, easing, final,
+reverse/interruption, responsive/direction, reduced-motion, and cleanup states.
 
-- trigger;
-- starting geometry/style;
-- progression/easing;
-- final state;
-- reverse/interruption behavior;
-- responsive and direction behavior;
-- reduced-motion result.
+Do not edit before root ownership and the smallest safe change are stated.
 
-Do not edit until root ownership and the smallest safe change are stated.
+## 3. Blueprint gate
 
-## 3. Pre-execution report
+Use `UI_UX_BLUEPRINT_TEMPLATE.md`. Implementation requires:
 
-Report FACT, GAP, GOAL, IMPACT, and DECISION. Name the proven owner, exact
-visible result, missing evidence, full support impact, smallest change, and
-excluded areas. Ask one concise clarification only when the GAP changes the
-implementation decision materially.
+- explicit scope in/out and owner-visible result;
+- semantic/no-JS/no-WebGL/reduced/failure results;
+- owner map for DOM, CSS, JS, Vite, locale, media, and graphics;
+- all six tier contracts;
+- ID/EN/AR and LTR/RTL transition contracts;
+- Chromium/WebKit and capability downgrade;
+- asset/performance/accessibility budgets;
+- state lifecycle and proof plan;
+- `OWNER_ACCEPTED` for material art-direction/engine/frame decisions.
+
+An unresolved `FRAME-GAP-001` blocks frame implementation.
 
 ## 4. Execution rules
 
-- Fetch current files/blob state again immediately before writing.
-- Change only proven owners.
-- Preserve unrelated user work and active milestone evidence.
-- Do not refactor another section for consistency.
+- Fetch source/blob state again immediately before writing.
+- Change only proven owners in editable scope.
+- Preserve unrelated user work and protected sections.
 - Do not activate/deactivate About or Testimonial unless named.
-- Do not change DB/controller/content source for a presentation problem.
+- Do not change DB/controller/content source for a presentation-only issue.
 - Keep source files at or below 200 lines.
 - Add/update tests for durable DOM/state/accessibility contracts.
-- Update current-state/handoff documentation when status or next step changes.
+- Update `UI_UX_CURRENT_STATE.md` when FACT/GAP/decision/progress/NEXT changes.
+- Do not mix baseline, engine selection, site-wide refactor, and frame
+  implementation in one active step.
 
-## 5. Required automated proof
+## 5. Automated proof
 
-Run:
+Run and report:
 
 ```bash
 git diff --check
@@ -80,114 +80,121 @@ npm run build
 php artisan test
 ```
 
-Use focused tests while iterating. Final `PASS` requires the relevant full gate.
-If dependencies or the execution channel block a command, record
-`BLOCKED_BY_MISSING_EVIDENCE`; do not translate it into `PASS`.
+Use focused tests while iterating. If the channel cannot run a required command,
+record `BLOCKED_BY_MISSING_EVIDENCE`; do not translate it into `PASS`.
 
-## 6. Runtime proof matrix
+## 6. Responsive/locale runtime matrix
 
-Public surface minimum:
+Use `UI_UX_RESPONSIVE_LOCALE_MATRIX.md`.
 
-| Dimension | Required proof |
+Core release proof:
+
+| Dimension | Required |
 |---|---|
-| Width | 390, 768, 1440px |
-| Locale | ID, EN, AR |
-| Direction | LTR and RTL |
-| Engine | tested Chromium and Safari/WebKit versions |
-| Motion | normal and `prefers-reduced-motion` |
-| Input | keyboard, pointer, touch where relevant |
-| Zoom/text | 200% or documented equivalent check |
+| Width tiers | XS, SM, MD, LG, XL, 2XL |
+| Representatives | 360, 390, 640, 768, 1024, 1280, 1440, 1536, 1920 |
+| Boundaries | both sides of every affected global/component boundary |
+| Navigation | 1180/1181 when affected |
+| Locale | ID, EN, AR in every tier |
+| Direction | LTR and RTL semantics/motion |
+| Engine | declared current Chromium and Safari/WebKit |
+| Motion | normal and reduced |
+| Input | keyboard, pointer, touch as applicable |
+| Text | 200% zoom/expansion |
+| Viewport | relevant orientation and short-height case |
 
-Add 1180 and 1181px when navigation or its containing layout changes. Add exact
-content breakpoints when wrapping or geometry changes there.
+Verify no unintended overflow/clipping, hidden content, stale direction, broken
+crop, inaccessible controls, state loss, or mixed-locale frame.
 
-Verify:
+## 7. Interaction/lifecycle proof
 
-- no clipping or unintended horizontal overflow;
-- no hidden/unreachable content;
-- correct logical alignment and directional motion;
-- stable focus and state after repeated interaction;
-- resize and orientation changes;
-- fast scroll and reverse scroll;
-- page hidden/visible lifecycle;
-- media/renderer fallback and failure path.
+For stateful motion/media/graphics, prove:
 
-## 7. Performance proof
+- fast and reverse scroll;
+- resize and orientation during each meaningful state;
+- repeated open/close/enter/exit;
+- hidden/visible tab and BFCache restoration;
+- locale switch from/to AR while idle/loading/active/failed;
+- focus, scroll lock, Escape, and restoration;
+- load abort, failure, retry, suspend, and dispose;
+- no listener/observer/timer/media/context accumulation.
 
-The release target is Lighthouse/PageSpeed:
+## 8. Performance proof
 
-- Performance: 100
-- Accessibility: 100
-- Best Practices: 100
-- SEO: 100
+Target:
 
-Record:
+- Performance 100;
+- Accessibility 100;
+- Best Practices 100;
+- SEO 100.
 
-- URL, commit, date, tool/version, device profile, network/CPU settings;
-- cold/warm condition and run count;
-- category scores and metric values;
-- transferred JS/CSS/fonts/images/video/3D assets;
-- LCP element/resource;
-- CLS sources;
-- long tasks and animation/rendering evidence.
+Record URL, commit, date, tool/version, browser/OS/hardware, viewport, CPU/network,
+cold/warm state, run count, scores, metrics, transfer by asset type, LCP
+resource/element, CLS sources, long tasks, and renderer evidence.
 
-Run at least three comparable lab samples for a performance-sensitive change;
-report median and worst result. A single lucky 100 is not durable proof.
+For performance-sensitive work, run at least three comparable lab samples and
+report median plus worst. A lucky single 100 is insufficient.
 
-Field Core Web Vitals `3/3` requires p75 real-user/CrUX evidence for:
+Field `3/3` requires p75 RUM/CrUX:
 
 - LCP <= 2.5s;
 - INP <= 200ms;
 - CLS <= 0.1.
 
-Lab Lighthouse cannot prove field INP or a field `3/3` result.
+Lighthouse cannot prove field INP or field `3/3`.
 
-## 8. Motion/3D proof
+## 9. WebGL/3D proof
 
-In addition to the normal matrix, record:
+In addition to the full matrix, record:
 
-- static/semantic fallback;
-- enhancement activation condition;
-- initial and deferred transfer size;
-- renderer start/stop/dispose events;
-- canvas resolution and DPR cap;
-- visible/offscreen and tab hidden behavior;
-- dropped-frame/long-task evidence on target devices;
-- unsupported/context-loss behavior;
-- memory/resource cleanup after close or navigation.
+- semantic poster/DOM fallback;
+- capability/preference/activation condition;
+- engine and initial/deferred transfer;
+- model/texture/decoder asset ledger and LOD;
+- canvas bounds, resolution, DPR cap, camera per tier/direction;
+- long tasks and p95 frame time on declared profiles;
+- offscreen/hidden/locale/page lifecycle;
+- context loss/failure;
+- buffers/textures/targets/workers/listeners disposed;
+- PageSpeed delta against baseline.
 
-No 3D feature is `PASS` when only the high-end desktop path was observed.
+No frame is `PASS` from high-end desktop observation alone.
 
-## 9. Definition of Done per surface
+## 10. Accessibility proof
 
-A surface is `PASS` only when:
+Verify semantic headings/landmarks, accessible names, reading/focus order,
+visible focus, keyboard/touch parity, screen-reader canvas treatment, text
+alternatives/captions, contrast, reduced motion, zoom, RTL, and error/fallback
+announcements where relevant.
 
-1. source/state ownership is explicit;
-2. no new anonymous cascade or duplicate controller was added;
-3. semantic content works before enhancement;
-4. ID/EN/AR hierarchy and locale switching are stable;
-5. LTR/RTL behavior is intentional;
-6. responsive evidence is complete;
-7. Chromium and WebKit evidence is complete;
-8. keyboard, touch/pointer, focus, and reduced motion work;
-9. loading, media, motion, and renderer lifecycle are bounded;
-10. relevant Lighthouse/CWV evidence is reported honestly;
-11. structure, build, tests, and diff checks pass;
-12. changed files are within the 200-line source limit;
-13. no unrelated section/data/controller was changed;
-14. user feedback for the batch is resolved;
-15. current-state/handoff and next step are accurate.
+## 11. Definition of Done
 
-## 10. Batch completion report
+A surface/capability is `PASS` only when:
+
+1. source/state ownership and accepted blueprint are explicit;
+2. no anonymous cascade or duplicate controller/renderer was added;
+3. semantic content and primary actions work without enhancement;
+4. all six tiers and affected boundaries have proof;
+5. ID/EN/AR and LTR/RTL switch behavior have proof;
+6. Chromium/WebKit and applicable input/orientation have proof;
+7. keyboard/focus/screen-reader/zoom/reduced motion pass;
+8. loading, media, motion, WebGL, failure, and disposal are bounded;
+9. PageSpeed/CWV claims match actual evidence;
+10. diff, structure, build, focused tests, and PHP tests pass;
+11. source files obey 200-line and ownership rules;
+12. no unrelated area changed;
+13. owner feedback for active scope is resolved;
+14. current state/progress/NEXT are accurate.
+
+## 12. Completion report
 
 ```text
-BATCH: surface/capability
-FACT / GAP / DECISION
-EXECUTION: exact files and ownership changed
-PROOF: diff, structure, build, tests, runtime matrix,
-       accessibility, performance, and lifecycle
+BATCH / MAIN SHA / BLUEPRINT:
+FACT / GAP / DECISION:
+EXECUTION / PROOF:
+PROGRESS:
 STATUS: PASS / FAIL / BLOCKED_BY_MISSING_EVIDENCE
-NEXT VALID STEP: exactly one action and execution channel
+NEXT EXECUTION CHANNEL:
+NEXT VALID STEP:
 ```
-
-Never claim completion from commit success alone.
+Commit success proves publication only, never runtime completion.

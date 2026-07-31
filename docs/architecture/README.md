@@ -1,71 +1,115 @@
-# SchoolAI Architecture Index
+# SchoolAI UI/UX Architecture Index
 
 Status: ACTIVE
 Updated: 2026-07-31
 
 ## Purpose
 
-This folder is the canonical source for SchoolAI engineering decisions that
-must survive across sessions, tools, and AI agents.
+This folder is the canonical UI/UX engineering package for SchoolAI. It keeps
+design intent, architecture, workflow, proof, and continuation state stable
+across Codex, Web AI, humans, and future agents.
 
-Root `AGENTS.md` is the router. This folder owns the detailed contracts,
-evidence, handoffs, and definitions of done.
+Root `AGENTS.md` is the bootstrap router. This index owns document order and
+authority.
 
-## UI/UX first-read order
+## Mandatory read order
 
-1. `UI_UX_CURRENT_STATE.md`
-   - verified repository facts, known risks, gaps, and the next valid step.
-2. `UI_UX_ENGINEERING.md`
-   - normative ownership model for Blade, CSS, JavaScript, locale, responsive,
-     browser, motion, and 3D.
-3. `UI_UX_DOD.md`
-   - discovery, execution, proof, and completion gates.
-4. `UI_UX_PERFORMANCE_BROWSER_MATRIX.md`
-   - Lighthouse/Core Web Vitals contract, capability tiers, and WebKit/Chromium
-     validation.
-5. `UI_UX_LUSION_REFERENCE.md`
-   - non-normative interaction reference and translation rules for SchoolAI.
+1. `UI_UX_DECISION_POLICY.md`
+   - evidence hierarchy, conflict rules, and missing-data decisions.
+2. `UI_UX_SESSION_PROTOCOL.md`
+   - session start, scope packet, blueprint, active-step, channel, and handoff
+     rules.
+3. `UI_UX_CURRENT_STATE.md`
+   - verified repo facts, active gaps, accepted decisions, progress, and NEXT.
+4. `UI_UX_ENGINEERING.md`
+   - ownership for Blade, CSS, JS, locale, browser, motion, and graphics.
+5. `UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
+   - six width tiers, 360px minimum, ID/EN/AR, LTR/RTL, and transition proof.
+6. `UI_UX_DOD.md`
+   - execution, automated proof, runtime matrix, and completion gates.
 
-## Existing systems that remain authoritative
+Read when relevant:
 
-When text is affected, read in this order:
+7. `UI_UX_PERFORMANCE_BROWSER_MATRIX.md`
+   - PageSpeed/CWV, capability tiers, budgets, Chromium, and WebKit.
+8. `UI_UX_WEBGL_3D_PIPELINE.md`
+   - renderer, six-frame architecture, models, shaders, lifecycle, and fallback.
+9. `UI_UX_LUSION_REFERENCE.md`
+   - reference analysis and translation into Al Mustaqbal identity.
+10. `UI_UX_BLUEPRINT_TEMPLATE.md`
+    - required surface/frame blueprint before implementation.
 
-1. `UNIFIED_TEXT_SYSTEM_HANDOFF.md`
-2. `UNIFIED_TEXT_SYSTEM_DOD.md`
-3. `ARABIC_TYPOGRAPHY_REFACTOR.md`
-4. the current milestone evidence named by the handoff.
+## Live typography sources
 
-The UI/UX system consumes the Unified Text System. It does not replace it.
+The former Unified Text System milestone documents were intentionally removed.
+When visible text or Arabic is in scope, use current source and runtime proof:
+
+- `resources/css/text-system.css`
+- `resources/css/public-latin-inter.css`
+- `resources/css/arabic-typography.css`
+- `resources/css/arabic-typography-base.css`
+- `resources/css/arabic-type-scale.css`
+- relevant Blade, lang files, and DB-rendered content.
+
+No old milestone percentage or `PASS` status survives without new evidence.
 
 ## Document roles
 
-- `*_CURRENT_STATE.md` records current facts, gaps, status, and next step.
-- `*_ENGINEERING.md` defines normative architecture and ownership.
-- `*_DOD.md` defines workflow and proof required for `PASS`.
-- `*_REFERENCE.md` supplies inspiration and analysis, not binding code.
-- `*_HANDOFF.md` is the current continuation point for a long-running scope.
-- M00/M01/etc. files preserve milestone evidence and may be historical.
+- `*_DECISION_POLICY.md`: authority, conflicts, and stop/ask rules.
+- `*_SESSION_PROTOCOL.md`: how a session starts, works, and hands off.
+- `*_CURRENT_STATE.md`: active progress ledger and one valid NEXT.
+- `*_ENGINEERING.md`: normative ownership and architecture.
+- `*_MATRIX.md`: declared support and required proof combinations.
+- `*_PIPELINE.md`: advanced asset/runtime lifecycle.
+- `*_DOD.md`: acceptance and completion gates.
+- `*_REFERENCE.md`: inspiration and analysis, never binding copied code.
+- `*_TEMPLATE.md`: copyable blueprint/scope structure.
 
-## Authority and conflicts
+Accepted surface blueprints belong under `docs/architecture/blueprints/`.
+Blueprints are plans, not evidence or handoffs.
 
-Use this priority:
+## Authority
 
-1. explicit current user scope;
+Use this order:
+
+1. explicit current owner scope and decision;
 2. root `AGENTS.md`;
-3. active current-state or handoff document;
-4. active DOD and engineering contract;
-5. milestone evidence;
-6. reference documents;
-7. archived or historical observations.
+3. `UI_UX_DECISION_POLICY.md`;
+4. `UI_UX_CURRENT_STATE.md`;
+5. owner-accepted active blueprint;
+6. engineering, matrices, pipeline, and DOD;
+7. source/runtime evidence for implementation facts;
+8. reference documents;
+9. historical observations.
 
-An older observation cannot override a newer explicit contract. If two active
-documents conflict, stop and record the conflict as a GAP before editing.
+Runtime/source evidence overrides stale descriptive claims. A user decision may
+change product intent but cannot turn an unrun proof gate into `PASS`.
 
 ## Update discipline
 
-- Do not leave a durable architecture decision only in chat.
-- Update the current-state or handoff when proof, status, or next step changes.
-- Keep one active next step.
-- Do not rewrite historical evidence to make a new implementation look valid.
-- Link a new mandatory rule from this index and root `AGENTS.md`.
-- Treat repository/runtime evidence as authoritative over document assumptions.
+- Do not leave a durable decision only in chat.
+- Keep exactly one active next step in `UI_UX_CURRENT_STATE.md`.
+- Progress changes only from explicit owner decisions or inspected proof.
+- Update every impacted entrypoint when a mandatory rule/file changes.
+- Do not use blueprints as session logs or proof stores.
+- Archive/history cannot override active contracts.
+- Do not recreate deleted milestone/error-log documents unless the owner asks.
+- A new mandatory file must be linked by this index and root `AGENTS.md`.
+- Before publish, verify all mandatory paths exist and no live document points
+  to a deleted mandatory dependency.
+
+## Current product direction
+
+SchoolAI targets a distinctive Al Mustaqbal cinematic experience informed by
+Lusion's design/motion/3D principles, with:
+
+- WebGL for approved cinematic frames;
+- semantic and static fallbacks;
+- six responsive width tiers from 360px upward;
+- ID/EN in Inter/LTR and AR in Cairo/RTL;
+- Chromium plus Safari/WebKit;
+- Lighthouse/PageSpeed `100/100/100/100`;
+- field CWV `3/3` only when p75 field data proves it.
+
+Visual ambition never waives accessibility, semantic content, lifecycle,
+maintainability, or measured performance.

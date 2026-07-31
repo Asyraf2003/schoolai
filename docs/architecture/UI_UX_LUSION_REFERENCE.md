@@ -4,143 +4,182 @@ Status: REFERENCE, NON-NORMATIVE
 Reviewed: 2026-07-31
 Primary reference: `https://lusion.co/`
 
-## 1. What was observed
+## 1. Verified reference facts
 
-Lusion publicly describes its work as combining design, motion, 3D, and
-development into immersive visual storytelling.
+Lusion currently describes its work as 3D visual storytelling and interactive
+web experiences that combine design, motion, 3D, and development.
 
-Observable patterns on the current public site include:
+Observable patterns include:
 
-- a cinematic, full-viewport opening statement;
-- oversized editorial typography with short supporting copy;
-- scroll used as narrative progression;
-- staged section entrances and strong spatial transitions;
-- project/media sequences that invite exploration;
-- an immersive full-screen menu and cross-page continuity;
+- a cinematic, full-viewport opening;
+- oversized editorial typography and short supporting copy;
+- scroll as narrative progression;
+- staged entrances and spatial transitions;
+- media/project sequences that invite exploration;
+- immersive navigation and cross-page continuity;
 - reel/audio controls and explicit interaction prompts;
-- 3D/WebGL as storytelling material rather than decoration alone.
+- 3D as story material, not incidental decoration.
 
-Lusion's public project page for “Of The Oak” also describes a custom Houdini to
-WebGL pipeline that reduced complex tree data to a 3.5 MB format and used
-instancing. The transferable lesson is deliberate asset/pipeline optimization,
-not that 3.5 MB is an approved SchoolAI budget.
+The “Of The Oak” case study states that Lusion built a Houdini-to-WebGL
+pipeline, reduced complex tree/branch/node data to a custom 3.5 MB format, and
+used WebGL instancing.
 
-## 2. SchoolAI translation
+Transferable lesson: high-end visuals depend on art direction plus a deliberate
+asset/runtime pipeline. The reported 3.5 MB is not a SchoolAI budget.
 
-Use the principles, not a pixel clone.
+## 2. SchoolAI product translation
 
-| Lusion principle | SchoolAI translation |
+| Lusion principle | Al Mustaqbal translation |
 |---|---|
-| Strong opening world | School identity, student life, and educational purpose |
-| Editorial scale | Unified semantic headings with locale-safe composition |
-| Scroll narrative | Guided journey through vision, values, programs, gallery |
-| Spatial transitions | Calm, clear educational motion with reduced-motion path |
-| 3D focal object | Optional meaningful campus/science/learning artifact |
-| Immersive project cards | Real school programs, articles, and gallery content |
-| Full-screen navigation | Accessible unified navigation across public pages |
-| Visual continuity | Shared motion grammar and color/type tokens |
+| strong opening world | school identity, students, place, and educational purpose |
+| editorial scale | semantic headings with Inter/Cairo locale composition |
+| scroll narrative | guided journey through vision, values, programs, gallery |
+| spatial transition | calm educational motion with RTL/reduced variants |
+| focal 3D world/object | meaningful campus, science, learning, or growth metaphor |
+| immersive projects | real school programs, articles, and gallery content |
+| full-screen navigation | accessible unified public navigation |
+| continuity | shared frame director, motion grammar, color/type tokens |
 
-The Al Mustaqbal result should feel confident, warm, exploratory, and credible.
-It must not feel like an agency portfolio with school text inserted into it.
+The result should feel confident, warm, exploratory, credible, and recognizably
+Al Mustaqbal. It must not feel like an agency portfolio with school text pasted
+into it.
 
-## 3. What must not be copied
+## 3. Accepted ambition
 
-- source code, shaders, models, images, video, audio, or typography assets;
-- brand marks, compositions, copy, or distinctive scene identity;
-- exact transition sequences used as a substitute for product discovery;
-- unsupported-browser exclusion as the default product strategy;
-- heavy initial payload merely to imitate visual fidelity;
-- canvas-only content, navigation, or calls to action.
+For owner-approved cinematic frames, WebGL is an intended required medium—not
+an optional decorative experiment. Normal DOM/CSS motion remains appropriate
+where spatial rendering adds no product value.
 
-Lusion is inspiration, not a performance or accessibility waiver.
+Required balance:
 
-## 4. Reverse-engineering method
+```text
+Lusion-class spatial ambition
++ Al Mustaqbal content/identity
++ one semantic accessible product
++ strict lazy WebGL asset pipeline
++ six responsive tiers
++ ID/EN/AR and LTR/RTL
++ Chromium/WebKit
++ PageSpeed 100/100/100/100 target
+```
 
-For each requested reference effect:
+If a high-fidelity profile cannot meet the gate, lower its fidelity tier while
+preserving the narrative frame, content, and controls.
 
-1. Capture the exact URL and viewport.
-2. Identify the user trigger.
-3. Record initial, intermediate, and final states.
-4. Separate camera/3D motion from DOM/layout motion.
-5. Measure duration, distance, easing, opacity, blur, scale, and layering where
-   runtime tools allow it.
-6. Identify loading, fallback, resize, reverse-scroll, and interruption states.
-7. Translate the effect into SchoolAI content and semantic structure.
-8. Design LTR/RTL and reduced-motion behavior before coding.
-9. Assign a performance budget and lifecycle owner.
-10. Implement one isolated prototype/surface and prove the full matrix.
+## 4. What must not be copied
 
-A screen recording is useful for chronology. Screenshots are useful for
-composition. DOM/computed styles/performance traces are required for ownership
-and implementation facts.
+- source code, loaders, shaders, models, images, video, audio, or type assets;
+- marks, compositions, copy, scene identity, or exact transition sequences;
+- an unsupported-browser exclusion strategy;
+- initial heavy payload merely to imitate fidelity;
+- canvas-only text, navigation, or CTA;
+- a studio/portfolio information architecture unsuited to a school.
 
-## 5. Pattern card
+Lusion is inspiration and technical evidence, not a performance, accessibility,
+copyright, or product-fit waiver.
 
-Create one card before implementing a new cinematic pattern:
+## 5. Reverse-engineering method
+
+For each requested effect:
+
+1. Record exact URL, viewport, browser, and timestamp.
+2. Identify user trigger and input.
+3. Capture initial, intermediate, and final states.
+4. Separate DOM/layout, camera, shader, model, and media motion.
+5. Measure duration, distance, easing, opacity, blur, scale, crop, and layering
+   where runtime tools permit.
+6. Inspect loading, fallback, resize, reverse, interruption, hidden-tab, and
+   cleanup behavior.
+7. State the school story and semantic fallback.
+8. Define all six tiers, ID/EN/AR, LTR/RTL, and reduced motion.
+9. Assign asset/runtime/PageSpeed budgets.
+10. Implement one isolated accepted frame/surface.
+11. Prove the full matrix before reuse.
+
+A recording proves chronology. Screenshots prove composition. DOM/computed
+styles/traces/source inspection prove ownership and cost.
+
+## 6. Reference pattern card
+
+Complete this before the full blueprint:
 
 ```text
 PATTERN
-- name and SchoolAI purpose
+- name and school purpose
 
 REFERENCE
-- URL, viewport, recording/screenshot timestamp
+- URL, viewport, browser, timestamp
 
-STORYBOARD
-- trigger
-- enter
-- active
-- exit/reverse
-- interruption/resize
+OBSERVED
+- trigger, enter, active, exit/reverse, interruption
+- DOM motion vs camera/WebGL motion
 
-OWNERSHIP
-- semantic Blade
-- component CSS
-- controller
-- optional renderer/assets
+TRANSLATION
+- Al Mustaqbal content and identity
+- elements explicitly not copied
 
 ADAPTERS
-- 390/768/1440
-- ID/EN/AR
-- LTR/RTL
+- XS/SM/MD/LG/XL/2XL
+- ID/EN/AR and LTR/RTL
 - Chromium/WebKit
-- reduced motion
+- normal/reduced/static
 
-BUDGET
-- critical/deferred bytes
-- main-thread/rendering lifecycle
-- fallback
+PIPELINE
+- semantic fallback
+- renderer/frame/assets/LOD
+- loading/suspend/dispose/failure
 
 PROOF
-- automated, runtime, accessibility, performance
+- visual, automated, accessibility, performance
 ```
 
-## 6. Recommended adoption order
+Then move accepted decisions into `UI_UX_BLUEPRINT_TEMPLATE.md`.
 
-Do not begin with a site-wide 3D runtime.
+## 7. Six-frame guidance
 
-1. Establish the current performance and browser baseline.
-2. Stabilize component/text ownership on the selected surface.
-3. Implement the motion grammar with DOM/CSS.
-4. Prove locale, direction, responsive, accessibility, and engine behavior.
-5. Add one isolated 3D enhancement only if it improves the story.
-6. Compare its measured value and cost before reuse.
+Until `FRAME-GAP-001` is resolved, Lusion observations cannot define the
+owner's six frame subjects.
 
-## 7. Acceptance rule
+Recommended architecture, pending owner confirmation:
 
-A Lusion-inspired feature is accepted only when:
+- one shared school world/renderer;
+- six narrative states;
+- frame-specific camera, DOM composition, and selectively streamed assets;
+- only one high-fidelity frame active;
+- adjacent prewarm only within budget;
+- complete poster/DOM story for every frame.
 
-- the SchoolAI content purpose is explicit;
-- the fallback is a complete, usable experience;
-- it does not create a new locale/device/browser fork;
+This recommendation is not approval to invent frame content.
+
+## 8. Adoption order
+
+1. Prove current source/performance/browser baseline.
+2. Resolve six-frame purpose/content.
+3. Accept one frame blueprint and engine ADR.
+4. Stabilize selected surface ownership.
+5. Implement semantic/static experience.
+6. Implement shared motion grammar.
+7. Add one WebGL frame with lifecycle and quality ladder.
+8. Prove all tiers/locales/engines/accessibility/PageSpeed.
+9. Reuse only after measured value and cost are accepted.
+
+Do not begin with a site-wide renderer or six-scene payload.
+
+## 9. Acceptance
+
+A Lusion-informed feature is accepted only when:
+
+- school purpose and owner-accepted storyboard are explicit;
+- fallback is complete and usable;
+- it creates no locale/tier/engine fork;
 - it passes `UI_UX_DOD.md`;
-- measured performance remains within the accepted target;
-- the implementation is owned and removable without destabilizing unrelated
-  sections.
+- WebGL pipeline and PageSpeed delta have proof;
+- it is owned, disposable, and removable without destabilizing other sections.
 
-## 8. Sources
+## 10. Sources
 
-- Lusion home: `https://lusion.co/`
-- Lusion about: `https://lusion.co/about/`
-- Lusion projects: `https://lusion.co/projects/`
-- Of The Oak case study: `https://lusion.co/projects/of_the_oak/`
-- Zero Tech case study: `https://lusion.co/projects/zero_tech/`
+- Lusion: `https://lusion.co/`
+- About: `https://lusion.co/about/`
+- Projects: `https://lusion.co/projects/`
+- Of The Oak: `https://lusion.co/projects/of_the_oak/`
+- Zero Tech: `https://lusion.co/projects/zero_tech/`

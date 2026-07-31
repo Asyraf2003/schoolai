@@ -5,196 +5,186 @@ Updated: 2026-07-31
 
 ## 1. Target interpretation
 
-The product target is:
+Lighthouse/PageSpeed lab target: Performance 100, Accessibility 100, Best
+Practices 100, and SEO 100. Field target: good LCP, INP, and CLS.
 
-```text
-Lighthouse/PageSpeed
-Performance 100
-Accessibility 100
-Best Practices 100
-SEO 100
-
-Field Core Web Vitals
-LCP good
-INP good
-CLS good
-```
-
-These are two evidence systems:
-
-- Lighthouse is controlled lab evidence and can run before production.
-- PageSpeed field/CrUX or RUM is real-user evidence and requires sufficient
-  production visits.
-
-Therefore an agent may prove a lab 100/100/100/100 but must not call field CWV
-`3/3` proven without p75 field data.
-
-Current good field thresholds:
+Lab and field are separate evidence. Field `3/3` requires sufficient p75
+RUM/CrUX data:
 
 - LCP <= 2.5 seconds;
 - INP <= 200 milliseconds;
 - CLS <= 0.1.
 
+An agent may prove lab 100s but must not infer field `3/3`.
+
 ## 2. Required profiles
 
-Record exact versions and hardware for every proof.
+Record exact browser/OS/hardware/input/capability tier.
 
 | Profile | Minimum purpose |
 |---|---|
-| Chromium mobile lab | Lighthouse/PageSpeed and 390px runtime |
-| Chromium desktop | 1440px, keyboard, performance trace |
-| WebKit mobile | 390px touch, viewport, media, overflow |
-| WebKit tablet | 768px touch/orientation |
-| Safari desktop | 1440px keyboard, media, graphics |
+| Chromium mobile lab | Lighthouse, 360/390, throttled load/input |
+| Chromium tablet | touch/orientation and MD/LG transition |
+| Chromium desktop | XL/2XL, keyboard, trace, graphics |
+| WebKit mobile | 360/390, touch, viewport/media/canvas |
+| WebKit tablet | MD/LG, orientation, memory/lifecycle |
+| Safari desktop | XL/2XL, keyboard, media/graphics |
 
-Brave may represent Chromium runtime behavior, but PageSpeed/Lighthouse evidence
-must still name the actual tool and profile used.
+Use `UI_UX_RESPONSIVE_LOCALE_MATRIX.md` for the full six-tier/locale proof.
+Brave may prove Chromium behavior but must be named; shields/extensions cannot
+be mistaken for application behavior.
 
-Support means the tested current stable versions pass. Do not infer older
-version support.
+## 3. Baseline before feature budgets
 
-## 3. Baseline before numeric budgets
+Resolve `BASELINE-GAP-001` before selecting the first WebGL engine/frame.
 
-Do not invent byte or frame budgets without a baseline.
-
-Before the first cinematic/3D implementation, record:
+Record:
 
 - HTML transfer and TTFB;
-- critical and total CSS;
-- initial and deferred JS;
-- font files and used weights/subsets;
-- LCP media;
-- below-fold image/video media;
-- long tasks and total blocking time;
-- CLS sources;
-- peak canvas/rendering memory where measurable.
+- critical/total CSS;
+- initial/deferred JS and chunk graph;
+- font scripts/weights;
+- LCP resource/element;
+- below-fold image/video;
+- long tasks, TBT, INP proxy, and CLS sources;
+- main/compositor/rendering time;
+- canvas/renderer CPU/GPU memory where measurable;
+- PageSpeed/Lighthouse repeatability.
 
-Then assign the feature a delta budget. If the baseline changes, update the
-ledger rather than quietly relaxing the gate.
+Assign each feature a delta budget against this baseline. Updating the baseline
+requires evidence; do not quietly relax a failed budget.
 
-## 4. Critical path rules
+## 4. Critical path
 
-- Primary copy, navigation, and CTA are server-rendered.
-- The LCP resource is discoverable in initial HTML when it is media.
-- Do not lazy-load the real LCP image.
-- Preload only the proven LCP/font resources required for first paint.
+- Primary copy, navigation, locale control, and CTA are server-rendered.
+- The true LCP media is discoverable in initial HTML and not lazy-loaded.
 - Reserve image/video/canvas dimensions.
-- Fonts use only required scripts and weights and cannot cause invisible
-  critical text.
-- Non-critical section CSS/JS/media is deferred or loaded by relevance.
-- Hidden slides and inactive sections do not preload full video/model payloads.
-- Third-party embeds load from a local cover/consent or interaction path where
-  product requirements allow it.
+- Preload only measured critical resources.
+- Load only required script subsets/weights; avoid invisible critical text.
+- Defer non-critical section code/media by relevance.
+- Hidden slides/frames do not preload full media/models.
+- Renderer, models, textures, shaders, and decoders are not critical-path
+  resources by default.
+- Third-party embeds use a local cover/intent path when product permits.
 
 ## 5. Capability tiers
 
-Enhancement is selected by capability and evidence, not device name or user
-agent.
+| Tier | Contract |
+|---|---|
+| 0 semantic static | HTML, controls, poster, no spatial/continuous renderer |
+| 1 lightweight motion | CSS transform/opacity and bounded JS orchestration |
+| 2 efficient graphics | lazy WebGL, lower LOD/effects, bounded DPR/update |
+| 3 high fidelity | richer assets/effects only on proven target profiles |
 
-### Tier 0 — semantic static
+Selection uses combined capabilities and measured results, not one user-agent,
+width, DPR, memory, core, connection, or battery hint.
 
-- HTML content and controls;
-- still media/poster;
-- no spatial motion;
-- required for unsupported graphics, failure, and reduced-motion safety.
+Every downgrade preserves content meaning and controls.
 
-### Tier 1 — lightweight motion
+## 6. PageSpeed strategy with WebGL
 
-- CSS transform/opacity;
-- IntersectionObserver/state classes;
-- no continuous renderer;
-- default safe enhancement.
+The initial PageSpeed path must complete semantic/LCP work without downloading
+or executing inactive WebGL.
 
-### Tier 2 — interactive graphics
+After activation, WebGL still owns real-user INP, long-task, memory, and
+lifecycle impact. “Deferred” does not mean “free.”
 
-- canvas/WebGL or equivalent;
-- lazy engine/assets;
-- measured DPR and lifecycle;
-- static fallback remains mounted or recoverable.
+Before accepting a frame:
 
-### Tier 3 — high fidelity
+1. compare baseline and feature runs under the same profile;
+2. attribute transfer/chunks, long tasks, CLS, and LCP change;
+3. prove no offscreen/hidden loop;
+4. prove quality downgrade;
+5. prove cleanup after locale/page/frame exit;
+6. reduce fidelity or redesign when the gate fails.
 
-- heavier geometry, textures, post-processing, or continuous effects;
-- allowed only for profiles proven to meet the accepted feature budget;
-- must downgrade cleanly without changing content meaning.
+## 7. Runtime rules
 
-One heuristic such as screen width, DPR, memory, core count, connection type, or
-battery state is not enough by itself to deny required content.
+- One RAF scheduler per active system.
+- Use callback timestamps, not assumed refresh rate.
+- Batch layout reads before writes.
+- No continuous loop offscreen, hidden, suspended, or disposed.
+- Avoid continuous large blur/filter/backdrop/mask cost unless profiling passes.
+- Break up heavy activation work; do not parse/compile assets in input handlers.
+- Repeated interaction, resize, locale change, and BFCache cannot accumulate
+  listeners, observers, canvases, contexts, media, or resources.
+- Use provisional WebGL DPR caps from `UI_UX_WEBGL_3D_PIPELINE.md`.
 
-## 6. Animation/runtime rules
+## 8. Lab method
 
-- Use one `requestAnimationFrame` scheduler per active motion/rendering system.
-- Time-based animation uses callback timestamps, not assumed refresh rate.
-- No loop runs for an offscreen, hidden, paused, or disposed experience.
-- Batch layout reads before writes; do not repeatedly force synchronous layout.
-- Avoid continuous large blur/filter/backdrop work unless profiling passes.
-- Break up long interaction tasks and keep event handlers small.
-- Repeated open/close and locale/viewport changes cannot accumulate listeners,
-  observers, timers, canvases, or media playback.
+For a performance-sensitive batch:
 
-## 7. WebKit/Safari verification
+- use at least three comparable cold runs;
+- optionally record warm/cache runs separately;
+- report median and worst, not only best;
+- keep URL, commit, profile, throttling, and tool version stable;
+- record scores and raw metrics;
+- retain trace/report references where the execution channel permits.
 
-Explicitly verify:
+A score fluctuation does not authorize changing the target. Diagnose variance
+and feature cost.
 
-- `100vh` fallback plus `svh`/`dvh` behavior;
-- fixed descendants and ancestors using transform/filter/backdrop/contain;
-- `overflow`, sticky/fixed layers, safe areas, and scroll locking;
-- `-webkit-backdrop-filter` only with a readable non-filter fallback;
-- muted autoplay policy and `playsinline`;
-- touch, pointer, hover media queries, and passive scrolling;
-- focus restoration, inert/hidden state, and keyboard navigation;
-- font loading, Arabic glyph clipping, and RTL scroll/alignment;
-- canvas sizing, context creation/loss, color, and memory disposal;
-- feature-gated CSS rather than assuming Chromium parity.
-
-## 8. Chromium verification
+## 9. WebKit/Safari verification
 
 Explicitly verify:
 
-- Lighthouse category and metric output;
-- Performance trace, long tasks, layout shifts, and rendering cost;
-- throttled mobile load and interaction;
+- `vh` fallback plus `svh`/`dvh`, safe areas, and browser chrome;
+- fixed/sticky descendants of transform/filter/backdrop/contain;
+- overflow, scroll lock, and stacking contexts;
+- `-webkit-backdrop-filter` only with readable fallback;
+- muted autoplay, `playsinline`, video texture lifecycle;
+- touch/pointer/hover queries and passive scrolling;
+- focus restoration, inert/hidden, keyboard;
+- Inter/Cairo loading, Arabic glyph clipping, RTL alignment/scroll;
+- canvas size/color, shader precision, context creation/loss, memory/disposal;
+- page hide/show and BFCache.
+
+## 10. Chromium verification
+
+Explicitly verify:
+
+- Lighthouse output and trace;
+- LCP discovery/priority;
+- long tasks, layout shifts, rendering/compositor/GPU cost;
+- throttled load and interaction;
 - accessibility tree and keyboard focus;
-- GPU/compositor use does not hide main-thread or memory cost;
-- Brave-specific shields/extensions are not mistaken for application behavior.
+- WebGL context/resource lifecycle;
+- Brave shields/extensions excluded as app variables.
 
-## 9. Media and 3D asset record
+## 11. Media/3D asset record
 
-Every advanced asset group records:
+Every advanced group records purpose/owner, format/provenance/license, transfer,
+decoded CPU/GPU cost, critical/deferred status, activation/LOD, fallback,
+cache/version policy, and suspend/dispose behavior.
 
-```text
-purpose
-owner surface
-format
-compressed transfer bytes
-decoded dimensions/estimated memory
-critical or deferred
-activation condition
-fallback
-cache policy
-dispose/unload behavior
-```
+Small network files may still create excessive decode/GPU cost.
 
-Models and textures must be compressed and right-sized from measured visual
-need. A smaller network file can still create excessive decoded/GPU memory.
+## 12. Failure policy
 
-## 10. Failure policy
+When an enhancement fails:
 
-If the enhancement fails:
-
-- content and CTA remain available;
-- no infinite loader remains;
-- scroll/focus are restored;
-- fallback is shown without layout shift;
-- the error is observable for diagnosis;
-- retry is bounded and user-driven where appropriate.
+- content, navigation, locale control, and CTA remain;
+- no infinite loader, trapped focus, or scroll lock remains;
+- fallback appears without layout shift;
+- error is observable for diagnosis;
+- retry is bounded/user-driven where appropriate;
+- resources are released.
 
 Performance regression is a product failure, not deferred polish.
 
-## 11. Reference sources
+## 13. Proof status
 
-- CWV thresholds: `https://web.dev/articles/vitals`
-- Field/lab: `https://web.dev/articles/vitals-measurement-getting-started`
+Until baseline and runtime evidence exist:
+
+- target: accepted;
+- architecture: defined;
+- current PageSpeed/CWV/browser parity: `BLOCKED_BY_MISSING_EVIDENCE`.
+
+## 14. Primary references
+
+- CWV: `https://web.dev/articles/vitals`
+- Lab and field: `https://web.dev/articles/vitals-measurement-getting-started`
 - Lighthouse: `https://developer.chrome.com/docs/lighthouse/performance/performance-scoring`
-- Animation: `https://developer.mozilla.org/docs/Web/API/Window/requestAnimationFrame`
+- RAF: `https://developer.mozilla.org/docs/Web/API/Window/requestAnimationFrame`
+- WebGL: `https://developer.mozilla.org/docs/Web/API/WebGL_API`
 - WebKit: `https://webkit.org/blog/`
