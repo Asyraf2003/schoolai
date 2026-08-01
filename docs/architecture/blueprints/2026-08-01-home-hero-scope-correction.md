@@ -1,24 +1,25 @@
 # Homepage Hero Scope Correction
 
 BLUEPRINT ID: `HOME-HERO-SCOPE-CORRECTION-001`
-STATUS: `OWNER_ACCEPTED`
+STATUS: `PROVEN_PENDING_SQUASH`
 OWNER: Asyraf Mubarak
 DATE: 2026-08-01
 SOURCE MAIN SHA: `763492d173cd504ad6f9b51c2626e0108166e6e5`
+PROVEN BRANCH SHA: `e6f15793a538dea6392abd7ebacece1cb9f9a250`
 ACTIVE SURFACE: homepage Hero presentation, media playback, and Demo 1 transition
 TARGET BRANCH: `agent/home-hero-scope-correction-001`
 
 ## FACT
 
-- The owner-provided current screenshot shows a dark Hero, a bottom transport
+- The owner-provided rejected screenshot showed a dark Hero, a bottom transport
   rail, dots, counter, and a visible pause/play control.
-- The owner-provided accepted earlier screenshot shows a bright Hero, compact
+- The owner-provided accepted earlier screenshot showed a bright Hero, compact
   lower-left copy, and two large yellow chevron controls floating in the
-  lower-right area. It has no visible rail, dots, counter, or playback control.
-- The accepted earlier brightness came from
+  lower-right area. It had no visible rail, dots, counter, or playback control.
+- The accepted earlier brightness came from the former
   `resources/css/pages/welcome-hero-visual.css`, which replaced the heavy media
   overlay with a very light vertical gradient.
-- The accepted earlier composition and chevrons came from
+- The accepted earlier composition and chevrons came from the former
   `partials/home-hero-copy-layout.blade.php`. That partial was incorrectly
   coupled through the language-flag partial and was removed during Hero
   stabilization.
@@ -27,17 +28,16 @@ TARGET BRANCH: `agent/home-hero-scope-correction-001`
 - The rejected WebGL adaptation selected a ready poster before an incoming video
   produced a drawable frame. The canvas therefore displayed a static poster
   while the native video advanced underneath.
-- The current fallback video is served from a third-party origin. Sampling it as
-  a WebGL texture would require a CORS-clean media contract that the Hero does
+- The current fallback video can be served from a third-party origin. Sampling it
+  as a WebGL texture would require a CORS-clean media contract that the Hero does
   not own and must not assume.
-- The Demo 1 direction policy and transition lifecycle are accepted and must
-  remain intact.
+- The Demo 1 direction policy and transition lifecycle remain accepted.
 
 ## GAP
 
 - Real Safari/WebKit and measured GPU/frame/color evidence remain unavailable.
-- GitHub CI can prove Chromium behavior and source contracts, but final visual
-  acceptance still requires owner inspection after pull.
+- GitHub CI proves Chromium behavior and source contracts, but final visual
+  acceptance still requires owner inspection after pulling the squash commit.
 
 ## GOAL
 
@@ -78,8 +78,7 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
 3. Move the accepted earlier visual values into the current named Hero modules:
    `layout.css`, `media.css`, `controls.css`, `responsive.css`, and `locale.css`.
 4. Use one light vertical media overlay for both LTR and RTL. Text readability is
-   carried by the previously accepted bounded text shadows, not a full-screen
-   dark wash.
+   carried by bounded text shadows, not a full-screen dark wash.
 5. Preserve WebGL canvas layering beneath the same light overlay.
 6. Select native-video reveal mode immediately when the incoming slide owns a
    video element. The transition must not wait for video dimensions or attempt
@@ -133,8 +132,8 @@ native video is slow or fails
 ## RESPONSIVE AND LOCALE CONTRACT
 
 - Preserve one DOM and one controller across XS, SM, MD, LG, XL, and 2XL.
-- Restore the proven floating chevrons fluidly on desktop/tablet and retain
-  usable bounded positions on mobile.
+- Restore the floating chevrons fluidly on desktop/tablet and retain usable
+  bounded positions on mobile.
 - Preserve ID/EN LTR and AR RTL copy/font contracts.
 - Manual controls keep physical direction; automatic changes keep locale
   direction.
@@ -151,40 +150,49 @@ native video is slow or fails
 
 ## PROOF
 
-Required automated proof:
+Proven on branch SHA `e6f15793a538dea6392abd7ebacece1cb9f9a250`:
 
-- diff hygiene and source structure;
-- Vite production build;
-- focused Hero/navigation tests;
-- full Laravel result recorded honestly;
-- Chromium 33-case locale/width matrix;
-- physical and automatic direction preserved;
-- exactly two visible Hero navigation buttons and no visible rail/dots/playback;
-- light overlay source contract and no heavy uniform overlay token;
-- incoming video `currentTime` advances while the Demo 1 canvas is active;
-- incoming video does not move backwards when the canvas settles;
-- renderer uses transparent live-video reveal and does not upload external video
-  pixels as a texture;
-- no second `play()`, `load()`, or active-video seek at transition settlement;
-- no stale canvas, RAF, transient class, listener, or timer.
+- diff hygiene: PASS;
+- Vite 8.1.3 production build: PASS, 90 modules transformed;
+- focused Hero/navigation: 11 passed, 236 assertions;
+- Chromium matrix: 33 ID/EN/AR viewport cases PASS;
+- exactly two visible Hero chevrons and no rail/dots/playback: PASS;
+- copy/chevron collision and horizontal overflow: PASS;
+- physical next/previous direction: PASS;
+- automatic video-ended and image-timer direction for ID and AR: PASS;
+- light overlay and corrected source ownership/equivalence: PASS;
+- standard interaction, reduced-motion, no-JavaScript, failure, and BFCache
+  behavior: PASS;
+- native live-video continuity through the Demo 1 canvas: PASS;
+- no stale canvas or transient slide state after settlement: PASS.
 
-The runtime proof intercepts only the third-party video request and serves an
-existing repository MP4 to Chromium. This keeps playback evidence deterministic
-without changing production content or relying on an external server during CI.
+The runtime video proof creates a test-only animated canvas in Chromium and
+attaches `canvas.captureStream()` to the existing native `<video>` element. It
+verifies advancing video frames while the Demo 1 canvas is active, verifies the
+same `MediaStream` remains attached after settlement, and does not change any
+production media URL, database content, bundle, or playback code.
+
+Known unrelated repository results remain recorded honestly:
+
+- three pre-existing Vision/Mission source-limit failures;
+- one stale About test for the intentionally disabled protected section;
+- one pre-existing high-severity npm audit issue;
+- package and lockfiles were not changed by this correction.
 
 External proof remains:
 
-- real Safari/WebKit visual acceptance;
-- owner screenshot comparison after pull;
-- measured GPU/frame and color parity on representative devices.
+- owner visual acceptance after pulling the squash commit;
+- real Safari/WebKit visual and playback acceptance;
+- measured Lighthouse/PageSpeed/CWV, GPU frame timing, and color parity on
+  representative devices.
 
 ## ROLLBACK
 
 Revert the correction squash commit. No package, schema, content, or database
 migration is involved.
 
-## ACTIVE STEP
+## NEXT VALID STEP
 
-Run the focused Chromium proof on the corrected native-video reveal, update
-current state with exact evidence, then publish one reviewable PR. Do not begin
-another surface.
+Publish one squash commit to `main`, then let the owner compare the actual page
+against the accepted screenshot. Do not begin another Hero redesign or homepage
+surface from this correction.
