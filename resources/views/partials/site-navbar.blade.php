@@ -11,6 +11,7 @@
   @include('partials.site-navbar.styles.language-modal')
   @include('partials.site-navbar.styles.responsive')
   @include('partials.site-navbar.styles.mega-roll')
+  @include('partials.site-navbar.styles.desktop-mega-layout')
 
 </style>
 
