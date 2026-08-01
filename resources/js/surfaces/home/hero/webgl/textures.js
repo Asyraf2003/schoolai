@@ -6,7 +6,8 @@ function imageSource(image) {
     element: image,
     width: image.naturalWidth,
     height: image.naturalHeight,
-    dynamic: false
+    dynamic: false,
+    kind: 'image'
   };
 }
 
@@ -16,7 +17,8 @@ function videoSource(video) {
     element: video,
     width: video.videoWidth,
     height: video.videoHeight,
-    dynamic: true
+    dynamic: true,
+    kind: 'video'
   };
 }
 
@@ -43,8 +45,7 @@ function prepareCorsImage(image) {
   if (!url || isSameOrigin(url) || corsImages.has(url)) return;
 
   var clone = new Image();
-  var record = { image: clone };
-  corsImages.set(url, record);
+  corsImages.set(url, { image: clone });
   clone.crossOrigin = 'anonymous';
   clone.decoding = 'async';
   clone.src = url;
@@ -54,23 +55,42 @@ function prepareSlideImages(slide) {
   slide?.querySelectorAll('[data-hero-poster], [data-hero-image]').forEach(prepareCorsImage);
 }
 
-export function textureSourceForSlide(slide) {
-  if (!slide) return null;
-  return videoSource(slide.querySelector('[data-hero-video]')) ||
-    corsImageSource(slide.querySelector('[data-hero-poster]')) ||
-    corsImageSource(slide.querySelector('[data-hero-image]'));
+function fallbackSourceForSlide(slide) {
+  return corsImageSource(slide?.querySelector('[data-hero-poster]')) ||
+    corsImageSource(slide?.querySelector('[data-hero-image]'));
 }
 
-export function waitForTextureSource(slide, timeout = 1200) {
-  prepareSlideImages(slide);
-  var available = textureSourceForSlide(slide);
+function waitForLiveVideoSource(slide, video, timeout) {
+  var available = videoSource(video);
   if (available) return Promise.resolve(available);
 
   return new Promise(function (resolve) {
     var startedAt = performance.now();
 
     function inspect() {
-      var source = textureSourceForSlide(slide);
+      var source = videoSource(video);
+      var failed = Boolean(video.error || slide.classList.contains('has-media-error'));
+      var expired = performance.now() - startedAt >= timeout;
+      if (source || failed || expired) {
+        resolve(source || fallbackSourceForSlide(slide));
+        return;
+      }
+      window.setTimeout(inspect, 40);
+    }
+
+    inspect();
+  });
+}
+
+function waitForImageSource(slide, timeout) {
+  var available = fallbackSourceForSlide(slide);
+  if (available) return Promise.resolve(available);
+
+  return new Promise(function (resolve) {
+    var startedAt = performance.now();
+
+    function inspect() {
+      var source = fallbackSourceForSlide(slide);
       if (source || performance.now() - startedAt >= timeout) {
         resolve(source);
         return;
@@ -80,6 +100,21 @@ export function waitForTextureSource(slide, timeout = 1200) {
 
     inspect();
   });
+}
+
+export function textureSourceForSlide(slide) {
+  if (!slide) return null;
+  return videoSource(slide.querySelector('[data-hero-video]')) ||
+    fallbackSourceForSlide(slide);
+}
+
+export function waitForTextureSource(slide, timeout = 1200) {
+  if (!slide) return Promise.resolve(null);
+  prepareSlideImages(slide);
+  var video = slide.querySelector('[data-hero-video]');
+  return video
+    ? waitForLiveVideoSource(slide, video, timeout)
+    : waitForImageSource(slide, timeout);
 }
 
 export function coverScale(source, targetWidth, targetHeight) {
@@ -113,22 +148,11 @@ export function updateHeroTexture(gl, texture, source, reuseStorage) {
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     if (reuseStorage) {
       gl.texSubImage2D(
-        gl.TEXTURE_2D,
-        0,
-        0,
-        0,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        source.element
+        gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, source.element
       );
     } else {
       gl.texImage2D(
-        gl.TEXTURE_2D,
-        0,
-        gl.RGBA,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        source.element
+        gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source.element
       );
     }
     return true;
