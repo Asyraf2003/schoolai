@@ -24,7 +24,7 @@ export function createHeroWebglRenderer(root) {
     if (gl && program && buffer) return true;
     if (failed) return false;
     gl = canvas.getContext('webgl', {
-      alpha: false,
+      alpha: true,
       antialias: false,
       depth: false,
       powerPreference: 'high-performance',
@@ -45,6 +45,7 @@ export function createHeroWebglRenderer(root) {
       progress: gl.getUniformLocation(program, 'uProgress'),
       direction: gl.getUniformLocation(program, 'uDirection'),
       width: gl.getUniformLocation(program, 'uWidth'),
+      revealLive: gl.getUniformLocation(program, 'uRevealLive'),
       noiseScale: gl.getUniformLocation(program, 'uNoiseScale'),
       fromScale: gl.getUniformLocation(program, 'uFromScale'),
       toScale: gl.getUniformLocation(program, 'uToScale'),
@@ -57,6 +58,7 @@ export function createHeroWebglRenderer(root) {
     gl.uniform1i(uniforms.from, 0);
     gl.uniform1i(uniforms.to, 1);
     gl.uniform1f(uniforms.width, 0.5);
+    gl.uniform1f(uniforms.revealLive, 0);
     gl.uniform2f(uniforms.noiseScale, 40, 40);
     return true;
   }
@@ -106,6 +108,7 @@ export function createHeroWebglRenderer(root) {
     gl.bindTexture(gl.TEXTURE_2D, active.toTexture);
     gl.uniform1f(uniforms.progress, progress);
     gl.uniform1f(uniforms.direction, active.direction);
+    gl.uniform1f(uniforms.revealLive, active.revealLive ? 1 : 0);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
   }
 
@@ -122,16 +125,20 @@ export function createHeroWebglRenderer(root) {
       if (active?.token === token) cancel();
       return;
     }
-    var texture = createHeroTexture(gl, source);
+    var revealLive = source.kind === 'live-video';
+    var texture = revealLive ? active.toTexture : createHeroTexture(gl, source);
     if (!texture) {
       cancel();
       return;
     }
-    gl.deleteTexture(active.toTexture);
-    active.toTexture = texture;
+    if (!revealLive) {
+      gl.deleteTexture(active.toTexture);
+      active.toTexture = texture;
+    }
     active.toSource = source;
+    active.revealLive = revealLive;
     active.startedAt = performance.now();
-    root.dataset.heroWebglIncomingSource = source.kind || (source.dynamic ? 'video' : 'image');
+    root.dataset.heroWebglIncomingSource = source.kind || 'image';
     resize();
     frame = window.requestAnimationFrame(draw);
   }
@@ -159,6 +166,7 @@ export function createHeroWebglRenderer(root) {
       toTexture: placeholderTexture,
       direction,
       duration,
+      revealLive: false,
       startedAt: 0
     };
     media.appendChild(canvas);
