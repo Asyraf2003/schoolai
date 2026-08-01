@@ -28,6 +28,54 @@ export function textureSourceForSlide(slide) {
     imageSource(slide.querySelector('[data-hero-image]'));
 }
 
+export function waitForTextureSource(slide, timeout = 1200) {
+  var available = textureSourceForSlide(slide);
+  if (available) return Promise.resolve(available);
+  if (!slide) return Promise.resolve(null);
+
+  var candidates = Array.from(slide.querySelectorAll(
+    '[data-hero-video], [data-hero-poster], [data-hero-image]'
+  ));
+  if (!candidates.length) return Promise.resolve(null);
+
+  return new Promise(function (resolve) {
+    var settled = false;
+    var timer = window.setTimeout(finish, timeout);
+    var events = ['loadeddata', 'playing', 'load', 'error'];
+
+    function cleanup() {
+      window.clearTimeout(timer);
+      candidates.forEach(function (candidate) {
+        events.forEach(function (eventName) {
+          candidate.removeEventListener(eventName, finish);
+        });
+      });
+    }
+
+    function finish() {
+      if (settled) return;
+      var source = textureSourceForSlide(slide);
+      if (!source && performance.now() && timer) return;
+      settled = true;
+      cleanup();
+      resolve(source);
+    }
+
+    candidates.forEach(function (candidate) {
+      events.forEach(function (eventName) {
+        candidate.addEventListener(eventName, finish);
+      });
+    });
+
+    window.clearTimeout(timer);
+    timer = window.setTimeout(function () {
+      settled = true;
+      cleanup();
+      resolve(textureSourceForSlide(slide));
+    }, timeout);
+  });
+}
+
 export function coverScale(source, targetWidth, targetHeight) {
   var sourceAspect = source.height / source.width;
   var targetAspect = targetHeight / targetWidth;
