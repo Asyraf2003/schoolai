@@ -1,11 +1,5 @@
 import { createHeroProgram } from './program.js';
-import {
-  coverScale,
-  createHeroTexture,
-  textureSourceForSlide,
-  updateHeroTexture,
-  waitForTextureSource
-} from './textures.js';
+import { coverScale, createHeroTexture, textureSourceForSlide, waitForTextureSource } from './textures.js';
 
 export function createHeroWebglRenderer(root) {
   var canvas = document.createElement('canvas');
@@ -100,8 +94,6 @@ export function createHeroWebglRenderer(root) {
 
   function render(progress) {
     if (!active || !gl) return;
-    if (active.fromSource.dynamic) updateHeroTexture(gl, active.fromTexture, active.fromSource, true);
-    if (active.toSource.dynamic) updateHeroTexture(gl, active.toTexture, active.toSource, true);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, active.fromTexture);
     gl.activeTexture(gl.TEXTURE1);
