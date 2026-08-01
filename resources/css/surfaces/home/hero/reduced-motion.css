@@ -1,0 +1,27 @@
+@media (prefers-reduced-motion: reduce) {
+    .hero-cinema *,
+    .hero-cinema *::before,
+    .hero-cinema *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-cinema__image,
+    .hero-cinema__poster,
+    .hero-cinema__media video,
+    .hero-cinema__copy {
+        transform: none !important;
+        filter: none !important;
+    }
+
+    .hero-cinema__progress {
+        visibility: hidden;
+    }
+
+    .hero-cinema__playback[disabled] {
+        opacity: 0.56;
+        cursor: not-allowed;
+    }
+}

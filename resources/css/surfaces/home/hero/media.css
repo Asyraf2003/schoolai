@@ -1,0 +1,84 @@
+.hero-cinema__media {
+    z-index: var(--hero-layer-media);
+    overflow: hidden;
+    background: linear-gradient(145deg, #123c34, #061c18);
+}
+
+.hero-cinema__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: var(--hero-layer-overlay);
+    pointer-events: none;
+    background:
+        linear-gradient(to top, rgb(2 13 12 / 0.9) 0%, rgb(2 13 12 / 0.48) 36%, transparent 72%),
+        linear-gradient(to right, rgb(3 20 17 / 0.58) 0%, rgb(3 20 17 / 0.12) 58%, transparent 84%),
+        rgb(2 13 12 / var(--hero-overlay-strength));
+}
+
+.hero-cinema__image,
+.hero-cinema__poster,
+.hero-cinema__media video,
+.hero-cinema__media-error {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-cinema__image,
+.hero-cinema__poster,
+.hero-cinema__media video {
+    max-width: none;
+    display: block;
+    object-fit: cover;
+    object-position: var(--hero-focal-position, center center);
+    image-rendering: auto;
+}
+
+.hero-cinema__poster {
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 240ms ease;
+}
+
+.hero-cinema__media video {
+    z-index: 1;
+    opacity: 0;
+    background: transparent;
+    transition: opacity 240ms ease;
+}
+
+.hero-cinema__slide.has-media-ready .hero-cinema__media video {
+    opacity: 1;
+}
+
+.hero-cinema__slide.has-media-ready .hero-cinema__poster {
+    opacity: 0;
+}
+
+.hero-cinema__slide.has-media-error .hero-cinema__media video,
+.hero-cinema__slide.has-media-error .hero-cinema__image {
+    opacity: 0;
+}
+
+.hero-cinema__slide.has-media-error .hero-cinema__poster {
+    opacity: 1;
+}
+
+.hero-cinema__media-error {
+    z-index: 0;
+    display: block;
+    background:
+        radial-gradient(circle at 18% 24%, rgb(247 178 75 / 0.32), transparent 32%),
+        linear-gradient(145deg, #174f42, #071b18);
+}
+
+.hero-cinema__image,
+.hero-cinema__poster {
+    z-index: 1;
+}
+
+.hero-cinema__media::after {
+    z-index: 2;
+}
