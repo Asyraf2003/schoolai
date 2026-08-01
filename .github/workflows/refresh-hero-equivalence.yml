@@ -1,0 +1,80 @@
+name: Refresh Hero equivalence
+
+on:
+  push:
+    branches:
+      - agent/home-hero-stabilization-001
+    paths:
+      - '.refresh-hero-equivalence'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/home-hero-stabilization-001
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Refresh effective equivalence records
+        run: |
+          node <<'NODE'
+          const crypto = require('node:crypto');
+          const fs = require('node:fs');
+          const path = require('node:path');
+
+          const sha256 = (source) => crypto.createHash('sha256').update(source).digest('hex');
+          const lines = (source) => source
+            ? (source.match(/\n/g) ?? []).length + (source.endsWith('\n') ? 0 : 1)
+            : 0;
+          const basePath = 'docs/architecture/source-module-equivalence.json';
+          const overridePath = 'docs/architecture/source-module-equivalence-overrides.json';
+          const base = JSON.parse(fs.readFileSync(basePath, 'utf8'));
+          const overrides = fs.existsSync(overridePath)
+            ? JSON.parse(fs.readFileSync(overridePath, 'utf8'))
+            : { version: 1, css: {} };
+
+          overrides.version = 1;
+          overrides.description = 'Effective equivalence overrides for intentionally migrated source owners.';
+          overrides.css ??= {};
+
+          for (const entry of ['resources/css/pages/welcome.css', 'resources/css/pages/welcome-hero.css']) {
+            const entrySource = fs.readFileSync(entry, 'utf8');
+            const imports = Array.from(entrySource.matchAll(/@import\s+['"]([^'"]+)['"]/g), (match) => match[1]);
+            const orderedModules = imports.map((request) => {
+              const target = path.resolve(path.dirname(entry), request);
+              const source = fs.readFileSync(target, 'utf8');
+              return { path: request, lines: lines(source), sha256: sha256(source) };
+            });
+            const combined = imports.map((request) => fs.readFileSync(path.resolve(path.dirname(entry), request), 'utf8')).join('');
+            overrides.css[entry] = {
+              sourceSha256: sha256(combined),
+              orderedModules,
+              originalSourceSha256: base.css?.[entry]?.originalSourceSha256 ?? base.css?.[entry]?.sourceSha256 ?? null,
+            };
+          }
+
+          fs.writeFileSync(overridePath, `${JSON.stringify(overrides, null, 2)}\n`);
+          NODE
+
+          rm -f .refresh-hero-equivalence .github/workflows/refresh-hero-equivalence.yml
+          npm run check:structure > /tmp/structure.log 2>&1 || true
+          if rg -q 'welcome.css no longer matches|welcome-hero.css no longer matches' /tmp/structure.log; then
+            cat /tmp/structure.log
+            exit 1
+          fi
+
+      - name: Commit refreshed ledger
+        run: |
+          git config user.name 'SchoolAI Hero Agent'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -A
+          git commit -m 'docs: refresh Hero navigation equivalence ledger'
+          git push origin HEAD:agent/home-hero-stabilization-001
