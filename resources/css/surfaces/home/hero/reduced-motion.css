@@ -15,13 +15,4 @@
         transform: none !important;
         filter: none !important;
     }
-
-    .hero-cinema__progress {
-        visibility: hidden;
-    }
-
-    .hero-cinema__playback[disabled] {
-        opacity: 0.56;
-        cursor: not-allowed;
-    }
 }
