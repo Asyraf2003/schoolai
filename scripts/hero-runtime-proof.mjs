@@ -182,9 +182,10 @@ async function provePhysicalDirections(page) {
 
 async function installSyntheticVideo(page, videoIndex) {
   await page.evaluate(async (index) => {
-    const video = document.querySelector(
-      `[data-hero-slide][data-slide-index="${index}"] [data-hero-video]`
+    const slide = document.querySelector(
+      `[data-hero-slide][data-slide-index="${index}"]`
     );
+    const video = slide?.querySelector('[data-hero-video]');
     if (!video || typeof HTMLCanvasElement.prototype.captureStream !== 'function') {
       throw new Error('Synthetic native-video fixture is unavailable');
     }
@@ -213,6 +214,7 @@ async function installSyntheticVideo(page, videoIndex) {
     video.dataset.hydrated = 'true';
     video.muted = true;
     video.playsInline = true;
+    slide.classList.remove('has-media-error', 'has-media-ready');
 
     const mediaTimes = [];
     if ('requestVideoFrameCallback' in video) {
@@ -235,6 +237,7 @@ async function installSyntheticVideo(page, videoIndex) {
         resolve();
       }, { once: true });
     });
+    slide.classList.remove('has-media-error', 'has-media-ready');
   }, String(videoIndex));
 }
 
