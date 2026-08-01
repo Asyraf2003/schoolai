@@ -96,18 +96,10 @@
                   <span class="nav-mega__media-shade" aria-hidden="true"></span>
                 </div>
 
-                <div class="nav-mega__intro">
-                  <p class="nav-mega__eyebrow" data-text-role="label">{{ $item['mega']['eyebrow'] ?? $item['label'] }}</p>
-                  <strong class="nav-mega__title" data-text-role="component-title">{{ $item['mega']['title'] ?? $item['label'] }}</strong>
-                  @if (! empty($item['mega']['description']))
-                    <p class="nav-mega__description" data-text-role="description">{{ $item['mega']['description'] }}</p>
-                  @endif
-                </div>
-
                 <div class="nav-mega__links">
                   @foreach ($item['mega']['links'] as $megaLink)
                     <a href="{{ $megaLink['href'] }}" class="nav-mega__link">
-                      <strong data-text-role="action">{{ $megaLink['label'] }}</strong>
+                      <strong data-nav-roll data-text-role="action">{{ $megaLink['label'] }}</strong>
                       @if (! empty($megaLink['description']))
                         <small data-text-role="description">{{ $megaLink['description'] }}</small>
                       @endif

@@ -14,6 +14,7 @@ it('keeps the same education gallery and article mega menus on every public page
             ->assertOk()
             ->assertSee('nav-shell', false)
             ->assertSee('data-nav-mega', false)
+            ->assertSee('data-nav-roll', false)
             ->assertDontSee('data-nav-mega-video', false)
             ->assertDontSee('youtube-nocookie.com', false)
             ->assertSee('Pendidikan')
@@ -24,7 +25,8 @@ it('keeps the same education gallery and article mega menus on every public page
             ->assertSee('Program')
             ->assertSee('Pendidikan');
 
-        expect(substr_count($response->getContent(), 'data-nav-mega'))->toBeGreaterThanOrEqual(3);
+        expect(substr_count($response->getContent(), 'data-nav-mega'))->toBeGreaterThanOrEqual(3)
+            ->and(substr_count($response->getContent(), 'data-nav-roll'))->toBeGreaterThanOrEqual(12);
     }
 });
 
