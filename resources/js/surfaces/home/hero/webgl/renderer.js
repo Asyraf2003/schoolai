@@ -131,6 +131,7 @@ export function createHeroWebglRenderer(root) {
     active.toTexture = texture;
     active.toSource = source;
     active.startedAt = performance.now();
+    root.dataset.heroWebglIncomingSource = source.kind || (source.dynamic ? 'video' : 'image');
     resize();
     frame = window.requestAnimationFrame(draw);
   }
@@ -165,6 +166,7 @@ export function createHeroWebglRenderer(root) {
     root.classList.add('is-webgl-transitioning');
     root.dataset.heroWebglActive = 'true';
     root.dataset.heroWebglDirection = direction > 0 ? 'right-to-left' : 'left-to-right';
+    root.dataset.heroWebglIncomingSource = 'pending';
     resize();
     render(0);
     waitForTextureSource(toSlide, textureWait).then(function (source) {
