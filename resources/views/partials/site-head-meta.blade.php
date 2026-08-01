@@ -124,8 +124,7 @@
   document.documentElement.setAttribute('dir', @json($headDirection));
 </script>
 
-
-  @include('partials.site-head-meta.base-styles')
+@include('partials.site-head-meta.base-styles')
 
 <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" type="application/ld+json">{!! json_encode(
     $headStructuredData,
@@ -139,7 +138,6 @@
 
 @if (request()->routeIs('home'))
   @vite([
-    'resources/css/pages/welcome-hero-visual.css',
     'resources/css/pages/welcome-scroll-reveal.css',
     'resources/js/pages/welcome-scroll-reveal.js',
   ])
