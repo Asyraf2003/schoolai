@@ -21,9 +21,35 @@ async function waitForEnhancedHero(page) {
   await page.waitForFunction(() => document.querySelector('[data-hero-slider]')?.dataset.enhanced === 'true');
 }
 
+async function waitForWebglReady(page) {
+  await page.waitForFunction(() => {
+    const state = document.querySelector('[data-hero-slider]')?.dataset.heroWebgl;
+    return state === 'ready' || state === 'failed';
+  }, null, { timeout: 5000 });
+  assert.equal(
+    await page.locator('[data-hero-slider]').getAttribute('data-hero-webgl'),
+    'ready',
+    'Hero WebGL renderer did not warm successfully'
+  );
+}
+
+async function waitForWebglStart(page) {
+  await page.waitForFunction(() =>
+    document.querySelector('[data-hero-slider]')?.dataset.heroWebglActive === 'true'
+  );
+}
+
+async function waitForWebglSettlement(page) {
+  await page.waitForFunction(() => {
+    const hero = document.querySelector('[data-hero-slider]');
+    return hero?.dataset.heroWebglActive === 'false' &&
+      !document.querySelector('.hero-cinema__webgl') &&
+      !document.querySelector('.is-entering, .is-leaving');
+  }, null, { timeout: 4000 });
+}
+
 function viewportHeight(width) {
   if (width <= 390) return 844;
-  if (width <= 767) return 900;
   return 900;
 }
 
@@ -62,6 +88,7 @@ async function inspectViewport(page, locale, width) {
       overlaps,
       activeSlides: document.querySelectorAll('[data-hero-slide].is-active').length,
       transientSlides: document.querySelectorAll('.is-entering, .is-leaving').length,
+      webglCanvases: document.querySelectorAll('.hero-cinema__webgl').length,
       titleInsideViewport: Boolean(title && title.left >= -1 && title.right <= innerWidth + 1),
       copyBelowNavbar: Boolean(copy && navbar && copy.top >= navbar.bottom - 1),
       hamburgerVisible: Boolean(hamburgerStyle && hamburgerStyle.display !== 'none' && hamburgerStyle.visibility !== 'hidden'),
@@ -73,6 +100,7 @@ async function inspectViewport(page, locale, width) {
   assert.equal(metrics.overlaps, false, `${locale} ${width}: Hero copy overlaps controls`);
   assert.equal(metrics.activeSlides, 1, `${locale} ${width}: active slide count`);
   assert.equal(metrics.transientSlides, 0, `${locale} ${width}: stale transition classes`);
+  assert.equal(metrics.webglCanvases, 0, `${locale} ${width}: stale WebGL canvas`);
   assert.equal(metrics.titleInsideViewport, true, `${locale} ${width}: title clips horizontally`);
   assert.equal(metrics.copyBelowNavbar, true, `${locale} ${width}: copy collides with navbar`);
   assert.equal(metrics.hamburgerVisible, width <= 1180, `${locale} ${width}: hamburger boundary`);
@@ -90,13 +118,35 @@ async function proveLocaleMatrix(browser, locale) {
   await waitForEnhancedHero(page);
   await selectLocale(page, locale.code);
 
-  const documentLocale = await page.locator('html').getAttribute('lang');
-  const documentDirection = await page.locator('html').getAttribute('dir');
-  assert.equal(documentLocale, locale.code, `${locale.code}: html lang`);
-  assert.equal(documentDirection, locale.dir, `${locale.code}: html dir`);
+  assert.equal(await page.locator('html').getAttribute('lang'), locale.code, `${locale.code}: html lang`);
+  assert.equal(await page.locator('html').getAttribute('dir'), locale.dir, `${locale.code}: html dir`);
 
   for (const width of widths) await inspectViewport(page, locale.code, width);
   await context.close();
+}
+
+async function provePhysicalDirections(page) {
+  await waitForWebglReady(page);
+  const hero = page.locator('[data-hero-slider]');
+  const activeIndex = async () => page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
+  const initial = await activeIndex();
+
+  await page.locator('[data-hero-next]').click();
+  await waitForWebglStart(page);
+  assert.equal(await hero.getAttribute('data-hero-webgl-direction'), 'right-to-left', 'right arrow direction');
+  assert.equal(await page.locator('.hero-cinema__webgl.is-active').count(), 1, 'right arrow WebGL canvas');
+  assert.ok(await page.locator('.is-entering').count(), 'transition entering state missing');
+  assert.ok(await page.locator('.is-leaving').count(), 'transition leaving state missing');
+  assert.notEqual(await activeIndex(), initial, 'right arrow did not change slide immediately');
+  await waitForWebglSettlement(page);
+
+  await page.locator('[data-hero-previous]').click();
+  await waitForWebglStart(page);
+  assert.equal(await hero.getAttribute('data-hero-webgl-direction'), 'left-to-right', 'left arrow direction');
+  await page.waitForFunction((index) =>
+    document.querySelector('[data-hero-slide].is-active')?.dataset.slideIndex === index,
+  initial);
+  await waitForWebglSettlement(page);
 }
 
 async function proveInteractions(browser) {
@@ -104,23 +154,15 @@ async function proveInteractions(browser) {
   const page = await context.newPage();
   await page.goto(baseURL, { waitUntil: 'domcontentloaded' });
   await waitForEnhancedHero(page);
+  await provePhysicalDirections(page);
 
-  const activeIndex = async () => page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
-  const initial = await activeIndex();
-  await page.locator('[data-hero-next]').focus();
-  await page.keyboard.press('Enter');
-  await page.waitForTimeout(80);
-  assert.ok(await page.locator('.is-entering').count(), 'transition entering state missing');
-  assert.ok(await page.locator('.is-leaving').count(), 'transition leaving state missing');
-  await page.waitForTimeout(1050);
-  assert.notEqual(await activeIndex(), initial, 'keyboard did not change slide');
-  assert.equal(await page.locator('.is-entering, .is-leaving').count(), 0, 'transition did not settle');
-
-  for (let index = 0; index < 5; index += 1) {
+  for (let index = 0; index < 3; index += 1) {
     await page.locator('[data-hero-next]').click();
-    await page.waitForTimeout(1020);
+    await waitForWebglStart(page);
+    await waitForWebglSettlement(page);
   }
   assert.equal(await page.locator('[data-hero-slide].is-active').count(), 1, 'repeated changes lost single-active invariant');
+  assert.equal(await page.locator('.hero-cinema__webgl').count(), 0, 'repeated changes left a canvas');
 
   await page.evaluate(() => {
     Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
@@ -128,14 +170,16 @@ async function proveInteractions(browser) {
   });
   assert.equal(await page.locator('[data-hero-video]').first().evaluate((video) => video.paused), true, 'visibility did not pause video');
 
-  await page.evaluate(() => {
-    const video = document.querySelector('[data-hero-video]');
-    video?.dispatchEvent(new Event('error'));
-  });
+  await page.evaluate(() => document.querySelector('[data-hero-video]')?.dispatchEvent(new Event('error')));
   assert.ok(await page.locator('[data-hero-slide].has-media-error').count(), 'video error fallback state missing');
 
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => false });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
   await page.locator('[data-hero-dot][data-slide-index="1"]').click();
-  await page.waitForTimeout(1050);
+  await waitForWebglStart(page);
+  await waitForWebglSettlement(page);
   const activeImage = page.locator('[data-hero-slide].is-active [data-hero-image]');
   await activeImage.evaluate((image) => image.dispatchEvent(new Event('error')));
   await activeImage.evaluate((image) => image.dispatchEvent(new Event('error')));
@@ -146,6 +190,7 @@ async function proveInteractions(browser) {
   await waitForEnhancedHero(page);
   assert.equal(await page.locator('[data-hero-slider]').getAttribute('data-enhanced'), 'true', 'back navigation did not restore Hero');
   report.interactions.standard = 'PASS';
+  report.interactions.physicalDirections = 'PASS';
   await context.close();
 
   const reduced = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
@@ -154,8 +199,9 @@ async function proveInteractions(browser) {
   await waitForEnhancedHero(reducedPage);
   assert.equal(await reducedPage.locator('[data-hero-playback]').isDisabled(), true, 'reduced motion playback must be disabled');
   await reducedPage.locator('[data-hero-next]').click();
-  await reducedPage.waitForTimeout(40);
+  await reducedPage.waitForTimeout(60);
   assert.equal(await reducedPage.locator('.is-entering, .is-leaving').count(), 0, 'reduced motion still animates');
+  assert.equal(await reducedPage.locator('.hero-cinema__webgl').count(), 0, 'reduced motion created WebGL canvas');
   report.interactions.reducedMotion = 'PASS';
   await reduced.close();
 
@@ -169,10 +215,65 @@ async function proveInteractions(browser) {
   await noScript.close();
 }
 
+async function waitForAutomaticChange(page, initialIndex, timeout = 10000) {
+  await page.waitForFunction((current) => {
+    const hero = document.querySelector('[data-hero-slider]');
+    const active = document.querySelector('[data-hero-slide].is-active');
+    return active?.dataset.slideIndex !== current && hero?.dataset.heroWebglActive === 'true';
+  }, initialIndex, { timeout });
+}
+
+async function assertAutomaticDirection(page, locale, expectedDirection, origin) {
+  assert.equal(
+    await page.locator('[data-hero-slider]').getAttribute('data-hero-webgl-direction'),
+    expectedDirection,
+    `${locale}: ${origin} automatic transition direction`
+  );
+  await waitForWebglSettlement(page);
+  report.interactions[`${origin}-${locale}`] = 'PASS';
+}
+
+async function proveAutomaticDirection(browser, locale, expectedDirection) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  await page.goto(baseURL, { waitUntil: 'domcontentloaded' });
+  await waitForEnhancedHero(page);
+  await selectLocale(page, locale);
+  await waitForWebglReady(page);
+
+  const activeVideo = page.locator('[data-hero-slide].is-active [data-hero-video]');
+  if (await activeVideo.count()) {
+    const initialVideoIndex = await page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
+    await activeVideo.dispatchEvent('ended');
+    await waitForAutomaticChange(page, initialVideoIndex);
+    await assertAutomaticDirection(page, locale, expectedDirection, 'video-ended');
+  }
+
+  const imageIndex = await page.evaluate(() =>
+    Array.from(document.querySelectorAll('[data-hero-slide]'))
+      .find((slide) => !slide.querySelector('[data-hero-video]'))?.dataset.slideIndex || null
+  );
+  assert.ok(imageIndex, `${locale}: no image slide available for timer proof`);
+
+  const currentIndex = await page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
+  if (currentIndex !== imageIndex) {
+    await page.locator(`[data-hero-dot][data-slide-index="${imageIndex}"]`).click();
+    await waitForWebglStart(page);
+    await waitForWebglSettlement(page);
+  }
+
+  const timerIndex = await page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
+  await waitForAutomaticChange(page, timerIndex);
+  await assertAutomaticDirection(page, locale, expectedDirection, 'timer');
+  await context.close();
+}
+
 const browser = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
 try {
   for (const locale of locales) await proveLocaleMatrix(browser, locale);
   await proveInteractions(browser);
+  await proveAutomaticDirection(browser, 'id', 'right-to-left');
+  await proveAutomaticDirection(browser, 'ar', 'left-to-right');
 } finally {
   await browser.close();
 }

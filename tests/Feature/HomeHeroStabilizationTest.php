@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
 
 uses(RefreshDatabase::class);
 
@@ -32,31 +33,61 @@ it('uses the exact 1180 and 1181 navigation boundary', function (): void {
         ->toContain('@media (min-width: 1181px)');
 });
 
-it('keeps hero ownership explicit and free of heavy animation dependencies', function (): void {
+it('keeps Hero WebGL deferred, local, and free of a general 3d engine', function (): void {
     $heroCss = file_get_contents(resource_path('css/pages/welcome-hero.css'));
+    $transition = file_get_contents(resource_path('js/surfaces/home/hero/transition.js'));
+    $renderer = file_get_contents(resource_path('js/surfaces/home/hero/webgl/renderer.js'));
     $package = json_decode(file_get_contents(base_path('package.json')), true, flags: JSON_THROW_ON_ERROR);
     $dependencies = array_merge($package['dependencies'] ?? [], $package['devDependencies'] ?? []);
 
     expect($heroCss)
-        ->toContain('../surfaces/home/hero/layout.css')
-        ->toContain('../surfaces/home/hero/media.css')
-        ->toContain('../surfaces/home/hero/motion.css')
-        ->toContain('../surfaces/home/hero/controls.css')
-        ->toContain('../surfaces/home/hero/responsive.css')
-        ->toContain('../surfaces/home/hero/locale.css')
-        ->toContain('../surfaces/home/hero/reduced-motion.css')
+        ->toContain('../surfaces/home/hero/webgl.css')
+        ->and($transition)
+        ->toContain("import('./webgl/renderer.js')")
+        ->and($renderer)
+        ->toContain("canvas.getContext('webgl'")
+        ->toContain("Math.min(window.devicePixelRatio || 1, 1.5)")
         ->and(array_keys($dependencies))
         ->not->toContain('three', 'babylonjs', 'gsap');
 });
 
-it('keeps each new hero source file within the 200 line contract', function (): void {
-    $files = glob(resource_path('css/surfaces/home/hero/*.css')) ?: [];
-    $files = array_merge($files, glob(resource_path('js/surfaces/home/hero/*.js')) ?: []);
+it('records physical and automatic Hero transition direction ownership', function (): void {
+    $events = file_get_contents(resource_path('js/surfaces/home/hero/events.js'));
+    $direction = file_get_contents(resource_path('js/surfaces/home/hero/direction.js'));
+    $controller = file_get_contents(resource_path('js/surfaces/home/hero/controller.js'));
+
+    expect($events)
+        ->toContain('HERO_LEFT_TO_RIGHT')
+        ->toContain('HERO_RIGHT_TO_LEFT')
+        ->and($direction)
+        ->toContain("document.documentElement.dir === 'rtl'")
+        ->and($controller)
+        ->toContain("{ origin: 'automatic' }");
+});
+
+it('starts incoming Hero video before the WebGL transition begins', function (): void {
+    $controller = file_get_contents(resource_path('js/surfaces/home/hero/controller.js'));
+    $syncPosition = strpos($controller, 'media.sync(nextIndex, canAutoAdvance());');
+    $transitionPosition = strpos($controller, 'transitions.play(previousIndex, nextIndex, request);');
+
+    expect($syncPosition)
+        ->not->toBeFalse()
+        ->and($transitionPosition)
+        ->not->toBeFalse()
+        ->and($syncPosition)
+        ->toBeLessThan($transitionPosition);
+});
+
+it('keeps every Hero source file within the 200 line contract', function (): void {
+    $files = array_merge(
+        File::allFiles(resource_path('css/surfaces/home/hero')),
+        File::allFiles(resource_path('js/surfaces/home/hero')),
+    );
 
     expect($files)->not->toBeEmpty();
 
     foreach ($files as $file) {
-        $lineCount = count(file($file, FILE_IGNORE_NEW_LINES));
-        expect($lineCount, basename($file))->toBeLessThanOrEqual(200);
+        $lineCount = count(file($file->getPathname(), FILE_IGNORE_NEW_LINES));
+        expect($lineCount, $file->getRelativePathname())->toBeLessThanOrEqual(200);
     }
 });

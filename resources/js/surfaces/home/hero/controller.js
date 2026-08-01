@@ -1,5 +1,6 @@
 import { bindHeroEvents } from './events.js';
 import { createHeroMediaController } from './media.js';
+import { createHeroTransitionController } from './transition.js';
 
 export function initializeHomeHero(root) {
   var slides = Array.from(root.querySelectorAll('[data-hero-slide]'));
@@ -23,6 +24,7 @@ export function initializeHomeHero(root) {
     disposed: false
   };
   var disposeEvents = function () {};
+  var transitions = createHeroTransitionController({ root, slides, reducedMotion });
 
   if (!Number.isFinite(duration) || duration < 4000) duration = 7000;
 
@@ -38,6 +40,7 @@ export function initializeHomeHero(root) {
   function clearTransition() {
     window.clearTimeout(state.transitionTimer);
     state.transitionTimer = 0;
+    transitions.suspend();
     slides.forEach(function (slide) { slide.classList.remove('is-entering', 'is-leaving'); });
   }
 
@@ -53,10 +56,7 @@ export function initializeHomeHero(root) {
       void progressBar.offsetWidth;
       progressBar.style.animation = '';
     }
-
-    if (canAutoAdvance() && !media.activeVideo(state.currentIndex)) {
-      root.classList.add('is-autoplaying');
-    }
+    if (canAutoAdvance() && !media.activeVideo(state.currentIndex)) root.classList.add('is-autoplaying');
   }
 
   function updateControls() {
@@ -87,11 +87,12 @@ export function initializeHomeHero(root) {
 
     var video = media.activeVideo(state.currentIndex);
     if (video && !media.isFailed(state.currentIndex)) return;
-
-    state.timer = window.setTimeout(function () { showSlide(state.currentIndex + 1, false); }, duration);
+    state.timer = window.setTimeout(function () {
+      showSlide(state.currentIndex + 1, false, { origin: 'automatic' });
+    }, duration);
   }
 
-  function showSlide(requestedIndex, announce) {
+  function showSlide(requestedIndex, announce, request) {
     if (state.disposed) return;
     var nextIndex = (requestedIndex + slides.length) % slides.length;
     var previousIndex = state.currentIndex;
@@ -99,6 +100,7 @@ export function initializeHomeHero(root) {
 
     clearTimer();
     clearTransition();
+    media.hydrate(slides[nextIndex], true);
     state.currentIndex = nextIndex;
 
     slides.forEach(function (slide, index) {
@@ -110,20 +112,20 @@ export function initializeHomeHero(root) {
       if (animate && active) slide.classList.add('is-entering');
     });
 
-    if (animate) {
-      state.transitionTimer = window.setTimeout(clearTransition, 980);
-    }
-
     state.presented = true;
-    media.hydrate(slides[nextIndex], true);
     media.prefetchNext(nextIndex);
     media.sync(nextIndex, canAutoAdvance());
-    updateControls();
+    var webglActive = animate && transitions.play(previousIndex, nextIndex, request);
 
+    if (animate) {
+      var cleanupDelay = webglActive ? transitions.settleDuration + 80 : 980;
+      state.transitionTimer = window.setTimeout(clearTransition, cleanupDelay);
+    }
+
+    updateControls();
     if (announce && liveRegion) {
       liveRegion.textContent = formatStatus(nextIndex) + ': ' + (slides[nextIndex].dataset.slideTitle || '');
     }
-
     scheduleNext();
   }
 
@@ -131,12 +133,15 @@ export function initializeHomeHero(root) {
     if (state.disposed) return;
     updateControls();
     media.sync(state.currentIndex, canAutoAdvance());
+    if (document.hidden || !state.relevant || reducedMotion.matches) transitions.suspend();
+    else transitions.resize();
     scheduleNext();
   }
 
   function suspend() {
     clearTimer();
     root.classList.remove('is-autoplaying');
+    transitions.suspend();
     media.suspend();
   }
 
@@ -146,32 +151,38 @@ export function initializeHomeHero(root) {
     clearTimer();
     clearTransition();
     disposeEvents();
+    transitions.dispose();
     media.dispose();
   }
 
   var media = createHeroMediaController({
-    slides: slides,
+    slides,
     onVideoEnded: function (index) {
-      if (index === state.currentIndex && canAutoAdvance()) showSlide(index + 1, false);
+      if (index === state.currentIndex && canAutoAdvance()) {
+        showSlide(index + 1, false, { origin: 'automatic' });
+      }
     }
   });
 
   var actions = {
-    dispose: dispose,
-    goTo: function (index) { if (Number.isInteger(index)) showSlide(index, true); },
-    next: function () { showSlide(state.currentIndex + 1, true); },
-    previous: function () { showSlide(state.currentIndex - 1, true); },
+    dispose,
+    goTo: function (index, request) { if (Number.isInteger(index)) showSlide(index, true, request); },
+    next: function (request) { showSlide(state.currentIndex + 1, true, request); },
+    previous: function (request) { showSlide(state.currentIndex - 1, true, request); },
     resume: syncEnvironment,
     setRelevant: function (relevant) { state.relevant = relevant; syncEnvironment(); },
-    suspend: suspend,
-    syncEnvironment: syncEnvironment,
-    togglePaused: function () { if (!reducedMotion.matches) { state.userPaused = !state.userPaused; syncEnvironment(); } }
+    suspend,
+    syncEnvironment,
+    togglePaused: function () {
+      if (!reducedMotion.matches) { state.userPaused = !state.userPaused; syncEnvironment(); }
+    }
   };
 
   root.dataset.heroInitialized = 'true';
   root.dataset.enhanced = 'true';
   root.style.setProperty('--hero-autoplay-duration', duration + 'ms');
   media.prepare();
-  disposeEvents = bindHeroEvents({ root: root, actions: actions, reducedMotion: reducedMotion });
+  disposeEvents = bindHeroEvents({ root, actions, reducedMotion });
   showSlide(state.currentIndex, false);
+  transitions.warm();
 }
