@@ -130,7 +130,7 @@ export function createHeroWebglRenderer(root) {
     active.toSource = source;
     active.revealLive = revealLive;
     active.startedAt = performance.now();
-    root.dataset.heroWebglIncomingSource = source.kind || 'image';
+    root.dataset.heroWebglIncomingSource = revealLive ? 'video' : (source.kind || 'image');
     resize();
     frame = window.requestAnimationFrame(draw);
   }
