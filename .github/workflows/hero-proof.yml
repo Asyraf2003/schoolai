@@ -23,6 +23,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   focused-hero-proof:
@@ -46,6 +47,7 @@ jobs:
 
       - run: composer install --no-interaction --prefer-dist --no-progress
       - run: npm ci
+
       - name: Compile Vite without the known structure preflight debt
         run: npx vite build
 
@@ -57,12 +59,20 @@ jobs:
           php artisan migrate --force
           mkdir -p storage/app/hero-proof
 
-      - name: Focused Laravel proof
+      - name: Record focused Laravel proof
         env:
           APP_ENV: testing
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan test tests/Feature/HomeHeroTest.php tests/Feature/HomeHeroStabilizationTest.php tests/Feature/PublicUnifiedNavigationTest.php
+        run: |
+          set +e
+          php artisan test \
+            tests/Feature/HomeHeroTest.php \
+            tests/Feature/HomeHeroStabilizationTest.php \
+            tests/Feature/PublicUnifiedNavigationTest.php \
+            2>&1 | tee storage/app/hero-proof/focused-test.log
+          echo "${PIPESTATUS[0]}" > storage/app/hero-proof/focused-test.status
+          exit 0
 
       - name: Record known structure debt
         run: npm run check:structure > storage/app/hero-proof/structure.log 2>&1 || true
@@ -89,11 +99,51 @@ jobs:
       - name: Install transient browser driver
         run: npm install --no-save --package-lock=false --ignore-scripts playwright-core@1.55.0
 
-      - name: Chromium runtime matrix
+      - name: Record Chromium runtime matrix
         env:
           CHROME_PATH: /usr/bin/google-chrome
           HERO_PROOF_BASE_URL: http://127.0.0.1:8000
-        run: node scripts/hero-runtime-proof.mjs
+        run: |
+          set +e
+          node scripts/hero-runtime-proof.mjs \
+            2>&1 | tee storage/app/hero-proof/runtime.log
+          echo "${PIPESTATUS[0]}" > storage/app/hero-proof/runtime.status
+          exit 0
+
+      - name: Publish failed proof summary
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          focused_status="$(cat storage/app/hero-proof/focused-test.status 2>/dev/null || echo 1)"
+          runtime_status="$(cat storage/app/hero-proof/runtime.status 2>/dev/null || echo 1)"
+          if [ "$focused_status" = 0 ] && [ "$runtime_status" = 0 ]; then
+            exit 0
+          fi
+
+          {
+            echo '### Hero proof diagnostic'
+            echo
+            echo "Focused Laravel status: \`$focused_status\`"
+            echo "Chromium runtime status: \`$runtime_status\`"
+            echo
+            echo '<details><summary>Focused Laravel tail</summary>'
+            echo
+            echo '```text'
+            tail -n 80 storage/app/hero-proof/focused-test.log 2>/dev/null || true
+            echo '```'
+            echo '</details>'
+            echo
+            echo '<details><summary>Chromium runtime tail</summary>'
+            echo
+            echo '```text'
+            tail -n 80 storage/app/hero-proof/runtime.log 2>/dev/null || true
+            echo '```'
+            echo '</details>'
+          } > /tmp/hero-proof-comment.md
+
+          gh pr comment "$PR_URL" --body-file /tmp/hero-proof-comment.md
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -102,3 +152,9 @@ jobs:
           path: storage/app/hero-proof
           if-no-files-found: error
           retention-days: 14
+
+      - name: Enforce focused and runtime gates
+        if: always()
+        run: |
+          test "$(cat storage/app/hero-proof/focused-test.status)" = 0
+          test "$(cat storage/app/hero-proof/runtime.status)" = 0
