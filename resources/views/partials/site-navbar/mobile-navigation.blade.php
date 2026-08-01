@@ -47,7 +47,7 @@
               aria-haspopup="dialog"
               aria-controls="languageModal"
             >
-              <span>{{ $item['label'] }}</span>
+              <span data-nav-roll="main">{{ $item['label'] }}</span>
               <span class="nav-language__current-flag" aria-hidden="true">
                 @include('partials.language-flag', ['locale' => $currentOption['locale'] ?? $currentLocale])
               </span>
@@ -63,7 +63,7 @@
               aria-expanded="false"
               aria-controls="{{ $megaPanelId }}"
             >
-              <span>{{ $item['label'] }}</span>
+              <span data-nav-roll="main">{{ $item['label'] }}</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
@@ -79,7 +79,7 @@
               <div class="nav-mega__links">
                 @foreach ($item['mega']['links'] as $megaLink)
                   <a href="{{ $megaLink['href'] }}" class="nav-mega__link">
-                    <strong data-text-role="action">{{ $megaLink['label'] }}</strong>
+                    <strong data-nav-roll="sub" data-text-role="action">{{ $megaLink['label'] }}</strong>
                     @if (! empty($megaLink['description']))
                       <small data-text-role="description">{{ $megaLink['description'] }}</small>
                     @endif
@@ -89,7 +89,7 @@
             </div>
           @elseif (! empty($item['disabled']))
             <span class="nav-link nav-link--dummy" data-text-role="action" aria-disabled="true">
-              {{ $item['label'] }}
+              <span data-nav-roll="main">{{ $item['label'] }}</span>
               @if (! empty($item['badge']))
                 <small class="nav-link__badge">{{ $item['badge'] }}</small>
               @endif
@@ -101,7 +101,7 @@
               data-text-role="action"
               @if ($isActiveRoute) aria-current="page" @endif
             >
-              {{ $item['label'] }}
+              <span data-nav-roll="main">{{ $item['label'] }}</span>
               @if (! empty($item['badge']))
                 <small class="nav-link__badge">{{ $item['badge'] }}</small>
               @endif
@@ -118,7 +118,7 @@
         data-mobile-navigation-item
         data-text-role="action"
       >
-        {{ $siteNavbar['cta']['label'] }}
+        <span data-nav-roll="main">{{ $siteNavbar['cta']['label'] }}</span>
       </a>
     @endif
   </nav>
