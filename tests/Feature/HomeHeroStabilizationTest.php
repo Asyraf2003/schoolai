@@ -35,52 +35,34 @@ it('uses the exact 1180 and 1181 navigation boundary', function (): void {
         ->toContain('@media (min-width: 1181px)');
 });
 
-it('keeps Hero WebGL deferred local and free of a general 3d engine', function (): void {
+it('restores the pre-akella CSS transition and removes the production WebGL graph', function (): void {
     $heroCss = file_get_contents(resource_path('css/pages/welcome-hero.css'));
-    $transition = file_get_contents(resource_path('js/surfaces/home/hero/transition.js'));
-    $renderer = file_get_contents(resource_path('js/surfaces/home/hero/webgl/renderer.js'));
+    $controller = file_get_contents(resource_path('js/surfaces/home/hero/controller.js'));
+    $events = file_get_contents(resource_path('js/surfaces/home/hero/events.js'));
     $package = json_decode(file_get_contents(base_path('package.json')), true, flags: JSON_THROW_ON_ERROR);
     $dependencies = array_merge($package['dependencies'] ?? [], $package['devDependencies'] ?? []);
 
     expect($heroCss)
-        ->toContain('../surfaces/home/hero/webgl.css')
-        ->and($transition)
-        ->toContain("import('./webgl/renderer.js')")
-        ->and($renderer)
-        ->toContain("canvas.getContext('webgl'")
-        ->toContain("Math.min(window.devicePixelRatio || 1, 1.5)")
+        ->toContain('../surfaces/home/hero/motion.css')
+        ->not->toContain('webgl.css')
+        ->and($controller)
+        ->toContain("window.setTimeout(clearTransition, 980)")
+        ->not->toContain('createHeroTransitionController')
+        ->not->toContain("import('./webgl/renderer.js')")
+        ->and($events)
+        ->toContain("document.documentElement.dir === 'rtl'")
+        ->not->toContain("from './direction.js'")
+        ->and(File::exists(resource_path('js/surfaces/home/hero/transition.js')))
+        ->toBeFalse()
+        ->and(File::exists(resource_path('js/surfaces/home/hero/webgl/renderer.js')))
+        ->toBeFalse()
+        ->and(File::exists(resource_path('css/surfaces/home/hero/webgl.css')))
+        ->toBeFalse()
         ->and(array_keys($dependencies))
         ->not->toContain('three', 'babylonjs', 'gsap');
 });
 
-it('records physical and automatic Hero transition direction ownership', function (): void {
-    $events = file_get_contents(resource_path('js/surfaces/home/hero/events.js'));
-    $direction = file_get_contents(resource_path('js/surfaces/home/hero/direction.js'));
-    $controller = file_get_contents(resource_path('js/surfaces/home/hero/controller.js'));
-
-    expect($events)
-        ->toContain('HERO_LEFT_TO_RIGHT')
-        ->toContain('HERO_RIGHT_TO_LEFT')
-        ->and($direction)
-        ->toContain("document.documentElement.dir === 'rtl'")
-        ->and($controller)
-        ->toContain("{ origin: 'automatic' }");
-});
-
-it('starts incoming Hero video before the WebGL transition begins', function (): void {
-    $controller = file_get_contents(resource_path('js/surfaces/home/hero/controller.js'));
-    $syncPosition = strpos($controller, 'media.sync(nextIndex, canAutoAdvance());');
-    $transitionPosition = strpos($controller, 'transitions.play(previousIndex, nextIndex, request);');
-
-    expect($syncPosition)
-        ->not->toBeFalse()
-        ->and($transitionPosition)
-        ->not->toBeFalse()
-        ->and($syncPosition)
-        ->toBeLessThan($transitionPosition);
-});
-
-it('restores the accepted bright Hero and floating chevron presentation', function (): void {
+it('keeps the accepted bright Hero and floating chevron presentation', function (): void {
     $media = file_get_contents(resource_path('css/surfaces/home/hero/media.css'));
     $controls = file_get_contents(resource_path('css/surfaces/home/hero/controls.css'));
     $locale = file_get_contents(resource_path('css/surfaces/home/hero/locale.css'));
@@ -99,28 +81,20 @@ it('restores the accepted bright Hero and floating chevron presentation', functi
         ->not->toContain('.hero-cinema__media::after');
 });
 
-it('reveals the same native video without sampling or restarting it', function (): void {
-    $textures = file_get_contents(resource_path('js/surfaces/home/hero/webgl/textures.js'));
-    $renderer = file_get_contents(resource_path('js/surfaces/home/hero/webgl/renderer.js'));
-    $shaders = file_get_contents(resource_path('js/surfaces/home/hero/webgl/shaders.js'));
-    $transition = file_get_contents(resource_path('js/surfaces/home/hero/transition.js'));
-    $graphics = $textures.$renderer.$shaders.$transition;
+it('retains the rejected WebGL history in architecture documentation', function (): void {
+    $readme = file_get_contents(base_path('docs/architecture/README.md'));
+    $currentState = file_get_contents(base_path('docs/architecture/UI_UX_CURRENT_STATE.md'));
 
-    expect($textures)
-        ->toContain('function waitForLiveVideoSource')
-        ->toContain('return video ? waitForLiveVideoSource(video)')
-        ->toContain("kind: 'live-video'")
-        ->and($renderer)
-        ->toContain("alpha: true")
-        ->toContain("source.kind === 'live-video'")
-        ->toContain("heroWebglIncomingSource = revealLive ? 'video'")
-        ->and($shaders)
-        ->toContain('uniform float uRevealLive')
-        ->toContain('vec4(outgoing.rgb, 1.0 - mask)')
-        ->and($graphics)
-        ->not->toContain('video.play(')
-        ->not->toContain('video.load(')
-        ->not->toContain('video.currentTime');
+    expect(File::exists(base_path(
+        'docs/architecture/blueprints/2026-08-01-home-hero-webgl-demo1.md'
+    )))->toBeTrue()
+        ->and(File::exists(base_path(
+            'docs/architecture/blueprints/2026-08-01-home-hero-scope-correction.md'
+        )))->toBeTrue()
+        ->and($readme)
+        ->toContain('Hero transition scope violation')
+        ->and($currentState)
+        ->toContain('HOME-HERO-REMOVE-AKELLA-WEBGL-001');
 });
 
 it('keeps every Hero source file within the 200 line contract', function (): void {
