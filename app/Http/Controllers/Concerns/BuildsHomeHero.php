@@ -2,23 +2,11 @@
 
 namespace App\Http\Controllers\Concerns;
 
-use App\Models\Article;
-use App\Models\GalleryItem;
-use App\Models\PpdbSetting;
-use App\Models\SiteStatistic;
 use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Schema;
 
 trait BuildsHomeHero
 {
-    /**
-     * Normalizes the locale-backed hero data into one presentation contract.
-     *
-     * The slides currently come from translation fallback data. A future
-     * database query only needs to provide the same keys before this boundary.
-     */
     private function heroData(): array
     {
         $hero = $this->homeSection('hero');
@@ -84,13 +72,10 @@ trait BuildsHomeHero
                 'render_type' => $renderType,
                 'media_url' => $mediaUrl,
                 'poster_url' => $posterUrl ?: $fallbackImageUrl,
+                'fallback_url' => $fallbackImageUrl,
                 'is_media_fallback' => $type !== $renderType,
-                'focal_position' => $this->heroFocalPosition(
-                    $slide['focal_position'] ?? null
-                ),
-                'overlay_strength' => $this->heroOverlayStrength(
-                    $slide['overlay_strength'] ?? null
-                ),
+                'focal_position' => $this->heroFocalPosition($slide['focal_position'] ?? null),
+                'overlay_strength' => $this->heroOverlayStrength($slide['overlay_strength'] ?? null),
                 'video_mime_type' => $this->heroVideoMimeType($mediaUrl),
                 'cta' => $cta,
             ]);
@@ -102,6 +87,7 @@ trait BuildsHomeHero
                 'render_type' => 'image',
                 'media_url' => $fallbackImageUrl,
                 'poster_url' => $fallbackImageUrl,
+                'fallback_url' => $fallbackImageUrl,
                 'media_alt' => $hero['fallback_image_alt'] ?? 'Al Mustaqbal School',
                 'eyebrow' => 'Al Mustaqbal School',
                 'title' => $hero['fallback_title'] ?? 'Al Mustaqbal School',
@@ -116,10 +102,7 @@ trait BuildsHomeHero
 
         $hero['slides'] = $normalizedSlides;
         $hero['fallback_image_url'] = $fallbackImageUrl;
-        $hero['autoplay_interval'] = min(
-            15000,
-            max(4000, (int) ($hero['autoplay_interval'] ?? 7000))
-        );
+        $hero['autoplay_interval'] = min(15000, max(4000, (int) ($hero['autoplay_interval'] ?? 7000)));
 
         return $hero;
     }

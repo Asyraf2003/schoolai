@@ -1,0 +1,104 @@
+name: Hero proof
+
+on:
+  pull_request:
+    paths:
+      - 'app/Http/Controllers/Concerns/BuildsHomeHero.php'
+      - 'resources/views/home/sections/hero.blade.php'
+      - 'resources/views/partials/site-navbar.blade.php'
+      - 'resources/views/partials/language-flag.blade.php'
+      - 'resources/css/pages/welcome-hero.css'
+      - 'resources/css/pages/welcome-navigation.css'
+      - 'resources/css/pages/welcome-navigation/**'
+      - 'resources/css/pages/welcome/029-*'
+      - 'resources/css/surfaces/home/hero/**'
+      - 'resources/js/pages/welcome-hero.js'
+      - 'resources/js/pages/welcome/**'
+      - 'resources/js/surfaces/home/hero/**'
+      - 'tests/Feature/HomeHero*'
+      - 'tests/Feature/PublicUnifiedNavigationTest.php'
+      - 'scripts/hero-*'
+      - 'vite.config.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  focused-hero-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci
+      - name: Compile Vite without the known structure preflight debt
+        run: npx vite build
+
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate --force
+          mkdir -p storage/app/hero-proof
+
+      - name: Focused Laravel proof
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test tests/Feature/HomeHeroTest.php tests/Feature/HomeHeroStabilizationTest.php tests/Feature/PublicUnifiedNavigationTest.php
+
+      - name: Record known structure debt
+        run: npm run check:structure > storage/app/hero-proof/structure.log 2>&1 || true
+
+      - name: Record full Laravel result
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test > storage/app/hero-proof/full-test.log 2>&1 || true
+
+      - name: Bundle report
+        run: node scripts/hero-bundle-report.mjs
+
+      - name: Start application
+        run: |
+          php artisan serve --host=127.0.0.1 --port=8000 > storage/app/hero-proof/server.log 2>&1 &
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8000 >/dev/null && exit 0
+            sleep 1
+          done
+          exit 1
+
+      - name: Install transient browser driver
+        run: npm install --no-save --package-lock=false --ignore-scripts playwright-core@1.55.0
+
+      - name: Chromium runtime matrix
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          HERO_PROOF_BASE_URL: http://127.0.0.1:8000
+        run: node scripts/hero-runtime-proof.mjs
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: home-hero-proof
+          path: storage/app/hero-proof
+          if-no-files-found: error
+          retention-days: 14
