@@ -49,7 +49,7 @@ export function createHeroTexture(gl, source) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-  if (!updateHeroTexture(gl, texture, source)) {
+  if (!updateHeroTexture(gl, texture, source, false)) {
     gl.deleteTexture(texture);
     return null;
   }
@@ -57,18 +57,31 @@ export function createHeroTexture(gl, source) {
   return texture;
 }
 
-export function updateHeroTexture(gl, texture, source) {
+export function updateHeroTexture(gl, texture, source, reuseStorage) {
   try {
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(
-      gl.TEXTURE_2D,
-      0,
-      gl.RGBA,
-      gl.RGBA,
-      gl.UNSIGNED_BYTE,
-      source.element
-    );
+
+    if (reuseStorage) {
+      gl.texSubImage2D(
+        gl.TEXTURE_2D,
+        0,
+        0,
+        0,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        source.element
+      );
+    } else {
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        source.element
+      );
+    }
     return true;
   } catch (error) {
     return false;
