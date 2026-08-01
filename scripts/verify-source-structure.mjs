@@ -143,13 +143,21 @@ for (const file of files.filter((target) => /resources\/(?:js|css)\/.+\.(?:js|cs
 
 const manifestPath = path.join(root, 'docs/architecture/source-module-equivalence.json');
 const overridesPath = path.join(root, 'docs/architecture/source-module-equivalence-overrides.json');
+const heroControlsOverridesPath = path.join(root, 'docs/architecture/source-module-equivalence-overrides.hero-controls.json');
 const baseManifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const overrides = fs.existsSync(overridesPath)
     ? JSON.parse(fs.readFileSync(overridesPath, 'utf8'))
     : {};
+const heroControlsOverrides = fs.existsSync(heroControlsOverridesPath)
+    ? JSON.parse(fs.readFileSync(heroControlsOverridesPath, 'utf8'))
+    : {};
 const manifest = {
     ...baseManifest,
-    css: { ...(baseManifest.css ?? {}), ...(overrides.css ?? {}) },
+    css: {
+        ...(baseManifest.css ?? {}),
+        ...(overrides.css ?? {}),
+        ...(heroControlsOverrides.css ?? {}),
+    },
 };
 
 for (const [entry, data] of Object.entries(manifest.css ?? {})) {
