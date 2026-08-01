@@ -108,7 +108,7 @@ it('reveals the same native video without sampling or restarting it', function (
 
     expect($textures)
         ->toContain('function waitForLiveVideoSource')
-        ->toContain('? waitForLiveVideoSource(slide, video, timeout)')
+        ->toContain('return video ? waitForLiveVideoSource(video)')
         ->toContain("kind: 'live-video'")
         ->and($renderer)
         ->toContain("alpha: true")
