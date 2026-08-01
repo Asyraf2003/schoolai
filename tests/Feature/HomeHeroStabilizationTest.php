@@ -99,18 +99,24 @@ it('restores the accepted bright Hero and floating chevron presentation', functi
         ->not->toContain('.hero-cinema__media::after');
 });
 
-it('waits for a live incoming video texture without restarting playback', function (): void {
+it('reveals the same native video without sampling or restarting it', function (): void {
     $textures = file_get_contents(resource_path('js/surfaces/home/hero/webgl/textures.js'));
     $renderer = file_get_contents(resource_path('js/surfaces/home/hero/webgl/renderer.js'));
+    $shaders = file_get_contents(resource_path('js/surfaces/home/hero/webgl/shaders.js'));
     $transition = file_get_contents(resource_path('js/surfaces/home/hero/transition.js'));
-    $graphics = $textures.$renderer.$transition;
+    $graphics = $textures.$renderer.$shaders.$transition;
 
     expect($textures)
         ->toContain('function waitForLiveVideoSource')
         ->toContain('? waitForLiveVideoSource(slide, video, timeout)')
-        ->toContain("kind: 'video'")
+        ->toContain("kind: 'live-video'")
         ->and($renderer)
+        ->toContain("alpha: true")
+        ->toContain("source.kind === 'live-video'")
         ->toContain("heroWebglIncomingSource = source.kind")
+        ->and($shaders)
+        ->toContain('uniform float uRevealLive')
+        ->toContain('vec4(outgoing.rgb, 1.0 - mask)')
         ->and($graphics)
         ->not->toContain('video.play(')
         ->not->toContain('video.load(')
