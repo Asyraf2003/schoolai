@@ -17,14 +17,12 @@ export function createHeroWebglRenderer(root) {
   var active = null;
   var generation = 0;
   var failed = false;
-
   canvas.className = 'hero-cinema__webgl';
   canvas.setAttribute('aria-hidden', 'true');
 
   function initialize() {
     if (gl && program && buffer) return true;
     if (failed) return false;
-
     gl = canvas.getContext('webgl', {
       alpha: false,
       antialias: false,
@@ -33,18 +31,15 @@ export function createHeroWebglRenderer(root) {
       premultipliedAlpha: false
     });
     if (!gl) return false;
-
     program = createHeroProgram(gl);
     buffer = gl.createBuffer();
     if (!program || !buffer) return false;
-
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
       gl.STATIC_DRAW
     );
-
     uniforms = {
       position: gl.getAttribLocation(program, 'aPosition'),
       progress: gl.getUniformLocation(program, 'uProgress'),
@@ -56,7 +51,6 @@ export function createHeroWebglRenderer(root) {
       from: gl.getUniformLocation(program, 'uFrom'),
       to: gl.getUniformLocation(program, 'uTo')
     };
-
     gl.useProgram(program);
     gl.enableVertexAttribArray(uniforms.position);
     gl.vertexAttribPointer(uniforms.position, 2, gl.FLOAT, false, 0, 0);
@@ -73,13 +67,11 @@ export function createHeroWebglRenderer(root) {
     var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     var width = Math.max(1, Math.round(rect.width * dpr));
     var height = Math.max(1, Math.round(rect.height * dpr));
-
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;
       canvas.height = height;
       gl.viewport(0, 0, width, height);
     }
-
     var fromScale = coverScale(active.fromSource, rect.width, rect.height);
     var toScale = coverScale(active.toSource, rect.width, rect.height);
     gl.uniform2f(uniforms.fromScale, fromScale[0], fromScale[1]);
@@ -108,7 +100,6 @@ export function createHeroWebglRenderer(root) {
     if (!active || !gl) return;
     if (active.fromSource.dynamic) updateHeroTexture(gl, active.fromTexture, active.fromSource, true);
     if (active.toSource.dynamic) updateHeroTexture(gl, active.toTexture, active.toSource, true);
-
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, active.fromTexture);
     gl.activeTexture(gl.TEXTURE1);
@@ -131,13 +122,11 @@ export function createHeroWebglRenderer(root) {
       if (active?.token === token) cancel();
       return;
     }
-
     var texture = createHeroTexture(gl, source);
     if (!texture) {
       cancel();
       return;
     }
-
     gl.deleteTexture(active.toTexture);
     active.toTexture = texture;
     active.toSource = source;
@@ -149,11 +138,9 @@ export function createHeroWebglRenderer(root) {
   function play(fromSlide, toSlide, direction, duration) {
     cancel();
     if (!initialize()) return false;
-
     var fromSource = textureSourceForSlide(fromSlide);
     var media = toSlide?.querySelector('.hero-cinema__media');
     if (!fromSource || !media) return false;
-
     var fromTexture = createHeroTexture(gl, fromSource);
     var placeholderTexture = createHeroTexture(gl, fromSource);
     if (!fromTexture || !placeholderTexture) {
@@ -161,7 +148,6 @@ export function createHeroWebglRenderer(root) {
       if (placeholderTexture) gl.deleteTexture(placeholderTexture);
       return false;
     }
-
     var token = generation;
     active = {
       token,
@@ -174,7 +160,6 @@ export function createHeroWebglRenderer(root) {
       duration,
       startedAt: 0
     };
-
     media.appendChild(canvas);
     canvas.classList.add('is-active');
     root.classList.add('is-webgl-transitioning');
@@ -182,10 +167,7 @@ export function createHeroWebglRenderer(root) {
     root.dataset.heroWebglDirection = direction > 0 ? 'right-to-left' : 'left-to-right';
     resize();
     render(0);
-
-    waitForTextureSource(toSlide).then(function (source) {
-      beginIncoming(token, source);
-    });
+    waitForTextureSource(toSlide).then(function (source) { beginIncoming(token, source); });
     return true;
   }
 
