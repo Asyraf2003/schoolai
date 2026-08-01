@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "description": "Hero WebGL CSS equivalence override owned by HOME-HERO-WEBGL-DEMO1-001.",
+  "description": "Corrected Hero CSS equivalence owned by HOME-HERO-SCOPE-CORRECTION-001 after restoring the accepted bright presentation and floating chevrons.",
   "css": {
     "resources/css/pages/welcome-hero.css": {
-      "sourceSha256": "df3f3874ad216aef4bdab518e7bba514305f52585c66248396159900d4d90d65",
+      "sourceSha256": "80dda9e3fb4923bed4005ad1ef61c9dee92742982bcea7810c96ad5a58d4135d",
       "orderedModules": [
         {
           "path": "../surfaces/home/hero/layout.css",

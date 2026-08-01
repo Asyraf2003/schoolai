@@ -15,7 +15,9 @@ it('keeps the homepage hero available before javascript enhancement', function (
         ->assertSee('class="hero-cinema__slide is-active"', false)
         ->assertSee('aria-hidden="false"', false)
         ->assertSee('fetchpriority="high"', false)
-        ->assertSee('data-hero-controls', false)
+        ->assertSee('hero-cinema__arrow--previous', false)
+        ->assertSee('hero-cinema__arrow--next', false)
+        ->assertDontSee('data-hero-controls', false)
         ->assertDontSee('data-enhanced="true"', false);
 });
 
@@ -33,7 +35,7 @@ it('uses the exact 1180 and 1181 navigation boundary', function (): void {
         ->toContain('@media (min-width: 1181px)');
 });
 
-it('keeps Hero WebGL deferred, local, and free of a general 3d engine', function (): void {
+it('keeps Hero WebGL deferred local and free of a general 3d engine', function (): void {
     $heroCss = file_get_contents(resource_path('css/pages/welcome-hero.css'));
     $transition = file_get_contents(resource_path('js/surfaces/home/hero/transition.js'));
     $renderer = file_get_contents(resource_path('js/surfaces/home/hero/webgl/renderer.js'));
@@ -76,6 +78,49 @@ it('starts incoming Hero video before the WebGL transition begins', function ():
         ->not->toBeFalse()
         ->and($syncPosition)
         ->toBeLessThan($transitionPosition);
+});
+
+it('restores the accepted bright Hero and floating chevron presentation', function (): void {
+    $media = file_get_contents(resource_path('css/surfaces/home/hero/media.css'));
+    $controls = file_get_contents(resource_path('css/surfaces/home/hero/controls.css'));
+    $locale = file_get_contents(resource_path('css/surfaces/home/hero/locale.css'));
+
+    expect($media)
+        ->toContain('rgb(2 13 12 / 0.04)')
+        ->toContain('transparent 48%')
+        ->toContain('rgb(2 13 12 / 0.08)')
+        ->not->toContain('var(--hero-overlay-strength)')
+        ->and($controls)
+        ->toContain('.hero-cinema__arrow--previous')
+        ->toContain('.hero-cinema__arrow--next')
+        ->toContain('width: clamp(92px, 7.4vw, 128px)')
+        ->toContain('background: transparent')
+        ->and($locale)
+        ->not->toContain('.hero-cinema__media::after');
+});
+
+it('reveals the same native video without sampling or restarting it', function (): void {
+    $textures = file_get_contents(resource_path('js/surfaces/home/hero/webgl/textures.js'));
+    $renderer = file_get_contents(resource_path('js/surfaces/home/hero/webgl/renderer.js'));
+    $shaders = file_get_contents(resource_path('js/surfaces/home/hero/webgl/shaders.js'));
+    $transition = file_get_contents(resource_path('js/surfaces/home/hero/transition.js'));
+    $graphics = $textures.$renderer.$shaders.$transition;
+
+    expect($textures)
+        ->toContain('function waitForLiveVideoSource')
+        ->toContain('return video ? waitForLiveVideoSource(video)')
+        ->toContain("kind: 'live-video'")
+        ->and($renderer)
+        ->toContain("alpha: true")
+        ->toContain("source.kind === 'live-video'")
+        ->toContain("heroWebglIncomingSource = revealLive ? 'video'")
+        ->and($shaders)
+        ->toContain('uniform float uRevealLive')
+        ->toContain('vec4(outgoing.rgb, 1.0 - mask)')
+        ->and($graphics)
+        ->not->toContain('video.play(')
+        ->not->toContain('video.load(')
+        ->not->toContain('video.currentTime');
 });
 
 it('keeps every Hero source file within the 200 line contract', function (): void {

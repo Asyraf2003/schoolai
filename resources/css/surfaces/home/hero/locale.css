@@ -1,16 +1,5 @@
-html[dir="rtl"] .hero-cinema__media::after {
-    background:
-        linear-gradient(to top, rgb(2 13 12 / 0.9) 0%, rgb(2 13 12 / 0.48) 36%, transparent 72%),
-        linear-gradient(to left, rgb(3 20 17 / 0.58) 0%, rgb(3 20 17 / 0.12) 58%, transparent 84%),
-        rgb(2 13 12 / var(--hero-overlay-strength));
-}
-
-html[dir="rtl"] .hero-cinema__cta::after,
-html[dir="rtl"] .hero-cinema__progress-bar {
-    transform-origin: right center;
-}
-
 html[dir="rtl"] .hero-cinema__cta::after {
+    transform-origin: right center;
     background: linear-gradient(270deg, #f7b24b, rgb(247 178 75 / 0.18));
 }
 
