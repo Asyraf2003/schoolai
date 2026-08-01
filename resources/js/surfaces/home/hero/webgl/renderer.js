@@ -126,6 +126,7 @@ export function createHeroWebglRenderer(root) {
     canvas.classList.remove('is-active');
     canvas.remove();
     root.classList.remove('is-webgl-transitioning');
+    root.dataset.heroWebglActive = 'false';
   }
 
   function draw(timestamp) {
@@ -133,8 +134,8 @@ export function createHeroWebglRenderer(root) {
     var elapsed = Math.min(1, (timestamp - active.startedAt) / active.duration);
     var progress = 1 - Math.pow(1 - elapsed, 2);
 
-    if (active.fromSource.dynamic) updateHeroTexture(gl, active.fromTexture, active.fromSource);
-    if (active.toSource.dynamic) updateHeroTexture(gl, active.toTexture, active.toSource);
+    if (active.fromSource.dynamic) updateHeroTexture(gl, active.fromTexture, active.fromSource, true);
+    if (active.toSource.dynamic) updateHeroTexture(gl, active.toTexture, active.toSource, true);
 
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, active.fromTexture);
@@ -178,6 +179,8 @@ export function createHeroWebglRenderer(root) {
     media.appendChild(canvas);
     canvas.classList.add('is-active');
     root.classList.add('is-webgl-transitioning');
+    root.dataset.heroWebglActive = 'true';
+    root.dataset.heroWebglDirection = direction > 0 ? 'right-to-left' : 'left-to-right';
     resize();
     draw(active.startedAt);
     return true;
