@@ -92,6 +92,7 @@
       } elseif ($index === 1) {
           $item['href'] = $homeAnchor('#program');
           $item['route_patterns'] = [];
+          $item['mega']['media_url'] = asset('media/hero/teaching.jpg');
 
           if (isset($item['mega']['links']) && is_array($item['mega']['links'])) {
               foreach ($item['mega']['links'] as &$link) {
@@ -107,7 +108,7 @@
           $item['route_patterns'] = ['galeri'];
           $item['mega'] = array_replace($megaCopy['gallery'], [
               'toggle_label' => $megaCopy['gallery']['eyebrow'],
-              'media_url' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1400&q=82',
+              'media_url' => asset('media/hero/activity.jpg'),
               'media_alt' => $megaCopy['gallery']['title'],
               'links' => array_map(
                   fn (array $link): array => array_merge($link, [
@@ -121,7 +122,7 @@
           $item['route_patterns'] = ['artikel', 'artikel.detail', 'artikel.native'];
           $item['mega'] = array_replace($megaCopy['article'], [
               'toggle_label' => $megaCopy['article']['eyebrow'],
-              'media_url' => 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1400&q=82',
+              'media_url' => asset('media/hero/library.jpg'),
               'media_alt' => $megaCopy['article']['title'],
               'links' => array_map(
                   fn (array $link): array => array_merge($link, [
