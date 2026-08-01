@@ -63,11 +63,11 @@
     margin-inline: 0;
     padding-inline: var(--hero-content-gutter);
     padding-block-start: calc(var(--hero-nav-height) + clamp(36px, 5vh, 64px));
-    padding-block-end: clamp(150px, 18vh, 214px);
+    padding-block-end: clamp(108px, 12vh, 142px);
 }
 
 .hero-cinema__copy {
-    width: min(620px, 48vw);
+    width: min(620px, 41vw);
     max-width: 620px;
 }
 
@@ -82,7 +82,11 @@
     font-weight: 850;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    text-shadow: 0 2px 14px rgb(0 0 0 / 0.54);
+    text-shadow:
+        0 1px 2px rgb(0 0 0 / 0.98),
+        0 0 8px rgb(0 0 0 / 0.9),
+        0 0 20px rgb(0 0 0 / 0.78),
+        0 0 38px rgb(0 0 0 / 0.58);
 }
 
 .hero-cinema__eyebrow::before {
@@ -95,7 +99,7 @@
 
 .hero-cinema__title {
     max-width: 22ch;
-    margin-block-start: clamp(10px, 1.5vh, 18px);
+    margin-block-start: clamp(10px, 1.4vh, 16px);
     color: #fff;
     font-family: var(--font-display);
     font-size: clamp(3rem, 6vw, 6.9rem);
@@ -103,31 +107,46 @@
     line-height: 0.96;
     letter-spacing: -0.052em;
     text-wrap: balance;
-    text-shadow: 0 3px 18px rgb(0 0 0 / 0.42), 0 10px 42px rgb(0 0 0 / 0.28);
+    text-shadow:
+        0 2px 3px rgb(0 0 0 / 0.96),
+        0 0 12px rgb(0 0 0 / 0.86),
+        0 0 30px rgb(0 0 0 / 0.68),
+        0 0 56px rgb(0 0 0 / 0.48);
 }
 
 .hero-cinema__description {
-    max-width: 48ch;
-    margin-block-start: clamp(14px, 2vh, 22px);
+    width: fit-content;
+    max-width: min(100%, 48ch);
+    margin-block-start: clamp(14px, 1.8vh, 20px);
     color: #fff;
     font-size: clamp(0.98rem, 1.2vw, 1.16rem);
     line-height: 1.65;
-    text-shadow: 0 2px 14px rgb(0 0 0 / 0.62), 0 0 30px rgb(0 0 0 / 0.28);
+    text-shadow:
+        0 1px 2px rgb(0 0 0 / 0.98),
+        0 0 8px rgb(0 0 0 / 0.9),
+        0 0 20px rgb(0 0 0 / 0.78),
+        0 0 38px rgb(0 0 0 / 0.58);
 }
 
 .hero-cinema__cta {
     position: relative;
+    width: fit-content;
+    max-width: min(100%, 52ch);
     min-height: 44px;
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    margin-block-start: clamp(16px, 2.4vh, 28px);
+    margin-block-start: clamp(14px, 2vh, 22px);
     padding-block: 10px;
     color: #fff;
     font-size: 0.88rem;
     font-weight: 820;
     letter-spacing: 0.04em;
-    text-shadow: 0 2px 14px rgb(0 0 0 / 0.54);
+    text-shadow:
+        0 1px 2px rgb(0 0 0 / 0.98),
+        0 0 8px rgb(0 0 0 / 0.9),
+        0 0 20px rgb(0 0 0 / 0.78),
+        0 0 38px rgb(0 0 0 / 0.58);
 }
 
 .hero-cinema__cta::after {
