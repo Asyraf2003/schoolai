@@ -10,6 +10,7 @@ Hero correction blueprint: `HOME-HERO-SCOPE-CORRECTION-001`
 Hero stabilization main SHA: `f77545362801059ef801d480d660ca1ce638f464`
 Hero Demo 1 main SHA: `ca99e0be7d339f52d8509381da7cc6ca1162b22b`
 Hero correction proven branch SHA: `e6f15793a538dea6392abd7ebacece1cb9f9a250`
+Hero correction main SHA: `8c3c84a09833b6ce093cd6a154bc03cb998fc0a3`
 
 Commit publication is source evidence only. Browser, accessibility, lifecycle,
 and performance claims below are limited to proof explicitly recorded here.
@@ -31,7 +32,7 @@ Build a distinctive Al Mustaqbal experience while retaining:
 
 Status: `COMPLETE_WITH_KNOWN_GAPS`
 
-B00 established these durable facts:
+Durable facts:
 
 - Laravel 13 + Blade + Vite 8;
 - About intentionally disabled and protected;
@@ -45,7 +46,6 @@ B00 established these durable facts:
 ## Completed production batch — Hero stabilization
 
 Blueprint: `docs/architecture/blueprints/2026-08-01-home-hero-stabilization.md`
-
 Status: `COMPLETE_WITH_EXTERNAL_SAFARI_DEFERRED`
 
 The stabilization established:
@@ -60,19 +60,17 @@ The stabilization established:
 - no legacy YouTube iframe/path;
 - source modules at or below 200 lines.
 
-Chromium stabilization proof covered 33 locale-width combinations and removed
-known Hero overflow, collision, and navigation-boundary defects. Real Safari and
-measured Lighthouse/PageSpeed remained deferred.
+Chromium stabilization proof covered 33 locale-width combinations. Real Safari
+and measured Lighthouse/PageSpeed remained deferred.
 
 ## Completed production batch — Hero Demo 1 WebGL transition
 
 Blueprint: `docs/architecture/blueprints/2026-08-01-home-hero-webgl-demo1.md`
 Reference: `akella/webGLImageTransitions`, Demo 1.
 Main SHA: `ca99e0be7d339f52d8509381da7cc6ca1162b22b`
-
 Status before owner correction: `TECHNICALLY_PROVEN_BUT_VISUALLY_REJECTED`
 
-Accepted behavior retained from this batch:
+Accepted behavior retained:
 
 - physical right arrow/key/swipe-left wipes right to left;
 - physical left arrow/key/swipe-right wipes left to right;
@@ -83,23 +81,24 @@ Accepted behavior retained from this batch:
 - reduced-motion, no-JavaScript, failure, lifecycle, and CSS fallback;
 - no Three.js, Babylon.js, GSAP, dat.GUI, package, or schema change.
 
-Rejected scope expansion recorded in the mandatory architecture index:
+Rejected scope expansion remains recorded in the mandatory architecture index:
 
-- the stabilization had replaced the accepted floating yellow chevrons with an
-  unrequested bottom rail, counter, dots, and playback control;
+- the accepted floating yellow chevrons had been replaced with an unrequested
+  bottom rail, counter, dots, and playback control;
 - the visible Hero became darker than the owner-approved design;
 - the first video adaptation could show a static poster over an advancing native
   video, creating a jump/restart impression when the canvas disappeared.
 
-The owner rejected those visual and playback changes. They are not accepted art
-direction and cannot be copied by future sessions.
+Those visual and playback changes are not accepted art direction and cannot be
+copied by future sessions.
 
-## Hero scope correction
+## Completed production batch — Hero scope correction
 
 Blueprint: `docs/architecture/blueprints/2026-08-01-home-hero-scope-correction.md`
 Blueprint ID: `HOME-HERO-SCOPE-CORRECTION-001`
-Status: `PROVEN_PENDING_SQUASH`
+Status: `COMPLETE_ON_MAIN_PENDING_OWNER_VISUAL`
 Proven branch SHA: `e6f15793a538dea6392abd7ebacece1cb9f9a250`
+Main SHA: `8c3c84a09833b6ce093cd6a154bc03cb998fc0a3`
 
 ### Corrected product behavior
 
@@ -117,7 +116,7 @@ Proven branch SHA: `e6f15793a538dea6392abd7ebacece1cb9f9a250`
 
 ### Corrected native-video architecture
 
-Incoming video now uses transparent live reveal:
+Incoming video uses transparent live reveal:
 
 ```text
 native video activates and play() is attempted
@@ -153,7 +152,8 @@ Consequences:
 
 ### Corrected proof
 
-Proven on branch SHA `e6f15793a538dea6392abd7ebacece1cb9f9a250`:
+Proven on branch SHA `e6f15793a538dea6392abd7ebacece1cb9f9a250`
+and repeated successfully on exact documentation head `40aa54a553fa8096d5c2bcd86e1aab30d38fb3db` before squash:
 
 - diff hygiene: PASS;
 - Vite 8.1.3 production build: PASS, 90 modules transformed;
@@ -211,9 +211,7 @@ Current facts:
 
 Status: `DEFERRED_TO_OWNER_AND_REAL_SAFARI`.
 
-After the correction squash reaches `main`:
-
-1. Owner pulls and compares the actual Hero against the accepted bright
+1. Owner pulls main and compares the actual Hero against the accepted bright
    screenshot.
 2. Verify the two floating chevrons, copy geometry, brightness, and absence of
    rail/dots/playback at desktop, tablet, and mobile.
@@ -231,7 +229,7 @@ After the correction squash reaches `main`:
 ### `OWNER-VISUAL-ACCEPTANCE-GAP-001`
 
 Automated Chromium proof passed, but the owner has not yet pulled the corrected
-squash commit and visually accepted it against the supplied screenshot.
+main commit and visually accepted it against the supplied screenshot.
 
 ### `STRUCTURE-GAP-001`
 
@@ -292,7 +290,7 @@ remediation remains a separate repository task.
 | C01 UI restoration | `PASS_CHROMIUM` | bright UI, two chevrons, no rejected rail |
 | C02 native-video reveal | `PASS_CHROMIUM` | advancing same video through canvas |
 | C03 correction proof | `PASS_CHROMIUM` | 11 tests, 236 assertions, 33 cases |
-| C04 correction delivery | `PASS_ON_SQUASH` | blueprint, ledger, equivalence, rollback |
+| C04 correction delivery | `COMPLETE_ON_MAIN` | squash SHA `8c3c84a09833b6ce093cd6a154bc03cb998fc0a3` |
 | Owner visual acceptance | `PENDING_PULL` | screenshot comparison required |
 | Safari Hero acceptance | `DEFERRED_TO_REAL_MAC_SAFARI` | external checklist |
 | N02 unified navbar roll | `IMPLEMENTING` | full runtime proof missing |
@@ -302,9 +300,9 @@ remediation remains a separate repository task.
 
 - Hero stabilization source: `COMPLETE`.
 - Demo 1 transition direction and image behavior: `PRESERVED`.
-- Rejected dark/control/poster behavior: `CORRECTED_ON_BRANCH`.
+- Rejected dark/control/poster behavior: `CORRECTED_ON_MAIN`.
 - Correction available proof: `PASS_CHROMIUM`.
-- Correction delivery: `PENDING_SQUASH_TO_MAIN`.
+- Correction delivery: `COMPLETE_ON_MAIN`.
 - Owner visual acceptance: `PENDING_PULL`.
 - About/Testimonial protection: preserved.
 - Third-party animation/WebGL dependencies added by correction: none.
@@ -312,6 +310,6 @@ remediation remains a separate repository task.
 
 ## NEXT VALID STEP
 
-Squash PR #28 into `main` after the exact documentation-head proof passes. Then
-the owner pulls and visually compares the Hero against the accepted screenshot.
-Do not begin another Hero redesign or homepage surface from this correction.
+The owner pulls main and visually compares the Hero against the accepted bright
+screenshot. Do not begin another Hero redesign or homepage surface from this
+correction.
