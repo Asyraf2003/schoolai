@@ -45,7 +45,12 @@ async function inspectViewport(page, locale, width) {
   const metrics = await page.evaluate(() => {
     const active = document.querySelector('[data-hero-slide].is-active');
     const copy = active?.querySelector('.hero-cinema__copy')?.getBoundingClientRect();
-    const controls = document.querySelector('[data-hero-controls]')?.getBoundingClientRect();
+    const arrows = Array.from(document.querySelectorAll('.hero-cinema__arrow'));
+    const arrowRects = arrows.map((arrow) => arrow.getBoundingClientRect());
+    const visibleArrows = arrows.filter((arrow) => {
+      const style = getComputedStyle(arrow);
+      return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
+    });
     const title = active?.querySelector('.hero-cinema__title')?.getBoundingClientRect();
     const navbar = document.getElementById('navbar')?.getBoundingClientRect();
     const hamburger = document.getElementById('hamburgerBtn');
@@ -53,9 +58,9 @@ async function inspectViewport(page, locale, width) {
     const style = (node) => node ? getComputedStyle(node) : null;
     const hamburgerStyle = style(hamburger);
     const desktopStyle = style(desktop);
-    const overlaps = copy && controls
-      ? !(copy.right <= controls.left || controls.right <= copy.left || copy.bottom <= controls.top || controls.bottom <= copy.top)
-      : false;
+    const overlaps = copy && arrowRects.some((rect) =>
+      !(copy.right <= rect.left || rect.right <= copy.left || copy.bottom <= rect.top || rect.bottom <= copy.top)
+    );
 
     return {
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -66,17 +71,23 @@ async function inspectViewport(page, locale, width) {
       copyBelowNavbar: Boolean(copy && navbar && copy.top >= navbar.bottom - 1),
       hamburgerVisible: Boolean(hamburgerStyle && hamburgerStyle.display !== 'none' && hamburgerStyle.visibility !== 'hidden'),
       desktopVisible: Boolean(desktopStyle && desktopStyle.display !== 'none' && desktopStyle.visibility !== 'hidden' && desktopStyle.opacity !== '0'),
+      visibleChevrons: visibleArrows.length,
+      chevronsInLowerHalf: arrowRects.length === 2 && arrowRects.every((rect) => rect.top > innerHeight * 0.5),
+      retiredControls: document.querySelectorAll('[data-hero-controls], [data-hero-progress], [data-hero-dot], [data-hero-playback]').length,
     };
   });
 
   assert.ok(metrics.overflow <= 1, `${locale} ${width}: horizontal overflow ${metrics.overflow}px`);
-  assert.equal(metrics.overlaps, false, `${locale} ${width}: Hero copy overlaps controls`);
+  assert.equal(metrics.overlaps, false, `${locale} ${width}: Hero copy overlaps chevrons`);
   assert.equal(metrics.activeSlides, 1, `${locale} ${width}: active slide count`);
   assert.equal(metrics.transientSlides, 0, `${locale} ${width}: stale transition classes`);
   assert.equal(metrics.titleInsideViewport, true, `${locale} ${width}: title clips horizontally`);
   assert.equal(metrics.copyBelowNavbar, true, `${locale} ${width}: copy collides with navbar`);
   assert.equal(metrics.hamburgerVisible, width <= 1180, `${locale} ${width}: hamburger boundary`);
   assert.equal(metrics.desktopVisible, width >= 1181, `${locale} ${width}: desktop navigation boundary`);
+  assert.equal(metrics.visibleChevrons, 2, `${locale} ${width}: visible chevron count`);
+  assert.equal(metrics.chevronsInLowerHalf, true, `${locale} ${width}: chevrons are not in the lower Hero area`);
+  assert.equal(metrics.retiredControls, 0, `${locale} ${width}: retired Hero rail controls returned`);
 
   const screenshot = `${locale}-${width}x${viewportHeight(width)}.png`;
   await page.screenshot({ path: path.join(outputDir, screenshot), fullPage: false });
@@ -90,10 +101,8 @@ async function proveLocaleMatrix(browser, locale) {
   await waitForEnhancedHero(page);
   await selectLocale(page, locale.code);
 
-  const documentLocale = await page.locator('html').getAttribute('lang');
-  const documentDirection = await page.locator('html').getAttribute('dir');
-  assert.equal(documentLocale, locale.code, `${locale.code}: html lang`);
-  assert.equal(documentDirection, locale.dir, `${locale.code}: html dir`);
+  assert.equal(await page.locator('html').getAttribute('lang'), locale.code, `${locale.code}: html lang`);
+  assert.equal(await page.locator('html').getAttribute('dir'), locale.dir, `${locale.code}: html dir`);
 
   for (const width of widths) await inspectViewport(page, locale.code, width);
   await context.close();
@@ -134,8 +143,15 @@ async function proveInteractions(browser) {
   });
   assert.ok(await page.locator('[data-hero-slide].has-media-error').count(), 'video error fallback state missing');
 
-  await page.locator('[data-hero-dot][data-slide-index="1"]').click();
-  await page.waitForTimeout(1050);
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => false });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
+  const imageIndex = await page.locator('[data-hero-slide][data-media-type="image"]').first().getAttribute('data-slide-index');
+  for (let attempt = 0; attempt < 6 && await activeIndex() !== imageIndex; attempt += 1) {
+    await page.locator('[data-hero-next]').click();
+    await page.waitForTimeout(1050);
+  }
   const activeImage = page.locator('[data-hero-slide].is-active [data-hero-image]');
   await activeImage.evaluate((image) => image.dispatchEvent(new Event('error')));
   await activeImage.evaluate((image) => image.dispatchEvent(new Event('error')));
@@ -152,10 +168,10 @@ async function proveInteractions(browser) {
   const reducedPage = await reduced.newPage();
   await reducedPage.goto(baseURL, { waitUntil: 'domcontentloaded' });
   await waitForEnhancedHero(reducedPage);
-  assert.equal(await reducedPage.locator('[data-hero-playback]').isDisabled(), true, 'reduced motion playback must be disabled');
   await reducedPage.locator('[data-hero-next]').click();
   await reducedPage.waitForTimeout(40);
   assert.equal(await reducedPage.locator('.is-entering, .is-leaving').count(), 0, 'reduced motion still animates');
+  assert.equal(await reducedPage.locator('.hero-cinema__arrow:visible').count(), 2, 'reduced motion hid chevrons');
   report.interactions.reducedMotion = 'PASS';
   await reduced.close();
 
@@ -163,7 +179,8 @@ async function proveInteractions(browser) {
   const noScriptPage = await noScript.newPage();
   await noScriptPage.goto(baseURL, { waitUntil: 'domcontentloaded' });
   assert.equal(await noScriptPage.locator('[data-hero-slide].is-active').count(), 1, 'no-JS first slide missing');
-  assert.equal(await noScriptPage.locator('[data-hero-controls]').evaluate((node) => getComputedStyle(node).display), 'none', 'no-JS controls should stay hidden');
+  assert.equal(await noScriptPage.locator('.hero-cinema__arrow').count(), 2, 'no-JS chevrons missing from semantic DOM');
+  assert.equal(await noScriptPage.locator('.hero-cinema__arrow:visible').count(), 0, 'no-JS chevrons should stay hidden');
   await noScriptPage.screenshot({ path: path.join(outputDir, 'no-js-390x844.png') });
   report.interactions.noJavaScript = 'PASS';
   await noScript.close();
