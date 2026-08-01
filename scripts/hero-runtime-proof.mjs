@@ -16,6 +16,43 @@ const report = { browser: 'Chromium', matrix: [], interactions: {} };
 
 fs.mkdirSync(outputDir, { recursive: true });
 
+async function installProofVideoRoute(context) {
+  const videoPath = path.resolve('public/media/hero/shanghai-mega-city.mp4');
+  assert.equal(fs.existsSync(videoPath), true, 'Local Hero proof video is missing');
+  const bytes = fs.readFileSync(videoPath);
+
+  await context.route('**/media/cc0-videos/flower.mp4', async (route) => {
+    const range = route.request().headers().range;
+    const match = range?.match(/^bytes=(\d+)-(\d*)$/);
+    if (!match) {
+      await route.fulfill({
+        status: 200,
+        headers: {
+          'Accept-Ranges': 'bytes',
+          'Content-Length': String(bytes.length),
+          'Content-Type': 'video/mp4',
+        },
+        body: bytes,
+      });
+      return;
+    }
+
+    const start = Number(match[1]);
+    const end = match[2] ? Math.min(Number(match[2]), bytes.length - 1) : bytes.length - 1;
+    const chunk = bytes.subarray(start, end + 1);
+    await route.fulfill({
+      status: 206,
+      headers: {
+        'Accept-Ranges': 'bytes',
+        'Content-Length': String(chunk.length),
+        'Content-Range': `bytes ${start}-${end}/${bytes.length}`,
+        'Content-Type': 'video/mp4',
+      },
+      body: chunk,
+    });
+  });
+}
+
 async function waitForEnhancedHero(page) {
   await page.locator('[data-hero-slider]').waitFor({ state: 'attached' });
   await page.waitForFunction(() =>
@@ -178,6 +215,7 @@ async function provePhysicalDirections(page) {
 
 async function proveLiveVideoWipe(browser) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await installProofVideoRoute(context);
   const page = await context.newPage();
   await page.goto(baseURL, { waitUntil: 'domcontentloaded' });
   await waitForEnhancedHero(page);
@@ -187,7 +225,7 @@ async function proveLiveVideoWipe(browser) {
     Array.from(document.querySelectorAll('[data-hero-slide]'))
       .findIndex((slide) => slide.querySelector('[data-hero-video]'))
   );
-  assert.ok(videoIndex >= 0, 'No native video slide exists for live texture proof');
+  assert.ok(videoIndex >= 0, 'No native video slide exists for live reveal proof');
   const total = await page.locator('[data-hero-slide]').count();
   const previousIndex = (videoIndex - 1 + total) % total;
   await goToSlideIndex(page, previousIndex);
@@ -196,14 +234,22 @@ async function proveLiveVideoWipe(browser) {
   await page.locator('[data-hero-next]').click();
   await waitForWebglStart(page);
   await page.waitForFunction(() =>
-    document.querySelector('[data-hero-slider]')?.dataset.heroWebglIncomingSource === 'video',
-  null, { timeout: 1800 });
+    document.querySelector('[data-hero-slider]')?.dataset.heroWebglIncomingSource === 'video'
+  );
+  await page.waitForFunction((index) => {
+    const hero = document.querySelector('[data-hero-slider]');
+    const node = document.querySelector(
+      `[data-hero-slide][data-slide-index="${index}"] [data-hero-video]`
+    );
+    return hero?.dataset.heroWebglActive === 'true' && node && !node.paused &&
+      node.readyState >= 2 && node.currentTime > 0;
+  }, String(videoIndex), { timeout: 1800 });
 
   const firstTime = await video.evaluate((node) => node.currentTime);
   await page.waitForTimeout(260);
   const secondTime = await video.evaluate((node) => node.currentTime);
   assert.equal(await video.evaluate((node) => node.paused), false, 'incoming video paused during wipe');
-  assert.ok(secondTime > firstTime + 0.08, 'incoming video frame did not advance during wipe');
+  assert.ok(secondTime > firstTime + 0.08, 'incoming video did not advance during wipe');
 
   await waitForWebglSettlement(page);
   const settledTime = await video.evaluate((node) => node.currentTime);
