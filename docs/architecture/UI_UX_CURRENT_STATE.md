@@ -8,9 +8,10 @@ Baseline audited source: `a580a509fecaaf912d718e56a38695212d41fcc3`
 Hero stabilization main SHA: `f77545362801059ef801d480d660ca1ce638f464`
 Hero Demo 1 main SHA: `ca99e0be7d339f52d8509381da7cc6ca1162b22b`
 Hero correction main SHA: `8c3c84a09833b6ce093cd6a154bc03cb998fc0a3`
+Hero Akella removal main SHA: `e579880580a5dcc54aff3fc4bd984cbf6d69ecc5`
 Active blueprint: `HOME-HERO-REMOVE-AKELLA-WEBGL-001`
 Proven implementation SHA: `62df105ecfa169590de7c8f9d038b981bfe65fea`
-Active branch: `agent/remove-hero-akella-webgl-001`
+Proven documentation head: `f62e9d25151993c6a9dd4027b976e301fb56b1ab`
 
 Commit publication is source evidence only. Browser, accessibility, lifecycle,
 and performance claims below are limited to proof explicitly recorded here.
@@ -62,14 +63,16 @@ The mandatory architecture index retains these owner-rejected facts:
 
 Blueprint `HOME-HERO-SCOPE-CORRECTION-001` restored the bright presentation,
 compact copy, and two floating chevrons. Those presentation results remain. Its
-transparent live-video WebGL reveal is retired by the current owner decision.
+transparent live-video WebGL reveal was retired by the final owner decision.
 
-## Active batch — remove Akella WebGL implementation
+## Completed batch — remove Akella WebGL implementation
 
 Blueprint:
 `docs/architecture/blueprints/2026-08-01-home-hero-remove-akella-webgl.md`
 Blueprint ID: `HOME-HERO-REMOVE-AKELLA-WEBGL-001`
-Status: `PROVEN_PENDING_SQUASH`
+Status: `COMPLETE_ON_MAIN_PENDING_OWNER_VISUAL`
+Main SHA: `e579880580a5dcc54aff3fc4bd984cbf6d69ecc5`
+Pull request: `#29`
 
 ### Owner decision
 
@@ -95,7 +98,9 @@ mistake, correction, and retirement.
 
 ### Automated proof
 
-Proven on implementation SHA `62df105ecfa169590de7c8f9d038b981bfe65fea`:
+Proven on implementation SHA `62df105ecfa169590de7c8f9d038b981bfe65fea`
+and repeated successfully on exact documentation head
+`f62e9d25151993c6a9dd4027b976e301fb56b1ab` before squash:
 
 - Vite 8.1.3: PASS, 84 modules transformed;
 - focused Hero/navigation: 9 passed, 214 assertions;
@@ -119,7 +124,7 @@ Bundle after removal:
 
 ### Known unrelated results
 
-- Structure report now contains only the three pre-existing oversized
+- Structure report contains only the three pre-existing oversized
   Vision/Mission files: 271, 326, and 610 lines.
 - Full Laravel still contains the stale About test for the intentionally disabled
   protected section.
@@ -176,7 +181,7 @@ One pre-existing high-severity npm audit issue remains separate.
 | R01 production graph removal | `PASS` | WebGL production graph absent |
 | R02 source/equivalence proof | `PASS_WITH_KNOWN_EXTERNAL_DEBT` | only old Vision files remain |
 | R03 Chromium proof | `PASS_CHROMIUM` | 33 cases, CSS transition, zero canvas |
-| R04 delivery to main | `PENDING_SQUASH` | final exact-head proof required |
+| R04 delivery to main | `COMPLETE_ON_MAIN` | SHA `e579880580a5dcc54aff3fc4bd984cbf6d69ecc5` |
 | Owner visual acceptance | `PENDING_PULL` | final screenshot comparison |
 | Safari acceptance | `DEFERRED_TO_REAL_MAC_SAFARI` | external proof |
 | Navbar roll proof | `BLOCKED_BY_MISSING_EVIDENCE` | separate scope |
@@ -184,17 +189,17 @@ One pre-existing high-severity npm audit issue remains separate.
 
 ## STATUS
 
-- Akella/Demo 1 production implementation: `REMOVED_ON_BRANCH`.
+- Akella/Demo 1 production implementation: `REMOVED_ON_MAIN`.
 - Pre-Akella CSS Hero transition: `RESTORED_AND_PROVEN`.
 - Accepted bright presentation and chevrons: `PRESERVED`.
 - Historical error, WebGL, and correction documents: `PRESERVED`.
 - About/Testimonial protection: `PRESERVED`.
 - Package/schema/content changes: none.
-- Delivery: `PROVEN_PENDING_SQUASH`.
+- Delivery: `COMPLETE_ON_MAIN_PENDING_OWNER_VISUAL`.
 
 ## NEXT VALID STEP
 
-Run the Hero proof on the documentation-closeout head. If it passes, mark PR #29
-ready and squash to `main`. After merge, update the ledger only with the final
-main SHA and leave visual acceptance pending the owner's pull. Do not begin
-another Hero design or homepage surface.
+The owner pulls `main` and compares the real Hero against the accepted bright
+reference on representative desktop, tablet, and mobile sizes. Leave the Hero
+scope closed until that visual proof is supplied. Do not begin another Hero
+design or homepage surface from this batch.
