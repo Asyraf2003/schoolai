@@ -18,6 +18,7 @@ uniform sampler2D uTo;
 uniform float uProgress;
 uniform float uDirection;
 uniform float uWidth;
+uniform float uRevealLive;
 uniform vec2 uNoiseScale;
 uniform vec2 uFromScale;
 uniform vec2 uToScale;
@@ -57,8 +58,13 @@ void main() {
   float grain = noise(vUv * uNoiseScale);
   float mask = smoothstep(1.0 - width, 1.0, sweep + grain * width);
   vec4 outgoing = texture2D(uFrom, coverUv(vUv, uFromScale));
-  vec4 incoming = texture2D(uTo, coverUv(vUv, uToScale));
 
+  if (uRevealLive > 0.5) {
+    gl_FragColor = vec4(outgoing.rgb, 1.0 - mask);
+    return;
+  }
+
+  vec4 incoming = texture2D(uTo, coverUv(vUv, uToScale));
   gl_FragColor = mix(outgoing, incoming, mask);
 }
 `;
