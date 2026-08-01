@@ -110,20 +110,3 @@ it('keeps every Hero source file within the 200 line contract', function (): voi
         expect($lineCount, $file->getRelativePathname())->toBeLessThanOrEqual(200);
     }
 });
-
-it('reports the exact post-WebGL Hero CSS equivalence hash', function (): void {
-    $modules = [
-        'css/surfaces/home/hero/layout.css',
-        'css/surfaces/home/hero/media.css',
-        'css/surfaces/home/hero/motion.css',
-        'css/surfaces/home/hero/controls.css',
-        'css/surfaces/home/hero/locale.css',
-        'css/surfaces/home/hero/responsive.css',
-        'css/surfaces/home/hero/reduced-motion.css',
-    ];
-    $combined = collect($modules)
-        ->map(fn (string $path): string => file_get_contents(resource_path($path)))
-        ->implode('');
-
-    expect(hash('sha256', $combined))->toBe('DIAGNOSTIC_PENDING');
-});
