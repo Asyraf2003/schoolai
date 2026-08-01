@@ -108,17 +108,42 @@ change product intent but cannot turn an unrun proof gate into `PASS`.
 - Before publish, verify all mandatory paths exist and no live document points
   to a deleted mandatory dependency.
 
-## Retained incident report
+## Accepted Hero history anchor
 
-The owner explicitly requested that one documentation-only record remain after
-reconstructing `main` from the last commit before the rejected Akella Hero
-transition work:
+The owner accepts the Hero produced by PR #26 and squash commit
+`f77545362801059ef801d480d660ca1ce638f464` as the stable production history
+anchor. PR #26 was based on `dda36abbc1f693294cfbc16b266f7e01d72975ec`,
+but `dda36ab` is not the desired final Hero state.
+
+Current and future work starts from current `main`. The stable anchor remains an
+ancestry fact, not a requirement that `main` stay permanently at that SHA.
+
+## Retained incident and retired lineage
+
+The owner explicitly requested one documentation-only record after rejecting the
+later Akella Hero transition lineage:
 
 - `incidents/2026-08-01-home-hero-akella-scope-violation.md`
 
-This incident file records an owner-rejected scope expansion. It is historical
-evidence only, never an active blueprint or implementation source. Future Hero
-work must use current `main` source and runtime evidence, not the retired commits.
+The incident file explains why historical Akella/WebGL, correction, and removal
+commits may be mentioned even though their production files do not exist on
+current `main`. Those files were intentionally excluded during history
+reconstruction. Their absence is not an unresolved GAP and they must not be
+recreated from archived branches or commits without a new explicit owner
+instruction.
+
+Archived PRs, SHA references, agent branches, rewrite branches, and safety backup
+branches are legacy audit material only. They are not valid implementation bases
+and must not be merged or cherry-picked into `main` merely to recover the retired
+experiment.
+
+Normal future commits continue from current `main` and therefore carry:
+
+```text
+accepted PR #26 Hero
+-> retained incident documentation
+-> later approved main changes
+```
 
 ## Current product direction
 
