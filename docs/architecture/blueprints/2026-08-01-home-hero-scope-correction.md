@@ -1,13 +1,13 @@
 # Homepage Hero Scope Correction
 
 BLUEPRINT ID: `HOME-HERO-SCOPE-CORRECTION-001`
-STATUS: `PROVEN_PENDING_SQUASH`
+STATUS: `COMPLETE_ON_MAIN_PENDING_OWNER_VISUAL`
 OWNER: Asyraf Mubarak
 DATE: 2026-08-01
 SOURCE MAIN SHA: `763492d173cd504ad6f9b51c2626e0108166e6e5`
 PROVEN BRANCH SHA: `e6f15793a538dea6392abd7ebacece1cb9f9a250`
+FINAL MAIN SHA: `8c3c84a09833b6ce093cd6a154bc03cb998fc0a3`
 ACTIVE SURFACE: homepage Hero presentation, media playback, and Demo 1 transition
-TARGET BRANCH: `agent/home-hero-scope-correction-001`
 
 ## FACT
 
@@ -37,7 +37,7 @@ TARGET BRANCH: `agent/home-hero-scope-correction-001`
 
 - Real Safari/WebKit and measured GPU/frame/color evidence remain unavailable.
 - GitHub CI proves Chromium behavior and source contracts, but final visual
-  acceptance still requires owner inspection after pulling the squash commit.
+  acceptance still requires owner inspection after pulling main.
 
 ## GOAL
 
@@ -150,7 +150,7 @@ native video is slow or fails
 
 ## PROOF
 
-Proven on branch SHA `e6f15793a538dea6392abd7ebacece1cb9f9a250`:
+Proven on branch SHA `e6f15793a538dea6392abd7ebacece1cb9f9a250` and repeated successfully on the exact documentation head before squash:
 
 - diff hygiene: PASS;
 - Vite 8.1.3 production build: PASS, 90 modules transformed;
@@ -181,18 +181,15 @@ Known unrelated repository results remain recorded honestly:
 
 External proof remains:
 
-- owner visual acceptance after pulling the squash commit;
+- owner visual acceptance after pulling main;
 - real Safari/WebKit visual and playback acceptance;
 - measured Lighthouse/PageSpeed/CWV, GPU frame timing, and color parity on
   representative devices.
 
 ## ROLLBACK
 
-Revert the correction squash commit. No package, schema, content, or database
-migration is involved.
+Revert main commit `8c3c84a09833b6ce093cd6a154bc03cb998fc0a3`. No package, schema, content, or database migration is involved.
 
 ## NEXT VALID STEP
 
-Publish one squash commit to `main`, then let the owner compare the actual page
-against the accepted screenshot. Do not begin another Hero redesign or homepage
-surface from this correction.
+The owner pulls `main` and compares the actual Hero against the accepted bright screenshot. Do not begin another Hero redesign or homepage surface from this correction.
