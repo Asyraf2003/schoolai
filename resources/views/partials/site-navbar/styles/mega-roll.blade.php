@@ -36,11 +36,7 @@ html[dir="rtl"] .nav-shell .nav-roll__layer--clone {
   backface-visibility: hidden;
   transform: translateY(0) rotateX(0deg);
   transform-origin: 50% 100%;
-  transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 420ms ease;
-  transition-delay: calc(var(--roll-index, 0) * 22ms);
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
 .nav-shell .nav-roll__layer--clone .nav-roll__char {
@@ -61,31 +57,7 @@ html[dir="rtl"] .nav-shell .nav-roll__layer--clone {
   border: 0;
 }
 
-@media (min-width: 1181px) {
-  .nav-shell .nav-mega__link:focus-visible .nav-roll__layer--base .nav-roll__char {
-    opacity: 0;
-    transform: translateY(105%) rotateX(-90deg);
-  }
-
-  .nav-shell .nav-mega__link:focus-visible .nav-roll__layer--clone .nav-roll__char {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg);
-  }
-}
-
-@media (min-width: 1181px) and (hover: hover) and (pointer: fine) {
-  .nav-shell .nav-mega__link:hover .nav-roll__layer--base .nav-roll__char {
-    opacity: 0;
-    transform: translateY(105%) rotateX(-90deg);
-  }
-
-  .nav-shell .nav-mega__link:hover .nav-roll__layer--clone .nav-roll__char {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg);
-  }
-}
-
-@media (max-width: 1180px), (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .nav-shell .nav-roll__layer--clone {
     display: none;
   }
@@ -93,7 +65,6 @@ html[dir="rtl"] .nav-shell .nav-roll__layer--clone {
   .nav-shell .nav-roll__char {
     opacity: 1;
     transform: none;
-    transition: none;
     will-change: auto;
   }
 }
