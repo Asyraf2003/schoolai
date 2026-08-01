@@ -113,7 +113,7 @@ it('reveals the same native video without sampling or restarting it', function (
         ->and($renderer)
         ->toContain("alpha: true")
         ->toContain("source.kind === 'live-video'")
-        ->toContain("heroWebglIncomingSource = source.kind")
+        ->toContain("heroWebglIncomingSource = revealLive ? 'video'")
         ->and($shaders)
         ->toContain('uniform float uRevealLive')
         ->toContain('vec4(outgoing.rgb, 1.0 - mask)')
