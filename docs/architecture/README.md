@@ -1,7 +1,7 @@
 # SchoolAI UI/UX Architecture Index
 
 Status: ACTIVE
-Updated: 2026-07-31
+Updated: 2026-08-01
 
 ## Purpose
 
@@ -124,3 +124,54 @@ Lusion's design/motion/3D principles, with:
 
 Visual ambition never waives accessibility, semantic content, lifecycle,
 maintainability, or measured performance.
+
+## Binding correction — Hero transition scope violation, 2026-08-01
+
+Status: `OWNER_REJECTED_SCOPE_EXPANSION`
+Affected batches: `HOME-HERO-STABILIZATION-001` and
+`HOME-HERO-WEBGL-DEMO1-001`.
+
+The owner requested Demo 1 as a media-transition change. That request did not
+authorize a redesign of Hero controls, a new darkness treatment, a layout
+change, or a change to normal native-video playback semantics.
+
+The following implementation decisions exceeded or blurred that scope:
+
+- Hero stabilization changed the visible arrow controls from the existing
+  circular side controls into large yellow transport arrows. The owner did not
+  explicitly request that visual redesign. Direction plumbing required by the
+  transition does not authorize changing the controls' appearance or placement.
+- The WebGL adaptation allowed an available poster to become the incoming video
+  texture immediately. This can show a static poster during the wipe while the
+  real video plays underneath, then reveal the advanced video after the canvas
+  disappears. The resulting jump/restart impression violates the owner's
+  requirement that the video begin and continue normally through the transition.
+- Demo 1 contains no requested image-darkening treatment. Any darker appearance
+  introduced by canvas color handling, layer composition, or extra styling is
+  an unintended defect, not accepted art direction. Existing readability
+  overlays may only be changed when explicitly in scope or backed by a proven
+  defect and owner decision.
+
+Binding rules for every future Hero continuation:
+
+1. A transition-only task may change transition rendering and the minimum state
+   plumbing required to drive it. It must not change control styling, control
+   placement, copy, overlay strength, media crop, layout, or unrelated UI.
+2. Physical arrow/key/swipe input may pass a physical direction into the
+   transition without redesigning or spatially relocating the control.
+3. Automatic direction may follow locale without changing manual-control UI.
+4. When the incoming slide is video, start the native video immediately and use
+   the live drawable video frame as the dynamic transition texture. Poster may
+   be used only as a bounded loading/failure fallback, and the renderer must
+   upgrade to the live video without restarting or resetting playback.
+5. Finishing or cancelling the shader must never call `play()`, `load()`, or set
+   `currentTime` on the active incoming video merely to resynchronize visuals.
+6. WebGL output must preserve the media's perceived brightness and color. Any
+   visible gamma/darkness shift is a failing visual regression.
+7. Product or art-direction ambiguity must stop before edit and return to the
+   owner. It must not be converted into a convenient implementation assumption.
+
+Required corrective scope is limited to restoring owner-approved arrow visuals,
+removing unintended transition darkness/color shift, and keeping live video
+continuous through the wipe. Do not use this correction as permission to
+redesign any other Hero element.
