@@ -118,7 +118,7 @@ export function initializeHomeHero(root) {
     var webglActive = animate && transitions.play(previousIndex, nextIndex, request);
 
     if (animate) {
-      var cleanupDelay = webglActive ? transitions.duration + 80 : 980;
+      var cleanupDelay = webglActive ? transitions.settleDuration + 80 : 980;
       state.transitionTimer = window.setTimeout(clearTransition, cleanupDelay);
     }
 
