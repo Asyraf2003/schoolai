@@ -1,38 +1,11 @@
-import { HERO_FRAGMENT_SHADER, HERO_VERTEX_SHADER } from './shaders.js';
+import { createHeroProgram } from './program.js';
 import {
   coverScale,
   createHeroTexture,
   textureSourceForSlide,
-  updateHeroTexture
+  updateHeroTexture,
+  waitForTextureSource
 } from './textures.js';
-
-function compileShader(gl, type, source) {
-  var shader = gl.createShader(type);
-  if (!shader) return null;
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-
-  if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
-  gl.deleteShader(shader);
-  return null;
-}
-
-function createProgram(gl) {
-  var vertex = compileShader(gl, gl.VERTEX_SHADER, HERO_VERTEX_SHADER);
-  var fragment = compileShader(gl, gl.FRAGMENT_SHADER, HERO_FRAGMENT_SHADER);
-  if (!vertex || !fragment) return null;
-
-  var program = gl.createProgram();
-  gl.attachShader(program, vertex);
-  gl.attachShader(program, fragment);
-  gl.linkProgram(program);
-  gl.deleteShader(vertex);
-  gl.deleteShader(fragment);
-
-  if (gl.getProgramParameter(program, gl.LINK_STATUS)) return program;
-  gl.deleteProgram(program);
-  return null;
-}
 
 export function createHeroWebglRenderer(root) {
   var canvas = document.createElement('canvas');
@@ -42,6 +15,7 @@ export function createHeroWebglRenderer(root) {
   var uniforms = null;
   var frame = 0;
   var active = null;
+  var generation = 0;
   var failed = false;
 
   canvas.className = 'hero-cinema__webgl';
@@ -60,7 +34,7 @@ export function createHeroWebglRenderer(root) {
     });
     if (!gl) return false;
 
-    program = createProgram(gl);
+    program = createHeroProgram(gl);
     buffer = gl.createBuffer();
     if (!program || !buffer) return false;
 
@@ -119,6 +93,7 @@ export function createHeroWebglRenderer(root) {
   }
 
   function cancel() {
+    generation += 1;
     window.cancelAnimationFrame(frame);
     frame = 0;
     releaseTextures();
@@ -129,11 +104,8 @@ export function createHeroWebglRenderer(root) {
     root.dataset.heroWebglActive = 'false';
   }
 
-  function draw(timestamp) {
+  function render(progress) {
     if (!active || !gl) return;
-    var elapsed = Math.min(1, (timestamp - active.startedAt) / active.duration);
-    var progress = 1 - Math.pow(1 - elapsed, 2);
-
     if (active.fromSource.dynamic) updateHeroTexture(gl, active.fromTexture, active.fromSource, true);
     if (active.toSource.dynamic) updateHeroTexture(gl, active.toTexture, active.toSource, true);
 
@@ -144,9 +116,34 @@ export function createHeroWebglRenderer(root) {
     gl.uniform1f(uniforms.progress, progress);
     gl.uniform1f(uniforms.direction, active.direction);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
 
+  function draw(timestamp) {
+    if (!active) return;
+    var elapsed = Math.min(1, (timestamp - active.startedAt) / active.duration);
+    render(1 - Math.pow(1 - elapsed, 2));
     if (elapsed < 1) frame = window.requestAnimationFrame(draw);
     else cancel();
+  }
+
+  function beginIncoming(token, source) {
+    if (!active || active.token !== token || !source || !gl) {
+      if (active?.token === token) cancel();
+      return;
+    }
+
+    var texture = createHeroTexture(gl, source);
+    if (!texture) {
+      cancel();
+      return;
+    }
+
+    gl.deleteTexture(active.toTexture);
+    active.toTexture = texture;
+    active.toSource = source;
+    active.startedAt = performance.now();
+    resize();
+    frame = window.requestAnimationFrame(draw);
   }
 
   function play(fromSlide, toSlide, direction, duration) {
@@ -154,35 +151,41 @@ export function createHeroWebglRenderer(root) {
     if (!initialize()) return false;
 
     var fromSource = textureSourceForSlide(fromSlide);
-    var toSource = textureSourceForSlide(toSlide);
     var media = toSlide?.querySelector('.hero-cinema__media');
-    if (!fromSource || !toSource || !media) return false;
+    if (!fromSource || !media) return false;
 
     var fromTexture = createHeroTexture(gl, fromSource);
-    var toTexture = createHeroTexture(gl, toSource);
-    if (!fromTexture || !toTexture) {
+    var placeholderTexture = createHeroTexture(gl, fromSource);
+    if (!fromTexture || !placeholderTexture) {
       if (fromTexture) gl.deleteTexture(fromTexture);
-      if (toTexture) gl.deleteTexture(toTexture);
+      if (placeholderTexture) gl.deleteTexture(placeholderTexture);
       return false;
     }
 
+    var token = generation;
     active = {
+      token,
       media,
       fromSource,
-      toSource,
+      toSource: fromSource,
       fromTexture,
-      toTexture,
+      toTexture: placeholderTexture,
       direction,
       duration,
-      startedAt: performance.now()
+      startedAt: 0
     };
+
     media.appendChild(canvas);
     canvas.classList.add('is-active');
     root.classList.add('is-webgl-transitioning');
     root.dataset.heroWebglActive = 'true';
     root.dataset.heroWebglDirection = direction > 0 ? 'right-to-left' : 'left-to-right';
     resize();
-    draw(active.startedAt);
+    render(0);
+
+    waitForTextureSource(toSlide).then(function (source) {
+      beginIncoming(token, source);
+    });
     return true;
   }
 
