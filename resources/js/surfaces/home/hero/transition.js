@@ -15,7 +15,8 @@ export function createHeroTransitionController(options) {
   var disposed = false;
 
   function isSupported() {
-    return !disposed && !reducedMotion.matches && 'WebGLRenderingContext' in window;
+    return !disposed && !document.hidden && !reducedMotion.matches &&
+      'WebGLRenderingContext' in window;
   }
 
   function loadRenderer() {
