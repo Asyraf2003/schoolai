@@ -135,7 +135,7 @@ export function createHeroWebglRenderer(root) {
     frame = window.requestAnimationFrame(draw);
   }
 
-  function play(fromSlide, toSlide, direction, duration) {
+  function play(fromSlide, toSlide, direction, duration, textureWait) {
     cancel();
     if (!initialize()) return false;
     var fromSource = textureSourceForSlide(fromSlide);
@@ -167,7 +167,9 @@ export function createHeroWebglRenderer(root) {
     root.dataset.heroWebglDirection = direction > 0 ? 'right-to-left' : 'left-to-right';
     resize();
     render(0);
-    waitForTextureSource(toSlide).then(function (source) { beginIncoming(token, source); });
+    waitForTextureSource(toSlide, textureWait).then(function (source) {
+      beginIncoming(token, source);
+    });
     return true;
   }
 
