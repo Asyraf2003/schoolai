@@ -4,7 +4,7 @@ Status: `COMPLETE_WITH_EXTERNAL_SAFARI_DEFERRED`
 Owner: Homepage Hero
 Target branch: `main`
 Baseline commit: `93ed595707c23b4b9c6d87414af7615452539936`
-Reconciled main commit: `0cdfebf87c8d632dbc636d8a86ea5a7436637d57`
+Reconciled main commit: `dda36abbc1f693294cfbc16b266f7e01d72975ec`
 Date: 2026-08-01
 Progress: `98%`
 
@@ -18,9 +18,9 @@ Progress: `98%`
 - The 1181px dead zone came from a stale `max-width: 1200px` navbar rule while
   the hamburger contract ended at 1180px.
 - About and Testimonial are protected and not Hero dependencies.
-- The final candidate preserves the latest concurrent navbar 3D-roll
-  orchestration from `main`; Hero changes only own asset loading and the proven
-  1180/1181 boundary required by this surface.
+- The final candidate preserves the concurrent unified navbar roll across
+  desktop and hamburger navigation while Hero owns only its asset loading and
+  the proven 1180/1181 boundary correction.
 
 ## GAP
 
@@ -193,6 +193,6 @@ About, Testimonial, admin, editor, global typography redesign, schema, WebGL,
 
 ## STATUS AND NEXT VALID STEP
 
-Source work is complete. Real Safari remains the only browser acceptance deferred.
-Run the owner Safari checklist, record the evidence, then decide the next homepage
-surface from fresh proof. Do not automatically start another section.
+Source work is complete. Real Safari remains the only Hero browser acceptance
+deferred. Run the owner Safari checklist, record the evidence, then finish the
+already-active navbar-roll proof before selecting another homepage surface.
