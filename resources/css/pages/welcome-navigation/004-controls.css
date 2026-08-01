@@ -1,0 +1,82 @@
+.nav-shell .nav-language__option:hover,
+.nav-shell .nav-language__option:focus-visible {
+    border-color: #f7c66f;
+    box-shadow:
+        0 0 0 4px rgb(247 198 111 / 0.18),
+        0 12px 30px rgb(3 18 16 / 0.28);
+    transform: translateY(-3px);
+}
+
+.nav-shell .nav-language__option.is-active {
+    border-color: #f7b24b;
+    box-shadow:
+        0 0 0 4px rgb(247 178 75 / 0.24),
+        0 12px 30px rgb(3 18 16 / 0.25);
+}
+
+.nav-shell .nav-language__option .nav-language__flag {
+    width: 100%;
+    height: 100%;
+}
+
+.nav-shell .hamburger {
+    position: relative;
+    z-index: calc(var(--hero-layer-header) + 2);
+    width: 46px;
+    height: 46px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid rgb(255 255 255 / 0.5);
+    border-radius: 999px;
+    color: inherit;
+    background: rgb(255 255 255 / 0.08);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.nav-shell .navbar.is-scrolled .hamburger,
+.nav-shell .navbar.has-open-menu .hamburger {
+    border-color: rgb(23 79 66 / 0.14);
+    background: #fff8ec;
+}
+
+.nav-shell .hamburger span {
+    width: 20px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 220ms ease, opacity 180ms ease;
+}
+
+.nav-shell .hamburger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-shell .hamburger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-shell .hamburger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-shell .nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--hero-layer-header) - 1);
+    background: rgb(2 16 14 / 0.62);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 240ms ease, visibility 0s linear 240ms;
+}
+
+.nav-shell .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
