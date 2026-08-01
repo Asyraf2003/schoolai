@@ -33,6 +33,21 @@ async function waitForWebglReady(page) {
   );
 }
 
+async function waitForWebglStart(page) {
+  await page.waitForFunction(() =>
+    document.querySelector('[data-hero-slider]')?.dataset.heroWebglActive === 'true'
+  );
+}
+
+async function waitForWebglSettlement(page) {
+  await page.waitForFunction(() => {
+    const hero = document.querySelector('[data-hero-slider]');
+    return hero?.dataset.heroWebglActive === 'false' &&
+      !document.querySelector('.hero-cinema__webgl') &&
+      !document.querySelector('.is-entering, .is-leaving');
+  }, null, { timeout: 4000 });
+}
+
 function viewportHeight(width) {
   if (width <= 390) return 844;
   return 900;
@@ -117,21 +132,21 @@ async function provePhysicalDirections(page) {
   const initial = await activeIndex();
 
   await page.locator('[data-hero-next]').click();
-  await page.waitForFunction(() => document.querySelector('[data-hero-slider]')?.dataset.heroWebglActive === 'true');
+  await waitForWebglStart(page);
   assert.equal(await hero.getAttribute('data-hero-webgl-direction'), 'right-to-left', 'right arrow direction');
   assert.equal(await page.locator('.hero-cinema__webgl.is-active').count(), 1, 'right arrow WebGL canvas');
   assert.ok(await page.locator('.is-entering').count(), 'transition entering state missing');
   assert.ok(await page.locator('.is-leaving').count(), 'transition leaving state missing');
-  await page.waitForTimeout(1450);
-  assert.notEqual(await activeIndex(), initial, 'right arrow did not change slide');
-  assert.equal(await page.locator('.is-entering, .is-leaving').count(), 0, 'right transition did not settle');
-  assert.equal(await page.locator('.hero-cinema__webgl').count(), 0, 'right transition canvas remained');
+  assert.notEqual(await activeIndex(), initial, 'right arrow did not change slide immediately');
+  await waitForWebglSettlement(page);
 
   await page.locator('[data-hero-previous]').click();
-  await page.waitForFunction(() => document.querySelector('[data-hero-slider]')?.dataset.heroWebglActive === 'true');
+  await waitForWebglStart(page);
   assert.equal(await hero.getAttribute('data-hero-webgl-direction'), 'left-to-right', 'left arrow direction');
-  await page.waitForTimeout(1450);
-  assert.equal(await activeIndex(), initial, 'left arrow did not restore slide');
+  await page.waitForFunction((index) =>
+    document.querySelector('[data-hero-slide].is-active')?.dataset.slideIndex === index,
+  initial);
+  await waitForWebglSettlement(page);
 }
 
 async function proveInteractions(browser) {
@@ -143,7 +158,8 @@ async function proveInteractions(browser) {
 
   for (let index = 0; index < 3; index += 1) {
     await page.locator('[data-hero-next]').click();
-    await page.waitForTimeout(1450);
+    await waitForWebglStart(page);
+    await waitForWebglSettlement(page);
   }
   assert.equal(await page.locator('[data-hero-slide].is-active').count(), 1, 'repeated changes lost single-active invariant');
   assert.equal(await page.locator('.hero-cinema__webgl').count(), 0, 'repeated changes left a canvas');
@@ -157,8 +173,13 @@ async function proveInteractions(browser) {
   await page.evaluate(() => document.querySelector('[data-hero-video]')?.dispatchEvent(new Event('error')));
   assert.ok(await page.locator('[data-hero-slide].has-media-error').count(), 'video error fallback state missing');
 
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => false });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
   await page.locator('[data-hero-dot][data-slide-index="1"]').click();
-  await page.waitForTimeout(1450);
+  await waitForWebglStart(page);
+  await waitForWebglSettlement(page);
   const activeImage = page.locator('[data-hero-slide].is-active [data-hero-image]');
   await activeImage.evaluate((image) => image.dispatchEvent(new Event('error')));
   await activeImage.evaluate((image) => image.dispatchEvent(new Event('error')));
@@ -214,8 +235,7 @@ async function proveAutomaticDirection(browser, locale, expectedDirection) {
     expectedDirection,
     `${locale}: automatic transition direction`
   );
-  await page.waitForTimeout(1450);
-  assert.equal(await page.locator('.hero-cinema__webgl').count(), 0, `${locale}: automatic canvas remained`);
+  await waitForWebglSettlement(page);
   report.interactions[`automatic-${locale}`] = 'PASS';
   await context.close();
 }
