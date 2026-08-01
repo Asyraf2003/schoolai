@@ -4,6 +4,8 @@ import {
 } from './direction.js';
 
 const HERO_WEBGL_DURATION = 1350;
+const HERO_TEXTURE_WAIT = 1200;
+const HERO_WEBGL_SETTLE_DURATION = HERO_TEXTURE_WAIT + HERO_WEBGL_DURATION;
 
 export function createHeroTransitionController(options) {
   var root = options.root;
@@ -69,7 +71,8 @@ export function createHeroTransitionController(options) {
       slides[fromIndex],
       slides[toIndex],
       directionFor(request, fromIndex, toIndex),
-      HERO_WEBGL_DURATION
+      HERO_WEBGL_DURATION,
+      HERO_TEXTURE_WAIT
     );
   }
 
@@ -95,6 +98,7 @@ export function createHeroTransitionController(options) {
     duration: HERO_WEBGL_DURATION,
     play,
     resize,
+    settleDuration: HERO_WEBGL_SETTLE_DURATION,
     suspend,
     warm
   };
