@@ -1,144 +1,140 @@
 # Homepage Hero Akella WebGL Removal
 
 BLUEPRINT ID: `HOME-HERO-REMOVE-AKELLA-WEBGL-001`
-STATUS: `OWNER_ACCEPTED`
+STATUS: `PROVEN_PENDING_SQUASH`
 OWNER: Asyraf Mubarak
 DATE: 2026-08-01
 SOURCE MAIN SHA: `3761b7f7bbd32e09ff18df60b638517eba73c931`
+PROVEN IMPLEMENTATION SHA: `62df105ecfa169590de7c8f9d038b981bfe65fea`
 ACTIVE ROUTE/SURFACE: homepage Hero media transition
-TARGET EXECUTION CHANNEL: Web AI with GitHub branch and PR
+TARGET BRANCH: `agent/remove-hero-akella-webgl-001`
 RELATED HISTORY: `HOME-HERO-WEBGL-DEMO1-001`, `HOME-HERO-SCOPE-CORRECTION-001`
 
 ## FACT
 
-- Main contains a project-owned raw WebGL1 transition adapted from Demo 1 of
-  `akella/webGLImageTransitions`.
-- The production graph includes `webgl.css`, `transition.js`, `direction.js`,
+- Main previously contained a project-owned raw WebGL1 transition adapted from
+  Demo 1 of `akella/webGLImageTransitions`.
+- The production graph included `webgl.css`, `transition.js`, `direction.js`,
   renderer, shader, program, texture modules, deferred bundle reporting, and
   WebGL-specific source/runtime proof.
-- Before that integration, Hero used the existing CSS transition in `motion.css`
-  driven by `is-entering` and `is-leaving`, with controller cleanup after 980ms.
-- The current owner-approved bright Hero, compact copy, and floating yellow
-  chevrons were restored after the WebGL batch and must remain.
-- The owner explicitly requires all architecture documents describing the
-  integration, scope violation, and correction to remain available.
-
-## GAP
-
-- Real Safari and owner visual proof after the removal remain external.
-- Existing unrelated structure, About-test, dependency-audit, navbar-proof, and
-  performance gaps remain outside this batch.
+- Before that integration, Hero used the CSS transition in `motion.css`, driven
+  by `is-entering` and `is-leaving`, with controller cleanup after 980ms.
+- The owner-approved bright Hero, compact copy, and floating yellow chevrons were
+  restored after the WebGL batch and had to remain.
+- The owner explicitly required all architecture documents describing the
+  integration, scope violation, correction, and retirement to remain.
 
 ## GOAL
 
 Remove the Akella/Demo 1 WebGL effect and every production/testing dependency
 that exists solely to support it, restore the pre-Akella CSS transition path,
-and preserve the current accepted Hero presentation and all historical docs.
+and preserve the accepted Hero presentation and all historical documentation.
 
-## IMPACT
-
-- No Hero canvas, WebGL context, shader, texture upload, dynamic renderer import,
-  WebGL data attributes, or deferred WebGL chunk remains in production.
-- Hero continues to change slides using the existing CSS scale/blur/fade motion.
-- Current Blade, media source, brightness, copy geometry, chevrons, locale,
-  responsive behavior, accessibility, autoplay, and lifecycle remain.
-- Historical docs remain and are reclassified as retained history rather than an
-  active implementation contract.
-
-## SCOPE IN
-
-- Restore pre-WebGL Hero controller and event wiring.
-- Remove production WebGL CSS/JS modules and imports.
-- Restore bundle, structure, and runtime proof to the CSS transition contract.
-- Replace WebGL-focused tests with absence and CSS-transition assertions.
-- Update `UI_UX_CURRENT_STATE.md` with the owner retirement decision.
-
-## SCOPE OUT
-
-- Hero presentation redesign, copy, media URLs, crop, duration, autoplay policy,
-  navbar, About, Testimonial, other homepage sections, DB/schema, translations,
-  packages, and old architecture documents.
-
-## EDITABLE FILES
-
-- `resources/css/pages/welcome-hero.css`
-- `resources/js/surfaces/home/hero/controller.js`
-- `resources/js/surfaces/home/hero/events.js`
-- WebGL-only Hero CSS/JS files for deletion
-- `scripts/hero-bundle-report.mjs`
-- `scripts/hero-runtime-proof.mjs`
-- `scripts/verify-source-structure.mjs`
-- `tests/Feature/HomeHeroStabilizationTest.php`
-- this blueprint and `UI_UX_CURRENT_STATE.md`
-
-## READ-ONLY / PRESERVED
-
-- current Hero Blade and accepted presentation CSS modules;
-- `docs/architecture/README.md` binding scope-violation record;
-- `2026-08-01-home-hero-webgl-demo1.md`;
-- `2026-08-01-home-hero-scope-correction.md`;
-- `source-module-equivalence-overrides.webgl.json` as retained historical data;
-- navbar, About, Testimonial, content, DB, package and lock files.
-
-## DECISION
+## IMPLEMENTED DECISION
 
 1. `motion.css` is again the sole production Hero transition renderer.
-2. Controller changes slide state immediately, applies `is-entering` and
-   `is-leaving`, and removes transient classes after 980ms.
-3. Event direction returns to the pre-Akella logical locale behavior without a
+2. Controller changes slide state, applies `is-entering` and `is-leaving`, and
+   removes transient classes after 980ms.
+3. Event direction returned to the pre-Akella logical locale behavior without a
    separate Demo 1 direction module.
-4. Current bright presentation and floating chevrons stay unchanged.
-5. Historical WebGL documents stay in `docs/architecture`; production structure
-   validation no longer loads the WebGL equivalence override.
-6. No replacement graphics engine or new transition library is introduced.
+4. Current bright presentation and floating chevrons remain unchanged.
+5. Historical WebGL blueprints and violation/correction records remain in
+   `docs/architecture`.
+6. Production structure validation no longer consumes the historical WebGL
+   equivalence override.
+7. Active Hero CSS equivalence is recorded separately in
+   `source-module-equivalence-overrides.hero-css.json`.
+8. No replacement graphics engine, transition library, package, schema, content,
+   or media URL was introduced.
+
+## REMOVED PRODUCTION GRAPH
+
+- `resources/css/surfaces/home/hero/webgl.css`
+- `resources/js/surfaces/home/hero/direction.js`
+- `resources/js/surfaces/home/hero/transition.js`
+- `resources/js/surfaces/home/hero/webgl/program.js`
+- `resources/js/surfaces/home/hero/webgl/renderer.js`
+- `resources/js/surfaces/home/hero/webgl/shaders.js`
+- `resources/js/surfaces/home/hero/webgl/textures.js`
+- the Hero WebGL stylesheet import;
+- controller/event imports and lifecycle hooks used only by Demo 1;
+- deferred renderer bundle reporting;
+- WebGL-positive test/runtime expectations.
+
+## PRESERVED
+
+- current Hero Blade and accepted presentation CSS;
+- native image/video media and existing failure/poster behavior;
+- autoplay, keyboard, pointer, swipe, locale, responsive, BFCache, visibility,
+  offscreen, pagehide, no-JS, and reduced-motion behavior;
+- exact 1180/1181 navigation boundary;
+- ID/EN LTR and AR RTL;
+- `docs/architecture/README.md` scope-violation record;
+- `2026-08-01-home-hero-webgl-demo1.md`;
+- `2026-08-01-home-hero-scope-correction.md`;
+- `source-module-equivalence-overrides.webgl.json` as historical evidence;
+- navbar, About, Testimonial, other sections, content, DB, package, and lock files.
 
 ## SEMANTIC / FALLBACK CONTRACT
 
 - One semantic Blade DOM remains.
-- First slide remains meaningful without JavaScript.
-- Without WebGL there is no graphics downgrade branch; CSS motion is the normal
-  enhanced path.
-- Reduced motion changes slide state without transition classes.
+- The first slide remains meaningful without JavaScript.
+- CSS motion is the normal enhanced path, not a WebGL fallback.
+- Reduced motion changes slide state without transient motion classes.
 - Media failure remains owned by existing poster/local fallback behavior.
-
-## RESPONSIVE / LOCALE CONTRACT
-
-- Preserve XS, SM, MD, LG, XL, and 2XL from 360px upward.
-- Preserve exact navigation boundary at 1180/1181.
-- Preserve ID/EN LTR and AR RTL.
-- Keyboard and swipe remain logical to locale as before the Akella integration.
-- No canvas or WebGL state may appear at any tier or locale.
+- No canvas, WebGL context, shader, texture upload, or WebGL state may appear.
 
 ## PROOF
 
-Required:
+Proven on implementation SHA `62df105ecfa169590de7c8f9d038b981bfe65fea`:
 
-- diff hygiene;
-- structure result recorded honestly;
-- Vite production build;
-- focused Hero/navigation tests;
-- full Laravel result recorded honestly;
-- Chromium 33-case ID/EN/AR width matrix;
-- exactly two visible chevrons and no rejected rail/dots/playback;
-- CSS `is-entering`/`is-leaving` transition appears and settles;
-- no Hero canvas, WebGL data state, dynamic renderer import, shader, texture,
-  program, or WebGL stylesheet exists in production;
-- reduced-motion and no-JS fallback;
-- current presentation CSS and protected sections unchanged.
+- diff hygiene: PASS;
+- Vite 8.1.3 production build: PASS, 84 modules transformed;
+- focused Hero/navigation: 9 passed, 214 assertions;
+- Chromium responsive/locale matrix: 33 cases PASS;
+- locales: ID, EN, AR;
+- widths: 360, 390, 640, 768, 1024, 1180, 1181, 1279, 1280,
+  1536, and 1920;
+- exactly two visible chevrons: PASS;
+- rejected rail, dots, counter, and playback control absent: PASS;
+- CSS `is-entering` and `is-leaving` transition appears and settles: PASS;
+- one-active-slide invariant after repeated changes: PASS;
+- Hero canvas count is zero in all matrix cases and interactions: PASS;
+- Hero WebGL data state absent in all matrix cases: PASS;
+- standard interaction, reduced motion, and no-JavaScript: PASS;
+- image/video failure, visibility pause, and BFCache return: PASS;
+- active Hero CSS equivalence checksum: PASS;
+- no WebGL stylesheet, adapter, program, renderer, shader, or texture production
+  file remains: PASS.
 
-External:
+Bundle after removal:
 
-- owner screenshot comparison after pull;
-- real Safari/WebKit acceptance;
-- measured Lighthouse/PageSpeed/CWV.
+- Hero CSS: 10,657 raw / 2,648 gzip bytes;
+- Hero entry JS: 8,027 raw / 2,667 gzip bytes;
+- deferred WebGL chunk: absent;
+- navigation CSS remains separately owned at 13,915 raw / 3,275 gzip bytes.
+
+Known unrelated results recorded honestly:
+
+- structure gate still reports only three pre-existing oversized Vision/Mission
+  files: 271, 326, and 610 lines;
+- the full Laravel suite still reports the stale protected About test;
+- npm audit still reports one pre-existing high-severity issue;
+- package and lockfiles were not changed by this batch.
+
+## EXTERNAL GAP
+
+- Owner visual comparison after pulling final `main`.
+- Real Safari/WebKit acceptance.
+- Measured Lighthouse/PageSpeed/CWV.
 
 ## ROLLBACK
 
 Revert the removal squash commit to restore the retired implementation. The
 historical blueprints remain in either direction.
 
-## ACTIVE STEP
+## NEXT VALID STEP
 
-Implement the bounded removal on `agent/remove-hero-akella-webgl-001`, run the
-focused PR proof, update this blueprint/current state with exact evidence, then
-squash to `main` only after proof passes.
+Run proof once more on the documentation-closeout head, mark PR #29 ready, and
+squash to `main` only if the exact-head proof passes. Do not begin another Hero
+design or homepage surface.
