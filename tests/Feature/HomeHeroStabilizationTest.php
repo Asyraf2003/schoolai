@@ -14,8 +14,37 @@ it('keeps the homepage hero available before javascript enhancement', function (
         ->assertSee('class="hero-cinema__slide is-active"', false)
         ->assertSee('aria-hidden="false"', false)
         ->assertSee('fetchpriority="high"', false)
-        ->assertSee('data-hero-controls', false)
+        ->assertSee('hero-cinema__arrow--previous', false)
+        ->assertSee('hero-cinema__arrow--next', false)
         ->assertDontSee('data-enhanced="true"', false);
+});
+
+it('keeps exactly two lower floating chevrons and omits the retired rail', function (): void {
+    $response = $this
+        ->withSession(['locale' => 'id'])
+        ->get(route('home'));
+
+    $controls = file_get_contents(resource_path('css/surfaces/home/hero/controls.css'));
+
+    $response
+        ->assertOk()
+        ->assertSee('class="hero-cinema__arrow hero-cinema__arrow--previous"', false)
+        ->assertSee('class="hero-cinema__arrow hero-cinema__arrow--next"', false)
+        ->assertDontSee('data-hero-controls', false)
+        ->assertDontSee('data-hero-progress', false)
+        ->assertDontSee('data-hero-dot', false)
+        ->assertDontSee('data-hero-playback', false);
+
+    expect(substr_count($response->getContent(), 'class="hero-cinema__arrow hero-cinema__arrow--'))
+        ->toBe(2)
+        ->and($controls)
+        ->toContain('.hero-cinema__arrow--previous')
+        ->toContain('.hero-cinema__arrow--next')
+        ->toContain('inset-block-end: 150px')
+        ->toContain('inset-block-end: 50px')
+        ->not->toContain('.hero-cinema__controls')
+        ->not->toContain('.hero-cinema__playback')
+        ->not->toContain('.hero-cinema__dot');
 });
 
 it('uses the exact 1180 and 1181 navigation boundary', function (): void {
