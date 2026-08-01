@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright-core';
@@ -16,39 +17,27 @@ const report = { browser: 'Chromium', matrix: [], interactions: {} };
 
 fs.mkdirSync(outputDir, { recursive: true });
 
+function buildProofVideo() {
+  const output = path.join(outputDir, 'runtime-proof-video.mp4');
+  const result = spawnSync('ffmpeg', [
+    '-hide_banner', '-loglevel', 'error', '-y',
+    '-f', 'lavfi', '-i', 'testsrc2=size=640x360:rate=30',
+    '-t', '4', '-an', '-c:v', 'libx264', '-preset', 'ultrafast',
+    '-pix_fmt', 'yuv420p', '-movflags', '+faststart', output,
+  ], { encoding: 'utf8' });
+  assert.equal(result.status, 0, `Could not create proof video: ${result.stderr || result.error || 'unknown error'}`);
+  assert.ok(fs.statSync(output).size > 0, 'Generated proof video is empty');
+  return output;
+}
+
+const proofVideoPath = buildProofVideo();
+
 async function installProofVideoRoute(context) {
-  const videoPath = path.resolve('public/media/hero/shanghai-mega-city.mp4');
-  assert.equal(fs.existsSync(videoPath), true, 'Local Hero proof video is missing');
-  const bytes = fs.readFileSync(videoPath);
-
   await context.route('**/media/cc0-videos/flower.mp4', async (route) => {
-    const range = route.request().headers().range;
-    const match = range?.match(/^bytes=(\d+)-(\d*)$/);
-    if (!match) {
-      await route.fulfill({
-        status: 200,
-        headers: {
-          'Accept-Ranges': 'bytes',
-          'Content-Length': String(bytes.length),
-          'Content-Type': 'video/mp4',
-        },
-        body: bytes,
-      });
-      return;
-    }
-
-    const start = Number(match[1]);
-    const end = match[2] ? Math.min(Number(match[2]), bytes.length - 1) : bytes.length - 1;
-    const chunk = bytes.subarray(start, end + 1);
     await route.fulfill({
-      status: 206,
-      headers: {
-        'Accept-Ranges': 'bytes',
-        'Content-Length': String(chunk.length),
-        'Content-Range': `bytes ${start}-${end}/${bytes.length}`,
-        'Content-Type': 'video/mp4',
-      },
-      body: chunk,
+      status: 200,
+      contentType: 'video/mp4',
+      path: proofVideoPath,
     });
   });
 }
