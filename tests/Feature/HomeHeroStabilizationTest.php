@@ -65,6 +65,19 @@ it('records physical and automatic Hero transition direction ownership', functio
         ->toContain("{ origin: 'automatic' }");
 });
 
+it('starts incoming Hero video before the WebGL transition begins', function (): void {
+    $controller = file_get_contents(resource_path('js/surfaces/home/hero/controller.js'));
+    $syncPosition = strpos($controller, 'media.sync(nextIndex, canAutoAdvance());');
+    $transitionPosition = strpos($controller, 'transitions.play(previousIndex, nextIndex, request);');
+
+    expect($syncPosition)
+        ->not->toBeFalse()
+        ->and($transitionPosition)
+        ->not->toBeFalse()
+        ->and($syncPosition)
+        ->toBeLessThan($transitionPosition);
+});
+
 it('keeps every Hero source file within the 200 line contract', function (): void {
     $files = array_merge(
         File::allFiles(resource_path('css/surfaces/home/hero')),
