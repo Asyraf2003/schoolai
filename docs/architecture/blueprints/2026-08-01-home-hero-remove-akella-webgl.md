@@ -1,13 +1,15 @@
 # Homepage Hero Akella WebGL Removal
 
 BLUEPRINT ID: `HOME-HERO-REMOVE-AKELLA-WEBGL-001`
-STATUS: `PROVEN_PENDING_SQUASH`
+STATUS: `COMPLETE_ON_MAIN_PENDING_OWNER_VISUAL`
 OWNER: Asyraf Mubarak
 DATE: 2026-08-01
 SOURCE MAIN SHA: `3761b7f7bbd32e09ff18df60b638517eba73c931`
 PROVEN IMPLEMENTATION SHA: `62df105ecfa169590de7c8f9d038b981bfe65fea`
+PROVEN DOCUMENTATION HEAD: `f62e9d25151993c6a9dd4027b976e301fb56b1ab`
+FINAL MAIN SHA: `e579880580a5dcc54aff3fc4bd984cbf6d69ecc5`
+PULL REQUEST: `#29`
 ACTIVE ROUTE/SURFACE: homepage Hero media transition
-TARGET BRANCH: `agent/remove-hero-akella-webgl-001`
 RELATED HISTORY: `HOME-HERO-WEBGL-DEMO1-001`, `HOME-HERO-SCOPE-CORRECTION-001`
 
 ## FACT
@@ -86,7 +88,9 @@ and preserve the accepted Hero presentation and all historical documentation.
 
 ## PROOF
 
-Proven on implementation SHA `62df105ecfa169590de7c8f9d038b981bfe65fea`:
+Proven on implementation SHA `62df105ecfa169590de7c8f9d038b981bfe65fea`
+and repeated successfully on exact documentation head
+`f62e9d25151993c6a9dd4027b976e301fb56b1ab` before squash:
 
 - diff hygiene: PASS;
 - Vite 8.1.3 production build: PASS, 84 modules transformed;
@@ -130,11 +134,13 @@ Known unrelated results recorded honestly:
 
 ## ROLLBACK
 
-Revert the removal squash commit to restore the retired implementation. The
-historical blueprints remain in either direction.
+Revert main commit `e579880580a5dcc54aff3fc4bd984cbf6d69ecc5` to
+restore the retired implementation. The historical blueprints remain in either
+direction.
 
 ## NEXT VALID STEP
 
-Run proof once more on the documentation-closeout head, mark PR #29 ready, and
-squash to `main` only if the exact-head proof passes. Do not begin another Hero
-design or homepage surface.
+The owner pulls `main` and visually verifies the accepted bright Hero, two
+floating chevrons, and restored CSS transition on representative desktop,
+tablet, and mobile sizes. Do not begin another Hero redesign or homepage surface
+from this removal batch.
