@@ -99,7 +99,7 @@
                 <div class="nav-mega__links">
                   @foreach ($item['mega']['links'] as $megaLink)
                     <a href="{{ $megaLink['href'] }}" class="nav-mega__link">
-                      <strong data-text-role="action">{{ $megaLink['label'] }}</strong>
+                      <strong data-nav-roll data-text-role="action">{{ $megaLink['label'] }}</strong>
                       @if (! empty($megaLink['description']))
                         <small data-text-role="description">{{ $megaLink['description'] }}</small>
                       @endif
