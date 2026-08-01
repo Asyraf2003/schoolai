@@ -157,12 +157,24 @@ for (const [entry, data] of Object.entries(manifest.css ?? {})) {
     const entrySource = fs.readFileSync(entryPath, 'utf8');
     const imports = Array.from(entrySource.matchAll(/@import\s+['"]([^'"]+)['"]/g), (match) => match[1]);
     const expected = data.orderedModules.map((module) => module.path);
-    if (JSON.stringify(imports) !== JSON.stringify(expected)) failures.push(`${entry} changed CSS import order`);
+    const actualCombined = imports.map((request) =>
+        fs.readFileSync(path.resolve(path.dirname(entryPath), request), 'utf8')
+    ).join('');
+
+    if (JSON.stringify(imports) !== JSON.stringify(expected)) {
+        failures.push(
+            `${entry} changed CSS import order; actual checksum: ${sha256(actualCombined)}`
+        );
+    }
 
     const combined = expected.map((request) =>
         fs.readFileSync(path.resolve(path.dirname(entryPath), request), 'utf8')
     ).join('');
-    if (sha256(combined) !== data.sourceSha256) failures.push(`${entry} no longer matches its source checksum`);
+    if (sha256(combined) !== data.sourceSha256) {
+        failures.push(
+            `${entry} no longer matches its source checksum; actual: ${sha256(combined)}`
+        );
+    }
 }
 
 if (failures.length) {
