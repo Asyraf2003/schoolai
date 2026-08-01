@@ -40,6 +40,7 @@
                 data-hero-poster
                 data-fallback-src="{{ $ultimateFallbackUrl }}"
                 src="{{ $fallbackUrl }}"
+                crossorigin="anonymous"
                 alt="{{ $slide['media_alt'] ?? '' }}"
                 width="1920"
                 height="1080"
@@ -52,6 +53,7 @@
               muted
               playsinline
               webkit-playsinline
+              crossorigin="anonymous"
               preload="none"
               @if ($fallbackUrl) poster="{{ $fallbackUrl }}" @endif
               aria-hidden="true"
@@ -67,6 +69,7 @@
               class="hero-cinema__image"
               data-hero-image
               data-fallback-src="{{ $ultimateFallbackUrl }}"
+              crossorigin="anonymous"
               @if ($loop->first)
                 src="{{ $slide['media_url'] }}"
                 fetchpriority="high"
