@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "description": "Active Hero CSS equivalence after owner retirement of the Akella WebGL transition.",
+  "css": {
+    "resources/css/pages/welcome-hero.css": {
+      "sourceSha256": "c83cd7865c5b0eeaf5656950df68a25b9ed1ec82bbfaf0f2fcbaeec3d43347dd",
+      "orderedModules": [
+        {
+          "path": "../surfaces/home/hero/layout.css",
+          "lines": 160,
+          "sha256": "5da606f76d67f3698dd1f3ed33401f2923af6d432140ea3434cd7d96982c06e3"
+        },
+        {
+          "path": "../surfaces/home/hero/media.css",
+          "lines": 84,
+          "sha256": "a2d5aadd9bcc754fef0f87e47b8913875b3bd2b191dd1fc2fca7b229bea632b6"
+        },
+        {
+          "path": "../surfaces/home/hero/motion.css",
+          "lines": 77,
+          "sha256": "1863a5c0d47fd1fcb26b60db026f96b94e7a292efee984c0ce6106289589942b"
+        },
+        {
+          "path": "../surfaces/home/hero/controls.css",
+          "lines": 158,
+          "sha256": "521ed0049c3261c1a252fcdb68920c69eabfb7fb9ac3465b4477888613da37fc"
+        },
+        {
+          "path": "../surfaces/home/hero/locale.css",
+          "lines": 49,
+          "sha256": "cfdafb83fe36138db848183f33b31e8611e0a24ca37ff286fb944a249a545681"
+        },
+        {
+          "path": "../surfaces/home/hero/responsive.css",
+          "lines": 143,
+          "sha256": "3715cae7c7ccdb92afdb7c19b1fa2f0b60c1a39dc359641a0a6486ab403dc2b4"
+        },
+        {
+          "path": "../surfaces/home/hero/reduced-motion.css",
+          "lines": 27,
+          "sha256": "dc503052abaf70cc58e611321fb2e1e996cc6b38f758e96b17dde7bf73c5c53e"
+        }
+      ],
+      "originalSourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a"
+    }
+  }
+}

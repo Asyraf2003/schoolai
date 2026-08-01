@@ -144,14 +144,15 @@ for (const file of files.filter((target) => /resources\/(?:js|css)\/.+\.(?:js|cs
 const manifestPath = path.join(root, 'docs/architecture/source-module-equivalence.json');
 const overridePaths = [
     'docs/architecture/source-module-equivalence-overrides.json',
-    'docs/architecture/source-module-equivalence-overrides.webgl.json',
-].map((file) => path.join(root, file));
+    'docs/architecture/source-module-equivalence-overrides.hero-css.json',
+];
 const baseManifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const overrideCss = {};
 
 for (const overridePath of overridePaths) {
-    if (!fs.existsSync(overridePath)) continue;
-    const override = JSON.parse(fs.readFileSync(overridePath, 'utf8'));
+    const absolutePath = path.join(root, overridePath);
+    if (!fs.existsSync(absolutePath)) continue;
+    const override = JSON.parse(fs.readFileSync(absolutePath, 'utf8'));
     Object.assign(overrideCss, override.css ?? {});
 }
 
@@ -165,24 +166,12 @@ for (const [entry, data] of Object.entries(manifest.css ?? {})) {
     const entrySource = fs.readFileSync(entryPath, 'utf8');
     const imports = Array.from(entrySource.matchAll(/@import\s+['"]([^'"]+)['"]/g), (match) => match[1]);
     const expected = data.orderedModules.map((module) => module.path);
-    const actualCombined = imports.map((request) =>
-        fs.readFileSync(path.resolve(path.dirname(entryPath), request), 'utf8')
-    ).join('');
-
-    if (JSON.stringify(imports) !== JSON.stringify(expected)) {
-        failures.push(
-            `${entry} changed CSS import order; actual checksum: ${sha256(actualCombined)}`
-        );
-    }
+    if (JSON.stringify(imports) !== JSON.stringify(expected)) failures.push(`${entry} changed CSS import order`);
 
     const combined = expected.map((request) =>
         fs.readFileSync(path.resolve(path.dirname(entryPath), request), 'utf8')
     ).join('');
-    if (sha256(combined) !== data.sourceSha256) {
-        failures.push(
-            `${entry} no longer matches its source checksum; actual: ${sha256(combined)}`
-        );
-    }
+    if (sha256(combined) !== data.sourceSha256) failures.push(`${entry} no longer matches its source checksum`);
 }
 
 if (failures.length) {
