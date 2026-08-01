@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "description": "Active Hero CSS equivalence after restoring the owner-approved lower floating chevrons without the retired control rail or Akella/WebGL code.",
+  "css": {
+    "resources/css/pages/welcome-hero.css": {
+      "sourceSha256": "080dcd79dcf692eebed850dfefde31598ff44892c62184120eda1dcbdf8315ea",
+      "orderedModules": [
+        {
+          "path": "../surfaces/home/hero/layout.css",
+          "lines": 160,
+          "sha256": "5da606f76d67f3698dd1f3ed33401f2923af6d432140ea3434cd7d96982c06e3"
+        },
+        {
+          "path": "../surfaces/home/hero/media.css",
+          "lines": 84,
+          "sha256": "a2d5aadd9bcc754fef0f87e47b8913875b3bd2b191dd1fc2fca7b229bea632b6"
+        },
+        {
+          "path": "../surfaces/home/hero/motion.css",
+          "lines": 77,
+          "sha256": "1863a5c0d47fd1fcb26b60db026f96b94e7a292efee984c0ce6106289589942b"
+        },
+        {
+          "path": "../surfaces/home/hero/controls.css",
+          "lines": 108,
+          "sha256": "3051210823166f37ae748fef0c988030120134a77d7c3569b7b3909eaac8c095"
+        },
+        {
+          "path": "../surfaces/home/hero/locale.css",
+          "lines": 48,
+          "sha256": "32a99a9c0b1f9c4217b70550c950705d8d09fb460dbbb22deb7579a988222a7f"
+        },
+        {
+          "path": "../surfaces/home/hero/responsive.css",
+          "lines": 103,
+          "sha256": "d29e5959e79ba70b0d884ee3915a2d33742d5a6f7722e7b9833c58c8516d8cc3"
+        },
+        {
+          "path": "../surfaces/home/hero/reduced-motion.css",
+          "lines": 18,
+          "sha256": "dbb2416fb342b72d32370c228bb7a5056eff0d968067db73d8c3de6ca39ad613"
+        }
+      ],
+      "originalSourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a"
+    }
+  }
+}
