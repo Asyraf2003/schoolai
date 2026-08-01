@@ -115,52 +115,31 @@
   </div>
 
   @if ($heroSlideCount > 1)
-    <div class="hero-cinema__controls container" data-hero-controls>
-      <div class="hero-cinema__progress" aria-hidden="true">
-        <span class="hero-cinema__progress-bar" data-hero-progress></span>
-      </div>
+    <button
+      type="button"
+      class="hero-cinema__arrow hero-cinema__arrow--previous"
+      data-hero-previous
+      aria-label="{{ $hero['previous_label'] ?? 'Previous slide' }}"
+    >
+      <svg viewBox="0 0 128 72" aria-hidden="true">
+        <path d="M42 4 10 36l32 32 14-14-18-18 18-18Z" />
+        <path d="M78 4 46 36l32 32 14-14-18-18 18-18Z" />
+        <path d="M114 4 82 36l32 32 14-14-18-18 18-18Z" />
+      </svg>
+    </button>
 
-      <p class="hero-cinema__counter" aria-hidden="true">
-        <span class="hero-cinema__counter-current" data-hero-current>01</span>
-        <span>/</span>
-        <span>{{ str_pad((string) $heroSlideCount, 2, '0', STR_PAD_LEFT) }}</span>
-      </p>
-
-      <div class="hero-cinema__dots" aria-label="{{ $hero['dots_label'] ?? 'Choose slide' }}">
-        @foreach ($heroSlides as $slide)
-          <button
-            type="button"
-            class="hero-cinema__dot{{ $loop->first ? ' is-active' : '' }}"
-            data-hero-dot
-            data-slide-index="{{ $loop->index }}"
-            aria-label="{{ $heroStatus($loop->iteration) }}"
-            aria-controls="hero-slide-{{ $loop->index }}"
-            @if ($loop->first) aria-current="true" @endif
-          ></button>
-        @endforeach
-      </div>
-
-      <div class="hero-cinema__transport">
-        <button type="button" class="hero-cinema__arrow" data-hero-previous aria-label="{{ $hero['previous_label'] ?? 'Previous slide' }}">
-          <svg viewBox="0 0 128 72" aria-hidden="true"><path d="M42 4 10 36l32 32 14-14-18-18 18-18Z" /><path d="M78 4 46 36l32 32 14-14-18-18 18-18Z" /><path d="M114 4 82 36l32 32 14-14-18-18 18-18Z" /></svg>
-        </button>
-        <button
-          type="button"
-          class="hero-cinema__playback"
-          data-hero-playback
-          data-pause-label="{{ $hero['pause_label'] ?? 'Pause slideshow' }}"
-          data-play-label="{{ $hero['play_label'] ?? 'Play slideshow' }}"
-          aria-label="{{ $hero['pause_label'] ?? 'Pause slideshow' }}"
-          aria-pressed="false"
-        >
-          <svg class="hero-cinema__pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
-          <svg class="hero-cinema__play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z" /></svg>
-        </button>
-        <button type="button" class="hero-cinema__arrow" data-hero-next aria-label="{{ $hero['next_label'] ?? 'Next slide' }}">
-          <svg viewBox="0 0 128 72" aria-hidden="true"><path d="m14 4 32 32-32 32L0 54l18-18L0 18Z" /><path d="m50 4 32 32-32 32-14-14 18-18-18-18Z" /><path d="m86 4 32 32-32 32-14-14 18-18-18-18Z" /></svg>
-        </button>
-      </div>
-    </div>
+    <button
+      type="button"
+      class="hero-cinema__arrow hero-cinema__arrow--next"
+      data-hero-next
+      aria-label="{{ $hero['next_label'] ?? 'Next slide' }}"
+    >
+      <svg viewBox="0 0 128 72" aria-hidden="true">
+        <path d="m14 4 32 32-32 32L0 54l18-18L0 18Z" />
+        <path d="m50 4 32 32-32 32-14-14 18-18-18-18Z" />
+        <path d="m86 4 32 32-32 32-14-14 18-18-18-18Z" />
+      </svg>
+    </button>
   @endif
 
   <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
