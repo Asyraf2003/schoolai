@@ -1,205 +1,194 @@
 # HOME-HERO-STABILIZATION-001
 
-Status: OWNER_ACCEPTED
+Status: `COMPLETE_WITH_EXTERNAL_SAFARI_DEFERRED`
 Owner: Homepage Hero
 Target branch: `main`
 Baseline commit: `93ed595707c23b4b9c6d87414af7615452539936`
 Date: 2026-08-01
+Progress: `98%`
 
 ## FACT
 
-- Hero data already normalizes `image`, direct native `video`, poster, locale copy,
-  focal position, overlay strength, and CTA destination in `BuildsHomeHero`.
-- The first parity slide is a direct MP4; image slides and a page-level fallback
-  image already exist for ID, EN, and AR.
-- Hero markup, CSS, JS, and navbar ownership were coupled through
-  `partials/language-flag.blade.php`.
-- The previous Blade rendered only arrows while CSS/JS also expected dots,
-  progress, counter, and playback controls.
-- The 390px collision came from mobile arrow positions in an inline Hero style.
+- Existing translation/controller data supports image, direct native video,
+  poster, fallback image, localized copy, focal position, overlay, and CTA.
+- Hero and navigation ownership had been coupled through language-flag rendering
+  and anonymous cascade modules.
+- The 390px collision came from mobile ornament/control positioning.
 - The 1181px dead zone came from a stale `max-width: 1200px` navbar rule while
   the hamburger contract ended at 1180px.
-- About and Testimonial remain protected and are not dependencies of Hero.
+- About and Testimonial are protected and not Hero dependencies.
 
 ## GAP
 
-- Real Mac Safari proof is unavailable in the execution environment.
-- Full structure and full Laravel gates contain pre-existing out-of-scope debt:
-  Vision/Mission line limits and one stale disabled-About test.
-- PageSpeed/Lighthouse and field CWV remain unmeasured.
+- Real macOS Safari was unavailable: `DEFERRED_TO_REAL_MAC_SAFARI`.
+- Lighthouse/PageSpeed/CWV are unmeasured.
+- Three oversized Vision/Mission files and one stale disabled-About test remain
+  outside this surface boundary.
 
 ## GOAL
 
-Deliver one stable semantic Hero across mixed media, six responsive tiers,
-ID/EN/AR, LTR/RTL, keyboard, reduced motion, failure fallback, no-JS, and the
-1180/1181 navigation boundary without redesigning unrelated homepage sections.
+Deliver one semantic Hero across mixed media, six responsive tiers, ID/EN/AR,
+LTR/RTL, keyboard, reduced motion, failure fallback, no-JS, and the exact
+1180/1181 navigation contract without redesigning unrelated sections.
 
 ## IMPACT
 
-- Hero gets explicit source ownership and deterministic lifecycle behavior.
-- Navigation CSS remains visually unchanged except for the proven boundary.
+- Hero receives explicit source ownership and deterministic lifecycle behavior.
+- Navigation remains visually consistent while its breakpoint gap is corrected.
 - Existing Controller/Blade/translation data flow is preserved.
 - No database schema or dependency is added.
 
 ## DECISION
 
-- Use CSS transforms, opacity, bounded blur, and small native JavaScript.
+- Use CSS transforms, opacity, bounded transition-only blur, and native JS.
 - Keep poster/fallback visible until video reaches `playing`.
 - Treat autoplay as optional enhancement; reduced motion disables it.
-- Render controls semantically in Blade and reveal them only after JS enhances.
-- Move navigation CSS/JS ownership out of Hero entry points.
-- Use an effective equivalence override record so all existing ledger entries
-  remain enforced while the intentionally migrated Hero record is replaced.
+- Render semantic controls in Blade and reveal them only after enhancement.
+- Separate navigation CSS/JS from Hero and language-flag ownership.
+- Protect migrated Hero and affected `welcome.css` order/checksums through the
+  effective equivalence ledger.
 
 ## SOURCE OWNERSHIP
 
-### Hero
+Hero:
 
-- `app/Http/Controllers/Concerns/BuildsHomeHero.php`: normalized media contract.
-- `resources/views/home/sections/hero.blade.php`: semantic DOM and static fallback.
-- `resources/css/pages/welcome-hero.css`: Hero CSS entry only.
-- `resources/css/surfaces/home/hero/layout.css`: geometry and content hierarchy.
-- `resources/css/surfaces/home/hero/media.css`: media, poster, and error surface.
-- `resources/css/surfaces/home/hero/motion.css`: transition choreography.
-- `resources/css/surfaces/home/hero/controls.css`: indicator and transport controls.
-- `resources/css/surfaces/home/hero/responsive.css`: fluid tier behavior.
-- `resources/css/surfaces/home/hero/locale.css`: RTL and Arabic typography.
-- `resources/css/surfaces/home/hero/reduced-motion.css`: motion fallback.
-- `resources/js/pages/welcome-hero.js`: entry only.
-- `resources/js/surfaces/home/hero/controller.js`: state and autoplay policy.
-- `resources/js/surfaces/home/hero/media.js`: hydration/playback/failure state.
-- `resources/js/surfaces/home/hero/events.js`: input and lifecycle listeners.
+- `BuildsHomeHero.php`: normalized media contract;
+- `home/sections/hero.blade.php`: semantic DOM and static fallback;
+- `welcome-hero.css`: Hero entry only;
+- `surfaces/home/hero/{layout,media,motion,controls,responsive,locale,reduced-motion}.css`;
+- `welcome-hero.js`: entry only;
+- `surfaces/home/hero/{controller,media,events}.js`.
 
-### Navigation boundary
+Navigation boundary:
 
-- `resources/css/pages/welcome-navigation.css` and its modules own shared navbar.
-- `resources/css/pages/welcome/029-*.css` owns the stale legacy breakpoint fix.
-- `resources/js/pages/welcome/navigation-mega.js` owns mega-menu behavior.
-- `resources/views/partials/site-navbar.blade.php` loads navigation entries.
+- `welcome-navigation.css` and its semantic modules;
+- `welcome/029-*.css` for the legacy shared breakpoint correction;
+- `welcome/navigation-mega.js` for mega-menu behavior;
+- `site-navbar.blade.php` for navigation asset loading.
+
+Every new Hero source file is at or below 200 lines.
 
 ## DATA AND MEDIA CONTRACT
 
-Each normalized slide exposes:
+Each normalized slide exposes declared/render type, sanitized media URL, poster,
+local fallback, alt text, focal position, overlay strength, video MIME type,
+localized copy, and CTA.
 
-- `type`: declared `image` or `video`;
-- `render_type`: safe rendered type;
-- `media_url`: sanitized image/direct video URL;
-- `poster_url`: video poster or page fallback;
-- `fallback_url`: final local fallback image;
-- `media_alt`, `focal_position`, `overlay_strength`, `video_mime_type`;
-- localized `eyebrow`, `title`, `description`, and CTA.
-
-Invalid/unsupported video degrades to image without schema changes. YouTube and
-old iframe media remain rejected.
+Unsupported or failed video degrades to image without schema changes. Legacy
+YouTube/iframe media remains rejected.
 
 ## TRANSITION STATE MACHINE
 
-States are represented by one active index plus transient classes:
-
 1. `static`: Blade first slide visible before JS.
-2. `active`: exactly one `.is-active` slide is interactive.
-3. `transitioning`: old `.is-leaving`, new `.is-entering` for 980ms.
-4. `suspended`: timers and media paused when hidden/offscreen/navigating.
-5. `media-error`: poster/local fallback remains visible.
-6. `disposed`: listeners, timers, observer, and media are cleaned.
+2. `active`: exactly one slide is interactive.
+3. `transitioning`: old `is-leaving`, new `is-entering`, bounded to 980ms.
+4. `suspended`: timers/media paused when hidden, offscreen, or navigating.
+5. `media-error`: poster/local image/gradient fallback remains visible.
+6. `disposed`: listeners, timer, observer, transition, and media state cleaned.
 
-Rapid input clears the prior transition before starting the next. Focus is never
-moved by automatic changes.
+Rapid input clears prior transient classes. Automatic changes never move focus.
 
 ## RESPONSIVE CONTRACT
 
-- XS 360–639
-- SM 640–767
-- MD 768–1023
-- LG 1024–1279
-- XL 1280–1535
-- 2XL 1536+
+- XS 360–639;
+- SM 640–767;
+- MD 768–1023;
+- LG 1024–1279;
+- XL 1280–1535;
+- 2XL 1536+.
 
-The implementation uses `clamp()`, logical properties, viewport units, flexible
-copy widths, and one responsive control rail. Certified boundaries are 360,
-390, 639/640, 767/768, 1023/1024, 1180/1181, 1279/1280, 1535/1536, and 1920.
-Hamburger is active through 1180; desktop navigation starts at 1181.
+Implementation uses fluid values and logical properties. Chromium certified 360,
+390, 640, 768, 1024, 1180, 1181, 1279, 1280, 1536, and 1920. Hamburger remains
+active through 1180; desktop navigation starts at 1181.
 
 ## LOCALE AND DIRECTION
 
-- ID and EN: Inter, LTR.
-- AR: Cairo, RTL.
-- One semantic DOM and one content flow.
-- Logical alignment and mirrored spatial controls are used.
-- Arrow keys and swipe direction follow reading direction.
-- Arabic title/description line-height and wrapping are explicitly bounded.
+- ID/EN: Inter, LTR;
+- AR: Cairo, RTL;
+- one DOM/content flow;
+- mirrored spatial controls and reading-direction keyboard/swipe behavior;
+- bounded Arabic title/description line-height and wrapping.
 
 ## ACCESSIBILITY AND FALLBACK
 
-- First slide content and poster/image remain available without JavaScript.
-- Controls are native buttons with visible focus and localized labels.
-- Autoplay has a pause/play control and does not move focus.
-- Reduced motion disables autoplay and transition animation.
-- Inactive slides are `aria-hidden` and `inert`.
-- Image/video failure falls back to poster, then local image, then a stable
-  gradient surface.
-- Explicit media dimensions and fixed Hero geometry prevent media CLS.
+- Native buttons, localized labels, visible focus, no focus trap;
+- autoplay pause/play without focus movement;
+- reduced motion disables autoplay/choreography, not content;
+- inactive slides use `aria-hidden` and `inert`;
+- no-JS first slide remains meaningful;
+- media failure falls through poster → local image → stable gradient;
+- explicit media dimensions and stable geometry reduce CLS risk.
 
 ## LIFECYCLE CLEANUP
 
-- Only active video sources are hydrated.
-- Inactive videos pause and reset.
-- Visibility, Hero intersection, locale submit, pagehide, and BFCache are handled.
-- Event listeners use `AbortController`; observers and timers are disposed.
-- BFCache pages suspend and resume rather than permanently losing controls.
+Only active video sources hydrate. Inactive video pauses/resets. Visibility,
+intersection, locale submit, pagehide, BFCache, resize, and disposal are handled.
+Listeners use `AbortController`; observers/timers are cleaned.
 
-## PERFORMANCE BUDGET
+## PERFORMANCE BUDGET AND RESULT
 
-- No Three.js, Babylon.js, GSAP, WebGL, or animation dependency.
-- No global animation loop.
-- Blur is transition-only and bounded to 14px.
-- First visible media is eager/high priority; inactive media stays lazy.
-- Bundle raw/gzip delta must be recorded from the Vite manifest.
-- Lighthouse/PageSpeed is never inferred from build success.
+- No Three.js, Babylon.js, GSAP, WebGL, heavy animation package, or global loop.
+- Blur is transition-only and capped at 14px.
+- First visible media is eager/high-priority; inactive media remains lazy.
+- Hero CSS: 22.65 kB → 12.136 kB raw; 4.99 kB → 2.980 kB gzip.
+- Hero JS: 9.29 kB → 8.027 kB raw; 2.93 kB → 2.667 kB gzip.
+- Navigation CSS is separately owned at 13.915 kB raw / 3.275 kB gzip.
+- No Lighthouse/PageSpeed result is inferred from build success.
 
-## PROOF MATRIX
+## PROOF
 
-Automated:
+Automated/runtime result:
 
-- `git diff --check` and clean final status;
-- focused Hero/navigation feature tests;
-- `npx vite build`;
-- effective source-equivalence validation;
-- bundle manifest raw/gzip report;
-- full Laravel suite with stale About failure classified separately;
-- structure output with Vision/Mission debt classified separately.
+- diff hygiene and clean proof checkout: PASS;
+- `npx vite build`: PASS;
+- focused Hero/navigation: 7 passed, 163 assertions;
+- Chromium: 33 locale-width cases PASS;
+- keyboard, pointer, repeated transitions, visibility, BFCache, media failure,
+  reduced motion, and no-JS: PASS;
+- full Laravel: 144 passed, one stale About test failed, 1375 assertions;
+- structure: only three known Vision/Mission line-limit failures;
+- Hero and affected `welcome.css` equivalence: PASS.
 
-Runtime Chromium:
+Safari status: `DEFERRED_TO_REAL_MAC_SAFARI`.
 
-- all certified widths for ID/LTR, EN/LTR, AR/RTL;
-- overflow, copy/control collision, media crop, wrapping, focus, nav mode;
-- repeated transitions, keyboard, pointer, swipe-safe handling;
-- reduced motion, video/image failure, JS-disabled fallback, BFCache.
+Exact owner proof checklist:
 
-Safari:
-
-- status remains `DEFERRED_TO_REAL_MAC_SAFARI` until the owner runs the exact
-  checklist in the final handoff on real Safari.
+1. Test all certified widths on real Safari and resize across each boundary.
+2. Switch ID/EN/AR through POST/session/redirect and verify language/direction.
+3. Verify muted inline video, poster, autoplay policy, inactive/hidden pause.
+4. Force video/image failures and verify the fallback chain.
+5. Repeat arrows/dots/keyboard/pointer/touch; verify settled single-active state.
+6. Enable Reduce Motion; verify no autoplay/choreography and complete content.
+7. Disable JS; verify the first semantic slide and fallback media.
+8. Navigate away/back; verify BFCache without duplicate listeners/timers.
+9. Check overflow, copy/media/control collisions, visible focus, and visual CLS.
+10. Inspect console/network/media for errors and repeated inactive downloads.
 
 ## ROLLBACK BOUNDARY
 
 Revert the single squash commit. No schema migration, package change, or content
-migration is required. Existing translations and media data remain compatible.
+migration is required. Existing locale/media data remains compatible.
 
 ## OUT OF SCOPE
 
 Vision/Mission, School Values, Featured Programs, Gallery, Articles, Footer,
-About, Testimonial, admin, editor, typography redesign, database schema, WebGL,
+About, Testimonial, admin, editor, global typography redesign, schema, WebGL,
 3D experiments, and unrelated navbar redesign.
 
 ## EXECUTION ORDER
 
-- H00 preflight and ownership map: COMPLETE
-- H01 media contract: IMPLEMENTED_PENDING_PROOF
-- H02 transition/lifecycle: IMPLEMENTED_PENDING_PROOF
-- H03 responsive system: IMPLEMENTED_PENDING_PROOF
-- H04 locale/RTL: IMPLEMENTED_PENDING_PROOF
-- H05 navigation boundary: IMPLEMENTED_PENDING_PROOF
-- H06 accessibility/fallback: IMPLEMENTED_PENDING_PROOF
-- H07 automated/runtime proof: PENDING
-- H08 docs/atomic merge: PENDING
+- H00 preflight and ownership map: PASS
+- H01 media contract: PASS
+- H02 transition/lifecycle: PASS
+- H03 responsive fluid six-tier system: PASS
+- H04 ID/EN/AR and LTR/RTL: PASS_CHROMIUM
+- H05 navigation 1180/1181: PASS
+- H06 accessibility/reduced-motion/failure fallback: PASS
+- H07 automated/runtime proof: PASS_CHROMIUM
+- H08 docs/equivalence/atomic main delivery: PASS_ON_SQUASH
+
+## STATUS AND NEXT VALID STEP
+
+Source work is complete. Real Safari remains the only browser acceptance deferred.
+Run the owner Safari checklist, record the evidence, then decide the next homepage
+surface from fresh proof. Do not automatically start another section.

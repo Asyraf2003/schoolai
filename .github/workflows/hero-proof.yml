@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - 'app/Http/Controllers/Concerns/BuildsHomeHero.php'
+      - 'docs/architecture/UI_UX_CURRENT_STATE.md'
+      - 'docs/architecture/blueprints/2026-08-01-home-hero-stabilization.md'
+      - 'docs/architecture/source-module-equivalence-overrides.json'
       - 'resources/views/home/sections/hero.blade.php'
       - 'resources/views/partials/site-navbar.blade.php'
       - 'resources/views/partials/language-flag.blade.php'
@@ -19,6 +22,7 @@ on:
       - 'tests/Feature/HomeHero*'
       - 'tests/Feature/PublicUnifiedNavigationTest.php'
       - 'scripts/hero-*'
+      - 'scripts/verify-source-structure.mjs'
       - 'vite.config.js'
   workflow_dispatch:
 
