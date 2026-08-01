@@ -215,6 +215,24 @@ async function proveInteractions(browser) {
   await noScript.close();
 }
 
+async function waitForAutomaticChange(page, initialIndex, timeout = 10000) {
+  await page.waitForFunction((current) => {
+    const hero = document.querySelector('[data-hero-slider]');
+    const active = document.querySelector('[data-hero-slide].is-active');
+    return active?.dataset.slideIndex !== current && hero?.dataset.heroWebglActive === 'true';
+  }, initialIndex, { timeout });
+}
+
+async function assertAutomaticDirection(page, locale, expectedDirection, origin) {
+  assert.equal(
+    await page.locator('[data-hero-slider]').getAttribute('data-hero-webgl-direction'),
+    expectedDirection,
+    `${locale}: ${origin} automatic transition direction`
+  );
+  await waitForWebglSettlement(page);
+  report.interactions[`${origin}-${locale}`] = 'PASS';
+}
+
 async function proveAutomaticDirection(browser, locale, expectedDirection) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
@@ -223,20 +241,30 @@ async function proveAutomaticDirection(browser, locale, expectedDirection) {
   await selectLocale(page, locale);
   await waitForWebglReady(page);
 
-  const initial = await page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
-  await page.waitForFunction((current) => {
-    const hero = document.querySelector('[data-hero-slider]');
-    const active = document.querySelector('[data-hero-slide].is-active');
-    return active?.dataset.slideIndex !== current && hero?.dataset.heroWebglActive === 'true';
-  }, initial, { timeout: 10000 });
+  const activeVideo = page.locator('[data-hero-slide].is-active [data-hero-video]');
+  if (await activeVideo.count()) {
+    const initialVideoIndex = await page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
+    await activeVideo.dispatchEvent('ended');
+    await waitForAutomaticChange(page, initialVideoIndex);
+    await assertAutomaticDirection(page, locale, expectedDirection, 'video-ended');
+  }
 
-  assert.equal(
-    await page.locator('[data-hero-slider]').getAttribute('data-hero-webgl-direction'),
-    expectedDirection,
-    `${locale}: automatic transition direction`
+  const imageIndex = await page.evaluate(() =>
+    Array.from(document.querySelectorAll('[data-hero-slide]'))
+      .find((slide) => !slide.querySelector('[data-hero-video]'))?.dataset.slideIndex || null
   );
-  await waitForWebglSettlement(page);
-  report.interactions[`automatic-${locale}`] = 'PASS';
+  assert.ok(imageIndex, `${locale}: no image slide available for timer proof`);
+
+  const currentIndex = await page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
+  if (currentIndex !== imageIndex) {
+    await page.locator(`[data-hero-dot][data-slide-index="${imageIndex}"]`).click();
+    await waitForWebglStart(page);
+    await waitForWebglSettlement(page);
+  }
+
+  const timerIndex = await page.locator('[data-hero-slide].is-active').getAttribute('data-slide-index');
+  await waitForAutomaticChange(page, timerIndex);
+  await assertAutomaticDirection(page, locale, expectedDirection, 'timer');
   await context.close();
 }
 
