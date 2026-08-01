@@ -1,7 +1,7 @@
 # SchoolAI UI/UX Architecture Index
 
 Status: ACTIVE
-Updated: 2026-07-31
+Updated: 2026-08-01
 
 ## Purpose
 
@@ -37,7 +37,7 @@ Read when relevant:
 9. `UI_UX_WEBGL_3D_PIPELINE.md`
    - renderer, cinematic scenes, models, shaders, lifecycle, and fallback.
 10. `UI_UX_LUSION_REFERENCE.md`
-   - reference analysis and translation into Al Mustaqbal identity.
+    - reference analysis and translation into Al Mustaqbal identity.
 11. `UI_UX_BLUEPRINT_TEMPLATE.md`
     - required surface/scene blueprint before implementation.
 12. `UI_UX_PROMPT_TEMPLATES.md`
@@ -107,6 +107,18 @@ change product intent but cannot turn an unrun proof gate into `PASS`.
 - A new mandatory file must be linked by this index and root `AGENTS.md`.
 - Before publish, verify all mandatory paths exist and no live document points
   to a deleted mandatory dependency.
+
+## Retained incident report
+
+The owner explicitly requested that one documentation-only record remain after
+reconstructing `main` from the last commit before the rejected Akella Hero
+transition work:
+
+- `incidents/2026-08-01-home-hero-akella-scope-violation.md`
+
+This incident file records an owner-rejected scope expansion. It is historical
+evidence only, never an active blueprint or implementation source. Future Hero
+work must use current `main` source and runtime evidence, not the retired commits.
 
 ## Current product direction
 
