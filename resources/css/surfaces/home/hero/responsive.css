@@ -19,17 +19,18 @@
     }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1180px) {
+    .hero-cinema__content {
+        padding-block-end: clamp(104px, 12vh, 132px);
+    }
+
     .hero-cinema__copy {
-        width: min(560px, 68vw);
+        width: min(560px, 58vw);
+        max-width: 560px;
     }
 
-    .hero-cinema__controls {
-        grid-template-columns: minmax(100px, 1fr) auto auto;
-    }
-
-    .hero-cinema__counter {
-        display: none;
+    .hero-cinema__title {
+        max-width: 20ch;
     }
 }
 
@@ -41,12 +42,12 @@
 
     .hero-cinema__content {
         padding-block-start: calc(var(--hero-nav-height) + 28px);
-        padding-block-end: clamp(154px, 21vh, 184px);
+        padding-block-end: 108px;
     }
 
     .hero-cinema__copy {
-        width: min(86vw, 380px);
-        max-width: min(86vw, 380px);
+        width: min(84vw, 340px);
+        max-width: min(84vw, 340px);
     }
 
     .hero-cinema__eyebrow {
@@ -60,48 +61,38 @@
 
     .hero-cinema__title {
         max-width: 18ch;
+        margin-block-start: 10px;
         font-size: clamp(2.35rem, 10.6vw, 4rem);
         line-height: 1;
     }
 
     .hero-cinema__description {
-        max-width: 36ch;
+        max-width: 34ch;
+        margin-block-start: 12px;
         font-size: 0.94rem;
         line-height: 1.58;
     }
 
-    .hero-cinema__controls {
-        inset-block-end: max(22px, env(safe-area-inset-bottom));
-        grid-template-columns: minmax(70px, 1fr) auto;
-        grid-template-areas:
-            "progress progress"
-            "dots transport";
-        gap: 16px 18px;
+    .hero-cinema__cta {
+        min-height: 38px;
+        margin-block-start: 12px;
+        padding-block: 8px;
     }
 
-    .hero-cinema__progress { grid-area: progress; }
-    .hero-cinema__dots { grid-area: dots; }
-    .hero-cinema__transport { grid-area: transport; }
-
-    .hero-cinema__arrow {
-        width: 54px;
-        height: 36px;
-    }
-
-    .hero-cinema__playback {
-        width: 38px;
-        height: 38px;
+    .hero-cinema__cta svg {
+        width: 15px;
+        height: 15px;
     }
 }
 
 @media (max-width: 440px) {
     .hero-cinema__content {
-        padding-block-end: 158px;
+        padding-block-end: 102px;
     }
 
     .hero-cinema__copy {
-        width: min(82vw, 320px);
-        max-width: min(82vw, 320px);
+        width: min(82vw, 315px);
+        max-width: min(82vw, 315px);
     }
 
     .hero-cinema__title {
@@ -112,20 +103,11 @@
     .hero-cinema__description {
         max-width: 32ch;
     }
-
-    .hero-cinema__controls {
-        gap: 14px;
-    }
-
-    .hero-cinema__arrow {
-        width: 48px;
-        height: 32px;
-    }
 }
 
 @media (max-height: 720px) and (min-width: 768px) {
     .hero-cinema__content {
-        padding-block-end: 126px;
+        padding-block-end: 108px;
     }
 
     .hero-cinema__title {
