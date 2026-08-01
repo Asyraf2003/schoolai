@@ -6,6 +6,13 @@
 
 @endphp
 
+@once
+  @vite([
+    'resources/css/pages/welcome-navigation.css',
+    'resources/css/pages/welcome-mega-menu.css',
+  ])
+@endonce
+
 <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
 
   @include('partials.site-navbar.styles.language-modal')

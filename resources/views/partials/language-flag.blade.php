@@ -6,11 +6,8 @@
   $hasFlagImage = is_file(public_path($flagImagePath));
 @endphp
 
-@include('partials.home-hero-copy-layout')
-
 @once
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-    /* Keep the original flag-only chooser, but center it in the viewport modal. */
     .language-modal__dialog {
       width: auto;
       min-height: 0;
@@ -76,7 +73,6 @@
   </style>
 
   <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-    /* Delegated fallback keeps the language trigger reliable across load order. */
     document.addEventListener('click', function (event) {
       var trigger = event.target.closest('[data-language-modal-open]');
       if (!trigger) return;
