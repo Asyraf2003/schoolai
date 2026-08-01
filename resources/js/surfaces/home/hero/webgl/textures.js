@@ -11,14 +11,13 @@ function imageSource(image) {
   };
 }
 
-function videoSource(video) {
+function liveVideoSource(video) {
   if (!video || video.readyState < 2 || video.videoWidth < 1) return null;
   return {
-    element: video,
     width: video.videoWidth,
     height: video.videoHeight,
-    dynamic: true,
-    kind: 'video'
+    dynamic: false,
+    kind: 'live-video'
   };
 }
 
@@ -61,14 +60,14 @@ function fallbackSourceForSlide(slide) {
 }
 
 function waitForLiveVideoSource(slide, video, timeout) {
-  var available = videoSource(video);
+  var available = liveVideoSource(video);
   if (available) return Promise.resolve(available);
 
   return new Promise(function (resolve) {
     var startedAt = performance.now();
 
     function inspect() {
-      var source = videoSource(video);
+      var source = liveVideoSource(video);
       var failed = Boolean(video.error || slide.classList.contains('has-media-error'));
       var expired = performance.now() - startedAt >= timeout;
       if (source || failed || expired) {
@@ -103,9 +102,7 @@ function waitForImageSource(slide, timeout) {
 }
 
 export function textureSourceForSlide(slide) {
-  if (!slide) return null;
-  return videoSource(slide.querySelector('[data-hero-video]')) ||
-    fallbackSourceForSlide(slide);
+  return slide ? fallbackSourceForSlide(slide) : null;
 }
 
 export function waitForTextureSource(slide, timeout = 1200) {
