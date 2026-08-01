@@ -12,10 +12,10 @@ function imageSource(image) {
 }
 
 function liveVideoSource(video) {
-  if (!video || video.readyState < 2 || video.videoWidth < 1) return null;
+  if (!video) return null;
   return {
-    width: video.videoWidth,
-    height: video.videoHeight,
+    width: video.videoWidth || 1,
+    height: video.videoHeight || 1,
     dynamic: false,
     kind: 'live-video'
   };
@@ -59,26 +59,8 @@ function fallbackSourceForSlide(slide) {
     corsImageSource(slide?.querySelector('[data-hero-image]'));
 }
 
-function waitForLiveVideoSource(slide, video, timeout) {
-  var available = liveVideoSource(video);
-  if (available) return Promise.resolve(available);
-
-  return new Promise(function (resolve) {
-    var startedAt = performance.now();
-
-    function inspect() {
-      var source = liveVideoSource(video);
-      var failed = Boolean(video.error || slide.classList.contains('has-media-error'));
-      var expired = performance.now() - startedAt >= timeout;
-      if (source || failed || expired) {
-        resolve(source || fallbackSourceForSlide(slide));
-        return;
-      }
-      window.setTimeout(inspect, 40);
-    }
-
-    inspect();
-  });
+function waitForLiveVideoSource(video) {
+  return Promise.resolve(liveVideoSource(video));
 }
 
 function waitForImageSource(slide, timeout) {
@@ -109,9 +91,7 @@ export function waitForTextureSource(slide, timeout = 1200) {
   if (!slide) return Promise.resolve(null);
   prepareSlideImages(slide);
   var video = slide.querySelector('[data-hero-video]');
-  return video
-    ? waitForLiveVideoSource(slide, video, timeout)
-    : waitForImageSource(slide, timeout);
+  return video ? waitForLiveVideoSource(video) : waitForImageSource(slide, timeout);
 }
 
 export function coverScale(source, targetWidth, targetHeight) {
