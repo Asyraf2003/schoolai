@@ -19,48 +19,18 @@ if (!fs.existsSync(manifestPath)) {
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const report = {};
 
-function measure(record, key) {
-  if (!record?.file) throw new Error(`Missing manifest asset: ${key}`);
+for (const entry of entries) {
+  const record = manifest[entry];
+  if (!record?.file) throw new Error(`Missing manifest entry: ${entry}`);
 
   const assetPath = path.join(root, 'public/build', record.file);
   const source = fs.readFileSync(assetPath);
-  return {
-    key,
+  report[entry] = {
     file: record.file,
     rawBytes: source.length,
     gzipBytes: zlib.gzipSync(source, { level: 9 }).length,
   };
 }
-
-for (const entry of entries) {
-  const record = manifest[entry];
-  if (!record) throw new Error(`Missing manifest entry: ${entry}`);
-  const measured = measure(record, entry);
-  delete measured.key;
-  report[entry] = measured;
-}
-
-const heroEntry = manifest['resources/js/pages/welcome-hero.js'];
-const pending = [...(heroEntry.dynamicImports ?? [])];
-const visited = new Set();
-const deferred = [];
-
-while (pending.length) {
-  const key = pending.shift();
-  if (!key || visited.has(key)) continue;
-  visited.add(key);
-
-  const record = manifest[key];
-  if (!record) throw new Error(`Missing deferred Hero manifest entry: ${key}`);
-  deferred.push(measure(record, key));
-  pending.push(...(record.dynamicImports ?? []));
-}
-
-report.heroDeferred = {
-  assets: deferred,
-  rawBytes: deferred.reduce((total, asset) => total + asset.rawBytes, 0),
-  gzipBytes: deferred.reduce((total, asset) => total + asset.gzipBytes, 0),
-};
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${JSON.stringify(report, null, 2)}\n`);
