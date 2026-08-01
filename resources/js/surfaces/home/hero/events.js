@@ -1,9 +1,3 @@
-import {
-  HERO_LEFT_TO_RIGHT,
-  HERO_RIGHT_TO_LEFT,
-  isHeroRtl
-} from './direction.js';
-
 export function bindHeroEvents(options) {
   var root = options.root;
   var actions = options.actions;
@@ -13,22 +7,17 @@ export function bindHeroEvents(options) {
   var pointerStart = null;
   var observer = null;
 
-  var previousButton = root.querySelector('[data-hero-previous]');
-  var nextButton = root.querySelector('[data-hero-next]');
+  function isRtl() {
+    return document.documentElement.dir === 'rtl';
+  }
 
-  previousButton?.addEventListener('click', function () {
-    actions.previous({ origin: 'physical', direction: HERO_LEFT_TO_RIGHT });
-  }, { signal: signal });
-
-  nextButton?.addEventListener('click', function () {
-    actions.next({ origin: 'physical', direction: HERO_RIGHT_TO_LEFT });
-  }, { signal: signal });
-
+  root.querySelector('[data-hero-previous]')?.addEventListener('click', actions.previous, { signal: signal });
+  root.querySelector('[data-hero-next]')?.addEventListener('click', actions.next, { signal: signal });
   root.querySelector('[data-hero-playback]')?.addEventListener('click', actions.togglePaused, { signal: signal });
 
   root.querySelectorAll('[data-hero-dot]').forEach(function (dot) {
     dot.addEventListener('click', function () {
-      actions.goTo(Number.parseInt(dot.dataset.slideIndex, 10), { origin: 'dot' });
+      actions.goTo(Number.parseInt(dot.dataset.slideIndex, 10));
     }, { signal: signal });
   });
 
@@ -37,14 +26,8 @@ export function bindHeroEvents(options) {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
 
     event.preventDefault();
-    var pointsLeft = event.key === 'ArrowLeft';
-    var request = {
-      origin: 'physical',
-      direction: pointsLeft ? HERO_LEFT_TO_RIGHT : HERO_RIGHT_TO_LEFT
-    };
-
-    if (pointsLeft === isHeroRtl()) actions.next(request);
-    else actions.previous(request);
+    var pointsForward = event.key === (isRtl() ? 'ArrowLeft' : 'ArrowRight');
+    if (pointsForward) actions.next(); else actions.previous();
   }, { signal: signal });
 
   root.addEventListener('pointerdown', function (event) {
@@ -59,14 +42,9 @@ export function bindHeroEvents(options) {
     pointerStart = null;
 
     if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
-    var movedLeft = deltaX < 0;
-    var request = {
-      origin: 'physical',
-      direction: movedLeft ? HERO_RIGHT_TO_LEFT : HERO_LEFT_TO_RIGHT
-    };
-    var logicalForward = movedLeft;
-    if (isHeroRtl()) logicalForward = !logicalForward;
-    if (logicalForward) actions.next(request); else actions.previous(request);
+    var swipeForward = deltaX < 0;
+    if (isRtl()) swipeForward = !swipeForward;
+    if (swipeForward) actions.next(); else actions.previous();
   }, { passive: true, signal: signal });
 
   root.addEventListener('pointercancel', function () { pointerStart = null; }, { passive: true, signal: signal });
