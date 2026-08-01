@@ -103,8 +103,6 @@
         max-height: 560px;
         margin-block: 6px 12px;
         pointer-events: auto;
-        transform: none;
-        clip-path: none;
     }
 
     .nav-shell .nav-mega__media,
@@ -148,20 +146,12 @@
 
     .nav-shell .navbar__cta {
         width: 100%;
-        color: #ffffff;
+        color: #fff;
         border-color: #a64f18;
         background: #b85a1f;
     }
 
     .nav-shell .hamburger {
         display: flex;
-    }
-
-    .hero-cinema__copy {
-        width: min(840px, calc(100vw - 120px));
-    }
-
-    .hero-cinema__title {
-        font-size: clamp(2.8rem, 7vw, 5.6rem);
     }
 }

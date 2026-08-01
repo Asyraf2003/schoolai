@@ -7,9 +7,7 @@
     padding: clamp(28px, 3vw, 44px);
     overflow: hidden;
     color: #ffffff;
-    background:
-        radial-gradient(circle at 15% 5%, rgb(247 178 75 / 0.42), transparent 42%),
-        linear-gradient(145deg, #174f42 0%, #0b2e28 100%);
+    background: radial-gradient(circle at 15% 5%, rgb(247 178 75 / 0.42), transparent 42%), linear-gradient(145deg, #174f42 0%, #0b2e28 100%);
 }
 
 .nav-shell .nav-mega__intro::after {
@@ -21,9 +19,7 @@
     border: 1px solid rgb(247 198 111 / 0.18);
     border-radius: 28% 72% 36% 64%;
     transform: rotate(22deg);
-    box-shadow:
-        0 0 0 18px rgb(247 198 111 / 0.05),
-        0 0 0 42px rgb(247 198 111 / 0.035);
+    box-shadow: 0 0 0 18px rgb(247 198 111 / 0.05), 0 0 0 42px rgb(247 198 111 / 0.035);
 }
 
 html[dir="rtl"] .nav-shell .nav-mega__intro::after {
@@ -75,10 +71,7 @@ html[dir="rtl"] .nav-shell .nav-mega__intro::after {
     border: 1px solid rgb(23 79 66 / 0.1);
     border-radius: 16px;
     background: #ffffff;
-    transition:
-        transform 180ms ease,
-        border-color 180ms ease,
-        box-shadow 180ms ease;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .nav-shell .nav-mega__link:hover,
@@ -99,6 +92,7 @@ html[dir="rtl"] .nav-shell .nav-mega__intro::after {
     font-size: 0.72rem;
     line-height: 1.45;
 }
+
 .nav-shell .nav-language {
     position: relative;
 }
@@ -142,10 +136,7 @@ html[dir="rtl"] .nav-shell .nav-mega__intro::after {
     pointer-events: none;
     transform: translateY(-8px) scale(0.92);
     transform-origin: top center;
-    transition:
-        opacity 160ms ease,
-        transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0s linear 220ms;
+    transition: opacity 160ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 220ms;
 }
 
 .nav-shell .nav-language.is-open .nav-language__panel {
@@ -172,11 +163,6 @@ html[dir="rtl"] .nav-shell .nav-mega__intro::after {
     border-radius: 50%;
     color: #28443e;
     background: transparent;
-    box-shadow:
-        0 8px 24px rgb(3 18 16 / 0.24),
-        0 0 0 1px rgb(4 29 24 / 0.06);
-    transition:
-        transform 180ms ease,
-        border-color 180ms ease,
-        box-shadow 180ms ease;
+    box-shadow: 0 8px 24px rgb(3 18 16 / 0.24), 0 0 0 1px rgb(4 29 24 / 0.06);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }

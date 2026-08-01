@@ -24,9 +24,8 @@ export default defineConfig({
                 // About section is temporarily disabled.
                 // 'resources/css/pages/welcome-about-stats.css',
                 'resources/css/pages/welcome-testimonial-layout.css',
+                'resources/css/pages/welcome-navigation.css',
                 'resources/css/pages/welcome-mega-menu.css',
-                'resources/css/pages/welcome-hero-motion.css',
-                'resources/css/pages/welcome-hero-visual.css',
                 'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/welcome-editorial-headings.css',
                 'resources/css/pages/welcome-editorial-description-desktop.css',

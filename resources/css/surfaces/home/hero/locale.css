@@ -1,0 +1,49 @@
+html[dir="rtl"] .hero-cinema__media::after {
+    background:
+        linear-gradient(to top, rgb(2 13 12 / 0.9) 0%, rgb(2 13 12 / 0.48) 36%, transparent 72%),
+        linear-gradient(to left, rgb(3 20 17 / 0.58) 0%, rgb(3 20 17 / 0.12) 58%, transparent 84%),
+        rgb(2 13 12 / var(--hero-overlay-strength));
+}
+
+html[dir="rtl"] .hero-cinema__cta::after,
+html[dir="rtl"] .hero-cinema__progress-bar {
+    transform-origin: right center;
+}
+
+html[dir="rtl"] .hero-cinema__cta::after {
+    background: linear-gradient(270deg, #f7b24b, rgb(247 178 75 / 0.18));
+}
+
+.hero-cinema__cta:hover svg,
+.hero-cinema__cta:focus-visible svg {
+    transform: translateX(5px);
+}
+
+html[dir="rtl"] .hero-cinema__cta svg,
+html[dir="rtl"] .hero-cinema__arrow svg {
+    transform: scaleX(-1);
+}
+
+html[dir="rtl"] .hero-cinema__cta:hover svg,
+html[dir="rtl"] .hero-cinema__cta:focus-visible svg {
+    transform: scaleX(-1) translateX(5px);
+}
+
+html[lang="ar"] .hero-cinema__title {
+    max-width: 18ch;
+    font-family: var(--font-arabic, "Cairo", sans-serif);
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: 0;
+    text-wrap: pretty;
+}
+
+html[lang="ar"] .hero-cinema__description {
+    max-width: 45ch;
+    line-height: 1.9;
+}
+
+html[lang="ar"] .hero-cinema__eyebrow {
+    letter-spacing: 0;
+    line-height: 1.6;
+}

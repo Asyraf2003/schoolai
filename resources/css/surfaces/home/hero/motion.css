@@ -1,0 +1,77 @@
+.hero-cinema[data-enhanced="true"] .hero-cinema__copy {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.hero-cinema[data-enhanced="true"] .hero-cinema__slide.is-active .hero-cinema__copy {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 620ms ease 140ms,
+        transform 760ms cubic-bezier(0.22, 1, 0.36, 1) 140ms;
+}
+
+.hero-cinema__slide.is-leaving {
+    animation: hero-slide-leave var(--hero-transition-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-cinema__slide.is-entering {
+    animation: hero-slide-enter var(--hero-transition-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-cinema__slide.is-leaving .hero-cinema__image,
+.hero-cinema__slide.is-leaving .hero-cinema__poster,
+.hero-cinema__slide.is-leaving .hero-cinema__media video {
+    animation: hero-media-leave var(--hero-transition-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-cinema__slide.is-entering .hero-cinema__image,
+.hero-cinema__slide.is-entering .hero-cinema__poster,
+.hero-cinema__slide.is-entering .hero-cinema__media video {
+    animation: hero-media-enter var(--hero-transition-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-cinema__slide.is-leaving .hero-cinema__copy {
+    animation: hero-copy-leave 480ms ease both;
+}
+
+.hero-cinema__slide.is-entering .hero-cinema__copy {
+    animation: hero-copy-enter 720ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both;
+}
+
+@keyframes hero-slide-leave {
+    0% { opacity: 1; }
+    42% { opacity: 0.88; }
+    100% { opacity: 0; }
+}
+
+@keyframes hero-slide-enter {
+    0% { opacity: 0; }
+    24% { opacity: 0.18; }
+    100% { opacity: 1; }
+}
+
+@keyframes hero-media-leave {
+    from { transform: scale(1); filter: blur(0); }
+    to { transform: scale(1.14); filter: blur(14px); }
+}
+
+@keyframes hero-media-enter {
+    from { transform: scale(1.14); filter: blur(14px); }
+    to { transform: scale(1); filter: blur(0); }
+}
+
+@keyframes hero-copy-leave {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+}
+
+@keyframes hero-copy-enter {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}

@@ -104,10 +104,7 @@ html[dir="rtl"] .nav-shell .nav-link::after {
     width: auto;
     min-height: 330px;
     display: grid;
-    grid-template-columns:
-        minmax(270px, 1fr)
-        minmax(250px, 0.78fr)
-        minmax(380px, 1.22fr);
+    grid-template-columns: minmax(270px, 1fr) minmax(250px, 0.78fr) minmax(380px, 1.22fr);
     overflow: hidden;
     border: 1px solid rgb(255 255 255 / 0.7);
     border-radius: 28px;
@@ -120,11 +117,7 @@ html[dir="rtl"] .nav-shell .nav-link::after {
     transform: translateY(-12px) scaleX(0.9);
     transform-origin: top center;
     clip-path: inset(0 45% 0 45% round 28px);
-    transition:
-        opacity 180ms ease,
-        transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
-        clip-path 360ms cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0s linear 360ms;
+    transition: opacity 180ms ease, transform 360ms cubic-bezier(0.22, 1, 0.36, 1), clip-path 360ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 360ms;
 }
 
 .nav-shell .nav-mega.is-open .nav-mega__panel {
@@ -163,14 +156,10 @@ html[dir="rtl"] .nav-shell .nav-link::after {
 .nav-shell .nav-mega__media-shade {
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(to top, rgb(3 24 20 / 0.75), transparent 66%),
-        linear-gradient(to right, transparent 62%, rgb(10 47 40 / 0.42));
+    background: linear-gradient(to top, rgb(3 24 20 / 0.75), transparent 66%), linear-gradient(to right, transparent 62%, rgb(10 47 40 / 0.42));
     pointer-events: none;
 }
 
 html[dir="rtl"] .nav-shell .nav-mega__media-shade {
-    background:
-        linear-gradient(to top, rgb(3 24 20 / 0.75), transparent 66%),
-        linear-gradient(to left, transparent 62%, rgb(10 47 40 / 0.42));
+    background: linear-gradient(to top, rgb(3 24 20 / 0.75), transparent 66%), linear-gradient(to left, transparent 62%, rgb(10 47 40 / 0.42));
 }

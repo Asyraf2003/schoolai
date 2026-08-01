@@ -1,0 +1,39 @@
+@media (max-width: 767px) {
+    :root {
+        --hero-nav-height: 78px;
+        --hero-content-gutter: 20px;
+    }
+
+    .nav-shell .navbar {
+        min-height: var(--hero-nav-height);
+    }
+
+    .nav-shell .navbar__menu {
+        inset-inline: 14px;
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+    .nav-shell .navbar__logo-icon {
+        width: 52px;
+        height: 52px;
+        flex-basis: 52px;
+        box-shadow:
+            0 0 0 6px rgb(255 255 255 / 0.1),
+            0 12px 28px rgb(0 0 0 / 0.2);
+    }
+}
+
+@media (max-width: 440px) {
+    .nav-shell .navbar__logo-text {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-shell .navbar,
+    .nav-shell .navbar * {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+    }
+}

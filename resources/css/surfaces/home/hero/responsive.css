@@ -1,0 +1,143 @@
+@media (min-width: 1536px) {
+    .hero-cinema__copy {
+        width: min(680px, 42vw);
+        max-width: 680px;
+    }
+
+    .hero-cinema__title {
+        font-size: clamp(5.8rem, 5.8vw, 7.6rem);
+    }
+}
+
+@media (max-width: 1279px) {
+    .hero-cinema__copy {
+        width: min(600px, 58vw);
+    }
+
+    .hero-cinema__title {
+        font-size: clamp(2.8rem, 7vw, 5.6rem);
+    }
+}
+
+@media (max-width: 1023px) {
+    .hero-cinema__copy {
+        width: min(560px, 68vw);
+    }
+
+    .hero-cinema__controls {
+        grid-template-columns: minmax(100px, 1fr) auto auto;
+    }
+
+    .hero-cinema__counter {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-cinema,
+    .hero-cinema__content {
+        min-height: max(700px, 100svh);
+    }
+
+    .hero-cinema__content {
+        padding-block-start: calc(var(--hero-nav-height) + 28px);
+        padding-block-end: clamp(154px, 21vh, 184px);
+    }
+
+    .hero-cinema__copy {
+        width: min(86vw, 380px);
+        max-width: min(86vw, 380px);
+    }
+
+    .hero-cinema__eyebrow {
+        font-size: 0.64rem;
+        letter-spacing: 0.14em;
+    }
+
+    .hero-cinema__eyebrow::before {
+        width: 22px;
+    }
+
+    .hero-cinema__title {
+        max-width: 18ch;
+        font-size: clamp(2.35rem, 10.6vw, 4rem);
+        line-height: 1;
+    }
+
+    .hero-cinema__description {
+        max-width: 36ch;
+        font-size: 0.94rem;
+        line-height: 1.58;
+    }
+
+    .hero-cinema__controls {
+        inset-block-end: max(22px, env(safe-area-inset-bottom));
+        grid-template-columns: minmax(70px, 1fr) auto;
+        grid-template-areas:
+            "progress progress"
+            "dots transport";
+        gap: 16px 18px;
+    }
+
+    .hero-cinema__progress { grid-area: progress; }
+    .hero-cinema__dots { grid-area: dots; }
+    .hero-cinema__transport { grid-area: transport; }
+
+    .hero-cinema__arrow {
+        width: 54px;
+        height: 36px;
+    }
+
+    .hero-cinema__playback {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+@media (max-width: 440px) {
+    .hero-cinema__content {
+        padding-block-end: 158px;
+    }
+
+    .hero-cinema__copy {
+        width: min(82vw, 320px);
+        max-width: min(82vw, 320px);
+    }
+
+    .hero-cinema__title {
+        max-width: 17ch;
+        font-size: clamp(2.18rem, 10.5vw, 3.15rem);
+    }
+
+    .hero-cinema__description {
+        max-width: 32ch;
+    }
+
+    .hero-cinema__controls {
+        gap: 14px;
+    }
+
+    .hero-cinema__arrow {
+        width: 48px;
+        height: 32px;
+    }
+}
+
+@media (max-height: 720px) and (min-width: 768px) {
+    .hero-cinema__content {
+        padding-block-end: 126px;
+    }
+
+    .hero-cinema__title {
+        font-size: clamp(2.7rem, 5.4vw, 5rem);
+    }
+
+    .hero-cinema__description {
+        margin-block-start: 12px;
+        line-height: 1.5;
+    }
+
+    .hero-cinema__cta {
+        margin-block-start: 12px;
+    }
+}

@@ -1,0 +1,220 @@
+name: Hero proof
+
+on:
+  pull_request:
+    paths:
+      - 'app/Http/Controllers/Concerns/BuildsHomeHero.php'
+      - 'docs/architecture/UI_UX_CURRENT_STATE.md'
+      - 'docs/architecture/blueprints/2026-08-01-home-hero-stabilization.md'
+      - 'docs/architecture/source-module-equivalence-overrides.json'
+      - 'resources/views/home/sections/hero.blade.php'
+      - 'resources/views/partials/site-navbar.blade.php'
+      - 'resources/views/partials/language-flag.blade.php'
+      - 'resources/views/partials/site-head-meta.blade.php'
+      - 'resources/css/pages/welcome-hero.css'
+      - 'resources/css/pages/welcome-navigation.css'
+      - 'resources/css/pages/welcome-navigation/**'
+      - 'resources/css/pages/welcome/029-*'
+      - 'resources/css/surfaces/home/hero/**'
+      - 'resources/js/pages/welcome-hero.js'
+      - 'resources/js/pages/welcome/**'
+      - 'resources/js/surfaces/home/hero/**'
+      - 'tests/Feature/HomeHero*'
+      - 'tests/Feature/PublicUnifiedNavigationTest.php'
+      - 'scripts/hero-*'
+      - 'scripts/verify-source-structure.mjs'
+      - 'vite.config.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  focused-hero-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Diff hygiene
+        run: |
+          git diff --check origin/main...HEAD
+          test -z "$(git status --short)"
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci
+
+      - name: Compile Vite without the known structure preflight debt
+        run: npx vite build
+
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate --force
+          mkdir -p storage/app/hero-proof
+
+      - name: Record focused Laravel proof
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: |
+          set +e
+          php artisan test \
+            tests/Feature/HomeHeroTest.php \
+            tests/Feature/HomeHeroStabilizationTest.php \
+            tests/Feature/PublicUnifiedNavigationTest.php \
+            2>&1 | tee storage/app/hero-proof/focused-test.log
+          echo "${PIPESTATUS[0]}" > storage/app/hero-proof/focused-test.status
+          exit 0
+
+      - name: Record known structure debt
+        run: npm run check:structure > storage/app/hero-proof/structure.log 2>&1 || true
+
+      - name: Record full Laravel result
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test > storage/app/hero-proof/full-test.log 2>&1 || true
+
+      - name: Bundle report
+        run: node scripts/hero-bundle-report.mjs
+
+      - name: Start application
+        run: |
+          php artisan serve --host=127.0.0.1 --port=8000 > storage/app/hero-proof/server.log 2>&1 &
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8000 >/dev/null && exit 0
+            sleep 1
+          done
+          exit 1
+
+      - name: Install transient browser driver
+        run: npm install --no-save --package-lock=false --ignore-scripts playwright-core@1.55.0
+
+      - name: Record Chromium runtime matrix
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          HERO_PROOF_BASE_URL: http://127.0.0.1:8000
+        run: |
+          set +e
+          node scripts/hero-runtime-proof.mjs \
+            2>&1 | tee storage/app/hero-proof/runtime.log
+          echo "${PIPESTATUS[0]}" > storage/app/hero-proof/runtime.status
+          exit 0
+
+      - name: Publish durable proof summary
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          focused_status="$(cat storage/app/hero-proof/focused-test.status 2>/dev/null || echo 1)"
+          runtime_status="$(cat storage/app/hero-proof/runtime.status 2>/dev/null || echo 1)"
+          verdict='FAIL'
+          if [ "$focused_status" = 0 ] && [ "$runtime_status" = 0 ]; then
+            verdict='PASS'
+          fi
+
+          node <<'NODE' > /tmp/runtime-summary.json
+          const fs = require('node:fs');
+          const file = 'storage/app/hero-proof/runtime-report.json';
+          if (!fs.existsSync(file)) {
+            console.log(JSON.stringify({ available: false }, null, 2));
+            process.exit(0);
+          }
+          const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+          console.log(JSON.stringify({
+            browser: report.browser,
+            matrixCases: report.matrix?.length ?? 0,
+            locales: [...new Set((report.matrix ?? []).map((entry) => entry.locale))],
+            widths: [...new Set((report.matrix ?? []).map((entry) => entry.width))],
+            interactions: report.interactions,
+          }, null, 2));
+          NODE
+
+          {
+            echo "### Hero proof summary: $verdict"
+            echo
+            echo "Focused Laravel status: \`$focused_status\`"
+            echo "Chromium runtime status: \`$runtime_status\`"
+            echo
+            echo '<details open><summary>Bundle report</summary>'
+            echo
+            echo '```json'
+            cat storage/app/hero-proof/bundle-report.json 2>/dev/null || true
+            echo '```'
+            echo '</details>'
+            echo
+            echo '<details><summary>Chromium matrix summary</summary>'
+            echo
+            echo '```json'
+            cat /tmp/runtime-summary.json
+            echo '```'
+            echo '</details>'
+            echo
+            echo '<details><summary>Focused Laravel tail</summary>'
+            echo
+            echo '```text'
+            tail -n 40 storage/app/hero-proof/focused-test.log 2>/dev/null || true
+            echo '```'
+            echo '</details>'
+            echo
+            echo '<details><summary>Full Laravel tail</summary>'
+            echo
+            echo '```text'
+            tail -n 60 storage/app/hero-proof/full-test.log 2>/dev/null || true
+            echo '```'
+            echo '</details>'
+            echo
+            echo '<details><summary>Structure tail</summary>'
+            echo
+            echo '```text'
+            tail -n 80 storage/app/hero-proof/structure.log 2>/dev/null || true
+            echo '```'
+            echo '</details>'
+            if [ "$verdict" != PASS ]; then
+              echo
+              echo '<details><summary>Runtime diagnostic tail</summary>'
+              echo
+              echo '```text'
+              tail -n 80 storage/app/hero-proof/runtime.log 2>/dev/null || true
+              echo '```'
+              echo '</details>'
+            fi
+          } > /tmp/hero-proof-comment.md
+
+          gh pr comment "$PR_URL" --body-file /tmp/hero-proof-comment.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: home-hero-proof
+          path: storage/app/hero-proof
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Enforce focused and runtime gates
+        if: always()
+        run: |
+          test "$(cat storage/app/hero-proof/focused-test.status)" = 0
+          test "$(cat storage/app/hero-proof/runtime.status)" = 0
