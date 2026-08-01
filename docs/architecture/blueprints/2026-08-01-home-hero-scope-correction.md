@@ -81,15 +81,16 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
    carried by the previously accepted bounded text shadows, not a full-screen
    dark wash.
 5. Preserve WebGL canvas layering beneath the same light overlay.
-6. For an incoming video slide, wait within the existing bounded window until
-   the native video has dimensions and a drawable playback state.
+6. Select native-video reveal mode immediately when the incoming slide owns a
+   video element. The transition must not wait for video dimensions or attempt
+   to copy its pixels.
 7. Keep the WebGL canvas transparent. Demo 1 retains its noisy directional mask,
    but the revealed region becomes transparent so the same native video playing
    underneath remains visible and continuous.
-8. Poster/image remains a bounded failure fallback only. The shader must never
-   restart, reload, seek, or duplicate the active incoming video.
+8. The native poster remains the media element's own loading/failure fallback.
+   The shader must never restart, reload, seek, or duplicate the incoming video.
 9. Image-to-image transitions continue using two ordinary textures.
-10. CSS fallback remains complete when WebGL or live media readiness fails.
+10. CSS fallback remains complete when WebGL initialization fails.
 
 ## OWNERSHIP
 
@@ -99,8 +100,8 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
 - `controls.css`: floating chevron geometry and focus/hover treatment.
 - `responsive.css`: six-tier/short-height chevron and copy adaptation.
 - `locale.css`: RTL semantic mirroring only, not a separate visual design.
-- `textures.js`: readiness metadata for native live video and normal image
-  textures; no external video pixel upload.
+- `textures.js`: immediate native-video reveal metadata and normal image texture
+  acquisition; no external video pixel upload.
 - `shaders.js`: Demo 1 mask plus transparent native-video reveal mode.
 - `renderer.js`: transparent canvas composition, resource cleanup, and normal
   image texture transitions.
@@ -110,11 +111,12 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
 
 ```text
 active slide selected
--> native incoming video hydrates and plays immediately
+-> native incoming video hydrates and play() is attempted immediately
+-> Demo 1 starts immediately in native-video reveal mode
 -> outgoing frame remains visible on the transparent WebGL canvas
--> native incoming video becomes drawable underneath
--> Demo 1 mask progressively makes the canvas transparent
--> the same advancing native video is revealed through the mask
+-> mask progressively makes the canvas transparent
+-> poster is visible only while the native video itself is still loading
+-> the same advancing native video appears underneath when it starts playing
 -> canvas releases
 -> native video remains at the same playback position
 ```
@@ -122,10 +124,10 @@ active slide selected
 Fallback:
 
 ```text
-native live video is unavailable within the bounded wait
--> poster/image texture may be used
--> native media remains the underlying owner
--> no restart, reload, or seek on canvas release
+native video is slow or fails
+-> its existing native poster/error fallback remains underneath the mask
+-> no WebGL video texture is created
+-> no restart, reload, or seek occurs on canvas release
 ```
 
 ## RESPONSIVE AND LOCALE CONTRACT
@@ -165,6 +167,10 @@ Required automated proof:
   pixels as a texture;
 - no second `play()`, `load()`, or active-video seek at transition settlement;
 - no stale canvas, RAF, transient class, listener, or timer.
+
+The runtime proof intercepts only the third-party video request and serves an
+existing repository MP4 to Chromium. This keeps playback evidence deterministic
+without changing production content or relying on an external server during CI.
 
 External proof remains:
 
