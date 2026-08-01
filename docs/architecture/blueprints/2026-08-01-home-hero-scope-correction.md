@@ -24,9 +24,12 @@ TARGET BRANCH: `agent/home-hero-scope-correction-001`
   stabilization.
 - The current owner modules correctly separate Hero Blade, CSS, controller,
   media, and deferred WebGL. The old language-flag coupling must not return.
-- The current WebGL texture selector returns a ready poster immediately when an
-  incoming video has not produced a drawable frame. The canvas then displays a
-  static poster while the native video plays underneath.
+- The rejected WebGL adaptation selected a ready poster before an incoming video
+  produced a drawable frame. The canvas therefore displayed a static poster
+  while the native video advanced underneath.
+- The current fallback video is served from a third-party origin. Sampling it as
+  a WebGL texture would require a CORS-clean media contract that the Hero does
+  not own and must not assume.
 - The Demo 1 direction policy and transition lifecycle are accepted and must
   remain intact.
 
@@ -52,11 +55,11 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
   from Hero Blade.
 - Keep native previous/next buttons, keyboard, swipe, autoplay, locale direction,
   live region, one-active-slide state, and reduced-motion behavior.
-- Make incoming video texture selection wait for a live drawable video frame
-  before falling back to poster.
+- Start the incoming native video immediately and reveal that same live element
+  through the Demo 1 mask instead of replacing it with a poster or sampled copy.
 - Keep the native video playing continuously; transition completion must not
   call `play()`, `load()`, or change `currentTime`.
-- Add focused source/runtime proof for restored UI and continuous video texture.
+- Add focused source/runtime proof for restored UI and continuous native video.
 
 ## SCOPE OUT
 
@@ -64,11 +67,13 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
   content, media crop/focal data, autoplay timing, and Demo 1 shader art style.
 - New animation libraries, renderer engines, or package changes.
 - Reintroducing the deleted language-flag/Hero coupling or anonymous overrides.
+- Depending on third-party CORS headers to upload external video frames into
+  WebGL textures.
 
 ## DECISION
 
 1. Keep the current semantic Hero and one controller owner.
-2. Replace the current control rail in Blade with the two proven native arrow
+2. Replace the rejected control rail in Blade with the two proven native arrow
    buttons and their existing triple-chevron SVGs.
 3. Move the accepted earlier visual values into the current named Hero modules:
    `layout.css`, `media.css`, `controls.css`, `responsive.css`, and `locale.css`.
@@ -76,11 +81,15 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
    carried by the previously accepted bounded text shadows, not a full-screen
    dark wash.
 5. Preserve WebGL canvas layering beneath the same light overlay.
-6. For an incoming video slide, wait up to the existing bounded texture window
-   for a drawable live video frame. Use poster/image only after that wait fails.
-7. Once a video source is selected, update that texture every RAF as already
-   supported by the renderer. Do not restart or seek the video.
-8. CSS fallback remains complete when WebGL or live texture acquisition fails.
+6. For an incoming video slide, wait within the existing bounded window until
+   the native video has dimensions and a drawable playback state.
+7. Keep the WebGL canvas transparent. Demo 1 retains its noisy directional mask,
+   but the revealed region becomes transparent so the same native video playing
+   underneath remains visible and continuous.
+8. Poster/image remains a bounded failure fallback only. The shader must never
+   restart, reload, seek, or duplicate the active incoming video.
+9. Image-to-image transitions continue using two ordinary textures.
+10. CSS fallback remains complete when WebGL or live media readiness fails.
 
 ## OWNERSHIP
 
@@ -90,8 +99,11 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
 - `controls.css`: floating chevron geometry and focus/hover treatment.
 - `responsive.css`: six-tier/short-height chevron and copy adaptation.
 - `locale.css`: RTL semantic mirroring only, not a separate visual design.
-- `textures.js`: live-video-first incoming texture acquisition.
-- `renderer.js`: unchanged continuous dynamic texture upload and cleanup.
+- `textures.js`: readiness metadata for native live video and normal image
+  textures; no external video pixel upload.
+- `shaders.js`: Demo 1 mask plus transparent native-video reveal mode.
+- `renderer.js`: transparent canvas composition, resource cleanup, and normal
+  image texture transitions.
 - Controller/events/direction: preserved unless proof exposes a direct defect.
 
 ## STATE CONTRACT
@@ -99,20 +111,21 @@ fallback, lifecycle, responsive, locale, or accessibility behavior.
 ```text
 active slide selected
 -> native incoming video hydrates and plays immediately
--> outgoing frame remains visible on canvas
--> live incoming video frame becomes drawable
--> Demo 1 wipe samples the advancing video every RAF
+-> outgoing frame remains visible on the transparent WebGL canvas
+-> native incoming video becomes drawable underneath
+-> Demo 1 mask progressively makes the canvas transparent
+-> the same advancing native video is revealed through the mask
 -> canvas releases
--> the same native video remains visible at the same playback position
+-> native video remains at the same playback position
 ```
 
 Fallback:
 
 ```text
-live frame unavailable within bounded wait
--> poster/image texture used
+native live video is unavailable within the bounded wait
+-> poster/image texture may be used
 -> native media remains the underlying owner
--> no restart/seek on canvas release
+-> no restart, reload, or seek on canvas release
 ```
 
 ## RESPONSIVE AND LOCALE CONTRACT
@@ -146,15 +159,17 @@ Required automated proof:
 - physical and automatic direction preserved;
 - exactly two visible Hero navigation buttons and no visible rail/dots/playback;
 - light overlay source contract and no heavy uniform overlay token;
-- incoming video transition chooses a dynamic video texture when a frame becomes
-  available within the bounded wait;
+- incoming video `currentTime` advances while the Demo 1 canvas is active;
+- incoming video does not move backwards when the canvas settles;
+- renderer uses transparent live-video reveal and does not upload external video
+  pixels as a texture;
 - no second `play()`, `load()`, or active-video seek at transition settlement;
 - no stale canvas, RAF, transient class, listener, or timer.
 
 External proof remains:
 
 - real Safari/WebKit visual acceptance;
-- owner screenshot comparison;
+- owner screenshot comparison after pull;
 - measured GPU/frame and color parity on representative devices.
 
 ## ROLLBACK
@@ -164,6 +179,6 @@ migration is involved.
 
 ## ACTIVE STEP
 
-Implement this correction only, run the focused Chromium proof, update current
-state with exact evidence, then publish one reviewable PR. Do not begin another
-surface.
+Run the focused Chromium proof on the corrected native-video reveal, update
+current state with exact evidence, then publish one reviewable PR. Do not begin
+another surface.
