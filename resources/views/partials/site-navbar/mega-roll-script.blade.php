@@ -4,41 +4,35 @@
     if (!root || root.dataset.navRollBooted === 'true') return;
 
     root.dataset.navRollBooted = 'true';
-
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var lastPlayed = new WeakMap();
     var controlSelector = '.nav-link, .nav-mega__link, .navbar__cta';
 
     function segmentsFor(text, locale, keepWholeWord) {
       if (keepWholeWord) return [text];
-
       if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
         return Array.from(
           new Intl.Segmenter(locale, { granularity: 'grapheme' }).segment(text),
           function (entry) { return entry.segment; }
         );
       }
-
       return Array.from(text);
     }
 
     function createLayer(text, locale, keepWholeWord, modifier) {
       var layer = document.createElement('span');
       layer.className = 'nav-roll__layer nav-roll__layer--' + modifier;
-
       segmentsFor(text, locale, keepWholeWord).forEach(function (segment) {
         var character = document.createElement('span');
         character.className = 'nav-roll__char';
         character.textContent = segment;
         layer.appendChild(character);
       });
-
       return layer;
     }
 
     function enhanceLabel(label, locale, keepWholeWord) {
       if (label.dataset.navRollEnhanced === 'true') return;
-
       var text = (label.textContent || '').trim();
       if (!text) return;
 
@@ -69,12 +63,10 @@
 
     function playRoll(label, delay, reverse) {
       if (!label || reducedMotion.matches || typeof label.animate !== 'function') return;
-
       var now = performance.now();
       var previous = lastPlayed.get(label) || 0;
       if (!delay && now - previous < 180) return;
       lastPlayed.set(label, now);
-
       cancelAnimations(label);
 
       var baseCharacters = label.querySelectorAll('.nav-roll__layer--base .nav-roll__char');
@@ -167,7 +159,6 @@
         if (becameActive) {
           playSequence(target.querySelectorAll('[data-nav-roll="main"]'), 420, 54);
         }
-
         if (openedMega) {
           var trigger = target.querySelector('[data-nav-mega-toggle]');
           playControl(trigger, false);
@@ -184,7 +175,6 @@
       root.querySelectorAll('[data-nav-roll]').forEach(function (label) {
         enhanceLabel(label, locale, keepWholeWord);
       });
-
       observer.observe(root, {
         attributes: true,
         attributeFilter: ['class'],
