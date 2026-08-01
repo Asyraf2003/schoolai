@@ -5,8 +5,7 @@ html[dir="rtl"] .hero-cinema__media::after {
         rgb(2 13 12 / var(--hero-overlay-strength));
 }
 
-html[dir="rtl"] .hero-cinema__cta::after,
-html[dir="rtl"] .hero-cinema__progress-bar {
+html[dir="rtl"] .hero-cinema__cta::after {
     transform-origin: right center;
 }
 
