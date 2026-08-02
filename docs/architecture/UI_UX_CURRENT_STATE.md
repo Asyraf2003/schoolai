@@ -3,91 +3,92 @@
 Status: BLOCKED_BY_MISSING_EVIDENCE
 Updated: 2026-08-03
 Repository: `Asyraf2003/schoolai`
-Source main before active batch: `61f35579bff7dea348f520b109c29c148399466f`
-Published implementation main: `62bb85887c1136aa18b132200fac4a244e243e55`
+Source main before active batch: `3e0b6ea36b5989a88202c51ee4d063a1d3c3259b`
+Active branch: `ai/vision-effect25-only-20260803`
 
 Commit publication proves source state only. It does not prove rendering,
 responsive parity, accessibility, performance, or browser lifecycle.
 
 ## Active production batch
 
-Blueprint: `blueprints/2026-08-03-about-vision-scroll-typography.md`
+Blueprint: `blueprints/2026-08-03-vision-effect25-scroll.md`
 
-- ID: `HOME-STORY-001`
+- ID: `HOME-VISION-002`
 - State: `IMPLEMENTING`
-- Surface: homepage About and Vision/Mission
-- Reference: Codrops On-Scroll Typography Animations, Set 2, effect 25 for About
+- Surface: homepage Vision/Mission only
+- Reference: Codrops On-Scroll Typography Animations, Set 2, effect 25
 - Protected: Hero, Testimonial, School Values, Programs, Gallery, Articles,
-  navigation, authentication, translations, database, and dependencies
+  navigation, translations, authentication, database, dependencies, and assets
 
 ## Current FACT and DECISION
 
-- About is activated again with one semantic blue sticky scroll scene.
-- About uses local `public/media/home/9.png` through `12.png` as white-tinted
-  decorative depth layers.
-- The retired About reel/video/SVG/canvas/WebGL warp source and controllers are
-  removed from the active source graph.
-- Vision/Mission is rebuilt as one editorial sequence using rise, fan, focus,
-  and vertical stretch effects; the previous card interaction and separate
-  desktop/mobile heading controllers are removed.
-- ID and EN animate Unicode characters. Arabic animates complete words so
-  joining and shaping remain intact.
-- One shared native RAF implementation owns both surfaces. No GSAP,
-  ScrollTrigger, Lenis, Splitting, WebGL, external font, or package change is
-  introduced.
-- No-JS content remains server-rendered. Reduced motion resolves to static final
-  content and removes the About sticky travel.
-- Retired split-source entries may remain as historical manifest records; the
-  structure checker validates only entries whose source entry still exists.
+- Owner feedback removes the complete About surface from homepage composition.
+- About partial, dedicated CSS, mixed responsive CSS, Vite entry, and focused
+  About test are removed; assets `9.png` through `12.png` remain untouched but
+  are no longer loaded by the homepage.
+- Vision/Mission is the sole scroll-typography story.
+- Opening, vision, bridge, and all four mission scenes use one effect grammar:
+  glyphs grow vertically from `scaleY(0)` to `scaleY(1)` while their scene is
+  held in a sticky viewport.
+- Existing semantic key phrases preserve blue, orange, green, and purple color
+  emphasis.
+- ID and EN animate Unicode characters sequentially.
+- Arabic animates complete words sequentially; isolated Arabic letters are
+  never generated, so joining and shaping remain intact.
+- One native requestAnimationFrame controller owns scroll, resize, reduced
+  motion, pagehide, and BFCache lifecycle. It updates only scenes whose progress
+  changes and restores static text when disposed.
+- No JS/failure state remains complete server-rendered text. Reduced motion
+  removes long scene travel, sticky positioning, and transforms.
+- One semantic DOM serves the six width tiers. Scene travel and page padding
+  adapt at 640, 768, 1024, 1280, and 1536px.
+- No GSAP, ScrollTrigger, Lenis, Splitting, WebGL, external font, package, or
+  translation change is introduced.
 
 ## Source proof status
 
 | Gate | Status | Evidence |
 |---|---|---|
-| Scope diff | `PASS` | connector compare contains only About/Vision source, entries, focused tests, structure retirement handling, and architecture docs |
-| Legacy standalone owners | `PASS` | old About reel/warp and Vision desktop/mobile CSS/JS files removed in published diff |
-| New source line limit | `PASS` | local line count: every new/replaced source file <= 118 lines |
-| New JavaScript syntax | `PASS` | local `node --check` passed for entry, controller, split module, and Vite config |
-| Publication | `PASS` | `main` fast-forwarded without force to `62bb85887c1136aa18b132200fac4a244e243e55` |
+| Scope diff | `PASS` | connector compare contains only Vision/Mission, About retirement, entries, focused test, and architecture docs |
+| About runtime owners | `PASS_SOURCE` | partial and active CSS/Vite/test owners removed from branch diff |
+| One motion grammar | `PASS_SOURCE` | every rendered story text declares `data-story-effect="stretch"`; rise/fan/focus removed |
+| Arabic shaping guard | `PASS_SOURCE` | locale adapter segments Arabic on whitespace into complete words |
+| Six-tier source contract | `PASS_SOURCE` | base XS plus 640/768/1024/1280/1536 boundaries in dedicated CSS |
+| No-JS/disposal fallback | `PASS_SOURCE` | transform activation is gated by `is-story-ready`; destroy removes inline transforms and progress |
+| Source file line limit | `PASS_SOURCE` | every added/replaced active source file remains below 200 lines by inspection |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector channel cannot run repository command |
-| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | full repository runtime unavailable in connector channel |
-| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | full repository runtime unavailable in connector channel |
-| Focused PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | tests updated but not executed in connector channel |
+| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not executed in connector channel |
+| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not executed in connector channel |
+| Focused PHP test | `BLOCKED_BY_MISSING_EVIDENCE` | contract updated but not executed in connector channel |
 | Full PHP suite | `BLOCKED_BY_MISSING_EVIDENCE` | not executed in connector channel |
 | Chromium/WebKit runtime | `BLOCKED_BY_MISSING_EVIDENCE` | no browser run yet |
 | Lighthouse/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | no comparable runtime run yet |
-
-## Prior completed auth/account baseline
-
-- Public `Login` links to the localized Guru/Murid choice page.
-- Admin remains non-public at `/login/admin`; Guru and Murid role isolation and
-  PPDB access boundaries remain unchanged by this batch.
-- Prior automated auth publication remains at `278dca9d9438e195a66bc7ea2f275b7394787b8e`.
-- Follow-up Chromium/WebKit proof for that route sequence remains unproven.
 
 ## Progress ledger
 
 | Stage | Status | Proof or blocker |
 |---|---|---|
-| H01 source ownership audit | `PASS` | Blade, CSS, JS, Vite, tests, locale copy, and assets inspected |
-| H02 blueprint acceptance | `PASS` | owner explicitly authorized the described implementation on `main` |
-| H03 semantic About rebuild | `IMPLEMENTED_SOURCE` | new active partial and blue sticky scene |
-| H04 semantic Vision/Mission rebuild | `IMPLEMENTED_SOURCE` | new editorial sequence and four motion variants |
-| H05 locale/motion controller | `IMPLEMENTED_SOURCE` | shared implementation with Arabic word adapter and cleanup |
-| H06 legacy retirement | `PASS_SOURCE` | standalone reel/warp/card/heading owners removed from published diff |
-| H07 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | repository commands have not run |
-| H08 runtime matrix | `BLOCKED_BY_MISSING_EVIDENCE` | six tiers, ID/EN/AR, Chromium/WebKit, reduced motion untested |
-| H09 publication | `PASS` | direct non-force fast-forward to published implementation SHA |
+| V01 owner correction | `PASS` | explicit request removes About and selects effect 25 for all Vision/Mission scenes |
+| V02 blueprint | `PASS` | `HOME-VISION-002` records one surface and one motion grammar |
+| V03 About retirement | `PASS_SOURCE` | render/include/CSS/Vite/test owners removed |
+| V04 semantic Vision/Mission rebuild | `IMPLEMENTED_SOURCE` | seven sticky editorial beats with marked phrase colors |
+| V05 locale adapter | `IMPLEMENTED_SOURCE` | ID/EN characters and Arabic complete words |
+| V06 six-tier layout | `IMPLEMENTED_SOURCE` | fluid type plus five declared width boundaries |
+| V07 lifecycle/performance bound | `IMPLEMENTED_SOURCE` | one RAF, progress cache, static disposal, reduced-motion result |
+| V08 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | repository commands have not run |
+| V09 runtime matrix | `BLOCKED_BY_MISSING_EVIDENCE` | tiers/locales/engines/reduced motion untested |
+| V10 publication | `PENDING` | revalidate main then non-force fast-forward |
 
 ## STATUS
 
-The requested production source replacement is published on `main`. Source
-inspection confirms the intended owners and legacy removals. Build, test,
-browser, accessibility, and PageSpeed claims remain blocked until their actual
-gates run.
+The corrected production source is complete on the active branch. It removes
+About and makes Vision/Mission an effect25-only scroll story. Build, test,
+browser, accessibility, and PageSpeed status remain blocked until actual gates
+run.
 
 ## NEXT VALID STEP
 
-Pull current `main`, then run `git diff --check`, `npm run check:structure`,
-`npm run build`, and `php artisan test`. Report the first failing gate verbatim;
-do not begin visual tuning until automated source/build status is known.
+Revalidate that `main` still equals `3e0b6ea36b5989a88202c51ee4d063a1d3c3259b`,
+then fast-forward it without force to the active branch head. After pulling,
+run `git diff --check`, `npm run check:structure`, `npm run build`, and
+`php artisan test`; report the first failing gate verbatim.
