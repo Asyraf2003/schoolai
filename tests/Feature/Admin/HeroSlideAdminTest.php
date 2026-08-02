@@ -2,6 +2,7 @@
 
 use App\Models\Article;
 use App\Models\HeroSlide;
+use App\Models\PpdbSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -73,6 +74,8 @@ it('rejects youtube and stores a raw uploaded hero video', function (): void {
         ->and($slide->poster_url)->toBe($this->heroArticle->thumbnail_url)
         ->and($slide->is_active)->toBeTrue();
     Storage::disk('public')->assertExists($storedPath);
+
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
 
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
