@@ -11,6 +11,7 @@
   $missionMotions = ['orbit', 'sweep', 'zoom', 'fold'];
   $missionColors = ['#075e62', '#7a3828', '#4d2c75', '#175b45'];
   $missionAssets = [9, 10, 11, 12];
+  $missionPositions = ['start', 'center', 'end', 'center'];
 @endphp
 
 <section
@@ -22,8 +23,9 @@
   data-story-locale="{{ $directionLocale }}"
 >
   <article
-    class="direction-story__scene direction-story__scene--vision"
+    class="direction-story__scene direction-story__scene--vision direction-story__scene--position-center"
     data-story-scene
+    data-story-position="center"
     data-story-color="#061d4f"
     data-story-art-motion="drift"
     style="--scene-color: #061d4f"
@@ -62,8 +64,9 @@
   </article>
 
   <div
-    class="direction-story__scene direction-story__scene--bridge"
+    class="direction-story__scene direction-story__scene--bridge direction-story__scene--position-center"
     data-story-scene
+    data-story-position="center"
     data-story-color="#1e2a78"
     style="--scene-color: #1e2a78"
   >
@@ -78,8 +81,9 @@
   <ol class="direction-story__list">
     @foreach ($visiMisi['missions'] as $mission)
       <li
-        class="direction-story__scene direction-story__scene--mission"
+        class="direction-story__scene direction-story__scene--mission direction-story__scene--position-{{ $missionPositions[$loop->index] }}"
         data-story-scene
+        data-story-position="{{ $missionPositions[$loop->index] }}"
         data-story-color="{{ $missionColors[$loop->index] }}"
         data-story-art-motion="{{ $missionMotions[$loop->index] }}"
         style="--scene-color: {{ $missionColors[$loop->index] }}"
