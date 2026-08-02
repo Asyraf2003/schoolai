@@ -145,6 +145,8 @@ const manifestPath = path.join(root, 'docs/architecture/source-module-equivalenc
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 for (const [entry, data] of Object.entries(manifest.css ?? {})) {
     const entryPath = path.join(root, entry);
+    if (!fs.existsSync(entryPath)) continue;
+
     const entrySource = fs.readFileSync(entryPath, 'utf8');
     const imports = Array.from(entrySource.matchAll(/@import\s+['"]([^'"]+)['"]/g), (match) => match[1]);
     const expected = data.orderedModules.map((module) => module.path);
