@@ -2,135 +2,128 @@
 
 Blueprint ID: `HOME-HERO-TEXT-001`
 Status: `IMPLEMENTING`
-Owner: repository owner through the 2026-08-02 implementation brief
-Source main SHA: `684328dd3c2f4eb962501aee9d4486cdc6d9ac6c`
+Owner: repository owner through the 2026-08-02 implementation and correction briefs
+Correction parent SHA: `1035427daf4e00349a7d833c0121ab6cacb21ccb`
 Surface: `/` homepage hero
-Execution channel: Terminal Codex
+Execution channel: Web AI with explicit direct-main permission
 
-## FACT and GAP
+## FACT and corrected decision
 
-- Translation fallback normalizes `flower.mp4` as the first video slide.
-- The database composer currently replaces all fallback slides, so an article
-  can displace that primary video.
-- Article slides carry `article_id` and a public article URL only inside the
-  generic CTA contract.
-- Blade renders one `h1`, subsequent `h2`, descriptions, and CTAs server-side.
-- `welcome-hero.js` currently wraps every title from a generic CTA URL after
-  DOM ready; this can falsely link non-article and PPDB slides.
-- `PpdbSetting` already owns registration-open state and safe public URL
-  normalization.
-- Navbar roll is self-contained in navbar Blade/CSS and is already active.
-- GAP `HERO-TEXT-001`: explicit primary/PPDB/title-link presentation fields and
-  browser proof do not exist.
-- GAP `HERO-BROWSER-001`: local Chromium/WebKit availability must be resolved
-  before browser claims.
+- Translation data contains a demo `flower.mp4` slide.
+- Active admin/article placements are the public hero's managed source of truth.
+- The earlier implementation prepended the translation demo video to managed
+  placements, so the admin displayed five placements while the homepage rendered
+  an additional unmanaged sixth slide.
+- Database/article output now replaces translation fallback as one complete list
+  when at least one slide survives normalization.
+- Translation slides remain only when no database/article slide is available.
+- The first final slide owns `is_primary_slide`; no hidden primary slide is
+  inserted ahead of the admin order.
+- `title_href` remains article-only and is never inferred from generic CTA data.
+- PPDB visibility remains sourced only from `PpdbSetting` and applies only when
+  the first final slide renders as video.
+- Navbar markup, styles, scripts, and motion remain untouched.
 
-## Goal, impact, and scope
+## Goal and scope
 
-Add server-rendered article title links, conditional primary-video PPDB CTA,
-directional title glow, and a hero-only PPDB roll without changing other
-homepage surfaces or navbar output.
+The first active admin placement must be the first public slide. In the owner's
+current data that placement is the uploaded article video. When PPDB is open,
+that video's normal description/CTA is replaced by the localized PPDB CTA. When
+closed, its normal article presentation returns.
 
 Editable owners:
 
-- hero controller/provider presentation normalization;
-- article-to-hero mapping and `HeroSlide::toHeroArray()`;
-- homepage hero Blade;
-- hero page JS modules and hero visual CSS;
-- ID/EN/AR runtime translations;
-- directly related hero tests;
+- `InjectsDatabaseHero` composition;
+- hero media and glow JS modules;
+- directly related hero/admin tests;
 - this blueprint and `UI_UX_CURRENT_STATE.md`.
 
-Forbidden: About, Testimonial, navbar markup/script/style/behavior, other
-homepage sections, unrelated admin/public routes, meta title/description,
-media loading policy, and new dependencies.
+Forbidden: About, Testimonial, navbar, other homepage surfaces, article content,
+admin ordering controls, database schema, media upload behavior, and new
+runtime dependencies.
 
-## Decision and presentation contract
+## Presentation contract
 
-- Preserve normalized translation slide zero as the primary video. When
-  database/article slides exist, append them after that slide and replace only
-  the remaining fallback slides.
-- Every normalized slide exposes `is_primary_slide`, `show_ppdb_cta`,
-  `ppdb_url`, `ppdb_label`, and `title_href`.
-- `show_ppdb_cta` is true only for normalized index zero when it renders as
-  video and `PpdbSetting::isRegistrationOpen()` is true.
-- An open primary PPDB state suppresses its normal description and normal CTA,
-  rendering one server-side PPDB CTA to `publicRegistrationUrl()`.
-- A closed state renders normal description and normal CTA with no reserved
-  PPDB gap.
-- `title_href` originates only from an article mapping, is normalized through
-  the existing public-link boundary, and is never inferred from CTA data.
-- Keep navbar roll untouched. A hero-owned roll enhancer uses the same
-  base/incoming, `translateY`, `rotateX`, and stagger grammar.
+```text
+managed slides available
+-> normalize managed slides
+-> first managed slide is primary
+-> render managed list only
+
+no managed/article/legacy slides available
+-> retain translation fallback list
+```
+
+Every final slide exposes `is_primary_slide`, `show_ppdb_cta`, `ppdb_url`,
+`ppdb_label`, and `title_href` through `HomeHeroPresentation`.
+
+No public slide may exist outside the ordering/activation contract visible to
+admin when managed placements are active.
+
+## Video fallback contract
+
+- Keep the server-rendered poster attribute while the video hydrates and starts.
+- Do not remove the poster merely because a slide becomes active.
+- The browser replaces the poster naturally when video frames become available.
+- Failed or delayed playback therefore retains meaningful media instead of
+  exposing only the dark-green media background.
 
 ## Semantic and motion contract
 
-- Keep exactly one `h1`; later slides remain `h2`; an article anchor stays
-  inside its heading and exists in initial HTML.
-- Plain semantic title text remains the visible/no-JS source. JS adds only an
-  `aria-hidden` decorative glow overlay without changing heading geometry.
-- ID/EN use grapheme segmentation with `Intl.Segmenter` and a code-point
-  fallback; grouped words preserve normal wrapping.
-- AR remains one shaped text run and uses a direction-mirrored gradient sweep.
-- Pointer enter/leave and link focus trigger bounded/cancelable animation.
-- Through LG on coarse/hover-none input, each activated slide gets one sweep;
-  tap behavior and slider swipe remain native.
-- Reduced motion removes sweep, stagger, blur, and rotation while retaining
-  semantic text, focus, and navigation.
+- Keep exactly one `h1`; later slides remain `h2`.
+- Article anchors remain server-rendered inside their heading.
+- Plain title text remains the semantic/no-JS source.
+- JS adds only an `aria-hidden` decorative overlay.
+- Every `hero:slide-active` event schedules one title sweep after 140ms on every
+  viewport and input mode, including initial load, autoplay, arrow navigation,
+  keyboard navigation, dot selection, and swipe.
+- Pointer hover and keyboard focus may replay the same bounded effect.
+- ID/EN use grapheme segmentation and left-to-right energy.
+- AR remains one shaped run with a mirrored right-to-left gradient sweep.
+- Reduced motion keeps the static title and focus treatment without glow/roll.
 
-## Six-tier and locale contract
+## Six-tier contract
 
-| Tier | Layout/content | Input/motion |
+| Tier | Managed first slide | Automatic glow |
 |---|---|---|
-| XS 360–639 | existing copy width; no PPDB residue | active-slide sweep once on touch |
-| SM 640–767 | existing fluid copy | active-slide sweep once on touch |
-| MD 768–1023 | existing copy/arrow geometry | active-slide sweep once on touch |
-| LG 1024–1279 | existing composition; prove 1180/1181 | touch sweep or pointer/focus |
-| XL 1280–1535 | existing desktop composition | pointer/focus sweep |
-| 2XL 1536+ | bounded existing copy | pointer/focus sweep |
+| XS 360–639 | admin order, touch-safe | once per activation |
+| SM 640–767 | admin order, touch-safe | once per activation |
+| MD 768–1023 | admin order | once per activation |
+| LG 1024–1279 | admin order; preserve 1180/1181 nav boundary | once per activation |
+| XL 1280–1535 | admin order | once per activation |
+| 2XL 1536+ | admin order, bounded copy | once per activation |
 
-ID/EN remain Inter/LTR with left-to-right energy. AR remains Cairo/RTL with a
-right-to-left whole-run sweep. Server locale switching reconstructs the same
-contract without duplicate DOM/state.
+The correction changes no layout breakpoint, navigation behavior, heading
+geometry, or locale architecture.
 
 ## Capability, performance, and accessibility
 
-- Tier 0: fully usable server HTML and static labels.
-- Tier 1: CSS plus bounded Web Animations API; no RAF loop, canvas, WebGL,
-  dependency, request, or per-character listener.
-- Chromium and WebKit receive the same capability-detected path; unsupported
-  animation APIs retain the static result.
-- Base text reserves all geometry, decorative layers are absolute and
-  `aria-hidden`, and only bounded transform/opacity/filter/background motion is
-  used.
-- Article focus ring remains distinct from decorative glow. No nested
-  interactive element or duplicate accessible label is allowed.
+- Static semantic HTML remains fully usable.
+- Motion uses bounded Web Animations API calls and one short activation timer.
+- No RAF loop, canvas, WebGL, dependency, network request, or per-character
+  listener is added.
+- Decorative layers remain pointer-inert and hidden from assistive technology.
+- The poster remains available during media loading/failure.
 
-## Execution and proof
+## Proof status
 
-- The presentation contract, Blade title link/PPDB branch, hero-owned motion
-  modules, translations, and focused tests are implemented locally.
-- Focused hero, navbar, and upstream hotfix regression: `PASS`, 15 tests and
-  262 assertions.
-- Production Vite build: `PASS`, 86 modules transformed.
-- `git diff --check`: `PASS`.
-- Full PHP suite: `FAIL`, 146/147 tests pass; the remaining failure is the
-  pre-existing stale `HomeAboutReelTest` for the protected disabled About
-  surface. About was not changed to conceal that conflict.
-- Source structure: `FAIL` on the three pre-existing oversized Vision/Mission
-  files and the pre-existing stale Hero source checksum.
-- Chromium: `PASS` for open/closed PPDB across 360, 640, 768, 1024, 1180,
-  1181, 1280, and 1536 in ID/EN/AR, plus touch single-tap and reduced motion.
-- WebKitGTK 2.52.5: `PASS` for the same widths, locales, states, pointer,
-  keyboard focus, layout, and motion. WebKit touch emulation and reduced-motion
-  emulation remain `BLOCKED_BY_MISSING_EVIDENCE` in the available driver.
-- Real Safari, Lighthouse/PageSpeed, zoom, orientation, short-height, and field
-  CWV remain outside this bounded proof and are not claimed.
+Published source correction includes:
 
-## Status and next valid step
+- removal of fallback/admin list concatenation;
+- automatic active-slide glow for every viewport;
+- retention of video posters during hydration/playback;
+- updated focused contracts for article placement, database fallback, admin raw
+  video, title semantics, PPDB, glow, and poster stability.
 
-Overall release status: `FAIL`. Blueprint remains `IMPLEMENTING`; automated
-gate failures prevent push. The next valid execution channel is owner/local
-terminal: resolve or formally retire the stale About test and structure
-baseline debt in their own accepted scopes, rerun every gate, then repeat the
-missing WebKit touch/reduced-motion proof before publication.
+Connector publication does not run local PHP, Vite, structure, browser, or
+Safari proof. Those gates remain `BLOCKED_BY_MISSING_EVIDENCE` until the owner
+pulls and runs them. Previously recorded baseline failures for the protected
+About test and Vision/Mission/source-equivalence structure debt remain separate.
+
+## Next valid step
+
+Execution channel: `owner/local terminal`.
+
+Pull current `main`, run the focused hero/admin tests and production build, then
+visually verify that the admin's placement `01` is the first public slide and
+that title glow replays on initial load plus every manual/automatic transition.
