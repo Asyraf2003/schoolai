@@ -3,6 +3,8 @@ name: Login choice proof
 on:
   push:
     branches: [ai/login-choice-page-20260802]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
