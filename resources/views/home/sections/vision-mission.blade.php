@@ -117,10 +117,17 @@
               {{ $mission['title'] }}
             </span>
             @foreach ($mission['text_parts'] as $part)
+              @php
+                $hasArabicHonorific = $directionLocale === 'ar'
+                  && str_contains($part['text'], 'ﷺ');
+                $partText = $hasArabicHonorific
+                  ? trim(str_replace('ﷺ', '', $part['text']))
+                  : $part['text'];
+              @endphp
               <span
                 class="direction-story__fragment{{ ! empty($part['mark']) ? ' direction-story__mark direction-story__mark--'.$part['mark'] : '' }}"
                 data-story-fragment
-              >{{ $part['text'] }}</span>
+              >{{ $partText }}@if ($hasArabicHonorific)<span class="direction-story__honorific" data-story-honorific>صلى الله عليه وسلم</span>@endif</span>
             @endforeach
           </h4>
         </div>
