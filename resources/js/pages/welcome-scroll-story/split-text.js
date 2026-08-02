@@ -73,7 +73,8 @@ export function prepareStoryText(root) {
         const prepared = prepareElement(element, arabic);
         return {
             ...prepared,
-            effect: 'stretch',
+            effect: element.dataset.storyEffect || 'effect25',
+            arabic,
         };
     });
 }
