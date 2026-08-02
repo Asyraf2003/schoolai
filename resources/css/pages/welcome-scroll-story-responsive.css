@@ -1,0 +1,85 @@
+.story-unit {
+    display: inline-block;
+    white-space: pre;
+    transform-origin: 50% 100%;
+}
+
+html.has-scroll-story [data-story-text] {
+    overflow-wrap: normal;
+}
+
+@media (max-width: 767px) {
+    .home-about-scroll { min-height: 320svh; }
+
+    .home-about-scroll__stage {
+        align-items: center;
+        padding: 5.5rem 1.25rem 6rem;
+    }
+
+    .home-about-scroll__layer {
+        width: clamp(12rem, 58vw, 22rem);
+        opacity: .2;
+    }
+
+    .home-about-scroll__title {
+        font-size: clamp(3.25rem, 17vw, 6.4rem);
+        line-height: .88;
+    }
+
+    .home-about-scroll__description {
+        font-size: .98rem;
+        line-height: 1.65;
+    }
+
+    .direction-story__intro,
+    .direction-story__vision,
+    .direction-story__mission,
+    .direction-story__missions-heading {
+        width: min(100% - 2.5rem, 94rem);
+    }
+
+    .direction-story__intro { min-height: 95svh; }
+
+    .direction-story__heading,
+    .direction-story__missions-heading {
+        font-size: clamp(3rem, 14vw, 6rem);
+        line-height: .9;
+    }
+
+    .direction-story__vision,
+    .direction-story__mission {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding-block: 5rem;
+    }
+
+    .direction-story__vision-copy h3,
+    .direction-story__mission-copy h4 {
+        max-width: 100%;
+        font-size: clamp(2.8rem, 13vw, 5.8rem);
+    }
+
+    .direction-story__mission::before {
+        inset-block-start: 0;
+        width: 4rem;
+        height: .28rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1180px) {
+    .home-about-scroll { min-height: 360svh; }
+    .home-about-scroll__title { font-size: clamp(5rem, 11vw, 8rem); }
+    .direction-story__heading { font-size: clamp(5rem, 9vw, 7.5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-about-scroll { min-height: auto; }
+    .home-about-scroll__stage { position: relative; }
+    .home-about-scroll__layer { transform: none !important; }
+    .story-unit { opacity: 1 !important; filter: none !important; transform: none !important; }
+    .direction-story__intro,
+    .direction-story__vision,
+    .direction-story__mission,
+    .direction-story__missions-heading { min-height: auto; }
+}
