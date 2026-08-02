@@ -148,7 +148,7 @@ it('restores the complete primary article presentation while PPDB is closed', fu
         ->not->toContain('Langkah Awal Menuju Pendidikan yang Bermakna');
 });
 
-it('replays bounded hero glow for every active slide and keeps posters stable', function (): void {
+it('replays bounded Latin hero glow, disables Arabic glow, and keeps posters stable', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome-hero.js'));
     $glow = file_get_contents(resource_path('js/pages/welcome-hero/title-glow.js'));
     $media = file_get_contents(resource_path('js/pages/welcome-hero/slider-media.js'));
@@ -158,6 +158,8 @@ it('replays bounded hero glow for every active slide and keeps posters stable', 
         ->and($entry)->toContain('initHeroTitleGlow(root)')
         ->and($entry)->not->toContain('initHeroPpdbRoll')
         ->and($glow)->toContain("granularity: 'grapheme'")
+        ->and($glow)->toContain("var isArabic = isRtl || locale.toLowerCase().indexOf('ar') === 0")
+        ->and($glow)->toContain("root.dataset.heroTitleGlowDisabled = 'arabic'")
         ->and($glow)->toContain("root.addEventListener('hero:slide-active'")
         ->and($glow)->toContain('playActivatedTitle(')
         ->and($glow)->not->toContain('touchActivation')
