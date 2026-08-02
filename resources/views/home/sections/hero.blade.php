@@ -74,7 +74,17 @@
                   ])
 
                   @if (! empty($slide['description']))
-                    <p class="hero-cinema__description" data-text-role="description">{{ $slide['description'] }}</p>
+                    <p class="hero-cinema__description" data-text-role="description">
+                      @if (! empty($slide['description_href']))
+                        <a
+                          href="{{ $slide['description_href'] }}"
+                          class="hero-cinema__description-link"
+                          data-hero-ppdb-description-link
+                        >{{ $slide['description'] }}</a>
+                      @else
+                        {{ $slide['description'] }}
+                      @endif
+                    </p>
                   @endif
 
                   @if ($slide['show_ppdb_cta'] ?? false)
