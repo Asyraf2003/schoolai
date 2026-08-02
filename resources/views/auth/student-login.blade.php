@@ -16,8 +16,8 @@
 <body class="auth-login-page public-page-body">
     <main class="auth-login" aria-labelledby="student-login-title">
         <section class="auth-login__card">
-            <a class="auth-login__back" href="{{ route('home') }}">
-                {{ __('app.auth.login.back_home') }}
+            <a class="auth-login__back" href="{{ route('portal.login') }}">
+                {{ __('app.auth.portal.back_choices') }}
             </a>
             <h1 id="student-login-title">{{ __('app.auth.student_login.heading') }}</h1>
             <p class="auth-login__description">{{ __('app.auth.student_login.description') }}</p>
