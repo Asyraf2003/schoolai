@@ -8,10 +8,7 @@ export default defineConfig({
             input: [
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/welcome-hero.js',
-                'resources/js/pages/welcome-vision-mission.js',
-                'resources/js/pages/welcome-vision-mission-mobile.js',
-                // About section is temporarily disabled.
-                // 'resources/js/pages/welcome-about-stats.js',
+                'resources/js/pages/welcome-scroll-story.js',
                 'resources/js/pages/welcome-testimonial-story.js',
                 'resources/js/pages/welcome-testimonial-extra-nodes.js',
                 'resources/js/pages/welcome-scroll-reveal.js',
@@ -22,10 +19,9 @@ export default defineConfig({
                 'resources/js/pages/admin-accounts.js',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
-                'resources/css/pages/welcome-vision-mission.css',
-                'resources/css/pages/welcome-vision-mission-mobile.css',
-                // About section is temporarily disabled.
-                // 'resources/css/pages/welcome-about-stats.css',
+                'resources/css/pages/welcome-about-scroll.css',
+                'resources/css/pages/welcome-vision-scroll.css',
+                'resources/css/pages/welcome-scroll-story-responsive.css',
                 'resources/css/pages/welcome-testimonial-layout.css',
                 'resources/css/pages/welcome-mega-menu.css',
                 'resources/css/pages/welcome-hero-motion.css',
@@ -33,7 +29,6 @@ export default defineConfig({
                 'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/welcome-editorial-headings.css',
                 'resources/css/pages/welcome-editorial-description-desktop.css',
-                // 'resources/css/pages/welcome-about-editorial-override.css',
                 'resources/css/pages/ppdb-journey.css',
                 'resources/css/pages/public-auth.css',
                 'resources/css/pages/student-dashboard.css',
