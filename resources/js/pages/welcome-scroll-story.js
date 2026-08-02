@@ -9,11 +9,8 @@ function initialiseStories() {
         document.querySelectorAll('[data-story-root]')
     ).map(createStoryController);
 
-    document.documentElement.classList.add('has-scroll-story');
-
     destroyStories = function destroyAllStories() {
         cleanups.forEach((cleanup) => cleanup());
-        document.documentElement.classList.remove('has-scroll-story');
         destroyStories = null;
     };
 }
