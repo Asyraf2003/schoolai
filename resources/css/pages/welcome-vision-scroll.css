@@ -9,16 +9,41 @@
     isolation: isolate;
 }
 
-.direction-story__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.direction-story__list { margin: 0; padding: 0; list-style: none; }
+
+.direction-story__background {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 0;
+    height: 100svh;
+    margin-block-end: -100svh;
+    overflow: hidden;
+    pointer-events: none;
 }
 
-.direction-story__scene {
-    position: relative;
-    min-height: 240svh;
+.direction-story__background::after {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, transparent 16%, rgba(6,29,79,.4) 75%);
+    content: "";
 }
+
+.direction-story__background-image {
+    position: absolute;
+    height: auto;
+    opacity: .16;
+    filter: grayscale(1) brightness(0) invert(1);
+    mix-blend-mode: screen;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.direction-story__background-image--1 { inset: -10% auto auto -18%; width: clamp(15rem, 64vw, 25rem); }
+.direction-story__background-image--2 { inset: 8% -20% auto auto; width: clamp(13rem, 55vw, 23rem); }
+.direction-story__background-image--3 { inset: auto auto -22% -16%; width: clamp(17rem, 70vw, 28rem); }
+.direction-story__background-image--4 { inset: auto -18% 2% auto; width: clamp(14rem, 58vw, 24rem); }
+
+.direction-story__scene { position: relative; z-index: 1; min-height: 240svh; }
 
 .direction-story__sticky {
     position: sticky;
@@ -73,15 +98,8 @@
     transform-origin: 0 50%;
 }
 
-.story-unit {
-    display: inline-block;
-    white-space: pre;
-    transform-origin: 50% 100%;
-}
-
-.direction-story.is-story-ready .story-unit {
-    transform: scaleY(.001);
-}
+.story-unit { display: inline-block; white-space: pre; transform-origin: 50% 100%; }
+.direction-story.is-story-ready .story-unit { transform: scaleY(.001); }
 
 html[dir="rtl"] .direction-story__display {
     font-family: var(--font-ar-display, Cairo, sans-serif);
@@ -90,58 +108,51 @@ html[dir="rtl"] .direction-story__display {
     line-height: 1.3;
 }
 
-html[dir="rtl"] .direction-story__label {
-    letter-spacing: 0;
-    text-transform: none;
-}
-
-html[dir="rtl"] .direction-story__accent {
-    transform-origin: 100% 50%;
-}
+html[dir="rtl"] .direction-story__label { letter-spacing: 0; text-transform: none; }
+html[dir="rtl"] .direction-story__accent { transform-origin: 100% 50%; }
 
 @media (min-width: 640px) {
     .direction-story__scene { min-height: 280svh; }
     .direction-story__sticky { width: min(100% - 4rem, 96rem); }
-    .direction-story__display {
-        inline-size: min(88vw, 48rem);
-        font-size: clamp(2.7rem, 6.8vw, 4.2rem);
-    }
+    .direction-story__display { inline-size: min(88vw, 48rem); font-size: clamp(2.7rem, 6.8vw, 4.2rem); }
+    .direction-story__background-image--1 { width: min(42vw, 29rem); }
+    .direction-story__background-image--2 { width: min(36vw, 26rem); }
+    .direction-story__background-image--3 { width: min(46vw, 33rem); }
+    .direction-story__background-image--4 { width: min(38vw, 28rem); }
 }
 
 @media (min-width: 768px) {
     .direction-story__scene { min-height: 320svh; }
     .direction-story__sticky { width: min(100% - 6rem, 96rem); }
-    .direction-story__display {
-        inline-size: min(80vw, 58rem);
-        font-size: clamp(3rem, 5.8vw, 5rem);
-    }
+    .direction-story__display { inline-size: min(80vw, 58rem); font-size: clamp(3rem, 5.8vw, 5rem); }
+    .direction-story__background-image--1 { inset-inline-start: -8%; width: min(34vw, 31rem); }
+    .direction-story__background-image--2 { inset-inline-end: -7%; width: min(29vw, 27rem); }
+    .direction-story__background-image--3 { inset-inline-start: 1%; width: min(37vw, 35rem); }
+    .direction-story__background-image--4 { inset-inline-end: -5%; width: min(31vw, 30rem); }
 }
 
 @media (min-width: 1024px) {
     .direction-story__scene { min-height: 380svh; }
     .direction-story__sticky { width: min(100% - 8rem, 96rem); }
-    .direction-story__display {
-        inline-size: min(72vw, 68rem);
-        font-size: clamp(3.5rem, 4.7vw, 5.8rem);
-    }
+    .direction-story__display { inline-size: min(72vw, 68rem); font-size: clamp(3.5rem, 4.7vw, 5.8rem); }
+    .direction-story__background-image { opacity: .14; }
 }
 
 @media (min-width: 1280px) {
     .direction-story__scene { min-height: 420svh; }
     .direction-story__sticky { width: min(100% - 10rem, 100rem); }
-    .direction-story__display {
-        inline-size: min(66.667vw, 78rem);
-        font-size: clamp(4rem, 4.3vw, 6.2rem);
-    }
+    .direction-story__display { inline-size: min(66.667vw, 78rem); font-size: clamp(4rem, 4.3vw, 6.2rem); }
+    .direction-story__background-image--1 { inset-inline-start: 1%; width: min(23vw, 35rem); }
+    .direction-story__background-image--2 { inset-inline-end: 2%; width: min(20vw, 31rem); }
+    .direction-story__background-image--3 { inset-inline-start: 7%; width: min(26vw, 39rem); }
+    .direction-story__background-image--4 { inset-inline-end: 4%; width: min(22vw, 34rem); }
 }
 
 @media (min-width: 1536px) {
     .direction-story__scene { min-height: 460svh; }
     .direction-story__sticky { width: min(100% - 14rem, 108rem); }
-    .direction-story__display {
-        inline-size: min(66.667vw, 88rem);
-        font-size: clamp(4.5rem, 4.4vw, 6.6rem);
-    }
+    .direction-story__display { inline-size: min(66.667vw, 88rem); font-size: clamp(4.5rem, 4.4vw, 6.6rem); }
+    .direction-story__background-image { opacity: .13; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -149,6 +160,8 @@ html[dir="rtl"] .direction-story__accent {
     .direction-story__sticky { position: relative; min-height: auto; }
     .direction-story__scene + .direction-story__scene,
     .direction-story__list .direction-story__scene { border-block-start: 1px solid rgba(255,255,255,.16); }
-    .direction-story.is-story-ready .story-unit { transform: none !important; }
+    .direction-story.is-story-ready .story-unit,
+    .direction-story__background-image { transform: none !important; }
+    .direction-story__background-image { will-change: auto; }
     .direction-story__accent { transform: none; }
 }
