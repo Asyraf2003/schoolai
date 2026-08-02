@@ -8,7 +8,7 @@
    4. Navbar berubah saat discroll
    5. Animasi angka statistik (counter)
    6. Filter ekstrakurikuler
-   7. Lightbox galeri
+   7. Galeri halaman khusus
    8. Tombol scroll-to-top
    9. Animasi reveal saat elemen masuk viewport
    10. Tilt halus pada ilustrasi hero (opsional)
@@ -17,7 +17,6 @@
 import './welcome/navigation.js';
 import './welcome/value-cards.js';
 import './welcome/program-cards.js';
-import './welcome/gallery-story.js';
 import './welcome/public-content.js';
 import './welcome/gallery-wall.js';
 import './welcome/lazy-media.js';
