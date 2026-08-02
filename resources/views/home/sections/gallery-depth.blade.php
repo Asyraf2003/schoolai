@@ -1,14 +1,15 @@
 @php
   $depthPalettes = [
-      ['#0a4d8c', '#37b8ff', '#ffb443'],
-      ['#0b6b55', '#75d8a1', '#f7c948'],
-      ['#6e3e96', '#bf8cff', '#ff9f68'],
-      ['#a83d2d', '#ff8f65', '#ffd166'],
-      ['#164f7a', '#75c9e8', '#f3a953'],
-      ['#385f2e', '#8bcf70', '#f5d76e'],
+      ['#c78f2b', '#ffd166', '#f4a261'],
+      ['#34785f', '#7bd5a7', '#d9c857'],
+      ['#4f6f9f', '#78c8e8', '#c9b8ff'],
+      ['#9d4d5f', '#ff9a76', '#e8b5cf'],
+      ['#66558f', '#a99bea', '#e0b96d'],
+      ['#60783c', '#9fd06e', '#f0c75e'],
   ];
   $depthItems = collect($gallerySection['items'] ?? [])->values();
   $depthCount = max(1, $depthItems->count());
+  $initialAtmosphere = $depthPalettes[0][0];
 @endphp
 
 <div
@@ -17,7 +18,7 @@
   data-lightbox-label="{{ $gallerySection['lightbox_label'] ?? __('home.galeri.lightbox_label') }}"
   data-close-label="{{ $gallerySection['close_label'] ?? __('home.galeri.close_label') }}"
   data-video-title="{{ $gallerySection['video_title'] ?? __('home.galeri.video_title') }}"
-  style="--depth-gallery-count: {{ $depthCount }}"
+  style="--depth-gallery-count: {{ $depthCount }}; --depth-atmosphere: {{ $initialAtmosphere }}"
 >
   <div class="depth-gallery__journey" data-depth-gallery-journey>
     <div class="depth-gallery__viewport" data-depth-gallery-viewport>
@@ -34,6 +35,7 @@
           @php
             $palette = $depthPalettes[$loop->index % count($depthPalettes)];
             $side = $loop->even ? 1 : -1;
+            $isReversed = $loop->index % 2 === 1;
             $mediaUrl = (string) ($item['media_url'] ?? '');
             $thumbnailUrl = (string) ($item['thumbnail_url'] ?? '');
             $itemTitle = (string) ($item['title'] ?? '');
@@ -44,7 +46,7 @@
 
           <article class="depth-gallery__item" role="listitem" data-depth-gallery-item>
             <a
-              class="depth-gallery__card"
+              class="depth-gallery__card{{ $isReversed ? ' depth-gallery__card--reverse' : '' }}"
               href="{{ $mediaUrl }}"
               data-depth-gallery-card
               data-gallery-index="{{ $loop->index }}"
