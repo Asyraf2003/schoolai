@@ -2,12 +2,65 @@ function localeKey(value) {
     return String(value || 'id').toLowerCase().split('-')[0];
 }
 
-function latinSegments(text) {
-    return Array.from(text);
+function segmentsFor(text, arabic) {
+    return arabic ? text.split(/(\s+)/u).filter(Boolean) : Array.from(text);
 }
 
-function arabicSegments(text) {
-    return text.split(/(\s+)/u).filter(Boolean);
+function textNodes(element) {
+    const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT,
+        {
+            acceptNode(node) {
+                return node.nodeValue
+                    ? NodeFilter.FILTER_ACCEPT
+                    : NodeFilter.FILTER_REJECT;
+            },
+        }
+    );
+    const nodes = [];
+
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    return nodes;
+}
+
+function splitNode(node, arabic, units) {
+    const fragment = document.createDocumentFragment();
+
+    segmentsFor(node.nodeValue, arabic).forEach((segment) => {
+        if (/^\s+$/u.test(segment)) {
+            fragment.appendChild(document.createTextNode(segment));
+            return;
+        }
+
+        const unit = document.createElement('span');
+        unit.className = 'story-unit';
+        unit.dataset.storyUnit = '';
+        unit.setAttribute('aria-hidden', 'true');
+        unit.textContent = segment;
+        fragment.appendChild(unit);
+        units.push(unit);
+    });
+
+    node.replaceWith(fragment);
+}
+
+function prepareElement(element, arabic) {
+    const source = element.getAttribute('aria-label') || element.textContent.trim();
+
+    if (element.dataset.storyPrepared === 'true') {
+        return {
+            element,
+            units: Array.from(element.querySelectorAll('[data-story-unit]')),
+        };
+    }
+
+    const units = [];
+    element.setAttribute('aria-label', source);
+    textNodes(element).forEach((node) => splitNode(node, arabic, units));
+    element.dataset.storyPrepared = 'true';
+
+    return { element, units };
 }
 
 export function prepareStoryText(root) {
@@ -17,36 +70,10 @@ export function prepareStoryText(root) {
     const arabic = locale === 'ar';
 
     return Array.from(root.querySelectorAll('[data-story-text]')).map((element) => {
-        const source = element.textContent.trim();
-        const segments = arabic ? arabicSegments(source) : latinSegments(source);
-        const fragment = document.createDocumentFragment();
-        const units = [];
-
-        element.setAttribute('aria-label', source);
-        element.textContent = '';
-
-        segments.forEach((segment, index) => {
-            if (/^\s+$/u.test(segment)) {
-                fragment.appendChild(document.createTextNode(segment));
-                return;
-            }
-
-            const unit = document.createElement('span');
-            unit.className = 'story-unit';
-            unit.setAttribute('aria-hidden', 'true');
-            unit.dataset.storyUnit = '';
-            unit.dataset.storyIndex = String(index);
-            unit.textContent = segment;
-            fragment.appendChild(unit);
-            units.push(unit);
-        });
-
-        element.appendChild(fragment);
-
+        const prepared = prepareElement(element, arabic);
         return {
-            element,
-            effect: element.dataset.storyEffect || 'rise',
-            units,
+            ...prepared,
+            effect: 'stretch',
         };
     });
 }
