@@ -1,105 +1,78 @@
-      <!-- ======================= VISI MISI ======================= -->
-      @php
-        $visionHeadingTitle = match (app()->getLocale()) {
-          'en' => 'Direction, Vision and Mission',
-          'ar' => 'التوجه والرؤية والرسالة',
-          default => 'Arah Visi dan Misi',
-        };
-        $visionHeadingWords = preg_split('/\s+/u', $visionHeadingTitle, -1, PREG_SPLIT_NO_EMPTY) ?: [];
-      @endphp
-      <section
-        class="visi-misi section"
-        id="visi-misi"
-        aria-labelledby="visi-misi-heading"
-        data-vision-mission
-      >
-        <div class="container">
-          <header
-            class="vision-mission-heading"
-            data-vision-mission-heading
-            data-locale="{{ app()->getLocale() }}"
-          >
-            <div class="vision-mission-heading__row">
-              <h2
-                class="vision-mission-heading__title"
-                id="visi-misi-heading"
-                aria-label="{{ $visionHeadingTitle }}"
-              >
-                <span class="vision-mission-heading__line" aria-hidden="true">
-                  @foreach ($visionHeadingWords as $word)
-                    <span
-                      class="vision-mission-heading__word"
-                      data-vision-word
-                      style="--vision-word-index: {{ $loop->index }}"
-                    >{{ $word }}</span>
-                    @if (! $loop->last)
-                      <span class="vision-mission-heading__space" aria-hidden="true">&nbsp;</span>
-                    @endif
-                  @endforeach
-                </span>
-              </h2>
+@php
+  $directionLocale = app()->getLocale();
+  $missionEffects = ['rise', 'fan', 'focus', 'stretch'];
+@endphp
 
-              @if (! empty($visiMisi['section_subtitle']))
-                <p class="vision-mission-heading__description" data-text-role="description">
-                  {{ $visiMisi['section_subtitle'] }}
-                </p>
-              @endif
-            </div>
-          </header>
+<section
+  class="direction-story"
+  id="visi-misi"
+  aria-labelledby="direction-story-title"
+  data-story-root
+  data-story-kind="direction"
+  data-story-locale="{{ $directionLocale }}"
+>
+  <header class="direction-story__intro" data-story-scene>
+    <p class="direction-story__kicker">{{ $visiMisi['section_subtitle'] }}</p>
+    <h2
+      class="direction-story__heading"
+      id="direction-story-title"
+      data-story-text
+      data-story-effect="rise"
+    >{{ $visiMisi['section_title'] }}</h2>
+  </header>
 
-          <div class="visi-misi__shell">
-            <article class="visi-card reveal" tabindex="0">
-              <div class="visi-card__topline">
-                <span class="visi-card__pulse" aria-hidden="true"></span>
-              </div>
+  <article class="direction-story__vision" data-story-scene>
+    <p class="direction-story__index">00</p>
+    <div class="direction-story__vision-copy">
+      <h3 data-story-text data-story-effect="focus">
+        {{ $visiMisi['vision']['title'] }}
+      </h3>
+      <p>
+        @foreach ($visiMisi['vision']['text_parts'] as $part)
+          @if (! empty($part['mark']))
+            <span class="direction-story__mark">{{ $part['text'] }}</span>
+          @else
+            {{ $part['text'] }}
+          @endif
+        @endforeach
+      </p>
+    </div>
+  </article>
 
-              <h3 class="visi-card__title">{{ $visiMisi['vision']['title'] }}</h3>
+  <div class="direction-story__missions" aria-labelledby="direction-missions-title">
+    <h3
+      class="direction-story__missions-heading"
+      id="direction-missions-title"
+      data-story-text
+      data-story-effect="stretch"
+      data-story-scene
+    >{{ $visiMisi['missions_intro']['title'] }}</h3>
 
-              <p class="visi-card__text">
-                @foreach ($visiMisi['vision']['text_parts'] as $part)
-                  @if (! empty($part['mark']))
-                    <span class="vm-mark vm-mark--{{ $part['mark'] }}">{{ $part['text'] }}</span>
-                  @else
-                    {{ $part['text'] }}
-                  @endif
-                @endforeach
-              </p>
-            </article>
-
-            <div class="misi-panel reveal reveal--delay-1">
-              <div class="misi-panel__head">
-                <h3>{{ $visiMisi['missions_intro']['title'] }}</h3>
-              </div>
-
-              <ol class="misi-list">
-                @foreach ($visiMisi['missions'] as $mission)
-                  <li class="misi-list__item">
-                    <button
-                      type="button"
-                      class="misi-card{{ $loop->first ? ' is-active' : '' }}"
-                      data-mission-card
-                      aria-pressed="{{ $loop->first ? 'true' : 'false' }}"
-                      style="--misi-accent: {{ $mission['accent'] ?? '#0ea5e9' }}"
-                    >
-                      <span class="misi-card__number">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-
-                      <span class="misi-card__body">
-                        <span class="misi-card__title">{{ $mission['title'] }}</span>
-                        <span class="misi-card__text">
-                          @foreach ($mission['text_parts'] as $part)
-                            @if (! empty($part['mark']))
-                              <span class="vm-mark vm-mark--{{ $part['mark'] }}">{{ $part['text'] }}</span>
-                            @else
-                              {{ $part['text'] }}
-                            @endif
-                          @endforeach
-                        </span>
-                      </span>
-                    </button>
-                  </li>
-                @endforeach
-              </ol>
-            </div>
+    <ol class="direction-story__list">
+      @foreach ($visiMisi['missions'] as $mission)
+        <li
+          class="direction-story__mission"
+          data-story-scene
+          style="--mission-accent: {{ $mission['accent'] ?? '#ffffff' }}"
+        >
+          <p class="direction-story__index">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</p>
+          <div class="direction-story__mission-copy">
+            <h4
+              data-story-text
+              data-story-effect="{{ $missionEffects[$loop->index] ?? 'rise' }}"
+            >{{ $mission['title'] }}</h4>
+            <p>
+              @foreach ($mission['text_parts'] as $part)
+                @if (! empty($part['mark']))
+                  <span class="direction-story__mark">{{ $part['text'] }}</span>
+                @else
+                  {{ $part['text'] }}
+                @endif
+              @endforeach
+            </p>
           </div>
-        </div>
-      </section>
+        </li>
+      @endforeach
+    </ol>
+  </div>
+</section>
