@@ -32,32 +32,24 @@
     padding-block: clamp(5.5rem, 12vh, 9rem);
 }
 
-.direction-story__index {
-    margin: 0 0 clamp(1.5rem, 4vw, 3rem);
-    color: var(--story-muted);
-    font-size: .76rem;
-    font-weight: 600;
-    letter-spacing: .22em;
-}
-
 .direction-story__display {
     width: min(100%, 17ch);
     margin: 0;
     color: var(--story-ink);
     font-family: var(--font-display, Inter, sans-serif);
-    font-size: clamp(2.75rem, 12vw, 5.6rem);
+    font-size: clamp(1.75rem, 6vw, 2.8rem);
     font-weight: 520;
     letter-spacing: -.06em;
-    line-height: .91;
+    line-height: .96;
     text-align: start;
     text-wrap: pretty;
 }
 
 .direction-story__label {
     display: block;
-    margin-block-end: .42em;
+    margin-block-end: .7em;
     color: var(--story-muted);
-    font-size: .28em;
+    font-size: .42em;
     font-weight: 650;
     letter-spacing: .06em;
     line-height: 1.25;
@@ -94,7 +86,7 @@ html[dir="rtl"] .direction-story__display {
     font-family: var(--font-ar-display, Cairo, sans-serif);
     font-weight: 500;
     letter-spacing: 0;
-    line-height: 1.18;
+    line-height: 1.3;
 }
 
 html[dir="rtl"] .direction-story__label {
@@ -109,7 +101,7 @@ html[dir="rtl"] .direction-story__accent {
 @media (min-width: 640px) {
     .direction-story__scene { min-height: 280svh; }
     .direction-story__sticky { width: min(100% - 4rem, 96rem); }
-    .direction-story__display { font-size: clamp(4rem, 9vw, 7rem); }
+    .direction-story__display { font-size: clamp(2rem, 4.5vw, 3.5rem); }
 }
 
 @media (min-width: 768px) {
@@ -123,20 +115,20 @@ html[dir="rtl"] .direction-story__accent {
     .direction-story__sticky { width: min(100% - 8rem, 96rem); }
     .direction-story__display {
         width: min(100%, 15ch);
-        font-size: clamp(5rem, 6vw, 7.8rem);
+        font-size: clamp(2.5rem, 3vw, 3.9rem);
     }
 }
 
 @media (min-width: 1280px) {
     .direction-story__scene { min-height: 420svh; }
     .direction-story__sticky { width: min(100% - 10rem, 100rem); }
-    .direction-story__display { font-size: clamp(5.6rem, 6vw, 8.6rem); }
+    .direction-story__display { font-size: clamp(2.8rem, 3vw, 4.3rem); }
 }
 
 @media (min-width: 1536px) {
     .direction-story__scene { min-height: 460svh; }
     .direction-story__sticky { width: min(100% - 14rem, 108rem); }
-    .direction-story__display { font-size: clamp(6.5rem, 6vw, 10rem); }
+    .direction-story__display { font-size: clamp(3.25rem, 3vw, 5rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
