@@ -55,12 +55,9 @@ it('mounts the mobile navigation layer after the fixed header', function (): voi
         ->and($mobileLayer)->toBeGreaterThan($headerEnd);
 });
 
-it('protects Arabic glyph tails and gives Arabic labels an RTL light sweep', function (): void {
+it('protects Arabic desktop glyph tails and smooths the hero header state', function (): void {
     $rollStyles = file_get_contents(resource_path(
         'views/partials/site-navbar/styles/mega-roll.blade.php'
-    ));
-    $rollScript = file_get_contents(resource_path(
-        'views/partials/site-navbar/mega-roll-script.blade.php'
     ));
     $heroStyles = file_get_contents(resource_path(
         'css/pages/welcome-hero/009-welcome-hero-cascade-009.css'
@@ -73,13 +70,6 @@ it('protects Arabic glyph tails and gives Arabic labels an RTL light sweep', fun
         ->toContain('html[dir="rtl"] .nav-shell [data-nav-roll="main"]')
         ->toContain('line-height: 1.28')
         ->toContain('padding-block-end: 0.2em')
-        ->toContain('.nav-roll--arabic .nav-roll__layer--clone .nav-roll__char')
-        ->toContain('clip-path: inset(0 0 0 100%)')
-        ->and($rollScript)
-        ->toContain("label.classList.add('nav-roll--arabic')")
-        ->toContain('function playArabicSweep')
-        ->toContain('clipPath: start')
-        ->toContain('webkitClipPath: start')
         ->and($heroStyles)
         ->toContain('.nav-shell .navbar::before')
         ->toContain('opacity 420ms cubic-bezier(0.22, 1, 0.36, 1)')
