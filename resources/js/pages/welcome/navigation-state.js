@@ -52,7 +52,7 @@ export function initializeNavigationState() {
           var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight + 1;
 
           window.scrollTo({ top: targetPos, behavior: 'smooth' });
-          window.setTimeout(updateActiveNavLink, 90);
+          window.setTimeout(requestNavigationUpdate, 90);
         }
       });
     }
@@ -78,7 +78,6 @@ export function initializeNavigationState() {
         if (sectionTop <= footerActivationLine || pageBottomReached) {
           current = section;
         }
-
         return;
       }
 
@@ -102,23 +101,33 @@ export function initializeNavigationState() {
 
   /* ---------- 4. NAVBAR BERUBAH SAAT SCROLL ---------- */
   var navbar = document.getElementById('navbar');
+  var navbarScrolled = navbar ? navbar.classList.contains('is-scrolled') : false;
+  var navigationFrame = 0;
+
   function handleNavbarScroll() {
     if (!navbar) return;
 
-    if (window.scrollY > 40) {
-      navbar.classList.add('is-scrolled');
-    } else {
-      navbar.classList.remove('is-scrolled');
-    }
+    var threshold = navbarScrolled ? 24 : 48;
+    var nextScrolled = window.scrollY > threshold;
+    if (nextScrolled === navbarScrolled) return;
+
+    navbarScrolled = nextScrolled;
+    navbar.classList.toggle('is-scrolled', nextScrolled);
   }
 
-
-  // Gabungkan semua listener scroll supaya efisien (tidak berulang-ulang)
-  window.addEventListener('scroll', function () {
+  function runNavigationUpdate() {
+    navigationFrame = 0;
     handleNavbarScroll();
     updateActiveNavLink();
-  });
-  // Jalankan sekali di awal untuk set kondisi awal
+  }
+
+  function requestNavigationUpdate() {
+    if (navigationFrame) return;
+    navigationFrame = window.requestAnimationFrame(runNavigationUpdate);
+  }
+
+  window.addEventListener('scroll', requestNavigationUpdate, { passive: true });
+  window.addEventListener('resize', requestNavigationUpdate, { passive: true });
   handleNavbarScroll();
   updateActiveNavLink();
 
