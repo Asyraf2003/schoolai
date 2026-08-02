@@ -5,11 +5,11 @@ let destroyStories = null;
 function initialiseStories() {
     if (typeof destroyStories === 'function') destroyStories();
 
-    document.documentElement.classList.add('has-scroll-story');
-
     const cleanups = Array.from(
         document.querySelectorAll('[data-story-root]')
     ).map(createStoryController);
+
+    document.documentElement.classList.add('has-scroll-story');
 
     destroyStories = function destroyAllStories() {
         cleanups.forEach((cleanup) => cleanup());
