@@ -28,10 +28,46 @@
 }
 
 .auth-login__back:focus-visible,
+.auth-login__choice:focus-visible,
 .auth-login__form input:focus-visible,
 .auth-login__form button:focus-visible {
   outline: 3px solid rgb(37 99 235 / 35%);
   outline-offset: 3px;
+}
+
+.auth-login__choices {
+  display: grid;
+  gap: 14px;
+  margin-block-start: 28px;
+}
+
+.auth-login__choice {
+  display: grid;
+  gap: 6px;
+  min-height: 96px;
+  padding: 18px;
+  border: 1px solid #d7e1dd;
+  border-radius: 16px;
+  color: #17362f;
+  background: #fff;
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.auth-login__choice strong {
+  font-family: var(--text-family-heading);
+  font-size: 1.15rem;
+}
+
+.auth-login__choice span {
+  color: #526861;
+  line-height: 1.55;
+}
+
+.auth-login__choice:hover {
+  border-color: #73968b;
+  box-shadow: 0 12px 28px rgb(23 54 47 / 10%);
+  transform: translateY(-2px);
 }
 
 .auth-login__form {
@@ -92,6 +128,12 @@ html[dir="rtl"] .auth-login__message {
   text-align: start;
 }
 
+@media (min-width: 640px) {
+  .auth-login__choices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 1024px) {
   .public-page-body .auth-login__card {
     width: min(100%, 520px);
@@ -99,8 +141,13 @@ html[dir="rtl"] .auth-login__message {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .auth-login__choice,
   .auth-login__form button,
   .auth-login__google {
     transition: none;
+  }
+
+  .auth-login__choice:hover {
+    transform: none;
   }
 }
