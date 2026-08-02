@@ -15,25 +15,47 @@ final class HomeHeroPresentation
         $registrationUrl = $ppdbSetting->isRegistrationOpen()
             ? $ppdbSetting->publicRegistrationUrl()
             : null;
+        $campaign = self::ppdbCampaign($ppdbLabel);
 
         return array_values(array_map(
-            static function (array $slide, int $index) use ($registrationUrl, $ppdbLabel): array {
+            static function (array $slide, int $index) use ($registrationUrl, $campaign): array {
                 $isPrimary = $index === 0;
                 $showPpdb = $isPrimary
                     && ($slide['render_type'] ?? null) === 'video'
                     && $registrationUrl !== null;
-
-                return array_replace($slide, [
+                $presentation = [
                     'is_primary_slide' => $isPrimary,
                     'show_ppdb_cta' => $showPpdb,
                     'ppdb_url' => $showPpdb ? $registrationUrl : null,
-                    'ppdb_label' => $ppdbLabel,
-                    'title_href' => self::articleTitleUrl($slide),
-                ]);
+                    'ppdb_label' => $campaign['cta'],
+                    'title_href' => $showPpdb ? null : self::articleTitleUrl($slide),
+                ];
+
+                if ($showPpdb) {
+                    $presentation = array_replace($presentation, [
+                        'eyebrow' => $campaign['eyebrow'],
+                        'title' => $campaign['title'],
+                        'description' => $campaign['description'],
+                        'cta' => [],
+                    ]);
+                }
+
+                return array_replace($slide, $presentation);
             },
             $slides,
             array_keys($slides),
         ));
+    }
+
+    /** @return array{eyebrow: string, title: string, description: string, cta: string} */
+    private static function ppdbCampaign(string $ppdbLabel): array
+    {
+        return [
+            'eyebrow' => __('runtime.home.ppdb_campaign_eyebrow'),
+            'title' => __('runtime.home.ppdb_campaign_title'),
+            'description' => __('runtime.home.ppdb_campaign_description'),
+            'cta' => $ppdbLabel,
+        ];
     }
 
     /** @param array<string, mixed> $slide */
