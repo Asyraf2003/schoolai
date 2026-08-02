@@ -1,7 +1,7 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
 Status: ACTIVE
-Updated: 2026-08-01
+Updated: 2026-08-02
 Repository: `Asyraf2003/schoolai`
 Baseline audited source: `a580a509fecaaf912d718e56a38695212d41fcc3`
 Published navbar implementation head before this ledger update:
@@ -95,6 +95,19 @@ composition, and runtime architecture are not copied.
 - `tests/Feature/PublicUnifiedNavigationTest.php`
 - the active blueprint and this ledger.
 
+## Bounded accessibility/HTTPS hotfix
+
+Blueprint: `docs/architecture/blueprints/2026-08-02-accessibility-https-hardening.md`
+
+- The unsupported paragraph `aria-label` was replaced by one complete `.sr-only`
+  text node while animated visual lines remain decorative.
+- Production HTTP returned `200`; HTTPS returned `200` with working HSTS.
+- `public/.htaccess` now redirects only the production host to canonical HTTPS,
+  preserving local and staging hosts.
+- Focused source-contract tests were added.
+- COOP, Trusted Types, CSP legacy fallback, and hero video diagnosis remain
+  documented gaps rather than unproved enforcement changes.
+
 ## Open GAP
 
 ### `STRUCTURE-GAP-001`
@@ -126,6 +139,12 @@ Required proof includes:
 - hamburger entrance, nested open, desktop hover, keyboard focus, and touch;
 - reduced motion and repeated open/close;
 - current Chromium and real Safari/WebKit.
+
+### `A11Y-HTTPS-PROOF-GAP-001`
+
+The hotfix is published but still requires focused/full tests, build/structure
+proof, deployed HTTP `301`, retained HTTPS HSTS/CSP, a repeated accessibility
+audit, and separate HTTPS byte-range proof for the reported hero MP4.
 
 ### `BROWSER-PERF-GAP-001`
 
@@ -161,12 +180,13 @@ exists. This DOM text roll does not justify selecting an engine.
 | N00 navbar media mapping | `PUBLISHED_NOT_RUNTIME_PROVEN` | local media paths committed |
 | N01 navbar text-overlay removal | `PUBLISHED_NOT_RUNTIME_PROVEN` | overlay markup removed |
 | N02 unified navbar 3D roll | `IMPLEMENTING` | source published; proof missing |
+| H00 accessibility/HTTPS hotfix | `PUBLISHED_NOT_RUNTIME_PROVEN` | source/tests/docs published; deploy proof missing |
 | E00 WebGL engine ADR | `BLOCKED_BY_MISSING_EVIDENCE` | no accepted WebGL scene |
 | R00 PageSpeed/CWV acceptance | `BLOCKED_BY_MISSING_EVIDENCE` | lab and field evidence absent |
 
 ## STATUS
 
-- Active surface: unified public navigation.
+- Active surface: unified public navigation plus bounded accessibility/HTTPS hotfix.
 - Production source mutation: `PUBLISHED`.
 - Runtime completion: `BLOCKED_BY_MISSING_EVIDENCE`.
 - About/Testimonial protection: preserved by inspected diff scope.
@@ -182,10 +202,11 @@ Pull current `main`, then run:
 git diff --check
 npm run check:structure
 npm run build
+php artisan test --filter=HomeAccessibilityAndHttpsDeploymentTest
 php artisan test --filter=PublicUnifiedNavigationTest
 php artisan test
 ```
 
-After automated proof, capture the declared navigation matrix in Chromium and
-real Safari/WebKit. Do not begin another production surface before recording the
-result of `NAV-ROLL-PROOF-GAP-001`.
+After deployment, prove HTTP redirects to HTTPS, HTTPS retains HSTS/CSP, rerun
+the accessibility audit, and retest the exact hero MP4 over HTTPS. Then capture
+the declared navigation matrix in Chromium and real Safari/WebKit.
