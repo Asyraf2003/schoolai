@@ -10,9 +10,7 @@
     @vite([
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
-      'resources/css/pages/welcome-about-scroll.css',
       'resources/css/pages/welcome-vision-scroll.css',
-      'resources/css/pages/welcome-scroll-story-responsive.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
       'resources/css/public-latin-inter.css',
@@ -25,13 +23,11 @@
     ])
   </head>
   <body class="home-page nav-shell">
-    <!-- Skip link untuk aksesibilitas keyboard -->
     <a href="#main-content" class="skip-link">{{ __('home.accessibility.skip_to_content') }}</a>
 
     @include('partials.site-navbar', ['navbar' => $navbar, 'siteNavMode' => 'home'])
 
     <main id="main-content">
-      <!-- ======================= HERO ======================= -->
       @php
         $heroSlides = collect($hero['slides'] ?? [])->values();
         $heroSlideCount = $heroSlides->count();
@@ -45,8 +41,6 @@
       @endphp
 
       @include('home.sections.hero')
-
-      @include('home.sections.about-statistics')
 
       @include('home.sections.vision-mission')
 
