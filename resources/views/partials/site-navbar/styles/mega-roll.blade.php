@@ -57,6 +57,17 @@ html[dir="rtl"] .nav-shell .nav-roll__layer--clone {
   border: 0;
 }
 
+@media (min-width: 1181px) {
+  html[dir="rtl"] .nav-shell [data-nav-roll="main"] {
+    line-height: 1.28;
+  }
+
+  html[dir="rtl"] .nav-shell [data-nav-roll="main"] .nav-roll__viewport {
+    padding-block-end: 0.2em;
+    margin-block-end: -0.2em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nav-shell .nav-roll__layer--clone {
     display: none;
