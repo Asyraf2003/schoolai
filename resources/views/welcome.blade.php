@@ -11,6 +11,7 @@
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
       'resources/css/pages/welcome-vision-scroll.css',
+      'resources/css/pages/welcome-depth-gallery.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
       'resources/css/public-latin-inter.css',
@@ -19,6 +20,7 @@
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
       'resources/js/pages/welcome-scroll-story.js',
+      'resources/js/pages/welcome-depth-gallery.js',
       'resources/js/pages/welcome-editorial-headings.js',
     ])
   </head>
