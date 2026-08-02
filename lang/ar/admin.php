@@ -19,6 +19,7 @@ return [
     'nav' => [
         'label' => 'قائمة الإدارة',
         'dashboard' => 'لوحة التحكم',
+        'accounts' => 'Akun',
         'ppdb' => 'التسجيل والقبول',
         'artikel' => 'المقالات',
         'galery' => 'المعرض',

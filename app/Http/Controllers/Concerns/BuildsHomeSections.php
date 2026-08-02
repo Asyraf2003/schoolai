@@ -2,36 +2,16 @@
 
 namespace App\Http\Controllers\Concerns;
 
-use App\Models\Article;
-use App\Models\GalleryItem;
 use App\Models\PpdbSetting;
 use App\Models\SiteStatistic;
-use App\Support\HeroVideoUrl;
-use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
+use App\Services\PpdbAccess;
 use Illuminate\Support\Facades\Schema;
 
 trait BuildsHomeSections
 {
     private function currentPpdbSetting(): PpdbSetting
     {
-        if (! Schema::hasTable('ppdb_settings')) {
-            return new PpdbSetting([
-                'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
-                'is_active' => true,
-            ]);
-        }
-
-        $setting = PpdbSetting::query()->first();
-
-        if ($setting instanceof PpdbSetting) {
-            return $setting;
-        }
-
-        return new PpdbSetting([
-            'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
-            'is_active' => true,
-        ]);
+        return app(PpdbAccess::class)->current();
     }
 
     private function statsData(): array
@@ -77,7 +57,7 @@ trait BuildsHomeSections
 
         return array_map(
             fn (array $item): array => [
-                'value' => trim((string) ($item['count'] ?? '') . (string) ($item['suffix'] ?? '')),
+                'value' => trim((string) ($item['count'] ?? '').(string) ($item['suffix'] ?? '')),
                 'count' => $item['count'] ?? null,
                 'suffix' => $item['suffix'] ?? '',
                 'label' => $item['label'] ?? '',
@@ -96,10 +76,7 @@ trait BuildsHomeSections
 
         $navbar['logo']['image_url'] = $this->publicAssetUrl($navbar['logo']['image'] ?? null);
 
-        if (isset($navbar['cta']) && is_array($navbar['cta'])) {
-            $navbar['cta']['label'] = __('runtime.home.admission_info');
-            $navbar['cta']['href'] = route('ppdb');
-        }
+        $navbar['cta'] = [];
 
         return $navbar;
     }

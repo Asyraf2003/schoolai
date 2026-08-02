@@ -8,6 +8,7 @@ return [
         'ppdb_campaign_eyebrow' => 'التسجيل للطلاب الجدد',
         'ppdb_campaign_title' => 'بداية رحلة تعليمية هادفة',
         'ppdb_campaign_description' => 'انضموا إلى المستقبل، ولننمِّ قدرات أبنائنا من خلال تعليم راسخ في القيم الإسلامية.',
+        'ppdb_campaign_link_label' => 'فتح معلومات التسجيل والقبول',
         'latest_story_by' => 'اقرأ أحدث قصص المدرسة بقلم :author.',
         'article' => 'مقال',
         'min_read' => 'مدة القراءة :count دقائق',

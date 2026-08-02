@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Services\ActiveSessionManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,13 +34,16 @@ it('invalidates the authenticated session during logout', function (): void {
         'email' => 'session-security@example.test',
         'email_verified_at' => now(),
         'password' => Hash::make('unused-password'),
-        'role' => User::ROLE_USER,
+        'role' => User::ROLE_GURU,
     ]);
 
     $this->actingAs($user)
-        ->withSession(['sensitive_marker' => 'must-be-removed'])
+        ->withSession([
+            ActiveSessionManager::SESSION_KEY => 0,
+            'sensitive_marker' => 'must-be-removed',
+        ])
         ->post(route('logout'))
-        ->assertRedirect(route('login'))
+        ->assertRedirect(route('guru.login'))
         ->assertSessionMissing('sensitive_marker');
 
     $this->assertGuest();

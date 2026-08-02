@@ -10,28 +10,24 @@ final class HomeHeroPresentation
     public static function decorate(
         array $slides,
         PpdbSetting $ppdbSetting,
-        string $ppdbLabel,
     ): array {
-        $registrationUrl = $ppdbSetting->isRegistrationOpen()
-            ? $ppdbSetting->publicRegistrationUrl()
+        $campaignUrl = $ppdbSetting->isRegistrationOpen()
+            ? route('ppdb')
             : null;
-        $campaign = self::ppdbCampaign($ppdbLabel);
+        $campaign = self::ppdbCampaign();
 
         return array_values(array_map(
-            static function (array $slide, int $index) use ($registrationUrl, $campaign): array {
+            static function (array $slide, int $index) use ($campaignUrl, $campaign): array {
                 $isPrimary = $index === 0;
-                $showPpdb = $isPrimary
-                    && ($slide['render_type'] ?? null) === 'video'
-                    && $registrationUrl !== null;
+                $showPpdb = $isPrimary && $campaignUrl !== null;
                 $presentation = [
                     'is_primary_slide' => $isPrimary,
-                    'show_ppdb_cta' => $showPpdb,
-                    'ppdb_url' => $showPpdb ? $registrationUrl : null,
-                    'ppdb_label' => $campaign['cta'],
+                    'is_ppdb_campaign' => $showPpdb,
+                    'campaign_link_label' => $showPpdb ? $campaign['link_label'] : null,
                     'title_href' => $showPpdb
-                        ? $registrationUrl
+                        ? $campaignUrl
                         : self::articleTitleUrl($slide),
-                    'description_href' => $showPpdb ? $registrationUrl : null,
+                    'description_href' => $showPpdb ? $campaignUrl : null,
                 ];
 
                 if ($showPpdb) {
@@ -50,14 +46,14 @@ final class HomeHeroPresentation
         ));
     }
 
-    /** @return array{eyebrow: string, title: string, description: string, cta: string} */
-    private static function ppdbCampaign(string $ppdbLabel): array
+    /** @return array{eyebrow: string, title: string, description: string, link_label: string} */
+    private static function ppdbCampaign(): array
     {
         return [
             'eyebrow' => __('runtime.home.ppdb_campaign_eyebrow'),
             'title' => __('runtime.home.ppdb_campaign_title'),
             'description' => __('runtime.home.ppdb_campaign_description'),
-            'cta' => $ppdbLabel,
+            'link_label' => __('runtime.home.ppdb_campaign_link_label'),
         ];
     }
 
@@ -87,11 +83,11 @@ final class HomeHeroPresentation
             && ($parts['host'] ?? null) === ($appParts['host'] ?? null)
             && ($parts['port'] ?? null) === ($appParts['port'] ?? null)
         ) {
-            $path = '/' . ltrim((string) ($parts['path'] ?? ''), '/');
-            $query = isset($parts['query']) ? '?' . $parts['query'] : '';
-            $fragment = isset($parts['fragment']) ? '#' . $parts['fragment'] : '';
+            $path = '/'.ltrim((string) ($parts['path'] ?? ''), '/');
+            $query = isset($parts['query']) ? '?'.$parts['query'] : '';
+            $fragment = isset($parts['fragment']) ? '#'.$parts['fragment'] : '';
 
-            return $path . $query . $fragment;
+            return $path.$query.$fragment;
         }
 
         return PublicUrl::normalize($url, ['/admin', '/login', '/auth']);
@@ -99,10 +95,10 @@ final class HomeHeroPresentation
 
     private static function hasBlockedPath(string $url): bool
     {
-        $path = '/' . ltrim((string) parse_url($url, PHP_URL_PATH), '/');
+        $path = '/'.ltrim((string) parse_url($url, PHP_URL_PATH), '/');
 
         foreach (['/admin', '/login', '/auth'] as $prefix) {
-            if ($path === $prefix || str_starts_with($path, $prefix . '/')) {
+            if ($path === $prefix || str_starts_with($path, $prefix.'/')) {
                 return true;
             }
         }

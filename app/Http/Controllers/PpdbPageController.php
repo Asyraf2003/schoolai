@@ -2,40 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PpdbSetting;
 use App\Models\PpdbShowcaseItem;
+use App\Services\PpdbAccess;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 final class PpdbPageController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(PpdbAccess $access): View|Response
     {
+        $setting = $access->current();
+
+        if (! $setting->isRegistrationOpen()) {
+            return response()->view('pages.ppdb-closed', status: 404);
+        }
+
         return view('pages.ppdb', [
-            'ppdbAdmission' => $this->currentSetting(),
+            'ppdbAdmission' => $setting,
             'ppdbShowcaseItems' => $this->showcaseItems(),
-        ]);
-    }
-
-    private function currentSetting(): PpdbSetting
-    {
-        if (! Schema::hasTable('ppdb_settings')) {
-            return new PpdbSetting([
-                'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
-                'is_active' => true,
-            ]);
-        }
-
-        $setting = PpdbSetting::query()->first();
-
-        if ($setting instanceof PpdbSetting) {
-            return $setting;
-        }
-
-        return new PpdbSetting([
-            'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
-            'is_active' => true,
         ]);
     }
 

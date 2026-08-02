@@ -7,6 +7,10 @@
 
   $siteFooter = $siteFooter ?? ($footerSection ?? $homeFooter);
   $siteFooter = is_array($siteFooter) ? $siteFooter : [];
+  $siteFooter['links'] = array_values(array_filter(
+      is_array($siteFooter['links'] ?? null) ? $siteFooter['links'] : [],
+      fn (array $link): bool => parse_url((string) ($link['href'] ?? ''), PHP_URL_PATH) !== '/ppdb',
+  ));
   $isHomeFooter = request()->routeIs('home');
 
   $normalizeFooterHref = function (mixed $href) use ($isHomeFooter): string {

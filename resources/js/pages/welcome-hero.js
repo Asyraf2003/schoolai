@@ -2,7 +2,6 @@ import { initMegaMenus, onMediaQueryChange } from './welcome-hero/mega-menu.js';
 import { createSliderMediaActions } from './welcome-hero/slider-media.js';
 import { createSliderPlaybackActions } from './welcome-hero/slider-playback.js';
 import { initHeroTitleGlow } from './welcome-hero/title-glow.js';
-import { initHeroPpdbRoll } from './welcome-hero/ppdb-roll.js';
 
 function initHeroSlider(root) {
     var slides = Array.prototype.slice.call(root.querySelectorAll('[data-hero-slide]'));
@@ -43,7 +42,6 @@ function initHeroSlider(root) {
     root.setAttribute('data-enhanced', 'true');
 
     initHeroTitleGlow(root);
-    initHeroPpdbRoll(root);
 
     var mediaActions = createSliderMediaActions({ slides, state, statusTemplate });
     var canAutoplay = mediaActions.canAutoplay;

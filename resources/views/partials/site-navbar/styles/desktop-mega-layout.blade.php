@@ -9,6 +9,17 @@
     gap: clamp(24px, 3vw, 48px);
   }
 
+  .nav-shell .nav-login .nav-mega__panel {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    width: min(420px, calc(100vw - 48px));
+    grid-template-columns: 1fr;
+  }
+
+  .nav-shell .nav-login .nav-mega__media {
+    display: none;
+  }
+
   .nav-shell .nav-mega__links {
     grid-template-columns: minmax(0, 1fr);
     align-content: center;

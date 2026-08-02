@@ -26,6 +26,7 @@
         @foreach ($menuItems as $item)
           @php
             $isLanguageItem = ($item['type'] ?? null) === 'language';
+            $isLoginItem = ($item['type'] ?? null) === 'login';
             $hasMegaMenu = ! $isLanguageItem
               && ! empty($item['mega']['links'])
               && is_array($item['mega']['links']);
@@ -39,7 +40,7 @@
           @endphp
 
           <li
-            class="nav-item{{ $isLanguageItem ? ' nav-language' : '' }}{{ $hasMegaMenu ? ' nav-mega' : '' }}"
+            class="nav-item{{ $isLanguageItem ? ' nav-language' : '' }}{{ $isLoginItem ? ' nav-login' : '' }}{{ $hasMegaMenu ? ' nav-mega' : '' }}"
             @if ($hasMegaMenu) data-nav-mega @endif
           >
             @if ($isLanguageItem)

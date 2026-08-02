@@ -1,0 +1,190 @@
+:root {
+  color-scheme: light;
+  --student-ink: #17362f;
+  --student-muted: #64748b;
+  --student-line: #dbe5e1;
+  --student-bg: #f5f8f6;
+}
+
+body.student-shell {
+  min-width: 360px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--student-ink);
+  background: var(--student-bg);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.student-header {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px clamp(18px, 4vw, 48px);
+  border-block-end: 1px solid var(--student-line);
+  background: #fff;
+}
+
+.student-brand {
+  color: inherit;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.student-header form {
+  margin: 0;
+}
+
+.student-logout,
+.student-password-form button {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--student-ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.student-frame {
+  width: min(1120px, 100%);
+  display: grid;
+  gap: 22px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px);
+}
+
+.student-nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.student-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  color: var(--student-muted);
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.student-nav a[aria-current="page"] {
+  color: #fff;
+  background: var(--student-ink);
+}
+
+.student-panel {
+  padding: clamp(24px, 5vw, 46px);
+  border: 1px solid var(--student-line);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 18px 55px rgb(23 54 47 / 8%);
+}
+
+.student-kicker {
+  margin: 0 0 8px;
+  color: var(--student-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.student-panel h1 {
+  margin: 0;
+  font-size: clamp(2rem, 1.6rem + 1.8vw, 3.2rem);
+}
+
+.student-panel > p:not(.student-kicker) {
+  color: var(--student-muted);
+  line-height: 1.65;
+}
+
+.student-identity {
+  display: grid;
+  gap: 12px;
+  margin-block-start: 24px;
+}
+
+.student-identity div {
+  padding: 14px 16px;
+  border: 1px solid var(--student-line);
+  border-radius: 14px;
+}
+
+.student-identity dt {
+  color: var(--student-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.student-identity dd {
+  margin: 4px 0 0;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.student-password-form {
+  max-width: 560px;
+  display: grid;
+  gap: 18px;
+  margin-block-start: 28px;
+}
+
+.student-password-form label {
+  display: grid;
+  gap: 8px;
+  font-weight: 750;
+}
+
+.student-password-form input {
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #b8c8c2;
+  border-radius: 12px;
+  font: inherit;
+}
+
+.student-status {
+  color: #047857;
+  font-weight: 800;
+}
+
+.student-status:empty,
+.student-errors:empty {
+  display: none;
+}
+
+.student-errors {
+  color: #b91c1c;
+  line-height: 1.5;
+}
+
+.student-password-form button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+:is(.student-nav a, .student-logout, .student-password-form input, .student-password-form button):focus-visible {
+  outline: 3px solid rgb(37 99 235 / 35%);
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .student-frame {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .student-nav {
+    align-content: start;
+    flex-direction: column;
+  }
+}

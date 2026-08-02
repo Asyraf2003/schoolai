@@ -3,41 +3,55 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Services\ActiveSessionManager;
 use App\Services\AuditLogger;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     public function __construct(
-        private readonly AuditLogger $auditLogger
-    ) {
-    }
+        private readonly AuditLogger $auditLogger,
+        private readonly ActiveSessionManager $sessionManager,
+    ) {}
 
     public function show()
     {
         return view('auth.login');
     }
 
+    public function showGuru()
+    {
+        return view('auth.guru-login');
+    }
+
     public function logout(Request $request)
     {
         $user = $request->user();
 
-        if ($user?->isAdmin()) {
+        if ($user instanceof User) {
             $this->auditLogger->record(
-                'auth.admin.logout',
+                match (true) {
+                    $user->isAdmin() => 'auth.admin.logout',
+                    $user->isGuru() => 'auth.guru.logout',
+                    $user->isMurid() => 'auth.murid.logout',
+                    default => 'auth.logout',
+                },
                 actor: $user,
                 subject: $user,
             );
         }
 
-        Auth::logout();
+        $redirectRoute = match (true) {
+            $user?->isGuru() => 'guru.login',
+            $user?->isMurid() => 'murid.login',
+            default => 'login',
+        };
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $this->sessionManager->logout($request);
 
         return redirect()
-            ->route('login')
+            ->route($redirectRoute)
             ->with(
                 'success',
                 __('app.auth.success.logged_out')

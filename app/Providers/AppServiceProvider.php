@@ -28,12 +28,15 @@ class AppServiceProvider extends ServiceProvider
     {
         RateLimiter::for('google-oauth', function (Request $request): array {
             $sessionId = $request->session()->getId();
+            $key = app('encrypter')->getKey();
+            $sourceHash = hash_hmac('sha256', (string) $request->ip(), $key);
+            $sessionHash = hash_hmac('sha256', $sessionId, $key);
 
             return [
                 Limit::perMinute(20)
-                    ->by('google-oauth:ip:'.$request->ip()),
+                    ->by('google-oauth:source:'.$sourceHash),
                 Limit::perMinute(10)
-                    ->by('google-oauth:session:'.$sessionId),
+                    ->by('google-oauth:session:'.$sessionHash),
             ];
         });
 

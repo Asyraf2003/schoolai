@@ -11,11 +11,39 @@ return [
     ],
 
     'auth' => [
+        'navigation' => [
+            'login' => 'LOGIN',
+            'toggle' => 'Buka pilihan login',
+            'guru' => 'Guru',
+            'guru_description' => 'Masuk dengan akun Google yang terdaftar.',
+            'murid' => 'Murid',
+            'murid_description' => 'Masuk dengan ID siswa dan password.',
+        ],
         'login' => [
             'title' => 'Login',
             'heading' => 'Login',
             'description' => 'Masuk menggunakan akun Google untuk melanjutkan.',
             'google_button' => 'Masuk dengan Google',
+            'back_home' => 'Kembali ke beranda',
+        ],
+
+        'guru_login' => [
+            'title' => 'Login Guru',
+            'heading' => 'Login Guru',
+            'description' => 'Gunakan akun Google yang telah didaftarkan oleh sekolah.',
+            'google_button' => 'Masuk dengan Google',
+            'loading' => 'Menghubungkan…',
+        ],
+
+        'student_login' => [
+            'title' => 'Login Murid',
+            'heading' => 'Login Murid',
+            'description' => 'Gunakan ID siswa dan password yang diberikan sekolah.',
+            'student_id' => 'ID siswa',
+            'password' => 'Password',
+            'submit' => 'Masuk',
+            'loading' => 'Memeriksa…',
+            'locked_countdown' => 'Coba lagi dalam :seconds detik',
         ],
 
         'account' => [
@@ -32,6 +60,11 @@ return [
             'google_unverified_email' => 'Email Google belum terverifikasi.',
             'google_identity_conflict' => 'Identitas Google tidak cocok dengan akun yang tersimpan. Hubungi administrator.',
             'account_disabled' => 'Akun ini telah dinonaktifkan. Hubungi administrator.',
+            'access_unavailable' => 'Akun belum terdaftar atau belum memiliki akses.',
+            'student_credentials' => 'ID siswa atau password tidak sesuai.',
+            'student_locked' => 'Terlalu banyak percobaan. Coba lagi setelah satu menit.',
+            'login_failed' => 'Login gagal. Silakan coba lagi.',
+            'network' => 'Layanan tidak dapat dihubungi. Coba lagi.',
         ],
 
         'success' => [

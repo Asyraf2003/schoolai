@@ -1,12 +1,14 @@
 <?php
 
 use App\Models\HeroSlide;
+use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 it('uses active database hero slides and falls back to locale slides when none are active', function (): void {
     HeroSlide::query()->delete();
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
 
     HeroSlide::query()->create([
         'type' => 'image',
@@ -37,6 +39,7 @@ it('uses active database hero slides and falls back to locale slides when none a
 
 it('never renders legacy youtube media or thumbnails in the hero', function (): void {
     HeroSlide::query()->delete();
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
 
     HeroSlide::query()->create([
         'type' => 'video',

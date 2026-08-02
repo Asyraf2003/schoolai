@@ -56,6 +56,7 @@ it('keeps one h1 and links the first admin article placement server side', funct
 
     $response->assertOk()->assertViewHas('hero', function (array $hero) use ($article): bool {
         $slides = $hero['slides'] ?? [];
+
         return count($slides) === 1
             && ($slides[0]['is_primary_slide'] ?? false) === true
             && ($slides[0]['render_type'] ?? null) === 'video'
@@ -72,11 +73,12 @@ it('keeps one h1 and links the first admin article placement server side', funct
         ->and(substr_count($heroHtml, '<h1'))->toBe(1)
         ->and(substr_count($heroHtml, '<h2'))->toBe(0)
         ->and(substr_count($heroHtml, 'class="hero-cinema__title-link"'))->toBe(1)
-        ->and($heroHtml)->toContain('href="'.e($articleUrl).'" class="hero-cinema__title-link"')
+        ->and($heroHtml)->toContain('href="'.e($articleUrl).'"')
+        ->and($heroHtml)->toContain('class="hero-cinema__title-link"')
         ->and($heroHtml)->toContain('data-hero-title-glow');
 });
 
-it('links every PPDB campaign action to the same registration URL', function (): void {
+it('links PPDB campaign copy to the internal PPDB page without a separate CTA', function (): void {
     $article = createPrimaryHeroArticleVideo();
     $registrationUrl = 'https://apply.example.org/al-mustaqbal';
     PpdbSetting::query()->firstOrFail()->update([
@@ -84,25 +86,26 @@ it('links every PPDB campaign action to the same registration URL', function ():
         'is_active' => true,
     ]);
     $campaigns = [
-        'id' => ['Penerimaan Peserta Didik Baru', 'Langkah Awal Menuju Pendidikan yang Bermakna', 'Bergabunglah bersama Al-Mustaqbal dan tumbuhkan potensi anak melalui pendidikan yang berakar pada nilai Islam.', 'Daftar PPDB'],
-        'en' => ['New Student Admissions', 'Begin a Meaningful Learning Journey', 'Join Al-Mustaqbal and nurture every child’s potential through education rooted in Islamic values.', 'Apply for Admission'],
-        'ar' => ['التسجيل للطلاب الجدد', 'بداية رحلة تعليمية هادفة', 'انضموا إلى المستقبل، ولننمِّ قدرات أبنائنا من خلال تعليم راسخ في القيم الإسلامية.', 'التسجيل للقبول'],
+        'id' => ['Penerimaan Peserta Didik Baru', 'Langkah Awal Menuju Pendidikan yang Bermakna', 'Bergabunglah bersama Al-Mustaqbal dan tumbuhkan potensi anak melalui pendidikan yang berakar pada nilai Islam.', 'Buka informasi pendaftaran PPDB'],
+        'en' => ['New Student Admissions', 'Begin a Meaningful Learning Journey', 'Join Al-Mustaqbal and nurture every child’s potential through education rooted in Islamic values.', 'Open admission information'],
+        'ar' => ['التسجيل للطلاب الجدد', 'بداية رحلة تعليمية هادفة', 'انضموا إلى المستقبل، ولننمِّ قدرات أبنائنا من خلال تعليم راسخ في القيم الإسلامية.', 'فتح معلومات التسجيل والقبول'],
     ];
+    $ppdbUrl = route('ppdb');
 
-    foreach ($campaigns as $locale => [$eyebrow, $title, $description, $label]) {
+    foreach ($campaigns as $locale => [$eyebrow, $title, $description, $linkLabel]) {
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
-        $response->assertOk()->assertViewHas('hero', function (array $hero) use ($eyebrow, $title, $description, $label, $registrationUrl): bool {
+        $response->assertOk()->assertViewHas('hero', function (array $hero) use ($eyebrow, $title, $description, $linkLabel, $ppdbUrl): bool {
             $first = $hero['slides'][0] ?? [];
+
             return ($first['is_primary_slide'] ?? false) === true
                 && ($first['render_type'] ?? null) === 'video'
-                && ($first['show_ppdb_cta'] ?? false) === true
-                && ($first['ppdb_url'] ?? null) === $registrationUrl
-                && ($first['ppdb_label'] ?? null) === $label
+                && ($first['is_ppdb_campaign'] ?? false) === true
+                && ($first['campaign_link_label'] ?? null) === $linkLabel
                 && ($first['eyebrow'] ?? null) === $eyebrow
                 && ($first['title'] ?? null) === $title
                 && ($first['description'] ?? null) === $description
-                && ($first['title_href'] ?? null) === $registrationUrl
-                && ($first['description_href'] ?? null) === $registrationUrl
+                && ($first['title_href'] ?? null) === $ppdbUrl
+                && ($first['description_href'] ?? null) === $ppdbUrl
                 && ($first['cta'] ?? null) === [];
         });
         $firstSlideHtml = firstHeroSlideHtml($response->getContent());
@@ -110,11 +113,11 @@ it('links every PPDB campaign action to the same registration URL', function ():
             ->toContain(e($eyebrow))
             ->toContain(e($title))
             ->toContain(e($description))
-            ->toContain(e($label))
+            ->toContain('aria-label="'.e($linkLabel).'"')
             ->toContain('data-hero-ppdb-description-link')
-            ->toContain('data-hero-ppdb-cta')
+            ->not->toContain('data-hero-ppdb-cta')
             ->not->toContain(e($article->titleForLocale($locale)));
-        expect(substr_count($firstSlideHtml, 'href="'.e($registrationUrl).'"'))->toBe(3);
+        expect(substr_count($firstSlideHtml, 'href="'.e($ppdbUrl).'"'))->toBe(2);
     }
 });
 
@@ -125,10 +128,10 @@ it('restores the complete primary article presentation while PPDB is closed', fu
 
     $response->assertOk()->assertViewHas('hero', function (array $hero) use ($article): bool {
         $first = $hero['slides'][0] ?? [];
+
         return ($first['is_primary_slide'] ?? false) === true
-            && ($first['show_ppdb_cta'] ?? true) === false
-            && array_key_exists('ppdb_url', $first)
-            && $first['ppdb_url'] === null
+            && ($first['is_ppdb_campaign'] ?? true) === false
+            && ($first['campaign_link_label'] ?? null) === null
             && array_key_exists('description_href', $first)
             && $first['description_href'] === null
             && ($first['title'] ?? null) === $article->title_id
@@ -149,18 +152,16 @@ it('replays bounded hero glow for every active slide and keeps posters stable', 
     $entry = file_get_contents(resource_path('js/pages/welcome-hero.js'));
     $glow = file_get_contents(resource_path('js/pages/welcome-hero/title-glow.js'));
     $media = file_get_contents(resource_path('js/pages/welcome-hero/slider-media.js'));
-    $roll = file_get_contents(resource_path('js/pages/welcome-hero/ppdb-roll.js'));
     $styles = file_get_contents(resource_path('css/pages/welcome-hero/text-interactions.css'));
 
     expect($entry)->not->toContain("querySelector('.hero-cinema__cta[href]')")
         ->and($entry)->toContain('initHeroTitleGlow(root)')
-        ->and($entry)->toContain('initHeroPpdbRoll(root)')
+        ->and($entry)->not->toContain('initHeroPpdbRoll')
         ->and($glow)->toContain("granularity: 'grapheme'")
         ->and($glow)->toContain("root.addEventListener('hero:slide-active'")
         ->and($glow)->toContain('playActivatedTitle(')
         ->and($glow)->not->toContain('touchActivation')
         ->and($media)->not->toContain("removeAttribute('poster')")
-        ->and($roll)->toContain('rotateX(')
         ->and($styles)->toContain('@media (prefers-reduced-motion: reduce)')
         ->and($styles)->toContain('.hero-cinema__title-link:focus-visible')
         ->and($styles)->toContain('.hero-cinema__description-link:focus-visible');

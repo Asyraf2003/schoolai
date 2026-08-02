@@ -2,12 +2,14 @@
 
 use App\Models\Article;
 use App\Models\HeroSlide;
+use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 it('uses latest published articles automatically and lets hero placements curate their order', function (): void {
     HeroSlide::query()->delete();
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
 
     $older = Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,

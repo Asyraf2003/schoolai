@@ -12,9 +12,7 @@ final class EnsureAdmin
         Request $request,
         Closure $next
     ): Response {
-        if (! $request->user()?->isAdmin()) {
-            return redirect()->route('account.locked');
-        }
+        abort_unless($request->user()?->isAdmin(), 403);
 
         return $next($request);
     }

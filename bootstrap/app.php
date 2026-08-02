@@ -1,17 +1,19 @@
 <?php
 
+use App\Http\Middleware\AddSecurityHeaders;
+use App\Http\Middleware\EnsureAccountIsActive;
+use App\Http\Middleware\EnsureActiveSession;
+use App\Http\Middleware\EnsureAdmin;
+use App\Http\Middleware\EnsureGuru;
+use App\Http\Middleware\EnsureMurid;
+use App\Http\Middleware\ForceAdminLocale;
+use App\Http\Middleware\PersistArabicArticleCanvas;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\Middleware\SetLocale;
-use App\Http\Middleware\ForceAdminLocale;
-use App\Http\Middleware\EnsureAdmin;
-use App\Http\Middleware\EnsureRegularUser;
-use App\Http\Middleware\EnsureAccountIsActive;
-use App\Http\Middleware\AddSecurityHeaders;
-use App\Http\Middleware\PersistArabicArticleCanvas;
-use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\PostTooLargeException;
+use Illuminate\Http\Request;
 
 $app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -41,16 +43,31 @@ $app = Application::configure(basePath: dirname(__DIR__))
             AddSecurityHeaders::class,
             PersistArabicArticleCanvas::class,
         ]);
+        $middleware->redirectGuestsTo(function (Request $request): string {
+            if ($request->is('guru', 'guru/*')) {
+                return route('guru.login');
+            }
+
+            if ($request->is('murid', 'murid/*')) {
+                return route('murid.login');
+            }
+
+            return route('login');
+        });
         $middleware->alias([
             'admin.locale' => ForceAdminLocale::class,
+            'internal.locale' => ForceAdminLocale::class,
             'admin' => EnsureAdmin::class,
-            'regular.user' => EnsureRegularUser::class,
+            'guru' => EnsureGuru::class,
+            'murid' => EnsureMurid::class,
             'active.account' => EnsureAccountIsActive::class,
+            'active.session' => EnsureActiveSession::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) => $request->is('api/*'),
+            fn (Request $request): bool => $request->expectsJson()
+                || $request->is('api/*'),
         );
 
         $exceptions->render(function (PostTooLargeException $exception, Request $request) {

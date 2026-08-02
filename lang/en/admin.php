@@ -19,6 +19,7 @@ return [
     'nav' => [
         'label' => 'Admin menu',
         'dashboard' => 'Dashboard',
+        'accounts' => 'Akun',
         'ppdb' => 'Admissions',
         'artikel' => 'Articles',
         'galery' => 'Gallery',

@@ -2,15 +2,9 @@
 
 namespace App\Http\Controllers\Concerns;
 
-use App\Models\Article;
-use App\Models\GalleryItem;
-use App\Models\PpdbSetting;
-use App\Models\SiteStatistic;
-use App\Support\HomeHeroPresentation;
 use App\Support\HeroVideoUrl;
+use App\Support\HomeHeroPresentation;
 use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Schema;
 
 trait BuildsHomeHero
 {
@@ -72,9 +66,7 @@ trait BuildsHomeHero
                 : [];
 
             if (($cta['action'] ?? null) === 'admission') {
-                $cta['href'] = $ppdbSetting->isRegistrationOpen()
-                    ? $ppdbSetting->publicRegistrationUrl()
-                    : route('ppdb');
+                $cta = [];
             } else {
                 $cta['href'] = $this->heroLinkUrl($cta['href'] ?? null);
             }
@@ -117,7 +109,6 @@ trait BuildsHomeHero
         $hero['slides'] = HomeHeroPresentation::decorate(
             $normalizedSlides,
             $ppdbSetting,
-            __('runtime.home.ppdb_cta_label'),
         );
         $hero['fallback_image_url'] = $fallbackImageUrl;
         $hero['autoplay_interval'] = min(

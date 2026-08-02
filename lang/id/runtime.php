@@ -8,6 +8,7 @@ return [
         'ppdb_campaign_eyebrow' => 'Penerimaan Peserta Didik Baru',
         'ppdb_campaign_title' => 'Langkah Awal Menuju Pendidikan yang Bermakna',
         'ppdb_campaign_description' => 'Bergabunglah bersama Al-Mustaqbal dan tumbuhkan potensi anak melalui pendidikan yang berakar pada nilai Islam.',
+        'ppdb_campaign_link_label' => 'Buka informasi pendaftaran PPDB',
         'latest_story_by' => 'Baca cerita terbaru sekolah oleh :author.',
         'article' => 'Artikel',
         'min_read' => ':count menit baca',

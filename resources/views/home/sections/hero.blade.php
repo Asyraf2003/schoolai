@@ -80,6 +80,7 @@
                           href="{{ $slide['description_href'] }}"
                           class="hero-cinema__description-link"
                           data-hero-ppdb-description-link
+                          @if (! empty($slide['campaign_link_label'])) aria-label="{{ $slide['campaign_link_label'] }}" @endif
                         >{{ $slide['description'] }}</a>
                       @else
                         {{ $slide['description'] }}
@@ -87,19 +88,7 @@
                     </p>
                   @endif
 
-                  @if ($slide['show_ppdb_cta'] ?? false)
-                    <a
-                      href="{{ $slide['ppdb_url'] }}"
-                      class="hero-cinema__cta hero-cinema__cta--ppdb"
-                      data-hero-ppdb-cta
-                      data-text-role="action"
-                    >
-                      <span data-hero-roll-label>{{ $slide['ppdb_label'] }}</span>
-                      <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                    </a>
-                  @elseif (! empty($slide['cta']['label']) && ! empty($slide['cta']['href']))
+                  @if (! empty($slide['cta']['label']) && ! empty($slide['cta']['href']))
                     <a href="{{ $slide['cta']['href'] }}" class="hero-cinema__cta" data-text-role="action">
                       <span>{{ $slide['cta']['label'] }}</span>
                       <svg viewBox="0 0 24 24" aria-hidden="true">

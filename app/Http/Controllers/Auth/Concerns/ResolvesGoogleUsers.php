@@ -2,141 +2,75 @@
 
 namespace App\Http\Controllers\Auth\Concerns;
 
-use App\Http\Controllers\Controller;
+use App\Enums\AccountRole;
 use App\Models\User;
-use App\Services\AuditLogger;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Laravel\Socialite\Facades\Socialite;
-use Throwable;
 
 trait ResolvesGoogleUsers
 {
+    /** @return array{user:?User,bound:bool,reason:string} */
     private function resolveUser(
         string $email,
         string $googleId,
-        string $name,
-        string $bootstrapAdminId,
-    ): ?User {
-        return DB::transaction(
-            function () use (
-                $email,
-                $googleId,
-                $name,
-                $bootstrapAdminId
-            ): ?User {
-                $state = DB::table('auth_bootstrap_states')
-                    ->where('key', self::ADMIN_CLAIM_KEY)
-                    ->lockForUpdate()
-                    ->first();
-
-                if (! $state) {
-                    DB::table('auth_bootstrap_states')->insert([
-                        'key' => self::ADMIN_CLAIM_KEY,
-                        'claimed_user_id' => null,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-
-                    $state = DB::table('auth_bootstrap_states')
-                        ->where('key', self::ADMIN_CLAIM_KEY)
-                        ->lockForUpdate()
-                        ->first();
-                }
-
-                $user = User::query()
+        AccountRole $intendedRole,
+    ): array {
+        try {
+            return DB::transaction(function () use ($email, $googleId, $intendedRole): array {
+                $googleOwner = User::query()
                     ->where('google_id', $googleId)
                     ->lockForUpdate()
                     ->first();
-
                 $emailOwner = User::query()
-                    ->where('email', $email)
+                    ->where('email_normalized', $email)
                     ->lockForUpdate()
                     ->first();
 
-                /*
-                 * Jangan pernah menautkan identitas Google baru
-                 * ke akun lama hanya karena alamat email sama.
-                 *
-                 * Jika email sudah digunakan tetapi google_id
-                 * tidak cocok, proses harus ditolak dan diperbaiki
-                 * melalui prosedur administratif yang terpisah.
-                 */
-                if (! $user && $emailOwner) {
-                    return null;
-                }
-
-                if (
-                    $user
-                    && $emailOwner
-                    && $emailOwner->getKey() !== $user->getKey()
-                ) {
-                    return null;
-                }
-
-                if (! $user) {
-                    $user = new User();
-                    $user->password = Hash::make(
-                        Str::random(64)
+                if ($googleOwner instanceof User) {
+                    $sameOwner = ! $emailOwner
+                        || $emailOwner->is($googleOwner);
+                    $sameEmail = hash_equals(
+                        (string) $googleOwner->email_normalized,
+                        $email,
                     );
-                    $user->role = User::ROLE_USER;
+
+                    if (! $sameOwner || ! $sameEmail) {
+                        return $this->googleResolution(null, false, 'identity_conflict');
+                    }
+
+                    return $this->googleResolution($googleOwner, false, 'linked');
                 }
 
-                $user->name = $name !== ''
-                    ? $name
-                    : Str::before($email, '@');
-
-                $user->email = $email;
-                $user->google_id = $googleId;
-
-                if (! $user->email_verified_at) {
-                    $user->email_verified_at = now();
+                if (! $emailOwner instanceof User) {
+                    return $this->googleResolution(null, false, 'unavailable');
                 }
 
-                $adminExists = User::query()
-                    ->where('role', User::ROLE_ADMIN)
-                    ->exists();
-
-                $claimIsOpen = $state
-                    && $state->claimed_user_id === null;
+                if ($emailOwner->google_id !== null) {
+                    return $this->googleResolution(null, false, 'identity_conflict');
+                }
 
                 if (
-                    $claimIsOpen
-                    && ! $adminExists
-                    && $bootstrapAdminId !== ''
-                    && $googleId === $bootstrapAdminId
+                    $emailOwner->isDisabled()
+                    || $emailOwner->role !== $intendedRole
                 ) {
-                    $user->role = User::ROLE_ADMIN;
-                } elseif (
-                    ! in_array(
-                        $user->role,
-                        [
-                            User::ROLE_ADMIN,
-                            User::ROLE_USER,
-                        ],
-                        true
-                    )
-                ) {
-                    $user->role = User::ROLE_USER;
+                    return $this->googleResolution(null, false, 'unavailable');
                 }
 
-                $user->save();
+                $emailOwner->forceFill([
+                    'google_id' => $googleId,
+                    'email_verified_at' => $emailOwner->email_verified_at ?? now(),
+                ])->saveQuietly();
 
-                if ($claimIsOpen && $user->isAdmin()) {
-                    DB::table('auth_bootstrap_states')
-                        ->where('key', self::ADMIN_CLAIM_KEY)
-                        ->update([
-                            'claimed_user_id' => $user->id,
-                            'updated_at' => now(),
-                        ]);
-                }
+                return $this->googleResolution($emailOwner->fresh(), true, 'bound');
+            }, attempts: 3);
+        } catch (UniqueConstraintViolationException) {
+            return $this->googleResolution(null, false, 'identity_conflict');
+        }
+    }
 
-                return $user;
-            },
-            attempts: 3,
-        );
+    /** @return array{user:?User,bound:bool,reason:string} */
+    private function googleResolution(?User $user, bool $bound, string $reason): array
+    {
+        return compact('user', 'bound', 'reason');
     }
 }

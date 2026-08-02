@@ -3,6 +3,7 @@
 
   $adminMenu = [
       ['key' => 'dashboard', 'label' => __('admin.nav.dashboard'), 'route' => 'admin.dashboard'],
+      ['key' => 'accounts', 'label' => __('admin.nav.accounts'), 'route' => 'admin.accounts.index'],
       ['key' => 'ppdb', 'label' => __('admin.nav.ppdb'), 'route' => 'admin.ppdb'],
       ['key' => 'artikel', 'label' => __('admin.nav.artikel'), 'route' => 'admin.artikel'],
       ['key' => 'galeri', 'label' => __('admin.nav.galery'), 'route' => 'admin.galeri'],

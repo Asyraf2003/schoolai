@@ -2,17 +2,10 @@
 
 namespace App\Providers\Concerns;
 
-use App\Http\Controllers\Admin\HeroSlideAdminController;
-use App\Models\Article;
 use App\Models\HeroSlide;
-use App\Models\PpdbSetting;
-use App\Support\HomeHeroPresentation;
 use App\Support\HeroVideoUrl;
-use App\Support\PublicUrl;
-use Illuminate\Support\Facades\Route;
+use App\Support\HomeHeroPresentation;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\View as ViewFacade;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
 
 trait InjectsDatabaseHero
@@ -81,9 +74,7 @@ trait InjectsDatabaseHero
 
             if (($cta['action'] ?? null) === 'admission') {
                 $ppdbSetting ??= $this->currentPpdbSetting();
-                $cta['href'] = $ppdbSetting->isRegistrationOpen()
-                    ? $ppdbSetting->publicRegistrationUrl()
-                    : route('ppdb');
+                $cta = [];
             } else {
                 $cta['href'] = $this->heroLinkUrl($cta['href'] ?? null);
             }
@@ -109,7 +100,6 @@ trait InjectsDatabaseHero
         $hero['slides'] = HomeHeroPresentation::decorate(
             $normalizedSlides,
             $ppdbSetting,
-            __('runtime.home.ppdb_cta_label'),
         );
         $view->with('hero', $hero);
     }

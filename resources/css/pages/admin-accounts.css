@@ -1,0 +1,43 @@
+.account-manager { display: grid; gap: 20px; }
+.account-manager__notice { min-height: 24px; margin: 0; color: #166534; font-weight: 750; }
+.account-filters {
+    display: grid; grid-template-columns: minmax(260px, 2fr) repeat(2, minmax(150px, 1fr));
+    gap: 12px; padding: 16px; border: 1px solid var(--admin-line); border-radius: 16px; background: #fff;
+}
+.account-filters label, .account-dialog label { display: grid; gap: 7px; color: #374151; font-weight: 800; }
+.account-filters input, .account-filters select, .account-dialog input, .account-dialog select {
+    width: 100%; min-height: 44px; border: 1px solid #d1d5db; border-radius: 10px;
+    padding: 9px 11px; background: #fff; color: #111827; font: inherit;
+}
+.account-filters input:focus, .account-filters select:focus, .account-dialog input:focus, .account-dialog select:focus {
+    outline: 3px solid rgba(249, 115, 22, .2); border-color: var(--admin-orange);
+}
+.account-table-panel { border: 1px solid var(--admin-line); border-radius: 16px; background: #fff; overflow: hidden; }
+.account-table-panel[aria-busy="true"] { opacity: .65; }
+.account-table-panel__head { display: flex; align-items: center; justify-content: space-between; padding: 17px 20px; border-bottom: 1px solid var(--admin-line); }
+.account-table-panel__head h2 { margin: 0; font-size: 1.05rem; }
+.account-table-panel__head span { color: var(--admin-muted); font-size: .8rem; }
+.account-table-scroll { overflow-x: auto; }
+.account-table { width: 100%; min-width: 840px; border-collapse: collapse; }
+.account-table th, .account-table td { padding: 14px 16px; border-bottom: 1px solid #eee9e1; text-align: left; vertical-align: middle; }
+.account-table th { color: #6b7280; background: #faf9f6; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; }
+.account-table td { color: #374151; font-size: .9rem; }
+.account-table td strong, .account-table td small { display: block; }
+.account-table td small { margin-top: 3px; color: #6b7280; }
+.account-table td.is-active { color: #166534; font-weight: 800; }
+.account-table td.is-inactive { color: #991b1b; font-weight: 800; }
+.account-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.account-progressive-note { max-width: 180px; }
+.account-empty { margin: 0; padding: 30px; color: #6b7280; text-align: center; }
+.account-dialog { width: min(520px, calc(100vw - 40px)); border: 0; border-radius: 18px; padding: 0; color: #111827; box-shadow: 0 26px 80px rgba(17, 24, 39, .3); }
+.account-dialog::backdrop { background: rgba(17, 24, 39, .58); }
+.account-dialog form { display: grid; gap: 15px; padding: 22px; }
+.account-dialog header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.account-dialog header span { color: #6b7280; font-size: .78rem; font-weight: 850; text-transform: uppercase; }
+.account-dialog h2 { margin: 4px 0 0; font-size: 1.35rem; }
+.account-dialog header button { border: 0; background: transparent; font-size: 1.7rem; cursor: pointer; }
+.account-dialog p { margin: 0; color: #6b7280; line-height: 1.55; }
+.account-dialog footer { display: flex; justify-content: flex-end; gap: 8px; padding-top: 5px; }
+.account-form-errors { color: #991b1b; font-weight: 700; }
+.account-form-errors p { margin: 4px 0; color: inherit; }
+@media (max-width: 1100px) { .account-filters { grid-template-columns: 1fr; } }

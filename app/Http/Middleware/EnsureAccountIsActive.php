@@ -2,13 +2,18 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
+use App\Services\ActiveSessionManager;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 final class EnsureAccountIsActive
 {
+    public function __construct(
+        private readonly ActiveSessionManager $sessionManager,
+    ) {}
+
     public function handle(
         Request $request,
         Closure $next
@@ -19,16 +24,22 @@ final class EnsureAccountIsActive
             return $next($request);
         }
 
-        Auth::logout();
+        $route = match (true) {
+            $user instanceof User && $user->isGuru() => 'guru.login',
+            $user instanceof User && $user->isMurid() => 'murid.login',
+            default => 'login',
+        };
+        $errorKey = $user instanceof User && $user->isMurid()
+            ? 'credentials'
+            : 'email';
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $this->sessionManager->logout($request);
 
         return redirect()
-            ->route('login')
+            ->route($route)
             ->withErrors([
-                'email' => __(
-                    'app.auth.errors.account_disabled'
+                $errorKey => __(
+                    'app.auth.errors.access_unavailable'
                 ),
             ]);
     }

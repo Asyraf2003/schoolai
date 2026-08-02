@@ -8,6 +8,7 @@ return [
         'ppdb_campaign_eyebrow' => 'New Student Admissions',
         'ppdb_campaign_title' => 'Begin a Meaningful Learning Journey',
         'ppdb_campaign_description' => 'Join Al-Mustaqbal and nurture every child’s potential through education rooted in Islamic values.',
+        'ppdb_campaign_link_label' => 'Open admission information',
         'latest_story_by' => 'Read the latest school story by :author.',
         'article' => 'Article',
         'min_read' => ':count min read',
