@@ -53,8 +53,8 @@ Blueprint: `blueprints/2026-08-02-homepage-hero-text-interactions.md`
 |---|---|---|
 | GitHub publication | `PASS` | direct fast-forward commits on `main` |
 | Source ownership inspection | `PASS` | one presentation owner and one Blade branch |
-| Open PPDB intent contract | `SOURCE_PROVEN` | campaign copy, null title link, empty normal CTA |
-| Closed PPDB restoration contract | `SOURCE_PROVEN` | original slide decorated without overrides |
+| Open PPDB source contract | `PASS` | source inspection: campaign copy, null title link, empty normal CTA |
+| Closed PPDB source contract | `PASS` | source inspection: original slide decorated without campaign overrides |
 | Focused PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | owner must pull and run locally |
 | Production Vite build | `BLOCKED_BY_MISSING_EVIDENCE` | no frontend bundle source changed, but release gate remains unrun |
 | ID/EN/AR runtime layout | `BLOCKED_BY_MISSING_EVIDENCE` | visual proof required |
