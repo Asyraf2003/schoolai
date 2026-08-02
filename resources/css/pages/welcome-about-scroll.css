@@ -1,19 +1,27 @@
 .home-about-scroll {
     position: relative;
-    min-height: 420svh;
+    min-height: auto;
     background: #0753d8;
     color: #fff;
     isolation: isolate;
 }
 
 .home-about-scroll__stage {
-    position: sticky;
+    position: relative;
     inset-block-start: 0;
     display: grid;
     min-height: 100svh;
     overflow: clip;
     place-items: center;
     padding: clamp(5rem, 9vw, 9rem) clamp(1.25rem, 5vw, 6rem);
+}
+
+html.has-scroll-story .home-about-scroll {
+    min-height: 420svh;
+}
+
+html.has-scroll-story .home-about-scroll__stage {
+    position: sticky;
 }
 
 .home-about-scroll__stage::before {
