@@ -4,62 +4,70 @@ BLUEPRINT ID: `HOME-GALLERY-003`
 STATUS: `IMPLEMENTING`
 OWNER: Asyraf
 DATE: 2026-08-03
-SOURCE MAIN SHA: `6c572ab40fd15362830646844abf7a71d5efa7fa`
+SOURCE MAIN SHA: `70800053340caf6643998e09a743bd3ea61b5348`
 ACTIVE ROUTE/SURFACE: homepage Gallery only
 TARGET EXECUTION CHANNEL: Web AI with GitHub connector
 REFERENCE: `houmahani/codrops-depth-gallery`
 
 ## Owner goal
 
-Replace the homepage Gallery presentation with the reference's atmospheric
-scroll-through-depth experience. Preserve current database gallery content,
-photo/video opening behavior, homepage section order, three locales, and one
-shared UI architecture.
+Use the reference's atmospheric scroll-through-depth experience while keeping
+SchoolAI database content, photo/video opening behavior, homepage section order,
+three locales, and one shared UI architecture.
 
-The reference contributes the depth journey, alternating media placement,
-scroll-driven camera feeling, velocity-reactive atmosphere, and palette changes.
-Its assets, flower identity, labels, source modules, shaders, and branding are
-not copied.
+Owner correction requires:
+
+- title, metadata, and caption beside the media instead of over the image;
+- square image corners with no decorative crop or forced aspect ratio;
+- intrinsic image proportions constrained only by maximum width and height;
+- clearly visible background palette changes as the active item changes;
+- one working composition across all six responsive tiers.
+
+The reference contributes depth travel, alternating media placement, adjacent
+labels, velocity-reactive atmosphere, and palette changes. Its assets, flower
+identity, labels, modules, shaders, and branding are not copied.
 
 ## FACT
 
 - Homepage receives at most six normalized gallery items from the existing
   database/content pipeline.
-- Existing Gallery is a DOM copy column plus sticky visual and lightbox.
-- Existing homepage has no production WebGL dependency.
-- Current source structure gate fails before this batch because
+- The first implementation incorrectly overlaid text, rounded/cropped images,
+  and left the previous homepage Gallery controller and partial in source.
+- Current source structure gate already fails outside Gallery because
   `resources/css/pages/welcome-hero.css` does not match its recorded checksum.
-  Gallery implementation must not alter Hero or disguise that independent
-  failure.
-- The owner explicitly authorized direct publication to `main` for this Gallery
-  replacement.
+- Legacy CSS is distributed through mixed historical modules that also own
+  Programs, Footer, and shared rules. They cannot be deleted as Gallery-only
+  files without a separate owner split and checksum migration.
+- The owner authorized direct publication to `main` for this Gallery scope.
 
 ## Scope
 
 SCOPE IN:
 - homepage Gallery Blade composition;
-- dedicated Gallery CSS entry and surface modules;
-- dedicated Gallery JS entry, scene math, raw WebGL atmosphere, and lifecycle;
-- Vite and homepage route entry registration;
+- dedicated Gallery CSS and JS surface modules;
+- visible atmosphere synchronization and raw WebGL shader treatment;
+- removal of the retired homepage Gallery Blade partial/controller/import;
 - focused source-contract test;
-- this blueprint and current-state ledger.
+- blueprint and current-state ledger.
 
 SCOPE OUT:
-- dedicated `/galeri` page and its gallery wall;
+- dedicated `/galeri` page and gallery wall controller;
+- mixed legacy CSS migration outside proven Gallery ownership;
 - Hero, Vision/Mission, Values, Programs, Articles, navigation, footer;
 - database schema, admin CRUD, translations, authentication;
 - external packages and `package-lock.json`;
-- fixing the pre-existing Hero checksum mismatch.
+- the pre-existing Hero checksum mismatch.
 
 ## Semantic and fallback experience
 
-- The heading and all gallery title, metadata, caption, and links remain HTML.
-- Each media card remains a normal anchor when JavaScript is unavailable.
-- JavaScript enhances anchors with the existing accessible homepage lightbox.
-- Reduced motion retains a static responsive card grid and does not initialize
-  the depth journey or WebGL renderer.
-- WebGL failure or context loss retains the DOM depth journey over a CSS
-  atmosphere; content and links remain available.
+- Heading, title, metadata, caption, and links remain HTML outside canvas.
+- Media and copy are adjacent siblings. Copy never overlays the image.
+- Images use intrinsic width/height with `max-width` and `max-height`; no
+  `object-fit: cover`, forced ratio, clipping, or rounded media corners.
+- Each item remains a normal anchor without JavaScript.
+- JavaScript enhances it with the shared accessible homepage lightbox.
+- Reduced motion retains a static responsive sequence and skips depth/WebGL.
+- WebGL failure retains depth motion and DOM-controlled palette changes.
 - Canvas is decorative and hidden from assistive technology.
 
 ## Ownership
@@ -73,82 +81,78 @@ SCOPE OUT:
 | depth math/palette | `js/surfaces/home/gallery-depth/scene.js` |
 | raw WebGL atmosphere | `js/surfaces/home/gallery-depth/renderer.js` |
 | route JS entry | `js/pages/welcome-depth-gallery.js` |
+| shared media dialog | `js/pages/welcome/gallery-story-lightbox.js` |
+
+Retired owners removed in this batch:
+
+- `views/home/sections/gallery-story.blade.php`;
+- `js/pages/welcome/gallery-story.js`;
+- its import from `js/pages/welcome.js`.
 
 ## Storyboard
 
-- Static: semantic cards render in document flow.
+- Static: intrinsic media and adjacent copy render in document flow.
 - Eligible: IntersectionObserver activates near the section.
-- Active: viewport becomes sticky; scroll progress moves one card at a time
-  through CSS 3D depth while alternating inline positions.
-- Atmosphere: one low-power WebGL canvas blends the active/next palette and
-  reacts subtly to pointer and scroll velocity.
-- Suspended: no RAF while offscreen or the document is hidden.
-- Failed: canvas is removed and CSS atmosphere remains.
-- Disposed: RAF, observer, listeners, program, buffer, and inline transforms are
-  released on permanent page exit.
+- Active: viewport becomes sticky and each media/copy pair travels through CSS
+  3D depth with alternating physical placement.
+- Atmosphere: the DOM viewport and WebGL canvas blend the same active/next
+  palette, ensuring the color change remains visible with or without WebGL.
+- Suspended: no RAF while offscreen or document-hidden.
+- Failed: WebGL is removed while DOM depth and palette progression remain.
+- Disposed: RAF, observer, listeners, GPU resources, and inline transforms clear.
 
 ## Six-tier contract
 
 | Tier | Contract |
 |---|---|
-| XS 360–639 | nearly full-width card, short depth travel, touch-first |
-| SM 640–767 | wider static two-column fallback; same depth scene |
-| MD 768–1023 | larger card and balanced tablet framing |
-| LG 1024–1279 | expanded depth perspective; navigation remains untouched |
-| XL 1280–1535 | full alternating cinematic composition |
-| 2XL >=1536 | bounded card width with wider atmospheric field |
+| XS 360–639 | stacked intrinsic media/copy within bounded sticky height |
+| SM 640–767 | adjacent media/copy with mirrored alternating order |
+| MD 768–1023 | larger intrinsic media bounds and tablet perspective |
+| LG 1024–1279 | wider side-copy composition and short-height guard |
+| XL 1280–1535 | full alternating cinematic field |
+| 2XL >=1536 | bounded 1320px composition inside wider atmosphere |
 
-The same DOM, controller, canvas, and content source serve all tiers. Fluid
-sizing handles interior widths. Short-height profiles reduce card height.
-
-## Locale and direction
-
-- ID and EN share LTR composition.
-- AR uses the same DOM and time/depth progression in RTL.
-- Text alignment follows logical `start`; Arabic letter spacing is not forced.
-- The media sequence and vertical scroll direction do not reverse for Arabic.
-- Locale switching remains the existing server-rendered page transition and
-  naturally reconstructs renderer geometry after reload.
+The same DOM, controller, canvas, and content source serve all tiers. RTL mirrors
+adjacent placement through CSS order while vertical time/depth stays unchanged.
 
 ## Capability and performance
 
-- No dependency or package change.
-- Renderer is raw WebGL1 with one canvas, program, buffer, and RAF.
-- DPR is capped at 1.5 and power preference is low-power.
-- Renderer initializes only near the Gallery and stops offscreen/hidden.
-- No gallery texture is uploaded to GPU; image media remains browser-managed
-  DOM content and lazy-loaded.
-- Static HTML is available before enhancement.
+- No package or lockfile change.
+- One raw WebGL1 canvas/program/buffer and one RAF.
+- DPR capped at 1.5 with low-power preference.
+- Renderer initializes near Gallery and stops offscreen/hidden.
+- Images remain lazy DOM media and are not uploaded as GPU textures.
+- DOM background palette updates independently from WebGL.
 
 ## Accessibility
 
 - Canvas is `aria-hidden`.
-- Stage and items retain list semantics.
-- Cards are links with visible focus and no-JS destinations.
-- Only the visually active depth card remains keyboard-tabbable while enhanced.
-- Existing dialog close, Escape, and focus restoration are retained.
-- Reduced-motion mode remains complete and static.
+- Stage/items retain list semantics and cards remain links.
+- Focus is visible and only the active enhanced item is tabbable.
+- Shared dialog retains Escape, close controls, and focus restoration.
+- Reduced-motion result remains complete and readable.
 
 ## Proof gates
 
 Automated:
-- `git diff --check`
-- `npm run check:structure`
-- `npm run build`
-- focused `HomeDepthGalleryTest`
-- `php artisan test`
+- `git diff --check`;
+- `npm run check:structure`;
+- `npm run build`;
+- focused `HomeDepthGalleryTest`;
+- `php artisan test`.
 
 Runtime:
-- representative six-tier widths plus affected boundaries;
+- 360, 390, 640, 768, 1024, 1280, 1440, 1536, and 1920;
+- global boundary pairs and relevant short-height/orientation cases;
 - ID, EN, AR and LTR/RTL;
 - Chromium and WebKit;
-- normal/reduced motion, pointer/touch/keyboard, short height, orientation;
+- normal/reduced motion, pointer/touch/keyboard;
 - offscreen suspension, hidden tab, BFCache, context loss, lightbox focus;
 - Lighthouse/PageSpeed comparison against a proven baseline.
 
 ## Known blocker
 
-The user-provided baseline stops at `npm run check:structure` because the Hero
-entry checksum is stale. That remains `BLOCKED_BY_MISSING_EVIDENCE` and is not
-changed by this Gallery patch. Gallery source publication does not convert the
-unrun build, PHP suite, runtime matrix, or performance gates into PASS.
+The repository structure gate is already blocked by the unrelated Hero checksum.
+This Gallery correction must not hide or repair that failure. Connector source
+inspection can prove ownership and declarations, but build, browser, runtime,
+and performance remain `BLOCKED_BY_MISSING_EVIDENCE` until actually run.
