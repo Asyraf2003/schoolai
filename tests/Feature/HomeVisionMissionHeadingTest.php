@@ -22,6 +22,11 @@ it('renders the compact effect25 vision mission story for every locale', functio
             ->assertSee('class="direction-story"', false)
             ->assertSee('data-story-kind="direction"', false)
             ->assertSee('data-story-effect="stretch"', false)
+            ->assertSee('data-story-bg-layer', false)
+            ->assertSee('media/home/9.png', false)
+            ->assertSee('media/home/10.png', false)
+            ->assertSee('media/home/11.png', false)
+            ->assertSee('media/home/12.png', false)
             ->assertSee($label)
             ->assertDontSee('direction-story__index', false)
             ->assertDontSee('direction-story__scene--opening', false)
@@ -35,6 +40,7 @@ it('renders the compact effect25 vision mission story for every locale', functio
         $content = $response->getContent();
 
         expect(substr_count($content, 'data-story-effect="stretch"'))->toBe(6)
+            ->and(substr_count($content, 'data-story-bg-layer'))->toBe(4)
             ->and(substr_count($content, '<li class="direction-story__scene"'))->toBe(4);
     }
 });
