@@ -54,3 +54,28 @@ it('mounts the mobile navigation layer after the fixed header', function (): voi
         ->and($mobileLayer)->not->toBeFalse()
         ->and($mobileLayer)->toBeGreaterThan($headerEnd);
 });
+
+it('protects Arabic desktop glyph tails and smooths the hero header state', function (): void {
+    $rollStyles = file_get_contents(resource_path(
+        'views/partials/site-navbar/styles/mega-roll.blade.php'
+    ));
+    $heroStyles = file_get_contents(resource_path(
+        'css/pages/welcome-hero/009-welcome-hero-cascade-009.css'
+    ));
+    $navigationState = file_get_contents(resource_path(
+        'js/pages/welcome/navigation-state.js'
+    ));
+
+    expect($rollStyles)
+        ->toContain('html[dir="rtl"] .nav-shell [data-nav-roll="main"]')
+        ->toContain('line-height: 1.28')
+        ->toContain('padding-block-end: 0.2em')
+        ->and($heroStyles)
+        ->toContain('.nav-shell .navbar::before')
+        ->toContain('opacity 420ms cubic-bezier(0.22, 1, 0.36, 1)')
+        ->toContain('box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1)')
+        ->and($navigationState)
+        ->toContain('navbarScrolled ? 24 : 48')
+        ->toContain('window.requestAnimationFrame(runNavigationUpdate)')
+        ->toContain("window.addEventListener('scroll', requestNavigationUpdate, { passive: true })");
+});
