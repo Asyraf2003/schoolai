@@ -10,22 +10,18 @@
     @vite([
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
-      // About section is temporarily disabled.
-      // 'resources/css/pages/welcome-about-stats.css',
+      'resources/css/pages/welcome-about-scroll.css',
+      'resources/css/pages/welcome-vision-scroll.css',
+      'resources/css/pages/welcome-scroll-story-responsive.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
       'resources/css/public-latin-inter.css',
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
-      'resources/css/pages/welcome-vision-mission.css',
-      'resources/css/pages/welcome-vision-mission-mobile.css',
-      // 'resources/css/pages/welcome-about-editorial-override.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
-      // 'resources/js/pages/welcome-about-stats.js',
+      'resources/js/pages/welcome-scroll-story.js',
       'resources/js/pages/welcome-editorial-headings.js',
-      'resources/js/pages/welcome-vision-mission.js',
-      'resources/js/pages/welcome-vision-mission-mobile.js',
     ])
   </head>
   <body class="home-page nav-shell">
@@ -50,8 +46,7 @@
 
       @include('home.sections.hero')
 
-      {{-- About section temporarily disabled. --}}
-      {{-- @include('home.sections.about-statistics') --}}
+      @include('home.sections.about-statistics')
 
       @include('home.sections.vision-mission')
 
