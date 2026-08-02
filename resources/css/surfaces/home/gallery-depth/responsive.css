@@ -1,0 +1,117 @@
+html[dir="rtl"] .depth-gallery__play {
+    inset-inline: 24px auto;
+}
+
+html[dir="rtl"] .depth-gallery__copy > strong {
+    letter-spacing: 0;
+}
+
+@media (min-width: 640px) {
+    .depth-gallery:not(.is-depth-ready) .depth-gallery__stage {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    .depth-gallery {
+        --depth-card-width: min(68vw, 780px);
+        --depth-card-height: min(66svh, 640px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .depth-gallery {
+        --depth-card-width: min(58vw, 820px);
+        --depth-card-height: min(68svh, 670px);
+    }
+
+    .depth-gallery.is-depth-ready .depth-gallery__stage {
+        perspective: 1500px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .depth-gallery {
+        --depth-card-width: min(52vw, 860px);
+        --depth-card-height: min(70svh, 700px);
+    }
+}
+
+@media (min-width: 1536px) {
+    .depth-gallery {
+        --depth-card-width: min(48vw, 920px);
+        --depth-card-height: min(72svh, 760px);
+    }
+
+    .depth-gallery.is-depth-ready .depth-gallery__stage {
+        perspective: 1800px;
+    }
+}
+
+@media (max-width: 639px) {
+    .galeri-section {
+        padding-block: 76px 74px;
+    }
+
+    .depth-gallery {
+        --depth-card-width: calc(100vw - 34px);
+        --depth-card-height: min(68svh, 580px);
+        margin-top: 42px;
+    }
+
+    .depth-gallery__stage {
+        width: calc(100% - 28px);
+    }
+
+    .depth-gallery__card {
+        min-height: 390px;
+    }
+
+    .depth-gallery__copy {
+        padding: 24px;
+    }
+
+    .depth-gallery__copy > strong {
+        font-size: clamp(1.65rem, 9vw, 2.75rem);
+    }
+
+    .depth-gallery__copy > small {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+}
+
+@media (max-height: 650px) and (min-width: 768px) {
+    .depth-gallery {
+        --depth-card-height: calc(100svh - 88px);
+        --depth-card-width: min(58vw, 700px);
+    }
+
+    .depth-gallery__copy {
+        padding: 26px 34px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .depth-gallery__image {
+        transition: none;
+    }
+
+    .depth-gallery__card:hover .depth-gallery__image,
+    .depth-gallery__card:focus-visible .depth-gallery__image {
+        transform: none;
+    }
+}
+
+.depth-gallery.is-depth-fallback .depth-gallery__canvas {
+    display: none;
+}
+
+.depth-gallery.is-depth-fallback .depth-gallery__viewport {
+    background:
+        radial-gradient(circle at 18% 16%, rgba(55, 184, 255, 0.34), transparent 34%),
+        radial-gradient(circle at 82% 78%, rgba(255, 180, 67, 0.3), transparent 38%),
+        #071f3b;
+}
