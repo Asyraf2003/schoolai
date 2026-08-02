@@ -12,12 +12,19 @@ return [
 
     'auth' => [
         'navigation' => [
-            'login' => 'LOGIN',
+            'login' => 'Login',
             'toggle' => 'Open login options',
             'guru' => 'Teacher',
             'guru_description' => 'Sign in with a registered Google account.',
             'murid' => 'Student',
             'murid_description' => 'Sign in with a student ID and password.',
+        ],
+        'portal' => [
+            'title' => 'Login',
+            'heading' => 'Choose your account type',
+            'description' => 'Choose Teacher or Student to continue to the appropriate login page.',
+            'choices_label' => 'Account type choices',
+            'back_choices' => 'Back to login choices',
         ],
         'login' => [
             'title' => 'Login',
