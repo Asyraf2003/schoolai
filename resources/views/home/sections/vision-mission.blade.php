@@ -7,6 +7,10 @@
   ];
   $visionLabel = $visionLabels[$directionLocale] ?? $visionLabels['id'];
   $visionBackgrounds = [9, 10, 11, 12];
+  $missionEffects = ['fan', 'perspective', 'focus', 'wave'];
+  $missionMotions = ['orbit', 'sweep', 'zoom', 'fold'];
+  $missionColors = ['#075e62', '#7a3828', '#4d2c75', '#175b45'];
+  $missionAssets = [9, 10, 11, 12];
 @endphp
 
 <section
@@ -17,23 +21,29 @@
   data-story-kind="direction"
   data-story-locale="{{ $directionLocale }}"
 >
-  <div class="direction-story__background" aria-hidden="true">
-    @foreach ($visionBackgrounds as $asset)
-      <img
-        class="direction-story__background-image direction-story__background-image--{{ $loop->iteration }}"
-        data-story-bg-layer
-        data-story-depth="{{ $loop->iteration }}"
-        src="{{ asset('media/home/'.$asset.'.png') }}"
-        alt=""
-        width="1600"
-        height="2000"
-        loading="lazy"
-        decoding="async"
-      />
-    @endforeach
-  </div>
+  <article
+    class="direction-story__scene direction-story__scene--vision"
+    data-story-scene
+    data-story-color="#061d4f"
+    data-story-art-motion="drift"
+    style="--scene-color: #061d4f"
+  >
+    <div class="direction-story__scene-background" aria-hidden="true">
+      @foreach ($visionBackgrounds as $asset)
+        <img
+          class="direction-story__art direction-story__art--vision-{{ $loop->iteration }}"
+          data-story-scene-art
+          data-story-depth="{{ $loop->iteration }}"
+          src="{{ asset('media/home/'.$asset.'.png') }}"
+          alt=""
+          width="1600"
+          height="2000"
+          loading="lazy"
+          decoding="async"
+        />
+      @endforeach
+    </div>
 
-  <article class="direction-story__scene" data-story-scene>
     <div class="direction-story__sticky">
       <p class="direction-story__display" data-story-text data-story-effect="stretch">
         <span
@@ -51,7 +61,13 @@
     </div>
   </article>
 
-  <div class="direction-story__scene direction-story__scene--bridge" data-story-scene>
+  <div
+    class="direction-story__scene direction-story__scene--bridge"
+    data-story-scene
+    data-story-color="#1e2a78"
+    style="--scene-color: #1e2a78"
+  >
+    <div class="direction-story__scene-background" aria-hidden="true"></div>
     <div class="direction-story__sticky">
       <h3 class="direction-story__display" data-story-text data-story-effect="stretch">
         <span data-story-fragment>{{ $visiMisi['missions_intro']['title'] }}</span>
@@ -61,14 +77,38 @@
 
   <ol class="direction-story__list">
     @foreach ($visiMisi['missions'] as $mission)
-      <li class="direction-story__scene" data-story-scene>
+      <li
+        class="direction-story__scene direction-story__scene--mission"
+        data-story-scene
+        data-story-color="{{ $missionColors[$loop->index] }}"
+        data-story-art-motion="{{ $missionMotions[$loop->index] }}"
+        style="--scene-color: {{ $missionColors[$loop->index] }}"
+      >
+        <div class="direction-story__scene-background" aria-hidden="true">
+          <img
+            class="direction-story__art direction-story__art--mission"
+            data-story-scene-art
+            data-story-depth="{{ $loop->iteration }}"
+            src="{{ asset('media/home/'.$missionAssets[$loop->index].'.png') }}"
+            alt=""
+            width="1600"
+            height="2000"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
         <div class="direction-story__sticky">
           <div
             class="direction-story__accent"
             style="--mission-accent: {{ $mission['accent'] ?? '#ffffff' }}"
             aria-hidden="true"
           ></div>
-          <h4 class="direction-story__display" data-story-text data-story-effect="stretch">
+          <h4
+            class="direction-story__display"
+            data-story-text
+            data-story-effect="{{ $missionEffects[$loop->index] }}"
+          >
             <span class="direction-story__label" data-story-fragment>
               {{ $mission['title'] }}
             </span>
