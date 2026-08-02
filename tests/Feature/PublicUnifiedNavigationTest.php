@@ -55,7 +55,7 @@ it('mounts the mobile navigation layer after the fixed header', function (): voi
         ->and($mobileLayer)->toBeGreaterThan($headerEnd);
 });
 
-it('protects Arabic glyph tails and gives Arabic labels an RTL light sweep', function (): void {
+it('keeps Arabic labels plain while preserving glyph room and smooth header state', function (): void {
     $rollStyles = file_get_contents(resource_path(
         'views/partials/site-navbar/styles/mega-roll.blade.php'
     ));
@@ -71,15 +71,16 @@ it('protects Arabic glyph tails and gives Arabic labels an RTL light sweep', fun
 
     expect($rollStyles)
         ->toContain('html[dir="rtl"] .nav-shell [data-nav-roll="main"]')
-        ->toContain('line-height: 1.28')
-        ->toContain('padding-block-end: 0.2em')
-        ->toContain('.nav-roll--arabic .nav-roll__layer--clone .nav-roll__char')
-        ->toContain('clip-path: inset(0 0 0 100%)')
+        ->toContain('line-height: 1.32')
+        ->toContain('padding-block-end: 0.08em')
+        ->not->toContain('.nav-roll--arabic')
+        ->not->toContain('clip-path: inset(0 0 0 100%)')
         ->and($rollScript)
-        ->toContain("label.classList.add('nav-roll--arabic')")
-        ->toContain('function playArabicSweep')
-        ->toContain('clipPath: start')
-        ->toContain('webkitClipPath: start')
+        ->toContain("root.dataset.navRollDisabled = 'arabic'")
+        ->toContain('if (arabic)')
+        ->not->toContain('function playArabicSweep')
+        ->not->toContain("label.classList.add('nav-roll--arabic')")
+        ->not->toContain('webkitClipPath')
         ->and($heroStyles)
         ->toContain('.nav-shell .navbar::before')
         ->toContain('opacity 420ms cubic-bezier(0.22, 1, 0.36, 1)')
