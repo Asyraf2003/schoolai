@@ -9,7 +9,7 @@ html.has-scroll-story [data-story-text] {
 }
 
 @media (max-width: 767px) {
-    .home-about-scroll { min-height: 320svh; }
+    html.has-scroll-story .home-about-scroll { min-height: 320svh; }
 
     .home-about-scroll__stage {
         align-items: center;
@@ -68,14 +68,14 @@ html.has-scroll-story [data-story-text] {
 }
 
 @media (min-width: 768px) and (max-width: 1180px) {
-    .home-about-scroll { min-height: 360svh; }
+    html.has-scroll-story .home-about-scroll { min-height: 360svh; }
     .home-about-scroll__title { font-size: clamp(5rem, 11vw, 8rem); }
     .direction-story__heading { font-size: clamp(5rem, 9vw, 7.5rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .home-about-scroll { min-height: auto; }
-    .home-about-scroll__stage { position: relative; }
+    html.has-scroll-story .home-about-scroll { min-height: auto; }
+    html.has-scroll-story .home-about-scroll__stage { position: relative; }
     .home-about-scroll__layer { transform: none !important; }
     .story-unit { opacity: 1 !important; filter: none !important; transform: none !important; }
     .direction-story__intro,
