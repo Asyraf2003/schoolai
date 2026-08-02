@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('keeps one h1 and uses h2 plus server title links only for articles', function (): void {
+it('keeps one h1 and links the first admin article placement server side', function (): void {
     HeroSlide::query()->delete();
     $article = Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
@@ -24,26 +24,33 @@ it('keeps one h1 and uses h2 plus server title links only for articles', functio
         'author' => 'Hero Test',
         'published_at' => now(),
     ]);
+    HeroSlide::query()->create([
+        'article_id' => $article->getKey(),
+        'type' => 'video',
+        'media_url' => 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+        'poster_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'sort_order' => 1,
+        'is_active' => true,
+    ]);
 
     $response = $this->withSession(['locale' => 'en'])->get(route('home'));
     $response->assertOk()->assertViewHas('hero', function (array $hero) use ($article): bool {
         $slides = $hero['slides'] ?? [];
-        return ($slides[0]['is_primary_slide'] ?? false) === true
+        return count($slides) === 1
+            && ($slides[0]['is_primary_slide'] ?? false) === true
             && ($slides[0]['render_type'] ?? null) === 'video'
-            && ($slides[0]['title_href'] ?? null) === null
-            && ($slides[1]['article_id'] ?? null) === $article->getKey()
-            && ($slides[1]['title_href'] ?? null) === route('artikel.native', $article->slug, false);
+            && ($slides[0]['article_id'] ?? null) === $article->getKey()
+            && ($slides[0]['title_href'] ?? null) === route('artikel.native', $article->slug, false);
     });
 
     $content = $response->getContent();
     $heroStart = strpos($content, '<section');
     $heroEnd = strpos($content, '</section>', $heroStart);
     $heroHtml = substr($content, $heroStart, $heroEnd - $heroStart);
-    $slideCount = count($response->viewData('hero')['slides'] ?? []);
     $articleUrl = route('artikel.native', $article->slug, false);
     expect(substr_count($content, '<h1'))->toBe(1)
         ->and(substr_count($heroHtml, '<h1'))->toBe(1)
-        ->and(substr_count($heroHtml, '<h2'))->toBe($slideCount - 1)
+        ->and(substr_count($heroHtml, '<h2'))->toBe(0)
         ->and(substr_count($heroHtml, 'class="hero-cinema__title-link"'))->toBe(1)
         ->and($heroHtml)->toContain('href="'.e($articleUrl).'" class="hero-cinema__title-link"')
         ->and($heroHtml)->toContain('data-hero-title-glow');
@@ -110,9 +117,10 @@ it('restores the normal primary description and CTA while PPDB is closed', funct
         ->toContain(e($first['cta']['label']));
 });
 
-it('keeps hero motion hooks bounded and removes CTA-derived title mutation', function (): void {
+it('replays bounded hero glow for every active slide and keeps posters stable', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome-hero.js'));
     $glow = file_get_contents(resource_path('js/pages/welcome-hero/title-glow.js'));
+    $media = file_get_contents(resource_path('js/pages/welcome-hero/slider-media.js'));
     $roll = file_get_contents(resource_path('js/pages/welcome-hero/ppdb-roll.js'));
     $styles = file_get_contents(resource_path('css/pages/welcome-hero/text-interactions.css'));
 
@@ -120,7 +128,10 @@ it('keeps hero motion hooks bounded and removes CTA-derived title mutation', fun
         ->and($entry)->toContain('initHeroTitleGlow(root)')
         ->and($entry)->toContain('initHeroPpdbRoll(root)')
         ->and($glow)->toContain("granularity: 'grapheme'")
-        ->and($glow)->toContain('hero-title-glow__overlay--run')
+        ->and($glow)->toContain("root.addEventListener('hero:slide-active'")
+        ->and($glow)->toContain('playActivatedTitle(')
+        ->and($glow)->not->toContain('touchActivation')
+        ->and($media)->not->toContain("removeAttribute('poster')")
         ->and($roll)->toContain('rotateX(')
         ->and($styles)->toContain('@media (prefers-reduced-motion: reduce)')
         ->and($styles)->toContain('.hero-cinema__title-link:focus-visible');
