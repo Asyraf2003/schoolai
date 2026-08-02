@@ -7,7 +7,7 @@
   ];
   $visionLabel = $visionLabels[$directionLocale] ?? $visionLabels['id'];
   $visionBackgrounds = [9, 10, 11, 12];
-  $missionEffects = ['fan', 'perspective', 'focus', 'wave'];
+  $missionEffects = ['effect22', 'effect23', 'effect27', 'effect28'];
   $missionMotions = ['orbit', 'sweep', 'zoom', 'fold'];
   $missionColors = ['#075e62', '#7a3828', '#4d2c75', '#175b45'];
   $missionAssets = [9, 10, 11, 12];
@@ -45,7 +45,7 @@
     </div>
 
     <div class="direction-story__sticky">
-      <p class="direction-story__display" data-story-text data-story-effect="stretch">
+      <p class="direction-story__display" data-story-text data-story-effect="effect25">
         <span
           class="direction-story__label"
           id="direction-story-title"
@@ -69,7 +69,7 @@
   >
     <div class="direction-story__scene-background" aria-hidden="true"></div>
     <div class="direction-story__sticky">
-      <h3 class="direction-story__display" data-story-text data-story-effect="stretch">
+      <h3 class="direction-story__display" data-story-text data-story-effect="effect25">
         <span data-story-fragment>{{ $visiMisi['missions_intro']['title'] }}</span>
       </h3>
     </div>
