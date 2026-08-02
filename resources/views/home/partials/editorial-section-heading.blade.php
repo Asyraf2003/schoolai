@@ -33,7 +33,8 @@
     </h2>
 
     @if ($headingDescription !== '')
-      <p class="welcome-editorial-heading__description" aria-label="{{ $headingDescription }}">
+      <p class="welcome-editorial-heading__description">
+        <span class="sr-only">{{ $headingDescription }}</span>
         @foreach ($descriptionLines as $descriptionLine)
           <span class="welcome-editorial-heading__description-clip" aria-hidden="true">
             <span class="welcome-editorial-heading__description-line">{{ $descriptionLine }}</span>
