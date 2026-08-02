@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HeroSlideAdminController;
 use App\Models\Article;
 use App\Models\HeroSlide;
 use App\Models\PpdbSetting;
+use App\Support\HomeHeroPresentation;
 use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ trait InjectsDatabaseHero
         $locale = app()->getLocale();
         $ppdbSetting = null;
         $normalizedSlides = [];
+        $primarySlide = collect($hero['slides'] ?? [])->first(
+            fn (mixed $slide): bool => is_array($slide)
+                && ($slide['is_primary_slide'] ?? false) === true
+                && ($slide['render_type'] ?? null) === 'video'
+        );
         $slides = $this->articleHeroSlides($locale);
 
         if ($slides === [] && Schema::hasTable('hero_slides')) {
@@ -104,7 +110,15 @@ trait InjectsDatabaseHero
             return;
         }
 
-        $hero['slides'] = $normalizedSlides;
+        $combinedSlides = is_array($primarySlide)
+            ? array_merge([$primarySlide], $normalizedSlides)
+            : $normalizedSlides;
+        $ppdbSetting ??= $this->currentPpdbSetting();
+        $hero['slides'] = HomeHeroPresentation::decorate(
+            $combinedSlides,
+            $ppdbSetting,
+            __('runtime.home.ppdb_cta_label'),
+        );
         $view->with('hero', $hero);
     }
 }

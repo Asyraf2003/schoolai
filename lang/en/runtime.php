@@ -4,6 +4,7 @@ return [
     'home' => [
         'apply_online_now' => 'Apply for Admission Online',
         'admission_info' => 'Admission Information',
+        'ppdb_cta_label' => 'Apply for Admission',
         'latest_story_by' => 'Read the latest school story by :author.',
         'article' => 'Article',
         'min_read' => ':count min read',

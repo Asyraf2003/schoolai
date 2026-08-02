@@ -79,7 +79,8 @@ it('rejects youtube and stores a raw uploaded hero video', function (): void {
         ->assertOk()
         ->assertSee('data-hero-video', false)
         ->assertDontSee('youtube', false)
-        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['title'] ?? null) === 'Database Hero');
+        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['render_type'] ?? null) === 'video'
+            && ($hero['slides'][1]['title'] ?? null) === 'Database Hero');
 });
 
 it('edits a seeded public image without forcing a replacement upload', function (): void {

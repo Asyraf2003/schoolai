@@ -125,6 +125,9 @@ export function createSliderPlaybackActions(options) {
         }
 
         hydrateSlide(slides[state.currentIndex], true);
+        root.dispatchEvent(new CustomEvent('hero:slide-active', {
+            detail: { slide: slides[state.currentIndex], index: state.currentIndex }
+        }));
 
         var nextSlide = slides[(state.currentIndex + 1) % slides.length];
         if (nextSlide && !nextSlide.querySelector('[data-hero-video]')) {

@@ -4,6 +4,7 @@ return [
     'home' => [
         'apply_online_now' => 'التسجيل الإلكتروني',
         'admission_info' => 'معلومات التسجيل والقبول',
+        'ppdb_cta_label' => 'التسجيل للقبول',
         'latest_story_by' => 'اقرأ أحدث قصص المدرسة بقلم :author.',
         'article' => 'مقال',
         'min_read' => 'مدة القراءة :count دقائق',

@@ -137,6 +137,7 @@ final class HeroSlide extends Model
                     ? trim($articleTag)
                     : $this->articleEyebrow($locale),
                 'title' => $articleTitle,
+                'title_href' => $article->linkForLocale($locale),
                 'description' => $articleDescription,
                 'cta' => [
                     'label' => $this->articleCtaLabel($locale),

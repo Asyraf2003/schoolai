@@ -68,17 +68,28 @@
                     <p class="hero-cinema__eyebrow" data-text-role="label">{{ $slide['eyebrow'] }}</p>
                   @endif
 
-                  @if ($loop->first)
-                    <h1 class="hero-cinema__title" data-text-role="display">{{ $slide['title'] }}</h1>
-                  @else
-                    <h2 class="hero-cinema__title" data-text-role="display">{{ $slide['title'] }}</h2>
-                  @endif
+                  @include('home.partials.hero-title', [
+                    'headingTag' => $loop->first ? 'h1' : 'h2',
+                    'slide' => $slide,
+                  ])
 
-                  @if (! empty($slide['description']))
+                  @if ($slide['show_ppdb_cta'] ?? false)
+                    <a
+                      href="{{ $slide['ppdb_url'] }}"
+                      class="hero-cinema__cta hero-cinema__cta--ppdb"
+                      data-hero-ppdb-cta
+                      data-text-role="action"
+                    >
+                      <span data-hero-roll-label>{{ $slide['ppdb_label'] }}</span>
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </a>
+                  @elseif (! empty($slide['description']))
                     <p class="hero-cinema__description" data-text-role="description">{{ $slide['description'] }}</p>
                   @endif
 
-                  @if (! empty($slide['cta']['label']) && ! empty($slide['cta']['href']))
+                  @if (! ($slide['show_ppdb_cta'] ?? false) && ! empty($slide['cta']['label']) && ! empty($slide['cta']['href']))
                     <a href="{{ $slide['cta']['href'] }}" class="hero-cinema__cta" data-text-role="action">
                       <span>{{ $slide['cta']['label'] }}</span>
                       <svg viewBox="0 0 24 24" aria-hidden="true">

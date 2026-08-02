@@ -1,6 +1,8 @@
 import { initMegaMenus, onMediaQueryChange } from './welcome-hero/mega-menu.js';
 import { createSliderMediaActions } from './welcome-hero/slider-media.js';
 import { createSliderPlaybackActions } from './welcome-hero/slider-playback.js';
+import { initHeroTitleGlow } from './welcome-hero/title-glow.js';
+import { initHeroPpdbRoll } from './welcome-hero/ppdb-roll.js';
 
 function initHeroSlider(root) {
     var slides = Array.prototype.slice.call(root.querySelectorAll('[data-hero-slide]'));
@@ -40,27 +42,8 @@ function initHeroSlider(root) {
     root.style.setProperty('--hero-autoplay-duration', duration + 'ms');
     root.setAttribute('data-enhanced', 'true');
 
-    slides.forEach(function (slide) {
-        var title = slide.querySelector('.hero-cinema__title');
-        var cta = slide.querySelector('.hero-cinema__cta[href]');
-
-        if (!title || !cta || title.querySelector('a[href]')) return;
-
-        var href = cta.getAttribute('href');
-        if (!href) return;
-
-        var link = document.createElement('a');
-        link.href = href;
-        link.className = 'hero-cinema__title-link';
-        link.style.color = 'inherit';
-        link.style.textDecoration = 'none';
-
-        while (title.firstChild) {
-            link.appendChild(title.firstChild);
-        }
-
-        title.appendChild(link);
-    });
+    initHeroTitleGlow(root);
+    initHeroPpdbRoll(root);
 
     var mediaActions = createSliderMediaActions({ slides, state, statusTemplate });
     var canAutoplay = mediaActions.canAutoplay;

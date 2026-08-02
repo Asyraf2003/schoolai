@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\GalleryItem;
 use App\Models\PpdbSetting;
 use App\Models\SiteStatistic;
+use App\Support\HomeHeroPresentation;
 use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
@@ -25,7 +26,7 @@ trait BuildsHomeHero
         $slides = $hero['slides'] ?? [];
         $fallbackImageUrl = $this->publicAssetUrl($hero['fallback_image'] ?? null);
         $normalizedSlides = [];
-        $ppdbSetting = null;
+        $ppdbSetting = $this->currentPpdbSetting();
 
         if (! is_array($slides)) {
             $slides = [];
@@ -71,7 +72,6 @@ trait BuildsHomeHero
                 : [];
 
             if (($cta['action'] ?? null) === 'admission') {
-                $ppdbSetting ??= $this->currentPpdbSetting();
                 $cta['href'] = $ppdbSetting->isRegistrationOpen()
                     ? $ppdbSetting->publicRegistrationUrl()
                     : route('ppdb');
@@ -114,7 +114,11 @@ trait BuildsHomeHero
             ];
         }
 
-        $hero['slides'] = $normalizedSlides;
+        $hero['slides'] = HomeHeroPresentation::decorate(
+            $normalizedSlides,
+            $ppdbSetting,
+            __('runtime.home.ppdb_cta_label'),
+        );
         $hero['fallback_image_url'] = $fallbackImageUrl;
         $hero['autoplay_interval'] = min(
             15000,

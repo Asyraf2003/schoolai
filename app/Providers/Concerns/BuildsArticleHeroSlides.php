@@ -65,6 +65,7 @@ trait BuildsArticleHeroSlides
                 ? trim($tag)
                 : $this->articleEyebrow($locale),
             'title' => $article->titleForLocale($locale),
+            'title_href' => $article->linkForLocale($locale),
             'description' => $article->descriptionForLocale($locale),
             'cta' => [
                 'label' => $this->articleCtaLabel($locale),

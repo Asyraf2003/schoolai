@@ -4,6 +4,7 @@ return [
     'home' => [
         'apply_online_now' => 'Daftar PPDB Online',
         'admission_info' => 'Info PPDB',
+        'ppdb_cta_label' => 'Daftar PPDB',
         'latest_story_by' => 'Baca cerita terbaru sekolah oleh :author.',
         'article' => 'Artikel',
         'min_read' => ':count menit baca',
