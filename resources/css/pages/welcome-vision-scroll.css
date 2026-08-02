@@ -57,7 +57,8 @@
 .direction-story__art--vision-3 { inset: auto auto -22% -16%; width: clamp(17rem, 70vw, 28rem); }
 .direction-story__art--vision-4 { inset: auto -18% 2% auto; width: clamp(14rem, 58vw, 24rem); }
 .direction-story__art--mission {
-    inset: 50% -18% auto auto;
+    inset-block-start: 50%;
+    inset-inline-end: -18%;
     width: clamp(20rem, 78vw, 36rem);
     opacity: .2;
     transform: translateY(-50%);
@@ -139,8 +140,8 @@ html[dir="rtl"] .direction-story__accent { transform-origin: 100% 50%; }
     .direction-story__scene--position-start .direction-story__sticky { justify-items: start; }
     .direction-story__scene--position-center .direction-story__sticky { justify-items: center; }
     .direction-story__scene--position-end .direction-story__sticky { justify-items: end; }
-    .direction-story__scene--position-end .direction-story__art--mission { inset-inline: 50% auto; }
     .direction-story__art--mission { inset-inline-end: -3%; width: min(46vw, 43rem); }
+    .direction-story__scene--position-end .direction-story__art--mission { inset-inline: 50% auto; }
 }
 @media (min-width: 1024px) {
     .direction-story__scene { min-height: 380svh; }
