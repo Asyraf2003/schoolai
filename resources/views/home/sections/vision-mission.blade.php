@@ -6,6 +6,7 @@
       'ar' => 'الرؤية التربوية',
   ];
   $visionLabel = $visionLabels[$directionLocale] ?? $visionLabels['id'];
+  $visionBackgrounds = [9, 10, 11, 12];
 @endphp
 
 <section
@@ -16,6 +17,22 @@
   data-story-kind="direction"
   data-story-locale="{{ $directionLocale }}"
 >
+  <div class="direction-story__background" aria-hidden="true">
+    @foreach ($visionBackgrounds as $asset)
+      <img
+        class="direction-story__background-image direction-story__background-image--{{ $loop->iteration }}"
+        data-story-bg-layer
+        data-story-depth="{{ $loop->iteration }}"
+        src="{{ asset('media/home/'.$asset.'.png') }}"
+        alt=""
+        width="1600"
+        height="2000"
+        loading="lazy"
+        decoding="async"
+      />
+    @endforeach
+  </div>
+
   <article class="direction-story__scene" data-story-scene>
     <div class="direction-story__sticky">
       <p class="direction-story__display" data-story-text data-story-effect="stretch">
