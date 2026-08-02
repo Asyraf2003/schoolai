@@ -3,8 +3,8 @@
 Status: BLOCKED_BY_MISSING_EVIDENCE
 Updated: 2026-08-02
 Repository: `Asyraf2003/schoolai`
-Published auth/account main: `5d0c73b20c33dceb7a6e5592fd066a99f22e4815`
-Active follow-up branch: `ai/login-choice-page-20260802`
+Published main: `278dca9d9438e195a66bc7ea2f275b7394787b8e`
+Merged pull request: `#30`
 
 Commit publication is source evidence only. It does not prove rendering,
 browser parity, accessibility, performance, or lifecycle behavior.
@@ -17,8 +17,8 @@ Blueprint: `blueprints/2026-08-02-auth-account-access.md`
 - State: `IMPLEMENTING`
 - Surface: public Login entry, authentication, accounts, role navigation,
   minimal guru/murid dashboards, and PPDB access boundary
-- Follow-up: replace the direct navbar role submenu with one title-case `Login`
-  link and a localized Guru/Murid choice page
+- Published follow-up: replace the direct navbar role submenu with one
+  title-case `Login` link and a localized Guru/Murid choice page
 - Protected: About, Testimonial, Vision/Mission, unrelated public sections,
   academic features, and global redesign
 
@@ -35,9 +35,9 @@ Blueprint: `blueprints/2026-08-02-auth-account-access.md`
   seconds with HMAC cache keys and neutral responses.
 - Admin Akun uses validated actions plus vanilla Fetch and ETag polling; no SPA,
   realtime package, token storage, or unsafe account `innerHTML` was added.
-- Desktop and mobile navigation now expose one localized title-case `Login`
-  link to `/login`. That page offers Guru and Murid choices; the navbar no
-  longer exposes direct role submenu links.
+- Desktop and mobile navigation expose one localized title-case `Login` link to
+  `/login`. That page offers Guru and Murid choices; the navbar no longer
+  exposes direct role submenu links.
 - Admin remains non-public at `/login/admin` while the internal route name
   `login` remains the protected-admin guest redirect.
 - Guru and Murid forms remain on `/login/guru` and `/login/murid`, and each form
@@ -51,16 +51,17 @@ Blueprint: `blueprints/2026-08-02-auth-account-access.md`
 
 | Gate | Status | Evidence |
 |---|---|---|
-| Published auth/account/public targeted tests | `PASS` | 88 tests, 666 assertions at `5d0c73b` batch source |
+| Published auth/account/public targeted tests | `PASS` | 88 tests, 666 assertions at prior auth/account batch source |
 | Login choice focused contract | `PASS` | 13 tests, 86 assertions in GitHub Actions run `30757503164` |
 | Auth and translation regression | `PASS` | 55 tests, 373 assertions in run `30757503164` |
-| Migration engines | `PASS` | SQLite and MariaDB 12.3 fresh/rollback/re-apply at published batch |
+| Migration engines | `PASS` | SQLite and MariaDB 12.3 fresh/rollback/re-apply at prior auth/account batch |
 | Vite production build | `PASS` | 92 modules transformed in run `30757503164` |
 | Scoped PHP formatting | `PASS` | Pint passed for every touched PHP file in run `30757503164` |
 | Full PHP suite | `PRE-EXISTING_BASELINE_DEBT` | 173 passed, 1 failed; only stale protected `HomeAboutReelTest` in run `30757561123` |
 | Standard dependency audit | `PRE-EXISTING_BASELINE_DEBT` | Composer audit passed; npm audit stopped on existing PostCSS advisory `GHSA-r28c-9q8g-f849` before build/test |
 | Structure checker | `PRE-EXISTING_BASELINE_DEBT` | accepted Vision/Mission and `welcome-hero.css` baseline; follow-up did not change those files |
-| Diff scope | `PASS` | connector compare shows only auth route/controller/view/CSS/locales/navbar test and architecture docs; no dependency or migration change |
+| Diff scope | `PASS` | final PR contained only auth route/controller/view/CSS/locales/navbar test and architecture docs; no dependency or migration change |
+| Publication | `PASS` | PR #30 squash-merged to `main` at `278dca9d9438e195a66bc7ea2f275b7394787b8e` |
 | WebKit runtime | `BLOCKED_BY_MISSING_EVIDENCE` | prior submenu proof cannot prove the new choice-page sequence |
 | Chromium runtime | `BLOCKED_BY_MISSING_EVIDENCE` | no Chromium executable in the prior environment and no follow-up run |
 
@@ -100,22 +101,24 @@ unavailable in the prior execution environment.
 | A04 admin/murid reactive UI | `PASS` | source tests and prior WebKit no-reload mutation |
 | A05 PPDB access boundary | `PASS` | source tests and prior WebKit open/closed proof |
 | A06 public Login choice follow-up | `PROVEN_AUTOMATED` | Pint, build, focused tests, auth regression, and full-suite isolation |
-| A07 final publication | `IMPLEMENTING` | fast-forward merge and remote SHA verification pending |
+| A07 final publication | `PASS` | PR #30 merged and main SHA recorded |
 | A08 follow-up browser proof | `BLOCKED_BY_MISSING_EVIDENCE` | WebKit and Chromium runtime not executed for the new flow |
 
 ## STATUS
 
-- Published auth/account implementation remains available on `main` at
-  `5d0c73b` until the follow-up merge completes.
-- Login choice follow-up is complete and proven at automated source/build level.
+- Login choice follow-up is published on `main` and proven at automated
+  source/build level.
 - Full suite adds no new regression; its sole failure is the protected stale
   About contract already outside scope.
 - Protected About/Testimonial/Vision/Mission remain unchanged.
 - No dependency, migration, package, or graphics runtime was added.
+- Browser parity for the new route sequence remains unproven and must not be
+  inferred from the prior submenu proof.
 
 ## NEXT VALID STEP
 
-Revalidate that `main` still points to `5d0c73b`, verify the final branch diff
-contains no temporary proof workflow, then merge PR #30 with an expected-head
-SHA and record the new remote `main` SHA. Runtime browser proof remains a
-separate explicit evidence gap and must not be claimed from automated tests.
+Pull `main` at or after `278dca9d9438e195a66bc7ea2f275b7394787b8e`,
+then execute the new `Login -> choice -> Guru/Murid form` sequence in WebKit and
+available Chromium across the required locale/direction and responsive matrix.
+Record any runtime defect as a new bounded follow-up; do not reopen protected
+About, Testimonial, or Vision/Mission scope.
