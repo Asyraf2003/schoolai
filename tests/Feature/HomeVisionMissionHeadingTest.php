@@ -31,6 +31,6 @@ it('renders one effect25-only vision mission story for every locale', function (
         $content = $response->getContent();
 
         expect(substr_count($content, 'data-story-effect="stretch"'))->toBe(7)
-            ->and(substr_count($content, 'class="direction-story__scene"'))->toBe(4);
+            ->and(substr_count($content, '<li class="direction-story__scene"'))->toBe(4);
     }
 });
