@@ -76,7 +76,7 @@ it('keeps one h1 and links the first admin article placement server side', funct
         ->and($heroHtml)->toContain('data-hero-title-glow');
 });
 
-it('turns the primary article video into a localized PPDB campaign while open', function (): void {
+it('links every PPDB campaign action to the same registration URL', function (): void {
     $article = createPrimaryHeroArticleVideo();
     $registrationUrl = 'https://apply.example.org/al-mustaqbal';
     PpdbSetting::query()->firstOrFail()->update([
@@ -101,8 +101,8 @@ it('turns the primary article video into a localized PPDB campaign while open', 
                 && ($first['eyebrow'] ?? null) === $eyebrow
                 && ($first['title'] ?? null) === $title
                 && ($first['description'] ?? null) === $description
-                && array_key_exists('title_href', $first)
-                && $first['title_href'] === null
+                && ($first['title_href'] ?? null) === $registrationUrl
+                && ($first['description_href'] ?? null) === $registrationUrl
                 && ($first['cta'] ?? null) === [];
         });
         $firstSlideHtml = firstHeroSlideHtml($response->getContent());
@@ -111,8 +111,10 @@ it('turns the primary article video into a localized PPDB campaign while open', 
             ->toContain(e($title))
             ->toContain(e($description))
             ->toContain(e($label))
-            ->not->toContain(e($article->titleForLocale($locale)))
-            ->not->toContain('hero-cinema__title-link');
+            ->toContain('data-hero-ppdb-description-link')
+            ->toContain('data-hero-ppdb-cta')
+            ->not->toContain(e($article->titleForLocale($locale)));
+        expect(substr_count($firstSlideHtml, 'href="'.e($registrationUrl).'"'))->toBe(3);
     }
 });
 
@@ -127,6 +129,8 @@ it('restores the complete primary article presentation while PPDB is closed', fu
             && ($first['show_ppdb_cta'] ?? true) === false
             && array_key_exists('ppdb_url', $first)
             && $first['ppdb_url'] === null
+            && array_key_exists('description_href', $first)
+            && $first['description_href'] === null
             && ($first['title'] ?? null) === $article->title_id
             && ($first['description'] ?? null) === $article->description_id
             && ($first['title_href'] ?? null) === route('artikel.native', $article->slug, false);
@@ -136,6 +140,7 @@ it('restores the complete primary article presentation while PPDB is closed', fu
         ->toContain(e($article->title_id))
         ->toContain(e($article->description_id))
         ->toContain('hero-cinema__title-link')
+        ->not->toContain('data-hero-ppdb-description-link')
         ->not->toContain('data-hero-ppdb-cta')
         ->not->toContain('Langkah Awal Menuju Pendidikan yang Bermakna');
 });
@@ -157,5 +162,6 @@ it('replays bounded hero glow for every active slide and keeps posters stable', 
         ->and($media)->not->toContain("removeAttribute('poster')")
         ->and($roll)->toContain('rotateX(')
         ->and($styles)->toContain('@media (prefers-reduced-motion: reduce)')
-        ->and($styles)->toContain('.hero-cinema__title-link:focus-visible');
+        ->and($styles)->toContain('.hero-cinema__title-link:focus-visible')
+        ->and($styles)->toContain('.hero-cinema__description-link:focus-visible');
 });
