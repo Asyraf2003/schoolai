@@ -1,9 +1,9 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: ACTIVE_WITH_FAILED_GATES
+Status: ACTIVE_WITH_KNOWN_GAPS
 Updated: 2026-08-02
 Repository: `Asyraf2003/schoolai`
-Audited source main: `684328dd3c2f4eb962501aee9d4486cdc6d9ac6c`
+Hero correction published through parent: `db177e3fb12c381e458cedf7296bf3421ce8be6f`
 
 Commit publication is source evidence only. It does not prove rendering,
 browser parity, accessibility, performance, or lifecycle behavior.
@@ -15,131 +15,116 @@ Blueprint: `blueprints/2026-08-02-homepage-hero-text-interactions.md`
 - ID: `HOME-HERO-TEXT-001`
 - State: `IMPLEMENTING`
 - Surface: homepage hero only
-- Owner decision: accepted in the 2026-08-02 implementation brief
-- Forbidden/protected: About, Testimonial, navbar behavior/visuals, other
-  homepage sections, unrelated admin/public routes, and meta ownership
+- Protected: About, Testimonial, navbar, other homepage sections, unrelated
+  routes, database schema, and media upload behavior
 
-## FACT and DECISION
+## Corrected FACT and DECISION
 
-- Translation fallback owns the required primary `flower.mp4` video.
-- Database/article injection previously displaced that video and exposed its
-  URL only through a generic CTA contract.
-- The primary fallback video is now retained at index zero; database/article
-  slides follow it.
-- One presentation owner adds explicit primary, PPDB, PPDB URL/label, and
-  article-only title URL fields after slide normalization.
-- PPDB visibility comes only from `PpdbSetting::isRegistrationOpen()` and its
-  safe `publicRegistrationUrl()` result.
-- Blade emits article title anchors in initial HTML inside the existing one
-  `h1`/subsequent `h2` hierarchy. JavaScript no longer infers title links from
-  generic CTA URLs.
-- Navbar roll remains untouched. Hero owns a small compatible PPDB roll module.
-- Latin glow uses grapheme segmentation and bounded stagger. Arabic stays one
-  shaped run with a mirrored gradient sweep.
-- Decorative layers are `aria-hidden`; static semantic text, focus, links,
-  reduced motion, and no-JS output remain usable.
-- No dependency, request, WebGL/canvas, animation loop, or media policy changed.
+- Active admin/article placements are authoritative when available.
+- The prior implementation incorrectly prepended the translation demo video to
+  managed placements, creating an unmanaged extra slide absent from admin.
+- Managed slides now replace translation fallback as one complete list.
+- Translation slides remain only when no managed/article/legacy slide survives.
+- Final index zero is the primary slide. The owner's current placement `01` is
+  therefore the uploaded article video shown first on the public homepage.
+- PPDB state remains owned by `PpdbSetting` and applies only when final index zero
+  renders as video.
+- Article title links remain server-rendered and article-only.
+- Video posters are retained while media hydrates or playback is delayed/blocked.
+- Every active-slide event triggers one delayed title sweep on all six tiers;
+  pointer hover and focus remain optional replay triggers.
+- ID/EN keep grapheme-based LTR motion. AR remains one shaped RTL run.
+- Reduced motion keeps semantic/static output.
+- Navbar source and behavior remain unchanged.
 
-## PROOF recorded on 2026-08-02
+## Published correction files
+
+- `app/Providers/Concerns/InjectsDatabaseHero.php`
+- `resources/js/pages/welcome-hero/title-glow.js`
+- `resources/js/pages/welcome-hero/slider-media.js`
+- `tests/Feature/HeroArticlePlacementTest.php`
+- `tests/Feature/HeroDatabaseFallbackTest.php`
+- `tests/Feature/Admin/HeroSlideAdminTest.php`
+- `tests/Feature/HomeHeroInteractionTest.php`
+- active blueprint and this ledger
+
+## Proof status
 
 | Gate | Status | Evidence |
 |---|---|---|
-| Focused hero/navbar/hotfix tests | `PASS` | 15 tests, 262 assertions |
-| Production Vite build | `PASS` | Vite 8.1.3, 86 modules |
-| Diff whitespace | `PASS` | `git diff --check` clean |
-| Full PHP suite | `FAIL` | 146/147; stale protected About test |
-| Source structure | `FAIL` | baseline Vision/Mission sizes + Hero checksum |
-| Chromium matrix | `PASS` | 50 state/locale/width cases |
-| Chromium touch/reduced | `PASS` | single-tap navigation + static fallback |
-| WebKitGTK matrix | `PASS` | 48 state/locale/width cases |
-| WebKit touch/reduced | `BLOCKED_BY_MISSING_EVIDENCE` | driver lacks emulation |
-| Real Safari/performance/field CWV | `BLOCKED_BY_MISSING_EVIDENCE` | not run |
-
-The browser matrix covers PPDB open/closed at 360, 640, 768, 1024, 1180,
-1181, 1280, and 1536 for ID, EN, and AR. It checks the first video, article
-heading/link, viewport containment, horizontal overflow, CTA/arrow separation,
-focus, motion count, and console errors. Representative and mid-motion captures
-were inspected. WebKit evidence is WebKitGTK 2.52.5, not a Safari claim.
+| GitHub publication | `PASS` | direct fast-forward commits on `main` |
+| Source ownership inspection | `PASS` | admin/fallback concatenation root cause removed |
+| Focused PHP tests after correction | `BLOCKED_BY_MISSING_EVIDENCE` | owner must run locally |
+| Production Vite build after correction | `BLOCKED_BY_MISSING_EVIDENCE` | owner must run locally |
+| Runtime visual/admin parity | `BLOCKED_BY_MISSING_EVIDENCE` | owner screenshot required |
+| Chromium transition/glow | `BLOCKED_BY_MISSING_EVIDENCE` | rerun after pull |
+| WebKit/Safari transition/glow | `BLOCKED_BY_MISSING_EVIDENCE` | rerun after pull |
+| Full PHP suite | `KNOWN_BASELINE_FAIL` | stale protected About test |
+| Structure checker | `KNOWN_BASELINE_FAIL` | Vision/Mission and equivalence debt |
 
 ## Bounded accessibility/HTTPS hotfix
 
-Blueprint: `docs/architecture/blueprints/2026-08-02-accessibility-https-hardening.md`
-
-- The unsupported paragraph `aria-label` was replaced by one complete `.sr-only`
-  text node while animated visual lines remain decorative.
-- Production HTTP returned `200`; HTTPS returned `200` with working HSTS.
-- `public/.htaccess` now redirects only the production host to canonical HTTPS,
-  preserving local and staging hosts.
-- Focused source-contract tests were added.
-- COOP, Trusted Types, CSP legacy fallback, and hero video diagnosis remain
-  documented gaps rather than unproved enforcement changes.
+The earlier accessibility and canonical-HTTPS source correction remains
+published. Deployment proof is still required for HTTP `301`, HTTPS HSTS/CSP,
+repeated accessibility audit, and hero MP4 byte-range behavior.
 
 ## Open GAP
 
+### `HERO-CORRECTION-PROOF-001`
+
+Pull current `main`, run focused tests/build, then prove:
+
+- admin placement `01` equals public slide `01`;
+- no translation demo slide is inserted while managed placements exist;
+- PPDB open/closed presentation applies to the managed primary video;
+- poster remains visible while video loads or autoplay is blocked;
+- glow runs on initial load and every autoplay/arrow/keyboard/swipe activation;
+- reduced motion remains static;
+- ID/EN/AR remain correct.
+
 ### `TEST-GAP-001`
 
-`HomeAboutReelTest` expects the intentionally disabled About surface. The hero
-batch does not alter that protected surface or falsify the result.
+`HomeAboutReelTest` still expects the intentionally disabled protected About
+surface. This hero correction does not alter that unrelated owner.
 
 ### `STRUCTURE-GAP-001`
 
-The official checker still reports three oversized Vision/Mission files and a
-stale Hero source checksum. Those baseline owners were not changed here.
-
-### `HERO-WEBKIT-INPUT-GAP-001`
-
-WebKit touch and reduced-motion input need a capable driver/device. Layout,
-pointer, focus, direction, and animation were proven in WebKitGTK.
-
-### `A11Y-HTTPS-PROOF-GAP-001`
-
-The hotfix is published but still requires focused/full tests, build/structure
-proof, deployed HTTP `301`, retained HTTPS HSTS/CSP, a repeated accessibility
-audit, and separate HTTPS byte-range proof for the reported hero MP4.
+The checker still has known Vision/Mission size and source-equivalence debt.
+Do not conceal it inside the hero correction.
 
 ### `BROWSER-PERF-GAP-001`
 
-Real Safari, Lighthouse/PageSpeed, zoom, orientation, short-height, BFCache,
-long-task, transfer, and field CWV evidence remains incomplete.
+Real Safari, complete WebKit input/reduced-motion, Lighthouse/PageSpeed, zoom,
+orientation, short-height, BFCache, long-task, transfer, and field CWV remain
+incomplete.
 
 ## Progress ledger
 
 | Stage | Status | Proof or blocker |
 |---|---|---|
 | G00 governance hardening | `PASS` | active architecture contracts |
-| G01 execution foundation | `PASS` | migration, lab, and handoff rules |
 | B00 current baseline | `COMPLETE_WITH_KNOWN_GAPS` | retained baseline evidence |
-| N00 navbar media mapping | `PUBLISHED_NOT_RUNTIME_PROVEN` | local media paths committed |
-| N01 navbar text-overlay removal | `PUBLISHED_NOT_RUNTIME_PROVEN` | overlay markup removed |
-| N02 unified navbar 3D roll | `IMPLEMENTING` | source published; proof missing |
-| A00 accessibility/HTTPS hotfix | `PUBLISHED_NOT_RUNTIME_PROVEN` | deploy proof missing |
-| H00 hero presentation + motion | `FAIL` | implementation proven; gates red |
-| E00 WebGL engine ADR | `BLOCKED_BY_MISSING_EVIDENCE` | no accepted WebGL scene |
+| N02 unified navbar 3D roll | `PUBLISHED_NOT_FULLY_PROVEN` | navbar untouched here |
+| A00 accessibility/HTTPS hotfix | `PUBLISHED_NOT_DEPLOYED_PROVEN` | deployment proof missing |
+| H00 hero presentation + motion | `PUBLISHED_AWAITING_LOCAL_PROOF` | corrected admin ownership |
 | R00 PageSpeed/CWV acceptance | `BLOCKED_BY_MISSING_EVIDENCE` | lab and field evidence absent |
 
 ## STATUS
 
-- Implementation source: complete locally.
-- Release/push: `FAIL`; withheld because mandatory gates are not all green.
-- Published accessibility/HTTPS hotfix: retained from current upstream.
-- About/Testimonial/navbar protection: preserved by changed-file inspection.
-- New graphics/runtime dependency: none.
+- Corrected hero source: `PUBLISHED` to `main`.
+- Runtime completion: `BLOCKED_BY_MISSING_EVIDENCE` until local proof.
+- About/Testimonial/navbar protection: preserved.
+- New dependency or graphics runtime: none.
 
 ## NEXT VALID STEP
 
 Execution channel: `owner/local terminal`.
 
-Resolve or formally retire `TEST-GAP-001` and `STRUCTURE-GAP-001` in separate
-owner-accepted scopes. Then rerun:
-
 ```bash
-git diff --check
-npm run check:structure
+git pull --ff-only origin main
+php artisan test --filter='HomeHeroInteractionTest|HeroArticlePlacementTest|HeroDatabaseFallbackTest|HeroSlideAdminTest'
 npm run build
-php artisan test --filter=HomeAccessibilityAndHttpsDeploymentTest
-php artisan test --filter=PublicUnifiedNavigationTest
-php artisan test
 ```
 
-Obtain WebKit touch/reduced-motion evidence before pushing this hero batch.
-Separately complete the published hotfix's deployed HTTPS/accessibility proof.
+Then reload `/` and `/admin/hero` without production deployment and compare the
+first placement, poster behavior, PPDB state, and automatic glow transitions.
