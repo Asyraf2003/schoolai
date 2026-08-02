@@ -29,6 +29,9 @@ it('keeps one h1 and links the first admin article placement server side', funct
         'type' => 'video',
         'media_url' => 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
         'poster_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'title_id' => $article->title_id,
+        'title_en' => $article->title_en,
+        'title_ar' => $article->title_ar,
         'sort_order' => 1,
         'is_active' => true,
     ]);
