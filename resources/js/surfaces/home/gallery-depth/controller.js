@@ -26,6 +26,11 @@ function bindLightbox(root, cards) {
     return () => document.removeEventListener('keydown', onKeyDown);
 }
 
+function paletteCss(channels) {
+    const values = channels.map((channel) => Math.round(channel * 255));
+    return `rgb(${values.join(' ')})`;
+}
+
 function createDepthGallery(root) {
     const journey = root.querySelector('[data-depth-gallery-journey]');
     const viewport = root.querySelector('[data-depth-gallery-viewport]');
@@ -43,6 +48,7 @@ function createDepthGallery(root) {
     const palettes = readPalettes(cards);
     const pointer = { x: 0, y: 0 };
     let renderer = null;
+    let rendererFailed = false;
     let observer = null;
     let frame = 0;
     let active = false;
@@ -52,13 +58,14 @@ function createDepthGallery(root) {
     let lastRenderTime = 0;
 
     const failRenderer = () => {
+        rendererFailed = true;
         root.classList.add('is-depth-fallback');
         renderer?.dispose();
         renderer = null;
     };
 
     const ensureRenderer = () => {
-        if (renderer || disposed) return;
+        if (renderer || rendererFailed || disposed) return;
         const candidate = new DepthGalleryRenderer(canvas, failRenderer);
         if (!candidate.init()) {
             candidate.dispose();
@@ -79,11 +86,13 @@ function createDepthGallery(root) {
         const progress = sceneProgress(journey, viewport);
         const camera = progress * (items.length - 1);
         const velocity = progress - previousProgress;
+        const palette = blendPalette(palettes, camera);
         previousProgress = progress;
         updateDepthItems(items, camera, viewport.clientWidth, pointer);
+        root.style.setProperty('--depth-atmosphere', paletteCss(palette.background));
         progressBar?.style.setProperty('transform', `scaleX(${progress.toFixed(5)})`);
         renderer?.resize();
-        renderer?.render(blendPalette(palettes, camera), time, velocity);
+        renderer?.render(palette, time, velocity);
         frame = requestAnimationFrame(render);
     };
 
@@ -132,6 +141,7 @@ function createDepthGallery(root) {
         cleanupLightbox();
         clearDepthItems(items);
         progressBar?.removeAttribute('style');
+        root.style.removeProperty('--depth-atmosphere');
         root.classList.remove('is-depth-ready');
     }
 
