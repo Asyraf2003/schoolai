@@ -1,0 +1,118 @@
+.direction-story {
+    --direction-ink: #f7fbff;
+    --direction-muted: rgba(247,251,255,.68);
+    position: relative;
+    overflow: clip;
+    background: #031b4d;
+    color: var(--direction-ink);
+}
+
+.direction-story__intro,
+.direction-story__vision,
+.direction-story__mission,
+.direction-story__missions-heading {
+    width: min(100% - clamp(2.5rem, 8vw, 10rem), 94rem);
+    margin-inline: auto;
+}
+
+.direction-story__intro {
+    display: grid;
+    min-height: 110svh;
+    align-content: center;
+    gap: clamp(2rem, 7vw, 7rem);
+    padding-block: clamp(6rem, 12vw, 12rem);
+}
+
+.direction-story__kicker {
+    width: min(100%, 42rem);
+    margin: 0;
+    color: var(--direction-muted);
+    font-size: clamp(.95rem, .45vw + .82rem, 1.25rem);
+    line-height: 1.7;
+}
+
+.direction-story__heading,
+.direction-story__missions-heading {
+    margin: 0;
+    font-size: clamp(3.2rem, 9vw, 10rem);
+    font-weight: 520;
+    letter-spacing: -.065em;
+    line-height: .86;
+    text-wrap: balance;
+}
+
+.direction-story__vision,
+.direction-story__mission {
+    display: grid;
+    min-height: 100svh;
+    grid-template-columns: minmax(3.5rem, 10vw) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 6rem);
+    border-block-start: 1px solid rgba(255,255,255,.22);
+    padding-block: clamp(5rem, 10vw, 10rem);
+}
+
+.direction-story__index {
+    align-self: start;
+    margin: .35rem 0 0;
+    color: var(--direction-muted);
+    font-size: clamp(.76rem, .3vw + .68rem, 1rem);
+    letter-spacing: .18em;
+}
+
+.direction-story__vision-copy h3,
+.direction-story__mission-copy h4 {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(2.8rem, 7.4vw, 8.5rem);
+    font-weight: 500;
+    letter-spacing: -.055em;
+    line-height: .9;
+}
+
+.direction-story__vision-copy p,
+.direction-story__mission-copy p {
+    width: min(100%, 48rem);
+    margin: clamp(2rem, 4vw, 4rem) 0 0;
+    color: var(--direction-muted);
+    font-size: clamp(1rem, .5vw + .88rem, 1.3rem);
+    line-height: 1.72;
+}
+
+.direction-story__missions {
+    padding-block-end: clamp(5rem, 10vw, 10rem);
+}
+
+.direction-story__missions-heading {
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    padding-block: clamp(5rem, 10vw, 10rem);
+}
+
+.direction-story__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.direction-story__mission::before {
+    position: absolute;
+    inset-inline-start: 0;
+    width: .3rem;
+    height: clamp(4rem, 12vw, 10rem);
+    background: var(--mission-accent);
+    content: "";
+}
+
+.direction-story__mission { position: relative; }
+.direction-story__mark { color: #fff; font-weight: 700; }
+
+html[dir="rtl"] .direction-story__heading,
+html[dir="rtl"] .direction-story__missions-heading,
+html[dir="rtl"] .direction-story__vision-copy h3,
+html[dir="rtl"] .direction-story__mission-copy h4 {
+    font-family: var(--font-ar-display, Cairo, sans-serif);
+    letter-spacing: 0;
+    line-height: 1.12;
+}
