@@ -5,6 +5,14 @@
 
     RewriteEngine On
 
+    # Keep local and staging hosts usable while enforcing the production origin.
+    RewriteCond %{HTTP_HOST} ^www\.almustaqbal\.sch\.id(?::\d+)?$ [NC]
+    RewriteRule ^ https://almustaqbal.sch.id%{REQUEST_URI} [R=301,L]
+
+    RewriteCond %{HTTP_HOST} ^almustaqbal\.sch\.id(?::\d+)?$ [NC]
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://almustaqbal.sch.id%{REQUEST_URI} [R=301,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
