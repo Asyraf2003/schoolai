@@ -16,8 +16,8 @@
 <body class="auth-login-page public-page-body">
     <main class="auth-login" aria-labelledby="login-heading">
         <section class="auth-login__card">
-            <a class="auth-login__back" href="{{ route('home') }}">
-                {{ __('app.auth.login.back_home') }}
+            <a class="auth-login__back" href="{{ route('portal.login') }}">
+                {{ __('app.auth.portal.back_choices') }}
             </a>
             <h1 id="login-heading">{{ __('app.auth.guru_login.heading') }}</h1>
             <p class="auth-login__description">

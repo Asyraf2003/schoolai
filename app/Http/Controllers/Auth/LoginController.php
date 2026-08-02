@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\ActiveSessionManager;
 use App\Services\AuditLogger;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
@@ -15,12 +16,17 @@ class LoginController extends Controller
         private readonly ActiveSessionManager $sessionManager,
     ) {}
 
-    public function show()
+    public function choose(): View
+    {
+        return view('auth.login-choice');
+    }
+
+    public function show(): View
     {
         return view('auth.login');
     }
 
-    public function showGuru()
+    public function showGuru(): View
     {
         return view('auth.guru-login');
     }

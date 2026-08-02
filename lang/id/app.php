@@ -12,12 +12,19 @@ return [
 
     'auth' => [
         'navigation' => [
-            'login' => 'LOGIN',
+            'login' => 'Login',
             'toggle' => 'Buka pilihan login',
             'guru' => 'Guru',
             'guru_description' => 'Masuk dengan akun Google yang terdaftar.',
             'murid' => 'Murid',
             'murid_description' => 'Masuk dengan ID siswa dan password.',
+        ],
+        'portal' => [
+            'title' => 'Login',
+            'heading' => 'Pilih jenis akun',
+            'description' => 'Pilih akses Guru atau Murid untuk melanjutkan ke halaman login.',
+            'choices_label' => 'Pilihan jenis akun',
+            'back_choices' => 'Kembali ke pilihan login',
         ],
         'login' => [
             'title' => 'Login',

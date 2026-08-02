@@ -147,24 +147,8 @@ unset($item);
 $loginItem = [
     'label' => __('app.auth.navigation.login'),
     'type' => 'login',
-    'route_patterns' => ['guru.login', 'murid.login'],
-    'mega' => [
-        'toggle_label' => __('app.auth.navigation.toggle'),
-        'media_url' => asset('media/hero/teaching.jpg'),
-        'media_alt' => __('app.auth.navigation.login'),
-        'links' => [
-            [
-                'label' => __('app.auth.navigation.guru'),
-                'description' => __('app.auth.navigation.guru_description'),
-                'href' => route('guru.login'),
-            ],
-            [
-                'label' => __('app.auth.navigation.murid'),
-                'description' => __('app.auth.navigation.murid_description'),
-                'href' => route('murid.login'),
-            ],
-        ],
-    ],
+    'href' => route('portal.login'),
+    'route_patterns' => ['portal.login', 'guru.login', 'murid.login'],
 ];
 $languageIndex = collect($menuItems)->search(
     fn (array $item): bool => ($item['type'] ?? null) === 'language',
