@@ -45,20 +45,6 @@ html[dir="rtl"] .nav-shell .nav-roll__layer--clone {
   transform-origin: 50% 0%;
 }
 
-.nav-shell .nav-roll--arabic .nav-roll__char {
-  backface-visibility: visible;
-  transform: none;
-  will-change: opacity, clip-path, filter;
-}
-
-.nav-shell .nav-roll--arabic .nav-roll__layer--clone .nav-roll__char {
-  opacity: 0;
-  transform: none;
-  -webkit-clip-path: inset(0 0 0 100%);
-  clip-path: inset(0 0 0 100%);
-  filter: brightness(1.55) drop-shadow(0 0 0.34em currentColor);
-}
-
 .nav-shell .nav-roll__accessible {
   position: absolute;
   width: 1px;
@@ -73,12 +59,8 @@ html[dir="rtl"] .nav-shell .nav-roll__layer--clone {
 
 @media (min-width: 1181px) {
   html[dir="rtl"] .nav-shell [data-nav-roll="main"] {
-    line-height: 1.28;
-  }
-
-  html[dir="rtl"] .nav-shell [data-nav-roll="main"] .nav-roll__viewport {
-    padding-block-end: 0.2em;
-    margin-block-end: -0.2em;
+    line-height: 1.32;
+    padding-block-end: 0.08em;
   }
 }
 
