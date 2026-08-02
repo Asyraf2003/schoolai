@@ -22,9 +22,9 @@ it('uses active database hero slides and falls back to locale slides when none a
         ->get(route('home'))
         ->assertOk()
         ->assertDontSee('hero-cinema__title-link', false)
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 2
-            && ($hero['slides'][0]['render_type'] ?? null) === 'video'
-            && ($hero['slides'][1]['title'] ?? null) === 'Hero from Database');
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
+            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
+            && ($hero['slides'][0]['title'] ?? null) === 'Hero from Database');
 
     HeroSlide::query()->update(['is_active' => false]);
 
@@ -51,6 +51,7 @@ it('never renders legacy youtube media or thumbnails in the hero', function (): 
         ->assertOk()
         ->assertDontSee('youtube', false)
         ->assertDontSee('ytimg', false)
-        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][1]['render_type'] ?? null) === 'image'
-            && ! str_contains(strtolower((string) ($hero['slides'][1]['media_url'] ?? '')), 'youtu'));
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
+            && ($hero['slides'][0]['render_type'] ?? null) === 'image'
+            && ! str_contains(strtolower((string) ($hero['slides'][0]['media_url'] ?? '')), 'youtu'));
 });
