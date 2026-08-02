@@ -106,7 +106,10 @@ it('turns the primary article video into a localized PPDB campaign while open', 
         });
         $firstSlideHtml = firstHeroSlideHtml($response->getContent());
         expect($firstSlideHtml)
-            ->toContain(e($eyebrow), e($title), e($description), e($label))
+            ->toContain(e($eyebrow))
+            ->toContain(e($title))
+            ->toContain(e($description))
+            ->toContain(e($label))
             ->not->toContain(e($article->titleForLocale($locale)))
             ->not->toContain('hero-cinema__title-link');
     }
@@ -129,7 +132,9 @@ it('restores the complete primary article presentation while PPDB is closed', fu
     });
     $firstSlideHtml = firstHeroSlideHtml($response->getContent());
     expect($firstSlideHtml)
-        ->toContain(e($article->title_id), e($article->description_id), 'hero-cinema__title-link')
+        ->toContain(e($article->title_id))
+        ->toContain(e($article->description_id))
+        ->toContain('hero-cinema__title-link')
         ->not->toContain('data-hero-ppdb-cta')
         ->not->toContain('Langkah Awal Menuju Pendidikan yang Bermakna');
 });
