@@ -10,9 +10,9 @@ export function readPalettes(cards) {
     return cards.map((card) => {
         const style = getComputedStyle(card);
         return {
-            background: DepthGalleryRenderer.color(style.getPropertyValue('--depth-bg') || '#071f3b'),
-            blobA: DepthGalleryRenderer.color(style.getPropertyValue('--depth-blob-a') || '#37b8ff'),
-            blobB: DepthGalleryRenderer.color(style.getPropertyValue('--depth-blob-b') || '#ffb443'),
+            background: DepthGalleryRenderer.color(style.getPropertyValue('--depth-bg') || '#c78f2b'),
+            blobA: DepthGalleryRenderer.color(style.getPropertyValue('--depth-blob-a') || '#ffd166'),
+            blobB: DepthGalleryRenderer.color(style.getPropertyValue('--depth-blob-b') || '#f4a261'),
         };
     });
 }
@@ -39,7 +39,7 @@ export function sceneProgress(journey, viewport) {
 }
 
 export function updateDepthItems(items, camera, viewportWidth, pointer) {
-    const horizontal = clamp(viewportWidth * 0.17, 46, 250);
+    const horizontal = clamp(viewportWidth * 0.065, 18, 118);
     const activeIndex = Math.round(camera);
 
     items.forEach((item, index) => {
@@ -47,11 +47,11 @@ export function updateDepthItems(items, camera, viewportWidth, pointer) {
         const relative = index - camera;
         const distance = Math.abs(relative);
         const side = Number.parseFloat(card?.style.getPropertyValue('--depth-side') || '0');
-        const x = side * horizontal + pointer.x * 18 * Math.max(0, 1 - distance);
-        const y = relative * 28 + pointer.y * 12 * Math.max(0, 1 - distance);
+        const x = side * horizontal + pointer.x * 14 * Math.max(0, 1 - distance);
+        const y = relative * 24 + pointer.y * 10 * Math.max(0, 1 - distance);
         const z = -relative * 650;
-        const scale = Math.max(0.78, 1 - distance * 0.075);
-        const rotate = -side * relative * 5.5;
+        const scale = Math.max(0.8, 1 - distance * 0.07);
+        const rotate = -side * relative * 3.5;
         const opacity = clamp(1 - distance * 0.82);
 
         item.style.transform = [
