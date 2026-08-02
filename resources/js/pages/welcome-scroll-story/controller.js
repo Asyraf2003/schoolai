@@ -65,6 +65,10 @@ export function createStoryController(root) {
     return function destroy() {
         destroyed = true;
         root.classList.remove('is-story-ready');
+        texts.forEach((item) => {
+            item.units.forEach((unit) => unit.style.removeProperty('transform'));
+        });
+        scenes.forEach((scene) => scene.style.removeProperty('--scene-progress'));
         if (frame) window.cancelAnimationFrame(frame);
         window.removeEventListener('scroll', requestRender);
         window.removeEventListener('resize', requestRender);
