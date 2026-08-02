@@ -125,6 +125,15 @@ html[dir="rtl"] .direction-story__display {
     letter-spacing: 0;
     line-height: 1.3;
 }
+html[dir="rtl"] .direction-story__honorific {
+    display: inline-flex;
+    margin-inline-start: .22em;
+    font-size: .58em;
+    font-weight: 500;
+    line-height: 1.45;
+    white-space: nowrap;
+    vertical-align: .18em;
+}
 html[dir="rtl"] .direction-story__label { letter-spacing: 0; text-transform: none; }
 html[dir="rtl"] .direction-story__accent { transform-origin: 100% 50%; }
 @media (min-width: 640px) {
