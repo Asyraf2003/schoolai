@@ -40,8 +40,10 @@ it('uses latest published articles automatically and lets hero placements curate
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
         ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['render_type'] ?? null) === 'video'
-            && ($hero['slides'][1]['title'] ?? null) === 'Latest Article');
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 2
+            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
+            && ($hero['slides'][0]['title'] ?? null) === 'Latest Article'
+            && ($hero['slides'][1]['title'] ?? null) === 'Older Article');
 
     HeroSlide::query()->create([
         'article_id' => $older->getKey(),
@@ -59,10 +61,10 @@ it('uses latest published articles automatically and lets hero placements curate
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
         ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 2
-            && ($hero['slides'][0]['render_type'] ?? null) === 'video'
-            && ($hero['slides'][1]['title'] ?? null) === 'Older Article'
-            && ($hero['slides'][1]['article_id'] ?? null) === $older->getKey());
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
+            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
+            && ($hero['slides'][0]['title'] ?? null) === 'Older Article'
+            && ($hero['slides'][0]['article_id'] ?? null) === $older->getKey());
 
     expect($latest->fresh()->isPubliclyVisibleNow())->toBeTrue();
 
@@ -71,6 +73,7 @@ it('uses latest published articles automatically and lets hero placements curate
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
         ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['render_type'] ?? null) === 'video'
-            && ($hero['slides'][1]['title'] ?? null) === 'Latest Article');
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
+            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
+            && ($hero['slides'][0]['title'] ?? null) === 'Latest Article');
 });
