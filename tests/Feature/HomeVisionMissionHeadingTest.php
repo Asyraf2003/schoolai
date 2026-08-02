@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders localized scene backgrounds and varied set two motion for every locale', function (): void {
+it('renders localized scene backgrounds and real Set 2 effects for every locale', function (): void {
     $labels = [
         'id' => 'Visi Pendidikan',
         'en' => 'Education Vision',
@@ -25,17 +25,21 @@ it('renders localized scene backgrounds and varied set two motion for every loca
             ->assertSee('data-story-art-motion="sweep"', false)
             ->assertSee('data-story-art-motion="zoom"', false)
             ->assertSee('data-story-art-motion="fold"', false)
-            ->assertSee('data-story-effect="stretch"', false)
-            ->assertSee('data-story-effect="fan"', false)
-            ->assertSee('data-story-effect="perspective"', false)
-            ->assertSee('data-story-effect="focus"', false)
-            ->assertSee('data-story-effect="wave"', false)
+            ->assertSee('data-story-effect="effect25"', false)
+            ->assertSee('data-story-effect="effect22"', false)
+            ->assertSee('data-story-effect="effect23"', false)
+            ->assertSee('data-story-effect="effect27"', false)
+            ->assertSee('data-story-effect="effect28"', false)
             ->assertSee('data-story-color="#061d4f"', false)
             ->assertSee('data-story-color="#075e62"', false)
             ->assertSee('data-story-color="#7a3828"', false)
             ->assertSee('data-story-color="#4d2c75"', false)
             ->assertSee('data-story-color="#175b45"', false)
             ->assertSee($label)
+            ->assertDontSee('data-story-effect="fan"', false)
+            ->assertDontSee('data-story-effect="perspective"', false)
+            ->assertDontSee('data-story-effect="focus"', false)
+            ->assertDontSee('data-story-effect="wave"', false)
             ->assertDontSee('direction-story__index', false)
             ->assertDontSee('id="tentang"', false)
             ->assertDontSee('home-about-scroll', false)
@@ -43,7 +47,8 @@ it('renders localized scene backgrounds and varied set two motion for every loca
 
         $content = $response->getContent();
 
-        expect(substr_count($content, 'data-story-scene-art'))->toBe(8)
+        expect(substr_count($content, 'data-story-effect="effect25"'))->toBe(2)
+            ->and(substr_count($content, 'data-story-scene-art'))->toBe(8)
             ->and(substr_count($content, '<li class="direction-story__scene direction-story__scene--mission"'))->toBe(4);
     }
 });
