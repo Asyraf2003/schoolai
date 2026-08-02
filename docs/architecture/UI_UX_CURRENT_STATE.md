@@ -3,8 +3,8 @@
 Status: BLOCKED_BY_MISSING_EVIDENCE
 Updated: 2026-08-03
 Repository: `Asyraf2003/schoolai`
-Source main before active batch: `3e0b6ea36b5989a88202c51ee4d063a1d3c3259b`
-Active branch: `ai/vision-effect25-only-20260803`
+Source main before batch: `3e0b6ea36b5989a88202c51ee4d063a1d3c3259b`
+Published implementation main: `50f639782761249211fcbef77695cdac7a7a9c53`
 
 Commit publication proves source state only. It does not prove rendering,
 responsive parity, accessibility, performance, or browser lifecycle.
@@ -50,12 +50,13 @@ Blueprint: `blueprints/2026-08-03-vision-effect25-scroll.md`
 | Gate | Status | Evidence |
 |---|---|---|
 | Scope diff | `PASS` | connector compare contains only Vision/Mission, About retirement, entries, focused test, and architecture docs |
-| About runtime owners | `PASS_SOURCE` | partial and active CSS/Vite/test owners removed from branch diff |
+| About runtime owners | `PASS_SOURCE` | partial and active CSS/Vite/test owners removed from published diff |
 | One motion grammar | `PASS_SOURCE` | every rendered story text declares `data-story-effect="stretch"`; rise/fan/focus removed |
 | Arabic shaping guard | `PASS_SOURCE` | locale adapter segments Arabic on whitespace into complete words |
 | Six-tier source contract | `PASS_SOURCE` | base XS plus 640/768/1024/1280/1536 boundaries in dedicated CSS |
 | No-JS/disposal fallback | `PASS_SOURCE` | transform activation is gated by `is-story-ready`; destroy removes inline transforms and progress |
 | Source file line limit | `PASS_SOURCE` | every added/replaced active source file remains below 200 lines by inspection |
+| Publication | `PASS` | `main` fast-forwarded without force to `50f639782761249211fcbef77695cdac7a7a9c53` |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector channel cannot run repository command |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not executed in connector channel |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not executed in connector channel |
@@ -77,18 +78,16 @@ Blueprint: `blueprints/2026-08-03-vision-effect25-scroll.md`
 | V07 lifecycle/performance bound | `IMPLEMENTED_SOURCE` | one RAF, progress cache, static disposal, reduced-motion result |
 | V08 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | repository commands have not run |
 | V09 runtime matrix | `BLOCKED_BY_MISSING_EVIDENCE` | tiers/locales/engines/reduced motion untested |
-| V10 publication | `PENDING` | revalidate main then non-force fast-forward |
+| V10 publication | `PASS` | direct non-force fast-forward to published implementation SHA |
 
 ## STATUS
 
-The corrected production source is complete on the active branch. It removes
-About and makes Vision/Mission an effect25-only scroll story. Build, test,
-browser, accessibility, and PageSpeed status remain blocked until actual gates
-run.
+The corrected production source is published on `main`. About is removed and
+Vision/Mission is now an effect25-only scroll story. Build, test, browser,
+accessibility, and PageSpeed status remain blocked until actual gates run.
 
 ## NEXT VALID STEP
 
-Revalidate that `main` still equals `3e0b6ea36b5989a88202c51ee4d063a1d3c3259b`,
-then fast-forward it without force to the active branch head. After pulling,
-run `git diff --check`, `npm run check:structure`, `npm run build`, and
-`php artisan test`; report the first failing gate verbatim.
+Pull current `main`, then run `git diff --check`, `npm run check:structure`,
+`npm run build`, and `php artisan test`. Report the first failing gate verbatim;
+do not begin visual tuning until automated source/build status is known.
