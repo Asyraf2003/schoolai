@@ -173,13 +173,21 @@ raw session IDs, or raw login identifiers.
 1. PROVEN: model/migration/role/session foundations and Google hardening.
 2. PROVEN: guru/murid login, dashboard, password, limiter, and middleware.
 3. PROVEN: admin account management, Fetch, revision/ETag, polling, and audit.
-4. IMPLEMENTING: replace direct navbar role submenu with localized Login choice
-   page while preserving hidden admin login and existing role forms.
-5. PENDING: focused tests, full diff, structure delta, build, PHP suite,
-   browser matrix, commit, fetch/revalidate, push, and remote SHA verification.
+4. PROVEN_AUTOMATED: direct navbar role submenu replaced by a localized Login
+   choice page while preserving hidden admin login and existing role forms.
+5. PROVEN_AUTOMATED: scoped Pint, Vite build, 13 public-auth tests with 86
+   assertions, and 55 auth/translation tests with 373 assertions passed.
+6. PRE-EXISTING_BASELINE_DEBT: full PHP suite produced 173 passes and only the
+   stale protected `HomeAboutReelTest` failure; standard CI also reproduced the
+   existing PostCSS advisory before build/test.
+7. PENDING: final diff revalidation, expected-head merge, remote SHA recording,
+   and fresh WebKit/Chromium runtime proof for the new choice flow.
 
 Pre-existing Vision/Mission line-limit failures are `PRE-EXISTING_BASELINE
 DEBT`. Do not change/exclude those files. No new structure failure is accepted.
+Browser proof remains `BLOCKED_BY_MISSING_EVIDENCE` until the new navigation and
+choice flow run in the required engines; automated proof must not be relabeled
+as browser proof.
 
 Rollback restores the former navbar submenu, removes the public choice route and
 view, and returns admin login to `/login`. Existing linked accounts and all auth
