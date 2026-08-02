@@ -31,7 +31,6 @@ export function createSliderMediaActions(options) {
         video.removeAttribute('loop');
 
         if (slide.classList.contains('is-active')) {
-            video.removeAttribute('poster');
             video.preload = 'auto';
         }
 
@@ -69,7 +68,6 @@ export function createSliderMediaActions(options) {
             }
 
             hydrateSlide(slide, true);
-            video.removeAttribute('poster');
 
             // Reduced-motion disables automatic carousel movement and animated
             // transitions, but must not turn a valid active video into a black frame.
