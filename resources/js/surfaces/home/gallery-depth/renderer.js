@@ -21,19 +21,19 @@ void main() {
     vec2 uv = vUv;
     float aspect = resolution.x / max(resolution.y, 1.0);
     vec2 p = vec2((uv.x - 0.5) * aspect, uv.y - 0.5);
-    vec2 drift = pointer * 0.07;
+    vec2 drift = pointer * 0.09;
     vec2 aCenter = vec2(-0.34, 0.20) + drift;
     vec2 bCenter = vec2(0.34, -0.18) - drift;
-    aCenter += vec2(sin(time * 0.28), cos(time * 0.24)) * 0.035;
-    bCenter += vec2(cos(time * 0.22), sin(time * 0.31)) * 0.045;
-    float a = smoothstep(0.72, 0.02, length(p - aCenter));
-    float b = smoothstep(0.78, 0.03, length(p - bCenter));
+    aCenter += vec2(sin(time * 0.28), cos(time * 0.24)) * 0.045;
+    bCenter += vec2(cos(time * 0.22), sin(time * 0.31)) * 0.055;
+    float a = smoothstep(0.78, 0.02, length(p - aCenter));
+    float b = smoothstep(0.82, 0.03, length(p - bCenter));
     float pulse = 0.5 + 0.5 * sin(time * 0.7 + length(p) * 7.0);
     vec3 color = backgroundColor;
-    color = mix(color, blobAColor, a * (0.54 + abs(velocity) * 2.0));
-    color = mix(color, blobBColor, b * (0.48 + pulse * 0.08));
-    float vignette = smoothstep(1.05, 0.18, length(p));
-    color *= 0.78 + vignette * 0.22;
+    color = mix(color, blobAColor, a * (0.62 + min(abs(velocity) * 3.0, 0.2)));
+    color = mix(color, blobBColor, b * (0.56 + pulse * 0.1));
+    float vignette = smoothstep(1.08, 0.2, length(p));
+    color *= 0.9 + vignette * 0.1;
     gl_FragColor = vec4(color, 1.0);
 }`;
 
