@@ -51,6 +51,7 @@ function firstHeroSlideHtml(string $content): string
 
 it('keeps one h1 and links the first admin article placement server side', function (): void {
     $article = createPrimaryHeroArticleVideo();
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
     $response = $this->withSession(['locale' => 'en'])->get(route('home'));
 
     $response->assertOk()->assertViewHas('hero', function (array $hero) use ($article): bool {
