@@ -58,5 +58,16 @@ it('renders localized scene backgrounds, positions, and real Set 2 effects', fun
             ->and(substr_count($content, 'data-story-position="start"'))->toBe(1)
             ->and(substr_count($content, 'data-story-position="end"'))->toBe(1)
             ->and(substr_count($content, 'direction-story__scene--mission direction-story__scene--position-'))->toBe(4);
+
+        if ($locale === 'ar') {
+            $storyStart = strpos($content, 'class="direction-story"');
+            $storyEnd = strpos($content, '</section>', $storyStart);
+            $story = substr($content, $storyStart, $storyEnd - $storyStart);
+
+            expect($story)
+                ->toContain('data-story-honorific')
+                ->toContain('صلى الله عليه وسلم')
+                ->not->toContain('ﷺ');
+        }
     }
 });
