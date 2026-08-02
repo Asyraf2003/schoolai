@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::get('/login', [LoginController::class, 'choose'])
+        ->name('portal.login');
+    Route::get('/login/admin', [LoginController::class, 'show'])
+        ->name('login');
     Route::get('/login/guru', [LoginController::class, 'showGuru'])
         ->name('guru.login');
     Route::get('/login/murid', [StudentLoginController::class, 'show'])
