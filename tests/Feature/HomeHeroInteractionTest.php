@@ -100,7 +100,8 @@ it('turns the primary article video into a localized PPDB campaign while open', 
                 && ($first['eyebrow'] ?? null) === $eyebrow
                 && ($first['title'] ?? null) === $title
                 && ($first['description'] ?? null) === $description
-                && ($first['title_href'] ?? 'missing') === null
+                && array_key_exists('title_href', $first)
+                && $first['title_href'] === null
                 && ($first['cta'] ?? null) === [];
         });
         $firstSlideHtml = firstHeroSlideHtml($response->getContent());
@@ -120,7 +121,8 @@ it('restores the complete primary article presentation while PPDB is closed', fu
         $first = $hero['slides'][0] ?? [];
         return ($first['is_primary_slide'] ?? false) === true
             && ($first['show_ppdb_cta'] ?? true) === false
-            && ($first['ppdb_url'] ?? 'missing') === null
+            && array_key_exists('ppdb_url', $first)
+            && $first['ppdb_url'] === null
             && ($first['title'] ?? null) === $article->title_id
             && ($first['description'] ?? null) === $article->description_id
             && ($first['title_href'] ?? null) === route('artikel.native', $article->slug, false);
