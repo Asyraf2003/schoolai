@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders localized Login submenus on desktop and mobile without a public PPDB menu link', function (string $locale, string $login, string $teacher, string $student): void {
+it('renders a localized Login link without direct role or public PPDB menu links', function (string $locale, string $login): void {
     PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
 
     $response = $this->withSession(['locale' => $locale])->get(route('home'))->assertOk();
@@ -14,17 +14,34 @@ it('renders localized Login submenus on desktop and mobile without a public PPDB
     expect($content)
         ->toContain('dir="'.($locale === 'ar' ? 'rtl' : 'ltr').'"')
         ->toContain($login)
-        ->toContain($teacher)
-        ->toContain($student)
+        ->not->toContain('href="'.route('guru.login').'"')
+        ->not->toContain('href="'.route('murid.login').'"')
         ->not->toContain('href="'.route('ppdb').'"')
         ->not->toContain('href="/ppdb"');
-    expect(substr_count($content, 'href="'.route('guru.login').'"'))->toBeGreaterThanOrEqual(2)
-        ->and(substr_count($content, 'href="'.route('murid.login').'"'))->toBeGreaterThanOrEqual(2)
+    expect(substr_count($content, 'href="'.route('portal.login').'"'))->toBeGreaterThanOrEqual(2)
         ->and(substr_count($content, 'nav-login'))->toBeGreaterThanOrEqual(2);
 })->with([
-    'Indonesia' => ['id', 'LOGIN', 'Guru', 'Murid'],
-    'English' => ['en', 'LOGIN', 'Teacher', 'Student'],
-    'Arabic' => ['ar', 'تسجيل الدخول', 'المعلم', 'الطالب'],
+    'Indonesia' => ['id', 'Login'],
+    'English' => ['en', 'Login'],
+    'Arabic' => ['ar', 'تسجيل الدخول'],
+]);
+
+it('renders localized role choices before the teacher and student forms', function (string $locale, string $direction, string $heading, string $teacher, string $student): void {
+    $this->withSession(['locale' => $locale])
+        ->get(route('portal.login'))
+        ->assertOk()
+        ->assertSee('dir="'.$direction.'"', escape: false)
+        ->assertSee($heading)
+        ->assertSee($teacher)
+        ->assertSee($student)
+        ->assertSee('href="'.route('guru.login').'"', escape: false)
+        ->assertSee('href="'.route('murid.login').'"', escape: false)
+        ->assertDontSee(route('google.redirect'), escape: false)
+        ->assertDontSee(route('google.guru.redirect'), escape: false);
+})->with([
+    ['id', 'ltr', 'Pilih jenis akun', 'Guru', 'Murid'],
+    ['en', 'ltr', 'Choose your account type', 'Teacher', 'Student'],
+    ['ar', 'rtl', 'اختر نوع الحساب', 'المعلم', 'الطالب'],
 ]);
 
 it('uses the same setting to expose the hero campaign and PPDB route only while open', function (): void {
@@ -65,7 +82,7 @@ it('returns a localized informational 404 when PPDB is closed', function (string
     ['ar', 'التسجيل مغلق حاليًا'],
 ]);
 
-it('renders localized teacher and student login pages in the correct direction', function (string $locale, string $direction, string $teacher, string $student): void {
+it('renders localized admin, teacher, and student login pages in the correct direction', function (string $locale, string $direction, string $teacher, string $student): void {
     $adminPage = $this->withSession(['locale' => $locale])->get(route('login'));
     $teacherPage = $this->withSession(['locale' => $locale])->get(route('guru.login'));
     $studentPage = $this->withSession(['locale' => $locale])->get(route('murid.login'));
@@ -76,10 +93,12 @@ it('renders localized teacher and student login pages in the correct direction',
     $teacherPage->assertOk()
         ->assertSee('dir="'.$direction.'"', escape: false)
         ->assertSee($teacher)
+        ->assertSee(route('portal.login'), escape: false)
         ->assertSee(route('google.guru.redirect'), escape: false);
     $studentPage->assertOk()
         ->assertSee('dir="'.$direction.'"', escape: false)
         ->assertSee($student)
+        ->assertSee(route('portal.login'), escape: false)
         ->assertSee('pattern="[A-Za-z0-9]{1,32}"', escape: false);
 })->with([
     ['id', 'ltr', 'Login Guru', 'Login Murid'],
