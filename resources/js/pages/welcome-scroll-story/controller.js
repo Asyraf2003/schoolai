@@ -16,6 +16,8 @@ function unitProgress(progress, index, total) {
 }
 
 function paintText(item, progress) {
+    if (Math.abs((item.lastProgress ?? -1) - progress) < .0005) return;
+    item.lastProgress = progress;
     const total = item.units.length;
 
     item.units.forEach((unit, index) => {
@@ -66,6 +68,7 @@ export function createStoryController(root) {
         destroyed = true;
         root.classList.remove('is-story-ready');
         texts.forEach((item) => {
+            delete item.lastProgress;
             item.units.forEach((unit) => unit.style.removeProperty('transform'));
         });
         scenes.forEach((scene) => scene.style.removeProperty('--scene-progress'));
