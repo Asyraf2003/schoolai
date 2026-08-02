@@ -4,6 +4,7 @@ Status: BLOCKED_BY_MISSING_EVIDENCE
 Updated: 2026-08-03
 Repository: `Asyraf2003/schoolai`
 Source main before active batch: `61f35579bff7dea348f520b109c29c148399466f`
+Published implementation main: `62bb85887c1136aa18b132200fac4a244e243e55`
 
 Commit publication proves source state only. It does not prove rendering,
 responsive parity, accessibility, performance, or browser lifecycle.
@@ -31,8 +32,9 @@ Blueprint: `blueprints/2026-08-03-about-vision-scroll-typography.md`
   desktop/mobile heading controllers are removed.
 - ID and EN animate Unicode characters. Arabic animates complete words so
   joining and shaping remain intact.
-- One shared native RAF controller owns both surfaces. No GSAP, ScrollTrigger,
-  Lenis, Splitting, WebGL, external font, or package change is introduced.
+- One shared native RAF implementation owns both surfaces. No GSAP,
+  ScrollTrigger, Lenis, Splitting, WebGL, external font, or package change is
+  introduced.
 - No-JS content remains server-rendered. Reduced motion resolves to static final
   content and removes the About sticky travel.
 - Retired split-source entries may remain as historical manifest records; the
@@ -43,9 +45,10 @@ Blueprint: `blueprints/2026-08-03-about-vision-scroll-typography.md`
 | Gate | Status | Evidence |
 |---|---|---|
 | Scope diff | `PASS` | connector compare contains only About/Vision source, entries, focused tests, structure retirement handling, and architecture docs |
-| Legacy standalone owners | `PASS` | old About reel/warp and Vision desktop/mobile CSS/JS files removed in branch diff |
+| Legacy standalone owners | `PASS` | old About reel/warp and Vision desktop/mobile CSS/JS files removed in published diff |
 | New source line limit | `PASS` | local line count: every new/replaced source file <= 118 lines |
 | New JavaScript syntax | `PASS` | local `node --check` passed for entry, controller, split module, and Vite config |
+| Publication | `PASS` | `main` fast-forwarded without force to `62bb85887c1136aa18b132200fac4a244e243e55` |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector channel cannot run repository command |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | full repository runtime unavailable in connector channel |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | full repository runtime unavailable in connector channel |
@@ -70,21 +73,21 @@ Blueprint: `blueprints/2026-08-03-about-vision-scroll-typography.md`
 | H02 blueprint acceptance | `PASS` | owner explicitly authorized the described implementation on `main` |
 | H03 semantic About rebuild | `IMPLEMENTED_SOURCE` | new active partial and blue sticky scene |
 | H04 semantic Vision/Mission rebuild | `IMPLEMENTED_SOURCE` | new editorial sequence and four motion variants |
-| H05 locale/motion controller | `IMPLEMENTED_SOURCE` | shared controller with Arabic word adapter and cleanup |
-| H06 legacy retirement | `PASS_SOURCE` | standalone reel/warp/card/heading owners removed from branch diff |
+| H05 locale/motion controller | `IMPLEMENTED_SOURCE` | shared implementation with Arabic word adapter and cleanup |
+| H06 legacy retirement | `PASS_SOURCE` | standalone reel/warp/card/heading owners removed from published diff |
 | H07 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | repository commands have not run |
 | H08 runtime matrix | `BLOCKED_BY_MISSING_EVIDENCE` | six tiers, ID/EN/AR, Chromium/WebKit, reduced motion untested |
-| H09 publication | `IMPLEMENTING` | direct fast-forward to `main` pending final ref check |
+| H09 publication | `PASS` | direct non-force fast-forward to published implementation SHA |
 
 ## STATUS
 
-The requested production source replacement is complete on the authorized work
-ref. Source inspection confirms the intended owners and legacy removals. Build,
-test, browser, accessibility, and PageSpeed claims remain blocked until their
-actual gates run.
+The requested production source replacement is published on `main`. Source
+inspection confirms the intended owners and legacy removals. Build, test,
+browser, accessibility, and PageSpeed claims remain blocked until their actual
+gates run.
 
 ## NEXT VALID STEP
 
-Revalidate remote `main`, compare the complete work ref against the recorded
-source SHA, then fast-forward `main` without force. After publication, pull the
-published SHA locally and run the mandatory automated gates before visual review.
+Pull current `main`, then run `git diff --check`, `npm run check:structure`,
+`npm run build`, and `php artisan test`. Report the first failing gate verbatim;
+do not begin visual tuning until automated source/build status is known.
