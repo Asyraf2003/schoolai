@@ -54,12 +54,10 @@ export function initHeroTitleGlow(root) {
     root.dataset.heroTitleGlowBooted = 'true';
 
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var touchActivation = window.matchMedia(
-        '(max-width: 1279px) and (hover: none), (max-width: 1279px) and (pointer: coarse)'
-    );
     var locale = document.documentElement.lang || 'id';
     var isRtl = document.documentElement.dir === 'rtl';
     var generations = new WeakMap();
+    var activationTimer = null;
 
     root.querySelectorAll('[data-hero-title-glow]').forEach(function (title) {
         enhanceTitle(title, locale, isRtl);
@@ -105,6 +103,14 @@ export function initHeroTitleGlow(root) {
         });
     }
 
+    function playActivatedTitle(title) {
+        if (activationTimer !== null) window.clearTimeout(activationTimer);
+        activationTimer = window.setTimeout(function () {
+            activationTimer = null;
+            play(title);
+        }, 140);
+    }
+
     function settle(title) {
         var overlay = title && title.querySelector('.hero-title-glow__overlay');
         if (!overlay || reducedMotion.matches || typeof overlay.animate !== 'function') return;
@@ -139,8 +145,7 @@ export function initHeroTitleGlow(root) {
     root.addEventListener('focusin', function (event) { play(titleFrom(event.target)); });
     root.addEventListener('focusout', function (event) { settle(titleFrom(event.target)); });
     root.addEventListener('hero:slide-active', function (event) {
-        if (!touchActivation.matches) return;
-        play(event.detail && event.detail.slide
+        playActivatedTitle(event.detail && event.detail.slide
             ? event.detail.slide.querySelector('[data-hero-title-glow]')
             : null);
     });
