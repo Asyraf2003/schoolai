@@ -28,7 +28,10 @@ final class HomeHeroPresentation
                     'show_ppdb_cta' => $showPpdb,
                     'ppdb_url' => $showPpdb ? $registrationUrl : null,
                     'ppdb_label' => $campaign['cta'],
-                    'title_href' => $showPpdb ? null : self::articleTitleUrl($slide),
+                    'title_href' => $showPpdb
+                        ? $registrationUrl
+                        : self::articleTitleUrl($slide),
+                    'description_href' => $showPpdb ? $registrationUrl : null,
                 ];
 
                 if ($showPpdb) {
