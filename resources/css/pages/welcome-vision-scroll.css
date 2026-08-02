@@ -88,7 +88,6 @@
 
 .direction-story.is-story-ready .story-unit {
     transform: scaleY(.001);
-    will-change: transform;
 }
 
 html[dir="rtl"] .direction-story__display {
