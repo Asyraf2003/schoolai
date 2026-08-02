@@ -3,8 +3,8 @@
 Status: BLOCKED_BY_MISSING_EVIDENCE
 Updated: 2026-08-03
 Repository: `Asyraf2003/schoolai`
-Source main before batch: `6c572ab40fd15362830646844abf7a71d5efa7fa`
-Gallery implementation source: `4ff6287f6072f919b76dc738bb1f6bd0804a466c`
+Source main before correction: `70800053340caf6643998e09a743bd3ea61b5348`
+Gallery correction source before ledger: `45c472e06b13eb61a250aeb7811f86751924c300`
 
 Commit publication proves source state only. It does not prove rendering,
 responsive parity, accessibility, performance, or browser lifecycle.
@@ -21,74 +21,86 @@ Blueprint: `blueprints/2026-08-03-home-depth-gallery.md`
   navigation, footer, dedicated Gallery page, translations, authentication,
   database schema, admin CRUD, dependencies, and existing media.
 
-## FACT and DECISION
+## FACT and owner correction
 
-- The owner explicitly selected the reference's atmospheric depth-gallery
-  direction and authorized direct publication to `main`.
-- Existing six normalized database/content items remain the only homepage
-  Gallery data source.
-- The homepage Gallery now renders semantic HTML links and copy around one
-  decorative low-power WebGL atmosphere.
-- Scroll progress moves the cards through one CSS 3D depth scene; cards alternate
-  inline position without creating locale or viewport forks.
-- The WebGL renderer is implemented with project-owned raw WebGL1 code. No
-  dependency or `package-lock.json` change is introduced.
-- The Gallery controller is dynamically imported near the section, uses one RAF,
-  caps DPR at 1.5, and suspends offscreen or while the document is hidden.
-- WebGL failure and context loss preserve the DOM depth experience over a CSS
-  atmosphere. Reduced motion preserves a static responsive card grid.
-- Existing homepage lightbox behavior is reused; no-JS cards remain normal media
-  links.
-- One semantic DOM serves ID, EN, and AR. Logical alignment handles RTL; vertical
-  time/depth progression is not reversed for Arabic.
-- Base XS plus boundaries at 640, 768, 1024, 1280, and 1536px define the same
-  scene across all six tiers.
+- The first Gallery implementation did not fully retire the former homepage
+  controller/partial and incorrectly placed copy over cropped rounded images.
+- Owner feedback requires adjacent copy, square media corners, intrinsic image
+  proportions bounded only by maximum width/height, visible atmosphere changes,
+  and the same system across all six tiers.
+- Homepage Gallery still receives the existing six normalized database/content
+  items and reuses the shared accessible lightbox.
+- `gallery-story.blade.php`, `gallery-story.js`, and its homepage import are now
+  removed. The shared lightbox remains because the new surface owns it.
+- Mixed historical CSS modules still contain dormant old Gallery selectors plus
+  active Programs/Footer/shared rules. They are not deleted in this atomic batch
+  because their ownership and welcome.css checksum require a separate migration.
+- No dependency, database, dedicated Gallery page, Hero, or other homepage
+  section is changed.
+
+## Corrected source contract
+
+- Media and copy are adjacent siblings. Copy never overlays media.
+- Images use `width: auto`, `height: auto`, `max-width`, `max-height`, and
+  `object-fit: contain`; no image border radius or forced aspect ratio remains.
+- Alternating media/copy order mirrors for RTL without creating a second DOM.
+- One scene is fluid from 360px and declares boundaries at 640, 768, 1024,
+  1280, and 1536px.
+- XS stacks media/copy; SM through 2XL use adjacent composition with progressively
+  bounded media and scene dimensions.
+- DOM background color blends the active and next palette every render frame.
+  WebGL uses the same palette with stronger atmospheric blobs.
+- CSS palette progression remains visible if WebGL initialization or context is
+  lost.
+- One RAF remains suspended offscreen or while the document is hidden.
+- Reduced motion remains a static semantic sequence.
 
 ## Source proof status
 
 | Gate | Status | Evidence |
 |---|---|---|
-| Scope diff | `PASS_SOURCE` | compare `6c572ab..4ff6287f` contains only Gallery owners, route entries, focused test, and blueprint |
-| Six-tier source contract | `PASS_SOURCE` | dedicated responsive module declares 640/768/1024/1280/1536 boundaries and fluid base |
-| Locale architecture | `PASS_SOURCE` | one Blade tree/controller; RTL uses logical styling only |
-| Semantic fallback | `PASS_SOURCE` | card anchors, list semantics, HTML copy, hidden decorative canvas |
-| Reduced motion | `PASS_SOURCE` | controller does not initialize depth/WebGL; CSS static grid remains |
-| Lifecycle bound | `PASS_SOURCE` | proximity import, offscreen/hidden suspension, BFCache handling, context-loss fallback, disposal |
+| Scope diff | `PASS_SOURCE` | compare from `70800053` contains Gallery owners, focused test, blueprint, and ledger only |
+| Adjacent copy | `PASS_SOURCE` | Blade siblings plus CSS grid; no overlay positioning on copy |
+| Intrinsic media | `PASS_SOURCE` | auto dimensions, max bounds, contain fit, square corners |
+| Palette change | `PASS_SOURCE` | controller writes blended `--depth-atmosphere`; renderer consumes same palette |
+| Six-tier source contract | `PASS_SOURCE` | fluid XS plus 640/768/1024/1280/1536 boundaries |
+| RTL architecture | `PASS_SOURCE` | one DOM with mirrored CSS order and logical text alignment |
+| Legacy active owner cleanup | `PASS_SOURCE` | old homepage partial/controller/import removed |
+| Lifecycle/fallback | `PASS_SOURCE` | lazy entry, one RAF, offscreen/hidden suspension, context-loss CSS fallback |
 | Dependency scope | `PASS_SOURCE` | no package or lockfile change |
-| Source file limit | `PASS_SOURCE` | every added active source file is below 200 lines in connector diff |
-| Previous clean worktree/diff | `PASS` | owner command reached `npm run check:structure` after clean status and `git diff --check` |
-| `npm run check:structure` | `FAIL_PRE_EXISTING` | owner proof: `welcome-hero.css` checksum mismatch before Gallery patch |
-| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | command chain stopped at structure gate |
-| Focused PHP test | `BLOCKED_BY_MISSING_EVIDENCE` | added but not executed in a repository checkout |
-| Full PHP suite | `BLOCKED_BY_MISSING_EVIDENCE` | command chain stopped before tests |
-| Chromium/WebKit runtime | `BLOCKED_BY_MISSING_EVIDENCE` | no browser run yet |
-| Lighthouse/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | no comparable runtime run yet |
+| Previous clean worktree/diff | `PASS` | owner command reached structure gate after clean status/diff |
+| `npm run check:structure` | `FAIL_PRE_EXISTING` | owner proof: `welcome-hero.css` checksum mismatch before this correction |
+| Focused PHP test | `BLOCKED_BY_MISSING_EVIDENCE` | updated source contract not executed locally |
+| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | structure gate remains unresolved |
+| Full PHP suite | `BLOCKED_BY_MISSING_EVIDENCE` | not executed after correction |
+| Chromium/WebKit runtime | `BLOCKED_BY_MISSING_EVIDENCE` | no browser matrix run after correction |
+| Lighthouse/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | no comparable runtime run |
 
 ## Progress ledger
 
 | Stage | Status | Proof or blocker |
 |---|---|---|
-| G01 reference/source audit | `PASS` | current template and SchoolAI owners inspected |
-| G02 owner decision | `PASS` | reference direction and direct-main publication explicitly accepted |
-| G03 blueprint | `PASS` | `HOME-GALLERY-003` records one bounded surface |
-| G04 semantic composition | `IMPLEMENTED_SOURCE` | database media, HTML copy, links, list semantics, and CTA preserved |
-| G05 atmospheric renderer | `IMPLEMENTED_SOURCE` | one raw WebGL canvas/program/buffer with palette blending |
-| G06 depth choreography | `IMPLEMENTED_SOURCE` | scroll camera feeling, alternating positions, pointer and velocity response |
-| G07 six-tier/RTL adapters | `IMPLEMENTED_SOURCE` | one scene with declared tier boundaries and logical RTL treatment |
-| G08 lifecycle/fallback | `IMPLEMENTED_SOURCE` | lazy import, suspend, reduced/static, failure, disposal |
-| G09 focused contract test | `IMPLEMENTED_SOURCE` | source contract added; execution still blocked |
-| G10 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | pre-existing Hero checksum prevents build/test chain |
+| G01 source/owner re-audit | `PASS` | active and retired Gallery owners inspected |
+| G02 owner visual correction | `PASS` | adjacent copy, intrinsic sharp media, visible palette explicitly required |
+| G03 blueprint correction | `PASS` | `HOME-GALLERY-003` updated |
+| G04 semantic composition | `IMPLEMENTED_SOURCE` | media and copy separated while anchors/lightbox remain |
+| G05 intrinsic media sizing | `IMPLEMENTED_SOURCE` | ratio preserved within tier-specific max bounds |
+| G06 atmosphere synchronization | `IMPLEMENTED_SOURCE` | DOM and WebGL palette progression share camera state |
+| G07 six-tier/RTL adapters | `IMPLEMENTED_SOURCE` | one scene and mirrored adjacent placement |
+| G08 retired owner cleanup | `IMPLEMENTED_SOURCE` | old Blade/controller/import removed |
+| G09 focused contract test | `IMPLEMENTED_SOURCE` | assertions updated; execution pending |
+| G10 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | pre-existing Hero checksum stops required chain |
 | G11 runtime matrix | `BLOCKED_BY_MISSING_EVIDENCE` | tiers/locales/engines/reduced motion untested |
 
 ## STATUS
 
-Homepage Gallery replacement is implemented in source and prepared for a
-non-force fast-forward to `main`. Completion remains blocked because the existing
-Hero checksum failure prevents the required structure/build/test chain, and no
-browser or performance proof has run.
+The requested Gallery visual correction is implemented in source. It must not be
+called responsive/browser PASS until the local focused test and runtime matrix
+are executed. Mixed legacy CSS retirement remains a separate ownership migration,
+not a hidden part of this visual patch.
 
 ## NEXT VALID STEP
 
-Pull current `main` and run only `npm run check:structure`. Report the exact
-result. Do not tune Gallery visuals until the repository structure gate is
-reconciled or explicitly classified as an unrelated accepted blocker.
+After publication, pull current `main`, run the focused Gallery test directly,
+and report its exact output. Do not begin another visual adjustment before that
+contract result is known.
