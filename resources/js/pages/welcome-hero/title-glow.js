@@ -56,6 +56,13 @@ export function initHeroTitleGlow(root) {
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var locale = document.documentElement.lang || 'id';
     var isRtl = document.documentElement.dir === 'rtl';
+    var isArabic = isRtl || locale.toLowerCase().indexOf('ar') === 0;
+
+    if (isArabic) {
+        root.dataset.heroTitleGlowDisabled = 'arabic';
+        return;
+    }
+
     var generations = new WeakMap();
     var activationTimer = null;
 
