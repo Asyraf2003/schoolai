@@ -1,41 +1,21 @@
-import { clearPaint, paintScene, paintText } from './motion-painters.js';
+import { clearPaint } from './motion-painters.js';
 import {
-    FRAME_MS, MOMENTUM_EPSILON, PROGRESS_EPSILON,
-    createScrollMotion, measureScenes, readScroll,
-    resetScrollMotion, sceneProgress, updateScrollMotion,
+    FRAME_MS, createScrollMotion, measureScenes, readScroll,
+    resetScrollMotion, sceneFrame, updateScrollMotion,
 } from './scroll-progress.js';
+import {
+    clearStoryScenes, linkStoryTexts,
+    paintStoryScene, prepareScenes,
+} from './scene-renderer.js';
 import { prepareStoryText } from './split-text.js';
-function prepareScenes(root) {
-    const elements = Array.from(root.querySelectorAll('[data-story-scene]'));
-    return elements.map((element, index) => {
-        const color = element.dataset.storyColor || '#061d4f';
-        const nextColor = elements[index + 1]?.dataset.storyColor || color;
-        element.style.setProperty('--scene-color', color);
-        element.style.setProperty('--next-scene-color', nextColor);
-        return {
-            element,
-            motion: element.dataset.storyArtMotion || 'none',
-            arts: Array.from(element.querySelectorAll('[data-story-scene-art]')),
-            texts: [],
-            top: 0,
-            height: 1,
-            painted: null,
-            paintedMomentum: null,
-        };
-    });
-}
+
 export function createStoryController(root) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const rtl = document.documentElement.dir === 'rtl';
     const scenes = prepareScenes(root);
-    const sceneByElement = new Map(
-        scenes.map((scene) => [scene.element, scene]),
-    );
     const texts = prepareStoryText(root);
-    texts.forEach((item) => {
-        const owner = item.element.closest('[data-story-scene]');
-        sceneByElement.get(owner)?.texts.push(item);
-    });
+    linkStoryTexts(scenes, texts);
+
     let frame = 0;
     let observer = null;
     let resizeObserver = null;
@@ -48,43 +28,24 @@ export function createStoryController(root) {
     let targetScroll = readScroll();
     const scrollMotion = createScrollMotion(targetScroll);
     let viewportHeight = window.innerHeight || 1;
+
     function cancelFrame() {
         if (frame) window.cancelAnimationFrame(frame);
         frame = 0;
         lastTime = 0;
     }
+
     function requestRender() {
         if (!frame && !destroyed && active && !document.hidden) {
             frame = window.requestAnimationFrame(render);
         }
     }
+
     function refreshLayout() {
         layoutDirty = false;
         viewportHeight = window.innerHeight || 1;
         measureScenes(scenes);
         forcePaint = true;
-    }
-
-    function paint(scene, progress, momentum) {
-        const progressChanged = scene.painted === null
-            || Math.abs(scene.painted - progress) > PROGRESS_EPSILON;
-        const momentumChanged = scene.paintedMomentum === null
-            || Math.abs(scene.paintedMomentum - momentum) > MOMENTUM_EPSILON;
-        if (!forcePaint && !progressChanged && !momentumChanged) return;
-
-        paintScene(scene, progress, rtl, reduced.matches);
-        scene.arts.forEach((art, index) => {
-            const drift = momentum * (index + 1) * 3;
-            art.style.translate = `0 ${drift.toFixed(2)}px`;
-        });
-        if (forcePaint || progressChanged) {
-            scene.texts.forEach((item) => {
-                delete item.lastProgress;
-                paintText(item, progress, rtl);
-            });
-        }
-        scene.painted = progress;
-        scene.paintedMomentum = momentum;
     }
 
     function render(time) {
@@ -104,10 +65,16 @@ export function createStoryController(root) {
         const momentum = reduced.matches ? 0 : snapshot.momentum;
 
         scenes.forEach((scene) => {
-            const progress = reduced.matches
-                ? 1
-                : sceneProgress(scene, snapshot.current, viewportHeight);
-            paint(scene, progress, momentum);
+            const timing = reduced.matches
+                ? { progress: 1, beat: 0 }
+                : sceneFrame(scene, snapshot.visual, viewportHeight);
+            paintStoryScene(
+                scene,
+                { ...timing, momentum },
+                rtl,
+                reduced.matches,
+                forcePaint,
+            );
         });
 
         snapNext = false;
@@ -177,17 +144,11 @@ export function createStoryController(root) {
         destroyed = true;
         active = false;
         root.classList.remove('is-story-ready');
-        texts.forEach(clearPaint);
-        scenes.forEach((scene) => {
-            scene.arts.forEach((art) => {
-                art.style.removeProperty('transform');
-                art.style.removeProperty('translate');
-            });
-            scene.element.style.removeProperty('--scene-progress');
-            scene.element.style.removeProperty('--scene-transition');
-            scene.element.style.removeProperty('--scene-color');
-            scene.element.style.removeProperty('--next-scene-color');
+        texts.forEach((item) => {
+            clearPaint(item);
+            item.element.style.removeProperty('translate');
         });
+        clearStoryScenes(scenes);
         cancelFrame();
         observer?.disconnect();
         resizeObserver?.disconnect();
