@@ -1,3 +1,9 @@
+import {
+    clearHeadingClasses,
+    createHeadingState,
+    syncHeadingClasses,
+    updateHeadingState,
+} from './heading-state.js';
 import { paintValuesStory, clearValuesStory } from './paint.js';
 import {
     FRAME_MS,
@@ -31,9 +37,13 @@ export function createValuesStory(root) {
     let lastTime = 0;
     let viewportHeight = window.innerHeight || 1;
     let geometry = null;
-    const motion = createScrollMotion(0);
 
     root.classList.add('is-values-ready');
+
+    const initialProgress = readStoryProgress(root, viewportHeight);
+    const motion = createScrollMotion(initialProgress);
+    const heading = createHeadingState(initialProgress);
+    syncHeadingClasses(root, heading);
 
     function cancelFrame() {
         if (frame) window.cancelAnimationFrame(frame);
@@ -60,9 +70,6 @@ export function createValuesStory(root) {
                 styles.getPropertyValue('--values-layout-mode'),
                 10,
             ) || 1,
-            titleLineTwoShift: Number.parseFloat(
-                styles.getPropertyValue('--values-line-two-target-x'),
-            ) || 0,
             viewportHeight,
             viewportWidth: window.innerWidth || 1,
         };
@@ -73,6 +80,7 @@ export function createValuesStory(root) {
         if (!active || destroyed || document.hidden) return;
         if (geometryDirty || !geometry) measure();
 
+        const rootTop = root.getBoundingClientRect().top;
         const target = readStoryProgress(root, viewportHeight);
         const delta = lastTime ? time - lastTime : FRAME_MS;
         lastTime = time;
@@ -82,13 +90,21 @@ export function createValuesStory(root) {
             delta,
             snapNext,
         );
+        const headingSnapshot = updateHeadingState(
+            heading,
+            target,
+            rootTop,
+            viewportHeight,
+        );
 
+        syncHeadingClasses(root, headingSnapshot);
         paintValuesStory(
             root,
             cards,
             snapshot.visual,
             geometry,
             snapshot.momentum,
+            headingSnapshot,
         );
         snapNext = false;
 
@@ -139,10 +155,6 @@ export function createValuesStory(root) {
         observer.observe(root);
     }
 
-    resetScrollMotion(
-        motion,
-        readStoryProgress(root, viewportHeight),
-    );
     requestRender();
 
     return function destroy() {
@@ -155,6 +167,7 @@ export function createValuesStory(root) {
         window.removeEventListener('pageshow', onResize);
         document.removeEventListener('visibilitychange', onVisibility);
         root.classList.remove('is-values-ready');
+        clearHeadingClasses(root);
         clearValuesStory(root, cards);
     };
 }
