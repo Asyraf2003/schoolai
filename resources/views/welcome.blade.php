@@ -11,6 +11,7 @@
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
       'resources/css/pages/welcome-vision-scroll.css',
+      'resources/css/pages/welcome-values-story.css',
       'resources/css/pages/welcome-depth-gallery.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
