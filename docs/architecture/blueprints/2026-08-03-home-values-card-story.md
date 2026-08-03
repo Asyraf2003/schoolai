@@ -4,126 +4,118 @@ Blueprint ID: `HOME-VALUES-001`
 Status: `IMPLEMENTING`
 Owner: Asyraf Mubarak
 Date: 2026-08-03
-Source main SHA: `4bb9a00eab448aa4b33d28119b2421e3736976db`
+Source main SHA: `7607f93abab66c9fb96bcdb313ce08371f8cdfe3`
 Surface: homepage `#nilai`
 Execution channel: Web AI with explicit direct-`main` authorization
 
 ## Owner goal and reference
 
-Replace the current Values grid with a full-viewport scroll story informed by
-the owner-provided Lusion About screenshots. Four real Al Mustaqbal value cards
-must begin readable from the front, flip one by one, reveal a school-owned line
-pattern on their backs, form a fan, compress into a stack, and leave the scene
-while the oversized localized Values heading remains.
+Build a full-viewport Values scroll story informed by the owner-provided Lusion
+About screenshots while using real Al Mustaqbal content and school-owned visual
+language. Lusion code, assets, branding, card art, and exact composition remain
+forbidden.
 
-The screenshots define chronology, spatial quality, white-card/blue-field
-contrast, and editorial scale. Lusion code, assets, marks, branding, card art,
-and exact composition are forbidden. The Al Mustaqbal translation uses current
-Qur'anic, Innovative, Integrative, and Inspirational content.
+## Current owner refinement: heading and description
+
+This atomic step changes only the Values heading and supporting copy:
+
+1. Both heading lines begin invisible at one shared vertical center seam.
+2. They separate smoothly into the final two-line heading.
+3. The lower line shifts slightly inward only when the available field is wide.
+4. Phone layouts show the heading only, without description or eyebrow.
+5. Tablet layouts keep supporting copy but do not shift the lower heading line.
+6. Desktop XL and 2XL keep supporting copy and use a bounded inward shift.
+7. Heading exit reverses toward the shared seam while fading, without
+   momentum-driven letter collisions.
+
+Cards, flip timing, trail, transition, content, and following sections are
+read-only in this step.
 
 ## FACT and GAP
 
-- The current DOM is `school-values.blade.php` with four interactive buttons.
-- `value-cards.js` owns hover/click/focus active-card state.
-- Legacy Values CSS is spread through `welcome/004`, `009`, `010`, and `011`.
-- Values content comes from `lang/{id,en,ar}/home.php` through `BuildsHomePage`.
-- ID/EN use Inter/LTR; AR uses Cairo/RTL.
-- Current main has no dedicated Values surface entry.
-- Runtime, six-tier, WebKit, accessibility, build, and performance proof remain
-  gaps until executed after publication.
+- Values has one semantic heading, description, eyebrow, and four article cards.
+- One controller owns progress, measurement, inertia, painting, and lifecycle.
+- The latest 1920x1080 Brave screenshots prove the heading uses excessive
+  opposing viewport travel and creates overlapping/ghosted exit states.
+- The screenshots also prove supporting copy remains visible on phone behavior
+  contrary to the owner's latest decision.
+- Build, WebKit, all-tier, accessibility, and performance proof remain gaps.
 
 ## Scope
 
-In scope:
+Editable for this refinement:
 
-- replace only the homepage Values semantic DOM and interaction owner;
-- add a dedicated Values CSS entry and imported surface modules;
-- replace the old Values controller import with one scroll-story controller;
-- add a focused feature test and update durable architecture state.
+- `resources/css/surfaces/home/values/story-shell.css`
+- `resources/css/surfaces/home/values/story-responsive.css`
+- `resources/js/surfaces/home/values/controller.js`
+- `resources/js/surfaces/home/values/layout.js`
+- `resources/js/surfaces/home/values/paint.js`
+- active blueprint/current-state records
 
-Out of scope and protected:
+Protected:
 
+- Values Blade/content and all cards, backs, flip poses, trail, transition;
 - Hero, Vision/Mission, Programs, Gallery, Articles, navigation, footer;
-- About and Testimonial activation/state;
-- DB schema, controller data shape, translations, routes, and admin behavior;
-- WebGL, third-party dependencies, Lusion assets, and unrelated legacy cleanup.
+- About/Testimonial state, DB, routes, controller data, translations, media,
+  WebGL, dependencies, and unrelated cleanup.
 
 ## Semantic and fallback contract
 
-- One `section`, one localized `h2`, one description, and four `article` cards.
-- DOM reading order stays Q, I, G, N in ID, EN, and AR.
-- Front faces carry all meaningful text; card backs are decorative and
-  `aria-hidden`.
-- No JavaScript, unsupported 3D, and reduced motion render a normal responsive
-  card grid with every front visible.
-- Scroll motion has no buttons, focus traps, hidden primary actions, or canvas.
+- One localized `h2` remains the semantic heading.
+- Description and eyebrow remain in the single DOM and are visually suppressed
+  on XS/SM by the accepted responsive contract.
+- No-JS, unsupported motion, and reduced-motion results remain usable.
+- Cards and content remain reachable and unchanged.
 
-## Ownership
+## Heading motion contract
 
-| Concern | Target owner |
-|---|---|
-| DOM/content | `home/sections/school-values.blade.php` + current lang data |
-| layout/motion CSS | `css/surfaces/home/values/*` |
-| CSS route entry | `css/pages/welcome-values-story.css` |
-| interaction state | `js/surfaces/home/values/controller.js` |
-| geometry/timeline | `layout.js` and `motion.js` in the same surface |
-| route composition | `welcome.blade.php`, `welcome.js`, and `vite.config.js` |
+The heading uses font-relative geometry:
 
-Legacy `.nilai-*` CSS becomes unreachable because the new DOM uses a dedicated
-namespace. The old `value-cards.js` owner is removed.
+```text
+initial line one: +0.41em
+initial line two: -0.41em
+line-height: 0.82
+result: both line centers share one seam
+```
 
-## Storyboard
+Opacity rises while both offsets approach zero. On exit the offsets return
+toward the seam while opacity falls. Scroll momentum may affect supporting copy
+slightly, but it must not displace individual heading lines.
 
-| State | Scroll result |
-|---|---|
-| static/failed | localized heading and readable front-card grid |
-| enter | four fronts settle into the tier composition |
-| flip | cards rotate right-to-left one by one around the Y axis |
-| fan | revealed backs spread with bounded Z depth and rotation |
-| stack | fan compresses into one centered stack |
-| exit | stack moves below the viewport while the heading advances |
-| reverse | every state reverses deterministically from scroll progress |
-| suspended | offscreen/hidden work stops; resize/BFCache snaps and remeasures |
+Line-two inward shift begins after the vertical opening is nearly complete and
+returns while the heading exits.
 
-## Six-tier contract
+## Six-tier heading/copy contract
 
-| Tier | Composition |
-|---|---|
-| XS 360–639 | one readable stack; compact fan; full-width static fallback |
-| SM 640–767 | 2x2 fronts; wider fan; two-column static fallback |
-| MD 768–1023 | larger 2x2 fronts and balanced vertical spacing |
-| LG 1024–1279 | four fronts in one row; bounded card width |
-| XL 1280–1535 | wider four-card field and editorial heading |
-| 2XL >=1536 | bounded cards/content with expanded blue cinematic field |
+| Tier | Copy | Lower-line shift |
+|---|---|---|
+| XS 360–639 | hidden | none |
+| SM 640–767 | hidden | none |
+| MD 768–1023 | visible | none |
+| LG 1024–1279 | visible | none |
+| XL 1280–1535 | visible | `104px` logical inward |
+| 2XL >=1536 | visible | `144px` logical inward |
 
-Card width also responds to short viewport height. Navigation is not changed,
-so the 1180/1181 contract remains read-only.
-
-## Locale and direction
-
-- The same DOM, order, physical flip order, timing, and neutral 3D rotations are
-  shared by ID/LTR, EN/LTR, and AR/RTL.
-- Copy and font/direction change through existing server-rendered locale owners.
-- Arabic does not reverse time or card order. Semantic typography roles avoid a
-  parallel Arabic component.
+CSS owns the tier target. The controller reads the resolved target during
+measurement, and the timeline paints only its progress. RTL uses the opposite
+physical sign so logical inward motion still approaches the visual center.
 
 ## Browser, performance, and accessibility
 
-- Capability tier 0: semantic static grid.
-- Capability tier 1: CSS 3D plus one bounded JavaScript RAF scheduler.
-- No WebGL, media, external package, font, image, or critical-path dependency.
-- Frequent animation is transform/opacity only; work pauses offscreen/hidden.
-- Chromium and WebKit require runtime proof for sticky, preserve-3d,
-  backface-visibility, viewport units, reverse scroll, and short heights.
-- Reduced motion keeps all content visible without sticky travel.
+- Frequent heading animation remains transform/opacity only.
+- No new asset, dependency, filter, layout animation, or continuous scheduler.
+- Logical inset properties preserve the shared ID/EN/AR DOM.
+- Reduced motion retains the static heading/card result.
+- Chromium/WebKit, short-height, reverse scroll, 200% zoom, and locale runtime
+  still require proof.
 
 ## Active execution and proof
 
-1. `ACTIVE`: publish the bounded Values owner replacement to `main`.
-2. `PENDING`: run `git diff --check`, `npm run check:structure`, `npm run build`,
-   focused/PHP tests, and inspect the first desktop Chromium result.
-3. `PENDING`: prove all six tiers, ID/EN/AR, WebKit, reduced motion, zoom, and
-   performance.
+1. `IMPLEMENTED_SOURCE`: publish the bounded heading/copy correction.
+2. `PENDING`: run repository diff, structure, build, and PHP test gates.
+3. `PENDING`: capture 390, 768, 1280, and 1920 Brave/Chromium heading/copy.
+4. `PENDING`: expand to all six tiers, ID/EN/AR, WebKit, reduced motion, zoom,
+   accessibility, and performance.
 
-Commit publication proves source state only. Until the pending gates run, final
+Commit publication proves source state only. Until pending gates run, final
 status is `BLOCKED_BY_MISSING_EVIDENCE`, not `PASS`.
