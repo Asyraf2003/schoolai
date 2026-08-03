@@ -1,14 +1,16 @@
 import { clamp } from './motion-painters.js';
 
 export const FRAME_MS = 1000 / 60;
-export const SCROLL_EPSILON = 0.1;
-export const PROGRESS_EPSILON = 0.00005;
-export const MOMENTUM_EPSILON = 0.002;
+export const SCROLL_EPSILON = 0.04;
+export const PROGRESS_EPSILON = 0.00003;
+export const MOMENTUM_EPSILON = 0.001;
 
-const SCROLL_LERP = 0.08;
-const VELOCITY_LERP = 0.12;
+const SCROLL_LERP = 0.065;
+const VELOCITY_LERP = 0.075;
 const VELOCITY_MAX = 1.5;
-const VELOCITY_EPSILON = 0.001;
+const VELOCITY_EPSILON = 0.00025;
+const VELOCITY_COAST = 8;
+const COMPLETE_AT = 0.82;
 
 export const readScroll = () => (
     window.scrollY || window.pageYOffset || 0
@@ -19,10 +21,6 @@ function adjustedBlend(amount, delta) {
         1 - amount,
         Math.min(delta, 64) / FRAME_MS,
     );
-}
-
-export function frameBlend(delta) {
-    return adjustedBlend(SCROLL_LERP, delta);
 }
 
 export function createScrollMotion(value = readScroll()) {
@@ -44,7 +42,7 @@ export function updateScrollMotion(state, target, delta, snap = false) {
     else {
         state.current += (
             target - state.current
-        ) * frameBlend(delta);
+        ) * adjustedBlend(SCROLL_LERP, delta);
 
         const rawVelocity = state.current - state.previous;
         state.velocity += (
@@ -59,7 +57,6 @@ export function updateScrollMotion(state, target, delta, snap = false) {
         if (Math.abs(state.velocity) < VELOCITY_EPSILON) {
             state.velocity = 0;
         }
-
         if (Math.abs(target - state.current) <= SCROLL_EPSILON) {
             state.current = target;
         }
@@ -72,6 +69,7 @@ export function updateScrollMotion(state, target, delta, snap = false) {
 
     return {
         current: state.current,
+        visual: state.current + state.velocity * VELOCITY_COAST,
         momentum: clamp(state.velocity / VELOCITY_MAX, -1, 1),
         settled: positionSettled && state.velocity === 0,
     };
@@ -87,12 +85,21 @@ export function measureScenes(scenes) {
     });
 }
 
-export function sceneProgress(scene, scrollY, viewportHeight) {
+export function sceneFrame(scene, scrollY, viewportHeight) {
     const start = viewportHeight * 0.55;
     const travel = Math.max(
         1,
         scene.height - viewportHeight * 0.45,
     );
+    const raw = clamp(
+        (start - (scene.top - scrollY)) / travel,
+    );
+    const completion = clamp(
+        (raw - COMPLETE_AT) / (1 - COMPLETE_AT),
+    );
 
-    return clamp((start - (scene.top - scrollY)) / travel);
+    return {
+        progress: clamp(raw / COMPLETE_AT),
+        beat: Math.sin(Math.PI * completion) ** 2,
+    };
 }
