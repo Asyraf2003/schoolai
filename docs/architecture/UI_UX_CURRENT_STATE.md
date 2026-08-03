@@ -1,6 +1,6 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `FAIL`
+Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
@@ -8,6 +8,8 @@ Active blueprint: `blueprints/2026-08-03-home-values-card-story.md`
 Raw evidence: `measurements/2026-08-03-home-values-reference-motion-raw.md`
 Failed runtime source: `c24e4d73fd57659df9f18eeb732d3ec755031743`
 Prior implementation: `fbbc83b6672053652ac4551aea3970b825df0fcc`
+Revision blueprint checkpoint: `e56b00a455848772905def3c3ab63016dd24c303`
+Revision source head: `c1c45381d7b1824ab72ca7d6d85fed77889e58ad`
 
 Commit publication proves source state only. It does not prove build, browser,
 responsive, accessibility, performance, or lifecycle completion.
@@ -15,7 +17,7 @@ responsive, accessibility, performance, or lifecycle completion.
 ## Active production batch
 
 - ID: `HOME-VALUES-001-R2`
-- State: `OWNER_ACCEPTED`
+- State: `IMPLEMENTED_SOURCE`
 - Surface: homepage Values section `#nilai`
 - Owner feedback date: 2026-08-04
 - Scope: Values-owned DOM, CSS, JS, locale keys, focused test, transitions, and
@@ -25,7 +27,7 @@ responsive, accessibility, performance, or lifecycle completion.
 
 ## Runtime FACT from owner evidence
 
-Four SchoolAI screenshots from current `main` prove:
+Four SchoolAI screenshots from failed baseline `c24e4d73` prove:
 
 - the header description overlaps the oversized title on wide layouts;
 - an unwanted eyebrow remains visible;
@@ -92,7 +94,7 @@ by a later override.
 - Every desktop back is opaque from the initial deck.
 - Desktop flips overlap at roughly 25–35%, retain fan tilt through edge-on, pass
   the front by about 18deg, then settle.
-- XS/SM/MD flip begins at half-card visibility and ends at full visibility.
+- XS/SM/MD/LG flip begins at half-card visibility and ends at full visibility.
 - The final Grid never fades; sticky release carries it upward intact.
 - The single trail completes before exit.
 - “Nilai yang Menjadi Arah Tumbuh Anak” and locale equivalents are removed from
@@ -102,24 +104,30 @@ by a later override.
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Current GitHub main | `PASS_SOURCE` | verified at `c24e4d73` before audit |
+| Current GitHub main | `PASS_SOURCE` | verified at `c1c45381` after non-force fast-forward |
 | Mandatory docs | `PASS_SOURCE` | full required chain read |
-| Owner screenshots/video | `FAIL_RUNTIME` | failures above are visible |
+| Baseline owner screenshots/video | `FAIL_RUNTIME` | failures apply to superseded `c24e4d73` |
 | Lusion live measurements | `PASS_REFERENCE` | read-only computed geometry captured |
-| Revised blueprint | `OWNER_ACCEPTED` | explicit owner specification recorded |
-| Revised source | `PENDING` | next active step |
+| Revised blueprint | `PASS_SOURCE` | accepted contract at `e56b00a4` |
+| Revised source/scope | `PASS_SOURCE` | atomic 16-file Values patch at `c1c45381` |
+| JavaScript syntax | `PASS_LOCAL_PATCH` | every Values module passed `node --check` |
+| CSS parse/bundle | `PASS_LOCAL_PATCH` | Values entry bundled with Lightning CSS |
+| PHP syntax only | `PASS_LOCAL_PATCH` | ID/EN/AR lang and focused Pest file parsed with `php-parser`; not a Laravel test |
+| six-tier ratio math | `PASS_LOCAL_PATCH` | 84vw; 43.75vw/4.1667vw; 21vw/2vw relationships verified |
+| heading/flip/exit curves | `PASS_LOCAL_PATCH` | opposite Y masks, 34.6deg overlap, -18deg overshoot, 50-100% visibility flip, no card-opacity output |
+| source line limit | `PASS_LOCAL_PATCH` | every Values source owner remains <=200 lines |
 | structure/build/PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | no complete checkout |
-| corrected Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | not yet available |
+| corrected Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | corrected source not rendered in this channel |
 | PageSpeed/accessibility | `BLOCKED_BY_MISSING_EVIDENCE` | not run |
 
 ## STATUS
 
-The published implementation is runtime `FAIL`. The root causes and revised
-blueprint are now evidence-backed and owner accepted. No corrected runtime claim
-exists yet.
+The corrected Values source is published on `main`. Source-level contracts pass
+where this channel can execute them. Runtime remains unpromoted: the prior
+runtime is `FAIL`, while `c1c45381` is `BLOCKED_BY_MISSING_EVIDENCE` until it is
+rendered and reviewed.
 
 ## NEXT VALID STEP
 
-Implement `HOME-VALUES-001-R2` only in the mapped Values owners, run every
-available source proof, fast-forward `main` without force, then record the
-resulting source SHA and all still-unavailable runtime gates.
+Pull `main` at `c1c45381`, render the Values section, and collect owner feedback
+plus the required Chromium/WebKit matrix without promoting unobserved gates.

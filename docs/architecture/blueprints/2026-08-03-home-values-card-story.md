@@ -1,7 +1,7 @@
 # Homepage Values Card Story Blueprint
 
 Blueprint ID: `HOME-VALUES-001`
-Status: `OWNER_ACCEPTED`
+Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Owner: Asyraf Mubarak
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
@@ -9,6 +9,8 @@ Target branch: `main`
 Source baseline: `087f2afac7b7b77dfcb62a27bb22c13b3cdc4da2`
 Source implementation head: `fbbc83b6672053652ac4551aea3970b825df0fcc`
 Revision baseline: `c24e4d73fd57659df9f18eeb732d3ec755031743`
+Revision blueprint checkpoint: `e56b00a455848772905def3c3ab63016dd24c303`
+Revision implementation head: `c1c45381d7b1824ab72ca7d6d85fed77889e58ad`
 Active route/surface: homepage `#nilai`
 Raw reference: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
 Execution channel: Web AI with explicit direct-`main` authorization
@@ -68,7 +70,7 @@ The accepted correction is atomic to Values and its owned transition layers:
 - start each desktop flip while the previous card is about `25-35%` through
   its turn, retain fan tilt through the edge-on phase, overshoot the front by
   about `18deg`, then settle at zero;
-- on XS/SM/MD, derive flip progress from the visible fraction of the card:
+- on XS/SM/MD/LG, derive flip progress from the visible fraction of the card:
   begin when half the body is visible and settle when the full body is visible;
   paired cards use the same rotation direction and timing;
 - increase bounded floating enough to read as suspension while keeping it on
@@ -258,7 +260,7 @@ section shell
 | final columns, gaps, card slot | CSS Grid/card article |
 | clipping/sticky | sticky clip shell |
 | perspective/origin | perspective stage |
-| translate X/Y/Z, rotateZ, scale, opacity | pose wrapper variables |
+| translate X/Y/Z, rotateZ, scale | pose wrapper variables |
 | float Y | float wrapper keyframes |
 | rotateY | flip wrapper variable |
 | face orientation/visibility | front/back faces |
@@ -298,7 +300,7 @@ the visual center.
 | `0.45` | card 2 begins while card 1 has turned about 30–36deg |
 | `0.52` | card 3 begins with the same overlap |
 | `0.59` | card 4 begins with the same overlap |
-| each flip | `rotateY 180 -> about -18 -> 0`; `rotateZ` settles late |
+| each flip | `rotateY 180 -> about -18 -> 0`; `rotateZ` holds through edge-on, then settles before the front pass |
 | `0.86+` | upright Grid holds; trail continues toward completion |
 | `0.96` | trail is complete before its exit fade |
 | sticky release | complete opaque Grid and section move upward; no card fade |
@@ -391,12 +393,19 @@ source. Protected sections are outside the patch.
 
 ## Execution result
 
-- The accepted audit/blueprint was published at `48830e93645dc0d5a681a89546f4dc8bc1941dab`.
-- The bounded 19-file source rebuild was published atomically at
-  `fbbc83b6672053652ac4551aea3970b825df0fcc`.
-- Changed JavaScript passed `node --check`; all six changed CSS modules parsed
-  with Lightning CSS; changed enforced-root files remained at or below 200
-  lines (`lang/` is outside the checker roots).
+- The failed baseline is `c24e4d73fd57659df9f18eeb732d3ec755031743`.
+- The revalidated correction blueprint was published at `7b625935c555d379cb0a455bcb1164c682123856`;
+  its tablet/desktop tier clarification was published at
+  `e56b00a455848772905def3c3ab63016dd24c303`.
+- The bounded 16-file revision was published atomically at
+  `c1c45381d7b1824ab72ca7d6d85fed77889e58ad` by non-force fast-forward.
+- Every Values JavaScript module passed `node --check`; the Values CSS entry
+  bundled with Lightning CSS; ID/EN/AR lang and the focused Pest source parsed
+  with an independent PHP parser; every Values source owner remains <=200 lines.
+- Source-model proof records exact six-tier Grid ratios, natural near/far 3D
+  projection, 34.6deg inter-card overlap, -18deg front overshoot, opposite Y
+  heading masks, 50-100% visible-fraction responsive flips, and no card-opacity
+  exit property.
 - Full checkout, build, PHP, browser, responsive, lifecycle, accessibility, and
   performance proof remains `BLOCKED_BY_MISSING_EVIDENCE`.
 
