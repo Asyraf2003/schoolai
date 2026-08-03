@@ -1,111 +1,126 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `BLOCKED_BY_MISSING_EVIDENCE`
+Status: `FAIL`
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Active blueprint: `blueprints/2026-08-03-home-values-card-story.md`
 Raw evidence: `measurements/2026-08-03-home-values-reference-motion-raw.md`
-Source implementation head: `fbbc83b6672053652ac4551aea3970b825df0fcc`
+Failed runtime source: `c24e4d73fd57659df9f18eeb732d3ec755031743`
+Prior implementation: `fbbc83b6672053652ac4551aea3970b825df0fcc`
 
 Commit publication proves source state only. It does not prove build, browser,
 responsive, accessibility, performance, or lifecycle completion.
 
 ## Active production batch
 
-- ID: `HOME-VALUES-001`
-- State: `IMPLEMENTED_SOURCE`
+- ID: `HOME-VALUES-001-R2`
+- State: `OWNER_ACCEPTED`
 - Surface: homepage Values section `#nilai`
-- Accepted blueprint commit: `48830e93645dc0d5a681a89546f4dc8bc1941dab`
-- Implementation commit: `fbbc83b6672053652ac4551aea3970b825df0fcc`
-- Scope: 19 Values-owned source and focused-test files
-- Protected: Hero, Vision/Mission, Programs, Gallery, Articles, navigation,
-  footer, DB/admin/routes, About, and Testimonial
+- Owner feedback date: 2026-08-04
+- Scope: Values-owned DOM, CSS, JS, locale keys, focused test, transitions, and
+  related architecture records
+- Protected: Hero, Vision/Mission content, Programs content, Gallery, Articles,
+  navigation, footer, DB/admin/routes, About, and Testimonial
 
-## Implemented result
+## Runtime FACT from owner evidence
 
-The Values section was rebuilt as one semantic, localized card story:
+Four SchoolAI screenshots from current `main` prove:
 
-```text
-mission green fade/blur -> blue Values field
--> center-origin two-line heading reveal
--> centered desktop deck -> fan -> overlapping perspective flips
--> upright CSS Grid row -> completed continuous trail
--> blue fade/blur -> white -> Programs
-```
+- the header description overlaps the oversized title on wide layouts;
+- an unwanted eyebrow remains visible;
+- the title reveal/composition does not match the requested vertical masks;
+- a long transition/empty interval separates the preceding section and Values;
+- the card phase is reached after the header rather than being present with it.
 
-- ID/EN/AR headings and the required honorific forms are owned by translations.
-- XS keeps a natural one-column layout.
-- SM and MD keep a natural 2x2 Grid.
-- LG, XL, and 2XL share the cinematic four-column sequence.
-- The semantic card articles remain the final CSS Grid slots.
-- Motion transforms only child pose wrappers relative to measured Grid slots.
-- The clipping shell and perspective stage are separate owners.
-- Desktop centering derives from `getBoundingClientRect()` stage/card geometry,
-  not viewport-height ratios.
-- One SVG path plus one measured circle head owns the route.
-- Reduced motion and unsupported 3D resolve to readable front cards.
-- No dependency, asset, WebGL, canvas, font, or parallel locale DOM was added.
+The resupplied Lusion forward/reverse videos prove the target chronology:
 
-## Root causes removed or isolated
+- all four backs already exist in the deck state;
+- fan formation precedes overlapping flips;
+- the next card begins during the preceding card's early turn;
+- the front overshoots by roughly `17-20deg`;
+- the complete final row exits upward and returns intact on reverse scroll.
 
-- Enhanced `display:block` plus absolute final card slots was replaced by Grid.
-- Manual X slots and viewport-ratio Y anchors were removed from final layout.
-- Perspective was moved off the clipping owner.
-- Fixed z-order is assigned structurally instead of repainted every frame.
-- Three duplicate trail paths and the dashed fake head were replaced.
-- Hard-coded Blade locale headings were replaced by translation-owned copy.
-- Values now owns both entry and exit transition layers.
-- The inactive equivalence-managed `.nilai-*` fossil remains isolated; deleting
-  it is a separate global cascade migration.
+Fresh live computed evidence at `lusion.co/about`, Chrome `1363x936`:
 
-## Source ownership
-
-| Concern | Owner |
+| Item | Measured result |
 |---|---|
-| semantics and story DOM | `resources/views/home/sections/school-values.blade.php` |
-| localized heading/content | `lang/{id,en,ar}/home.php` |
-| entry/timeline/clip/exit | `resources/css/surfaces/home/values/story-shell.css` |
-| heading masks | `resources/css/surfaces/home/values/story-heading.css` |
-| final Grid and card faces | `resources/css/surfaces/home/values/story-cards.css` |
-| continuous route | `resources/css/surfaces/home/values/story-trail.css` |
-| lifecycle and RAF | `resources/js/surfaces/home/values/controller.js` |
-| stage/Grid measurement | `resources/js/surfaces/home/values/geometry.js` |
-| critically damped motion | `resources/js/surfaces/home/values/motion.js` |
-| desktop fan/flip pose | `desktop-keyframes.js` and `desktop-layout.js` |
-| responsive pose | `resources/js/surfaces/home/values/layout.js` |
-| CSS variable writes | `resources/js/surfaces/home/values/paint.js` |
-| focused regression contract | `tests/Feature/HomeValuesStoryTest.php` |
+| content field | `90vw`, inset `5vw` |
+| card | `21vw`, aspect about `.717` |
+| column gap | `2vw` |
+| perspective | `936px = 100vh` |
+| title | `12vw` |
+| supporting copy | about `18vw` |
+| section height | about `375.88vh` |
+
+These are reference measurements, not permission to copy Lusion source or
+absolute-layout architecture.
+
+## Source root causes at failed head
+
+| Concern | Current owner/failure |
+|---|---|
+| final Grid | structurally correct, but capped to `92rem` and card/gap maxima |
+| card presence | ready and hidden states set opacity to zero |
+| exit | Grid opacity fades during `0.94-1` |
+| perspective | width-driven `54-66rem`, flatter than height-driven reference |
+| heading | JS writes X travel; owner requires opposite vertical Y masks |
+| description | side composition starts at 640px and desktop width is `29vw` |
+| responsive flip | whole-root progress, not card visible fraction |
+| desktop overlap | nominal stagger exists, but slow early easing hides it |
+| overshoot | only `-8deg` |
+| float | only `-3px..3px` and reads as static |
+| pacing | `600-640svh`, materially longer than reference evidence |
+| eyebrow | still rendered from locale `title` |
+
+The semantic DOM, CSS Grid final slots, separate pose/float/flip wrappers, fixed
+structural z-order, one route path, cached geometry, and single RAF controller
+remain valid owners. The failing logic inside them must be replaced, not covered
+by a later override.
+
+## Owner-accepted revision
+
+- Header line one enters from below; line two enters from above.
+- Line two shifts inward on MD/LG/XL/2XL and mirrors for RTL.
+- Description is hidden on XS/SM, below the title on MD, and at logical side on
+  LG+.
+- Cards use identical geometry and motion in LTR/RTL; content direction changes.
+- Horizontal layouts use the exact accepted ratios:
+  - XS: `8 / 84 / 8%`;
+  - SM/MD: `4.1667 / 43.75 / 4.1667 / 43.75 / 4.1667%`;
+  - LG+: `5 / 21 / 2 / 21 / 2 / 21 / 2 / 21 / 5%`.
+- Every desktop back is opaque from the initial deck.
+- Desktop flips overlap at roughly 25–35%, retain fan tilt through edge-on, pass
+  the front by about 18deg, then settle.
+- XS/SM/MD flip begins at half-card visibility and ends at full visibility.
+- The final Grid never fades; sticky release carries it upward intact.
+- The single trail completes before exit.
+- “Nilai yang Menjadi Arah Tumbuh Anak” and locale equivalents are removed from
+  visible output.
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Atomic source publication | `PASS_SOURCE` | `main` verified at implementation commit |
-| Commit scope | `PASS_SOURCE` | exactly 19 expected files in GitHub commit |
-| Exact headings/honorifics | `PASS_SOURCE` | translation and Blade source inspected |
-| Semantic DOM/Grid fallback | `PASS_SOURCE` | one `h2`, four articles, Grid final slots |
-| JS syntax | `PASS_LOCAL_PATCH` | `node --check` passed for every changed module |
-| CSS syntax | `PASS_LOCAL_PATCH` | all six modules parsed with Lightning CSS |
-| Enforced source line limit | `PASS_LOCAL_PATCH` | changed `resources/` files are <=200 lines; `lang/` is outside the checker roots |
-| Focused feature test | `IMPLEMENTED_SOURCE` | test added; PHP runtime unavailable here |
-| `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | no repository checkout in this channel |
-| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | no complete checkout/package root |
-| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | no complete checkout/package root |
-| PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | `php` is unavailable in this channel |
-| Desktop center tolerance | `BLOCKED_BY_MISSING_EVIDENCE` | browser rectangles not captured |
-| Six-tier ID/EN/AR runtime | `BLOCKED_BY_MISSING_EVIDENCE` | responsive matrix not captured |
-| Reverse/fast/resize/BFCache | `BLOCKED_BY_MISSING_EVIDENCE` | lifecycle capture absent |
-| Reduced motion/zoom/a11y | `BLOCKED_BY_MISSING_EVIDENCE` | runtime audit absent |
-| Chromium/WebKit/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | target runtimes unavailable here |
+| Current GitHub main | `PASS_SOURCE` | verified at `c24e4d73` before audit |
+| Mandatory docs | `PASS_SOURCE` | full required chain read |
+| Owner screenshots/video | `FAIL_RUNTIME` | failures above are visible |
+| Lusion live measurements | `PASS_REFERENCE` | read-only computed geometry captured |
+| Revised blueprint | `OWNER_ACCEPTED` | explicit owner specification recorded |
+| Revised source | `PENDING` | next active step |
+| structure/build/PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | no complete checkout |
+| corrected Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | not yet available |
+| PageSpeed/accessibility | `BLOCKED_BY_MISSING_EVIDENCE` | not run |
 
 ## STATUS
 
-The accepted source rebuild is published on `main`. Release/runtime status
-remains `BLOCKED_BY_MISSING_EVIDENCE`; no browser or build gate is recorded as
-passing without evidence.
+The published implementation is runtime `FAIL`. The root causes and revised
+blueprint are now evidence-backed and owner accepted. No corrected runtime claim
+exists yet.
 
 ## NEXT VALID STEP
 
-Pull `main` with `git pull --ff-only origin main`, then run the repository proof
-commands and capture the required browser matrix from the resulting checkout.
+Implement `HOME-VALUES-001-R2` only in the mapped Values owners, run every
+available source proof, fast-forward `main` without force, then record the
+resulting source SHA and all still-unavailable runtime gates.
+

@@ -222,3 +222,46 @@ The recordings prove desired chronology and continuity. Computed styles prove
 reference geometry at captured instants. Neither proves the reference source
 code, its exact easing function, SchoolAI browser parity, performance,
 accessibility, or successful implementation.
+
+## 2026-08-04 reference revalidation
+
+The owner resupplied the forward and reverse recordings together with five
+reference frames and four failing SchoolAI frames. The recordings remain
+`1280x720`, nominally `60fps`, with durations `4.156s` forward and `1.648s`
+reverse. Frame sampling at 10/12fps confirms:
+
+- the four cards exist from the first deck state; overlap makes the deck read as
+  one card before the fan opens;
+- the fan is fully legible before the first flip;
+- each following flip starts while the preceding card is only about one quarter
+  through its turn;
+- the front face passes its final plane by roughly `17-20deg` before settling;
+- the final row remains opaque and moves out through the top as a complete
+  group; it does not fade away;
+- reverse scroll brings the complete row back from above and retraces the same
+  flip/fan/deck path.
+
+A fresh read-only inspection of `https://lusion.co/about` in Chrome at
+`1363x936` produced these computed values:
+
+| Measurement | Value | Normalized result |
+|---|---:|---:|
+| section width / height | `1363 x 3518.234px` | about `375.88vh` high |
+| content/card field | `1226.719px` | exactly `90vw`, inset `5vw` |
+| base card plane | `286.234 x 399.266px` | `21vw`, aspect about `.717` |
+| section column gap | `27.26px` | exactly `2vw` |
+| card-stage perspective | `936px` | exactly `100vh` |
+| title size | `163.56px` | exactly `12vw` |
+| supporting-copy box | `245px` at `x=1049.859px` | about `18vw`, starting at `77vw` |
+| settled second-line origin | `x=395.25px` | about `29vw` |
+
+This revalidation explains two SchoolAI failures that the earlier normalized
+blueprint did not remove. SchoolAI capped the field, cards, and gap instead of
+preserving the measured `5 / 21 / 2 / 21 / 2 / 21 / 2 / 21 / 5` viewport
+ratio, and its width-driven `54-66rem` perspective becomes flatter than the
+reference's height-driven camera on wide displays.
+
+The live reference still uses absolute cards for its cinematic layout. That is
+reference ownership evidence only. SchoolAI keeps semantic CSS Grid as its
+final layout source and uses child pose transforms to reproduce the accepted
+story without copying the reference implementation.

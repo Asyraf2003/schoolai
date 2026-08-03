@@ -1,13 +1,14 @@
 # Homepage Values Card Story Blueprint
 
 Blueprint ID: `HOME-VALUES-001`
-Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
+Status: `OWNER_ACCEPTED`
 Owner: Asyraf Mubarak
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Source baseline: `087f2afac7b7b77dfcb62a27bb22c13b3cdc4da2`
 Source implementation head: `fbbc83b6672053652ac4551aea3970b825df0fcc`
+Revision baseline: `c24e4d73fd57659df9f18eeb732d3ec755031743`
 Active route/surface: homepage `#nilai`
 Raw reference: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
 Execution channel: Web AI with explicit direct-`main` authorization
@@ -34,6 +35,78 @@ scope. XS uses a natural one-column flow; SM/MD use a natural 2x2 grid; LG/XL/
 2XL use the cinematic four-column story. The exact owner-specified headings are
 `PONDASI / KARAKTER`, `VALUES / STUDENTS`, and
 `أَسَاسُ الْمَدْرَسَةِ`.
+
+## Owner-accepted runtime correction — 2026-08-04
+
+The owner-provided SchoolAI captures are runtime `FAIL` evidence for
+`c24e4d73`. The prior source rebuild preserved the intended wrapper ownership
+but normalized away several measured reference relationships and implemented
+the wrong heading axis.
+
+The accepted correction is atomic to Values and its owned transition layers:
+
+- remove the visible eyebrow “Nilai yang Menjadi Arah Tumbuh Anak” and its EN/AR
+  equivalents;
+- reveal line one vertically from below and line two vertically from above;
+  after reveal, shift line two toward the visual center on MD through 2XL only;
+- hide description on XS/SM, place it below the title on MD, and at the logical
+  side on LG/XL/2XL; RTL mirrors only header composition;
+- keep card order, geometry, flip direction, and chronology identical for LTR
+  and RTL; only card content direction/language changes;
+- use exact horizontal ratios: XS `8/84/8%`; SM/MD
+  `4.1667/43.75/4.1667/43.75/4.1667%`; LG+
+  `5/21/2/21/2/21/2/21/5%`;
+- use a card aspect of approximately `.717`, allowing height to follow width
+  fluidly instead of hard-capping the card to one screenshot;
+- use a height-driven perspective camera matching the revalidated
+  `perspective = 100vh` relationship, with a safe short-height floor;
+- make all four backs present from the first deck frame; overlap may make them
+  read as one card, but no card may fade in from nothing;
+- shorten the desktop timeline from `600-640vh` toward the revalidated
+  approximately `376vh` story scale;
+- start each desktop flip while the previous card is about `25-35%` through
+  its turn, retain fan tilt through the edge-on phase, overshoot the front by
+  about `18deg`, then settle at zero;
+- on XS/SM/MD, derive flip progress from the visible fraction of the card:
+  begin when half the body is visible and settle when the full body is visible;
+  paired cards use the same rotation direction and timing;
+- increase bounded floating enough to read as suspension while keeping it on
+  the dedicated float wrapper and out of layout measurement;
+- never fade the final card row. It remains complete through sticky release and
+  exits upward with normal section movement; reverse scroll restores it intact;
+- complete the single background path before the exit transition and retain
+  reversible geometry.
+
+No card art, source code, asset, font, shader, or exact component structure from
+Lusion is copied.
+
+## Revision FACT and root-cause map
+
+Current `c24e4d73` ownership remains correctly isolated: Blade owns one
+localized semantic tree; the six Values CSS modules own treatment; one
+controller plus the eight Values helpers own measurement and motion; the Vite
+entry/import graph remains unchanged. The failure is inside those owners:
+
+| Owner-visible failure | Current source fact | Root cause / replacement |
+|---|---|---|
+| cards appear late | ready state sets card opacity to zero; hidden poses also use zero opacity | keep every back opaque and reveal the deck through overlap/translation |
+| cards disappear at the end | Grid opacity falls during `0.94-1` | remove group/card fading; let sticky release move the complete Grid |
+| PC cards too narrow | field caps at `92rem`; card caps at `21rem`; gap caps at `1.6rem` | preserve the measured viewport ratios with real Grid columns |
+| flip looks flat | perspective is width-driven `54-66rem` | use the measured height-driven camera and retain the preserve-3d chain |
+| weak float | keyframes travel only `-3px..3px` | bounded `6-10px` compositor float on the dedicated wrapper |
+| insufficient front overshoot | `FLIP_OVERSHOOT = -8` | use the observed approximately `-18deg` settle path |
+| flip reads one-by-one | slow early cubic turn hides the nominal overlap | continuous curve reaches about 30–36deg when the next flip begins |
+| phone/tablet flip timing drifts | range derives from whole-root progress and viewport offsets | calculate actual card visible fraction from cached slot geometry |
+| heading enters from the sides | root writes line X variables and masks use `translateX` | line one uses positive Y travel; line two uses negative Y travel |
+| description collides with title | side layout begins at 640px; desktop box is `29vw` at `19svh` | hide through SM, below-title MD, measured side box LG+ |
+| unwanted small label | Blade still renders `.values-story__eyebrow` | remove its DOM and unused locale key |
+| pacing feels late | desktop story is `600-640svh` | reduce to the measured approximately `376svh` narrative scale |
+
+The final CSS Grid, semantic card articles, pose/float/flip wrapper separation,
+fixed structural z-order, one SVG route, and single RAF controller are retained.
+The opacity reveal/fade, capped viewport geometry, horizontal heading masks,
+root-progress responsive flip, and shallow overshoot are replaced rather than
+overridden.
 
 ## FACT — inspected source baseline
 
@@ -216,17 +289,18 @@ the visual center.
 
 | Progress/state | Result |
 |---:|---|
-| section enters | independent 900ms heading reveal starts immediately |
-| `0.05–0.18` | all four backs form one legible centered deck |
-| `0.18–0.38` | deck opens into a fixed-order fan around stage center |
-| `0.34–0.46` | cards approach real Grid slots with fan tilt retained |
-| `0.44` | card 1 flip begins |
-| `0.515` | card 2 begins at about 27% of card 1 duration |
-| `0.590` | card 3 begins at about 27% of card 2 duration |
-| `0.665` | card 4 begins at about 27% of card 3 duration |
-| each flip | `rotateY 180 -> slight front overshoot -> 0`; `rotateZ -> 0` |
-| `0.90+` | upright Grid holds; trail is complete before fading |
-| `0.94–1` | cards/header/trail leave before the white exit layer |
+| section enters | independent 900ms vertical heading reveal starts immediately |
+| `0.00–0.16` | all four opaque backs rise as one legible centered deck |
+| `0.12–0.36` | deck opens into a fixed-order fan around stage center |
+| `0.30–0.42` | cards approach real Grid slots with fan tilt retained |
+| `0.38` | card 1 flip begins |
+| `0.45` | card 2 begins while card 1 has turned about 30–36deg |
+| `0.52` | card 3 begins with the same overlap |
+| `0.59` | card 4 begins with the same overlap |
+| each flip | `rotateY 180 -> about -18 -> 0`; `rotateZ` settles late |
+| `0.86+` | upright Grid holds; trail continues toward completion |
+| `0.96` | trail is complete before its exit fade |
+| sticky release | complete opaque Grid and section move upward; no card fade |
 
 Scroll motion uses callback delta time and a critically damped state. It
 supports reverse and fast input without per-sample stops. Resize invalidates
@@ -237,16 +311,16 @@ resolves to the current logical progress.
 
 | Tier | Layout | Header/copy | Motion | Trail |
 |---|---|---|---|---|
-| XS `<640` | natural one-column 1-1-1-1 | heading; description hidden | simple per-card entrance/flip | hidden |
-| SM `640–767` | natural 2x2 Grid | heading + copy when space allows | row/pair overlap, no stack/fan | hidden |
-| MD `768–1023` | natural 2x2 Grid | heading + copy | row/pair overlap, no stack/fan | hidden |
+| XS `<640` | one column; `84vw` cards field | heading; description hidden | flip from 1/2 to full visibility | hidden |
+| SM `640–767` | 2x2; exact 1/10.5/1/10.5/1 ratio | heading; description hidden | same-direction paired flip | hidden |
+| MD `768–1023` | same 2x2 ratio | description below heading; line two shifts modestly | same-direction paired flip | hidden |
 | LG `1024–1279` | centered four-column Grid | full sequence | stack/fan/flip/settle | visible |
 | XL `1280–1535` | centered four-column Grid | full sequence | full cinematic sequence | visible |
 | 2XL `>=1536` | bounded four-column Grid | bounded editorial scale | shared cinematic sequence | visible |
 
-All gaps, padding, card widths, and heading sizes remain fluid with intrinsic
-Grid and `clamp()`. XS/SM/MD stay in natural document flow rather than using a
-desktop pinning model.
+LG+ uses the exact measured 5/21/2/21/2/21/2/21/5 viewport ratio. All card
+heights follow the shared aspect and available width. XS/SM/MD stay in natural
+document flow rather than using a desktop pinning model.
 
 ## Locale/direction contract
 
