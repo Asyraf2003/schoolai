@@ -1,13 +1,13 @@
 .values-story {
-    --values-card-target: min(76vw, 19rem);
-    --values-story-length: 700svh;
+    --values-card-target: min(82vw, 21rem);
+    --values-story-length: 600svh;
 }
 
 @media (min-width: 640px) {
     .values-story {
         --values-layout-mode: 2;
-        --values-card-target: min(38vw, 16rem);
-        --values-story-length: 740svh;
+        --values-card-target: min(43vw, 19rem);
+        --values-story-length: 580svh;
     }
 
     .values-story__cards {
@@ -17,8 +17,8 @@
 
 @media (min-width: 768px) {
     .values-story {
-        --values-card-target: min(38vw, 18rem);
-        --values-story-length: 780svh;
+        --values-card-target: min(41vw, 20rem);
+        --values-story-length: 560svh;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -34,8 +34,8 @@
 @media (min-width: 1024px) {
     .values-story {
         --values-layout-mode: 4;
-        --values-card-target: min(21vw, 14rem);
-        --values-story-length: 820svh;
+        --values-card-target: min(22vw, 18rem);
+        --values-story-length: 520svh;
     }
 
     .values-story__cards {
@@ -43,14 +43,14 @@
     }
 
     .values-story.is-values-ready .values-story__title {
-        top: clamp(5rem, 8vh, 7rem);
+        top: clamp(1.5rem, 4vh, 3rem);
     }
 }
 
 @media (min-width: 1280px) {
     .values-story {
-        --values-card-target: min(21vw, 16.5rem);
-        --values-story-length: 860svh;
+        --values-card-target: min(22vw, 20rem);
+        --values-story-length: 500svh;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -60,8 +60,8 @@
 
 @media (min-width: 1536px) {
     .values-story {
-        --values-card-target: min(20vw, 18.5rem);
-        --values-story-length: 900svh;
+        --values-card-target: min(20vw, 22rem);
+        --values-story-length: 520svh;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -98,7 +98,7 @@
     }
 
     .values-story.is-values-ready .values-story__title {
-        top: clamp(5rem, 10vh, 7rem);
+        top: clamp(1.5rem, 4vh, 3rem);
         left: 1.25rem;
         max-inline-size: 8ch;
         font-size: clamp(4.3rem, 20vw, 6.5rem);
@@ -121,7 +121,7 @@
 
 @media (max-height: 620px) and (prefers-reduced-motion: no-preference) {
     .values-story.is-values-ready .values-story__title {
-        top: 4.5rem;
+        top: 1rem;
     }
 
     .values-story.is-values-ready .values-story__eyebrow {
