@@ -108,7 +108,10 @@ export class DepthGalleryEngine {
         if (!this.renderer || !this.viewport) return false;
         const rect = this.viewport.getBoundingClientRect();
         const width = Math.round(rect.width);
-        const height = Math.round(rect.height);
+        const readyHeight = this.root.classList.contains('is-depth-ready')
+            ? rect.height
+            : Math.max(window.innerHeight || 0, 560);
+        const height = Math.round(readyHeight);
         if (width < 2 || height < 2) return false;
 
         this.camera.aspect = width / height;
