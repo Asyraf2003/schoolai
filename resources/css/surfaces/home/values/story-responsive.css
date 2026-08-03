@@ -1,13 +1,13 @@
 .values-story {
     --values-card-target: min(82vw, 21rem);
-    --values-story-length: 600svh;
+    --values-story-length: 640svh;
 }
 
 @media (min-width: 640px) {
     .values-story {
         --values-layout-mode: 2;
         --values-card-target: min(43vw, 19rem);
-        --values-story-length: 580svh;
+        --values-story-length: 620svh;
     }
 
     .values-story__cards {
@@ -18,7 +18,7 @@
 @media (min-width: 768px) {
     .values-story {
         --values-card-target: min(41vw, 20rem);
-        --values-story-length: 560svh;
+        --values-story-length: 600svh;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -35,22 +35,18 @@
     .values-story {
         --values-layout-mode: 4;
         --values-card-target: min(22vw, 18rem);
-        --values-story-length: 520svh;
+        --values-story-length: 580svh;
     }
 
     .values-story__cards {
         grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .values-story.is-values-ready .values-story__title {
-        top: clamp(1.5rem, 4vh, 3rem);
     }
 }
 
 @media (min-width: 1280px) {
     .values-story {
         --values-card-target: min(22vw, 20rem);
-        --values-story-length: 500svh;
+        --values-story-length: 560svh;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -61,7 +57,7 @@
 @media (min-width: 1536px) {
     .values-story {
         --values-card-target: min(20vw, 22rem);
-        --values-story-length: 520svh;
+        --values-story-length: 580svh;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -89,6 +85,10 @@
 }
 
 @media (max-width: 639px) {
+    .values-transition {
+        --values-transition-height: clamp(7rem, 22svh, 13rem);
+    }
+
     .values-story {
         padding-inline: 1.25rem;
     }
@@ -130,12 +130,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .values-story {
-        min-height: auto;
+    .values-transition {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
     }
 
-    .values-story__curve {
-        display: none;
+    .values-story {
+        min-height: auto;
     }
 
     .values-card {
