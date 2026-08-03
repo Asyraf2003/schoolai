@@ -1,16 +1,16 @@
-import { measuredDesktopPose } from './desktop-keyframes.js';
-import { clamp, mix, phase } from './motion.js';
+import {
+    deckAngle,
+    fanAngle,
+    fanArc,
+    flipAngle,
+    flipLocal,
+    stackNudge,
+    uprightAmount,
+} from './desktop-keyframes.js';
+import { mix, phase } from './motion.js';
 
-function pose(
-    x = 0,
-    y = 0,
-    z = 0,
-    rz = 0,
-    scale = 1,
-    opacity = 1,
-    ry = 180,
-) {
-    return { x, y, z, rx: 0, ry, rz, scale, opacity };
+function pose(x, y, z, rz, scale, opacity, ry = 180) {
+    return { x, y, z, rz, scale, opacity, ry };
 }
 
 function mixPose(from, to, amount) {
@@ -18,38 +18,56 @@ function mixPose(from, to, amount) {
         x: mix(from.x, to.x, amount),
         y: mix(from.y, to.y, amount),
         z: mix(from.z, to.z, amount),
-        rx: mix(from.rx, to.rx, amount),
-        ry: mix(from.ry, to.ry, amount),
         rz: mix(from.rz, to.rz, amount),
         scale: mix(from.scale, to.scale, amount),
         opacity: mix(from.opacity, to.opacity, amount),
+        ry: mix(from.ry, to.ry, amount),
     };
 }
 
-function cardTopAt(centerRatio, geometry) {
-    return geometry.viewportHeight * centerRatio - geometry.cardHeight * 0.5;
+function centeredOffsets(index, geometry) {
+    const slot = geometry.slots[index];
+    return {
+        x: geometry.stageCenterX - slot.centerX,
+        y: geometry.stageCenterY - slot.centerY,
+    };
 }
 
-function leadPose(index, geometry) {
+function hiddenPose(index, geometry, center) {
     return pose(
+        center.x + stackNudge(index, geometry.cardWidth),
+        center.y + geometry.cardHeight * 0.34,
+        -index * 14,
+        deckAngle(index),
+        0.9,
         0,
-        cardTopAt(0.64, geometry),
-        -index * 24,
-        0,
-        0.96,
-        index === 0 ? 1 : 0,
     );
 }
 
-function deckPose(index, geometry) {
+function deckPose(index, geometry, center) {
     return pose(
-        (index - 1.5) * geometry.cardWidth * 0.038,
-        cardTopAt(0.57, geometry) + index * 4,
-        -index * 22,
-        (index - 1.5) * 1.9,
+        center.x + stackNudge(index, geometry.cardWidth),
+        center.y + geometry.cardHeight * 0.14 + index * 2,
+        -index * 14,
+        deckAngle(index),
         0.96,
         1,
     );
+}
+
+function fanPose(index, geometry, center) {
+    return pose(
+        center.x * 0.3,
+        center.y + fanArc(index, geometry.cardHeight),
+        -index * 3,
+        fanAngle(index),
+        1,
+        1,
+    );
+}
+
+function preFlipPose(index) {
+    return pose(0, 0, 0, fanAngle(index), 1, 1);
 }
 
 export function desktopCardFrame(
@@ -58,29 +76,30 @@ export function desktopCardFrame(
     geometry,
     momentum,
 ) {
-    const lead = leadPose(index, geometry);
-    const hidden = {
-        ...lead,
-        y: lead.y + geometry.viewportHeight * 0.1,
-        scale: lead.scale * 0.88,
-        opacity: 0,
-    };
-    const deck = deckPose(index, geometry);
-    const baseY = cardTopAt(0.535, geometry);
-    const measuredAmount = clamp((progress - 0.34) / 0.52);
-    const measured = measuredDesktopPose(
-        index,
-        measuredAmount,
-        geometry,
-        baseY,
+    const center = centeredOffsets(index, geometry);
+    const hidden = hiddenPose(index, geometry, center);
+    const deck = deckPose(index, geometry, center);
+    const fan = fanPose(index, geometry, center);
+    const preFlip = preFlipPose(index);
+    const revealStart = 0.05 + index * 0.012;
+    const revealEnd = 0.14 + index * 0.012;
+    let current = mixPose(
+        hidden,
+        deck,
+        phase(progress, revealStart, revealEnd),
     );
-    const fan = measuredDesktopPose(index, 0, geometry, baseY);
-    let current = mixPose(hidden, lead, phase(progress, 0.03, 0.12));
 
-    current = mixPose(current, deck, phase(progress, 0.12, 0.24));
-    current = mixPose(current, fan, phase(progress, 0.22, 0.34));
-    current = mixPose(current, measured, phase(progress, 0.32, 0.36));
-    current.y += momentum * 6;
+    current = mixPose(current, fan, phase(progress, 0.18, 0.38));
+    current = mixPose(current, preFlip, phase(progress, 0.34, 0.46));
+
+    const localFlip = flipLocal(index, progress);
+    const upright = uprightAmount(localFlip);
+    current.ry = flipAngle(localFlip);
+    current.rz = mix(current.rz, 0, upright);
+    current.x = mix(current.x, 0, upright);
+    current.y = mix(current.y, 0, upright)
+        + momentum * geometry.cardHeight * 0.012;
+    current.z = mix(current.z, 0, upright);
 
     return current;
 }

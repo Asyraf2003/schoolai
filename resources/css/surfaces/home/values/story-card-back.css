@@ -1,19 +1,19 @@
 .values-card__back {
-    display: none;
+    display: grid;
     place-items: center;
-    border: clamp(.18rem, .35vw, .3rem) solid #fff;
+    border: clamp(.16rem, .3vw, .28rem) solid rgba(255,255,255,.96);
     background:
         repeating-linear-gradient(
             45deg,
-            transparent 0 12px,
-            rgba(255,255,255,.18) 12px 14px
+            transparent 0 13px,
+            rgba(255,255,255,.17) 13px 15px
         ),
         repeating-linear-gradient(
             -45deg,
-            transparent 0 12px,
-            rgba(255,255,255,.12) 12px 14px
+            transparent 0 13px,
+            rgba(255,255,255,.11) 13px 15px
         ),
-        var(--values-blue);
+        linear-gradient(145deg, #172cd6, var(--values-blue));
     color: #fff;
     transform: rotateY(180deg) translateZ(.1px);
 }
@@ -21,15 +21,15 @@
 .values-card__back-frame {
     position: absolute;
     inset: 7%;
-    border: 2px solid rgba(255,255,255,.92);
-    border-radius: .75rem;
+    border: 2px solid rgba(255,255,255,.88);
+    border-radius: .8rem;
 }
 
 .values-card__back-frame::before,
 .values-card__back-frame::after {
     position: absolute;
     inset: 17%;
-    border: 2px solid rgba(255,255,255,.72);
+    border: 2px solid rgba(255,255,255,.68);
     content: "";
     transform: rotate(45deg);
 }
@@ -46,13 +46,13 @@
     aspect-ratio: 1;
     border: 2px solid rgba(255,255,255,.92);
     border-radius: 50%;
-    box-shadow: 0 0 0 1rem rgba(32,56,255,.88);
+    box-shadow: 0 0 0 1rem rgba(32,56,255,.86);
 }
 
 .values-card__back-code {
     position: relative;
     z-index: 2;
-    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
     line-height: 1;
 }
 
@@ -60,39 +60,9 @@
     position: absolute;
     inset: auto 10% 8%;
     overflow: hidden;
-    font-size: clamp(.72rem, 1.1vw, .92rem);
+    font-size: clamp(.72rem, 1vw, .94rem);
     font-weight: 700;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.values-story.is-values-ready .values-story__cards {
-    position: absolute;
-    inset: 0;
-    display: block;
-    transform-style: preserve-3d;
-}
-
-.values-story.is-values-ready .values-card {
-    --values-opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: min(var(--values-card-target), calc(72svh - 5.76rem));
-    margin: 0;
-    transform:
-        translate3d(
-            calc(-50% + var(--values-x)),
-            calc(-50% + var(--values-y)),
-            var(--values-z)
-        )
-        rotateX(var(--values-rx))
-        rotateZ(var(--values-rz))
-        scale(var(--values-scale));
-    will-change: transform, opacity;
-}
-
-.values-story.is-values-ready .values-card__back {
-    display: grid;
 }

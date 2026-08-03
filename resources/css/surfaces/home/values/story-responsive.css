@@ -1,135 +1,124 @@
 .values-story {
-    --values-card-target: min(82vw, 19rem);
-    --values-story-length: 520svh;
+    --values-card-target: min(86vw, 20rem);
+    --values-story-length: 100svh;
+    --values-line-two-shift: 0;
 }
 
 @media (min-width: 640px) {
     .values-story {
-        --values-card-target: min(58vw, 16rem);
-        --values-story-length: 500svh;
+        --values-layout-mode: 2;
+        --values-card-target: min(42vw, 18rem);
     }
 
-    .values-story__cards {
+    .values-story__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: min(100%, 44rem);
     }
 }
 
 @media (min-width: 768px) {
     .values-story {
-        --values-layout-mode: 2;
-        --values-card-target: min(34vw, 14rem);
-        --values-story-length: 400svh;
+        --values-card-target: min(36vw, 19rem);
     }
 
-    .values-story.is-values-ready .values-story__title {
-        inset-inline-start: clamp(2rem, 5vw, 5rem);
+    .values-story__clip {
+        padding-inline: clamp(2rem, 5vw, 5rem);
     }
 
-    .values-story.is-values-ready .values-story__description,
-    .values-story.is-values-ready .values-story__eyebrow {
-        inset-inline-end: clamp(2rem, 5vw, 5rem);
+    .values-story__grid {
+        width: min(100%, 48rem);
     }
 }
 
 @media (min-width: 1024px) {
     .values-story {
-        --values-card-target: min(22vw, 14.5rem);
-        --values-story-length: 400svh;
+        --values-layout-mode: 4;
+        --values-card-target: clamp(12rem, 19vw, 15rem);
+        --values-story-length: 600svh;
+        --values-line-two-shift: clamp(-7rem, -7vw, -4rem);
+    }
+
+    html[dir="rtl"] .values-story {
+        --values-line-two-shift: clamp(4rem, 7vw, 7rem);
+    }
+
+    .values-story.is-values-ready .values-story__timeline {
+        min-height: var(--values-story-length);
+    }
+
+    .values-story.is-values-ready .values-story__clip {
+        position: sticky;
+        top: var(--nav-h, 4.5rem);
+        height: calc(100vh - var(--nav-h, 4.5rem));
+        height: calc(100svh - var(--nav-h, 4.5rem));
+        min-height: 0;
+        padding: 0;
+    }
+
+    .values-story.is-values-ready .values-story__perspective {
+        position: absolute;
+        inset: 0;
+        padding: clamp(2rem, 4vw, 5rem);
+    }
+
+    .values-story.is-values-ready .values-story__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: clamp(.7rem, 1.35vw, 1.4rem);
+        width: min(calc(100% - clamp(2rem, 5vw, 6rem)), 92rem);
+    }
+
+    .values-story.is-values-ready .values-card {
+        width: min(
+            100%,
+            var(--values-card-target),
+            calc(72svh - var(--nav-h, 4.5rem) - 4rem)
+        );
     }
 }
 
 @media (min-width: 1280px) {
     .values-story {
-        --values-layout-mode: 4;
-        --values-card-target: min(26vw, 25rem);
+        --values-card-target: clamp(14rem, 19vw, 19rem);
         --values-story-length: 620svh;
-        --values-line-two-target-x: 104px;
     }
 
-    html[dir="rtl"] .values-story {
-        --values-line-two-target-x: -104px;
-    }
-
-    .values-story__cards {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .values-story.is-values-ready .values-story__title {
-        font-size: clamp(8rem, 14.5vw, 15rem);
+    .values-story.is-values-ready .values-story__grid {
+        gap: clamp(1rem, 1.45vw, 1.6rem);
     }
 }
 
 @media (min-width: 1536px) {
     .values-story {
-        --values-card-target: min(24vw, 27rem);
+        --values-card-target: clamp(16rem, 19vw, 21rem);
         --values-story-length: 640svh;
-        --values-line-two-target-x: 144px;
+        --values-line-two-shift: clamp(-10rem, -8vw, -7rem);
     }
 
     html[dir="rtl"] .values-story {
-        --values-line-two-target-x: -144px;
-    }
-
-    .values-story.is-values-ready .values-story__title {
-        inset-inline-start: max(5rem, calc((100vw - 108rem) / 2));
-        font-size: clamp(9rem, 14vw, 16rem);
-    }
-
-    .values-story.is-values-ready .values-story__description,
-    .values-story.is-values-ready .values-story__eyebrow {
-        inset-inline-end: max(5rem, calc((100vw - 108rem) / 2));
-    }
-}
-
-@media (max-width: 1023px) {
-    .values-story.is-values-ready .values-story__description {
-        top: auto;
-        inset-inline-end: clamp(1.25rem, 5vw, 3rem);
-        bottom: clamp(5rem, 12vh, 8rem);
-        width: min(68vw, 25rem);
-    }
-
-    .values-story.is-values-ready .values-story__eyebrow {
-        inset-inline-end: clamp(1.25rem, 5vw, 3rem);
-        bottom: clamp(1.5rem, 4vh, 3rem);
-    }
-}
-
-@media (max-width: 767px) {
-    .values-story__description,
-    .values-story__eyebrow {
-        display: none;
+        --values-line-two-shift: clamp(7rem, 8vw, 10rem);
     }
 }
 
 @media (max-width: 639px) {
-    .values-transition {
-        --values-transition-height: clamp(7rem, 22svh, 13rem);
-    }
-
     .values-story {
+        --values-entry-height: clamp(7rem, 22svh, 13rem);
+        --values-exit-height: clamp(9rem, 28svh, 16rem);
+    }
+
+    .values-story__eyebrow,
+    .values-story__description {
+        display: none;
+    }
+
+    .values-story__clip {
         padding-inline: 1.25rem;
-    }
-
-    .values-story__title {
-        font-size: clamp(3.6rem, 18vw, 5.4rem);
-    }
-
-    .values-story.is-values-ready .values-story__title {
-        top: clamp(1.5rem, 4vh, 3rem);
-        inset-inline-start: 1.25rem;
-        max-inline-size: 8ch;
-        font-size: clamp(4.6rem, 21vw, 7rem);
-    }
-
-    .values-card__body {
-        font-size: clamp(.68rem, 2.7vw, .82rem);
     }
 }
 
-@media (max-height: 620px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 1024px) and (max-height: 620px) {
     .values-story.is-values-ready .values-story__title {
         top: 1rem;
+        font-size: clamp(5rem, 11vw, 8rem);
     }
 
     .values-story.is-values-ready .values-story__eyebrow {
@@ -138,17 +127,25 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .values-transition {
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-    }
-
-    .values-story {
+    .values-story__timeline,
+    .values-story__clip {
         min-height: auto;
     }
 
-    .values-card {
+    .values-story__clip {
+        position: relative;
+        height: auto;
+    }
+
+    .values-story__grid {
+        opacity: 1;
+    }
+
+    .values-card__pose,
+    .values-card__float,
+    .values-card__inner {
         opacity: 1;
         transform: none;
+        animation: none;
     }
 }

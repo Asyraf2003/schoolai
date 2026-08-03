@@ -1,13 +1,9 @@
-import { clamp } from './motion.js';
+import { clamp, easeOutCubic } from './motion.js';
 
 const EPSILON = 0.00005;
-const ENTRY_TRIGGER_RATIO = 0.94;
-const REVEAL_DURATION_MS = 1200;
-
-function revealEase(value) {
-    const progress = clamp(value);
-    return 1 - Math.pow(1 - progress, 3);
-}
+const ENTRY_TRIGGER_RATIO = 0.9;
+const REVEAL_DURATION_MS = 900;
+const FAST_RESOLVE_PROGRESS = 0.18;
 
 function resetForEntry(state) {
     state.phase = 'idle';
@@ -38,44 +34,43 @@ export function createHeadingState(progress = 0) {
 
 export function updateHeadingState(
     state,
-    target,
-    rootTop,
+    storyProgress,
+    timelineTop,
     viewportHeight,
     time,
     desktop,
 ) {
     const triggerTop = viewportHeight * ENTRY_TRIGGER_RATIO;
-    const beforeSection = target <= EPSILON && rootTop > triggerTop;
+    const beforeSection = storyProgress <= EPSILON && timelineTop > triggerTop;
     const firstSample = state.previousTop === null;
-    const movingDown = firstSample || rootTop < state.previousTop - 0.5;
-    const enteringFromTop = rootTop <= triggerTop
-        && rootTop > -viewportHeight * 0.15
+    const movingDown = firstSample || timelineTop < state.previousTop - 0.5;
+    const enteringFromTop = timelineTop <= triggerTop
+        && timelineTop > -viewportHeight * 0.2
         && movingDown;
 
-    if (beforeSection) {
-        resetForEntry(state);
-    } else if (state.phase === 'idle') {
+    if (beforeSection) resetForEntry(state);
+    else if (state.phase === 'idle') {
         if (enteringFromTop) {
             state.phase = 'revealing';
             state.startedAt = time;
             state.instant = false;
-        } else {
-            resolveWithoutEntry(state);
-        }
+        } else resolveWithoutEntry(state);
     }
 
     if (state.phase === 'revealing') {
         const elapsed = Math.max(0, time - state.startedAt);
-        state.reveal = revealEase(elapsed / REVEAL_DURATION_MS);
+        state.reveal = easeOutCubic(elapsed / REVEAL_DURATION_MS);
 
-        if (state.reveal >= 0.999) {
+        if (state.reveal >= 0.999 || storyProgress >= FAST_RESOLVE_PROGRESS) {
             state.reveal = 1;
             state.phase = 'revealed';
+            state.instant = storyProgress >= FAST_RESOLVE_PROGRESS;
         }
     }
 
+    state.reveal = clamp(state.reveal);
     state.shifted = desktop && state.phase === 'revealed';
-    state.previousTop = rootTop;
+    state.previousTop = timelineTop;
 
     return {
         reveal: state.reveal,

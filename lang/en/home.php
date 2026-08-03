@@ -340,6 +340,8 @@ return [
 
     'nilai_sekolah' => [
         'title' => 'Values That Guide Every Child’s Growth',
+        'heading' => 'VALUES STUDENTS',
+        'heading_lines' => ['VALUES', 'STUDENTS'],
         'subtitle' => 'Four core values shape the learning culture at Al-Mustaqbal: closeness to the Qur’an, courage to think, unity of character, and the ability to inspire others.',
         'aria_label' => 'Al-Mustaqbal school values',
         'items' => [
@@ -350,7 +352,7 @@ return [
                 'summary' => 'Rooted in the Qur’an and Sunnah.',
                 'text_parts' => [
                     ['text' => 'Building student character based on the '],
-                    ['text' => 'Qur’an and the Sunnah of the Prophet Muhammad ﷺ', 'mark' => 'green'],
+                    ['text' => 'Qur’an and the Sunnah of the Messenger of Allah, peace and blessings be upon him', 'mark' => 'green'],
                     ['text' => ' through everyday learning habits and daily life.'],
                 ],
             ],

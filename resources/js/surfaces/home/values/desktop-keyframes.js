@@ -1,117 +1,57 @@
-import { clamp } from './motion.js';
+import { clamp, easeOutCubic, mix, phase } from './motion.js';
 
-const SAMPLE_TIMES = [0, 0.1, 0.22, 0.39, 0.57, 0.77, 1];
-const X_FACTORS = [0.93, 0.93, 0.955, 0.975, 0.988, 0.996, 1];
-const TANGENT_SCALE = 0.72;
-const Y_SAMPLES = [
-    [4.191, 7.161, 3.547, -3.328],
-    [4.191, 7.161, 3.547, -3.328],
-    [-7.55, -5.996, 1.071, 7.153],
-    [5.806, 8.509, 3.39, -4.847],
-    [-1.307, 6.976, 8.845, 2.582],
-    [5.045, 9.772, 5.515, -3.812],
-    [8.36, 0.036, -8.321, -9.027],
-];
-const RZ_SAMPLES = [
-    [-12.639, -4.213, 4.213, 12.639],
-    [-12.639, -4.213, 4.213, 12.639],
-    [-7.612, -2.537, 2.537, 7.612],
-    [-0.746, -0.249, 0.249, 0.746],
-    [-0.072, -0.024, 0.024, 0.072],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-];
-const RY_SAMPLES = [
-    [180, 180, 180, 180],
-    [123.539, 150.52, 167.831, 179.079],
-    [65.918, 107.185, 136.954, 156.925],
-    [14.942, 45.001, 80.369, 114.728],
-    [-10.699, 6.053, 30.105, 59.303],
-    [-17.398, -16.491, -7.624, 8.021],
-    [0, 0, 0, 0],
-];
+const FAN_ANGLES = [-13, -4.5, 4.5, 13];
+const DECK_ANGLES = [-1.8, -.6, .6, 1.8];
+const FLIP_START = 0.44;
+const FLIP_DURATION = 0.28;
+const FLIP_STAGGER = 0.075;
+const FLIP_OVERSHOOT = -8;
 
-function segmentAt(amount) {
-    const value = clamp(amount);
-
-    for (let index = 0; index < SAMPLE_TIMES.length - 1; index += 1) {
-        const start = SAMPLE_TIMES[index];
-        const end = SAMPLE_TIMES[index + 1];
-        if (value <= end) {
-            return {
-                index,
-                amount: (value - start) / Math.max(0.0001, end - start),
-            };
-        }
-    }
-
-    return { index: SAMPLE_TIMES.length - 2, amount: 1 };
+function easeInOutCubic(value) {
+    const progress = clamp(value);
+    return progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 }
 
-function tangent(values, index) {
-    const last = values.length - 1;
-    if (index <= 0) {
-        return (values[1] - values[0])
-            / (SAMPLE_TIMES[1] - SAMPLE_TIMES[0]);
-    }
-    if (index >= last) {
-        return (values[last] - values[last - 1])
-            / (SAMPLE_TIMES[last] - SAMPLE_TIMES[last - 1]);
-    }
-
-    return (values[index + 1] - values[index - 1])
-        / (SAMPLE_TIMES[index + 1] - SAMPLE_TIMES[index - 1]);
+export function fanAngle(index) {
+    return FAN_ANGLES[index] ?? 0;
 }
 
-function sampleScalar(values, amount) {
-    const segment = segmentAt(amount);
-    const index = segment.index;
-    const local = segment.amount;
-    const duration = SAMPLE_TIMES[index + 1] - SAMPLE_TIMES[index];
-    const start = values[index];
-    const end = values[index + 1];
-    const startSlope = tangent(values, index) * duration * TANGENT_SCALE;
-    const endSlope = tangent(values, index + 1) * duration * TANGENT_SCALE;
-    const squared = local * local;
-    const cubed = squared * local;
-
-    return (2 * cubed - 3 * squared + 1) * start
-        + (cubed - 2 * squared + local) * startSlope
-        + (-2 * cubed + 3 * squared) * end
-        + (cubed - squared) * endSlope;
+export function deckAngle(index) {
+    return DECK_ANGLES[index] ?? 0;
 }
 
-function sampleCard(values, cardIndex, amount) {
-    return sampleScalar(
-        values.map((sample) => sample[cardIndex]),
-        amount,
+export function flipLocal(index, progress) {
+    const start = FLIP_START + index * FLIP_STAGGER;
+    return clamp((progress - start) / FLIP_DURATION);
+}
+
+export function flipAngle(local) {
+    if (local <= 0) return 180;
+    if (local < 0.82) {
+        return mix(
+            180,
+            FLIP_OVERSHOOT,
+            easeInOutCubic(local / 0.82),
+        );
+    }
+
+    return mix(
+        FLIP_OVERSHOOT,
+        0,
+        easeOutCubic((local - 0.82) / 0.18),
     );
 }
 
-function rowSlot(geometry) {
-    const sideSpace = Math.max(32, geometry.viewportWidth * 0.045);
-    const available = (
-        geometry.viewportWidth - sideSpace * 2 - geometry.cardWidth
-    ) / 3;
-
-    return Math.min(
-        geometry.cardWidth * 1.03,
-        Math.max(geometry.cardWidth * 0.72, available),
-    );
+export function uprightAmount(local) {
+    return phase(local, 0.12, 0.88);
 }
 
-export function measuredDesktopPose(index, amount, geometry, baseY) {
-    const yScale = clamp(geometry.cardWidth / 400, 0.78, 1.12);
-    const slot = rowSlot(geometry);
+export function fanArc(index, cardHeight) {
+    return Math.abs(index - 1.5) * cardHeight * 0.035;
+}
 
-    return {
-        x: (index - 1.5) * slot * sampleScalar(X_FACTORS, amount),
-        y: baseY + sampleCard(Y_SAMPLES, index, amount) * yScale,
-        z: -index * 4,
-        rx: 0,
-        ry: clamp(sampleCard(RY_SAMPLES, index, amount), -24, 180),
-        rz: sampleCard(RZ_SAMPLES, index, amount),
-        scale: 1,
-        opacity: 1,
-    };
+export function stackNudge(index, cardWidth) {
+    return (index - 1.5) * cardWidth * 0.018;
 }

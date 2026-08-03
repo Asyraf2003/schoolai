@@ -1,12 +1,9 @@
 export const FRAME_MS = 1000 / 60;
 
-const POSITION_BLEND = 0.075;
-const VELOCITY_BLEND = 0.08;
-const POSITION_EPSILON = 0.00002;
-const VELOCITY_EPSILON = 0.000006;
-const VELOCITY_MAX = 0.012;
-const VELOCITY_COAST = 5;
-const RELEASE_HOLD = 0.75;
+const SPRING_FREQUENCY = 11.5;
+const POSITION_EPSILON = 0.00008;
+const VELOCITY_EPSILON = 0.0008;
+const MAX_PROGRESS_VELOCITY = 2.8;
 
 export const clamp = (value, min = 0, max = 1) => (
     Math.min(max, Math.max(min, value))
@@ -19,74 +16,73 @@ export function smooth(value) {
     return progress * progress * (3 - 2 * progress);
 }
 
+export function easeOutCubic(value) {
+    return 1 - Math.pow(1 - clamp(value), 3);
+}
+
 export function phase(progress, start, end) {
     return smooth((progress - start) / Math.max(0.0001, end - start));
 }
 
-function adjustedBlend(amount, delta) {
-    return 1 - Math.pow(
-        1 - amount,
-        Math.min(delta, 64) / FRAME_MS,
-    );
-}
+export function readStoryProgress(storyTop, geometry) {
+    if (geometry.mode === 4) {
+        const travel = Math.max(
+            1,
+            geometry.timelineHeight - geometry.stageHeight,
+        );
 
-export function readStoryProgress(root, viewportHeight) {
-    const rect = root.getBoundingClientRect();
-    const hold = viewportHeight * RELEASE_HOLD;
-    const travel = Math.max(
-        1,
-        root.offsetHeight - viewportHeight - hold,
-    );
-    return clamp(-rect.top / travel);
+        return clamp((geometry.stickyTop - storyTop) / travel);
+    }
+
+    const travel = geometry.rootHeight + geometry.viewportHeight;
+    return clamp((geometry.viewportHeight - storyTop) / Math.max(1, travel));
 }
 
 export function createScrollMotion(value = 0) {
     return {
         current: value,
-        previous: value,
         velocity: 0,
     };
 }
 
 export function resetScrollMotion(state, value) {
     state.current = value;
-    state.previous = value;
     state.velocity = 0;
+}
+
+function criticalStep(state, target, deltaSeconds) {
+    const displacement = state.current - target;
+    const coefficient = state.velocity
+        + SPRING_FREQUENCY * displacement;
+    const decay = Math.exp(-SPRING_FREQUENCY * deltaSeconds);
+
+    state.current = target
+        + (displacement + coefficient * deltaSeconds) * decay;
+    state.velocity = (
+        state.velocity
+        - SPRING_FREQUENCY * coefficient * deltaSeconds
+    ) * decay;
 }
 
 export function updateScrollMotion(state, target, delta, snap = false) {
     if (snap) resetScrollMotion(state, target);
-    else {
-        state.current += (
-            target - state.current
-        ) * adjustedBlend(POSITION_BLEND, delta);
+    else criticalStep(state, target, Math.min(Math.max(delta, 0), 64) / 1000);
 
-        const rawVelocity = state.current - state.previous;
-        state.velocity += (
-            rawVelocity - state.velocity
-        ) * adjustedBlend(VELOCITY_BLEND, delta);
-        state.velocity = clamp(
-            state.velocity,
-            -VELOCITY_MAX,
-            VELOCITY_MAX,
-        );
-
-        if (Math.abs(target - state.current) <= POSITION_EPSILON) {
-            state.current = target;
-        }
-        if (Math.abs(state.velocity) <= VELOCITY_EPSILON) {
-            state.velocity = 0;
-        }
-        state.previous = state.current;
+    if (Math.abs(target - state.current) <= POSITION_EPSILON
+        && Math.abs(state.velocity) <= VELOCITY_EPSILON) {
+        resetScrollMotion(state, target);
     }
 
-    const settled = Math.abs(target - state.current) <= POSITION_EPSILON
-        && state.velocity === 0;
+    state.current = clamp(state.current);
+    const settled = state.current === target && state.velocity === 0;
 
     return {
-        current: state.current,
-        visual: clamp(state.current + state.velocity * VELOCITY_COAST),
-        momentum: clamp(state.velocity / VELOCITY_MAX, -1, 1),
+        visual: state.current,
+        momentum: clamp(
+            state.velocity / MAX_PROGRESS_VELOCITY,
+            -1,
+            1,
+        ),
         settled,
     };
 }

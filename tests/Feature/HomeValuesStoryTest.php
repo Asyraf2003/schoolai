@@ -4,36 +4,48 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders one localized semantic values card story in every locale', function (): void {
-    $titles = [
-        'id' => 'Nilai yang Menjadi Arah Tumbuh Anak',
-        'en' => 'Values That Guide Every Child’s Growth',
-        'ar' => 'قيم ترسم مسار نمو الطفل',
+it('renders the rebuilt localized semantic values story', function (): void {
+    $locales = [
+        'id' => [
+            'title' => 'Nilai yang Menjadi Arah Tumbuh Anak',
+            'heading' => 'PONDASI KARAKTER',
+            'honorific' => 'Rasulullah shallallahu ‘alaihi wasallam',
+        ],
+        'en' => [
+            'title' => 'Values That Guide Every Child’s Growth',
+            'heading' => 'VALUES STUDENTS',
+            'honorific' => 'the Messenger of Allah, peace and blessings be upon him',
+        ],
+        'ar' => [
+            'title' => 'قيم ترسم مسار نمو الطفل',
+            'heading' => 'أَسَاسُ الْمَدْرَسَةِ',
+            'honorific' => 'رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ',
+        ],
     ];
 
-    foreach ($titles as $locale => $title) {
+    foreach ($locales as $locale => $copy) {
         $response = $this
             ->withSession(['locale' => $locale])
             ->get(route('home'));
 
         $response
             ->assertOk()
-            ->assertSee('class="values-transition"', false)
             ->assertSee('id="nilai"', false)
             ->assertSee('data-values-story', false)
+            ->assertSee('class="values-story__entry"', false)
+            ->assertSee('data-values-timeline', false)
             ->assertSee('data-values-stage', false)
-            ->assertSee('values-story__trail-line', false)
-            ->assertSee('values-story__trail-head', false)
-            ->assertSee('values-story__title-line--one', false)
-            ->assertSee('values-story__title-line--two', false)
-            ->assertSee('values-story__title-text', false)
-            ->assertSee('values-card__float', false)
+            ->assertSee('data-values-perspective', false)
             ->assertSee('data-values-cards', false)
+            ->assertSee('data-values-card-pose', false)
             ->assertSee('data-values-card-inner', false)
-            ->assertSee('values-card__front', false)
-            ->assertSee('values-card__back', false)
-            ->assertSee('aria-hidden="true"', false)
-            ->assertSee($title)
+            ->assertSee('data-values-trail-path', false)
+            ->assertSee('data-values-trail-head', false)
+            ->assertSee('class="values-story__exit"', false)
+            ->assertSee($copy['title'])
+            ->assertSee($copy['heading'])
+            ->assertSee($copy['honorific'])
+            ->assertDontSee('class="values-transition"', false)
             ->assertDontSee('data-school-value-card', false)
             ->assertDontSee('aria-pressed=', false)
             ->assertDontSee('class="nilai-card', false);
@@ -43,10 +55,12 @@ it('renders one localized semantic values card story in every locale', function 
         expect(substr_count($content, 'class="values-card"'))->toBe(4)
             ->and(substr_count($content, 'values-card__front'))->toBe(4)
             ->and(substr_count($content, 'values-card__back'))->toBe(4)
+            ->and(substr_count($content, 'values-card__pose'))->toBe(4)
             ->and(substr_count($content, 'values-card__float'))->toBe(4)
             ->and(substr_count($content, 'values-story__title-text'))->toBe(2)
             ->and(substr_count($content, 'role="listitem"'))->toBeGreaterThanOrEqual(4)
-            ->and(substr_count($content, 'pathLength="1"'))->toBe(3);
+            ->and(substr_count($content, 'pathLength="1"'))->toBe(1)
+            ->and(substr_count($content, 'data-values-trail-head'))->toBe(1);
 
         if ($locale === 'ar') {
             expect($content)
