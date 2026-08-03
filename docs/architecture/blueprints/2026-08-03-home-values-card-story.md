@@ -4,7 +4,7 @@ Blueprint ID: `HOME-VALUES-001`
 Status: `IMPLEMENTING`
 Owner: Asyraf Mubarak
 Date: 2026-08-03
-Source main before this correction: `9e14ebd4eb9bab7f28b8c0e030603f895ea30505`
+Source main before this correction: `d67edbd1a5e23866164ddd2b011bfd0d42854fdb`
 Surface: homepage `#nilai`
 Execution channel: Web AI with explicit direct-`main` authorization
 
@@ -14,76 +14,85 @@ Replace the Values grid with a full-viewport scroll story informed by the
 owner-provided Lusion About screenshots without copying Lusion code, assets,
 branding, card art, or exact composition.
 
-The corrected owner direction is:
+The latest accepted owner direction is:
 
-- heading text must emerge through a clipped seam like a ruler sliding from a
-  pencil case; the leading edge appears before the complete word body;
-- the heading reveal runs only when entering Values from the preceding section;
-- reverse scroll from later content keeps the heading in its resolved static
-  state instead of replaying the reveal backward;
-- the second heading line shifts inward through a time-based animation, not a
-  scroll-scrubbed transform;
-- cards begin with their decorative backs visible and flip to reveal information;
-- phone, tablet, and PC use distinct compositions within one DOM/controller;
-- the moving white line and stack/spread sequence exist only on PC widths.
+- preserve the clipped edge-first heading reveal and make it substantially
+  slower and smoother;
+- enlarge the heading while reducing visual weight;
+- when the PC card deck starts forming, move the heading upward as a
+  scroll-scrubbed object rather than through a detached time-only lift;
+- enlarge PC cards by roughly one visual scale step;
+- make all PC cards anticipate together by rotating about `15deg` away from
+  their destination;
+- flip cards one by one with overlap, overshoot the front by about `15deg`, then
+  settle to a neutral front-facing pose;
+- keep a subtle, continuous vertical float during the card choreography;
+- preserve the existing phone and tablet choreography families.
 
 ## Scope
 
 In scope:
 
-- Values heading markup, clipping, state, and responsive copy visibility;
-- Values card geometry/timeline across all six width tiers;
-- PC-only scroll-drawn line visibility;
-- focused test and durable architecture state.
+- Values heading reveal state, weight, scale, and PC exit motion;
+- PC Values card scale, deck/spread geometry, flip timing, and float layer;
+- focused DOM test and durable architecture state.
 
 Protected and out of scope:
 
 - Hero, Vision/Mission content/controller, Programs, Gallery, Articles;
 - navigation, footer, About, Testimonial, DB/admin/routes;
-- translation copy, WebGL, third-party dependencies, and unrelated cleanup.
+- translation copy, WebGL, third-party dependencies, and unrelated cleanup;
+- phone and tablet card chronology except shared semantic markup.
 
 ## Semantic and fallback contract
 
 - One semantic `section`, localized `h2`, description, and four `article` cards.
-- Heading lines contain nested text spans solely for clipping; reading order and
-  accessible heading text remain unchanged.
-- DOM value order remains Q, I, G, N in ID, EN, and AR.
-- Card fronts contain all meaningful information; backs remain decorative and
+- Heading line wrappers exist only for clipping; accessible reading order stays
+  unchanged.
+- A decorative `.values-card__float` wrapper separates time-based floating from
+  scroll-driven position and Y-axis card rotation.
+- Card fronts retain all meaningful content; backs remain decorative and
   `aria-hidden`.
-- No JavaScript, unsupported 3D, and reduced motion render the normal readable
+- No JavaScript, unsupported 3D, and reduced motion render the readable static
   front-card grid.
-- Scroll motion has no controls, focus traps, hidden actions, canvas, or WebGL.
+- No controls, focus traps, hidden actions, canvas, or WebGL are introduced.
 
 ## Heading state contract
 
 ```text
 before Values
 -> reveal 0
--> forward entry opens both clipped lines from their shared seam
--> reveal reaches 1 and latches
--> wide-only second-line shift runs as a CSS transition
--> PC deck threshold triggers a time-based heading lift
--> reverse scroll keeps resolved heading static
--> leaving above Values resets the state for the next forward entry
+-> forward entry scrubs reveal from progress 0.012 through 0.20
+-> an idle RAF frame preserves the current partial reveal
+-> completed reveal latches
+-> line two shifts through a 1350ms CSS transition
+-> PC deck progress 0.22 begins scroll-driven vertical heading travel
+-> progress 0.46 places the heading above the sticky viewport
+-> reverse scroll resolves a partial reveal and keeps the heading static
+-> leaving above Values resets the state
 ```
 
-- Line one text begins `108%` below its clipped line box.
-- Line two text begins `108%` above its clipped line box.
-- Because the boxes meet at the line seam, each line appears edge-first rather
-  than moving as a fully visible word block.
-- Interrupted forward reveal resolves to the complete static heading on reverse.
-- Page load inside/later than the reveal initializes the resolved static state.
+The former state treated any frame without new raw scroll delta as reverse
+behavior. Since inertial rendering continues after the scroll event, the next
+RAF frame forced a partial heading directly to `100%`. The corrected state
+distinguishes forward, backward, and idle frames.
+
+- Reveal uses double-smoothed progress for gentler acceleration/deceleration.
+- Line one begins `108%` below its clipping box.
+- Line two begins `108%` above its clipping box.
+- Latin and Arabic headings use weight `300`; Arabic tracking remains natural.
+- Loading inside the section initializes a resolved static heading.
 
 ## Six-tier composition
 
 | Tier | Heading/copy | Cards | Trail |
 |---|---|---|---|
-| XS 360–639 | heading only; no description/eyebrow; no shift | one card at a time; back-to-front flip only | hidden |
-| SM 640–767 | heading only; no description/eyebrow; no shift | one card at a time; back-to-front flip only | hidden |
-| MD 768–1023 | heading plus copy; no horizontal shift | fixed 2x2; two cards flip as a pair, then the other pair | hidden |
-| LG 1024–1279 | heading plus copy; no horizontal shift | fixed 2x2; paired flips only | hidden |
-| XL 1280–1535 | heading plus copy; line two shifts `104px` inward | lead back rises with heading, four-card deck, spread, overlapping flips, exit | visible |
-| 2XL >=1536 | heading plus copy; line two shifts `144px` inward | wider bounded lead/deck/spread/flip/exit | visible |
+| XS 360–639 | larger thin heading only | one card at a time; back-to-front flip | hidden |
+| SM 640–767 | larger thin heading only | one card at a time; back-to-front flip | hidden |
+| MD 768–1023 | heading plus copy | fixed 2x2; paired flips | hidden |
+| LG 1024–1279 | heading plus copy | fixed 2x2; paired flips | hidden |
+| XL 1280–1535 | thin large heading, inward second-line shift, scrubbed exit | enlarged lead/deck/spread/anticipate/flip/settle/exit | visible |
+| 2XL >=1536 | largest bounded heading and cards | wider enlarged PC chronology | visible |
 
 Story travel:
 
@@ -92,61 +101,84 @@ XS 520svh
 SM 500svh
 MD 400svh
 LG 400svh
-XL 560svh
-2XL 580svh
+XL 620svh
+2XL 640svh
+```
+
+PC card targets:
+
+```text
+XL   min(26vw, 25rem)
+2XL  min(24vw, 27rem)
 ```
 
 ## PC chronology
 
-1. Heading begins clipped reveal.
-2. The first back-facing card rises during the same entry window and settles
-   approximately `20vh` below the heading composition.
-3. The remaining backs reveal as a four-card deck.
-4. Deck threshold triggers a time-based heading lift.
-5. Deck spreads into four independent cards.
-6. Cards flip right-to-left with `0.15` progress duration and `0.045` offsets,
-   preserving roughly 30% temporal overlap.
-7. The white SVG line grows and advances throughout the PC journey.
-8. Cards rise and leave after flip completion.
+1. Heading reveals gradually through its center seam.
+2. The first back-facing card rises and settles about `20vh` below the heading.
+3. Remaining backs form a deck from progress `0.22`.
+4. At the same progress, the heading begins moving upward with scroll and exits
+   by progress `0.46`.
+5. Deck spreads from progress `0.31` through `0.48` into enlarged cards with
+   closer overlap than the previous row.
+6. All card backs anticipate together from `180deg` to `195deg` during progress
+   `0.40` through `0.48`.
+7. Physical right-to-left cards drive from `195deg` to `-15deg`; starts are
+   offset by `0.052`, each drive lasts `0.18`, preserving strong overlap.
+8. Each card settles from `-15deg` to `0deg` over the following `0.07`.
+9. A separate float wrapper moves each card between `-4px` and `4px` on a
+   `4.8s` ease-in-out cycle with staggered phases.
+10. Cards begin exit after progress `0.90`; the PC trail remains scroll-driven.
+
+This is the requested motion grammar:
+
+```text
+anticipation -> launch -> overshoot -> settle
+```
+
+The cards therefore imply mass and intention instead of mechanically rotating
+between two flat endpoints.
 
 ## Tablet chronology
 
 - Four decorative backs occupy a stable 2x2 arrangement.
-- No lead card, deck, spread, or white line is used.
+- No lead card, deck, spread, white line, or continuous float layer is activated.
 - The physical right pair flips together, followed by the left pair.
-- Spatial geometry remains stable while only the card inner faces rotate.
+- Geometry stays stable while the inner faces rotate.
 
 ## Phone chronology
 
 - One centered card is visible at a time.
-- Each card appears on its back, flips to its information front, then yields to
+- Each card appears on its back, flips to the information front, and yields to
   the next card.
-- No deck, spread, pair grid, horizontal heading shift, description, eyebrow, or
-  white line is used.
+- No deck, spread, pair grid, horizontal heading shift, supporting copy, white
+  line, or continuous float is used.
 
 ## Locale and direction
 
-- One DOM, controller, progress model, and physical card chronology serve ID,
-  EN, and AR.
-- Locale changes copy, font, `dir`, and natural alignment only.
-- On PC, the second heading line moves toward the visual center: positive X in
-  LTR and negative X in RTL.
-- Arabic does not reverse time, card order, vertical scroll, or neutral Y-axis
-  rotation.
+- One DOM, controller, progress model, and physical chronology serve ID, EN,
+  and AR.
+- Locale changes copy, family, direction, and natural alignment only.
+- On PC, line two moves toward the visual center: positive X in LTR and negative
+  X in RTL.
+- Arabic does not reverse time, card order, vertical scroll, anticipation, or
+  neutral Y-axis rotation.
 
 ## Ownership
 
 | Concern | Owner |
 |---|---|
-| DOM/content | `resources/views/home/sections/school-values.blade.php` and current lang data |
-| shell/sticky | `resources/css/surfaces/home/values/story-shell.css` |
-| heading/copy | `resources/css/surfaces/home/values/story-heading.css` |
-| tier adapters | `resources/css/surfaces/home/values/story-responsive.css` |
-| cards/backs | `story-cards.css` and `story-card-back.css` |
+| DOM/content/float wrapper | `resources/views/home/sections/school-values.blade.php` |
+| shell/sticky/root variables | `story-shell.css` |
+| heading/copy treatment | `story-heading.css` |
+| tier scale and travel | `story-responsive.css` |
+| card treatment/float cycle | `story-cards.css` |
+| backs | `story-card-back.css` |
 | PC trail | `story-trail.css` |
-| controller/lifecycle | `resources/js/surfaces/home/values/controller.js` |
-| one-way heading state | `heading-state.js` |
-| geometry/timeline | `layout.js` |
+| controller/lifecycle | `controller.js` |
+| one-way heading direction state | `heading-state.js` |
+| phone/tablet/story frame | `layout.js` |
+| PC card frame | `desktop-layout.js` |
 | scroll inertia | `motion.js` |
 | style painting/cleanup | `paint.js` |
 | focused DOM contract | `tests/Feature/HomeValuesStoryTest.php` |
@@ -154,15 +186,13 @@ XL 560svh
 ## Browser, performance, and accessibility
 
 - Capability tier 0 remains the semantic static front-card grid.
-- Capability tier 1 uses CSS 3D plus one bounded RAF scheduler.
-- Narrow widths avoid the SVG trail and desktop deck/spread writes.
-- Frequent animation uses transform/opacity; the line uses SVG dash progress.
-- Work pauses offscreen/hidden and removes listeners/classes/properties on dispose.
-- Chromium and WebKit still require runtime proof for clipping, sticky,
-  preserve-3d, backface visibility, viewport units, resize, reverse scroll, and
-  BFCache.
-- Reduced motion keeps all heading/copy/card content accessible without the
-  sticky story.
+- Capability tier 1 uses CSS 3D plus one bounded scroll RAF scheduler.
+- The float uses CSS animation on four decorative wrappers only at `>=1280px`.
+- Reduced motion disables the sticky enhanced story and float.
+- Frequent updates remain transform/opacity based.
+- Work pauses offscreen/hidden and disposes listeners/classes/properties.
+- Chromium and WebKit still require runtime proof for clipping, 3D backfaces,
+  variable updates inside transforms, sticky behavior, resize, and BFCache.
 
 ## Proof state
 
