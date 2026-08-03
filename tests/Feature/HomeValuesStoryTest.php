@@ -27,6 +27,7 @@ it('renders one localized semantic values card story in every locale', function 
             ->assertSee('values-story__title-line--one', false)
             ->assertSee('values-story__title-line--two', false)
             ->assertSee('values-story__title-text', false)
+            ->assertSee('values-card__float', false)
             ->assertSee('data-values-cards', false)
             ->assertSee('data-values-card-inner', false)
             ->assertSee('values-card__front', false)
@@ -42,6 +43,7 @@ it('renders one localized semantic values card story in every locale', function 
         expect(substr_count($content, 'class="values-card"'))->toBe(4)
             ->and(substr_count($content, 'values-card__front'))->toBe(4)
             ->and(substr_count($content, 'values-card__back'))->toBe(4)
+            ->and(substr_count($content, 'values-card__float'))->toBe(4)
             ->and(substr_count($content, 'values-story__title-text'))->toBe(2)
             ->and(substr_count($content, 'role="listitem"'))->toBeGreaterThanOrEqual(4)
             ->and(substr_count($content, 'pathLength="1"'))->toBe(3);
