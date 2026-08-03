@@ -3,6 +3,8 @@
  * MIT license notice: docs/third-party/codrops-depth-gallery-MIT.txt
  */
 
+import { updateGalleryMotion } from './gallery-motion.js';
+
 export class DepthGalleryPlanes {
     constructor(THREE, config) {
         this.THREE = THREE;
@@ -40,7 +42,9 @@ export class DepthGalleryPlanes {
     init(scene, textures) {
         this.textures = textures;
         this.geometry = new this.THREE.PlaneGeometry(3, 3);
-        this.config.forEach((item, index) => this.createPlane(scene, item, index));
+        this.config.forEach((item, index) => {
+            this.createPlane(scene, item, index);
+        });
         this.updatePlaneScale();
         this.layoutPlanes();
         window.addEventListener('pointermove', this.onPointerMove, { passive: true });
@@ -170,51 +174,7 @@ export class DepthGalleryPlanes {
 
     update(camera, scroll) {
         const blend = this.getPlaneBlendData(camera.position.z);
-        if (!blend) return;
-        this.pointerCurrent.lerp(this.pointerTarget, this.parallaxSmoothing);
-        const velocityMax = Math.max(scroll.velocityMax, 0.0001);
-        const velocity = this.THREE.MathUtils.clamp(
-            Math.abs(scroll.velocity) / velocityMax,
-            0,
-            1,
-        );
-        this.targetBreathIntensity = Math.min(1, velocity * this.breathGain);
-        this.breathIntensity = this.THREE.MathUtils.lerp(
-            this.breathIntensity,
-            this.targetBreathIntensity,
-            this.breathSmoothing,
-        );
-        this.driftTarget = this.THREE.MathUtils.clamp(scroll.velocity / velocityMax, -1, 1);
-        this.driftCurrent = this.THREE.MathUtils.lerp(
-            this.driftCurrent,
-            this.driftTarget,
-            this.gestureParallaxSmoothing,
-        );
-        this.updatePlanes(blend);
-    }
-
-    updatePlanes(blend) {
-        const spread = this.getXSpreadFactor();
-        const baseScale = this.getBaseScale();
-        this.planes.forEach((plane, index) => {
-            let targetOpacity = index === blend.currentPlaneIndex ? 1 - blend.blend : 0;
-            if (index === blend.nextPlaneIndex) targetOpacity = Math.max(targetOpacity, blend.blend);
-            plane.material.opacity = this.THREE.MathUtils.lerp(
-                plane.material.opacity,
-                targetOpacity,
-                this.planeFadeSmoothing,
-            );
-            const opacity = plane.material.opacity;
-            const base = plane.userData.basePosition;
-            plane.position.x = base.x * spread + this.pointerCurrent.x * this.parallaxAmountX * opacity;
-            plane.position.y = base.y + this.pointerCurrent.y * this.parallaxAmountY * opacity
-                + this.driftCurrent * this.gestureParallaxAmountY;
-            const breath = this.breathIntensity * opacity;
-            plane.rotation.x = -this.pointerCurrent.y * this.breathTiltAmount * breath;
-            plane.rotation.y = this.pointerCurrent.x * this.breathTiltAmount * breath;
-            const pulse = 1 + this.breathScaleAmount * breath;
-            plane.scale.set(baseScale * plane.userData.aspectRatio * pulse, baseScale * pulse, 1);
-        });
+        if (blend) updateGalleryMotion(this, blend, scroll);
     }
 
     dispose(scene) {
