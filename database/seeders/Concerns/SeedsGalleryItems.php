@@ -3,10 +3,6 @@
 namespace Database\Seeders\Concerns;
 
 use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
-use App\Models\GalleryPageSection;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 trait SeedsGalleryItems
 {
@@ -109,11 +105,11 @@ trait SeedsGalleryItems
                 'category_en' => $categoryEn,
                 'category_ar' => $categoryAr,
 
-                'caption' => 'Dokumentasi dummy untuk pratinjau galeri sekolah.',
+                'caption' => 'Cuplikan kegiatan belajar, ibadah, karya, dan kebersamaan siswa di Al Mustaqbal.',
 
-                'caption_id' => 'Dokumentasi dummy untuk pratinjau galeri sekolah.',
-                'caption_en' => 'Sample documentation for the school gallery preview.',
-                'caption_ar' => 'محتوى تجريبي لمعاينة معرض المدرسة.',
+                'caption_id' => 'Cuplikan kegiatan belajar, ibadah, karya, dan kebersamaan siswa di Al Mustaqbal.',
+                'caption_en' => 'A glimpse of learning, worship, creativity, and student life at Al Mustaqbal.',
+                'caption_ar' => 'لمحات من التعلّم والعبادة والإبداع وحياة الطلاب في مدرسة المستقبل.',
 
                 'media_url' => $image,
 
