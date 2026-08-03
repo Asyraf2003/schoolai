@@ -124,30 +124,35 @@ export function cardFrame(index, progress, geometry, momentum) {
     };
 }
 
-export function storyFrame(progress, viewportHeight, momentum) {
-    const titleEnter = phase(progress, 0.015, 0.15);
-    const titleLeave = phase(progress, 0.34, 0.46);
-    const copyEnter = phase(progress, 0.07, 0.17);
-    const copyLeave = phase(progress, 0.36, 0.48);
+export function storyFrame(progress, geometry, momentum) {
+    const storyGeometry = typeof geometry === 'number'
+        ? { viewportHeight: geometry, titleLineTwoShift: 0 }
+        : geometry;
+    const titleEnter = phase(progress, 0.02, 0.13);
+    const titleLeave = phase(progress, 0.35, 0.45);
+    const titleOpen = titleEnter * (1 - titleLeave);
+    const headingEnter = phase(progress, 0.025, 0.1);
+    const copyEnter = phase(progress, 0.15, 0.23);
+    const copyLeave = phase(progress, 0.34, 0.44);
+    const lineTwoShift = phase(progress, 0.11, 0.21)
+        * (1 - titleLeave);
     const trailProgress = phase(progress, 0.04, 0.95);
     const trailLeave = phase(progress, 0.9, 1);
 
     return {
-        lineOneY: mix(viewportHeight * 0.28, 0, titleEnter)
-            + momentum * 14,
-        lineTwoY: mix(-viewportHeight * 0.28, 0, titleEnter)
-            + momentum * 14,
-        headingOpacity: titleEnter * (1 - titleLeave),
+        lineOneY: mix(0.41, 0, titleOpen),
+        lineTwoY: mix(-0.41, 0, titleOpen),
+        lineTwoX: storyGeometry.titleLineTwoShift * lineTwoShift,
+        headingOpacity: headingEnter * (1 - titleLeave),
         copyOpacity: copyEnter * (1 - copyLeave),
-        copyY: mix(32, 0, copyEnter) + momentum * 10,
+        copyY: mix(28, 0, copyEnter) + momentum * 6,
         trailProgress,
         trailOpacity: phase(progress, 0.02, 0.1) * (1 - trailLeave),
-        trailY: mix(viewportHeight * 0.08, -viewportHeight * 0.06, progress)
-            + momentum * 22,
+        trailY: mix(
+            storyGeometry.viewportHeight * 0.08,
+            -storyGeometry.viewportHeight * 0.06,
+            progress,
+        ) + momentum * 22,
         progress: clamp(progress),
-        headingY: 0,
-        headingScale: 1,
-        curveY: 0,
-        curveOpacity: 0,
     };
 }
