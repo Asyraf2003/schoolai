@@ -1,9 +1,16 @@
-import { mix, phase } from './motion.js';
+import { measuredDesktopPose } from './desktop-keyframes.js';
+import { clamp, mix, phase } from './motion.js';
 
-const FAN_ROTATIONS = [-4, -1.25, 1.25, 4];
-
-function pose(x = 0, y = 0, z = 0, rz = 0, scale = 1, opacity = 1) {
-    return { x, y, z, rz, scale, opacity };
+function pose(
+    x = 0,
+    y = 0,
+    z = 0,
+    rz = 0,
+    scale = 1,
+    opacity = 1,
+    ry = 180,
+) {
+    return { x, y, z, rx: 0, ry, rz, scale, opacity };
 }
 
 function mixPose(from, to, amount) {
@@ -11,64 +18,46 @@ function mixPose(from, to, amount) {
         x: mix(from.x, to.x, amount),
         y: mix(from.y, to.y, amount),
         z: mix(from.z, to.z, amount),
+        rx: mix(from.rx, to.rx, amount),
+        ry: mix(from.ry, to.ry, amount),
         rz: mix(from.rz, to.rz, amount),
         scale: mix(from.scale, to.scale, amount),
         opacity: mix(from.opacity, to.opacity, amount),
     };
 }
 
+function leadY(geometry) {
+    return geometry.viewportHeight * 0.78 - geometry.cardHeight * 0.5;
+}
+
+function deckY(geometry) {
+    return geometry.viewportHeight * 0.6 - geometry.cardHeight * 0.5;
+}
+
+function centerY(geometry) {
+    return geometry.viewportHeight * 0.56 - geometry.cardHeight * 0.5;
+}
+
 function leadPose(index, geometry) {
     return pose(
         0,
-        geometry.viewportHeight * 0.2,
+        leadY(geometry),
         -index * 24,
         0,
-        0.92,
+        0.96,
         index === 0 ? 1 : 0,
     );
 }
 
 function deckPose(index, geometry) {
     return pose(
-        (index - 1.5) * geometry.cardWidth * 0.042,
-        geometry.viewportHeight * 0.2 + index * 5,
+        (index - 1.5) * geometry.cardWidth * 0.038,
+        deckY(geometry) + index * 4,
         -index * 22,
-        (index - 1.5) * 2.2,
-        0.92,
+        (index - 1.5) * 1.9,
+        0.96,
         1,
     );
-}
-
-function fanPose(index, geometry) {
-    return pose(
-        (index - 1.5) * geometry.cardWidth * 0.88,
-        geometry.viewportHeight * 0.1
-            + Math.abs(index - 1.5) * 3,
-        -index * 22,
-        FAN_ROTATIONS[index],
-        1,
-    );
-}
-
-function uprightPose(index, geometry) {
-    return pose(
-        (index - 1.5) * geometry.cardWidth * 0.88,
-        geometry.viewportHeight * 0.1,
-        -index * 4,
-        0,
-        1,
-    );
-}
-
-function flipAngle(index, progress) {
-    const anticipation = phase(progress, 0.5, 0.56);
-    const start = 0.56 + index * 0.045;
-    const drive = phase(progress, start, start + 0.17);
-    const settle = phase(progress, start + 0.17, start + 0.25);
-    const prepared = mix(180, 195, anticipation);
-    const overshot = mix(prepared, -15, drive);
-
-    return mix(overshot, 0, settle);
 }
 
 export function desktopCardFrame(
@@ -80,23 +69,25 @@ export function desktopCardFrame(
     const lead = leadPose(index, geometry);
     const hidden = {
         ...lead,
-        y: lead.y + geometry.viewportHeight * 0.18,
+        y: lead.y + geometry.viewportHeight * 0.16,
         scale: lead.scale * 0.88,
         opacity: 0,
     };
     const deck = deckPose(index, geometry);
-    const fan = fanPose(index, geometry);
-    const upright = uprightPose(index, geometry);
-    let current = mixPose(hidden, lead, phase(progress, 0.07, 0.19));
+    const measuredAmount = clamp((progress - 0.38) / 0.5);
+    const measured = measuredDesktopPose(
+        index,
+        measuredAmount,
+        geometry,
+        centerY(geometry),
+    );
+    const fan = measuredDesktopPose(index, 0, geometry, centerY(geometry));
+    let current = mixPose(hidden, lead, phase(progress, 0.06, 0.16));
 
-    current = mixPose(current, deck, phase(progress, 0.22, 0.33));
-    current = mixPose(current, fan, phase(progress, 0.31, 0.41));
-    current = mixPose(current, upright, phase(progress, 0.4, 0.5));
+    current = mixPose(current, deck, phase(progress, 0.18, 0.29));
+    current = mixPose(current, fan, phase(progress, 0.28, 0.38));
+    current = mixPose(current, measured, phase(progress, 0.36, 0.4));
     current.y += momentum * 6;
 
-    return {
-        ...current,
-        rx: 0,
-        ry: flipAngle(index, progress),
-    };
+    return current;
 }
