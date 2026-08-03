@@ -6,6 +6,8 @@
   };
 @endphp
 
+<div class="values-transition" aria-hidden="true"></div>
+
 <section
   class="values-story"
   id="nilai"
@@ -13,8 +15,28 @@
   data-values-story
 >
   <div class="values-story__stage" data-values-stage>
-    <span class="values-story__curve values-story__curve--one" aria-hidden="true"></span>
-    <span class="values-story__curve values-story__curve--two" aria-hidden="true"></span>
+    <svg
+      class="values-story__trail"
+      viewBox="0 0 1600 900"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        class="values-story__trail-glow"
+        pathLength="1"
+        d="M-120 770C220 980 500 930 650 650C810 350 760 120 620-80C540-200 760-180 900 40C1080 330 880 610 1070 760C1240 900 1450 570 1720 650"
+      />
+      <path
+        class="values-story__trail-line"
+        pathLength="1"
+        d="M-120 770C220 980 500 930 650 650C810 350 760 120 620-80C540-200 760-180 900 40C1080 330 880 610 1070 760C1240 900 1450 570 1720 650"
+      />
+      <path
+        class="values-story__trail-head"
+        pathLength="1"
+        d="M-120 770C220 980 500 930 650 650C810 350 760 120 620-80C540-200 760-180 900 40C1080 330 880 610 1070 760C1240 900 1450 570 1720 650"
+      />
+    </svg>
 
     <header class="values-story__headline">
       <p class="values-story__eyebrow" data-text-role="label">
@@ -25,8 +47,12 @@
         id="values-story-heading"
         data-text-role="display"
       >
-        <span>{{ $valuesStoryHeading['line_one'] }}</span>
-        <span>{{ $valuesStoryHeading['line_two'] }}</span>
+        <span class="values-story__title-line values-story__title-line--one">
+          {{ $valuesStoryHeading['line_one'] }}
+        </span>
+        <span class="values-story__title-line values-story__title-line--two">
+          {{ $valuesStoryHeading['line_two'] }}
+        </span>
       </h2>
       <p class="values-story__description" data-text-role="description">
         {{ $schoolValues['subtitle'] }}
