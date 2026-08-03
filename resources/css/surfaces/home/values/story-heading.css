@@ -20,8 +20,8 @@
     font-size: clamp(4rem, 14vw, 13.5rem);
     font-optical-sizing: auto;
     font-synthesis: none;
-    font-variation-settings: "wght" 200;
-    font-weight: 200;
+    font-variation-settings: "wght" 260;
+    font-weight: 260;
     line-height: .8;
     letter-spacing: -.04em;
     text-wrap: balance;
@@ -52,6 +52,8 @@
     position: absolute;
     top: clamp(1.25rem, 3.5vh, 2.75rem);
     inset-inline-start: clamp(1rem, 5vw, 5rem);
+    display: grid;
+    row-gap: .018em;
     max-inline-size: 10ch;
     font-size: clamp(5.2rem, 14vw, 14rem);
     transform: translate3d(0, var(--values-heading-y), 0);
@@ -61,13 +63,13 @@
 .values-story.is-values-ready .values-story__title-line {
     overflow: hidden;
     overflow: clip;
-    padding-block: .08em;
-    margin-block: -.08em;
+    padding-block: .045em;
+    margin-block: -.045em;
 }
 
 .values-story.is-values-ready .values-story__title-line--two {
     transform: translate3d(0, 0, 0);
-    transition: transform 1350ms cubic-bezier(.16, 1, .3, 1);
+    transition: transform 1050ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .values-story.is-values-ready .values-story__title-text {
