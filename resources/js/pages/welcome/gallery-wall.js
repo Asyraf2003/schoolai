@@ -1,6 +1,9 @@
+import { playGalleryRouteArrival } from '../../components/gallery-route-transition.js';
 import { applyGalleryMediaLayout } from './gallery-media-layout.js';
 
 document.addEventListener('DOMContentLoaded', function () {
+  playGalleryRouteArrival();
+
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-wall-card]'));
   var lightbox = document.querySelector('[data-gallery-wall-lightbox]');
   var mediaBox = document.querySelector('[data-gallery-wall-lightbox-media]');
