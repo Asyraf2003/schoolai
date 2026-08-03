@@ -7,7 +7,7 @@ const CARD_PROPERTIES = [
 
 const ROOT_PROPERTIES = [
     '--values-progress', '--values-heading-opacity',
-    '--values-line-one-y', '--values-line-two-y',
+    '--values-heading-y', '--values-line-one-y', '--values-line-two-y',
     '--values-copy-opacity', '--values-copy-y',
     '--values-trail-progress', '--values-trail-opacity',
     '--values-trail-y',
@@ -50,6 +50,10 @@ export function paintValuesStory(
     root.style.setProperty(
         '--values-heading-opacity',
         story.headingOpacity.toFixed(4),
+    );
+    root.style.setProperty(
+        '--values-heading-y',
+        `${story.headingY.toFixed(2)}px`,
     );
     root.style.setProperty(
         '--values-line-one-y',
