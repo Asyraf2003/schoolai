@@ -15,7 +15,7 @@
    ========================================================= */
 
 import './welcome/navigation.js';
-import './welcome/value-cards.js';
+import '../surfaces/home/values/controller.js';
 import './welcome/program-cards.js';
 import './welcome/public-content.js';
 import './welcome/gallery-wall.js';
