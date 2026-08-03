@@ -13,8 +13,8 @@ export class DepthGalleryPlanes {
         this.textures = new Map();
         this.geometry = null;
         this.planeGap = 5;
-        this.desktopPlaneScale = 1;
-        this.mobilePlaneScale = 0.65;
+        this.desktopPlaneScale = 0.67;
+        this.mobilePlaneScale = 0.44;
         this.mobileXSpreadFactor = 0.25;
         this.mobileBreakpoint = 768;
         this.moodSampleOffset = 1;
