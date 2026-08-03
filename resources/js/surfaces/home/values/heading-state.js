@@ -1,8 +1,13 @@
-import { clamp, smooth } from './motion.js';
+import { clamp } from './motion.js';
 
 const EPSILON = 0.00005;
-const ENTRY_TRIGGER_RATIO = 0.72;
-const REVEAL_DURATION_MS = 1600;
+const ENTRY_TRIGGER_RATIO = 0.94;
+const REVEAL_DURATION_MS = 1200;
+
+function revealEase(value) {
+    const progress = clamp(value);
+    return 1 - Math.pow(1 - progress, 3);
+}
 
 function resetForEntry(state) {
     state.phase = 'idle';
@@ -61,7 +66,7 @@ export function updateHeadingState(
 
     if (state.phase === 'revealing') {
         const elapsed = Math.max(0, time - state.startedAt);
-        state.reveal = smooth(clamp(elapsed / REVEAL_DURATION_MS));
+        state.reveal = revealEase(elapsed / REVEAL_DURATION_MS);
 
         if (state.reveal >= 0.999) {
             state.reveal = 1;
