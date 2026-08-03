@@ -45,13 +45,17 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    display: none;
+    display: block;
     width: 100%;
     height: 100%;
     border: 0;
     outline: 0;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
     cursor: pointer;
     touch-action: pan-y;
+    transition: opacity 180ms ease;
 }
 
 .depth-gallery__canvas:focus-visible {
@@ -64,6 +68,7 @@
     inset: 0;
     z-index: 4;
     pointer-events: none;
+    visibility: hidden;
     opacity: 0;
     transition: opacity 260ms ease;
 }
@@ -110,21 +115,26 @@
     min-height: 560px;
 }
 
-.depth-gallery.is-depth-ready .depth-gallery__canvas {
-    display: block;
+.depth-gallery.is-depth-active .depth-gallery__canvas {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
 }
 
-.depth-gallery.is-depth-ready .depth-gallery__labels {
+.depth-gallery.is-depth-active .depth-gallery__labels {
+    visibility: visible;
     opacity: 1;
 }
 
-.depth-gallery.is-depth-ready .depth-gallery__fallback-list {
+.depth-gallery.is-depth-active .depth-gallery__fallback-list {
     display: none;
 }
 
 .depth-gallery.is-depth-fallback .depth-gallery__canvas,
 .depth-gallery.is-depth-fallback .depth-gallery__labels {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
 }
 
 @supports not (height: 100svh) {
