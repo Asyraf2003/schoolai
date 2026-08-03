@@ -10,9 +10,7 @@ export function readGalleryData(root) {
             index,
             title: element.getAttribute('data-title') || '',
             caption: element.getAttribute('data-caption') || '',
-            mediaUrl: element.getAttribute('data-media-url') || '',
             textureSrc: element.getAttribute('data-thumbnail-url') || '',
-            isVideo: element.getAttribute('data-is-video') === '1',
             position: {
                 x: numberValue(element.getAttribute('data-position-x')),
                 y: 0,
