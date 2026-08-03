@@ -31,7 +31,7 @@ green mission fade/blur -> blue Values field
 
 Desktop uses semantic DOM, CSS 3D, and one JavaScript orchestrator. Three.js,
 WebGL, canvas text, new dependencies, and parallel locale/tier DOMs are out of
-scope. XS uses a natural one-column flow; SM/MD use a natural 2x2 grid; LG/XL/
+scope. XS/SM use a natural one-column flow; MD/LG use a natural 2x2 grid; XL/
 2XL use the cinematic four-column story. The exact owner-specified headings are
 `PONDASI / KARAKTER`, `VALUES / STUDENTS`, and
 `أَسَاسُ الْمَدْرَسَةِ`.
@@ -49,12 +49,13 @@ The accepted correction is atomic to Values and its owned transition layers:
   equivalents;
 - reveal line one vertically from below and line two vertically from above;
   after reveal, shift line two toward the visual center on MD through 2XL only;
-- hide description on XS/SM, place it below the title on MD, and at the logical
-  side on LG/XL/2XL; RTL mirrors only header composition;
+- hide description on XS/SM, place it below the title on MD and portrait LG,
+  and at the logical side on landscape LG and XL/2XL; RTL mirrors only header
+  composition;
 - keep card order, geometry, flip direction, and chronology identical for LTR
   and RTL; only card content direction/language changes;
-- use exact horizontal ratios: XS `8/84/8%`; SM/MD
-  `4.1667/43.75/4.1667/43.75/4.1667%`; LG+
+- use exact horizontal ratios: XS/SM `8/84/8%`; MD/LG
+  `4.1667/43.75/4.1667/43.75/4.1667%`; XL+
   `5/21/2/21/2/21/2/21/5%`;
 - use a card aspect of approximately `.717`, allowing height to follow width
   fluidly instead of hard-capping the card to one screenshot;
@@ -312,15 +313,15 @@ resolves to the current logical progress.
 | Tier | Layout | Header/copy | Motion | Trail |
 |---|---|---|---|---|
 | XS `<640` | one column; `84vw` cards field | heading; description hidden | flip from 1/2 to full visibility | hidden |
-| SM `640–767` | 2x2; exact 1/10.5/1/10.5/1 ratio | heading; description hidden | same-direction paired flip | hidden |
-| MD `768–1023` | same 2x2 ratio | description below heading; line two shifts modestly | same-direction paired flip | hidden |
-| LG `1024–1279` | centered four-column Grid | full sequence | stack/fan/flip/settle | visible |
-| XL `1280–1535` | centered four-column Grid | full sequence | full cinematic sequence | visible |
+| SM `640–767` | one column; `84vw` cards field | heading; description hidden | same-direction sequential flip | hidden |
+| MD `768–1023` | 2x2; exact 1/10.5/1/10.5/1 ratio | description below heading; line two shifts modestly | same-direction paired flip | hidden |
+| LG `1024–1279` | same centered 2x2 Grid | portrait copy below; landscape copy at logical side | same-direction paired flip; no deck/fan | hidden |
+| XL `1280–1535` | centered four-column Grid | full side-copy sequence | stack/fan/flip/settle | visible |
 | 2XL `>=1536` | bounded four-column Grid | bounded editorial scale | shared cinematic sequence | visible |
 
-LG+ uses the exact measured 5/21/2/21/2/21/2/21/5 viewport ratio. All card
-heights follow the shared aspect and available width. XS/SM/MD stay in natural
-document flow rather than using a desktop pinning model.
+XL+ uses the exact measured 5/21/2/21/2/21/2/21/5 viewport ratio. All card
+heights follow the shared aspect and available width. XS/SM/MD/LG stay in
+natural document flow rather than using a desktop pinning model.
 
 ## Locale/direction contract
 

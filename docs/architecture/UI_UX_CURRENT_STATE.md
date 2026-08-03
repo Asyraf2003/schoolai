@@ -82,13 +82,13 @@ by a later override.
 
 - Header line one enters from below; line two enters from above.
 - Line two shifts inward on MD/LG/XL/2XL and mirrors for RTL.
-- Description is hidden on XS/SM, below the title on MD, and at logical side on
-  LG+.
+- Description is hidden on XS/SM, below the title on MD and portrait LG, at the
+  logical side on landscape LG, and at the logical side on XL+.
 - Cards use identical geometry and motion in LTR/RTL; content direction changes.
 - Horizontal layouts use the exact accepted ratios:
-  - XS: `8 / 84 / 8%`;
-  - SM/MD: `4.1667 / 43.75 / 4.1667 / 43.75 / 4.1667%`;
-  - LG+: `5 / 21 / 2 / 21 / 2 / 21 / 2 / 21 / 5%`.
+  - XS/SM: `8 / 84 / 8%`;
+  - MD/LG: `4.1667 / 43.75 / 4.1667 / 43.75 / 4.1667%`;
+  - XL+: `5 / 21 / 2 / 21 / 2 / 21 / 2 / 21 / 5%`.
 - Every desktop back is opaque from the initial deck.
 - Desktop flips overlap at roughly 25–35%, retain fan tilt through edge-on, pass
   the front by about 18deg, then settle.
@@ -123,4 +123,3 @@ exists yet.
 Implement `HOME-VALUES-001-R2` only in the mapped Values owners, run every
 available source proof, fast-forward `main` without force, then record the
 resulting source SHA and all still-unavailable runtime gates.
-
