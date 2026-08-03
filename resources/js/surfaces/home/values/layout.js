@@ -17,142 +17,167 @@ function mixPose(from, to, amount) {
     };
 }
 
-function leadPose(index, geometry) {
+function desktopLead(index, geometry) {
     return pose(
         0,
-        geometry.cardHeight * 0.19,
+        geometry.viewportHeight * 0.2,
         -index * 22,
         0,
-        geometry.mode === 1 ? 0.78 : 0.86,
+        0.86,
         index === 0 ? 1 : 0,
     );
 }
 
-function deckPose(index, geometry) {
-    const spread = geometry.mode === 1 ? 0.028 : 0.045;
-    const scale = geometry.mode === 1 ? 0.78 : 0.86;
-
+function desktopDeck(index, geometry) {
     return pose(
-        (index - 1.5) * geometry.cardWidth * spread,
-        geometry.cardHeight * 0.18 + index * 5,
+        (index - 1.5) * geometry.cardWidth * 0.045,
+        geometry.viewportHeight * 0.2 + index * 5,
         -index * 20,
         (index - 1.5) * 2.4,
-        scale,
+        0.86,
         1,
     );
 }
 
-function rowPose(index, geometry) {
-    const { mode, cardWidth, cardHeight } = geometry;
-
-    if (mode === 4) {
-        return pose(
-            (index - 1.5) * cardWidth * 1.06,
-            cardHeight * 0.03 + Math.abs(index - 1.5) * 3,
-            index * 2,
-            ROW_ROTATIONS[index],
-            0.92,
-        );
-    }
-
-    if (mode === 2) {
-        const column = index % 2 ? 0.5 : -0.5;
-        const row = index < 2 ? -0.5 : 0.5;
-        return pose(
-            column * cardWidth * 1.08,
-            row * cardHeight * 0.73,
-            index * 2,
-            ROW_ROTATIONS[index] * 0.45,
-            0.86,
-        );
-    }
-
+function desktopRow(index, geometry) {
     return pose(
-        (index - 1.5) * cardWidth * 0.25,
-        Math.abs(index - 1.5) * cardHeight * 0.045,
-        index * 4,
-        ROW_ROTATIONS[index] * 1.25,
-        0.67,
+        (index - 1.5) * geometry.cardWidth * 1.06,
+        geometry.viewportHeight * 0.1
+            + Math.abs(index - 1.5) * 3,
+        index * 2,
+        ROW_ROTATIONS[index],
+        0.92,
     );
 }
 
-function exitPose(index, geometry) {
-    const row = rowPose(index, geometry);
-    return {
+function desktopFlip(index, progress) {
+    const start = 0.5 + (3 - index) * 0.045;
+    return phase(progress, start, start + 0.15);
+}
+
+function desktopFrame(index, progress, geometry, momentum) {
+    const lead = desktopLead(index, geometry);
+    const hidden = {
+        ...lead,
+        y: lead.y + geometry.viewportHeight * 0.18,
+        scale: lead.scale * 0.88,
+        opacity: 0,
+    };
+    const deck = desktopDeck(index, geometry);
+    const row = desktopRow(index, geometry);
+    const exit = {
         ...row,
-        x: row.x + (index - 1.5) * geometry.cardWidth * 0.05,
         y: row.y - geometry.viewportHeight * (1.08 + index * 0.025),
         rz: row.rz + (index - 1.5) * 3,
         opacity: 0,
     };
-}
+    let current = mixPose(hidden, lead, phase(progress, 0.07, 0.18));
 
-function flipProgress(index, progress) {
-    const order = 3 - index;
-    const start = 0.48 + order * 0.045;
-    return phase(progress, start, start + 0.15);
-}
-
-export function cardFrame(index, progress, geometry, momentum) {
-    const lead = leadPose(index, geometry);
-    const hidden = {
-        ...lead,
-        y: lead.y + geometry.viewportHeight * 0.22,
-        scale: lead.scale * 0.88,
-        opacity: 0,
-    };
-    const deck = deckPose(index, geometry);
-    const row = rowPose(index, geometry);
-    const exit = exitPose(index, geometry);
-    let current = mixPose(hidden, lead, phase(progress, 0.13, 0.21));
-
-    current = mixPose(current, deck, phase(progress, 0.2, 0.3));
-    current = mixPose(current, row, phase(progress, 0.3, 0.46));
-
-    const exitStart = 0.82 + (3 - index) * 0.008;
+    current = mixPose(current, deck, phase(progress, 0.22, 0.32));
+    current = mixPose(current, row, phase(progress, 0.32, 0.48));
     current = mixPose(
         current,
         exit,
-        phase(progress, exitStart, Math.min(1, exitStart + 0.16)),
+        phase(progress, 0.84 + (3 - index) * 0.008, 1),
     );
-    current.y += momentum * (index + 1) * 6;
+    current.y += momentum * (index + 1) * 5;
 
     return {
         ...current,
-        rx: phase(progress, 0.82, 1) * -5,
-        ry: flipProgress(index, progress) * 180,
+        rx: phase(progress, 0.84, 1) * -5,
+        ry: mix(180, 0, desktopFlip(index, progress)),
     };
 }
 
-export function storyFrame(progress, geometry, momentum) {
-    const storyGeometry = typeof geometry === 'number'
-        ? { viewportHeight: geometry, titleLineTwoShift: 0 }
-        : geometry;
-    const titleEnter = phase(progress, 0.02, 0.13);
-    const titleLeave = phase(progress, 0.35, 0.45);
-    const titleOpen = titleEnter * (1 - titleLeave);
-    const headingEnter = phase(progress, 0.025, 0.1);
-    const copyEnter = phase(progress, 0.15, 0.23);
-    const copyLeave = phase(progress, 0.34, 0.44);
-    const lineTwoShift = phase(progress, 0.11, 0.21)
-        * (1 - titleLeave);
-    const trailProgress = phase(progress, 0.04, 0.95);
-    const trailLeave = phase(progress, 0.9, 1);
+function tabletPose(index, geometry) {
+    const column = index % 2 ? 0.5 : -0.5;
+    const row = index < 2 ? -0.5 : 0.5;
+
+    return pose(
+        column * geometry.cardWidth * 1.08,
+        geometry.viewportHeight * 0.12
+            + row * geometry.cardHeight * 1.04,
+        index * 2,
+        ROW_ROTATIONS[index] * 0.35,
+        0.86,
+    );
+}
+
+function tabletFrame(index, progress, geometry) {
+    const current = tabletPose(index, geometry);
+    const pair = index >= 2 ? 0 : 1;
+    const start = 0.3 + pair * 0.18;
+    const flip = phase(progress, start, start + 0.24);
 
     return {
-        lineOneY: mix(0.41, 0, titleOpen),
-        lineTwoY: mix(-0.41, 0, titleOpen),
-        lineTwoX: storyGeometry.titleLineTwoShift * lineTwoShift,
-        headingOpacity: headingEnter * (1 - titleLeave),
-        copyOpacity: copyEnter * (1 - copyLeave),
-        copyY: mix(28, 0, copyEnter) + momentum * 6,
-        trailProgress,
-        trailOpacity: phase(progress, 0.02, 0.1) * (1 - trailLeave),
-        trailY: mix(
-            storyGeometry.viewportHeight * 0.08,
-            -storyGeometry.viewportHeight * 0.06,
-            progress,
-        ) + momentum * 22,
+        ...current,
+        opacity: phase(progress, 0.12, 0.18),
+        rx: 0,
+        ry: mix(180, 0, flip),
+    };
+}
+
+function phoneFrame(index, progress, geometry) {
+    const start = 0.16;
+    const slot = 0.19;
+    const local = clamp((progress - start - index * slot) / slot);
+    const fadeIn = phase(local, 0, 0.08);
+    const fadeOut = index === 3 ? 1 : 1 - phase(local, 0.9, 1);
+
+    return {
+        ...pose(
+            0,
+            geometry.viewportHeight * 0.2,
+            index,
+            0,
+            0.78,
+            fadeIn * fadeOut,
+        ),
+        rx: 0,
+        ry: mix(180, 0, phase(local, 0.18, 0.68)),
+    };
+}
+
+export function cardFrame(index, progress, geometry, momentum) {
+    if (geometry.mode === 4) {
+        return desktopFrame(index, progress, geometry, momentum);
+    }
+
+    if (geometry.mode === 2) {
+        return tabletFrame(index, progress, geometry);
+    }
+
+    return phoneFrame(index, progress, geometry);
+}
+
+export function storyFrame(
+    progress,
+    geometry,
+    momentum,
+    headingState,
+) {
+    const reveal = headingState?.reveal ?? phase(progress, 0.018, 0.13);
+    const copyEnter = phase(reveal, 0.76, 1);
+    const desktop = geometry.mode === 4;
+    const trailLeave = phase(progress, 0.92, 1);
+
+    return {
+        lineOneY: mix(108, 0, reveal),
+        lineTwoY: mix(-108, 0, reveal),
+        headingOpacity: 1,
+        copyOpacity: copyEnter,
+        copyY: mix(24, 0, copyEnter),
+        trailProgress: desktop ? phase(progress, 0.04, 0.95) : 0,
+        trailOpacity: desktop
+            ? phase(progress, 0.04, 0.11) * (1 - trailLeave)
+            : 0,
+        trailY: desktop
+            ? mix(
+                geometry.viewportHeight * 0.08,
+                -geometry.viewportHeight * 0.06,
+                progress,
+            ) + momentum * 20
+            : 0,
         progress: clamp(progress),
     };
 }
