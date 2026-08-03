@@ -39,9 +39,12 @@ it('guards the depth gallery bootstrap and removes its legacy owner', function (
         ->toContain('getDrawingBufferSize')
         ->toContain('size.x > 1')
         ->toContain('hasVisiblePlane')
+        ->toContain('hasVisibleEndCta')
         ->and($blade)
-        ->toContain('tabindex="-1"')
-        ->toContain('aria-hidden="true"');
+        ->toContain('aria-hidden="true"')
+        ->toContain('data-depth-gallery-end-steps')
+        ->not->toContain('role="button"')
+        ->not->toContain('tabindex="-1"');
 
     expect($base)
         ->not->toContain(
@@ -59,6 +62,7 @@ it('guards the depth gallery bootstrap and removes its legacy owner', function (
         resource_path('js/surfaces/home/gallery-depth/controller.js'),
         resource_path('js/surfaces/home/gallery-depth/engine.js'),
         resource_path('js/surfaces/home/gallery-depth/engine-frame.js'),
+        resource_path('js/surfaces/home/gallery-depth/end-cta.js'),
     ];
 
     foreach ($files as $file) {
