@@ -25,6 +25,7 @@
 
 .depth-gallery {
     --depth-step: 280px;
+    --depth-label-opacity: 1;
     position: relative;
     margin-top: clamp(48px, 6vw, 88px);
     color: #121212;
@@ -53,14 +54,8 @@
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    cursor: pointer;
     touch-action: pan-y;
     transition: opacity 180ms ease;
-}
-
-.depth-gallery__canvas:focus-visible {
-    outline: 2px solid #121212;
-    outline-offset: -8px;
 }
 
 .depth-gallery__labels {
@@ -118,12 +113,11 @@
 .depth-gallery.is-depth-active .depth-gallery__canvas {
     visibility: visible;
     opacity: 1;
-    pointer-events: auto;
 }
 
 .depth-gallery.is-depth-active .depth-gallery__labels {
     visibility: visible;
-    opacity: 1;
+    opacity: var(--depth-label-opacity);
 }
 
 .depth-gallery.is-depth-active .depth-gallery__fallback-list {
