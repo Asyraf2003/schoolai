@@ -12,7 +12,7 @@
     --scene-progress: 0;
     --scene-transition: 0;
     position: relative;
-    min-height: 240svh;
+    min-height: 413svh;
 }
 .direction-story__scene-background {
     position: sticky;
@@ -137,13 +137,13 @@ html[dir="rtl"] .direction-story__honorific {
 html[dir="rtl"] .direction-story__label { letter-spacing: 0; text-transform: none; }
 html[dir="rtl"] .direction-story__accent { transform-origin: 100% 50%; }
 @media (min-width: 640px) {
-    .direction-story__scene { min-height: 280svh; }
+    .direction-story__scene { min-height: 482svh; }
     .direction-story__sticky { width: min(100% - 4rem, 96rem); }
     .direction-story__display { inline-size: min(88vw, 48rem); font-size: clamp(2.7rem, 6.8vw, 4.2rem); }
     .direction-story__art--mission { inset-inline-end: -8%; width: min(58vw, 40rem); }
 }
 @media (min-width: 768px) {
-    .direction-story__scene { min-height: 320svh; }
+    .direction-story__scene { min-height: 550svh; }
     .direction-story__sticky { width: min(100% - 6rem, 96rem); }
     .direction-story__display { inline-size: min(80vw, 58rem); font-size: clamp(3rem, 5.8vw, 5rem); }
     .direction-story__scene--position-start .direction-story__sticky { justify-items: start; }
@@ -153,21 +153,21 @@ html[dir="rtl"] .direction-story__accent { transform-origin: 100% 50%; }
     .direction-story__scene--position-end .direction-story__art--mission { inset-inline: 50% auto; }
 }
 @media (min-width: 1024px) {
-    .direction-story__scene { min-height: 380svh; }
+    .direction-story__scene { min-height: 654svh; }
     .direction-story__sticky { width: min(100% - 8rem, 96rem); }
     .direction-story__display { inline-size: min(72vw, 68rem); font-size: clamp(3.5rem, 4.7vw, 5.8rem); }
     .direction-story__art { opacity: .15; }
     .direction-story__art--mission { width: min(40vw, 48rem); }
 }
 @media (min-width: 1280px) {
-    .direction-story__scene { min-height: 420svh; }
+    .direction-story__scene { min-height: 722svh; }
     .direction-story__sticky { width: min(100% - 10rem, 100rem); }
     .direction-story__display { inline-size: min(66.667vw, 78rem); font-size: clamp(4rem, 4.3vw, 6.2rem); }
     .direction-story__art--mission { inset-inline-end: 2%; width: min(34vw, 52rem); }
     .direction-story__scene--position-end .direction-story__art--mission { inset-inline: 48% auto; }
 }
 @media (min-width: 1536px) {
-    .direction-story__scene { min-height: 460svh; }
+    .direction-story__scene { min-height: 791svh; }
     .direction-story__sticky { width: min(100% - 14rem, 108rem); }
     .direction-story__display { inline-size: min(66.667vw, 88rem); font-size: clamp(4.5rem, 4.4vw, 6.6rem); }
     .direction-story__art { opacity: .14; }
