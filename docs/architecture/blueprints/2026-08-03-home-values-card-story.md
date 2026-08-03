@@ -4,31 +4,39 @@ Blueprint ID: `HOME-VALUES-001`
 Status: `IMPLEMENTING`
 Owner: Asyraf Mubarak
 Date: 2026-08-03
-Source main before this correction: `e23d1f220ca76aa8782bb6c5cfd8f3b2aa4ba298`
-Source head after bounded implementation: `0db23a9a450b94bcabdd5261bade505be3098767`
+Source main before this correction: `e8ae9c0945c1dae0a9f703da67f64001cd55e608`
+Raw evidence commit: `75138335c381535e7f942a77210a2f34988cccc0`
+Source head after bounded implementation: `f48d9a9a3b1e93b72944a33616b3328d3c575f64`
 Surface: homepage `#nilai`
 Execution channel: Web AI with explicit direct-`main` authorization
 
 ## Owner goal and reference
 
-Build a full-viewport Values story informed by the owner-provided Lusion About
-screenshots and measured transform samples without copying Lusion code, assets,
-branding, card art, or exact composition.
+Build a full-viewport Values story informed by owner-provided Lusion About
+recordings, screenshots, computed styles, and measured transform samples without
+copying Lusion code, assets, branding, card art, type files, or exact
+composition.
+
+Raw evidence is preserved at:
+
+`../measurements/2026-08-03-home-values-reference-motion-raw.md`
 
 Latest owner-accepted correction:
 
 - heading entry is a time-based section-entry animation, not scroll scrubbing;
-- the two clipped title lines emerge toward their resting positions from
-  opposite vertical directions;
-- after the reveal completes, line two shifts toward visual center only on PC;
-- reverse entry from the following section shows the already-revealed static
-  heading instead of replaying the entry;
-- the lead card begins below the heading, then the four-card deck rises while
-  the heading starts its scroll-driven exit;
-- the deck locks near the stage center before the measured fan/flip sequence;
-- fan `rotateZ` is preserved while per-card `rotateY` begins with overlap;
-- each card straightens during its flip, not in a separate upright phase;
-- all four information fronts settle into one stable centered row;
+- entry starts as soon as the section enters the viewport;
+- two clipped title lines emerge from opposite directions with a narrow center
+  seam, then line two shifts toward visual center on PC only;
+- Latin heading remains editorial-light but is slightly thicker than weight
+  `200`;
+- reverse entry from the following section shows the static revealed heading;
+- the lead card begins low below the heading, then the deck rises into one
+  centered stage plane while the heading exits;
+- the fan keeps outward `rotateZ` while the first-to-fourth flips overlap;
+- X, Y, `rotateZ`, and `rotateY` evolve together;
+- captured samples guide the path but must not become stop points;
+- interpolation must preserve continuous velocity through samples, followed by
+  bounded front-side overshoot and a stable upright information row;
 - phone remains one-card flip only, tablet remains paired 2x2 flip only, and the
   white trail remains PC-only.
 
@@ -36,18 +44,18 @@ Latest owner-accepted correction:
 
 In scope:
 
-- Values heading entry state and RAF lifecycle;
+- Values heading trigger, duration, easing, weight, and center seam;
 - PC heading exit timing relative to deck formation;
-- PC lead/deck vertical staging;
-- measured PC card interpolation for X, Y, `rotateZ`, and `rotateY`;
-- durable blueprint and current-state records.
+- PC lead/deck/fan vertical staging;
+- continuous measured PC interpolation for X, Y, `rotateZ`, and `rotateY`;
+- durable raw evidence, blueprint, and current-state records.
 
 Protected and out of scope:
 
 - Hero, Vision/Mission, Programs, Gallery, Articles, navigation, footer;
 - About, Testimonial, DB/admin/routes, translations, WebGL, dependencies;
-- card semantic content, back illustration, card size tokens, Latin/Cairo font
-  ownership, phone chronology, tablet chronology, and locale content.
+- card semantic content, back illustration, card size tokens, Cairo ownership,
+  phone chronology, tablet chronology, and locale content.
 
 ## Semantic and fallback contract
 
@@ -63,20 +71,27 @@ Protected and out of scope:
 ```text
 before section
 -> idle clipped lines
--> section enters from above
--> 1600ms eased reveal runs independently of scroll
--> PC line two shifts using its CSS transition
+-> section top crosses 94% viewport trigger
+-> 1200ms cubic ease-out reveal runs independently of scroll
+-> PC line two shifts through its CSS transition
 -> revealed/static
--> PC heading exits upward only when card deck formation begins
+-> PC heading exits upward when card deck formation begins
 ```
 
 Reverse/re-entry rules:
 
-- entering from the following section resolves instantly to the static revealed
-  state;
+- entering from the following section resolves instantly to static revealed;
 - scrolling fully above the entry threshold resets the next forward entry;
-- the RAF continues until both scroll inertia and the heading reveal settle;
-- CSS owns the second-line shift transition; JavaScript owns only the state.
+- RAF continues until both scroll inertia and heading reveal settle;
+- CSS owns the line-two shift; JavaScript owns entry state.
+
+Typography/treatment:
+
+- ID/EN use Inter variable weight `260` and existing optical sizing;
+- AR keeps Cairo weight `300`, natural tracking, and current adapter;
+- title lines use a small final row gap and clipped travel of approximately one
+  line height;
+- the PC line-two shift remains logical-direction aware.
 
 Responsive heading/copy:
 
@@ -84,87 +99,62 @@ Responsive heading/copy:
 - MD/LG: heading plus copy, no line-two shift or scroll exit;
 - XL/2XL: heading plus copy, PC line-two shift and scroll-driven exit.
 
-ID/EN retain Inter weight `200`; AR retains Cairo weight `300`, natural
-tracking, and normal variation settings.
-
 ## PC spatial chronology
 
 ```text
 heading entry
--> one lower lead back
+-> one low lead back
 -> four-card centered deck rises
 -> heading begins upward exit
 -> deck opens into measured fan
--> overlapping measured card flips
--> rotateZ converges toward zero during flip
--> overshoot
+-> overlapping first-to-fourth flips
+-> rotateZ converges toward zero while rotateY crosses edge-on
+-> small negative rotateY overshoot
 -> stable four-front centered row
 -> normal sticky release
 ```
 
-### Vertical anchors
+### Stage anchors
 
 All Y values are card-top transforms derived from stage and card geometry:
 
 ```text
-lead center:  78% stage height
- deck center: 60% stage height
- final center: 56% stage height
+lead center:   86% stage height
+deck center:   63% stage height
+active center: 53.5% stage height
 ```
 
-The card half-height is subtracted from each center. This keeps the first card
-below the heading and the active deck/row near the viewport center instead of
-using one arbitrary top offset.
+Card half-height is subtracted from every center. The increased lead-to-active
+travel makes the deck visibly rise rather than remaining submerged near the
+bottom of the stage.
+
+### Story timing
+
+```text
+lead reveal:       progress 0.03–0.12
+deck formation:    progress 0.12–0.24
+heading exit:      progress 0.12–0.30
+fan formation:     progress 0.22–0.34
+measured travel:   progress 0.34–0.86
+stable front hold: progress 0.86 onward
+```
+
+The fan and measured stages overlap briefly so there is no generic intermediate
+upright row.
 
 ### Horizontal normalization
 
-The measured reference X values are converted into a shared center-relative row:
+Raw reference X positions are normalized into one center-relative row:
 
-- final slot spacing is bounded by `1.03 * cardWidth` and available viewport
-  width;
-- the early fan uses approximately `93%` of final row spread;
-- measured X factors progress through
-  `0.93, 0.955, 0.975, 0.988, 0.996, 1.0`;
-- every card remains anchored to the same physical stage center.
+- final slot spacing is bounded by card width and available viewport width;
+- early fan spread remains approximately 93% of the final row;
+- every card stays anchored to the same physical stage center;
+- fixed card z-order prevents a one-frame left/right ownership jump.
 
-## Measured reference transform samples
+## Continuous measured interpolation
 
-The owner supplied six reference samples. Raw reference coordinates remain
-recorded here as art-direction evidence; production uses normalized geometry,
-not fixed 1600px coordinates.
-
-| Sample | Container Y | Card | X | Y | rotateZ | rotateY |
-|---|---:|---|---:|---:|---:|---:|
-| 1 | 471.417 | 1 | 46.398 | 4.191 | -12.639 | 123.539 |
-| 1 | 471.417 | 2 | 456.846 | 7.161 | -4.213 | 150.520 |
-| 1 | 471.417 | 3 | 867.294 | 3.547 | 4.213 | 167.831 |
-| 1 | 471.417 | 4 | 1277.740 | -3.328 | 12.639 | 179.079 |
-| 2 | 582.862 | 1 | 29.565 | -7.550 | -7.612 | 65.918 |
-| 2 | 582.862 | 2 | 451.235 | -5.996 | -2.537 | 107.185 |
-| 2 | 582.862 | 3 | 872.905 | 1.071 | 2.537 | 136.954 |
-| 2 | 582.862 | 4 | 1294.580 | 7.153 | 7.612 | 156.925 |
-| 3 | 719.985 | 1 | 17.085 | 5.806 | -0.746 | 14.942 |
-| 3 | 719.985 | 2 | 447.075 | 8.509 | -0.249 | 45.001 |
-| 3 | 719.985 | 3 | 877.066 | 3.390 | 0.249 | 80.369 |
-| 3 | 719.985 | 4 | 1307.060 | -4.847 | 0.746 | 114.728 |
-| 4 | 857.109 | 1 | 9.872 | -1.307 | -0.072 | -10.699 |
-| 4 | 857.109 | 2 | 444.672 | 6.976 | -0.024 | 6.053 |
-| 4 | 857.109 | 3 | 879.470 | 8.845 | 0.024 | 30.105 |
-| 4 | 857.109 | 4 | 1314.270 | 2.582 | 0.072 | 59.303 |
-| 5 | 1048.540 | 1 | 4.591 | 5.045 | 0 | -17.398 |
-| 5 | 1048.540 | 2 | 442.911 | 9.772 | 0 | -16.491 |
-| 5 | 1048.540 | 3 | 881.235 | 5.515 | 0 | -7.624 |
-| 5 | 1048.540 | 4 | 1319.550 | -3.812 | 0 | 8.021 |
-| 6 | 1405.600 | 1 | 1.101 | 8.360 | 0 | -0.172 |
-| 6 | 1405.600 | 2 | 441.747 | 0.036 | 0 | -6.322 |
-| 6 | 1405.600 | 3 | 882.393 | -8.321 | 0 | -13.860 |
-| 6 | 1405.600 | 4 | 1323.040 | -9.027 | 0 | 0 |
-
-Production interpolation adds a pre-flip all-back sample at `rotateY(180deg)`
-and a final all-front sample at `rotateY(0deg)`. The supplied negative angles
-remain the overshoot before the final settle.
-
-Normalized sample timing is:
+Raw samples and matrix snapshots are stored in the linked evidence packet.
+Production keeps the accepted normalized times:
 
 ```text
 0.00 pre-flip fan
@@ -176,8 +166,15 @@ Normalized sample timing is:
 1.00 stable front row
 ```
 
-Each interval uses eased interpolation. This creates overlapping first-to-fourth
-flips without a generic per-card delay formula.
+Previous piecewise `smooth()` interpolation reached zero velocity at every
+sample and produced mechanical micro-pauses. Production now uses cubic Hermite
+interpolation with finite-difference tangents and bounded tangent scale. This
+keeps a continuous first derivative across X, Y, `rotateZ`, and `rotateY` while
+still passing through every captured sample.
+
+The pre-flip all-back state remains `rotateY(180deg)`. Negative measured values
+remain front-side overshoot, clamped to a safe bounded range before final
+`0deg` settle.
 
 ## Six-tier composition
 
@@ -187,8 +184,8 @@ flips without a generic per-card delay formula.
 | SM 640–767 | autoplay heading only | one centered card at a time | hidden |
 | MD 768–1023 | autoplay heading plus copy | stable centered 2x2 pair flips | hidden |
 | LG 1024–1279 | autoplay heading plus copy | stable centered 2x2 pair flips | hidden |
-| XL 1280–1535 | autoplay heading, PC shift/exit | measured lead/deck/fan/flip/hold | visible |
-| 2XL >=1536 | largest bounded PC composition | wider measured choreography | visible |
+| XL 1280–1535 | autoplay heading, PC shift/exit | lead/deck/fan/flip/hold | visible |
+| 2XL >=1536 | largest bounded PC composition | wider shared choreography | visible |
 
 One semantic DOM and one controller serve all tiers. CSS mode variables select
 chronology; there is no device, locale, browser, or controller fork.
@@ -196,9 +193,8 @@ chronology; there is no device, locale, browser, or controller fork.
 ## Locale and direction
 
 - ID and EN share LTR chronology and Inter.
-- AR shares the same neutral vertical reveal and Y-axis card flip in Cairo/RTL.
-- The PC second-line horizontal shift mirrors through the existing logical
-  direction token.
+- AR shares the neutral vertical reveal and Y-axis card flip in Cairo/RTL.
+- PC second-line horizontal shift mirrors through the existing logical token.
 - Card item order remains semantic order in every locale.
 - Vertical scroll, time, and neutral 3D rotation are not reversed for RTL.
 
@@ -212,27 +208,26 @@ chronology; there is no device, locale, browser, or controller fork.
 | entry state | `resources/js/surfaces/home/values/heading-state.js` |
 | controller/RAF lifecycle | `resources/js/surfaces/home/values/controller.js` |
 | mode story timing | `resources/js/surfaces/home/values/layout.js` |
-| PC lead/deck choreography | `resources/js/surfaces/home/values/desktop-layout.js` |
-| measured PC samples | `resources/js/surfaces/home/values/desktop-keyframes.js` |
+| PC staging | `resources/js/surfaces/home/values/desktop-layout.js` |
+| measured curves | `resources/js/surfaces/home/values/desktop-keyframes.js` |
 | scroll inertia | `resources/js/surfaces/home/values/motion.js` |
+| raw evidence | `docs/architecture/measurements/2026-08-03-home-values-reference-motion-raw.md` |
 | durable proof ledger | `docs/architecture/UI_UX_CURRENT_STATE.md` |
 
 ## Browser, performance, and accessibility
 
 - Frequent movement remains transform/opacity based.
-- The existing single Values RAF is reused; no second scheduler, observer,
+- The existing single Values RAF is reused; no new scheduler, observer,
   listener family, asset, dependency, canvas, or WebGL context is introduced.
 - RAF stops only after both scroll inertia and time-based heading reveal settle.
 - Reduced motion retains the readable static grid.
 - Runtime proof is still required for Chromium/WebKit sticky, clipping,
-  `preserve-3d`, backface visibility, reverse scroll, resize, and BFCache.
+  `preserve-3d`, backface visibility, fast/reverse scroll, resize, and BFCache.
 
 ## Proof state
 
-Source syntax and local transform sampling passed before publication. Commit
-publication proves source state only.
-
-Required repository/runtime gates remain:
+Commit publication proves source state only. Required repository/runtime gates
+remain:
 
 ```text
 git diff --check
