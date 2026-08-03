@@ -15,135 +15,125 @@ responsive, accessibility, performance, or lifecycle completion.
 - State: `IMPLEMENTING`
 - Surface: homepage Values section `#nilai` and its visual handoff from the final
   Mission scene
-- Protected: Hero, Vision/Mission scene content and motion, Programs, Gallery,
-  Articles, navigation, footer, DB/admin/routes, About, and Testimonial
+- Current atomic scope: Values heading and supporting description only
+- Protected in this step: cards, flip chronology, trail, transition layer, Hero,
+  Vision/Mission content and motion, Programs, Gallery, Articles, navigation,
+  footer, DB/admin/routes, About, and Testimonial
 
 ## Owner-accepted storyboard
 
 The Values journey must run in this order:
 
 1. Final Mission color/content dissolves through blur into the Values blue field.
-2. Localized heading line one enters bottom-to-top.
-3. Heading line two enters top-to-bottom.
-4. One front-facing card rises below the heading.
-5. The remaining cards become visible as a four-card deck.
-6. The deck spreads smoothly into the tier-appropriate independent layout.
-7. Cards flip right-to-left with about 30% temporal overlap.
-8. A white line grows from nothing and advances like a moving snake throughout
-   the scroll journey.
-9. Cards rise and leave only after the overlapping flip sequence completes.
-10. Scroll then hands off to the next homepage section.
+2. Localized heading appears from one shared center seam.
+3. Its two lines separate vertically into the final two-line composition.
+4. On wide layouts only, line two then shifts inward toward the visual center.
+5. Supporting copy appears after the heading settles where the tier permits it.
+6. One front-facing card rises below the heading.
+7. The remaining cards become visible as a four-card deck.
+8. The deck spreads, cards flip with temporal overlap, and the line advances.
+9. Cards rise and leave before the next-section handoff.
 
 One DOM, physical choreography, and controller serve ID, EN, and AR. Locale and
 RTL alter content, font, direction, and natural text alignment only.
+
+## Current heading/description tier contract
+
+| Tier | Heading | Supporting copy | Line-two inward shift |
+|---|---|---|---|
+| XS 360–639 | two-line heading only | hidden | none |
+| SM 640–767 | two-line heading only | hidden | none |
+| MD 768–1023 | heading + description/eyebrow | visible | none |
+| LG 1024–1279 | heading + description/eyebrow | visible | none |
+| XL 1280–1535 | heading + description/eyebrow | visible | `104px` logical inward |
+| 2XL >=1536 | heading + description/eyebrow | visible | `144px` logical inward |
+
+The two lines start invisible with `0.41em` opposing offsets. Because the title
+line-height is `.82`, both line centers initially coincide. They separate as
+opacity rises, and converge back toward the same seam while fading on exit.
 
 ## Runtime feedback FACT
 
 ### Runtime 1: sticky failure
 
-Owner screenshots on local 1920x1080 Brave/Chromium proved:
-
-- the stage travelled under the navbar;
-- cards were small and weakly opaque;
-- the heading did not enter;
-- a long empty blue area remained.
-
-Root cause was `overflow: hidden` on the sticky ancestor plus excessively long
-entry and release timing. The bounded sticky correction was published.
+Owner screenshots on local 1920x1080 Brave/Chromium proved the stage travelled
+under the navbar, cards were small, the heading did not enter, and long empty
+blue travel remained. The sticky containing-block defect was corrected.
 
 ### Runtime 2: storyboard and face failure
 
-Fresh owner screenshots proved the sticky correction worked, but the composition
-still failed the accepted storyboard:
+Fresh screenshots proved sticky containment worked, but chronology, card faces,
+static line treatment, and transition still failed the accepted storyboard. The
+bounded card/trail/transition correction was published.
 
-- Mission and Values met at a hard color edge;
-- the heading appeared as one static block rather than two opposing line entries;
-- cards spread/flip in the wrong chronology;
-- one flip completed before the next began;
-- front content appeared mirrored after `180deg` instead of revealing the back;
-- the white decoration was two static circles rather than a scroll-drawn line;
-- final cards did not follow the requested rise-after-flip handoff.
+### Runtime 3: heading and copy failure
 
-This runtime is a `FAIL` for art direction despite correct sticky containment.
+The latest owner screenshots prove the heading/copy result still fails:
+
+- line one and line two travel from approximately `±28svh`, far beyond the
+  intended shared center seam;
+- inertia during title exit creates crossed/ghosted letter compositions;
+- supporting copy remains visible on phone widths despite the owner requiring a
+  heading-only phone result;
+- line two does not have a tier-aware inward desktop finish.
+
+Cards, flip progression, trail, and transition are not evaluated in this atomic
+feedback step.
 
 ## Implemented source correction
 
-Source head before this ledger update:
-`fdc60f49ebf798941cf0f05ff988b488b2988081`.
+Current correction source head before this ledger update:
+`ec5b82371f9c8e5c50bb0efba6c221345db295f3`.
 
-- A negative-overlap, backdrop-blurred transition layer blends the final Mission
-  green into Values blue without changing Mission scene content/controller.
-- Heading lines have independent CSS variables and opposite vertical entry.
-- The first card is the only visible lead card.
-- Remaining cards reveal into a compact deck before any spread.
-- Deck-to-independent layout uses one eased interpolation.
-- Flip duration is `0.15` progress with `0.045` start offsets, so each next card
-  begins when the previous card is about 30% through its flip.
-- Rightmost card starts first; physical order is shared in RTL.
-- Y rotation moved from the outer card pose to `.values-card__inner`, allowing
-  front/back `backface-visibility` to work instead of mirroring the front.
-- One SVG Bezier path replaces static circles.
-- Main stroke, glow, and moving head share scroll-driven dash progress.
-- Cards exit upward only after the flip window.
-- Story travel remains explicit for XS, SM, MD, LG, XL, and 2XL.
-- Reduced-motion and unsupported CSS engines keep the semantic static layout.
-
-## Six-tier source contract
-
-| Tier | Layout | Travel |
-|---|---|---|
-| XS 360–639 | readable compact fan/stack | `640svh` |
-| SM 640–767 | 2x2 | `620svh` |
-| MD 768–1023 | larger 2x2 | `600svh` |
-| LG 1024–1279 | four-card row | `580svh` |
-| XL 1280–1535 | cinematic row | `560svh` |
-| 2XL >=1536 | bounded wide row | `580svh` |
+- Header travel is font-relative, not viewport-relative: `0.41em` and `-0.41em`.
+- Header lines no longer receive scroll-momentum displacement.
+- Line two shifts only after the two lines have nearly opened.
+- CSS owns tier targets; JS only reads the resolved target and paints progress.
+- XS and SM hide description and eyebrow, including the static fallback.
+- MD and LG retain copy without horizontal title shift.
+- XL and 2XL use bounded logical inward targets; RTL receives the opposite
+  physical sign toward the same visual center.
+- Heading/copy anchors now use logical inset properties.
+- Card, flip, trail, transition, content, routes, and unrelated surfaces are
+  unchanged by this correction.
 
 ## Source ownership
 
-- Blade: `resources/views/home/sections/school-values.blade.php`
-- CSS entry: `resources/css/pages/welcome-values-story.css`
-- CSS modules: `resources/css/surfaces/home/values/*`
-- Controller: `resources/js/surfaces/home/values/controller.js`
-- Layout/timeline: `resources/js/surfaces/home/values/layout.js`
-- Inertia: `resources/js/surfaces/home/values/motion.js`
+- Blade/content: `resources/views/home/sections/school-values.blade.php`
+- Heading/copy CSS: `resources/css/surfaces/home/values/story-shell.css`
+- Tier adapters: `resources/css/surfaces/home/values/story-responsive.css`
+- Geometry measurement: `resources/js/surfaces/home/values/controller.js`
+- Timeline: `resources/js/surfaces/home/values/layout.js`
 - Painting/cleanup: `resources/js/surfaces/home/values/paint.js`
-- Focused test: `tests/Feature/HomeValuesStoryTest.php`
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Mandatory source audit | `PASS_SOURCE` | current owners inspected |
-| Owner storyboard | `PASS` | prompt and chronological screenshots |
-| Runtime 1 | `FAIL` | sticky composition failure |
-| Sticky root-cause correction | `PASS_SOURCE` | runtime 2 proves pinning works |
-| Runtime 2 | `FAIL` | chronology, faces, line, and transition wrong |
-| Corrected storyboard source | `IMPLEMENTED_SOURCE` | bounded Blade/CSS/JS patch |
-| Split title source | `IMPLEMENTED_SOURCE` | independent line variables |
-| Deck/spread/overlap source | `IMPLEMENTED_SOURCE` | deterministic timeline |
-| True front/back source | `IMPLEMENTED_SOURCE` | inner-card Y rotation |
-| Scroll-drawn line source | `IMPLEMENTED_SOURCE` | SVG dash progression |
-| Focused feature test | `IMPLEMENTED_SOURCE` | updated DOM contract |
-| JavaScript syntax | `PASS_LOCAL_PATCH` | controller/layout/paint checked |
+| Mandatory docs/current main | `PASS_SOURCE` | current chain and owners inspected |
+| Latest owner heading/copy decision | `PASS` | exact prompt plus screenshots |
+| Runtime 3 heading/copy | `FAIL` | excessive travel, ghosting, phone copy |
+| Center-seam source correction | `IMPLEMENTED_SOURCE` | bounded timeline/painter patch |
+| Six-tier copy/shift contract | `IMPLEMENTED_SOURCE` | CSS tier targets and visibility |
+| ID/EN/AR logical architecture | `IMPLEMENTED_SOURCE` | one DOM plus logical insets |
+| JavaScript syntax | `PASS_LOCAL_PATCH` | controller/layout/paint `node --check` |
+| CSS balance | `PASS_LOCAL_PATCH` | changed CSS brace balance checked |
 | Source line limit | `PASS_LOCAL_PATCH` | all changed source <=200 lines |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run repo command |
-| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run after correction |
-| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run after correction |
-| PHP/focused tests | `BLOCKED_BY_MISSING_EVIDENCE` | not run after correction |
-| Corrected Chromium runtime | `BLOCKED_BY_MISSING_EVIDENCE` | fresh recording absent |
-| WebKit/six-tier/RTL runtime | `BLOCKED_BY_MISSING_EVIDENCE` | matrix absent |
-| Accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | comparable runs absent |
+| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
+| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
+| PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
+| Corrected Chromium tier runtime | `BLOCKED_BY_MISSING_EVIDENCE` | fresh screenshots absent |
+| WebKit/RTL/accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | matrix absent |
 
 ## STATUS
 
-The second runtime result failed the accepted art direction. The transition,
-split heading, lead/deck/spread ordering, 30%-overlap flips, true card backs,
-scroll-drawn line, and upward exit are corrected in source and published to
-`main`. Runtime and release status remain unproven.
+The latest runtime heading/copy result failed. A bounded center-seam title,
+wide-only inward second-line shift, phone heading-only rule, and logical
+ID/EN/AR positioning are implemented and published to `main`. Runtime and
+release status remain unproven.
 
 ## NEXT VALID STEP
 
-Pull current `main` and capture one 1920x1080 Brave/Chromium scroll sequence from
-the final Mission scene through Values title, lead card, deck, spread, overlapping
-flips, animated line, upward exit, and next-section handoff.
+Pull current `main` and capture the Values heading/copy at 390, 768, 1280, and
+1920 widths in Brave/Chromium before returning to cards or trail behavior.
