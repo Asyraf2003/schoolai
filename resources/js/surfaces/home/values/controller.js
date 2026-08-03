@@ -1,4 +1,4 @@
-import { cardFrame, storyFrame } from './layout.js';
+import { paintValuesStory, clearValuesStory } from './paint.js';
 import {
     FRAME_MS,
     createScrollMotion,
@@ -7,26 +7,11 @@ import {
     updateScrollMotion,
 } from './motion.js';
 
-const MOTION_PROPERTIES = [
-    '--values-x', '--values-y', '--values-z', '--values-rx',
-    '--values-ry', '--values-rz', '--values-scale', '--values-opacity',
-];
 function supportsStoryMotion() {
     return typeof CSS !== 'undefined'
         && CSS.supports('overflow', 'clip')
         && CSS.supports('position', 'sticky')
         && CSS.supports('transform-style', 'preserve-3d');
-}
-
-function writeCardFrame(card, state) {
-    card.style.setProperty('--values-x', `${state.x.toFixed(2)}px`);
-    card.style.setProperty('--values-y', `${state.y.toFixed(2)}px`);
-    card.style.setProperty('--values-z', `${state.z.toFixed(2)}px`);
-    card.style.setProperty('--values-rx', `${state.rx.toFixed(2)}deg`);
-    card.style.setProperty('--values-ry', `${state.ry.toFixed(2)}deg`);
-    card.style.setProperty('--values-rz', `${state.rz.toFixed(2)}deg`);
-    card.style.setProperty('--values-scale', state.scale.toFixed(4));
-    card.style.setProperty('--values-opacity', state.opacity.toFixed(4));
 }
 
 export function createValuesStory(root) {
@@ -45,7 +30,6 @@ export function createValuesStory(root) {
     let snapNext = true;
     let lastTime = 0;
     let viewportHeight = window.innerHeight || 1;
-    let targetProgress = 0;
     let geometry = null;
     const motion = createScrollMotion(0);
 
@@ -81,40 +65,28 @@ export function createValuesStory(root) {
         };
     }
 
-    function paint(progress, momentum) {
-        cards.forEach((card, index) => {
-            writeCardFrame(
-                card,
-                cardFrame(index, progress, geometry, momentum),
-            );
-            card.style.zIndex = String(10 + index);
-        });
-
-        const story = storyFrame(progress, viewportHeight, momentum);
-        root.style.setProperty('--values-progress', story.progress.toFixed(5));
-        root.style.setProperty('--values-heading-y', `${story.headingY.toFixed(2)}px`);
-        root.style.setProperty('--values-heading-scale', story.headingScale.toFixed(4));
-        root.style.setProperty('--values-heading-opacity', story.headingOpacity.toFixed(4));
-        root.style.setProperty('--values-curve-y', `${story.curveY.toFixed(2)}px`);
-        root.style.setProperty('--values-curve-opacity', story.curveOpacity.toFixed(4));
-    }
-
     function render(time) {
         frame = 0;
         if (!active || destroyed || document.hidden) return;
         if (geometryDirty || !geometry) measure();
 
-        targetProgress = readStoryProgress(root, viewportHeight);
+        const target = readStoryProgress(root, viewportHeight);
         const delta = lastTime ? time - lastTime : FRAME_MS;
         lastTime = time;
         const snapshot = updateScrollMotion(
             motion,
-            targetProgress,
+            target,
             delta,
             snapNext,
         );
 
-        paint(snapshot.visual, snapshot.momentum);
+        paintValuesStory(
+            root,
+            cards,
+            snapshot.visual,
+            geometry,
+            snapshot.momentum,
+        );
         snapNext = false;
 
         if (!snapshot.settled) requestRender();
@@ -122,7 +94,6 @@ export function createValuesStory(root) {
     }
 
     function onScroll() {
-        targetProgress = readStoryProgress(root, viewportHeight);
         requestRender();
     }
 
@@ -137,12 +108,6 @@ export function createValuesStory(root) {
         else onResize();
     }
 
-    function onPageShow() {
-        geometryDirty = true;
-        snapNext = true;
-        requestRender();
-    }
-
     function onIntersection(entries) {
         const nextActive = entries.some((entry) => entry.isIntersecting);
         if (nextActive === active) return;
@@ -152,15 +117,15 @@ export function createValuesStory(root) {
         if (!active) return;
 
         geometryDirty = true;
-        targetProgress = readStoryProgress(root, window.innerHeight || 1);
-        resetScrollMotion(motion, targetProgress);
+        const target = readStoryProgress(root, window.innerHeight || 1);
+        resetScrollMotion(motion, target);
         snapNext = true;
         requestRender();
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
-    window.addEventListener('pageshow', onPageShow);
+    window.addEventListener('pageshow', onResize);
     document.addEventListener('visibilitychange', onVisibility);
 
     if ('IntersectionObserver' in window) {
@@ -171,8 +136,10 @@ export function createValuesStory(root) {
         observer.observe(root);
     }
 
-    targetProgress = readStoryProgress(root, viewportHeight);
-    resetScrollMotion(motion, targetProgress);
+    resetScrollMotion(
+        motion,
+        readStoryProgress(root, viewportHeight),
+    );
     requestRender();
 
     return function destroy() {
@@ -182,17 +149,10 @@ export function createValuesStory(root) {
         observer?.disconnect();
         window.removeEventListener('scroll', onScroll);
         window.removeEventListener('resize', onResize);
-        window.removeEventListener('pageshow', onPageShow);
+        window.removeEventListener('pageshow', onResize);
         document.removeEventListener('visibilitychange', onVisibility);
         root.classList.remove('is-values-ready');
-        [
-            '--values-progress', '--values-heading-y', '--values-heading-scale',
-            '--values-heading-opacity', '--values-curve-y', '--values-curve-opacity',
-        ]
-            .forEach((name) => root.style.removeProperty(name));
-        cards.forEach((card) => {
-            MOTION_PROPERTIES.forEach((name) => card.style.removeProperty(name));
-        });
+        clearValuesStory(root, cards);
     };
 }
 
