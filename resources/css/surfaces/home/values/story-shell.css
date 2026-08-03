@@ -33,10 +33,10 @@
     --values-ink: #111;
     --values-progress: 0;
     --values-heading-opacity: 1;
+    --values-heading-y: 0px;
     --values-line-one-y: 108%;
     --values-line-two-y: -108%;
     --values-line-two-target-x: 0px;
-    --values-heading-lift-target: 0px;
     --values-copy-opacity: 0;
     --values-copy-y: 1.5rem;
     --values-trail-progress: 0;
