@@ -93,44 +93,45 @@
             $itemCaption = (string) ($item['caption'] ?? '');
           @endphp
 
-          <a
-            class="depth-gallery__fallback-card"
-            href="{{ $mediaUrl }}"
-            role="listitem"
-            data-depth-gallery-source
-            data-gallery-index="{{ $loop->index }}"
-            data-title="{{ $itemTitle }}"
-            data-caption="{{ $itemCaption }}"
-            data-media-url="{{ $mediaUrl }}"
-            data-thumbnail-url="{{ $thumbnailUrl }}"
-            data-is-video="{{ ! empty($item['is_video']) ? '1' : '0' }}"
-            data-position-x="{{ $preset['x'] }}"
-            data-fallback-color="{{ $preset['fallback'] }}"
-            data-accent-color="{{ $preset['accent'] }}"
-            data-background-color="{{ $preset['background'] }}"
-            data-blob1-color="{{ $preset['blob1'] }}"
-            data-blob2-color="{{ $preset['blob2'] }}"
-            aria-label="{{ $gallerySection['open_media_prefix'] ?? __('home.galeri.open_media_prefix') }} {{ $itemTitle }}"
-          >
-            <span class="depth-gallery__fallback-media">
-              @if ($thumbnailUrl !== '')
-                <img
-                  src="{{ $thumbnailUrl }}"
-                  alt="{{ $itemTitle }}"
-                  loading="lazy"
-                  decoding="async"
-                />
-              @else
-                <span aria-hidden="true">{{ $item['fallback_icon'] ?? '📸' }}</span>
-              @endif
-            </span>
-            <span class="depth-gallery__fallback-copy">
-              <strong>{{ $itemTitle }}</strong>
-              @if ($itemCaption !== '')
-                <small>{{ $itemCaption }}</small>
-              @endif
-            </span>
-          </a>
+          <article class="depth-gallery__fallback-item" role="listitem">
+            <a
+              class="depth-gallery__fallback-card"
+              href="{{ $mediaUrl }}"
+              data-depth-gallery-source
+              data-gallery-index="{{ $loop->index }}"
+              data-title="{{ $itemTitle }}"
+              data-caption="{{ $itemCaption }}"
+              data-media-url="{{ $mediaUrl }}"
+              data-thumbnail-url="{{ $thumbnailUrl }}"
+              data-is-video="{{ ! empty($item['is_video']) ? '1' : '0' }}"
+              data-position-x="{{ $preset['x'] }}"
+              data-fallback-color="{{ $preset['fallback'] }}"
+              data-accent-color="{{ $preset['accent'] }}"
+              data-background-color="{{ $preset['background'] }}"
+              data-blob1-color="{{ $preset['blob1'] }}"
+              data-blob2-color="{{ $preset['blob2'] }}"
+              aria-label="{{ $gallerySection['open_media_prefix'] ?? __('home.galeri.open_media_prefix') }} {{ $itemTitle }}"
+            >
+              <span class="depth-gallery__fallback-media">
+                @if ($thumbnailUrl !== '')
+                  <img
+                    src="{{ $thumbnailUrl }}"
+                    alt="{{ $itemTitle }}"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                @else
+                  <span aria-hidden="true">{{ $item['fallback_icon'] ?? '📸' }}</span>
+                @endif
+              </span>
+              <span class="depth-gallery__fallback-copy">
+                <strong>{{ $itemTitle }}</strong>
+                @if ($itemCaption !== '')
+                  <small>{{ $itemCaption }}</small>
+                @endif
+              </span>
+            </a>
+          </article>
         @endforeach
       </div>
     </div>
