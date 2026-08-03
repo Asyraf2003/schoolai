@@ -35,12 +35,6 @@
     width: min(100%, 720px);
     margin-inline: auto;
     color: #121212;
-    text-decoration: none;
-}
-
-.depth-gallery__fallback-card:focus-visible {
-    outline: 2px solid #121212;
-    outline-offset: 8px;
 }
 
 .depth-gallery__fallback-media {
