@@ -1,6 +1,6 @@
 import { clamp, mix, phase } from './motion.js';
 
-const ROTATIONS = [-13, -4.5, 4.5, 13];
+const ROW_ROTATIONS = [-5, -1.5, 1.5, 5];
 
 function pose(x = 0, y = 0, z = 0, rz = 0, scale = 1, opacity = 1) {
     return { x, y, z, rz, scale, opacity };
@@ -17,16 +17,41 @@ function mixPose(from, to, amount) {
     };
 }
 
-function frontPose(index, geometry) {
+function leadPose(index, geometry) {
+    return pose(
+        0,
+        geometry.cardHeight * 0.19,
+        -index * 22,
+        0,
+        geometry.mode === 1 ? 0.78 : 0.86,
+        index === 0 ? 1 : 0,
+    );
+}
+
+function deckPose(index, geometry) {
+    const spread = geometry.mode === 1 ? 0.028 : 0.045;
+    const scale = geometry.mode === 1 ? 0.78 : 0.86;
+
+    return pose(
+        (index - 1.5) * geometry.cardWidth * spread,
+        geometry.cardHeight * 0.18 + index * 5,
+        -index * 20,
+        (index - 1.5) * 2.4,
+        scale,
+        1,
+    );
+}
+
+function rowPose(index, geometry) {
     const { mode, cardWidth, cardHeight } = geometry;
 
     if (mode === 4) {
         return pose(
-            (index - 1.5) * cardWidth * 1.03,
-            index % 2 ? 2 : -2,
+            (index - 1.5) * cardWidth * 1.06,
+            cardHeight * 0.03 + Math.abs(index - 1.5) * 3,
             index * 2,
-            0,
-            1,
+            ROW_ROTATIONS[index],
+            0.92,
         );
     }
 
@@ -34,115 +59,95 @@ function frontPose(index, geometry) {
         const column = index % 2 ? 0.5 : -0.5;
         const row = index < 2 ? -0.5 : 0.5;
         return pose(
-            column * cardWidth * 1.06,
-            row * cardHeight * 0.7,
+            column * cardWidth * 1.08,
+            row * cardHeight * 0.73,
             index * 2,
-            0,
-            0.92,
+            ROW_ROTATIONS[index] * 0.45,
+            0.86,
         );
     }
 
     return pose(
-        (index - 1.5) * cardWidth * 0.035,
-        (index - 1.5) * 5,
-        -index * 26,
-        (index - 1.5) * 1.8,
-        1 - index * 0.012,
-    );
-}
-
-function fanPose(index, geometry) {
-    const { mode, cardWidth, cardHeight } = geometry;
-    const gap = mode === 1 ? 0.26 : mode === 2 ? 0.6 : 0.94;
-    const scale = mode === 1 ? 0.68 : mode === 2 ? 0.82 : 0.94;
-
-    return pose(
-        (index - 1.5) * cardWidth * gap,
-        Math.abs(index - 1.5) * cardHeight * 0.075,
-        index * 8,
-        ROTATIONS[index],
-        scale,
-    );
-}
-
-function stackPose(index, geometry) {
-    const { mode, cardWidth, cardHeight } = geometry;
-    const scale = mode === 1 ? 0.82 : mode === 2 ? 0.88 : 0.94;
-
-    return pose(
-        (index - 1.5) * cardWidth * 0.028,
-        cardHeight * 0.2 + Math.abs(index - 1.5) * 3,
-        index * 12,
-        (index - 1.5) * 4.6,
-        scale,
+        (index - 1.5) * cardWidth * 0.25,
+        Math.abs(index - 1.5) * cardHeight * 0.045,
+        index * 4,
+        ROW_ROTATIONS[index] * 1.25,
+        0.67,
     );
 }
 
 function exitPose(index, geometry) {
-    const stacked = stackPose(index, geometry);
+    const row = rowPose(index, geometry);
     return {
-        ...stacked,
-        x: stacked.x + (index - 1.5) * geometry.cardWidth * 0.08,
-        y: stacked.y + geometry.viewportHeight * 1.12,
-        rz: stacked.rz + (index - 1.5) * 4,
+        ...row,
+        x: row.x + (index - 1.5) * geometry.cardWidth * 0.05,
+        y: row.y - geometry.viewportHeight * (1.08 + index * 0.025),
+        rz: row.rz + (index - 1.5) * 3,
         opacity: 0,
     };
 }
 
-function flipProgress(index, progress, mode) {
-    const first = mode === 1 ? 0.14 : 0.075;
+function flipProgress(index, progress) {
     const order = 3 - index;
-    const start = first + order * 0.065;
-    return phase(progress, start, start + 0.13);
+    const start = 0.48 + order * 0.045;
+    return phase(progress, start, start + 0.15);
 }
 
 export function cardFrame(index, progress, geometry, momentum) {
-    const front = frontPose(index, geometry);
-    const enterFrom = {
-        ...front,
-        y: front.y + geometry.viewportHeight * 0.06,
-        scale: front.scale * 0.97,
-        opacity: 0.88,
+    const lead = leadPose(index, geometry);
+    const hidden = {
+        ...lead,
+        y: lead.y + geometry.viewportHeight * 0.22,
+        scale: lead.scale * 0.88,
+        opacity: 0,
     };
-    const entered = mixPose(enterFrom, front, phase(progress, 0, 0.025));
-    const fanned = fanPose(index, geometry);
-    const stacked = stackPose(index, geometry);
-    const exited = exitPose(index, geometry);
-    let current;
+    const deck = deckPose(index, geometry);
+    const row = rowPose(index, geometry);
+    const exit = exitPose(index, geometry);
+    let current = mixPose(hidden, lead, phase(progress, 0.13, 0.21));
 
-    if (geometry.mode === 1) {
-        current = mixPose(entered, fanned, phase(progress, 0.34, 0.56));
-        current = mixPose(current, stacked, phase(progress, 0.62, 0.78));
-    } else {
-        current = mixPose(entered, fanned, phase(progress, 0.43, 0.62));
-        current = mixPose(current, stacked, phase(progress, 0.62, 0.78));
-    }
+    current = mixPose(current, deck, phase(progress, 0.2, 0.3));
+    current = mixPose(current, row, phase(progress, 0.3, 0.46));
 
-    current = mixPose(current, exited, phase(progress, 0.82, 1));
-    current.y += momentum * (index + 1) * 7;
+    const exitStart = 0.82 + (3 - index) * 0.008;
+    current = mixPose(
+        current,
+        exit,
+        phase(progress, exitStart, Math.min(1, exitStart + 0.16)),
+    );
+    current.y += momentum * (index + 1) * 6;
 
     return {
         ...current,
-        rx: phase(progress, 0.84, 1) * -7,
-        ry: flipProgress(index, progress, geometry.mode) * 180,
+        rx: phase(progress, 0.82, 1) * -5,
+        ry: flipProgress(index, progress) * 180,
     };
 }
 
 export function storyFrame(progress, viewportHeight, momentum) {
-    const enter = phase(progress, 0.52, 0.69);
-    const depart = phase(progress, 0.82, 1);
-    const headingStart = viewportHeight * 0.34;
-    const headingY = mix(headingStart, 0, enter)
-        - viewportHeight * 0.3 * depart;
-    const enteredScale = mix(1.06, 1, enter);
+    const titleEnter = phase(progress, 0.015, 0.15);
+    const titleLeave = phase(progress, 0.34, 0.46);
+    const copyEnter = phase(progress, 0.07, 0.17);
+    const copyLeave = phase(progress, 0.36, 0.48);
+    const trailProgress = phase(progress, 0.04, 0.95);
+    const trailLeave = phase(progress, 0.9, 1);
 
     return {
-        headingY: headingY + momentum * 18,
-        headingScale: mix(enteredScale, 0.93, depart),
-        headingOpacity: phase(progress, 0.48, 0.61),
-        curveY: mix(-viewportHeight * 0.08, viewportHeight * 0.22, progress)
-            + momentum * 28,
-        curveOpacity: phase(progress, 0.28, 0.46),
+        lineOneY: mix(viewportHeight * 0.28, 0, titleEnter)
+            + momentum * 14,
+        lineTwoY: mix(-viewportHeight * 0.28, 0, titleEnter)
+            + momentum * 14,
+        headingOpacity: titleEnter * (1 - titleLeave),
+        copyOpacity: copyEnter * (1 - copyLeave),
+        copyY: mix(32, 0, copyEnter) + momentum * 10,
+        trailProgress,
+        trailOpacity: phase(progress, 0.02, 0.1) * (1 - trailLeave),
+        trailY: mix(viewportHeight * 0.08, -viewportHeight * 0.06, progress)
+            + momentum * 22,
         progress: clamp(progress),
+        headingY: 0,
+        headingScale: 1,
+        curveY: 0,
+        curveOpacity: 0,
     };
 }
