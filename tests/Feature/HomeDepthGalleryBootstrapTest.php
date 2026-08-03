@@ -25,7 +25,6 @@ it('guards the depth gallery bootstrap and removes its legacy owner', function (
         ->toContain('visibility: hidden')
         ->toContain('.depth-gallery.is-depth-active .depth-gallery__canvas')
         ->toContain('.depth-gallery.is-depth-active .depth-gallery__fallback-list')
-        ->not->toContain('.depth-gallery.is-depth-ready .depth-gallery__canvas {\n    display: block;')
         ->and($controller)
         ->toContain('requestAnimationFrame')
         ->toContain('engine.activate()')
@@ -42,13 +41,19 @@ it('guards the depth gallery bootstrap and removes its legacy owner', function (
         ->toContain('hasVisiblePlane')
         ->and($blade)
         ->toContain('tabindex="-1"')
-        ->toContain('aria-hidden="true"')
-        ->and($head)
-        ->not->toContain('welcome-gallery-desktop.css')
-        ->and(file_exists(public_path(
-            'css/welcome-gallery-desktop.css'
-        )))
-        ->toBeFalse();
+        ->toContain('aria-hidden="true"');
+
+    expect($base)
+        ->not->toContain(
+            '.depth-gallery.is-depth-ready .depth-gallery__canvas {'.PHP_EOL
+            .'    display: block;'
+        );
+
+    expect($head)->not->toContain('welcome-gallery-desktop.css');
+
+    expect(file_exists(public_path(
+        'css/welcome-gallery-desktop.css'
+    )))->toBeFalse();
 
     $files = [
         resource_path('js/surfaces/home/gallery-depth/controller.js'),
