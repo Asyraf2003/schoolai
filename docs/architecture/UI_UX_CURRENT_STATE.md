@@ -14,7 +14,7 @@ responsive, accessibility, performance, or lifecycle completion.
 - ID: `HOME-VALUES-001`
 - State: `IMPLEMENTING`
 - Surface: homepage Values section `#nilai`
-- Current atomic result: clipped one-way heading plus tier-specific card story
+- Current atomic result: slower heading plus enlarged cinematic PC card motion
 - Protected: Hero, Vision/Mission content/controller, Programs, Gallery,
   Articles, navigation, footer, DB/admin/routes, About, and Testimonial
 
@@ -22,132 +22,167 @@ responsive, accessibility, performance, or lifecycle completion.
 
 ### Heading and copy
 
-- Heading must emerge edge-first from one shared center seam, like a ruler
-  sliding out of a pencil case; a fully visible word block must not translate.
-- The reveal runs only when entering from the preceding section.
-- Reverse scroll from later Values states keeps the resolved heading static.
-- If forward reveal is interrupted and reversed, the heading resolves fully
-  instead of remaining partially clipped.
-- The second line shifts inward through a time-based CSS transition, not scrub.
-- PC deck onset triggers a time-based heading lift.
-- XS and SM hide description and eyebrow; MD through 2XL show them.
+- Preserve the edge-first clipped reveal but make it much slower and smoother.
+- Make the title larger and visibly thinner.
+- Keep reverse-scroll latching.
+- Begin moving the PC title upward with scroll as soon as the card deck forms.
+- Let supporting copy leave as the PC deck takes visual priority.
+- XS and SM remain heading-only.
 
 ### Cards and trail
 
-- Enhanced cards begin with their decorative backs visible and flip to their
-  information fronts.
-- XS and SM show one centered card at a time and use flip-only choreography.
-- MD and LG keep a stable 2x2 layout and flip two cards as a pair.
-- XL and 2XL use lead rise, four-card deck, spread, overlapping flips, and exit.
-- The white scroll-drawn line is active only on XL and 2XL.
-- ID/EN/AR share one DOM/controller and physical chronology.
+- Increase PC card scale by roughly one visual step.
+- During spread, all backs anticipate together by about `15deg`.
+- Cards then flip right-to-left with overlap.
+- Each card overshoots the front by about `15deg`, then settles to neutral.
+- Cards float vertically by a few pixels throughout the PC choreography.
+- Phone/tablet chronology and PC-only trail boundaries remain unchanged.
 
 ## Runtime feedback FACT
 
 ### Runtime 1: sticky failure
 
 Owner screenshots at 1920x1080 Brave/Chromium proved the stage travelled under
-the navbar and left long empty blue travel. The sticky containing-block defect
-was corrected.
+the navbar and left long empty blue travel. Sticky containment was corrected.
 
 ### Runtime 2: chronology and card-face failure
 
-Fresh screenshots proved sticky containment worked, but chronology, mirrored
-front faces, static line treatment, and Mission-to-Values transition still
-failed. The bounded face/timeline/trail/transition correction was published.
+Screenshots proved sticky containment worked, but chronology, mirrored fronts,
+line treatment, and transition still failed. Face/timeline/trail corrections
+were published.
 
 ### Runtime 3: heading travel failure
 
-Screenshots proved the whole heading bodies remained visible while translating,
-creating crossed and ghosted text. The first heading correction reduced travel
-but still used whole-line transforms and therefore failed the requested reveal
-material.
+Screenshots proved whole word bodies moved visibly, producing crossed and
+ghosted text. Nested clipped title spans were introduced.
 
-### Runtime 4: latest owner screenshot
+### Runtime 4: tier and reverse contract failure
 
-The latest 1920x1080 screenshot proves:
+Screenshots proved the result still needed one-way heading state, back-first
+cards, divergent phone/tablet/PC choreography, and a PC-only line. Those source
+owners were split and published.
 
-- both complete word bodies are visible during entry;
-- the result does not resemble edge-first extraction through a seam;
-- reverse behavior still needs a latched resolved heading contract;
-- the responsive card story must diverge between phone, tablet, and PC;
-- cards must start on their backs;
-- stack/spread and the moving line must be PC-only.
+### Runtime 5: latest owner screenshots
 
-This runtime is `FAIL` for the corrected owner direction. It is the evidence for
-the current source rewrite.
+The supplied 1920x1080 comparison sequence proves:
+
+- the clipped heading now resolves, but its reveal feels abrupt;
+- the heading weight is much heavier and its scale smaller than the intended
+  reference rhythm;
+- PC cards are materially smaller than the target visual mass;
+- title remains in the card field instead of beginning a scroll-scrubbed exit
+  when the deck appears;
+- the current direct `180deg -> 0deg` flip lacks shared anticipation, endpoint
+  overshoot, and settle;
+- cards lack the subtle continuous vertical drift visible in the intended
+  experience.
+
+This runtime is `FAIL` for the latest owner direction and is the evidence for
+the current correction.
+
+## Root-cause FACT
+
+The heading reveal speed defect was not merely a short numeric range.
+
+`heading-state.js` previously used:
+
+```text
+not moving forward
++ any partial reveal
+-> force reveal to 1
+```
+
+The scroll controller continues RAF frames while its inertial position settles.
+On the first RAF frame after a raw scroll event, `target` is unchanged. The old
+state therefore misclassified an idle frame as rollback and completed the entire
+heading immediately.
+
+The corrected owner distinguishes three states:
+
+```text
+forward delta
+backward delta
+idle/no delta
+```
+
+Idle now preserves partial reveal. Only actual backward delta resolves a partial
+heading to the static reverse state.
 
 ## Implemented source correction
 
 Source head before this ledger update:
-`07d757371ce8f214257cd52fd493f63cdaf50550`.
+`abd13fbdc8b582fac7acbcbab4f29fc4f58dbd49`.
 
 ### Heading implementation
 
-- Each title line now contains a nested `.values-story__title-text` span.
-- The line boxes clip their children.
-- Line one begins `108%` below its box and line two begins `108%` above its box,
-  so only the leading edge becomes visible before the rest of the glyph body.
-- `heading-state.js` owns one-way reveal state separately from scroll inertia.
-- Reveal advances only on forward entry and latches at completion.
-- Reverse during partial reveal resolves the full static heading.
-- Leaving above Values resets the state for a future forward entry.
-- Wide second-line shift and heading lift are class-triggered CSS transitions,
-  not continuous scroll interpolation.
-- RTL uses the opposite X sign toward the same visual center.
+- Reveal range expanded from `0.018–0.13` to `0.012–0.20`.
+- Reveal uses an additional smooth pass for gentler acceleration and release.
+- Idle RAF frames no longer force completion.
+- Page load inside Values initializes a resolved static heading.
+- Title weight changed from `500` to `300`.
+- Desktop title scales up to `15rem` on XL and `16rem` on 2XL.
+- Line-two independent transition increased to `1350ms`.
+- PC title Y is now painted from scroll progress:
+  - start `0.22`;
+  - finish `0.46`;
+  - destination `-56%` of viewport height.
+- Supporting copy fades between progress `0.24` and `0.36`.
+- The old time-only heading-lift class and target variable were removed.
 
-### Responsive card implementation
+### PC card implementation
 
-| Tier | Mode | Story travel |
-|---|---|---:|
-| XS 360–639 | one card at a time, back-to-front flip only | `520svh` |
-| SM 640–767 | one card at a time, back-to-front flip only | `500svh` |
-| MD 768–1023 | stable 2x2, paired flips | `400svh` |
-| LG 1024–1279 | stable 2x2, paired flips | `400svh` |
-| XL 1280–1535 | lead/deck/spread/overlap/exit | `560svh` |
-| 2XL >=1536 | wider lead/deck/spread/overlap/exit | `580svh` |
-
-- All enhanced cards begin at `rotateY(180deg)`, exposing the decorative back.
-- Phone slots reveal and flip one card before yielding to the next.
-- Tablet right pair flips first, followed by the left pair; geometry stays fixed.
-- PC lead card rises during heading entry and settles about `20vh` below the
-  title composition.
-- PC deck reveal triggers the time-based heading lift.
-- PC spread precedes right-to-left overlapping flips.
-- Flip duration remains `0.15` progress with `0.045` offsets.
-- PC trail remains scroll-driven; CSS and the painter disable it below 1280px.
+- Desktop card frame moved to `desktop-layout.js` to keep each source file below
+  200 lines.
+- XL card target changed to `min(26vw, 25rem)`.
+- 2XL card target changed to `min(24vw, 27rem)`.
+- PC story travel increased to `620svh` and `640svh`.
+- Lead/deck scale is `0.92`; spread scale reaches `1`.
+- Row spacing reduced to `0.88 * cardWidth`, producing larger controlled overlap.
+- Spread runs from progress `0.31` through `0.48`.
+- All backs anticipate from `180deg` to `195deg` during `0.40–0.48`.
+- Right-to-left flip starts use `0.052` offsets.
+- Each drive lasts `0.18`, ending at `-15deg`.
+- Each settle lasts `0.07`, ending at `0deg`.
+- Exit begins after progress `0.90`.
+- A dedicated `.values-card__float` wrapper animates from `-4px` to `4px` over
+  `4.8s` with staggered negative delays.
+- Float is active only at `>=1280px` and only when reduced motion is not set.
 
 ## Source ownership
 
 - Blade: `resources/views/home/sections/school-values.blade.php`
 - CSS entry: `resources/css/pages/welcome-values-story.css`
-- Sticky shell: `resources/css/surfaces/home/values/story-shell.css`
-- Heading/copy: `resources/css/surfaces/home/values/story-heading.css`
-- Tier adapters: `resources/css/surfaces/home/values/story-responsive.css`
-- Cards/backs/trail: remaining Values surface CSS modules
-- Controller: `resources/js/surfaces/home/values/controller.js`
-- Heading state: `resources/js/surfaces/home/values/heading-state.js`
-- Geometry/timeline: `resources/js/surfaces/home/values/layout.js`
-- Inertia: `resources/js/surfaces/home/values/motion.js`
-- Painting/cleanup: `resources/js/surfaces/home/values/paint.js`
+- Sticky shell/root variables: `story-shell.css`
+- Heading/copy: `story-heading.css`
+- Tier scale/travel: `story-responsive.css`
+- Card treatment/float: `story-cards.css`
+- Card backs: `story-card-back.css`
+- PC trail: `story-trail.css`
+- Controller: `controller.js`
+- Heading direction state: `heading-state.js`
+- Phone/tablet/story frame: `layout.js`
+- PC card frame: `desktop-layout.js`
+- Inertia: `motion.js`
+- Painting/cleanup: `paint.js`
 - Focused test: `tests/Feature/HomeValuesStoryTest.php`
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Mandatory docs/current main audit | `PASS_SOURCE` | current owners inspected before write |
-| Latest owner storyboard | `PASS` | exact prompt plus runtime screenshot |
-| Runtime 4 | `FAIL` | whole-body heading reveal and wrong tier model |
-| Nested clipped heading DOM | `IMPLEMENTED_SOURCE` | two semantic nested text spans |
-| One-way heading state | `IMPLEMENTED_SOURCE` | dedicated state owner and lifecycle classes |
-| Back-first cards | `IMPLEMENTED_SOURCE` | Y rotation starts at 180 degrees |
-| XS/SM phone mode | `IMPLEMENTED_SOURCE` | one-card flip slots |
-| MD/LG tablet mode | `IMPLEMENTED_SOURCE` | stable 2x2 paired flips |
-| XL/2XL PC mode | `IMPLEMENTED_SOURCE` | lead/deck/spread/overlap/exit |
-| PC-only moving trail | `IMPLEMENTED_SOURCE` | CSS media gate plus painter gate |
-| Focused DOM test | `IMPLEMENTED_SOURCE` | nested heading contract added |
-| JavaScript syntax | `PASS_LOCAL_PATCH` | all changed JS passed `node --check` |
+| Current main/source audit | `PASS_SOURCE` | source head and active owners inspected |
+| Latest owner sequence | `PASS` | exact prompt plus eleven 1920x1080 screenshots |
+| Runtime 5 | `FAIL` | abrupt heading and mechanically small/direct card motion |
+| Idle-vs-reverse heading state | `IMPLEMENTED_SOURCE` | explicit directional delta branches |
+| Slower/lighter/larger heading | `IMPLEMENTED_SOURCE` | range, weight, scale, and CSS timing |
+| Scroll-driven PC heading exit | `IMPLEMENTED_SOURCE` | painted Y from deck start |
+| Enlarged PC cards | `IMPLEMENTED_SOURCE` | XL/2XL targets and row scale |
+| Anticipation/overshoot/settle | `IMPLEMENTED_SOURCE` | dedicated desktop frame |
+| PC card float | `IMPLEMENTED_SOURCE` | independent wrapper and reduced-motion gate |
+| Phone/tablet boundary | `IMPLEMENTED_SOURCE` | existing mode branches preserved |
+| Focused DOM test | `IMPLEMENTED_SOURCE` | four float wrappers asserted |
+| JavaScript syntax | `PASS_LOCAL_PATCH` | changed JS passed `node --check` |
+| PHP test syntax | `PASS_LOCAL_PATCH` | focused test passed `php -l` |
 | CSS brace balance | `PASS_LOCAL_PATCH` | changed CSS balances verified |
 | Source line limit | `PASS_LOCAL_PATCH` | every changed source file <=200 lines |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run repo command |
@@ -155,17 +190,17 @@ Source head before this ledger update:
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
 | PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
 | Corrected Chromium runtime | `BLOCKED_BY_MISSING_EVIDENCE` | fresh sequence absent |
-| WebKit/RTL/accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | required matrix absent |
+| WebKit/RTL/accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | matrix absent |
 
 ## STATUS
 
-The latest rendered heading and responsive card model failed the owner direction.
-A clipped edge-first heading, forward-only latched state, back-first cards, three
-responsive choreography families, and PC-only trail are implemented and
-published to `main`. Runtime and release status remain unproven.
+Runtime 5 failed the latest motion target. Source now contains a corrected
+direction-aware heading reveal, lighter/larger title, scroll-scrubbed PC title
+exit, enlarged PC cards, shared anticipation, overlapping drive, front
+overshoot, settle, and subtle float. Runtime and release status remain unproven.
 
 ## NEXT VALID STEP
 
-Pull current `main` and capture normal plus reverse scroll at 390px, 1024px, and
-1920px in Brave/Chromium, covering heading entry, static reverse heading,
-back-to-front cards, tier-specific layout, and PC-only trail.
+Pull current `main` and capture the PC sequence at 1920px in Brave/Chromium:
+heading entry, deck onset/title exit, shared anticipation, first/middle/final
+flip, neutral settle, and card exit.
