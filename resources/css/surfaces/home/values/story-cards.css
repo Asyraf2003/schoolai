@@ -23,7 +23,6 @@
     transform:
         translate3d(var(--values-x), var(--values-y), var(--values-z))
         rotateX(var(--values-rx))
-        rotateY(var(--values-ry))
         rotateZ(var(--values-rz))
         scale(var(--values-scale));
     transform-style: preserve-3d;
@@ -39,7 +38,9 @@
 .values-card__inner {
     border: 1px solid rgba(255,255,255,.5);
     box-shadow: 0 2rem 5rem rgba(5,11,55,.24);
+    transform: rotateY(var(--values-ry));
     transform-style: preserve-3d;
+    will-change: transform;
 }
 
 .values-card__face {
@@ -56,6 +57,7 @@
     padding: clamp(1rem, 2vw, 1.55rem);
     background: #f7f7f4;
     color: var(--values-ink);
+    transform: rotateY(0deg) translateZ(.1px);
 }
 
 .values-card__front::before {
@@ -117,7 +119,11 @@
 
 .values-card__summary {
     padding-block: .75rem;
-    border-block: 2px dotted color-mix(in srgb, var(--values-accent) 34%, transparent);
+    border-block: 2px dotted color-mix(
+        in srgb,
+        var(--values-accent) 34%,
+        transparent
+    );
     font-size: clamp(.78rem, 1.15vw, 1rem);
     font-weight: 600;
     line-height: 1.35;
