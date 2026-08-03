@@ -5,9 +5,10 @@ export class DepthScroll {
         this.gallery = gallery;
         this.journey = journey;
         this.viewport = viewport;
-        this.progressTarget = 0;
+        this.scrollTarget = 0;
+        this.scrollCurrent = 0;
+        this.previousScrollCurrent = 0;
         this.progressCurrent = 0;
-        this.previousProgress = 0;
         this.scrollSmoothing = 0.08;
         this.velocity = 0;
         this.velocityDamping = 0.12;
@@ -27,24 +28,27 @@ export class DepthScroll {
         this.minCameraZ = Math.min(this.maxCameraZ, range.deepestZ + 5);
     }
 
-    readProgress() {
+    readScrollTarget(travel) {
         const rect = this.journey.getBoundingClientRect();
-        const travel = Math.max(1, this.journey.offsetHeight - this.viewport.clientHeight);
-        return this.THREE.MathUtils.clamp(-rect.top / travel, 0, 1);
+        return this.THREE.MathUtils.clamp(-rect.top, 0, travel);
     }
 
     update() {
         this.updateCameraBounds();
-        this.progressTarget = this.readProgress();
-        this.progressCurrent = this.THREE.MathUtils.lerp(
-            this.progressCurrent,
-            this.progressTarget,
+        const travel = Math.max(
+            1,
+            this.journey.offsetHeight - this.viewport.clientHeight,
+        );
+        this.scrollTarget = this.readScrollTarget(travel);
+        this.scrollCurrent = this.THREE.MathUtils.lerp(
+            this.scrollCurrent,
+            this.scrollTarget,
             this.scrollSmoothing,
         );
-        const rawVelocity = this.progressCurrent - this.previousProgress;
+        const rawVelocity = this.scrollCurrent - this.previousScrollCurrent;
         this.velocity = this.THREE.MathUtils.lerp(
             this.velocity,
-            rawVelocity * 100,
+            rawVelocity,
             this.velocityDamping,
         );
         this.velocity = this.THREE.MathUtils.clamp(
@@ -53,7 +57,12 @@ export class DepthScroll {
             this.velocityMax,
         );
         if (Math.abs(this.velocity) < 0.0001) this.velocity = 0;
-        this.previousProgress = this.progressCurrent;
+        this.previousScrollCurrent = this.scrollCurrent;
+        this.progressCurrent = this.THREE.MathUtils.clamp(
+            this.scrollCurrent / travel,
+            0,
+            1,
+        );
         this.camera.position.z = this.THREE.MathUtils.lerp(
             this.maxCameraZ,
             this.minCameraZ,
