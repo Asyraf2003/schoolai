@@ -1,15 +1,14 @@
 @php
   $depthPalettes = [
-      ['#c78f2b', '#ffd166', '#f4a261'],
-      ['#34785f', '#7bd5a7', '#d9c857'],
-      ['#4f6f9f', '#78c8e8', '#c9b8ff'],
-      ['#9d4d5f', '#ff9a76', '#e8b5cf'],
-      ['#66558f', '#a99bea', '#e0b96d'],
-      ['#60783c', '#9fd06e', '#f0c75e'],
+      ['#d9a327', '#f8c85d', '#e7c88d'],
+      ['#bfd96b', '#e7ef94', '#8eb89a'],
+      ['#5f81ab', '#f88b8d', '#cfbbdd'],
+      ['#5b9bc2', '#ffaa00', '#00e1ff'],
+      ['#7d936e', '#fdd895', '#a5b599'],
+      ['#bb96af', '#f4c5a7', '#d29a41'],
   ];
   $depthItems = collect($gallerySection['items'] ?? [])->values();
   $depthCount = max(1, $depthItems->count());
-  $initialAtmosphere = $depthPalettes[0][0];
 @endphp
 
 <div
@@ -18,12 +17,30 @@
   data-lightbox-label="{{ $gallerySection['lightbox_label'] ?? __('home.galeri.lightbox_label') }}"
   data-close-label="{{ $gallerySection['close_label'] ?? __('home.galeri.close_label') }}"
   data-video-title="{{ $gallerySection['video_title'] ?? __('home.galeri.video_title') }}"
-  style="--depth-gallery-count: {{ $depthCount }}; --depth-atmosphere: {{ $initialAtmosphere }}"
+  style="--depth-gallery-count: {{ $depthCount }}"
 >
   <div class="depth-gallery__journey" data-depth-gallery-journey>
     <div class="depth-gallery__viewport" data-depth-gallery-viewport>
       <canvas class="depth-gallery__canvas" data-depth-gallery-canvas aria-hidden="true"></canvas>
       <div class="depth-gallery__veil" aria-hidden="true"></div>
+
+      <svg
+        class="depth-gallery__trail"
+        viewBox="0 0 1000 1000"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          class="depth-gallery__trail-glow"
+          d="M 72 960 C 80 760 330 810 288 610 C 246 410 740 540 690 300 C 650 118 890 210 930 34"
+        />
+        <path
+          class="depth-gallery__trail-line"
+          data-depth-gallery-trail
+          pathLength="1"
+          d="M 72 960 C 80 760 330 810 288 610 C 246 410 740 540 690 300 C 650 118 890 210 930 34"
+        />
+      </svg>
 
       <div
         class="depth-gallery__stage"
@@ -35,18 +52,14 @@
           @php
             $palette = $depthPalettes[$loop->index % count($depthPalettes)];
             $side = $loop->even ? 1 : -1;
-            $isReversed = $loop->index % 2 === 1;
             $mediaUrl = (string) ($item['media_url'] ?? '');
             $thumbnailUrl = (string) ($item['thumbnail_url'] ?? '');
             $itemTitle = (string) ($item['title'] ?? '');
-            $itemType = (string) ($item['type_label'] ?? (
-                $gallerySection['default_type_label'] ?? __('home.galeri.default_type_label')
-            ));
           @endphp
 
           <article class="depth-gallery__item" role="listitem" data-depth-gallery-item>
             <a
-              class="depth-gallery__card{{ $isReversed ? ' depth-gallery__card--reverse' : '' }}"
+              class="depth-gallery__card{{ $loop->even ? ' depth-gallery__card--reverse' : '' }}"
               href="{{ $mediaUrl }}"
               data-depth-gallery-card
               data-gallery-index="{{ $loop->index }}"
@@ -54,7 +67,7 @@
               data-caption="{{ $item['caption'] ?? '' }}"
               data-category="{{ $item['category'] ?? '' }}"
               data-date="{{ $item['date'] ?? '' }}"
-              data-type-label="{{ $itemType }}"
+              data-type-label="{{ $item['type_label'] ?? '' }}"
               data-media-url="{{ $mediaUrl }}"
               data-is-video="{{ ! empty($item['is_video']) ? '1' : '0' }}"
               style="--depth-side: {{ $side }}; --depth-bg: {{ $palette[0] }}; --depth-blob-a: {{ $palette[1] }}; --depth-blob-b: {{ $palette[2] }}"
@@ -81,13 +94,6 @@
               </span>
 
               <span class="depth-gallery__copy">
-                <span class="depth-gallery__eyebrow">
-                  <b>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</b>
-                  <span>{{ $itemType }}</span>
-                  @if (! empty($item['date']))
-                    <span>{{ $item['date'] }}</span>
-                  @endif
-                </span>
                 <strong>{{ $itemTitle }}</strong>
                 @if (! empty($item['caption']))
                   <small>{{ $item['caption'] }}</small>
@@ -96,10 +102,6 @@
             </a>
           </article>
         @endforeach
-      </div>
-
-      <div class="depth-gallery__meter" aria-hidden="true">
-        <span data-depth-gallery-progress></span>
       </div>
     </div>
   </div>
