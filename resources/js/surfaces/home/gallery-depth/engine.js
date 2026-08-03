@@ -1,4 +1,5 @@
 import { DepthBackground } from './background.js';
+import { DepthGalleryEndCta } from './end-cta.js';
 import { renderDepthFrame } from './engine-frame.js';
 import { DepthGalleryPlanes } from './gallery.js';
 import { DepthLabel } from './label.js';
@@ -21,13 +22,19 @@ export class DepthGalleryEngine {
         this.background = new DepthBackground(THREE);
         this.gallery = new DepthGalleryPlanes(THREE, config);
         this.label = new DepthLabel(root, this.gallery, config);
+        const endSteps = Number.parseInt(
+            root.getAttribute('data-depth-gallery-end-steps') || '0',
+            10,
+        );
         this.scroll = new DepthScroll(
             THREE,
             this.camera,
             this.gallery,
             this.journey,
             this.viewport,
+            endSteps,
         );
+        this.endCta = new DepthGalleryEndCta(root, this.scroll);
         this.trail = new DepthTrailController(THREE, this.gallery);
         this.textures = new Map();
         this.resizeObserver = null;
@@ -59,6 +66,7 @@ export class DepthGalleryEngine {
             this.background.init();
             this.trail.init(this.scene, this.camera);
             this.scroll.init();
+            this.endCta.init();
             if (!this.resize()) return false;
 
             window.addEventListener('resize', this.onResize, { passive: true });
@@ -176,6 +184,7 @@ export class DepthGalleryEngine {
             'webglcontextlost',
             this.onContextLost,
         );
+        this.endCta.dispose();
         this.label.clear();
         this.trail.dispose(this.scene);
         this.gallery.dispose(this.scene);
