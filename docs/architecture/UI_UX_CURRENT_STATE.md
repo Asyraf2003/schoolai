@@ -3,15 +3,13 @@
 Status: `BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-03
 Repository: `Asyraf2003/schoolai`
-Source main before batch: `4bb9a00eab448aa4b33d28119b2421e3736976db`
 Target branch: `main`
+Active blueprint: `blueprints/2026-08-03-home-values-card-story.md`
 
 Commit publication proves source state only. It does not prove build, browser,
 responsive, accessibility, performance, or lifecycle completion.
 
 ## Active production batch
-
-Blueprint: `blueprints/2026-08-03-home-values-card-story.md`
 
 - ID: `HOME-VALUES-001`
 - State: `IMPLEMENTING`
@@ -22,123 +20,120 @@ Blueprint: `blueprints/2026-08-03-home-values-card-story.md`
 
 ## Owner-accepted reference contract
 
-The owner supplied a chronological screenshot sequence from Lusion About and
-accepted the following SchoolAI translation:
+The owner accepted this SchoolAI translation:
 
 - blue full-viewport field with oversized localized Values heading;
 - four readable white cards using current school value content;
 - sequential right-to-left Y-axis flips;
-- school-owned geometric line backs, not copied Lusion art;
+- school-owned geometric line backs, not copied reference art;
 - fan, centered stack, and final departure;
 - six responsive tiers from 360px;
-- one shared UI and motion meaning for ID/EN/AR and LTR/RTL;
-- direct publication to `Asyraf2003/schoolai` `main`.
+- one shared UI/motion meaning for ID/EN/AR and LTR/RTL.
 
-Screenshots prove desired chronology/composition only. They do not prove source
-ownership, browser parity, performance, or runtime behavior.
+## Runtime feedback FACT
 
-## Inspected source FACT
+Owner screenshots from local `127.0.0.1:8000` on a 1920x1080
+Brave/Chromium desktop prove the first published implementation failed its
+intended sticky composition:
 
-- `school-values.blade.php` previously rendered four `.nilai-card` buttons.
-- `resources/js/pages/welcome/value-cards.js` previously owned click, focus, and
-  hover active-card state.
-- Values CSS remains distributed through legacy welcome modules `004`, `009`,
-  `010`, and `011`, but those selectors no longer match the new Values DOM.
-- `resources/js/pages/welcome.js` now imports the dedicated Values controller.
-- `welcome.blade.php` and `vite.config.js` own the new Values stylesheet entry.
-- `BuildsHomePage` supplies `schoolValues` from `lang/{id,en,ar}/home.php`.
-- All locales expose four cards in the same semantic Q/I/G/N order.
-- ID/EN use Inter/LTR; AR uses Cairo/RTL through current typography adapters.
-- No WebGL or third-party dependency is required for this surface.
+- the card stage moved upward beneath the fixed navbar;
+- cards were small and partially transparent;
+- the heading did not enter during the captured journey;
+- a long empty blue area remained after the stage moved away.
 
-## Implemented source contract
+This is a runtime `FAIL` for the first published motion result. It does not prove
+the corrected patch.
 
-- Values now uses one semantic section, localized heading/description, and four
-  article cards with meaningful front faces.
-- Card backs are decorative and hidden from assistive technology.
-- One dedicated CSS route entry owns the blue field, cards, 3D faces, six-tier
-  composition, static fallback, and reduced-motion result.
-- One Values controller owns scroll progress, inertia, measurement,
-  intersection/visibility suspension, resize, reverse scroll, and BFCache
-  restoration.
-- One deterministic timeline owns enter, sequential flip, fan, stack, and exit.
-- New source uses a dedicated `.values-*` namespace; legacy `.nilai-*` CSS no
-  longer matches rendered Values DOM.
-- The old `value-cards.js` controller and import are removed.
-- No content data, route, DB, WebGL, media, or unrelated section changes.
+## Root-cause FACT
+
+- `.values-story` used `overflow: hidden`.
+- Its child `.values-story__stage` used `position: sticky`.
+- The overflow ancestor became the sticky containing scroll context, so the
+  stage travelled with the page instead of remaining pinned.
+- Card entry opacity lasted through 9% of a `900svh` desktop timeline, creating
+  almost one viewport of weak/empty composition.
+- Sticky release and the card exit both completed at progress `1`, allowing the
+  stage to unpin before inertial exit painting had visibly settled.
+
+## Corrected source contract
+
+Correction source head before this ledger update:
+`a66a04c91a4f40ff57430734b5d2ab9ed6e07e2c`.
+
+- Values root now uses `overflow: clip`; static fallback retains hidden overflow.
+- Motion activation now requires `overflow: clip`, sticky, and preserve-3d
+  support. Unsupported engines retain the semantic static grid.
+- Sticky stage starts below `--nav-h` and fills the remaining viewport.
+- Desktop travel is reduced from `820–900svh` to `500–520svh`.
+- Card targets are enlarged across all six tiers.
+- Initial cards begin at `0.88` opacity and settle within 2.5% progress.
+- Sequential flip starts earlier; fan, stack, heading, and exit phases are
+  compressed into a continuous journey.
+- Progress reaches `1` with a `0.75` viewport release hold so inertial exit can
+  settle before the sticky stage unpins.
+- No DOM, locale data, routes, DB, WebGL, media, or unrelated section changed.
 
 ## Six-tier source contract
 
 | Tier | Source composition |
 |---|---|
-| XS 360–639 | one readable stack, compact fan, one-column static fallback |
-| SM 640–767 | 2x2 fronts/fallback with wider fan |
-| MD 768–1023 | larger 2x2 field and balanced vertical spacing |
-| LG 1024–1279 | four cards in one row |
-| XL 1280–1535 | wider four-card cinematic field |
-| 2XL >=1536 | bounded cards/copy with expanded blue background |
+| XS 360–639 | large readable stack, compact fan, `600svh` |
+| SM 640–767 | 2x2 fronts/fallback, `580svh` |
+| MD 768–1023 | larger 2x2 field, `560svh` |
+| LG 1024–1279 | four cards in one row, `520svh` |
+| XL 1280–1535 | enlarged cinematic row, `500svh` |
+| 2XL >=1536 | bounded cards on expanded field, `520svh` |
 
-Card width also clamps to short viewport height. Navigation is untouched, so
-1180/1181 remains outside active proof.
+Navigation source is untouched, so 1180/1181 remains outside the changed
+surface proof.
 
 ## Locale/direction source contract
 
 - One DOM, controller, timeline, and physical card order serves ID, EN, and AR.
 - Locale changes copy, `lang`, `dir`, family, and natural text alignment only.
-- Neutral Y-axis flips, vertical scroll time, fan order, and stack order do not
-  reverse in RTL.
+- Neutral Y-axis flips, vertical time, fan order, and stack order stay shared.
 - No mixed-language duplicate DOM or locale-specific component fork exists.
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Mandatory docs/current main | `PASS_SOURCE` | docs and main inspected |
-| Owner art-direction decision | `PASS` | exact prompt + screenshots |
-| Existing DOM/CSS/JS/Vite/lang audit | `PASS_SOURCE` | current owners inspected |
-| Dedicated semantic Values DOM | `IMPLEMENTED_SOURCE` | bounded Blade replacement |
-| Static/reduced fallback | `IMPLEMENTED_SOURCE` | no readiness class required |
-| Sequential flip/fan/stack/exit | `IMPLEMENTED_SOURCE` | one deterministic controller |
-| Six-tier architecture | `IMPLEMENTED_SOURCE` | CSS tier variables + one DOM |
-| ID/EN/AR and RTL architecture | `IMPLEMENTED_SOURCE` | existing content/type owners |
-| Focused feature test | `IMPLEMENTED_SOURCE` | DOM/state contract added |
-| JavaScript syntax | `PASS_LOCAL_PATCH` | `node --check` on new modules |
+| Mandatory docs/source audit | `PASS_SOURCE` | current owners inspected |
+| Owner art direction | `PASS` | prompt and reference screenshots |
+| Initial desktop runtime | `FAIL` | owner screenshots show broken sticky journey |
+| Sticky root cause | `PASS_SOURCE` | overflow/sticky ownership identified |
+| Corrected sticky/fallback contract | `IMPLEMENTED_SOURCE` | bounded CSS/JS patch |
+| Corrected pacing/scale contract | `IMPLEMENTED_SOURCE` | layout/tier modules |
+| JavaScript syntax | `PASS_LOCAL_PATCH` | `node --check` on all three modules |
+| Correction diff scope | `PASS_SOURCE` | five Values-owned files only |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run repo command |
-| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
-| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
-| PHP/focused tests | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
-| Chromium/WebKit six-tier runtime | `BLOCKED_BY_MISSING_EVIDENCE` | no rendered matrix yet |
-| Accessibility/zoom/reduced motion | `BLOCKED_BY_MISSING_EVIDENCE` | runtime proof absent |
-| Lighthouse/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | no comparable runs |
-
-## Prior production state
-
-Vision/Mission momentum and completion-beat source changes are published on
-`main`, but their full browser/performance matrix remains unproven. Gallery
-refinement history remains outside this Values batch and is not modified.
+| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run after correction |
+| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run after correction |
+| PHP/focused tests | `BLOCKED_BY_MISSING_EVIDENCE` | not run after correction |
+| Corrected Chromium runtime | `BLOCKED_BY_MISSING_EVIDENCE` | fresh recording absent |
+| WebKit/six-tier/RTL runtime | `BLOCKED_BY_MISSING_EVIDENCE` | matrix absent |
+| Accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | comparable runs absent |
 
 ## Progress ledger
 
 | Stage | Status |
 |---|---|
-| V01 mandatory docs and current source | `PASS_SOURCE` |
-| V02 reference chronology and owner decision | `PASS` |
-| V03 DOM/CSS/JS/Vite/content audit | `PASS_SOURCE` |
-| V04 accepted Values blueprint | `IMPLEMENTING` |
-| V05 semantic/static surface | `IMPLEMENTED_SOURCE` |
-| V06 scroll motion and lifecycle | `IMPLEMENTED_SOURCE` |
-| V07 six-tier/locale adapters | `IMPLEMENTED_SOURCE` |
-| V08 focused test and publication | `IMPLEMENTED_SOURCE` |
-| V09 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` |
-| V10 browser/accessibility/performance matrix | `BLOCKED_BY_MISSING_EVIDENCE` |
+| V01 docs/current source | `PASS_SOURCE` |
+| V02 owner storyboard | `PASS` |
+| V03 initial implementation | `IMPLEMENTED_SOURCE` |
+| V04 initial XL runtime | `FAIL` |
+| V05 root-cause correction | `IMPLEMENTED_SOURCE` |
+| V06 corrected XL runtime | `BLOCKED_BY_MISSING_EVIDENCE` |
+| V07 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` |
+| V08 full release matrix | `BLOCKED_BY_MISSING_EVIDENCE` |
 
 ## STATUS
 
-The Values card story is implemented in source and published directly to
-`main`. It is not runtime or release `PASS`.
+The first runtime result failed. The sticky containment, scale, pacing, and
+release defects are corrected in source and published to `main`. The corrected
+runtime remains unproven.
 
 ## NEXT VALID STEP
 
-Pull resulting `main`, run the focused Values test plus mandatory automated
-gates, then capture one XL Chromium scroll recording from front cards through
-flip, fan, stack, and exit before expanding to the remaining tiers and WebKit.
+Pull current `main` and capture one fresh 1920x1080 Brave/Chromium scroll
+sequence showing front cards, sequential flips, fan, stack, heading, and exit.
