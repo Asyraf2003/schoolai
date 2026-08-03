@@ -20,6 +20,12 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
     $planes = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/gallery.js'
     ));
+    $motion = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/gallery-motion.js'
+    ));
+    $scroll = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/scroll.js'
+    ));
     $background = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/background.js'
     ));
@@ -49,6 +55,7 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->and($base)
         ->toContain('height: 100svh')
         ->toContain('position: sticky')
+        ->toContain('--depth-step: 280px')
         ->not->toContain('perspective:')
         ->not->toContain('transform-style: preserve-3d')
         ->and($responsive)
@@ -57,6 +64,7 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('@media (min-width: 1024px)')
         ->toContain('@media (min-width: 1280px)')
         ->toContain('@media (min-width: 1536px)')
+        ->toContain('--depth-step: 500px')
         ->toContain('@media (prefers-reduced-motion: reduce)')
         ->and($controller)
         ->toContain('loadThreeRuntime')
@@ -76,6 +84,12 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('this.planeGap = 5')
         ->toContain('this.mobilePlaneScale = 0.65')
         ->toContain('this.mobileXSpreadFactor = 0.25')
+        ->and($motion)
+        ->toContain('const depthInfluence = 1 + index * 0.05')
+        ->and($scroll)
+        ->toContain('this.scrollSmoothing = 0.08')
+        ->toContain('this.velocityDamping = 0.12')
+        ->toContain('this.scrollCurrent / travel')
         ->and($background)
         ->toContain('ShaderMaterial')
         ->toContain('setMoodBlend')
@@ -85,6 +99,8 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->and($trailController)
         ->toContain('horizontalCycles: 1.85')
         ->toContain('verticalCycles: 2.1')
+        ->toContain('this.trail.curveTension = 0.67')
+        ->toContain('this.trail.pointSmoothing = 0.53')
         ->and(file_exists(resource_path(
             'js/surfaces/home/gallery-depth/renderer.js'
         )))
