@@ -1,4 +1,5 @@
 import { DepthBackground } from './background.js';
+import { renderDepthFrame } from './engine-frame.js';
 import { DepthGalleryPlanes } from './gallery.js';
 import { DepthLabel } from './label.js';
 import { DepthScroll } from './scroll.js';
@@ -46,22 +47,30 @@ export class DepthGalleryEngine {
                 canvas: this.canvas,
                 antialias: true,
             });
-            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+            this.renderer.setPixelRatio(
+                Math.min(window.devicePixelRatio || 1, 1.5),
+            );
             this.renderer.outputColorSpace = this.THREE.SRGBColorSpace;
             this.renderer.autoClear = false;
             this.textures = await this.preloadTextures();
             if (this.disposed || !this.hasPrimaryTexture()) return false;
+
             this.gallery.init(this.scene, this.textures);
             this.background.init();
             this.trail.init(this.scene, this.camera);
             this.scroll.init();
             if (!this.resize()) return false;
+
             window.addEventListener('resize', this.onResize, { passive: true });
-            this.canvas.addEventListener('webglcontextlost', this.onContextLost);
+            this.canvas.addEventListener(
+                'webglcontextlost',
+                this.onContextLost,
+            );
             if ('ResizeObserver' in window) {
                 this.resizeObserver = new ResizeObserver(this.onResize);
                 this.resizeObserver.observe(this.viewport);
             }
+
             this.initialized = true;
             return this.renderOnce(performance.now());
         } catch (error) {
@@ -81,6 +90,7 @@ export class DepthGalleryEngine {
         )];
         const loader = new this.THREE.TextureLoader();
         const textures = new Map();
+
         await Promise.all(sources.map(async (source) => {
             try {
                 const texture = await loader.loadAsync(source);
@@ -90,6 +100,7 @@ export class DepthGalleryEngine {
                 console.warn('Gallery texture failed to load', source, error);
             }
         }));
+
         return textures;
     }
 
@@ -99,6 +110,7 @@ export class DepthGalleryEngine {
         const width = Math.round(rect.width);
         const height = Math.round(rect.height);
         if (width < 2 || height < 2) return false;
+
         this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(width, height, false);
@@ -112,58 +124,8 @@ export class DepthGalleryEngine {
         if (this.initialized) this.renderOnce(performance.now());
     }
 
-    renderScene(time) {
-        this.scroll.update();
-        this.trail.update(this.camera, this.scroll, time);
-        this.gallery.update(this.camera, this.scroll);
-        this.label.update(this.camera);
-        const planeBlend = this.gallery.getPlaneBlendData(this.camera.position.z);
-        const moodBlend = this.gallery.getMoodBlendData(this.camera.position.z);
-        if (moodBlend) this.background.setMoodBlend(moodBlend);
-        const velocity = this.THREE.MathUtils.clamp(
-            Math.abs(this.scroll.velocity) / Math.max(this.scroll.velocityMax, 0.0001),
-            0,
-            1,
-        );
-        const blend = planeBlend?.blend || 0;
-        const stability = this.THREE.MathUtils.smoothstep(
-            Math.abs(blend - 0.5) * 2,
-            0.35,
-            1,
-        );
-        this.background.setMotionResponse({
-            depthProgress: this.gallery.getDepthProgress(this.camera.position.z),
-            velocityIntensity: velocity * stability,
-        });
-        this.background.update(time);
-        this.renderer.clear(true, true, true);
-        this.background.render(this.renderer);
-        this.renderer.clearDepth();
-        this.renderer.render(this.scene, this.camera);
-    }
-
     renderOnce(time = performance.now()) {
-        if (!this.renderer || this.disposed) return false;
-        try {
-            this.renderScene(time);
-            return this.isFrameHealthy();
-        } catch (error) {
-            console.warn('Depth gallery frame failed', error);
-            return false;
-        }
-    }
-
-    isFrameHealthy() {
-        const size = this.renderer.getDrawingBufferSize(new this.THREE.Vector2());
-        const context = this.renderer.getContext();
-        const hasVisiblePlane = this.gallery.planes.some(
-            (plane) => plane.material.opacity > 0.01,
-        );
-        return size.x > 1
-            && size.y > 1
-            && !context.isContextLost()
-            && context.getError() === context.NO_ERROR
-            && hasVisiblePlane;
+        return renderDepthFrame(this, time);
     }
 
     activate() {
@@ -174,7 +136,9 @@ export class DepthGalleryEngine {
         if (!this.running || this.disposed) return;
         if (!this.renderOnce(time)) {
             this.stop();
-            this.onFailure(new Error('Depth gallery produced an invalid frame'));
+            this.onFailure(
+                new Error('Depth gallery produced an invalid frame'),
+            );
             return;
         }
         this.frame = requestAnimationFrame(this.animate);
@@ -205,7 +169,10 @@ export class DepthGalleryEngine {
         window.removeEventListener('resize', this.onResize);
         this.resizeObserver?.disconnect();
         this.resizeObserver = null;
-        this.canvas?.removeEventListener('webglcontextlost', this.onContextLost);
+        this.canvas?.removeEventListener(
+            'webglcontextlost',
+            this.onContextLost,
+        );
         this.label.clear();
         this.trail.dispose(this.scene);
         this.gallery.dispose(this.scene);
