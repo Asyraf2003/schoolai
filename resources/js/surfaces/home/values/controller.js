@@ -95,6 +95,8 @@ export function createValuesStory(root) {
             target,
             rootTop,
             viewportHeight,
+            time,
+            geometry.mode === 4,
         );
 
         syncHeadingClasses(root, headingSnapshot);
@@ -108,7 +110,7 @@ export function createValuesStory(root) {
         );
         snapNext = false;
 
-        if (!snapshot.settled) requestRender();
+        if (!snapshot.settled || !headingSnapshot.settled) requestRender();
         else lastTime = 0;
     }
 
