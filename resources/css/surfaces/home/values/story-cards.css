@@ -28,6 +28,7 @@
     transform-style: preserve-3d;
 }
 
+.values-card__float,
 .values-card__inner,
 .values-card__face {
     position: absolute;
@@ -35,11 +36,15 @@
     border-radius: clamp(1rem, 1.8vw, 1.55rem);
 }
 
+.values-card__float,
+.values-card__inner {
+    transform-style: preserve-3d;
+}
+
 .values-card__inner {
     border: 1px solid rgba(255,255,255,.5);
     box-shadow: 0 2rem 5rem rgba(5,11,55,.24);
     transform: rotateY(var(--values-ry));
-    transform-style: preserve-3d;
     will-change: transform;
 }
 
@@ -153,4 +158,35 @@
     font-weight: 500;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+@keyframes values-card-float {
+    0%,
+    100% {
+        transform: translate3d(0, -4px, 0);
+    }
+
+    50% {
+        transform: translate3d(0, 4px, 0);
+    }
+}
+
+@media (min-width: 1280px)
+and (prefers-reduced-motion: no-preference) {
+    .values-story.is-values-ready .values-card__float {
+        animation: values-card-float 4.8s ease-in-out infinite;
+        will-change: transform;
+    }
+
+    .values-card:nth-child(2) .values-card__float {
+        animation-delay: -1.2s;
+    }
+
+    .values-card:nth-child(3) .values-card__float {
+        animation-delay: -2.4s;
+    }
+
+    .values-card:nth-child(4) .values-card__float {
+        animation-delay: -3.6s;
+    }
 }
