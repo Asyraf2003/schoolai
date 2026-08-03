@@ -4,230 +4,227 @@ BLUEPRINT ID: `HOME-GALLERY-003`
 STATUS: `IMPLEMENTING`
 OWNER: Asyraf
 DATE: 2026-08-03
-SOURCE MAIN SHA: `dfef1cef25f3de744c3abaf03d1825781c4f9db6`
-ACTIVE ROUTE/SURFACE: homepage Gallery only
+SOURCE MAIN SHA: `03624783eebe794fbbc383326b25a31806b0dc8a`
+ACTIVE ROUTE/SURFACE: homepage Gallery plus bounded transition into `/galeri`
 TARGET EXECUTION CHANNEL: Web AI with GitHub connector
 REFERENCE: `houmahani/codrops-depth-gallery`
 LICENSE: MIT notice under `docs/third-party/`
 
 ## Owner goal and acceptance
 
-Port the reference Gallery faithfully. Do not invent another composition. The
-only intended product substitutions are:
+Port the reference Gallery faithfully without inventing another composition.
+SchoolAI media and text replace the reference content, while the standalone demo
+scroll is mapped to a sticky homepage section.
 
-- SchoolAI database media replaces the reference flower textures;
-- SchoolAI title and optional description replace color-spec labels;
-- the standalone demo scroll is mapped to a sticky homepage section so the
-  surrounding page remains navigable;
-- debug pane, FPS display, Codrops frame/branding, and demo-only controls are
-  omitted.
+The owner accepted these refinements on 2026-08-03 after the corrected desktop
+runtime became visible:
 
-The owner explicitly accepted this engine and art direction on 2026-08-03.
+- reduce media plane width and height to roughly two thirds of the accepted
+  result;
+- make every homepage media item a passive preview, not a link or lightbox
+  trigger;
+- exclude video/embed items from homepage data entirely;
+- keep video/embed playback available on the dedicated `/galeri` page;
+- place the localized Gallery CTA as the final depth step after all media;
+- on plain primary click, enlarge the CTA/viewport, blur, rotate the CTA to
+  approximately `45deg`, then navigate to `/galeri`;
+- settle the destination page from blur/scale into its normal layout;
+- use ordinary navigation for reduced motion, modified clicks, no WebGL, or
+  animation API failure;
+- replace seeded and runtime dummy captions with meaningful localized school
+  documentation copy.
 
 ## FACT
 
-The rejected first implementation used large HTML cards. The rejected second
-implementation used CSS depth transforms, a custom raw WebGL background, and an
-SVG trail. Neither was a faithful port.
+The active Three.js implementation uses:
 
-Reference source inspection proves the actual system uses:
+- `PerspectiveCamera(45, 1, 0.1, 100)`;
+- textured `PlaneGeometry(3, 3)` meshes along the Z axis;
+- plane gap `5` and mobile X spread `0.25`;
+- plane opacity blending, pointer parallax, velocity breath/tilt/scale, and
+  gesture drift;
+- an orthographic GLSL background with animated blobs, grain, palette blend,
+  depth response, and velocity response;
+- a tapered Catmull-Rom tube trail plus trail-head particles;
+- DOM title/description labels independent of media geometry;
+- a semantic fallback that remains usable without WebGL.
 
-- Three.js `PerspectiveCamera(45, 1, 0.1, 100)` and WebGLRenderer;
-- textured `PlaneGeometry(3, 3)` meshes placed on the Z axis;
-- plane gap `5`, camera offsets `5`, desktop scale `1`, mobile scale `0.65`,
-  and mobile X spread `0.25`;
-- opacity blending between current and next planes;
-- pointer parallax, velocity breath, tilt, scale pulse, and gesture drift;
-- an orthographic GLSL background with two animated blobs, grain, palette
-  blending, depth radius response, and velocity luminance response;
-- a tapered Three.js Catmull-Rom tube trail plus trail-head particles;
-- small fixed label overlays independent from plane dimensions.
+The prior `1x1` canvas bootstrap failure and superseded public Gallery
+stylesheet were already corrected. The latest owner screenshot proves the
+corrected desktop runtime now displays the first media plane, background, title,
+and caption. It does not prove the six-tier or browser matrix.
 
-The first Three.js integration also failed at runtime. The owner screenshot
-proved that only a flat background and HTML labels appeared. Source audit proved
-that the canvas was `display: none` while `engine.init()` measured it, producing
-a `1x1` drawing buffer. The fallback was then hidden before any visible plane or
-healthy post-layout frame was proven. A superseded public Gallery stylesheet was
-also still linked from the homepage.
+Source inspection also proves:
+
+- homepage data previously accepted both photo and video records;
+- homepage media previously opened a dedicated lightbox from canvas and fallback
+  links;
+- `/galeri` has its own controller, cards, and lightbox that create trusted video
+  iframes;
+- dummy captions originated in the Gallery seeder and could persist in an
+  existing database;
+- the old CTA existed outside the depth journey.
 
 ## Scope
 
 SCOPE IN:
-- homepage Gallery Blade/CSS/JS owners;
-- deferred pinned Three.js runtime;
-- WebGL bootstrap, first-frame, resize, failure, and fallback lifecycle;
-- removal of the superseded public Gallery stylesheet owner;
-- CSP permission for the pinned runtime;
-- existing lightbox integration;
-- focused Gallery and CSP tests;
-- MIT notice, blueprint, and current-state ledger.
+- homepage Gallery query and normalization;
+- homepage Gallery Blade/CSS/JS scene owners;
+- final depth CTA and route-transition lifecycle;
+- destination arrival enhancement on `/galeri`;
+- Gallery seed copy;
+- focused Gallery tests, blueprint, and current-state ledger.
 
 SCOPE OUT:
-- `/galeri` page;
-- Hero, Vision/Mission, Values, Programs, Articles, navigation, and footer;
-- DB schema/admin/data normalization;
-- About and Testimonial activation;
+- `/galeri` grid, card composition, media trust policy, and lightbox behavior;
+- Gallery DB schema and admin CRUD;
+- Hero, Vision/Mission, Values, Programs, Articles, navigation, footer, About,
+  and Testimonial;
 - unrelated historical CSS migration;
 - pre-existing Hero checksum mismatch.
 
-## Semantic and fallback contract
+## Semantic and media contract
 
-- Blade renders one normal link per media item with image, title, and caption.
-- The fallback list remains visible with no JS, reduced motion, CDN failure,
-  unsupported WebGL, primary texture failure, invalid first frame, or context
-  loss.
-- The canvas remains in layout but visually hidden, inert, `aria-hidden`, and
-  removed from the tab order while Three initializes.
-- The controller applies sticky geometry first, waits one animation frame, then
-  reruns renderer sizing and a complete frame.
-- The fallback is hidden and made inert only when the post-layout frame proves a
-  drawing buffer larger than `1x1`, a live context, no GL error, and at least one
-  visible media plane.
-- When activation succeeds, the canvas becomes the active-media button for
-  pointer and keyboard users.
-- Title and description remain DOM overlay text, not canvas text.
-- Existing lightbox semantics, Escape close, and focus restoration remain.
+- Homepage displays published photo items only.
+- Video/embed records remain stored and remain available on `/galeri`.
+- Homepage canvas is decorative and permanently hidden from assistive
+  technology; it has no button role, tab stop, accessible action, or click
+  handler.
+- Homepage fallback items are passive semantic articles containing image, title,
+  and optional caption. They are not anchors or buttons.
+- The only homepage Gallery action is the localized CTA to `/galeri`.
+- No-JS, reduced-motion, unsupported WebGL, texture failure, invalid first frame,
+  or context loss exposes the passive list followed by a normal CTA link.
+- Meaningful title/caption text remains DOM content.
+- Existing `/galeri` cards retain keyboard/pointer lightbox behavior and trusted
+  video iframe playback.
 
-## Faithful scene contract
+## Scene and scale contract
 
-- One Three scene owns all media planes and the 3D trail.
+- One Three scene owns all photo planes and the 3D trail.
 - One orthographic background scene renders before the depth scene.
-- Renderer order is background, clear depth, then gallery/trail scene.
-- Camera and plane configuration retain reference numeric values.
-- Media aspect ratio changes only plane X scale; images are not cropped.
-- X positions and palettes cycle through the five reference presets when
-  SchoolAI provides more than five items.
-- Labels show title on one side and optional description on the other.
-- Labels are small, black, and never change plane geometry.
-- Clicking or pressing Enter/Space on the active canvas opens the active
-  SchoolAI item.
+- Render order remains background, clear depth, then gallery/trail scene.
+- Homepage desktop plane scale is `0.67`; mobile plane scale is `0.44`.
+- These values are approximately two thirds of the previous `1` and `0.65`
+  scales while preserving intrinsic image aspect ratio.
+- Media aspect affects only plane X scale; images remain uncropped.
+- X positions and palettes continue cycling through the five reference presets.
+- Labels remain small, black, and independent of plane geometry.
+- The final media fades during the extra depth step as the CTA enters.
+
+## Final CTA storyboard
+
+| State | Trigger | Result |
+|---|---|---|
+| unavailable | media sequence active | CTA invisible, inert, and outside tab order |
+| entering | scroll passes the final media step | CTA fades/scales from below; labels and final plane fade |
+| ready | end progress reaches the accepted threshold | CTA becomes the only interactive Gallery element |
+| leaving | plain primary click | renderer stops; viewport enlarges and blurs; CTA enlarges, then rotates to `45deg` and blurs |
+| destination | animations finish | normal navigation to `/galeri`; destination main settles from blur/scale |
+| interrupted | modified/middle click or reduced motion | browser-native navigation with no intercepted animation |
+| failed/static | WebGL or scene fails | ordinary CTA remains after passive fallback list |
+
+The transition uses Web Animations promises rather than an arbitrary timeout.
+Session storage only carries a one-use arrival marker; storage failure does not
+block navigation.
 
 ## Homepage scroll integration
 
-The reference intercepts wheel/touch because it is a standalone full-screen
-demo. SchoolAI cannot hijack the whole homepage.
+- Sticky-section document progress remains mapped to camera Z.
+- One additional plane-gap-equivalent step is reserved after the last media.
+- The extra step is included in journey height and camera bounds.
+- `endProgress` is calculated only from that final segment.
+- Fast/reverse scrolling can move the CTA and final media in both directions.
+- Normal page scrolling remains available before and after Gallery.
 
-The accepted adapter:
+## Bootstrap, lifecycle, and failure
 
-- keeps reference camera bounds and smoothing;
-- maps sticky-section document progress to camera Z;
-- retains velocity calculation for breath, trail, and background response;
-- preserves normal page scrolling before and after Gallery;
-- does not create a second visual choreography.
-
-## Bootstrap and resize contract
-
-- The canvas must never use `display: none` while renderer dimensions are read.
-- Pre-activation hiding uses visibility, opacity, and pointer state only.
-- Before sticky geometry is active, the drawing-buffer height is bounded to the
-  viewport, not the full semantic fallback-list document height.
-- After `is-depth-ready` applies sticky geometry, one RAF must elapse before
-  `engine.activate()` reruns `resize()` and renders the acceptance frame.
-- `ResizeObserver` watches the Gallery viewport. Window resize remains as a
-  secondary signal.
-- Camera projection, renderer dimensions, plane scale, and plane layout update
-  together.
-- The primary texture must be present before cinematic activation. Partial
-  secondary texture failure may use the plane fallback color without removing
-  semantic access.
-- A failed frame stops and disposes the engine before returning to the fallback.
-- `is-depth-ready` means geometry is prepared. `is-depth-active` means the
-  acceptance frame passed. These states must not be conflated again.
-
-## Owner cleanup contract
-
-- `public/css/welcome-gallery-desktop.css` is a losing owner from the former
-  `.galeri-story*` composition.
-- Its direct homepage `<link>` and file are removed in this batch.
-- Historical CSS that also owns other surfaces is not deleted merely because it
-  contains Gallery-era names. It requires separate ownership proof.
-- No later selector, inline fallback, or z-index escalation may conceal a
-  conflicting owner.
-
-## Runtime and dependency decision
-
-- Three.js is pinned to `0.183.0` and dynamically imported only near Gallery.
-- The module is currently served from `cdn.jsdelivr.net` because this connector
-  cannot truthfully regenerate `package-lock.json` with `npm install`.
-- CSP allows only that HTTPS origin for script/connect loading on the homepage.
-- CDN or network failure retains the semantic fallback.
-- A future self-hosting/package migration requires its own lockfile/build proof;
-  it must not change scene behavior.
-- DPR remains capped at `1.5` under the SchoolAI quality contract.
+- Canvas remains measurable before initialization and never uses `display:none`
+  while renderer dimensions are read.
+- Activation waits for sticky geometry and a healthy post-layout frame.
+- Drawing buffer, context, texture, and visible plane/CTA health are checked
+  before the semantic fallback is removed.
+- `ResizeObserver` plus window resize update renderer, camera, and plane layout.
+- One RAF runs only while the section is relevant and the document visible.
+- The route transition stops the renderer before expensive blur/scale work.
+- Hidden tab, offscreen state, reduced-motion change, BFCache, permanent exit,
+  invalid frame, and context loss suspend or dispose owned resources.
+- Disposal includes CTA state, RAF, observers, listeners, renderer, textures,
+  materials, geometry, background, trail, particles, and scene references.
 
 ## Six-tier contract
 
-One scene/controller/canvas/content source serves every tier.
+One Blade source, scene, controller, CTA, and transition serves all tiers.
 
-| Tier | Scene and labels |
+| Tier | Media and CTA contract |
 |---|---|
-| XS 360–639 | reference mobile scale/spread; labels at bottom in two columns |
-| SM 640–767 | mobile scale/spread; wider safe-area label spacing |
-| MD 768–1023 | desktop scale/spread; labels return to viewport sides |
-| LG 1024–1279 | same camera/scene; increased side label inset |
-| XL 1280–1535 | same camera/scene; bounded editorial side offsets |
-| 2XL >=1536 | same camera/scene; wider atmosphere, bounded labels |
+| XS 360–639 | mobile plane scale `0.44`; labels at bottom; CTA width bounded to 260px |
+| SM 640–767 | same mobile scene; wider safe-area spacing |
+| MD 768–1023 | desktop scale `0.67`; labels at viewport sides |
+| LG 1024–1279 | same scene; larger side insets |
+| XL 1280–1535 | same scene and final CTA; bounded editorial offsets |
+| 2XL >=1536 | wider atmosphere; CTA and labels remain bounded |
 
-Short-height profiles retain the same scene and shift label anchors only.
-Declared tier source is not runtime proof; each representative and boundary must
-still be rendered.
+Short-height profiles keep the same sequence. Declared source behavior is not
+runtime proof.
 
 ## Locale and direction
 
 - ID and EN remain LTR; AR remains RTL.
-- DOM labels use logical inset and text alignment.
-- Arabic does not reverse camera time, plane order, palette chronology, trail
-  growth, media orientation, or vertical scroll.
-- No locale-specific scene, renderer, or content fork is introduced.
+- Titles, captions, and CTA labels continue using existing localized sources.
+- Logical CSS owns label and CTA alignment.
+- Arabic does not reverse camera time, plane order, vertical scroll, neutral
+  rotation, route-transition rotation, or trail growth.
+- Dummy caption detection covers the known ID, EN, and AR seeded strings.
 
-## Lifecycle
+## Dependency and performance decision
 
-- Page entry dynamically imports Gallery controller near the section.
-- One RAF runs only while the section is relevant and the document is visible.
-- Resize updates camera projection, renderer size, plane scale, and layout.
-- Reduced-motion preference changes can dispose the cinematic engine and restore
-  the semantic fallback without reloading the page.
-- Hidden tab, offscreen state, BFCache, permanent page exit, initialization
-  failure, invalid frame, and context loss stop or dispose the engine.
-- Disposal covers RAF, activation RAF, observers, listeners, renderer, textures,
-  materials, geometry, background, trail, particles, and scene references.
+- Three.js remains dynamically imported from pinned `0.183.0` near Gallery.
+- CSP permission remains homepage-scoped.
+- DPR remains capped at `1.5`.
+- Homepage excludes video thumbnails/embeds from its query, reducing media work
+  and preventing third-party player initialization.
+- The route transition adds no dependency and runs only after explicit intent.
+- Blur is bounded to the short exit/arrival transition and never runs in the
+  continuous scene loop.
 
 ## Proof gates
 
 Source:
-- no custom `renderer.js`, `scene.js`, CSS card depth, or SVG trail remains;
-- Three camera/planes/background/trail parameters match the reference;
-- title/description and SchoolAI media are the only visible data substitution;
-- canvas remains measurable before initialization;
-- post-layout activation requires a healthy rendered frame;
-- invalid graphics states preserve the semantic fallback;
-- the legacy public Gallery stylesheet is absent and unlinked;
-- all active source files are at most 200 lines;
-- six-tier and RTL adapters remain one architecture;
-- MIT notice and CSP source are present.
+- homepage query contains `type = photo`;
+- fallback media is passive and canvas has no interaction semantics;
+- homepage lightbox owner is deleted;
+- `/galeri` still retains video iframe/lightbox behavior;
+- scales are `0.67` desktop and `0.44` mobile;
+- CTA is inside the final journey step and is the sole action;
+- exit contains enlarge, blur, and final `rotate(45deg)`;
+- reduced motion and modified click use native navigation;
+- dummy seed copy is absent and existing dummy DB captions are normalized;
+- all active JS files remain at most 200 lines.
 
 Automated:
 - `git diff --check`;
-- focused Gallery, Gallery bootstrap, and Security Headers tests;
+- focused Gallery, bootstrap, passive-preview, and Security Headers tests;
 - `npm run check:structure`;
 - `npm run build`;
 - `php artisan test`.
 
 Runtime:
-- drawing buffer matches CSS geometry after activation and after resize;
-- representatives and boundaries for all six tiers;
-- ID, EN, AR and LTR/RTL transitions;
+- desktop comparison at the owner screenshot viewport;
+- all six tier representatives and affected boundaries;
+- ID, EN, AR and LTR/RTL;
 - Chromium and WebKit;
-- pointer, keyboard, touch, fast/reverse scroll, resize, and short height;
-- normal/reduced motion, CDN failure, texture failure, invalid frame, and context
-  loss;
-- visual comparison against the reference for camera, plane position, fade,
-  background, trail, particles, and label placement.
+- normal and reduced motion;
+- keyboard focus on the CTA, pointer/touch, modified click, reverse/fast scroll,
+  resize, short height, BFCache, context loss, and transition interruption;
+- `/galeri` photo and video lightbox behavior after arrival.
 
 ## Known blockers
 
-- Required local commands cannot run through the GitHub connector.
+- Required commands cannot run through the GitHub connector.
 - `npm run check:structure` previously failed on the unrelated
   `resources/css/pages/welcome-hero.css` checksum.
-- The corrected branch has not yet been rendered by the owner.
-- Publication proves source state only, not browser fidelity or performance.
+- The new smaller scale, final CTA, and route transition have not yet been
+  rendered by the owner.
+- Publication proves source state only, not six-tier, browser, accessibility, or
+  performance completion.
