@@ -3,11 +3,19 @@
     place-items: center;
     border: clamp(.18rem, .35vw, .3rem) solid #fff;
     background:
-        repeating-linear-gradient(45deg, transparent 0 12px, rgba(255,255,255,.18) 12px 14px),
-        repeating-linear-gradient(-45deg, transparent 0 12px, rgba(255,255,255,.12) 12px 14px),
+        repeating-linear-gradient(
+            45deg,
+            transparent 0 12px,
+            rgba(255,255,255,.18) 12px 14px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            transparent 0 12px,
+            rgba(255,255,255,.12) 12px 14px
+        ),
         var(--values-blue);
     color: #fff;
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) translateZ(.1px);
 }
 
 .values-card__back-frame {
@@ -67,6 +75,7 @@
 }
 
 .values-story.is-values-ready .values-card {
+    --values-opacity: 0;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -79,7 +88,6 @@
             var(--values-z)
         )
         rotateX(var(--values-rx))
-        rotateY(var(--values-ry))
         rotateZ(var(--values-rz))
         scale(var(--values-scale));
     will-change: transform, opacity;
