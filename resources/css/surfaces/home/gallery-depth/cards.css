@@ -24,6 +24,10 @@
     color: rgba(18, 18, 18, 0.78);
 }
 
+.depth-gallery__fallback-item {
+    min-width: 0;
+}
+
 .depth-gallery__fallback-card {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -78,8 +82,9 @@
     color: rgba(18, 18, 18, 0.72);
 }
 
-.depth-gallery__fallback-card:nth-child(even) {
-    justify-self: end;
+.depth-gallery__fallback-item:nth-child(even) .depth-gallery__fallback-card {
+    margin-inline-start: auto;
+    margin-inline-end: 0;
 }
 
 html[dir="rtl"] .depth-gallery__label-left,
