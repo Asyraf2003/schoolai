@@ -35,7 +35,7 @@ function createDepthGallery(root) {
     const journey = root.querySelector('[data-depth-gallery-journey]');
     const viewport = root.querySelector('[data-depth-gallery-viewport]');
     const canvas = root.querySelector('[data-depth-gallery-canvas]');
-    const progressBar = root.querySelector('[data-depth-gallery-progress]');
+    const trail = root.querySelector('[data-depth-gallery-trail]');
     const items = Array.from(root.querySelectorAll('[data-depth-gallery-item]'));
     const cards = Array.from(root.querySelectorAll('[data-depth-gallery-card]'));
     const cleanupLightbox = bindLightbox(root, cards);
@@ -90,7 +90,7 @@ function createDepthGallery(root) {
         previousProgress = progress;
         updateDepthItems(items, camera, viewport.clientWidth, pointer);
         root.style.setProperty('--depth-atmosphere', paletteCss(palette.background));
-        progressBar?.style.setProperty('transform', `scaleX(${progress.toFixed(5)})`);
+        trail?.style.setProperty('stroke-dashoffset', (1 - progress).toFixed(5));
         renderer?.resize();
         renderer?.render(palette, time, velocity);
         frame = requestAnimationFrame(render);
@@ -140,7 +140,7 @@ function createDepthGallery(root) {
         renderer?.dispose();
         cleanupLightbox();
         clearDepthItems(items);
-        progressBar?.removeAttribute('style');
+        trail?.removeAttribute('style');
         root.style.removeProperty('--depth-atmosphere');
         root.classList.remove('is-depth-ready');
     }
