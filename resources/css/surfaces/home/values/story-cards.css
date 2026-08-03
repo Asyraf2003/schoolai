@@ -6,7 +6,6 @@
     gap: 1rem;
     place-items: center;
 }
-
 .values-card {
     --values-x: 0px;
     --values-y: 0px;
@@ -27,13 +26,11 @@
         scale(var(--values-scale));
     transform-style: preserve-3d;
 }
-
 .values-story.is-values-ready .values-story__cards {
     position: absolute;
     inset: 0;
     display: block;
 }
-
 .values-story.is-values-ready .values-card {
     position: absolute;
     top: 0;
@@ -49,7 +46,6 @@
         scale(var(--values-scale));
     transform-origin: center center;
 }
-
 .values-card__float,
 .values-card__inner,
 .values-card__face {
@@ -57,25 +53,21 @@
     inset: 0;
     border-radius: clamp(1rem, 1.8vw, 1.55rem);
 }
-
 .values-card__float,
 .values-card__inner {
     transform-style: preserve-3d;
 }
-
 .values-card__inner {
     border: 1px solid rgba(255,255,255,.5);
     box-shadow: 0 2rem 5rem rgba(5,11,55,.24);
     transform: rotateY(var(--values-ry));
     will-change: transform;
 }
-
 .values-card__face {
     overflow: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
-
 .values-card__front {
     display: flex;
     flex-direction: column;
@@ -86,7 +78,6 @@
     color: var(--values-ink);
     transform: rotateY(0deg) translateZ(.1px);
 }
-
 .values-card__front::before {
     position: absolute;
     inset: 0 0 auto;
@@ -94,7 +85,6 @@
     background: var(--values-accent);
     content: "";
 }
-
 .values-card__top,
 .values-card__footer {
     position: relative;
@@ -104,13 +94,11 @@
     justify-content: space-between;
     gap: 1rem;
 }
-
 .values-card__index {
     color: rgba(17,17,17,.54);
     font-weight: 700;
     letter-spacing: .12em;
 }
-
 .values-card__code {
     display: grid;
     width: clamp(2rem, 3vw, 3rem);
@@ -121,14 +109,12 @@
     font-size: clamp(1rem, 2vw, 1.65rem);
     line-height: 1;
 }
-
 .values-card__copy {
     position: relative;
     z-index: 1;
     display: grid;
     gap: clamp(.65rem, 1.5vw, 1rem);
 }
-
 .values-card__title {
     margin: 0;
     color: var(--values-ink);
@@ -137,13 +123,11 @@
     letter-spacing: -.045em;
     line-height: .95;
 }
-
 .values-card__summary,
 .values-card__body {
     margin: 0;
     color: rgba(17,17,17,.78);
 }
-
 .values-card__summary {
     padding-block: .75rem;
     border-block: 2px dotted color-mix(
@@ -155,25 +139,20 @@
     font-weight: 600;
     line-height: 1.35;
 }
-
 .values-card__body {
     font-size: clamp(.7rem, .92vw, .88rem);
     line-height: 1.5;
 }
-
 .values-card__body strong {
     color: color-mix(in srgb, var(--values-accent) 78%, #111);
     font-weight: 700;
 }
-
 .values-card__footer {
     transform: rotate(180deg);
 }
-
 .values-card__footer strong {
     font-size: clamp(1.15rem, 2vw, 1.7rem);
 }
-
 .values-card__footer span {
     overflow: hidden;
     font-size: clamp(.8rem, 1.35vw, 1.08rem);
@@ -181,33 +160,27 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
 @keyframes values-card-float {
     0%,
     100% {
         transform: translate3d(0, -4px, 0);
     }
-
     50% {
         transform: translate3d(0, 4px, 0);
     }
 }
-
 @media (min-width: 1280px)
 and (prefers-reduced-motion: no-preference) {
     .values-story.is-values-ready .values-card__float {
         animation: values-card-float 4.8s ease-in-out infinite;
         will-change: transform;
     }
-
     .values-card:nth-child(2) .values-card__float {
         animation-delay: -1.2s;
     }
-
     .values-card:nth-child(3) .values-card__float {
         animation-delay: -2.4s;
     }
-
     .values-card:nth-child(4) .values-card__float {
         animation-delay: -3.6s;
     }
