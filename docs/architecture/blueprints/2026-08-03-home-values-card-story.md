@@ -4,118 +4,177 @@ Blueprint ID: `HOME-VALUES-001`
 Status: `IMPLEMENTING`
 Owner: Asyraf Mubarak
 Date: 2026-08-03
-Source main SHA: `7607f93abab66c9fb96bcdb313ce08371f8cdfe3`
+Source main before this correction: `9e14ebd4eb9bab7f28b8c0e030603f895ea30505`
 Surface: homepage `#nilai`
 Execution channel: Web AI with explicit direct-`main` authorization
 
 ## Owner goal and reference
 
-Build a full-viewport Values scroll story informed by the owner-provided Lusion
-About screenshots while using real Al Mustaqbal content and school-owned visual
-language. Lusion code, assets, branding, card art, and exact composition remain
-forbidden.
+Replace the Values grid with a full-viewport scroll story informed by the
+owner-provided Lusion About screenshots without copying Lusion code, assets,
+branding, card art, or exact composition.
 
-## Current owner refinement: heading and description
+The corrected owner direction is:
 
-This atomic step changes only the Values heading and supporting copy:
-
-1. Both heading lines begin invisible at one shared vertical center seam.
-2. They separate smoothly into the final two-line heading.
-3. The lower line shifts slightly inward only when the available field is wide.
-4. Phone layouts show the heading only, without description or eyebrow.
-5. Tablet layouts keep supporting copy but do not shift the lower heading line.
-6. Desktop XL and 2XL keep supporting copy and use a bounded inward shift.
-7. Heading exit reverses toward the shared seam while fading, without
-   momentum-driven letter collisions.
-
-Cards, flip timing, trail, transition, content, and following sections are
-read-only in this step.
-
-## FACT and GAP
-
-- Values has one semantic heading, description, eyebrow, and four article cards.
-- One controller owns progress, measurement, inertia, painting, and lifecycle.
-- The latest 1920x1080 Brave screenshots prove the heading uses excessive
-  opposing viewport travel and creates overlapping/ghosted exit states.
-- The screenshots also prove supporting copy remains visible on phone behavior
-  contrary to the owner's latest decision.
-- Build, WebKit, all-tier, accessibility, and performance proof remain gaps.
+- heading text must emerge through a clipped seam like a ruler sliding from a
+  pencil case; the leading edge appears before the complete word body;
+- the heading reveal runs only when entering Values from the preceding section;
+- reverse scroll from later content keeps the heading in its resolved static
+  state instead of replaying the reveal backward;
+- the second heading line shifts inward through a time-based animation, not a
+  scroll-scrubbed transform;
+- cards begin with their decorative backs visible and flip to reveal information;
+- phone, tablet, and PC use distinct compositions within one DOM/controller;
+- the moving white line and stack/spread sequence exist only on PC widths.
 
 ## Scope
 
-Editable for this refinement:
+In scope:
 
-- `resources/css/surfaces/home/values/story-shell.css`
-- `resources/css/surfaces/home/values/story-responsive.css`
-- `resources/js/surfaces/home/values/controller.js`
-- `resources/js/surfaces/home/values/layout.js`
-- `resources/js/surfaces/home/values/paint.js`
-- active blueprint/current-state records
+- Values heading markup, clipping, state, and responsive copy visibility;
+- Values card geometry/timeline across all six width tiers;
+- PC-only scroll-drawn line visibility;
+- focused test and durable architecture state.
 
-Protected:
+Protected and out of scope:
 
-- Values Blade/content and all cards, backs, flip poses, trail, transition;
-- Hero, Vision/Mission, Programs, Gallery, Articles, navigation, footer;
-- About/Testimonial state, DB, routes, controller data, translations, media,
-  WebGL, dependencies, and unrelated cleanup.
+- Hero, Vision/Mission content/controller, Programs, Gallery, Articles;
+- navigation, footer, About, Testimonial, DB/admin/routes;
+- translation copy, WebGL, third-party dependencies, and unrelated cleanup.
 
 ## Semantic and fallback contract
 
-- One localized `h2` remains the semantic heading.
-- Description and eyebrow remain in the single DOM and are visually suppressed
-  on XS/SM by the accepted responsive contract.
-- No-JS, unsupported motion, and reduced-motion results remain usable.
-- Cards and content remain reachable and unchanged.
+- One semantic `section`, localized `h2`, description, and four `article` cards.
+- Heading lines contain nested text spans solely for clipping; reading order and
+  accessible heading text remain unchanged.
+- DOM value order remains Q, I, G, N in ID, EN, and AR.
+- Card fronts contain all meaningful information; backs remain decorative and
+  `aria-hidden`.
+- No JavaScript, unsupported 3D, and reduced motion render the normal readable
+  front-card grid.
+- Scroll motion has no controls, focus traps, hidden actions, canvas, or WebGL.
 
-## Heading motion contract
-
-The heading uses font-relative geometry:
+## Heading state contract
 
 ```text
-initial line one: +0.41em
-initial line two: -0.41em
-line-height: 0.82
-result: both line centers share one seam
+before Values
+-> reveal 0
+-> forward entry opens both clipped lines from their shared seam
+-> reveal reaches 1 and latches
+-> wide-only second-line shift runs as a CSS transition
+-> PC deck threshold triggers a time-based heading lift
+-> reverse scroll keeps resolved heading static
+-> leaving above Values resets the state for the next forward entry
 ```
 
-Opacity rises while both offsets approach zero. On exit the offsets return
-toward the seam while opacity falls. Scroll momentum may affect supporting copy
-slightly, but it must not displace individual heading lines.
+- Line one text begins `108%` below its clipped line box.
+- Line two text begins `108%` above its clipped line box.
+- Because the boxes meet at the line seam, each line appears edge-first rather
+  than moving as a fully visible word block.
+- Interrupted forward reveal resolves to the complete static heading on reverse.
+- Page load inside/later than the reveal initializes the resolved static state.
 
-Line-two inward shift begins after the vertical opening is nearly complete and
-returns while the heading exits.
+## Six-tier composition
 
-## Six-tier heading/copy contract
+| Tier | Heading/copy | Cards | Trail |
+|---|---|---|---|
+| XS 360–639 | heading only; no description/eyebrow; no shift | one card at a time; back-to-front flip only | hidden |
+| SM 640–767 | heading only; no description/eyebrow; no shift | one card at a time; back-to-front flip only | hidden |
+| MD 768–1023 | heading plus copy; no horizontal shift | fixed 2x2; two cards flip as a pair, then the other pair | hidden |
+| LG 1024–1279 | heading plus copy; no horizontal shift | fixed 2x2; paired flips only | hidden |
+| XL 1280–1535 | heading plus copy; line two shifts `104px` inward | lead back rises with heading, four-card deck, spread, overlapping flips, exit | visible |
+| 2XL >=1536 | heading plus copy; line two shifts `144px` inward | wider bounded lead/deck/spread/flip/exit | visible |
 
-| Tier | Copy | Lower-line shift |
-|---|---|---|
-| XS 360–639 | hidden | none |
-| SM 640–767 | hidden | none |
-| MD 768–1023 | visible | none |
-| LG 1024–1279 | visible | none |
-| XL 1280–1535 | visible | `104px` logical inward |
-| 2XL >=1536 | visible | `144px` logical inward |
+Story travel:
 
-CSS owns the tier target. The controller reads the resolved target during
-measurement, and the timeline paints only its progress. RTL uses the opposite
-physical sign so logical inward motion still approaches the visual center.
+```text
+XS 520svh
+SM 500svh
+MD 400svh
+LG 400svh
+XL 560svh
+2XL 580svh
+```
+
+## PC chronology
+
+1. Heading begins clipped reveal.
+2. The first back-facing card rises during the same entry window and settles
+   approximately `20vh` below the heading composition.
+3. The remaining backs reveal as a four-card deck.
+4. Deck threshold triggers a time-based heading lift.
+5. Deck spreads into four independent cards.
+6. Cards flip right-to-left with `0.15` progress duration and `0.045` offsets,
+   preserving roughly 30% temporal overlap.
+7. The white SVG line grows and advances throughout the PC journey.
+8. Cards rise and leave after flip completion.
+
+## Tablet chronology
+
+- Four decorative backs occupy a stable 2x2 arrangement.
+- No lead card, deck, spread, or white line is used.
+- The physical right pair flips together, followed by the left pair.
+- Spatial geometry remains stable while only the card inner faces rotate.
+
+## Phone chronology
+
+- One centered card is visible at a time.
+- Each card appears on its back, flips to its information front, then yields to
+  the next card.
+- No deck, spread, pair grid, horizontal heading shift, description, eyebrow, or
+  white line is used.
+
+## Locale and direction
+
+- One DOM, controller, progress model, and physical card chronology serve ID,
+  EN, and AR.
+- Locale changes copy, font, `dir`, and natural alignment only.
+- On PC, the second heading line moves toward the visual center: positive X in
+  LTR and negative X in RTL.
+- Arabic does not reverse time, card order, vertical scroll, or neutral Y-axis
+  rotation.
+
+## Ownership
+
+| Concern | Owner |
+|---|---|
+| DOM/content | `resources/views/home/sections/school-values.blade.php` and current lang data |
+| shell/sticky | `resources/css/surfaces/home/values/story-shell.css` |
+| heading/copy | `resources/css/surfaces/home/values/story-heading.css` |
+| tier adapters | `resources/css/surfaces/home/values/story-responsive.css` |
+| cards/backs | `story-cards.css` and `story-card-back.css` |
+| PC trail | `story-trail.css` |
+| controller/lifecycle | `resources/js/surfaces/home/values/controller.js` |
+| one-way heading state | `heading-state.js` |
+| geometry/timeline | `layout.js` |
+| scroll inertia | `motion.js` |
+| style painting/cleanup | `paint.js` |
+| focused DOM contract | `tests/Feature/HomeValuesStoryTest.php` |
 
 ## Browser, performance, and accessibility
 
-- Frequent heading animation remains transform/opacity only.
-- No new asset, dependency, filter, layout animation, or continuous scheduler.
-- Logical inset properties preserve the shared ID/EN/AR DOM.
-- Reduced motion retains the static heading/card result.
-- Chromium/WebKit, short-height, reverse scroll, 200% zoom, and locale runtime
-  still require proof.
+- Capability tier 0 remains the semantic static front-card grid.
+- Capability tier 1 uses CSS 3D plus one bounded RAF scheduler.
+- Narrow widths avoid the SVG trail and desktop deck/spread writes.
+- Frequent animation uses transform/opacity; the line uses SVG dash progress.
+- Work pauses offscreen/hidden and removes listeners/classes/properties on dispose.
+- Chromium and WebKit still require runtime proof for clipping, sticky,
+  preserve-3d, backface visibility, viewport units, resize, reverse scroll, and
+  BFCache.
+- Reduced motion keeps all heading/copy/card content accessible without the
+  sticky story.
 
-## Active execution and proof
+## Proof state
 
-1. `IMPLEMENTED_SOURCE`: publish the bounded heading/copy correction.
-2. `PENDING`: run repository diff, structure, build, and PHP test gates.
-3. `PENDING`: capture 390, 768, 1280, and 1920 Brave/Chromium heading/copy.
-4. `PENDING`: expand to all six tiers, ID/EN/AR, WebKit, reduced motion, zoom,
-   accessibility, and performance.
+Implemented source is not runtime proof. Required gates remain:
 
-Commit publication proves source state only. Until pending gates run, final
-status is `BLOCKED_BY_MISSING_EVIDENCE`, not `PASS`.
+```text
+git diff --check
+npm run check:structure
+npm run build
+php artisan test
+```
+
+Runtime proof must cover 390, 640, 768, 1024, 1280, 1536, and 1920 widths,
+ID/EN/AR, LTR/RTL, Chromium/WebKit, normal/reduced motion, reverse scroll,
+resize/orientation, zoom, accessibility, and PageSpeed.
