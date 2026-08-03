@@ -5,6 +5,7 @@
     grid-template-columns: 1fr;
     gap: 1rem;
     place-items: center;
+    transform-style: preserve-3d;
 }
 .values-card {
     --values-x: 0px;
@@ -30,6 +31,7 @@
     position: absolute;
     inset: 0;
     display: block;
+    transform-style: preserve-3d;
 }
 .values-story.is-values-ready .values-card {
     position: absolute;
@@ -61,6 +63,7 @@
     border: 1px solid rgba(255,255,255,.5);
     box-shadow: 0 2rem 5rem rgba(5,11,55,.24);
     transform: rotateY(var(--values-ry));
+    transform-origin: center center;
     will-change: transform;
 }
 .values-card__face {
