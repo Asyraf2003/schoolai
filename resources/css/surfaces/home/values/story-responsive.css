@@ -1,13 +1,12 @@
 .values-story {
-    --values-card-target: min(82vw, 21rem);
-    --values-story-length: 640svh;
+    --values-card-target: min(82vw, 19rem);
+    --values-story-length: 520svh;
 }
 
 @media (min-width: 640px) {
     .values-story {
-        --values-layout-mode: 2;
-        --values-card-target: min(43vw, 19rem);
-        --values-story-length: 620svh;
+        --values-card-target: min(58vw, 16rem);
+        --values-story-length: 500svh;
     }
 
     .values-story__cards {
@@ -17,8 +16,9 @@
 
 @media (min-width: 768px) {
     .values-story {
-        --values-card-target: min(41vw, 20rem);
-        --values-story-length: 600svh;
+        --values-layout-mode: 2;
+        --values-card-target: min(34vw, 14rem);
+        --values-story-length: 400svh;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -33,25 +33,26 @@
 
 @media (min-width: 1024px) {
     .values-story {
-        --values-layout-mode: 4;
-        --values-card-target: min(22vw, 18rem);
-        --values-story-length: 580svh;
-    }
-
-    .values-story__cards {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        --values-card-target: min(22vw, 14.5rem);
+        --values-story-length: 400svh;
     }
 }
 
 @media (min-width: 1280px) {
     .values-story {
+        --values-layout-mode: 4;
         --values-card-target: min(22vw, 20rem);
         --values-story-length: 560svh;
         --values-line-two-target-x: 104px;
+        --values-heading-lift-target: -8svh;
     }
 
     html[dir="rtl"] .values-story {
         --values-line-two-target-x: -104px;
+    }
+
+    .values-story__cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -64,6 +65,7 @@
         --values-card-target: min(20vw, 22rem);
         --values-story-length: 580svh;
         --values-line-two-target-x: 144px;
+        --values-heading-lift-target: -9svh;
     }
 
     html[dir="rtl"] .values-story {
