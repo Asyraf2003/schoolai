@@ -14,145 +14,157 @@ responsive, accessibility, performance, or lifecycle completion.
 - ID: `HOME-VALUES-001`
 - State: `IMPLEMENTING`
 - Surface: homepage Values section `#nilai`
-- Current atomic result: true-thin Latin heading plus stable upright PC flip row
-- Protected: Hero, Vision/Mission content/controller, Programs, Gallery,
-  Articles, navigation, footer, DB/admin/routes, About, and Testimonial
+- Current atomic result: shared enhanced-card origin, coherent PC motion plane,
+  first-to-fourth flip order, stable final row, and rebalanced Latin heading
+- Protected: Hero, Vision/Mission, Programs, Gallery, Articles, navigation,
+  footer, DB/admin/routes, About, and Testimonial
 
 ## Latest owner-accepted direction
 
 ### Heading
 
-- Preserve the clipped, slower, one-way heading reveal.
-- The current Latin heading remains visibly too heavy compared with the accepted
-  visual rhythm.
-- Use the real minimum Inter variable weight rather than a merely lighter normal
-  weight.
-- Arabic remains governed by its own typography adapter and natural tracking.
+- Preserve the slow clipped reveal, second-line shift, and scroll-driven PC exit.
+- Weight `300` was too heavy, but the later weight `100` became visibly hairline.
+- Use a genuinely light editorial weight between those extremes.
+- Arabic remains governed by Cairo, natural tracking, and its current adapter.
 
-### PC cards
+### Cards
 
-- A deck may briefly spread as a fan.
-- Before any information flip begins, all four cards must become upright,
-  vertically aligned, and placed in their individual horizontal slots.
-- Card depth order must not cross while the deck spreads; the visually leading
-  card must not jump from one side to another for a frame.
-- Flip still uses shared anticipation, overlapping right-to-left drive,
-  overshoot, settle, and subtle float.
-- Phone/tablet choreography and the PC-only trail boundary remain unchanged.
+- All enhanced card geometry must be calculated from one shared stage center.
+- The temporary deck and fan may overlap, but cards must straighten before flip.
+- Scroll momentum may move the group slightly; it must not create a vertical
+  staircase by multiplying movement per card.
+- Flip order follows the visual cards from first to fourth with overlapping
+  anticipation, drive, overshoot, and settle.
+- After all information fronts appear, the row stays coherent until the sticky
+  section releases naturally.
+- Phone remains one card at a time; tablet remains a stable 2x2 pair sequence.
+- The white trail remains PC-only.
 
 ## Runtime feedback FACT
 
-### Runtime 1–5
+### Runtime 1–6
 
-Earlier owner screenshots proved sticky containment, transition, heading reveal,
-responsive choreography, card scale, and direct-flip defects. Those source
-corrections remain published history.
+Earlier owner screenshots proved and drove corrections for sticky containment,
+transition, clipped heading entry, responsive chronology, card scale, face
+orientation, depth crossing, and missing upright staging.
 
-### Runtime 6: latest owner screenshots
+### Runtime 7: latest owner comparison sequence
 
-Nine new 1920x1080 Brave/Chromium screenshots prove:
+Ten new 1920x1080 Brave/Chromium screenshots compare SchoolAI against the
+reference chronology and prove:
 
-- the SchoolAI heading is still materially thicker than the reference heading;
-- while the back deck spreads, the visually leading card changes side for a
-  fraction of the motion;
-- cards retain fan `rotateZ` angles while their faces are flipping;
-- front-facing cards remain at different fan angles and heights instead of
-  occupying a clean upright row.
+- the Latin heading at weight `100` is much thinner than the intended reference;
+- the enhanced card container still contributes four grid-column origins while
+  JavaScript also applies center-relative X offsets;
+- cards therefore do not behave as one spatial group;
+- the current flip order is fourth-to-first, while the supplied reference
+  sequence and owner chronology proceed first-to-fourth;
+- per-card momentum produces different vertical displacement for every card;
+- the exit phase creates a large diagonal staircase after fronts are visible;
+- the final information row is not held as one stable composition.
 
-Runtime 6 is `FAIL` for the latest owner direction and is the evidence for this
-bounded correction.
+Runtime 7 is `FAIL` and is the evidence for this bounded correction.
 
 ## Root-cause FACT
 
-### Heading weight
+### Double horizontal origin
 
-`site-head-meta.blade.php` loads Inter as a Google variable font with the full
-`100..900` weight range. The Values heading was set to `300`; this was a real
-font weight, but it remained too heavy at the current display size.
-
-### Depth-order jump
-
-The previous PC geometry changed depth from:
+Desktop CSS retained:
 
 ```text
-deck: -index * 22
-row:   index * 2
+display: grid
+four desktop columns
 ```
 
-Those values cross while interpolating. Browser 3D compositing therefore changes
-which overlapping card is visually nearest during the spread.
+At the same time, `desktop-layout.js` calculated every X pose as if all cards
+started from one center point. Natural grid placement and animated translation
+were therefore added together.
 
-### Persistent fan during flip
+### Per-card vertical momentum
 
-The previous row pose kept:
+The previous desktop frame used:
 
 ```text
-rotateZ = [-4, -1.25, 1.25, 4]
-y = base + edge offset
+current.y += momentum * (index + 1) * 5
 ```
 
-No upright pose existed between spread and flip. The cards were therefore doing
-exactly what the source requested, unfortunately.
+The fourth card could receive four times the vertical displacement of the first.
+That directly produced the diagonal staircase visible during fast scroll.
+
+### Reversed flip order
+
+The previous start formula was:
+
+```text
+0.56 + (3 - index) * 0.045
+```
+
+That starts card four first. The owner sequence requires card one first.
+
+### Artificial exit fan
+
+The previous `exitPose` assigned different vertical destinations and staggered
+starts to each card. No accepted owner direction required that breakup.
 
 ## Implemented source correction
 
 Source head before this ledger update:
-`5ba09b5c255aa0b89f042a82e25cc04236239b25`.
+`60436413ec36bbd7216bd37e0c4b58f5f0b0fe05`.
 
-### Heading implementation
+### Shared coordinate plane
 
-- Latin Values heading now uses `font-weight: 100`.
-- `font-variation-settings: "wght" 100` explicitly selects the variable axis.
-- `font-synthesis: none` prevents a synthetic replacement weight.
-- Tracking relaxes from `-.065em` to `-.045em` so the thin display letters do
-  not visually collapse into one dense mass.
-- Arabic resets variation settings and keeps weight `300` plus natural tracking.
+- In enhanced mode, `.values-story__cards` is now one absolute stage layer.
+- Every enhanced card is absolutely anchored at physical center `left: 50%`.
+- Card translation uses `calc(-50% + var(--values-x))`.
+- Lead, deck, fan, upright row, phone, and tablet poses now resolve from the
+  coordinate origin their JavaScript geometry already assumed.
+- Static/no-JS/reduced-motion layout remains the original semantic CSS grid.
 
-### PC geometry and flip implementation
+### Coherent PC card motion
 
-The PC sequence is now:
+- The temporary fan still resolves into a common upright row by progress `0.50`.
+- Momentum is now one shared `momentum * 6` offset for all four cards.
+- Independent CSS float remains limited to `-4px..4px` and does not alter the
+  scroll geometry.
+- Flip start is now `0.56 + index * 0.045`, producing card one through card four.
+- Drive remains overlapping, with shared anticipation and front overshoot.
+- The separate indexed exit pose was removed.
+- Final fronts hold their upright slots until normal sticky release.
 
-```text
-lead -> deck -> fan spread -> upright row -> anticipation -> flip -> settle
-```
+### Heading balance
 
-- `fanPose` preserves the intended temporary fan angles.
-- `uprightPose` gives all cards the same Y position and `rotateZ(0deg)`.
-- Upright alignment completes by progress `0.50`.
-- Anticipation now starts at `0.50` and completes at `0.56`.
-- The first drive begins only after the upright phase.
-- Depth stays negative and ordered from deck through upright row:
-  - deck/fan: `-index * 22`;
-  - upright: `-index * 4`.
-- Depth values no longer cross signs or reverse nearest-card order.
-- Right-to-left starts use `0.045` offsets.
-- Each drive lasts `0.17`; each settle completes over the following `0.08`.
-- Exit waits until progress `0.955`, after the final front settle.
-- Existing desktop float remains separate from scroll geometry and face rotation.
+- ID/EN Values heading now uses Inter variable weight `200`.
+- `font-synthesis: none` remains active.
+- Tracking is `-.04em`, between the former dense heavy state and the hairline
+  state.
+- Arabic keeps weight `300`, normal variation settings, and natural tracking.
 
 ## Source ownership
 
-- Blade/semantic cards: `resources/views/home/sections/school-values.blade.php`
+- Semantic cards: `resources/views/home/sections/school-values.blade.php`
+- Card layout/treatment: `resources/css/surfaces/home/values/story-cards.css`
 - Heading treatment: `resources/css/surfaces/home/values/story-heading.css`
 - PC geometry/flip: `resources/js/surfaces/home/values/desktop-layout.js`
-- Shared painting: `resources/js/surfaces/home/values/paint.js`
-- Controller/inertia: remaining Values JS modules
+- Shared painting/controller/inertia: remaining Values JS modules
 - Durable plan: active Values blueprint
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Current main/source audit | `PASS_SOURCE` | main and active owners fetched before write |
-| Runtime 6 | `FAIL` | thick heading, depth swap, and fan-shaped flips |
-| True Inter thin axis | `IMPLEMENTED_SOURCE` | weight and variation axis set to 100 |
-| Arabic typography boundary | `IMPLEMENTED_SOURCE` | variation reset and weight 300 retained |
-| Stable depth ordering | `IMPLEMENTED_SOURCE` | negative ordered Z values preserved |
-| Fan-to-upright phase | `IMPLEMENTED_SOURCE` | dedicated upright pose before anticipation |
-| Upright front settle | `IMPLEMENTED_SOURCE` | common Y and zero Z rotation |
-| Phone/tablet boundary | `PASS_SOURCE` | their mode branches were not edited |
-| JavaScript syntax | `PASS_LOCAL_PATCH` | desktop module passed `node --check` |
-| Source line limit | `PASS_LOCAL_PATCH` | changed source files remain below 200 lines |
+| Current main/source audit | `PASS_SOURCE` | active owners and mandatory docs inspected |
+| Runtime 7 | `FAIL` | hairline heading and fragmented card plane |
+| Shared enhanced-card origin | `IMPLEMENTED_SOURCE` | absolute center anchor replaces dual origins |
+| Group momentum | `IMPLEMENTED_SOURCE` | one common Y offset replaces indexed multiplier |
+| First-to-fourth flip | `IMPLEMENTED_SOURCE` | start formula uses `index` |
+| Stable final row | `IMPLEMENTED_SOURCE` | indexed exit pose removed |
+| Latin heading balance | `IMPLEMENTED_SOURCE` | Inter axis set to 200 |
+| Arabic typography boundary | `PASS_SOURCE` | Cairo owner retained |
+| Phone/tablet chronology | `PASS_SOURCE` | mode algorithms unchanged |
+| JavaScript syntax | `PASS_LOCAL_PATCH` | changed desktop module passed `node --check` |
+| CSS brace balance | `PASS_LOCAL_PATCH` | changed card CSS balance is zero |
+| Source line limit | `PASS_LOCAL_PATCH` | desktop JS 102 lines; card CSS 187 lines |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run repo command |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
@@ -162,12 +174,13 @@ lead -> deck -> fan spread -> upright row -> anticipation -> flip -> settle
 
 ## STATUS
 
-Runtime 6 failed. Source now uses the actual Inter thin axis and inserts a stable
-upright row between fan spread and card flip. Depth ordering no longer crosses,
-and information faces settle vertically aligned at zero fan angle. Runtime and
-release status remain unproven.
+Runtime 7 failed. Source now gives every enhanced card one center-relative motion
+plane, uses shared momentum, flips first-to-fourth, holds the final row, and
+raises the Latin heading from hairline weight `100` to editorial weight `200`.
+Runtime and release status remain unproven.
 
 ## NEXT VALID STEP
 
-Pull current `main` and capture 1920px PC frames covering: resolved heading,
-fan spread, upright backs, first/middle/final flip, and all four upright fronts.
+Pull current `main` and capture one 1920px Brave/Chromium sequence covering:
+heading, centered lead/deck, fan, upright backs, card-one/middle/card-four flip,
+and the stable four-front row during continued scroll.
