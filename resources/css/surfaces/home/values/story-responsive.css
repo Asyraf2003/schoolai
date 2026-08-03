@@ -41,10 +41,9 @@
 @media (min-width: 1280px) {
     .values-story {
         --values-layout-mode: 4;
-        --values-card-target: min(22vw, 20rem);
-        --values-story-length: 560svh;
+        --values-card-target: min(26vw, 25rem);
+        --values-story-length: 620svh;
         --values-line-two-target-x: 104px;
-        --values-heading-lift-target: -8svh;
     }
 
     html[dir="rtl"] .values-story {
@@ -56,16 +55,15 @@
     }
 
     .values-story.is-values-ready .values-story__title {
-        font-size: clamp(7rem, 13vw, 13rem);
+        font-size: clamp(8rem, 14.5vw, 15rem);
     }
 }
 
 @media (min-width: 1536px) {
     .values-story {
-        --values-card-target: min(20vw, 22rem);
-        --values-story-length: 580svh;
+        --values-card-target: min(24vw, 27rem);
+        --values-story-length: 640svh;
         --values-line-two-target-x: 144px;
-        --values-heading-lift-target: -9svh;
     }
 
     html[dir="rtl"] .values-story {
@@ -74,6 +72,7 @@
 
     .values-story.is-values-ready .values-story__title {
         inset-inline-start: max(5rem, calc((100vw - 108rem) / 2));
+        font-size: clamp(9rem, 14vw, 16rem);
     }
 
     .values-story.is-values-ready .values-story__description,
@@ -113,14 +112,14 @@
     }
 
     .values-story__title {
-        font-size: clamp(3.4rem, 17vw, 5rem);
+        font-size: clamp(3.6rem, 18vw, 5.4rem);
     }
 
     .values-story.is-values-ready .values-story__title {
         top: clamp(1.5rem, 4vh, 3rem);
         inset-inline-start: 1.25rem;
         max-inline-size: 8ch;
-        font-size: clamp(4.3rem, 20vw, 6.5rem);
+        font-size: clamp(4.6rem, 21vw, 7rem);
     }
 
     .values-card__body {
