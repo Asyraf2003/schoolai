@@ -56,12 +56,4 @@
   </div>
 
   @include('home.sections.gallery-depth')
-
-  @if (! empty($gallerySection['cta']['href']) && ! empty($gallerySection['cta']['label']))
-    <div class="container galeri-section__action">
-      <a href="{{ $gallerySection['cta']['href'] }}" class="btn btn--white">
-        {{ $gallerySection['cta']['label'] }}
-      </a>
-    </div>
-  @endif
 </section>
