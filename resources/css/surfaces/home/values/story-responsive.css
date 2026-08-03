@@ -22,12 +22,12 @@
     }
 
     .values-story.is-values-ready .values-story__title {
-        left: clamp(2rem, 5vw, 5rem);
+        inset-inline-start: clamp(2rem, 5vw, 5rem);
     }
 
     .values-story.is-values-ready .values-story__description,
     .values-story.is-values-ready .values-story__eyebrow {
-        right: clamp(2rem, 5vw, 5rem);
+        inset-inline-end: clamp(2rem, 5vw, 5rem);
     }
 }
 
@@ -47,6 +47,11 @@
     .values-story {
         --values-card-target: min(22vw, 20rem);
         --values-story-length: 560svh;
+        --values-line-two-target-x: 104px;
+    }
+
+    html[dir="rtl"] .values-story {
+        --values-line-two-target-x: -104px;
     }
 
     .values-story.is-values-ready .values-story__title {
@@ -58,29 +63,41 @@
     .values-story {
         --values-card-target: min(20vw, 22rem);
         --values-story-length: 580svh;
+        --values-line-two-target-x: 144px;
+    }
+
+    html[dir="rtl"] .values-story {
+        --values-line-two-target-x: -144px;
     }
 
     .values-story.is-values-ready .values-story__title {
-        left: max(5rem, calc((100vw - 108rem) / 2));
+        inset-inline-start: max(5rem, calc((100vw - 108rem) / 2));
     }
 
     .values-story.is-values-ready .values-story__description,
     .values-story.is-values-ready .values-story__eyebrow {
-        right: max(5rem, calc((100vw - 108rem) / 2));
+        inset-inline-end: max(5rem, calc((100vw - 108rem) / 2));
     }
 }
 
 @media (max-width: 1023px) {
     .values-story.is-values-ready .values-story__description {
         top: auto;
-        right: clamp(1.25rem, 5vw, 3rem);
+        inset-inline-end: clamp(1.25rem, 5vw, 3rem);
         bottom: clamp(5rem, 12vh, 8rem);
         width: min(68vw, 25rem);
     }
 
     .values-story.is-values-ready .values-story__eyebrow {
-        right: clamp(1.25rem, 5vw, 3rem);
+        inset-inline-end: clamp(1.25rem, 5vw, 3rem);
         bottom: clamp(1.5rem, 4vh, 3rem);
+    }
+}
+
+@media (max-width: 767px) {
+    .values-story__description,
+    .values-story__eyebrow {
+        display: none;
     }
 }
 
@@ -99,19 +116,9 @@
 
     .values-story.is-values-ready .values-story__title {
         top: clamp(1.5rem, 4vh, 3rem);
-        left: 1.25rem;
+        inset-inline-start: 1.25rem;
         max-inline-size: 8ch;
         font-size: clamp(4.3rem, 20vw, 6.5rem);
-    }
-
-    .values-story.is-values-ready .values-story__description {
-        right: 1.25rem;
-        width: min(76vw, 22rem);
-        font-size: .72rem;
-    }
-
-    .values-story.is-values-ready .values-story__eyebrow {
-        right: 1.25rem;
     }
 
     .values-card__body {
