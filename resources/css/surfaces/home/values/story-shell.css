@@ -33,8 +33,10 @@
     --values-ink: #111;
     --values-progress: 0;
     --values-heading-opacity: 0;
-    --values-line-one-y: 28svh;
-    --values-line-two-y: -28svh;
+    --values-line-one-y: .41em;
+    --values-line-two-y: -.41em;
+    --values-line-two-x: 0px;
+    --values-line-two-target-x: 0px;
     --values-copy-opacity: 0;
     --values-copy-y: 2rem;
     --values-trail-progress: 0;
@@ -134,9 +136,14 @@
 .values-story.is-values-ready .values-story__title {
     position: absolute;
     top: clamp(1.5rem, 4vh, 3rem);
-    left: clamp(1rem, 5vw, 5rem);
+    inset-inline-start: clamp(1rem, 5vw, 5rem);
     max-inline-size: 10ch;
     font-size: clamp(4.8rem, 13.5vw, 13rem);
+}
+
+.values-story.is-values-ready .values-story__title-line {
+    transform-origin: 50% 50%;
+    will-change: transform;
 }
 
 .values-story.is-values-ready .values-story__title-line--one {
@@ -144,17 +151,17 @@
 }
 
 .values-story.is-values-ready .values-story__title-line--two {
-    transform: translate3d(0, var(--values-line-two-y), 0);
-}
-
-.values-story.is-values-ready .values-story__title-line {
-    will-change: transform;
+    transform: translate3d(
+        var(--values-line-two-x),
+        var(--values-line-two-y),
+        0
+    );
 }
 
 .values-story.is-values-ready .values-story__eyebrow,
 .values-story.is-values-ready .values-story__description {
     position: absolute;
-    right: clamp(1rem, 5vw, 5rem);
+    inset-inline-end: clamp(1rem, 5vw, 5rem);
     opacity: var(--values-copy-opacity);
     transform: translate3d(0, var(--values-copy-y), 0);
 }
