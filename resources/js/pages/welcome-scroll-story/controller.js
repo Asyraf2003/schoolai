@@ -1,10 +1,10 @@
 import { clearPaint, paintScene, paintText } from './motion-painters.js';
 import {
-    FRAME_MS, PROGRESS_EPSILON, SCROLL_EPSILON, frameBlend,
-    measureScenes, readScroll, sceneProgress,
+    FRAME_MS, MOMENTUM_EPSILON, PROGRESS_EPSILON,
+    createScrollMotion, measureScenes, readScroll,
+    resetScrollMotion, sceneProgress, updateScrollMotion,
 } from './scroll-progress.js';
 import { prepareStoryText } from './split-text.js';
-
 function prepareScenes(root) {
     const elements = Array.from(root.querySelectorAll('[data-story-scene]'));
     return elements.map((element, index) => {
@@ -20,10 +20,10 @@ function prepareScenes(root) {
             top: 0,
             height: 1,
             painted: null,
+            paintedMomentum: null,
         };
     });
 }
-
 export function createStoryController(root) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const rtl = document.documentElement.dir === 'rtl';
@@ -32,12 +32,10 @@ export function createStoryController(root) {
         scenes.map((scene) => [scene.element, scene]),
     );
     const texts = prepareStoryText(root);
-
     texts.forEach((item) => {
         const owner = item.element.closest('[data-story-scene]');
         sceneByElement.get(owner)?.texts.push(item);
     });
-
     let frame = 0;
     let observer = null;
     let resizeObserver = null;
@@ -47,22 +45,19 @@ export function createStoryController(root) {
     let forcePaint = true;
     let snapNext = true;
     let lastTime = 0;
-    let currentScroll = readScroll();
-    let targetScroll = currentScroll;
+    let targetScroll = readScroll();
+    const scrollMotion = createScrollMotion(targetScroll);
     let viewportHeight = window.innerHeight || 1;
-
     function cancelFrame() {
         if (frame) window.cancelAnimationFrame(frame);
         frame = 0;
         lastTime = 0;
     }
-
     function requestRender() {
         if (!frame && !destroyed && active && !document.hidden) {
             frame = window.requestAnimationFrame(render);
         }
     }
-
     function refreshLayout() {
         layoutDirty = false;
         viewportHeight = window.innerHeight || 1;
@@ -70,13 +65,26 @@ export function createStoryController(root) {
         forcePaint = true;
     }
 
-    function paint(scene, progress) {
-        const unchanged = scene.painted !== null
-            && Math.abs(scene.painted - progress) <= PROGRESS_EPSILON;
-        if (!forcePaint && unchanged) return;
+    function paint(scene, progress, momentum) {
+        const progressChanged = scene.painted === null
+            || Math.abs(scene.painted - progress) > PROGRESS_EPSILON;
+        const momentumChanged = scene.paintedMomentum === null
+            || Math.abs(scene.paintedMomentum - momentum) > MOMENTUM_EPSILON;
+        if (!forcePaint && !progressChanged && !momentumChanged) return;
+
         paintScene(scene, progress, rtl, reduced.matches);
-        scene.texts.forEach((item) => paintText(item, progress, rtl));
+        scene.arts.forEach((art, index) => {
+            const drift = momentum * (index + 1) * 3;
+            art.style.translate = `0 ${drift.toFixed(2)}px`;
+        });
+        if (forcePaint || progressChanged) {
+            scene.texts.forEach((item) => {
+                delete item.lastProgress;
+                paintText(item, progress, rtl);
+            });
+        }
         scene.painted = progress;
+        scene.paintedMomentum = momentum;
     }
 
     function render(time) {
@@ -87,29 +95,24 @@ export function createStoryController(root) {
         targetScroll = readScroll();
         const delta = lastTime ? time - lastTime : FRAME_MS;
         lastTime = time;
-
-        if (snapNext || reduced.matches) currentScroll = targetScroll;
-        else {
-            currentScroll += (
-                targetScroll - currentScroll
-            ) * frameBlend(delta);
-        }
-
-        const settled = Math.abs(
-            targetScroll - currentScroll,
-        ) <= SCROLL_EPSILON;
-        if (settled) currentScroll = targetScroll;
+        const snapshot = updateScrollMotion(
+            scrollMotion,
+            targetScroll,
+            delta,
+            snapNext || reduced.matches,
+        );
+        const momentum = reduced.matches ? 0 : snapshot.momentum;
 
         scenes.forEach((scene) => {
             const progress = reduced.matches
                 ? 1
-                : sceneProgress(scene, currentScroll, viewportHeight);
-            paint(scene, progress);
+                : sceneProgress(scene, snapshot.current, viewportHeight);
+            paint(scene, progress, momentum);
         });
 
         snapNext = false;
         forcePaint = false;
-        if (!settled) requestRender();
+        if (!snapshot.settled) requestRender();
         else lastTime = 0;
     }
 
@@ -144,8 +147,9 @@ export function createStoryController(root) {
         active = nextActive;
         cancelFrame();
         if (!active) return;
-        currentScroll = readScroll();
-        targetScroll = currentScroll;
+
+        targetScroll = readScroll();
+        resetScrollMotion(scrollMotion, targetScroll);
         onResize();
     }
 
@@ -175,7 +179,10 @@ export function createStoryController(root) {
         root.classList.remove('is-story-ready');
         texts.forEach(clearPaint);
         scenes.forEach((scene) => {
-            scene.arts.forEach((art) => art.style.removeProperty('transform'));
+            scene.arts.forEach((art) => {
+                art.style.removeProperty('transform');
+                art.style.removeProperty('translate');
+            });
             scene.element.style.removeProperty('--scene-progress');
             scene.element.style.removeProperty('--scene-transition');
             scene.element.style.removeProperty('--scene-color');
