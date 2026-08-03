@@ -4,11 +4,17 @@ it('locks the homepage atmospheric depth gallery source contract', function (): 
     $gallery = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
     $depth = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $entry = file_get_contents(resource_path('css/pages/welcome-depth-gallery.css'));
+    $base = file_get_contents(resource_path(
+        'css/surfaces/home/gallery-depth/base.css'
+    ));
     $cards = file_get_contents(resource_path(
         'css/surfaces/home/gallery-depth/cards.css'
     ));
     $responsive = file_get_contents(resource_path(
         'css/surfaces/home/gallery-depth/responsive.css'
+    ));
+    $scene = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/scene.js'
     ));
     $controller = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/controller.js'
@@ -32,25 +38,31 @@ it('locks the homepage atmospheric depth gallery source contract', function (): 
         ->and($depth)
         ->toContain('data-depth-gallery')
         ->toContain('data-depth-gallery-canvas')
+        ->toContain('data-depth-gallery-trail')
+        ->toContain('pathLength="1"')
         ->toContain('depth-gallery__card--reverse')
         ->toContain('depth-gallery__media')
         ->toContain('depth-gallery__copy')
-        ->toContain('aria-hidden="true"')
+        ->not->toContain('depth-gallery__eyebrow')
         ->toContain('role="list"')
         ->toContain('role="listitem"')
-        ->toContain('data-media-url')
         ->toContain('href="{{ $mediaUrl }}"')
         ->and($entry)
         ->toContain('gallery-depth/base.css')
         ->toContain('gallery-depth/cards.css')
         ->toContain('gallery-depth/responsive.css')
+        ->and($base)
+        ->toContain('.depth-gallery__trail-line')
+        ->toContain('stroke-dasharray: 1')
         ->and($cards)
         ->toContain('grid-template-columns: minmax(0, 1fr)')
         ->toContain('width: auto')
         ->toContain('height: auto')
-        ->toContain('max-width: 100%')
         ->toContain('object-fit: contain')
         ->toContain('border-radius: 0')
+        ->toContain('color: #111')
+        ->toContain('font-size: clamp(0.88rem')
+        ->not->toContain('font-size: clamp(1.55rem')
         ->and($responsive)
         ->toContain('@media (min-width: 640px)')
         ->toContain('@media (min-width: 768px)')
@@ -59,8 +71,12 @@ it('locks the homepage atmospheric depth gallery source contract', function (): 
         ->toContain('@media (min-width: 1536px)')
         ->toContain('@media (prefers-reduced-motion: reduce)')
         ->toContain('html[dir="rtl"]')
+        ->and($scene)
+        ->toContain('viewportWidth * 0.032')
+        ->toContain('12, 54')
         ->and($controller)
         ->toContain("root.style.setProperty('--depth-atmosphere'")
+        ->toContain("trail?.style.setProperty('stroke-dashoffset'")
         ->toContain('IntersectionObserver')
         ->toContain('visibilitychange')
         ->toContain('pagehide')
