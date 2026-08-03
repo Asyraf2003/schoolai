@@ -1,41 +1,13 @@
-import { createGalleryStoryLightbox } from '../../../pages/welcome/gallery-story-lightbox.js';
+import { bindGalleryRouteExit } from '../../../components/gallery-route-transition.js';
 import { readGalleryData } from './data.js';
 import { DepthGalleryEngine } from './engine.js';
 import { loadThreeRuntime } from './three-runtime.js';
-
-function createLightboxBindings(root, config) {
-    const elements = config.map((item) => item.element);
-    const lightbox = createGalleryStoryLightbox(root, elements);
-    const cleanups = elements.map((element) => {
-        const onClick = (event) => {
-            if (!element.getAttribute('data-media-url')) return;
-            event.preventDefault();
-            lightbox.openStoryMedia(element);
-        };
-        element.addEventListener('click', onClick);
-        return () => element.removeEventListener('click', onClick);
-    });
-    const onKeyDown = (event) => {
-        if (event.key === 'Escape' && lightbox.isOpen()) {
-            lightbox.closeStoryMedia();
-        }
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return {
-        lightbox,
-        destroy() {
-            cleanups.forEach((cleanup) => cleanup());
-            document.removeEventListener('keydown', onKeyDown);
-        },
-    };
-}
 
 function createDepthGallery(root) {
     const config = readGalleryData(root);
     const canvas = root.querySelector('[data-depth-gallery-canvas]');
     const fallback = root.querySelector('[data-depth-gallery-fallback]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const lightboxBinding = createLightboxBindings(root, config);
     let engine = null;
     let observer = null;
     let activationFrame = 0;
@@ -44,18 +16,27 @@ function createDepthGallery(root) {
     let initializing = false;
     let active = false;
 
+    const routeTransition = bindGalleryRouteExit(
+        root,
+        () => engine,
+    );
+
     function applyFallbackState(disposeEngine = true) {
         if (activationFrame) cancelAnimationFrame(activationFrame);
         activationFrame = 0;
         active = false;
         initializing = false;
-        root.classList.remove('is-depth-ready', 'is-depth-active');
+        root.classList.remove(
+            'is-depth-ready',
+            'is-depth-active',
+            'is-depth-end-ready',
+            'is-depth-leaving',
+        );
         root.classList.add('is-depth-fallback');
         fallback?.removeAttribute('hidden');
         fallback?.removeAttribute('aria-hidden');
         if (fallback) fallback.inert = false;
         canvas?.setAttribute('aria-hidden', 'true');
-        canvas?.setAttribute('tabindex', '-1');
         canvas?.removeAttribute('aria-busy');
         if (!disposeEngine) return;
         const failedEngine = engine;
@@ -77,8 +58,6 @@ function createDepthGallery(root) {
             fallback?.setAttribute('hidden', '');
             fallback?.setAttribute('aria-hidden', 'true');
             if (fallback) fallback.inert = true;
-            canvas?.setAttribute('aria-hidden', 'false');
-            canvas?.setAttribute('tabindex', '0');
             canvas?.removeAttribute('aria-busy');
             if (inView && !document.hidden) engine.start();
         });
@@ -119,19 +98,6 @@ function createDepthGallery(root) {
         }
     }
 
-    const onCanvasOpen = () => {
-        if (!active) return;
-        const index = Number.parseInt(
-            canvas?.dataset.activeGalleryIndex || '-1',
-            10,
-        );
-        if (index >= 0) lightboxBinding.lightbox.openStoryMediaByIndex(index);
-    };
-    const onCanvasKeyDown = (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault();
-        onCanvasOpen();
-    };
     const onVisibility = () => {
         if (document.hidden) engine?.stop();
         else if (inView && active) engine?.start();
@@ -155,18 +121,14 @@ function createDepthGallery(root) {
         observer?.disconnect();
         engine?.dispose();
         engine = null;
-        canvas?.removeEventListener('click', onCanvasOpen);
-        canvas?.removeEventListener('keydown', onCanvasKeyDown);
         document.removeEventListener('visibilitychange', onVisibility);
         reducedMotion.removeEventListener?.('change', onMotionChange);
         window.removeEventListener('pagehide', onPageHide);
         window.removeEventListener('pageshow', onPageShow);
-        lightboxBinding.destroy();
+        routeTransition.destroy();
     }
 
     applyFallbackState(false);
-    canvas?.addEventListener('click', onCanvasOpen);
-    canvas?.addEventListener('keydown', onCanvasKeyDown);
     document.addEventListener('visibilitychange', onVisibility);
     reducedMotion.addEventListener?.('change', onMotionChange);
     window.addEventListener('pagehide', onPageHide);
