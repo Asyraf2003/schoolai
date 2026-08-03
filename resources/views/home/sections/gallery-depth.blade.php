@@ -42,30 +42,30 @@
       ],
   ];
   $depthItems = collect($gallerySection['items'] ?? [])->values();
-  $depthCount = max(1, $depthItems->count());
+  $depthCta = is_array($gallerySection['cta'] ?? null)
+      ? $gallerySection['cta']
+      : [];
+  $hasDepthCta = trim((string) ($depthCta['href'] ?? '')) !== ''
+      && trim((string) ($depthCta['label'] ?? '')) !== '';
+  $depthEndSteps = $hasDepthCta ? 1 : 0;
+  $depthJourneyCount = max(1, $depthItems->count() + $depthEndSteps);
 @endphp
 
 <div
   class="depth-gallery is-depth-fallback"
   data-depth-gallery
-  data-lightbox-label="{{ $gallerySection['lightbox_label'] ?? __('home.galeri.lightbox_label') }}"
-  data-close-label="{{ $gallerySection['close_label'] ?? __('home.galeri.close_label') }}"
-  data-video-title="{{ $gallerySection['video_title'] ?? __('home.galeri.video_title') }}"
-  data-open-prefix="{{ $gallerySection['open_media_prefix'] ?? __('home.galeri.open_media_prefix') }}"
-  style="--depth-gallery-count: {{ $depthCount }}"
+  data-depth-gallery-end-steps="{{ $depthEndSteps }}"
+  style="--depth-gallery-count: {{ $depthJourneyCount }}"
 >
   <div class="depth-gallery__journey" data-depth-gallery-journey>
     <div class="depth-gallery__viewport" data-depth-gallery-viewport>
       <canvas
         class="depth-gallery__canvas"
         data-depth-gallery-canvas
-        role="button"
-        tabindex="-1"
         aria-hidden="true"
-        aria-label="{{ $gallerySection['aria_label'] ?? __('home.galeri.aria_label') }}"
       ></canvas>
 
-      <section class="depth-gallery__labels" data-depth-gallery-labels>
+      <section class="depth-gallery__labels" data-depth-gallery-labels aria-hidden="true">
         <div class="depth-gallery__label-left">
           <p data-depth-gallery-title></p>
         </div>
@@ -83,31 +83,27 @@
         @foreach ($depthItems as $item)
           @php
             $preset = $depthPresets[$loop->index % count($depthPresets)];
-            $mediaUrl = (string) ($item['media_url'] ?? '');
             $thumbnailUrl = (string) ($item['thumbnail_url'] ?? '');
             $itemTitle = (string) ($item['title'] ?? '');
             $itemCaption = (string) ($item['caption'] ?? '');
           @endphp
 
-          <article class="depth-gallery__fallback-item" role="listitem">
-            <a
-              class="depth-gallery__fallback-card"
-              href="{{ $mediaUrl }}"
-              data-depth-gallery-source
-              data-gallery-index="{{ $loop->index }}"
-              data-title="{{ $itemTitle }}"
-              data-caption="{{ $itemCaption }}"
-              data-media-url="{{ $mediaUrl }}"
-              data-thumbnail-url="{{ $thumbnailUrl }}"
-              data-is-video="{{ ! empty($item['is_video']) ? '1' : '0' }}"
-              data-position-x="{{ $preset['x'] }}"
-              data-fallback-color="{{ $preset['fallback'] }}"
-              data-accent-color="{{ $preset['accent'] }}"
-              data-background-color="{{ $preset['background'] }}"
-              data-blob1-color="{{ $preset['blob1'] }}"
-              data-blob2-color="{{ $preset['blob2'] }}"
-              aria-label="{{ $gallerySection['open_media_prefix'] ?? __('home.galeri.open_media_prefix') }} {{ $itemTitle }}"
-            >
+          <article
+            class="depth-gallery__fallback-item"
+            role="listitem"
+            data-depth-gallery-source
+            data-gallery-index="{{ $loop->index }}"
+            data-title="{{ $itemTitle }}"
+            data-caption="{{ $itemCaption }}"
+            data-thumbnail-url="{{ $thumbnailUrl }}"
+            data-position-x="{{ $preset['x'] }}"
+            data-fallback-color="{{ $preset['fallback'] }}"
+            data-accent-color="{{ $preset['accent'] }}"
+            data-background-color="{{ $preset['background'] }}"
+            data-blob1-color="{{ $preset['blob1'] }}"
+            data-blob2-color="{{ $preset['blob2'] }}"
+          >
+            <div class="depth-gallery__fallback-card">
               <span class="depth-gallery__fallback-media">
                 @if ($thumbnailUrl !== '')
                   <img
@@ -126,10 +122,22 @@
                   <small>{{ $itemCaption }}</small>
                 @endif
               </span>
-            </a>
+            </div>
           </article>
         @endforeach
       </div>
+
+      @if ($hasDepthCta)
+        <div class="depth-gallery__end" data-depth-gallery-end>
+          <a
+            class="depth-gallery__end-link"
+            href="{{ $depthCta['href'] }}"
+            data-depth-gallery-end-link
+          >
+            <span>{{ $depthCta['label'] }}</span>
+          </a>
+        </div>
+      @endif
     </div>
   </div>
 </div>
