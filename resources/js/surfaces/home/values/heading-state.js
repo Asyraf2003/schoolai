@@ -1,7 +1,7 @@
 import { clamp, easeOutCubic } from './motion.js';
 
 const EPSILON = 0.00005;
-const ENTRY_TRIGGER_RATIO = 0.9;
+const ENTRY_TRIGGER_RATIO = 0.96;
 const REVEAL_DURATION_MS = 900;
 const FAST_RESOLVE_PROGRESS = 0.18;
 
@@ -38,7 +38,7 @@ export function updateHeadingState(
     timelineTop,
     viewportHeight,
     time,
-    desktop,
+    shiftAllowed,
 ) {
     const triggerTop = viewportHeight * ENTRY_TRIGGER_RATIO;
     const beforeSection = storyProgress <= EPSILON && timelineTop > triggerTop;
@@ -64,12 +64,12 @@ export function updateHeadingState(
         if (state.reveal >= 0.999 || storyProgress >= FAST_RESOLVE_PROGRESS) {
             state.reveal = 1;
             state.phase = 'revealed';
-            state.instant = storyProgress >= FAST_RESOLVE_PROGRESS;
+            state.instant = false;
         }
     }
 
     state.reveal = clamp(state.reveal);
-    state.shifted = desktop && state.phase === 'revealed';
+    state.shifted = shiftAllowed && state.phase === 'revealed';
     state.previousTop = timelineTop;
 
     return {

@@ -339,7 +339,6 @@ return [
     ],
 
     'nilai_sekolah' => [
-        'title' => 'Values That Guide Every Child’s Growth',
         'heading' => 'VALUES STUDENTS',
         'heading_lines' => ['VALUES', 'STUDENTS'],
         'subtitle' => 'Four core values shape the learning culture at Al-Mustaqbal: closeness to the Qur’an, courage to think, unity of character, and the ability to inspire others.',

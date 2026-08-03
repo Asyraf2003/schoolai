@@ -92,7 +92,7 @@ export function createValuesStory(root) {
             frameTarget.timelineTop,
             geometry.viewportHeight,
             time,
-            geometry.mode === 4,
+            geometry.mode >= 3,
         );
 
         syncHeadingClasses(root, headingSnapshot);

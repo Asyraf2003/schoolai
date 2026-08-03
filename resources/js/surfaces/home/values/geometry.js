@@ -52,7 +52,6 @@ export function measureValuesGeometry(root, cards, nodes) {
             rootStyles.getPropertyValue('--values-layout-mode'),
             10,
         ) || 1,
-        directionSign: rootStyles.direction === 'rtl' ? -1 : 1,
         viewportHeight: window.innerHeight || 1,
         viewportWidth: window.innerWidth || 1,
         rootHeight: Math.max(1, root.offsetHeight),

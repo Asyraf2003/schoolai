@@ -14,10 +14,6 @@
   <div class="values-story__timeline" data-values-timeline>
     <div class="values-story__clip" data-values-stage>
       <header class="values-story__headline" data-values-heading>
-        <p class="values-story__eyebrow" data-text-role="label">
-          {{ $schoolValues['title'] }}
-        </p>
-
         <h2
           class="values-story__title"
           id="values-story-heading"

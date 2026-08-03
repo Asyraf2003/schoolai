@@ -7,17 +7,17 @@ uses(RefreshDatabase::class);
 it('renders the rebuilt localized semantic values story', function (): void {
     $locales = [
         'id' => [
-            'title' => 'Nilai yang Menjadi Arah Tumbuh Anak',
+            'removed_title' => 'Nilai yang Menjadi Arah Tumbuh Anak',
             'heading' => 'PONDASI KARAKTER',
             'honorific' => 'Rasulullah shallallahu ‘alaihi wasallam',
         ],
         'en' => [
-            'title' => 'Values That Guide Every Child’s Growth',
+            'removed_title' => 'Values That Guide Every Child’s Growth',
             'heading' => 'VALUES STUDENTS',
             'honorific' => 'the Messenger of Allah, peace and blessings be upon him',
         ],
         'ar' => [
-            'title' => 'قيم ترسم مسار نمو الطفل',
+            'removed_title' => 'قيم ترسم مسار نمو الطفل',
             'heading' => 'أَسَاسُ الْمَدْرَسَةِ',
             'honorific' => 'رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ',
         ],
@@ -42,9 +42,10 @@ it('renders the rebuilt localized semantic values story', function (): void {
             ->assertSee('data-values-trail-path', false)
             ->assertSee('data-values-trail-head', false)
             ->assertSee('class="values-story__exit"', false)
-            ->assertSee($copy['title'])
             ->assertSee($copy['heading'])
             ->assertSee($copy['honorific'])
+            ->assertDontSee($copy['removed_title'])
+            ->assertDontSee('values-story__eyebrow', false)
             ->assertDontSee('class="values-transition"', false)
             ->assertDontSee('data-school-value-card', false)
             ->assertDontSee('aria-pressed=', false)

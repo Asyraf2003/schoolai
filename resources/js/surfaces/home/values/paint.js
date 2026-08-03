@@ -2,15 +2,15 @@ import { cardFrame, storyFrame } from './layout.js';
 
 const CARD_PROPERTIES = [
     '--values-x', '--values-y', '--values-z', '--values-ry',
-    '--values-rz', '--values-scale', '--values-opacity',
+    '--values-rz', '--values-scale',
 ];
 
 const ROOT_PROPERTIES = [
     '--values-heading-opacity', '--values-heading-y',
-    '--values-line-one-x', '--values-line-two-x',
+    '--values-line-one-y', '--values-line-two-y',
     '--values-copy-opacity', '--values-copy-y',
-    '--values-cards-opacity', '--values-trail-progress',
-    '--values-trail-opacity', '--values-trail-y',
+    '--values-trail-progress', '--values-trail-opacity',
+    '--values-trail-y',
 ];
 
 function writeCardFrame(card, state) {
@@ -20,7 +20,6 @@ function writeCardFrame(card, state) {
     card.style.setProperty('--values-ry', `${state.ry.toFixed(2)}deg`);
     card.style.setProperty('--values-rz', `${state.rz.toFixed(2)}deg`);
     card.style.setProperty('--values-scale', state.scale.toFixed(4));
-    card.style.setProperty('--values-opacity', state.opacity.toFixed(4));
 }
 
 function readTrailPoint(nodes, geometry, progress) {
@@ -43,22 +42,18 @@ function writeRootFrame(root, story) {
         `${story.headingY.toFixed(2)}px`,
     );
     root.style.setProperty(
-        '--values-line-one-x',
-        `${story.lineOneX.toFixed(2)}%`,
+        '--values-line-one-y',
+        `${story.lineOneY.toFixed(2)}%`,
     );
     root.style.setProperty(
-        '--values-line-two-x',
-        `${story.lineTwoX.toFixed(2)}%`,
+        '--values-line-two-y',
+        `${story.lineTwoY.toFixed(2)}%`,
     );
     root.style.setProperty(
         '--values-copy-opacity',
         story.copyOpacity.toFixed(4),
     );
     root.style.setProperty('--values-copy-y', `${story.copyY.toFixed(2)}px`);
-    root.style.setProperty(
-        '--values-cards-opacity',
-        story.cardsOpacity.toFixed(4),
-    );
     root.style.setProperty(
         '--values-trail-progress',
         story.trailProgress.toFixed(5),
@@ -98,6 +93,7 @@ export function paintValuesStory(
         );
     });
     writeRootFrame(root, story);
+    root.classList.toggle('is-values-floating', story.floatActive);
 
     if (trailPoint && nodes.trailHead) {
         nodes.trailHead.setAttribute('cx', trailPoint.x.toFixed(2));
@@ -106,6 +102,7 @@ export function paintValuesStory(
 }
 
 export function clearValuesStory(root, cards, nodes) {
+    root.classList.remove('is-values-floating');
     ROOT_PROPERTIES.forEach((name) => root.style.removeProperty(name));
     cards.forEach((card) => {
         CARD_PROPERTIES.forEach((name) => card.style.removeProperty(name));

@@ -2,16 +2,16 @@ import { clamp, easeOutCubic, mix, phase } from './motion.js';
 
 const FAN_ANGLES = [-13, -4.5, 4.5, 13];
 const DECK_ANGLES = [-1.8, -.6, .6, 1.8];
-const FLIP_START = 0.44;
-const FLIP_DURATION = 0.28;
-const FLIP_STAGGER = 0.075;
-const FLIP_OVERSHOOT = -8;
+const FLIP_START = 0.38;
+const FLIP_DURATION = 0.27;
+const FLIP_STAGGER = 0.07;
+const FLIP_FRONT_PASS = 0.84;
+const FLIP_OVERSHOOT = -18;
 
-function easeInOutCubic(value) {
+function smootherStep(value) {
     const progress = clamp(value);
-    return progress < 0.5
-        ? 4 * progress * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    return progress * progress * progress
+        * (progress * (progress * 6 - 15) + 10);
 }
 
 export function fanAngle(index) {
@@ -29,23 +29,25 @@ export function flipLocal(index, progress) {
 
 export function flipAngle(local) {
     if (local <= 0) return 180;
-    if (local < 0.82) {
+    if (local < FLIP_FRONT_PASS) {
         return mix(
             180,
             FLIP_OVERSHOOT,
-            easeInOutCubic(local / 0.82),
+            smootherStep(local / FLIP_FRONT_PASS),
         );
     }
 
     return mix(
         FLIP_OVERSHOOT,
         0,
-        easeOutCubic((local - 0.82) / 0.18),
+        easeOutCubic(
+            (local - FLIP_FRONT_PASS) / (1 - FLIP_FRONT_PASS),
+        ),
     );
 }
 
 export function uprightAmount(local) {
-    return phase(local, 0.12, 0.88);
+    return phase(local, 0.3, 0.74);
 }
 
 export function fanArc(index, cardHeight) {

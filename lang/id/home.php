@@ -338,7 +338,6 @@ return [
     ],
 
     'nilai_sekolah' => [
-        'title' => 'Nilai yang Menjadi Arah Tumbuh Anak',
         'heading' => 'PONDASI KARAKTER',
         'heading_lines' => ['PONDASI', 'KARAKTER'],
         'subtitle' => 'Empat nilai utama yang membentuk budaya belajar Al-Mustaqbal: dekat dengan Al-Qur’an, berani berpikir, menyatu dalam karakter, dan menginspirasi lingkungan.',

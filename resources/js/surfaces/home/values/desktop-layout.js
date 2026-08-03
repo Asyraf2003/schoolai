@@ -9,8 +9,8 @@ import {
 } from './desktop-keyframes.js';
 import { mix, phase } from './motion.js';
 
-function pose(x, y, z, rz, scale, opacity, ry = 180) {
-    return { x, y, z, rz, scale, opacity, ry };
+function pose(x, y, z, rz, scale, ry = 180) {
+    return { x, y, z, rz, scale, ry };
 }
 
 function mixPose(from, to, amount) {
@@ -20,7 +20,6 @@ function mixPose(from, to, amount) {
         z: mix(from.z, to.z, amount),
         rz: mix(from.rz, to.rz, amount),
         scale: mix(from.scale, to.scale, amount),
-        opacity: mix(from.opacity, to.opacity, amount),
         ry: mix(from.ry, to.ry, amount),
     };
 }
@@ -36,22 +35,20 @@ function centeredOffsets(index, geometry) {
 function hiddenPose(index, geometry, center) {
     return pose(
         center.x + stackNudge(index, geometry.cardWidth),
-        center.y + geometry.cardHeight * 0.34,
+        center.y + geometry.cardHeight * 0.62,
         -index * 14,
         deckAngle(index),
-        0.9,
-        0,
+        0.92,
     );
 }
 
 function deckPose(index, geometry, center) {
     return pose(
         center.x + stackNudge(index, geometry.cardWidth),
-        center.y + geometry.cardHeight * 0.14 + index * 2,
+        center.y + geometry.cardHeight * 0.18 + index * 2,
         -index * 14,
         deckAngle(index),
-        0.96,
-        1,
+        0.97,
     );
 }
 
@@ -62,12 +59,11 @@ function fanPose(index, geometry, center) {
         -index * 3,
         fanAngle(index),
         1,
-        1,
     );
 }
 
 function preFlipPose(index) {
-    return pose(0, 0, 0, fanAngle(index), 1, 1);
+    return pose(0, 0, 0, fanAngle(index), 1);
 }
 
 export function desktopCardFrame(
@@ -81,16 +77,14 @@ export function desktopCardFrame(
     const deck = deckPose(index, geometry, center);
     const fan = fanPose(index, geometry, center);
     const preFlip = preFlipPose(index);
-    const revealStart = 0.05 + index * 0.012;
-    const revealEnd = 0.14 + index * 0.012;
     let current = mixPose(
         hidden,
         deck,
-        phase(progress, revealStart, revealEnd),
+        phase(progress, 0, 0.16),
     );
 
-    current = mixPose(current, fan, phase(progress, 0.18, 0.38));
-    current = mixPose(current, preFlip, phase(progress, 0.34, 0.46));
+    current = mixPose(current, fan, phase(progress, 0.12, 0.36));
+    current = mixPose(current, preFlip, phase(progress, 0.30, 0.42));
 
     const localFlip = flipLocal(index, progress);
     const upright = uprightAmount(localFlip);
