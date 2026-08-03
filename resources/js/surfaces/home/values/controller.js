@@ -60,6 +60,9 @@ export function createValuesStory(root) {
                 styles.getPropertyValue('--values-layout-mode'),
                 10,
             ) || 1,
+            titleLineTwoShift: Number.parseFloat(
+                styles.getPropertyValue('--values-line-two-target-x'),
+            ) || 0,
             viewportHeight,
             viewportWidth: window.innerWidth || 1,
         };
