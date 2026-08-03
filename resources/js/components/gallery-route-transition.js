@@ -23,46 +23,51 @@ export function bindGalleryRouteExit(root, getEngine) {
         root.classList.add('is-depth-leaving');
         rememberTransition();
 
-        const timing = {
-            duration: 760,
-            easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
-            fill: 'forwards',
-        };
-        const viewportAnimation = viewport.animate([
-            {
-                transform: 'scale(1)',
-                filter: 'blur(0px)',
-                opacity: 1,
-            },
-            {
-                transform: 'scale(1.16)',
-                filter: 'blur(18px)',
-                opacity: 0.08,
-            },
-        ], timing);
-        const linkAnimation = link.animate([
-            {
-                transform: 'translate3d(0, 0, 0) rotate(0deg) scale(1)',
-                filter: 'blur(0px)',
-                opacity: 1,
-            },
-            {
-                offset: 0.68,
-                transform: 'translate3d(0, 0, 0) rotate(0deg) scale(1.55)',
-                filter: 'blur(0px)',
-                opacity: 1,
-            },
-            {
-                transform: 'translate3d(0, 0, 0) rotate(45deg) scale(2.05)',
-                filter: 'blur(14px)',
-                opacity: 0,
-            },
-        ], timing);
+        try {
+            const timing = {
+                duration: 760,
+                easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
+                fill: 'forwards',
+            };
+            const viewportAnimation = viewport.animate([
+                {
+                    transform: 'scale(1)',
+                    filter: 'blur(0px)',
+                    opacity: 1,
+                },
+                {
+                    transform: 'scale(1.16)',
+                    filter: 'blur(18px)',
+                    opacity: 0.08,
+                },
+            ], timing);
+            const linkAnimation = link.animate([
+                {
+                    transform: 'translate3d(0, 0, 0) rotate(0deg) scale(1)',
+                    filter: 'blur(0px)',
+                    opacity: 1,
+                },
+                {
+                    offset: 0.68,
+                    transform: 'translate3d(0, 0, 0) rotate(0deg) scale(1.55)',
+                    filter: 'blur(0px)',
+                    opacity: 1,
+                },
+                {
+                    transform: 'translate3d(0, 0, 0) rotate(45deg) scale(2.05)',
+                    filter: 'blur(14px)',
+                    opacity: 0,
+                },
+            ], timing);
 
-        Promise.allSettled([
-            viewportAnimation.finished,
-            linkAnimation.finished,
-        ]).then(() => window.location.assign(link.href));
+            Promise.allSettled([
+                viewportAnimation.finished,
+                linkAnimation.finished,
+            ]).then(() => navigate(link.href));
+        } catch (error) {
+            console.warn('Gallery route transition failed', error);
+            navigate(link.href);
+        }
     };
 
     link.addEventListener('click', onClick);
@@ -100,11 +105,16 @@ export function playGalleryRouteArrival() {
 }
 
 function isPlainPrimaryClick(event) {
-    return event.button === 0
+    return !event.defaultPrevented
+        && event.button === 0
         && !event.metaKey
         && !event.ctrlKey
         && !event.shiftKey
         && !event.altKey;
+}
+
+function navigate(href) {
+    window.location.assign(href);
 }
 
 function rememberTransition() {
