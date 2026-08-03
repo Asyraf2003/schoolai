@@ -1,14 +1,16 @@
 export class DepthScroll {
-    constructor(THREE, camera, gallery, journey, viewport) {
+    constructor(THREE, camera, gallery, journey, viewport, endSteps = 0) {
         this.THREE = THREE;
         this.camera = camera;
         this.gallery = gallery;
         this.journey = journey;
         this.viewport = viewport;
+        this.endSteps = Math.max(0, endSteps);
         this.scrollTarget = 0;
         this.scrollCurrent = 0;
         this.previousScrollCurrent = 0;
         this.progressCurrent = 0;
+        this.endProgress = 0;
         this.scrollSmoothing = 0.08;
         this.velocity = 0;
         this.velocityDamping = 0.12;
@@ -24,13 +26,31 @@ export class DepthScroll {
 
     updateCameraBounds() {
         const range = this.gallery.getDepthRange();
+        const endDepth = this.endSteps * this.gallery.planeGap;
         this.maxCameraZ = range.nearestZ + 5;
-        this.minCameraZ = Math.min(this.maxCameraZ, range.deepestZ + 5);
+        this.minCameraZ = Math.min(
+            this.maxCameraZ,
+            range.deepestZ + 5 - endDepth,
+        );
     }
 
     readScrollTarget(travel) {
         const rect = this.journey.getBoundingClientRect();
         return this.THREE.MathUtils.clamp(-rect.top, 0, travel);
+    }
+
+    updateEndProgress() {
+        const planeSteps = Math.max(0, this.gallery.planes.length - 1);
+        const totalSteps = Math.max(1, planeSteps + this.endSteps);
+        const endStart = planeSteps / totalSteps;
+
+        this.endProgress = this.endSteps > 0 && endStart < 1
+            ? this.THREE.MathUtils.clamp(
+                (this.progressCurrent - endStart) / (1 - endStart),
+                0,
+                1,
+            )
+            : 0;
     }
 
     update() {
@@ -63,6 +83,7 @@ export class DepthScroll {
             0,
             1,
         );
+        this.updateEndProgress();
         this.camera.position.z = this.THREE.MathUtils.lerp(
             this.maxCameraZ,
             this.minCameraZ,
