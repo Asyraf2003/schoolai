@@ -10,6 +10,7 @@ export function updateGalleryMotion(gallery, blend, scroll) {
         0,
         1,
     );
+    const endOpacity = 1 - scroll.endProgress;
     gallery.targetBreathIntensity = Math.min(
         1,
         velocity * gallery.breathGain,
@@ -34,10 +35,13 @@ export function updateGalleryMotion(gallery, blend, scroll) {
     const baseScale = gallery.getBaseScale();
     gallery.planes.forEach((plane, index) => {
         let targetOpacity = index === blend.currentPlaneIndex
-            ? 1 - blend.blend
+            ? (1 - blend.blend) * endOpacity
             : 0;
         if (index === blend.nextPlaneIndex) {
-            targetOpacity = Math.max(targetOpacity, blend.blend);
+            targetOpacity = Math.max(
+                targetOpacity,
+                blend.blend * endOpacity,
+            );
         }
         plane.material.opacity = THREE.MathUtils.lerp(
             plane.material.opacity,
