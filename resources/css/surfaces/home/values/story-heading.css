@@ -20,10 +20,10 @@
     font-size: clamp(4rem, 14vw, 13.5rem);
     font-optical-sizing: auto;
     font-synthesis: none;
-    font-variation-settings: "wght" 100;
-    font-weight: 100;
+    font-variation-settings: "wght" 200;
+    font-weight: 200;
     line-height: .8;
-    letter-spacing: -.045em;
+    letter-spacing: -.04em;
     text-wrap: balance;
 }
 
