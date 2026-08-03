@@ -1,7 +1,8 @@
-import { clamp, mix, smooth } from './motion.js';
+import { clamp } from './motion.js';
 
 const SAMPLE_TIMES = [0, 0.1, 0.22, 0.39, 0.57, 0.77, 1];
 const X_FACTORS = [0.93, 0.93, 0.955, 0.975, 0.988, 0.996, 1];
+const TANGENT_SCALE = 0.72;
 const Y_SAMPLES = [
     [4.191, 7.161, 3.547, -3.328],
     [4.191, 7.161, 3.547, -3.328],
@@ -33,13 +34,13 @@ const RY_SAMPLES = [
 function segmentAt(amount) {
     const value = clamp(amount);
 
-    for (let index = 1; index < SAMPLE_TIMES.length; index += 1) {
-        if (value <= SAMPLE_TIMES[index]) {
-            const start = SAMPLE_TIMES[index - 1];
-            const end = SAMPLE_TIMES[index];
+    for (let index = 0; index < SAMPLE_TIMES.length - 1; index += 1) {
+        const start = SAMPLE_TIMES[index];
+        const end = SAMPLE_TIMES[index + 1];
+        if (value <= end) {
             return {
-                index: index - 1,
-                amount: smooth((value - start) / Math.max(0.0001, end - start)),
+                index,
+                amount: (value - start) / Math.max(0.0001, end - start),
             };
         }
     }
@@ -47,13 +48,37 @@ function segmentAt(amount) {
     return { index: SAMPLE_TIMES.length - 2, amount: 1 };
 }
 
+function tangent(values, index) {
+    const last = values.length - 1;
+    if (index <= 0) {
+        return (values[1] - values[0])
+            / (SAMPLE_TIMES[1] - SAMPLE_TIMES[0]);
+    }
+    if (index >= last) {
+        return (values[last] - values[last - 1])
+            / (SAMPLE_TIMES[last] - SAMPLE_TIMES[last - 1]);
+    }
+
+    return (values[index + 1] - values[index - 1])
+        / (SAMPLE_TIMES[index + 1] - SAMPLE_TIMES[index - 1]);
+}
+
 function sampleScalar(values, amount) {
     const segment = segmentAt(amount);
-    return mix(
-        values[segment.index],
-        values[segment.index + 1],
-        segment.amount,
-    );
+    const index = segment.index;
+    const local = segment.amount;
+    const duration = SAMPLE_TIMES[index + 1] - SAMPLE_TIMES[index];
+    const start = values[index];
+    const end = values[index + 1];
+    const startSlope = tangent(values, index) * duration * TANGENT_SCALE;
+    const endSlope = tangent(values, index + 1) * duration * TANGENT_SCALE;
+    const squared = local * local;
+    const cubed = squared * local;
+
+    return (2 * cubed - 3 * squared + 1) * start
+        + (cubed - 2 * squared + local) * startSlope
+        + (-2 * cubed + 3 * squared) * end
+        + (cubed - squared) * endSlope;
 }
 
 function sampleCard(values, cardIndex, amount) {
@@ -84,7 +109,7 @@ export function measuredDesktopPose(index, amount, geometry, baseY) {
         y: baseY + sampleCard(Y_SAMPLES, index, amount) * yScale,
         z: -index * 4,
         rx: 0,
-        ry: sampleCard(RY_SAMPLES, index, amount),
+        ry: clamp(sampleCard(RY_SAMPLES, index, amount), -24, 180),
         rz: sampleCard(RZ_SAMPLES, index, amount),
         scale: 1,
         opacity: 1,
