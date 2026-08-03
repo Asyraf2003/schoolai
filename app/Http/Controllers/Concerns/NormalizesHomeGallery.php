@@ -2,14 +2,7 @@
 
 namespace App\Http\Controllers\Concerns;
 
-use App\Models\Article;
-use App\Models\GalleryItem;
-use App\Models\PpdbSetting;
-use App\Models\SiteStatistic;
-use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Schema;
 
 trait NormalizesHomeGallery
 {
@@ -53,6 +46,11 @@ trait NormalizesHomeGallery
         $videoProvider = $type === 'video'
             ? $this->videoProvider($mediaUrl)
             : null;
+        $caption = trim((string) ($item['caption'] ?? ''));
+
+        if ($this->isDummyGalleryCaption($caption)) {
+            $caption = trim((string) __('home.galeri.section_subtitle'));
+        }
 
         $item['type'] = $type;
         $item['type_label'] = (string) ($item['type_label'] ?? (
@@ -62,7 +60,9 @@ trait NormalizesHomeGallery
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
         $item['media_url'] = $mediaUrl;
-        $item['thumbnail_url'] = $type === 'photo' ? $mediaUrl : $this->videoThumbnailUrl($mediaUrl);
+        $item['thumbnail_url'] = $type === 'photo'
+            ? $mediaUrl
+            : $this->videoThumbnailUrl($mediaUrl);
         $item['video_provider'] = $videoProvider;
         $item['video_provider_logo_url'] = $this->videoProviderLogoUrl($videoProvider);
         $item['video_provider_label'] = match ($videoProvider) {
@@ -75,12 +75,21 @@ trait NormalizesHomeGallery
         };
         $item['published_at'] = (string) ($item['published_at'] ?? $item['date'] ?? '');
         $item['date'] = (string) ($item['date'] ?? $item['published_at']);
-        $item['caption'] = (string) ($item['caption'] ?? '');
+        $item['caption'] = $caption;
         $item['category'] = (string) ($item['category'] ?? '');
         $item['accent'] = $type === 'video' ? '#f97316' : '#19aee6';
         $item['fallback_icon'] = $type === 'video' ? '▶' : '📸';
 
         return $item;
+    }
+
+    private function isDummyGalleryCaption(string $caption): bool
+    {
+        return in_array($caption, [
+            'Dokumentasi dummy untuk pratinjau galeri sekolah.',
+            'Sample documentation for the school gallery preview.',
+            'محتوى تجريبي لمعاينة معرض المدرسة.',
+        ], true);
     }
 
     private function trustedVideoEmbedUrl(mixed $url): ?string
@@ -119,7 +128,8 @@ trait NormalizesHomeGallery
             return $url;
         }
 
-        if ($host === 'www.facebook.com' && $path === 'plugins/video.php' && $this->isTrustedFacebookEmbedUrl($url)) {
+        if ($host === 'www.facebook.com' && $path === 'plugins/video.php'
+            && $this->isTrustedFacebookEmbedUrl($url)) {
             return $url;
         }
 
