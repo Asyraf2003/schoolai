@@ -75,24 +75,24 @@ export function storyFrame(
     headingState,
 ) {
     const reveal = headingState?.reveal ?? 1;
-    const copyEnter = phase(reveal, 0.76, 1);
+    const copyEnter = phase(reveal, 0.7, 1);
     const desktop = geometry.mode === 4;
-    const copyLeave = desktop ? phase(progress, 0.18, 0.34) : 0;
+    const copyLeave = desktop ? phase(progress, 0.12, 0.28) : 0;
     const trailLeave = phase(progress, 0.92, 1);
     const headingY = desktop
-        ? mix(0, -geometry.viewportHeight * 0.72, phase(progress, 0.18, 0.36))
+        ? mix(0, -geometry.viewportHeight * 0.72, phase(progress, 0.12, 0.3))
         : 0;
 
     return {
-        lineOneY: mix(108, 0, reveal),
-        lineTwoY: mix(-108, 0, reveal),
+        lineOneY: mix(103, 0, reveal),
+        lineTwoY: mix(-103, 0, reveal),
         headingOpacity: 1,
         headingY,
         copyOpacity: copyEnter * (1 - copyLeave),
         copyY: mix(24, 0, copyEnter),
-        trailProgress: desktop ? phase(progress, 0.18, 0.96) : 0,
+        trailProgress: desktop ? phase(progress, 0.12, 0.96) : 0,
         trailOpacity: desktop
-            ? phase(progress, 0.18, 0.26) * (1 - trailLeave)
+            ? phase(progress, 0.12, 0.22) * (1 - trailLeave)
             : 0,
         trailY: desktop
             ? mix(
