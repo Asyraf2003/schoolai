@@ -84,7 +84,9 @@
     height: calc(100vh - var(--nav-h, 4.5rem));
     height: calc(100svh - var(--nav-h, 4.5rem));
     overflow: hidden;
-    perspective: 1600px;
+    perspective: 960px;
+    perspective-origin: 50% 52%;
+    transform-style: preserve-3d;
 }
 
 @supports not (overflow: clip) {
