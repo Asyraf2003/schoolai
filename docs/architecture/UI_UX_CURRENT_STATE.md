@@ -6,6 +6,7 @@ Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Active blueprint: `blueprints/2026-08-03-home-values-card-story.md`
 Raw evidence: `measurements/2026-08-03-home-values-reference-motion-raw.md`
+Source implementation head: `fbbc83b6672053652ac4551aea3970b825df0fcc`
 
 Commit publication proves source state only. It does not prove build, browser,
 responsive, accessibility, performance, or lifecycle completion.
@@ -13,179 +14,98 @@ responsive, accessibility, performance, or lifecycle completion.
 ## Active production batch
 
 - ID: `HOME-VALUES-001`
-- State: `IMPLEMENTING`
+- State: `IMPLEMENTED_SOURCE`
 - Surface: homepage Values section `#nilai`
-- Source implementation head:
-  `f0dd63a11b33078058f7c2f81344f0c2b66fbd09`
-- Current atomic result: centered PC card staging plus a continuous CSS 3D
-  perspective chain for natural flip projection
+- Accepted blueprint commit: `48830e93645dc0d5a681a89546f4dc8bc1941dab`
+- Implementation commit: `fbbc83b6672053652ac4551aea3970b825df0fcc`
+- Scope: 19 Values-owned source and focused-test files
 - Protected: Hero, Vision/Mission, Programs, Gallery, Articles, navigation,
   footer, DB/admin/routes, About, and Testimonial
 
-## Latest owner runtime feedback
+## Implemented result
 
-The owner supplied SchoolAI and Lusion screenshots showing two remaining
-mismatches in the prior implementation:
-
-1. The lead stack and flip action remained visually submerged near the bottom of
-   the sticky stage.
-2. Edge-on SchoolAI cards looked like rectangles whose width was compressed,
-   while the reference showed a perspective trapezoid with a larger near side
-   and smaller far side.
-
-The owner's road analogy is accurate: the prior result kept both road edges
-nearly parallel, while a natural perspective projection converges toward a
-vanishing point.
-
-This runtime feedback is `FAIL` for source head
-`3f2c8596ef37a61627098e87d4140e33ec9a5e9f`. Corrected runtime remains unproven.
-
-## Root-cause FACT
-
-### Low stage anchor
-
-The prior PC centers were:
+The Values section was rebuilt as one semantic, localized card story:
 
 ```text
-lead:   86%
-deck:   63%
-active: 53.5%
+mission green fade/blur -> blue Values field
+-> center-origin two-line heading reveal
+-> centered desktop deck -> fan -> overlapping perspective flips
+-> upright CSS Grid row -> completed continuous trail
+-> blue fade/blur -> white -> Programs
 ```
 
-At the current card height, the `86%` lead center placed a large portion of the
-stack below the useful viewport plane. The subsequent movement therefore began
-from the bottom instead of reading as a centered stage action.
+- ID/EN/AR headings and the required honorific forms are owned by translations.
+- XS keeps a natural one-column layout.
+- SM and MD keep a natural 2x2 Grid.
+- LG, XL, and 2XL share the cinematic four-column sequence.
+- The semantic card articles remain the final CSS Grid slots.
+- Motion transforms only child pose wrappers relative to measured Grid slots.
+- The clipping shell and perspective stage are separate owners.
+- Desktop centering derives from `getBoundingClientRect()` stage/card geometry,
+  not viewport-height ratios.
+- One SVG path plus one measured circle head owns the route.
+- Reduced motion and unsupported 3D resolve to readable front cards.
+- No dependency, asset, WebGL, canvas, font, or parallel locale DOM was added.
 
-### Flattened perspective chain
+## Root causes removed or isolated
 
-The sticky stage used:
-
-```text
-perspective: 1600px
-```
-
-That distance produced a relatively flat projection compared with the measured
-reference perspective near `964px`.
-
-The intermediate `.values-story__cards` owner did not explicitly preserve 3D.
-The nested card inner owned `rotateY`, while translation and fan `rotateZ` lived
-on outer wrappers. Without one continuous preserve-3d ancestry, the perceived
-flip could collapse into uniform width compression instead of near/far side
-foreshortening.
-
-## Implemented source correction
-
-### Vertical staging
-
-`resources/js/surfaces/home/values/desktop-layout.js` now uses:
-
-```text
-lead center:   64%
-deck center:   57%
-active center: 53.5%
-hidden offset: +10%
-```
-
-The lead remains lower than the final action plane but is fully visible. Deck
-formation then rises through the center instead of emerging from the bottom.
-
-Commit:
-
-- `8d0f4ca25000dfafd4d13464e19b7abb948d72a3`
-  `fix(values): raise desktop card staging`
-
-### Shared perspective camera
-
-`resources/css/surfaces/home/values/story-shell.css` now uses:
-
-```text
-perspective: 960px
-perspective-origin: 50% 52%
-transform-style: preserve-3d
-```
-
-Commit:
-
-- `c4e9b3c88863cd6e1bfdfa119079e3c32ac516b2`
-  `fix(values): tighten desktop card perspective`
-
-### Continuous 3D ancestry
-
-`resources/css/surfaces/home/values/story-cards.css` now preserves 3D through the
-cards container, card, float wrapper, and inner flip plane. The inner transform
-origin is explicitly centered.
-
-Commit:
-
-- `f0dd63a11b33078058f7c2f81344f0c2b66fbd09`
-  `fix(values): preserve card depth through flip`
-
-No Three.js, WebGL, canvas, dependency, model, shader, or additional renderer was
-introduced. This remains semantic DOM plus CSS 3D transforms driven by the
-existing Values controller.
-
-## Unchanged contracts
-
-- Heading entry, line-two PC shift, heading exit, and typography remain from the
-  preceding accepted correction.
-- Measured X/Y/`rotateZ`/`rotateY` curves and overlap timing remain unchanged.
-- Fan tilt remains on the outer card while `rotateY` progresses on the inner
-  plane.
-- Phone remains one-card flip only.
-- Tablet remains paired 2x2 flip only.
-- White trail remains PC-only.
-- Card content, Blade semantics, translations, Cairo ownership, navigation,
-  other homepage sections, DB, admin, and routes were not changed.
+- Enhanced `display:block` plus absolute final card slots was replaced by Grid.
+- Manual X slots and viewport-ratio Y anchors were removed from final layout.
+- Perspective was moved off the clipping owner.
+- Fixed z-order is assigned structurally instead of repainted every frame.
+- Three duplicate trail paths and the dashed fake head were replaced.
+- Hard-coded Blade locale headings were replaced by translation-owned copy.
+- Values now owns both entry and exit transition layers.
+- The inactive equivalence-managed `.nilai-*` fossil remains isolated; deleting
+  it is a separate global cascade migration.
 
 ## Source ownership
 
-- Semantic cards: `resources/views/home/sections/school-values.blade.php`
-- Heading CSS: `resources/css/surfaces/home/values/story-heading.css`
-- Stage perspective: `resources/css/surfaces/home/values/story-shell.css`
-- Card 3D chain: `resources/css/surfaces/home/values/story-cards.css`
-- Controller/RAF: `resources/js/surfaces/home/values/controller.js`
-- Shared timing: `resources/js/surfaces/home/values/layout.js`
-- PC staging: `resources/js/surfaces/home/values/desktop-layout.js`
-- Measured curves: `resources/js/surfaces/home/values/desktop-keyframes.js`
-- Scroll inertia: `resources/js/surfaces/home/values/motion.js`
+| Concern | Owner |
+|---|---|
+| semantics and story DOM | `resources/views/home/sections/school-values.blade.php` |
+| localized heading/content | `lang/{id,en,ar}/home.php` |
+| entry/timeline/clip/exit | `resources/css/surfaces/home/values/story-shell.css` |
+| heading masks | `resources/css/surfaces/home/values/story-heading.css` |
+| final Grid and card faces | `resources/css/surfaces/home/values/story-cards.css` |
+| continuous route | `resources/css/surfaces/home/values/story-trail.css` |
+| lifecycle and RAF | `resources/js/surfaces/home/values/controller.js` |
+| stage/Grid measurement | `resources/js/surfaces/home/values/geometry.js` |
+| critically damped motion | `resources/js/surfaces/home/values/motion.js` |
+| desktop fan/flip pose | `desktop-keyframes.js` and `desktop-layout.js` |
+| responsive pose | `resources/js/surfaces/home/values/layout.js` |
+| CSS variable writes | `resources/js/surfaces/home/values/paint.js` |
+| focused regression contract | `tests/Feature/HomeValuesStoryTest.php` |
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Current main/source audit | `PASS_SOURCE` | mandatory docs and active owners inspected |
-| Prior owner runtime | `FAIL` | low action plane and flat flip projection |
-| Raised PC lead/deck plane | `IMPLEMENTED_SOURCE` | 64% -> 57% -> 53.5% centers |
-| Reference-scale perspective | `IMPLEMENTED_SOURCE` | 960px shared stage camera |
-| Continuous preserve-3d chain | `IMPLEMENTED_SOURCE` | stage through inner flip plane |
-| No Three.js/WebGL expansion | `PASS_SOURCE` | no dependency or renderer changed |
-| Phone/tablet chronology | `PASS_SOURCE` | algorithms unchanged |
-| Arabic typography boundary | `PASS_SOURCE` | Cairo owner and locale DOM unchanged |
-| Source line limit | `PASS_SOURCE` | changed source files remain under 200 lines |
-| Scoped source mutation | `PASS_SOURCE` | only three Values owners changed |
-| `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run repository command |
-| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
-| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
-| PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
-| Corrected Chromium runtime | `BLOCKED_BY_MISSING_EVIDENCE` | fresh capture absent |
-| WebKit/RTL/accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | matrix absent |
+| Atomic source publication | `PASS_SOURCE` | `main` verified at implementation commit |
+| Commit scope | `PASS_SOURCE` | exactly 19 expected files in GitHub commit |
+| Exact headings/honorifics | `PASS_SOURCE` | translation and Blade source inspected |
+| Semantic DOM/Grid fallback | `PASS_SOURCE` | one `h2`, four articles, Grid final slots |
+| JS syntax | `PASS_LOCAL_PATCH` | `node --check` passed for every changed module |
+| CSS syntax | `PASS_LOCAL_PATCH` | all six modules parsed with Lightning CSS |
+| Enforced source line limit | `PASS_LOCAL_PATCH` | changed `resources/` files are <=200 lines; `lang/` is outside the checker roots |
+| Focused feature test | `IMPLEMENTED_SOURCE` | test added; PHP runtime unavailable here |
+| `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | no repository checkout in this channel |
+| `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | no complete checkout/package root |
+| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | no complete checkout/package root |
+| PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | `php` is unavailable in this channel |
+| Desktop center tolerance | `BLOCKED_BY_MISSING_EVIDENCE` | browser rectangles not captured |
+| Six-tier ID/EN/AR runtime | `BLOCKED_BY_MISSING_EVIDENCE` | responsive matrix not captured |
+| Reverse/fast/resize/BFCache | `BLOCKED_BY_MISSING_EVIDENCE` | lifecycle capture absent |
+| Reduced motion/zoom/a11y | `BLOCKED_BY_MISSING_EVIDENCE` | runtime audit absent |
+| Chromium/WebKit/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | target runtimes unavailable here |
 
 ## STATUS
 
-The bounded source correction is published. The PC card group now enters and
-acts around the visual center, and the CSS 3D camera/ancestry is configured to
-produce near/far side foreshortening rather than a uniformly squeezed rectangle.
-
-Runtime and release status remain `BLOCKED_BY_MISSING_EVIDENCE`.
+The accepted source rebuild is published on `main`. Release/runtime status
+remains `BLOCKED_BY_MISSING_EVIDENCE`; no browser or build gate is recorded as
+passing without evidence.
 
 ## NEXT VALID STEP
 
-Pull current `main` and capture one XL/2XL forward sequence plus one reverse
-sequence. Verify:
-
-- the lead stack is fully visible around the middle plane;
-- the deck rises rather than emerging from the bottom;
-- edge-on cards form a perspective trapezoid;
-- the near side appears larger than the far side;
-- fan tilt survives into the overlapping flip;
-- the final information row settles upright without a position jump.
+Pull `main` with `git pull --ff-only origin main`, then run the repository proof
+commands and capture the required browser matrix from the resulting checkout.

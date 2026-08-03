@@ -1,12 +1,13 @@
 # Homepage Values Card Story Blueprint
 
 Blueprint ID: `HOME-VALUES-001`
-Status: `OWNER_ACCEPTED`
+Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Owner: Asyraf Mubarak
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Source baseline: `087f2afac7b7b77dfcb62a27bb22c13b3cdc4da2`
+Source implementation head: `fbbc83b6672053652ac4551aea3970b825df0fcc`
 Active route/surface: homepage `#nilai`
 Raw reference: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
 Execution channel: Web AI with explicit direct-`main` authorization
@@ -313,11 +314,24 @@ entry, route composition, controller import, translation keys, and raw evidence
 paths remain stable, so rollback does not require reconstructing deleted global
 source. Protected sections are outside the patch.
 
+## Execution result
+
+- The accepted audit/blueprint was published at `48830e93645dc0d5a681a89546f4dc8bc1941dab`.
+- The bounded 19-file source rebuild was published atomically at
+  `fbbc83b6672053652ac4551aea3970b825df0fcc`.
+- Changed JavaScript passed `node --check`; all six changed CSS modules parsed
+  with Lightning CSS; changed enforced-root files remained at or below 200
+  lines (`lang/` is outside the checker roots).
+- Full checkout, build, PHP, browser, responsive, lifecycle, accessibility, and
+  performance proof remains `BLOCKED_BY_MISSING_EVIDENCE`.
+
 ## Execution plan
 
-1. `ACTIVE`: publish this inspected owner-accepted audit/blueprint.
-2. `PENDING`: rebuild only the mapped Values owners and focused test.
-3. `PENDING`: run available local syntax/source proof and record unavailable
+1. `COMPLETE`: publish the inspected owner-accepted audit/blueprint.
+2. `COMPLETE`: rebuild only the mapped Values owners and focused test.
+3. `COMPLETE`: run available local syntax/source proof and record unavailable
    checkout/browser gates honestly.
-4. `PENDING`: fast-forward `main`, verify resulting SHA, and update the durable
-   progress ledger.
+4. `COMPLETE`: fast-forward `main`, verify the source SHA, and update the durable
+   progress ledger/handoff.
+5. `PENDING`: run checkout/browser proof and promote only when every acceptance
+   gate has recorded evidence.
