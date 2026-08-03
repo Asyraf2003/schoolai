@@ -3,8 +3,8 @@
 Status: BLOCKED_BY_MISSING_EVIDENCE
 Updated: 2026-08-03
 Repository: `Asyraf2003/schoolai`
-Source main before correction: `70800053340caf6643998e09a743bd3ea61b5348`
-Gallery correction source before ledger: `45c472e06b13eb61a250aeb7811f86751924c300`
+Source main before correction: `d954427cfee91575e32540a3c7fb74bca00718a5`
+Gallery correction source before ledger: `4d22732e3d59c15a194d39ead6711b6bd5e47b39`
 
 Commit publication proves source state only. It does not prove rendering,
 responsive parity, accessibility, performance, or browser lifecycle.
@@ -17,90 +17,109 @@ Blueprint: `blueprints/2026-08-03-home-depth-gallery.md`
 - State: `IMPLEMENTING`
 - Surface: homepage Gallery only
 - Reference: Houmahani Kane / Codrops Atmospheric Depth Gallery
-- Protected: Hero, Vision/Mission, School Values, Programs, Articles,
-  navigation, footer, dedicated Gallery page, translations, authentication,
-  database schema, admin CRUD, dependencies, and existing media.
+- Runtime evidence: two owner desktop Chromium screenshots, 2026-08-03
+- Protected: Hero, Vision/Mission, Values, Programs, Articles, navigation,
+  footer, `/galeri`, translations, DB/admin, dependencies, and existing media.
 
-## FACT and owner correction
+## Runtime FACT
 
-- The first Gallery implementation did not fully retire the former homepage
-  controller/partial and incorrectly placed copy over cropped rounded images.
-- Owner feedback requires adjacent copy, square media corners, intrinsic image
-  proportions bounded only by maximum width/height, visible atmosphere changes,
-  and the same system across all six tiers.
-- Homepage Gallery still receives the existing six normalized database/content
-  items and reuses the shared accessible lightbox.
-- `gallery-story.blade.php`, `gallery-story.js`, and its homepage import are now
-  removed. The shared lightbox remains because the new surface owns it.
-- Mixed historical CSS modules still contain dormant old Gallery selectors plus
-  active Programs/Footer/shared rules. They are not deleted in this atomic batch
-  because their ownership and welcome.css checksum require a separate migration.
-- No dependency, database, dedicated Gallery page, Hero, or other homepage
-  section is changed.
+The owner screenshots prove the previous Gallery result was still visually
+incorrect:
+
+- oversized white copy remained a competing focal object;
+- active composition occupied too much viewport width;
+- alternating/even items were displaced too far;
+- a straight progress bar appeared instead of the reference-like thin trail;
+- media-first reference hierarchy was not preserved.
+
+## Owner correction
+
+- Media is the focal object.
+- Visible copy is title plus optional description only.
+- Copy is small, black, ordinary body typography, and adjacent to media.
+- Visible number/type/date/category treatment is removed.
+- Image corners remain square and intrinsic ratio remains unchanged.
+- Alternating placement is subtle rather than pushed across the viewport.
+- A thin curved path reveals with scroll progress.
+- Palette changes remain synchronized between DOM fallback and WebGL.
+- The same semantic component must adapt across all six tiers and RTL/LTR.
 
 ## Corrected source contract
 
-- Media and copy are adjacent siblings. Copy never overlays media.
-- Images use `width: auto`, `height: auto`, `max-width`, `max-height`, and
-  `object-fit: contain`; no image border radius or forced aspect ratio remains.
-- Alternating media/copy order mirrors for RTL without creating a second DOM.
-- One scene is fluid from 360px and declares boundaries at 640, 768, 1024,
-  1280, and 1536px.
-- XS stacks media/copy; SM through 2XL use adjacent composition with progressively
-  bounded media and scene dimensions.
-- DOM background color blends the active and next palette every render frame.
-  WebGL uses the same palette with stronger atmospheric blobs.
-- CSS palette progression remains visible if WebGL initialization or context is
-  lost.
-- One RAF remains suspended offscreen or while the document is hidden.
-- Reduced motion remains a static semantic sequence.
+- Blade retains one anchor per media item with semantic image/title/caption.
+- The old eyebrow block is removed from rendered Gallery markup.
+- Media and copy remain siblings; copy never overlays image.
+- CSS uses auto image dimensions, max width/height, contain fit, and zero radius.
+- Label title is fluid around 14–17px; caption remains smaller.
+- Scene horizontal displacement is `viewportWidth * 0.032`, clamped to 12–54px.
+- Card/item width is reduced at each tier instead of approaching full viewport
+  width on desktop.
+- SVG trail uses one normalized path and `stroke-dashoffset` driven by existing
+  scene progress.
+- Former bottom meter markup and CSS are removed.
+- One RAF still owns scene, palette, and trail updates.
+- Reduced motion keeps a static sequence and complete trail.
+
+## Six-tier source contract
+
+| Tier | Source rule |
+|---|---|
+| XS 360–639 | stacked media/copy; card viewport-bounded |
+| SM 640–767 | adjacent composition; item <=780px |
+| MD 768–1023 | adjacent composition; item <=840px |
+| LG 1024–1279 | item <=900px |
+| XL 1280–1535 | item <=960px |
+| 2XL >=1536 | item <=1020px |
+
+One DOM/controller/canvas/trail serves every tier. RTL mirrors only the
+media/copy order and logical alignment.
 
 ## Source proof status
 
 | Gate | Status | Evidence |
 |---|---|---|
-| Scope diff | `PASS_SOURCE` | compare from `70800053` contains Gallery owners, focused test, blueprint, and ledger only |
-| Adjacent copy | `PASS_SOURCE` | Blade siblings plus CSS grid; no overlay positioning on copy |
-| Intrinsic media | `PASS_SOURCE` | auto dimensions, max bounds, contain fit, square corners |
-| Palette change | `PASS_SOURCE` | controller writes blended `--depth-atmosphere`; renderer consumes same palette |
-| Six-tier source contract | `PASS_SOURCE` | fluid XS plus 640/768/1024/1280/1536 boundaries |
-| RTL architecture | `PASS_SOURCE` | one DOM with mirrored CSS order and logical text alignment |
-| Legacy active owner cleanup | `PASS_SOURCE` | old homepage partial/controller/import removed |
-| Lifecycle/fallback | `PASS_SOURCE` | lazy entry, one RAF, offscreen/hidden suspension, context-loss CSS fallback |
-| Dependency scope | `PASS_SOURCE` | no package or lockfile change |
-| Previous clean worktree/diff | `PASS` | owner command reached structure gate after clean status/diff |
-| `npm run check:structure` | `FAIL_PRE_EXISTING` | owner proof: `welcome-hero.css` checksum mismatch before this correction |
-| Focused PHP test | `BLOCKED_BY_MISSING_EVIDENCE` | updated source contract not executed locally |
-| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | structure gate remains unresolved |
-| Full PHP suite | `BLOCKED_BY_MISSING_EVIDENCE` | not executed after correction |
-| Chromium/WebKit runtime | `BLOCKED_BY_MISSING_EVIDENCE` | no browser matrix run after correction |
-| Lighthouse/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | no comparable runtime run |
+| Screenshot diagnosis | `PASS` | owner runtime screenshots supplied |
+| Reference hierarchy | `PASS_SOURCE` | media dominant; only small adjacent title/caption |
+| Visible metadata cleanup | `PASS_SOURCE` | no eyebrow/number/type/date markup in scene |
+| Intrinsic media | `PASS_SOURCE` | auto dimensions, contain fit, max bounds, square corners |
+| Even-item spacing | `PASS_SOURCE` | horizontal displacement capped at 54px |
+| Thin trail | `PASS_SOURCE` | SVG curve plus normalized scroll reveal |
+| Palette progression | `PASS_SOURCE` | DOM and WebGL share blended camera palette |
+| Six tiers | `PASS_SOURCE` | fluid XS plus 640/768/1024/1280/1536 boundaries |
+| RTL architecture | `PASS_SOURCE` | one DOM and logical order mirroring |
+| Lifecycle | `PASS_SOURCE` | one RAF, proximity activation, hidden/offscreen suspension |
+| Dependency scope | `PASS_SOURCE` | no package or lockfile changes |
+| Focused PHP test | `BLOCKED_BY_MISSING_EVIDENCE` | contract updated but not executed locally |
+| `npm run check:structure` | `FAIL_PRE_EXISTING` | prior Hero checksum mismatch remains unrelated |
+| `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run after this correction |
+| Full PHP suite | `BLOCKED_BY_MISSING_EVIDENCE` | not run after this correction |
+| Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | corrected source not yet visually tested |
+| Lighthouse/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | no comparable run |
 
 ## Progress ledger
 
 | Stage | Status | Proof or blocker |
 |---|---|---|
-| G01 source/owner re-audit | `PASS` | active and retired Gallery owners inspected |
-| G02 owner visual correction | `PASS` | adjacent copy, intrinsic sharp media, visible palette explicitly required |
-| G03 blueprint correction | `PASS` | `HOME-GALLERY-003` updated |
-| G04 semantic composition | `IMPLEMENTED_SOURCE` | media and copy separated while anchors/lightbox remain |
-| G05 intrinsic media sizing | `IMPLEMENTED_SOURCE` | ratio preserved within tier-specific max bounds |
-| G06 atmosphere synchronization | `IMPLEMENTED_SOURCE` | DOM and WebGL palette progression share camera state |
-| G07 six-tier/RTL adapters | `IMPLEMENTED_SOURCE` | one scene and mirrored adjacent placement |
-| G08 retired owner cleanup | `IMPLEMENTED_SOURCE` | old Blade/controller/import removed |
-| G09 focused contract test | `IMPLEMENTED_SOURCE` | assertions updated; execution pending |
-| G10 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | pre-existing Hero checksum stops required chain |
-| G11 runtime matrix | `BLOCKED_BY_MISSING_EVIDENCE` | tiers/locales/engines/reduced motion untested |
+| G01 screenshot/root-cause audit | `PASS` | visual hierarchy and spacing defect identified |
+| G02 reference source audit | `PASS` | labels, planes, trail, and mood behavior inspected |
+| G03 owner correction | `PASS` | media-first, small black copy, trail explicitly required |
+| G04 semantic markup | `IMPLEMENTED_SOURCE` | title/caption only; metadata removed from view |
+| G05 compact composition | `IMPLEMENTED_SOURCE` | reduced tier widths and 54px max displacement |
+| G06 trail | `IMPLEMENTED_SOURCE` | responsive SVG path bound to scene progress |
+| G07 palette/lifecycle | `IMPLEMENTED_SOURCE` | existing bounded renderer retained |
+| G08 focused contract test | `IMPLEMENTED_SOURCE` | source assertions updated; execution pending |
+| G09 automated proof | `BLOCKED_BY_MISSING_EVIDENCE` | local commands unavailable in connector |
+| G10 runtime matrix | `BLOCKED_BY_MISSING_EVIDENCE` | corrected six-tier/browser proof pending |
 
 ## STATUS
 
-The requested Gallery visual correction is implemented in source. It must not be
-called responsive/browser PASS until the local focused test and runtime matrix
-are executed. Mixed legacy CSS retirement remains a separate ownership migration,
-not a hidden part of this visual patch.
+The requested media-first correction is implemented in source and prepared for a
+non-force fast-forward to `main`. It is not yet runtime PASS. Browser proof must
+confirm that label scale, even-item spacing, trail visibility, palette changes,
+and all six tier compositions match the accepted direction.
 
 ## NEXT VALID STEP
 
-After publication, pull current `main`, run the focused Gallery test directly,
-and report its exact output. Do not begin another visual adjustment before that
-contract result is known.
+After publication, pull current `main` and run only the focused Gallery test.
+Then provide one desktop screenshot at the same viewport used for the current
+runtime evidence before testing the remaining five tier boundaries.
