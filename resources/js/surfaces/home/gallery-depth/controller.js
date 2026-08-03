@@ -55,9 +55,9 @@ function createDepthGallery(root) {
             }
             active = true;
             root.classList.add('is-depth-active');
-            fallback?.setAttribute('hidden', '');
-            fallback?.setAttribute('aria-hidden', 'true');
-            if (fallback) fallback.inert = true;
+            fallback?.removeAttribute('hidden');
+            fallback?.removeAttribute('aria-hidden');
+            if (fallback) fallback.inert = false;
             canvas?.removeAttribute('aria-busy');
             if (inView && !document.hidden) engine.start();
         });
