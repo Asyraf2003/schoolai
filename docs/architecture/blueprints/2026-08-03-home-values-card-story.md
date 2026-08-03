@@ -3,132 +3,144 @@
 Blueprint ID: `HOME-VALUES-001`
 Status: `IMPLEMENTING`
 Owner: Asyraf Mubarak
-Date: 2026-08-03
-Source main before this correction: `e8ae9c0945c1dae0a9f703da67f64001cd55e608`
-Raw evidence commit: `75138335c381535e7f942a77210a2f34988cccc0`
-Source head after bounded implementation: `f48d9a9a3b1e93b72944a33616b3328d3c575f64`
-Surface: homepage `#nilai`
+Updated: 2026-08-04
+Repository: `Asyraf2003/schoolai`
+Target branch: `main`
+Active route/surface: homepage `#nilai`
+Source implementation head: `f0dd63a11b33078058f7c2f81344f0c2b66fbd09`
+Raw evidence: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
 Execution channel: Web AI with explicit direct-`main` authorization
 
-## Owner goal and reference
+## Owner goal
 
-Build a full-viewport Values story informed by owner-provided Lusion About
-recordings, screenshots, computed styles, and measured transform samples without
-copying Lusion code, assets, branding, card art, type files, or exact
-composition.
+Create an Al Mustaqbal Values sequence informed by the supplied Lusion About
+recordings, screenshots, computed styles, and transform samples without copying
+Lusion code, assets, card art, branding, shaders, or type files.
 
-Raw evidence is preserved at:
+The PC sequence must read as one continuous spatial story:
 
-`../measurements/2026-08-03-home-values-reference-motion-raw.md`
+```text
+automatic clipped heading reveal
+-> low but fully visible card stack
+-> stack rises into the center plane
+-> fan opens while heading exits
+-> overlapping perspective flips straighten each card
+-> bounded overshoot
+-> stable four-card information row
+```
 
-Latest owner-accepted correction:
+## Latest owner-accepted correction
 
-- heading entry is a time-based section-entry animation, not scroll scrubbing;
-- entry starts as soon as the section enters the viewport;
-- two clipped title lines emerge from opposite directions with a narrow center
-  seam, then line two shifts toward visual center on PC only;
-- Latin heading remains editorial-light but is slightly thicker than weight
-  `200`;
-- reverse entry from the following section shows the static revealed heading;
-- the lead card begins low below the heading, then the deck rises into one
-  centered stage plane while the heading exits;
-- the fan keeps outward `rotateZ` while the first-to-fourth flips overlap;
-- X, Y, `rotateZ`, and `rotateY` evolve together;
-- captured samples guide the path but must not become stop points;
-- interpolation must preserve continuous velocity through samples, followed by
-  bounded front-side overshoot and a stable upright information row;
-- phone remains one-card flip only, tablet remains paired 2x2 flip only, and the
-  white trail remains PC-only.
+- The lead stack and the flip action must run around the visual center, not from
+  the bottom edge of the sticky stage.
+- A card near edge-on must project as a perspective trapezoid: the side closer
+  to the viewer appears larger and the far side appears smaller.
+- The flip must not look like a rectangle whose width is merely compressed.
+- The existing fan `rotateZ` remains while `rotateY` progresses toward upright.
+- This surface remains DOM/CSS 3D. Three.js and WebGL are out of scope.
+
+## FACT
+
+- The prior PC lead center was `86%` of stage height, which placed most of the
+  initial card below the useful center plane.
+- The stage perspective was `1600px`, much flatter than the measured reference
+  perspective near `964px`.
+- `.values-story__cards` did not preserve the 3D chain between the stage and the
+  nested rotating card inner.
+- Card rotation is owned by CSS transforms and JS-authored pose variables.
+- One semantic `h2` and four semantic `article` cards remain the content source.
+- Phone and tablet use their existing simpler flip chronologies.
+- The white trail remains PC-only.
+
+## GAP
+
+Corrected runtime is not yet captured. Browser, responsive, RTL, accessibility,
+build, test, and PageSpeed status remain `BLOCKED_BY_MISSING_EVIDENCE`.
 
 ## Scope
 
-In scope:
+### In scope
 
-- Values heading trigger, duration, easing, weight, and center seam;
-- PC heading exit timing relative to deck formation;
-- PC lead/deck/fan vertical staging;
-- continuous measured PC interpolation for X, Y, `rotateZ`, and `rotateY`;
-- durable raw evidence, blueprint, and current-state records.
+- PC lead/deck/active vertical anchors.
+- Sticky stage perspective and perspective origin.
+- Continuous `preserve-3d` ancestry for the rotating card plane.
+- Durable blueprint and current-state records.
 
-Protected and out of scope:
+### Protected and out of scope
 
-- Hero, Vision/Mission, Programs, Gallery, Articles, navigation, footer;
-- About, Testimonial, DB/admin/routes, translations, WebGL, dependencies;
-- card semantic content, back illustration, card size tokens, Cairo ownership,
-  phone chronology, tablet chronology, and locale content.
+- Hero, Vision/Mission, Programs, Gallery, Articles, navigation, footer.
+- About, Testimonial, DB/admin/routes, translations, card content.
+- Heading chronology and typography from the preceding accepted correction.
+- Phone/tablet chronology.
+- Dependencies, Three.js, canvas, WebGL, models, shaders, and assets.
 
 ## Semantic and fallback contract
 
-- One localized semantic `h2` and four semantic `article` cards remain.
-- Card fronts keep all meaningful information; backs remain decorative.
-- Without JavaScript, with reduced motion, or without required CSS 3D support,
-  the readable static front-card grid remains.
-- No control, focus path, content source, semantic order, or accessible name
-  changes.
+- The localized heading and four card articles remain in Blade.
+- Card fronts contain all meaningful information; card backs are decorative.
+- No-JS, reduced-motion, or unsupported-3D paths retain the readable static
+  front-card layout.
+- No control, content source, focus order, or accessible name changes.
 
-## Heading state contract
+## Heading contract
+
+The accepted heading behavior remains unchanged:
 
 ```text
-before section
--> idle clipped lines
--> section top crosses 94% viewport trigger
--> 1200ms cubic ease-out reveal runs independently of scroll
--> PC line two shifts through its CSS transition
--> revealed/static
--> PC heading exits upward when card deck formation begins
+section enters from above
+-> time-based clipped reveal starts immediately
+-> two lines meet across the narrow center seam
+-> PC line two shifts toward visual center
+-> heading exits upward when deck formation starts
 ```
 
-Reverse/re-entry rules:
+Reverse entry from the following section resolves to the static revealed state.
+XS/SM hide the description; MD/LG retain heading and copy without the PC shift;
+XL/2XL use the full PC choreography.
 
-- entering from the following section resolves instantly to static revealed;
-- scrolling fully above the entry threshold resets the next forward entry;
-- RAF continues until both scroll inertia and heading reveal settle;
-- CSS owns the line-two shift; JavaScript owns entry state.
+## PC card stage geometry
 
-Typography/treatment:
-
-- ID/EN use Inter variable weight `260` and existing optical sizing;
-- AR keeps Cairo weight `300`, natural tracking, and current adapter;
-- title lines use a small final row gap and clipped travel of approximately one
-  line height;
-- the PC line-two shift remains logical-direction aware.
-
-Responsive heading/copy:
-
-- XS/SM: heading only, no description/eyebrow, no line-two shift;
-- MD/LG: heading plus copy, no line-two shift or scroll exit;
-- XL/2XL: heading plus copy, PC line-two shift and scroll-driven exit.
-
-## PC spatial chronology
+All Y transforms describe the card top after subtracting half the measured card
+height from the desired visual center:
 
 ```text
-heading entry
--> one low lead back
--> four-card centered deck rises
--> heading begins upward exit
--> deck opens into measured fan
--> overlapping first-to-fourth flips
--> rotateZ converges toward zero while rotateY crosses edge-on
--> small negative rotateY overshoot
--> stable four-front centered row
--> normal sticky release
-```
-
-### Stage anchors
-
-All Y values are card-top transforms derived from stage and card geometry:
-
-```text
-lead center:   86% stage height
-deck center:   63% stage height
+lead center:   64% stage height
+deck center:   57% stage height
 active center: 53.5% stage height
+hidden lead:   lead + 10% stage height
 ```
 
-Card half-height is subtracted from every center. The increased lead-to-active
-travel makes the deck visibly rise rather than remaining submerged near the
-bottom of the stage.
+This keeps the lead stack low relative to the title while still fully visible,
+then raises it into the centered action plane before fan and flip motion.
 
-### Story timing
+## Perspective contract
+
+The sticky stage owns one shared perspective camera:
+
+```text
+perspective:        960px
+perspective-origin: 50% 52%
+```
+
+The chain remains three-dimensional through:
+
+```text
+stage
+-> cards container
+-> card
+-> float wrapper
+-> inner flip plane
+-> front/back faces
+```
+
+Each intermediate owner uses `transform-style: preserve-3d`. The outer card
+continues to own translation and fan `rotateZ`; the inner plane owns `rotateY`.
+The shared camera must project edge-on cards with natural near/far side
+foreshortening instead of uniform width compression.
+
+## Story timing
+
+The previously accepted timing remains:
 
 ```text
 lead reveal:       progress 0.03–0.12
@@ -139,94 +151,55 @@ measured travel:   progress 0.34–0.86
 stable front hold: progress 0.86 onward
 ```
 
-The fan and measured stages overlap briefly so there is no generic intermediate
-upright row.
+Measured X, Y, `rotateZ`, and `rotateY` continue through the shared cubic Hermite
+interpolation. Fixed z-order remains unchanged.
 
-### Horizontal normalization
-
-Raw reference X positions are normalized into one center-relative row:
-
-- final slot spacing is bounded by card width and available viewport width;
-- early fan spread remains approximately 93% of the final row;
-- every card stays anchored to the same physical stage center;
-- fixed card z-order prevents a one-frame left/right ownership jump.
-
-## Continuous measured interpolation
-
-Raw samples and matrix snapshots are stored in the linked evidence packet.
-Production keeps the accepted normalized times:
-
-```text
-0.00 pre-flip fan
-0.10 measured sample 1
-0.22 measured sample 2
-0.39 measured sample 3
-0.57 measured sample 4
-0.77 measured sample 5
-1.00 stable front row
-```
-
-Previous piecewise `smooth()` interpolation reached zero velocity at every
-sample and produced mechanical micro-pauses. Production now uses cubic Hermite
-interpolation with finite-difference tangents and bounded tangent scale. This
-keeps a continuous first derivative across X, Y, `rotateZ`, and `rotateY` while
-still passing through every captured sample.
-
-The pre-flip all-back state remains `rotateY(180deg)`. Negative measured values
-remain front-side overshoot, clamped to a safe bounded range before final
-`0deg` settle.
-
-## Six-tier composition
+## Six-tier contract
 
 | Tier | Heading/copy | Cards | Trail |
 |---|---|---|---|
-| XS 360–639 | autoplay heading only | one centered card at a time | hidden |
-| SM 640–767 | autoplay heading only | one centered card at a time | hidden |
-| MD 768–1023 | autoplay heading plus copy | stable centered 2x2 pair flips | hidden |
-| LG 1024–1279 | autoplay heading plus copy | stable centered 2x2 pair flips | hidden |
-| XL 1280–1535 | autoplay heading, PC shift/exit | lead/deck/fan/flip/hold | visible |
-| 2XL >=1536 | largest bounded PC composition | wider shared choreography | visible |
+| XS 360–639 | heading only | one centered flip at a time | hidden |
+| SM 640–767 | heading only | one centered flip at a time | hidden |
+| MD 768–1023 | heading plus copy | centered 2x2 pair flips | hidden |
+| LG 1024–1279 | heading plus copy | centered 2x2 pair flips | hidden |
+| XL 1280–1535 | full PC heading | lead/deck/fan/perspective flip | visible |
+| 2XL >=1536 | bounded large composition | shared PC choreography | visible |
 
-One semantic DOM and one controller serve all tiers. CSS mode variables select
-chronology; there is no device, locale, browser, or controller fork.
+One semantic DOM and one controller serve every tier.
 
 ## Locale and direction
 
-- ID and EN share LTR chronology and Inter.
-- AR shares the neutral vertical reveal and Y-axis card flip in Cairo/RTL.
-- PC second-line horizontal shift mirrors through the existing logical token.
-- Card item order remains semantic order in every locale.
-- Vertical scroll, time, and neutral 3D rotation are not reversed for RTL.
+- ID and EN use the shared Inter/LTR composition.
+- AR keeps Cairo/RTL typography and the same neutral vertical/3D chronology.
+- The logical PC line-two shift mirrors for RTL.
+- Vertical scroll, time, and neutral card rotation do not reverse for RTL.
 
 ## Ownership
 
 | Concern | Owner |
 |---|---|
 | semantic content | `resources/views/home/sections/school-values.blade.php` |
-| heading treatment | `resources/css/surfaces/home/values/story-heading.css` |
-| card layout/treatment | `resources/css/surfaces/home/values/story-cards.css` |
-| entry state | `resources/js/surfaces/home/values/heading-state.js` |
-| controller/RAF lifecycle | `resources/js/surfaces/home/values/controller.js` |
-| mode story timing | `resources/js/surfaces/home/values/layout.js` |
-| PC staging | `resources/js/surfaces/home/values/desktop-layout.js` |
+| stage/perspective | `resources/css/surfaces/home/values/story-shell.css` |
+| card 3D chain | `resources/css/surfaces/home/values/story-cards.css` |
+| PC stage anchors | `resources/js/surfaces/home/values/desktop-layout.js` |
 | measured curves | `resources/js/surfaces/home/values/desktop-keyframes.js` |
+| controller/RAF | `resources/js/surfaces/home/values/controller.js` |
 | scroll inertia | `resources/js/surfaces/home/values/motion.js` |
-| raw evidence | `docs/architecture/measurements/2026-08-03-home-values-reference-motion-raw.md` |
-| durable proof ledger | `docs/architecture/UI_UX_CURRENT_STATE.md` |
+| proof ledger | `docs/architecture/UI_UX_CURRENT_STATE.md` |
 
-## Browser, performance, and accessibility
+## Performance and accessibility
 
-- Frequent movement remains transform/opacity based.
-- The existing single Values RAF is reused; no new scheduler, observer,
-  listener family, asset, dependency, canvas, or WebGL context is introduced.
-- RAF stops only after both scroll inertia and time-based heading reveal settle.
-- Reduced motion retains the readable static grid.
-- Runtime proof is still required for Chromium/WebKit sticky, clipping,
-  `preserve-3d`, backface visibility, fast/reverse scroll, resize, and BFCache.
+- No dependency, renderer, canvas, asset, listener family, or RAF was added.
+- Frequent motion remains transform/opacity based.
+- Semantic content remains outside graphics.
+- Reduced motion retains the static readable grid.
+- Runtime proof must include Chromium/WebKit perspective behavior, reverse and
+  fast scroll, resize/orientation, all six tiers, ID/EN/AR, RTL, zoom, and
+  accessibility.
 
 ## Proof state
 
-Commit publication proves source state only. Required repository/runtime gates
+Source publication proves only that the bounded owners changed. Required gates
 remain:
 
 ```text
@@ -236,5 +209,11 @@ npm run build
 php artisan test
 ```
 
-Runtime proof must cover the six tiers, ID/EN/AR, LTR/RTL, Chromium/WebKit,
-reduced motion, resize/orientation, reverse entry, accessibility, and PageSpeed.
+A fresh owner capture is required before the visual correction can be marked
+`PASS`.
+
+## Next valid step
+
+Pull current `main` and capture the XL/2XL forward sequence, focusing on the
+lead stack center, fan position, edge-on trapezoid, near/far side projection,
+overlapping flips, and stable final row.
