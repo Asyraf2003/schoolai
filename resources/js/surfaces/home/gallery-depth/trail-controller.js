@@ -8,6 +8,8 @@ export class DepthTrailController {
         this.THREE = THREE;
         this.gallery = gallery;
         this.trail = new DepthTrail(THREE);
+        this.trail.curveTension = 0.67;
+        this.trail.pointSmoothing = 0.53;
         this.particles = new DepthTrailParticles(THREE);
         this.head = new THREE.Vector3();
         this.timer = new THREE.Timer();
