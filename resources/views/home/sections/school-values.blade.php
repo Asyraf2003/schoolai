@@ -48,10 +48,14 @@
         data-text-role="display"
       >
         <span class="values-story__title-line values-story__title-line--one">
-          {{ $valuesStoryHeading['line_one'] }}
+          <span class="values-story__title-text">
+            {{ $valuesStoryHeading['line_one'] }}
+          </span>
         </span>
         <span class="values-story__title-line values-story__title-line--two">
-          {{ $valuesStoryHeading['line_two'] }}
+          <span class="values-story__title-text">
+            {{ $valuesStoryHeading['line_two'] }}
+          </span>
         </span>
       </h2>
       <p class="values-story__description" data-text-role="description">
