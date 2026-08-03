@@ -11,9 +11,9 @@ const MOTION_PROPERTIES = [
     '--values-x', '--values-y', '--values-z', '--values-rx',
     '--values-ry', '--values-rz', '--values-scale', '--values-opacity',
 ];
-
 function supportsStoryMotion() {
     return typeof CSS !== 'undefined'
+        && CSS.supports('overflow', 'clip')
         && CSS.supports('position', 'sticky')
         && CSS.supports('transform-style', 'preserve-3d');
 }
