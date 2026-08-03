@@ -6,6 +6,7 @@ const POSITION_EPSILON = 0.00002;
 const VELOCITY_EPSILON = 0.000006;
 const VELOCITY_MAX = 0.012;
 const VELOCITY_COAST = 5;
+const RELEASE_HOLD = 0.75;
 
 export const clamp = (value, min = 0, max = 1) => (
     Math.min(max, Math.max(min, value))
@@ -31,7 +32,11 @@ function adjustedBlend(amount, delta) {
 
 export function readStoryProgress(root, viewportHeight) {
     const rect = root.getBoundingClientRect();
-    const travel = Math.max(1, root.offsetHeight - viewportHeight);
+    const hold = viewportHeight * RELEASE_HOLD;
+    const travel = Math.max(
+        1,
+        root.offsetHeight - viewportHeight - hold,
+    );
     return clamp(-rect.top / travel);
 }
 
