@@ -60,20 +60,9 @@ function uprightPose(index, geometry) {
     );
 }
 
-function exitPose(index, geometry) {
-    const upright = uprightPose(index, geometry);
-
-    return {
-        ...upright,
-        y: upright.y - geometry.viewportHeight * (1.08 + index * 0.025),
-        rz: (index - 1.5) * 3,
-        opacity: 0,
-    };
-}
-
 function flipAngle(index, progress) {
     const anticipation = phase(progress, 0.5, 0.56);
-    const start = 0.56 + (3 - index) * 0.045;
+    const start = 0.56 + index * 0.045;
     const drive = phase(progress, start, start + 0.17);
     const settle = phase(progress, start + 0.17, start + 0.25);
     const prepared = mix(180, 195, anticipation);
@@ -98,22 +87,16 @@ export function desktopCardFrame(
     const deck = deckPose(index, geometry);
     const fan = fanPose(index, geometry);
     const upright = uprightPose(index, geometry);
-    const exit = exitPose(index, geometry);
     let current = mixPose(hidden, lead, phase(progress, 0.07, 0.19));
 
     current = mixPose(current, deck, phase(progress, 0.22, 0.33));
     current = mixPose(current, fan, phase(progress, 0.31, 0.41));
     current = mixPose(current, upright, phase(progress, 0.4, 0.5));
-    current = mixPose(
-        current,
-        exit,
-        phase(progress, 0.955 + (3 - index) * 0.004, 1),
-    );
-    current.y += momentum * (index + 1) * 5;
+    current.y += momentum * 6;
 
     return {
         ...current,
-        rx: phase(progress, 0.955, 1) * -5,
+        rx: 0,
         ry: flipAngle(index, progress),
     };
 }
