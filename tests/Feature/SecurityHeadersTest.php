@@ -36,6 +36,8 @@ it('adds nonce based security headers to public pages', function (): void {
             ->toContain("default-src 'self'")
             ->toContain("frame-ancestors 'none'")
             ->toContain("script-src-attr 'none'")
+            ->toContain('https://cdn.jsdelivr.net')
+            ->toContain("connect-src 'self' https://cdn.jsdelivr.net")
             ->toContain(
                 "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com"
             )
