@@ -64,12 +64,7 @@
         aria-label="{{ $gallerySection['aria_label'] ?? __('home.galeri.aria_label') }}"
       ></canvas>
 
-      <section
-        class="depth-gallery__labels"
-        data-depth-gallery-labels
-        aria-live="polite"
-        aria-atomic="true"
-      >
+      <section class="depth-gallery__labels" data-depth-gallery-labels>
         <div class="depth-gallery__label-left">
           <p data-depth-gallery-title></p>
         </div>
