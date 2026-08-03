@@ -26,22 +26,14 @@ function mixPose(from, to, amount) {
     };
 }
 
-function leadY(geometry) {
-    return geometry.viewportHeight * 0.78 - geometry.cardHeight * 0.5;
-}
-
-function deckY(geometry) {
-    return geometry.viewportHeight * 0.6 - geometry.cardHeight * 0.5;
-}
-
-function centerY(geometry) {
-    return geometry.viewportHeight * 0.56 - geometry.cardHeight * 0.5;
+function cardTopAt(centerRatio, geometry) {
+    return geometry.viewportHeight * centerRatio - geometry.cardHeight * 0.5;
 }
 
 function leadPose(index, geometry) {
     return pose(
         0,
-        leadY(geometry),
+        cardTopAt(0.86, geometry),
         -index * 24,
         0,
         0.96,
@@ -52,7 +44,7 @@ function leadPose(index, geometry) {
 function deckPose(index, geometry) {
     return pose(
         (index - 1.5) * geometry.cardWidth * 0.038,
-        deckY(geometry) + index * 4,
+        cardTopAt(0.63, geometry) + index * 4,
         -index * 22,
         (index - 1.5) * 1.9,
         0.96,
@@ -69,24 +61,25 @@ export function desktopCardFrame(
     const lead = leadPose(index, geometry);
     const hidden = {
         ...lead,
-        y: lead.y + geometry.viewportHeight * 0.16,
+        y: lead.y + geometry.viewportHeight * 0.14,
         scale: lead.scale * 0.88,
         opacity: 0,
     };
     const deck = deckPose(index, geometry);
-    const measuredAmount = clamp((progress - 0.38) / 0.5);
+    const baseY = cardTopAt(0.535, geometry);
+    const measuredAmount = clamp((progress - 0.34) / 0.52);
     const measured = measuredDesktopPose(
         index,
         measuredAmount,
         geometry,
-        centerY(geometry),
+        baseY,
     );
-    const fan = measuredDesktopPose(index, 0, geometry, centerY(geometry));
-    let current = mixPose(hidden, lead, phase(progress, 0.06, 0.16));
+    const fan = measuredDesktopPose(index, 0, geometry, baseY);
+    let current = mixPose(hidden, lead, phase(progress, 0.03, 0.12));
 
-    current = mixPose(current, deck, phase(progress, 0.18, 0.29));
-    current = mixPose(current, fan, phase(progress, 0.28, 0.38));
-    current = mixPose(current, measured, phase(progress, 0.36, 0.4));
+    current = mixPose(current, deck, phase(progress, 0.12, 0.24));
+    current = mixPose(current, fan, phase(progress, 0.22, 0.34));
+    current = mixPose(current, measured, phase(progress, 0.32, 0.36));
     current.y += momentum * 6;
 
     return current;
