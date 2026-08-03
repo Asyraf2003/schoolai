@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Hash;
 uses(RefreshDatabase::class);
 
 it('adds nonce based security headers to public pages', function (): void {
-    $urls = [
-        route('home'),
-        route('ppdb'),
-        route('galeri'),
+    $pages = [
+        [route('home'), true],
+        [route('ppdb'), false],
+        [route('galeri'), false],
     ];
 
-    foreach ($urls as $url) {
+    foreach ($pages as [$url, $allowsThreeRuntime]) {
         $response = $this->get($url)->assertOk();
 
         $response
@@ -36,13 +36,21 @@ it('adds nonce based security headers to public pages', function (): void {
             ->toContain("default-src 'self'")
             ->toContain("frame-ancestors 'none'")
             ->toContain("script-src-attr 'none'")
-            ->toContain('https://cdn.jsdelivr.net')
-            ->toContain("connect-src 'self' https://cdn.jsdelivr.net")
             ->toContain(
                 "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com"
             )
             ->not->toContain('frame-src *')
             ->not->toContain('frame-src https:');
+
+        if ($allowsThreeRuntime) {
+            expect($csp)
+                ->toContain('https://cdn.jsdelivr.net')
+                ->toContain(
+                    "connect-src 'self' https://cdn.jsdelivr.net"
+                );
+        } else {
+            expect($csp)->not->toContain('https://cdn.jsdelivr.net');
+        }
 
         expect(
             preg_match(
@@ -89,7 +97,8 @@ it('adds the same security policy to authenticated admin pages', function (): vo
     expect($csp)
         ->toContain("frame-ancestors 'none'")
         ->toContain("script-src 'self' 'nonce-")
-        ->toContain("style-src 'self' 'nonce-");
+        ->toContain("style-src 'self' 'nonce-")
+        ->not->toContain('https://cdn.jsdelivr.net');
 
     preg_match_all(
         '/<(?:script|style)\b(?![^>]*\bnonce=)[^>]*>/i',
