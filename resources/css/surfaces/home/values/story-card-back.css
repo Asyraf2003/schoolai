@@ -1,0 +1,90 @@
+.values-card__back {
+    display: none;
+    place-items: center;
+    border: clamp(.18rem, .35vw, .3rem) solid #fff;
+    background:
+        repeating-linear-gradient(45deg, transparent 0 12px, rgba(255,255,255,.18) 12px 14px),
+        repeating-linear-gradient(-45deg, transparent 0 12px, rgba(255,255,255,.12) 12px 14px),
+        var(--values-blue);
+    color: #fff;
+    transform: rotateY(180deg);
+}
+
+.values-card__back-frame {
+    position: absolute;
+    inset: 7%;
+    border: 2px solid rgba(255,255,255,.92);
+    border-radius: .75rem;
+}
+
+.values-card__back-frame::before,
+.values-card__back-frame::after {
+    position: absolute;
+    inset: 17%;
+    border: 2px solid rgba(255,255,255,.72);
+    content: "";
+    transform: rotate(45deg);
+}
+
+.values-card__back-frame::after {
+    inset: 30%;
+    border-radius: 50%;
+    transform: none;
+}
+
+.values-card__back-orbit {
+    position: absolute;
+    width: 46%;
+    aspect-ratio: 1;
+    border: 2px solid rgba(255,255,255,.92);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1rem rgba(32,56,255,.88);
+}
+
+.values-card__back-code {
+    position: relative;
+    z-index: 2;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 1;
+}
+
+.values-card__back-title {
+    position: absolute;
+    inset: auto 10% 8%;
+    overflow: hidden;
+    font-size: clamp(.72rem, 1.1vw, .92rem);
+    font-weight: 700;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.values-story.is-values-ready .values-story__cards {
+    position: absolute;
+    inset: 0;
+    display: block;
+    transform-style: preserve-3d;
+}
+
+.values-story.is-values-ready .values-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(var(--values-card-target), calc(72svh - 5.76rem));
+    margin: 0;
+    transform:
+        translate3d(
+            calc(-50% + var(--values-x)),
+            calc(-50% + var(--values-y)),
+            var(--values-z)
+        )
+        rotateX(var(--values-rx))
+        rotateY(var(--values-ry))
+        rotateZ(var(--values-rz))
+        scale(var(--values-scale));
+    will-change: transform, opacity;
+}
+
+.values-story.is-values-ready .values-card__back {
+    display: grid;
+}
