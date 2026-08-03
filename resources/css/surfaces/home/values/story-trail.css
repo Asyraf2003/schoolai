@@ -12,8 +12,10 @@
     will-change: transform, opacity;
 }
 
-.values-story.is-values-ready .values-story__trail {
-    display: block;
+@media (min-width: 1280px) {
+    .values-story.is-values-ready .values-story__trail {
+        display: block;
+    }
 }
 
 .values-story__trail path {
@@ -51,6 +53,6 @@
 
 @media (prefers-reduced-motion: reduce) {
     .values-story__trail {
-        display: none !important;
+        display: none;
     }
 }
