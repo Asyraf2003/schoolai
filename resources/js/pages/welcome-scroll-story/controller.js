@@ -1,38 +1,24 @@
-import { clearPaint, clamp, paintScene, paintText } from './motion-painters.js';
+import { clearPaint, paintScene, paintText } from './motion-painters.js';
+import {
+    FRAME_MS, PROGRESS_EPSILON, SCROLL_EPSILON, frameBlend,
+    measureScenes, readScroll, sceneProgress,
+} from './scroll-progress.js';
 import { prepareStoryText } from './split-text.js';
-
-const EPSILON = 0.0005;
-const DAMPING_MS = 150;
-
-function sceneProgress(scene, viewportHeight) {
-    const rect = scene.getBoundingClientRect();
-    const start = viewportHeight * .55;
-    const travel = Math.max(1, rect.height - viewportHeight * .45);
-    return clamp((start - rect.top) / travel);
-}
-
-function damp(current, target, delta) {
-    const blend = 1 - Math.exp(-Math.min(delta, 64) / DAMPING_MS);
-    return current + (target - current) * blend;
-}
 
 function prepareScenes(root) {
     const elements = Array.from(root.querySelectorAll('[data-story-scene]'));
-
     return elements.map((element, index) => {
-        const next = elements[index + 1];
         const color = element.dataset.storyColor || '#061d4f';
-        const nextColor = next?.dataset.storyColor || color;
-
+        const nextColor = elements[index + 1]?.dataset.storyColor || color;
         element.style.setProperty('--scene-color', color);
         element.style.setProperty('--next-scene-color', nextColor);
-
         return {
             element,
             motion: element.dataset.storyArtMotion || 'none',
             arts: Array.from(element.querySelectorAll('[data-story-scene-art]')),
-            target: 0,
-            current: 0,
+            texts: [],
+            top: 0,
+            height: 1,
             painted: null,
         };
     });
@@ -42,76 +28,33 @@ export function createStoryController(root) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const rtl = document.documentElement.dir === 'rtl';
     const scenes = prepareScenes(root);
-    const texts = prepareStoryText(root).map((item) => ({
-        ...item,
-        scene: item.element.closest('[data-story-scene]'),
-    }));
+    const sceneByElement = new Map(
+        scenes.map((scene) => [scene.element, scene]),
+    );
+    const texts = prepareStoryText(root);
+
+    texts.forEach((item) => {
+        const owner = item.element.closest('[data-story-scene]');
+        sceneByElement.get(owner)?.texts.push(item);
+    });
+
     let frame = 0;
     let observer = null;
+    let resizeObserver = null;
     let active = true;
     let destroyed = false;
-    let needsMeasure = true;
+    let layoutDirty = true;
     let forcePaint = true;
     let snapNext = true;
     let lastTime = 0;
+    let currentScroll = readScroll();
+    let targetScroll = currentScroll;
+    let viewportHeight = window.innerHeight || 1;
 
     function cancelFrame() {
         if (frame) window.cancelAnimationFrame(frame);
         frame = 0;
         lastTime = 0;
-    }
-
-    function measureTargets() {
-        needsMeasure = false;
-        const viewportHeight = window.innerHeight || 1;
-
-        scenes.forEach((scene) => {
-            scene.target = reduced.matches
-                ? 1
-                : sceneProgress(scene.element, viewportHeight);
-        });
-    }
-
-    function render(time) {
-        frame = 0;
-        if (destroyed || !active || document.hidden) return;
-
-        const delta = lastTime ? time - lastTime : 16.67;
-        lastTime = time;
-        if (needsMeasure) measureTargets();
-
-        const progressByScene = new Map();
-        const shouldSnap = snapNext || reduced.matches;
-        let moving = false;
-
-        scenes.forEach((scene) => {
-            const next = shouldSnap
-                ? scene.target
-                : damp(scene.current, scene.target, delta);
-            const settled = Math.abs(scene.target - next) <= EPSILON;
-
-            scene.current = settled ? scene.target : next;
-            moving ||= !settled;
-            progressByScene.set(scene.element, scene.current);
-
-            if (
-                forcePaint
-                || scene.painted === null
-                || Math.abs(scene.painted - scene.current) > EPSILON
-            ) {
-                paintScene(scene, scene.current, rtl, reduced.matches);
-                scene.painted = scene.current;
-            }
-        });
-
-        texts.forEach((item) => {
-            paintText(item, progressByScene.get(item.scene) ?? 1, rtl);
-        });
-
-        snapNext = false;
-        forcePaint = false;
-        if (moving || needsMeasure) requestRender();
-        else lastTime = 0;
     }
 
     function requestRender() {
@@ -120,18 +63,65 @@ export function createStoryController(root) {
         }
     }
 
-    function requestMeasure(repaint = false) {
-        needsMeasure = true;
-        forcePaint ||= repaint;
-        requestRender();
+    function refreshLayout() {
+        layoutDirty = false;
+        viewportHeight = window.innerHeight || 1;
+        measureScenes(scenes);
+        forcePaint = true;
+    }
+
+    function paint(scene, progress) {
+        const unchanged = scene.painted !== null
+            && Math.abs(scene.painted - progress) <= PROGRESS_EPSILON;
+        if (!forcePaint && unchanged) return;
+        paintScene(scene, progress, rtl, reduced.matches);
+        scene.texts.forEach((item) => paintText(item, progress, rtl));
+        scene.painted = progress;
+    }
+
+    function render(time) {
+        frame = 0;
+        if (destroyed || !active || document.hidden) return;
+        if (layoutDirty) refreshLayout();
+
+        targetScroll = readScroll();
+        const delta = lastTime ? time - lastTime : FRAME_MS;
+        lastTime = time;
+
+        if (snapNext || reduced.matches) currentScroll = targetScroll;
+        else {
+            currentScroll += (
+                targetScroll - currentScroll
+            ) * frameBlend(delta);
+        }
+
+        const settled = Math.abs(
+            targetScroll - currentScroll,
+        ) <= SCROLL_EPSILON;
+        if (settled) currentScroll = targetScroll;
+
+        scenes.forEach((scene) => {
+            const progress = reduced.matches
+                ? 1
+                : sceneProgress(scene, currentScroll, viewportHeight);
+            paint(scene, progress);
+        });
+
+        snapNext = false;
+        forcePaint = false;
+        if (!settled) requestRender();
+        else lastTime = 0;
     }
 
     function onScroll() {
-        requestMeasure();
+        targetScroll = readScroll();
+        requestRender();
     }
 
     function onResize() {
-        requestMeasure(true);
+        layoutDirty = true;
+        snapNext = true;
+        requestRender();
     }
 
     function onVisibility() {
@@ -139,25 +129,24 @@ export function createStoryController(root) {
             cancelFrame();
             return;
         }
-        snapNext = true;
-        requestMeasure(true);
+        onResize();
     }
 
     function onMotionChange() {
         snapNext = true;
-        requestMeasure(true);
+        forcePaint = true;
+        requestRender();
     }
 
     function onIntersection(entries) {
         const nextActive = entries.some((entry) => entry.isIntersecting);
         if (nextActive === active) return;
-
         active = nextActive;
         cancelFrame();
         if (!active) return;
-
-        snapNext = true;
-        requestMeasure(true);
+        currentScroll = readScroll();
+        targetScroll = currentScroll;
+        onResize();
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -167,10 +156,14 @@ export function createStoryController(root) {
 
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(onIntersection, {
-            rootMargin: '120% 0px 120% 0px',
+            rootMargin: '100% 0px 100% 0px',
             threshold: 0.01,
         });
         observer.observe(root);
+    }
+    if ('ResizeObserver' in window) {
+        resizeObserver = new ResizeObserver(onResize);
+        resizeObserver.observe(root);
     }
 
     root.classList.add('is-story-ready');
@@ -182,9 +175,7 @@ export function createStoryController(root) {
         root.classList.remove('is-story-ready');
         texts.forEach(clearPaint);
         scenes.forEach((scene) => {
-            scene.arts.forEach((art) => {
-                art.style.removeProperty('transform');
-            });
+            scene.arts.forEach((art) => art.style.removeProperty('transform'));
             scene.element.style.removeProperty('--scene-progress');
             scene.element.style.removeProperty('--scene-transition');
             scene.element.style.removeProperty('--scene-color');
@@ -192,6 +183,7 @@ export function createStoryController(root) {
         });
         cancelFrame();
         observer?.disconnect();
+        resizeObserver?.disconnect();
         window.removeEventListener('scroll', onScroll);
         window.removeEventListener('resize', onResize);
         document.removeEventListener('visibilitychange', onVisibility);
