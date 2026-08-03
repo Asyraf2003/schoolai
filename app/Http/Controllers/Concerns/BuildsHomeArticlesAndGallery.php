@@ -4,11 +4,6 @@ namespace App\Http\Controllers\Concerns;
 
 use App\Models\Article;
 use App\Models\GalleryItem;
-use App\Models\PpdbSetting;
-use App\Models\SiteStatistic;
-use App\Support\HeroVideoUrl;
-use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
 
 trait BuildsHomeArticlesAndGallery
@@ -96,12 +91,13 @@ trait BuildsHomeArticlesAndGallery
 
             return GalleryItem::query()
                 ->where('is_published', true)
+                ->where('type', 'photo')
                 ->ordered()
                 ->limit(6)
                 ->get()
                 ->map(fn (GalleryItem $item): array => $this->normalizeGalleryItem([
                     'title' => $item->titleForLocale($locale),
-                    'type' => $item->type,
+                    'type' => 'photo',
                     'type_label' => $item->typeLabelForLocale($locale),
                     'media_url' => $item->media_url,
                     'published_at' => optional($item->published_at)->toDateString() ?? '',
@@ -119,12 +115,18 @@ trait BuildsHomeArticlesAndGallery
             return [];
         }
 
+        $photoItems = array_filter(
+            $items,
+            static fn (mixed $item): bool => is_array($item)
+                && (($item['type'] ?? 'photo') === 'photo'),
+        );
+
         $normalizedItems = array_values(array_filter(
             array_map(
                 fn (mixed $item): ?array => is_array($item)
                     ? $this->normalizeGalleryItem($item)
                     : null,
-                $items,
+                $photoItems,
             ),
         ));
 
