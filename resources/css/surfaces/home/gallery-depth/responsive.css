@@ -4,6 +4,7 @@
     }
 
     .depth-gallery {
+        --depth-step: 280px;
         margin-top: 40px;
     }
 
@@ -42,6 +43,10 @@
 }
 
 @media (min-width: 640px) {
+    .depth-gallery {
+        --depth-step: 340px;
+    }
+
     .depth-gallery__viewport {
         min-height: 650px;
     }
@@ -52,6 +57,10 @@
 }
 
 @media (min-width: 768px) {
+    .depth-gallery {
+        --depth-step: 500px;
+    }
+
     .depth-gallery__fallback-list {
         width: min(900px, calc(100% - 64px));
     }
