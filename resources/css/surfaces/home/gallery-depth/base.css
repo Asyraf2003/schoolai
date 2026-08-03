@@ -2,8 +2,8 @@
     position: relative;
     overflow: clip;
     padding-block: clamp(92px, 11vw, 176px) clamp(82px, 9vw, 144px);
-    background: #071f3b;
-    color: #fff;
+    background: #d9a327;
+    color: #111;
     isolation: isolate;
 }
 
@@ -14,21 +14,22 @@
 
 .galeri-section__heading-shell {
     position: relative;
-    z-index: 4;
+    z-index: 5;
 }
 
 .galeri-section .gallery-heading-motion__heading,
 .galeri-section .gallery-heading-motion__line,
 .galeri-section .gallery-heading-motion__description {
-    color: #fff;
+    color: #111;
 }
 
 .depth-gallery {
-    --depth-card-width: min(94vw, 1240px);
-    --depth-card-height: min(78svh, 760px);
-    --depth-media-max-height: min(68svh, 700px);
+    --depth-atmosphere: #d9a327;
+    --depth-card-width: min(76vw, 960px);
+    --depth-card-height: min(68svh, 650px);
+    --depth-media-max-height: min(60svh, 590px);
     position: relative;
-    margin-top: clamp(56px, 8vw, 112px);
+    margin-top: clamp(54px, 7vw, 104px);
 }
 
 .depth-gallery__journey {
@@ -37,14 +38,15 @@
 
 .depth-gallery__viewport {
     position: relative;
-    min-height: 720px;
+    min-height: 680px;
     overflow: hidden;
-    background-color: var(--depth-atmosphere, #c78f2b);
-    transition: background-color 180ms linear;
+    background: var(--depth-atmosphere);
+    transition: background-color 240ms linear;
 }
 
 .depth-gallery__canvas,
-.depth-gallery__veil {
+.depth-gallery__veil,
+.depth-gallery__trail {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -54,34 +56,57 @@
 
 .depth-gallery__canvas {
     display: none;
+    z-index: 0;
 }
 
 .depth-gallery__veil {
     z-index: 1;
     background:
-        linear-gradient(180deg, rgba(3, 13, 27, 0.2), transparent 25%, transparent 74%, rgba(3, 13, 27, 0.42)),
-        radial-gradient(circle at 50% 50%, transparent 44%, rgba(3, 13, 27, 0.2) 100%);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 24%, transparent 78%, rgba(0, 0, 0, 0.08)),
+        radial-gradient(circle at 50% 50%, transparent 46%, rgba(0, 0, 0, 0.08) 100%);
+}
+
+.depth-gallery__trail {
+    z-index: 2;
+    overflow: visible;
+}
+
+.depth-gallery__trail-glow,
+.depth-gallery__trail-line {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.depth-gallery__trail-glow {
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 8;
+    filter: blur(5px);
+}
+
+.depth-gallery__trail-line {
+    stroke: rgba(255, 255, 255, 0.78);
+    stroke-width: 1.35;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
 }
 
 .depth-gallery__stage {
     position: relative;
-    z-index: 2;
-    width: min(1180px, calc(100% - 40px));
+    z-index: 3;
+    width: min(1100px, calc(100% - 40px));
     margin-inline: auto;
     display: grid;
-    gap: clamp(46px, 8vw, 96px);
+    gap: 22px;
 }
 
 .depth-gallery__item {
     min-width: 0;
 }
 
-.depth-gallery__meter {
-    display: none;
-}
-
 .depth-gallery.is-depth-ready .depth-gallery__journey {
-    min-height: calc(100svh + (var(--depth-gallery-count) - 1) * 76svh);
+    min-height: calc(100svh + (var(--depth-gallery-count) - 1) * 72svh);
 }
 
 .depth-gallery.is-depth-ready .depth-gallery__viewport {
@@ -93,14 +118,13 @@
 
 .depth-gallery.is-depth-ready .depth-gallery__canvas {
     display: block;
-    z-index: 0;
 }
 
 .depth-gallery.is-depth-ready .depth-gallery__stage {
     position: absolute;
     inset: 0;
     width: 100%;
-    perspective: 1500px;
+    perspective: 1400px;
     transform-style: preserve-3d;
 }
 
@@ -110,7 +134,7 @@
     width: var(--depth-card-width);
     height: var(--depth-card-height);
     opacity: 0;
-    transform: translate3d(-50%, -50%, -1200px);
+    transform: translate3d(-50%, -50%, -1100px);
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -119,23 +143,4 @@
     width: 100%;
     height: 100%;
     min-height: 0;
-}
-
-.depth-gallery.is-depth-ready .depth-gallery__meter {
-    position: absolute;
-    z-index: 5;
-    inset: auto clamp(18px, 3vw, 46px) clamp(20px, 4vh, 44px);
-    display: block;
-    height: 2px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.depth-gallery__meter > span {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    transform: scaleX(0);
-    transform-origin: inline-start center;
 }
