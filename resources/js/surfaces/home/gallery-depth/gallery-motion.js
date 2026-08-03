@@ -45,11 +45,17 @@ export function updateGalleryMotion(gallery, blend, scroll) {
             gallery.planeFadeSmoothing,
         );
         const opacity = plane.material.opacity;
+        const depthInfluence = 1 + index * 0.05;
+        const parallaxInfluence = opacity * depthInfluence;
         const base = plane.userData.basePosition;
         plane.position.x = base.x * spread
-            + gallery.pointerCurrent.x * gallery.parallaxAmountX * opacity;
+            + gallery.pointerCurrent.x
+                * gallery.parallaxAmountX
+                * parallaxInfluence;
         plane.position.y = base.y
-            + gallery.pointerCurrent.y * gallery.parallaxAmountY * opacity
+            + gallery.pointerCurrent.y
+                * gallery.parallaxAmountY
+                * parallaxInfluence
             + gallery.driftCurrent * gallery.gestureParallaxAmountY;
         const breath = gallery.breathIntensity * opacity;
         plane.rotation.x = -gallery.pointerCurrent.y
