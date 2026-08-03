@@ -24,6 +24,7 @@
 }
 
 .depth-gallery {
+    --depth-step: 280px;
     position: relative;
     margin-top: clamp(48px, 6vw, 88px);
     color: #121212;
@@ -97,7 +98,9 @@
 }
 
 .depth-gallery.is-depth-ready .depth-gallery__journey {
-    min-height: calc(100svh + (var(--depth-gallery-count) - 1) * 92svh);
+    min-height: calc(
+        100svh + (var(--depth-gallery-count) - 1) * var(--depth-step)
+    );
 }
 
 .depth-gallery.is-depth-ready .depth-gallery__viewport {
@@ -126,7 +129,9 @@
 
 @supports not (height: 100svh) {
     .depth-gallery.is-depth-ready .depth-gallery__journey {
-        min-height: calc(100vh + (var(--depth-gallery-count) - 1) * 92vh);
+        min-height: calc(
+            100vh + (var(--depth-gallery-count) - 1) * var(--depth-step)
+        );
     }
 
     .depth-gallery.is-depth-ready .depth-gallery__viewport {
