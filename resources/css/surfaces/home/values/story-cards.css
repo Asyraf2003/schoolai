@@ -28,6 +28,28 @@
     transform-style: preserve-3d;
 }
 
+.values-story.is-values-ready .values-story__cards {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+
+.values-story.is-values-ready .values-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform:
+        translate3d(
+            calc(-50% + var(--values-x)),
+            var(--values-y),
+            var(--values-z)
+        )
+        rotateX(var(--values-rx))
+        rotateZ(var(--values-rz))
+        scale(var(--values-scale));
+    transform-origin: center center;
+}
+
 .values-card__float,
 .values-card__inner,
 .values-card__face {
