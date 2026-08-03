@@ -38,55 +38,93 @@ function createDepthGallery(root) {
     const lightboxBinding = createLightboxBindings(root, config);
     let engine = null;
     let observer = null;
+    let activationFrame = 0;
     let disposed = false;
     let inView = false;
-    let initialized = false;
+    let initializing = false;
+    let active = false;
 
-    const setFallback = () => {
-        engine?.dispose();
-        engine = null;
-        initialized = false;
-        root.classList.remove('is-depth-ready');
+    function applyFallbackState(disposeEngine = true) {
+        if (activationFrame) cancelAnimationFrame(activationFrame);
+        activationFrame = 0;
+        active = false;
+        initializing = false;
+        root.classList.remove('is-depth-ready', 'is-depth-active');
         root.classList.add('is-depth-fallback');
         fallback?.removeAttribute('hidden');
         fallback?.removeAttribute('aria-hidden');
         if (fallback) fallback.inert = false;
+        canvas?.setAttribute('aria-hidden', 'true');
+        canvas?.setAttribute('tabindex', '-1');
         canvas?.removeAttribute('aria-busy');
-    };
+        if (!disposeEngine) return;
+        const failedEngine = engine;
+        engine = null;
+        failedEngine?.dispose();
+    }
 
-    const setReady = () => {
-        initialized = true;
+    function activateEngine() {
         root.classList.remove('is-depth-fallback');
         root.classList.add('is-depth-ready');
-        fallback?.setAttribute('hidden', '');
-        fallback?.setAttribute('aria-hidden', 'true');
-        if (fallback) fallback.inert = true;
-        canvas?.removeAttribute('aria-busy');
-        if (inView && !document.hidden) engine?.start();
-    };
+        activationFrame = requestAnimationFrame(() => {
+            activationFrame = 0;
+            if (disposed || !engine || !engine.activate()) {
+                applyFallbackState();
+                return;
+            }
+            active = true;
+            root.classList.add('is-depth-active');
+            fallback?.setAttribute('hidden', '');
+            fallback?.setAttribute('aria-hidden', 'true');
+            if (fallback) fallback.inert = true;
+            canvas?.setAttribute('aria-hidden', 'false');
+            canvas?.setAttribute('tabindex', '0');
+            canvas?.removeAttribute('aria-busy');
+            if (inView && !document.hidden) engine.start();
+        });
+    }
 
-    const initialize = async () => {
-        if (disposed || initialized || engine || reducedMotion.matches) return;
-        if (!canvas || config.length < 2) return;
+    async function initialize() {
+        if (
+            disposed
+            || active
+            || initializing
+            || engine
+            || reducedMotion.matches
+            || !canvas
+            || config.length < 2
+        ) return;
+
+        initializing = true;
         canvas.setAttribute('aria-busy', 'true');
         try {
             const THREE = await loadThreeRuntime();
             if (disposed) return;
-            engine = new DepthGalleryEngine(THREE, root, config, setFallback);
+            engine = new DepthGalleryEngine(
+                THREE,
+                root,
+                config,
+                applyFallbackState,
+            );
             const success = await engine.init();
+            initializing = false;
             if (!success || disposed) {
-                setFallback();
+                applyFallbackState();
                 return;
             }
-            setReady();
+            activateEngine();
         } catch (error) {
             console.warn('Depth gallery initialization failed', error);
-            setFallback();
+            applyFallbackState();
         }
-    };
+    }
 
     const onCanvasOpen = () => {
-        const index = Number.parseInt(canvas?.dataset.activeGalleryIndex || '-1', 10);
+        if (!active) return;
+        const index = Number.parseInt(
+            canvas?.dataset.activeGalleryIndex || '-1',
+            10,
+        );
         if (index >= 0) lightboxBinding.lightbox.openStoryMediaByIndex(index);
     };
     const onCanvasKeyDown = (event) => {
@@ -96,34 +134,41 @@ function createDepthGallery(root) {
     };
     const onVisibility = () => {
         if (document.hidden) engine?.stop();
-        else if (inView) engine?.start();
+        else if (inView && active) engine?.start();
+    };
+    const onMotionChange = () => {
+        if (reducedMotion.matches) applyFallbackState();
+        else if (inView) initialize();
     };
     const onPageHide = (event) => {
         if (event.persisted) engine?.stop();
         else destroy();
     };
     const onPageShow = () => {
-        if (inView) engine?.start();
+        if (inView && active) engine?.start();
     };
 
     function destroy() {
         if (disposed) return;
         disposed = true;
+        if (activationFrame) cancelAnimationFrame(activationFrame);
         observer?.disconnect();
         engine?.dispose();
         engine = null;
         canvas?.removeEventListener('click', onCanvasOpen);
         canvas?.removeEventListener('keydown', onCanvasKeyDown);
         document.removeEventListener('visibilitychange', onVisibility);
+        reducedMotion.removeEventListener?.('change', onMotionChange);
         window.removeEventListener('pagehide', onPageHide);
         window.removeEventListener('pageshow', onPageShow);
         lightboxBinding.destroy();
-        setFallback();
     }
 
+    applyFallbackState(false);
     canvas?.addEventListener('click', onCanvasOpen);
     canvas?.addEventListener('keydown', onCanvasKeyDown);
     document.addEventListener('visibilitychange', onVisibility);
+    reducedMotion.addEventListener?.('change', onMotionChange);
     window.addEventListener('pagehide', onPageHide);
     window.addEventListener('pageshow', onPageShow);
 
@@ -132,7 +177,7 @@ function createDepthGallery(root) {
             inView = entry.isIntersecting;
             if (inView) {
                 initialize();
-                engine?.start();
+                if (active) engine?.start();
             } else {
                 engine?.stop();
             }
