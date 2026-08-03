@@ -5,6 +5,7 @@ Updated: 2026-08-03
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Active blueprint: `blueprints/2026-08-03-home-values-card-story.md`
+Raw evidence: `measurements/2026-08-03-home-values-reference-motion-raw.md`
 
 Commit publication proves source state only. It does not prove build, browser,
 responsive, accessibility, performance, or lifecycle completion.
@@ -14,148 +15,141 @@ responsive, accessibility, performance, or lifecycle completion.
 - ID: `HOME-VALUES-001`
 - State: `IMPLEMENTING`
 - Surface: homepage Values section `#nilai`
-- Source head after bounded implementation:
-  `0db23a9a450b94bcabdd5261bade505be3098767`
-- Current atomic result: time-triggered heading entry plus measured PC
-  lead/deck/fan/flip/settle choreography
+- Raw evidence commit: `75138335c381535e7f942a77210a2f34988cccc0`
+- Source implementation head: `f48d9a9a3b1e93b72944a33616b3328d3c575f64`
+- Blueprint ledger head: `afd91c5ebd7321a736d02f222587c65266e90935`
+- Current atomic result: earlier heading entry, rebalanced heading weight,
+  raised PC staging, and continuous measured card interpolation
 - Protected: Hero, Vision/Mission, Programs, Gallery, Articles, navigation,
   footer, DB/admin/routes, About, and Testimonial
 
-## Latest owner-accepted direction
+## Latest owner evidence and direction
 
-### Heading
+### Evidence packet
 
-- The heading reveal is an animation triggered by entering the section from
-  above, not a direct scroll-progress effect.
-- Both clipped lines travel from opposite vertical directions toward their
-  complete forms over a deliberately slow, smooth entry.
-- After reveal, line two shifts toward visual center on PC only.
-- Entering backward from the following section keeps the heading statically
-  revealed; it does not replay the forward entry.
-- When the four-card deck begins to form, the PC heading starts its
-  scroll-driven upward exit.
-- Description/eyebrow remain available on tablet and PC and hidden on phone.
+The owner supplied:
 
-### Cards
+- normal downward reference recording, 1280x720, 4.156 seconds;
+- normal upward reference recording, 1280x720, 1.648 seconds;
+- fast downward reference recording, 1280x720, 0.720 seconds;
+- computed heading word transforms at 90%, 50%, and 0% travel;
+- reference card hierarchy, perspective, transform origins, and base geometry;
+- five `matrix3d()` card snapshots;
+- projected front-face bounds across stack, edge-on, front, and overshoot;
+- six four-card X/Y/`rotateZ`/`rotateY` samples.
 
-- The first card begins below the heading rather than intersecting it.
-- The deck rises toward a shared stage center while the heading exits.
-- Fan geometry preserves outward left/right `rotateZ`.
-- Cards straighten during their overlapping flips; there is no separate
-  generic upright row before the first flip.
-- Per-card X, Y, `rotateZ`, and `rotateY` follow the owner-supplied measured
-  samples.
-- The negative `rotateY` values act as overshoot before the final all-front
-  `0deg` settle.
-- Phone remains one card at a time; tablet remains a stable paired 2x2
-  sequence; the white trail remains PC-only.
+The full unnormalized dataset is preserved in the raw evidence document.
+
+### Heading direction
+
+- Trigger the clipped heading reveal when the section first enters from above.
+- Do not require continued scroll for the entry animation.
+- Start earlier than the prior 72% viewport threshold.
+- Make the current Latin weight `200` slightly thicker while remaining much
+  lighter than the rejected heavy state.
+- Keep a narrow seam between the two clipped lines.
+- Make the reveal somewhat faster without becoming abrupt.
+- Keep PC-only line-two shift and scroll-driven heading exit.
+- Reverse entry from the following section remains statically revealed.
+
+### Card direction
+
+- The lead stack may begin low, but it must visibly rise into the center plane.
+- Heading exit begins with deck formation.
+- Fan tilt stays active while flips begin.
+- Cards move from fan tilt toward upright during the flip itself.
+- First-to-fourth flips overlap.
+- Sample points guide one continuous path; they must not become mechanical stop
+  points.
+- Negative `rotateY` values remain bounded front-side overshoot.
+- Final cards hold one stable upright information row.
+- Phone/tablet behavior and PC-only trail contracts remain unchanged.
 
 ## Runtime feedback FACT
 
-### Runtime 8: latest owner screenshots and measurements
+### Runtime 9: owner recordings plus computed styles
 
-The owner supplied SchoolAI/reference screenshots plus six transform samples.
-They prove the intended chronology and expose these mismatches in the prior
-source:
+The new recordings prove that the reference motion remains continuous under
+normal downward, reverse, and fast downward input. The reference compresses or
+reverses one spatial path rather than switching layouts.
 
-- heading reveal was still derived from scroll progress rather than running as
-  its own section-entry animation;
-- the initial card stack occupied an arbitrary Y offset and did not preserve the
-  intended distance below the heading;
-- the generic `fan -> upright -> delayed flip` sequence removed fan tilt before
-  the flip, while the reference straightens during the flip;
-- the generic flip formula could not reproduce the measured overlap, overshoot,
-  or per-card orientation;
-- the card group needed to remain centered throughout the active choreography.
+Owner screenshots of the previous SchoolAI source still showed:
 
-Runtime 8 is `FAIL` for the old implementation and is the evidence for this
-bounded correction.
+- title entry beginning too late and appearing too hairline;
+- insufficient visible title seam;
+- lead/deck motion staying visually submerged too long;
+- card movement feeling mechanical despite matching captured sample values.
+
+Runtime 9 is `FAIL` for the prior SchoolAI implementation and is the evidence for
+this correction. Corrected runtime remains unproven.
 
 ## Root-cause FACT
 
-### Scroll-scrubbed heading entry
+### Mechanical sample interpolation
 
-`heading-state.js` previously calculated reveal from:
-
-```text
-phase(targetProgress, revealStart, revealEnd)
-```
-
-Stopping scroll therefore stopped the heading, even though the owner defined it
-as an automatic entrance animation.
-
-### Arbitrary card-top geometry
-
-The previous desktop layout used fixed viewport fractions directly as card-top
-positions:
+The previous `desktop-keyframes.js` applied `smooth()` independently inside
+every sample interval. Smoothstep reaches zero velocity at both ends of each
+interval. Every captured reference sample therefore became a tiny artificial
+rest point:
 
 ```text
-lead/deck: viewportHeight * 0.20
-fan/upright: viewportHeight * 0.10
+sample 1 -> stop -> sample 2 -> stop -> sample 3 -> stop
 ```
 
-Those values ignored card height and could not express “lead below heading, then
-lock the active deck near stage center.”
+The recordings instead show continuous travel through those samples.
 
-### Generic flip model
+### Late heading entry
 
-The previous choreography forced every card through the same formula:
+The prior heading threshold was `72%` of viewport height and duration was
+`1600ms`. That delayed the start after the blue section was already visible and
+made the owner wait before the full title resolved.
+
+### Compressed vertical staging
+
+Prior card centers were:
 
 ```text
-fan rotateZ
--> separate upright rotateZ(0)
--> shared anticipation
--> per-index delayed rotateY
+lead 78%
+deck 60%
+active 56%
 ```
 
-The supplied data instead shows `rotateZ` converging toward zero while each
-card's `rotateY` follows a distinct overlapping trajectory.
+The distance was too subtle at the current card scale. The lead looked low but
+the active deck did not rise enough to read as a deliberate center lock.
 
 ## Implemented source correction
 
-Source head before this batch:
-`e23d1f220ca76aa8782bb6c5cfd8f3b2aa4ba298`.
+### Heading
 
-### Independent heading entry
+- Entry trigger moved from `72%` to `94%` viewport height.
+- Reveal duration changed from `1600ms` to `1200ms`.
+- Entry uses cubic ease-out instead of symmetric smoothstep.
+- ID/EN Inter variable weight changed from `200` to `260`.
+- A small `.018em` row seam separates the two title masks.
+- Line-two PC shift transition changed to `1050ms` with a soft ease-out curve.
+- Initial clipped travel is approximately one line height (`103%`).
+- Cairo/RTL typography ownership remains unchanged.
 
-- `heading-state.js` now owns `idle -> revealing -> revealed`.
-- Forward entry begins when the section crosses a 72% viewport trigger.
-- Reveal runs for `1600ms` with eased frame progression.
-- The controller keeps the existing RAF active until both scroll motion and the
-  heading reveal settle.
-- Reverse entry resolves instantly to the static revealed state.
-- Scrolling completely above the trigger resets the next forward entry.
-- PC line-two shift is applied only after reveal completion.
+### Card staging
 
-### Center-derived desktop staging
+- PC lead center changed to `86%` stage height.
+- Deck center changed to `63%`.
+- Active/final center changed to `53.5%`.
+- Lead reveal now runs at progress `0.03–0.12`.
+- Deck formation and heading exit begin together at progress `0.12`.
+- Fan formation runs at `0.22–0.34`.
+- Measured travel runs at `0.34–0.86` and then holds.
 
-- Lead, deck, and final row use card-centered stage anchors.
-- Lead center is 78% of stage height, deck center is 60%, and active/final center
-  is 56%.
-- Card half-height is subtracted so transforms describe actual card top.
-- Deck formation begins with the PC heading exit at progress `0.18`.
-- The active group receives one shared momentum offset only.
+### Continuous measured curves
 
-### Measured keyframe choreography
-
-- Added `desktop-keyframes.js` as the sole owner of measured PC transform data.
-- Raw X is normalized into one shared center-relative row that adapts to card
-  width and available viewport width.
-- Y samples are scaled narrowly from the measured 400px card basis.
-- `rotateZ` follows the measured fan-to-zero path.
-- `rotateY` adds an all-back start, follows the six supplied per-card samples,
-  preserves negative overshoot, and finishes at a stable all-front row.
-- Piecewise eased interpolation replaces the generic flip-delay formula.
-- Fixed z-order and the shared coordinate plane remain unchanged.
-
-### Story timing
-
-- PC heading exit now runs from progress `0.18–0.36`.
-- Deck forms during `0.18–0.29`.
-- Fan forms during `0.28–0.38`.
-- Measured transform travel runs from progress `0.38–0.88`.
-- Trail start was aligned with card-story activation instead of appearing near
-  the beginning of the section.
+- Piecewise smoothstep interpolation was replaced by cubic Hermite
+  interpolation.
+- Finite-difference tangents provide a continuous first derivative across
+  irregular sample times.
+- Tangents are bounded with scale `0.72` to avoid uncontrolled overshoot.
+- X, Y, `rotateZ`, and `rotateY` share the same continuous sampling model.
+- `rotateY` remains clamped to `-24deg..180deg`.
+- Existing scroll inertia, shared momentum, fixed z-order, and CSS float remain.
 
 ## Source ownership
 
@@ -166,44 +160,44 @@ Source head before this batch:
 - Controller/RAF: `resources/js/surfaces/home/values/controller.js`
 - Shared mode timing: `resources/js/surfaces/home/values/layout.js`
 - Desktop staging: `resources/js/surfaces/home/values/desktop-layout.js`
-- Measured transforms: `resources/js/surfaces/home/values/desktop-keyframes.js`
-- Inertia: `resources/js/surfaces/home/values/motion.js`
+- Measured curves: `resources/js/surfaces/home/values/desktop-keyframes.js`
+- Scroll inertia: `resources/js/surfaces/home/values/motion.js`
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Current main/source audit | `PASS_SOURCE` | mandatory docs and active Values owners inspected |
-| Runtime 8 prior implementation | `FAIL` | owner screenshots and measured transforms |
-| Time-triggered heading entry | `IMPLEMENTED_SOURCE` | explicit heading state and 1600ms timeline |
-| Reverse static heading | `IMPLEMENTED_SOURCE` | non-forward entry resolves revealed/instant |
-| Center-derived card Y | `IMPLEMENTED_SOURCE` | card height included in lead/deck/final anchors |
-| Measured per-card transforms | `IMPLEMENTED_SOURCE` | dedicated keyframe owner added |
-| Fan-to-upright during flip | `IMPLEMENTED_SOURCE` | rotateZ and rotateY interpolate together |
-| Stable final front row | `IMPLEMENTED_SOURCE` | final sample is all-front and centered |
-| Phone/tablet contracts | `PASS_SOURCE` | their algorithms remain unchanged |
+| Current main/source audit | `PASS_SOURCE` | mandatory docs and active owners inspected |
+| Raw reference evidence | `PASS_SOURCE` | recordings and computed data preserved before code |
+| Runtime 9 prior implementation | `FAIL` | owner screenshots/recordings |
+| Earlier automatic heading entry | `IMPLEMENTED_SOURCE` | 94% trigger and independent 1200ms state |
+| Heading weight/seam | `IMPLEMENTED_SOURCE` | Inter 260 and clipped row seam |
+| Raised PC stage travel | `IMPLEMENTED_SOURCE` | 86% -> 63% -> 53.5% centers |
+| Continuous sample velocity | `IMPLEMENTED_SOURCE` | cubic Hermite finite-difference curves |
+| Fan-to-upright during flip | `IMPLEMENTED_SOURCE` | rotateZ and rotateY remain coupled |
+| Stable final front row | `IMPLEMENTED_SOURCE` | final sample and hold remain all-front |
+| Phone/tablet contracts | `PASS_SOURCE` | their algorithms were not changed |
 | Arabic typography boundary | `PASS_SOURCE` | Cairo owner and locale DOM unchanged |
-| Changed JavaScript syntax | `PASS_LOCAL_PATCH` | five changed/added modules passed `node --check` |
-| Transform sample inspection | `PASS_LOCAL_PATCH` | representative progress samples produced ordered centered poses |
-| Source line limit | `PASS_LOCAL_PATCH` | controller 178; heading 93; desktop 93; keyframes 92; layout 106 |
-| Scoped compare | `PASS_SOURCE` | source diff contains only five Values JS files |
+| Changed JavaScript syntax | `PASS_LOCAL_PATCH` | four changed JS files passed `node --check` |
+| Source line limit | `PASS_LOCAL_PATCH` | changed source files remain below 200 lines |
+| Scoped compare | `PASS_SOURCE` | only five Values source owners changed |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run repository command |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
 | PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
-| Corrected Chromium runtime | `BLOCKED_BY_MISSING_EVIDENCE` | fresh forward/reverse sequence absent |
+| Corrected Chromium runtime | `BLOCKED_BY_MISSING_EVIDENCE` | fresh capture absent |
 | WebKit/RTL/accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | matrix absent |
 
 ## STATUS
 
-The source now separates heading entry time from scroll, aligns heading exit with
-deck formation, derives card height from the stage, and drives PC fan/flip/settle
-from the supplied measured transforms. Runtime and release status remain
-unproven.
+Raw reference evidence is durable. Source now starts the heading earlier, makes
+it slightly heavier and faster, raises the desktop card plane more visibly, and
+removes the zero-velocity pause at every measured sample. Runtime and release
+status remain unproven.
 
 ## NEXT VALID STEP
 
-Pull current `main` and capture one 1920px Brave/Chromium forward-and-reverse
-sequence covering: automatic heading reveal while scroll is stopped, PC line-two
-shift, lower lead card, centered deck/fan, all four measured flip stages, stable
-front row, and backward entry from the following section.
+Pull current `main` and capture one 1920px Brave/Chromium forward sequence plus
+one reverse sequence covering: immediate title entry, center seam, PC line-two
+shift, low lead stack, visible rise to center, fan, edge-on overlap, overshoot,
+stable four-front row, and fast scroll continuity.
