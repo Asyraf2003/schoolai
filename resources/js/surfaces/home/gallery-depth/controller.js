@@ -1,153 +1,128 @@
 import { createGalleryStoryLightbox } from '../../../pages/welcome/gallery-story-lightbox.js';
-import { DepthGalleryRenderer } from './renderer.js';
-import {
-    blendPalette,
-    clearDepthItems,
-    readPalettes,
-    sceneProgress,
-    updateDepthItems,
-} from './scene.js';
+import { readGalleryData } from './data.js';
+import { DepthGalleryEngine } from './engine.js';
+import { loadThreeRuntime } from './three-runtime.js';
 
-function bindLightbox(root, cards) {
-    const lightbox = createGalleryStoryLightbox(root, cards);
-
-    cards.forEach((card) => {
-        card.addEventListener('click', (event) => {
-            if (!card.getAttribute('data-media-url')) return;
+function createLightboxBindings(root, config) {
+    const elements = config.map((item) => item.element);
+    const lightbox = createGalleryStoryLightbox(root, elements);
+    const cleanups = elements.map((element) => {
+        const onClick = (event) => {
+            if (!element.getAttribute('data-media-url')) return;
             event.preventDefault();
-            lightbox.openStoryMedia(card);
-        });
+            lightbox.openStoryMedia(element);
+        };
+        element.addEventListener('click', onClick);
+        return () => element.removeEventListener('click', onClick);
     });
-
     const onKeyDown = (event) => {
-        if (event.key === 'Escape' && lightbox.isOpen()) lightbox.closeStoryMedia();
+        if (event.key === 'Escape' && lightbox.isOpen()) {
+            lightbox.closeStoryMedia();
+        }
     };
     document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-}
-
-function paletteCss(channels) {
-    const values = channels.map((channel) => Math.round(channel * 255));
-    return `rgb(${values.join(' ')})`;
+    return {
+        lightbox,
+        destroy() {
+            cleanups.forEach((cleanup) => cleanup());
+            document.removeEventListener('keydown', onKeyDown);
+        },
+    };
 }
 
 function createDepthGallery(root) {
-    const journey = root.querySelector('[data-depth-gallery-journey]');
-    const viewport = root.querySelector('[data-depth-gallery-viewport]');
+    const config = readGalleryData(root);
     const canvas = root.querySelector('[data-depth-gallery-canvas]');
-    const trail = root.querySelector('[data-depth-gallery-trail]');
-    const items = Array.from(root.querySelectorAll('[data-depth-gallery-item]'));
-    const cards = Array.from(root.querySelectorAll('[data-depth-gallery-card]'));
-    const cleanupLightbox = bindLightbox(root, cards);
+    const fallback = root.querySelector('[data-depth-gallery-fallback]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    if (!journey || !viewport || !canvas || items.length < 2 || reducedMotion.matches) {
-        return { destroy: cleanupLightbox };
-    }
-
-    const palettes = readPalettes(cards);
-    const pointer = { x: 0, y: 0 };
-    let renderer = null;
-    let rendererFailed = false;
+    const lightboxBinding = createLightboxBindings(root, config);
+    let engine = null;
     let observer = null;
-    let frame = 0;
-    let active = false;
-    let inView = false;
     let disposed = false;
-    let previousProgress = 0;
-    let lastRenderTime = 0;
+    let inView = false;
+    let initialized = false;
 
-    const failRenderer = () => {
-        rendererFailed = true;
+    const setFallback = () => {
+        engine?.dispose();
+        engine = null;
+        initialized = false;
+        root.classList.remove('is-depth-ready');
         root.classList.add('is-depth-fallback');
-        renderer?.dispose();
-        renderer = null;
+        fallback?.removeAttribute('hidden');
+        fallback?.removeAttribute('aria-hidden');
+        if (fallback) fallback.inert = false;
+        canvas?.removeAttribute('aria-busy');
     };
 
-    const ensureRenderer = () => {
-        if (renderer || rendererFailed || disposed) return;
-        const candidate = new DepthGalleryRenderer(canvas, failRenderer);
-        if (!candidate.init()) {
-            candidate.dispose();
-            failRenderer();
-            return;
+    const setReady = () => {
+        initialized = true;
+        root.classList.remove('is-depth-fallback');
+        root.classList.add('is-depth-ready');
+        fallback?.setAttribute('hidden', '');
+        fallback?.setAttribute('aria-hidden', 'true');
+        if (fallback) fallback.inert = true;
+        canvas?.removeAttribute('aria-busy');
+        if (inView && !document.hidden) engine?.start();
+    };
+
+    const initialize = async () => {
+        if (disposed || initialized || engine || reducedMotion.matches) return;
+        if (!canvas || config.length < 2) return;
+        canvas.setAttribute('aria-busy', 'true');
+        try {
+            const THREE = await loadThreeRuntime();
+            if (disposed) return;
+            engine = new DepthGalleryEngine(THREE, root, config, setFallback);
+            const success = await engine.init();
+            if (!success || disposed) {
+                setFallback();
+                return;
+            }
+            setReady();
+        } catch (error) {
+            console.warn('Depth gallery initialization failed', error);
+            setFallback();
         }
-        renderer = candidate;
     };
 
-    const render = (time) => {
-        frame = 0;
-        if (!active || disposed || document.hidden) return;
-        if (time - lastRenderTime < 30) {
-            frame = requestAnimationFrame(render);
-            return;
-        }
-        lastRenderTime = time;
-        const progress = sceneProgress(journey, viewport);
-        const camera = progress * (items.length - 1);
-        const velocity = progress - previousProgress;
-        const palette = blendPalette(palettes, camera);
-        previousProgress = progress;
-        updateDepthItems(items, camera, viewport.clientWidth, pointer);
-        root.style.setProperty('--depth-atmosphere', paletteCss(palette.background));
-        trail?.style.setProperty('stroke-dashoffset', (1 - progress).toFixed(5));
-        renderer?.resize();
-        renderer?.render(palette, time, velocity);
-        frame = requestAnimationFrame(render);
+    const onCanvasOpen = () => {
+        const index = Number.parseInt(canvas?.dataset.activeGalleryIndex || '-1', 10);
+        if (index >= 0) lightboxBinding.lightbox.openStoryMediaByIndex(index);
     };
-
-    const start = () => {
-        if (active || disposed || !inView || document.hidden) return;
-        active = true;
-        ensureRenderer();
-        if (!frame) frame = requestAnimationFrame(render);
+    const onCanvasKeyDown = (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        onCanvasOpen();
     };
-
-    const stop = () => {
-        active = false;
-        if (frame) cancelAnimationFrame(frame);
-        frame = 0;
+    const onVisibility = () => {
+        if (document.hidden) engine?.stop();
+        else if (inView) engine?.start();
     };
-
-    const onPointerMove = (event) => {
-        const rect = viewport.getBoundingClientRect();
-        if (!rect.width || !rect.height) return;
-        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        pointer.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
-        renderer?.setPointer(pointer.x, pointer.y);
+    const onPageHide = (event) => {
+        if (event.persisted) engine?.stop();
+        else destroy();
     };
-
-    const onPointerLeave = () => {
-        pointer.x = 0;
-        pointer.y = 0;
-        renderer?.setPointer(0, 0);
+    const onPageShow = () => {
+        if (inView) engine?.start();
     };
-
-    const onVisibility = () => document.hidden ? stop() : start();
-    const onPageHide = (event) => event.persisted ? stop() : destroy();
-    const onPageShow = () => start();
 
     function destroy() {
         if (disposed) return;
         disposed = true;
-        stop();
         observer?.disconnect();
-        viewport.removeEventListener('pointermove', onPointerMove);
-        viewport.removeEventListener('pointerleave', onPointerLeave);
+        engine?.dispose();
+        engine = null;
+        canvas?.removeEventListener('click', onCanvasOpen);
+        canvas?.removeEventListener('keydown', onCanvasKeyDown);
         document.removeEventListener('visibilitychange', onVisibility);
         window.removeEventListener('pagehide', onPageHide);
         window.removeEventListener('pageshow', onPageShow);
-        renderer?.dispose();
-        cleanupLightbox();
-        clearDepthItems(items);
-        trail?.removeAttribute('style');
-        root.style.removeProperty('--depth-atmosphere');
-        root.classList.remove('is-depth-ready');
+        lightboxBinding.destroy();
+        setFallback();
     }
 
-    root.classList.add('is-depth-ready');
-    viewport.addEventListener('pointermove', onPointerMove, { passive: true });
-    viewport.addEventListener('pointerleave', onPointerLeave, { passive: true });
+    canvas?.addEventListener('click', onCanvasOpen);
+    canvas?.addEventListener('keydown', onCanvasKeyDown);
     document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('pagehide', onPageHide);
     window.addEventListener('pageshow', onPageShow);
@@ -155,7 +130,12 @@ function createDepthGallery(root) {
     observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             inView = entry.isIntersecting;
-            inView ? start() : stop();
+            if (inView) {
+                initialize();
+                engine?.start();
+            } else {
+                engine?.stop();
+            }
         });
     }, { rootMargin: '35% 0px 35% 0px', threshold: 0.01 });
     observer.observe(root);
