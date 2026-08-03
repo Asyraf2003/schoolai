@@ -17,6 +17,9 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
     $engine = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/engine.js'
     ));
+    $frame = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/engine-frame.js'
+    ));
     $planes = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/gallery.js'
     ));
@@ -77,8 +80,11 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->and($engine)
         ->toContain('PerspectiveCamera(45, 1, 0.1, 100)')
         ->toContain('new this.THREE.WebGLRenderer')
-        ->toContain('renderer.clearDepth()')
         ->toContain('Math.min(window.devicePixelRatio || 1, 1.5)')
+        ->toContain("'ResizeObserver' in window")
+        ->and($frame)
+        ->toContain('renderer.clearDepth()')
+        ->toContain('getDrawingBufferSize')
         ->and($planes)
         ->toContain('PlaneGeometry(3, 3)')
         ->toContain('this.planeGap = 5')
@@ -120,6 +126,7 @@ it('keeps every active depth gallery source within the file limit', function ():
 
     foreach ($files as $file) {
         $lines = count(file($file));
-        expect($lines, basename($file).' exceeds 200 lines')->toBeLessThanOrEqual(200);
+        expect($lines, basename($file).' exceeds 200 lines')
+            ->toBeLessThanOrEqual(200);
     }
 });
