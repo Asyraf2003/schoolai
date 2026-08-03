@@ -4,6 +4,7 @@ export function renderDepthFrame(engine, time = performance.now()) {
 
     try {
         engine.scroll.update();
+        engine.endCta.update();
         engine.trail.update(camera, engine.scroll, time);
         engine.gallery.update(camera, engine.scroll);
         engine.label.update(camera);
@@ -51,10 +52,11 @@ function isDepthFrameHealthy(engine) {
     const hasVisiblePlane = engine.gallery.planes.some(
         (plane) => plane.material.opacity > 0.01,
     );
+    const hasVisibleEndCta = engine.endCta.isVisible();
 
     return size.x > 1
         && size.y > 1
         && !context.isContextLost()
         && context.getError() === context.NO_ERROR
-        && hasVisiblePlane;
+        && (hasVisiblePlane || hasVisibleEndCta);
 }
