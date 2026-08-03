@@ -14,177 +14,145 @@ responsive, accessibility, performance, or lifecycle completion.
 - ID: `HOME-VALUES-001`
 - State: `IMPLEMENTING`
 - Surface: homepage Values section `#nilai`
-- Current atomic result: slower heading plus enlarged cinematic PC card motion
+- Current atomic result: true-thin Latin heading plus stable upright PC flip row
 - Protected: Hero, Vision/Mission content/controller, Programs, Gallery,
   Articles, navigation, footer, DB/admin/routes, About, and Testimonial
 
 ## Latest owner-accepted direction
 
-### Heading and copy
+### Heading
 
-- Preserve the edge-first clipped reveal but make it much slower and smoother.
-- Make the title larger and visibly thinner.
-- Keep reverse-scroll latching.
-- Begin moving the PC title upward with scroll as soon as the card deck forms.
-- Let supporting copy leave as the PC deck takes visual priority.
-- XS and SM remain heading-only.
+- Preserve the clipped, slower, one-way heading reveal.
+- The current Latin heading remains visibly too heavy compared with the accepted
+  visual rhythm.
+- Use the real minimum Inter variable weight rather than a merely lighter normal
+  weight.
+- Arabic remains governed by its own typography adapter and natural tracking.
 
-### Cards and trail
+### PC cards
 
-- Increase PC card scale by roughly one visual step.
-- During spread, all backs anticipate together by about `15deg`.
-- Cards then flip right-to-left with overlap.
-- Each card overshoots the front by about `15deg`, then settles to neutral.
-- Cards float vertically by a few pixels throughout the PC choreography.
-- Phone/tablet chronology and PC-only trail boundaries remain unchanged.
+- A deck may briefly spread as a fan.
+- Before any information flip begins, all four cards must become upright,
+  vertically aligned, and placed in their individual horizontal slots.
+- Card depth order must not cross while the deck spreads; the visually leading
+  card must not jump from one side to another for a frame.
+- Flip still uses shared anticipation, overlapping right-to-left drive,
+  overshoot, settle, and subtle float.
+- Phone/tablet choreography and the PC-only trail boundary remain unchanged.
 
 ## Runtime feedback FACT
 
-### Runtime 1: sticky failure
+### Runtime 1–5
 
-Owner screenshots at 1920x1080 Brave/Chromium proved the stage travelled under
-the navbar and left long empty blue travel. Sticky containment was corrected.
+Earlier owner screenshots proved sticky containment, transition, heading reveal,
+responsive choreography, card scale, and direct-flip defects. Those source
+corrections remain published history.
 
-### Runtime 2: chronology and card-face failure
+### Runtime 6: latest owner screenshots
 
-Screenshots proved sticky containment worked, but chronology, mirrored fronts,
-line treatment, and transition still failed. Face/timeline/trail corrections
-were published.
+Nine new 1920x1080 Brave/Chromium screenshots prove:
 
-### Runtime 3: heading travel failure
+- the SchoolAI heading is still materially thicker than the reference heading;
+- while the back deck spreads, the visually leading card changes side for a
+  fraction of the motion;
+- cards retain fan `rotateZ` angles while their faces are flipping;
+- front-facing cards remain at different fan angles and heights instead of
+  occupying a clean upright row.
 
-Screenshots proved whole word bodies moved visibly, producing crossed and
-ghosted text. Nested clipped title spans were introduced.
-
-### Runtime 4: tier and reverse contract failure
-
-Screenshots proved the result still needed one-way heading state, back-first
-cards, divergent phone/tablet/PC choreography, and a PC-only line. Those source
-owners were split and published.
-
-### Runtime 5: latest owner screenshots
-
-The supplied 1920x1080 comparison sequence proves:
-
-- the clipped heading now resolves, but its reveal feels abrupt;
-- the heading weight is much heavier and its scale smaller than the intended
-  reference rhythm;
-- PC cards are materially smaller than the target visual mass;
-- title remains in the card field instead of beginning a scroll-scrubbed exit
-  when the deck appears;
-- the current direct `180deg -> 0deg` flip lacks shared anticipation, endpoint
-  overshoot, and settle;
-- cards lack the subtle continuous vertical drift visible in the intended
-  experience.
-
-This runtime is `FAIL` for the latest owner direction and is the evidence for
-the current correction.
+Runtime 6 is `FAIL` for the latest owner direction and is the evidence for this
+bounded correction.
 
 ## Root-cause FACT
 
-The heading reveal speed defect was not merely a short numeric range.
+### Heading weight
 
-`heading-state.js` previously used:
+`site-head-meta.blade.php` loads Inter as a Google variable font with the full
+`100..900` weight range. The Values heading was set to `300`; this was a real
+font weight, but it remained too heavy at the current display size.
 
-```text
-not moving forward
-+ any partial reveal
--> force reveal to 1
-```
+### Depth-order jump
 
-The scroll controller continues RAF frames while its inertial position settles.
-On the first RAF frame after a raw scroll event, `target` is unchanged. The old
-state therefore misclassified an idle frame as rollback and completed the entire
-heading immediately.
-
-The corrected owner distinguishes three states:
+The previous PC geometry changed depth from:
 
 ```text
-forward delta
-backward delta
-idle/no delta
+deck: -index * 22
+row:   index * 2
 ```
 
-Idle now preserves partial reveal. Only actual backward delta resolves a partial
-heading to the static reverse state.
+Those values cross while interpolating. Browser 3D compositing therefore changes
+which overlapping card is visually nearest during the spread.
+
+### Persistent fan during flip
+
+The previous row pose kept:
+
+```text
+rotateZ = [-4, -1.25, 1.25, 4]
+y = base + edge offset
+```
+
+No upright pose existed between spread and flip. The cards were therefore doing
+exactly what the source requested, unfortunately.
 
 ## Implemented source correction
 
 Source head before this ledger update:
-`abd13fbdc8b582fac7acbcbab4f29fc4f58dbd49`.
+`5ba09b5c255aa0b89f042a82e25cc04236239b25`.
 
 ### Heading implementation
 
-- Reveal range expanded from `0.018–0.13` to `0.012–0.20`.
-- Reveal uses an additional smooth pass for gentler acceleration and release.
-- Idle RAF frames no longer force completion.
-- Page load inside Values initializes a resolved static heading.
-- Title weight changed from `500` to `300`.
-- Desktop title scales up to `15rem` on XL and `16rem` on 2XL.
-- Line-two independent transition increased to `1350ms`.
-- PC title Y is now painted from scroll progress:
-  - start `0.22`;
-  - finish `0.46`;
-  - destination `-56%` of viewport height.
-- Supporting copy fades between progress `0.24` and `0.36`.
-- The old time-only heading-lift class and target variable were removed.
+- Latin Values heading now uses `font-weight: 100`.
+- `font-variation-settings: "wght" 100` explicitly selects the variable axis.
+- `font-synthesis: none` prevents a synthetic replacement weight.
+- Tracking relaxes from `-.065em` to `-.045em` so the thin display letters do
+  not visually collapse into one dense mass.
+- Arabic resets variation settings and keeps weight `300` plus natural tracking.
 
-### PC card implementation
+### PC geometry and flip implementation
 
-- Desktop card frame moved to `desktop-layout.js` to keep each source file below
-  200 lines.
-- XL card target changed to `min(26vw, 25rem)`.
-- 2XL card target changed to `min(24vw, 27rem)`.
-- PC story travel increased to `620svh` and `640svh`.
-- Lead/deck scale is `0.92`; spread scale reaches `1`.
-- Row spacing reduced to `0.88 * cardWidth`, producing larger controlled overlap.
-- Spread runs from progress `0.31` through `0.48`.
-- All backs anticipate from `180deg` to `195deg` during `0.40–0.48`.
-- Right-to-left flip starts use `0.052` offsets.
-- Each drive lasts `0.18`, ending at `-15deg`.
-- Each settle lasts `0.07`, ending at `0deg`.
-- Exit begins after progress `0.90`.
-- A dedicated `.values-card__float` wrapper animates from `-4px` to `4px` over
-  `4.8s` with staggered negative delays.
-- Float is active only at `>=1280px` and only when reduced motion is not set.
+The PC sequence is now:
+
+```text
+lead -> deck -> fan spread -> upright row -> anticipation -> flip -> settle
+```
+
+- `fanPose` preserves the intended temporary fan angles.
+- `uprightPose` gives all cards the same Y position and `rotateZ(0deg)`.
+- Upright alignment completes by progress `0.50`.
+- Anticipation now starts at `0.50` and completes at `0.56`.
+- The first drive begins only after the upright phase.
+- Depth stays negative and ordered from deck through upright row:
+  - deck/fan: `-index * 22`;
+  - upright: `-index * 4`.
+- Depth values no longer cross signs or reverse nearest-card order.
+- Right-to-left starts use `0.045` offsets.
+- Each drive lasts `0.17`; each settle completes over the following `0.08`.
+- Exit waits until progress `0.955`, after the final front settle.
+- Existing desktop float remains separate from scroll geometry and face rotation.
 
 ## Source ownership
 
-- Blade: `resources/views/home/sections/school-values.blade.php`
-- CSS entry: `resources/css/pages/welcome-values-story.css`
-- Sticky shell/root variables: `story-shell.css`
-- Heading/copy: `story-heading.css`
-- Tier scale/travel: `story-responsive.css`
-- Card treatment/float: `story-cards.css`
-- Card backs: `story-card-back.css`
-- PC trail: `story-trail.css`
-- Controller: `controller.js`
-- Heading direction state: `heading-state.js`
-- Phone/tablet/story frame: `layout.js`
-- PC card frame: `desktop-layout.js`
-- Inertia: `motion.js`
-- Painting/cleanup: `paint.js`
-- Focused test: `tests/Feature/HomeValuesStoryTest.php`
+- Blade/semantic cards: `resources/views/home/sections/school-values.blade.php`
+- Heading treatment: `resources/css/surfaces/home/values/story-heading.css`
+- PC geometry/flip: `resources/js/surfaces/home/values/desktop-layout.js`
+- Shared painting: `resources/js/surfaces/home/values/paint.js`
+- Controller/inertia: remaining Values JS modules
+- Durable plan: active Values blueprint
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Current main/source audit | `PASS_SOURCE` | source head and active owners inspected |
-| Latest owner sequence | `PASS` | exact prompt plus eleven 1920x1080 screenshots |
-| Runtime 5 | `FAIL` | abrupt heading and mechanically small/direct card motion |
-| Idle-vs-reverse heading state | `IMPLEMENTED_SOURCE` | explicit directional delta branches |
-| Slower/lighter/larger heading | `IMPLEMENTED_SOURCE` | range, weight, scale, and CSS timing |
-| Scroll-driven PC heading exit | `IMPLEMENTED_SOURCE` | painted Y from deck start |
-| Enlarged PC cards | `IMPLEMENTED_SOURCE` | XL/2XL targets and row scale |
-| Anticipation/overshoot/settle | `IMPLEMENTED_SOURCE` | dedicated desktop frame |
-| PC card float | `IMPLEMENTED_SOURCE` | independent wrapper and reduced-motion gate |
-| Phone/tablet boundary | `IMPLEMENTED_SOURCE` | existing mode branches preserved |
-| Focused DOM test | `IMPLEMENTED_SOURCE` | four float wrappers asserted |
-| JavaScript syntax | `PASS_LOCAL_PATCH` | changed JS passed `node --check` |
-| PHP test syntax | `PASS_LOCAL_PATCH` | focused test passed `php -l` |
-| CSS brace balance | `PASS_LOCAL_PATCH` | changed CSS balances verified |
-| Source line limit | `PASS_LOCAL_PATCH` | every changed source file <=200 lines |
+| Current main/source audit | `PASS_SOURCE` | main and active owners fetched before write |
+| Runtime 6 | `FAIL` | thick heading, depth swap, and fan-shaped flips |
+| True Inter thin axis | `IMPLEMENTED_SOURCE` | weight and variation axis set to 100 |
+| Arabic typography boundary | `IMPLEMENTED_SOURCE` | variation reset and weight 300 retained |
+| Stable depth ordering | `IMPLEMENTED_SOURCE` | negative ordered Z values preserved |
+| Fan-to-upright phase | `IMPLEMENTED_SOURCE` | dedicated upright pose before anticipation |
+| Upright front settle | `IMPLEMENTED_SOURCE` | common Y and zero Z rotation |
+| Phone/tablet boundary | `PASS_SOURCE` | their mode branches were not edited |
+| JavaScript syntax | `PASS_LOCAL_PATCH` | desktop module passed `node --check` |
+| Source line limit | `PASS_LOCAL_PATCH` | changed source files remain below 200 lines |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run repo command |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | not run on resulting main |
@@ -194,13 +162,12 @@ Source head before this ledger update:
 
 ## STATUS
 
-Runtime 5 failed the latest motion target. Source now contains a corrected
-direction-aware heading reveal, lighter/larger title, scroll-scrubbed PC title
-exit, enlarged PC cards, shared anticipation, overlapping drive, front
-overshoot, settle, and subtle float. Runtime and release status remain unproven.
+Runtime 6 failed. Source now uses the actual Inter thin axis and inserts a stable
+upright row between fan spread and card flip. Depth ordering no longer crosses,
+and information faces settle vertically aligned at zero fan angle. Runtime and
+release status remain unproven.
 
 ## NEXT VALID STEP
 
-Pull current `main` and capture the PC sequence at 1920px in Brave/Chromium:
-heading entry, deck onset/title exit, shared anticipation, first/middle/final
-flip, neutral settle, and card exit.
+Pull current `main` and capture 1920px PC frames covering: resolved heading,
+fan spread, upright backs, first/middle/final flip, and all four upright fronts.
