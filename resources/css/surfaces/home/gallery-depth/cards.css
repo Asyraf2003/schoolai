@@ -4,19 +4,19 @@
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, 1fr) auto;
     align-items: center;
-    gap: clamp(18px, 3vw, 38px);
+    gap: clamp(14px, 2vw, 28px);
     min-height: 420px;
     overflow: visible;
     border: 0;
     border-radius: 0;
     background: transparent;
-    color: #fff;
+    color: #111;
     box-shadow: none;
     text-decoration: none;
 }
 
 .depth-gallery__card:focus-visible {
-    outline: 4px solid #fff;
+    outline: 2px solid #111;
     outline-offset: 8px;
 }
 
@@ -24,8 +24,10 @@
     position: relative;
     display: grid;
     place-items: center;
+    justify-self: center;
     min-width: 0;
-    width: 100%;
+    width: fit-content;
+    max-width: min(100%, var(--depth-media-max-width, 640px));
     max-height: var(--depth-media-max-height);
     overflow: visible;
     background: transparent;
@@ -39,38 +41,38 @@
     max-height: var(--depth-media-max-height);
     object-fit: contain;
     border-radius: 0;
-    box-shadow: 0 34px 80px rgba(0, 0, 0, 0.28);
-    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 28px 68px rgba(0, 0, 0, 0.2);
+    transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .depth-gallery__card:hover .depth-gallery__image,
 .depth-gallery__card:focus-visible .depth-gallery__image {
-    transform: scale(1.018);
+    transform: scale(1.012);
 }
 
 .depth-gallery__fallback {
     display: grid;
     place-items: center;
-    width: min(62vw, 420px);
+    width: min(54vw, 390px);
     aspect-ratio: 1;
     border-radius: 0;
     background: color-mix(in srgb, var(--depth-blob-a) 72%, #fff);
     font-size: clamp(4rem, 8vw, 8rem);
-    box-shadow: 0 34px 80px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 28px 68px rgba(0, 0, 0, 0.18);
 }
 
 .depth-gallery__play {
     position: absolute;
     z-index: 2;
-    inset: 18px 18px auto auto;
+    inset: 14px 14px auto auto;
     display: grid;
     place-items: center;
-    width: 52px;
+    width: 44px;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    color: #071f3b;
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
+    background: rgba(255, 255, 255, 0.94);
+    color: #111;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
 .depth-gallery__copy {
@@ -78,51 +80,33 @@
     z-index: 3;
     display: grid;
     align-content: center;
-    gap: 14px;
+    gap: 7px;
     min-width: 0;
+    max-width: 24ch;
     padding: 0;
+    color: #111;
     text-align: start;
 }
 
-.depth-gallery__eyebrow {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 9px 14px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-}
-
-.depth-gallery__eyebrow b {
-    display: grid;
-    place-items: center;
-    width: 36px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.94);
-    color: #071f3b;
-}
-
 .depth-gallery__copy > strong {
-    max-width: 16ch;
-    font-family: var(--font-display);
-    font-size: clamp(1.55rem, 2.5vw, 3.45rem);
-    line-height: 1.02;
-    letter-spacing: -0.04em;
+    max-width: 22ch;
+    font-family: var(--font-body, inherit);
+    font-size: clamp(0.88rem, 0.28vw + 0.82rem, 1.08rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0;
 }
 
 .depth-gallery__copy > small {
-    max-width: 38ch;
-    color: rgba(255, 255, 255, 0.86);
-    font-size: clamp(0.9rem, 0.38vw + 0.82rem, 1.06rem);
-    line-height: 1.58;
+    max-width: 30ch;
+    color: rgba(17, 17, 17, 0.72);
+    font-size: clamp(0.72rem, 0.2vw + 0.68rem, 0.86rem);
+    line-height: 1.48;
 }
 
 @media (min-width: 640px) {
     .depth-gallery__card {
-        grid-template-columns: minmax(0, 1fr) minmax(180px, min(31vw, 330px));
+        grid-template-columns: minmax(0, 1fr) minmax(140px, 220px);
         grid-template-rows: 1fr;
     }
 
@@ -140,6 +124,7 @@
 
     .depth-gallery__card--reverse .depth-gallery__copy {
         order: 1;
+        justify-self: end;
     }
 
     html[dir="rtl"] .depth-gallery__card .depth-gallery__media {
@@ -148,6 +133,7 @@
 
     html[dir="rtl"] .depth-gallery__card .depth-gallery__copy {
         order: 1;
+        justify-self: end;
     }
 
     html[dir="rtl"] .depth-gallery__card--reverse .depth-gallery__media {
@@ -156,5 +142,6 @@
 
     html[dir="rtl"] .depth-gallery__card--reverse .depth-gallery__copy {
         order: 2;
+        justify-self: start;
     }
 }
