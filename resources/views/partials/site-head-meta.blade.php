@@ -98,10 +98,6 @@
   />
 @endif
 
-@if (request()->routeIs('home'))
-  <link rel="stylesheet" href="{{ asset('css/welcome-gallery-desktop.css') }}" />
-@endif
-
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="{{ $headSiteName }}" />
 <meta property="og:locale" content="{{ $headLocale }}" />
@@ -124,8 +120,7 @@
   document.documentElement.setAttribute('dir', @json($headDirection));
 </script>
 
-
-  @include('partials.site-head-meta.base-styles')
+@include('partials.site-head-meta.base-styles')
 
 <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" type="application/ld+json">{!! json_encode(
     $headStructuredData,
