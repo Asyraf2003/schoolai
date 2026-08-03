@@ -33,7 +33,7 @@ function cardTopAt(centerRatio, geometry) {
 function leadPose(index, geometry) {
     return pose(
         0,
-        cardTopAt(0.86, geometry),
+        cardTopAt(0.64, geometry),
         -index * 24,
         0,
         0.96,
@@ -44,7 +44,7 @@ function leadPose(index, geometry) {
 function deckPose(index, geometry) {
     return pose(
         (index - 1.5) * geometry.cardWidth * 0.038,
-        cardTopAt(0.63, geometry) + index * 4,
+        cardTopAt(0.57, geometry) + index * 4,
         -index * 22,
         (index - 1.5) * 1.9,
         0.96,
@@ -61,7 +61,7 @@ export function desktopCardFrame(
     const lead = leadPose(index, geometry);
     const hidden = {
         ...lead,
-        y: lead.y + geometry.viewportHeight * 0.14,
+        y: lead.y + geometry.viewportHeight * 0.1,
         scale: lead.scale * 0.88,
         opacity: 0,
     };
