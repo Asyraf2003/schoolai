@@ -18,7 +18,10 @@ final class AddSecurityHeaders
 
         $response->headers->set(
             'Content-Security-Policy',
-            $this->contentSecurityPolicy($nonce)
+            $this->contentSecurityPolicy(
+                $nonce,
+                $request->routeIs('home')
+            )
         );
         $response->headers->set(
             'X-Content-Type-Options',
@@ -47,21 +50,27 @@ final class AddSecurityHeaders
         return $response;
     }
 
-    private function contentSecurityPolicy(string $nonce): string
-    {
+    private function contentSecurityPolicy(
+        string $nonce,
+        bool $allowDepthGalleryRuntime
+    ): string {
+        $threeSource = $allowDepthGalleryRuntime
+            ? ' https://cdn.jsdelivr.net'
+            : '';
+
         return implode('; ', [
             "default-src 'self'",
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
             "object-src 'none'",
-            "script-src 'self' 'nonce-{$nonce}' https://cdn.jsdelivr.net",
+            "script-src 'self' 'nonce-{$nonce}'{$threeSource}",
             "script-src-attr 'none'",
             "style-src 'self' 'nonce-{$nonce}' https://fonts.googleapis.com",
             "style-src-attr 'unsafe-inline'",
             "img-src 'self' data: blob: https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net",
             "font-src 'self' data: https://fonts.gstatic.com",
-            "connect-src 'self' https://cdn.jsdelivr.net",
+            "connect-src 'self'{$threeSource}",
             "media-src 'self' blob:",
             "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com https://open.spotify.com https://codepen.io",
             "manifest-src 'self'",
