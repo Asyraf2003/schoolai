@@ -60,7 +60,8 @@
         class="depth-gallery__canvas"
         data-depth-gallery-canvas
         role="button"
-        tabindex="0"
+        tabindex="-1"
+        aria-hidden="true"
         aria-label="{{ $gallerySection['aria_label'] ?? __('home.galeri.aria_label') }}"
       ></canvas>
 
