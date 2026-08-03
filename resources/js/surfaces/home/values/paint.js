@@ -8,7 +8,7 @@ const CARD_PROPERTIES = [
 const ROOT_PROPERTIES = [
     '--values-progress', '--values-heading-opacity',
     '--values-line-one-y', '--values-line-two-y',
-    '--values-copy-opacity', '--values-copy-y',
+    '--values-line-two-x', '--values-copy-opacity', '--values-copy-y',
     '--values-trail-progress', '--values-trail-opacity',
     '--values-trail-y',
 ];
@@ -39,7 +39,7 @@ export function paintValuesStory(
         card.style.zIndex = String(20 - index);
     });
 
-    const story = storyFrame(progress, geometry.viewportHeight, momentum);
+    const story = storyFrame(progress, geometry, momentum);
     root.style.setProperty('--values-progress', story.progress.toFixed(5));
     root.style.setProperty(
         '--values-heading-opacity',
@@ -47,11 +47,15 @@ export function paintValuesStory(
     );
     root.style.setProperty(
         '--values-line-one-y',
-        `${story.lineOneY.toFixed(2)}px`,
+        `${story.lineOneY.toFixed(4)}em`,
     );
     root.style.setProperty(
         '--values-line-two-y',
-        `${story.lineTwoY.toFixed(2)}px`,
+        `${story.lineTwoY.toFixed(4)}em`,
+    );
+    root.style.setProperty(
+        '--values-line-two-x',
+        `${story.lineTwoX.toFixed(2)}px`,
     );
     root.style.setProperty(
         '--values-copy-opacity',
