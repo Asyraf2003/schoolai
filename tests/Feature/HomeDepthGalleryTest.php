@@ -1,68 +1,55 @@
 <?php
 
-it('locks the homepage atmospheric depth gallery source contract', function (): void {
+it('locks the faithful homepage depth gallery source contract', function (): void {
     $gallery = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
     $depth = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $entry = file_get_contents(resource_path('css/pages/welcome-depth-gallery.css'));
-    $base = file_get_contents(resource_path(
-        'css/surfaces/home/gallery-depth/base.css'
-    ));
-    $cards = file_get_contents(resource_path(
-        'css/surfaces/home/gallery-depth/cards.css'
-    ));
+    $base = file_get_contents(resource_path('css/surfaces/home/gallery-depth/base.css'));
     $responsive = file_get_contents(resource_path(
         'css/surfaces/home/gallery-depth/responsive.css'
-    ));
-    $scene = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/scene.js'
     ));
     $controller = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/controller.js'
     ));
-    $renderer = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/renderer.js'
+    $runtime = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/three-runtime.js'
     ));
-    $welcomeScript = file_get_contents(resource_path('js/pages/welcome.js'));
-    $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
-    $vite = file_get_contents(base_path('vite.config.js'));
+    $engine = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/engine.js'
+    ));
+    $planes = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/gallery.js'
+    ));
+    $background = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/background.js'
+    ));
+    $trail = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/trail.js'
+    ));
+    $trailController = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/trail-controller.js'
+    ));
+    $license = base_path('docs/third-party/codrops-depth-gallery-MIT.txt');
 
     expect($gallery)
         ->toContain("@include('home.sections.gallery-depth')")
-        ->not->toContain("@include('home.sections.gallery-story')")
-        ->and(file_exists(resource_path('views/home/sections/gallery-story.blade.php')))
-        ->toBeFalse()
-        ->and(file_exists(resource_path('js/pages/welcome/gallery-story.js')))
-        ->toBeFalse()
-        ->and($welcomeScript)
-        ->not->toContain("import './welcome/gallery-story.js'")
         ->and($depth)
-        ->toContain('data-depth-gallery')
         ->toContain('data-depth-gallery-canvas')
-        ->toContain('data-depth-gallery-trail')
-        ->toContain('pathLength="1"')
-        ->toContain('depth-gallery__card--reverse')
-        ->toContain('depth-gallery__media')
-        ->toContain('depth-gallery__copy')
-        ->not->toContain('depth-gallery__eyebrow')
-        ->toContain('role="list"')
-        ->toContain('role="listitem"')
-        ->toContain('href="{{ $mediaUrl }}"')
+        ->toContain('data-depth-gallery-labels')
+        ->toContain('data-depth-gallery-source')
+        ->toContain('data-position-x="{{ $preset[\'x\'] }}"')
+        ->toContain('data-background-color')
+        ->not->toContain('<svg')
+        ->not->toContain('depth-gallery__card')
         ->and($entry)
         ->toContain('gallery-depth/base.css')
         ->toContain('gallery-depth/cards.css')
         ->toContain('gallery-depth/responsive.css')
         ->and($base)
-        ->toContain('.depth-gallery__trail-line')
-        ->toContain('stroke-dasharray: 1')
-        ->and($cards)
-        ->toContain('grid-template-columns: minmax(0, 1fr)')
-        ->toContain('width: auto')
-        ->toContain('height: auto')
-        ->toContain('object-fit: contain')
-        ->toContain('border-radius: 0')
-        ->toContain('color: #111')
-        ->toContain('font-size: clamp(0.88rem')
-        ->not->toContain('font-size: clamp(1.55rem')
+        ->toContain('height: 100svh')
+        ->toContain('position: sticky')
+        ->not->toContain('perspective:')
+        ->not->toContain('transform-style: preserve-3d')
         ->and($responsive)
         ->toContain('@media (min-width: 640px)')
         ->toContain('@media (min-width: 768px)')
@@ -70,26 +57,53 @@ it('locks the homepage atmospheric depth gallery source contract', function (): 
         ->toContain('@media (min-width: 1280px)')
         ->toContain('@media (min-width: 1536px)')
         ->toContain('@media (prefers-reduced-motion: reduce)')
-        ->toContain('html[dir="rtl"]')
-        ->and($scene)
-        ->toContain('viewportWidth * 0.032')
-        ->toContain('12, 54')
         ->and($controller)
-        ->toContain("root.style.setProperty('--depth-atmosphere'")
-        ->toContain("trail?.style.setProperty('stroke-dashoffset'")
+        ->toContain('loadThreeRuntime')
+        ->toContain('DepthGalleryEngine')
         ->toContain('IntersectionObserver')
         ->toContain('visibilitychange')
-        ->toContain('pagehide')
-        ->toContain('requestAnimationFrame')
-        ->and($renderer)
-        ->toContain("getContext('webgl'")
-        ->toContain("powerPreference: 'low-power'")
+        ->toContain('webgl')
+        ->and($runtime)
+        ->toContain('three@0.183.0')
+        ->toContain('/* @vite-ignore */')
+        ->and($engine)
+        ->toContain('PerspectiveCamera(45, 1, 0.1, 100)')
+        ->toContain('new this.THREE.WebGLRenderer')
+        ->toContain('renderer.clearDepth()')
         ->toContain('Math.min(window.devicePixelRatio || 1, 1.5)')
-        ->toContain('webglcontextlost')
-        ->and($welcome)
-        ->toContain('resources/css/pages/welcome-depth-gallery.css')
-        ->toContain('resources/js/pages/welcome-depth-gallery.js')
-        ->and($vite)
-        ->toContain('resources/css/pages/welcome-depth-gallery.css')
-        ->toContain('resources/js/pages/welcome-depth-gallery.js');
+        ->and($planes)
+        ->toContain('PlaneGeometry(3, 3)')
+        ->toContain('this.planeGap = 5')
+        ->toContain('this.mobilePlaneScale = 0.65')
+        ->toContain('this.mobileXSpreadFactor = 0.25')
+        ->and($background)
+        ->toContain('ShaderMaterial')
+        ->toContain('setMoodBlend')
+        ->and($trail)
+        ->toContain('CatmullRomCurve3')
+        ->toContain('createTaperedTube')
+        ->and($trailController)
+        ->toContain('horizontalCycles: 1.85')
+        ->toContain('verticalCycles: 2.1')
+        ->and(file_exists(resource_path(
+            'js/surfaces/home/gallery-depth/renderer.js'
+        )))
+        ->toBeFalse()
+        ->and(file_exists(resource_path(
+            'js/surfaces/home/gallery-depth/scene.js'
+        )))
+        ->toBeFalse()
+        ->and(file_exists($license))
+        ->toBeTrue();
+});
+
+it('keeps every active depth gallery source within the file limit', function (): void {
+    $files = glob(resource_path('js/surfaces/home/gallery-depth/*.js'));
+
+    expect($files)->not->toBeEmpty();
+
+    foreach ($files as $file) {
+        $lines = count(file($file));
+        expect($lines, basename($file).' exceeds 200 lines')->toBeLessThanOrEqual(200);
+    }
 });
