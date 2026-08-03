@@ -1,219 +1,323 @@
 # Homepage Values Card Story Blueprint
 
 Blueprint ID: `HOME-VALUES-001`
-Status: `IMPLEMENTING`
+Status: `OWNER_ACCEPTED`
 Owner: Asyraf Mubarak
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
+Source baseline: `087f2afac7b7b77dfcb62a27bb22c13b3cdc4da2`
 Active route/surface: homepage `#nilai`
-Source implementation head: `f0dd63a11b33078058f7c2f81344f0c2b66fbd09`
-Raw evidence: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
+Raw reference: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
 Execution channel: Web AI with explicit direct-`main` authorization
 
-## Owner goal
+## Owner goal and accepted direction
 
-Create an Al Mustaqbal Values sequence informed by the supplied Lusion About
-recordings, screenshots, computed styles, and transform samples without copying
-Lusion code, assets, card art, branding, shaders, or type files.
+Rebuild the Values section as an Al Mustaqbal editorial card story informed by
+the supplied Lusion motion evidence, without copying Lusion code, assets,
+branding, card art, shaders, or type files.
 
-The PC sequence must read as one continuous spatial story:
-
-```text
-automatic clipped heading reveal
--> low but fully visible card stack
--> stack rises into the center plane
--> fan opens while heading exits
--> overlapping perspective flips straighten each card
--> bounded overshoot
--> stable four-card information row
-```
-
-## Latest owner-accepted correction
-
-- The lead stack and the flip action must run around the visual center, not from
-  the bottom edge of the sticky stage.
-- A card near edge-on must project as a perspective trapezoid: the side closer
-  to the viewer appears larger and the far side appears smaller.
-- The flip must not look like a rectangle whose width is merely compressed.
-- The existing fan `rotateZ` remains while `rotateY` progresses toward upright.
-- This surface remains DOM/CSS 3D. Three.js and WebGL are out of scope.
-
-## FACT
-
-- The prior PC lead center was `86%` of stage height, which placed most of the
-  initial card below the useful center plane.
-- The stage perspective was `1600px`, much flatter than the measured reference
-  perspective near `964px`.
-- `.values-story__cards` did not preserve the 3D chain between the stage and the
-  nested rotating card inner.
-- Card rotation is owned by CSS transforms and JS-authored pose variables.
-- One semantic `h2` and four semantic `article` cards remain the content source.
-- Phone and tablet use their existing simpler flip chronologies.
-- The white trail remains PC-only.
-
-## GAP
-
-Corrected runtime is not yet captured. Browser, responsive, RTL, accessibility,
-build, test, and PageSpeed status remain `BLOCKED_BY_MISSING_EVIDENCE`.
-
-## Scope
-
-### In scope
-
-- PC lead/deck/active vertical anchors.
-- Sticky stage perspective and perspective origin.
-- Continuous `preserve-3d` ancestry for the rotating card plane.
-- Durable blueprint and current-state records.
-
-### Protected and out of scope
-
-- Hero, Vision/Mission, Programs, Gallery, Articles, navigation, footer.
-- About, Testimonial, DB/admin/routes, translations, card content.
-- Heading chronology and typography from the preceding accepted correction.
-- Phone/tablet chronology.
-- Dependencies, Three.js, canvas, WebGL, models, shaders, and assets.
-
-## Semantic and fallback contract
-
-- The localized heading and four card articles remain in Blade.
-- Card fronts contain all meaningful information; card backs are decorative.
-- No-JS, reduced-motion, or unsupported-3D paths retain the readable static
-  front-card layout.
-- No control, content source, focus order, or accessible name changes.
-
-## Heading contract
-
-The accepted heading behavior remains unchanged:
+The accepted result is:
 
 ```text
-section enters from above
--> time-based clipped reveal starts immediately
--> two lines meet across the narrow center seam
--> PC line two shifts toward visual center
--> heading exits upward when deck formation starts
+green mission fade/blur -> blue Values field
+-> immediate two-line masked heading entrance from the center
+-> centered desktop deck -> stable fan -> overlapping perspective flip
+-> upright CSS Grid row -> completed continuous trail
+-> blue fade/blur -> white -> following Programs section
 ```
 
-Reverse entry from the following section resolves to the static revealed state.
-XS/SM hide the description; MD/LG retain heading and copy without the PC shift;
-XL/2XL use the full PC choreography.
+Desktop uses semantic DOM, CSS 3D, and one JavaScript orchestrator. Three.js,
+WebGL, canvas text, new dependencies, and parallel locale/tier DOMs are out of
+scope. XS uses a natural one-column flow; SM/MD use a natural 2x2 grid; LG/XL/
+2XL use the cinematic four-column story. The exact owner-specified headings are
+`PONDASI / KARAKTER`, `VALUES / STUDENTS`, and
+`أَسَاسُ الْمَدْرَسَةِ`.
 
-## PC card stage geometry
+## FACT — inspected source baseline
 
-All Y transforms describe the card top after subtracting half the measured card
-height from the desired visual center:
+- `welcome.blade.php` renders Vision/Mission, Values, then Programs and loads
+  the Values CSS and `welcome.js` entry explicitly through Vite.
+- `welcome.js` imports one Values controller.
+- `school-values.blade.php` renders one semantic `h2` and four `article` cards
+  from `nilai_sekolah` lang data.
+- The current Blade hard-codes a different heading per locale instead of using
+  the accepted heading copy from lang files.
+- `welcome-values-story.css` is the Values CSS owner entry and imports six
+  bounded surface modules in a stable order.
+- In enhanced mode, `.values-story__cards` changes from CSS Grid to
+  `display:block`; every `.values-card` becomes `position:absolute` at
+  `left:50%`.
+- `desktop-keyframes.js` calculates manual X slots, while `desktop-layout.js`
+  calculates Y from `geometry.viewportHeight` ratios.
+- The CSS sticky stage height is `calc(100svh - var(--nav-h))`, while the
+  controller measures `window.innerHeight` and calls it `viewportHeight`.
+- The current sticky stage owns both `overflow:hidden/clip` and `perspective`.
+- Card translation/fan/scale live on the article; flip lives on the inner
+  wrapper; float is separate. The final layout slot itself is not preserved
+  during enhanced motion.
+- JavaScript writes a fixed `20 - index` z-index every frame. The current source
+  does not dynamically swap z-order; the repeated write is redundant.
+- The trail is three copies of one SVG path. Its apparent head is a dashed path,
+  not a point measured on the continuous route.
+- The current source has an entry overlay but no owned Values-to-Programs exit
+  layer.
+- Current Values translations contain abbreviated or non-accepted Rasulullah
+  honorific forms.
+- ID/EN use the loaded variable Inter family; AR uses locally bundled Cairo.
+- `text-system.css` and locale typography entries load after the Values entry;
+  equal-specificity component type rules can lose to semantic-role rules.
+- Reduced motion and unsupported CSS 3D retain semantic content, but the current
+  reduced-motion rules do not explicitly restore every enhanced absolute owner.
+- The legacy `.nilai-*` selectors in `welcome.css` no longer match the active
+  Values DOM. They are an inactive fossil protected by the source-equivalence
+  manifest, not an active runtime owner for this batch.
+- Programs begins with a very light green background. The Values exit must pass
+  through white and meet that color without a horizontal seam.
+
+## GAP — evidence not available in this execution channel
+
+- `GAP-VALUES-RUNTIME-001`: no corrected Chromium capture for the resulting
+  source.
+- `GAP-VALUES-WEBKIT-001`: no Safari/WebKit runtime is available here.
+- `GAP-VALUES-MATRIX-001`: six-tier ID/EN/AR, reverse/fast scroll, resize,
+  reload-near-section, reduced-motion, zoom, and accessibility runtime proof is
+  absent.
+- `GAP-VALUES-BUILD-001`: the connector does not provide a repository checkout,
+  so full structure/build/PHP commands cannot run in this channel.
+
+These gaps do not block the owner-accepted source rebuild. They do block
+`PROVEN` and any runtime `PASS` claim.
+
+## Source ownership map
+
+| Concern | Baseline owner | Target owner |
+|---|---|---|
+| semantic heading/cards | `school-values.blade.php` | same bounded partial |
+| localized copy | `lang/{id,en,ar}/home.php` | same `nilai_sekolah` arrays |
+| entry/timeline/clip/exit | `story-shell.css` | same module, separated layers |
+| heading masks/composition | `story-heading.css` | same module |
+| final layout/card treatment | `story-cards.css` | CSS Grid remains source of truth |
+| card-back art | `story-card-back.css` | same decorative-only module |
+| route/tier/reduced styles | `story-responsive.css` | same module |
+| one continuous trail | `story-trail.css` + Blade paths | one path + one measured head |
+| lifecycle/RAF | `controller.js` | same single controller |
+| stage/slot measurement | controller-local reads | `geometry.js` |
+| motion integration | `motion.js` | delta-time critically damped motion |
+| desktop pose | `desktop-layout.js` | transforms relative to real Grid slots |
+| flip/fan curve | `desktop-keyframes.js` | named semantic curve, no device slots |
+| responsive pose | `layout.js` | natural one-column/2x2 entrance/flip |
+| CSS variable writes | `paint.js` | pose/flip/trail owners only |
+| heading entrance state | `heading-state.js` | time-based, direction-aware mask state |
+| Vite/import graph | existing entries | unchanged |
+
+## Current transform hierarchy and root causes
 
 ```text
-lead center:   64% stage height
-deck center:   57% stage height
-active center: 53.5% stage height
-hidden lead:   lead + 10% stage height
+sticky stage [clip + perspective]
+-> cards container [Grid disabled when ready]
+-> absolute article [manual X/Y/Z + rotateX/Z + scale]
+-> float wrapper [CSS keyframes]
+-> inner [rotateY]
+-> front/back
 ```
 
-This keeps the lead stack low relative to the title while still fully visible,
-then raises it into the centered action plane before fan and flip motion.
-
-## Perspective contract
-
-The sticky stage owns one shared perspective camera:
-
-```text
-perspective:        960px
-perspective-origin: 50% 52%
-```
-
-The chain remains three-dimensional through:
-
-```text
-stage
--> cards container
--> card
--> float wrapper
--> inner flip plane
--> front/back faces
-```
-
-Each intermediate owner uses `transform-style: preserve-3d`. The outer card
-continues to own translation and fan `rotateZ`; the inner plane owns `rotateY`.
-The shared camera must project edge-on cards with natural near/far side
-foreshortening instead of uniform width compression.
-
-## Story timing
-
-The previously accepted timing remains:
-
-```text
-lead reveal:       progress 0.03–0.12
-deck formation:    progress 0.12–0.24
-heading exit:      progress 0.12–0.30
-fan formation:     progress 0.22–0.34
-measured travel:   progress 0.34–0.86
-stable front hold: progress 0.86 onward
-```
-
-Measured X, Y, `rotateZ`, and `rotateY` continue through the shared cubic Hermite
-interpolation. Fixed z-order remains unchanged.
-
-## Six-tier contract
-
-| Tier | Heading/copy | Cards | Trail |
-|---|---|---|---|
-| XS 360–639 | heading only | one centered flip at a time | hidden |
-| SM 640–767 | heading only | one centered flip at a time | hidden |
-| MD 768–1023 | heading plus copy | centered 2x2 pair flips | hidden |
-| LG 1024–1279 | heading plus copy | centered 2x2 pair flips | hidden |
-| XL 1280–1535 | full PC heading | lead/deck/fan/perspective flip | visible |
-| 2XL >=1536 | bounded large composition | shared PC choreography | visible |
-
-One semantic DOM and one controller serve every tier.
-
-## Locale and direction
-
-- ID and EN use the shared Inter/LTR composition.
-- AR keeps Cairo/RTL typography and the same neutral vertical/3D chronology.
-- The logical PC line-two shift mirrors for RTL.
-- Vertical scroll, time, and neutral card rotation do not reverse for RTL.
-
-## Ownership
-
-| Concern | Owner |
+| Reported issue | Audit result and root cause |
 |---|---|
-| semantic content | `resources/views/home/sections/school-values.blade.php` |
-| stage/perspective | `resources/css/surfaces/home/values/story-shell.css` |
-| card 3D chain | `resources/css/surfaces/home/values/story-cards.css` |
-| PC stage anchors | `resources/js/surfaces/home/values/desktop-layout.js` |
-| measured curves | `resources/js/surfaces/home/values/desktop-keyframes.js` |
-| controller/RAF | `resources/js/surfaces/home/values/controller.js` |
-| scroll inertia | `resources/js/surfaces/home/values/motion.js` |
-| proof ledger | `docs/architecture/UI_UX_CURRENT_STATE.md` |
+| stage/JS center mismatch | confirmed: `100svh - nav` versus `innerHeight` |
+| guessed vertical center | confirmed: `viewportHeight * ratio` |
+| absolute final layout | confirmed: enhanced Grid is replaced by block/absolute slots |
+| clip/perspective coupling | confirmed on the same sticky owner |
+| transform ownership mixing | confirmed at layout/pose boundary; final slot is transformed away |
+| width-compression appearance | prior runtime failed; current source correction is still unproven |
+| natural near/far projection | unproven; shared camera exists but remains inside clip owner |
+| fan remains during front face | not structurally explicit; raw sampled curves implicitly drive both |
+| z-order jump | not confirmed in current source; order is fixed but redundantly repainted |
+| cards start too low | still possible because anchors use viewport ratios, not stage geometry |
+| late/overlapping heading spawn | confirmed: old copy and vertical masks share one horizontal origin |
+| trail ends early | runtime unproven; source reaches completion only at the final fade window |
+| hard exit seam | confirmed: no Values-owned exit layer exists |
+| weak card hierarchy | source has parts, but footer is inverted and body reads as a text block |
+| reverse/fast/resize stability | unproven; resize currently snaps scroll state |
 
-## Performance and accessibility
+## Legacy removal/isolation decision
 
-- No dependency, renderer, canvas, asset, listener family, or RAF was added.
-- Frequent motion remains transform/opacity based.
-- Semantic content remains outside graphics.
-- Reduced motion retains the static readable grid.
-- Runtime proof must include Chromium/WebKit perspective behavior, reverse and
-  fast scroll, resize/orientation, all six tiers, ID/EN/AR, RTL, zoom, and
-  accessibility.
+Replace, do not layer over:
 
-## Proof state
+- enhanced `display:block`/absolute card layout;
+- `left:50%` and manual `rowSlot()` final positions;
+- viewport-ratio card centers;
+- perspective on the clipping shell;
+- repeated per-frame z-index writes;
+- three duplicate trail paths and the dashed fake head;
+- hard-coded locale heading match in Blade;
+- implicit sampled fan/flip coupling and resize snap;
+- external entry overlay without an owned exit counterpart.
 
-Source publication proves only that the bounded owners changed. Required gates
-remain:
+Preserve the raw measurement document. Preserve inactive `.nilai-*` fossils in
+the equivalence-managed global cascade because deleting them is a separate
+global migration and they do not match the active DOM.
+
+## Target hierarchy and transform ownership
 
 ```text
+section shell
+├── entry transition layer
+├── timeline
+│   └── sticky clip shell
+│       ├── heading layer
+│       ├── one-path trail layer
+│       └── perspective stage
+│           └── final CSS Grid
+│               └── semantic card slot (never transformed)
+│                   └── pose wrapper (X/Y/Z + rotateZ + scale)
+│                       └── float wrapper (tiny vertical float)
+│                           └── flip wrapper (rotateY only)
+│                               ├── front face
+│                               └── decorative back face
+└── exit transition layer
+```
+
+| Transform/property | Sole owner |
+|---|---|
+| final columns, gaps, card slot | CSS Grid/card article |
+| clipping/sticky | sticky clip shell |
+| perspective/origin | perspective stage |
+| translate X/Y/Z, rotateZ, scale, opacity | pose wrapper variables |
+| float Y | float wrapper keyframes |
+| rotateY | flip wrapper variable |
+| face orientation/visibility | front/back faces |
+| heading mask travel | title-text wrappers |
+| heading scroll exit | heading block |
+| line drawing/head | one SVG path + circle |
+| entry/exit blur/fade | sibling transition layers |
+
+The controller measures the sticky stage and untransformed semantic card slots
+with `getBoundingClientRect()`. Since transforms move a child pose wrapper, the
+article rectangles remain the true CSS Grid targets. Final pose values are zero;
+JavaScript cannot become the final layout source.
+
+## Centering contract
+
+```text
+cardsCenterX = cardsUnionRect.left + cardsUnionRect.width / 2
+cardsCenterY = cardsUnionRect.top + cardsUnionRect.height / 2
+stageCenterX = stageRect.left + stageRect.width / 2
+stageCenterY = stageRect.top + stageRect.height / 2
+```
+
+Desktop target: horizontal delta <=8px and vertical delta <=12px, or <=2% of
+the corresponding stage dimension. Stack and fan offsets derive from the real
+stage center, card slot centers, and card dimensions. No viewport percentage is
+the visual center.
+
+## Storyboard and measured timeline
+
+| Progress/state | Result |
+|---:|---|
+| section enters | independent 900ms heading reveal starts immediately |
+| `0.05–0.18` | all four backs form one legible centered deck |
+| `0.18–0.38` | deck opens into a fixed-order fan around stage center |
+| `0.34–0.46` | cards approach real Grid slots with fan tilt retained |
+| `0.44` | card 1 flip begins |
+| `0.515` | card 2 begins at about 27% of card 1 duration |
+| `0.590` | card 3 begins at about 27% of card 2 duration |
+| `0.665` | card 4 begins at about 27% of card 3 duration |
+| each flip | `rotateY 180 -> slight front overshoot -> 0`; `rotateZ -> 0` |
+| `0.90+` | upright Grid holds; trail is complete before fading |
+| `0.94–1` | cards/header/trail leave before the white exit layer |
+
+Scroll motion uses callback delta time and a critically damped state. It
+supports reverse and fast input without per-sample stops. Resize invalidates
+geometry without blindly snapping an active animation; a tier-mode change
+resolves to the current logical progress.
+
+## Six-tier responsive contract
+
+| Tier | Layout | Header/copy | Motion | Trail |
+|---|---|---|---|---|
+| XS `<640` | natural one-column 1-1-1-1 | heading; description hidden | simple per-card entrance/flip | hidden |
+| SM `640–767` | natural 2x2 Grid | heading + copy when space allows | row/pair overlap, no stack/fan | hidden |
+| MD `768–1023` | natural 2x2 Grid | heading + copy | row/pair overlap, no stack/fan | hidden |
+| LG `1024–1279` | centered four-column Grid | full sequence | stack/fan/flip/settle | visible |
+| XL `1280–1535` | centered four-column Grid | full sequence | full cinematic sequence | visible |
+| 2XL `>=1536` | bounded four-column Grid | bounded editorial scale | shared cinematic sequence | visible |
+
+All gaps, padding, card widths, and heading sizes remain fluid with intrinsic
+Grid and `clamp()`. XS/SM/MD stay in natural document flow rather than using a
+desktop pinning model.
+
+## Locale/direction contract
+
+| Locale | Heading | Direction/composition | Honorific form |
+|---|---|---|---|
+| ID | `PONDASI / KARAKTER` | Inter/LTR; copy right/right-aligned | `Rasulullah shallallahu ‘alaihi wasallam` |
+| EN | `VALUES / STUDENTS` | Inter/LTR; copy right/right-aligned | `the Messenger of Allah, peace and blessings be upon him` |
+| AR | `أَسَاسُ / الْمَدْرَسَةِ` | Cairo/RTL; copy left/left-aligned | `رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ` |
+
+Arabic is split only at a word boundary for the two line masks; no character
+splitting is allowed. The semantic `aria-label` preserves the exact complete
+Arabic heading. Neutral vertical scroll and card flip time do not reverse for
+RTL; center-origin heading directions and logical line-two settlement mirror.
+
+## Semantic, accessibility, browser, and fallback contract
+
+- One `h2`, one list, and four `article` values remain server rendered.
+- Front content remains text DOM; backs and trail are decorative.
+- No-JS, unsupported 3D, and reduced-motion states show the readable front Grid.
+- Reduced motion removes sticky storytelling, line motion, float, fan, and
+  complex flip.
+- CSS feature detection gates the enhanced path; no user-agent fork exists.
+- Chromium and WebKit must prove sticky/clip, CSS 3D/backface, SVG geometry,
+  variable Inter/Cairo shaping, RTL, and BFCache behavior.
+- No keyboard target or focus order changes. Cards remain non-interactive
+  articles.
+
+## Performance contract
+
+- No dependency, asset, font, renderer, canvas, or additional animation loop.
+- One RAF scheduler; layout is read in one measure pass and written afterward.
+- Final slot geometry is cached until resize/re-entry; no per-card layout read
+  occurs inside the animation loop.
+- Motion uses transform/opacity. Entry/exit blur is bounded to transition
+  layers and removed for reduced motion.
+- The SVG route length is cached; only one point lookup is used for its head on
+  desktop frames.
+
+## Proof plan
+
+Static/source:
+
+```text
+node --check on every changed Values JS module
 git diff --check
 npm run check:structure
 npm run build
+php artisan test --filter=HomeValuesStoryTest
 php artisan test
 ```
 
-A fresh owner capture is required before the visual correction can be marked
-`PASS`.
+Runtime: Chromium and WebKit; ID/EN/AR; 360, 390, 640, 768, 1024, 1280,
+1440, 1536, and 1920; boundary pairs; normal/reverse/fast scroll; active resize;
+reload near section; reduced motion; 200% zoom; short height; keyboard and touch.
 
-## Next valid step
+Capture: pre-entry, completed heading, deck, early/late fan, first 90-degree
+flip, card 1/2 overlap, front face, final Grid, completed trail, and white exit.
+Measure stage/card-union center in every tier. An unavailable gate remains
+`BLOCKED_BY_MISSING_EVIDENCE`.
 
-Pull current `main` and capture the XL/2XL forward sequence, focusing on the
-lead stack center, fan position, edge-on trapezoid, near/far side projection,
-overlapping flips, and stable final row.
+## Rollback plan
+
+Rollback is one revert of the resulting Values rebuild commit(s). The Vite
+entry, route composition, controller import, translation keys, and raw evidence
+paths remain stable, so rollback does not require reconstructing deleted global
+source. Protected sections are outside the patch.
+
+## Execution plan
+
+1. `ACTIVE`: publish this inspected owner-accepted audit/blueprint.
+2. `PENDING`: rebuild only the mapped Values owners and focused test.
+3. `PENDING`: run available local syntax/source proof and record unavailable
+   checkout/browser gates honestly.
+4. `PENDING`: fast-forward `main`, verify resulting SHA, and update the durable
+   progress ledger.
