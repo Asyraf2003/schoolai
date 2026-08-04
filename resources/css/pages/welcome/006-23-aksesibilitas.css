@@ -33,7 +33,6 @@
         display: flex;
     }
 
-
     .quick-info__grid {
         grid-template-columns: 1fr;
     }
@@ -65,10 +64,6 @@
         grid-template-columns: 1fr;
     }
 
-    .visi-card__text {
-        font-size: 1.1rem;
-    }
-
     .site-footer__grid {
         grid-template-columns: 1fr;
         text-align: left;
@@ -89,7 +84,6 @@
         scroll-behavior: auto !important;
     }
 }
-
 
 .navbar__logo {
     gap: 12px;
@@ -152,31 +146,4 @@
     .navbar__logo-text small {
         font-size: 0.66rem;
     }
-}
-
-.visi-misi {
-    position: relative;
-    overflow: hidden;
-    background:
-        radial-gradient(
-            circle at 8% 12%,
-            rgba(255, 213, 79, 0.18),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 92% 18%,
-            rgba(14, 165, 233, 0.16),
-            transparent 32%
-        ),
-        linear-gradient(180deg, var(--color-cream), #fffaf0);
-}
-
-.visi-misi::before,
-.visi-misi::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-    border-radius: 999px;
-    filter: blur(2px);
-    opacity: 0.48;
 }
