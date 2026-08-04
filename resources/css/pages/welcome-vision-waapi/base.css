@@ -2,8 +2,8 @@
     position: relative;
     overflow: clip;
     padding-block: clamp(4rem, 8vw, 8rem);
-    background: linear-gradient(180deg, #061d4f 0%, #08183a 100%);
-    color: #ffffff;
+    background: #ffffff;
+    color: #161616;
 }
 
 .vision-story__stage {
@@ -26,10 +26,11 @@
 .vision-story__eyebrow,
 .vision-story__label {
     margin: 0;
-    color: rgba(255, 255, 255, 0.68);
+    color: rgba(22, 22, 22, 0.58);
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
+    font-weight: 400;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
@@ -38,11 +39,11 @@
     max-width: 10ch;
     margin: 0;
     color: inherit;
-    font-family: var(--font-display);
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(3rem, 7vw, 7rem);
-    font-weight: 900;
-    line-height: 0.92;
-    letter-spacing: -0.065em;
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: -0.055em;
 }
 
 .vision-story__divider {
@@ -65,19 +66,17 @@
     display: grid;
     align-items: end;
     padding: clamp(1.5rem, 4vw, 3.25rem);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: clamp(1.25rem, 2vw, 2rem);
-    background: #0b2e72;
-    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(22, 22, 22, 0.18);
+    border-radius: 0;
+    background: #f3f3f1;
+    box-shadow: none;
+    color: #161616;
     isolation: isolate;
 }
 
-.vision-story__panel--vision {
-    background: #08245d;
-}
-
+.vision-story__panel--vision,
 .vision-story__panel--mission {
-    background: #0d326e;
+    background: #f3f3f1;
 }
 
 .vision-story__art {
@@ -93,7 +92,7 @@
     display: block;
     width: clamp(12rem, 28vw, 28rem);
     height: auto;
-    opacity: 0.18;
+    opacity: 0.09;
     object-fit: contain;
     transform-origin: 50% 50%;
     user-select: none;
@@ -118,25 +117,26 @@
 .vision-story__content h3,
 .vision-story__content h4 {
     margin: 0 0 0.8rem;
-    color: #ffffff;
-    font-family: var(--font-display);
+    color: #161616;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(2rem, 4vw, 4rem);
-    font-weight: 900;
-    line-height: 0.96;
-    letter-spacing: -0.05em;
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
 }
 
 .vision-story__content p {
     max-width: 34rem;
     margin: 0;
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(22, 22, 22, 0.78);
     font-size: clamp(0.92rem, 1.1vw, 1.12rem);
+    font-weight: 400;
     line-height: 1.55;
 }
 
 .vision-story__content strong {
-    color: #ffd36a;
-    font-weight: 800;
+    color: #161616;
+    font-weight: 500;
 }
 
 .vision-story__outro {
@@ -155,6 +155,8 @@ html[dir="rtl"] .vision-story__editorial h2,
 html[dir="rtl"] .vision-story__outro h3,
 html[dir="rtl"] .vision-story__content h3,
 html[dir="rtl"] .vision-story__content h4 {
+    font-family: "Cairo", Arial, sans-serif;
+    font-weight: 400;
     letter-spacing: normal;
 }
 
