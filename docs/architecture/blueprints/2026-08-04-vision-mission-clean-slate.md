@@ -1,12 +1,13 @@
 # Vision/Mission Clean-Slate Preparation
 
 BLUEPRINT ID: `HOME-VISION-003-CLEAN`
-STATUS: `OWNER_ACCEPTED`
+STATUS: `IMPLEMENTING`
 OWNER: Asyraf Mubarak
 DATE: 2026-08-04
 SOURCE MAIN SHA: `e42308fad7f6d7e48aa1e109eacec1d49947d75f`
+SOURCE SEQUENCE BEFORE BLUEPRINT CLOSE: `023d8d6ccffa3350ac558cf2d742d4b9d09dab5d`
 ACTIVE ROUTE/SURFACE: homepage Vision/Mission `#visi-misi`
-TARGET EXECUTION CHANNEL: Web AI GitHub direct `main`
+TARGET EXECUTION CHANNEL: owner/local terminal for proof
 
 ## Owner goal
 
@@ -23,15 +24,16 @@ outside this cleanup batch.
 
 ## FACT
 
-- Current Vision/Mission owns one dedicated CSS entry and one JavaScript entry.
-- The JavaScript entry creates its controller at DOM ready.
-- Latin copy is split into characters and painted with per-unit inline styles.
-- Six long sticky scenes and filtered artwork are driven by a local RAF.
-- Legacy Vision/Mission selectors also remain in the mechanically split homepage
-  CSS and reveal controller.
+- The prior Vision/Mission owned one dedicated CSS entry and one JavaScript entry.
+- The JavaScript entry created its controller at DOM ready.
+- Latin copy was split into characters and painted with per-unit inline styles.
+- Six long sticky scenes and filtered artwork were driven by a local RAF.
+- Legacy Vision/Mission selectors also remained in the mechanically split
+  homepage CSS, Arabic typography adapter, and reveal controller.
 - ID, EN, AR content and assets `media/home/9.png` through `12.png` remain valid
-  content/assets and are not deleted.
-- Owner audit shows `main` and `origin/main` both at the source SHA above.
+  content/assets and were not deleted.
+- Owner audit showed local and remote `main` at the source SHA before write.
+- Two locally modified seeder files are unrelated and protected from this batch.
 
 ## Scope
 
@@ -60,6 +62,21 @@ SCOPE OUT:
 - Arabic honorific text remains written in full.
 - No JavaScript, sticky scene, hidden unit, or motion-dependent access is needed.
 
+## Execution result
+
+Published source now:
+
+- renders the static semantic contract in ID, EN, and AR;
+- removes the old homepage and Vite entries;
+- deletes the dedicated stylesheet, story entry, controller, scroll progress,
+  scene renderer, motion painters, and text splitter;
+- removes stale reveal rules and known dormant legacy selectors;
+- retains the mechanically protected CSS import slots as comment-only files;
+- updates the focused feature test to reject all old story hooks;
+- records the active source state in `UI_UX_CURRENT_STATE.md`.
+
+No WAAPI, new renderer, new assets, or adjacent-section changes were included.
+
 ## Deferred WAAPI contract
 
 The next blueprint may add a single paused WAAPI master timeline controlled by
@@ -79,6 +96,7 @@ php artisan test --filter=HomeVisionMissionHeadingTest
 php artisan test
 ```
 
-Also search runtime source for deleted ownership identifiers. Browser, six-tier,
-locale, performance, and accessibility status remain
-`BLOCKED_BY_MISSING_EVIDENCE` until rendered proof exists.
+Also run a runtime-source search for deleted ownership identifiers. Browser,
+six-tier, locale, performance, and accessibility status remain
+`BLOCKED_BY_MISSING_EVIDENCE` until rendered proof exists. The blueprint cannot
+become `PROVEN` before those declared gates pass.
