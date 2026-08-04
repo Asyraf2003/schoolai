@@ -1,0 +1,176 @@
+.vision-story {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(4rem, 8vw, 8rem);
+    background:
+        radial-gradient(circle at 18% 18%, rgba(44, 115, 184, 0.24), transparent 34%),
+        linear-gradient(180deg, #061d4f 0%, #08183a 100%);
+    color: #ffffff;
+}
+
+.vision-story__pin,
+.vision-story__stage {
+    position: relative;
+}
+
+.vision-story__stage {
+    width: min(100% - 2rem, 100rem);
+    margin-inline: auto;
+}
+
+.vision-story__editorial {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.vision-story__eyebrow {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.vision-story__editorial h2 {
+    max-width: 13ch;
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 7vw, 7.8rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+}
+
+.vision-story__divider {
+    display: none;
+}
+
+.vision-story__deck,
+.vision-story__missions {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.vision-story__missions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.vision-story__panel {
+    --panel-color: #0b2e72;
+    position: relative;
+    min-height: clamp(32rem, 72svh, 52rem);
+    overflow: hidden;
+    display: grid;
+    align-items: end;
+    padding: clamp(1.5rem, 4vw, 4rem);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: clamp(1.5rem, 3vw, 3rem);
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 42%),
+        var(--panel-color);
+    box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.28);
+    isolation: isolate;
+}
+
+.vision-story__panel--vision {
+    --panel-color: #08245d;
+    min-height: min(86svh, 58rem);
+}
+
+.vision-story__panel--mission-1 { --panel-color: #075e62; }
+.vision-story__panel--mission-2 { --panel-color: #7a3828; }
+.vision-story__panel--mission-3 { --panel-color: #4d2c75; }
+.vision-story__panel--mission-4 { --panel-color: #175b45; }
+
+.vision-story__art {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.vision-story__art img {
+    position: absolute;
+    display: block;
+    width: clamp(14rem, 32vw, 32rem);
+    height: auto;
+    opacity: 0.18;
+    object-fit: contain;
+    transform-origin: 50% 50%;
+    user-select: none;
+}
+
+.vision-story__art img:nth-child(1) {
+    inset: -18% auto auto -10%;
+}
+
+.vision-story__art img:nth-child(2) {
+    inset: 2% -12% auto auto;
+}
+
+.vision-story__art img:nth-child(3) {
+    inset: auto auto -24% -12%;
+}
+
+.vision-story__art img:nth-child(4) {
+    inset: auto -10% -10% auto;
+}
+
+.vision-story__panel--mission .vision-story__art img {
+    inset: 50% -8% auto auto;
+    width: clamp(18rem, 44vw, 42rem);
+    opacity: 0.16;
+    transform: translateY(-50%);
+}
+
+.vision-story__content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 60rem);
+}
+
+.vision-story__label {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.vision-story__content h3,
+.vision-story__content h4 {
+    margin: 0 0 1rem;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+}
+
+.vision-story__content p {
+    max-width: 42rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.86);
+    font-size: clamp(1rem, 1.2vw, 1.32rem);
+    line-height: 1.62;
+}
+
+.vision-story__content strong {
+    color: #ffd36a;
+    font-weight: 800;
+}
+
+html[dir="rtl"] .vision-story__editorial h2,
+html[dir="rtl"] .vision-story__content h3,
+html[dir="rtl"] .vision-story__content h4 {
+    letter-spacing: normal;
+}
