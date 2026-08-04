@@ -1,7 +1,7 @@
 import { clamp, easeOutCubic } from './motion.js';
 
 const EPSILON = 0.00005;
-const ENTRY_TRIGGER_RATIO = 0.96;
+const ENTRY_TRIGGER_RATIO = 0.98;
 const REVEAL_DURATION_MS = 900;
 const FAST_RESOLVE_PROGRESS = 0.18;
 
@@ -44,17 +44,19 @@ export function updateHeadingState(
     const beforeSection = storyProgress <= EPSILON && timelineTop > triggerTop;
     const firstSample = state.previousTop === null;
     const movingDown = firstSample || timelineTop < state.previousTop - 0.5;
-    const enteringFromTop = timelineTop <= triggerTop
-        && timelineTop > -viewportHeight * 0.2
+    const entering = timelineTop <= triggerTop
+        && storyProgress < FAST_RESOLVE_PROGRESS
         && movingDown;
 
     if (beforeSection) resetForEntry(state);
     else if (state.phase === 'idle') {
-        if (enteringFromTop) {
+        if (entering) {
             state.phase = 'revealing';
             state.startedAt = time;
             state.instant = false;
-        } else resolveWithoutEntry(state);
+        } else if (storyProgress >= FAST_RESOLVE_PROGRESS) {
+            resolveWithoutEntry(state);
+        }
     }
 
     if (state.phase === 'revealing') {

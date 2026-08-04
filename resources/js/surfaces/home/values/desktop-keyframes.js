@@ -7,6 +7,10 @@ const FLIP_DURATION = 0.27;
 const FLIP_STAGGER = 0.07;
 const FLIP_FRONT_PASS = 0.84;
 const FLIP_OVERSHOOT = -18;
+const BOUNCE_START = 0.868;
+const BOUNCE_END = 0.936;
+const BOUNCE_STAGGER = 0.004;
+const EXIT_START = 0.95;
 
 function smootherStep(value) {
     const progress = clamp(value);
@@ -29,6 +33,7 @@ export function flipLocal(index, progress) {
 
 export function flipAngle(local) {
     if (local <= 0) return 180;
+    if (local >= 1) return 0;
     if (local < FLIP_FRONT_PASS) {
         return mix(
             180,
@@ -46,6 +51,10 @@ export function flipAngle(local) {
     );
 }
 
+export function responsiveFlipAngle(local) {
+    return mix(180, 0, smootherStep(local));
+}
+
 export function uprightAmount(local) {
     return phase(local, 0.3, 0.74);
 }
@@ -56,4 +65,18 @@ export function fanArc(index, cardHeight) {
 
 export function stackNudge(index, cardWidth) {
     return (index - 1.5) * cardWidth * 0.018;
+}
+
+export function bounceOffset(index, progress, cardHeight) {
+    const start = BOUNCE_START + index * BOUNCE_STAGGER;
+    const end = BOUNCE_END + index * BOUNCE_STAGGER;
+    if (progress <= start || progress >= end) return 0;
+
+    const local = clamp((progress - start) / (end - start));
+    const amplitude = cardHeight * 0.026 * (1 - local * 0.35);
+    return -Math.sin(local * Math.PI * 6) * amplitude;
+}
+
+export function exitAmount(progress) {
+    return easeOutCubic(phase(progress, EXIT_START, 1));
 }

@@ -8,7 +8,7 @@
     margin-block-end: clamp(3rem, 8vw, 6rem);
     opacity: var(--values-heading-opacity);
     transform: translate3d(0, var(--values-heading-y), 0);
-    will-change: transform, opacity;
+    will-change: transform;
 }
 
 .values-story__title[data-text-role="display"] {
@@ -42,12 +42,12 @@
     margin-block: -.06em;
 }
 
-.values-story__title-line--one {
+.values-story__title-line--one,
+.values-story__title-line--two {
     justify-self: start;
 }
 
 .values-story__title-line--two {
-    justify-self: end;
     transition: transform 880ms cubic-bezier(.22, 1, .36, 1);
 }
 

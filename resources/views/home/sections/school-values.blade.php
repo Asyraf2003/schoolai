@@ -73,14 +73,9 @@
                 <div class="values-card__float">
                   <div class="values-card__inner" data-values-card-inner>
                     <div class="values-card__face values-card__front">
-                      <div class="values-card__top">
-                        <span class="values-card__index" data-text-role="meta">
-                          {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
-                        </span>
-                        <strong class="values-card__code" aria-hidden="true">
-                          {{ $value['code'] }}
-                        </strong>
-                      </div>
+                      <span class="values-card__index" data-text-role="meta">
+                        {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
+                      </span>
 
                       <div class="values-card__copy">
                         <p class="values-card__summary" data-text-role="subtitle">
@@ -89,7 +84,6 @@
                         <h3 class="values-card__title" data-text-role="component-title">
                           {{ $value['title'] }}
                         </h3>
-                        <span class="values-card__rule" aria-hidden="true"></span>
                         <p class="values-card__body" data-text-role="description">
                           @foreach ($value['text_parts'] as $part)
                             @if (! empty($part['mark']))
@@ -100,19 +94,9 @@
                           @endforeach
                         </p>
                       </div>
-
-                      <div class="values-card__footer" aria-hidden="true">
-                        <strong>{{ $value['code'] }}</strong>
-                        <span>{{ $value['title'] }}</span>
-                      </div>
                     </div>
 
-                    <div class="values-card__face values-card__back" aria-hidden="true">
-                      <span class="values-card__back-frame"></span>
-                      <span class="values-card__back-orbit"></span>
-                      <strong class="values-card__back-code">{{ $value['code'] }}</strong>
-                      <span class="values-card__back-title">{{ $value['title'] }}</span>
-                    </div>
+                    <div class="values-card__face values-card__back" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,6 @@
-import { flipAngle } from './desktop-keyframes.js';
+import { responsiveFlipAngle } from './desktop-keyframes.js';
 import { desktopCardFrame } from './desktop-layout.js';
-import { clamp, easeOutCubic, mix, phase } from './motion.js';
+import { clamp, mix, phase } from './motion.js';
 
 function visibleFraction(index, progress, geometry) {
     const travel = geometry.rootHeight + geometry.viewportHeight;
@@ -14,16 +14,16 @@ function visibleFraction(index, progress, geometry) {
 
 function responsiveCardFrame(index, progress, geometry) {
     const visible = visibleFraction(index, progress, geometry);
-    const enter = easeOutCubic(phase(visible, 0.04, 0.5));
     const flip = clamp((visible - 0.5) / 0.5);
 
     return {
         x: 0,
-        y: mix(36, 0, enter),
+        y: 0,
         z: 0,
         rz: 0,
-        ry: flipAngle(flip),
-        scale: mix(0.96, 1, enter),
+        ry: responsiveFlipAngle(flip),
+        scale: 1,
+        floatY: 0,
     };
 }
 
@@ -43,22 +43,23 @@ export function storyFrame(
 ) {
     const reveal = headingState?.reveal ?? 1;
     const desktop = geometry.mode === 4;
-    const headingLeave = desktop ? phase(progress, 0.12, 0.28) : 0;
     const copyEnter = phase(reveal, 0.58, 1);
-    const copyLeave = desktop ? phase(progress, 0.1, 0.22) : 0;
     const trailLeave = phase(progress, 0.97, 1);
+    const desktopTravel = Math.max(
+        1,
+        geometry.timelineHeight - geometry.stageHeight,
+    );
 
     return {
         lineOneY: mix(108, 0, reveal),
         lineTwoY: mix(-108, 0, reveal),
-        headingOpacity: desktop ? 1 - phase(progress, 0.18, 0.3) : 1,
-        headingY: desktop
-            ? mix(0, -geometry.stageHeight * 0.72, headingLeave)
+        headingOpacity: 1,
+        headingY: desktop && progress > 0
+            ? -progress * desktopTravel
             : 0,
-        copyOpacity: copyEnter * (1 - copyLeave),
+        copyOpacity: copyEnter,
         copyY: mix(24, 0, copyEnter),
-        floatActive: progress >= 0.12,
-        trailProgress: desktop ? phase(progress, 0.06, 0.96) : 0,
+        trailProgress: desktop ? phase(progress, 0.06, 0.94) : 0,
         trailOpacity: desktop
             ? phase(progress, 0.08, 0.16) * (1 - trailLeave)
             : 0,

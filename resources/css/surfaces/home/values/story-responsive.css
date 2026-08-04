@@ -7,7 +7,6 @@
     --values-grid-row-gap: clamp(1rem, 4vw, 2rem);
     --values-story-length: 100svh;
     --values-line-two-shift: 0;
-    --values-float-distance: clamp(.35rem, .65vw, .55rem);
 }
 
 @media (min-width: 640px) {
@@ -24,21 +23,21 @@
         --values-content-width: 91.6667vw;
         --values-grid-column-gap: 4.1667vw;
         --values-grid-row-gap: 4.1667vw;
-        --values-line-two-shift: clamp(-3.5rem, -5vw, -2rem);
+        --values-line-two-shift: clamp(2rem, 5vw, 3.5rem);
     }
 
     html[dir="rtl"] .values-story {
-        --values-line-two-shift: clamp(2rem, 5vw, 3.5rem);
+        --values-line-two-shift: clamp(-3.5rem, -5vw, -2rem);
     }
 }
 
 @media (min-width: 1024px) {
     .values-story {
-        --values-line-two-shift: clamp(-6rem, -6vw, -3.5rem);
+        --values-line-two-shift: clamp(3.5rem, 6vw, 6rem);
     }
 
     html[dir="rtl"] .values-story {
-        --values-line-two-shift: clamp(3.5rem, 6vw, 6rem);
+        --values-line-two-shift: clamp(-6rem, -6vw, -3.5rem);
     }
 }
 
@@ -51,12 +50,11 @@
         --values-grid-column-gap: 2vw;
         --values-grid-row-gap: 2vw;
         --values-story-length: 380svh;
-        --values-line-two-shift: clamp(-7rem, -7vw, -4rem);
-        --values-float-distance: clamp(.4rem, .5vw, .65rem);
+        --values-line-two-shift: clamp(4rem, 7vw, 7rem);
     }
 
     html[dir="rtl"] .values-story {
-        --values-line-two-shift: clamp(4rem, 7vw, 7rem);
+        --values-line-two-shift: clamp(-7rem, -7vw, -4rem);
     }
 
     .values-story.is-values-ready .values-story__timeline {
@@ -79,32 +77,13 @@
     }
 }
 
-@media (min-width: 1280px) and (max-width: 1599px) {
-    .values-card__front { gap: .72rem; padding: 1rem; }
-    .values-card__copy { gap: .5rem; }
-    .values-card__summary[data-text-role="subtitle"] {
-        font-size: .68rem;
-        line-height: 1.28;
-    }
-    .values-card__title[data-text-role="component-title"] {
-        font-size: 1.35rem;
-    }
-    .values-card__body[data-text-role="description"] {
-        font-size: .66rem;
-        line-height: 1.42;
-    }
-    .values-card__footer { padding-block-start: .5rem; }
-    .values-card__footer strong { font-size: 1rem; }
-    .values-card__footer span { font-size: .66rem; }
-}
-
 @media (min-width: 1536px) {
     .values-story {
-        --values-line-two-shift: clamp(-10rem, -8vw, -7rem);
+        --values-line-two-shift: clamp(7rem, 8vw, 10rem);
     }
 
     html[dir="rtl"] .values-story {
-        --values-line-two-shift: clamp(7rem, 8vw, 10rem);
+        --values-line-two-shift: clamp(-10rem, -8vw, -7rem);
     }
 }
 

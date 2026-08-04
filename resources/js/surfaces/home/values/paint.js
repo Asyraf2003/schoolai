@@ -2,7 +2,7 @@ import { cardFrame, storyFrame } from './layout.js';
 
 const CARD_PROPERTIES = [
     '--values-x', '--values-y', '--values-z', '--values-ry',
-    '--values-rz', '--values-scale',
+    '--values-rz', '--values-scale', '--values-float-y',
 ];
 
 const ROOT_PROPERTIES = [
@@ -20,6 +20,10 @@ function writeCardFrame(card, state) {
     card.style.setProperty('--values-ry', `${state.ry.toFixed(2)}deg`);
     card.style.setProperty('--values-rz', `${state.rz.toFixed(2)}deg`);
     card.style.setProperty('--values-scale', state.scale.toFixed(4));
+    card.style.setProperty(
+        '--values-float-y',
+        `${state.floatY.toFixed(2)}px`,
+    );
 }
 
 function readTrailPoint(nodes, geometry, progress) {
@@ -93,7 +97,6 @@ export function paintValuesStory(
         );
     });
     writeRootFrame(root, story);
-    root.classList.toggle('is-values-floating', story.floatActive);
 
     if (trailPoint && nodes.trailHead) {
         nodes.trailHead.setAttribute('cx', trailPoint.x.toFixed(2));
@@ -102,7 +105,6 @@ export function paintValuesStory(
 }
 
 export function clearValuesStory(root, cards, nodes) {
-    root.classList.remove('is-values-floating');
     ROOT_PROPERTIES.forEach((name) => root.style.removeProperty(name));
     cards.forEach((card) => {
         CARD_PROPERTIES.forEach((name) => card.style.removeProperty(name));
