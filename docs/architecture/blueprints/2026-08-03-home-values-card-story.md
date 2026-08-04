@@ -1,7 +1,7 @@
 # Homepage Values Card Story Blueprint
 
 Blueprint ID: `HOME-VALUES-001`
-Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
+Status: `OWNER_ACCEPTED / R3 IMPLEMENTING`
 Owner: Asyraf Mubarak
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
@@ -11,6 +11,7 @@ Source implementation head: `fbbc83b6672053652ac4551aea3970b825df0fcc`
 Revision baseline: `c24e4d73fd57659df9f18eeb732d3ec755031743`
 Revision blueprint checkpoint: `e56b00a455848772905def3c3ab63016dd24c303`
 Revision implementation head: `c1c45381d7b1824ab72ca7d6d85fed77889e58ad`
+Focused correction baseline: `2e052a87a71d8c429358277d96c056998d4595b1`
 Active route/surface: homepage `#nilai`
 Raw reference: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
 Execution channel: Web AI with explicit direct-`main` authorization
@@ -37,6 +38,36 @@ scope. XS/SM use a natural one-column flow; MD/LG use a natural 2x2 grid; XL/
 2XL use the cinematic four-column story. The exact owner-specified headings are
 `PONDASI / KARAKTER`, `VALUES / STUDENTS`, and
 `أَسَاسُ الْمَدْرَسَةِ`.
+
+## Owner-accepted focused correction R3 — 2026-08-04
+
+The owner's latest screenshots and correction are accepted as a narrow third
+iteration inside the existing Values surface:
+
+- keep both desktop title lines at the same logical inline start during reveal;
+  line one rises from below, line two drops from above, then line two shifts
+  toward inline-end; Arabic mirrors the inline shift only;
+- remove the desktop heading dwell: it follows scroll upward from the first
+  story progress while the cards remain the only held composition;
+- simplify every front to index, summary, title, and body copy; remove the code
+  tile, duplicate footer, top accent strip, and internal divider;
+- replace the decorative back logo/orbit with a repeated Islamic geometric
+  hexagonal field;
+- after the desktop flips settle, give each card exactly three reversible
+  vertical bounce cycles, then move the complete row upward; remove perpetual
+  float animation;
+- keep heading reveal on XS/SM/MD/LG and make responsive card motion a single
+  smooth back-to-front `180deg -> 0deg` turn with no overshoot or return;
+- scale card padding and typography from the card's own inline size so content
+  remains readable on phone, tablet, and desktop; remove the small XL override;
+- keep card chronology/direction neutral across LTR/RTL; only content direction
+  changes.
+
+The smoothness investigation is read-only in this batch. Live Lusion evidence
+shows a fixed, native-scroll-locked UI and canvas under one virtual-scroll render
+pipeline. SchoolAI retains native document scrolling plus surface-local RAF
+controllers. No global scroll owner, other surface, dependency, canvas, or
+WebGL pipeline may change in R3.
 
 ## Owner-accepted runtime correction — 2026-08-04
 
