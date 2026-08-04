@@ -87,11 +87,7 @@ html[lang="ar"] :is(
   .native-related-card__body strong,
   .native-article__header h1,
   .native-article__body h2,
-  .native-article__body h3,
-  .visi-card__title,
-  .misi-panel__head h3,
-  .misi-card__title,
-  .misi-card__number
+  .native-article__body h3
 ):not([data-text-role]) {
   font-family: var(--font-ar-display);
   font-weight: 700;
@@ -114,8 +110,6 @@ html[lang="ar"] :is(
   .footer-brand__description,
   .footer-channel__note,
   .site-footer__bottom p,
-  .visi-card__text,
-  .misi-card__text,
   .native-article__subtitle,
   .native-article__body,
   .native-article__footer p,
@@ -129,7 +123,6 @@ html[lang="ar"] :is(
 html[lang="ar"] :is(
   .program-card__summary,
   .nilai-card__summary,
-  .vm-mark,
   .program-mark,
   .nilai-mark
 ):not([data-text-role]) {
