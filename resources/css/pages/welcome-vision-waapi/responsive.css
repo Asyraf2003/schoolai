@@ -1,0 +1,122 @@
+@media (max-width: 1023px) {
+    .vision-story.is-enhanced {
+        height: 640svh;
+    }
+
+    .vision-story.is-enhanced .vision-story__editorial {
+        inset-block-start: 9svh;
+        inset-inline: 6vw;
+        width: auto;
+        transform: none;
+    }
+
+    .vision-story.is-enhanced .vision-story__editorial h2 {
+        max-width: 12ch;
+        font-size: clamp(3rem, 9vw, 6rem);
+    }
+
+    .vision-story.is-enhanced .vision-story__eyebrow {
+        font-size: 0.72rem;
+    }
+
+    .vision-story.is-enhanced .vision-story__divider {
+        inset-block: 29svh auto;
+        inset-inline: 8vw;
+        width: auto;
+        height: 1px;
+        transform: scaleX(0);
+    }
+
+    .vision-story.is-enhanced .vision-story__panel {
+        width: min(88vw, 54rem);
+        height: 64svh;
+        padding: clamp(1.5rem, 5vw, 3rem);
+    }
+
+    .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content {
+        width: min(78%, 42rem);
+    }
+}
+
+@media (max-width: 767px) {
+    .vision-story {
+        padding-block: 4rem;
+    }
+
+    .vision-story__stage {
+        width: min(100% - 1.25rem, 100rem);
+    }
+
+    .vision-story__editorial h2 {
+        font-size: clamp(2.5rem, 13vw, 4.5rem);
+    }
+
+    .vision-story__panel {
+        min-height: 34rem;
+        padding: 1.35rem;
+        border-radius: 1.6rem;
+    }
+
+    .vision-story__art img {
+        width: clamp(12rem, 62vw, 22rem);
+    }
+
+    .vision-story__content h3,
+    .vision-story__content h4 {
+        font-size: clamp(2rem, 10vw, 3.6rem);
+    }
+
+    .vision-story__content p {
+        font-size: 0.96rem;
+        line-height: 1.56;
+    }
+
+    .vision-story.is-enhanced {
+        height: 600svh;
+    }
+
+    .vision-story.is-enhanced .vision-story__editorial {
+        inset-block-start: 7svh;
+        inset-inline: 1.2rem;
+    }
+
+    .vision-story.is-enhanced .vision-story__editorial h2 {
+        font-size: clamp(2.65rem, 12vw, 4.6rem);
+    }
+
+    .vision-story.is-enhanced .vision-story__divider {
+        inset-block-start: 25svh;
+        inset-inline: 1.2rem;
+    }
+
+    .vision-story.is-enhanced .vision-story__panel {
+        width: calc(100vw - 1.5rem);
+        height: 68svh;
+        padding: 1.35rem;
+        border-radius: 1.6rem;
+    }
+
+    .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content {
+        width: min(88%, 36rem);
+    }
+
+    .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content h4 {
+        font-size: clamp(2.2rem, 10vw, 4rem);
+    }
+
+    .vision-story__panel--mission .vision-story__art img {
+        inset-inline-end: -24%;
+        width: 78vw;
+    }
+}
+
+@media (min-width: 1536px) {
+    .vision-story.is-enhanced {
+        height: 720svh;
+    }
+
+    .vision-story.is-enhanced .vision-story__panel {
+        width: min(78vw, 92rem);
+        height: min(82svh, 60rem);
+    }
+}
