@@ -1,4 +1,3 @@
-.visi-misi__head .section-subtitle,
 .nilai-section__intro .section-subtitle,
 .program-section__head .section-subtitle,
 .galeri-section__head .section-subtitle,
@@ -11,7 +10,6 @@
     line-height: 1.68;
 }
 
-.visi-misi__head,
 .program-section__head,
 .galeri-section__head,
 .artikel-section__head {
@@ -23,7 +21,6 @@
 }
 
 @media (max-width: 720px) {
-    .visi-misi__head .section-title,
     .nilai-section__intro .section-title,
     .program-section__head .section-title,
     .galeri-section__head .section-title,
@@ -34,7 +31,6 @@
         line-height: 1.08;
     }
 
-    .visi-misi__head,
     .program-section__head,
     .galeri-section__head,
     .artikel-section__head,
