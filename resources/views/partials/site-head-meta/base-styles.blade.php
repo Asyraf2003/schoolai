@@ -42,10 +42,6 @@
     text-align: right;
   }
 
-  html[dir="rtl"] .misi-card:hover {
-    transform: translateX(-6px);
-  }
-
   html[dir="rtl"] .skip-link {
     right: -999px;
     left: auto;
