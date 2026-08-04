@@ -123,7 +123,9 @@
 }
 
 .vision-story__panel--mission .vision-story__art img {
-    inset: 50% -8% auto auto;
+    inset: auto;
+    inset-block-start: 50%;
+    inset-inline-end: -8%;
     width: clamp(18rem, 44vw, 42rem);
     opacity: 0.16;
     transform: translateY(-50%);
@@ -173,4 +175,10 @@ html[dir="rtl"] .vision-story__editorial h2,
 html[dir="rtl"] .vision-story__content h3,
 html[dir="rtl"] .vision-story__content h4 {
     letter-spacing: normal;
+}
+
+html[dir="rtl"] .vision-story__eyebrow,
+html[dir="rtl"] .vision-story__label {
+    letter-spacing: normal;
+    text-transform: none;
 }
