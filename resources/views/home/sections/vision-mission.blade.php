@@ -102,7 +102,8 @@
                       @php
                         $hasArabicHonorific = $directionLocale === 'ar'
                           && (
-                            str_contains($part['text'], 'ﷺ')
+                            str_contains($part['text'], 'رسول الله')
+                            || str_contains($part['text'], 'ﷺ')
                             || str_contains($part['text'], $arabicHonorific)
                           );
                         $partText = $hasArabicHonorific
