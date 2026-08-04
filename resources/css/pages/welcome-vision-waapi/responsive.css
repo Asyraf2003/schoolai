@@ -1,40 +1,38 @@
 @media (max-width: 1023px) {
     .vision-story.is-enhanced {
-        height: 640svh;
+        height: 760svh;
+    }
+
+    .vision-story.is-enhanced .vision-story__track {
+        gap: clamp(2rem, 5vw, 4rem);
+        padding-inline: 5vw;
     }
 
     .vision-story.is-enhanced .vision-story__editorial {
-        inset-block-start: 9svh;
-        inset-inline: 6vw;
-        width: auto;
-        transform: none;
+        width: min(68vw, 32rem);
+        height: 46svh;
     }
 
     .vision-story.is-enhanced .vision-story__editorial h2 {
-        max-width: 12ch;
-        font-size: clamp(3rem, 9vw, 6rem);
-    }
-
-    .vision-story.is-enhanced .vision-story__eyebrow {
-        font-size: 0.72rem;
+        font-size: clamp(3rem, 8vw, 5.8rem);
     }
 
     .vision-story.is-enhanced .vision-story__divider {
-        inset-block: 29svh auto;
-        inset-inline: 8vw;
-        width: auto;
-        height: 1px;
-        transform: scaleX(0);
+        height: 46svh;
     }
 
     .vision-story.is-enhanced .vision-story__panel {
-        width: min(88vw, 54rem);
-        height: 64svh;
-        padding: clamp(1.5rem, 5vw, 3rem);
+        height: 46svh;
+        padding: clamp(1.5rem, 4vw, 2.5rem);
     }
 
-    .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content {
-        width: min(78%, 42rem);
+    .vision-story.is-enhanced .vision-story__outro {
+        width: min(76vw, 38rem);
+        height: 46svh;
+    }
+
+    .vision-story.is-enhanced .vision-story__outro h3 {
+        font-size: clamp(3rem, 8vw, 6rem);
     }
 }
 
@@ -44,79 +42,84 @@
     }
 
     .vision-story__stage {
-        width: min(100% - 1.25rem, 100rem);
+        width: min(100% - 1.25rem, 92rem);
     }
 
-    .vision-story__editorial h2 {
-        font-size: clamp(2.5rem, 13vw, 4.5rem);
+    .vision-story__editorial h2,
+    .vision-story__outro h3 {
+        font-size: clamp(2.6rem, 12vw, 4.5rem);
     }
 
     .vision-story__panel {
-        min-height: 34rem;
+        width: 100%;
         padding: 1.35rem;
-        border-radius: 1.6rem;
-    }
-
-    .vision-story__art img {
-        width: clamp(12rem, 62vw, 22rem);
+        border-radius: 1.4rem;
     }
 
     .vision-story__content h3,
     .vision-story__content h4 {
-        font-size: clamp(2rem, 10vw, 3.6rem);
+        font-size: clamp(2rem, 9vw, 3.4rem);
     }
 
     .vision-story__content p {
-        font-size: 0.96rem;
-        line-height: 1.56;
+        font-size: 0.92rem;
+        line-height: 1.5;
     }
 
     .vision-story.is-enhanced {
-        height: 600svh;
+        height: 720svh;
+    }
+
+    .vision-story.is-enhanced .vision-story__track {
+        gap: 1.5rem;
+        padding-inline: 1rem;
     }
 
     .vision-story.is-enhanced .vision-story__editorial {
-        inset-block-start: 7svh;
-        inset-inline: 1.2rem;
+        width: 84vw;
+        height: 56vw;
     }
 
     .vision-story.is-enhanced .vision-story__editorial h2 {
-        font-size: clamp(2.65rem, 12vw, 4.6rem);
+        font-size: clamp(2.7rem, 12vw, 4.5rem);
     }
 
     .vision-story.is-enhanced .vision-story__divider {
-        inset-block-start: 25svh;
-        inset-inline: 1.2rem;
+        height: 56vw;
     }
 
     .vision-story.is-enhanced .vision-story__panel {
-        width: calc(100vw - 1.5rem);
-        height: 68svh;
-        padding: 1.35rem;
-        border-radius: 1.6rem;
-    }
-
-    .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content {
-        width: min(88%, 36rem);
+        width: 82vw;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        padding: 1.25rem;
+        border-radius: 1.4rem;
     }
 
     .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content h4 {
-        font-size: clamp(2.2rem, 10vw, 4rem);
+        font-size: clamp(2rem, 8vw, 3.2rem);
     }
 
-    .vision-story__panel--mission .vision-story__art img {
-        inset-inline-end: -24%;
-        width: 78vw;
+    .vision-story.is-enhanced .vision-story__art img {
+        width: clamp(11rem, 54vw, 20rem);
+    }
+
+    .vision-story.is-enhanced .vision-story__outro {
+        width: 86vw;
+        height: 58vw;
+    }
+
+    .vision-story.is-enhanced .vision-story__outro h3 {
+        font-size: clamp(2.8rem, 12vw, 4.6rem);
     }
 }
 
 @media (min-width: 1536px) {
     .vision-story.is-enhanced {
-        height: 720svh;
+        height: 820svh;
     }
 
-    .vision-story.is-enhanced .vision-story__panel {
-        width: min(78vw, 92rem);
-        height: min(82svh, 60rem);
+    .vision-story.is-enhanced .vision-story__track {
+        gap: clamp(4rem, 6vw, 7rem);
     }
 }
