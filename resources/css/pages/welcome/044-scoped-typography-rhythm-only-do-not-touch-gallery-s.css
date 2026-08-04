@@ -110,7 +110,6 @@
     outline-offset: 4px;
 }
 
-.visi-misi__head,
 .program-section__head,
 .galeri-section__head {
     max-width: 880px;
@@ -119,12 +118,10 @@
     text-align: center;
 }
 
-.visi-misi__head .section-title,
 .program-section__head .section-title {
     margin-inline: auto;
 }
 
-.visi-misi__head .section-subtitle,
 .program-section__head .section-subtitle,
 .galeri-section__head .section-subtitle {
     margin-top: 12px;
@@ -175,7 +172,6 @@
 }
 
 /* Scoped typography rhythm only. Do not touch gallery sticky/media layout. */
-.visi-misi__head .section-title,
 .nilai-section__intro .section-title,
 .program-section__head .section-title,
 .galeri-section__head .section-title,
