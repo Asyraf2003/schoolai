@@ -1,7 +1,7 @@
 # Homepage Values Card Story Blueprint
 
 Blueprint ID: `HOME-VALUES-001`
-Status: `OWNER_ACCEPTED / R3 IMPLEMENTING`
+Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Owner: Asyraf Mubarak
 Updated: 2026-08-04
 Repository: `Asyraf2003/schoolai`
@@ -12,6 +12,8 @@ Revision baseline: `c24e4d73fd57659df9f18eeb732d3ec755031743`
 Revision blueprint checkpoint: `e56b00a455848772905def3c3ab63016dd24c303`
 Revision implementation head: `c1c45381d7b1824ab72ca7d6d85fed77889e58ad`
 Focused correction baseline: `2e052a87a71d8c429358277d96c056998d4595b1`
+Focused correction blueprint: `0521c9aa1641c8d547099f8a7c758f943a32a0ae`
+Focused correction source head: `95b3b78f91d42d536881324eda6d453c7139a015`
 Active route/surface: homepage `#nilai`
 Raw reference: `../measurements/2026-08-03-home-values-reference-motion-raw.md`
 Execution channel: Web AI with explicit direct-`main` authorization
@@ -62,6 +64,12 @@ iteration inside the existing Values surface:
   remains readable on phone, tablet, and desktop; remove the small XL override;
 - keep card chronology/direction neutral across LTR/RTL; only content direction
   changes.
+
+R3 is published at `95b3b78f91d42d536881324eda6d453c7139a015` as an
+11-file Values/test commit. Available proof passed JavaScript syntax, CSS parse,
+PHP test-source parse, <=200-line owners, pure responsive `180/90/0deg` flip,
+three desktop bounce cycles, immediate heading travel, intact desktop overlap,
+and explicit upward exit.
 
 The smoothness investigation is read-only in this batch. Live Lusion evidence
 shows a fixed, native-scroll-locked UI and canvas under one virtual-scroll render
@@ -450,3 +458,18 @@ source. Protected sections are outside the patch.
    progress ledger/handoff.
 5. `PENDING`: run checkout/browser proof and promote only when every acceptance
    gate has recorded evidence.
+
+
+## Focused correction R3 execution result
+
+- The owner-accepted checkpoint is
+  `0521c9aa1641c8d547099f8a7c758f943a32a0ae`.
+- The bounded source commit is
+  `95b3b78f91d42d536881324eda6d453c7139a015`, advanced by non-force
+  fast-forward.
+- Exactly 11 files changed: one Blade partial, four Values CSS owners, five
+  Values JavaScript owners, and one focused feature test.
+- No locale copy, route, dependency, Vite entry, protected surface, or global
+  scroll controller changed.
+- Full checkout build/PHP/browser proof remains
+  `BLOCKED_BY_MISSING_EVIDENCE`.

@@ -1,7 +1,7 @@
 # Homepage Values Runtime Correction Handoff
 
 Date: 2026-08-04
-Batch: `HOME-VALUES-001-R2`
+Batch: `HOME-VALUES-001-R3`
 Repository: `Asyraf2003/schoolai`
 Branch: `main`
 Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
@@ -14,6 +14,10 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
   `docs(values): classify tablet and desktop tiers`
 - `c1c45381d7b1824ab72ca7d6d85fed77889e58ad`
   `fix(values): rebuild responsive card story motion`
+- `0521c9aa1641c8d547099f8a7c758f943a32a0ae`
+  `docs(values): accept focused runtime correction`
+- `95b3b78f91d42d536881324eda6d453c7139a015`
+  `fix(values): refine heading and card motion`
 
 All three commits advanced `main` by non-force fast-forward. The failed runtime
 baseline was `c24e4d73fd57659df9f18eeb732d3ec755031743`.
@@ -49,15 +53,26 @@ deck, flips overlap when the preceding card has turned about `34.6deg`, the
 front passes by `-18deg`, floating is stronger and phase-offset, and the final
 row leaves upward intact with normal section movement.
 
-No protected section, dependency, font, asset, route, database, or backend
-owner was intentionally changed.
+R3 makes the desktop heading leave from the first scroll progress, starts both
+title lines at logical inline-start before the second line shifts inline-end,
+simplifies card fronts to readable content, replaces the back logo/orbit with an
+Islamic geometric field, runs exactly three desktop bounce cycles before upward
+exit, and uses a pure `180deg -> 0deg` responsive flip with card-relative type.
+
+The live smoothness audit proved that Lusion uses native-scroll lock, a fixed UI,
+and fixed canvases under one virtual-scroll pipeline. SchoolAI still uses native
+scroll plus surface-local RAF controllers. That global difference is recorded
+but intentionally not changed in R3.
+
+No protected section, dependency, font, asset, route, database, backend, locale
+copy, Vite entry, or global scroll owner was intentionally changed.
 
 ## Available source evidence
 
 | Check | Result |
 |---|---|
-| GitHub HEAD/ref update | `PASS_SOURCE` at `c1c45381`; fast-forward, `force:false` |
-| implementation scope | `PASS_SOURCE`; exactly 16 mapped Values files |
+| GitHub HEAD/ref update | `PASS_SOURCE` at `95b3b78f`; fast-forward, `force:false` |
+| R3 implementation scope | `PASS_SOURCE`; exactly 11 mapped Values/test files |
 | Values JavaScript `node --check` | `PASS_LOCAL_PATCH` |
 | Values CSS entry Lightning CSS bundle/parse | `PASS_LOCAL_PATCH` |
 | ID/EN/AR lang + focused Pest source PHP parse | `PASS_LOCAL_PATCH`; syntax only, not Laravel execution |
@@ -67,10 +82,11 @@ owner was intentionally changed.
 | removed eyebrow/copy scan | `PASS_LOCAL_PATCH` |
 | merge-conflict scan | `PASS_LOCAL_PATCH` |
 
-The numeric contract recorded `34.6deg` prior-card turn at each following flip,
-`-18deg` front overshoot, `0deg` final pose, responsive `rotateY` values of
-`180 / 46.5 / 0deg` at `50 / 75 / 100%` visibility, heading mask starts of
-`+108 / -108%`, and no final card-opacity property.
+The R3 numeric contract records responsive `180 / 90 / 0deg` at half-visible /
+three-quarter-visible / fully-visible states, `34.59deg` retained desktop
+inter-card overlap, exactly three alternating bounce cycles, heading Y travel
+from the first positive progress, explicit full-row upward exit, and no
+perpetual float keyframes.
 
 ## Evidence still required
 
@@ -103,10 +119,10 @@ git pull --ff-only origin main
 git rev-parse HEAD
 ```
 
-Expected HEAD: `c1c45381d7b1824ab72ca7d6d85fed77889e58ad`. Render that exact source and
+Expected HEAD: `95b3b78f91d42d536881324eda6d453c7139a015`. Render that exact source and
 collect owner feedback before promoting any runtime gate.
 
 ## Rollback
 
-The source correction is isolated in `c1c45381d7b1824ab72ca7d6d85fed77889e58ad`.
+The focused R3 source correction is isolated in `95b3b78f91d42d536881324eda6d453c7139a015`.
 Use a normal revert commit if rollback is required; do not force-push `main`.
