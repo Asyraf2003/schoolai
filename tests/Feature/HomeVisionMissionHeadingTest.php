@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders a localized semantic Vision and Mission fallback without legacy motion ownership', function (): void {
+it('renders the localized WAAPI Vision and Mission story contract', function (): void {
     foreach (['id', 'en', 'ar'] as $locale) {
         $response = $this
             ->withSession(['locale' => $locale])
@@ -13,22 +13,26 @@ it('renders a localized semantic Vision and Mission fallback without legacy moti
         $response
             ->assertOk()
             ->assertSee('id="visi-misi"', false)
-            ->assertSee('data-vision-mission-static', false)
+            ->assertSee('data-vision-story', false)
+            ->assertSee('data-vision-editorial', false)
+            ->assertSee('data-vision-divider', false)
             ->assertSee('data-vision-mission-list', false)
-            ->assertSee('data-vision-mission-item', false)
+            ->assertSee('resources/css/pages/welcome-vision-waapi.css', false)
+            ->assertSee('resources/js/pages/welcome-vision-story.js', false)
             ->assertDontSee('data-story-root', false)
             ->assertDontSee('data-story-scene', false)
             ->assertDontSee('data-story-text', false)
-            ->assertDontSee('data-story-effect', false)
             ->assertDontSee('direction-story', false)
             ->assertDontSee('story-unit', false);
 
         $content = $response->getContent();
 
-        expect(substr_count($content, 'data-vision-mission-static'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-mission-list'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-mission-item'))->toBe(4)
-            ->and(substr_count($content, 'id="mission-title-'))->toBe(4);
+        expect(substr_count($content, 'data-vision-story'))->toBe(1)
+            ->and(substr_count($content, 'data-vision-panel'))->toBe(10)
+            ->and(substr_count($content, 'data-vision-panel-kind="vision"'))->toBe(1)
+            ->and(substr_count($content, 'data-vision-panel-kind="mission"'))->toBe(4)
+            ->and(substr_count($content, 'data-vision-art'))->toBe(4)
+            ->and(substr_count($content, 'id="vision-mission-title-'))->toBe(4);
 
         if ($locale === 'ar') {
             $storyStart = strpos($content, 'id="visi-misi"');
