@@ -6,6 +6,8 @@ uses(RefreshDatabase::class);
 
 it('renders the localized WAAPI Vision and Mission story contract', function (): void {
     foreach (['id', 'en', 'ar'] as $locale) {
+        app()->setLocale($locale);
+
         $response = $this
             ->withSession(['locale' => $locale])
             ->get(route('home'));
