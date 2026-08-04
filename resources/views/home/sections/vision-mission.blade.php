@@ -1,8 +1,9 @@
 @php
   $directionLocale = app()->getLocale();
   $visionAssets = [9, 10, 11, 12];
-  $missionAssets = [9, 10, 11, 12];
   $arabicHonorific = 'صلى الله عليه وسلم';
+  $programTitle = $featuredPrograms['section_title']
+    ?? __('home.program_unggulan.section_title');
 @endphp
 
 <section
@@ -13,24 +14,27 @@
 >
   <div class="vision-story__pin" data-vision-pin>
     <div class="vision-story__stage">
-      <header class="vision-story__editorial" data-vision-editorial>
-        <p class="vision-story__eyebrow">
-          {{ $visiMisi['section_subtitle'] }}
-        </p>
-        <h2 id="vision-story-title">
-          {{ $visiMisi['section_title'] }}
-        </h2>
-      </header>
+      <div class="vision-story__track" data-vision-track>
+        <header
+          class="vision-story__editorial vision-story__track-item"
+          data-vision-editorial
+        >
+          <p class="vision-story__eyebrow">
+            {{ $visiMisi['section_subtitle'] }}
+          </p>
+          <h2 id="vision-story-title">
+            {{ $visiMisi['section_title'] }}
+          </h2>
+        </header>
 
-      <span
-        class="vision-story__divider"
-        data-vision-divider
-        aria-hidden="true"
-      ></span>
+        <span
+          class="vision-story__divider"
+          data-vision-divider
+          aria-hidden="true"
+        ></span>
 
-      <div class="vision-story__deck">
         <article
-          class="vision-story__panel vision-story__panel--vision"
+          class="vision-story__panel vision-story__panel--vision vision-story__track-item"
           data-vision-panel
           data-vision-panel-kind="vision"
           aria-labelledby="vision-panel-title"
@@ -75,25 +79,13 @@
               $isArabicFirstMission = $directionLocale === 'ar' && $loop->first;
             @endphp
 
-            <li>
+            <li class="vision-story__track-item">
               <article
-                class="vision-story__panel vision-story__panel--mission vision-story__panel--mission-{{ $loop->iteration }}"
+                class="vision-story__panel vision-story__panel--mission"
                 data-vision-panel
                 data-vision-panel-kind="mission"
                 aria-labelledby="vision-mission-title-{{ $loop->iteration }}"
               >
-                <div class="vision-story__art" aria-hidden="true">
-                  <img
-                    src="{{ asset('media/home/'.$missionAssets[$loop->index].'.png') }}"
-                    alt=""
-                    width="1600"
-                    height="2000"
-                    loading="lazy"
-                    decoding="async"
-                    fetchpriority="low"
-                  />
-                </div>
-
                 <div class="vision-story__content">
                   <span class="vision-story__label">
                     {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
@@ -125,6 +117,19 @@
             </li>
           @endforeach
         </ol>
+
+        <div
+          class="vision-story__outro vision-story__track-item"
+          data-vision-outro
+        >
+          <h3>{{ $programTitle }}</h3>
+        </div>
+
+        <div
+          class="vision-story__canvas vision-story__track-item"
+          data-vision-canvas
+          aria-hidden="true"
+        ></div>
       </div>
     </div>
   </div>
