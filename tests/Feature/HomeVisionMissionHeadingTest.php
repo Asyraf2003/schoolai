@@ -16,9 +16,12 @@ it('renders the localized WAAPI Vision and Mission story contract', function ():
             ->assertOk()
             ->assertSee('id="visi-misi"', false)
             ->assertSee('data-vision-story', false)
+            ->assertSee('data-vision-track', false)
             ->assertSee('data-vision-editorial', false)
             ->assertSee('data-vision-divider', false)
             ->assertSee('data-vision-mission-list', false)
+            ->assertSee('data-vision-outro', false)
+            ->assertSee('data-vision-canvas', false)
             ->assertDontSee('data-story-root', false)
             ->assertDontSee('data-story-scene', false)
             ->assertDontSee('data-story-text', false)
@@ -28,10 +31,13 @@ it('renders the localized WAAPI Vision and Mission story contract', function ():
         $content = $response->getContent();
 
         expect(substr_count($content, 'data-vision-story'))->toBe(1)
+            ->and(substr_count($content, 'data-vision-track'))->toBe(1)
             ->and(substr_count($content, 'data-vision-panel-kind='))->toBe(5)
             ->and(substr_count($content, 'data-vision-panel-kind="vision"'))->toBe(1)
             ->and(substr_count($content, 'data-vision-panel-kind="mission"'))->toBe(4)
             ->and(substr_count($content, 'data-vision-art'))->toBe(4)
+            ->and(substr_count($content, 'data-vision-outro'))->toBe(1)
+            ->and(substr_count($content, 'data-vision-canvas'))->toBe(1)
             ->and(substr_count($content, 'id="vision-mission-title-'))->toBe(4);
 
         if ($locale === 'ar') {
