@@ -1,137 +1,91 @@
 const DURATION = 1000;
 
-function createPausedAnimation(element, keyframes) {
+function createAnimation(element, keyframes) {
     const animation = element.animate(keyframes, {
         duration: DURATION,
         fill: 'both',
         easing: 'linear',
     });
-
     animation.pause();
     animation.currentTime = 0;
     return animation;
 }
 
-function panelTransform({ rtl, x = 0, y = 0, scale = 1, rotate = 0 }) {
-    const center = rtl ? 'translate(50%, -50%)' : 'translate(-50%, -50%)';
-    return `${center} translate3d(${x}px, ${y}px, 0) scale(${scale}) rotate(${rotate}deg)`;
+const middleX = (rect) => rect.left + (rect.width / 2);
+const middleY = (rect) => rect.top + (rect.height / 2);
+const trackTransform = (x) => `translate3d(${x}px, -50%, 0)`;
+
+function initialTrackX(editorial, vision, viewportWidth) {
+    const left = Math.min(editorial.left, vision.left);
+    const right = Math.max(editorial.right, vision.right);
+    return (viewportWidth / 2) - ((left + right) / 2);
 }
 
-function missionFrames(index, geometry) {
-    const windows = [
-        [0.28, 0.43, 0.48, 0.59],
-        [0.42, 0.56, 0.61, 0.72],
-        [0.55, 0.69, 0.74, 0.85],
-        [0.68, 0.82, 0.94, 1],
-    ];
-    const [start, dock, exitStart, exitEnd] = windows[index];
-    const arc = start + ((dock - start) * 0.45);
-    const { rtl, direction, width, height, dockX, dockY, dockScale } = geometry;
-
-    return [
-        {
-            offset: 0,
-            opacity: 0,
-            transform: panelTransform({ rtl, x: direction * width * 0.78, y: height * 0.72, scale: 0.4, rotate: direction * 12 }),
-        },
-        {
-            offset: start,
-            opacity: 0,
-            transform: panelTransform({ rtl, x: direction * width * 0.78, y: height * 0.72, scale: 0.4, rotate: direction * 12 }),
-            easing: 'cubic-bezier(.22,1,.36,1)',
-        },
-        {
-            offset: arc,
-            opacity: 1,
-            transform: panelTransform({ rtl, x: direction * width * 0.56, y: -height * 0.14, scale: dockScale * 0.88, rotate: direction * -7 }),
-            easing: 'cubic-bezier(.2,.75,.3,1)',
-        },
-        {
-            offset: dock,
-            opacity: 1,
-            transform: panelTransform({ rtl, x: dockX, y: dockY, scale: dockScale, rotate: 0 }),
-        },
-        {
-            offset: exitStart,
-            opacity: 1,
-            transform: panelTransform({ rtl, x: dockX, y: dockY, scale: dockScale, rotate: 0 }),
-            easing: 'cubic-bezier(.64,0,.36,1)',
-        },
-        {
-            offset: exitEnd,
-            opacity: index === 3 ? 0.7 : 0,
-            transform: panelTransform({ rtl, x: direction * width * -1.18, y: dockY, scale: dockScale, rotate: 0 }),
-        },
-        {
-            offset: 1,
-            opacity: index === 3 ? 0.7 : 0,
-            transform: panelTransform({ rtl, x: direction * width * -1.18, y: dockY, scale: dockScale, rotate: 0 }),
-        },
-    ];
+function itemTrackX(rect, viewportWidth, ratio = 0.54) {
+    return (viewportWidth * ratio) - middleX(rect);
 }
 
 export function createVisionTimeline(root) {
-    const rtl = document.documentElement.dir === 'rtl';
-    const mobile = window.matchMedia('(max-width: 1023px)').matches;
-    const direction = rtl ? -1 : 1;
+    const track = root.querySelector('[data-vision-track]');
+    const editorial = root.querySelector('[data-vision-editorial]');
+    const vision = root.querySelector('[data-vision-panel-kind="vision"]');
+    const missions = Array.from(root.querySelectorAll('[data-vision-panel-kind="mission"]'));
+    const outro = root.querySelector('[data-vision-outro]');
+    const canvas = root.querySelector('[data-vision-canvas]');
+
+    if (!track || !editorial || !vision || missions.length !== 4 || !outro || !canvas) {
+        return { setProgress() {}, destroy() {} };
+    }
+
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const dockScale = mobile ? 0.74 : 0.56;
-    const dockX = mobile ? 0 : direction * width * 0.24;
-    const dockY = mobile ? height * 0.14 : 0;
-    const geometry = { rtl, mobile, direction, width, height, dockScale, dockX, dockY };
+    const editorialRect = editorial.getBoundingClientRect();
+    const visionRect = vision.getBoundingClientRect();
+    const missionRects = missions.map((item) => item.getBoundingClientRect());
+    const outroRect = outro.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    const startX = initialTrackX(editorialRect, visionRect, width);
+    const missionX = missionRects.map((rect) => itemTrackX(rect, width));
+    const outroX = itemTrackX(outroRect, width, 0.5);
+    const canvasX = itemTrackX(canvasRect, width, 0.5);
+    const openScale = Math.max(width / visionRect.width, height / visionRect.height) * 1.03;
+    const openX = (width / 2) - (middleX(visionRect) + startX);
+    const openY = (height / 2) - middleY(visionRect);
     const animations = [];
-    const panels = Array.from(root.querySelectorAll('[data-vision-panel]'));
-    const editorial = root.querySelector('[data-vision-editorial]');
-    const divider = root.querySelector('[data-vision-divider]');
-    const visionPanel = panels[0];
 
-    animations.push(createPausedAnimation(visionPanel, [
-        { offset: 0, opacity: 1, transform: panelTransform({ rtl }) },
-        { offset: 0.17, opacity: 1, transform: panelTransform({ rtl }), easing: 'cubic-bezier(.22,1,.36,1)' },
-        { offset: 0.3, opacity: 1, transform: panelTransform({ rtl, x: dockX, y: dockY, scale: dockScale }) },
-        { offset: 0.38, opacity: 1, transform: panelTransform({ rtl, x: dockX, y: dockY, scale: dockScale }), easing: 'cubic-bezier(.64,0,.36,1)' },
-        { offset: 0.5, opacity: 0, transform: panelTransform({ rtl, x: direction * width * -1.18, y: dockY, scale: dockScale }) },
-        { offset: 1, opacity: 0, transform: panelTransform({ rtl, x: direction * width * -1.18, y: dockY, scale: dockScale }) },
+    animations.push(createAnimation(track, [
+        { offset: 0, transform: trackTransform(startX) },
+        { offset: 0.25, transform: trackTransform(startX), easing: 'cubic-bezier(.22,1,.36,1)' },
+        { offset: 0.36, transform: trackTransform(missionX[0]) },
+        { offset: 0.48, transform: trackTransform(missionX[1]) },
+        { offset: 0.60, transform: trackTransform(missionX[2]) },
+        { offset: 0.72, transform: trackTransform(missionX[3]) },
+        { offset: 0.84, transform: trackTransform(outroX) },
+        { offset: 0.94, transform: trackTransform(canvasX), easing: 'cubic-bezier(.64,0,.36,1)' },
+        { offset: 1, transform: trackTransform(canvasX) },
     ]));
 
-    panels.slice(1).forEach((panel, index) => {
-        animations.push(createPausedAnimation(panel, missionFrames(index, geometry)));
-    });
+    animations.push(createAnimation(vision, [
+        { offset: 0, transform: `translate3d(${openX}px, ${openY}px, 0) scale(${openScale})` },
+        { offset: 0.12, transform: `translate3d(${openX}px, ${openY}px, 0) scale(${openScale})`, easing: 'cubic-bezier(.22,1,.36,1)' },
+        { offset: 0.25, transform: 'translate3d(0, 0, 0) scale(1)' },
+        { offset: 1, transform: 'translate3d(0, 0, 0) scale(1)' },
+    ]));
 
-    if (editorial) {
-        const startTransform = mobile
-            ? 'translate3d(0, -20px, 0)'
-            : `translate3d(${direction * -36}px, -50%, 0)`;
-        const endTransform = mobile ? 'translate3d(0, 0, 0)' : 'translate3d(0, -50%, 0)';
-        animations.push(createPausedAnimation(editorial, [
-            { offset: 0, opacity: 0, transform: startTransform },
-            { offset: 0.18, opacity: 0, transform: startTransform, easing: 'cubic-bezier(.22,1,.36,1)' },
-            { offset: 0.3, opacity: 1, transform: endTransform },
-            { offset: 0.9, opacity: 1, transform: endTransform },
-            { offset: 1, opacity: 0, transform: endTransform },
-        ]));
-    }
-
-    if (divider) {
-        const transform = mobile ? 'scaleX' : 'scaleY';
-        animations.push(createPausedAnimation(divider, [
-            { offset: 0, opacity: 0, transform: `${transform}(0)` },
-            { offset: 0.2, opacity: 0, transform: `${transform}(0)` },
-            { offset: 0.32, opacity: 1, transform: `${transform}(1)` },
-            { offset: 0.92, opacity: 1, transform: `${transform}(1)` },
-            { offset: 1, opacity: 0, transform: `${transform}(0)` },
-        ]));
-    }
+    animations.push(createAnimation(outro, [
+        { offset: 0, opacity: 0, transform: 'translate3d(0, 18svh, 0)' },
+        { offset: 0.72, opacity: 0, transform: 'translate3d(0, 18svh, 0)', easing: 'cubic-bezier(.22,1,.36,1)' },
+        { offset: 0.84, opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        { offset: 1, opacity: 1, transform: 'translate3d(0, 0, 0)' },
+    ]));
 
     const artOffsets = [[-90, -70], [90, -60], [-80, 80], [85, 65]];
     root.querySelectorAll('[data-vision-art]').forEach((image, index) => {
         const [x, y] = artOffsets[index % artOffsets.length];
-        animations.push(createPausedAnimation(image, [
-            { offset: 0, opacity: 0.05, transform: `translate3d(${x}px, ${y}px, 0) scale(1.08)` },
-            { offset: 0.2, opacity: 0.22, transform: 'translate3d(0, 0, 0) scale(1)', easing: 'cubic-bezier(.22,1,.36,1)' },
-            { offset: 0.5, opacity: 0.16, transform: `translate3d(${x * -0.08}px, ${y * -0.08}px, 0) scale(.98)` },
-            { offset: 1, opacity: 0.12, transform: `translate3d(${x * 0.06}px, ${y * 0.06}px, 0) scale(.96)` },
+        animations.push(createAnimation(image, [
+            { offset: 0, opacity: 0.08, transform: `translate3d(${x}px, ${y}px, 0) scale(1.08)` },
+            { offset: 0.14, opacity: 0.22, transform: 'translate3d(0, 0, 0) scale(1)', easing: 'cubic-bezier(.22,1,.36,1)' },
+            { offset: 1, opacity: 0.18, transform: 'translate3d(0, 0, 0) scale(1)' },
         ]));
     });
 
