@@ -24,6 +24,7 @@
     .vision-story.is-enhanced .vision-story__panel {
         height: 46svh;
         padding: clamp(1.5rem, 4vw, 2.5rem);
+        border-radius: 0;
     }
 
     .vision-story.is-enhanced .vision-story__outro {
@@ -53,7 +54,7 @@
     .vision-story__panel {
         width: 100%;
         padding: 1.35rem;
-        border-radius: 1.4rem;
+        border-radius: 0;
     }
 
     .vision-story__content h3,
@@ -93,7 +94,7 @@
         height: auto;
         aspect-ratio: 4 / 3;
         padding: 1.25rem;
-        border-radius: 1.4rem;
+        border-radius: 0;
     }
 
     .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content h4 {
