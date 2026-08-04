@@ -6,6 +6,7 @@ Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Active blueprint: `blueprints/2026-08-03-home-values-card-story.md`
 Raw evidence: `measurements/2026-08-03-home-values-reference-motion-raw.md`
+Cross-surface smoothness audit: `measurements/2026-08-04-home-motion-smoothness-source-audit.md`
 Failed runtime source: `c24e4d73fd57659df9f18eeb732d3ec755031743`
 Prior implementation: `fbbc83b6672053652ac4551aea3970b825df0fcc`
 Revision blueprint checkpoint: `e56b00a455848772905def3c3ab63016dd24c303`
@@ -121,26 +122,41 @@ only the proven Values owners: logical heading composition, natural heading
 exit, front hierarchy, geometric back art, card-relative type scale, bounded
 desktop bounce/exit, responsive pure flip, and focused DOM assertions.
 
-## Smoothness audit boundary
+## Cross-surface smoothness source audit
 
-Read-only live evidence from `lusion.co/about` at `1363x936` shows
-`html/body overflow:hidden`, a viewport-fixed UI approximately `24760px`
-high, and fixed canvases. Lusion therefore routes input through one virtual
-scroll/render pipeline. SchoolAI uses native document scroll plus separate
-surface-local RAF controllers; its Values spring smooths only Values progress,
-not the whole page. Large transition blur/backdrop layers can add paint cost.
+The durable source comparison is recorded in
+`measurements/2026-08-04-home-motion-smoothness-source-audit.md` at inspected
+main `7eddaeb3`. It accepts the owner's symptom that Main Menu and Gallery feel
+smoother than Vision/Mission and Values, without claiming an unrun frame trace.
 
-This is a global architecture difference, not an asset-download gap. R3 does
-not alter global scroll, other RAF owners, dependencies, canvas, or WebGL.
+Source facts explain the architectural difference:
+
+- Main Menu uses finite event-driven CSS/Web Animations rather than a scroll
+  story loop.
+- Gallery gives one RAF authority to a camera/canvas pipeline; most changing
+  state stays inside one WebGL frame.
+- Vision/Mission splits Latin copy into characters and continuously writes
+  unit opacity/filter/transform while animating large filtered sticky layers.
+- Values performs 39 DOM style/attribute mutations per normal desktop frame,
+  samples the SVG trail path, and composites nested CSS-3D/shadow/blur layers.
+- Vision and Values observer margins can keep both local RAF controllers active
+  around their shared boundary, alongside navigation motion.
+
+Lusion's one virtual-scroll/render pipeline explains its global input unity.
+The relative difference inside SchoolAI is instead per-surface frame workload,
+pacing, and fragmented scheduling; all four SchoolAI surfaces still consume
+native scroll. No UI source changed in this documentation batch. Actual frame
+cost remains `BLOCKED_BY_MISSING_EVIDENCE` until comparable traces exist.
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| Current GitHub main | `PASS_SOURCE` | verified at `95b3b78f` after non-force fast-forward |
+| Inspected GitHub main | `PASS_SOURCE` | baseline `7eddaeb3`; Values source `95b3b78f` remains in ancestry |
 | Mandatory docs | `PASS_SOURCE` | full required chain read |
 | Baseline owner screenshots/video | `FAIL_RUNTIME` | failures apply to superseded `c24e4d73` |
 | Lusion live measurements | `PASS_REFERENCE` | read-only computed geometry captured |
+| Cross-surface smoothness audit | `PASS_SOURCE` | four owners and frame-work differences recorded; runtime cost unmeasured |
 | Revised blueprint | `PASS_SOURCE` | accepted contract at `e56b00a4` |
 | Revised source/scope | `PASS_SOURCE` | atomic 16-file R2 patch at `c1c45381` |
 | Focused R3 blueprint | `PASS_SOURCE` | owner-accepted checkpoint at `0521c9aa` |
@@ -162,8 +178,13 @@ pass where this channel can execute them. Runtime remains unpromoted: owner
 feedback makes R2 a runtime `FAIL`, while `95b3b78f` remains
 `BLOCKED_BY_MISSING_EVIDENCE` until rendered and reviewed.
 
+The cross-surface smoothness comparison is documentation-only and does not
+promote Values, Vision/Mission, Gallery, or global performance status.
+
 ## NEXT VALID STEP
 
-Pull current `main`, verify source commit `95b3b78f` is in its ancestry,
-render the Values section, and collect owner feedback plus the required
-Chromium/WebKit matrix without promoting unobserved gates.
+Pull current `main`, confirm `95b3b78f` remains in its ancestry, then capture
+one controlled Chromium Performance trace for normal and reverse scroll through
+Vision -> Values at XL/ID. Record frame time, long tasks, style/layout,
+paint/composite, layer count, and simultaneous RAF callbacks before accepting a
+global-motion blueprint.
