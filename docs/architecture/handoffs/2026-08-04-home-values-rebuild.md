@@ -116,11 +116,13 @@ still requires measured card-union/stage center deltas within 8px horizontal and
 
 ```bash
 git pull --ff-only origin main
-git rev-parse HEAD
+git merge-base --is-ancestor 95b3b78f91d42d536881324eda6d453c7139a015 HEAD
+git rev-parse --short HEAD
 ```
 
-Expected HEAD: `95b3b78f91d42d536881324eda6d453c7139a015`. Render that exact source and
-collect owner feedback before promoting any runtime gate.
+The ancestry command must exit `0`. The branch HEAD may be a later docs-only
+handoff commit; render the source containing `95b3b78f` and collect owner
+feedback before promoting any runtime gate.
 
 ## Rollback
 

@@ -164,5 +164,6 @@ feedback makes R2 a runtime `FAIL`, while `95b3b78f` remains
 
 ## NEXT VALID STEP
 
-Pull `main` at `95b3b78f`, render the Values section, and collect owner feedback
-plus the required Chromium/WebKit matrix without promoting unobserved gates.
+Pull current `main`, verify source commit `95b3b78f` is in its ancestry,
+render the Values section, and collect owner feedback plus the required
+Chromium/WebKit matrix without promoting unobserved gates.
