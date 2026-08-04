@@ -1,0 +1,144 @@
+.vision-story.is-enhanced {
+    height: 680svh;
+    padding: 0;
+}
+
+.vision-story.is-enhanced .vision-story__pin {
+    position: sticky;
+    inset-block-start: 0;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.vision-story.is-enhanced .vision-story__stage {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.vision-story.is-enhanced .vision-story__editorial {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 5vw;
+    z-index: 20;
+    width: min(36vw, 34rem);
+    margin: 0;
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.vision-story.is-enhanced .vision-story__editorial h2 {
+    max-width: 9ch;
+    font-size: clamp(4rem, 8.8vw, 9rem);
+}
+
+.vision-story.is-enhanced .vision-story__divider {
+    position: absolute;
+    inset-block: 8svh;
+    inset-inline-start: 50%;
+    z-index: 19;
+    display: block;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.34);
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: 50% 50%;
+}
+
+.vision-story.is-enhanced .vision-story__deck,
+.vision-story.is-enhanced .vision-story__missions,
+.vision-story.is-enhanced .vision-story__missions > li {
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.vision-story.is-enhanced .vision-story__panel {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    width: min(82vw, 82rem);
+    min-height: 0;
+    height: min(84svh, 56rem);
+    padding: clamp(2rem, 4vw, 4.5rem);
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 50%;
+    backface-visibility: hidden;
+    contain: layout paint style;
+}
+
+html[dir="rtl"] .vision-story.is-enhanced .vision-story__panel {
+    transform: translate(50%, -50%);
+}
+
+.vision-story.is-enhanced .vision-story__panel--mission {
+    opacity: 0;
+}
+
+.vision-story.is-enhanced .vision-story__panel--mission .vision-story__content {
+    width: min(64%, 48rem);
+}
+
+.vision-story.is-enhanced .vision-story__panel--mission .vision-story__content h4 {
+    font-size: clamp(2.6rem, 5.5vw, 6rem);
+}
+
+.vision-story.is-enhanced.is-near .vision-story__panel,
+.vision-story.is-enhanced.is-near .vision-story__art img,
+.vision-story.is-enhanced.is-near .vision-story__editorial,
+.vision-story.is-enhanced.is-near .vision-story__divider {
+    will-change: transform, opacity;
+}
+
+.vision-story.is-enhanced:not(.is-near) .vision-story__panel,
+.vision-story.is-enhanced:not(.is-near) .vision-story__art img,
+.vision-story.is-enhanced:not(.is-near) .vision-story__editorial,
+.vision-story.is-enhanced:not(.is-near) .vision-story__divider {
+    will-change: auto;
+}
+
+.vision-story.is-preparing::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: 1.5rem;
+    inset-block-start: 1.5rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.46);
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vision-story.is-enhanced {
+        height: auto;
+        padding-block: clamp(4rem, 8vw, 8rem);
+    }
+
+    .vision-story.is-enhanced .vision-story__pin {
+        position: relative;
+        height: auto;
+        overflow: visible;
+    }
+
+    .vision-story.is-enhanced .vision-story__stage,
+    .vision-story.is-enhanced .vision-story__deck,
+    .vision-story.is-enhanced .vision-story__missions,
+    .vision-story.is-enhanced .vision-story__missions > li,
+    .vision-story.is-enhanced .vision-story__panel,
+    .vision-story.is-enhanced .vision-story__editorial {
+        position: relative;
+        inset: auto;
+        width: auto;
+        height: auto;
+        opacity: 1;
+        transform: none;
+    }
+
+    .vision-story.is-enhanced .vision-story__divider {
+        display: none;
+    }
+}
