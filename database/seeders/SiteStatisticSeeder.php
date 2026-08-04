@@ -13,7 +13,7 @@ final class SiteStatisticSeeder extends Seeder
             [
                 'value' => '320+',
                 'value_en' => '320+',
-                'value_ar' => '+٣٢٠',
+                'value_ar' => '+320',
                 'label' => 'Siswa',
                 'label_en' => 'Students',
                 'label_ar' => 'طالب',
@@ -21,7 +21,7 @@ final class SiteStatisticSeeder extends Seeder
             [
                 'value' => '24+',
                 'value_en' => '24+',
-                'value_ar' => '+٢٤',
+                'value_ar' => '+24',
                 'label' => 'Prestasi',
                 'label_en' => 'Achievements',
                 'label_ar' => 'إنجازًا',
@@ -29,7 +29,7 @@ final class SiteStatisticSeeder extends Seeder
             [
                 'value' => '1.200+',
                 'value_en' => '1,200+',
-                'value_ar' => '+١٬٢٠٠',
+                'value_ar' => '+1,200',
                 'label' => 'Jam Belajar',
                 'label_en' => 'Learning Hours',
                 'label_ar' => 'ساعة تعلّم',
@@ -37,7 +37,7 @@ final class SiteStatisticSeeder extends Seeder
             [
                 'value' => '18+',
                 'value_en' => '18+',
-                'value_ar' => '+١٨',
+                'value_ar' => '+18',
                 'label' => 'Program',
                 'label_en' => 'Programs',
                 'label_ar' => 'برنامجًا',
