@@ -156,9 +156,6 @@
         grid-template-columns: 1fr;
         padding: 40px;
     }
-    .visi-misi__grid {
-        grid-template-columns: 1fr;
-    }
     .site-footer__grid {
         grid-template-columns: 1fr 1fr;
     }
