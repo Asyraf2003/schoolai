@@ -17,11 +17,6 @@ import './welcome-gallery-heading.js';
         { selector: '.hero__visual', directions: ['right'], stagger: 0 },
         { selector: '.stats-ribbon', directions: ['bottom'], stagger: 0 },
 
-        { selector: '.visi-misi__head', directions: ['zoom'], stagger: 0 },
-        { selector: '.visi-card', directions: ['left'], stagger: 0 },
-        { selector: '.misi-panel', directions: ['right'], stagger: 0 },
-        { selector: '.misi-list__item', directions: ['right', 'bottom'], stagger: 45 },
-
         { selector: '.nilai-section__intro', directions: ['left'], stagger: 0 },
         { selector: '.nilai-card', directions: ['left', 'bottom', 'right', 'zoom'], stagger: 45 },
 
