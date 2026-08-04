@@ -8,6 +8,7 @@ export default defineConfig({
             input: [
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/welcome-hero.js',
+                'resources/js/pages/welcome-vision-story.js',
                 'resources/js/pages/welcome-depth-gallery.js',
                 'resources/js/pages/welcome-testimonial-story.js',
                 'resources/js/pages/welcome-testimonial-extra-nodes.js',
@@ -19,6 +20,7 @@ export default defineConfig({
                 'resources/js/pages/admin-accounts.js',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
+                'resources/css/pages/welcome-vision-waapi.css',
                 'resources/css/pages/welcome-values-story.css',
                 'resources/css/pages/welcome-depth-gallery.css',
                 'resources/css/pages/welcome-testimonial-layout.css',
