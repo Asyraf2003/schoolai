@@ -71,6 +71,10 @@
 
         <ol class="vision-story__missions" data-vision-mission-list>
           @foreach ($visiMisi['missions'] as $mission)
+            @php
+              $isArabicFirstMission = $directionLocale === 'ar' && $loop->first;
+            @endphp
+
             <li>
               <article
                 class="vision-story__panel vision-story__panel--mission vision-story__panel--mission-{{ $loop->iteration }}"
@@ -100,13 +104,7 @@
                   <p>
                     @foreach ($mission['text_parts'] as $part)
                       @php
-                        $hasArabicHonorific = $directionLocale === 'ar'
-                          && (
-                            str_contains($part['text'], 'رسول الله')
-                            || str_contains($part['text'], 'ﷺ')
-                            || str_contains($part['text'], $arabicHonorific)
-                          );
-                        $partText = $hasArabicHonorific
+                        $partText = $isArabicFirstMission
                           ? trim(str_replace(['ﷺ', $arabicHonorific], '', $part['text']))
                           : $part['text'];
                       @endphp
@@ -116,11 +114,11 @@
                       @else
                         {{ $partText }}
                       @endif
-
-                      @if ($hasArabicHonorific)
-                        <span data-vision-mission-honorific>{{ $arabicHonorific }}</span>
-                      @endif
                     @endforeach
+
+                    @if ($isArabicFirstMission)
+                      <span data-vision-mission-honorific>{{ $arabicHonorific }}</span>
+                    @endif
                   </p>
                 </div>
               </article>
