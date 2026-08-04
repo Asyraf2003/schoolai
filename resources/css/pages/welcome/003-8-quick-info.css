@@ -171,20 +171,3 @@
     font-size: 0.86rem;
     color: rgba(255, 255, 255, 0.85);
 }
-
-/* ---------- 10. VISI MISI ---------- */
-.visi-misi__grid {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 40px;
-    align-items: center;
-}
-.visi-card {
-    background: var(--color-blue-soft);
-    border-radius: var(--radius-lg);
-    padding: 40px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
