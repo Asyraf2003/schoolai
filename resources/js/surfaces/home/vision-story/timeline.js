@@ -25,6 +25,25 @@ function itemTrackX(rect, viewportWidth, ratio = 0.54) {
     return (viewportWidth * ratio) - middleX(rect);
 }
 
+function missionFrames(index, direction, width, height) {
+    const arrivals = [0.36, 0.48, 0.60, 0.72];
+    const arrival = arrivals[index];
+    const start = arrival - 0.09;
+    const corner = `translate3d(${direction * width * 0.22}px, ${height * 0.44}px, 0) scale(.96)`;
+
+    return [
+        { offset: 0, opacity: 0, transform: corner },
+        {
+            offset: start,
+            opacity: 0,
+            transform: corner,
+            easing: 'cubic-bezier(.22,1,.36,1)',
+        },
+        { offset: arrival, opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' },
+        { offset: 1, opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' },
+    ];
+}
+
 export function createVisionTimeline(root) {
     const track = root.querySelector('[data-vision-track]');
     const editorial = root.querySelector('[data-vision-editorial]');
@@ -37,6 +56,8 @@ export function createVisionTimeline(root) {
         return { setProgress() {}, destroy() {} };
     }
 
+    const rtl = document.documentElement.dir === 'rtl';
+    const direction = rtl ? -1 : 1;
     const width = window.innerWidth;
     const height = window.innerHeight;
     const editorialRect = editorial.getBoundingClientRect();
@@ -72,6 +93,13 @@ export function createVisionTimeline(root) {
         { offset: 1, transform: 'translate3d(0, 0, 0) scale(1)' },
     ]));
 
+    missions.forEach((mission, index) => {
+        animations.push(createAnimation(
+            mission,
+            missionFrames(index, direction, width, height),
+        ));
+    });
+
     animations.push(createAnimation(outro, [
         { offset: 0, opacity: 0, transform: 'translate3d(0, 18svh, 0)' },
         { offset: 0.72, opacity: 0, transform: 'translate3d(0, 18svh, 0)', easing: 'cubic-bezier(.22,1,.36,1)' },
@@ -83,9 +111,9 @@ export function createVisionTimeline(root) {
     root.querySelectorAll('[data-vision-art]').forEach((image, index) => {
         const [x, y] = artOffsets[index % artOffsets.length];
         animations.push(createAnimation(image, [
-            { offset: 0, opacity: 0.08, transform: `translate3d(${x}px, ${y}px, 0) scale(1.08)` },
-            { offset: 0.14, opacity: 0.22, transform: 'translate3d(0, 0, 0) scale(1)', easing: 'cubic-bezier(.22,1,.36,1)' },
-            { offset: 1, opacity: 0.18, transform: 'translate3d(0, 0, 0) scale(1)' },
+            { offset: 0, opacity: 0.04, transform: `translate3d(${x}px, ${y}px, 0) scale(1.08)` },
+            { offset: 0.14, opacity: 0.1, transform: 'translate3d(0, 0, 0) scale(1)', easing: 'cubic-bezier(.22,1,.36,1)' },
+            { offset: 1, opacity: 0.09, transform: 'translate3d(0, 0, 0) scale(1)' },
         ]));
     });
 
