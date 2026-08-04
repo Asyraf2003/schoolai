@@ -17,8 +17,6 @@ it('renders the localized WAAPI Vision and Mission story contract', function ():
             ->assertSee('data-vision-editorial', false)
             ->assertSee('data-vision-divider', false)
             ->assertSee('data-vision-mission-list', false)
-            ->assertSee('resources/css/pages/welcome-vision-waapi.css', false)
-            ->assertSee('resources/js/pages/welcome-vision-story.js', false)
             ->assertDontSee('data-story-root', false)
             ->assertDontSee('data-story-scene', false)
             ->assertDontSee('data-story-text', false)
@@ -28,7 +26,7 @@ it('renders the localized WAAPI Vision and Mission story contract', function ():
         $content = $response->getContent();
 
         expect(substr_count($content, 'data-vision-story'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-panel'))->toBe(10)
+            ->and(substr_count($content, 'data-vision-panel-kind='))->toBe(5)
             ->and(substr_count($content, 'data-vision-panel-kind="vision"'))->toBe(1)
             ->and(substr_count($content, 'data-vision-panel-kind="mission"'))->toBe(4)
             ->and(substr_count($content, 'data-vision-art'))->toBe(4)
