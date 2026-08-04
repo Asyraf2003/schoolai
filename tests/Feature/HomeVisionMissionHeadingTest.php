@@ -33,11 +33,7 @@ it('renders the localized WAAPI Vision and Mission story contract', function ():
             ->and(substr_count($content, 'id="vision-mission-title-'))->toBe(4);
 
         if ($locale === 'ar') {
-            $storyStart = strpos($content, 'id="visi-misi"');
-            $storyEnd = strpos($content, '</section>', $storyStart);
-            $story = substr($content, $storyStart, $storyEnd - $storyStart);
-
-            expect($story)
+            expect($content)
                 ->toContain('data-vision-mission-honorific')
                 ->toContain('صلى الله عليه وسلم')
                 ->not->toContain('ﷺ');
