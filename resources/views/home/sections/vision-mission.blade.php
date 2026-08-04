@@ -2,6 +2,7 @@
   $directionLocale = app()->getLocale();
   $visionAssets = [9, 10, 11, 12];
   $missionAssets = [9, 10, 11, 12];
+  $arabicHonorific = 'صلى الله عليه وسلم';
 @endphp
 
 <section
@@ -100,9 +101,12 @@
                     @foreach ($mission['text_parts'] as $part)
                       @php
                         $hasArabicHonorific = $directionLocale === 'ar'
-                          && str_contains($part['text'], 'ﷺ');
+                          && (
+                            str_contains($part['text'], 'ﷺ')
+                            || str_contains($part['text'], $arabicHonorific)
+                          );
                         $partText = $hasArabicHonorific
-                          ? trim(str_replace('ﷺ', '', $part['text']))
+                          ? trim(str_replace(['ﷺ', $arabicHonorific], '', $part['text']))
                           : $part['text'];
                       @endphp
 
@@ -113,7 +117,7 @@
                       @endif
 
                       @if ($hasArabicHonorific)
-                        <span data-vision-mission-honorific>صلى الله عليه وسلم</span>
+                        <span data-vision-mission-honorific>{{ $arabicHonorific }}</span>
                       @endif
                     @endforeach
                   </p>
