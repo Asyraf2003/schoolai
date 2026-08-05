@@ -2,13 +2,13 @@ import { createVisionTimeline } from './timeline.js';
 
 const clamp = (value) => Math.max(0, Math.min(1, value));
 
-function decodeOpeningArtwork(root) {
+function decodeImages(root) {
     const images = Array.from(root.querySelectorAll('[data-vision-art]'));
     const work = Promise.allSettled(images.map((image) => {
         if (typeof image.decode !== 'function') return Promise.resolve();
         return image.decode();
     }));
-    const timeout = new Promise((resolve) => window.setTimeout(resolve, 700));
+    const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
 
     return Promise.race([work, timeout]);
 }
@@ -16,8 +16,14 @@ function decodeOpeningArtwork(root) {
 export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktop = window.matchMedia('(min-width: 1181px)');
 
-    if (!root || reducedMotion.matches || typeof Element.prototype.animate !== 'function') {
+    if (
+        !root
+        || !desktop.matches
+        || reducedMotion.matches
+        || typeof Element.prototype.animate !== 'function'
+    ) {
         return null;
     }
 
@@ -77,7 +83,7 @@ export function mountVisionStory() {
     }
 
     function rebuildTimeline() {
-        if (!prepared || destroyed) return;
+        if (!prepared || destroyed || !desktop.matches) return;
         if (timeline) timeline.destroy();
         measure();
         timeline = createVisionTimeline(root);
@@ -90,8 +96,8 @@ export function mountVisionStory() {
         preparing = true;
         root.classList.add('is-preparing');
 
-        await decodeOpeningArtwork(root);
-        if (destroyed) return;
+        await decodeImages(root);
+        if (destroyed || !desktop.matches) return;
 
         root.classList.add('is-enhanced');
         root.classList.remove('is-preparing');
@@ -123,10 +129,17 @@ export function mountVisionStory() {
 
     function onResize() {
         window.clearTimeout(resizeTimer);
-        resizeTimer = window.setTimeout(rebuildTimeline, 140);
+        resizeTimer = window.setTimeout(() => {
+            if (!desktop.matches) {
+                destroy();
+                return;
+            }
+            rebuildTimeline();
+        }, 140);
     }
 
     function destroy() {
+        if (destroyed) return;
         destroyed = true;
         window.clearTimeout(resizeTimer);
         if (frame !== null) cancelAnimationFrame(frame);
@@ -135,7 +148,7 @@ export function mountVisionStory() {
         window.removeEventListener('scroll', updateTarget);
         window.removeEventListener('resize', onResize);
         window.removeEventListener('pageshow', rebuildTimeline);
-        root.classList.remove('is-near', 'is-preparing');
+        root.classList.remove('is-enhanced', 'is-near', 'is-preparing');
     }
 
     window.addEventListener('scroll', updateTarget, { passive: true });
