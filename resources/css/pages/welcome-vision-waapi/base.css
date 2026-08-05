@@ -1,167 +1,161 @@
-.vision-story {
+.vision-paper {
     position: relative;
     overflow: clip;
-    padding-block: clamp(4rem, 8vw, 8rem);
-    background: #ffffff;
-    color: #161616;
+    background: #fff;
+    color: #111;
 }
 
-.vision-story__stage {
-    width: min(100% - 2rem, 92rem);
-    margin-inline: auto;
+.vision-paper__pin,
+.vision-paper__track,
+.vision-paper__scene,
+.vision-paper__program {
+    position: relative;
 }
 
-.vision-story__track {
+.vision-paper__track {
     display: grid;
-    gap: clamp(2rem, 5vw, 5rem);
 }
 
-.vision-story__editorial {
+.vision-paper__scene {
+    min-height: 100svh;
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 5rem);
+}
+
+.vision-paper__copy-layout {
     display: grid;
-    align-content: center;
-    gap: 1rem;
-    min-height: 50svh;
+    gap: clamp(3rem, 7vw, 7rem);
 }
 
-.vision-story__eyebrow,
-.vision-story__label {
-    margin: 0;
-    color: rgba(22, 22, 22, 0.58);
+.vision-paper__copy {
+    max-width: 42rem;
+}
+
+.vision-paper__kicker {
+    margin: 0 0 1.25rem;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 400;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
 }
 
-.vision-story__editorial h2,
-.vision-story__outro h3 {
-    max-width: 10ch;
+.vision-paper__vision-text {
     margin: 0;
-    color: inherit;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(3rem, 7vw, 7rem);
+    font-size: clamp(1.55rem, 3.2vw, 3.4rem);
     font-weight: 300;
-    line-height: 0.98;
-    letter-spacing: -0.055em;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
 }
 
-.vision-story__divider {
-    display: none;
-}
-
-.vision-story__missions {
+.vision-paper__mission-list {
     display: grid;
-    gap: clamp(2rem, 5vw, 5rem);
+    gap: 1.1rem;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.vision-story__panel {
-    position: relative;
-    width: min(100%, 48rem);
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    display: grid;
-    align-items: end;
-    padding: clamp(1.5rem, 4vw, 3.25rem);
-    border: 1px solid rgba(22, 22, 22, 0.18);
-    border-radius: 0;
-    background: #f3f3f1;
-    box-shadow: none;
-    color: #161616;
-    isolation: isolate;
-}
-
-.vision-story__panel--vision,
-.vision-story__panel--mission {
-    background: #f3f3f1;
-}
-
-.vision-story__art {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.vision-story__art img {
-    position: absolute;
-    display: block;
-    width: clamp(12rem, 28vw, 28rem);
-    height: auto;
-    opacity: 0.09;
-    object-fit: contain;
-    transform-origin: 50% 50%;
-    user-select: none;
-}
-
-.vision-story__art img:nth-child(1) { inset: -18% auto auto -10%; }
-.vision-story__art img:nth-child(2) { inset: 2% -12% auto auto; }
-.vision-story__art img:nth-child(3) { inset: auto auto -24% -12%; }
-.vision-story__art img:nth-child(4) { inset: auto -10% -10% auto; }
-
-.vision-story__content {
-    position: relative;
-    z-index: 1;
-    width: min(100%, 38rem);
-}
-
-.vision-story__label {
-    display: inline-block;
-    margin-bottom: 0.8rem;
-}
-
-.vision-story__content h3,
-.vision-story__content h4 {
-    margin: 0 0 0.8rem;
-    color: #161616;
-    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(2rem, 4vw, 4rem);
-    font-weight: 400;
-    line-height: 1.02;
-    letter-spacing: -0.045em;
-}
-
-.vision-story__content p {
-    max-width: 34rem;
+.vision-paper__mission-list h3,
+.vision-paper__mission-list p {
     margin: 0;
-    color: rgba(22, 22, 22, 0.78);
-    font-size: clamp(0.92rem, 1.1vw, 1.12rem);
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
-    line-height: 1.55;
 }
 
-.vision-story__content strong {
-    color: #161616;
-    font-weight: 500;
+.vision-paper__mission-list h3 {
+    margin-bottom: 0.3rem;
+    font-size: clamp(0.95rem, 1.35vw, 1.25rem);
+    line-height: 1.15;
 }
 
-.vision-story__outro {
-    min-height: 70svh;
+.vision-paper__mission-list p {
+    color: rgba(17, 17, 17, 0.68);
+    font-size: clamp(0.78rem, 0.9vw, 0.98rem);
+    line-height: 1.42;
+}
+
+.vision-paper__square {
+    position: relative;
+    width: min(100%, 44rem);
+    aspect-ratio: 1;
+    margin: 5rem 0 0;
+    overflow: visible;
+}
+
+.vision-paper__square > img,
+.vision-paper__image-stack img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vision-paper__frame {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 42%;
+    width: 72%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    transform: translateY(-50%);
+}
+
+.vision-paper__image-stack {
     display: grid;
-    place-items: center;
-    text-align: center;
+    grid-template-rows: repeat(2, 50%);
+    width: 100%;
+    height: 200%;
+    transform: translate3d(0, 0, 0);
 }
 
-.vision-story__canvas {
+.vision-paper__program {
     min-height: 100svh;
-    background: #ffffff;
+    display: grid;
+    align-content: center;
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 8vw, 8rem);
+    background: #fff;
 }
 
-html[dir="rtl"] .vision-story__editorial h2,
-html[dir="rtl"] .vision-story__outro h3,
-html[dir="rtl"] .vision-story__content h3,
-html[dir="rtl"] .vision-story__content h4 {
-    font-family: "Cairo", Arial, sans-serif;
+.vision-paper__program-accent {
+    display: none;
+}
+
+.vision-paper__program h2 {
+    max-width: 13ch;
+    margin: 0;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(3.2rem, 7.5vw, 8rem);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+}
+
+.vision-paper__program p {
+    max-width: 34rem;
+    margin: 3rem 0 0 auto;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
     font-weight: 400;
+    line-height: 1.35;
+}
+
+html[dir="rtl"] .vision-paper__copy,
+html[dir="rtl"] .vision-paper__program {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] .vision-paper__kicker,
+html[dir="rtl"] .vision-paper__vision-text,
+html[dir="rtl"] .vision-paper__mission-list h3,
+html[dir="rtl"] .vision-paper__mission-list p,
+html[dir="rtl"] .vision-paper__program h2,
+html[dir="rtl"] .vision-paper__program p {
+    font-family: "Cairo", Arial, sans-serif;
     letter-spacing: normal;
 }
 
-html[dir="rtl"] .vision-story__eyebrow,
-html[dir="rtl"] .vision-story__label {
-    letter-spacing: normal;
-    text-transform: none;
+html[dir="rtl"] .vision-paper__program p {
+    margin-inline: 0 auto;
 }
