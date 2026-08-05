@@ -29,7 +29,8 @@
         --frame-inside: calc(var(--frame-width) * 2 / 3);
         --frame-outside: calc(var(--frame-width) / 3);
         --frame-start: calc(var(--image-width) - var(--frame-inside));
-        --scene-width: calc(82vw + var(--image-width) + var(--frame-outside));
+        --scene-width: calc(82vw + var(--image-width));
+        z-index: 1;
         flex: 0 0 var(--scene-width);
         width: var(--scene-width);
         height: 100svh;
@@ -92,6 +93,7 @@
     }
 
     .vision-paper.is-enhanced .vision-paper__frame {
+        z-index: 2;
         inset-block-start: 50%;
         inset-inline-start: var(--frame-start);
         width: var(--frame-width);
@@ -101,6 +103,7 @@
     }
 
     .vision-paper.is-enhanced .vision-paper__program {
+        z-index: 0;
         flex: 0 0 100vw;
         width: 100vw;
         height: 100svh;
