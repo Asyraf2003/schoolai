@@ -9,7 +9,6 @@ function decodeImages(root) {
         return image.decode();
     }));
     const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
-
     return Promise.race([work, timeout]);
 }
 
@@ -17,14 +16,11 @@ export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const wide = window.matchMedia('(min-width: 1024px)');
-
     if (
         !root
         || reducedMotion.matches
         || typeof Element.prototype.animate !== 'function'
-    ) {
-        return null;
-    }
+    ) return null;
 
     const track = root.querySelector('[data-vision-track]');
     let timeline = null;
@@ -50,7 +46,6 @@ export function mountVisionStory() {
             root.style.removeProperty('height');
             return;
         }
-
         root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
     }
 
@@ -80,7 +75,6 @@ export function mountVisionStory() {
     function tick(now) {
         frame = null;
         if (destroyed || !near || !timeline) return;
-
         const elapsed = Math.min(64, Math.max(1, now - lastFrameTime));
         const alpha = 1 - Math.exp(-elapsed / 88);
         renderedProgress += (targetProgress - renderedProgress) * alpha;
@@ -89,17 +83,14 @@ export function mountVisionStory() {
         ) * alpha;
         lastFrameTime = now;
         render();
-
         const storyMoving = Math.abs(targetProgress - renderedProgress) > 0.00015;
         const introMoving = Math.abs(
             targetIntroProgress - renderedIntroProgress,
         ) > 0.00015;
-
         if (storyMoving || introMoving) {
             frame = requestAnimationFrame(tick);
             return;
         }
-
         renderedProgress = targetProgress;
         renderedIntroProgress = targetIntroProgress;
         render();
@@ -132,13 +123,10 @@ export function mountVisionStory() {
         if (prepared || preparing || destroyed) return;
         preparing = true;
         root.classList.add('is-preparing');
-
         await decodeImages(root);
         if (destroyed) return;
-
         root.classList.add('is-enhanced');
         root.classList.remove('is-preparing');
-
         requestAnimationFrame(() => {
             if (destroyed) return;
             measure();
@@ -155,7 +143,6 @@ export function mountVisionStory() {
     function onIntersection(entries) {
         near = entries.some((entry) => entry.isIntersecting);
         root.classList.toggle('is-near', near);
-
         if (near) {
             prepare();
             updateTarget();
@@ -188,7 +175,6 @@ export function mountVisionStory() {
     window.addEventListener('resize', onResize, { passive: true });
     window.addEventListener('pageshow', rebuildTimeline, { passive: true });
     window.addEventListener('pagehide', destroy, { once: true });
-
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(onIntersection, {
             rootMargin: '110% 0px 110% 0px',
@@ -200,6 +186,5 @@ export function mountVisionStory() {
         root.classList.add('is-near');
         prepare();
     }
-
     return { destroy };
 }
