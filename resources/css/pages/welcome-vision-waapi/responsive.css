@@ -1,126 +1,79 @@
-@media (max-width: 1023px) {
-    .vision-story.is-enhanced {
-        height: 760svh;
+@media (min-width: 768px) and (max-width: 1180px) {
+    .vision-paper__scene {
+        padding-inline: clamp(2rem, 6vw, 5rem);
     }
 
-    .vision-story.is-enhanced .vision-story__track {
-        gap: clamp(2rem, 5vw, 4rem);
-        padding-inline: 5vw;
+    .vision-paper__copy-layout {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
     }
 
-    .vision-story.is-enhanced .vision-story__editorial {
-        width: min(68vw, 32rem);
-        height: 46svh;
+    html[dir="rtl"] .vision-paper__copy--vision {
+        order: 2;
     }
 
-    .vision-story.is-enhanced .vision-story__editorial h2 {
-        font-size: clamp(3rem, 8vw, 5.8rem);
+    html[dir="rtl"] .vision-paper__copy--mission {
+        order: 1;
     }
 
-    .vision-story.is-enhanced .vision-story__divider {
-        height: 46svh;
-    }
-
-    .vision-story.is-enhanced .vision-story__panel {
-        height: 46svh;
-        padding: clamp(1.5rem, 4vw, 2.5rem);
-        border-radius: 0;
-    }
-
-    .vision-story.is-enhanced .vision-story__outro {
-        width: min(76vw, 38rem);
-        height: 46svh;
-    }
-
-    .vision-story.is-enhanced .vision-story__outro h3 {
-        font-size: clamp(3rem, 8vw, 6rem);
+    .vision-paper__square {
+        width: min(72vw, 42rem);
+        margin-inline: auto;
     }
 }
 
 @media (max-width: 767px) {
-    .vision-story {
+    .vision-paper__scene {
         padding-block: 4rem;
     }
 
-    .vision-story__stage {
-        width: min(100% - 1.25rem, 92rem);
+    .vision-paper__copy-layout {
+        gap: 3.5rem;
     }
 
-    .vision-story__editorial h2,
-    .vision-story__outro h3 {
-        font-size: clamp(2.6rem, 12vw, 4.5rem);
+    html[dir="rtl"] .vision-paper__copy--vision {
+        order: 2;
     }
 
-    .vision-story__panel {
-        width: 100%;
-        padding: 1.35rem;
-        border-radius: 0;
+    html[dir="rtl"] .vision-paper__copy--mission {
+        order: 1;
     }
 
-    .vision-story__content h3,
-    .vision-story__content h4 {
-        font-size: clamp(2rem, 9vw, 3.4rem);
+    .vision-paper__vision-text {
+        font-size: clamp(1.8rem, 8vw, 3rem);
     }
 
-    .vision-story__content p {
-        font-size: 0.92rem;
-        line-height: 1.5;
+    .vision-paper__mission-list {
+        gap: 1.35rem;
     }
 
-    .vision-story.is-enhanced {
-        height: 720svh;
+    .vision-paper__square {
+        width: calc(100% - 2rem);
+        margin-inline: 0 auto;
     }
 
-    .vision-story.is-enhanced .vision-story__track {
-        gap: 1.5rem;
-        padding-inline: 1rem;
+    .vision-paper__frame {
+        inset-inline-start: 34%;
+        width: 82%;
     }
 
-    .vision-story.is-enhanced .vision-story__editorial {
-        width: 84vw;
-        height: 56vw;
+    .vision-paper__program {
+        padding-block: 5rem;
     }
 
-    .vision-story.is-enhanced .vision-story__editorial h2 {
-        font-size: clamp(2.7rem, 12vw, 4.5rem);
+    .vision-paper__program h2 {
+        font-size: clamp(3rem, 13vw, 5rem);
     }
 
-    .vision-story.is-enhanced .vision-story__divider {
-        height: 56vw;
-    }
-
-    .vision-story.is-enhanced .vision-story__panel {
-        width: 82vw;
-        height: auto;
-        aspect-ratio: 4 / 3;
-        padding: 1.25rem;
-        border-radius: 0;
-    }
-
-    .vision-story.is-enhanced .vision-story__panel--mission .vision-story__content h4 {
-        font-size: clamp(2rem, 8vw, 3.2rem);
-    }
-
-    .vision-story.is-enhanced .vision-story__art img {
-        width: clamp(11rem, 54vw, 20rem);
-    }
-
-    .vision-story.is-enhanced .vision-story__outro {
-        width: 86vw;
-        height: 58vw;
-    }
-
-    .vision-story.is-enhanced .vision-story__outro h3 {
-        font-size: clamp(2.8rem, 12vw, 4.6rem);
+    .vision-paper__program p {
+        margin-top: 2rem;
+        font-size: 1rem;
     }
 }
 
-@media (min-width: 1536px) {
-    .vision-story.is-enhanced {
-        height: 820svh;
-    }
-
-    .vision-story.is-enhanced .vision-story__track {
-        gap: clamp(4rem, 6vw, 7rem);
+@media (prefers-reduced-motion: reduce) {
+    .vision-paper__track,
+    .vision-paper__image-stack {
+        transform: none !important;
     }
 }
