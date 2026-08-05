@@ -23,11 +23,11 @@
 
     .vision-paper.is-enhanced .vision-paper__scene {
         --image-height: 100svh;
-        --image-width: calc(var(--image-height) * 5 / 4);
-        --frame-height: calc(var(--image-height) * 3 / 5);
-        --frame-width: calc(var(--frame-height) * 16 / 9);
-        --frame-inside: calc(var(--frame-width) * 3 / 4);
-        --frame-outside: calc(var(--frame-width) / 4);
+        --image-width: calc(var(--image-height) * 11 / 8);
+        --frame-height: calc(var(--image-height) / 3);
+        --frame-width: calc(var(--frame-height) * 11 / 8);
+        --frame-inside: calc(var(--frame-width) * 2 / 3);
+        --frame-outside: calc(var(--frame-width) / 3);
         --frame-start: calc(var(--image-width) - var(--frame-inside));
         --scene-width: calc(82vw + var(--image-width) + var(--frame-outside));
         flex: 0 0 var(--scene-width);
@@ -88,7 +88,7 @@
         width: var(--image-width);
         height: var(--image-height);
         margin: 0;
-        aspect-ratio: 5 / 4;
+        aspect-ratio: 11 / 8;
     }
 
     .vision-paper.is-enhanced .vision-paper__frame {
@@ -96,7 +96,7 @@
         inset-inline-start: var(--frame-start);
         width: var(--frame-width);
         height: var(--frame-height);
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 11 / 8;
         transform: translateY(-50%);
     }
 
