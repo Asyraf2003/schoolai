@@ -20,6 +20,7 @@
       'resources/css/pages/welcome-editorial-description-desktop.css',
       'resources/js/pages/welcome.js',
       'resources/js/pages/welcome-hero.js',
+      'resources/js/pages/welcome-vision-story.js',
       'resources/js/pages/welcome-depth-gallery.js',
       'resources/js/pages/welcome-editorial-headings.js',
     ])

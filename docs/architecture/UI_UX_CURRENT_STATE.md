@@ -4,54 +4,53 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-05
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active blueprint: `blueprints/2026-08-05-vision-mission-static-three-layout.md`
-Source baseline before batch: `a1287ed901f983d7b6cffda03db723b511bc1832`
-
-Commit publication proves source state only. It does not prove build, browser,
-responsive, accessibility, or performance completion.
+Active blueprint: `blueprints/2026-08-05-vision-mission-static-copy-image-motion.md`
+Source baseline before batch: `91719bd35cfbe11b16c8047a3f1ac74c27d32ce4`
 
 ## Active production batch
 
-- ID: `HOME-VISION-008-STATIC`
+- ID: `HOME-VISION-009-STATIC-COPY-IMAGE-MOTION`
 - State: `IMPLEMENTED_SOURCE`
 - Surface: homepage Vision/Mission `#visi-misi`
-- Goal: make critical Vision/Mission information permanently visible through
-  three static responsive layouts.
-- Protected: semantic copy, media assets, Hero, Values, Programs source,
-  Gallery, Articles, navigation, footer, About, Testimonial, routes, DB,
+- Goal: retain the accepted three static copy layouts while restoring only the
+  image 2-3 scroll swap.
+- Protected: Vision/Mission copy, locale strings, Program visibility, Hero,
+  Values, Programs source, Gallery, Articles, navigation, footer, routes, DB,
   authentication, and dependencies.
 
-## Owner-accepted decisions
+## Owner correction
 
-- All Vision/Mission motion is removed from production at every width.
-- Desktop `>=1181px` retains Vision left, Mission right, and Mission lower.
-- Large tablet `1024-1180px` uses two centered columns.
-- Narrow tablet and phone `<=1023px` use a close centered stack.
-- Image and Program follow with bounded `2-3svh` rhythm.
-- ID, EN, and AR use the same semantic layout and centered copy.
+The previous batch interpreted “static” as the whole section. The accepted
+meaning is narrower:
+
+- Vision and Mission copy are static and always readable;
+- image 2-3 retains scroll motion;
+- Program remains static and follows the image stage.
 
 ## Implemented source
 
-- CSS is the only runtime owner of Vision/Mission layout.
-- The Vision/Mission JavaScript entry was removed from Blade and Vite inputs.
-- Sticky pinning, long scroll height, horizontal travel, typography reveal,
-  image swap, lift, opacity gates, RAF, observer, and WAAPI are no longer loaded.
-- Desktop preserves the accepted copy hierarchy without absolute off-screen
-  travel.
-- Large tablet uses two columns; smaller widths stack.
-- The static media composition shows the main image plus images two and three.
-- Program content follows the image without reserving a full viewport.
+- Restored the Vite and homepage entry for `welcome-vision-story.js`.
+- Replaced the old entry with one image-only controller.
+- The production entry does not import the legacy typography/story controller.
+- Copy layout and visibility remain CSS-only in three responsive compositions.
+- Image 2-3 uses a vertical stack only when image motion is active.
+- The swap starts at frame entry and finishes at frame center.
+- A bounded sticky image stage holds the final image before static Program copy.
+- Reduced motion and failed JavaScript retain the static two-image fallback.
+- One passive scroll listener, one observer, one RAF, resize rebuild, and BFCache
+  restoration are used.
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
 | current `main` validation | `PASS_SOURCE` | branch checked before write |
-| latest user change preservation | `PASS_SOURCE` | patch built above `a1287ed9` |
-| source scope isolation | `PASS_SOURCE` | Vision owners, Vite entry, docs only |
-| CSS brace balance | `PASS_LOCAL_STATIC` | four CSS owners checked |
+| source scope isolation | `PASS_SOURCE` | image entry, image CSS, entry wiring, docs |
+| copy ownership isolation | `PASS_SOURCE` | controller has no copy/typography query |
+| JS syntax | `PASS_LOCAL_STATIC` | entry parsed with Node |
+| CSS brace balance | `PASS_LOCAL_STATIC` | enhanced owner checked |
 | source line limit | `PASS_LOCAL_STATIC` | changed source files <= 200 lines |
-| JS-disabled semantic result | `PASS_SOURCE` | production layout is CSS-only |
+| static fallback | `PASS_SOURCE` | class-free base layout remains readable |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector has no checkout |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
@@ -63,14 +62,12 @@ responsive, accessibility, or performance completion.
 - `Admin/GalleryItemSoftDeleteTest`
 - `HomeValuesStoryTest`
 
-No Gallery or Values source/test owner changed.
-
 ## STATUS
 
-The static three-layout Vision/Mission source is implemented. Completion remains
-blocked by checkout build/tests and responsive browser proof.
+The source now keeps critical copy static while restoring image-only motion.
+Completion remains blocked by checkout build/tests and browser proof.
 
 ## NEXT VALID STEP
 
-Owner/local terminal: fast-forward `main`, run the proof block, then review ID,
-EN, and AR at 1023/1024 and 1180/1181 boundaries.
+Fast-forward `main`, run the proof block, then verify image progress and static
+copy at 390x844, 759x924, 1036x924, 1180px, and desktop in ID, EN, and AR.

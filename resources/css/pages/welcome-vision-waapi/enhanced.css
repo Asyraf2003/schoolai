@@ -1,3 +1,33 @@
+.vision-paper.is-image-enhanced {
+    --image-motion-travel: clamp(12rem, 55svh, 34rem);
+}
+
+.vision-paper.is-image-enhanced .vision-paper__scene {
+    padding-block-end: calc(
+        var(--image-motion-travel) + var(--story-gap)
+    );
+}
+
+.vision-paper.is-image-enhanced .vision-paper__square {
+    position: sticky;
+    z-index: 1;
+    inset-block-start: clamp(4.75rem, 10svh, 7rem);
+}
+
+.vision-paper.is-image-enhanced .vision-paper__image-stack {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 50%);
+    width: 100%;
+    height: 200%;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+}
+
+.vision-paper.is-image-enhanced.is-image-near
+.vision-paper__image-stack {
+    will-change: transform;
+}
+
 @media (min-width: 1181px) {
     .vision-paper__scene {
         --copy-display-size: clamp(2rem, 2vw, 3rem);
