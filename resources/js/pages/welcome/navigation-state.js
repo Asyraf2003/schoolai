@@ -101,8 +101,27 @@ export function initializeNavigationState() {
 
   /* ---------- 4. NAVBAR BERUBAH SAAT SCROLL ---------- */
   var navbar = document.getElementById('navbar');
+  var hero = document.getElementById('beranda');
+  var desktopHeader = window.matchMedia('(min-width: 1181px)');
   var navbarScrolled = navbar ? navbar.classList.contains('is-scrolled') : false;
+  var navbarHidden = false;
+  var lastScrollY = window.scrollY;
+  var scrollDirection = 0;
+  var directionDistance = 0;
   var navigationFrame = 0;
+
+  function setNavbarHidden(shouldHide) {
+    if (!navbar || shouldHide === navbarHidden) return;
+
+    navbarHidden = shouldHide;
+    navbar.classList.toggle('is-scroll-hidden', shouldHide);
+  }
+
+  function resetDirectionTracking(scrollY) {
+    lastScrollY = scrollY;
+    scrollDirection = 0;
+    directionDistance = 0;
+  }
 
   function handleNavbarScroll() {
     if (!navbar) return;
@@ -115,9 +134,47 @@ export function initializeNavigationState() {
     navbar.classList.toggle('is-scrolled', nextScrolled);
   }
 
+  function handleNavbarVisibility() {
+    if (!navbar) return;
+
+    var currentScrollY = window.scrollY;
+    var delta = currentScrollY - lastScrollY;
+    lastScrollY = currentScrollY;
+
+    if (!desktopHeader.matches || !hero || navbar.classList.contains('has-open-menu')) {
+      setNavbarHidden(false);
+      resetDirectionTracking(currentScrollY);
+      return;
+    }
+
+    var heroBottom = getElementDocumentTop(hero) + Math.max(hero.offsetHeight, hero.scrollHeight, 1);
+    var outsideHero = currentScrollY + navbar.offsetHeight >= heroBottom;
+
+    if (!outsideHero) {
+      setNavbarHidden(false);
+      resetDirectionTracking(currentScrollY);
+      return;
+    }
+
+    if (!delta) return;
+
+    var nextDirection = delta > 0 ? 1 : -1;
+    if (nextDirection !== scrollDirection) {
+      scrollDirection = nextDirection;
+      directionDistance = 0;
+    }
+
+    directionDistance += Math.abs(delta);
+    if (directionDistance < 12) return;
+
+    setNavbarHidden(scrollDirection > 0);
+    directionDistance = 0;
+  }
+
   function runNavigationUpdate() {
     navigationFrame = 0;
     handleNavbarScroll();
+    handleNavbarVisibility();
     updateActiveNavLink();
   }
 
@@ -128,7 +185,15 @@ export function initializeNavigationState() {
 
   window.addEventListener('scroll', requestNavigationUpdate, { passive: true });
   window.addEventListener('resize', requestNavigationUpdate, { passive: true });
+
+  if (navbar) {
+    navbar.addEventListener('focusin', function () {
+      setNavbarHidden(false);
+    });
+  }
+
   handleNavbarScroll();
+  handleNavbarVisibility();
   updateActiveNavLink();
 
   /* ---------- 9. ANIMASI REVEAL SAAT SCROLL ---------- */
