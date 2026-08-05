@@ -7,6 +7,8 @@
     color: #111;
 }
 
+.vision-paper__copy-stage,
+.vision-paper__motion,
 .vision-paper__pin,
 .vision-paper__track,
 .vision-paper__scene,
@@ -14,22 +16,19 @@
     position: relative;
 }
 
-.vision-paper__track,
-.vision-paper__scene,
-.vision-paper__copy-layout {
-    display: grid;
-}
-
-.vision-paper__scene,
-.vision-paper__copy-layout {
-    gap: var(--story-gap);
-}
-
-.vision-paper__scene {
-    min-height: 0;
+.vision-paper__copy-stage {
     padding-block-start: calc(
         var(--story-header-clearance) + var(--story-gap)
     );
+}
+
+.vision-paper__copy-layout,
+.vision-paper__track {
+    display: grid;
+}
+
+.vision-paper__copy-layout {
+    gap: var(--story-gap);
 }
 
 .vision-paper__copy {
@@ -83,15 +82,21 @@
     --vision-mark-color: #7e22ce;
 }
 
-.vision-paper__square {
-    position: relative;
-    width: min(88vw, 60rem);
-    aspect-ratio: 11 / 8;
-    margin-inline: auto;
-    overflow: hidden;
+.vision-paper__scene {
+    min-height: 100svh;
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 5rem);
 }
 
-.vision-paper__square > img {
+.vision-paper__square {
+    position: relative;
+    width: min(100%, 44rem);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+.vision-paper__square > img,
+.vision-paper__image-stack img {
     display: block;
     width: 100%;
     height: 100%;
@@ -100,45 +105,37 @@
 
 .vision-paper__frame {
     position: absolute;
-    z-index: 2;
-    left: 50%;
-    right: auto;
-    bottom: var(--story-gap);
-    width: min(72%, 40rem);
-    aspect-ratio: 11 / 8;
+    inset-block-start: 50%;
+    inset-inline-start: 42%;
+    width: 72%;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
-    transform: translateX(-50%);
-    border: clamp(0.25rem, 0.6vw, 0.5rem) solid #fff;
+    transform: translateY(-50%);
 }
 
 .vision-paper__image-stack {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, 50%);
     width: 100%;
-    height: 100%;
-}
-
-.vision-paper__image-stack img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 200%;
+    transform: translate3d(0, 0, 0);
 }
 
 .vision-paper__program {
     display: grid;
-    min-height: 0;
-    align-content: start;
-    padding: var(--story-gap)
-        clamp(1.25rem, 8vw, 8rem)
-        clamp(4rem, 8svh, 7rem);
+    min-height: 100svh;
+    align-content: center;
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 8vw, 8rem);
     background: #fff;
-    text-align: center;
+}
+
+.vision-paper__program-accent {
+    display: none;
 }
 
 .vision-paper__program h2 {
     max-width: 13ch;
-    margin: 0 auto;
+    margin: 0;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(3.2rem, 7.5vw, 8rem);
     font-weight: 500;
@@ -149,7 +146,7 @@
 
 .vision-paper__program p {
     max-width: 34rem;
-    margin: var(--story-gap) auto 0;
+    margin: 3rem 0 0 auto;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(1rem, 1.4vw, 1.35rem);
     font-weight: 400;
@@ -172,4 +169,12 @@ html[dir="rtl"] .vision-paper__program p {
 
 html[dir="rtl"] .vision-paper__kicker {
     text-transform: none;
+}
+
+html[dir="rtl"] .vision-paper__program {
+    text-align: right;
+}
+
+html[dir="rtl"] .vision-paper__program p {
+    margin-inline: 0 auto;
 }

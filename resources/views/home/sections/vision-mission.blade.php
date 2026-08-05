@@ -38,110 +38,103 @@
   aria-labelledby="vision-paper-title"
   data-vision-story
 >
-  <div class="vision-paper__pin" data-vision-pin>
-    <div class="vision-paper__track" data-vision-track>
-      <div class="vision-paper__scene" data-vision-intro>
-        <div class="vision-paper__copy-layout">
-          <article
-            class="vision-paper__copy vision-paper__copy--vision"
-            data-vision-copy="vision"
-          >
-            <p class="vision-paper__kicker" data-vision-typography="vision">
-              {{ $visionLabel }}
-            </p>
-            <h2 id="vision-paper-title" class="sr-only">
-              {{ $visiMisi['section_title'] }}
-            </h2>
-            <p
-              class="vision-paper__vision-text"
-              data-vision-typography="vision"
-            >
-              @foreach ($visiMisi['vision']['text_parts'] as $part)
-                @if (! empty($part['mark']))
-                  <strong class="vision-paper__mark vision-paper__mark--{{ $part['mark'] }}">
-                    {{ $part['text'] }}
-                  </strong>
-                @else
-                  {{ $part['text'] }}
-                @endif
-              @endforeach
-            </p>
-          </article>
+  <div class="vision-paper__copy-stage">
+    <div class="vision-paper__copy-layout">
+      <article
+        class="vision-paper__copy vision-paper__copy--vision"
+        data-vision-copy="vision"
+      >
+        <p class="vision-paper__kicker">{{ $visionLabel }}</p>
+        <h2 id="vision-paper-title" class="sr-only">
+          {{ $visiMisi['section_title'] }}
+        </h2>
+        <p class="vision-paper__vision-text">
+          @foreach ($visiMisi['vision']['text_parts'] as $part)
+            @if (! empty($part['mark']))
+              <strong class="vision-paper__mark vision-paper__mark--{{ $part['mark'] }}">
+                {{ $part['text'] }}
+              </strong>
+            @else
+              {{ $part['text'] }}
+            @endif
+          @endforeach
+        </p>
+      </article>
 
-          <article
-            class="vision-paper__copy vision-paper__copy--mission"
-            data-vision-copy="mission"
-          >
-            <p class="vision-paper__kicker" data-vision-typography="mission">
-              {{ $missionLabel }}
-            </p>
-            <p
-              class="vision-paper__mission-text"
-              data-vision-mission-text
-              data-vision-typography="mission"
-            >
-              @foreach ($visiMisi['missions'] as $mission)
-                @foreach ($mission['text_parts'] as $part)
-                  @php
-                    $partText = $locale === 'ar'
-                      ? str_replace('ﷺ', $arabicHonorific, $part['text'])
-                      : $part['text'];
-                  @endphp
-                  {{ $partText }}
-                @endforeach
-                @unless ($loop->last) {{ ' ' }} @endunless
-              @endforeach
-            </p>
-          </article>
+      <article
+        class="vision-paper__copy vision-paper__copy--mission"
+        data-vision-copy="mission"
+      >
+        <p class="vision-paper__kicker">{{ $missionLabel }}</p>
+        <p class="vision-paper__mission-text" data-vision-mission-text>
+          @foreach ($visiMisi['missions'] as $mission)
+            @foreach ($mission['text_parts'] as $part)
+              @php
+                $partText = $locale === 'ar'
+                  ? str_replace('ﷺ', $arabicHonorific, $part['text'])
+                  : $part['text'];
+              @endphp
+              {{ $partText }}
+            @endforeach
+            @unless ($loop->last) {{ ' ' }} @endunless
+          @endforeach
+        </p>
+      </article>
+    </div>
+  </div>
+
+  <div class="vision-paper__motion" data-vision-motion>
+    <div class="vision-paper__pin" data-vision-pin>
+      <div class="vision-paper__track" data-vision-track>
+        <div class="vision-paper__scene" data-vision-intro>
+          <figure class="vision-paper__square" data-vision-image-square>
+            <img
+              src="{{ $schoolImages[0] }}"
+              alt="Aktivitas belajar di ruang kelas"
+              width="1600"
+              height="1600"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="low"
+              data-vision-art
+            />
+
+            <div class="vision-paper__frame" data-vision-image-frame>
+              <div class="vision-paper__image-stack" data-vision-image-stack>
+                <img
+                  src="{{ $schoolImages[1] }}"
+                  alt="Guru mendampingi kegiatan belajar anak"
+                  width="1920"
+                  height="1080"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  data-vision-art
+                />
+                <img
+                  src="{{ $schoolImages[2] }}"
+                  alt="Anak belajar bersama di kelas"
+                  width="1920"
+                  height="1080"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  data-vision-art
+                />
+              </div>
+            </div>
+          </figure>
         </div>
 
-        <figure class="vision-paper__square" data-vision-image-square>
-          <img
-            src="{{ $schoolImages[0] }}"
-            alt="Aktivitas belajar di ruang kelas"
-            width="1600"
-            height="1600"
-            loading="lazy"
-            decoding="async"
-            fetchpriority="low"
-            data-vision-art
-          />
-
-          <div class="vision-paper__frame" data-vision-image-frame>
-            <div class="vision-paper__image-stack" data-vision-image-stack>
-              <img
-                src="{{ $schoolImages[1] }}"
-                alt="Guru mendampingi kegiatan belajar anak"
-                width="1920"
-                height="1080"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-                data-vision-art
-              />
-              <img
-                src="{{ $schoolImages[2] }}"
-                alt="Anak belajar bersama di kelas"
-                width="1920"
-                height="1080"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-                data-vision-art
-              />
-            </div>
-          </div>
-        </figure>
+        <section
+          class="vision-paper__program"
+          aria-labelledby="vision-program-title"
+          data-vision-program
+        >
+          <h2 id="vision-program-title">{{ $programCopy['title'] }}</h2>
+          <p>{{ $programCopy['description'] }}</p>
+        </section>
       </div>
-
-      <section
-        class="vision-paper__program"
-        aria-labelledby="vision-program-title"
-        data-vision-program
-      >
-        <h2 id="vision-program-title">{{ $programCopy['title'] }}</h2>
-        <p>{{ $programCopy['description'] }}</p>
-      </section>
     </div>
   </div>
 </section>

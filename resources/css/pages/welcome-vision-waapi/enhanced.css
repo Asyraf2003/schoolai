@@ -1,39 +1,7 @@
-.vision-paper.is-image-enhanced {
-    --image-motion-travel: clamp(12rem, 55svh, 34rem);
-}
-
-.vision-paper.is-image-enhanced .vision-paper__scene {
-    padding-block-end: calc(
-        var(--image-motion-travel) + var(--story-gap)
-    );
-}
-
-.vision-paper.is-image-enhanced .vision-paper__square {
-    position: sticky;
-    z-index: 1;
-    inset-block-start: clamp(4.75rem, 10svh, 7rem);
-}
-
-.vision-paper.is-image-enhanced .vision-paper__image-stack {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, 50%);
-    width: 100%;
-    height: 200%;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-}
-
-.vision-paper.is-image-enhanced.is-image-near
-.vision-paper__image-stack {
-    will-change: transform;
-}
-
 @media (min-width: 1181px) {
-    .vision-paper__scene {
+    .vision-paper__copy-stage {
         --copy-display-size: clamp(2rem, 2vw, 3rem);
         --mission-display-size: clamp(1.7rem, min(2vw, 4.4svh), 3rem);
-        grid-template-rows: auto auto;
-        padding-inline: 0;
     }
 
     .vision-paper__copy-layout {
@@ -76,12 +44,114 @@
         max-width: 22ch;
     }
 
-    .vision-paper__square {
-        width: min(72vw, 72rem);
-        margin-top: var(--story-gap);
+    .vision-paper__motion {
+        min-height: 100svh;
     }
 
+    .vision-paper__scene {
+        --image-height: 100svh;
+        --image-width: calc(var(--image-height) * 11 / 8);
+        --frame-height: calc(var(--image-height) * 2 / 4);
+        --frame-width: calc(var(--frame-height) * 11 / 8);
+        --frame-inside: calc(var(--frame-width) * 2 / 3);
+        --frame-start: calc(var(--image-width) - var(--frame-inside));
+        height: 100svh;
+        min-height: 0;
+        padding: 0;
+    }
+
+    .vision-paper__square {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 8vw;
+        width: var(--image-width);
+        height: var(--image-height);
+        margin: 0;
+        aspect-ratio: 11 / 8;
+    }
+
+    .vision-paper__frame {
+        z-index: 2;
+        inset-block-start: 50%;
+        inset-inline-start: var(--frame-start);
+        width: var(--frame-width);
+        height: var(--frame-height);
+        aspect-ratio: 11 / 8;
+        transform: translateY(-50%);
+    }
+
+    html.vision-motion-capable .vision-paper.is-enhanced
+    .vision-paper__motion {
+        height: 360svh;
+    }
+
+    html.vision-motion-capable .vision-paper.is-enhanced
+    .vision-paper__pin {
+        position: sticky;
+        inset-block-start: 0;
+        height: 100svh;
+        overflow: hidden;
+    }
+
+    html.vision-motion-capable .vision-paper.is-enhanced
+    .vision-paper__track {
+        position: absolute;
+        inset: 0 auto 0 0;
+        display: flex;
+        width: max-content;
+        height: 100svh;
+        direction: ltr;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+    }
+
+    html.vision-motion-capable .vision-paper.is-enhanced
+    .vision-paper__scene {
+        --scene-width: calc(8vw + var(--image-width));
+        z-index: 1;
+        flex: 0 0 var(--scene-width);
+        width: var(--scene-width);
+    }
+
+    html.vision-motion-capable .vision-paper.is-enhanced
+    .vision-paper__program {
+        --frame-outside: calc(100svh * 2 / 4 * 11 / 8 / 3);
+        z-index: 0;
+        display: flex;
+        flex: 0 0 100vw;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(1.5rem, 4svh, 3rem);
+        width: 100vw;
+        height: 100svh;
+        min-height: 0;
+        padding: 12svh 8vw 10svh calc(var(--frame-outside) + 5vw);
+        overflow: hidden;
+        text-align: left;
+    }
+
+    html.vision-motion-capable .vision-paper.is-enhanced
     .vision-paper__program h2 {
+        width: min(68vw, 86rem);
+        max-width: none;
+        margin: 0;
         font-size: clamp(4rem, 6.8vw, 8rem);
     }
+
+    html.vision-motion-capable .vision-paper.is-enhanced
+    .vision-paper__program p {
+        width: min(34vw, 32rem);
+        margin: 0;
+        font-size: clamp(0.95rem, 1.25vw, 1.3rem);
+    }
+
+    html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__program {
+        direction: rtl;
+        text-align: right;
+    }
+}
+
+.vision-paper.is-enhanced.is-near .vision-paper__track,
+.vision-paper.is-enhanced.is-near .vision-paper__image-stack {
+    will-change: transform;
 }

@@ -1,18 +1,16 @@
-import {
-    createVisionTimeline,
-    prepareVisionTypography,
-} from './timeline.js';
-import { createTypographyEntry } from './entry.js';
+import { createVisionTimeline } from './timeline.js';
 import { prepareVisionAssets } from './preparation.js';
 
 const clamp = (value) => Math.max(0, Math.min(1, value));
 
 export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
+    const motion = root?.querySelector('[data-vision-motion]');
+    const track = root?.querySelector('[data-vision-track]');
     const wide = window.matchMedia('(min-width: 1181px)');
-    if (!root || typeof Element.prototype.animate !== 'function') return null;
 
-    const track = root.querySelector('[data-vision-track]');
+    if (!root || !motion || !track) return null;
+
     let timeline = null;
     let observer = null;
     let resizeTimer = null;
@@ -26,16 +24,13 @@ export function mountVisionStory() {
     let targetProgress = 0;
     let renderedProgress = 0;
     let lastFrameTime = performance.now();
-    let lastScrollY = window.scrollY;
-    let scrollDirection = 'initial';
-    const typographyEntry = createTypographyEntry(root, wide, () => timeline);
 
-    function syncStoryHeight() {
-        if (!track || wide.matches) {
-            root.style.removeProperty('height');
+    function syncMotionHeight() {
+        if (wide.matches) {
+            motion.style.removeProperty('height');
             return;
         }
-        root.style.height = `${Math.max(
+        motion.style.height = `${Math.max(
             track.scrollHeight,
             window.innerHeight + 1,
         )}px`;
@@ -45,25 +40,16 @@ export function mountVisionStory() {
         targetProgress = clamp((window.scrollY - start) / distance);
     }
 
-    function updateDirection() {
-        const nextScrollY = window.scrollY;
-        if (nextScrollY > lastScrollY + 0.5) scrollDirection = 'down';
-        if (nextScrollY < lastScrollY - 0.5) scrollDirection = 'up';
-        lastScrollY = nextScrollY;
-    }
-
     function measure() {
-        syncStoryHeight();
-        const rect = root.getBoundingClientRect();
+        syncMotionHeight();
+        const rect = motion.getBoundingClientRect();
         start = window.scrollY + rect.top;
-        distance = Math.max(1, root.offsetHeight - window.innerHeight);
+        distance = Math.max(1, motion.offsetHeight - window.innerHeight);
         updateProgressTarget();
     }
 
     function render() {
-        if (timeline) {
-            timeline.setProgress(renderedProgress, scrollDirection);
-        }
+        timeline?.setProgress(renderedProgress);
     }
 
     function tick(now) {
@@ -93,9 +79,7 @@ export function mountVisionStory() {
 
     function updateTarget() {
         if (!prepared || !near || !timeline) return;
-        updateDirection();
         updateProgressTarget();
-        typographyEntry.sync(scrollDirection);
         scheduleFrame();
     }
 
@@ -103,20 +87,18 @@ export function mountVisionStory() {
         if (!prepared || destroyed || !root.classList.contains('is-enhanced')) {
             return;
         }
-        if (timeline) timeline.destroy();
+        timeline?.destroy();
         timeline = null;
         measure();
         timeline = createVisionTimeline(root);
         renderedProgress = targetProgress;
-        scrollDirection = 'initial';
         render();
-        typographyEntry.sync('initial', true);
     }
 
     async function prepare() {
         if (prepared || preparing || destroyed) return;
         preparing = true;
-        await prepareVisionAssets(root, prepareVisionTypography);
+        await prepareVisionAssets(root);
         if (destroyed) return;
 
         root.classList.add('is-enhanced');
@@ -127,7 +109,6 @@ export function mountVisionStory() {
         prepared = true;
         preparing = false;
         root.classList.remove('is-preparing');
-        typographyEntry.sync('initial', true);
         scheduleFrame();
     }
 
@@ -154,27 +135,27 @@ export function mountVisionStory() {
         updateTarget();
     }
 
+    function destroy() {
+        if (destroyed) return;
+        destroyed = true;
+        window.clearTimeout(resizeTimer);
+        if (frame !== null) cancelAnimationFrame(frame);
+        observer?.disconnect();
+        timeline?.destroy();
+        window.removeEventListener('scroll', updateTarget);
+        window.removeEventListener('resize', onResize);
+        window.removeEventListener('pageshow', onPageShow);
+        window.removeEventListener('pagehide', onPageHide);
+        motion.style.removeProperty('height');
+        root.classList.remove('is-enhanced', 'is-near', 'is-preparing');
+    }
+
     function onPageHide(event) {
         if (frame !== null) {
             cancelAnimationFrame(frame);
             frame = null;
         }
         if (!event.persisted) destroy();
-    }
-
-    function destroy() {
-        if (destroyed) return;
-        destroyed = true;
-        window.clearTimeout(resizeTimer);
-        if (frame !== null) cancelAnimationFrame(frame);
-        if (observer) observer.disconnect();
-        if (timeline) timeline.destroy();
-        window.removeEventListener('scroll', updateTarget);
-        window.removeEventListener('resize', onResize);
-        window.removeEventListener('pageshow', onPageShow);
-        window.removeEventListener('pagehide', onPageHide);
-        root.style.removeProperty('height');
-        root.classList.remove('is-enhanced', 'is-near', 'is-preparing');
     }
 
     window.addEventListener('scroll', updateTarget, { passive: true });
@@ -187,7 +168,7 @@ export function mountVisionStory() {
             rootMargin: '110% 0px 110% 0px',
             threshold: 0,
         });
-        observer.observe(root);
+        observer.observe(motion);
     } else {
         near = true;
         root.classList.add('is-near');
