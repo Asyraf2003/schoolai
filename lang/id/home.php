@@ -165,8 +165,8 @@ return [
                         'short' => 'EN',
                     ],
                 ],
-            ], 
-        ], 
+            ],
+        ],
         'cta' => [
             'label' => 'Daftar Sekarang',
             'href' => '/ppdb',
@@ -484,9 +484,9 @@ return [
 
     'galeri' => [
 
-    'section_title' => 'Galeri Kegiatan Sekolah',
+        'section_title' => 'Galeri Kegiatan Sekolah',
 
-    'section_subtitle' => 'Cuplikan kegiatan belajar, ibadah, karya, dan kebersamaan siswa yang terdokumentasi di sekolah.',
+        'section_subtitle' => 'Cuplikan kegiatan belajar, ibadah, karya, dan kebersamaan siswa yang terdokumentasi di sekolah.',
 
         'title' => 'Momen Terbaru Al Mustaqbal School',
         'subtitle' => 'Dokumentasi kegiatan belajar, ibadah, kreativitas, dan kebersamaan siswa. Untuk saat ini galeri memakai data manual dan tautan Instagram, belum memakai API.',        'aria_label' => 'Daftar momen galeri terbaru',
@@ -722,7 +722,7 @@ return [
         ],
     ],
 
-'footer' => [
+    'footer' => [
         'brand' => [
             'href' => '#beranda',
             'image' => '/media/home/logo-footer.webp',
@@ -773,7 +773,7 @@ return [
                 'href' => 'mailto:almustaqbal010@gmail.com',
             ],
         ],
-'links_title' => 'Halaman Kami',
+        'links_title' => 'Halaman Kami',
         'links' => [
             [
                 'label' => 'Beranda',

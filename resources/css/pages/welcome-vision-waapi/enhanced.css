@@ -22,7 +22,7 @@
     }
 
     .vision-paper.is-enhanced .vision-paper__scene {
-        --copy-display-size: clamp(2.2rem, 3.6vw, 4.5rem);
+        --copy-display-size: clamp(2rem, 2vw, 3rem);
         --image-height: 100svh;
         --image-width: calc(var(--image-height) * 11 / 8);
         --frame-height: calc(var(--image-height) * 2 / 4);
@@ -41,7 +41,7 @@
 
     .vision-paper.is-enhanced .vision-paper__copy-layout {
         position: absolute;
-        inset-block-start: 11svh;
+        inset-block-start: 25svh;
         inset-inline-start: 6vw;
         display: grid;
         grid-template-columns: 34vw 34vw;
@@ -59,7 +59,7 @@
     .vision-paper.is-enhanced .vision-paper__copy--mission {
         grid-area: mission;
         align-self: start;
-        margin-top: 25svh;
+        margin-top: 15svh;
     }
 
     html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__copy-layout {
