@@ -1,14 +1,8 @@
 const UNIT_CLASS = 'vision-paper__reveal-unit';
 const WORD_CLASS = 'vision-paper__reveal-word';
 const READY_ATTRIBUTE = 'data-vision-typography-ready';
-const VISION_DURATION = 320;
-const MISSION_DURATION = 220;
-const VISION_STAGGER_SPAN = 150;
-const MISSION_STAGGER_SPAN = 180;
 const clamp = (value) => Math.max(0, Math.min(1, value));
-function normalizeLabel(value) {
-    return value.replace(/\s+/gu, ' ').trim();
-}
+
 function graphemes(value) {
     if (typeof Intl?.Segmenter === 'function') {
         const segmenter = new Intl.Segmenter(undefined, {
@@ -18,6 +12,7 @@ function graphemes(value) {
     }
     return Array.from(value);
 }
+
 function textNodes(element) {
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
     const nodes = [];
@@ -28,6 +23,7 @@ function textNodes(element) {
     }
     return nodes;
 }
+
 function createUnit(text, word = false) {
     const unit = document.createElement('span');
     unit.className = word ? `${WORD_CLASS} ${UNIT_CLASS}` : UNIT_CLASS;
@@ -35,12 +31,13 @@ function createUnit(text, word = false) {
     unit.textContent = text;
     return unit;
 }
+
 function splitTarget(target, mode, preserveWords) {
     if (target.hasAttribute(READY_ATTRIBUTE)) {
         return Array.from(target.querySelectorAll(`.${UNIT_CLASS}`));
     }
 
-    const label = normalizeLabel(target.textContent || '');
+    const label = (target.textContent || '').replace(/\s+/gu, ' ').trim();
     if (label) target.setAttribute('aria-label', label);
 
     textNodes(target).forEach((node) => {
@@ -69,10 +66,11 @@ function splitTarget(target, mode, preserveWords) {
     target.setAttribute(READY_ATTRIBUTE, 'true');
     return Array.from(target.querySelectorAll(`.${UNIT_CLASS}`));
 }
+
 function staggerDelay(index, total, span) {
-    if (total <= 1) return 0;
-    return (index / (total - 1)) * span;
+    return total <= 1 ? 0 : (index / (total - 1)) * span;
 }
+
 function createSequence(units, keyframesFor, optionsFor) {
     const animations = units.map((unit, index) => {
         const options = optionsFor(index, units.length);
@@ -87,17 +85,18 @@ function createSequence(units, keyframesFor, optionsFor) {
     });
     const totalTime = Math.max(1, ...animations.map(({ endTime }) => endTime));
 
+    function setProgress(progress) {
+        const time = clamp(progress) * totalTime;
+        animations.forEach(({ animation, endTime }) => {
+            animation.pause();
+            animation.currentTime = Math.min(time, endTime);
+        });
+    }
+
     return {
-        setProgress(progress) {
-            const time = clamp(progress) * totalTime;
-            animations.forEach(({ animation, endTime }) => {
-                animation.pause();
-                animation.currentTime = Math.min(time, endTime);
-            });
-        },
-        reset() {
-            this.setProgress(0);
-        },
+        setProgress,
+        reset: () => setProgress(0),
+        finish: () => setProgress(1),
         play() {
             animations.forEach(({ animation }) => {
                 animation.pause();
@@ -106,14 +105,12 @@ function createSequence(units, keyframesFor, optionsFor) {
                 animation.play();
             });
         },
-        finish() {
-            this.setProgress(1);
-        },
         destroy() {
             animations.forEach(({ animation }) => animation.cancel());
         },
     };
 }
+
 function createVisionSequence(units, rtl) {
     const x = [-18, 12, -9, 16, -13, 8];
     const y = [-5, 6, 3, -4, 7, -2];
@@ -135,12 +132,13 @@ function createVisionSequence(units, rtl) {
             ];
         },
         (index, total) => ({
-            duration: VISION_DURATION,
-            delay: staggerDelay(index, total, VISION_STAGGER_SPAN),
+            duration: 320,
+            delay: staggerDelay(index, total, 150),
             easing: 'cubic-bezier(.16,1,.3,1)',
         }),
     );
 }
+
 function createMissionSequence(units) {
     return createSequence(
         units,
@@ -149,30 +147,37 @@ function createMissionSequence(units) {
             { transform: 'scaleY(1)' },
         ],
         (index, total) => ({
-            duration: MISSION_DURATION,
-            delay: staggerDelay(index, total, MISSION_STAGGER_SPAN),
+            duration: 220,
+            delay: staggerDelay(index, total, 180),
             easing: 'cubic-bezier(.55,.055,.675,.19)',
         }),
     );
 }
+
 function unitsFor(root, name, preserveWords) {
     return Array.from(
         root.querySelectorAll(`[data-vision-typography="${name}"]`),
     ).flatMap((target) => splitTarget(target, name, preserveWords));
 }
+
 export function prepareTypography(root) {
     const rtl = document.documentElement.dir === 'rtl';
     unitsFor(root, 'vision', true);
     unitsFor(root, 'mission', rtl);
 }
+
 export function createTypographyEntrance(root) {
     const rtl = document.documentElement.dir === 'rtl';
     const vision = createVisionSequence(unitsFor(root, 'vision', true), rtl);
     const mission = createMissionSequence(unitsFor(root, 'mission', rtl));
 
     return {
-        setVisionProgress: (progress) => vision.setProgress(progress),
         setMissionProgress: (progress) => mission.setProgress(progress),
+        resetVision: () => vision.reset(),
+        playVision: () => vision.play(),
+        finishVision: () => vision.finish(),
+        resetMission: () => mission.reset(),
+        finishMission: () => mission.finish(),
         reset() {
             vision.reset();
             mission.reset();

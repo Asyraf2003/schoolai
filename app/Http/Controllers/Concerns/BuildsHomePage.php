@@ -2,14 +2,8 @@
 
 namespace App\Http\Controllers\Concerns;
 
-use App\Models\Article;
-use App\Models\GalleryItem;
-use App\Models\PpdbSetting;
-use App\Models\SiteStatistic;
-use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Schema;
 
 trait BuildsHomePage
 {
@@ -35,17 +29,12 @@ trait BuildsHomePage
 
     private function homeData(): array
     {
-        if ($this->homeDataCache !== null) {
-            return $this->homeDataCache;
-        }
-
         $base = __('home');
         $parity = __('home_parity');
-
         $base = is_array($base) ? $base : [];
         $parity = is_array($parity) ? $parity : [];
 
-        return $this->homeDataCache = array_replace_recursive($base, $parity);
+        return array_replace_recursive($base, $parity);
     }
 
     private function homeSection(string $key): array

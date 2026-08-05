@@ -20,17 +20,7 @@ function waitForFonts() {
 }
 
 export async function prepareVisionAssets(root, prepareTypography) {
-    if (root.getBoundingClientRect().top < window.innerHeight * 0.9) {
-        return false;
-    }
-
     root.classList.add('is-preparing');
     prepareTypography(root);
     await Promise.all([decodeImages(root), waitForFonts()]);
-
-    if (root.getBoundingClientRect().top < window.innerHeight * 0.8) {
-        root.classList.remove('is-preparing');
-        return false;
-    }
-    return true;
 }

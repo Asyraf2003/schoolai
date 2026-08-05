@@ -30,6 +30,10 @@
     max-width: 42rem;
 }
 
+.vision-paper__copy--vision {
+    text-align: center;
+}
+
 .vision-paper__kicker {
     margin: 0 0 1.25rem;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -47,6 +51,11 @@
     font-weight: 300;
     line-height: 1.08;
     letter-spacing: -0.04em;
+}
+
+.vision-paper__vision-text {
+    width: min(100%, 20ch);
+    margin-inline: auto;
 }
 
 .vision-paper__reveal-word,

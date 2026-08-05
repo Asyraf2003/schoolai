@@ -1,6 +1,5 @@
 @media (max-width: 1180px) {
-    .vision-paper__copy--vision,
-    html[dir="rtl"] .vision-paper__copy--vision {
+    .vision-paper__copy--vision {
         text-align: center;
     }
 
@@ -18,80 +17,23 @@
         font-size: clamp(1.65rem, min(4.2vw, 5svh), 2.6rem);
     }
 
+    .vision-paper__vision-text,
+    .vision-paper__mission-text {
+        max-width: 20ch;
+    }
+
     .vision-paper__vision-text {
+        width: min(100%, 20ch);
         margin-inline: auto;
     }
 
     .vision-paper__mission-text {
         margin-inline: 0 auto;
     }
-}
-
-@media (max-width: 1023px) {
-    .vision-paper__scene {
-        padding: 5rem clamp(1.25rem, 6vw, 4rem);
-    }
-
-    .vision-paper__copy-layout {
-        display: block;
-    }
-
-    .vision-paper__copy {
-        max-width: none;
-    }
-
-    .vision-paper__copy--mission {
-        margin-top: 5rem;
-    }
-
-    .vision-paper__kicker,
-    .vision-paper__vision-text,
-    .vision-paper__mission-text {
-        font-weight: 300;
-        line-height: 1.08;
-    }
 
     .vision-paper__kicker {
         margin-bottom: 0.3em;
         letter-spacing: 0.14em;
-    }
-
-    .vision-paper__vision-text,
-    .vision-paper__mission-text {
-        max-width: 20ch;
-    }
-
-    .vision-paper__square {
-        width: min(88vw, 46rem);
-        margin: 7rem auto 0;
-        aspect-ratio: 11 / 8;
-    }
-
-    .vision-paper__frame {
-        inset-inline-start: 50%;
-        width: 68.75%;
-        aspect-ratio: 11 / 8;
-        transform: translate(-50%, -50%);
-    }
-
-    .vision-paper__program {
-        min-height: 100svh;
-        place-content: center;
-        padding: 5rem clamp(1.25rem, 8vw, 5rem);
-        text-align: center;
-    }
-
-    .vision-paper__program h2,
-    .vision-paper__program p {
-        margin-inline: auto;
-    }
-
-    .vision-paper__program h2 {
-        font-size: clamp(3rem, 10vw, 6rem);
-    }
-
-    .vision-paper__program p {
-        margin-top: 2rem;
     }
 }
 
@@ -110,7 +52,6 @@
 @media (prefers-reduced-motion: reduce) {
     .vision-paper__track,
     .vision-paper__image-stack,
-    .vision-paper__copy--mission,
     .vision-paper__reveal-unit {
         transform: none !important;
         opacity: 1 !important;
