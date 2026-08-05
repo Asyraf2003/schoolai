@@ -68,7 +68,7 @@
 
     .vision-paper.is-enhanced .vision-paper__kicker,
     .vision-paper.is-enhanced .vision-paper__vision-text,
-    .vision-paper.is-enhanced .vision-paper__mission-list h3 {
+    .vision-paper.is-enhanced .vision-paper__mission-text {
         font-size: var(--copy-display-size);
         font-weight: 300;
         line-height: 1.08;
@@ -78,33 +78,12 @@
     .vision-paper.is-enhanced .vision-paper__kicker {
         margin: 0 0 0.28em;
         letter-spacing: 0.18em;
-        text-transform: lowercase;
-    }
-
-    .vision-paper.is-enhanced .vision-paper__mission-list {
-        gap: 0.12em;
-    }
-
-    .vision-paper.is-enhanced .vision-paper__mission-list h3 {
-        margin: 0;
-        text-wrap: balance;
-    }
-
-    .vision-paper.is-enhanced .vision-paper__mission-detail {
-        position: absolute !important;
-        width: 1px !important;
-        height: 1px !important;
-        padding: 0 !important;
-        margin: -1px !important;
-        overflow: hidden !important;
-        clip: rect(0, 0, 0, 0) !important;
-        white-space: nowrap !important;
-        border: 0 !important;
+        text-transform: uppercase;
     }
 
     html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__kicker,
     html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__vision-text,
-    html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__mission-list h3 {
+    html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__mission-text {
         letter-spacing: normal;
     }
 

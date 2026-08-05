@@ -39,7 +39,8 @@
     text-transform: uppercase;
 }
 
-.vision-paper__vision-text {
+.vision-paper__vision-text,
+.vision-paper__mission-text {
     margin: 0;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(1.55rem, 3.2vw, 3.4rem);
@@ -68,33 +69,6 @@
 
 .vision-paper__mark--purple {
     --vision-mark-color: #7e22ce;
-}
-
-.vision-paper__mission-list {
-    display: grid;
-    gap: 1.1rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.vision-paper__mission-list h3,
-.vision-paper__mission-list p {
-    margin: 0;
-    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-}
-
-.vision-paper__mission-list h3 {
-    margin-bottom: 0.3rem;
-    font-size: clamp(0.95rem, 1.35vw, 1.25rem);
-    line-height: 1.15;
-}
-
-.vision-paper__mission-list p {
-    color: rgba(17, 17, 17, 0.68);
-    font-size: clamp(0.78rem, 0.9vw, 0.98rem);
-    line-height: 1.42;
 }
 
 .vision-paper__square {
@@ -170,8 +144,7 @@ html[dir="rtl"] .vision-paper__program {
 
 html[dir="rtl"] .vision-paper__kicker,
 html[dir="rtl"] .vision-paper__vision-text,
-html[dir="rtl"] .vision-paper__mission-list h3,
-html[dir="rtl"] .vision-paper__mission-list p,
+html[dir="rtl"] .vision-paper__mission-text,
 html[dir="rtl"] .vision-paper__program h2,
 html[dir="rtl"] .vision-paper__program p {
     font-family: "Cairo", Arial, sans-serif;

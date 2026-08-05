@@ -3,13 +3,13 @@
   $arabicHonorific = 'صلى الله عليه وسلم';
   $visionLabel = match ($locale) {
     'ar' => 'الرؤية',
-    'en' => 'Vision',
-    default => 'Visi',
+    'en' => 'VISION',
+    default => 'VISI',
   };
   $missionLabel = match ($locale) {
     'ar' => 'الرسالة',
-    'en' => 'Mission',
-    default => 'Misi',
+    'en' => 'MISSION',
+    default => 'MISI',
   };
   $programCopy = match ($locale) {
     'ar' => [
@@ -68,37 +68,19 @@
             data-vision-copy="mission"
           >
             <p class="vision-paper__kicker">{{ $missionLabel }}</p>
-            <ol class="vision-paper__mission-list">
+            <p class="vision-paper__mission-text" data-vision-mission-text>
               @foreach ($visiMisi['missions'] as $mission)
-                @php
-                  $isArabicFirstMission = $locale === 'ar' && $loop->first;
-                @endphp
-                <li>
-                  <h3 id="vision-mission-title-{{ $loop->iteration }}">
-                    {{ $mission['title'] }}
-                  </h3>
-                  <p class="vision-paper__mission-detail">
-                    @foreach ($mission['text_parts'] as $part)
-                      @php
-                        $partText = $isArabicFirstMission
-                          ? trim(str_replace(['ﷺ', $arabicHonorific], '', $part['text']))
-                          : $part['text'];
-                      @endphp
-                      @if (! empty($part['mark']))
-                        <strong class="vision-paper__mark vision-paper__mark--{{ $part['mark'] }}">
-                          {{ $partText }}
-                        </strong>
-                      @else
-                        {{ $partText }}
-                      @endif
-                    @endforeach
-                    @if ($isArabicFirstMission)
-                      <span data-vision-mission-honorific>{{ $arabicHonorific }}</span>
-                    @endif
-                  </p>
-                </li>
+                @foreach ($mission['text_parts'] as $part)
+                  @php
+                    $partText = $locale === 'ar'
+                      ? str_replace('ﷺ', $arabicHonorific, $part['text'])
+                      : $part['text'];
+                  @endphp
+                  {{ $partText }}
+                @endforeach
+                @unless ($loop->last) {{ ' ' }} @endunless
               @endforeach
-            </ol>
+            </p>
           </article>
         </div>
 
