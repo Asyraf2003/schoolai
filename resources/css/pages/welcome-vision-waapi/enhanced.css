@@ -23,7 +23,7 @@
 
     .vision-paper.is-enhanced .vision-paper__scene {
         --square-size: 100svh;
-        --frame-height: calc(var(--square-size) / 3);
+        --frame-height: calc(var(--square-size) * 3 / 5);
         --frame-width: calc(var(--frame-height) * 16 / 9);
         --frame-inside: calc(var(--frame-width) * 3 / 4);
         --frame-outside: calc(var(--frame-width) / 4);
