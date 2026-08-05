@@ -1,4 +1,6 @@
 .vision-paper {
+    --story-gap: clamp(1rem, 2.5svh, 2rem);
+    --story-header-clearance: clamp(4.5rem, 8svh, 6rem);
     position: relative;
     overflow: clip;
     background: #fff;
@@ -12,64 +14,51 @@
     position: relative;
 }
 
-.vision-paper__track {
+.vision-paper__track,
+.vision-paper__scene,
+.vision-paper__copy-layout {
     display: grid;
+}
+
+.vision-paper__scene,
+.vision-paper__copy-layout {
+    gap: var(--story-gap);
 }
 
 .vision-paper__scene {
-    min-height: 100svh;
-    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 5rem);
-}
-
-.vision-paper__copy-layout {
-    display: grid;
-    gap: clamp(3rem, 7vw, 7rem);
+    min-height: 0;
+    padding-block-start: calc(
+        var(--story-header-clearance) + var(--story-gap)
+    );
 }
 
 .vision-paper__copy {
+    width: 100%;
     max-width: 42rem;
-}
-
-.vision-paper__copy--vision {
+    margin: 0;
     text-align: center;
 }
 
 .vision-paper__kicker {
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.3em;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.82rem;
-    font-weight: 400;
-    letter-spacing: 0.28em;
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
 }
 
 .vision-paper__vision-text,
 .vision-paper__mission-text {
-    margin: 0;
+    width: min(100%, 20ch);
+    max-width: 20ch;
+    margin: 0 auto;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(1.55rem, 3.2vw, 3.4rem);
     font-weight: 300;
     line-height: 1.08;
     letter-spacing: -0.04em;
-}
-
-.vision-paper__vision-text {
-    width: min(100%, 20ch);
-    margin-inline: auto;
-}
-
-.vision-paper__reveal-word,
-.vision-paper__reveal-unit {
-    display: inline-block;
-}
-
-.vision-paper__reveal-word {
-    white-space: nowrap;
-}
-
-.vision-paper__reveal-unit {
-    transform-origin: 50% 100%;
-    backface-visibility: hidden;
 }
 
 .vision-paper__mark {
@@ -96,14 +85,13 @@
 
 .vision-paper__square {
     position: relative;
-    width: min(100%, 44rem);
-    aspect-ratio: 1;
-    margin: 5rem 0 0;
-    overflow: visible;
+    width: min(88vw, 60rem);
+    aspect-ratio: 11 / 8;
+    margin-inline: auto;
+    overflow: hidden;
 }
 
-.vision-paper__square > img,
-.vision-paper__image-stack img {
+.vision-paper__square > img {
     display: block;
     width: 100%;
     height: 100%;
@@ -112,37 +100,45 @@
 
 .vision-paper__frame {
     position: absolute;
-    inset-block-start: 50%;
-    inset-inline-start: 42%;
-    width: 72%;
-    aspect-ratio: 16 / 9;
+    z-index: 2;
+    left: 50%;
+    right: auto;
+    bottom: var(--story-gap);
+    width: min(72%, 40rem);
+    aspect-ratio: 11 / 8;
     overflow: hidden;
-    transform: translateY(-50%);
+    transform: translateX(-50%);
+    border: clamp(0.25rem, 0.6vw, 0.5rem) solid #fff;
 }
 
 .vision-paper__image-stack {
     display: grid;
-    grid-template-rows: repeat(2, 50%);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
-    height: 200%;
-    transform: translate3d(0, 0, 0);
+    height: 100%;
+}
+
+.vision-paper__image-stack img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .vision-paper__program {
-    min-height: 100svh;
     display: grid;
-    align-content: center;
-    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 8vw, 8rem);
+    min-height: 0;
+    align-content: start;
+    padding: var(--story-gap)
+        clamp(1.25rem, 8vw, 8rem)
+        clamp(4rem, 8svh, 7rem);
     background: #fff;
-}
-
-.vision-paper__program-accent {
-    display: none;
+    text-align: center;
 }
 
 .vision-paper__program h2 {
     max-width: 13ch;
-    margin: 0;
+    margin: 0 auto;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(3.2rem, 7.5vw, 8rem);
     font-weight: 500;
@@ -153,7 +149,7 @@
 
 .vision-paper__program p {
     max-width: 34rem;
-    margin: 3rem 0 0 auto;
+    margin: var(--story-gap) auto 0;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(1rem, 1.4vw, 1.35rem);
     font-weight: 400;
@@ -165,11 +161,6 @@ html[dir="rtl"] .vision-paper__program {
     direction: rtl;
 }
 
-html[dir="rtl"] .vision-paper__copy--mission,
-html[dir="rtl"] .vision-paper__program {
-    text-align: right;
-}
-
 html[dir="rtl"] .vision-paper__kicker,
 html[dir="rtl"] .vision-paper__vision-text,
 html[dir="rtl"] .vision-paper__mission-text,
@@ -179,6 +170,6 @@ html[dir="rtl"] .vision-paper__program p {
     letter-spacing: normal;
 }
 
-html[dir="rtl"] .vision-paper__program p {
-    margin-inline: 0 auto;
+html[dir="rtl"] .vision-paper__kicker {
+    text-transform: none;
 }
