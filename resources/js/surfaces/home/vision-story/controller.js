@@ -15,7 +15,7 @@ function decodeImages(root) {
 export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const wide = window.matchMedia('(min-width: 1024px)');
+    const wide = window.matchMedia('(min-width: 1181px)');
     if (
         !root
         || reducedMotion.matches
