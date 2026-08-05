@@ -37,8 +37,12 @@ export function mountVisionStory() {
     let destroyed = false;
     let start = 0;
     let distance = 1;
+    let introStart = 0;
+    let introDistance = 1;
     let targetProgress = 0;
     let renderedProgress = 0;
+    let targetIntroProgress = 0;
+    let renderedIntroProgress = 0;
     let lastFrameTime = performance.now();
 
     function syncStoryHeight() {
@@ -50,16 +54,27 @@ export function mountVisionStory() {
         root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
     }
 
+    function updateProgressTargets() {
+        targetProgress = clamp((window.scrollY - start) / distance);
+        targetIntroProgress = clamp(
+            (window.scrollY - introStart) / introDistance,
+        );
+    }
+
     function measure() {
         syncStoryHeight();
         const rect = root.getBoundingClientRect();
         start = window.scrollY + rect.top;
         distance = Math.max(1, root.offsetHeight - window.innerHeight);
-        targetProgress = clamp((window.scrollY - start) / distance);
+        introStart = start - window.innerHeight;
+        introDistance = Math.max(1, window.innerHeight * 0.8);
+        updateProgressTargets();
     }
 
-    function render(progress) {
-        if (timeline) timeline.setProgress(progress);
+    function render() {
+        if (!timeline) return;
+        timeline.setProgress(renderedProgress);
+        timeline.setIntroProgress(renderedIntroProgress);
     }
 
     function tick(now) {
@@ -69,15 +84,25 @@ export function mountVisionStory() {
         const elapsed = Math.min(64, Math.max(1, now - lastFrameTime));
         const alpha = 1 - Math.exp(-elapsed / 88);
         renderedProgress += (targetProgress - renderedProgress) * alpha;
+        renderedIntroProgress += (
+            targetIntroProgress - renderedIntroProgress
+        ) * alpha;
         lastFrameTime = now;
-        render(renderedProgress);
+        render();
 
-        if (Math.abs(targetProgress - renderedProgress) > 0.00015) {
+        const storyMoving = Math.abs(targetProgress - renderedProgress) > 0.00015;
+        const introMoving = Math.abs(
+            targetIntroProgress - renderedIntroProgress,
+        ) > 0.00015;
+
+        if (storyMoving || introMoving) {
             frame = requestAnimationFrame(tick);
-        } else {
-            renderedProgress = targetProgress;
-            render(renderedProgress);
+            return;
         }
+
+        renderedProgress = targetProgress;
+        renderedIntroProgress = targetIntroProgress;
+        render();
     }
 
     function scheduleFrame() {
@@ -88,7 +113,7 @@ export function mountVisionStory() {
 
     function updateTarget() {
         if (!prepared || !near) return;
-        targetProgress = clamp((window.scrollY - start) / distance);
+        updateProgressTargets();
         scheduleFrame();
     }
 
@@ -99,7 +124,8 @@ export function mountVisionStory() {
         measure();
         timeline = createVisionTimeline(root);
         renderedProgress = targetProgress;
-        render(renderedProgress);
+        renderedIntroProgress = targetIntroProgress;
+        render();
     }
 
     async function prepare() {
@@ -118,7 +144,8 @@ export function mountVisionStory() {
             measure();
             timeline = createVisionTimeline(root);
             renderedProgress = targetProgress;
-            render(renderedProgress);
+            renderedIntroProgress = targetIntroProgress;
+            render();
             prepared = true;
             preparing = false;
             scheduleFrame();
