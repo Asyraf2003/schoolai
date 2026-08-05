@@ -172,6 +172,7 @@ export function createTypographyEntrance(root) {
     const mission = createMissionSequence(unitsFor(root, 'mission', rtl));
 
     return {
+        setVisionProgress: (progress) => vision.setProgress(progress),
         setMissionProgress: (progress) => mission.setProgress(progress),
         resetVision: () => vision.reset(),
         playVision: () => vision.play(),

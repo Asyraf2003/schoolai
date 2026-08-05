@@ -1,100 +1,46 @@
 export function createTypographyEntry(root, wide, timelineFor) {
-    const visionTitle = root.querySelector(
-        '[data-vision-copy="vision"] .vision-paper__kicker',
-    );
-    let wideArmed = false;
-    let visionArmed = false;
-    let lastRootTop = Number.POSITIVE_INFINITY;
-    let lastVisionTop = Number.POSITIVE_INFINITY;
+    let armed = false;
+    let lastTop = Number.POSITIVE_INFINITY;
 
-    function syncWide(timeline, rootTop, direction, initial) {
+    function sync(direction = 'initial', initial = false) {
+        if (!wide.matches) return;
+
+        const timeline = timelineFor();
+        if (!timeline) return;
+        const top = root.getBoundingClientRect().top;
+
         if (initial) {
-            if (rootTop > window.innerHeight) {
+            if (top > window.innerHeight) {
                 timeline.resetTypography();
-                wideArmed = true;
+                armed = true;
             } else {
                 timeline.showTypography();
-                wideArmed = false;
+                armed = false;
             }
+            lastTop = top;
             return;
         }
 
         if (direction === 'up') {
             timeline.showTypography();
-            wideArmed = false;
-            return;
-        }
-
-        if (rootTop > window.innerHeight) {
-            if (!wideArmed) timeline.resetTypography();
-            wideArmed = true;
-            return;
-        }
-
-        if (
-            wideArmed
-            && direction === 'down'
-            && lastRootTop > window.innerHeight
-            && rootTop <= window.innerHeight
-        ) {
-            timeline.playTypography();
-            wideArmed = false;
-        }
-    }
-
-    function syncCompact(timeline, direction, initial) {
-        if (!visionTitle) return;
-        const top = visionTitle.getBoundingClientRect().top;
-
-        if (initial) {
-            if (top > window.innerHeight) {
-                timeline.resetVisionTypography();
-                visionArmed = true;
-            } else {
-                timeline.showVisionTypography();
-                visionArmed = false;
-            }
-            lastVisionTop = top;
-            return;
-        }
-
-        if (direction === 'up') {
-            timeline.showVisionTypography();
-            visionArmed = false;
-            lastVisionTop = top;
+            armed = false;
+            lastTop = top;
             return;
         }
 
         if (top > window.innerHeight) {
-            if (!visionArmed && direction === 'down') {
-                timeline.resetVisionTypography();
-                visionArmed = true;
-            }
+            if (!armed) timeline.resetTypography();
+            armed = true;
         } else if (
-            visionArmed
+            armed
             && direction === 'down'
-            && lastVisionTop > window.innerHeight
+            && lastTop > window.innerHeight
         ) {
-            timeline.playVisionTypography();
-            visionArmed = false;
+            timeline.playTypography();
+            armed = false;
         }
 
-        lastVisionTop = top;
-    }
-
-    function sync(direction = 'initial', initial = false) {
-        const timeline = timelineFor();
-        if (!timeline) return;
-
-        const rootTop = root.getBoundingClientRect().top;
-
-        if (wide.matches) {
-            syncWide(timeline, rootTop, direction, initial);
-        } else {
-            syncCompact(timeline, direction, initial);
-        }
-
-        lastRootTop = rootTop;
+        lastTop = top;
     }
 
     return { sync };

@@ -1,10 +1,8 @@
 @media (max-width: 1180px) {
-    .vision-paper__copy--vision {
+    .vision-paper__copy--vision,
+    .vision-paper__copy--mission,
+    html[dir="rtl"] .vision-paper__copy--mission {
         text-align: center;
-    }
-
-    .vision-paper__copy--mission {
-        text-align: start;
     }
 
     .vision-paper__copy--vision .vision-paper__kicker,
@@ -19,16 +17,9 @@
 
     .vision-paper__vision-text,
     .vision-paper__mission-text {
-        max-width: 20ch;
-    }
-
-    .vision-paper__vision-text {
         width: min(100%, 20ch);
+        max-width: 20ch;
         margin-inline: auto;
-    }
-
-    .vision-paper__mission-text {
-        margin-inline: 0 auto;
     }
 
     .vision-paper__kicker {
@@ -52,6 +43,8 @@
 @media (prefers-reduced-motion: reduce) {
     .vision-paper__track,
     .vision-paper__image-stack,
+    .vision-paper__copy,
+    .vision-paper__program h2,
     .vision-paper__reveal-unit {
         transform: none !important;
         opacity: 1 !important;

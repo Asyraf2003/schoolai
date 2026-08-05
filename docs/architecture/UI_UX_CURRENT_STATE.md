@@ -4,98 +4,64 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-05
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active blueprint: `blueprints/2026-08-05-vision-mission-deterministic-geometry.md`
-Source baseline before batch: `c9bc2fc22780b950b548f1f0ac491f96d254eb61`
+Active blueprint: `blueprints/2026-08-05-vision-mission-compact-rhythm.md`
+Source baseline before batch: `bc6e3d1819edfc69e3f4aefa20a3d8409d86883e`
 
 Commit publication proves source state only. It does not prove build, browser,
 responsive, accessibility, performance, or lifecycle completion.
 
 ## Active production batch
 
-- ID: `HOME-VISION-006-DETERMINISTIC`
+- ID: `HOME-VISION-007-COMPACT-RHYTHM`
 - State: `IMPLEMENTED_SOURCE`
 - Surface: homepage Vision/Mission `#visi-misi`
-- Goal: remove reload-dependent composition, duplicate Mission reveal,
-  viewport-coordinate timing, Arabic Vision drift, and locale-unsafe home data.
-- Protected: Hero, Values, Programs, Gallery, Articles, navigation, footer,
-  About, Testimonial, locale copy, routes, DB, authentication, dependencies, and
-  Vision/Mission media assets.
-
-## Runtime evidence received
-
-Owner screenshots at 759x924, 1036x924, and 1081x924 showed:
-
-- the same viewport could render either static copy flow or enhanced pinned flow;
-- compact Mission remained faded until its title had passed viewport center;
-- image swap timing varied between reloads;
-- Arabic Vision centered text but not always its container.
-
-Local test report remained 191 passed and 3 failed:
-
-- Gallery soft-delete homepage assertion;
-- page-wide Values `aria-pressed` assertion;
-- English Vision/Mission copy assertion.
-
-## Verified root causes
-
-- Preparation could permanently choose static or enhanced composition based on
-  section position after font and image waits.
-- Static and enhanced compact CSS had different geometry and conflicting legacy
-  responsive owners.
-- Mission had both typography progress and a separate parent opacity/translate.
-- Mission and frame offsets mixed viewport coordinates with local track distance.
-- Scroll-event geometry reads lagged the smoothed rendered track.
-- Arabic Vision centered text without consistently centering its article box.
-- `HomeController::$homeDataCache` stored translation data without a locale key.
+- Goal: replace compact full-screen copy stages with a close intrinsic stack and
+  retain a controlled scroll lift.
+- Protected: desktop horizontal composition, Blade, locale copy, media assets,
+  Hero, Values, Programs source, Gallery, Articles, navigation, footer, routes,
+  DB, authentication, and dependencies.
 
 ## Owner-accepted decisions
 
-- Use shared semantic stage geometry for static and enhanced states.
-- Gate sticky motion with one capability marker.
-- Initialize enhancement atomically after bounded preparation.
-- Remove compact parent Mission reveal; effect25 is the sole Mission reveal.
-- Derive Mission and frame progress from local track geometry.
-- Complete both when their center reaches viewport center.
-- Keep upward Mission entry final.
-- Center the Vision article and text in every locale.
-- Remove the locale-unsafe homepage translation cache.
-- Do not address Gallery or Values failures in this batch.
+- Through `1180px`, Vision and Mission are both centered in ID, EN, and AR.
+- Vision, Mission, image, and Program title use final gaps around `2-3svh`.
+- Vision and Mission no longer receive `100svh` each.
+- The Program section no longer reserves another full viewport in compact mode.
+- Vision, Mission, and Program title begin about `10svh` lower and settle when
+  their trigger title reaches viewport center.
+- Motion uses transform and opacity; final document geometry never animates.
+- Upward entry remains final.
+- Image 2-3 keeps its bottom-to-center swap.
+- Desktop from `1181px` remains unchanged.
 
 ## Implemented source
 
-- Compact stage geometry no longer depends on `.is-enhanced`.
-- Legacy responsive layout rules that produced a different static flow were
-  removed.
-- Desktop fallback shares the enhanced first-frame composition.
-- A motion capability marker gates pinning.
-- The late-preparation skip was removed.
-- Enhanced class, measurement, timeline, and current progress initialize in one
-  synchronous completion step.
-- Compact Mission parent opacity and translate animation were removed.
-- Mission and frame ranges now use track-local geometry.
-- Compact Mission progress now follows rendered master progress.
-- Upward entry remains final until a fresh downward pass begins above it.
-- Vision article measure is centered in ID, EN, and AR.
-- The locale-unsafe `homeDataCache` was removed.
-- One controller, one observer, one scroll listener, one RAF owner, native WAAPI,
-  dynamic import, lazy media, and all six global tiers remain.
+- Compact scene now uses an intrinsic grid with one bounded `2.5svh` rhythm token.
+- Vision and Mission copy blocks use content height instead of `100svh`.
+- The image follows Mission directly; Program follows the image directly.
+- Compact Program height is intrinsic and retains a bounded bottom exit space.
+- Mission alignment is centered for LTR and RTL compact layouts.
+- Added one local geometry helper for range calculation and paused WAAPI control.
+- Vision, Mission, and Program title use a bounded `56-104px` upward lift.
+- Compact Vision and Mission typography follow their own title ranges.
+- Wide entry remains a short combined play-on-entry effect.
+- One controller, one observer, one scroll listener, one RAF, native WAAPI,
+  dynamic import, and the six global tiers remain.
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
 | current `main` validation | `PASS_SOURCE` | branch checked before write |
-| screenshot/root-cause audit | `PASS_SOURCE` | runtime symptoms matched owners |
-| source scope isolation | `PASS_SOURCE` | active owners and locale cache only |
-| JS syntax | `PASS_LOCAL_STATIC` | changed JS parsed with Node |
-| PHP syntax | `PASS_LOCAL_STATIC` | changed PHP parsed with PHP lint |
-| CSS brace balance | `PASS_LOCAL_STATIC` | four CSS owners checked |
+| source scope isolation | `PASS_SOURCE` | compact Vision owners and docs only |
+| JS syntax | `PASS_LOCAL_STATIC` | changed/new modules parsed with Node |
+| CSS brace balance | `PASS_LOCAL_STATIC` | changed CSS owners checked |
 | source line limit | `PASS_LOCAL_STATIC` | changed source files <= 200 lines |
+| semantic/reduced fallback | `PASS_SOURCE` | close layout is CSS-first |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector has no checkout |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
-| focused PHP test | `BLOCKED_BY_MISSING_EVIDENCE` | cache fix not run here |
-| full PHP tests | `FAIL_REPORTED_LOCAL` | prior 191 passed, 3 failed |
+| focused/full PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
 | Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | runtime review required |
 | deployed performance delta | `BLOCKED_BY_MISSING_EVIDENCE` | deployment proof required |
 
@@ -104,15 +70,14 @@ Local test report remained 191 passed and 3 failed:
 - `Admin/GalleryItemSoftDeleteTest`
 - `HomeValuesStoryTest`
 
-No Gallery or Values owner or assertion changed.
+No Gallery or Values source/test owner changed.
 
 ## STATUS
 
-The deterministic Vision/Mission source correction is implemented. Completion
-remains blocked by checkout build/tests and the browser/runtime matrix.
+The compact rhythm and scroll-lift source correction is implemented. Completion
+remains blocked by checkout build/tests and responsive browser proof.
 
 ## NEXT VALID STEP
 
-Owner/local terminal: fast-forward `main`, run the proof block, then reproduce
-the supplied 759x924, 1036x924, and 1081x924 cases across reload states before
-additional visual tuning.
+Owner/local terminal: fast-forward `main`, run the proof block, then review
+compact spacing and lift at 390x844, 759x924, 1036x924, and 1180 short-height.
