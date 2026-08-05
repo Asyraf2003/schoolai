@@ -46,11 +46,16 @@
             class="vision-paper__copy vision-paper__copy--vision"
             data-vision-copy="vision"
           >
-            <p class="vision-paper__kicker">{{ $visionLabel }}</p>
+            <p class="vision-paper__kicker" data-vision-typography="vision">
+              {{ $visionLabel }}
+            </p>
             <h2 id="vision-paper-title" class="sr-only">
               {{ $visiMisi['section_title'] }}
             </h2>
-            <p class="vision-paper__vision-text">
+            <p
+              class="vision-paper__vision-text"
+              data-vision-typography="vision"
+            >
               @foreach ($visiMisi['vision']['text_parts'] as $part)
                 @if (! empty($part['mark']))
                   <strong class="vision-paper__mark vision-paper__mark--{{ $part['mark'] }}">
@@ -67,8 +72,14 @@
             class="vision-paper__copy vision-paper__copy--mission"
             data-vision-copy="mission"
           >
-            <p class="vision-paper__kicker">{{ $missionLabel }}</p>
-            <p class="vision-paper__mission-text" data-vision-mission-text>
+            <p class="vision-paper__kicker" data-vision-typography="mission">
+              {{ $missionLabel }}
+            </p>
+            <p
+              class="vision-paper__mission-text"
+              data-vision-mission-text
+              data-vision-typography="mission"
+            >
               @foreach ($visiMisi['missions'] as $mission)
                 @foreach ($mission['text_parts'] as $part)
                   @php
