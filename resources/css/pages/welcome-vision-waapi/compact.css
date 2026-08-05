@@ -1,4 +1,4 @@
-@media (max-width: 1023px) {
+@media (max-width: 1180px) {
     .vision-paper.is-enhanced .vision-paper__pin {
         position: sticky;
         inset-block-start: 0;
@@ -132,5 +132,15 @@
 
     .vision-paper.is-enhanced .vision-paper__copy {
         padding-inline: 12vw;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1180px) {
+    .vision-paper.is-enhanced .vision-paper__scene {
+        --mobile-image-width: min(70vw, 50rem);
+    }
+
+    .vision-paper.is-enhanced .vision-paper__copy {
+        padding-inline: 14vw;
     }
 }
