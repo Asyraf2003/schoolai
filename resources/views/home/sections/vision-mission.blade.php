@@ -1,98 +1,71 @@
 @php
-  $directionLocale = app()->getLocale();
-  $visionAssets = [9, 10, 11, 12];
+  $locale = app()->getLocale();
   $arabicHonorific = 'صلى الله عليه وسلم';
-  $programTitle = $featuredPrograms['section_title']
-    ?? __('home.program_unggulan.section_title');
+  $missionLabel = match ($locale) {
+    'ar' => 'الرسالة',
+    'en' => 'Mission',
+    default => 'Misi',
+  };
+  $programCopy = match ($locale) {
+    'ar' => [
+      'title' => 'برامج مدرسية للنمو والتعلّم وبناء الشخصية',
+      'description' => 'تجارب تعليمية مترابطة تجمع بين الإيمان والعلم والإبداع والاستقلالية والحياة اليومية.',
+    ],
+    'en' => [
+      'title' => 'School programs for growth, learning, and character',
+      'description' => 'Connected learning experiences that bring together faith, knowledge, creativity, independence, and everyday life.',
+    ],
+    default => [
+      'title' => 'Program sekolah untuk tumbuh, belajar, dan berkarakter',
+      'description' => 'Rangkaian pengalaman belajar yang menghubungkan iman, ilmu, kreativitas, kemandirian, dan kehidupan sehari-hari.',
+    ],
+  };
+  $schoolImages = [
+    'https://images.pexels.com/photos/8618068/pexels-photo-8618068.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    'https://images.pexels.com/photos/8363783/pexels-photo-8363783.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    'https://images.pexels.com/photos/8923877/pexels-photo-8923877.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  ];
 @endphp
 
 <section
-  class="vision-story"
+  class="vision-paper"
   id="visi-misi"
-  aria-labelledby="vision-story-title"
+  aria-labelledby="vision-paper-title"
   data-vision-story
 >
-  <div class="vision-story__pin" data-vision-pin>
-    <div class="vision-story__stage">
-      <div class="vision-story__track" data-vision-track>
-        <header
-          class="vision-story__editorial vision-story__track-item"
-          data-vision-editorial
-        >
-          <p class="vision-story__eyebrow">
-            {{ $visiMisi['section_subtitle'] }}
-          </p>
-          <h2 id="vision-story-title">
-            {{ $visiMisi['section_title'] }}
-          </h2>
-        </header>
-
-        <span
-          class="vision-story__divider"
-          data-vision-divider
-          aria-hidden="true"
-        ></span>
-
-        <article
-          class="vision-story__panel vision-story__panel--vision vision-story__track-item"
-          data-vision-panel
-          data-vision-panel-kind="vision"
-          aria-labelledby="vision-panel-title"
-        >
-          <div class="vision-story__art" aria-hidden="true">
-            @foreach ($visionAssets as $asset)
-              <img
-                src="{{ asset('media/home/'.$asset.'.png') }}"
-                alt=""
-                width="1600"
-                height="2000"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-                data-vision-art
-              />
-            @endforeach
-          </div>
-
-          <div class="vision-story__content">
-            <span class="vision-story__label">
-              {{ $visiMisi['vision']['title'] }}
-            </span>
-            <h3 id="vision-panel-title">
-              {{ $visiMisi['vision']['title'] }}
-            </h3>
-            <p>
+  <div class="vision-paper__pin" data-vision-pin>
+    <div class="vision-paper__track" data-vision-track>
+      <div class="vision-paper__scene" data-vision-intro>
+        <div class="vision-paper__copy-layout">
+          <article
+            class="vision-paper__copy vision-paper__copy--vision"
+            data-vision-copy="vision"
+          >
+            <p class="vision-paper__kicker">{{ $visiMisi['vision']['title'] }}</p>
+            <h2 id="vision-paper-title" class="sr-only">
+              {{ $visiMisi['section_title'] }}
+            </h2>
+            <p class="vision-paper__vision-text">
               @foreach ($visiMisi['vision']['text_parts'] as $part)
-                @if (! empty($part['mark']))
-                  <strong>{{ $part['text'] }}</strong>
-                @else
-                  {{ $part['text'] }}
-                @endif
+                {{ $part['text'] }}
               @endforeach
             </p>
-          </div>
-        </article>
+          </article>
 
-        <ol class="vision-story__missions" data-vision-mission-list>
-          @foreach ($visiMisi['missions'] as $mission)
-            @php
-              $isArabicFirstMission = $directionLocale === 'ar' && $loop->first;
-            @endphp
-
-            <li class="vision-story__track-item">
-              <article
-                class="vision-story__panel vision-story__panel--mission"
-                data-vision-panel
-                data-vision-panel-kind="mission"
-                aria-labelledby="vision-mission-title-{{ $loop->iteration }}"
-              >
-                <div class="vision-story__content">
-                  <span class="vision-story__label">
-                    {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
-                  </span>
-                  <h4 id="vision-mission-title-{{ $loop->iteration }}">
+          <article
+            class="vision-paper__copy vision-paper__copy--mission"
+            data-vision-copy="mission"
+          >
+            <p class="vision-paper__kicker">{{ $missionLabel }}</p>
+            <ol class="vision-paper__mission-list">
+              @foreach ($visiMisi['missions'] as $mission)
+                @php
+                  $isArabicFirstMission = $locale === 'ar' && $loop->first;
+                @endphp
+                <li>
+                  <h3 id="vision-mission-title-{{ $loop->iteration }}">
                     {{ $mission['title'] }}
-                  </h4>
+                  </h3>
                   <p>
                     @foreach ($mission['text_parts'] as $part)
                       @php
@@ -100,37 +73,66 @@
                           ? trim(str_replace(['ﷺ', $arabicHonorific], '', $part['text']))
                           : $part['text'];
                       @endphp
-
-                      @if (! empty($part['mark']))
-                        <strong>{{ $partText }}</strong>
-                      @else
-                        {{ $partText }}
-                      @endif
+                      {{ $partText }}
                     @endforeach
-
                     @if ($isArabicFirstMission)
                       <span data-vision-mission-honorific>{{ $arabicHonorific }}</span>
                     @endif
                   </p>
-                </div>
-              </article>
-            </li>
-          @endforeach
-        </ol>
-
-        <div
-          class="vision-story__outro vision-story__track-item"
-          data-vision-outro
-        >
-          <h3>{{ $programTitle }}</h3>
+                </li>
+              @endforeach
+            </ol>
+          </article>
         </div>
 
-        <div
-          class="vision-story__canvas vision-story__track-item"
-          data-vision-canvas
-          aria-hidden="true"
-        ></div>
+        <figure class="vision-paper__square" data-vision-image-square>
+          <img
+            src="{{ $schoolImages[0] }}"
+            alt="Aktivitas belajar di ruang kelas"
+            width="1600"
+            height="1067"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low"
+            data-vision-art
+          />
+
+          <div class="vision-paper__frame" data-vision-image-frame>
+            <div class="vision-paper__image-stack" data-vision-image-stack>
+              <img
+                src="{{ $schoolImages[1] }}"
+                alt="Guru mendampingi kegiatan belajar anak"
+                width="1600"
+                height="1067"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+                data-vision-art
+              />
+              <img
+                src="{{ $schoolImages[2] }}"
+                alt="Anak belajar bersama di kelas"
+                width="1600"
+                height="1067"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+                data-vision-art
+              />
+            </div>
+          </div>
+        </figure>
       </div>
+
+      <section
+        class="vision-paper__program"
+        aria-labelledby="vision-program-title"
+        data-vision-program
+      >
+        <span class="vision-paper__program-accent" aria-hidden="true"></span>
+        <h2 id="vision-program-title">{{ $programCopy['title'] }}</h2>
+        <p>{{ $programCopy['description'] }}</p>
+      </section>
     </div>
   </div>
 </section>
