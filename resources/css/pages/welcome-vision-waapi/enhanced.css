@@ -22,13 +22,14 @@
     }
 
     .vision-paper.is-enhanced .vision-paper__scene {
-        --square-size: 100svh;
-        --frame-height: calc(var(--square-size) * 3 / 5);
+        --image-height: 100svh;
+        --image-width: calc(var(--image-height) * 5 / 4);
+        --frame-height: calc(var(--image-height) * 3 / 5);
         --frame-width: calc(var(--frame-height) * 16 / 9);
         --frame-inside: calc(var(--frame-width) * 3 / 4);
         --frame-outside: calc(var(--frame-width) / 4);
-        --frame-start: calc(var(--square-size) - var(--frame-inside));
-        --scene-width: calc(82vw + var(--square-size) + var(--frame-outside));
+        --frame-start: calc(var(--image-width) - var(--frame-inside));
+        --scene-width: calc(82vw + var(--image-width) + var(--frame-outside));
         flex: 0 0 var(--scene-width);
         width: var(--scene-width);
         height: 100svh;
@@ -84,10 +85,10 @@
         position: absolute;
         inset-block-start: 0;
         inset-inline-start: 82vw;
-        width: var(--square-size);
-        height: var(--square-size);
+        width: var(--image-width);
+        height: var(--image-height);
         margin: 0;
-        aspect-ratio: 1;
+        aspect-ratio: 5 / 4;
     }
 
     .vision-paper.is-enhanced .vision-paper__frame {
