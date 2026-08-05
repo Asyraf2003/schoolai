@@ -16,17 +16,17 @@ function decodeImages(root) {
 export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const desktop = window.matchMedia('(min-width: 1181px)');
+    const wide = window.matchMedia('(min-width: 1024px)');
 
     if (
         !root
-        || !desktop.matches
         || reducedMotion.matches
         || typeof Element.prototype.animate !== 'function'
     ) {
         return null;
     }
 
+    const track = root.querySelector('[data-vision-track]');
     let timeline = null;
     let observer = null;
     let resizeTimer = null;
@@ -41,7 +41,17 @@ export function mountVisionStory() {
     let renderedProgress = 0;
     let lastFrameTime = performance.now();
 
+    function syncStoryHeight() {
+        if (!track || wide.matches) {
+            root.style.removeProperty('height');
+            return;
+        }
+
+        root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
+    }
+
     function measure() {
+        syncStoryHeight();
         const rect = root.getBoundingClientRect();
         start = window.scrollY + rect.top;
         distance = Math.max(1, root.offsetHeight - window.innerHeight);
@@ -83,8 +93,9 @@ export function mountVisionStory() {
     }
 
     function rebuildTimeline() {
-        if (!prepared || destroyed || !desktop.matches) return;
+        if (!prepared || destroyed) return;
         if (timeline) timeline.destroy();
+        timeline = null;
         measure();
         timeline = createVisionTimeline(root);
         renderedProgress = targetProgress;
@@ -97,7 +108,7 @@ export function mountVisionStory() {
         root.classList.add('is-preparing');
 
         await decodeImages(root);
-        if (destroyed || !desktop.matches) return;
+        if (destroyed) return;
 
         root.classList.add('is-enhanced');
         root.classList.remove('is-preparing');
@@ -129,13 +140,7 @@ export function mountVisionStory() {
 
     function onResize() {
         window.clearTimeout(resizeTimer);
-        resizeTimer = window.setTimeout(() => {
-            if (!desktop.matches) {
-                destroy();
-                return;
-            }
-            rebuildTimeline();
-        }, 140);
+        resizeTimer = window.setTimeout(rebuildTimeline, 140);
     }
 
     function destroy() {
@@ -148,6 +153,7 @@ export function mountVisionStory() {
         window.removeEventListener('scroll', updateTarget);
         window.removeEventListener('resize', onResize);
         window.removeEventListener('pageshow', rebuildTimeline);
+        root.style.removeProperty('height');
         root.classList.remove('is-enhanced', 'is-near', 'is-preparing');
     }
 
