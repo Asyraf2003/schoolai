@@ -154,6 +154,10 @@
 html[dir="rtl"] .vision-paper__copy,
 html[dir="rtl"] .vision-paper__program {
     direction: rtl;
+}
+
+html[dir="rtl"] .vision-paper__copy--mission,
+html[dir="rtl"] .vision-paper__program {
     text-align: right;
 }
 

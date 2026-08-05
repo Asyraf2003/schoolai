@@ -1,14 +1,12 @@
-import { createVisionTimeline } from './timeline.js';
+import {
+    createVisionTimeline,
+    prepareVisionTypography,
+} from './timeline.js';
+import { createTypographyEntry } from './entry.js';
+import { prepareVisionAssets } from './preparation.js';
+
 const clamp = (value) => Math.max(0, Math.min(1, value));
-function decodeImages(root) {
-    const images = Array.from(root.querySelectorAll('[data-vision-art]'));
-    const work = Promise.allSettled(images.map((image) => {
-        if (typeof image.decode !== 'function') return Promise.resolve();
-        return image.decode();
-    }));
-    const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
-    return Promise.race([work, timeout]);
-}
+
 export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -18,6 +16,7 @@ export function mountVisionStory() {
         || reducedMotion.matches
         || typeof Element.prototype.animate !== 'function'
     ) return null;
+
     const track = root.querySelector('[data-vision-track]');
     let timeline = null;
     let observer = null;
@@ -27,24 +26,28 @@ export function mountVisionStory() {
     let preparing = false;
     let near = false;
     let destroyed = false;
-    let entranceArmed = false;
     let start = 0;
     let distance = 1;
     let targetProgress = 0;
     let renderedProgress = 0;
     let lastFrameTime = performance.now();
-    let lastScrollY = window.scrollY;
-    let lastTop = Number.POSITIVE_INFINITY;
+    const typographyEntry = createTypographyEntry(root, wide, () => timeline);
+
     function syncStoryHeight() {
         if (!track || wide.matches) {
             root.style.removeProperty('height');
             return;
         }
-        root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
+        root.style.height = `${Math.max(
+            track.scrollHeight,
+            window.innerHeight + 1,
+        )}px`;
     }
+
     function updateProgressTarget() {
         targetProgress = clamp((window.scrollY - start) / distance);
     }
+
     function measure() {
         syncStoryHeight();
         const rect = root.getBoundingClientRect();
@@ -52,9 +55,11 @@ export function mountVisionStory() {
         distance = Math.max(1, root.offsetHeight - window.innerHeight);
         updateProgressTarget();
     }
+
     function render() {
         if (timeline) timeline.setProgress(renderedProgress);
     }
+
     function tick(now) {
         frame = null;
         if (destroyed || !near || !timeline) return;
@@ -70,68 +75,57 @@ export function mountVisionStory() {
         renderedProgress = targetProgress;
         render();
     }
+
     function scheduleFrame() {
         if (!near || !timeline || frame !== null) return;
         lastFrameTime = performance.now();
         frame = requestAnimationFrame(tick);
     }
-    function syncTypographyEntry(initial = false) {
-        if (!timeline) return;
-        const top = root.getBoundingClientRect().top;
-        const scrollY = window.scrollY;
-        const movingDown = scrollY > lastScrollY + 0.5;
-        const movingUp = scrollY < lastScrollY - 0.5;
-        if (initial) {
-            if (top > window.innerHeight) {
-                timeline.resetTypography();
-                entranceArmed = true;
-            } else {
-                timeline.showTypography();
-                entranceArmed = false;
-            }
-        } else if (movingUp) {
-            timeline.showTypography();
-            entranceArmed = false;
-        } else if (top > window.innerHeight) {
-            if (!entranceArmed) timeline.resetTypography();
-            entranceArmed = true;
-        } else if (
-            entranceArmed
-            && movingDown
-            && lastTop > window.innerHeight
-            && top <= window.innerHeight
-        ) {
-            timeline.playTypography();
-            entranceArmed = false;
-        }
-        lastScrollY = scrollY;
-        lastTop = top;
-    }
+
     function updateTarget() {
-        if (!prepared || !near) return;
+        if (!prepared || !near || !timeline) return;
         updateProgressTarget();
-        syncTypographyEntry();
+        typographyEntry.sync();
         scheduleFrame();
     }
+
     function rebuildTimeline() {
-        if (!prepared || destroyed) return;
+        if (
+            !prepared
+            || destroyed
+            || !root.classList.contains('is-enhanced')
+        ) return;
         if (timeline) timeline.destroy();
         timeline = null;
         measure();
         timeline = createVisionTimeline(root);
         renderedProgress = targetProgress;
         render();
-        syncTypographyEntry(true);
+        typographyEntry.sync(true);
     }
+
+    function finishStaticPreparation() {
+        prepared = true;
+        preparing = false;
+        root.classList.remove('is-preparing');
+    }
+
     async function prepare() {
         if (prepared || preparing || destroyed) return;
         preparing = true;
-        root.classList.add('is-preparing');
-        await decodeImages(root);
+        const shouldEnhance = await prepareVisionAssets(
+            root,
+            prepareVisionTypography,
+        );
         if (destroyed) return;
+        if (!shouldEnhance) {
+            finishStaticPreparation();
+            return;
+        }
+
         root.classList.add('is-enhanced');
         root.classList.remove('is-preparing');
-        requestAnimationFrame(() => {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
             if (destroyed) return;
             measure();
             timeline = createVisionTimeline(root);
@@ -139,10 +133,11 @@ export function mountVisionStory() {
             render();
             prepared = true;
             preparing = false;
-            syncTypographyEntry(true);
+            typographyEntry.sync(true);
             scheduleFrame();
-        });
+        }));
     }
+
     function onIntersection(entries) {
         near = entries.some((entry) => entry.isIntersecting);
         root.classList.toggle('is-near', near);
@@ -154,10 +149,12 @@ export function mountVisionStory() {
             frame = null;
         }
     }
+
     function onResize() {
         window.clearTimeout(resizeTimer);
         resizeTimer = window.setTimeout(rebuildTimeline, 140);
     }
+
     function destroy() {
         if (destroyed) return;
         destroyed = true;
@@ -171,10 +168,12 @@ export function mountVisionStory() {
         root.style.removeProperty('height');
         root.classList.remove('is-enhanced', 'is-near', 'is-preparing');
     }
+
     window.addEventListener('scroll', updateTarget, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
     window.addEventListener('pageshow', rebuildTimeline, { passive: true });
     window.addEventListener('pagehide', destroy, { once: true });
+
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(onIntersection, {
             rootMargin: '110% 0px 110% 0px',
@@ -184,7 +183,8 @@ export function mountVisionStory() {
     } else {
         near = true;
         root.classList.add('is-near');
-        prepare();
     }
+
+    prepare();
     return { destroy };
 }

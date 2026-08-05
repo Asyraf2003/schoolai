@@ -1,10 +1,21 @@
 @media (max-width: 1180px) {
-    .vision-paper__copy--vision {
+    .vision-paper__copy--vision,
+    html[dir="rtl"] .vision-paper__copy--vision {
         text-align: center;
     }
 
     .vision-paper__copy--mission {
         text-align: start;
+    }
+
+    .vision-paper__copy--vision .vision-paper__kicker,
+    .vision-paper__vision-text {
+        font-size: clamp(1.8rem, min(5vw, 5.5svh), 3rem);
+    }
+
+    .vision-paper__copy--mission .vision-paper__kicker,
+    .vision-paper__mission-text {
+        font-size: clamp(1.65rem, min(4.2vw, 5svh), 2.6rem);
     }
 
     .vision-paper__vision-text {
@@ -36,7 +47,6 @@
     .vision-paper__kicker,
     .vision-paper__vision-text,
     .vision-paper__mission-text {
-        font-size: clamp(1.8rem, 5vw, 3rem);
         font-weight: 300;
         line-height: 1.08;
     }
@@ -86,10 +96,14 @@
 }
 
 @media (max-width: 639px) {
-    .vision-paper__kicker,
-    .vision-paper__vision-text,
-    .vision-paper__mission-text {
+    .vision-paper__copy--vision .vision-paper__kicker,
+    .vision-paper__vision-text {
         font-size: clamp(1.65rem, 7vw, 2.6rem);
+    }
+
+    .vision-paper__copy--mission .vision-paper__kicker,
+    .vision-paper__mission-text {
+        font-size: clamp(1.55rem, 6.2vw, 2.35rem);
     }
 }
 

@@ -5,33 +5,29 @@ const VISION_DURATION = 320;
 const MISSION_DURATION = 220;
 const VISION_STAGGER_SPAN = 150;
 const MISSION_STAGGER_SPAN = 180;
-
+const clamp = (value) => Math.max(0, Math.min(1, value));
 function normalizeLabel(value) {
     return value.replace(/\s+/gu, ' ').trim();
 }
-
 function graphemes(value) {
     if (typeof Intl?.Segmenter === 'function') {
-        const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+        const segmenter = new Intl.Segmenter(undefined, {
+            granularity: 'grapheme',
+        });
         return Array.from(segmenter.segment(value), ({ segment }) => segment);
     }
-
     return Array.from(value);
 }
-
 function textNodes(element) {
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
     const nodes = [];
     let current = walker.nextNode();
-
     while (current) {
         if (current.nodeValue?.trim()) nodes.push(current);
         current = walker.nextNode();
     }
-
     return nodes;
 }
-
 function createUnit(text, word = false) {
     const unit = document.createElement('span');
     unit.className = word ? `${WORD_CLASS} ${UNIT_CLASS}` : UNIT_CLASS;
@@ -39,7 +35,6 @@ function createUnit(text, word = false) {
     unit.textContent = text;
     return unit;
 }
-
 function splitTarget(target, mode, preserveWords) {
     if (target.hasAttribute(READY_ATTRIBUTE)) {
         return Array.from(target.querySelectorAll(`.${UNIT_CLASS}`));
@@ -50,20 +45,16 @@ function splitTarget(target, mode, preserveWords) {
 
     textNodes(target).forEach((node) => {
         const fragment = document.createDocumentFragment();
-        const segments = (node.nodeValue || '').split(/(\s+)/u);
-
-        segments.forEach((segment) => {
+        (node.nodeValue || '').split(/(\s+)/u).forEach((segment) => {
             if (!segment) return;
             if (/^\s+$/u.test(segment)) {
                 fragment.append(document.createTextNode(segment));
                 return;
             }
-
             if (mode === 'vision' || preserveWords) {
                 fragment.append(createUnit(segment, true));
                 return;
             }
-
             const word = document.createElement('span');
             word.className = WORD_CLASS;
             word.setAttribute('aria-hidden', 'true');
@@ -72,19 +63,16 @@ function splitTarget(target, mode, preserveWords) {
             });
             fragment.append(word);
         });
-
         node.replaceWith(fragment);
     });
 
     target.setAttribute(READY_ATTRIBUTE, 'true');
     return Array.from(target.querySelectorAll(`.${UNIT_CLASS}`));
 }
-
 function staggerDelay(index, total, span) {
     if (total <= 1) return 0;
     return (index / (total - 1)) * span;
 }
-
 function createSequence(units, keyframesFor, optionsFor) {
     const animations = units.map((unit, index) => {
         const options = optionsFor(index, units.length);
@@ -97,13 +85,18 @@ function createSequence(units, keyframesFor, optionsFor) {
         animation.currentTime = endTime;
         return { animation, endTime };
     });
+    const totalTime = Math.max(1, ...animations.map(({ endTime }) => endTime));
 
     return {
-        reset() {
-            animations.forEach(({ animation }) => {
+        setProgress(progress) {
+            const time = clamp(progress) * totalTime;
+            animations.forEach(({ animation, endTime }) => {
                 animation.pause();
-                animation.currentTime = 0;
+                animation.currentTime = Math.min(time, endTime);
             });
+        },
+        reset() {
+            this.setProgress(0);
         },
         play() {
             animations.forEach(({ animation }) => {
@@ -114,32 +107,31 @@ function createSequence(units, keyframesFor, optionsFor) {
             });
         },
         finish() {
-            animations.forEach(({ animation, endTime }) => {
-                animation.pause();
-                animation.currentTime = endTime;
-            });
+            this.setProgress(1);
         },
         destroy() {
             animations.forEach(({ animation }) => animation.cancel());
         },
     };
 }
-
 function createVisionSequence(units, rtl) {
-    const xPattern = [-18, 12, -9, 16, -13, 8];
-    const yPattern = [-5, 6, 3, -4, 7, -2];
-    const zPattern = [120, 90, 150, 105, 135, 80];
-    const rotationPattern = [-16, 12, -9, 15, -12, 8];
+    const x = [-18, 12, -9, 16, -13, 8];
+    const y = [-5, 6, 3, -4, 7, -2];
+    const z = [120, 90, 150, 105, 135, 80];
+    const rotate = [-16, 12, -9, 15, -12, 8];
     const direction = rtl ? -1 : 1;
 
     return createSequence(
         units,
         (index) => {
-            const slot = index % xPattern.length;
-            const start = `perspective(900px) translate3d(${xPattern[slot] * direction}px, ${yPattern[slot]}px, ${zPattern[slot]}px) rotateX(${rotationPattern[slot]}deg)`;
+            const slot = index % x.length;
+            const start = `perspective(900px) translate3d(${x[slot] * direction}px, ${y[slot]}px, ${z[slot]}px) rotateX(${rotate[slot]}deg)`;
             return [
                 { opacity: 0, transform: start },
-                { opacity: 1, transform: 'perspective(900px) translate3d(0, 0, 0) rotateX(0deg)' },
+                {
+                    opacity: 1,
+                    transform: 'perspective(900px) translate3d(0, 0, 0) rotateX(0deg)',
+                },
             ];
         },
         (index, total) => ({
@@ -149,7 +141,6 @@ function createVisionSequence(units, rtl) {
         }),
     );
 }
-
 function createMissionSequence(units) {
     return createSequence(
         units,
@@ -164,18 +155,24 @@ function createMissionSequence(units) {
         }),
     );
 }
-
 function unitsFor(root, name, preserveWords) {
-    return Array.from(root.querySelectorAll(`[data-vision-typography="${name}"]`))
-        .flatMap((target) => splitTarget(target, name, preserveWords));
+    return Array.from(
+        root.querySelectorAll(`[data-vision-typography="${name}"]`),
+    ).flatMap((target) => splitTarget(target, name, preserveWords));
 }
-
+export function prepareTypography(root) {
+    const rtl = document.documentElement.dir === 'rtl';
+    unitsFor(root, 'vision', true);
+    unitsFor(root, 'mission', rtl);
+}
 export function createTypographyEntrance(root) {
     const rtl = document.documentElement.dir === 'rtl';
     const vision = createVisionSequence(unitsFor(root, 'vision', true), rtl);
     const mission = createMissionSequence(unitsFor(root, 'mission', rtl));
 
     return {
+        setVisionProgress: (progress) => vision.setProgress(progress),
+        setMissionProgress: (progress) => mission.setProgress(progress),
         reset() {
             vision.reset();
             mission.reset();

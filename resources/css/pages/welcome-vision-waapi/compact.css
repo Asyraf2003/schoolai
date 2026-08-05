@@ -40,7 +40,7 @@
         align-content: center;
         min-height: 100svh;
         max-width: none;
-        padding: 12svh clamp(1.25rem, 7vw, 5rem);
+        padding: clamp(3.5rem, 9svh, 6rem) clamp(1.25rem, 7vw, 5rem);
     }
 
     .vision-paper.is-enhanced .vision-paper__copy--mission {
@@ -50,7 +50,6 @@
     .vision-paper.is-enhanced .vision-paper__kicker,
     .vision-paper.is-enhanced .vision-paper__vision-text,
     .vision-paper.is-enhanced .vision-paper__mission-text {
-        font-size: clamp(1.8rem, 5vw, 3rem);
         font-weight: 300;
         line-height: 1.08;
     }
@@ -104,12 +103,6 @@
 @media (max-width: 639px) {
     .vision-paper.is-enhanced .vision-paper__scene {
         --mobile-image-width: 92vw;
-    }
-
-    .vision-paper.is-enhanced .vision-paper__kicker,
-    .vision-paper.is-enhanced .vision-paper__vision-text,
-    .vision-paper.is-enhanced .vision-paper__mission-text {
-        font-size: clamp(1.65rem, 7vw, 2.6rem);
     }
 }
 

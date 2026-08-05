@@ -23,6 +23,7 @@
 
     .vision-paper.is-enhanced .vision-paper__scene {
         --copy-display-size: clamp(2rem, 2vw, 3rem);
+        --mission-display-size: clamp(1.7rem, min(2vw, 4.4svh), 3rem);
         --image-height: 100svh;
         --image-width: calc(var(--image-height) * 11 / 8);
         --frame-height: calc(var(--image-height) * 2 / 4);
@@ -41,14 +42,16 @@
 
     .vision-paper.is-enhanced .vision-paper__copy-layout {
         position: absolute;
-        inset-block-start: 25svh;
+        inset-block-start: 50%;
         inset-inline-start: 6vw;
         display: grid;
         grid-template-columns: 34vw 34vw;
         grid-template-areas: "vision mission";
+        align-items: start;
         gap: 5vw;
         width: 73vw;
-        height: 82svh;
+        height: auto;
+        transform: translateY(-50%);
     }
 
     .vision-paper.is-enhanced .vision-paper__copy--vision {
@@ -59,7 +62,7 @@
     .vision-paper.is-enhanced .vision-paper__copy--mission {
         grid-area: mission;
         align-self: start;
-        margin-top: 15svh;
+        margin-top: clamp(2.5rem, 8svh, 5rem);
     }
 
     html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__copy-layout {
@@ -69,10 +72,19 @@
     .vision-paper.is-enhanced .vision-paper__kicker,
     .vision-paper.is-enhanced .vision-paper__vision-text,
     .vision-paper.is-enhanced .vision-paper__mission-text {
-        font-size: var(--copy-display-size);
         font-weight: 300;
         line-height: 1.08;
         letter-spacing: -0.04em;
+    }
+
+    .vision-paper.is-enhanced .vision-paper__copy--vision .vision-paper__kicker,
+    .vision-paper.is-enhanced .vision-paper__vision-text {
+        font-size: var(--copy-display-size);
+    }
+
+    .vision-paper.is-enhanced .vision-paper__copy--mission .vision-paper__kicker,
+    .vision-paper.is-enhanced .vision-paper__mission-text {
+        font-size: var(--mission-display-size);
     }
 
     .vision-paper.is-enhanced .vision-paper__kicker {

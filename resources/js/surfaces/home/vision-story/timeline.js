@@ -1,9 +1,11 @@
-import { createTypographyEntrance } from './typography.js';
+import {
+    createTypographyEntrance,
+    prepareTypography,
+} from './typography.js';
 
 const DURATION = 1000;
 const MOVE_START = 0.04;
 const MOVE_END = 0.96;
-
 const clamp = (value) => Math.max(0, Math.min(1, value));
 const middleX = (rect) => rect.left + (rect.width / 2);
 const middleY = (rect) => rect.top + (rect.height / 2);
@@ -14,7 +16,6 @@ function createAnimation(element, keyframes) {
         fill: 'both',
         easing: 'linear',
     });
-
     animation.pause();
     animation.currentTime = 0;
     return animation;
@@ -26,12 +27,10 @@ function masterOffset(trackFraction) {
 
 function orderedOffsets(firstMove, secondMove, endMove) {
     if (endMove === 0) return [0.25, 0.4];
-
     const first = masterOffset(firstMove / endMove);
     const second = masterOffset(secondMove / endMove);
     const start = clamp(Math.min(first, second));
     const end = clamp(Math.max(start + 0.04, Math.max(first, second)));
-
     return [start, end];
 }
 
@@ -42,14 +41,12 @@ function frameSwapOffsets(frameRect, endMove, viewportSize, horizontal) {
     const centeredMove = horizontal
         ? (viewportSize / 2) - middleX(frameRect)
         : (viewportSize / 2) - middleY(frameRect);
-
     return orderedOffsets(fullyVisibleMove, centeredMove, endMove);
 }
 
-function missionEnterOffsets(missionRect, endMove, viewportHeight) {
-    const enterMove = (viewportHeight * 0.82) - missionRect.top;
-    const centeredMove = (viewportHeight / 2) - middleY(missionRect);
-
+function missionEnterOffsets(titleRect, endMove, viewportHeight) {
+    const enterMove = viewportHeight - titleRect.top;
+    const centeredMove = (viewportHeight / 2) - middleY(titleRect);
     return orderedOffsets(enterMove, centeredMove, endMove);
 }
 
@@ -59,15 +56,22 @@ function trackTransform(move, horizontal) {
         : `translate3d(0, ${move}px, 0)`;
 }
 
+export function prepareVisionTypography(root) {
+    prepareTypography(root);
+}
+
 export function createVisionTimeline(root) {
     const track = root.querySelector('[data-vision-track]');
     const frame = root.querySelector('[data-vision-image-frame]');
     const stack = root.querySelector('[data-vision-image-stack]');
     const mission = root.querySelector('[data-vision-copy="mission"]');
+    const missionTitle = mission?.querySelector('.vision-paper__kicker');
 
     if (!track || !frame || !stack) {
         return {
             setProgress() {},
+            setVisionTypographyProgress() {},
+            setMissionTypographyProgress() {},
             playTypography() {},
             showTypography() {},
             resetTypography() {},
@@ -87,45 +91,54 @@ export function createVisionTimeline(root) {
         viewportSize,
         horizontal,
     );
-    const animations = [];
+    const animations = [
+        createAnimation(track, [
+            { offset: 0, transform: trackTransform(0, horizontal) },
+            { offset: MOVE_START, transform: trackTransform(0, horizontal) },
+            { offset: MOVE_END, transform: trackTransform(endMove, horizontal) },
+            { offset: 1, transform: trackTransform(endMove, horizontal) },
+        ]),
+        createAnimation(stack, [
+            { offset: 0, transform: 'translate3d(0, 0, 0)' },
+            { offset: swapStart, transform: 'translate3d(0, 0, 0)' },
+            {
+                offset: swapEnd,
+                transform: 'translate3d(0, -50%, 0)',
+                easing: 'cubic-bezier(.22,1,.36,1)',
+            },
+            { offset: 1, transform: 'translate3d(0, -50%, 0)' },
+        ]),
+    ];
 
-    animations.push(createAnimation(track, [
-        { offset: 0, transform: trackTransform(0, horizontal) },
-        { offset: MOVE_START, transform: trackTransform(0, horizontal) },
-        { offset: MOVE_END, transform: trackTransform(endMove, horizontal) },
-        { offset: 1, transform: trackTransform(endMove, horizontal) },
-    ]));
-
-    animations.push(createAnimation(stack, [
-        { offset: 0, transform: 'translate3d(0, 0, 0)' },
-        { offset: swapStart, transform: 'translate3d(0, 0, 0)' },
-        {
-            offset: swapEnd,
-            transform: 'translate3d(0, -50%, 0)',
-            easing: 'cubic-bezier(.22,1,.36,1)',
-        },
-        { offset: 1, transform: 'translate3d(0, -50%, 0)' },
-    ]));
-
-    if (!horizontal && mission) {
-        const missionRect = mission.getBoundingClientRect();
+    if (!horizontal && mission && missionTitle) {
         const [revealStart, revealEnd] = missionEnterOffsets(
-            missionRect,
+            missionTitle.getBoundingClientRect(),
             endMove,
             window.innerHeight,
         );
         const fromX = document.documentElement.dir === 'rtl' ? '-18vw' : '18vw';
-
         animations.push(createAnimation(mission, [
-            { offset: 0, opacity: 0, transform: `translate3d(${fromX}, 0, 0)` },
-            { offset: revealStart, opacity: 0, transform: `translate3d(${fromX}, 0, 0)` },
+            {
+                offset: 0,
+                opacity: 0,
+                transform: `translate3d(${fromX}, 0, 0)`,
+            },
+            {
+                offset: revealStart,
+                opacity: 0,
+                transform: `translate3d(${fromX}, 0, 0)`,
+            },
             {
                 offset: revealEnd,
                 opacity: 1,
                 transform: 'translate3d(0, 0, 0)',
                 easing: 'cubic-bezier(.22,1,.36,1)',
             },
-            { offset: 1, opacity: 1, transform: 'translate3d(0, 0, 0)' },
+            {
+                offset: 1,
+                opacity: 1,
+                transform: 'translate3d(0, 0, 0)',
+            },
         ]));
     }
 
@@ -135,6 +148,12 @@ export function createVisionTimeline(root) {
             animations.forEach((animation) => {
                 animation.currentTime = time;
             });
+        },
+        setVisionTypographyProgress(progress) {
+            typography.setVisionProgress(progress);
+        },
+        setMissionTypographyProgress(progress) {
+            typography.setMissionProgress(progress);
         },
         playTypography() {
             typography.play();
