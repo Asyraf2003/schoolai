@@ -1,7 +1,10 @@
 @media (max-width: 1180px) {
-    .vision-paper__scene {
+    .vision-paper {
         --story-gap: clamp(1rem, 2.5svh, 2rem);
         --story-header-clearance: clamp(4.5rem, 8svh, 5.5rem);
+    }
+
+    .vision-paper__scene {
         --mobile-image-width: min(88vw, 46rem);
         --mobile-image-height: calc(var(--mobile-image-width) * 8 / 11);
         --mobile-frame-height: calc(var(--mobile-image-height) * 2 / 4);
