@@ -118,7 +118,7 @@
       "originalSourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db"
     },
     "resources/css/pages/welcome-hero.css": {
-      "sourceSha256": "8d3c51b2d9baafb5b341ac991b63706f2bca85cdee1eefbc588263fa6babb5ac",
+      "sourceSha256": "9e6092c3503d4f58ea25351ea2ef1e2ece84fe1c5acd81a443f72cb3976bc533",
       "orderedModules": [
         {
           "path": "./welcome-hero/001-homepage-hero-and-overlay-navigation-this-file-inten.css",
@@ -142,8 +142,8 @@
         },
         {
           "path": "./welcome-hero/005-welcome-hero-cascade-005.css",
-          "lines": 186,
-          "sha256": "697768d7ab66906c2ab412ef79f16a0a9bda9f16a2b607497f107bd9a0eaedbc"
+          "lines": 130,
+          "sha256": "113e77b32c941217f7f86ffbbb6b75d6c86c6c1707b8fbba6c03ad5d2afa37f6"
         },
         {
           "path": "./welcome-hero/006-welcome-hero-cascade-006.css",
@@ -162,8 +162,8 @@
         },
         {
           "path": "./welcome-hero/009-welcome-hero-cascade-009.css",
-          "lines": 139,
-          "sha256": "fc7dfd7d29917b36d1183b621f9262947d2524f163426cd3b8da9b1b3fd3eb46"
+          "lines": 185,
+          "sha256": "6f3463d23152dfd408f77c776efa8d1aeaf999f826e55ea23a3e8ad9bf94197b"
         }
       ],
       "originalSourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a"
@@ -211,7 +211,7 @@
       "originalSourceSha256": "e8c0330c670122a378d6eb0f11fcdab928e257c1e15ee72bc74479a89257fd5e"
     },
     "resources/css/pages/welcome.css": {
-      "sourceSha256": "cf3f36e2192a3295f63a8cb2bdb88bfd07a040a0c22a340110d0157cb5ff0dea",
+      "sourceSha256": "1d1eb59cd2fa94d4b348b4a840283e380b74a49a23a3d57f94352c31e580cb84",
       "orderedModules": [
         {
           "path": "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css",
@@ -225,38 +225,38 @@
         },
         {
           "path": "./welcome/003-8-quick-info.css",
-          "lines": 190,
-          "sha256": "d722567fd50ef1a4f1fce01fae2a6b6473193d28dfea84ea6fce1f244e669960"
+          "lines": 173,
+          "sha256": "bcbdd0f4692301f0ed674a58fb3d45f14a77b27c3aacb75d232c53db6f5ae01d"
         },
         {
           "path": "./welcome/004-11-nilai-sekolah.css",
-          "lines": 189,
-          "sha256": "d1065bb284e4dca5f01299ce259483480dd998642d03fdcd69e7f97ec73b0047"
+          "lines": 156,
+          "sha256": "b1d92dd5488e35e107fc4179e595656653232cf30037c90416b69b51bc3f297d"
         },
         {
           "path": "./welcome/005-19-footer.css",
-          "lines": 167,
-          "sha256": "988300bdf9626545cbc160aaf78cb96c00cd0650e3a83e73aa721647a02fbe05"
+          "lines": 164,
+          "sha256": "1ce6039f7c977e674877d9ae6caf608d4a2d5b867e9eb09691953c1d6af85c19"
         },
         {
           "path": "./welcome/006-23-aksesibilitas.css",
-          "lines": 182,
-          "sha256": "0fd9d0102bfd2210c3a0551008c87418a5a9a03f6f9447a69a788d90dbfa9192"
+          "lines": 149,
+          "sha256": "5c7616f6d315f44c5f3b10212782f35072574946d599c7cb7ae5d4a128c8d5d2"
         },
         {
           "path": "./welcome/007-welcome-cascade-007.css",
-          "lines": 185,
-          "sha256": "dac3d4cc0f62765e35642a3394c98ae73fbe23bf43995372d780400d29d0b215"
+          "lines": 1,
+          "sha256": "55d5864ed6ca951f299ad38c28a56ed10da7e6fe7375b983fdced15961ed765f"
         },
         {
           "path": "./welcome/008-welcome-cascade-008.css",
-          "lines": 189,
-          "sha256": "6ee0d58f11866bb65e51283a5ceccb776b332d56070476f8560e5641d0089bc2"
+          "lines": 1,
+          "sha256": "91a3716c76d8017fcd82cbe2b4ef1e13199ede62b823fc53f4623cf3609326bd"
         },
         {
           "path": "./welcome/009-welcome-cascade-009.css",
-          "lines": 184,
-          "sha256": "979028d37799a35b441584e28affc42d670804bc1f19b08e4407358d3545e63b"
+          "lines": 112,
+          "sha256": "cfe4ea13c247f33bebad7c026d6ac7307b05b86d8df7c0b9bdf163c869e62042"
         },
         {
           "path": "./welcome/010-welcome-cascade-010.css",
@@ -430,13 +430,13 @@
         },
         {
           "path": "./welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css",
-          "lines": 188,
-          "sha256": "8aa5851dbda27a2be2afdaa6edcb1ed9e0ec3bb9a65551aaa78afb13e99e654e"
+          "lines": 184,
+          "sha256": "7542f9c6c37d5ec949d07c34bad497912cf2c287969e99639f43a40c8c96a133"
         },
         {
           "path": "./welcome/045-halaman-artikel-clean-editorial-grid-3-2-1-gambar-ko.css",
-          "lines": 184,
-          "sha256": "08e7f82db30214319019144770ce74397d3e34102110130142830fe621348b6d"
+          "lines": 180,
+          "sha256": "33659c50a6361319c5b1539c8504158cce57b6022e23e74d967e317783da716a"
         },
         {
           "path": "./welcome/046-social-video-covers-provider-identity-without-loadin.css",
