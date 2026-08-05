@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders the localized WAAPI Vision and Mission story contract', function (): void {
+it('renders the localized desktop Vision and Mission paper story', function (): void {
     foreach (['id', 'en', 'ar'] as $locale) {
         app()->setLocale($locale);
 
@@ -17,27 +17,30 @@ it('renders the localized WAAPI Vision and Mission story contract', function ():
             ->assertSee('id="visi-misi"', false)
             ->assertSee('data-vision-story', false)
             ->assertSee('data-vision-track', false)
-            ->assertSee('data-vision-editorial', false)
-            ->assertSee('data-vision-divider', false)
-            ->assertSee('data-vision-mission-list', false)
-            ->assertSee('data-vision-outro', false)
-            ->assertSee('data-vision-canvas', false)
+            ->assertSee('data-vision-intro', false)
+            ->assertSee('data-vision-copy="vision"', false)
+            ->assertSee('data-vision-copy="mission"', false)
+            ->assertSee('data-vision-image-square', false)
+            ->assertSee('data-vision-image-frame', false)
+            ->assertSee('data-vision-image-stack', false)
+            ->assertSee('data-vision-program', false)
+            ->assertDontSee('data-vision-panel-kind', false)
+            ->assertDontSee('data-vision-outro', false)
+            ->assertDontSee('data-vision-canvas', false)
             ->assertDontSee('data-story-root', false)
             ->assertDontSee('data-story-scene', false)
-            ->assertDontSee('data-story-text', false)
-            ->assertDontSee('direction-story', false)
             ->assertDontSee('story-unit', false);
 
         $content = $response->getContent();
 
         expect(substr_count($content, 'data-vision-story'))->toBe(1)
             ->and(substr_count($content, 'data-vision-track'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-panel-kind='))->toBe(5)
-            ->and(substr_count($content, 'data-vision-panel-kind="vision"'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-panel-kind="mission"'))->toBe(4)
-            ->and(substr_count($content, 'data-vision-art'))->toBe(4)
-            ->and(substr_count($content, 'data-vision-outro'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-canvas'))->toBe(1)
+            ->and(substr_count($content, 'data-vision-copy='))->toBe(2)
+            ->and(substr_count($content, 'data-vision-art'))->toBe(3)
+            ->and(substr_count($content, 'images.pexels.com'))->toBe(3)
+            ->and(substr_count($content, 'data-vision-image-frame'))->toBe(1)
+            ->and(substr_count($content, 'data-vision-image-stack'))->toBe(1)
+            ->and(substr_count($content, 'data-vision-program'))->toBe(1)
             ->and(substr_count($content, 'id="vision-mission-title-'))->toBe(4);
 
         if ($locale === 'ar') {
