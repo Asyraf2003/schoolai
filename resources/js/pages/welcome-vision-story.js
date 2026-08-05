@@ -19,7 +19,7 @@ function loadController() {
         .catch((error) => {
             controllerPromise = null;
             rootElement.classList.remove('vision-motion-capable');
-            console.error('Vision image motion failed.', error);
+            console.error('Vision story enhancement failed.', error);
         });
 
     return controllerPromise;
@@ -28,6 +28,7 @@ function loadController() {
 function scheduleAfterHero() {
     if (scheduled || !canEnhance) return;
     scheduled = true;
+
     const run = () => loadController();
 
     if ('requestIdleCallback' in window) {
@@ -40,6 +41,7 @@ function scheduleAfterHero() {
 
 function waitForHeroPresentation() {
     if (!document.querySelector('[data-vision-story]') || !canEnhance) return;
+
     const hero = document.querySelector('[data-hero-slider]');
 
     if (!hero || hero.getAttribute('data-enhanced') === 'true') {

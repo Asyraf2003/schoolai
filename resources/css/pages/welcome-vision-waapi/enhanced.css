@@ -1,31 +1,53 @@
 @media (min-width: 1181px) {
-    .vision-paper__copy-stage {
+    .vision-paper__scene {
         --copy-display-size: clamp(2rem, 2vw, 3rem);
         --mission-display-size: clamp(1.7rem, min(2vw, 4.4svh), 3rem);
+        --image-height: 100svh;
+        --image-width: calc(var(--image-height) * 11 / 8);
+        --frame-height: calc(var(--image-height) * 2 / 4);
+        --frame-width: calc(var(--frame-height) * 11 / 8);
+        --frame-inside: calc(var(--frame-width) * 2 / 3);
+        --frame-start: calc(var(--image-width) - var(--frame-inside));
+        height: 100svh;
+        min-height: 0;
+        padding: 0;
     }
 
     .vision-paper__copy-layout {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 6vw;
+        display: grid;
         grid-template-columns: 34vw 34vw;
         grid-template-areas: "vision mission";
         align-items: start;
         gap: 5vw;
         width: 73vw;
-        margin-inline-start: 6vw;
+        height: auto;
+        transform: translateY(-50%);
     }
 
     .vision-paper__copy--vision {
         grid-area: vision;
-        justify-self: center;
+        align-self: start;
     }
 
     .vision-paper__copy--mission {
         grid-area: mission;
-        justify-self: center;
+        align-self: start;
         margin-top: clamp(2.5rem, 8svh, 5rem);
     }
 
     html[dir="rtl"] .vision-paper__copy-layout {
         grid-template-areas: "mission vision";
+    }
+
+    .vision-paper__kicker,
+    .vision-paper__vision-text,
+    .vision-paper__mission-text {
+        font-weight: 300;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
     }
 
     .vision-paper__copy--vision .vision-paper__kicker,
@@ -38,32 +60,26 @@
         font-size: var(--mission-display-size);
     }
 
-    .vision-paper__vision-text,
-    .vision-paper__mission-text {
-        width: min(100%, 22ch);
-        max-width: 22ch;
+    .vision-paper__kicker {
+        margin: 0 0 0.28em;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
     }
 
-    .vision-paper__motion {
-        min-height: 100svh;
+    html[dir="rtl"] .vision-paper__kicker,
+    html[dir="rtl"] .vision-paper__vision-text,
+    html[dir="rtl"] .vision-paper__mission-text {
+        letter-spacing: normal;
     }
 
-    .vision-paper__scene {
-        --image-height: 100svh;
-        --image-width: calc(var(--image-height) * 11 / 8);
-        --frame-height: calc(var(--image-height) * 2 / 4);
-        --frame-width: calc(var(--frame-height) * 11 / 8);
-        --frame-inside: calc(var(--frame-width) * 2 / 3);
-        --frame-start: calc(var(--image-width) - var(--frame-inside));
-        height: 100svh;
-        min-height: 0;
-        padding: 0;
+    html[dir="rtl"] .vision-paper__kicker {
+        text-transform: none;
     }
 
     .vision-paper__square {
         position: absolute;
         inset-block-start: 0;
-        inset-inline-start: 8vw;
+        inset-inline-start: 82vw;
         width: var(--image-width);
         height: var(--image-height);
         margin: 0;
@@ -80,21 +96,18 @@
         transform: translateY(-50%);
     }
 
-    html.vision-motion-capable .vision-paper.is-enhanced
-    .vision-paper__motion {
-        height: 360svh;
+    html.vision-motion-capable .vision-paper.is-enhanced {
+        height: 430svh;
     }
 
-    html.vision-motion-capable .vision-paper.is-enhanced
-    .vision-paper__pin {
+    html.vision-motion-capable .vision-paper.is-enhanced .vision-paper__pin {
         position: sticky;
         inset-block-start: 0;
         height: 100svh;
         overflow: hidden;
     }
 
-    html.vision-motion-capable .vision-paper.is-enhanced
-    .vision-paper__track {
+    html.vision-motion-capable .vision-paper.is-enhanced .vision-paper__track {
         position: absolute;
         inset: 0 auto 0 0;
         display: flex;
@@ -105,16 +118,14 @@
         backface-visibility: hidden;
     }
 
-    html.vision-motion-capable .vision-paper.is-enhanced
-    .vision-paper__scene {
-        --scene-width: calc(8vw + var(--image-width));
+    html.vision-motion-capable .vision-paper.is-enhanced .vision-paper__scene {
+        --scene-width: calc(82vw + var(--image-width));
         z-index: 1;
         flex: 0 0 var(--scene-width);
         width: var(--scene-width);
     }
 
-    html.vision-motion-capable .vision-paper.is-enhanced
-    .vision-paper__program {
+    html.vision-motion-capable .vision-paper.is-enhanced .vision-paper__program {
         --frame-outside: calc(100svh * 2 / 4 * 11 / 8 / 3);
         z-index: 0;
         display: flex;
@@ -132,6 +143,7 @@
 
     html.vision-motion-capable .vision-paper.is-enhanced
     .vision-paper__program h2 {
+        position: static;
         width: min(68vw, 86rem);
         max-width: none;
         margin: 0;
@@ -140,6 +152,7 @@
 
     html.vision-motion-capable .vision-paper.is-enhanced
     .vision-paper__program p {
+        position: static;
         width: min(34vw, 32rem);
         margin: 0;
         font-size: clamp(0.95rem, 1.25vw, 1.3rem);
@@ -149,9 +162,9 @@
         direction: rtl;
         text-align: right;
     }
-}
 
-.vision-paper.is-enhanced.is-near .vision-paper__track,
-.vision-paper.is-enhanced.is-near .vision-paper__image-stack {
-    will-change: transform;
+    .vision-paper.is-enhanced.is-near .vision-paper__track,
+    .vision-paper.is-enhanced.is-near .vision-paper__image-stack {
+        will-change: transform;
+    }
 }

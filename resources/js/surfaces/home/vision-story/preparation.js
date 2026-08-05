@@ -14,7 +14,12 @@ function decodeImages(root) {
     return boundedWait(work, 900);
 }
 
+function waitForFonts() {
+    if (!document.fonts?.ready) return Promise.resolve();
+    return boundedWait(document.fonts.ready, 700);
+}
+
 export async function prepareVisionAssets(root) {
     root.classList.add('is-preparing');
-    await decodeImages(root);
+    await Promise.all([decodeImages(root), waitForFonts()]);
 }

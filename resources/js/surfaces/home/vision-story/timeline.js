@@ -14,7 +14,10 @@ export function createVisionTimeline(root) {
     const stack = root.querySelector('[data-vision-image-stack]');
 
     if (!track || !frame || !stack) {
-        return { setProgress() {}, destroy() {} };
+        return {
+            setProgress() {},
+            destroy() {},
+        };
     }
 
     const horizontal = window.matchMedia('(min-width: 1181px)').matches;
