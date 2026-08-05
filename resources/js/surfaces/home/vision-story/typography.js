@@ -1,17 +1,16 @@
 const UNIT_CLASS = 'vision-paper__reveal-unit';
+const WORD_CLASS = 'vision-paper__reveal-word';
 const READY_ATTRIBUTE = 'data-vision-typography-ready';
-const REVEAL_DURATION = 420;
-const REVEAL_SPAN = 720;
-
-const clamp = (value) => Math.max(0, Math.min(1, value));
+const VISION_DURATION = 320;
+const MISSION_DURATION = 220;
+const VISION_STAGGER_SPAN = 150;
+const MISSION_STAGGER_SPAN = 180;
 
 function normalizeLabel(value) {
     return value.replace(/\s+/gu, ' ').trim();
 }
 
-function segmentText(value, preserveArabicWords) {
-    if (preserveArabicWords) return value.split(/(\s+)/u);
-
+function graphemes(value) {
     if (typeof Intl?.Segmenter === 'function') {
         const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
         return Array.from(segmenter.segment(value), ({ segment }) => segment);
@@ -33,7 +32,15 @@ function textNodes(element) {
     return nodes;
 }
 
-function splitTarget(target, preserveArabicWords) {
+function createUnit(text, word = false) {
+    const unit = document.createElement('span');
+    unit.className = word ? `${WORD_CLASS} ${UNIT_CLASS}` : UNIT_CLASS;
+    unit.setAttribute('aria-hidden', 'true');
+    unit.textContent = text;
+    return unit;
+}
+
+function splitTarget(target, mode, preserveWords) {
     if (target.hasAttribute(READY_ATTRIBUTE)) {
         return Array.from(target.querySelectorAll(`.${UNIT_CLASS}`));
     }
@@ -43,19 +50,27 @@ function splitTarget(target, preserveArabicWords) {
 
     textNodes(target).forEach((node) => {
         const fragment = document.createDocumentFragment();
-        const segments = segmentText(node.nodeValue || '', preserveArabicWords);
+        const segments = (node.nodeValue || '').split(/(\s+)/u);
 
         segments.forEach((segment) => {
+            if (!segment) return;
             if (/^\s+$/u.test(segment)) {
                 fragment.append(document.createTextNode(segment));
                 return;
             }
 
-            const unit = document.createElement('span');
-            unit.className = UNIT_CLASS;
-            unit.setAttribute('aria-hidden', 'true');
-            unit.textContent = segment;
-            fragment.append(unit);
+            if (mode === 'vision' || preserveWords) {
+                fragment.append(createUnit(segment, true));
+                return;
+            }
+
+            const word = document.createElement('span');
+            word.className = WORD_CLASS;
+            word.setAttribute('aria-hidden', 'true');
+            graphemes(segment).forEach((character) => {
+                word.append(createUnit(character));
+            });
+            fragment.append(word);
         });
 
         node.replaceWith(fragment);
@@ -65,59 +80,113 @@ function splitTarget(target, preserveArabicWords) {
     return Array.from(target.querySelectorAll(`.${UNIT_CLASS}`));
 }
 
-function createReveal(units) {
-    if (!units.length) return { setProgress() {}, destroy() {} };
+function staggerDelay(index, total, span) {
+    if (total <= 1) return 0;
+    return (index / (total - 1)) * span;
+}
 
-    const stagger = REVEAL_SPAN / Math.max(1, units.length - 1);
-    const totalDuration = REVEAL_DURATION + (stagger * (units.length - 1));
+function createSequence(units, keyframesFor, optionsFor) {
     const animations = units.map((unit, index) => {
-        const animation = unit.animate([
-            { transform: 'scaleY(0)' },
-            { transform: 'scaleY(1)' },
-        ], {
-            duration: REVEAL_DURATION,
-            delay: index * stagger,
-            easing: 'cubic-bezier(.55,.055,.675,.19)',
+        const options = optionsFor(index, units.length);
+        const animation = unit.animate(keyframesFor(index), {
+            ...options,
             fill: 'both',
         });
-
+        const endTime = options.delay + options.duration;
         animation.pause();
-        animation.currentTime = 0;
-        return animation;
+        animation.currentTime = endTime;
+        return { animation, endTime };
     });
 
     return {
-        setProgress(progress) {
-            const time = clamp(progress) * totalDuration;
-            animations.forEach((animation) => {
-                animation.currentTime = time;
+        reset() {
+            animations.forEach(({ animation }) => {
+                animation.pause();
+                animation.currentTime = 0;
+            });
+        },
+        play() {
+            animations.forEach(({ animation }) => {
+                animation.pause();
+                animation.currentTime = 0;
+                animation.playbackRate = 1;
+                animation.play();
+            });
+        },
+        finish() {
+            animations.forEach(({ animation, endTime }) => {
+                animation.pause();
+                animation.currentTime = endTime;
             });
         },
         destroy() {
-            animations.forEach((animation) => animation.cancel());
+            animations.forEach(({ animation }) => animation.cancel());
         },
     };
 }
 
-function createGroup(root, name, preserveArabicWords) {
-    const selector = `[data-vision-typography="${name}"]`;
-    const units = Array.from(root.querySelectorAll(selector))
-        .flatMap((target) => splitTarget(target, preserveArabicWords));
+function createVisionSequence(units, rtl) {
+    const xPattern = [-18, 12, -9, 16, -13, 8];
+    const yPattern = [-5, 6, 3, -4, 7, -2];
+    const zPattern = [120, 90, 150, 105, 135, 80];
+    const rotationPattern = [-16, 12, -9, 15, -12, 8];
+    const direction = rtl ? -1 : 1;
 
-    return createReveal(units);
+    return createSequence(
+        units,
+        (index) => {
+            const slot = index % xPattern.length;
+            const start = `perspective(900px) translate3d(${xPattern[slot] * direction}px, ${yPattern[slot]}px, ${zPattern[slot]}px) rotateX(${rotationPattern[slot]}deg)`;
+            return [
+                { opacity: 0, transform: start },
+                { opacity: 1, transform: 'perspective(900px) translate3d(0, 0, 0) rotateX(0deg)' },
+            ];
+        },
+        (index, total) => ({
+            duration: VISION_DURATION,
+            delay: staggerDelay(index, total, VISION_STAGGER_SPAN),
+            easing: 'cubic-bezier(.16,1,.3,1)',
+        }),
+    );
 }
 
-export function createTypographyReveal(root) {
-    const preserveArabicWords = document.documentElement.dir === 'rtl';
-    const vision = createGroup(root, 'vision', preserveArabicWords);
-    const mission = createGroup(root, 'mission', preserveArabicWords);
+function createMissionSequence(units) {
+    return createSequence(
+        units,
+        () => [
+            { transform: 'scaleY(0.001)' },
+            { transform: 'scaleY(1)' },
+        ],
+        (index, total) => ({
+            duration: MISSION_DURATION,
+            delay: staggerDelay(index, total, MISSION_STAGGER_SPAN),
+            easing: 'cubic-bezier(.55,.055,.675,.19)',
+        }),
+    );
+}
+
+function unitsFor(root, name, preserveWords) {
+    return Array.from(root.querySelectorAll(`[data-vision-typography="${name}"]`))
+        .flatMap((target) => splitTarget(target, name, preserveWords));
+}
+
+export function createTypographyEntrance(root) {
+    const rtl = document.documentElement.dir === 'rtl';
+    const vision = createVisionSequence(unitsFor(root, 'vision', true), rtl);
+    const mission = createMissionSequence(unitsFor(root, 'mission', rtl));
 
     return {
-        setVisionProgress(progress) {
-            vision.setProgress(progress);
+        reset() {
+            vision.reset();
+            mission.reset();
         },
-        setMissionProgress(progress) {
-            mission.setProgress(progress);
+        play() {
+            vision.play();
+            mission.play();
+        },
+        finish() {
+            vision.finish();
+            mission.finish();
         },
         destroy() {
             vision.destroy();

@@ -49,8 +49,16 @@
     letter-spacing: -0.04em;
 }
 
+.vision-paper__reveal-word,
 .vision-paper__reveal-unit {
     display: inline-block;
+}
+
+.vision-paper__reveal-word {
+    white-space: nowrap;
+}
+
+.vision-paper__reveal-unit {
     transform-origin: 50% 100%;
     backface-visibility: hidden;
 }

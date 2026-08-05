@@ -1,3 +1,21 @@
+@media (max-width: 1180px) {
+    .vision-paper__copy--vision {
+        text-align: center;
+    }
+
+    .vision-paper__copy--mission {
+        text-align: start;
+    }
+
+    .vision-paper__vision-text {
+        margin-inline: auto;
+    }
+
+    .vision-paper__mission-text {
+        margin-inline: 0 auto;
+    }
+}
+
 @media (max-width: 1023px) {
     .vision-paper__scene {
         padding: 5rem clamp(1.25rem, 6vw, 4rem);
@@ -11,17 +29,8 @@
         max-width: none;
     }
 
-    .vision-paper__copy--vision {
-        text-align: center;
-    }
-
     .vision-paper__copy--mission {
         margin-top: 5rem;
-        text-align: right;
-    }
-
-    html[dir="rtl"] .vision-paper__copy--mission {
-        text-align: left;
     }
 
     .vision-paper__kicker,
@@ -40,18 +49,6 @@
     .vision-paper__vision-text,
     .vision-paper__mission-text {
         max-width: 20ch;
-    }
-
-    .vision-paper__vision-text {
-        margin-inline: auto;
-    }
-
-    .vision-paper__mission-text {
-        margin-inline: auto 0;
-    }
-
-    html[dir="rtl"] .vision-paper__mission-text {
-        margin-inline: 0 auto;
     }
 
     .vision-paper__square {
@@ -99,7 +96,8 @@
 @media (prefers-reduced-motion: reduce) {
     .vision-paper__track,
     .vision-paper__image-stack,
-    .vision-paper__copy--mission {
+    .vision-paper__copy--mission,
+    .vision-paper__reveal-unit {
         transform: none !important;
         opacity: 1 !important;
     }

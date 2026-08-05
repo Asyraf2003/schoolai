@@ -1,7 +1,5 @@
 import { createVisionTimeline } from './timeline.js';
-
 const clamp = (value) => Math.max(0, Math.min(1, value));
-
 function decodeImages(root) {
     const images = Array.from(root.querySelectorAll('[data-vision-art]'));
     const work = Promise.allSettled(images.map((image) => {
@@ -11,7 +9,6 @@ function decodeImages(root) {
     const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
     return Promise.race([work, timeout]);
 }
-
 export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -21,7 +18,6 @@ export function mountVisionStory() {
         || reducedMotion.matches
         || typeof Element.prototype.animate !== 'function'
     ) return null;
-
     const track = root.querySelector('[data-vision-track]');
     let timeline = null;
     let observer = null;
@@ -31,16 +27,14 @@ export function mountVisionStory() {
     let preparing = false;
     let near = false;
     let destroyed = false;
+    let entranceArmed = false;
     let start = 0;
     let distance = 1;
-    let introStart = 0;
-    let introDistance = 1;
     let targetProgress = 0;
     let renderedProgress = 0;
-    let targetIntroProgress = 0;
-    let renderedIntroProgress = 0;
     let lastFrameTime = performance.now();
-
+    let lastScrollY = window.scrollY;
+    let lastTop = Number.POSITIVE_INFINITY;
     function syncStoryHeight() {
         if (!track || wide.matches) {
             root.style.removeProperty('height');
@@ -48,66 +42,77 @@ export function mountVisionStory() {
         }
         root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
     }
-
-    function updateProgressTargets() {
+    function updateProgressTarget() {
         targetProgress = clamp((window.scrollY - start) / distance);
-        targetIntroProgress = clamp(
-            (window.scrollY - introStart) / introDistance,
-        );
     }
-
     function measure() {
         syncStoryHeight();
         const rect = root.getBoundingClientRect();
         start = window.scrollY + rect.top;
         distance = Math.max(1, root.offsetHeight - window.innerHeight);
-        introStart = start - window.innerHeight;
-        introDistance = Math.max(1, window.innerHeight * 0.8);
-        updateProgressTargets();
+        updateProgressTarget();
     }
-
     function render() {
-        if (!timeline) return;
-        timeline.setProgress(renderedProgress);
-        timeline.setIntroProgress(renderedIntroProgress);
+        if (timeline) timeline.setProgress(renderedProgress);
     }
-
     function tick(now) {
         frame = null;
         if (destroyed || !near || !timeline) return;
         const elapsed = Math.min(64, Math.max(1, now - lastFrameTime));
         const alpha = 1 - Math.exp(-elapsed / 88);
         renderedProgress += (targetProgress - renderedProgress) * alpha;
-        renderedIntroProgress += (
-            targetIntroProgress - renderedIntroProgress
-        ) * alpha;
         lastFrameTime = now;
         render();
-        const storyMoving = Math.abs(targetProgress - renderedProgress) > 0.00015;
-        const introMoving = Math.abs(
-            targetIntroProgress - renderedIntroProgress,
-        ) > 0.00015;
-        if (storyMoving || introMoving) {
+        if (Math.abs(targetProgress - renderedProgress) > 0.00015) {
             frame = requestAnimationFrame(tick);
             return;
         }
         renderedProgress = targetProgress;
-        renderedIntroProgress = targetIntroProgress;
         render();
     }
-
     function scheduleFrame() {
         if (!near || !timeline || frame !== null) return;
         lastFrameTime = performance.now();
         frame = requestAnimationFrame(tick);
     }
-
+    function syncTypographyEntry(initial = false) {
+        if (!timeline) return;
+        const top = root.getBoundingClientRect().top;
+        const scrollY = window.scrollY;
+        const movingDown = scrollY > lastScrollY + 0.5;
+        const movingUp = scrollY < lastScrollY - 0.5;
+        if (initial) {
+            if (top > window.innerHeight) {
+                timeline.resetTypography();
+                entranceArmed = true;
+            } else {
+                timeline.showTypography();
+                entranceArmed = false;
+            }
+        } else if (movingUp) {
+            timeline.showTypography();
+            entranceArmed = false;
+        } else if (top > window.innerHeight) {
+            if (!entranceArmed) timeline.resetTypography();
+            entranceArmed = true;
+        } else if (
+            entranceArmed
+            && movingDown
+            && lastTop > window.innerHeight
+            && top <= window.innerHeight
+        ) {
+            timeline.playTypography();
+            entranceArmed = false;
+        }
+        lastScrollY = scrollY;
+        lastTop = top;
+    }
     function updateTarget() {
         if (!prepared || !near) return;
-        updateProgressTargets();
+        updateProgressTarget();
+        syncTypographyEntry();
         scheduleFrame();
     }
-
     function rebuildTimeline() {
         if (!prepared || destroyed) return;
         if (timeline) timeline.destroy();
@@ -115,10 +120,9 @@ export function mountVisionStory() {
         measure();
         timeline = createVisionTimeline(root);
         renderedProgress = targetProgress;
-        renderedIntroProgress = targetIntroProgress;
         render();
+        syncTypographyEntry(true);
     }
-
     async function prepare() {
         if (prepared || preparing || destroyed) return;
         preparing = true;
@@ -132,14 +136,13 @@ export function mountVisionStory() {
             measure();
             timeline = createVisionTimeline(root);
             renderedProgress = targetProgress;
-            renderedIntroProgress = targetIntroProgress;
             render();
             prepared = true;
             preparing = false;
+            syncTypographyEntry(true);
             scheduleFrame();
         });
     }
-
     function onIntersection(entries) {
         near = entries.some((entry) => entry.isIntersecting);
         root.classList.toggle('is-near', near);
@@ -151,12 +154,10 @@ export function mountVisionStory() {
             frame = null;
         }
     }
-
     function onResize() {
         window.clearTimeout(resizeTimer);
         resizeTimer = window.setTimeout(rebuildTimeline, 140);
     }
-
     function destroy() {
         if (destroyed) return;
         destroyed = true;
@@ -170,7 +171,6 @@ export function mountVisionStory() {
         root.style.removeProperty('height');
         root.classList.remove('is-enhanced', 'is-near', 'is-preparing');
     }
-
     window.addEventListener('scroll', updateTarget, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
     window.addEventListener('pageshow', rebuildTimeline, { passive: true });

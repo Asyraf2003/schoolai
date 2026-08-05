@@ -1,130 +1,108 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
 Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
-Updated: 2026-08-04
+Updated: 2026-08-05
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active blueprint: `blueprints/2026-08-04-vision-mission-clean-slate.md`
-Source baseline: `e42308fad7f6d7e48aa1e109eacec1d49947d75f`
-Cross-surface audit: `measurements/2026-08-04-home-motion-smoothness-source-audit.md`
+Active blueprint: `blueprints/2026-08-05-vision-mission-fast-entrance.md`
+Source baseline before batch: `3387885eaf0d98d5accc8a7cc0f2f0afce0ffd2e`
 
 Commit publication proves source state only. It does not prove build, browser,
 responsive, accessibility, performance, or lifecycle completion.
 
 ## Active production batch
 
-- ID: `HOME-VISION-003-CLEAN`
+- ID: `HOME-VISION-004-ENTRANCE`
 - State: `IMPLEMENTED_SOURCE`
 - Surface: homepage Vision/Mission `#visi-misi`
-- Owner decision date: 2026-08-04
+- Owner decision date: 2026-08-05
 - Execution channel: Web AI direct GitHub `main`
-- Goal: remove the complete old Vision/Mission motion ownership before a new
-  scroll-linked WAAPI surface is designed.
-- Protected: Hero behavior/content, Values, Programs, Gallery, Articles,
-  navigation, footer, DB/admin/routes, About, Testimonial, locale data, and
-  `public/media/home/9.png` through `12.png`.
+- Goal: keep the current paper story and desktop composition while replacing
+  typography scrub with a short, downward-entry effect.
+- Protected: Hero, Values, Programs, Gallery, Articles, navigation, footer,
+  About, Testimonial, locale data, routes, DB, authentication, dependencies, and
+  Vision/Mission media assets.
 
-## Owner-provided audit FACT
+## Verified source facts before execution
 
-The owner ran a read-only local audit at source baseline `e42308fad`.
+- `main` was `3387885eaf0d98d5accc8a7cc0f2f0afce0ffd2e` before the batch.
+- Homepage renders one Vision/Mission semantic partial with one Vision article,
+  one Mission article, three lazy images, and one program panel.
+- `welcome-vision-story.js` defers the controller with Hero readiness,
+  `requestIdleCallback`, and dynamic import.
+- One controller owns IntersectionObserver, passive scroll/resize listeners,
+  one bounded RAF smoother, measurement, and cleanup.
+- The track changes from vertical through `1180px` to horizontal from `1181px`.
+- Before this batch, Vision and Mission both used the same effect25-like
+  `scaleY` grammar.
+- Before this batch, typography was scrubbed by scroll progress; mobile Mission
+  typography was tied to its later vertical-story progress.
+- Before this batch, compact and responsive CSS both owned physical Mission
+  alignment, producing right-aligned ID/EN and left-aligned AR at `<=1023px`.
+- The previous ledger still described the earlier clean-slate state and was
+  stale relative to production source.
 
-- local `main` and `origin/main` matched the baseline before publication;
-- two unrelated local seeder files were modified and remain outside this batch;
-- the old Vision system had one dedicated CSS entry and one JavaScript entry;
-- the JavaScript entry initialized at DOM ready;
-- the controller owned an RAF, IntersectionObserver, ResizeObserver, smoothing,
-  scene measurement, text splitting, and per-frame painting;
-- Latin content was split into characters; Arabic content was split into words;
-- the Blade rendered one Vision scene, one bridge, four Mission scenes, and
-  eight artwork nodes;
-- stale legacy Vision selectors also remained in mechanically split homepage
-  CSS, the Arabic typography adapter, and the generic reveal controller;
-- the four retained PNG assets are tracked, valid `1600x2000` RGBA images.
+## Owner-accepted decisions
 
-The uploaded raw CLI report is conversation evidence. Durable product decisions
-and resulting source state are recorded in the active blueprint and this ledger.
+- Vision uses deterministic word-level Set 2 model 12 (`effect27`) motion.
+- Mission uses Set 2 model 10 (`effect25`) baseline reveal.
+- Both entrances start together only when scrolling down from above and the
+  section top crosses into the viewport.
+- Upward entry shows final static copy without replay.
+- The entrance is deliberately short; content never waits on scroll progress.
+- Six global tiers remain unchanged; `1180/1181` stays a sub-boundary inside LG.
+- Through `1180px`, Vision is centered and Mission uses logical start.
+- Desktop composition from `1181px` is retained.
+- No new dependency, controller, listener owner, breakpoint tier, or parallel
+  locale implementation is introduced.
 
-## Execution
+## Implemented source
 
-The cleanup publication:
-
-- replaced the animated Blade scene graph with one server-rendered semantic
-  section containing an H2, one Vision article, and four ordered Mission items;
-- preserved ID, EN, and AR content from the existing locale source;
-- preserved semantic emphasis and the full Arabic honorific;
-- removed the old Vision CSS/JS entries from homepage Blade and Vite;
-- deleted the dedicated scroll stylesheet, entry, controller, scroll progress,
-  scene renderer, motion painters, and text splitter;
-- removed stale Vision rules from the generic homepage reveal controller;
-- removed dormant legacy Vision/Mission selectors from the mechanically split
-  homepage CSS and Arabic typography selector lists;
-- replaced the focused feature test with assertions for static semantics,
-  four Mission items, Arabic honorific output, and absence of old story hooks;
-- left two mechanically protected CSS import slots as harmless comments instead
-  of changing the 47-file import structure without structure proof.
-
-No WAAPI, smooth-scroll package, virtual scroll, WebGL, new image load, section
-reordering, or page-wide scheduler was added.
-
-## Deferred WAAPI contract
-
-The next Vision blueprint must use progressive enhancement:
-
-1. Hero and semantic content remain on the initial critical path.
-2. Vision enhancement code is dynamically imported only after Hero presentation.
-3. Preparation should use an idle window with a bounded fallback timeout.
-4. Media decoding and geometry preparation happen before proximity activation.
-5. One paused WAAPI master timeline follows native scroll progress.
-6. Frequent motion is limited to wrapper `transform` and `opacity`.
-7. Reduced motion and failure retain the complete static section.
-8. No deleted story controller or parallel Vision RAF may return.
-
-The exact Hero-ready signal is still a blueprint decision. Current source exposes
-`hero:slide-active`; it does not yet expose a dedicated first-presentation-ready
-event.
-
-## Prior Values state retained
-
-The prior focused Values implementation remains published in ancestry:
-
-- accepted revision blueprint checkpoint: `e56b00a455848772905def3c3ab63016dd24c303`;
-- focused correction blueprint: `0521c9aa1641c8d547099f8a7c758f943a32a0ae`;
-- focused Values source: `95b3b78f91d42d536881324eda6d453c7139a015`;
-- source ancestry clarification: `7eddaeb3259cfb1ae3d11eabee69487fb599d819`.
-
-Values runtime, browser, performance, and accessibility status remain unchanged
-and unpromoted by this Vision cleanup.
+- Replaced the shared typography progress API with explicit `reset`, `play`,
+  and `finish` entrance states.
+- Vision now uses deterministic bounded opacity/X/Y/Z/rotateX motion per word.
+- Mission uses grouped grapheme reveal for ID/EN and complete-word reveal for AR.
+- Added stable word wrappers so line composition remains structured.
+- Removed typography from scroll-progress scrubbing while retaining the existing
+  track, image swap, and compact Mission scene motion.
+- Added downward crossing detection to the existing controller; upward movement
+  immediately forces final typography state.
+- Preserved dynamic import, image decoding/lazy attributes, one observer, one
+  scroll listener, and one RAF owner.
+- Consolidated vertical alignment into logical CSS through `1180px`; removed
+  the conflicting physical alignment owner from compact CSS.
+- Kept all changed source files within the enforced 200-line limit.
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| owner baseline audit | `PASS_SOURCE` | local report at `e42308fad`; remote/local matched before write |
-| scope isolation | `PASS_SOURCE` | no seeder, DB, route, locale, Hero, Values, Program, Gallery, or asset edit |
-| semantic fallback source | `PASS_SOURCE` | one section, one Vision article, four Mission items |
-| old entry removal | `PASS_SOURCE` | homepage and Vite no longer load old CSS/JS entries |
-| old dedicated owners | `PASS_SOURCE` | dedicated stylesheet and story modules deleted |
-| stale reveal/legacy selectors | `PASS_SOURCE` | known active and dormant selectors removed from inspected owners |
-| focused test source | `PASS_SOURCE` | static/locale/Arabic/no-legacy assertions published |
-| assets and locale data | `PASS_SOURCE` | retained without mutation |
-| source line limit | `PASS_SOURCE` | new Blade, test, and blueprint remain below 200 lines |
-| `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector cannot run checkout command |
+| current `main` validation | `PASS_SOURCE` | branch checked before write |
+| source scope isolation | `PASS_SOURCE` | only Vision/Mission owners and docs changed |
+| JS syntax | `PASS_LOCAL_STATIC` | `node --check` on three changed JS modules |
+| source line limit | `PASS_LOCAL_STATIC` | every changed source file <= 200 lines |
+| semantic/no-JS fallback | `PASS_SOURCE` | Blade and locale content unchanged |
+| lazy/controller ownership | `PASS_SOURCE` | existing loader and one controller retained |
+| `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector has no checkout |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
 | focused/full PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
-| Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | static source not rendered in this channel |
-| accessibility/PageSpeed | `BLOCKED_BY_MISSING_EVIDENCE` | not run |
+| Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | deployed/runtime review required |
+| deployed performance delta | `BLOCKED_BY_MISSING_EVIDENCE` | run after deployment |
+
+## Prior Values state retained
+
+The published Values implementation and its prior proof status remain unchanged.
+This batch does not alter Values source, tests, layout, or progress.
 
 ## STATUS
 
-The old Vision/Mission runtime is removed from production source and replaced by
-a complete static semantic fallback. The clean-slate source goal is implemented;
-completion remains blocked until local structure/build/tests and browser review
-run against the resulting `main`.
+The requested C+B+B Vision/Mission correction is implemented in production
+source. Completion remains blocked until local structure/build/tests, full
+responsive/locale browser review, and deployed performance comparison run.
 
 ## NEXT VALID STEP
 
-Owner/local terminal: pull current `main` without discarding the two unrelated
-modified seeder files, then run the exact proof block from the active blueprint.
-Do not begin the WAAPI build until the cleanup structure, build, and focused/full
-tests pass.
+Owner/local terminal: fast-forward pull the resulting `main` and run the exact
+source proof block from the active blueprint without discarding unrelated local
+work.

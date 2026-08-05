@@ -43,14 +43,8 @@
         padding: 12svh clamp(1.25rem, 7vw, 5rem);
     }
 
-    .vision-paper.is-enhanced .vision-paper__copy--vision {
-        text-align: center;
-    }
-
-    .vision-paper.is-enhanced .vision-paper__copy--mission,
-    html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__copy--mission {
+    .vision-paper.is-enhanced .vision-paper__copy--mission {
         margin-top: 0;
-        text-align: right;
     }
 
     .vision-paper.is-enhanced .vision-paper__kicker,
