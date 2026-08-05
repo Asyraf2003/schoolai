@@ -129,7 +129,6 @@
         aria-labelledby="vision-program-title"
         data-vision-program
       >
-        <span class="vision-paper__program-accent" aria-hidden="true"></span>
         <h2 id="vision-program-title">{{ $programCopy['title'] }}</h2>
         <p>{{ $programCopy['description'] }}</p>
       </section>
