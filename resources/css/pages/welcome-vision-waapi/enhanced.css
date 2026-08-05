@@ -1,4 +1,4 @@
-@media (min-width: 1181px) {
+@media (min-width: 1024px) {
     .vision-paper.is-enhanced {
         height: 430svh;
     }
@@ -119,12 +119,13 @@
         min-height: 0;
         padding: 0;
         overflow: hidden;
+        text-align: right;
     }
 
     .vision-paper.is-enhanced .vision-paper__program h2 {
         position: absolute;
         inset-block-start: 17svh;
-        inset-inline-start: 8vw;
+        inset-inline: auto 8vw;
         width: min(78vw, 86rem);
         max-width: none;
         font-size: clamp(4rem, 6.8vw, 8rem);
@@ -132,19 +133,20 @@
 
     .vision-paper.is-enhanced .vision-paper__program p {
         position: absolute;
-        inset-inline-end: 11vw;
+        inset-inline: auto 8vw;
         inset-block-end: 9svh;
         width: min(30vw, 32rem);
         margin: 0;
         font-size: clamp(0.95rem, 1.25vw, 1.3rem);
     }
 
-    html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__program h2 {
-        inset-inline: auto 8vw;
+    html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__program {
+        text-align: left;
     }
 
+    html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__program h2,
     html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__program p {
-        inset-inline: 11vw auto;
+        inset-inline: 8vw auto;
     }
 
     .vision-paper.is-enhanced.is-near .vision-paper__track,
