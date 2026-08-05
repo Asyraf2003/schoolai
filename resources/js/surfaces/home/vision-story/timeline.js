@@ -75,7 +75,7 @@ export function createVisionTimeline(root) {
     }
 
     const typography = createTypographyReveal(root);
-    const horizontal = window.matchMedia('(min-width: 1024px)').matches;
+    const horizontal = window.matchMedia('(min-width: 1181px)').matches;
     const viewportSize = horizontal ? window.innerWidth : window.innerHeight;
     const trackSize = horizontal ? track.scrollWidth : track.scrollHeight;
     const endMove = Math.min(0, viewportSize - trackSize);
