@@ -22,8 +22,15 @@
     }
 
     .vision-paper.is-enhanced .vision-paper__scene {
-        flex: 0 0 calc(82vw + 114.81svh);
-        width: calc(82vw + 114.81svh);
+        --square-size: 100svh;
+        --frame-height: calc(var(--square-size) / 3);
+        --frame-width: calc(var(--frame-height) * 16 / 9);
+        --frame-inside: calc(var(--frame-width) * 3 / 4);
+        --frame-outside: calc(var(--frame-width) / 4);
+        --frame-start: calc(var(--square-size) - var(--frame-inside));
+        --scene-width: calc(82vw + var(--square-size) + var(--frame-outside));
+        flex: 0 0 var(--scene-width);
+        width: var(--scene-width);
         height: 100svh;
         min-height: 0;
         padding: 0;
@@ -77,17 +84,17 @@
         position: absolute;
         inset-block-start: 0;
         inset-inline-start: 82vw;
-        width: 100svh;
-        height: 100svh;
+        width: var(--square-size);
+        height: var(--square-size);
         margin: 0;
         aspect-ratio: 1;
     }
 
     .vision-paper.is-enhanced .vision-paper__frame {
         inset-block-start: 50%;
-        inset-inline-start: 55.55svh;
-        width: 59.26svh;
-        height: 33.33svh;
+        inset-inline-start: var(--frame-start);
+        width: var(--frame-width);
+        height: var(--frame-height);
         aspect-ratio: 16 / 9;
         transform: translateY(-50%);
     }
@@ -101,21 +108,11 @@
         overflow: hidden;
     }
 
-    .vision-paper.is-enhanced .vision-paper__program-accent {
-        position: absolute;
-        inset-block-start: 27svh;
-        inset-inline-start: 0;
-        display: block;
-        width: 11vw;
-        height: 50svh;
-        background: #143f73;
-    }
-
     .vision-paper.is-enhanced .vision-paper__program h2 {
         position: absolute;
         inset-block-start: 17svh;
-        inset-inline-start: 17vw;
-        width: min(68vw, 78rem);
+        inset-inline-start: 8vw;
+        width: min(78vw, 86rem);
         max-width: none;
         font-size: clamp(4rem, 6.8vw, 8rem);
     }
@@ -130,7 +127,7 @@
     }
 
     html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__program h2 {
-        inset-inline: auto 17vw;
+        inset-inline: auto 8vw;
     }
 
     html[dir="rtl"] .vision-paper.is-enhanced .vision-paper__program p {
