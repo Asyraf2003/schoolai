@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders the localized desktop Vision and Mission paper story', function (): void {
+it('renders the localized responsive Vision and Mission paper story', function (): void {
     $labels = [
         'id' => ['vision' => 'VISI', 'mission' => 'MISI'],
         'en' => ['vision' => 'VISION', 'mission' => 'MISSION'],
@@ -40,6 +40,8 @@ it('renders the localized desktop Vision and Mission paper story', function (): 
             ->assertSee('data-vision-intro', false)
             ->assertSee('data-vision-copy="vision"', false)
             ->assertSee('data-vision-copy="mission"', false)
+            ->assertSee('data-vision-typography="vision"', false)
+            ->assertSee('data-vision-typography="mission"', false)
             ->assertSee($labels[$locale]['vision'])
             ->assertSee($labels[$locale]['mission'])
             ->assertSee($missionSnippets[$locale][0])
@@ -65,6 +67,7 @@ it('renders the localized desktop Vision and Mission paper story', function (): 
         expect(substr_count($content, 'data-vision-story'))->toBe(1)
             ->and(substr_count($content, 'data-vision-track'))->toBe(1)
             ->and(substr_count($content, 'data-vision-copy='))->toBe(2)
+            ->and(substr_count($content, 'data-vision-typography='))->toBe(4)
             ->and(substr_count($content, 'data-vision-art'))->toBe(3)
             ->and(substr_count($content, 'media/home/vision-paper-'))->toBe(3)
             ->and(substr_count($content, 'images.pexels.com'))->toBe(0)
