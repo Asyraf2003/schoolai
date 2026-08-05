@@ -48,6 +48,28 @@
     letter-spacing: -0.04em;
 }
 
+.vision-paper__mark {
+    color: var(--vision-mark-color, currentColor);
+    font: inherit;
+    font-weight: 700;
+}
+
+.vision-paper__mark--blue {
+    --vision-mark-color: #0369a1;
+}
+
+.vision-paper__mark--orange {
+    --vision-mark-color: #c2410c;
+}
+
+.vision-paper__mark--green {
+    --vision-mark-color: #15803d;
+}
+
+.vision-paper__mark--purple {
+    --vision-mark-color: #7e22ce;
+}
+
 .vision-paper__mission-list {
     display: grid;
     gap: 1.1rem;
