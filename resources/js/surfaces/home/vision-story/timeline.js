@@ -1,3 +1,5 @@
+import { createTypographyReveal } from './typography.js';
+
 const DURATION = 1000;
 const MOVE_START = 0.04;
 const MOVE_END = 0.96;
@@ -51,6 +53,11 @@ function missionEnterOffsets(missionRect, endMove, viewportHeight) {
     return orderedOffsets(enterMove, centeredMove, endMove);
 }
 
+function rangeProgress(progress, start, end) {
+    if (end <= start) return progress >= end ? 1 : 0;
+    return clamp((progress - start) / (end - start));
+}
+
 function trackTransform(move, horizontal) {
     return horizontal
         ? `translate3d(${move}px, 0, 0)`
@@ -64,9 +71,10 @@ export function createVisionTimeline(root) {
     const mission = root.querySelector('[data-vision-copy="mission"]');
 
     if (!track || !frame || !stack) {
-        return { setProgress() {}, destroy() {} };
+        return { setProgress() {}, setIntroProgress() {}, destroy() {} };
     }
 
+    const typography = createTypographyReveal(root);
     const horizontal = window.matchMedia('(min-width: 1024px)').matches;
     const viewportSize = horizontal ? window.innerWidth : window.innerHeight;
     const trackSize = horizontal ? track.scrollWidth : track.scrollHeight;
@@ -79,6 +87,8 @@ export function createVisionTimeline(root) {
         horizontal,
     );
     const animations = [];
+    let missionRevealStart = 0;
+    let missionRevealEnd = 1;
 
     animations.push(createAnimation(track, [
         { offset: 0, transform: trackTransform(0, horizontal) },
@@ -100,7 +110,7 @@ export function createVisionTimeline(root) {
 
     if (!horizontal && mission) {
         const missionRect = mission.getBoundingClientRect();
-        const [enterStart, enterEnd] = missionEnterOffsets(
+        [missionRevealStart, missionRevealEnd] = missionEnterOffsets(
             missionRect,
             endMove,
             window.innerHeight,
@@ -109,9 +119,9 @@ export function createVisionTimeline(root) {
 
         animations.push(createAnimation(mission, [
             { offset: 0, opacity: 0, transform: `translate3d(${fromX}, 0, 0)` },
-            { offset: enterStart, opacity: 0, transform: `translate3d(${fromX}, 0, 0)` },
+            { offset: missionRevealStart, opacity: 0, transform: `translate3d(${fromX}, 0, 0)` },
             {
-                offset: enterEnd,
+                offset: missionRevealEnd,
                 opacity: 1,
                 transform: 'translate3d(0, 0, 0)',
                 easing: 'cubic-bezier(.22,1,.36,1)',
@@ -126,9 +136,22 @@ export function createVisionTimeline(root) {
             animations.forEach((animation) => {
                 animation.currentTime = time;
             });
+
+            if (!horizontal) {
+                typography.setMissionProgress(rangeProgress(
+                    progress,
+                    missionRevealStart,
+                    missionRevealEnd,
+                ));
+            }
+        },
+        setIntroProgress(progress) {
+            typography.setVisionProgress(progress);
+            if (horizontal) typography.setMissionProgress(progress);
         },
         destroy() {
             animations.forEach((animation) => animation.cancel());
+            typography.destroy();
         },
     };
 }
