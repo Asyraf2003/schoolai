@@ -22,8 +22,8 @@
     }
 
     .vision-paper.is-enhanced .vision-paper__scene {
-        flex: 0 0 190vw;
-        width: 190vw;
+        flex: 0 0 calc(82vw + 114.81svh);
+        width: calc(82vw + 114.81svh);
         height: 100svh;
         min-height: 0;
         padding: 0;
