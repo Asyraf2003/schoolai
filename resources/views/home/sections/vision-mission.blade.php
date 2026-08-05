@@ -21,9 +21,9 @@
     ],
   };
   $schoolImages = [
-    'https://images.pexels.com/photos/8618068/pexels-photo-8618068.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    'https://images.pexels.com/photos/8363783/pexels-photo-8363783.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    'https://images.pexels.com/photos/8923877/pexels-photo-8923877.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    asset('media/home/vision-paper-01.webp'),
+    asset('media/home/vision-paper-02.webp'),
+    asset('media/home/vision-paper-03.webp'),
   ];
 @endphp
 
@@ -90,7 +90,7 @@
             src="{{ $schoolImages[0] }}"
             alt="Aktivitas belajar di ruang kelas"
             width="1600"
-            height="1067"
+            height="1600"
             loading="lazy"
             decoding="async"
             fetchpriority="low"
@@ -102,8 +102,8 @@
               <img
                 src="{{ $schoolImages[1] }}"
                 alt="Guru mendampingi kegiatan belajar anak"
-                width="1600"
-                height="1067"
+                width="1920"
+                height="1080"
                 loading="lazy"
                 decoding="async"
                 fetchpriority="low"
@@ -112,8 +112,8 @@
               <img
                 src="{{ $schoolImages[2] }}"
                 alt="Anak belajar bersama di kelas"
-                width="1600"
-                height="1067"
+                width="1920"
+                height="1080"
                 loading="lazy"
                 decoding="async"
                 fetchpriority="low"
