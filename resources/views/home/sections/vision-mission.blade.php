@@ -1,6 +1,11 @@
 @php
   $locale = app()->getLocale();
   $arabicHonorific = 'صلى الله عليه وسلم';
+  $visionLabel = match ($locale) {
+    'ar' => 'الرؤية',
+    'en' => 'Vision',
+    default => 'Visi',
+  };
   $missionLabel = match ($locale) {
     'ar' => 'الرسالة',
     'en' => 'Mission',
@@ -41,13 +46,19 @@
             class="vision-paper__copy vision-paper__copy--vision"
             data-vision-copy="vision"
           >
-            <p class="vision-paper__kicker">{{ $visiMisi['vision']['title'] }}</p>
+            <p class="vision-paper__kicker">{{ $visionLabel }}</p>
             <h2 id="vision-paper-title" class="sr-only">
               {{ $visiMisi['section_title'] }}
             </h2>
             <p class="vision-paper__vision-text">
               @foreach ($visiMisi['vision']['text_parts'] as $part)
-                {{ $part['text'] }}
+                @if (! empty($part['mark']))
+                  <strong class="vision-paper__mark vision-paper__mark--{{ $part['mark'] }}">
+                    {{ $part['text'] }}
+                  </strong>
+                @else
+                  {{ $part['text'] }}
+                @endif
               @endforeach
             </p>
           </article>
@@ -66,14 +77,20 @@
                   <h3 id="vision-mission-title-{{ $loop->iteration }}">
                     {{ $mission['title'] }}
                   </h3>
-                  <p>
+                  <p class="vision-paper__mission-detail">
                     @foreach ($mission['text_parts'] as $part)
                       @php
                         $partText = $isArabicFirstMission
                           ? trim(str_replace(['ﷺ', $arabicHonorific], '', $part['text']))
                           : $part['text'];
                       @endphp
-                      {{ $partText }}
+                      @if (! empty($part['mark']))
+                        <strong class="vision-paper__mark vision-paper__mark--{{ $part['mark'] }}">
+                          {{ $partText }}
+                        </strong>
+                      @else
+                        {{ $partText }}
+                      @endif
                     @endforeach
                     @if ($isArabicFirstMission)
                       <span data-vision-mission-honorific>{{ $arabicHonorific }}</span>
