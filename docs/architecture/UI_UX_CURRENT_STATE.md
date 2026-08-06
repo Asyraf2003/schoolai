@@ -4,57 +4,59 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-07
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-019-SEPARATE-OWNERS`
-Source baseline: `719a3b5114660767dc7268a325b9465622754132`
+Active batch: `HOME-PROGRAM-020-INTEGRATED-DESKTOP-PIN`
+Source baseline: `9d5dfbe39d84982734ee45c6956a4de464c8811d`
 Active blueprint: `blueprints/2026-08-06-home-program-scroll-rail.md`
 
-## Implemented owner correction
+## Latest owner correction
 
-- Visi/Misi now owns only its vision, mission, and image story.
-- Program title and description were removed from the Visi/Misi Blade and moved
-  into the Program Blade.
-- Program no longer queries, captures, reparents, or restores DOM nodes from
-  Visi/Misi.
-- The Program opening white canvas and six image panels remain one vertical
-  seven-frame track with no gaps, margins, or overlay curtain.
-- Program copy is a separate absolute layer inside the Program sticky viewport.
-  It is not fixed to the browser viewport.
-- The title starts at the Program intro layout and moves to its corner during
-  the first frame travel. The description keeps the intro coordinates while
-  only its text changes.
-- Rail clicks use one exact frame transaction: document scroll and visual
-  current are both set to `(index + 1) * viewport height`.
-- Native wheel/touch scroll retains the Gallery-style `0.08` visual lerp.
-- Visi/Misi keeps its horizontal WAAPI animation. Its scroll height now derives
-  from real horizontal travel rather than the removed Program panel and the
-  former fixed `430svh` value.
-- Values and all unrelated homepage sections remain unchanged.
+- Desktop Visi/Misi and Program no longer hand off across two independent sticky
+  section boundaries.
+- In enhanced wide mode, the complete Program section is appended as the final
+  `100vw` panel of the existing Visi/Misi horizontal track.
+- The Visi/Misi pin remains active for both phases. Its first phase consumes the
+  actual horizontal overflow until the Program panel fully occupies the
+  viewport. Only then does Program local vertical progress begin.
+- Program keeps local ownership of its white intro frame, six image frames,
+  title, description, link, rail, and exit. No Program copy is moved into or
+  out of the Visi/Misi Blade.
+- Compact layouts, reduced motion, and no-JS fallback keep Visi/Misi and Program
+  as ordinary sequential sections, avoiding nested compact sticky owners.
+- Program media remains one continuous seven-frame track. No invented dwell or
+  snapping was added.
+- Program copy changes at the exact full-frame boundary. Direction is retained
+  while the user pauses mid-transition, so forward and reverse scrolling keep
+  the last fully occupied frame's copy.
+- Rail clicks still synchronize document position and visual current to one
+  exact full-frame location.
+- Values and unrelated homepage surfaces remain unchanged.
 
 ## Changed owners
 
-- `resources/views/home/sections/{vision-mission,featured-programs}.blade.php`
-- `resources/css/pages/welcome/program-journey/{base,hud,rail,compact,wide}.css`
-- `resources/css/pages/welcome-vision-waapi/{base,compact,enhanced,responsive}.css`
-- `resources/js/surfaces/home/program-journey/{controller,geometry}.js`
+- `resources/js/surfaces/home/program-journey/{controller,geometry,integration,motion}.js`
 - `resources/js/surfaces/home/vision-story/controller.js`
+- `resources/css/pages/welcome/program-journey/base.css`
 - focused Program and Visi/Misi tests
 - active blueprint and this ledger
 
 ## Source proof
 
-- Changed JavaScript passes `node --check` on staged source.
-- Focused PHP tests pass `php -l` on staged source.
+- All changed JavaScript passes `node --check`.
+- Focused PHP tests pass `php -l`.
 - Changed CSS braces are balanced.
 - Every changed source file remains at or below 200 lines.
-- Program source contains no `data-program-origin`, Visi/Misi reparenting,
-  `handoffIn`, `handoffOut`, fixed HUD, white curtain, metadata counter, or
-  percentage rail anchors.
-- Program source contains one intro frame, six media frames, exact rail frame
-  positions, local Program title/description ownership, and `0.08` lerp.
+- Program integration is wide-only, motion-capable, reversible on resize, and
+  restores the original DOM position on destroy.
+- Visi/Misi height equals viewport plus complete horizontal travel plus Program
+  vertical travel.
+- Horizontal timeline distance remains only the horizontal travel; Program
+  vertical distance cannot slow or truncate the horizontal motion.
+- Program active-copy selection uses completed-frame `floor/ceil` boundaries,
+  not midpoint `Math.round`.
 
 ## Blocked proof
 
-The GitHub connector cannot render the local browser. The following remain
+The GitHub connector cannot render the owner's local browser. These remain
 `BLOCKED_BY_MISSING_EVIDENCE` until actually run:
 
 - `git diff --check`
@@ -62,6 +64,6 @@ The GitHub connector cannot render the local browser. The following remain
 - `npm run build`
 - full `php artisan test`
 - Chromium/WebKit forward, reverse, interrupted, rail-click, responsive,
-  locale, RTL, reduced-motion, resize, short-height, zoom, BFCache,
-  external-image failure, PageSpeed, and CWV matrix
-- owner review of the rendered Visi/Misi → Program → Values continuity
+  locale, RTL, reduced-motion, resize, BFCache, PageSpeed, and CWV matrix
+- owner review of the rendered Visi/Misi horizontal completion and Program
+  full-frame copy timing

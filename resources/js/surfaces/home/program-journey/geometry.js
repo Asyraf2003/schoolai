@@ -37,12 +37,30 @@ export function createProgramGeometry(root, hud, frameCount) {
     applyDescriptionOrigin();
   }
 
+  function integrationContext() {
+    const story = root.closest('[data-vision-story]');
+    const track = story?.querySelector('[data-vision-track]');
+    const integrated = root.classList.contains('is-integrated') && story && track;
+    return { integrated, story, track };
+  }
+
   function measure() {
     const step = Math.max(1, window.innerHeight);
-    const start = window.scrollY + root.getBoundingClientRect().top;
     const trackTravel = Math.max(0, frameCount * step);
     const exitTravel = step;
     const travel = trackTravel + exitTravel;
+    const context = integrationContext();
+    let start = window.scrollY + root.getBoundingClientRect().top;
+
+    if (context.integrated) {
+      const storyStart = window.scrollY + context.story.getBoundingClientRect().top;
+      const horizontalTravel = Math.max(1, context.track.scrollWidth - window.innerWidth);
+      start = storyStart + horizontalTravel;
+      context.story.dataset.programStoryTravel = String(travel);
+      context.story.style.setProperty('--program-story-travel', `${travel}px`);
+      context.story.style.height = `${step + horizontalTravel + travel}px`;
+    }
+
     metrics = { start, step, trackTravel, exitTravel, travel };
     root.style.setProperty('--program-step', `${step}px`);
     root.style.setProperty('--program-track-height', `${(frameCount + 1) * step}px`);
@@ -78,10 +96,12 @@ export function createProgramGeometry(root, hud, frameCount) {
     return `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
   }
 
-  function programIndex(current) {
-    if (current < metrics.step) return -1;
-    const index = Math.round((current - metrics.step) / metrics.step);
-    return clamp(index, 0, frameCount - 1);
+  function programIndex(current, direction = 1) {
+    const framePosition = clamp(current / metrics.step, 0, frameCount);
+    const visibleFrame = direction < 0
+      ? Math.ceil(framePosition)
+      : Math.floor(framePosition);
+    return clamp(visibleFrame - 1, -1, frameCount - 1);
   }
 
   function localPosition(index) {

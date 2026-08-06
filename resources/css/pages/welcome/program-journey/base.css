@@ -143,3 +143,38 @@ html[dir="rtl"] .program-frame__media::after {
     font-weight: 800;
     text-decoration: none;
 }
+
+@media (min-width: 1181px) {
+    html.vision-motion-capable
+    .vision-paper.has-integrated-program
+    .program-journey.is-integrated {
+        flex: 0 0 100vw;
+        width: 100vw;
+        height: 100svh;
+        min-height: 100svh;
+        overflow: hidden;
+        direction: ltr;
+    }
+
+    html[dir="rtl"].vision-motion-capable
+    .vision-paper.has-integrated-program
+    .program-journey.is-integrated {
+        direction: rtl;
+    }
+
+    html.vision-motion-capable
+    .vision-paper.has-integrated-program
+    .program-journey.is-integrated.is-enhanced {
+        height: 100svh;
+    }
+
+    html.vision-motion-capable
+    .vision-paper.has-integrated-program
+    .program-journey.is-integrated.is-enhanced
+    .program-journey__sticky {
+        position: relative;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+}

@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders a localized Vision and Mission story without Program ownership', function (): void {
+it('renders localized Vision and Mission content without owning Program copy', function (): void {
     $labels = [
         'id' => ['vision' => 'VISI', 'mission' => 'MISI'],
         'en' => ['vision' => 'VISION', 'mission' => 'MISSION'],
@@ -59,13 +59,16 @@ it('renders a localized Vision and Mission story without Program ownership', fun
     }
 });
 
-it('sizes Vision scroll from its real horizontal travel', function (): void {
+it('keeps horizontal travel complete before the integrated Program phase begins', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/vision-story/controller.js'));
     $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($controller)
         ->toContain('track.scrollWidth - window.innerWidth')
-        ->toContain('window.innerHeight + horizontalTravel')
+        ->toContain('root.dataset.programStoryTravel')
+        ->toContain('window.innerHeight + horizontalTravel + programTravel')
+        ->toContain('distance = wide.matches')
+        ->toContain("new CustomEvent('vision:layout')")
         ->and($enhanced)
         ->not->toContain('430svh')
         ->not->toContain('vision-paper__program');

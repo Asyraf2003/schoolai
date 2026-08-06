@@ -1,4 +1,5 @@
 import { createProgramGeometry } from './geometry.js';
+import { createProgramIntegration } from './integration.js';
 import { createCopyMotion, createVisualScrollEngine } from './motion.js';
 
 export function mountProgramJourney(root) {
@@ -30,8 +31,12 @@ export function mountProgramJourney(root) {
   const copyMotion = createCopyMotion(reducedMotion);
   const geometry = createProgramGeometry(root, hud, frames.length);
   let activeIndex = -1;
+  let travelDirection = 1;
   let destroyed = false;
 
+  const integration = createProgramIntegration(root, reducedMotion);
+
+  integration.sync();
   geometry.rememberOrigin(introFrame, titleGuide, descriptionGuide);
   root.classList.add('is-enhanced');
   geometry.measure();
@@ -78,11 +83,13 @@ export function mountProgramJourney(root) {
     });
   }
 
-  function render({ current }) {
+  function render({ current, velocity }) {
     if (destroyed) return;
+    if (velocity > .001) travelDirection = 1;
+    else if (velocity < -.001) travelDirection = -1;
     const trackCurrent = geometry.trackPosition(current);
     const exitProgress = geometry.exitProgress(current);
-    const programIndex = geometry.programIndex(current);
+    const programIndex = geometry.programIndex(current, travelDirection);
     const programVisible = programIndex >= 0;
 
     framesTrack.style.transform = `translate3d(0, ${(-trackCurrent).toFixed(2)}px, 0)`;
@@ -118,12 +125,22 @@ export function mountProgramJourney(root) {
     if (href && window.location.hash !== href) history.pushState(null, '', href);
   }
 
-  function onResize() {
+  function refreshGeometry() {
     title.style.removeProperty('transform');
     geometry.rememberOrigin(introFrame, titleGuide, descriptionGuide);
     geometry.measure();
     geometry.measureTitleMotion(title);
     visualScroll.sync(geometry.readTarget());
+  }
+
+  function onResize() {
+    integration.sync();
+    refreshGeometry();
+    window.dispatchEvent(new CustomEvent('program:layout'));
+  }
+
+  function onVisionLayout() {
+    refreshGeometry();
   }
 
   function onPageShow(event) {
@@ -141,17 +158,21 @@ export function mountProgramJourney(root) {
     hud.style.removeProperty('opacity');
     rail?.style.removeProperty('opacity');
     root.classList.remove('is-enhanced', 'is-program-visible');
+    integration.destroy();
     railItems.forEach((item) => item.removeEventListener('click', onRailClick));
     window.removeEventListener('scroll', visualScroll.observe);
     window.removeEventListener('resize', onResize);
+    window.removeEventListener('vision:layout', onVisionLayout);
     window.removeEventListener('pageshow', onPageShow);
     window.removeEventListener('pagehide', destroy);
   }
 
   railItems.forEach((item) => item.addEventListener('click', onRailClick));
   visualScroll.sync(geometry.readTarget());
+  window.dispatchEvent(new CustomEvent('program:layout'));
   window.addEventListener('scroll', visualScroll.observe, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
+  window.addEventListener('vision:layout', onVisionLayout);
   window.addEventListener('pageshow', onPageShow);
   window.addEventListener('pagehide', destroy);
   return { destroy };
