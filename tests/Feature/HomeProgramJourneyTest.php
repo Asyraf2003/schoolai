@@ -61,7 +61,7 @@ it('uses one seven-frame track and exact rail anchor geometry', function (): voi
         ->and($geometry)
         ->toContain('(frameCount + 1) * step')
         ->toContain('frameCount * step')
-        ->toContain('current < metrics.step * .98')
+        ->toContain('current < metrics.step')
         ->not->toContain('entryProgress')
         ->and($base)
         ->toContain('program-frame--intro')

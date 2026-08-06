@@ -95,7 +95,7 @@ export function createProgramGeometry(root, frameCount) {
   }
 
   function programIndex(current) {
-    if (current < metrics.step * .98) return -1;
+    if (current < metrics.step) return -1;
     const index = Math.round((current - metrics.step) / metrics.step);
     return clamp(index, 0, frameCount - 1);
   }
