@@ -1,5 +1,20 @@
 # SchoolAI Agent Rules
 
+## Absolute zero-execution gate
+
+Before any UI/UX analysis, diagnosis, plan, command suggestion, edit, test,
+commit, push, PR/issue mutation, or status claim, an agent may only:
+
+1. resolve the current `main` SHA;
+2. read this file and every mandatory architecture document in full.
+
+The agent must then record the mandatory read attestation defined in
+`docs/architecture/UI_UX_EXECUTION_HARDENING.md`. If any mandatory file cannot
+be read or followed, execution stops with `BLOCKED_BY_MISSING_EVIDENCE`.
+
+There is no silent exception, best-effort bypass, or permission to improvise.
+Reading the rulebook without following it does not satisfy the gate.
+
 ## Canonical instruction source
 
 `docs/architecture/` is the canonical UI/UX rulebook for Codex, Web AI with
@@ -10,11 +25,13 @@ Before UI/UX analysis, planning, editing, or command suggestions, read:
 1. `docs/architecture/README.md`
 2. `docs/architecture/UI_UX_DECISION_POLICY.md`
 3. `docs/architecture/UI_UX_SESSION_PROTOCOL.md`
-4. `docs/architecture/UI_UX_CURRENT_STATE.md`
-5. `docs/architecture/UI_UX_ENGINEERING.md`
-6. `docs/architecture/UI_UX_EXECUTION_FOUNDATION.md`
-7. `docs/architecture/UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
-8. `docs/architecture/UI_UX_DOD.md`
+4. `docs/architecture/UI_UX_EXECUTION_INCIDENTS.md`
+5. `docs/architecture/UI_UX_EXECUTION_HARDENING.md`
+6. `docs/architecture/UI_UX_CURRENT_STATE.md`
+7. `docs/architecture/UI_UX_ENGINEERING.md`
+8. `docs/architecture/UI_UX_EXECUTION_FOUNDATION.md`
+9. `docs/architecture/UI_UX_RESPONSIVE_LOCALE_MATRIX.md`
+10. `docs/architecture/UI_UX_DOD.md`
 
 Also read:
 
@@ -23,7 +40,7 @@ Also read:
   animation, canvas, WebGL, or responsive work;
 - `UI_UX_WEBGL_3D_PIPELINE.md` for 3D, models, shaders, canvas, cinematic
   scenes, or render-frame timing;
-- `UI_UX_BLUEPRINT_TEMPLATE.md` before proposing or implementing a surface.
+- `UI_UX_BLUEPRINT_TEMPLATE.md` before proposing or implementing a surface;
 - `UI_UX_PROMPT_TEMPLATES.md` when starting a bounded agent task;
 - `UI_UX_HANDOFF_TEMPLATE.md` when work crosses sessions or agents.
 
@@ -66,27 +83,81 @@ Rules:
 
 - Fetch and inspect current `main`; never trust an old SHA or chat state.
 - Validate that every mandatory document exists before continuing.
+- Record the required read attestation before doing work beyond mandatory
+  reading.
+- Read the incident register and map the active symptom to failed approaches.
 - The latest user-named file, route, screenshot, video, issue, commit, command
   output, viewport tier, cinematic scene, or section defines active scope until
   the user changes it.
 - Audit read-only before editing. Inspect the actual Blade DOM, CSS
-  winners/import order, JS state, assets, locale source, and Vite entry path.
+  winners/import order, JS state, assets, locale source, Vite entry path, and
+  available runtime geometry.
 - A screenshot proves a symptom or composition, not ownership or root cause.
+- Separate FACT, HYPOTHESIS, and GAP. Every material hypothesis must state what
+  evidence would falsify it.
 - Write or accept one bounded blueprint before implementation.
+- `OWNER_ACCEPTED` requires explicit acceptance evidence; general permission to
+  work or push does not accept a specific architecture.
 - Execute one atomic surface or capability at a time.
 - Do not perform unrelated cleanup, activation, deactivation, or redesign.
 - Do not hide an unexplained conflict with a stronger selector, later import,
-  inline fallback, timeout, z-index escalation, or duplicate controller.
+  inline fallback, timeout, z-index escalation, duplicate controller, runtime
+  root reparenting, or cross-surface geometry loop.
 - Remove or migrate a proven losing/conflicting owner when safe.
 - Keep source files under the enforced 200-line limit.
 - Use `rg` and `fd` for local discovery.
 - Never claim build, browser, responsive, RTL, accessibility, Lighthouse,
-  PageSpeed, or Core Web Vitals results without actual proof.
+  PageSpeed, smoothness, full-frame geometry, or Core Web Vitals results without
+  the matching proof category.
 
 If missing information changes architecture or art direction, record a GAP and
 ask for the smallest proof or owner decision. Offer two or three viable options
 plus tradeoffs and a recommended hybrid when useful. Do not silently choose an
 ADR-level decision.
+
+## Runtime-critical mutation freeze
+
+Sticky/pinned scroll, scroll choreography, transforms/containing blocks,
+anchor/hash geometry, runtime semantic-root reparenting, cross-surface
+controllers, canvas, WebGL, and browser-specific layout are runtime-critical.
+
+If the active execution channel cannot run the required browser proof:
+
+- production source mutation is forbidden;
+- direct writes to `main` are forbidden;
+- work may continue only as read-only diagnosis, governance docs, or an accepted
+  candidate branch;
+- the runtime step must move to `owner/local terminal` or another capable
+  channel.
+
+General authorization to push `main` does not waive this rule. Any exception
+requires explicit owner acceptance of the named missing proof, risk, and
+rollback.
+
+## Owner feedback invalidation
+
+Owner screenshot, video, or reproducible output showing a required failure sets
+the surface to `FAIL` immediately.
+
+Before another source patch:
+
+1. freeze source mutation;
+2. update `UI_UX_CURRENT_STATE.md`;
+3. update `UI_UX_EXECUTION_INCIDENTS.md`;
+4. demote unsupported blueprint status;
+5. perform read-only diagnosis;
+6. collect the smallest falsifying evidence.
+
+Do not answer a runtime failure by immediately producing another architecture.
+
+## Mandatory adversarial review
+
+Before publication, run a separate critic pass covering alternative root causes,
+initial hash, reverse/interrupted scroll, resize, short height, zoom, reduced
+motion, locale/RTL, failed enhancement, BFCache, module order, duplicate
+ownership, token-test self-confirmation, and rollback.
+
+Unresolved critic findings block publication.
 
 ## Agent and mutation boundaries
 
@@ -115,6 +186,11 @@ ADR-level decision.
   a usable fallback; user-agent forks require a reproduced engine defect.
 - Component CSS owns layout and treatment. Typography owners own type. JS owns
   state/orchestration, not breakpoint typography or duplicate content.
+- One controller/state owner per surface.
+- Moving a semantic surface root into another surface at runtime is forbidden by
+  default. Exceptions must satisfy `UI_UX_EXECUTION_HARDENING.md`.
+- Cross-surface mutual geometry measurement is forbidden unless one explicit
+  shared coordinator is owner-accepted and proven.
 - Do not copy Lusion code, assets, branding, shaders, or exact compositions.
   Translate its storytelling principles into Al Mustaqbal identity.
 
@@ -125,8 +201,8 @@ ADR-level decision.
 - Global tiers start at `360`, `640`, `768`, `1024`, `1280`, and `1536px`.
 - The existing navigation contract remains hamburger through `1180px` and
   desktop from `1181px`; test both exact widths when navigation is affected.
-- Every surface blueprint must define behavior in all six tiers and ID, EN,
-  and AR, including LTR/RTL motion and locale-switch lifecycle.
+- Every surface blueprint must define behavior in all six tiers and ID, EN, and
+  AR, including LTR/RTL motion and locale-switch lifecycle.
 - Width tiers describe available space, not guessed device identity.
 
 ## WebGL, performance, and accessibility
@@ -168,6 +244,7 @@ At minimum, run and report:
 
 ```bash
 git diff --check
+git status --short
 npm run check:structure
 npm run build
 php artisan test

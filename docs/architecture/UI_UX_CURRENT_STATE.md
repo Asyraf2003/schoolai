@@ -1,69 +1,94 @@
-# UI/UX Engineering — Current State and Progress Ledger
+# UI/UX Engineering Current State
 
-Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
+Status: `FAIL`
 Updated: 2026-08-07
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-020-INTEGRATED-DESKTOP-PIN`
-Source baseline: `9d5dfbe39d84982734ee45c6956a4de464c8811d`
+Current source SHA: `ed4346f0768add58024aa88748c9a1b94655f2d2`
+Active governance batch: `HOME-PROGRAM-021-GOVERNANCE-HARDENING`
+Active incident: `INC-2026-08-07-HOME-PROGRAM-001`
 Active blueprint: `blueprints/2026-08-06-home-program-scroll-rail.md`
 
-## Latest owner correction
+## Owner evidence
 
-- Desktop Visi/Misi and Program no longer hand off across two independent sticky
-  section boundaries.
-- In enhanced wide mode, the complete Program section is appended as the final
-  `100vw` panel of the existing Visi/Misi horizontal track.
-- The Visi/Misi pin remains active for both phases. Its first phase consumes the
-  actual horizontal overflow until the Program panel fully occupies the
-  viewport. Only then does Program local vertical progress begin.
-- Program keeps local ownership of its white intro frame, six image frames,
-  title, description, link, rail, and exit. No Program copy is moved into or
-  out of the Visi/Misi Blade.
-- Compact layouts, reduced motion, and no-JS fallback keep Visi/Misi and Program
-  as ordinary sequential sections, avoiding nested compact sticky owners.
-- Program media remains one continuous seven-frame track. No invented dwell or
-  snapping was added.
-- Program copy changes at the exact full-frame boundary. Direction is retained
-  while the user pauses mid-transition, so forward and reverse scrolling keep
-  the last fully occupied frame's copy.
-- Rail clicks still synchronize document position and visual current to one
-  exact full-frame location.
-- Values and unrelated homepage surfaces remain unchanged.
+Owner screenshots and feedback on 2026-08-07 prove:
 
-## Changed owners
+- Visi/Misi horizontal choreography is not preserved as requested;
+- Program white canvas, media, title, and description produce unintended
+  compositions;
+- Program transitions and rail/full-frame behavior remain incorrect;
+- implementation introduced unrequested architecture and visual decisions.
 
-- `resources/js/surfaces/home/program-journey/{controller,geometry,integration,motion}.js`
-- `resources/js/surfaces/home/vision-story/controller.js`
-- `resources/css/pages/welcome/program-journey/base.css`
-- focused Program and Visi/Misi tests
-- active blueprint and this ledger
+This is runtime and owner-visible `FAIL`.
 
-## Source proof
+## Evidence status
 
-- All changed JavaScript passes `node --check`.
-- Focused PHP tests pass `php -l`.
-- Changed CSS braces are balanced.
-- Every changed source file remains at or below 200 lines.
-- Program integration is wide-only, motion-capable, reversible on resize, and
-  restores the original DOM position on destroy.
-- Visi/Misi height equals viewport plus complete horizontal travel plus Program
-  vertical travel.
-- Horizontal timeline distance remains only the horizontal travel; Program
-  vertical distance cannot slow or truncate the horizontal motion.
-- Program active-copy selection uses completed-frame `floor/ceil` boundaries,
-  not midpoint `Math.round`.
+```text
+SOURCE_SYNTAX: previously PASS for inspected files
+SOURCE_STRUCTURE: previously PASS for limited contracts
+BUILD_TEST: BLOCKED_BY_MISSING_EVIDENCE
+RUNTIME_GEOMETRY: FAIL
+RUNTIME_CHOREOGRAPHY: FAIL
+RESPONSIVE_LOCALE: BLOCKED_BY_MISSING_EVIDENCE
+BROWSER_ENGINE: BLOCKED_BY_MISSING_EVIDENCE
+ACCESSIBILITY: BLOCKED_BY_MISSING_EVIDENCE
+PERFORMANCE: BLOCKED_BY_MISSING_EVIDENCE
+OWNER_VISUAL: FAIL
+PUBLICATION: PASS
+FINAL_STATUS: FAIL
+ROOT_CAUSE: BLOCKED_BY_MISSING_EVIDENCE
+```
 
-## Blocked proof
+Source checks and publication do not offset runtime failure.
 
-The GitHub connector cannot render the owner's local browser. These remain
-`BLOCKED_BY_MISSING_EVIDENCE` until actually run:
+## Invalidated decisions
 
-- `git diff --check`
-- `npm run check:structure`
-- `npm run build`
-- full `php artisan test`
-- Chromium/WebKit forward, reverse, interrupted, rail-click, responsive,
-  locale, RTL, reduced-motion, resize, BFCache, PageSpeed, and CWV matrix
-- owner review of the rendered Visi/Misi horizontal completion and Program
-  full-frame copy timing
+The following are not owner-accepted facts and must not be reused without fresh
+evidence and acceptance:
+
+- separate white curtain;
+- percentage rail mapping;
+- moving Program copy between sections;
+- independent sticky owners as the final architecture;
+- runtime movement of the entire Program section into Visi/Misi;
+- coupled `program:layout` and `vision:layout` ownership;
+- direction-based `floor/ceil` copy timing;
+- any claim that no visual/interaction decisions were added.
+
+## Source freeze
+
+No further Program or Visi/Misi production source mutation is allowed until:
+
+1. the runtime reproduction packet is collected;
+2. competing root-cause hypotheses are tested;
+3. one architecture survives adversarial review;
+4. blueprint acceptance evidence exists;
+5. a candidate-branch proof plan and rollback are defined.
+
+## Required runtime packet
+
+```text
+current SHA
+Firefox/Chromium version, OS, hardware
+viewport width x height, zoom
+locale/direction
+URL and initial hash
+reload versus in-page navigation
+input and exact steps
+recording from end of Visi/Misi through Program 2
+DOM parent chain
+computed sticky/position/overflow/transform values
+bounding rectangles
+scroll/current/target state
+module mount order
+```
+
+## Progress
+
+Governance hardening is the only active capability. Visual/runtime progress does
+not increase from this docs batch.
+
+## One next valid step
+
+`owner/local terminal`: collect the read-only runtime reproduction packet for
+SHA `ed4346f0768add58024aa88748c9a1b94655f2d2`. Do not edit source.
