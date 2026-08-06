@@ -1,0 +1,130 @@
+.program-journey.is-enhanced .program-journey__hud {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: block;
+    height: 100svh;
+    height: 100dvh;
+    margin-block-end: -100svh;
+    margin-block-end: -100dvh;
+    pointer-events: none;
+    will-change: opacity, filter;
+}
+
+.program-journey.is-enhanced .program-frame__fallback {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.program-journey__title,
+.program-journey__copy,
+.program-journey__rail {
+    position: absolute;
+    z-index: 2;
+}
+
+.program-journey__title {
+    transform: translate3d(0, var(--intro-y), 0) scale(var(--intro-scale));
+    will-change: transform;
+}
+
+.program-journey__eyebrow,
+.program-journey__count {
+    margin: 0 0 10px;
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.program-journey__count {
+    color: var(--program-accent);
+}
+
+.program-journey__title h3 {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(2.7rem, 6vw, 6.7rem);
+    font-weight: 650;
+    line-height: .86;
+    letter-spacing: -.07em;
+    overflow-wrap: anywhere;
+}
+
+.program-journey__copy {
+    max-width: 38rem;
+    pointer-events: none;
+}
+
+.program-journey__summary,
+.program-journey__description {
+    margin: 0;
+}
+
+.program-journey__summary {
+    font-size: clamp(1rem, 1.35vw, 1.28rem);
+    font-weight: 720;
+    line-height: 1.35;
+}
+
+.program-journey__description {
+    margin-top: 10px;
+    color: rgb(13 20 34 / 0.66);
+    font-size: clamp(.9rem, 1vw, 1.05rem);
+    line-height: 1.55;
+}
+
+.program-journey__link {
+    margin-top: 18px;
+    border-bottom: 1px solid currentColor;
+    pointer-events: auto;
+}
+
+.program-journey__exit {
+    position: relative;
+    z-index: 30;
+    min-height: 100svh;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: var(--program-blue);
+    color: #fff;
+}
+
+.program-journey__exit p {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    font-size: clamp(1rem, 2vw, 1.8rem);
+    font-weight: 750;
+    letter-spacing: -.03em;
+}
+
+.program-journey__exit-lines {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: space-evenly;
+    padding-block: 8vh;
+}
+
+.program-journey__exit-lines span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: rgb(255 255 255 / 0.76);
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.program-journey__exit-lines span:nth-child(even) {
+    transform-origin: right center;
+}

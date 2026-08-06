@@ -4,89 +4,101 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-06
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active blueprint: owner-accepted dense desktop Program exploration from 2026-08-06
-Source baseline: `d35311a8d09ddc2398ad7128076372b7af0d9322`
-Source implementation head before ledger: `79a34befb6cf879f1b2434ac9015740156efc7e4`
+Active blueprint: `blueprints/2026-08-06-home-program-scroll-rail.md`
+Source baseline: `18c80280afd585c45fc2910d7f4f881c47285564`
 
 ## Active production batch
 
-- ID: `HOME-PROGRAM-013-CINEMATIC-SCROLL-CHAPTERS`
+- ID: `HOME-PROGRAM-014-NATIVE-SCROLL-RAIL`
 - State: `IMPLEMENTED_SOURCE`
 - Surface: homepage Program `#program`
-- Goal: push the desktop Program prototype toward an award-level school story
-  by combining normal scroll chapters, a sticky media stage, functional actions,
-  and dense education content without scroll hijacking.
+- Goal: let parents experience all six programs through ordinary vertical scroll,
+  synchronized title/description/media/link, a centered side rail, soft frame
+  settling, and a blue handoff into Values.
 
 ## Owner decision
 
-- Homepage order remains Vision/Mission -> Program -> Values -> Gallery -> Articles.
-- The final Program heading inside Vision/Mission remains the single Program heading.
-- Creative evaluation is currently desktop-first at `>=1181px`.
-- The section may become intentionally content-dense for owner review.
-- Phone, tablet, and full RTL/LTR certification remain deferred.
-- Program remains functional: visible semantic chapter content, PPDB action, Gallery
-  action, keyboard selection, and reduced-motion behavior are retained.
+- Vision/Mission keeps the single Program heading and introductory description.
+- Users are not required to press previous/next controls; ordinary scroll is the
+  primary journey in both directions.
+- Six images remain physical vertical HTML frames with visible boundaries.
+- When input stops inside the frame range, the page may settle gently to the
+  nearest frame, but new input must cancel that motion.
+- Desktop LTR places the title at inline-start and the rail at inline-end; RTL
+  swaps only those logical positions.
+- Tablets center title/description, hide the rail when narrow, and show it when
+  width permits. Phones retain the same story with smaller type/media.
+- Temporary Unsplash images are accepted for this review cycle.
+- The sixth frame transitions into blue with white lines before Values.
 
 ## Implemented source
 
-- Six programs now render as six long-form scroll chapters rather than a compact
-  card index.
-- Information architecture remains split into:
-  - school journey: KB, TK, and SD;
-  - learning pillars: Tahfidz, Mitra Bahasa, and Literasi.
-- A sticky desktop media stage now synchronizes:
-  - active chapter number, accent, code, label, title, summary, and description;
-  - one large local media layer and one secondary floating local media layer;
-  - vertical progress, section ambient drift, and pointer depth;
-  - PPDB and Gallery actions.
-- IntersectionObserver activates chapters from ordinary page scroll. There is no
-  wheel interception, forced horizontal travel, or full-page scroll hijack.
-- Click, hover, focus, Arrow keys, Home, and End remain supported.
-- Image changes preload before replacement. WAAPI transitions cancel prior runs.
-- RAF work is shared for pointer and scroll updates, and pagehide cleans observers,
-  animation frames, and active WAAPI animations.
-- A three-part manifesto closes the section: Berakar, Bereksplorasi, and
-  Berkontribusi.
-- Existing compact shell ownership is retained for the deferred non-desktop path.
+- Replaced the previous two-column Program prototype with six semantic vertical
+  frame articles and one sticky synchronized HUD.
+- The HUD updates active label, count, title, summary, description, link, accent,
+  and rail state from the nearest visible frame.
+- Entry begins from the current Vision/Mission Program copy and settles the title
+  toward its responsive active position.
+- Copy and rail use the established mobile-menu blur/vertical/easing character
+  through cancellable WAAPI animations.
+- Soft settling uses a cancellable RAF animation after scroll input pauses. It
+  does not intercept wheel/touch events or require arrow controls.
+- The rail exposes six line items, keeps its focus line centered, reveals labels
+  on hover/focus, and can optionally scroll directly to a frame.
+- A final blue full-viewport panel draws eight white lines from alternating sides
+  and naturally releases into Values.
+- No-JS fallback renders all six images, titles, descriptions, and PPDB links.
+- Reduced motion disables automatic settle and collapses transition durations.
+- Six temporary static Unsplash CDN images are used; the existing CSP already
+  permits that host.
 
 ## Files changed
 
 - `resources/views/home/sections/featured-programs.blade.php`
 - `resources/css/pages/welcome/program-showcase-desktop.css`
+- `resources/css/pages/welcome/program-journey/base.css`
+- `resources/css/pages/welcome/program-journey/hud.css`
+- `resources/css/pages/welcome/program-journey/rail.css`
+- `resources/css/pages/welcome/program-journey/compact.css`
+- `resources/css/pages/welcome/program-journey/wide.css`
 - `resources/js/pages/welcome/program-cards.js`
-- `docs/architecture/UI_UX_CURRENT_STATE.md`
+- `resources/js/surfaces/home/program-journey/controller.js`
+- `resources/js/surfaces/home/program-journey/motion.js`
+- `tests/Feature/HomeProgramJourneyTest.php`
+- active blueprint and this ledger
 
 ## Proof status
 
 | Gate | Status | Evidence/blocker |
 |---|---|---|
-| current `main` validation | `PASS_SOURCE` | revalidated immediately before writes |
-| single Program heading | `PASS_SOURCE` | section still references `vision-program-title` |
-| six chapter data contract | `PASS_SOURCE` | every program carries content, accent, and two local media paths |
-| normal-scroll activation | `PASS_SOURCE` | IntersectionObserver only; no wheel/touch scroll interception |
-| functional CTA path | `PASS_SOURCE` | `/ppdb` and `#galeri` remain native links |
-| keyboard state path | `PASS_SOURCE` | focus, arrows, Home, and End are wired |
-| reduced motion | `PASS_SOURCE` | WAAPI and pointer motion are suppressed |
-| lifecycle cleanup | `PASS_SOURCE` | observer, RAF, and animations cleaned on pagehide |
-| JS syntax | `PASS_LOCAL_STATIC` | `node --check` passed on equivalent staged source |
-| source line limit | `PASS_LOCAL_STATIC` | Blade 165, JS 162, CSS 24 physical lines |
-| CSS structural sanity | `PASS_LOCAL_STATIC` | balanced rule braces; unsupported calc multiplication removed |
+| current `main` validation | `PASS_SOURCE` | baseline fetched before implementation |
+| one Program heading | `PASS_SOURCE` | Program still references `vision-program-title` |
+| six semantic frames | `PASS_LOCAL_STATIC` | Blade contract and focused test require six |
+| ordinary scroll ownership | `PASS_SOURCE` | no wheel/touch prevention or scroll lock |
+| WAAPI copy/rail motion | `PASS_SOURCE` | cancellable blur/vertical animations |
+| soft-settle interruption | `PASS_SOURCE` | wheel/touch/pointer/key cancel RAF settle |
+| RTL logical placement | `PASS_SOURCE` | title/rail use logical inset rules |
+| no-JS content/action | `PASS_SOURCE` | six visible fallback articles and PPDB links |
+| reduced motion | `PASS_SOURCE` | settle disabled and transition durations collapsed |
+| source line limit | `PASS_LOCAL_STATIC` | every changed source file is <=200 lines |
+| JS syntax | `PASS_LOCAL_STATIC` | `node --check` passed for all changed JS files |
+| CSS structural sanity | `PASS_LOCAL_STATIC` | braces balanced in every changed stylesheet |
+| external image availability | `BLOCKED_BY_MISSING_EVIDENCE` | runtime network verification unavailable |
 | `git diff --check` | `BLOCKED_BY_MISSING_EVIDENCE` | connector has no checkout |
 | `npm run check:structure` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
 | `npm run build` | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
 | PHP tests | `BLOCKED_BY_MISSING_EVIDENCE` | owner checkout required |
-| desktop Chromium/WebKit review | `BLOCKED_BY_MISSING_EVIDENCE` | rendered owner review required |
-| compact/RTL matrix | `DEFERRED_OWNER_SCOPE` | not part of this creative evaluation |
+| Chromium/WebKit matrix | `BLOCKED_BY_MISSING_EVIDENCE` | rendered runtime review required |
+| PageSpeed/CWV delta | `BLOCKED_BY_MISSING_EVIDENCE` | measured runtime evidence required |
 
 ## STATUS
 
-The dense cinematic Program direction is published to source. Publication and
-source wiring are proven. Rendering quality, crop suitability of the selected
-local media, build output, browser behavior, and performance remain unproven.
+The owner-accepted Program scroll rail is implemented in source. Publication,
+build output, actual media crops, settle feel, browser parity, responsive quality,
+and performance are not yet proven.
 
 ## NEXT VALID STEP
 
-Owner pulls current `main`, builds the project, and reviews the Program section
-at desktop width `>=1181px`. The next correction should be based on rendered
-feedback, then compared against the supplied video and shortlisted award-winning
-school references.
+Owner pulls current `main`, runs the required build/test commands, and reviews the
+Program journey forward and backward at 390, 768, 1024, 1181, 1440, and 1920px in
+ID and AR before permanent Al-Mustaqbal media replaces the temporary images.

@@ -1,0 +1,102 @@
+.program-journey__rail-window {
+    position: relative;
+    height: 304px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(transparent, #000 24%, #000 76%, transparent);
+    mask-image: linear-gradient(transparent, #000 24%, #000 76%, transparent);
+}
+
+.program-journey__rail ol {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    will-change: transform;
+}
+
+.program-journey__rail li,
+.program-journey__rail button {
+    height: 48px;
+}
+
+.program-journey__rail button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #0d1422;
+    cursor: pointer;
+}
+
+.program-journey__rail button i {
+    order: 2;
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    opacity: .34;
+    transition:
+        width 560ms cubic-bezier(.16, 1, .3, 1),
+        opacity 320ms ease,
+        background-color 320ms ease;
+}
+
+.program-journey__rail button span {
+    max-width: 132px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(10px);
+    color: #0d1422;
+    font-size: .72rem;
+    font-weight: 800;
+    text-align: end;
+    white-space: nowrap;
+    transition:
+        opacity 260ms ease,
+        transform 560ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.program-journey__rail button:hover span,
+.program-journey__rail button:focus-visible span,
+.program-journey__rail button[aria-current="true"] span {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.program-journey__rail button:hover i,
+.program-journey__rail button:focus-visible i,
+.program-journey__rail button[aria-current="true"] i {
+    width: 76px;
+    background: var(--program-accent);
+    opacity: 1;
+}
+
+.program-journey__rail-focus {
+    position: absolute;
+    inset-inline-end: 0;
+    inset-block-start: 50%;
+    z-index: 2;
+    width: 84px;
+    height: 1px;
+    background: rgb(13 20 34 / 0.14);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+html[dir="rtl"] .program-journey__rail button {
+    justify-content: flex-start;
+}
+
+html[dir="rtl"] .program-journey__rail button i {
+    order: 0;
+}
+
+html[dir="rtl"] .program-journey__rail button span {
+    text-align: start;
+    transform: translateX(-10px);
+}
