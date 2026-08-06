@@ -1,6 +1,5 @@
 @php
   $programItems = collect($featuredPrograms['items'] ?? [])->values();
-  $programJourneySteps = max(1, $programItems->count() + 2);
   $programMedia = [
     ['url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=2400&q=82', 'position' => 'center 42%'],
     ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2400&q=82', 'position' => 'center 46%'],
@@ -11,19 +10,16 @@
   ];
   $programUi = match (app()->getLocale()) {
     'en' => [
-      'eyebrow' => 'Al-Mustaqbal programs', 'more' => 'Learn more',
-      'rail' => 'Program journey', 'photo' => 'Temporary photo from Unsplash',
-      'next' => 'Continue to our values',
+      'more' => 'Learn more', 'rail' => 'Program journey',
+      'photo' => 'Temporary photo from Unsplash', 'next' => 'Continue to our values',
     ],
     'ar' => [
-      'eyebrow' => 'برامج المستقبل', 'more' => 'اكتشف المزيد',
-      'rail' => 'رحلة البرامج', 'photo' => 'صورة مؤقتة من أنسبلاش',
-      'next' => 'تابع إلى قيمنا',
+      'more' => 'اكتشف المزيد', 'rail' => 'رحلة البرامج',
+      'photo' => 'صورة مؤقتة من أنسبلاش', 'next' => 'تابع إلى قيمنا',
     ],
     default => [
-      'eyebrow' => 'Program Al-Mustaqbal', 'more' => 'Selengkapnya',
-      'rail' => 'Perjalanan program', 'photo' => 'Foto sementara dari Unsplash',
-      'next' => 'Lanjut ke nilai-nilai kami',
+      'more' => 'Selengkapnya', 'rail' => 'Perjalanan program',
+      'photo' => 'Foto sementara dari Unsplash', 'next' => 'Lanjut ke nilai-nilai kami',
     ],
   };
   $programLink = route('portal.login');
@@ -40,26 +36,26 @@
     <span
       class="program-journey__anchor"
       id="program-scroll-{{ $loop->iteration }}"
-      data-program-anchor="{{ $loop->index }}"
       aria-hidden="true"
-      style="inset-block-start: {{ number_format(($loop->iteration / $programJourneySteps) * 100, 6, '.', '') }}%"
+      style="--program-anchor-step: {{ $loop->iteration }}"
     ></span>
   @endforeach
 
   <div class="program-journey__sticky" data-program-sticky>
     <div class="program-journey__viewport" data-program-viewport>
       <div class="program-journey__frames" data-program-frames>
+        <div class="program-frame program-frame--intro" data-program-intro-frame aria-hidden="true"></div>
+
         @forelse ($programItems as $program)
           @php
             $description = collect($program['text_parts'] ?? [])->pluck('text')->implode('');
             $media = $programMedia[$loop->index] ?? $programMedia[0];
           @endphp
           <article
-            class="program-frame{{ $loop->first ? ' is-active' : '' }}"
+            class="program-frame"
             id="program-frame-{{ $loop->iteration }}"
             data-program-frame
             data-program-index="{{ $loop->index }}"
-            data-program-label="{{ $program['label'] }}"
             data-program-title="{{ $program['title'] }}"
             data-program-description="{{ $description }}"
             data-program-link="{{ $programLink }}"
@@ -96,13 +92,7 @@
       </div>
     </div>
 
-    <div class="program-journey__curtain" data-program-curtain aria-hidden="true"></div>
-
     <div class="program-journey__hud" data-program-hud>
-      <div class="program-journey__meta" aria-hidden="true">
-        <p data-program-active-label>{{ $programUi['eyebrow'] }}</p>
-        <p data-program-active-count></p>
-      </div>
       <div class="program-journey__title-slot" data-program-title-slot></div>
       <div class="program-journey__copy-slot" data-program-copy-slot>
         <div data-program-description-slot></div>
@@ -117,11 +107,7 @@
         </a>
       </div>
 
-      <nav
-        class="program-journey__rail"
-        data-program-rail
-        aria-label="{{ $programUi['rail'] }}"
-      >
+      <nav class="program-journey__rail" data-program-rail aria-label="{{ $programUi['rail'] }}">
         <ol>
           @foreach ($programItems as $program)
             <li>
@@ -130,7 +116,7 @@
                 data-program-rail-item
                 data-program-index="{{ $loop->index }}"
                 aria-label="{{ $program['title'] }}"
-                aria-current="{{ $loop->first ? 'true' : 'false' }}"
+                aria-current="false"
               >
                 <i aria-hidden="true"></i>
                 <span>{{ $program['title'] }}</span>
