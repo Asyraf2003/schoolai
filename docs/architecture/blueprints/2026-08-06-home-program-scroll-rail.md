@@ -1,91 +1,111 @@
-# Homepage Program Fixed Chrome and White Curtain Blueprint
+# Homepage Program Single Seven-Frame Track Blueprint
 
-State: `OWNER_ACCEPTED / IMPLEMENTING`
+State: `OWNER_CORRECTED / IMPLEMENTED_SOURCE`
 Date: 2026-08-06
 Surface: homepage Program `#program`
-Source baseline: `076efb5e2e3770d90688cd4c9267633b523ac485`
-Batch: `HOME-PROGRAM-018-FIXED-CHROME-CURTAIN-RAIL`
+Source baseline: `3865b248093da2d379d4e6b666e1a6caf13daec6`
+Batch: `HOME-PROGRAM-018-SINGLE-SEVEN-FRAME-TRACK`
 
-## OWNER GOAL
+## Owner goal
 
-Correct only the observed Program defects. The section title becomes each
-program title through a text transition. The title moves once toward the
-logical top corner; the description changes text without changing position.
-Title, description, and rail remain independent and stationary while Program
-media moves. The white opening canvas moves plainly upward to reveal the first
-image underneath. The rail must be clickable. No unrelated visual invention is
-authorized.
+Program must use one vertical visual track. The plain white Program opening is
+media frame zero, followed by six related full-viewport images. Only the track
+moves. The section title, description, action, and clickable six-item rail stay
+independent from that media movement.
 
-## FACT AND ROOT CAUSE
+The original section title moves smoothly to the Program corner during the first
+white-to-image transition. After reaching the corner, only title text changes.
+The description never changes coordinate; only its text changes.
 
-- `main` already uses a sticky full-screen Program viewport and Gallery-style
-  native-target `0.08` lerp.
-- The current handoff changes state at separate root thresholds and starts media
-  travel immediately, so a small scroll can trigger title/copy changes before a
-  dedicated opening transition exists.
-- The description owner adds a `clamp()` height and clipping even though the
-  owner only requested stable coordinates and changing text.
-- There is no single opaque white layer separating the Visi/Misi handoff from
-  the Program image, so the surfaces can appear to overlap.
-- The previous owner correction intentionally changed the rail into passive
-  `<li>` indicators. The latest owner correction explicitly restores clicking.
+No category/eyebrow text or `00 / 00` counter is allowed above the title.
 
-## SCOPE AND OWNER MAP
+## Source facts and rejected implementation
 
-Editable:
+The rejected source used three independent visual owners:
 
-- `resources/views/home/sections/featured-programs.blade.php`
-- `resources/css/pages/welcome/program-journey/{base,hud,rail}.css`
-- `resources/js/surfaces/home/program-journey/{controller,geometry}.js`
-- focused Program test
-- this blueprint and `UI_UX_CURRENT_STATE.md`
+- a six-image track;
+- a fixed white curtain with separate `entryProgress`;
+- a fixed HUD activated by threshold.
 
-Read-only / forbidden:
+It also placed rail anchors by percentage of total section height. Consequently,
+white was not a media frame, description coordinates were captured while the
+previous section was moving, text became white while the curtain was still
+white, and rail item 2 could resolve to an intermediate or unrelated frame.
 
-- Visi/Misi source and controller
-- Values, Gallery, Articles, About, Testimonial, header, and other sections
-- localized program data and the six temporary Unsplash images
+That model is removed rather than patched with more thresholds.
 
-## REQUIRED RESULT
+## Implemented ownership
 
-1. Native document scroll remains the only target.
-2. Visual current continues to use `lerp(current, target, 0.08)`.
-3. One entry viewport is added before media travel.
-4. During that entry, one opaque white curtain translates upward. It does not
-   fade, crossfade, or mix with the image.
-5. Frame one remains stationary below the curtain.
-6. The title node moves only during the original handoff to the Program corner.
-7. Later title and description text swaps use opacity/light blur only.
-8. Description top/left/width come from the measured Visi/Misi coordinate; no
-   invented fixed height or clipping is applied.
-9. Title, description, metadata, link, and rail remain in the fixed HUD while
-   curtain/media move behind them.
-10. Six rail items are native fragment links to six document-position anchors.
-    Clicking may use normal browser scrolling, but no automatic snap system,
-    wheel interception, projected landing, or Program `window.scrollTo` returns.
-11. Active rail state remains derived from visual current.
-12. The blue and white-line Values handoff remains unchanged.
+| Concern | Owner |
+|---|---|
+| white frame plus six semantic media frames | Program Blade partial |
+| exact viewport distances and active frame | `geometry.js` |
+| handoff, copy swapping, track and exit render | `controller.js` |
+| native-target `0.08` visual smoothing | existing `motion.js` |
+| sticky viewport, full-screen frames, fixed HUD | Program CSS modules |
+| durable source contracts | focused Program feature test |
 
-## RESPONSIVE, LOCALE, AND FALLBACK
+## Track geometry
 
-- Existing title and rail placement rules remain; no new composition is added.
-- ID/EN remain LTR and AR mirrors logical title/rail placement.
-- Existing compact tiers may continue hiding the rail where already defined.
-- Without JS, all six semantic Program articles and links remain readable.
-- Reduced motion maps visual current directly to native target and removes
-  animated text travel.
+```text
+frame 0 = plain white Program opening
+frame 1 = Program image 1
+frame 2 = Program image 2
+frame 3 = Program image 3
+frame 4 = Program image 4
+frame 5 = Program image 5
+frame 6 = Program image 6
+```
 
-## PROOF
+Each frame is exactly one measured `window.innerHeight`. The complete media track
+height is `(programCount + 1) * viewportHeight`. Its maximum travel is
+`programCount * viewportHeight`, leaving Program image 6 full-screen before the
+existing Values exit begins.
 
-Available source checks:
+Rail item `n` targets `n * viewportHeight` from Program start. There is no
+percentage approximation and no separate entry distance outside the media track.
 
-- JS syntax
-- focused PHP syntax
-- CSS brace balance
-- source files at or below 200 lines
-- absence of snap/scroll-writing owners
-- presence of white curtain, entry geometry, stable copy, and six native links
+## Copy behavior
+
+Before Program starts, the controller records the original title and description
+viewport rectangles while they are still visible in Visi/Misi. At Program start:
+
+- the same title node moves into the final title slot;
+- inverse geometry keeps it visually at its recorded origin;
+- first-frame progress removes that inverse transform, moving only the title to
+  its final corner;
+- the same description node is placed at its recorded top, left, and width;
+- description position receives no scroll-linked transform;
+- after the first image is effectively full-screen, title and description text
+  swap to Program 1, then follow later active frames.
+
+## Rail and scroll behavior
+
+The rail remains ordinary semantic anchor navigation. Each link points to a real
+absolute anchor at the corresponding exact viewport step. Native scroll remains
+the document owner. Program does not add snap settling, projected landing,
+wheel interception, or `window.scrollTo`.
+
+The visual track follows native target with the existing Gallery-style `0.08`
+lerp. Forward, reverse, interrupted input, and rail navigation use the same
+single current value.
+
+## Explicit non-goals
+
+This correction does not redesign typography, invent new metadata, add counters,
+add category labels, change Program content, modify Visi/Misi, replace images,
+change Values, or introduce a new animation style.
+
+## Proof gates
+
+Source checks available before publication:
+
+- JS syntax for controller and geometry
+- PHP syntax for focused test
+- balanced CSS braces
+- changed source files at or below 200 lines
+- absence of rejected curtain/metadata/percentage geometry tokens
 - atomic fast-forward publication and changed-path verification
 
-Runtime/browser/build gates remain `BLOCKED_BY_MISSING_EVIDENCE` unless actually
-run and recorded.
+Browser and command gates remain `BLOCKED_BY_MISSING_EVIDENCE` until run from a
+checkout with the application and browser matrix.
