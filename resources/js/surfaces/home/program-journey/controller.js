@@ -26,6 +26,7 @@ export function mountProgramJourney(root) {
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var defaultLabel = label ? label.textContent.trim() : '';
   var defaultLinkLabel = linkLabel ? linkLabel.textContent.trim() : '';
+  var defaultLinkHref = link ? link.getAttribute('href') : '';
   var total = frames.length;
   var activeIndex = -1;
   var mode = '';
@@ -71,7 +72,7 @@ export function mountProgramJourney(root) {
       text(summary, program.programSummary);
       text(description, program.programDescription);
       if (link) {
-        link.href = program.programLink || '/ppdb';
+        link.href = program.programLink || defaultLinkHref;
         link.setAttribute('aria-label', defaultLinkLabel + ': ' + program.programTitle);
       }
       text(linkLabel, defaultLinkLabel);
