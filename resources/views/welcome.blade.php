@@ -47,9 +47,9 @@
 
       @include('home.sections.vision-mission')
 
-      @include('home.sections.school-values')
-
       @include('home.sections.featured-programs')
+
+      @include('home.sections.school-values')
 
       @include('home.sections.gallery')
 
