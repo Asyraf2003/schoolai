@@ -1,10 +1,5 @@
 import { createProgramGeometry } from './geometry.js';
-import {
-  createCopyMotion,
-  createRailMotion,
-  createVisualScrollEngine,
-  moveWithFlip,
-} from './motion.js';
+import { createCopyMotion, createVisualScrollEngine, moveWithFlip } from './motion.js';
 
 const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 
@@ -14,9 +9,7 @@ export function mountProgramJourney(root) {
   const railItems = Array.from(root.querySelectorAll('[data-program-rail-item]'));
   const hud = root.querySelector('[data-program-hud]');
   const framesTrack = root.querySelector('[data-program-frames]');
-  const rail = root.querySelector('.program-journey__rail');
-  const railWindow = root.querySelector('[data-program-rail-window]');
-  const railTrack = root.querySelector('[data-program-rail]');
+  const rail = root.querySelector('[data-program-rail]');
   const exit = root.querySelector('[data-program-exit]');
   const exitLines = Array.from(root.querySelectorAll('[data-program-exit-lines] span'));
   const label = root.querySelector('[data-program-active-label]');
@@ -41,13 +34,11 @@ export function mountProgramJourney(root) {
   const defaultLinkLabel = linkLabel?.textContent.trim() || '';
   const defaultLinkHref = link?.getAttribute('href') || '';
   const copyMotion = createCopyMotion(reducedMotion);
-  const railMotion = createRailMotion(railTrack, railWindow, railItems, reducedMotion);
+  const geometry = createProgramGeometry(root, description, frames.length);
   let activeIndex = -1;
   let mode = 'intro';
   let handedOff = false;
   let destroyed = false;
-  let renderFrame = 0;
-  let exitProgress = 0;
 
   root.classList.add('is-enhanced');
 
@@ -55,17 +46,15 @@ export function mountProgramJourney(root) {
     if (node) node.textContent = value || '';
   }
 
-  const geometry = createProgramGeometry(root, framesTrack, description, frames.length);
-
   function handoffIn() {
     if (handedOff) return;
     handedOff = true;
     geometry.rememberCopyAnchor();
     titleHome.style.minHeight = `${title.offsetHeight}px`;
     descriptionHome.style.minHeight = `${description.offsetHeight}px`;
+    descriptionSlot.appendChild(description);
     root.classList.add('has-handoff');
     moveWithFlip(title, titleSlot, reducedMotion);
-    moveWithFlip(description, descriptionSlot, reducedMotion);
   }
 
   function handoffOut() {
@@ -75,7 +64,7 @@ export function mountProgramJourney(root) {
     text(title, introTitle);
     text(description, introDescription);
     moveWithFlip(title, titleHome, reducedMotion);
-    moveWithFlip(description, descriptionHome, reducedMotion);
+    descriptionHome.appendChild(description);
     titleHome.style.removeProperty('min-height');
     descriptionHome.style.removeProperty('min-height');
     root.classList.remove('has-handoff');
@@ -83,10 +72,18 @@ export function mountProgramJourney(root) {
     activeIndex = -1;
   }
 
+  function swapCopy(update) {
+    copyMotion.swap({
+      moving: [label, count, title, link],
+      stable: [description],
+      update,
+    });
+  }
+
   function setIntro() {
     if (mode === 'intro') return;
     mode = 'intro';
-    copyMotion.swap([label, count, title, description, link], () => {
+    swapCopy(() => {
       text(label, defaultLabel);
       text(count, '');
       text(title, introTitle);
@@ -105,7 +102,7 @@ export function mountProgramJourney(root) {
     frames.forEach((frame, i) => frame.classList.toggle('is-active', i === index));
     railItems.forEach((item, i) => item.setAttribute('aria-current', i === index ? 'true' : 'false'));
     root.style.setProperty('--program-accent', program.programAccent || '#0ea5e9');
-    copyMotion.swap([label, count, title, description, link], () => {
+    swapCopy(() => {
       text(label, program.programLabel);
       text(count, `${String(index + 1).padStart(2, '0')} / ${String(frames.length).padStart(2, '0')}`);
       text(title, program.programTitle);
@@ -113,79 +110,65 @@ export function mountProgramJourney(root) {
       if (link) link.href = program.programLink || defaultLinkHref;
       text(linkLabel, defaultLinkLabel);
     });
-    railMotion.move(index);
   }
 
-  function renderChrome() {
-    renderFrame = 0;
+  function render({ current }) {
     if (destroyed) return;
     const viewport = window.innerHeight;
     const rootRect = root.getBoundingClientRect();
-    if (rootRect.top <= viewport * .82 && rootRect.bottom > 0) handoffIn();
-    if (rootRect.top > viewport * .9) handoffOut();
+    const rootTop = rootRect.top;
+    if (rootTop <= viewport * .82 && rootRect.bottom > 0) handoffIn();
+    if (rootTop > viewport * .9) handoffOut();
 
-    const exitRect = exit.getBoundingClientRect();
-    exitProgress = clamp((viewport - exitRect.top) / viewport);
+    const mediaCurrent = geometry.mediaPosition(current);
+    const exitProgress = geometry.exitProgress(current);
+    framesTrack.style.transform = `translate3d(0, ${(-mediaCurrent).toFixed(2)}px, 0)`;
+    exit.style.opacity = String(exitProgress);
     hud.style.opacity = String(handedOff ? 1 - clamp(exitProgress * 1.12) : 0);
-    hud.style.filter = `blur(${(exitProgress * 18).toFixed(2)}px)`;
+    hud.style.filter = `blur(${(exitProgress * 14).toFixed(2)}px)`;
+    if (rail) rail.style.opacity = String(handedOff ? 1 - exitProgress : 0);
     exitLines.forEach((line, index) => {
       const progress = clamp((exitProgress - index * .035) / .72);
       line.style.transform = `scaleX(${progress.toFixed(3)})`;
     });
-    if (rail) {
-      rail.style.opacity = String(clamp((viewport * .58 - rootRect.top) / (viewport * .36)) * (1 - exitProgress));
-    }
-  }
 
-  function scheduleChrome() {
-    if (!renderFrame) renderFrame = requestAnimationFrame(renderChrome);
+    if (!handedOff || rootTop > viewport * .12) setIntro();
+    else setActive(geometry.activeIndex(current));
   }
 
   const visualScroll = createVisualScrollEngine({
     reducedMotion,
     readTarget: geometry.readTarget,
-    canSnap: () => handedOff && exitProgress < .08 && geometry.travel > 0,
-    getAnchors: geometry.anchors,
-    snapTo: (local) => window.scrollTo({ top: geometry.documentTarget(local), behavior: 'smooth' }),
-    stopSnap: () => window.scrollTo({ top: window.scrollY, behavior: 'auto' }),
-    onUpdate: ({ target, current }) => {
-      framesTrack.style.transform = `translate3d(0, ${(target - current).toFixed(2)}px, 0)`;
-      const rootTop = root.getBoundingClientRect().top;
-      if (!handedOff || rootTop > window.innerHeight * .12) setIntro();
-      else setActive(geometry.activeIndex(current));
-      scheduleChrome();
-    },
+    onUpdate: render,
   });
 
   function onScroll() {
-    scheduleChrome();
     visualScroll.observe();
   }
 
   function onResize() {
     geometry.measure();
     visualScroll.sync(geometry.readTarget());
-    scheduleChrome();
   }
 
-  railItems.forEach((item, index) => {
-    item.addEventListener('click', () => {
-      visualScroll.snapNow(geometry.anchors()[index]);
-    });
-  });
+  function onPageShow(event) {
+    if (!event.persisted) return;
+    geometry.measure();
+    visualScroll.sync(geometry.readTarget());
+  }
 
-  function destroy() {
-    if (destroyed) return;
+  function destroy(event) {
+    if (event?.persisted || destroyed) return;
     destroyed = true;
     copyMotion.cancel();
     visualScroll.destroy();
-    railMotion.cancel();
-    if (renderFrame) cancelAnimationFrame(renderFrame);
     handoffOut();
     framesTrack.style.removeProperty('transform');
+    exit.style.removeProperty('opacity');
     root.classList.remove('is-enhanced');
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
+    window.removeEventListener('pageshow', onPageShow);
     window.removeEventListener('pagehide', destroy);
   }
 
@@ -193,7 +176,7 @@ export function mountProgramJourney(root) {
   visualScroll.sync(geometry.readTarget());
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
-  window.addEventListener('pagehide', destroy, { once: true });
-  renderChrome();
+  window.addEventListener('pageshow', onPageShow);
+  window.addEventListener('pagehide', destroy);
   return { destroy };
 }

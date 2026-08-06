@@ -1,16 +1,31 @@
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
-export function createProgramGeometry(root, framesTrack, description, frameCount) {
+export function createProgramGeometry(root, description, frameCount) {
   let copyAnchor = null;
-  let metrics = { start: 0, step: window.innerHeight, travel: 0 };
+  let metrics = {
+    start: 0,
+    step: window.innerHeight,
+    mediaTravel: 0,
+    exitTravel: window.innerHeight,
+    travel: 0,
+  };
+
+  function applyCopyAnchor() {
+    if (!copyAnchor) return;
+    root.style.setProperty('--program-copy-top', `${copyAnchor.top * window.innerHeight}px`);
+    root.style.setProperty('--program-copy-left', `${copyAnchor.left * window.innerWidth}px`);
+    root.style.setProperty('--program-copy-width', `${copyAnchor.width * window.innerWidth}px`);
+  }
 
   function measure() {
-    const rootTop = window.scrollY + root.getBoundingClientRect().top;
-    metrics = {
-      step: window.innerHeight,
-      start: rootTop + framesTrack.offsetTop,
-      travel: Math.max(0, framesTrack.offsetHeight - window.innerHeight),
-    };
+    const step = Math.max(1, window.innerHeight);
+    const start = window.scrollY + root.getBoundingClientRect().top;
+    const mediaTravel = Math.max(0, (frameCount - 1) * step);
+    const exitTravel = step;
+    metrics = { start, step, mediaTravel, exitTravel, travel: mediaTravel + exitTravel };
+    root.style.setProperty('--program-step', `${step}px`);
+    root.style.setProperty('--program-track-height', `${frameCount * step}px`);
+    root.style.setProperty('--program-scroll-distance', `${metrics.travel}px`);
     applyCopyAnchor();
   }
 
@@ -24,38 +39,28 @@ export function createProgramGeometry(root, framesTrack, description, frameCount
     applyCopyAnchor();
   }
 
-  function applyCopyAnchor() {
-    if (!copyAnchor) return;
-    root.style.setProperty('--program-copy-top', `${copyAnchor.top * window.innerHeight}px`);
-    root.style.setProperty('--program-copy-left', `${copyAnchor.left * window.innerWidth}px`);
-    root.style.setProperty('--program-copy-width', `${copyAnchor.width * window.innerWidth}px`);
-  }
-
   function readTarget() {
     return clamp(window.scrollY - metrics.start, 0, metrics.travel);
   }
 
-  function anchors() {
-    return Array.from({ length: frameCount }, (_, index) => (
-      Math.min(metrics.travel, index * metrics.step)
-    ));
+  function mediaPosition(current) {
+    return clamp(current, 0, metrics.mediaTravel);
   }
 
   function activeIndex(current) {
-    return clamp(Math.round(current / metrics.step), 0, frameCount - 1);
+    return clamp(Math.round(mediaPosition(current) / metrics.step), 0, frameCount - 1);
   }
 
-  function documentTarget(local) {
-    return metrics.start + local;
+  function exitProgress(current) {
+    return clamp((current - metrics.mediaTravel) / metrics.exitTravel, 0, 1);
   }
 
   return {
     measure,
     rememberCopyAnchor,
     readTarget,
-    anchors,
+    mediaPosition,
     activeIndex,
-    documentTarget,
-    get travel() { return metrics.travel; },
+    exitProgress,
   };
 }

@@ -4,7 +4,6 @@
         inset-inline-end: clamp(18px, 2.2vw, 42px);
         width: 190px;
         transform: translateY(-50%);
-        pointer-events: auto;
     }
 
     html[dir="rtl"] .program-journey__meta,
@@ -26,8 +25,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .program-journey__rail button i,
-    .program-journey__rail button span {
+    .program-journey__rail li i,
+    .program-journey__rail li span {
         transition-duration: .01ms !important;
     }
 }

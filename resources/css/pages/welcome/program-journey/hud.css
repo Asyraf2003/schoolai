@@ -3,8 +3,7 @@
     inset: 0;
     z-index: 20;
     display: block;
-    height: 100svh;
-    height: 100dvh;
+    height: var(--program-step);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -13,7 +12,6 @@
 }
 
 .program-journey.is-enhanced.has-handoff .program-journey__hud {
-    opacity: 1;
     visibility: visible;
     transition-delay: 0s;
 }
@@ -87,6 +85,9 @@
 }
 
 .program-journey__copy-slot [data-program-origin-description] {
+    width: 100%;
+    height: clamp(8rem, 18vh, 11rem);
+    overflow: hidden;
     margin: 0;
     color: rgb(255 255 255 / .9);
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -112,6 +113,15 @@
     overflow: hidden;
     background: var(--program-blue);
     color: #fff;
+}
+
+.program-journey.is-enhanced .program-journey__exit {
+    position: absolute;
+    inset: 0;
+    min-height: var(--program-step);
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity;
 }
 
 .program-journey__exit p {
