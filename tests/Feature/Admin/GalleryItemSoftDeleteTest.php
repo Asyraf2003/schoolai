@@ -125,8 +125,8 @@ it('matches replacement candidates only when type and normalized media are ident
 it('atomically restores an archived gallery item and archives its identical active replacement', function (): void {
     $archived = galleryItem([
         'title_id' => 'Galeri lama identik',
-        'type' => 'video',
-        'media_url' => 'https://www.youtube.com/embed/same-video',
+        'type' => 'photo',
+        'media_url' => '/storage/gallery/photos/same-photo.jpg',
         'sort_order' => 1,
         'is_published' => true,
     ]);
@@ -134,8 +134,8 @@ it('atomically restores an archived gallery item and archives its identical acti
 
     $replacement = galleryItem([
         'title_id' => 'Galeri aktif pengganti',
-        'type' => 'video',
-        'media_url' => 'https://www.youtube.com/embed/same-video/',
+        'type' => 'photo',
+        'media_url' => '/storage/gallery/photos/same-photo.jpg/',
         'sort_order' => 1,
         'is_published' => true,
     ]);
