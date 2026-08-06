@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders one white intro frame and six full-screen Program media frames', function (): void {
+it('renders one self-owned localized Program journey', function (): void {
     foreach (['id', 'en', 'ar'] as $locale) {
         app()->setLocale($locale);
 
@@ -15,32 +15,37 @@ it('renders one white intro frame and six full-screen Program media frames', fun
         $response
             ->assertOk()
             ->assertSee('id="program"', false)
+            ->assertSee('aria-labelledby="program-journey-title"', false)
             ->assertSee('data-program-intro-frame', false)
+            ->assertSee('data-program-intro-guide', false)
+            ->assertSee('data-program-title', false)
+            ->assertSee('data-program-description', false)
             ->assertSee('data-program-sticky', false)
             ->assertSee('data-program-frames', false)
+            ->assertSee('data-program-exit', false)
+            ->assertDontSee('data-program-origin', false)
+            ->assertDontSee('data-vision-program', false)
             ->assertDontSee('data-program-curtain', false)
-            ->assertDontSee('data-program-active-label', false)
-            ->assertDontSee('data-program-active-count', false);
+            ->assertDontSee('<figcaption', false);
 
         $content = $response->getContent();
         preg_match('/<section[^>]+id="program".*?<\/section>/s', $content, $section);
         preg_match_all('/\sdata-program-frame(?:\s|>)/', $section[0] ?? '', $frames);
+        preg_match_all('/\sdata-program-anchor=|class="program-journey__anchor"/', $section[0] ?? '', $anchors);
         preg_match_all('/\sdata-program-rail-item(?:\s|>)/', $section[0] ?? '', $railItems);
-        preg_match_all('/\sid="program-scroll-[1-6]"/', $section[0] ?? '', $anchors);
 
         expect(count($frames[0]))->toBe(6)
-            ->and(count($railItems[0]))->toBe(6)
             ->and(count($anchors[0]))->toBe(6)
-            ->and(substr_count($section[0] ?? '', 'data-program-intro-frame'))->toBe(1)
+            ->and(count($railItems[0]))->toBe(6)
             ->and(substr_count($section[0] ?? '', 'images.unsplash.com'))->toBe(6)
-            ->and($section[0] ?? '')->not->toContain('program-journey__meta')
-            ->and($section[0] ?? '')->not->toContain('data-program-label')
-            ->and($section[0] ?? '')->not->toContain('<figcaption>')
-            ->and($section[0] ?? '')->toContain('--program-anchor-step: 2');
+            ->and(substr_count($section[0] ?? '', 'href="#program-scroll-'))->toBe(6)
+            ->and(substr_count($content, 'id="program-journey-title"'))->toBe(1)
+            ->and($section[0] ?? '')->not->toContain('00 / 00')
+            ->and($section[0] ?? '')->not->toContain('<button');
     }
 });
 
-it('uses one seven-frame track and exact rail anchor geometry', function (): void {
+it('keeps Program media, copy, and rail under one local scroll owner', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
     $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
@@ -48,27 +53,27 @@ it('uses one seven-frame track and exact rail anchor geometry', function (): voi
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
 
     expect($controller)
-        ->toContain('geometry.trackPosition(current)')
-        ->toContain('geometry.titleTransform(current)')
-        ->not->toContain('curtain')
-        ->not->toContain('data-program-active-count')
-        ->not->toContain('padStart')
-        ->not->toContain('window.scrollTo')
+        ->toContain("root.querySelector('[data-program-title]')")
+        ->toContain("addEventListener('click', onRailClick)")
+        ->toContain("behavior: 'instant'")
+        ->toContain('visualScroll.sync(geometry.localPosition(index))')
+        ->not->toContain("document.querySelector('[data-program-origin]')")
+        ->not->toContain('handoffIn')
+        ->not->toContain('handoffOut')
         ->and($motion)
         ->toContain('lerp(current, target, .08)')
         ->not->toContain('snapTimer')
         ->not->toContain('projected')
         ->and($geometry)
-        ->toContain('(frameCount + 1) * step')
         ->toContain('frameCount * step')
-        ->toContain('current < metrics.step')
-        ->not->toContain('entryProgress')
+        ->toContain('(frameCount + 1) * step')
+        ->toContain('documentPosition')
+        ->toContain('localPosition')
         ->and($base)
-        ->toContain('program-frame--intro')
-        ->toContain('calc(var(--program-anchor-step) * var(--program-step))')
-        ->toContain('height: var(--program-track-height, 700dvh)')
-        ->not->toContain('figcaption')
+        ->toContain('.program-frame--intro')
+        ->not->toContain('.program-journey__curtain')
         ->and($hud)
-        ->not->toContain('program-journey__meta')
-        ->not->toContain('figcaption');
+        ->toContain('position: absolute')
+        ->toContain('.program-journey__intro-guide')
+        ->not->toContain('position: fixed');
 });

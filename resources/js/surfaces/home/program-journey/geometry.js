@@ -1,6 +1,6 @@
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
-export function createProgramGeometry(root, frameCount) {
+export function createProgramGeometry(root, hud, frameCount) {
   let origin = null;
   let titleMotion = { x: 0, y: 0, scale: 1 };
   let metrics = {
@@ -11,30 +11,30 @@ export function createProgramGeometry(root, frameCount) {
     travel: 0,
   };
 
-  function viewportRect(rect) {
+  function localRect(node, owner) {
+    const rect = node.getBoundingClientRect();
+    const ownerRect = owner.getBoundingClientRect();
     return {
-      top: rect.top / window.innerHeight,
-      left: rect.left / window.innerWidth,
-      width: rect.width / window.innerWidth,
-      height: rect.height / window.innerHeight,
-    };
-  }
-
-  function resolvedRect(rect) {
-    return {
-      top: rect.top * window.innerHeight,
-      left: rect.left * window.innerWidth,
-      width: rect.width * window.innerWidth,
-      height: rect.height * window.innerHeight,
+      top: rect.top - ownerRect.top,
+      left: rect.left - ownerRect.left,
+      width: rect.width,
+      height: rect.height,
     };
   }
 
   function applyDescriptionOrigin() {
     if (!origin) return;
-    const description = resolvedRect(origin.description);
-    root.style.setProperty('--program-copy-top', `${description.top}px`);
-    root.style.setProperty('--program-copy-left', `${description.left}px`);
-    root.style.setProperty('--program-copy-width', `${description.width}px`);
+    root.style.setProperty('--program-copy-top', `${origin.description.top}px`);
+    root.style.setProperty('--program-copy-left', `${origin.description.left}px`);
+    root.style.setProperty('--program-copy-width', `${origin.description.width}px`);
+  }
+
+  function rememberOrigin(introFrame, titleGuide, descriptionGuide) {
+    origin = {
+      title: localRect(titleGuide, introFrame),
+      description: localRect(descriptionGuide, introFrame),
+    };
+    applyDescriptionOrigin();
   }
 
   function measure() {
@@ -50,27 +50,14 @@ export function createProgramGeometry(root, frameCount) {
     applyDescriptionOrigin();
   }
 
-  function rememberOrigin(titleRect, descriptionRect) {
-    origin = {
-      title: viewportRect(titleRect),
-      description: viewportRect(descriptionRect),
-    };
-    applyDescriptionOrigin();
-  }
-
-  function hasOrigin() {
-    return origin !== null;
-  }
-
   function measureTitleMotion(title) {
     if (!origin || !title) return;
-    const source = resolvedRect(origin.title);
-    const target = title.getBoundingClientRect();
+    const target = localRect(title, hud);
     if (!target.width) return;
     titleMotion = {
-      x: source.left - target.left,
-      y: source.top - target.top,
-      scale: source.width / target.width,
+      x: origin.title.left - target.left,
+      y: origin.title.top - target.top,
+      scale: origin.title.width / target.width,
     };
   }
 
@@ -82,12 +69,9 @@ export function createProgramGeometry(root, frameCount) {
     return clamp(current, 0, metrics.trackTravel);
   }
 
-  function titleProgress(current) {
-    return clamp(current / metrics.step, 0, 1);
-  }
-
   function titleTransform(current) {
-    const inverse = 1 - titleProgress(current);
+    const progress = clamp(current / metrics.step, 0, 1);
+    const inverse = 1 - progress;
     const x = titleMotion.x * inverse;
     const y = titleMotion.y * inverse;
     const scale = 1 + (titleMotion.scale - 1) * inverse;
@@ -100,6 +84,14 @@ export function createProgramGeometry(root, frameCount) {
     return clamp(index, 0, frameCount - 1);
   }
 
+  function localPosition(index) {
+    return clamp((index + 1) * metrics.step, 0, metrics.trackTravel);
+  }
+
+  function documentPosition(index) {
+    return metrics.start + localPosition(index);
+  }
+
   function exitProgress(current) {
     return clamp(
       (current - metrics.trackTravel) / metrics.exitTravel,
@@ -109,14 +101,15 @@ export function createProgramGeometry(root, frameCount) {
   }
 
   return {
-    measure,
     rememberOrigin,
-    hasOrigin,
+    measure,
     measureTitleMotion,
     readTarget,
     trackPosition,
     titleTransform,
     programIndex,
+    localPosition,
+    documentPosition,
     exitProgress,
   };
 }

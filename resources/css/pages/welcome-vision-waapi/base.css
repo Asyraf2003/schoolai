@@ -7,8 +7,7 @@
 
 .vision-paper__pin,
 .vision-paper__track,
-.vision-paper__scene,
-.vision-paper__program {
+.vision-paper__scene {
     position: relative;
 }
 
@@ -78,21 +77,10 @@
     font-weight: 700;
 }
 
-.vision-paper__mark--blue {
-    --vision-mark-color: #0369a1;
-}
-
-.vision-paper__mark--orange {
-    --vision-mark-color: #c2410c;
-}
-
-.vision-paper__mark--green {
-    --vision-mark-color: #15803d;
-}
-
-.vision-paper__mark--purple {
-    --vision-mark-color: #7e22ce;
-}
+.vision-paper__mark--blue { --vision-mark-color: #0369a1; }
+.vision-paper__mark--orange { --vision-mark-color: #c2410c; }
+.vision-paper__mark--green { --vision-mark-color: #15803d; }
+.vision-paper__mark--purple { --vision-mark-color: #7e22ce; }
 
 .vision-paper__square {
     position: relative;
@@ -128,57 +116,17 @@
     transform: translate3d(0, 0, 0);
 }
 
-.vision-paper__program {
-    min-height: 100svh;
-    display: grid;
-    align-content: center;
-    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 8vw, 8rem);
-    background: #fff;
-}
-
-.vision-paper__program-accent {
-    display: none;
-}
-
-.vision-paper__program h2 {
-    max-width: 13ch;
-    margin: 0;
-    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(3.2rem, 7.5vw, 8rem);
-    font-weight: 500;
-    line-height: 0.96;
-    letter-spacing: -0.055em;
-    overflow-wrap: anywhere;
-}
-
-.vision-paper__program p {
-    max-width: 34rem;
-    margin: 3rem 0 0 auto;
-    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(1rem, 1.4vw, 1.35rem);
-    font-weight: 400;
-    line-height: 1.35;
-}
-
-html[dir="rtl"] .vision-paper__copy,
-html[dir="rtl"] .vision-paper__program {
+html[dir="rtl"] .vision-paper__copy {
     direction: rtl;
 }
 
-html[dir="rtl"] .vision-paper__copy--mission,
-html[dir="rtl"] .vision-paper__program {
+html[dir="rtl"] .vision-paper__copy--mission {
     text-align: right;
 }
 
 html[dir="rtl"] .vision-paper__kicker,
 html[dir="rtl"] .vision-paper__vision-text,
-html[dir="rtl"] .vision-paper__mission-text,
-html[dir="rtl"] .vision-paper__program h2,
-html[dir="rtl"] .vision-paper__program p {
+html[dir="rtl"] .vision-paper__mission-text {
     font-family: "Cairo", Arial, sans-serif;
     letter-spacing: normal;
-}
-
-html[dir="rtl"] .vision-paper__program p {
-    margin-inline: 0 auto;
 }

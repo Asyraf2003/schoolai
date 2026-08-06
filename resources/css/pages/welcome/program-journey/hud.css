@@ -1,55 +1,70 @@
-.program-journey.is-enhanced .program-journey__hud {
+.program-journey__hud {
     --program-copy-color: #111;
     --program-copy-shadow: none;
-    position: fixed;
-    inset: 0;
+    position: absolute;
+    inset: 0 0 auto;
     z-index: 20;
     display: block;
-    height: var(--program-step);
+    width: 100%;
+    height: var(--program-step, 100dvh);
     color: var(--program-copy-color);
-    opacity: 0;
+    pointer-events: none;
+}
+.program-journey__intro-copy,
+.program-journey__intro-guide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1.5rem, 4svh, 3rem);
+    padding: 12svh 8vw 10svh calc((100svh * 2 / 4 * 11 / 8 / 3) + 5vw);
+    color: #111;
+    text-align: left;
+}
+.program-journey__intro-guide {
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 180ms linear, visibility 0s linear 180ms;
-    will-change: opacity;
 }
-
-.program-journey.is-enhanced.is-program-visible .program-journey__hud {
-    --program-copy-color: #fff;
-    --program-copy-shadow: 0 2px 24px rgb(0 0 0 / .28);
+.program-journey__intro-guide h2,
+.program-journey__intro-copy h2 {
+    width: min(68vw, 86rem);
+    max-width: none;
+    margin: 0;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(4rem, 6.8vw, 8rem);
+    font-weight: 500;
+    line-height: .96;
+    letter-spacing: -.055em;
+    overflow-wrap: anywhere;
 }
-
-.program-journey.is-enhanced.has-handoff .program-journey__hud {
-    visibility: visible;
-    transition-delay: 0s;
+.program-journey__intro-guide p,
+.program-journey__copy-slot {
+    width: min(34vw, 32rem);
 }
-
-.program-journey.is-enhanced .program-frame__fallback {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+.program-journey__intro-guide p,
+.program-journey__copy-slot [data-program-description] {
+    margin: 0;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(.95rem, 1.25vw, 1.3rem);
+    font-weight: 400;
+    line-height: 1.35;
 }
-
-.program-journey__title-slot,
-.program-journey__copy-slot,
+.program-journey.is-enhanced .program-journey__intro-copy {
+    display: contents;
+}
+.program-journey.is-enhanced .program-journey__title-slot,
+.program-journey.is-enhanced .program-journey__copy-slot,
 .program-journey__rail {
     position: absolute;
     z-index: 2;
 }
-
-.program-journey__title-slot {
+.program-journey.is-enhanced .program-journey__title-slot {
     inset-block-start: calc(var(--nav-h, 76px) + clamp(52px, 8vh, 92px));
     inset-inline-start: clamp(22px, 4vw, 72px);
     width: min(46vw, 760px);
 }
-
-.program-journey__title-slot #vision-program-title {
+.program-journey.is-enhanced .program-journey__title-slot h2 {
     max-width: 13ch;
     margin: 0;
     color: inherit;
@@ -65,31 +80,54 @@
     transform-origin: left top;
     will-change: transform;
 }
-
-.program-journey__copy-slot {
+.program-journey.is-enhanced .program-journey__copy-slot {
     top: var(--program-copy-top, 62vh);
     left: var(--program-copy-left, 56vw);
     width: var(--program-copy-width, min(34rem, 36vw));
     max-width: calc(100vw - 40px);
 }
-
-.program-journey__copy-slot [data-program-origin-description] {
+.program-journey.is-enhanced .program-journey__copy-slot [data-program-description] {
     width: 100%;
-    margin: 0;
     color: inherit;
-    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(1rem, 1.4vw, 1.35rem);
-    font-weight: 400;
-    line-height: 1.35;
     text-shadow: var(--program-copy-shadow);
 }
-
+.program-journey.is-program-visible .program-journey__hud {
+    --program-copy-color: #fff;
+    --program-copy-shadow: 0 2px 24px rgb(0 0 0 / .28);
+}
 .program-journey__link {
     margin-top: 22px;
     border-bottom: 1px solid currentColor;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.program-journey.is-program-visible .program-journey__link {
+    opacity: 1;
+    visibility: visible;
     pointer-events: auto;
 }
-
+.program-journey__rail {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.program-journey.is-program-visible .program-journey__rail {
+    visibility: visible;
+    pointer-events: auto;
+}
+.program-journey.is-enhanced .program-frame__fallback {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 .program-journey__exit {
     position: relative;
     z-index: 30;
@@ -101,7 +139,6 @@
     background: var(--program-blue);
     color: #fff;
 }
-
 .program-journey.is-enhanced .program-journey__exit {
     position: absolute;
     inset: 0;
@@ -110,7 +147,6 @@
     pointer-events: none;
     will-change: opacity;
 }
-
 .program-journey__exit p {
     position: relative;
     z-index: 2;
@@ -118,7 +154,6 @@
     font-size: clamp(1rem, 2vw, 1.8rem);
     font-weight: 750;
 }
-
 .program-journey__exit-lines {
     position: absolute;
     inset: 0;
@@ -126,7 +161,6 @@
     align-content: space-evenly;
     padding-block: 8vh;
 }
-
 .program-journey__exit-lines span {
     display: block;
     width: 100%;
@@ -135,7 +169,20 @@
     transform: scaleX(0);
     transform-origin: left center;
 }
-
 .program-journey__exit-lines span:nth-child(even) {
     transform-origin: right center;
+}
+html[dir="rtl"] .program-journey__intro-copy,
+html[dir="rtl"] .program-journey__intro-guide {
+    direction: rtl;
+    text-align: right;
+    padding: 12svh calc((100svh * 2 / 4 * 11 / 8 / 3) + 5vw) 10svh 8vw;
+}
+html[dir="rtl"] .program-journey__intro-copy h2,
+html[dir="rtl"] .program-journey__intro-guide h2,
+html[dir="rtl"] .program-journey__intro-guide p,
+html[dir="rtl"] .program-journey__title-slot h2,
+html[dir="rtl"] .program-journey__copy-slot [data-program-description] {
+    font-family: "Cairo", Arial, sans-serif;
+    letter-spacing: normal;
 }

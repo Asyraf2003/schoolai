@@ -1,5 +1,9 @@
 .program-journey__rail {
     color: inherit;
+    pointer-events: none;
+}
+
+.program-journey.is-program-visible .program-journey__rail {
     pointer-events: auto;
 }
 

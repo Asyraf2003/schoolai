@@ -28,10 +28,6 @@
     position: relative;
 }
 
-.program-journey__hud {
-    display: none;
-}
-
 .program-journey.is-enhanced {
     height: calc(var(--program-step) + var(--program-scroll-distance));
 }
@@ -72,12 +68,8 @@
 }
 
 .program-frame--intro {
-    display: none;
-    background: #fff;
-}
-
-.program-journey.is-enhanced .program-frame--intro {
     display: block;
+    background: #fff;
 }
 
 .program-journey.is-enhanced .program-frame {

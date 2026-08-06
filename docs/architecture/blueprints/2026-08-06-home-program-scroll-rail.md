@@ -1,111 +1,100 @@
-# Homepage Program Single Seven-Frame Track Blueprint
+# Homepage Program Independent Sticky Track Blueprint
 
-State: `OWNER_CORRECTED / IMPLEMENTED_SOURCE`
-Date: 2026-08-06
-Surface: homepage Program `#program`
-Source baseline: `3865b248093da2d379d4e6b666e1a6caf13daec6`
-Batch: `HOME-PROGRAM-018-SINGLE-SEVEN-FRAME-TRACK`
+State: `OWNER_ACCEPTED / IMPLEMENTED_SOURCE`
+Date: 2026-08-07
+Surface: homepage Visi/Misi handoff and Program `#program`
+Source baseline: `719a3b5114660767dc7268a325b9465622754132`
+Batch: `HOME-PROGRAM-019-SEPARATE-OWNERS`
 
-## Owner goal
+## OWNER GOAL
 
-Program must use one vertical visual track. The plain white Program opening is
-media frame zero, followed by six related full-viewport images. Only the track
-moves. The section title, description, action, and clickable six-item rail stay
-independent from that media movement.
+Keep every intended animation while separating Program from Visi/Misi. Program
+must own its title, description, white opening canvas, six media panels, link,
+and clickable rail. The title moves once toward the logical corner. The
+description remains fixed. Only the white/media track moves vertically.
 
-The original section title moves smoothly to the Program corner during the first
-white-to-image transition. After reaching the corner, only title text changes.
-The description never changes coordinate; only its text changes.
+## FACT AND ROOT CAUSE
 
-No category/eyebrow text or `00 / 00` counter is allowed above the title.
+- The previous source placed Program intro copy inside the Visi/Misi horizontal
+  track and then moved those nodes into a fixed Program HUD at runtime.
+- Program also contained a second white intro frame, creating two Program intro
+  canvases under different owners.
+- The HUD used `position: fixed`, so copy was attached to the browser viewport
+  rather than the Program sticky viewport.
+- Fragment links moved native document scroll while the visual lerp continued
+  from its old current value, leaving the viewport between media frames.
+- Removing the Program panel from Visi/Misi changes its horizontal track width;
+  the former fixed `430svh` height therefore cannot preserve motion proportion.
 
-## Source facts and rejected implementation
+## REQUIRED ARCHITECTURE
 
-The rejected source used three independent visual owners:
+### Visi/Misi owner
 
-- a six-image track;
-- a fixed white curtain with separate `entryProgress`;
-- a fixed HUD activated by threshold.
+- Contains only vision copy, mission copy, and its image composition.
+- Retains horizontal WAAPI track and image-stack animation.
+- Calculates vertical scroll distance from actual horizontal overflow:
+  `viewport height + (track width - viewport width)`.
+- Contains no Program title, description, selectors, or data attributes.
 
-It also placed rail anchors by percentage of total section height. Consequently,
-white was not a media frame, description coordinates were captured while the
-previous section was moving, text became white while the curtain was still
-white, and rail item 2 could resolve to an intermediate or unrelated frame.
+### Program owner
 
-That model is removed rather than patched with more thresholds.
+- Contains one sticky viewport.
+- Contains one vertical media track with exactly seven full-screen frames:
+  white intro plus six program images.
+- Contains one separate absolute copy layer inside the sticky viewport.
+- Owns localized Program intro title and description directly in its Blade.
+- Uses an invisible intro guide only to preserve the existing intro geometry
+  across viewport sizes; the guide adds no visible content or animation.
+- Moves the title from the intro guide position to the corner during frame zero.
+- Keeps the description at the intro guide position for all Program frames.
+- Changes title and description text with opacity/light blur only.
+- Keeps the link and rail hidden during the white intro, then reveals them on
+  the first full media frame.
 
-## Implemented ownership
+### Rail transaction
 
-| Concern | Owner |
-|---|---|
-| white frame plus six semantic media frames | Program Blade partial |
-| exact viewport distances and active frame | `geometry.js` |
-| handoff, copy swapping, track and exit render | `controller.js` |
-| native-target `0.08` visual smoothing | existing `motion.js` |
-| sticky viewport, full-screen frames, fixed HUD | Program CSS modules |
-| durable source contracts | focused Program feature test |
+For program index `i`:
 
-## Track geometry
+- local visual position is `(i + 1) * viewport height`;
+- document position is `Program start + local visual position`;
+- click sets document scroll and visual current to the same value;
+- URL hash is updated without triggering a second browser anchor scroll;
+- no snap timer, wheel interception, projected landing, or automatic snapping
+  is introduced.
 
-```text
-frame 0 = plain white Program opening
-frame 1 = Program image 1
-frame 2 = Program image 2
-frame 3 = Program image 3
-frame 4 = Program image 4
-frame 5 = Program image 5
-frame 6 = Program image 6
-```
+## RESPONSIVE, LOCALE, AND FALLBACK
 
-Each frame is exactly one measured `window.innerHeight`. The complete media track
-height is `(programCount + 1) * viewportHeight`. Its maximum travel is
-`programCount * viewportHeight`, leaving Program image 6 full-screen before the
-existing Values exit begins.
+- ID/EN remain LTR and AR uses logical mirrored title/rail placement.
+- Intro guide and visible intro copy share the same responsive typography and
+  layout rules.
+- Compact tiers retain their existing centered title behavior and rail
+  visibility rules.
+- Without JS, Program copy overlays only the white intro frame and each media
+  article retains its semantic fallback title, description, and link.
+- Reduced motion maps visual current directly to native target.
 
-Rail item `n` targets `n * viewportHeight` from Program start. There is no
-percentage approximation and no separate entry distance outside the media track.
+## FORBIDDEN
 
-## Copy behavior
+- Program DOM inside `vision-mission.blade.php`
+- `data-program-origin`
+- moving Program nodes between sections
+- browser-viewport fixed Program HUD
+- a separate white curtain
+- category metadata or `00 / 00` counters
+- percentage-based rail target positions
+- visual changes outside Visi/Misi ownership cleanup and Program correction
 
-Before Program starts, the controller records the original title and description
-viewport rectangles while they are still visible in Visi/Misi. At Program start:
+## PROOF
 
-- the same title node moves into the final title slot;
-- inverse geometry keeps it visually at its recorded origin;
-- first-frame progress removes that inverse transform, moving only the title to
-  its final corner;
-- the same description node is placed at its recorded top, left, and width;
-- description position receives no scroll-linked transform;
-- after the first image is effectively full-screen, title and description text
-  swap to Program 1, then follow later active frames.
+Available source gates:
 
-## Rail and scroll behavior
-
-The rail remains ordinary semantic anchor navigation. Each link points to a real
-absolute anchor at the corresponding exact viewport step. Native scroll remains
-the document owner. Program does not add snap settling, projected landing,
-wheel interception, or `window.scrollTo`.
-
-The visual track follows native target with the existing Gallery-style `0.08`
-lerp. Forward, reverse, interrupted input, and rail navigation use the same
-single current value.
-
-## Explicit non-goals
-
-This correction does not redesign typography, invent new metadata, add counters,
-add category labels, change Program content, modify Visi/Misi, replace images,
-change Values, or introduce a new animation style.
-
-## Proof gates
-
-Source checks available before publication:
-
-- JS syntax for controller and geometry
-- PHP syntax for focused test
-- balanced CSS braces
+- JavaScript syntax
+- focused PHP syntax
+- CSS brace balance
 - changed source files at or below 200 lines
-- absence of rejected curtain/metadata/percentage geometry tokens
-- atomic fast-forward publication and changed-path verification
+- absence of cross-section Program ownership and fixed HUD
+- one intro plus six media frames
+- exact document/visual rail targets
+- Visi/Misi height based on real horizontal travel
 
-Browser and command gates remain `BLOCKED_BY_MISSING_EVIDENCE` until run from a
-checkout with the application and browser matrix.
+Runtime/browser/build proof remains `BLOCKED_BY_MISSING_EVIDENCE` until run.

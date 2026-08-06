@@ -1,30 +1,51 @@
 @media (max-width: 1180px) {
-    .program-journey__meta {
-        inset-block-start: calc(var(--nav-h, 72px) + 14px);
-        inset-inline: 18px;
+    .program-journey__intro-copy,
+    .program-journey__intro-guide {
         justify-content: center;
+        gap: clamp(1.25rem, 2.5svh, 2rem);
+        padding: calc(var(--nav-h, 72px) + 5svh) clamp(1.25rem, 8vw, 5rem) 6svh;
+        text-align: center;
     }
 
-    .program-journey__title-slot {
+    .program-journey__intro-guide h2,
+    .program-journey__intro-copy h2 {
+        width: 100%;
+        font-size: clamp(3.2rem, 7.5vw, 8rem);
+    }
+
+    .program-journey__intro-guide p,
+    .program-journey__copy-slot {
+        width: min(100%, 34rem);
+        margin-inline: auto;
+    }
+
+    .program-journey.is-enhanced .program-journey__title-slot {
         inset-block-start: calc(var(--nav-h, 72px) + 48px);
         inset-inline: 18px;
         width: auto;
         text-align: center;
     }
 
-    .program-journey__title-slot #vision-program-title {
+    .program-journey.is-enhanced .program-journey__title-slot h2 {
         max-width: 16ch;
         margin-inline: auto;
         font-size: clamp(2rem, 7.6vw, 4.8rem);
+        transform-origin: center top;
     }
 
     .program-journey__rail {
         display: none;
     }
+
+    html[dir="rtl"] .program-journey__intro-copy,
+    html[dir="rtl"] .program-journey__intro-guide {
+        padding: calc(var(--nav-h, 72px) + 5svh) clamp(1.25rem, 8vw, 5rem) 6svh;
+        text-align: center;
+    }
 }
 
 @media (min-width: 1024px) and (max-width: 1180px) {
-    .program-journey__title-slot {
+    .program-journey.is-enhanced .program-journey__title-slot {
         inset-inline: 17vw;
     }
 
@@ -34,12 +55,16 @@
         display: block;
         width: 150px;
         transform: translateY(-50%);
-        pointer-events: auto;
     }
 }
 
 @media (max-width: 639px) {
-    .program-journey__title-slot #vision-program-title {
+    .program-journey__intro-guide h2,
+    .program-journey__intro-copy h2 {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .program-journey.is-enhanced .program-journey__title-slot h2 {
         font-size: clamp(1.85rem, 9vw, 3rem);
     }
 

@@ -1,5 +1,19 @@
 @php
   $programItems = collect($featuredPrograms['items'] ?? [])->values();
+  $programCopy = match (app()->getLocale()) {
+    'ar' => [
+      'title' => 'برامج مدرسية للنمو والتعلّم وبناء الشخصية',
+      'description' => 'تجارب تعليمية مترابطة تجمع بين الإيمان والعلم والإبداع والاستقلالية والحياة اليومية.',
+    ],
+    'en' => [
+      'title' => 'School programs for growth, learning, and character',
+      'description' => 'Connected learning experiences that bring together faith, knowledge, creativity, independence, and everyday life.',
+    ],
+    default => [
+      'title' => 'Program sekolah untuk tumbuh, belajar, dan berkarakter',
+      'description' => 'Rangkaian pengalaman belajar yang menghubungkan iman, ilmu, kreativitas, kemandirian, dan kehidupan sehari-hari.',
+    ],
+  };
   $programMedia = [
     ['url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=2400&q=82', 'position' => 'center 42%'],
     ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2400&q=82', 'position' => 'center 46%'],
@@ -9,18 +23,9 @@
     ['url' => 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=2400&q=82', 'position' => 'center 50%'],
   ];
   $programUi = match (app()->getLocale()) {
-    'en' => [
-      'more' => 'Learn more', 'rail' => 'Program journey',
-      'next' => 'Continue to our values',
-    ],
-    'ar' => [
-      'more' => 'اكتشف المزيد', 'rail' => 'رحلة البرامج',
-      'next' => 'تابع إلى قيمنا',
-    ],
-    default => [
-      'more' => 'Selengkapnya', 'rail' => 'Perjalanan program',
-      'next' => 'Lanjut ke nilai-nilai kami',
-    ],
+    'en' => ['more' => 'Learn more', 'rail' => 'Program journey', 'next' => 'Continue to our values'],
+    'ar' => ['more' => 'اكتشف المزيد', 'rail' => 'رحلة البرامج', 'next' => 'تابع إلى قيمنا'],
+    default => ['more' => 'Selengkapnya', 'rail' => 'Perjalanan program', 'next' => 'Lanjut ke nilai-nilai kami'],
   };
   $programLink = route('portal.login');
 @endphp
@@ -28,7 +33,7 @@
 <section
   class="program-journey section"
   id="program"
-  aria-labelledby="vision-program-title"
+  aria-labelledby="program-journey-title"
   data-program-journey
   data-program-total="{{ $programItems->count() }}"
 >
@@ -44,7 +49,12 @@
   <div class="program-journey__sticky" data-program-sticky>
     <div class="program-journey__viewport" data-program-viewport>
       <div class="program-journey__frames" data-program-frames>
-        <div class="program-frame program-frame--intro" data-program-intro-frame aria-hidden="true"></div>
+        <div class="program-frame program-frame--intro" data-program-intro-frame aria-hidden="true">
+          <div class="program-journey__intro-guide" data-program-intro-guide>
+            <h2 data-program-title-guide>{{ $programCopy['title'] }}</h2>
+            <p data-program-description-guide>{{ $programCopy['description'] }}</p>
+          </div>
+        </div>
 
         @forelse ($programItems as $program)
           @php
@@ -88,18 +98,22 @@
     </div>
 
     <div class="program-journey__hud" data-program-hud>
-      <div class="program-journey__title-slot" data-program-title-slot></div>
-      <div class="program-journey__copy-slot" data-program-copy-slot>
-        <div data-program-description-slot></div>
-        <a
-          class="program-journey__link"
-          href="{{ $programLink }}"
-          data-program-active-link
-          aria-label="{{ $programUi['more'] }}"
-        >
-          <span data-program-active-link-label>{{ $programUi['more'] }}</span>
-          <span aria-hidden="true">↗</span>
-        </a>
+      <div class="program-journey__intro-copy" data-program-intro-copy>
+        <div class="program-journey__title-slot" data-program-title-slot>
+          <h2 id="program-journey-title" data-program-title>{{ $programCopy['title'] }}</h2>
+        </div>
+        <div class="program-journey__copy-slot" data-program-copy-slot>
+          <p data-program-description>{{ $programCopy['description'] }}</p>
+          <a
+            class="program-journey__link"
+            href="{{ $programLink }}"
+            data-program-active-link
+            aria-label="{{ $programUi['more'] }}"
+          >
+            <span data-program-active-link-label>{{ $programUi['more'] }}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
 
       <nav class="program-journey__rail" data-program-rail aria-label="{{ $programUi['rail'] }}">

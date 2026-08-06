@@ -11,20 +11,6 @@
     'en' => 'MISSION',
     default => 'MISI',
   };
-  $programCopy = match ($locale) {
-    'ar' => [
-      'title' => 'برامج مدرسية للنمو والتعلّم وبناء الشخصية',
-      'description' => 'تجارب تعليمية مترابطة تجمع بين الإيمان والعلم والإبداع والاستقلالية والحياة اليومية.',
-    ],
-    'en' => [
-      'title' => 'School programs for growth, learning, and character',
-      'description' => 'Connected learning experiences that bring together faith, knowledge, creativity, independence, and everyday life.',
-    ],
-    default => [
-      'title' => 'Program sekolah untuk tumbuh, belajar, dan berkarakter',
-      'description' => 'Rangkaian pengalaman belajar yang menghubungkan iman, ilmu, kreativitas, kemandirian, dan kehidupan sehari-hari.',
-    ],
-  };
   $schoolImages = [
     asset('media/home/vision-paper-01.webp'),
     asset('media/home/vision-paper-02.webp'),
@@ -133,22 +119,6 @@
           </div>
         </figure>
       </div>
-
-      <section
-        class="vision-paper__program"
-        aria-labelledby="vision-program-title"
-        data-vision-program
-        data-program-origin
-      >
-        <div data-program-title-home>
-          <h2 id="vision-program-title" data-program-origin-title>
-            {{ $programCopy['title'] }}
-          </h2>
-        </div>
-        <div data-program-description-home>
-          <p data-program-origin-description>{{ $programCopy['description'] }}</p>
-        </div>
-      </section>
     </div>
   </div>
 </section>

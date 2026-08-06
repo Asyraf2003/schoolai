@@ -6,27 +6,20 @@
         transform: translateY(-50%);
     }
 
-    html[dir="rtl"] .program-journey__meta,
-    html[dir="rtl"] .program-journey__title-slot {
+    html[dir="rtl"] .program-journey.is-enhanced .program-journey__title-slot {
         inset-inline-start: auto;
         inset-inline-end: clamp(22px, 4vw, 72px);
         text-align: right;
     }
 
-    .program-journey__copy-slot [data-program-origin-description] {
+    .program-journey.is-enhanced .program-journey__copy-slot [data-program-description] {
         font-size: clamp(.95rem, 1.25vw, 1.3rem);
-    }
-
-    html[dir="rtl"] .program-journey__title-slot #vision-program-title,
-    html[dir="rtl"] .program-journey__copy-slot [data-program-origin-description] {
-        font-family: "Cairo", Arial, sans-serif;
-        letter-spacing: normal;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .program-journey__rail li i,
-    .program-journey__rail li span {
+    .program-journey__rail a i,
+    .program-journey__rail a span {
         transition-duration: .01ms !important;
     }
 }

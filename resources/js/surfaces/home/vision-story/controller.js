@@ -24,14 +24,13 @@ export function mountVisionStory() {
     let lastFrameTime = performance.now();
 
     function syncStoryHeight() {
-        if (!track || wide.matches) {
-            root.style.removeProperty('height');
+        if (!track) return;
+        if (wide.matches) {
+            const horizontalTravel = Math.max(1, track.scrollWidth - window.innerWidth);
+            root.style.height = `${window.innerHeight + horizontalTravel}px`;
             return;
         }
-        root.style.height = `${Math.max(
-            track.scrollHeight,
-            window.innerHeight + 1,
-        )}px`;
+        root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
     }
 
     function updateProgressTarget() {
@@ -82,9 +81,7 @@ export function mountVisionStory() {
     }
 
     function rebuildTimeline() {
-        if (!prepared || destroyed || !root.classList.contains('is-enhanced')) {
-            return;
-        }
+        if (!prepared || destroyed || !root.classList.contains('is-enhanced')) return;
         if (timeline) timeline.destroy();
         timeline = null;
         measure();

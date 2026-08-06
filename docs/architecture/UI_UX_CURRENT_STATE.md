@@ -1,66 +1,67 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
 Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
-Updated: 2026-08-06
+Updated: 2026-08-07
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-018-SINGLE-SEVEN-FRAME-TRACK`
-Source baseline: `3865b248093da2d379d4e6b666e1a6caf13daec6`
+Active batch: `HOME-PROGRAM-019-SEPARATE-OWNERS`
+Source baseline: `719a3b5114660767dc7268a325b9465622754132`
 Active blueprint: `blueprints/2026-08-06-home-program-scroll-rail.md`
 
-## Owner correction implemented in source
+## Implemented owner correction
 
-- Removed the unrequested Program eyebrow, category label, and `00 / 00` counter
-  above the title.
-- Removed the separate fixed white curtain. White is now frame zero in the same
-  vertical track as the six Program images.
-- The track contains exactly seven full-viewport frames: one plain white frame
-  followed by six Program media frames. One Gallery-style visual current moves
-  the complete track.
-- The original title and description remain the same nodes. Their final visible
-  Visi/Misi viewport coordinates are captured before Program starts.
-- Only the title moves from its original coordinate to the Program corner during
-  the white-to-first-image travel. The description remains at its captured
-  coordinate and only its text changes.
-- Program rail links remain clickable. Each hash anchor is positioned at the
-  exact integer viewport step for its related image, so Program 2 resolves to
-  frame 2 instead of a percentage-derived intermediate position.
-- HUD title, description, link, and rail remain outside the moving media track.
-- Program keeps native document scrolling as target and Gallery-style `0.08`
-  visual lerp. No snap timer, projected landing, or Program `window.scrollTo`
-  was introduced.
+- Visi/Misi now owns only its vision, mission, and image story.
+- Program title and description were removed from the Visi/Misi Blade and moved
+  into the Program Blade.
+- Program no longer queries, captures, reparents, or restores DOM nodes from
+  Visi/Misi.
+- The Program opening white canvas and six image panels remain one vertical
+  seven-frame track with no gaps, margins, or overlay curtain.
+- Program copy is a separate absolute layer inside the Program sticky viewport.
+  It is not fixed to the browser viewport.
+- The title starts at the Program intro layout and moves to its corner during
+  the first frame travel. The description keeps the intro coordinates while
+  only its text changes.
+- Rail clicks use one exact frame transaction: document scroll and visual
+  current are both set to `(index + 1) * viewport height`.
+- Native wheel/touch scroll retains the Gallery-style `0.08` visual lerp.
+- Visi/Misi keeps its horizontal WAAPI animation. Its scroll height now derives
+  from real horizontal travel rather than the removed Program panel and the
+  former fixed `430svh` value.
+- Values and all unrelated homepage sections remain unchanged.
 
 ## Changed owners
 
-- `resources/views/home/sections/featured-programs.blade.php`
-- `resources/css/pages/welcome/program-journey/{base,hud}.css`
+- `resources/views/home/sections/{vision-mission,featured-programs}.blade.php`
+- `resources/css/pages/welcome/program-journey/{base,hud,rail,compact,wide}.css`
+- `resources/css/pages/welcome-vision-waapi/{base,compact,enhanced,responsive}.css`
 - `resources/js/surfaces/home/program-journey/{controller,geometry}.js`
-- `tests/Feature/HomeProgramJourneyTest.php`
+- `resources/js/surfaces/home/vision-story/controller.js`
+- focused Program and Visi/Misi tests
 - active blueprint and this ledger
-
-Protected surfaces remain unchanged: Visi/Misi source and motion, Values,
-Gallery, Articles, About, Testimonial, header, and unrelated homepage sections.
 
 ## Source proof
 
-- Controller and geometry pass `node --check` on staged source.
-- Focused PHP test passes `php -l` on staged source.
+- Changed JavaScript passes `node --check` on staged source.
+- Focused PHP tests pass `php -l` on staged source.
 - Changed CSS braces are balanced.
 - Every changed source file remains at or below 200 lines.
-- Staged Program source contains no curtain, visible category/counter metadata,
-  `entryProgress`, Program `window.scrollTo`, snap timer, or projected landing.
-- Focused contracts require one white intro frame, six Program media frames, six
-  exact-step rail anchors, one seven-frame track, and no Program metadata row.
+- Program source contains no `data-program-origin`, Visi/Misi reparenting,
+  `handoffIn`, `handoffOut`, fixed HUD, white curtain, metadata counter, or
+  percentage rail anchors.
+- Program source contains one intro frame, six media frames, exact rail frame
+  positions, local Program title/description ownership, and `0.08` lerp.
 
 ## Blocked proof
 
-The GitHub connector cannot run the local browser/runtime matrix. These remain
-`BLOCKED_BY_MISSING_EVIDENCE` until checked from a working checkout:
+The GitHub connector cannot render the local browser. The following remain
+`BLOCKED_BY_MISSING_EVIDENCE` until actually run:
 
 - `git diff --check`
 - `npm run check:structure`
 - `npm run build`
-- `php artisan test`
-- Chromium/WebKit visual review at all six responsive tiers and ID/EN/AR
-- slow, fast, reverse, interrupted, rail-click, resize, BFCache, reduced-motion,
-  short-height, zoom, failed-image, PageSpeed, and CWV proof
+- full `php artisan test`
+- Chromium/WebKit forward, reverse, interrupted, rail-click, responsive,
+  locale, RTL, reduced-motion, resize, short-height, zoom, BFCache,
+  external-image failure, PageSpeed, and CWV matrix
+- owner review of the rendered Visi/Misi → Program → Values continuity
