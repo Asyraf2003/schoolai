@@ -4,110 +4,121 @@ document.addEventListener('DOMContentLoaded', function () {
   var showcase = document.querySelector('[data-program-showcase]');
   if (!showcase) return;
 
-  var programCards = Array.prototype.slice.call(
-    showcase.querySelectorAll('[data-featured-program-card]')
-  );
+  var cards = Array.prototype.slice.call(showcase.querySelectorAll('[data-featured-program-card]'));
   var stage = showcase.querySelector('[data-program-stage]');
-  var stageVisual = showcase.querySelector('[data-program-stage-visual]');
-  var stageContent = showcase.querySelector('[data-program-stage-content]');
+  var visual = showcase.querySelector('[data-program-stage-visual]');
+  var content = showcase.querySelector('[data-program-stage-content]');
   var stageIndex = showcase.querySelector('[data-program-stage-index]');
   var stageCode = showcase.querySelector('[data-program-stage-code]');
   var stageLabel = showcase.querySelector('[data-program-stage-label]');
   var stageTitle = showcase.querySelector('[data-program-stage-title]');
   var stageSummary = showcase.querySelector('[data-program-stage-summary]');
   var stageDescription = showcase.querySelector('[data-program-stage-description]');
-  var reduceMotion = window.matchMedia
-    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var contentAnimation = null;
-  var visualAnimation = null;
+  var stageImage = showcase.querySelector('[data-program-stage-image]');
+  var stageSecondary = showcase.querySelector('[data-program-stage-secondary]');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var desktop = window.matchMedia('(min-width: 1181px)');
+  var observer = null;
   var pointerFrame = null;
+  var scrollFrame = null;
+  var activeCard = null;
+  var animations = [];
 
-  if (!programCards.length || !stage) return;
+  if (!cards.length || !stage) return;
 
   function replaceText(node, value) {
     if (node) node.textContent = value || '';
   }
 
-  function animateStage() {
-    if (reduceMotion || !stageContent || !stageVisual || !stageContent.animate) return;
+  function animateNodes() {
+    if (reduceMotion || !Element.prototype.animate) return;
+    animations.forEach(function (animation) { animation.cancel(); });
+    animations = [];
 
-    if (contentAnimation) contentAnimation.cancel();
-    if (visualAnimation) visualAnimation.cancel();
-
-    contentAnimation = stageContent.animate(
-      [
-        { opacity: 0.38, transform: 'translateY(16px)' },
-        { opacity: 1, transform: 'translateY(0)' },
-      ],
-      { duration: 360, easing: 'cubic-bezier(.22,.8,.2,1)' }
-    );
-
-    visualAnimation = stageVisual.animate(
-      [
-        { opacity: 0.62, transform: 'scale(.96)' },
-        { opacity: 1, transform: 'scale(1)' },
-      ],
-      { duration: 480, easing: 'cubic-bezier(.22,.8,.2,1)' }
-    );
+    if (content) {
+      animations.push(content.animate(
+        [{ opacity: 0.25, transform: 'translateY(22px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { duration: 460, easing: 'cubic-bezier(.2,.8,.2,1)' }
+      ));
+    }
+    if (visual) {
+      animations.push(visual.animate(
+        [{ opacity: 0.58, transform: 'scale(.985)' }, { opacity: 1, transform: 'scale(1)' }],
+        { duration: 620, easing: 'cubic-bezier(.2,.8,.2,1)' }
+      ));
+    }
   }
 
-  function activateProgramCard(activeCard, shouldFocus) {
-    programCards.forEach(function (card) {
-      var isActive = card === activeCard;
-      card.classList.toggle('is-active', isActive);
-      card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    });
-
-    stage.style.setProperty('--program-accent', activeCard.dataset.programAccent || '#0ea5e9');
-    replaceText(stageIndex, String(activeCard.dataset.programIndex || '1').padStart(2, '0'));
-    replaceText(stageCode, activeCard.dataset.programCode);
-    replaceText(stageLabel, activeCard.dataset.programLabel);
-    replaceText(stageTitle, activeCard.dataset.programTitle);
-    replaceText(stageSummary, activeCard.dataset.programSummary);
-    replaceText(stageDescription, activeCard.dataset.programDescription);
-    animateStage();
-
-    if (shouldFocus) activeCard.focus();
+  function replaceImage(node, source, alt) {
+    if (!node || !source || node.getAttribute('src') === source) return;
+    var preload = new Image();
+    preload.onload = function () {
+      node.src = source;
+      if (typeof alt === 'string') node.alt = alt;
+    };
+    preload.src = source;
   }
 
-  programCards.forEach(function (card, index) {
-    card.addEventListener('click', function () {
-      activateProgramCard(card, false);
+  function activate(card, shouldFocus) {
+    if (!card || activeCard === card) {
+      if (shouldFocus && card) card.focus();
+      return;
+    }
+    activeCard = card;
+    cards.forEach(function (item) {
+      var selected = item === card;
+      item.classList.toggle('is-active', selected);
+      item.setAttribute('aria-pressed', selected ? 'true' : 'false');
     });
 
-    card.addEventListener('focus', function () {
-      activateProgramCard(card, false);
-    });
+    var index = Number(card.dataset.programIndex || 1);
+    stage.style.setProperty('--program-accent', card.dataset.programAccent || '#0ea5e9');
+    showcase.style.setProperty('--program-accent', card.dataset.programAccent || '#0ea5e9');
+    stage.style.setProperty('--program-progress', ((index / cards.length) * 100).toFixed(2) + '%');
+    replaceText(stageIndex, String(index).padStart(2, '0'));
+    replaceText(stageCode, card.dataset.programCode);
+    replaceText(stageLabel, card.dataset.programLabel);
+    replaceText(stageTitle, card.dataset.programTitle);
+    replaceText(stageSummary, card.dataset.programSummary);
+    replaceText(stageDescription, card.dataset.programDescription);
+    replaceImage(stageImage, card.dataset.programMedia, card.dataset.programTitle || '');
+    replaceImage(stageSecondary, card.dataset.programSecondary, '');
+    animateNodes();
+    if (shouldFocus) card.focus();
+  }
 
+  function bindObserver() {
+    if (observer) observer.disconnect();
+    if (!desktop.matches || !('IntersectionObserver' in window)) return;
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) activate(entry.target, false);
+      });
+    }, { rootMargin: '-34% 0px -44% 0px', threshold: 0.08 });
+    cards.forEach(function (card) { observer.observe(card); });
+  }
+
+  cards.forEach(function (card, index) {
+    card.addEventListener('click', function () { activate(card, false); });
+    card.addEventListener('focus', function () { activate(card, false); });
     card.addEventListener('mouseenter', function () {
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        activateProgramCard(card, false);
-      }
+      if (desktop.matches && window.matchMedia('(hover: hover) and (pointer: fine)').matches) activate(card, false);
     });
-
     card.addEventListener('keydown', function (event) {
-      var nextIndex = null;
-
-      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-        nextIndex = (index + 1) % programCards.length;
-      } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-        nextIndex = (index - 1 + programCards.length) % programCards.length;
-      } else if (event.key === 'Home') {
-        nextIndex = 0;
-      } else if (event.key === 'End') {
-        nextIndex = programCards.length - 1;
-      }
-
-      if (nextIndex === null) return;
+      var next = null;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = (index + 1) % cards.length;
+      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = (index - 1 + cards.length) % cards.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = cards.length - 1;
+      if (next === null) return;
       event.preventDefault();
-      activateProgramCard(programCards[nextIndex], true);
+      activate(cards[next], true);
     });
   });
 
   stage.addEventListener('pointermove', function (event) {
-    if (reduceMotion || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (reduceMotion || !desktop.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     if (pointerFrame) cancelAnimationFrame(pointerFrame);
-
     pointerFrame = requestAnimationFrame(function () {
       var bounds = stage.getBoundingClientRect();
       var x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 18;
@@ -116,11 +127,32 @@ document.addEventListener('DOMContentLoaded', function () {
       stage.style.setProperty('--stage-y', y.toFixed(2) + 'px');
     });
   });
-
   stage.addEventListener('pointerleave', function () {
     stage.style.setProperty('--stage-x', '0px');
     stage.style.setProperty('--stage-y', '0px');
   });
 
-  activateProgramCard(programCards[0], false);
+  function updateSectionProgress() {
+    scrollFrame = null;
+    var bounds = showcase.getBoundingClientRect();
+    var travel = Math.max(1, bounds.height - window.innerHeight);
+    var progress = Math.min(1, Math.max(0, -bounds.top / travel));
+    showcase.style.setProperty('--section-progress', progress.toFixed(3));
+    showcase.style.setProperty('--section-drift', (progress * 25).toFixed(2) + '%');
+  }
+  window.addEventListener('scroll', function () {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateSectionProgress);
+  }, { passive: true });
+  desktop.addEventListener('change', bindObserver);
+  bindObserver();
+  activeCard = null;
+  activate(cards[0], false);
+  updateSectionProgress();
+
+  window.addEventListener('pagehide', function () {
+    if (observer) observer.disconnect();
+    if (pointerFrame) cancelAnimationFrame(pointerFrame);
+    if (scrollFrame) cancelAnimationFrame(scrollFrame);
+    animations.forEach(function (animation) { animation.cancel(); });
+  }, { once: true });
 });
