@@ -52,7 +52,7 @@
       <p>{{ $programUi['scroll'] }} <span aria-hidden="true">↓</span></p>
     </header>
 
-    <div class="program-showcase__layout">
+    <div class="program-section__shell program-showcase__layout">
       <div
         class="program-flow"
         aria-label="{{ $featuredPrograms['flow_aria_label'] ?? __('home.program_unggulan.flow_aria_label') }}"
