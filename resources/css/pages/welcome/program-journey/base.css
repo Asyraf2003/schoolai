@@ -7,16 +7,18 @@
     margin: 0;
     padding: 0;
     overflow: visible;
-    background: #0b1220;
+    background: #fff;
     color: #fff;
     isolation: isolate;
 }
 
 .program-journey__anchor {
     position: absolute;
+    inset-block-start: calc(var(--program-anchor-step) * var(--program-step));
     inset-inline-start: 0;
     width: 1px;
     height: 1px;
+    scroll-margin: 0;
     pointer-events: none;
 }
 
@@ -26,8 +28,7 @@
     position: relative;
 }
 
-.program-journey__hud,
-.program-journey__curtain {
+.program-journey__hud {
     display: none;
 }
 
@@ -50,28 +51,11 @@
     overflow: hidden;
 }
 
-.program-journey.is-enhanced .program-journey__curtain {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    display: block;
-    visibility: hidden;
-    background: #fff;
-    pointer-events: none;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform;
-}
-
-.program-journey.is-enhanced.has-handoff .program-journey__curtain {
-    visibility: visible;
-}
-
 .program-journey.is-enhanced .program-journey__frames {
     position: absolute;
     inset: 0 auto auto 0;
     width: 100%;
-    height: var(--program-track-height, 600dvh);
+    height: var(--program-track-height, 700dvh);
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     will-change: transform;
@@ -87,6 +71,15 @@
     overflow: hidden;
 }
 
+.program-frame--intro {
+    display: none;
+    background: #fff;
+}
+
+.program-journey.is-enhanced .program-frame--intro {
+    display: block;
+}
+
 .program-journey.is-enhanced .program-frame {
     height: var(--program-step);
     min-height: var(--program-step);
@@ -95,18 +88,13 @@
 .program-frame__media {
     position: relative;
     width: 100vw;
-    height: 100svh;
-    height: 100dvh;
+    height: 100%;
     margin: 0;
     overflow: hidden;
     border: 0;
     border-radius: 0;
     background: #101828;
     box-shadow: none;
-}
-
-.program-journey.is-enhanced .program-frame__media {
-    height: var(--program-step);
 }
 
 .program-frame__media::after {
