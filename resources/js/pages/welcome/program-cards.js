@@ -125,11 +125,15 @@ document.addEventListener('DOMContentLoaded', function () {
       var y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 18;
       stage.style.setProperty('--stage-x', x.toFixed(2) + 'px');
       stage.style.setProperty('--stage-y', y.toFixed(2) + 'px');
+      stage.style.setProperty('--stage-image-x', (-x * 0.24).toFixed(2) + 'px');
+      stage.style.setProperty('--stage-image-y', (-y * 0.24).toFixed(2) + 'px');
     });
   });
   stage.addEventListener('pointerleave', function () {
     stage.style.setProperty('--stage-x', '0px');
     stage.style.setProperty('--stage-y', '0px');
+    stage.style.setProperty('--stage-image-x', '0px');
+    stage.style.setProperty('--stage-image-y', '0px');
   });
 
   function updateSectionProgress() {
