@@ -52,12 +52,11 @@ export function moveWithFlip(node, target, reducedMotion) {
   target.appendChild(node);
   var after = node.getBoundingClientRect();
   if (reducedMotion || !node.animate || !before.width || !after.width) return;
-  var scaleX = before.width / after.width;
-  var scaleY = before.height / after.height;
+  var scale = before.width / after.width;
   node.animate([
     {
       transform: 'translate3d(' + (before.left - after.left) + 'px,'
-        + (before.top - after.top) + 'px,0) scale(' + scaleX + ',' + scaleY + ')',
+        + (before.top - after.top) + 'px,0) scale(' + scale + ')',
       filter: 'blur(0)',
     },
     { transform: 'translate3d(0,0,0) scale(1)', filter: 'blur(0)' },
@@ -79,6 +78,9 @@ export function createMomentumSettler(options) {
     timer = 0;
     frame = 0;
     running = false;
+    lastY = window.scrollY;
+    lastTime = performance.now();
+    velocity = 0;
   }
 
   function observe() {
@@ -140,7 +142,6 @@ export function createMomentumSettler(options) {
 
   function goTo(target) {
     cancel();
-    velocity = 0;
     lastY = window.scrollY;
     run(target, 0);
   }
