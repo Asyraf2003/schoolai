@@ -67,21 +67,6 @@ export function createCopyMotion(reducedMotion) {
   return { swap, cancel };
 }
 
-export function moveWithFlip(node, target, reducedMotion) {
-  if (!node || !target || node.parentElement === target) return;
-  const before = node.getBoundingClientRect();
-  target.appendChild(node);
-  const after = node.getBoundingClientRect();
-  if (reducedMotion || !node.animate || !before.width || !after.width) return;
-  node.animate([
-    {
-      transform: `translate3d(${before.left - after.left}px,${before.top - after.top}px,0) scale(${before.width / after.width})`,
-      filter: 'blur(0)',
-    },
-    { transform: 'translate3d(0,0,0) scale(1)', filter: 'blur(0)' },
-  ], { duration: 920, easing: fluidEase });
-}
-
 export function createVisualScrollEngine(options) {
   let frame = 0;
   let current = 0;
@@ -100,7 +85,16 @@ export function createVisualScrollEngine(options) {
     velocity = lerp(velocity, current - previous, .12);
     previous = current;
     options.onUpdate({ target, current, velocity });
-    if (Math.abs(target - current) > .08 || Math.abs(velocity) > .015) wake();
+
+    if (Math.abs(target - current) > .08 || Math.abs(velocity) > .015) {
+      wake();
+      return;
+    }
+
+    current = target;
+    previous = target;
+    velocity = 0;
+    options.onUpdate({ target, current, velocity });
   }
 
   function observe() {
