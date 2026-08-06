@@ -35,6 +35,7 @@ it('renders one white intro frame and six full-screen Program media frames', fun
             ->and(substr_count($section[0] ?? '', 'images.unsplash.com'))->toBe(6)
             ->and($section[0] ?? '')->not->toContain('program-journey__meta')
             ->and($section[0] ?? '')->not->toContain('data-program-label')
+            ->and($section[0] ?? '')->not->toContain('<figcaption>')
             ->and($section[0] ?? '')->toContain('--program-anchor-step: 2');
     }
 });
@@ -66,6 +67,8 @@ it('uses one seven-frame track and exact rail anchor geometry', function (): voi
         ->toContain('program-frame--intro')
         ->toContain('calc(var(--program-anchor-step) * var(--program-step))')
         ->toContain('height: var(--program-track-height, 700dvh)')
+        ->not->toContain('figcaption')
         ->and($hud)
-        ->not->toContain('program-journey__meta');
+        ->not->toContain('program-journey__meta')
+        ->not->toContain('figcaption');
 });
