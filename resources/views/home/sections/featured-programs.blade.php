@@ -1,5 +1,6 @@
 @php
   $programItems = collect($featuredPrograms['items'] ?? [])->values();
+  $programJourneySteps = max(1, $programItems->count() + 2);
   $programMedia = [
     ['url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=2400&q=82', 'position' => 'center 42%'],
     ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2400&q=82', 'position' => 'center 46%'],
@@ -35,6 +36,16 @@
   data-program-journey
   data-program-total="{{ $programItems->count() }}"
 >
+  @foreach ($programItems as $program)
+    <span
+      class="program-journey__anchor"
+      id="program-scroll-{{ $loop->iteration }}"
+      data-program-anchor="{{ $loop->index }}"
+      aria-hidden="true"
+      style="inset-block-start: {{ number_format(($loop->iteration / $programJourneySteps) * 100, 6, '.', '') }}%"
+    ></span>
+  @endforeach
+
   <div class="program-journey__sticky" data-program-sticky>
     <div class="program-journey__viewport" data-program-viewport>
       <div class="program-journey__frames" data-program-frames>
@@ -85,6 +96,8 @@
       </div>
     </div>
 
+    <div class="program-journey__curtain" data-program-curtain aria-hidden="true"></div>
+
     <div class="program-journey__hud" data-program-hud>
       <div class="program-journey__meta" aria-hidden="true">
         <p data-program-active-label>{{ $programUi['eyebrow'] }}</p>
@@ -104,26 +117,28 @@
         </a>
       </div>
 
-      <div
+      <nav
         class="program-journey__rail"
         data-program-rail
-        role="group"
         aria-label="{{ $programUi['rail'] }}"
-        tabindex="0"
       >
         <ol>
           @foreach ($programItems as $program)
-            <li
-              data-program-rail-item
-              data-program-index="{{ $loop->index }}"
-              aria-current="{{ $loop->first ? 'true' : 'false' }}"
-            >
-              <i aria-hidden="true"></i>
-              <span>{{ $program['title'] }}</span>
+            <li>
+              <a
+                href="#program-scroll-{{ $loop->iteration }}"
+                data-program-rail-item
+                data-program-index="{{ $loop->index }}"
+                aria-label="{{ $program['title'] }}"
+                aria-current="{{ $loop->first ? 'true' : 'false' }}"
+              >
+                <i aria-hidden="true"></i>
+                <span>{{ $program['title'] }}</span>
+              </a>
             </li>
           @endforeach
         </ol>
-      </div>
+      </nav>
     </div>
 
     <div class="program-journey__exit" data-program-exit aria-hidden="true">

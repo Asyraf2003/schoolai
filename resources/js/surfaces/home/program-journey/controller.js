@@ -9,6 +9,7 @@ export function mountProgramJourney(root) {
   const railItems = Array.from(root.querySelectorAll('[data-program-rail-item]'));
   const hud = root.querySelector('[data-program-hud]');
   const framesTrack = root.querySelector('[data-program-frames]');
+  const curtain = root.querySelector('[data-program-curtain]');
   const rail = root.querySelector('[data-program-rail]');
   const exit = root.querySelector('[data-program-exit]');
   const exitLines = Array.from(root.querySelectorAll('[data-program-exit-lines] span'));
@@ -25,8 +26,9 @@ export function mountProgramJourney(root) {
   const description = origin?.querySelector('[data-program-origin-description]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (!frames.length || !hud || !framesTrack || !exit || !title || !description
-    || !titleHome || !descriptionHome || !titleSlot || !descriptionSlot) return null;
+  if (!frames.length || !hud || !framesTrack || !curtain || !exit || !title
+    || !description || !titleHome || !descriptionHome || !titleSlot
+    || !descriptionSlot) return null;
 
   const introTitle = title.textContent.trim();
   const introDescription = description.textContent.trim();
@@ -67,15 +69,15 @@ export function mountProgramJourney(root) {
     descriptionHome.appendChild(description);
     titleHome.style.removeProperty('min-height');
     descriptionHome.style.removeProperty('min-height');
-    root.classList.remove('has-handoff');
+    root.classList.remove('has-handoff', 'is-media-visible');
     mode = 'intro';
     activeIndex = -1;
   }
 
   function swapCopy(update) {
     copyMotion.swap({
-      moving: [label, count, title, link],
-      stable: [description],
+      moving: [label, count, link],
+      stable: [title, description],
       update,
     });
   }
@@ -83,6 +85,9 @@ export function mountProgramJourney(root) {
   function setIntro() {
     if (mode === 'intro') return;
     mode = 'intro';
+    activeIndex = -1;
+    frames.forEach((frame, index) => frame.classList.toggle('is-active', index === 0));
+    railItems.forEach((item, index) => item.setAttribute('aria-current', index === 0 ? 'true' : 'false'));
     swapCopy(() => {
       text(label, defaultLabel);
       text(count, '');
@@ -120,19 +125,22 @@ export function mountProgramJourney(root) {
     if (rootTop <= viewport * .82 && rootRect.bottom > 0) handoffIn();
     if (rootTop > viewport * .9) handoffOut();
 
+    const entryProgress = geometry.entryProgress(current);
     const mediaCurrent = geometry.mediaPosition(current);
     const exitProgress = geometry.exitProgress(current);
+    curtain.style.transform = `translate3d(0, ${(-entryProgress * 100).toFixed(3)}%, 0)`;
     framesTrack.style.transform = `translate3d(0, ${(-mediaCurrent).toFixed(2)}px, 0)`;
     exit.style.opacity = String(exitProgress);
     hud.style.opacity = String(handedOff ? 1 - clamp(exitProgress * 1.12) : 0);
     hud.style.filter = `blur(${(exitProgress * 14).toFixed(2)}px)`;
     if (rail) rail.style.opacity = String(handedOff ? 1 - exitProgress : 0);
+    root.classList.toggle('is-media-visible', entryProgress >= .55);
     exitLines.forEach((line, index) => {
       const progress = clamp((exitProgress - index * .035) / .72);
       line.style.transform = `scaleX(${progress.toFixed(3)})`;
     });
 
-    if (!handedOff || rootTop > viewport * .12) setIntro();
+    if (!handedOff || entryProgress < .55) setIntro();
     else setActive(geometry.activeIndex(current));
   }
 
@@ -164,6 +172,7 @@ export function mountProgramJourney(root) {
     visualScroll.destroy();
     handoffOut();
     framesTrack.style.removeProperty('transform');
+    curtain.style.removeProperty('transform');
     exit.style.removeProperty('opacity');
     root.classList.remove('is-enhanced');
     window.removeEventListener('scroll', onScroll);

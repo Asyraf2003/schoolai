@@ -1,126 +1,91 @@
-# Homepage Program Native-Target Sticky Track Blueprint
+# Homepage Program Fixed Chrome and White Curtain Blueprint
 
 State: `OWNER_ACCEPTED / IMPLEMENTING`
 Date: 2026-08-06
 Surface: homepage Program `#program`
-Source baseline: `c72c7eb05818b61bbd253391a229053c092270e2`
-Batch: `HOME-PROGRAM-017-NATIVE-TARGET-STICKY-TRACK`
+Source baseline: `076efb5e2e3770d90688cd4c9267633b523ac485`
+Batch: `HOME-PROGRAM-018-FIXED-CHROME-CURTAIN-RAIL`
 
 ## OWNER GOAL
 
-Program must feel like Gallery: native document scroll supplies a target and one
-visual current follows it with lerp. The six full-screen HTML media frames move
-inside one sticky viewport without snapping or writing document scroll. The
-opening description stays at its Visi/Misi viewport coordinate like a sticker;
-only its text opacity and light blur may change. The rail is an indicator only.
+Correct only the observed Program defects. The section title becomes each
+program title through a text transition. The title moves once toward the
+logical top corner; the description changes text without changing position.
+Title, description, and rail remain independent and stationary while Program
+media moves. The white opening canvas moves plainly upward to reveal the first
+image underneath. The rail must be clickable. No unrelated visual invention is
+authorized.
 
 ## FACT AND ROOT CAUSE
 
-- Visi/Misi owns the single original Program title and description nodes.
-- Program renders six localized semantic articles and six temporary Unsplash
-  images, followed by the blue Values handoff.
-- The previous Program implementation combined natural document movement with a
-  `target - current` compensation transform.
-- Its motion owner also retained projected landing, `snapTimer`, anchor settling,
-  `window.scrollTo`, rail click navigation, a separate rail transform timeline,
-  description FLIP, and vertical description keyframes.
-- Those owners conflict with ordinary native scrolling and can diverge during
-  fast, reverse, or interrupted input.
+- `main` already uses a sticky full-screen Program viewport and Gallery-style
+  native-target `0.08` lerp.
+- The current handoff changes state at separate root thresholds and starts media
+  travel immediately, so a small scroll can trigger title/copy changes before a
+  dedicated opening transition exists.
+- The description owner adds a `clamp()` height and clipping even though the
+  owner only requested stable coordinates and changing text.
+- There is no single opaque white layer separating the Visi/Misi handoff from
+  the Program image, so the surfaces can appear to overlap.
+- The previous owner correction intentionally changed the rail into passive
+  `<li>` indicators. The latest owner correction explicitly restores clicking.
 
 ## SCOPE AND OWNER MAP
 
-Editable owners:
+Editable:
 
 - `resources/views/home/sections/featured-programs.blade.php`
-- `resources/css/pages/welcome/program-journey/{base,hud,rail,wide}.css`
-- `resources/js/surfaces/home/program-journey/{controller,geometry,motion}.js`
-- `tests/Feature/HomeProgramJourneyTest.php`
+- `resources/css/pages/welcome/program-journey/{base,hud,rail}.css`
+- `resources/js/surfaces/home/program-journey/{controller,geometry}.js`
+- focused Program test
 - this blueprint and `UI_UX_CURRENT_STATE.md`
 
-Read-only constraints:
+Read-only / forbidden:
 
-- `resources/views/home/sections/vision-mission.blade.php` as the original node
-  and coordinate source
-- localized Program data and temporary media contract
-- Values, Gallery, Articles, About, Testimonial, header, and every other surface
+- Visi/Misi source and controller
+- Values, Gallery, Articles, About, Testimonial, header, and other sections
+- localized program data and the six temporary Unsplash images
 
-Ownership after patch:
+## REQUIRED RESULT
 
-| Concern | Owner |
-|---|---|
-| semantic content/media/fallback | Program Blade partial |
-| scroll distance and active geometry | `geometry.js` |
-| handoff, current state, media/rail/exit synchronization | `controller.js` |
-| lerp and copy WAAPI | `motion.js` |
-| sticky viewport, full-screen track, HUD, rail, exit | Program CSS modules |
-| durable source contracts | focused Program feature test |
-
-## VISIBLE AND INTERACTION RESULT
-
-1. The Program section provides scroll distance while a `100vw × 100dvh` visual
-   viewport remains sticky.
-2. Six `100vw × 100dvh` HTML frames form one vertical visual track. The track is
-   removed from enhanced document flow and moves only by `-visualCurrent`.
-3. Native wheel, touchpad, touch, keyboard, scrollbar, and browser momentum own
-   document scrolling. There is no wheel interception, automatic landing, timer,
-   anchor settling, or Program `window.scrollTo`.
-4. `target` is read from native scroll. `current` follows it with the Gallery
-   smoothing factor `0.08`; forward and reverse use the same equation.
-5. The original title remains the same node and may FLIP to the responsive
-   inline-start top slot; RTL uses logical inline-end.
-6. The original description is reparented into the sticky HUD only to escape the
-   transformed Visi/Misi containing block. Its measured top/left/width are
-   preserved, it receives no FLIP, and text swaps use only opacity/light blur.
-7. The fixed description area keeps one stable size and coordinate while media
-   moves behind it.
-8. The rail contains six non-clickable list indicators. The active line follows
-   the same `current`; all names reveal only on hover or focus-within.
-9. The final blue field and white lines derive from the same current after frame
-   six, then the page releases naturally to Values.
+1. Native document scroll remains the only target.
+2. Visual current continues to use `lerp(current, target, 0.08)`.
+3. One entry viewport is added before media travel.
+4. During that entry, one opaque white curtain translates upward. It does not
+   fade, crossfade, or mix with the image.
+5. Frame one remains stationary below the curtain.
+6. The title node moves only during the original handoff to the Program corner.
+7. Later title and description text swaps use opacity/light blur only.
+8. Description top/left/width come from the measured Visi/Misi coordinate; no
+   invented fixed height or clipping is applied.
+9. Title, description, metadata, link, and rail remain in the fixed HUD while
+   curtain/media move behind them.
+10. Six rail items are native fragment links to six document-position anchors.
+    Clicking may use normal browser scrolling, but no automatic snap system,
+    wheel interception, projected landing, or Program `window.scrollTo` returns.
+11. Active rail state remains derived from visual current.
+12. The blue and white-line Values handoff remains unchanged.
 
 ## RESPONSIVE, LOCALE, AND FALLBACK
 
-- XS/SM/MD use the existing compact title composition and hide the rail where
-  space is insufficient; the sticky track and fixed description contract remain.
-- LG 1024–1180 may show the rail at logical inline-end.
-- XL/2XL place title at logical inline-start and rail at logical inline-end.
-- ID/EN use LTR. AR mirrors title and rail through logical properties; vertical
-  time and media order are unchanged.
-- One DOM and one controller serve all six tiers and all locales.
-- Reduced motion maps current directly to native target and removes copy travel;
-  description still uses no positional animation.
-- Without JS, all six images, headings, descriptions, and links remain ordinary
-  HTML in document flow, followed by the existing blue handoff.
-- External image failure cannot remove Program text or the portal action.
+- Existing title and rail placement rules remain; no new composition is added.
+- ID/EN remain LTR and AR mirrors logical title/rail placement.
+- Existing compact tiers may continue hiding the rail where already defined.
+- Without JS, all six semantic Program articles and links remain readable.
+- Reduced motion maps visual current directly to native target and removes
+  animated text travel.
 
-## STATE AND CLEANUP
+## PROOF
 
-```text
-before -> handoff -> active frames -> blue exit -> after
-```
+Available source checks:
 
-Fast/reverse/interrupted scrolling is reversible because all visual state derives
-from one current value. Resize remeasures viewport distance and copy coordinates.
-BFCache pageshow resynchronizes state. Final disposal cancels RAF/WAAPI, restores
-original nodes, removes listeners, and clears enhanced transforms.
-
-## PROOF GATES
-
-Source checks available in the Web AI channel:
-
-- JS syntax for controller, geometry, and motion
-- PHP syntax for focused test
-- balanced CSS braces
-- changed source files at or below 200 lines
-- forbidden-token/source contract checks
+- JS syntax
+- focused PHP syntax
+- CSS brace balance
+- source files at or below 200 lines
+- absence of snap/scroll-writing owners
+- presence of white curtain, entry geometry, stable copy, and six native links
 - atomic fast-forward publication and changed-path verification
 
-Required but unavailable in this channel, therefore
-`BLOCKED_BY_MISSING_EVIDENCE` until run from a checkout/runtime:
-
-- `git diff --check`
-- `npm run check:structure`
-- `npm run build`
-- `php artisan test`
-- Chromium/WebKit six-tier ID/EN/AR, RTL, reduced-motion, input, resize,
-  short-height, zoom, BFCache, image-failure, PageSpeed, and CWV proof
+Runtime/browser/build gates remain `BLOCKED_BY_MISSING_EVIDENCE` unless actually
+run and recorded.

@@ -5,6 +5,7 @@ export function createProgramGeometry(root, description, frameCount) {
   let metrics = {
     start: 0,
     step: window.innerHeight,
+    entryTravel: window.innerHeight,
     mediaTravel: 0,
     exitTravel: window.innerHeight,
     travel: 0,
@@ -20,12 +21,14 @@ export function createProgramGeometry(root, description, frameCount) {
   function measure() {
     const step = Math.max(1, window.innerHeight);
     const start = window.scrollY + root.getBoundingClientRect().top;
+    const entryTravel = step;
     const mediaTravel = Math.max(0, (frameCount - 1) * step);
     const exitTravel = step;
-    metrics = { start, step, mediaTravel, exitTravel, travel: mediaTravel + exitTravel };
+    const travel = entryTravel + mediaTravel + exitTravel;
+    metrics = { start, step, entryTravel, mediaTravel, exitTravel, travel };
     root.style.setProperty('--program-step', `${step}px`);
     root.style.setProperty('--program-track-height', `${frameCount * step}px`);
-    root.style.setProperty('--program-scroll-distance', `${metrics.travel}px`);
+    root.style.setProperty('--program-scroll-distance', `${travel}px`);
     applyCopyAnchor();
   }
 
@@ -43,8 +46,12 @@ export function createProgramGeometry(root, description, frameCount) {
     return clamp(window.scrollY - metrics.start, 0, metrics.travel);
   }
 
+  function entryProgress(current) {
+    return clamp(current / metrics.entryTravel, 0, 1);
+  }
+
   function mediaPosition(current) {
-    return clamp(current, 0, metrics.mediaTravel);
+    return clamp(current - metrics.entryTravel, 0, metrics.mediaTravel);
   }
 
   function activeIndex(current) {
@@ -52,13 +59,15 @@ export function createProgramGeometry(root, description, frameCount) {
   }
 
   function exitProgress(current) {
-    return clamp((current - metrics.mediaTravel) / metrics.exitTravel, 0, 1);
+    const exitStart = metrics.entryTravel + metrics.mediaTravel;
+    return clamp((current - exitStart) / metrics.exitTravel, 0, 1);
   }
 
   return {
     measure,
     rememberCopyAnchor,
     readTarget,
+    entryProgress,
     mediaPosition,
     activeIndex,
     exitProgress,

@@ -12,13 +12,22 @@
     isolation: isolate;
 }
 
+.program-journey__anchor {
+    position: absolute;
+    inset-inline-start: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
 .program-journey__sticky,
 .program-journey__viewport,
 .program-journey__frames {
     position: relative;
 }
 
-.program-journey__hud {
+.program-journey__hud,
+.program-journey__curtain {
     display: none;
 }
 
@@ -39,6 +48,23 @@
     inset: 0;
     z-index: 1;
     overflow: hidden;
+}
+
+.program-journey.is-enhanced .program-journey__curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: block;
+    visibility: hidden;
+    background: #fff;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+.program-journey.is-enhanced.has-handoff .program-journey__curtain {
+    visibility: visible;
 }
 
 .program-journey.is-enhanced .program-journey__frames {

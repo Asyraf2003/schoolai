@@ -20,6 +20,7 @@ it('renders one localized six-frame Program scroll journey', function (): void {
             ->assertSee('data-program-origin-description', false)
             ->assertSee('data-program-sticky', false)
             ->assertSee('data-program-viewport', false)
+            ->assertSee('data-program-curtain', false)
             ->assertSee('data-program-frames', false)
             ->assertSee('data-program-exit', false)
             ->assertDontSee('data-featured-program-card', false)
@@ -28,11 +29,14 @@ it('renders one localized six-frame Program scroll journey', function (): void {
         $content = $response->getContent();
         preg_match('/<section[^>]+id="program".*?<\/section>/s', $content, $section);
         preg_match_all('/\sdata-program-frame(?:\s|>)/', $section[0] ?? '', $frames);
+        preg_match_all('/\sdata-program-anchor=/', $section[0] ?? '', $anchors);
         preg_match_all('/\sdata-program-rail-item(?:\s|>)/', $section[0] ?? '', $railItems);
 
         expect(count($frames[0]))->toBe(6)
+            ->and(count($anchors[0]))->toBe(6)
             ->and(count($railItems[0]))->toBe(6)
             ->and(substr_count($section[0] ?? '', 'images.unsplash.com'))->toBe(6)
+            ->and(substr_count($section[0] ?? '', 'href="#program-scroll-'))->toBe(6)
             ->and(substr_count($content, 'id="vision-program-title"'))->toBe(1)
             ->and(substr_count($content, 'data-program-origin-title'))->toBe(1)
             ->and(substr_count($content, 'data-program-origin-description'))->toBe(1)
@@ -41,18 +45,21 @@ it('renders one localized six-frame Program scroll journey', function (): void {
     }
 });
 
-it('keeps Program native-target visual smoothing isolated', function (): void {
+it('keeps Program current, copy, curtain, and rail under one scroll owner', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
     $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+    $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
     $rail = file_get_contents(resource_path('css/pages/welcome/program-journey/rail.css'));
 
     expect($controller)
-        ->toContain('createVisualScrollEngine')
+        ->toContain('geometry.entryProgress(current)')
         ->toContain('geometry.mediaPosition(current)')
+        ->toContain('stable: [title, description]')
         ->toContain('descriptionSlot.appendChild(description)')
         ->not->toContain('moveWithFlip(description')
+        ->not->toContain("addEventListener('click'")
         ->not->toContain('snapNow')
         ->and($motion)
         ->toContain('lerp(current, target, .08)')
@@ -60,15 +67,20 @@ it('keeps Program native-target visual smoothing isolated', function (): void {
         ->not->toContain('window.scrollTo')
         ->not->toContain('projected')
         ->and($geometry)
+        ->toContain('entryTravel')
+        ->toContain('entryProgress')
         ->toContain('--program-scroll-distance')
-        ->toContain('mediaPosition')
         ->not->toContain('anchors')
         ->not->toContain('documentTarget')
         ->and($base)
         ->toContain('position: sticky')
-        ->toContain('height: var(--program-track-height, 600dvh)')
+        ->toContain('.program-journey__curtain')
+        ->toContain('background: #fff')
+        ->and($hud)
+        ->not->toContain('height: clamp(8rem')
+        ->not->toContain("program-origin-description] {\n    width: 100%;\n    height:")
         ->and($rail)
-        ->toContain('.program-journey__rail:hover li span')
-        ->toContain('.program-journey__rail:focus-within li span')
-        ->not->toContain('cursor: pointer');
+        ->toContain('.program-journey__rail a')
+        ->toContain('cursor: pointer')
+        ->toContain(':focus-within a span');
 });
