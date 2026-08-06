@@ -25,6 +25,7 @@
       'next' => 'Lanjut ke nilai-nilai kami',
     ],
   };
+  $programLink = route('portal.login');
 @endphp
 
 <section
@@ -54,7 +55,7 @@
       </div>
       <a
         class="program-journey__link"
-        href="/ppdb"
+        href="{{ $programLink }}"
         data-program-active-link
         aria-label="{{ $programUi['more'] }}"
       >
@@ -102,7 +103,7 @@
         data-program-title="{{ $program['title'] }}"
         data-program-summary="{{ $program['summary'] }}"
         data-program-description="{{ $description }}"
-        data-program-link="/ppdb"
+        data-program-link="{{ $programLink }}"
         data-program-accent="{{ $program['accent'] ?? '#0ea5e9' }}"
         style="--program-accent: {{ $program['accent'] ?? '#0ea5e9' }}"
       >
@@ -128,7 +129,7 @@
           <h3>{{ $program['title'] }}</h3>
           <p>{{ $program['summary'] }}</p>
           <p>{{ $description }}</p>
-          <a href="/ppdb">{{ $programUi['more'] }} <span aria-hidden="true">↗</span></a>
+          <a href="{{ $programLink }}">{{ $programUi['more'] }} <span aria-hidden="true">↗</span></a>
         </div>
       </article>
     @empty
