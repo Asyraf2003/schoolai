@@ -39,3 +39,23 @@ it('renders one localized six-frame Program scroll journey', function (): void {
         expect($content)->not->toContain('href="/ppdb"');
     }
 });
+
+it('keeps Program visual smoothing and rail reveal contracts isolated', function (): void {
+    $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
+    $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
+    $rail = file_get_contents(resource_path('css/pages/welcome/program-journey/rail.css'));
+
+    expect($controller)
+        ->toContain('createVisualScrollEngine')
+        ->not->toContain('createMomentumSettler')
+        ->and($motion)
+        ->toContain('lerp(current, target, .08)')
+        ->not->toContain('window.scrollTo')
+        ->and($geometry)
+        ->toContain('--program-copy-top')
+        ->toContain('--program-copy-left')
+        ->and($rail)
+        ->toContain('.program-journey__rail:hover button span')
+        ->toContain('.program-journey__rail:focus-within button span');
+});

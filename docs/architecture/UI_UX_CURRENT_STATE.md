@@ -4,38 +4,59 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-06
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-015-FULL-FRAME-CONTINUITY`
-Source baseline: `e13f505d8bc739a413da747bd43530647ee5a6e0`
+Active batch: `HOME-PROGRAM-016-VISUAL-LERP-RAIL-REVEAL`
+Source baseline: `c0d8ff61acd3d5321bdb4c74c4d4b0bbed5befd8`
+Active blueprint: `blueprints/2026-08-06-home-program-scroll-rail.md`
 
 ## Owner corrections
 
-- The Program title and description at the end of Vision/Mission are now the same DOM nodes used by the Program HUD.
-- Those nodes move into responsive Program slots with a FLIP transition and return when scrolling upward.
-- The visible Program copy contains one description, not a summary plus a second paragraph.
-- Six Program photographs are edge-to-edge `100vw × 100dvh` frames without card borders, radius, margins, or shadows.
-- Normal word wrapping replaces arbitrary character breaks.
-- Scroll settling now samples velocity, projects a landing frame, and uses a cancellable damped spring.
-- New wheel, touch, pointer, or keyboard input interrupts settling.
-- The rail, temporary Unsplash images, portal link, RTL placement, and blue Values handoff remain.
+- Only the Program title changes visual position during handoff.
+- The existing description remains anchored to its measured viewport coordinate;
+  only its text changes between the introduction and six programs.
+- Program no longer uses a custom damped spring that rewrites document scroll on
+  every RAF frame.
+- Native document scroll is the target; the six-frame media stack visually lerps
+  toward it at the same `0.08` smoothing factor used by Gallery.
+- Active Program state derives from rendered scroll, keeping media, title,
+  description, count, accent, and rail synchronized.
+- A single native smooth-scroll request may align the nearest frame after input
+  quiets; new input cancels it. Reduced motion disables automatic snapping.
+- The rail normally displays only lines. All labels appear only while the rail is
+  hovered or contains keyboard focus; the active line remains visibly accented.
+- Full-frame media, temporary Unsplash images, portal links, RTL placement, and
+  the blue Values handoff remain unchanged.
 
 ## Changed owners
 
-- `resources/views/home/sections/vision-mission.blade.php`
-- `resources/views/home/sections/featured-programs.blade.php`
 - `resources/css/pages/welcome/program-journey/{base,hud,rail,compact,wide}.css`
-- `resources/js/surfaces/home/program-journey/{controller,motion}.js`
+- `resources/js/surfaces/home/program-journey/{controller,geometry,motion}.js`
 - `tests/Feature/HomeProgramJourneyTest.php`
-- this ledger
+- active blueprint and this ledger
 
-## Proof status
+## Source proof
 
-- Current main checked before writing.
-- Changed JS passed `node --check` on staged source.
-- Changed PHP test passed `php -l` on staged source.
-- CSS braces are balanced.
-- Changed source files remain at or below 200 lines.
-- Repository build, full PHP tests, browser matrix, media availability, and performance remain `BLOCKED_BY_MISSING_EVIDENCE` until run from a checkout.
+- Current `main` was fetched before implementation.
+- Controller, geometry, and motion modules pass `node --check` on staged source.
+- Focused PHP test passes `php -l` on staged source.
+- Changed CSS braces are balanced.
+- Every changed source file remains at or below 200 lines.
+- Source contract test records visual lerp, fixed description anchoring, and
+  rail hover/focus reveal ownership.
+
+## Blocked proof
+
+The GitHub connector cannot run repository commands or browser/runtime tests.
+The following remain `BLOCKED_BY_MISSING_EVIDENCE`:
+
+- `git diff --check`
+- `npm run check:structure`
+- `npm run build`
+- full `php artisan test`
+- Chromium/WebKit responsive, RTL, reduced-motion, and input matrix
+- actual scroll feel, image availability/crops, PageSpeed, and CWV delta
 
 ## Next valid step
 
-Pull `main`, run the build and full tests, then review forward and reverse Program scrolling at 390, 768, 1024, 1181, 1440, and 1920 pixels in ID and AR.
+Owner pulls `main`, runs the required command gates, then reviews Program with
+slow/fast/reverse/interrupted wheel and touchpad input at 390, 768, 1024, 1181,
+1440, and 1920 pixels in ID and AR.

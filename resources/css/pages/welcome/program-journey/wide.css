@@ -8,11 +8,14 @@
     }
 
     html[dir="rtl"] .program-journey__meta,
-    html[dir="rtl"] .program-journey__title-slot,
-    html[dir="rtl"] .program-journey__copy-slot {
+    html[dir="rtl"] .program-journey__title-slot {
         inset-inline-start: auto;
         inset-inline-end: clamp(22px, 4vw, 72px);
         text-align: right;
+    }
+
+    .program-journey__copy-slot [data-program-origin-description] {
+        font-size: clamp(.95rem, 1.25vw, 1.3rem);
     }
 
     html[dir="rtl"] .program-journey__title-slot #vision-program-title,
@@ -23,7 +26,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .program-frame__media img,
     .program-journey__rail button i,
     .program-journey__rail button span {
         transition-duration: .01ms !important;

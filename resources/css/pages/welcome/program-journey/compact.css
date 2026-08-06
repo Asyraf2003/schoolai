@@ -18,27 +18,13 @@
         font-size: clamp(2rem, 7.6vw, 4.8rem);
     }
 
-    .program-journey__copy-slot {
-        inset-inline: 8vw;
-        inset-block-end: clamp(34px, 8vh, 82px);
-        width: auto;
-        text-align: center;
-    }
-
-    .program-journey__copy-slot [data-program-origin-description] {
-        max-width: 42rem;
-        margin-inline: auto;
-        font-size: clamp(.94rem, 2.1vw, 1.18rem);
-    }
-
     .program-journey__rail {
         display: none;
     }
 }
 
 @media (min-width: 1024px) and (max-width: 1180px) {
-    .program-journey__title-slot,
-    .program-journey__copy-slot {
+    .program-journey__title-slot {
         inset-inline: 17vw;
     }
 
@@ -55,14 +41,6 @@
 @media (max-width: 639px) {
     .program-journey__title-slot #vision-program-title {
         font-size: clamp(1.85rem, 9vw, 3rem);
-    }
-
-    .program-journey__copy-slot {
-        inset-inline: 20px;
-    }
-
-    .program-journey__copy-slot [data-program-origin-description] {
-        font-size: .96rem;
     }
 
     .program-journey__link {

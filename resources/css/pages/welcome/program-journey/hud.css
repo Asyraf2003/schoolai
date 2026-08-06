@@ -80,17 +80,19 @@
 }
 
 .program-journey__copy-slot {
-    inset-inline-start: clamp(22px, 4vw, 72px);
-    inset-block-end: clamp(42px, 9vh, 108px);
-    width: min(38vw, 560px);
+    top: var(--program-copy-top, auto);
+    left: var(--program-copy-left, clamp(22px, 4vw, 72px));
+    width: var(--program-copy-width, min(38vw, 560px));
+    max-width: calc(100vw - 40px);
 }
 
 .program-journey__copy-slot [data-program-origin-description] {
     margin: 0;
     color: rgb(255 255 255 / .9);
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(1rem, 1.35vw, 1.35rem);
-    line-height: 1.48;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.35;
     text-shadow: 0 2px 24px rgb(0 0 0 / .28);
 }
 

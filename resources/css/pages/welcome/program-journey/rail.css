@@ -57,18 +57,26 @@
     transition: opacity 260ms ease, transform 560ms cubic-bezier(.16, 1, .3, 1);
 }
 
-.program-journey__rail button:hover span,
-.program-journey__rail button:focus-visible span,
-.program-journey__rail button[aria-current="true"] span {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.program-journey__rail button:hover i,
-.program-journey__rail button:focus-visible i,
 .program-journey__rail button[aria-current="true"] i {
     width: 76px;
     background: var(--program-accent);
+    opacity: 1;
+}
+
+.program-journey__rail:hover button span,
+.program-journey__rail:focus-within button span {
+    opacity: .62;
+    transform: translateX(0);
+}
+
+.program-journey__rail:hover button[aria-current="true"] span,
+.program-journey__rail:focus-within button[aria-current="true"] span {
+    opacity: 1;
+}
+
+.program-journey__rail button:hover i,
+.program-journey__rail button:focus-visible i {
+    width: 76px;
     opacity: 1;
 }
 
@@ -95,4 +103,9 @@ html[dir="rtl"] .program-journey__rail button i {
 html[dir="rtl"] .program-journey__rail button span {
     text-align: start;
     transform: translateX(-10px);
+}
+
+html[dir="rtl"] .program-journey__rail:hover button span,
+html[dir="rtl"] .program-journey__rail:focus-within button span {
+    transform: translateX(0);
 }
