@@ -121,29 +121,6 @@ html[dir="rtl"] .program-frame__media::after {
     transform: translateZ(0);
 }
 
-.program-frame__media figcaption {
-    position: absolute;
-    inset-inline: clamp(18px, 3vw, 52px);
-    inset-block-end: clamp(18px, 3vh, 36px);
-    z-index: 2;
-    display: flex;
-    gap: 12px;
-    color: #fff;
-    font-size: .72rem;
-    font-weight: 800;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-}
-
-.program-frame__media figcaption span:first-child {
-    color: var(--program-accent);
-}
-
-.program-frame__media figcaption small {
-    margin-inline-start: auto;
-    color: rgb(255 255 255 / .58);
-}
-
 .program-frame__fallback {
     position: absolute;
     inset-inline: clamp(20px, 6vw, 96px);

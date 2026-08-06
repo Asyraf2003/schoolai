@@ -24,8 +24,7 @@
     transition-delay: 0s;
 }
 
-.program-journey.is-enhanced .program-frame__fallback,
-.program-journey.is-enhanced .program-frame__media figcaption {
+.program-journey.is-enhanced .program-frame__fallback {
     position: absolute;
     width: 1px;
     height: 1px;

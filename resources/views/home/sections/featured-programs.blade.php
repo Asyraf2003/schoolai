@@ -11,15 +11,15 @@
   $programUi = match (app()->getLocale()) {
     'en' => [
       'more' => 'Learn more', 'rail' => 'Program journey',
-      'photo' => 'Temporary photo from Unsplash', 'next' => 'Continue to our values',
+      'next' => 'Continue to our values',
     ],
     'ar' => [
       'more' => 'اكتشف المزيد', 'rail' => 'رحلة البرامج',
-      'photo' => 'صورة مؤقتة من أنسبلاش', 'next' => 'تابع إلى قيمنا',
+      'next' => 'تابع إلى قيمنا',
     ],
     default => [
       'more' => 'Selengkapnya', 'rail' => 'Perjalanan program',
-      'photo' => 'Foto sementara dari Unsplash', 'next' => 'Lanjut ke nilai-nilai kami',
+      'next' => 'Lanjut ke nilai-nilai kami',
     ],
   };
   $programLink = route('portal.login');
@@ -73,11 +73,6 @@
                 referrerpolicy="strict-origin-when-cross-origin"
                 style="object-position: {{ $media['position'] }}"
               />
-              <figcaption>
-                <span>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-                <span>{{ $program['label'] }}</span>
-                <small>{{ $programUi['photo'] }}</small>
-              </figcaption>
             </figure>
 
             <div class="program-frame__fallback">
