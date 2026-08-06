@@ -13,17 +13,18 @@ export function createCopyMotion(reducedMotion) {
     token += 1;
     var activeToken = token;
     cancel();
+    var targets = nodes.filter(Boolean);
 
     if (reducedMotion || !Element.prototype.animate) {
       update();
       return;
     }
 
-    var outgoing = nodes.filter(Boolean).map(function (node) {
+    var outgoing = targets.map(function (node) {
       var animation = node.animate([
         { opacity: 1, filter: 'blur(0)', transform: 'translateY(0)' },
-        { opacity: 0, filter: 'blur(9px)', transform: 'translateY(-18px)' },
-      ], { duration: 190, easing: 'ease-in', fill: 'forwards' });
+        { opacity: 0, filter: 'blur(10px)', transform: 'translateY(-18px)' },
+      ], { duration: 220, easing: 'ease-in', fill: 'forwards' });
       animations.push(animation);
       return animation.finished.catch(function () {});
     });
@@ -32,11 +33,11 @@ export function createCopyMotion(reducedMotion) {
       if (activeToken !== token) return;
       cancel();
       update();
-      nodes.filter(Boolean).forEach(function (node) {
+      targets.forEach(function (node) {
         var animation = node.animate([
-          { opacity: 0, filter: 'blur(9px)', transform: 'translateY(42px)' },
+          { opacity: 0, filter: 'blur(10px)', transform: 'translateY(42px)' },
           { opacity: 1, filter: 'blur(0)', transform: 'translateY(0)' },
-        ], { duration: 720, easing: fluidEase });
+        ], { duration: 760, easing: fluidEase });
         animations.push(animation);
       });
     });
@@ -45,77 +46,117 @@ export function createCopyMotion(reducedMotion) {
   return { swap: swap, cancel: cancel };
 }
 
-export function createSoftSettler(options) {
+export function moveWithFlip(node, target, reducedMotion) {
+  if (!node || !target || node.parentElement === target) return;
+  var before = node.getBoundingClientRect();
+  target.appendChild(node);
+  var after = node.getBoundingClientRect();
+  if (reducedMotion || !node.animate || !before.width || !after.width) return;
+  var scaleX = before.width / after.width;
+  var scaleY = before.height / after.height;
+  node.animate([
+    {
+      transform: 'translate3d(' + (before.left - after.left) + 'px,'
+        + (before.top - after.top) + 'px,0) scale(' + scaleX + ',' + scaleY + ')',
+      filter: 'blur(0)',
+    },
+    { transform: 'translate3d(0,0,0) scale(1)', filter: 'blur(0)' },
+  ], { duration: 920, easing: fluidEase });
+}
+
+export function createMomentumSettler(options) {
   var reducedMotion = options.reducedMotion;
   var timer = 0;
   var frame = 0;
   var running = false;
+  var lastY = window.scrollY;
+  var lastTime = performance.now();
+  var velocity = 0;
 
   function cancel() {
-    window.clearTimeout(timer);
+    clearTimeout(timer);
     if (frame) cancelAnimationFrame(frame);
     timer = 0;
     frame = 0;
     running = false;
   }
 
-  function goTo(target) {
-    cancel();
-    if (!Number.isFinite(target)) return;
-    if (reducedMotion) {
-      window.scrollTo(0, target);
-      return;
-    }
+  function observe() {
+    if (running || reducedMotion) return;
+    var now = performance.now();
+    var y = window.scrollY;
+    var dt = Math.max(8, Math.min(80, now - lastTime));
+    var sample = (y - lastY) / dt;
+    velocity = velocity * .62 + sample * .38;
+    lastY = y;
+    lastTime = now;
+    clearTimeout(timer);
+    timer = setTimeout(start, 88);
+  }
 
-    var start = window.scrollY;
-    var distance = target - start;
-    if (Math.abs(distance) < 2) return;
-    var duration = Math.min(680, Math.max(320, Math.abs(distance) * 0.62));
-    var startedAt = performance.now();
+  function run(target, initialVelocity) {
+    if (!Number.isFinite(target)) return;
+    var position = window.scrollY;
+    var speed = initialVelocity * 16.67;
     running = true;
 
-    function tick(now) {
-      var progress = Math.min(1, (now - startedAt) / duration);
-      var eased = 1 - Math.pow(1 - progress, 4);
-      window.scrollTo(0, start + distance * eased);
+    function tick() {
+      var error = target - position;
+      speed = (speed + error * .072) * .82;
+      position += speed;
+      window.scrollTo({ top: position, behavior: 'auto' });
       options.onFrame();
-
-      if (progress < 1 && running) {
+      if (Math.abs(error) > .6 || Math.abs(speed) > .08) {
         frame = requestAnimationFrame(tick);
         return;
       }
+      window.scrollTo({ top: target, behavior: 'auto' });
+      lastY = target;
+      lastTime = performance.now();
+      velocity = 0;
       frame = 0;
       running = false;
+      options.onFrame();
     }
 
     frame = requestAnimationFrame(tick);
   }
 
-  function schedule() {
-    if (running || reducedMotion) return;
-    window.clearTimeout(timer);
-    timer = window.setTimeout(function () {
-      timer = 0;
-      if (!options.canSettle()) return;
-      var target = options.getTarget();
-      if (target !== null) goTo(target);
-    }, 150);
+  function start() {
+    timer = 0;
+    if (!options.canSettle()) return;
+    var anchors = options.getAnchors();
+    if (!anchors.length) return;
+    var position = window.scrollY;
+    var projected = position + Math.max(
+      -window.innerHeight,
+      Math.min(window.innerHeight, velocity * 340)
+    );
+    var target = anchors.reduce(function (best, value) {
+      return Math.abs(value - projected) < Math.abs(best - projected) ? value : best;
+    }, anchors[0]);
+    run(target, velocity);
   }
 
-  var interruptEvents = ['wheel', 'touchstart', 'pointerdown', 'keydown'];
-  interruptEvents.forEach(function (eventName) {
-    window.addEventListener(eventName, cancel, { passive: true });
+  function goTo(target) {
+    cancel();
+    velocity = 0;
+    lastY = window.scrollY;
+    run(target, 0);
+  }
+
+  var interrupts = ['wheel', 'touchstart', 'pointerdown', 'keydown'];
+  interrupts.forEach(function (name) {
+    window.addEventListener(name, cancel, { passive: true });
   });
 
   function destroy() {
     cancel();
-    interruptEvents.forEach(function (eventName) {
-      window.removeEventListener(eventName, cancel);
-    });
+    interrupts.forEach(function (name) { window.removeEventListener(name, cancel); });
   }
 
   return {
-    schedule: schedule,
+    observe: observe,
     goTo: goTo,
     cancel: cancel,
     destroy: destroy,

@@ -1,47 +1,4 @@
 @media (min-width: 1181px) {
-    .program-frame {
-        padding-inline: clamp(64px, 9vw, 150px);
-    }
-
-    .program-frame__media {
-        width: min(76vw, 1180px);
-        height: min(76svh, 820px);
-        border-radius: 36px;
-    }
-
-    .program-frame:not(.is-active) .program-frame__media {
-        opacity: .78;
-        transform: scale(.985);
-    }
-
-    .program-frame:last-of-type .program-frame__media {
-        filter: blur(var(--exit-blur));
-        transform: scale(var(--exit-scale));
-    }
-
-    .program-journey__title {
-        inset-block-start: calc(var(--nav-h, 76px) + clamp(24px, 4vh, 48px));
-        inset-inline-start: clamp(28px, 4vw, 72px);
-        width: min(35vw, 580px);
-        transform-origin: top left;
-    }
-
-    .program-journey__copy {
-        inset-inline-start: 50%;
-        inset-block-end: clamp(30px, 5vh, 62px);
-        width: min(42vw, 640px);
-        transform: translateX(-50%);
-    }
-
-    .program-journey__copy::before {
-        content: '';
-        display: block;
-        width: 44px;
-        height: 2px;
-        margin-bottom: 16px;
-        background: var(--program-accent);
-    }
-
     .program-journey__rail {
         inset-block-start: 50%;
         inset-inline-end: clamp(18px, 2.2vw, 42px);
@@ -50,14 +7,22 @@
         pointer-events: auto;
     }
 
-    html[dir="rtl"] .program-journey__title {
-        transform-origin: top right;
+    html[dir="rtl"] .program-journey__meta,
+    html[dir="rtl"] .program-journey__title-slot,
+    html[dir="rtl"] .program-journey__copy-slot {
+        inset-inline-start: auto;
+        inset-inline-end: clamp(22px, 4vw, 72px);
         text-align: right;
+    }
+
+    html[dir="rtl"] .program-journey__title-slot #vision-program-title,
+    html[dir="rtl"] .program-journey__copy-slot [data-program-origin-description] {
+        font-family: "Cairo", Arial, sans-serif;
+        letter-spacing: normal;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .program-frame__media,
     .program-frame__media img,
     .program-journey__rail button i,
     .program-journey__rail button span {

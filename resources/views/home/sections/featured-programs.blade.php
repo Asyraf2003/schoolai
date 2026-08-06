@@ -36,23 +36,13 @@
   data-program-total="{{ $programItems->count() }}"
 >
   <div class="program-journey__hud" data-program-hud>
-    <div class="program-journey__title" data-program-title-wrap aria-hidden="true">
-      <p class="program-journey__eyebrow" data-program-active-label>{{ $programUi['eyebrow'] }}</p>
-      <p class="program-journey__count" data-program-active-count>
-        01 / {{ str_pad((string) $programItems->count(), 2, '0', STR_PAD_LEFT) }}
-      </p>
-      <h3 data-program-active-title>{{ $programItems->first()['title'] ?? '' }}</h3>
+    <div class="program-journey__meta" aria-hidden="true">
+      <p data-program-active-label>{{ $programUi['eyebrow'] }}</p>
+      <p data-program-active-count></p>
     </div>
-
-    <div class="program-journey__copy">
-      <div aria-hidden="true" data-program-copy-motion>
-        <p class="program-journey__summary" data-program-active-summary>
-          {{ $programItems->first()['summary'] ?? '' }}
-        </p>
-        <p class="program-journey__description" data-program-active-description>
-          {{ collect($programItems->first()['text_parts'] ?? [])->pluck('text')->implode('') }}
-        </p>
-      </div>
+    <div class="program-journey__title-slot" data-program-title-slot></div>
+    <div class="program-journey__copy-slot" data-program-copy-slot>
+      <div data-program-description-slot></div>
       <a
         class="program-journey__link"
         href="{{ $programLink }}"
@@ -98,10 +88,8 @@
         id="program-frame-{{ $loop->iteration }}"
         data-program-frame
         data-program-index="{{ $loop->index }}"
-        data-program-code="{{ $program['code'] }}"
         data-program-label="{{ $program['label'] }}"
         data-program-title="{{ $program['title'] }}"
-        data-program-summary="{{ $program['summary'] }}"
         data-program-description="{{ $description }}"
         data-program-link="{{ $programLink }}"
         data-program-accent="{{ $program['accent'] ?? '#0ea5e9' }}"
@@ -127,7 +115,6 @@
 
         <div class="program-frame__fallback">
           <h3>{{ $program['title'] }}</h3>
-          <p>{{ $program['summary'] }}</p>
           <p>{{ $description }}</p>
           <a href="{{ $programLink }}">{{ $programUi['more'] }} <span aria-hidden="true">↗</span></a>
         </div>

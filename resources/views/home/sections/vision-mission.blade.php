@@ -138,9 +138,16 @@
         class="vision-paper__program"
         aria-labelledby="vision-program-title"
         data-vision-program
+        data-program-origin
       >
-        <h2 id="vision-program-title">{{ $programCopy['title'] }}</h2>
-        <p>{{ $programCopy['description'] }}</p>
+        <div data-program-title-home>
+          <h2 id="vision-program-title" data-program-origin-title>
+            {{ $programCopy['title'] }}
+          </h2>
+        </div>
+        <div data-program-description-home>
+          <p data-program-origin-description>{{ $programCopy['description'] }}</p>
+        </div>
       </section>
     </div>
   </div>
