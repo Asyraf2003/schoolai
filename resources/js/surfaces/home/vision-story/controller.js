@@ -24,13 +24,18 @@ export function mountVisionStory() {
     let lastFrameTime = performance.now();
 
     function syncStoryHeight() {
-        if (!track) return;
+        if (!track) return 1;
         if (wide.matches) {
             const horizontalTravel = Math.max(1, track.scrollWidth - window.innerWidth);
-            root.style.height = `${window.innerHeight + horizontalTravel}px`;
-            return;
+            const programTravel = Math.max(
+                0,
+                Number(root.dataset.programStoryTravel || 0),
+            );
+            root.style.height = `${window.innerHeight + horizontalTravel + programTravel}px`;
+            return horizontalTravel;
         }
         root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
+        return Math.max(1, root.offsetHeight - window.innerHeight);
     }
 
     function updateProgressTarget() {
@@ -38,10 +43,12 @@ export function mountVisionStory() {
     }
 
     function measure() {
-        syncStoryHeight();
+        const horizontalDistance = syncStoryHeight();
         const rect = root.getBoundingClientRect();
         start = window.scrollY + rect.top;
-        distance = Math.max(1, root.offsetHeight - window.innerHeight);
+        distance = wide.matches
+            ? horizontalDistance
+            : Math.max(1, root.offsetHeight - window.innerHeight);
         updateProgressTarget();
     }
 
@@ -88,6 +95,7 @@ export function mountVisionStory() {
         timeline = createVisionTimeline(root);
         renderedProgress = targetProgress;
         render();
+        window.dispatchEvent(new CustomEvent('vision:layout'));
     }
 
     async function prepare() {
@@ -104,6 +112,7 @@ export function mountVisionStory() {
         prepared = true;
         preparing = false;
         root.classList.remove('is-preparing');
+        window.dispatchEvent(new CustomEvent('vision:layout'));
         scheduleFrame();
     }
 
@@ -122,6 +131,10 @@ export function mountVisionStory() {
     function onResize() {
         window.clearTimeout(resizeTimer);
         resizeTimer = window.setTimeout(rebuildTimeline, 140);
+    }
+
+    function onProgramLayout() {
+        if (prepared) rebuildTimeline();
     }
 
     function onPageShow(event) {
@@ -147,6 +160,7 @@ export function mountVisionStory() {
         if (timeline) timeline.destroy();
         window.removeEventListener('scroll', updateTarget);
         window.removeEventListener('resize', onResize);
+        window.removeEventListener('program:layout', onProgramLayout);
         window.removeEventListener('pageshow', onPageShow);
         window.removeEventListener('pagehide', onPageHide);
         root.style.removeProperty('height');
@@ -155,6 +169,7 @@ export function mountVisionStory() {
 
     window.addEventListener('scroll', updateTarget, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('program:layout', onProgramLayout);
     window.addEventListener('pageshow', onPageShow, { passive: true });
     window.addEventListener('pagehide', onPageHide, { passive: true });
 
