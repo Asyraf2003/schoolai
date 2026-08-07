@@ -1,111 +1,112 @@
 import { createProgramGeometry } from './geometry.js';
-import { createProgramIntegration } from './integration.js';
 import { createCopyMotion, createVisualScrollEngine } from './motion.js';
+
+function setBaseBox(node, box) {
+  if (!node || !box) return;
+  node.style.left = `${box.x.toFixed(2)}px`;
+  node.style.top = `${box.y.toFixed(2)}px`;
+  node.style.width = `${box.w.toFixed(2)}px`;
+  node.style.height = `${box.h.toFixed(2)}px`;
+}
+
+function transformTo(node, base, target) {
+  if (!node || !base || !target || !base.w || !base.h) return;
+  const scaleX = target.w / base.w;
+  const scaleY = target.h / base.h;
+  const translateX = target.x - base.x;
+  const translateY = target.y - base.y;
+  node.style.transform = `matrix(${scaleX.toFixed(5)}, 0, 0, ${scaleY.toFixed(5)}, ${translateX.toFixed(2)}, ${translateY.toFixed(2)})`;
+}
 
 export function mountProgramJourney(root) {
   if (!root) return null;
 
-  const frames = Array.from(root.querySelectorAll('[data-program-frame]'));
-  const railItems = Array.from(root.querySelectorAll('[data-program-rail-item]'));
-  const hud = root.querySelector('[data-program-hud]');
-  const framesTrack = root.querySelector('[data-program-frames]');
-  const introFrame = root.querySelector('[data-program-intro-frame]');
-  const titleGuide = root.querySelector('[data-program-title-guide]');
-  const descriptionGuide = root.querySelector('[data-program-description-guide]');
-  const rail = root.querySelector('[data-program-rail]');
-  const exit = root.querySelector('[data-program-exit]');
-  const exitLines = Array.from(root.querySelectorAll('[data-program-exit-lines] span'));
-  const title = root.querySelector('[data-program-title]');
-  const description = root.querySelector('[data-program-description]');
+  const handoff = root.querySelector('[data-program-handoff]');
+  const mission = root.querySelector('[data-program-handoff-mission]');
+  const main = root.querySelector('[data-program-handoff-main]');
+  const thumbOne = root.querySelector('[data-program-handoff-thumb-one]');
+  const thumbTwo = root.querySelector('[data-program-handoff-thumb-two]');
+  const showcase = root.querySelector('[data-program-showcase]');
+  const titleBox = root.querySelector('[data-program-title-box]');
+  const copyBox = root.querySelector('[data-program-copy-box]');
+  const description = root.querySelector('[data-program-hud-description]');
   const link = root.querySelector('[data-program-active-link]');
-  const linkLabel = root.querySelector('[data-program-active-link-label]');
+  const backgrounds = root.querySelector('[data-program-backgrounds]');
+  const frames = Array.from(root.querySelectorAll('[data-program-frame]'));
+  const rail = root.querySelector('[data-program-rail]');
+  const railItems = Array.from(root.querySelectorAll('[data-program-rail-item]'));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (!frames.length || !hud || !framesTrack || !introFrame || !titleGuide
-    || !descriptionGuide || !exit || !title || !description) return null;
+  if (!handoff || !mission || !main || !thumbOne || !thumbTwo || !showcase
+    || !titleBox || !copyBox || !description || !backgrounds || !frames.length) return null;
 
-  const introTitle = title.textContent.trim();
   const introDescription = description.textContent.trim();
-  const defaultLinkLabel = linkLabel?.textContent.trim() || '';
-  const defaultLinkHref = link?.getAttribute('href') || '';
+  const defaultLink = link?.getAttribute('href') || '';
+  const geometry = createProgramGeometry(root);
   const copyMotion = createCopyMotion(reducedMotion);
-  const geometry = createProgramGeometry(root, hud, frames.length);
-  let activeIndex = -1;
-  let travelDirection = 1;
+  let baseBoxes = null;
+  let activeIndex = -2;
   let destroyed = false;
 
-  const integration = createProgramIntegration(root, reducedMotion);
-
-  integration.sync();
-  geometry.rememberOrigin(introFrame, titleGuide, descriptionGuide);
   root.classList.add('is-enhanced');
-  geometry.measure();
-  geometry.measureTitleMotion(title);
-
-  function text(node, value) {
-    if (node) node.textContent = value || '';
-  }
-
-  function swapCopy(update) {
-    copyMotion.swap({ stable: [title, description], update });
-  }
-
-  function setIntro() {
-    if (activeIndex === -1) return;
-    activeIndex = -1;
-    frames.forEach((frame) => frame.classList.remove('is-active'));
-    railItems.forEach((item) => item.setAttribute('aria-current', 'false'));
-    swapCopy(() => {
-      text(title, introTitle);
-      text(description, introDescription);
-      text(linkLabel, defaultLinkLabel);
-      if (link) link.href = defaultLinkHref;
-    });
-  }
 
   function setActive(index) {
-    if (activeIndex === index) return;
-    const program = frames[index]?.dataset;
-    if (!program) return;
+    if (index === activeIndex) return;
     activeIndex = index;
-    frames.forEach((frame, itemIndex) => {
-      frame.classList.toggle('is-active', itemIndex === index);
-    });
+
     railItems.forEach((item, itemIndex) => {
       item.setAttribute('aria-current', itemIndex === index ? 'true' : 'false');
     });
-    root.style.setProperty('--program-accent', program.programAccent || '#0ea5e9');
-    swapCopy(() => {
-      text(title, program.programTitle);
-      text(description, program.programDescription);
-      if (link) link.href = program.programLink || defaultLinkHref;
-      text(linkLabel, defaultLinkLabel);
+
+    if (index < 0) {
+      copyMotion.swap({
+        stable: [description],
+        update: () => {
+          description.textContent = introDescription;
+          if (link) link.href = defaultLink;
+        },
+      });
+      return;
+    }
+
+    const data = frames[index]?.dataset;
+    if (!data) return;
+    root.style.setProperty('--program-accent', data.programAccent || '#0ea5e9');
+    copyMotion.swap({
+      stable: [description],
+      update: () => {
+        description.textContent = data.programDescriptionValue || introDescription;
+        if (link) link.href = data.programLinkValue || defaultLink;
+      },
     });
   }
 
-  function render({ current, velocity }) {
-    if (destroyed) return;
-    if (velocity > .001) travelDirection = 1;
-    else if (velocity < -.001) travelDirection = -1;
-    const trackCurrent = geometry.trackPosition(current);
-    const exitProgress = geometry.exitProgress(current);
-    const programIndex = geometry.programIndex(current, travelDirection);
-    const programVisible = programIndex >= 0;
+  function render({ current }) {
+    if (destroyed || !baseBoxes) return;
+    const state = geometry.state(current, frames.length);
 
-    framesTrack.style.transform = `translate3d(0, ${(-trackCurrent).toFixed(2)}px, 0)`;
-    title.style.transform = geometry.titleTransform(current);
-    exit.style.opacity = String(exitProgress);
-    hud.style.opacity = String(1 - exitProgress);
-    if (rail) rail.style.opacity = String(programVisible ? 1 - exitProgress : 0);
-    root.classList.toggle('is-program-visible', programVisible);
+    transformTo(mission, baseBoxes.mission, state.boxes.mission);
+    transformTo(main, baseBoxes.main, state.boxes.main);
+    transformTo(thumbOne, baseBoxes.thumbOne, state.boxes.thumbOne);
+    transformTo(thumbTwo, baseBoxes.thumbTwo, state.boxes.thumbTwo);
+    transformTo(titleBox, baseBoxes.title, state.boxes.title);
+    transformTo(copyBox, baseBoxes.copy, state.boxes.copy);
 
-    if (programVisible) setActive(programIndex);
-    else setIntro();
+    mission.style.opacity = state.missionOpacity.toFixed(3);
+    thumbOne.style.opacity = state.thumbOneOpacity.toFixed(3);
+    handoff.style.opacity = state.handoffOpacity.toFixed(3);
+    showcase.style.opacity = state.showcaseOpacity.toFixed(3);
+    showcase.style.color = state.textColor;
+    backgrounds.style.opacity = state.backgroundsOpacity.toFixed(3);
+    if (rail) rail.style.opacity = state.railOpacity.toFixed(3);
 
-    exitLines.forEach((line, index) => {
-      const progress = Math.max(0, Math.min(1, (exitProgress - index * .035) / .72));
-      line.style.transform = `scaleX(${progress.toFixed(3)})`;
+    frames.forEach((frame, index) => {
+      frame.style.opacity = String(state.frameOpacities[index] || 0);
+      frame.classList.toggle('is-active', index === state.activeIndex);
     });
+
+    root.classList.toggle('is-program-loop', state.activeIndex >= 0);
+    setActive(state.activeIndex);
   }
 
   const visualScroll = createVisualScrollEngine({
@@ -114,37 +115,34 @@ export function mountProgramJourney(root) {
     onUpdate: render,
   });
 
-  function onRailClick(event) {
-    const item = event.currentTarget;
-    const index = Number(item.dataset.programIndex);
-    if (!Number.isInteger(index) || index < 0 || index >= frames.length) return;
-    event.preventDefault();
-    window.scrollTo({ top: geometry.documentPosition(index), behavior: 'instant' });
-    visualScroll.sync(geometry.localPosition(index));
-    const href = item.getAttribute('href');
-    if (href && window.location.hash !== href) history.pushState(null, '', href);
-  }
-
   function refreshGeometry() {
-    title.style.removeProperty('transform');
-    geometry.rememberOrigin(introFrame, titleGuide, descriptionGuide);
     geometry.measure();
-    geometry.measureTitleMotion(title);
+    const start = geometry.state(0, frames.length).boxes;
+    const showcaseFinal = geometry.state(.60, frames.length).boxes;
+    baseBoxes = {
+      mission: start.mission,
+      main: start.main,
+      thumbOne: start.thumbOne,
+      thumbTwo: start.thumbTwo,
+      title: showcaseFinal.title,
+      copy: showcaseFinal.copy,
+    };
+
+    setBaseBox(mission, baseBoxes.mission);
+    setBaseBox(main, baseBoxes.main);
+    setBaseBox(thumbOne, baseBoxes.thumbOne);
+    setBaseBox(thumbTwo, baseBoxes.thumbTwo);
+    setBaseBox(titleBox, baseBoxes.title);
+    setBaseBox(copyBox, baseBoxes.copy);
     visualScroll.sync(geometry.readTarget());
   }
 
   function onResize() {
-    integration.sync();
-    refreshGeometry();
-    window.dispatchEvent(new CustomEvent('program:layout'));
-  }
-
-  function onVisionLayout() {
     refreshGeometry();
   }
 
   function onPageShow(event) {
-    if (event.persisted) onResize();
+    if (event.persisted) refreshGeometry();
   }
 
   function destroy(event) {
@@ -152,28 +150,19 @@ export function mountProgramJourney(root) {
     destroyed = true;
     copyMotion.cancel();
     visualScroll.destroy();
-    title.style.removeProperty('transform');
-    framesTrack.style.removeProperty('transform');
-    exit.style.removeProperty('opacity');
-    hud.style.removeProperty('opacity');
-    rail?.style.removeProperty('opacity');
-    root.classList.remove('is-enhanced', 'is-program-visible');
-    integration.destroy();
-    railItems.forEach((item) => item.removeEventListener('click', onRailClick));
     window.removeEventListener('scroll', visualScroll.observe);
     window.removeEventListener('resize', onResize);
-    window.removeEventListener('vision:layout', onVisionLayout);
     window.removeEventListener('pageshow', onPageShow);
     window.removeEventListener('pagehide', destroy);
+    root.classList.remove('is-enhanced', 'is-program-loop');
+    root.style.removeProperty('height');
   }
 
-  railItems.forEach((item) => item.addEventListener('click', onRailClick));
-  visualScroll.sync(geometry.readTarget());
-  window.dispatchEvent(new CustomEvent('program:layout'));
+  refreshGeometry();
   window.addEventListener('scroll', visualScroll.observe, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
-  window.addEventListener('vision:layout', onVisionLayout);
-  window.addEventListener('pageshow', onPageShow);
+  window.addEventListener('pageshow', onPageShow, { passive: true });
   window.addEventListener('pagehide', destroy);
+
   return { destroy };
 }
