@@ -27,11 +27,7 @@ export function mountVisionStory() {
         if (!track) return 1;
         if (wide.matches) {
             const horizontalTravel = Math.max(1, track.scrollWidth - window.innerWidth);
-            const programTravel = Math.max(
-                0,
-                Number(root.dataset.programStoryTravel || 0),
-            );
-            root.style.height = `${window.innerHeight + horizontalTravel + programTravel}px`;
+            root.style.height = `${window.innerHeight + horizontalTravel}px`;
             return horizontalTravel;
         }
         root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
@@ -133,10 +129,6 @@ export function mountVisionStory() {
         resizeTimer = window.setTimeout(rebuildTimeline, 140);
     }
 
-    function onProgramLayout() {
-        if (prepared) rebuildTimeline();
-    }
-
     function onPageShow(event) {
         if (!event.persisted || destroyed) return;
         rebuildTimeline();
@@ -160,7 +152,6 @@ export function mountVisionStory() {
         if (timeline) timeline.destroy();
         window.removeEventListener('scroll', updateTarget);
         window.removeEventListener('resize', onResize);
-        window.removeEventListener('program:layout', onProgramLayout);
         window.removeEventListener('pageshow', onPageShow);
         window.removeEventListener('pagehide', onPageHide);
         root.style.removeProperty('height');
@@ -169,7 +160,6 @@ export function mountVisionStory() {
 
     window.addEventListener('scroll', updateTarget, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
-    window.addEventListener('program:layout', onProgramLayout);
     window.addEventListener('pageshow', onPageShow, { passive: true });
     window.addEventListener('pagehide', onPageHide, { passive: true });
 
