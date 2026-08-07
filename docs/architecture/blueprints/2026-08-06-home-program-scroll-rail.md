@@ -1,121 +1,106 @@
-# Homepage Visi/Misi to Program Blueprint
+# Homepage Vision-to-Program Integrated Pin Blueprint
 
-Status: `DRAFT`
-Updated: 2026-08-07
-Surface: homepage Visi/Misi -> Program
-Current failing SHA: `ed4346f0768add58024aa88748c9a1b94655f2d2`
-Incident: `INC-2026-08-07-HOME-PROGRAM-001`
+State: `OWNER_ACCEPTED / IMPLEMENTED_SOURCE`
+Date: 2026-08-07
+Surface: homepage Visi/Misi → Program
+Source baseline: `9d5dfbe39d84982734ee45c6956a4de464c8811d`
+Batch: `HOME-PROGRAM-020-INTEGRATED-DESKTOP-PIN`
 
-## Acceptance status
+## OWNER GOAL
 
-```text
-ACCEPTED BY: not recorded
-ACCEPTED AT: not recorded
-OWNER STATEMENT: no acceptance of the implemented runtime architecture
-EXPLICITLY ACCEPTED VISIBLE RESULT: preserve Visi/Misi motion, Program white
-canvas/media layering, stable copy layer, full-frame program states, and
-accurate rail navigation
-EXPLICITLY ACCEPTED ARCHITECTURE: none
-```
+Preserve the complete Visi/Misi horizontal motion and the complete Program
+vertical motion without a section boundary interrupting the transition.
+Program copy stays locally owned. Program copy changes only when the related
+media frame has completely occupied the viewport.
 
-The previous `OWNER_ACCEPTED / IMPLEMENTED_SOURCE` label was invalid and is
-withdrawn. Implementation is forbidden while this blueprint remains `DRAFT`.
+## ROOT CAUSE
 
-## Owner-visible goal
+- Separating the two sticky roots removed the final `100vw` destination panel
+  from the Visi/Misi track.
+- Visi/Misi therefore unpinned at its own section boundary before the Program
+  phase could continue inside the same visual stage.
+- Program active copy used midpoint rounding, so the next title and description
+  could appear while the next image was only partly visible.
 
-- Visi/Misi horizontal motion must remain intact.
-- Program must follow without collision or broken section handoff.
-- Program white canvas must behave according to the owner's frame/layer model.
-- title, description, and list belong to an independent copy layer;
-- only the instructed title movement may occur;
-- rail selection must land on the related full media frame;
-- no metadata, counter, layout, timing, dwell, snap, or architecture may be
-  invented.
+## REQUIRED DESKTOP ARCHITECTURE
 
-## Proven failure
+For enhanced widths `>= 1181px`:
 
-Owner screenshots prove the current result violates the goal. They do not prove
-one final technical root cause.
+1. Program remains a complete semantic section with its own title, description,
+   media track, rail, link, and exit.
+2. Runtime integration moves the whole Program section into the existing
+   Visi/Misi horizontal track as its final `100vw` flex panel.
+3. The Visi/Misi root owns one sticky viewport for both phases.
+4. Story height is:
+   `viewport + horizontal travel + Program vertical travel`.
+5. Visi/Misi timeline progress divides only by horizontal travel.
+6. Program local progress begins at:
+   `story start + horizontal travel`.
+7. At that point the Program white intro frame already fills the viewport.
+8. Further native scrolling moves only the Program seven-frame vertical track.
+9. Program HUD remains absolute inside the Program panel and never follows the
+   media transform.
+10. Values begins only after Program exit travel completes.
 
-## Rejected or unproven approaches
+## COMPACT, REDUCED MOTION, AND FALLBACK
 
-- fixed curtain overlay;
-- percentage anchors;
-- cross-section copy reparenting;
-- separate sticky-owner handoff;
-- runtime Program-root reparenting;
-- coupled Vision/Program layout events;
-- midpoint or direction timing rules selected by the agent;
-- source-token tests used as behavior proof.
+- At widths below `1181px`, Program returns to its original sibling location.
+- Compact Visi/Misi and Program keep their existing sequential behavior.
+- Reduced motion does not integrate the sticky owners.
+- Without JavaScript, the original Blade order remains Visi/Misi, Program,
+  Values, with all semantic Program fallback content readable.
+- Resize across the wide boundary moves the complete Program root and
+  immediately recomputes both story geometries.
 
-None may be repeated without new evidence and explicit owner acceptance.
+## FULL-FRAME COPY RULE
 
-## Open gaps
+Physical media movement remains continuous. No hold, snap, or invented pause is
+added.
 
-### PROGRAM-RUNTIME-001
+For visual frame position `p = current / viewport`:
 
-```text
-Unknown: actual Program DOM parent and containing block when failure occurs
-Blocks: ownership architecture
-Evidence: live DOM parent chain, computed styles, rectangles
-Falsifier: Program is proven under the expected owner with stable geometry
-```
+- forward travel uses `floor(p)`;
+- reverse travel uses `ceil(p)`;
+- Program index is the completed visible frame minus the white intro frame;
+- the last non-zero travel direction is retained when the user pauses between
+  frames.
 
-### PROGRAM-RUNTIME-002
+Therefore the next Program title and description cannot activate until its
+image is fully in the viewport, in either direction.
 
-```text
-Unknown: effect of initial #program-scroll-* hash and module mount order
-Blocks: rail/deep-link architecture
-Evidence: reload without hash, reload with hash, click after stable mount,
-scroll/current/target and module-order logs
-```
+## RAIL RULE
 
-### PROGRAM-RUNTIME-003
+For program index `i`:
 
-```text
-Unknown: exact physical media progression required between full frames
-Blocks: track mapping and copy timing
-Evidence: owner-approved storyboard or annotated recording with frame milestones
-```
+- local position is `(i + 1) * viewport height`;
+- integrated document position is:
+  `Vision story start + horizontal travel + local position`;
+- document scroll and visual current synchronize in the same click transaction;
+- the hash updates without browser anchor scrolling a second time.
 
-### PROGRAM-RUNTIME-004
+## FORBIDDEN
 
-```text
-Unknown: smallest stable relationship between Visi/Misi and Program
-Blocks: separate owner versus one shared coordinator
-Evidence: runtime geometry plus adversarial comparison of both designs
-```
+- independent desktop sticky boundaries between Visi/Misi and Program
+- moving only title or description nodes across owners
+- duplicate white curtains
+- midpoint `Math.round` active-frame selection
+- invented frame dwell, scroll snapping, wheel interception, or projected
+  landing
+- visual changes to Values, Gallery, header, or unrelated sections
 
-## Candidate options are not yet decisions
+## PROOF
 
-No option may be implemented until runtime evidence is collected. The eventual
-decision must compare:
+Available source gates:
 
-- separate semantic sections with a proven visual handoff;
-- one static shared story coordinator with child semantic sections;
-- another minimal architecture derived from runtime facts.
+- JavaScript syntax
+- PHP focused syntax
+- CSS brace balance
+- source files at or below 200 lines
+- complete Program-root integration and restoration
+- story height includes horizontal and Program vertical distances
+- horizontal progress excludes Program vertical distance
+- direction-aware completed-frame copy selection
+- exact rail document/visual synchronization
 
-Runtime DOM reparenting is not a default option.
-
-## Mandatory critic
-
-The next proposal must address initial hash, reverse/interrupted scroll, resize,
-short height, zoom, reduced motion, failed enhancement, locale/RTL, BFCache,
-module order, duplicate ownership, rollback, and whether tests verify behavior.
-
-## Proof and promotion
-
-Next implementation must use a candidate branch. Promotion requires:
-
-- automated source/build/test gates;
-- runtime DOM/computed-style/geometry proof;
-- Firefox/Chromium and required WebKit proof;
-- rail and initial-hash proof;
-- forward/reverse/interrupted motion;
-- responsive/locale/accessibility matrix;
-- owner visual acceptance;
-- documented rollback.
-
-## One next step
-
-Collect the read-only runtime reproduction packet. No source changes.
+Browser, build, full test, performance, and owner visual proof remain
+`BLOCKED_BY_MISSING_EVIDENCE` until run.
