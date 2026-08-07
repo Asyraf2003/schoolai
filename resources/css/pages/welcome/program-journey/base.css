@@ -1,116 +1,63 @@
 .program-journey {
-    --program-blue: #0647c8;
     --program-accent: #0ea5e9;
-    --program-step: 100dvh;
-    --program-scroll-distance: 0px;
     position: relative;
     margin: 0;
     padding: 0;
     overflow: visible;
     background: #fff;
-    color: #fff;
+    color: #111;
     isolation: isolate;
 }
 
-.program-journey__anchor {
-    position: absolute;
-    inset-block-start: calc(var(--program-anchor-step) * var(--program-step));
-    inset-inline-start: 0;
-    width: 1px;
-    height: 1px;
-    scroll-margin: 0;
-    pointer-events: none;
-}
-
 .program-journey__sticky,
-.program-journey__viewport,
-.program-journey__frames {
+.program-journey__stage {
     position: relative;
 }
 
-.program-journey.is-enhanced {
-    height: calc(var(--program-step) + var(--program-scroll-distance));
+.program-journey__handoff {
+    display: none;
 }
 
-.program-journey.is-enhanced .program-journey__sticky {
-    position: sticky;
-    inset-block-start: 0;
-    width: 100vw;
-    height: var(--program-step);
-    overflow: hidden;
+.program-journey__showcase {
+    padding: clamp(4rem, 10vw, 9rem) clamp(1.25rem, 8vw, 8rem);
+    background: #fff;
+    color: #111;
 }
 
-.program-journey.is-enhanced .program-journey__viewport {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.program-journey.is-enhanced .program-journey__frames {
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: var(--program-track-height, 700dvh);
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform;
+.program-journey__backgrounds {
+    display: grid;
 }
 
 .program-frame {
     position: relative;
-    width: 100%;
-    min-height: 100svh;
-    min-height: 100dvh;
+    min-height: 70svh;
     margin: 0;
-    padding: 0;
     overflow: hidden;
-}
-
-.program-frame--intro {
-    display: block;
-    background: #fff;
-}
-
-.program-journey.is-enhanced .program-frame {
-    height: var(--program-step);
-    min-height: var(--program-step);
+    background: #101828;
+    color: #fff;
 }
 
 .program-frame__media {
-    position: relative;
-    width: 100vw;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     margin: 0;
     overflow: hidden;
-    border: 0;
-    border-radius: 0;
-    background: #101828;
-    box-shadow: none;
 }
 
 .program-frame__media::after {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(90deg, rgb(4 10 24 / .72), rgb(4 10 24 / .16) 54%, rgb(4 10 24 / .05)),
-        linear-gradient(0deg, rgb(4 10 24 / .58), transparent 48%);
+    background: linear-gradient(0deg, rgb(3 7 18 / .52), rgb(3 7 18 / .06) 58%);
     pointer-events: none;
 }
 
-html[dir="rtl"] .program-frame__media::after {
-    background:
-        linear-gradient(270deg, rgb(4 10 24 / .72), rgb(4 10 24 / .16) 54%, rgb(4 10 24 / .05)),
-        linear-gradient(0deg, rgb(4 10 24 / .58), transparent 48%);
-}
-
-.program-frame__media img {
+.program-frame__media img,
+.program-handoff__image img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: translateZ(0);
 }
 
 .program-frame__fallback {
@@ -140,41 +87,128 @@ html[dir="rtl"] .program-frame__media::after {
     gap: 12px;
     min-height: 44px;
     color: inherit;
-    font-weight: 800;
+    font-weight: 700;
     text-decoration: none;
 }
 
-@media (min-width: 1181px) {
-    html.vision-motion-capable
-    .vision-paper.has-integrated-program
-    .program-journey.is-integrated {
-        flex: 0 0 100vw;
-        width: 100vw;
-        height: 100svh;
-        min-height: 100svh;
-        overflow: hidden;
-        direction: ltr;
-    }
+.program-journey.is-enhanced .program-journey__sticky {
+    position: sticky;
+    inset-block-start: 0;
+    width: 100%;
+    height: 100svh;
+    height: 100dvh;
+    overflow: hidden;
+}
 
-    html[dir="rtl"].vision-motion-capable
-    .vision-paper.has-integrated-program
-    .program-journey.is-integrated {
-        direction: rtl;
-    }
+.program-journey.is-enhanced .program-journey__stage {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #fff;
+}
 
-    html.vision-motion-capable
-    .vision-paper.has-integrated-program
-    .program-journey.is-integrated.is-enhanced {
-        height: 100svh;
-    }
+.program-journey.is-enhanced .program-journey__handoff {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+    will-change: opacity;
+}
 
-    html.vision-motion-capable
-    .vision-paper.has-integrated-program
-    .program-journey.is-integrated.is-enhanced
-    .program-journey__sticky {
-        position: relative;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-    }
+.program-journey.is-enhanced .program-handoff__mission,
+.program-journey.is-enhanced .program-handoff__image {
+    position: absolute;
+    margin: 0;
+    transform-origin: 0 0;
+    will-change: transform, opacity;
+}
+
+.program-journey.is-enhanced .program-handoff__mission {
+    z-index: 4;
+    overflow: hidden;
+    color: #111;
+}
+
+.program-handoff__kicker {
+    margin: 0 0 .38em;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(.82rem, 1vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+.program-handoff__mission-text {
+    margin: 0;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1.5rem, min(2vw, 4.4svh), 3rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -.04em;
+}
+
+.program-journey.is-enhanced .program-handoff__image {
+    z-index: 2;
+    overflow: hidden;
+    background: #e5e7eb;
+}
+
+.program-journey.is-enhanced .program-handoff__image--main {
+    z-index: 1;
+}
+
+.program-journey.is-enhanced .program-journey__backgrounds {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+    will-change: opacity;
+}
+
+.program-journey.is-enhanced .program-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    opacity: 0;
+    will-change: opacity;
+}
+
+.program-journey.is-enhanced .program-frame__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.program-journey.is-enhanced .program-frame__fallback {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+html[dir="rtl"] .program-handoff__mission {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] .program-handoff__kicker,
+html[dir="rtl"] .program-handoff__mission-text {
+    font-family: "Cairo", Arial, sans-serif;
+    letter-spacing: normal;
+}
+
+html[dir="rtl"] .program-handoff__kicker {
+    text-transform: none;
 }
