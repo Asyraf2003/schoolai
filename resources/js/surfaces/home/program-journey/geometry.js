@@ -82,14 +82,16 @@ function interpolateBox(points, progress) {
   return { ...last[1] };
 }
 
-function scaledBox(points, profile, progress, viewport) {
+function scaledBox(points, profile, progress, viewport, rtl) {
   const box = interpolateBox(points, progress);
-  return {
+  const scaled = {
     x: box.x * (viewport.width / profile.width),
     y: box.y * (viewport.height / profile.height),
     w: box.w * (viewport.width / profile.width),
     h: box.h * (viewport.height / profile.height),
   };
+  if (rtl) scaled.x = viewport.width - (scaled.x + scaled.w);
+  return scaled;
 }
 
 function fade(progress, from, to) {
@@ -121,6 +123,7 @@ export function createProgramGeometry(root) {
   let travel = 1;
   let viewport = { width: window.innerWidth, height: window.innerHeight };
   let profile = profiles.wide;
+  let rtl = document.documentElement.dir === 'rtl';
 
   function chooseProfile() {
     if (viewport.width < 768) return profiles.compact;
@@ -133,6 +136,7 @@ export function createProgramGeometry(root) {
       width: Math.max(1, window.innerWidth),
       height: Math.max(1, window.innerHeight),
     };
+    rtl = document.documentElement.dir === 'rtl';
     profile = chooseProfile();
     const travelScreens = viewport.width >= 1181 ? 9 : viewport.width >= 768 ? 8.5 : 8;
     travel = viewport.height * travelScreens;
@@ -153,12 +157,12 @@ export function createProgramGeometry(root) {
     return {
       progress: current,
       boxes: {
-        mission: scaledBox(profile.mission, profile, current, viewport),
-        main: scaledBox(profile.main, profile, current, viewport),
-        thumbOne: scaledBox(profile.thumbOne, profile, current, viewport),
-        thumbTwo: scaledBox(profile.thumbTwo, profile, current, viewport),
-        title: scaledBox(profile.title, profile, current, viewport),
-        copy: scaledBox(profile.copy, profile, current, viewport),
+        mission: scaledBox(profile.mission, profile, current, viewport, rtl),
+        main: scaledBox(profile.main, profile, current, viewport, rtl),
+        thumbOne: scaledBox(profile.thumbOne, profile, current, viewport, rtl),
+        thumbTwo: scaledBox(profile.thumbTwo, profile, current, viewport, rtl),
+        title: scaledBox(profile.title, profile, current, viewport, rtl),
+        copy: scaledBox(profile.copy, profile, current, viewport, rtl),
       },
       missionOpacity: 1 - fade(current, .34, .45),
       thumbOneOpacity: 1 - fade(current, .30, .40),
