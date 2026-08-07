@@ -1,71 +1,43 @@
 @media (max-width: 1180px) {
-    .program-journey__intro-copy,
-    .program-journey__intro-guide {
-        justify-content: center;
-        gap: clamp(1.25rem, 2.5svh, 2rem);
-        padding: calc(var(--nav-h, 72px) + 5svh) clamp(1.25rem, 8vw, 5rem) 6svh;
-        text-align: center;
-    }
-
-    .program-journey__intro-guide h2,
-    .program-journey__intro-copy h2 {
-        width: 100%;
-        font-size: clamp(3.2rem, 7.5vw, 8rem);
-    }
-
-    .program-journey__intro-guide p,
-    .program-journey__copy-slot {
-        width: min(100%, 34rem);
-        margin-inline: auto;
-    }
-
-    .program-journey.is-enhanced .program-journey__title-slot {
-        inset-block-start: calc(var(--nav-h, 72px) + 48px);
-        inset-inline: 18px;
-        width: auto;
-        text-align: center;
-    }
-
-    .program-journey.is-enhanced .program-journey__title-slot h2 {
-        max-width: 16ch;
-        margin-inline: auto;
-        font-size: clamp(2rem, 7.6vw, 4.8rem);
-        transform-origin: center top;
-    }
-
     .program-journey__rail {
-        display: none;
+        display: none !important;
     }
 
-    html[dir="rtl"] .program-journey__intro-copy,
-    html[dir="rtl"] .program-journey__intro-guide {
-        padding: calc(var(--nav-h, 72px) + 5svh) clamp(1.25rem, 8vw, 5rem) 6svh;
-        text-align: center;
+    .program-journey.is-enhanced .program-journey__title-box h2 {
+        font-size: clamp(2.6rem, 8vw, 5.4rem);
+        line-height: .96;
+    }
+
+    .program-journey.is-enhanced .program-journey__copy-box p {
+        font-size: clamp(.95rem, 2vw, 1.2rem);
+    }
+
+    .program-handoff__mission-text {
+        font-size: clamp(1.35rem, 3.5vw, 2.35rem);
     }
 }
 
 @media (min-width: 1024px) and (max-width: 1180px) {
-    .program-journey.is-enhanced .program-journey__title-slot {
-        inset-inline: 17vw;
-    }
-
-    .program-journey__rail {
+    .program-journey.is-enhanced .program-journey__rail {
         inset-block-start: 50%;
         inset-inline-end: 20px;
-        display: block;
+        display: block !important;
         width: 150px;
         transform: translateY(-50%);
     }
 }
 
-@media (max-width: 639px) {
-    .program-journey__intro-guide h2,
-    .program-journey__intro-copy h2 {
-        font-size: clamp(2.5rem, 10vw, 4rem);
+@media (max-width: 767px) {
+    .program-journey.is-enhanced .program-journey__title-box h2 {
+        font-size: clamp(2.35rem, 11vw, 4rem);
     }
 
-    .program-journey.is-enhanced .program-journey__title-slot h2 {
-        font-size: clamp(1.85rem, 9vw, 3rem);
+    .program-handoff__kicker {
+        font-size: .72rem;
+    }
+
+    .program-handoff__mission-text {
+        font-size: clamp(1.2rem, 5.3vw, 1.75rem);
     }
 
     .program-journey__link {
