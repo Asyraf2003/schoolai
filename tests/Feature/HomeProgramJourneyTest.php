@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders one localized Program journey with seven full-screen frames', function (): void {
+it('renders one localized Program journey with a visual handoff and six background frames', function (): void {
     foreach (['id', 'en', 'ar'] as $locale) {
         app()->setLocale($locale);
 
@@ -16,70 +16,65 @@ it('renders one localized Program journey with seven full-screen frames', functi
             ->assertOk()
             ->assertSee('id="program"', false)
             ->assertSee('aria-labelledby="program-journey-title"', false)
-            ->assertSee('data-program-intro-frame', false)
-            ->assertSee('data-program-intro-guide', false)
-            ->assertSee('data-program-title', false)
-            ->assertSee('data-program-description', false)
+            ->assertSee('data-program-handoff', false)
+            ->assertSee('data-program-handoff-mission', false)
+            ->assertSee('data-program-handoff-main', false)
+            ->assertSee('data-program-handoff-thumb-one', false)
+            ->assertSee('data-program-handoff-thumb-two', false)
+            ->assertSee('data-program-backgrounds', false)
+            ->assertSee('data-program-hud-title', false)
+            ->assertSee('data-program-hud-description', false)
             ->assertSee('data-program-sticky', false)
-            ->assertSee('data-program-frames', false)
-            ->assertSee('data-program-exit', false)
-            ->assertDontSee('data-program-origin', false)
-            ->assertDontSee('data-vision-program', false)
+            ->assertDontSee('class="program-journey__anchor"', false)
+            ->assertDontSee('href="#program-scroll-', false)
+            ->assertDontSee('data-program-exit', false)
             ->assertDontSee('data-program-curtain', false)
             ->assertDontSee('<figcaption', false);
 
         $content = $response->getContent();
         preg_match('/<section[^>]+id="program".*?<\/section>/s', $content, $section);
         preg_match_all('/\sdata-program-frame(?:\s|>)/', $section[0] ?? '', $frames);
-        preg_match_all('/class="program-journey__anchor"/', $section[0] ?? '', $anchors);
         preg_match_all('/\sdata-program-rail-item(?:\s|>)/', $section[0] ?? '', $railItems);
 
         expect(count($frames[0]))->toBe(6)
-            ->and(count($anchors[0]))->toBe(6)
             ->and(count($railItems[0]))->toBe(6)
             ->and(substr_count($section[0] ?? '', 'images.unsplash.com'))->toBe(6)
-            ->and(substr_count($section[0] ?? '', 'href="#program-scroll-'))->toBe(6)
             ->and(substr_count($content, 'id="program-journey-title"'))->toBe(1)
             ->and($section[0] ?? '')->not->toContain('00 / 00')
             ->and($section[0] ?? '')->not->toContain('<button');
     }
 });
 
-it('shares one desktop pin while keeping Program media and copy locally owned', function (): void {
+it('keeps Program geometry local and native-scroll driven', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
-    $integration = file_get_contents(resource_path('js/surfaces/home/program-journey/integration.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
     $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
+    $visionController = file_get_contents(resource_path('js/surfaces/home/vision-story/controller.js'));
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
-    $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
 
     expect($controller)
-        ->toContain('createProgramIntegration(root, reducedMotion)')
-        ->toContain('programIndex(current, travelDirection)')
-        ->toContain("addEventListener('vision:layout', onVisionLayout)")
-        ->toContain("behavior: 'instant'")
-        ->toContain('visualScroll.sync(geometry.localPosition(index))')
-        ->not->toContain('handoffIn')
-        ->not->toContain('handoffOut')
-        ->and($integration)
-        ->toContain('visionTrack.appendChild(root)')
-        ->toContain('has-integrated-program')
-        ->toContain("root.classList.add('is-integrated')")
+        ->not->toContain('createProgramIntegration')
+        ->not->toContain('window.scrollTo')
+        ->not->toContain('history.pushState')
+        ->not->toContain("addEventListener('click'")
+        ->not->toContain('vision:layout')
+        ->not->toContain('program:layout')
+        ->and(file_exists(resource_path('js/surfaces/home/program-journey/integration.js')))->toBeFalse()
         ->and($motion)
         ->toContain('lerp(current, target, .08)')
         ->toContain('current = target')
         ->not->toContain('snapTimer')
         ->not->toContain('projected')
         ->and($geometry)
-        ->toContain('story.dataset.programStoryTravel')
-        ->toContain('Math.floor(framePosition)')
-        ->toContain('Math.ceil(framePosition)')
-        ->toContain('documentPosition')
+        ->toContain('[.45, { x: 0, y: 0, w: 1920, h: 965 }]')
+        ->toContain('[.60, { x: 320, y: 300, w: 1280, h: 350 }]')
+        ->toContain("const loop = clamp((progress - .75) / .25)")
+        ->not->toContain('documentPosition')
+        ->not->toContain('programStoryTravel')
+        ->and($visionController)
+        ->not->toContain('programStoryTravel')
+        ->not->toContain('program:layout')
         ->and($base)
-        ->toContain('.vision-paper.has-integrated-program')
-        ->toContain('.program-journey.is-integrated')
-        ->not->toContain('.program-journey__curtain')
-        ->and($hud)
-        ->toContain('position: absolute')
-        ->not->toContain('position: fixed');
+        ->not->toContain('has-integrated-program')
+        ->not->toContain('.program-journey.is-integrated');
 });
