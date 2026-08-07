@@ -1,25 +1,18 @@
 @media (min-width: 1181px) {
-    .program-journey__rail {
+    .program-journey.is-enhanced .program-journey__rail {
         inset-block-start: 50%;
         inset-inline-end: clamp(18px, 2.2vw, 42px);
         width: 190px;
         transform: translateY(-50%);
     }
 
-    html[dir="rtl"] .program-journey.is-enhanced .program-journey__title-slot {
-        inset-inline-start: auto;
-        inset-inline-end: clamp(22px, 4vw, 72px);
-        text-align: right;
-    }
-
-    .program-journey.is-enhanced .program-journey__copy-slot [data-program-description] {
+    .program-journey.is-enhanced .program-journey__copy-box p {
         font-size: clamp(.95rem, 1.25vw, 1.3rem);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .program-journey__rail a i,
-    .program-journey__rail a span {
+    .program-journey__rail [data-program-rail-item] i {
         transition-duration: .01ms !important;
     }
 }
