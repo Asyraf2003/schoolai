@@ -8,6 +8,7 @@
     --program-type-weight: 800;
     --program-type-leading: .75;
     --program-type-tracking: -.055em;
+    --program-handoff-height: clamp(18rem, 28vw, 30rem);
     position: relative;
     min-height: 100svh;
     overflow: hidden;
