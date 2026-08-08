@@ -1,53 +1,34 @@
 # Homepage Program — Kinetic Type Transition Blueprint
 
-Status: `APPROVED_FOR_IMPLEMENTATION`
+Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Date: 2026-08-08
-Owner decision: replace the current Program journey completely.
+Owner decision: replace Program completely with the Codrops kinetic-type template behavior.
 Reference: `https://github.com/codrops/KineticTypePageTransition`
 Reference license: MIT.
 
 ## FACT
 
-- The reference is a click-driven kinetic typography page-transition concept.
-- Its core choreography is: staggered media items -> items fade/translate away -> oversized repeated type scales/rotates and travels laterally -> selected detail enters -> back action reverses the transition.
-- The reference implementation uses GSAP.
-- SchoolAI already owns a dedicated Program Vite entry and four Program JS surface modules plus five Program CSS modules.
-- The homepage supports ID/EN/AR, LTR/RTL, compact and wide layouts, reduced motion, Chromium and WebKit.
-- Program must remain an independent section below About/Visi/Misi.
+- The reference is a click-driven kinetic typography page transition, not a scroll gallery.
+- Its choreography is: staggered media items -> items fade/translate away -> oversized repeated type scales/rotates and travels laterally -> selected detail enters -> back action reverses the transition.
+- The reference uses GSAP `^3.7.1` and `imagesloaded` only for preload handling.
+- The Codrops code is MIT licensed; its Adobe/Typekit font licensing is separate and is not inherited through MIT.
+- SchoolAI Program contains six paths: PG, TK, SD, TQ, MB, LT.
+- Homepage supports ID/EN/AR, LTR/RTL, reduced motion, compact/wide layouts, Chromium and WebKit.
+
+## OWNER CORRECTION
+
+The first SchoolAI implementation translated the Codrops behavior to WAAPI. The owner subsequently chose higher reference fidelity and explicitly approved using the template behavior directly.
+
+Therefore the active implementation now:
+
+- uses GSAP 3.7.1 timing/easing semantics from the reference;
+- preserves the reference scale `2.7`, quarter-turn, line stagger, item exit and article reveal choreography;
+- keeps SchoolAI content, locale ownership, accessibility integration and six-card adaptation;
+- does not copy the Codrops images or Adobe Typekit font.
 
 ## GOAL
 
-Replace the existing scroll-journey Program with a six-program interactive kinetic-type showcase:
-
-1. PG — Playgroup
-2. TK — Kindergarten
-3. SD — Islamic Elementary School
-4. TQ — Qur’an Memorization
-5. MB — Language Partner
-6. LT — Literacy & Library
-
-The idle composition shows all six program cards. Activating one card runs a kinetic typography transition and opens a focused full-viewport program detail. Back/Escape restores the six-card composition.
-
-## REFERENCE TRANSLATION
-
-Adopt:
-
-- staggered media-card composition;
-- repeated oversized kinetic type as the transition field;
-- scale + quarter-turn rotation of the type field;
-- staggered horizontal type-line travel;
-- alternating card exit motion;
-- opposite image-wrap/image reveal for the detail;
-- staggered detail-copy entrance;
-- reversible back transition.
-
-Do not copy:
-
-- Codrops copy, images, fonts or visual identity;
-- global body overflow ownership from the demo;
-- Adobe Typekit dependencies;
-- GSAP dependency when native WAAPI is sufficient;
-- exact colors or dimensions.
+Render six Program cards in the Codrops staggered composition. Activating one card transitions into its full-viewport detail through the kinetic typography field. Back or Escape reverses the sequence and restores the card composition.
 
 ## CONTENT CONTRACT
 
@@ -57,121 +38,100 @@ All public Program copy is locale-owned in:
 - `lang/en/home_program.php`
 - `lang/ar/home_program.php`
 
-Blade contains no locale switch/match for Program public copy.
+Each item owns code, category, title, summary, description and optional next-program code. Blade contains no locale switch/match for public Program copy.
 
-Each item owns:
+## REFERENCE FIDELITY
 
-- code;
-- eyebrow/category;
-- title;
-- summary;
-- full description;
-- optional next program code;
-- remote Unsplash media URL and focal position.
+Adopt directly:
 
-## INTERACTION CONTRACT
+- GSAP timeline model;
+- `power2.inOut`, `power1`, `power3`, `power4`, `expo` and `back` easing roles;
+- type field scale to `2.7`;
+- LTR quarter-turn `-90deg`, mirrored to `+90deg` in RTL;
+- type-line `20% -> -200%` travel with `0.04` stagger, mirrored in RTL;
+- alternating `+25% / -25%` item exit;
+- detail copy entering from `50%` Y with stagger;
+- image wrapper `100% -> 0` and image `-100% -> 0` reveal;
+- reversible close timeline.
 
-Idle:
+Adapt because SchoolAI has six items instead of four:
 
-- six cards are visible and keyboard focusable;
-- wide composition uses a staggered kinetic editorial arrangement;
-- compact composition becomes a readable two-column/one-column flow.
+- desktop item width and vertical interval;
+- localized copy length;
+- responsive compact layout;
+- RTL motion direction;
+- focus trap, Escape handling and focus restoration;
+- Program-local body scroll lock only while detail is open.
 
-Open:
+Do not copy:
 
-- clicked item is recorded as the active item;
-- cards exit with alternating vertical displacement;
-- kinetic type scales and rotates while lines travel across the viewport;
-- selected detail becomes visible before the type transition fully clears;
-- detail copy and image reveal with bounded WAAPI animations;
-- document scroll is locked only while the fixed detail experience is open.
+- Codrops prose/content;
+- Codrops image files;
+- Adobe Typekit kit/fonts;
+- global page identity outside Program.
 
-Close:
+## GSAP DELIVERY
 
-- back button and Escape both close;
-- detail elements exit;
-- kinetic type reverses;
-- cards return;
-- scroll state is restored;
-- keyboard focus returns to the originating card.
+SchoolAI does not add GSAP to `package.json` or `package-lock.json` in this batch. Program lazily requests the same GSAP 3.7.1 runtime from jsDelivr only when the Program enhancer mounts. This keeps the main Vite dependency graph unchanged while preserving reference timing.
 
-## RTL
+If GSAP cannot load, full Program descriptions remain available through the non-enhanced fallback.
 
-- semantic text direction follows document `dir`;
+## MEDIA
+
+Current development media uses six Unsplash URLs. Final production media is expected to move to Cloudflare-delivered school photography.
+
+Recommended Cloudflare contract:
+
+- source originals retained once;
+- delivery variants sized to viewport need;
+- WebP/AVIF negotiation where supported;
+- responsive `srcset`/`sizes` rather than one 2400px file for every device;
+- lazy loading for non-critical Program media;
+- immutable CDN cache headers for versioned assets.
+
+## RTL / LTR
+
+- text direction follows document `dir`;
 - Arabic uses the existing Cairo stack;
-- quarter-turn and lateral type travel mirror direction in RTL;
-- visual media ordering remains the same six-program logical sequence;
-- keyboard behavior is identical.
+- kinetic rotation and lateral line travel mirror under RTL;
+- six-program logical order remains PG -> TK -> SD -> TQ -> MB -> LT;
+- keyboard behavior remains direction-neutral.
 
 ## REDUCED MOTION
 
-With `prefers-reduced-motion: reduce`:
+With `prefers-reduced-motion: reduce`, the kinetic GSAP transition is bypassed and detail state changes immediately while preserving semantic content, dialog focus behavior and Back/Escape controls.
 
-- no kinetic scale/rotation;
-- no large staggered travel;
-- detail opens/closes with immediate state changes or a minimal opacity transition;
-- all content remains available.
+## THIRD-PARTY NOTICE
 
-## NO-JS / FAILURE FALLBACK
+The required MIT copyright and permission notice is stored at:
 
-Before enhancement:
-
-- all six cards remain readable;
-- each card includes its full description in normal document flow;
-- no fixed overlay blocks page navigation.
-
-JS enhancement may hide fallback-only description after mount.
-
-## PERFORMANCE
-
-- no new runtime dependency;
-- use CSS transforms/opacity and WAAPI only;
-- remote images are lazy except where the browser chooses otherwise;
-- animation does not write document scroll each frame;
-- no WebGL;
-- no continuous RAF loop.
+`docs/licenses/CODROPS_KINETIC_TYPE_PAGE_TRANSITION_MIT.md`
 
 ## SCOPE
 
-Allowed:
+Allowed: Program Blade, Program CSS/JS modules, Program locale files, focused Program test, Program blueprint/current-state docs, and the Codrops MIT notice.
 
-- Program Blade;
-- Program CSS modules and their existing entry;
-- Program JS modules and existing entry;
-- focused Program feature test;
-- new Program locale files;
-- Program blueprint/current-state docs.
-
-Forbidden:
-
-- About/Visi/Misi;
-- Hero;
-- Values;
-- Gallery;
-- Articles;
-- navbar/footer;
-- unrelated source-structure failures.
+Forbidden: About/Visi/Misi, Hero, Values, Gallery, Articles, navbar/footer and unrelated source-structure failures.
 
 ## PROOF GATE
 
 Static/local:
 
 - `git diff --check`
+- `php artisan test --filter=HomeProgramJourneyTest`
+- full `php artisan test`
 - `npm run check:structure`
 - `npm run build`
-- focused Program test
-- full `php artisan test`
 
 Runtime:
 
-- six idle cards render;
-- every card opens the correct detail;
-- back and Escape close correctly;
-- focus restoration works;
-- repeated open/close does not leave body scroll locked;
-- ID/EN/AR and RTL are correct;
+- all six cards open the correct detail;
+- back/Escape and focus restoration work;
+- repeated open/close leaves no stale body lock;
+- LTR/RTL kinetic travel is correct;
+- reduced motion is readable;
 - 360 through 1920 widths are usable;
-- Chromium and WebKit forward/reverse interactions are clean;
-- reduced motion remains readable.
+- Chromium and WebKit match the intended Codrops transition character;
+- Cloudflare image migration is measured separately when final assets exist.
 
-Until browser/runtime proof exists, status is `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`.
+Until runtime proof exists, status remains `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`.
