@@ -1,16 +1,17 @@
 .program-kinetic__type {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 50%;
-    z-index: 1;
+    z-index: 3;
     width: 100vmax;
-    height: 100vmax;
+    height: calc(var(--program-handoff-height) + 100svh);
     display: grid;
-    align-content: center;
+    align-content: start;
     justify-content: center;
+    padding-top: calc(var(--program-handoff-height) / 11);
     pointer-events: none;
-    transform: translate(-50%, -50%);
-    transform-origin: center;
+    transform: translateX(-50%);
+    transform-origin: center top;
     will-change: transform;
 }
 
@@ -23,7 +24,15 @@
 .program-kinetic.is-transitioning .program-kinetic__type,
 .program-kinetic.is-detail-open .program-kinetic__type {
     position: fixed;
+    top: 50%;
+    left: 50%;
     z-index: 1202;
+    width: 100vmax;
+    height: 100vmax;
+    align-content: center;
+    padding-top: 0;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
 }
 
 .program-kinetic__detail-layer {
