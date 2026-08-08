@@ -8,7 +8,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
     $expected = [
         'id' => ['Program Kami', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan'],
         'en' => ['Our Programs', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library'],
-        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتابة'],
+        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة'],
     ];
 
     foreach ($expected as $locale => $copy) {
