@@ -1,7 +1,7 @@
 # SchoolAI UI/UX Architecture Index
 
 Status: ACTIVE
-Updated: 2026-07-31
+Updated: 2026-08-08
 
 ## Purpose
 
@@ -38,11 +38,13 @@ Read when relevant:
    - renderer, cinematic scenes, models, shaders, lifecycle, and fallback.
 10. `UI_UX_LUSION_REFERENCE.md`
    - reference analysis and translation into Al Mustaqbal identity.
-11. `UI_UX_BLUEPRINT_TEMPLATE.md`
+11. `UI_UX_AL_MUSTAQBAL_BRAND_INTERACTION_REFERENCE.md`
+   - owner-curated brand-to-visual, motion, interaction, and journey rationale.
+12. `UI_UX_BLUEPRINT_TEMPLATE.md`
     - required surface/scene blueprint before implementation.
-12. `UI_UX_PROMPT_TEMPLATES.md`
+13. `UI_UX_PROMPT_TEMPLATES.md`
     - bounded audit, edit, build, experiment, and continuation prompts.
-13. `UI_UX_HANDOFF_TEMPLATE.md`
+14. `UI_UX_HANDOFF_TEMPLATE.md`
     - durable cross-session and cross-agent transfer.
 
 ## Live typography sources
