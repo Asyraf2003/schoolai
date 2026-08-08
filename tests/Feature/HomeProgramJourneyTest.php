@@ -6,9 +6,9 @@ uses(RefreshDatabase::class);
 
 it('renders six localized kinetic Program cards and details', function (): void {
     $expected = [
-        'id' => ['PROGRAM', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan'],
-        'en' => ['PROGRAM', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library'],
-        'ar' => ['البرامج', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة'],
+        'id' => ['Program Kami', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan'],
+        'en' => ['Our Programs', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library'],
+        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة'],
     ];
 
     foreach ($expected as $locale => $copy) {
@@ -18,6 +18,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
             ->assertOk()
             ->assertSee('id="program"', false)
             ->assertSee('data-program-kinetic', false)
+            ->assertSee('data-program-handoff', false)
             ->assertSee('data-program-type', false)
             ->assertSee('data-program-cards', false)
             ->assertSee('data-program-detail-layer', false)
@@ -37,6 +38,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
             ->and(count($details[0]))->toBe(6)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
+            ->and($programSection)->not->toContain('01—06')
             ->and($programSection)->not->toContain('data-program-sticky')
             ->and($programSection)->not->toContain('data-program-rail')
             ->and($programSection)->not->toContain('data-program-frame');
