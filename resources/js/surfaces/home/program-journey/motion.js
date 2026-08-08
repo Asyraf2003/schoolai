@@ -57,7 +57,9 @@ export class TypeTransition {
           { opacity: 1, duration: 1, ease: 'power1.in' },
           { opacity: 0.05, duration: 1.5, ease: 'power1.in' },
         ],
-      }, 0);
+      }, 0)
+      .set(this.lines, { clearProps: 'opacity,transform' })
+      .set(this.element, { clearProps: 'transform' });
   }
 }
 
