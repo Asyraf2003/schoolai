@@ -33,16 +33,17 @@ it('renders six localized kinetic Program cards and details', function (): void 
         preg_match_all('/\sdata-program-open(?:\s|>)/', $programSection, $triggers);
         preg_match_all('/\sdata-program-detail(?:\s|>)/', $programSection, $details);
         preg_match_all('/\sdata-program-handoff-step="\d+"/', $programSection, $handoffSteps);
+        preg_match_all('/\sdata-program-type(?:\s|>)/', $programSection, $typeFields);
 
         expect(count($cards[0]))->toBe(6)
             ->and(count($triggers[0]))->toBe(6)
             ->and(count($details[0]))->toBe(6)
             ->and(count($handoffSteps[0]))->toBe(11)
+            ->and(count($typeFields[0]))->toBe(1)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
-            ->and(substr_count($programSection, 'program-kinetic__kinetic-line'))->toBe(13)
             ->and(substr_count($programSection, 'class="program-kinetic__summary"'))->toBe(6)
-            ->and($programSection)->toContain('program-kinetic__handoff-type')
+            ->and($programSection)->not->toContain('program-kinetic__handoff-type')
             ->and($programSection)->not->toContain('class="program-kinetic section"')
             ->and($programSection)->not->toContain('class="program-kinetic__meta"')
             ->and($programSection)->not->toContain('class="program-kinetic__eyebrow"')
@@ -54,7 +55,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
     }
 });
 
-it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking', function (): void {
+it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome/program-cards.js'));
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
@@ -74,10 +75,12 @@ it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking'
         ->toContain("ease: 'power2.inOut'")
         ->toContain('scale: 2.7')
         ->toContain('stagger: 0.04')
+        ->toContain("clearProps: 'opacity,transform'")
+        ->toContain("clearProps: 'transform'")
         ->and(file_exists($license))->toBeTrue();
 });
 
-it('blends Vision into Program with one shared kinetic type grammar', function (): void {
+it('blends Vision into one continuous Program kinetic field', function (): void {
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
     $handoff = file_get_contents(resource_path('css/pages/welcome/program-journey/handoff.css'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
@@ -87,22 +90,16 @@ it('blends Vision into Program with one shared kinetic type grammar', function (
         ->toContain('--program-type: #397aa6')
         ->toContain('--program-type-opacity: .16')
         ->toContain('--program-type-size: clamp(7rem, 18.75vh, 15rem)')
-        ->toContain('--program-type-weight: 800')
-        ->toContain('--program-type-leading: .75')
-        ->toContain('--program-type-tracking: -.055em')
-        ->toContain('.program-kinetic__kinetic-line')
-        ->toContain('font-size: var(--program-type-size)')
+        ->toContain('--program-handoff-height: clamp(18rem, 28vw, 30rem)')
         ->and($handoff)
         ->toContain('--handoff-b: var(--program-bg)')
+        ->toContain('height: var(--program-handoff-height)')
         ->toContain('grid-template-rows: repeat(11')
         ->toContain('repeating-linear-gradient(180deg')
-        ->toContain('var(--handoff-a) 0 9px, var(--handoff-b) 9px 10px')
-        ->toContain('var(--handoff-a) 0 1px, var(--handoff-b) 1px 10px')
-        ->not->toContain('font-size: clamp(3.4rem, 8vw, 8rem)')
-        ->not->toContain('radial-gradient(')
-        ->not->toContain('filter: blur(')
-        ->not->toContain('backdrop-filter: blur(')
+        ->not->toContain('.program-kinetic__handoff-type')
         ->and($hud)
-        ->not->toContain('font-size: clamp(7rem, 18.75vh, 15rem)')
-        ->toContain('.program-kinetic__type-line');
+        ->toContain('height: calc(var(--program-handoff-height) + 100svh)')
+        ->toContain('padding-top: calc(var(--program-handoff-height) / 11)')
+        ->toContain('position: fixed')
+        ->not->toContain('font-size: clamp(7rem, 18.75vh, 15rem)');
 });
