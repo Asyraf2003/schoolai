@@ -1,6 +1,7 @@
 @php
   $programContent = trans('home_program');
   $programItems = collect($programContent['items'] ?? [])->values();
+  $programHeadingLines = $programContent['heading_lines'] ?? [$programContent['section_label'] ?? ''];
   $programMedia = [
     ['url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 42%'],
     ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 46%'],
@@ -12,9 +13,21 @@
 @endphp
 
 <section class="program-kinetic section" id="program" aria-labelledby="program-kinetic-title" data-program-kinetic>
+  <div class="program-kinetic__handoff" data-program-handoff aria-hidden="true"></div>
+
   <header class="program-kinetic__header">
-    <h2 id="program-kinetic-title">{{ $programContent['section_label'] ?? 'PROGRAM' }}</h2>
-    <p aria-hidden="true">01—06</p>
+    <h2
+      class="program-kinetic__title"
+      id="program-kinetic-title"
+      data-text-role="display"
+      aria-label="{{ $programContent['section_label'] ?? '' }}"
+    >
+      @foreach ($programHeadingLines as $line)
+        <span class="program-kinetic__title-line program-kinetic__title-line--{{ $loop->iteration }}">
+          <span class="program-kinetic__title-text" aria-hidden="true">{{ $line }}</span>
+        </span>
+      @endforeach
+    </h2>
   </header>
 
   <div class="program-kinetic__type" data-program-type aria-hidden="true">
@@ -50,7 +63,7 @@
     @endforeach
   </div>
 
-  <div class="program-kinetic__detail-layer" data-program-detail-layer role="dialog" aria-modal="true" aria-label="{{ $programContent['section_label'] ?? 'PROGRAM' }}" hidden>
+  <div class="program-kinetic__detail-layer" data-program-detail-layer role="dialog" aria-modal="true" aria-label="{{ $programContent['section_label'] ?? '' }}" hidden>
     <button class="program-kinetic__back" type="button" data-program-back><span aria-hidden="true">←</span><span>{{ $programContent['back'] }}</span></button>
     <div class="program-kinetic__details">
       @foreach ($programItems as $program)

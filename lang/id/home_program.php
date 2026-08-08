@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'section_label' => 'PROGRAM',
+    'section_label' => 'Program Kami',
+    'heading_lines' => ['Program', 'Kami'],
     'back' => 'Kembali ke program',
     'open_item' => 'Buka :program',
     'items' => [

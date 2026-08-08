@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'section_label' => 'البرامج',
+    'section_label' => 'برامجنا',
+    'heading_lines' => ['برامجنا'],
     'back' => 'العودة إلى البرامج',
     'open_item' => 'افتح برنامج :program',
     'items' => [
