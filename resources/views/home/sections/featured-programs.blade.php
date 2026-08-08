@@ -17,15 +17,19 @@
     @for ($handoffStep = 1; $handoffStep <= 11; $handoffStep++)
       <span class="program-kinetic__handoff-step" data-program-handoff-step="{{ $handoffStep }}"></span>
     @endfor
+    <div class="program-kinetic__handoff-type">
+      @for ($line = 0; $line < 5; $line++)
+        @php($typeItem = $programItems[$line % max(1, $programItems->count())] ?? null)
+        <div class="program-kinetic__handoff-type-line">
+          {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }}
+        </div>
+      @endfor
+    </div>
   </div>
 
   <header class="program-kinetic__header">
-    <h2
-      class="program-kinetic__title"
-      id="program-kinetic-title"
-      data-text-role="display"
-      aria-label="{{ $programContent['section_label'] ?? '' }}"
-    >
+    <h2 class="program-kinetic__title" id="program-kinetic-title" data-text-role="display"
+      aria-label="{{ $programContent['section_label'] ?? '' }}">
       @foreach ($programHeadingLines as $line)
         <span class="program-kinetic__title-line program-kinetic__title-line--{{ $loop->iteration }}">
           <span class="program-kinetic__title-text" aria-hidden="true">{{ $line }}</span>
@@ -38,8 +42,7 @@
     @for ($line = 0; $line < 10; $line++)
       @php($typeItem = $programItems[$line % max(1, $programItems->count())] ?? null)
       <div class="program-kinetic__type-line" data-program-type-line>
-        {{ $typeItem['code'] ?? '' }} {{ $typeItem['title'] ?? '' }}
-        {{ $typeItem['code'] ?? '' }} {{ $typeItem['title'] ?? '' }}
+        {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }}
       </div>
     @endfor
   </div>
@@ -48,41 +51,49 @@
     @foreach ($programItems as $program)
       @php($media = $programMedia[$loop->index] ?? $programMedia[0])
       <article class="program-kinetic__card" data-program-card>
-        <button class="program-kinetic__trigger" type="button" data-program-open data-program-index="{{ $loop->index }}" aria-controls="program-detail-{{ strtolower($program['code']) }}" aria-haspopup="dialog" aria-label="{{ __('home_program.open_item', ['program' => $program['title']]) }}">
+        <button class="program-kinetic__trigger" type="button" data-program-open
+          data-program-index="{{ $loop->index }}"
+          aria-controls="program-detail-{{ strtolower($program['code']) }}"
+          aria-haspopup="dialog"
+          aria-label="{{ __('home_program.open_item', ['program' => $program['title']]) }}">
           <span class="program-kinetic__image-wrap">
-            <img src="{{ $media['url'] }}" alt="{{ $program['title'] }}" width="1800" height="1200" loading="lazy" decoding="async" referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $media['position'] }}" />
+            <img src="{{ $media['url'] }}" alt="{{ $program['title'] }}" width="1800" height="1200"
+              loading="lazy" decoding="async" referrerpolicy="strict-origin-when-cross-origin"
+              style="object-position: {{ $media['position'] }}" />
           </span>
           <span class="program-kinetic__caption">
-            <span class="program-kinetic__meta"><b>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</b><span>{{ $program['code'] }}</span></span>
-            <span class="program-kinetic__eyebrow">{{ $program['eyebrow'] }}</span>
             <strong class="program-kinetic__name">{{ $program['title'] }}</strong>
-            <span class="program-kinetic__summary">{{ $program['summary'] }}</span>
-            @if (! empty($program['next']))
-              <span class="program-kinetic__next" aria-hidden="true">→{{ $program['next'] }}</span>
-            @endif
+            <span class="program-kinetic__summary">{{ $program['description'] }}</span>
           </span>
         </button>
-        <p class="program-kinetic__fallback">{{ $program['description'] }}</p>
       </article>
     @endforeach
   </div>
 
-  <div class="program-kinetic__detail-layer" data-program-detail-layer role="dialog" aria-modal="true" aria-label="{{ $programContent['section_label'] ?? '' }}" hidden>
-    <button class="program-kinetic__back" type="button" data-program-back><span aria-hidden="true">←</span><span>{{ $programContent['back'] }}</span></button>
+  <div class="program-kinetic__detail-layer" data-program-detail-layer role="dialog"
+    aria-modal="true" aria-label="{{ $programContent['section_label'] ?? '' }}" hidden>
+    <button class="program-kinetic__back" type="button" data-program-back>
+      <span aria-hidden="true">←</span><span>{{ $programContent['back'] }}</span>
+    </button>
     <div class="program-kinetic__details">
       @foreach ($programItems as $program)
         @php($media = $programMedia[$loop->index] ?? $programMedia[0])
-        <article class="program-kinetic__detail" id="program-detail-{{ strtolower($program['code']) }}" data-program-detail data-program-index="{{ $loop->index }}" hidden>
+        <article class="program-kinetic__detail" id="program-detail-{{ strtolower($program['code']) }}"
+          data-program-detail data-program-index="{{ $loop->index }}" hidden>
           <div class="program-kinetic__detail-copy">
             <span class="program-kinetic__detail-number">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }} / 06</span>
             <p class="program-kinetic__detail-eyebrow">{{ $program['eyebrow'] }}</p>
             <h3>{{ $program['title'] }}</h3>
             <p class="program-kinetic__detail-intro">{{ $program['summary'] }}</p>
             <p class="program-kinetic__detail-description">{{ $program['description'] }}</p>
-            @if (! empty($program['next']))<span class="program-kinetic__detail-next" aria-hidden="true">→{{ $program['next'] }}</span>@endif
+            @if (! empty($program['next']))
+              <span class="program-kinetic__detail-next" aria-hidden="true">→{{ $program['next'] }}</span>
+            @endif
           </div>
           <div class="program-kinetic__detail-image-wrap" data-program-detail-image-wrap>
-            <img src="{{ $media['url'] }}" alt="" width="1800" height="1200" decoding="async" referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $media['position'] }}" data-program-detail-image />
+            <img src="{{ $media['url'] }}" alt="" width="1800" height="1200" decoding="async"
+              referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $media['position'] }}"
+              data-program-detail-image />
           </div>
         </article>
       @endforeach
