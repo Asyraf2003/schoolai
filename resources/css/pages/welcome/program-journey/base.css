@@ -1,8 +1,8 @@
 .program-kinetic {
-    --program-bg: #de5f40;
+    --program-bg: #fff;
     --program-ink: #000;
     --program-muted: rgb(0 0 0 / .7);
-    --program-type-opacity: .05;
+    --program-type-opacity: 1;
     position: relative;
     min-height: 100svh;
     overflow: hidden;
