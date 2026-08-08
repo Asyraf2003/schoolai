@@ -12,7 +12,7 @@
   ];
 @endphp
 
-<section class="program-kinetic section" id="program" aria-labelledby="program-kinetic-title" data-program-kinetic>
+<section class="program-kinetic" id="program" aria-labelledby="program-kinetic-title" data-program-kinetic>
   <div class="program-kinetic__handoff" data-program-handoff aria-hidden="true">
     @for ($handoffStep = 1; $handoffStep <= 11; $handoffStep++)
       <span class="program-kinetic__handoff-step" data-program-handoff-step="{{ $handoffStep }}"></span>
