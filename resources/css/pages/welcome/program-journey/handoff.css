@@ -5,7 +5,7 @@
     z-index: 2;
     display: grid;
     grid-template-rows: repeat(11, minmax(0, 1fr));
-    height: clamp(18rem, 28vw, 30rem);
+    height: var(--program-handoff-height);
     margin-top: -1px;
     overflow: hidden;
     isolation: isolate;
@@ -68,32 +68,4 @@
 
 .program-kinetic__handoff-step:nth-child(11) {
     background: var(--handoff-b);
-}
-
-.program-kinetic__handoff-type {
-    position: absolute;
-    inset: 9.0909% 0 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: hidden;
-    pointer-events: none;
-    mix-blend-mode: normal;
-}
-
-.program-kinetic__handoff-type-line {
-    transform: translateX(-4vw);
-}
-
-.program-kinetic__handoff-type-line:nth-child(even) {
-    transform: translateX(-12vw);
-}
-
-html[dir="rtl"] .program-kinetic__handoff-type-line {
-    transform: translateX(4vw);
-}
-
-html[dir="rtl"] .program-kinetic__handoff-type-line:nth-child(even) {
-    transform: translateX(12vw);
 }
