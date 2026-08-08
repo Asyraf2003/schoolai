@@ -1,53 +1,18 @@
 .program-kinetic__handoff {
     --handoff-a: #f4f1e9;
+    --handoff-b: var(--program-bg);
     position: relative;
     z-index: 2;
     display: grid;
     grid-template-rows: repeat(11, minmax(0, 1fr));
-    height: clamp(11rem, 20vw, 20rem);
+    height: clamp(13rem, 22vw, 22rem);
     margin-top: -1px;
     overflow: hidden;
     isolation: isolate;
-    background: var(--program-bg);
+    background: var(--handoff-b);
     filter: none;
     box-shadow: none;
     backdrop-filter: none;
-}
-
-.program-kinetic__handoff-type {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    overflow: hidden;
-    padding-block: clamp(.25rem, 1vw, .75rem);
-    pointer-events: none;
-    color: var(--program-type);
-    font-size: clamp(3.2rem, 7.6vw, 7.5rem);
-    font-weight: 800;
-    line-height: .72;
-    letter-spacing: -.055em;
-    text-transform: uppercase;
-}
-
-.program-kinetic__handoff-type-line {
-    width: max-content;
-    white-space: nowrap;
-    transform: translateX(-4vw);
-}
-
-.program-kinetic__handoff-type-line:nth-child(even) {
-    transform: translateX(-12vw);
-}
-
-html[dir="rtl"] .program-kinetic__handoff-type-line {
-    transform: translateX(4vw);
-}
-
-html[dir="rtl"] .program-kinetic__handoff-type-line:nth-child(even) {
-    transform: translateX(12vw);
 }
 
 .program-kinetic__handoff-step {
@@ -66,41 +31,78 @@ html[dir="rtl"] .program-kinetic__handoff-type-line:nth-child(even) {
 }
 
 .program-kinetic__handoff-step:nth-child(2) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 9px, transparent 9px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 9px, var(--handoff-b) 9px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(3) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 8px, transparent 8px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 8px, var(--handoff-b) 8px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(4) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 7px, transparent 7px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 7px, var(--handoff-b) 7px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(5) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 6px, transparent 6px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 6px, var(--handoff-b) 6px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(6) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 5px, transparent 5px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 5px, var(--handoff-b) 5px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(7) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 4px, transparent 4px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 4px, var(--handoff-b) 4px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(8) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 3px, transparent 3px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 3px, var(--handoff-b) 3px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(9) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 2px, transparent 2px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 2px, var(--handoff-b) 2px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(10) {
-    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 1px, transparent 1px 10px);
+    background: repeating-linear-gradient(180deg, var(--handoff-a) 0 1px, var(--handoff-b) 1px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(11) {
-    background: transparent;
+    background: var(--handoff-b);
+}
+
+.program-kinetic__handoff-type {
+    position: absolute;
+    inset: 9.0909% 0 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    overflow: hidden;
+    pointer-events: none;
+    color: var(--program-type);
+    opacity: var(--program-type-opacity);
+    font-size: clamp(3.4rem, 8vw, 8rem);
+    font-weight: 800;
+    line-height: .75;
+    letter-spacing: -.055em;
+    text-transform: uppercase;
+    mix-blend-mode: normal;
+}
+
+.program-kinetic__handoff-type-line {
+    width: max-content;
+    white-space: nowrap;
+    transform: translateX(-4vw);
+}
+
+.program-kinetic__handoff-type-line:nth-child(even) {
+    transform: translateX(-12vw);
+}
+
+html[dir="rtl"] .program-kinetic__handoff-type-line {
+    transform: translateX(4vw);
+}
+
+html[dir="rtl"] .program-kinetic__handoff-type-line:nth-child(even) {
+    transform: translateX(12vw);
 }
