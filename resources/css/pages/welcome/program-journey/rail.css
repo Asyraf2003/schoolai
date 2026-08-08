@@ -1,26 +1,45 @@
-.program-kinetic__detail-copy > * { will-change: transform, opacity; }
-.program-kinetic__detail-image-wrap,
-.program-kinetic__detail-image-wrap img { will-change: transform; }
+.program-kinetic.has-gsap .program-kinetic__card,
+.program-kinetic.has-gsap .program-kinetic__header,
+.program-kinetic.has-gsap .program-kinetic__type,
+.program-kinetic.has-gsap .program-kinetic__type-line,
+.program-kinetic.has-gsap .program-kinetic__detail-copy > *,
+.program-kinetic.has-gsap .program-kinetic__detail-image-wrap,
+.program-kinetic.has-gsap .program-kinetic__detail-image-wrap img {
+    will-change: transform, opacity;
+}
 
 .program-kinetic.is-transitioning .program-kinetic__trigger,
-.program-kinetic.is-detail-open .program-kinetic__trigger { pointer-events: none; }
+.program-kinetic.is-detail-open .program-kinetic__trigger {
+    pointer-events: none;
+}
 
 .program-kinetic__trigger,
-.program-kinetic__back { -webkit-tap-highlight-color: transparent; }
+.program-kinetic__back {
+    -webkit-tap-highlight-color: transparent;
+}
 
-@media (hover: hover) {
-    .program-kinetic__trigger:hover .program-kinetic__name {
-        text-decoration: underline;
-        text-decoration-thickness: .06em;
-        text-underline-offset: .15em;
-    }
+.program-kinetic__trigger:hover .program-kinetic__name,
+.program-kinetic__trigger:focus-visible .program-kinetic__name {
+    text-decoration: underline;
+    text-decoration-thickness: .08em;
+    text-underline-offset: .16em;
+}
+
+.program-kinetic.gsap-failed .program-kinetic__trigger {
+    cursor: default;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .program-kinetic__type { display: none; }
-    .program-kinetic__card,
-    .program-kinetic__detail-copy > *,
-    .program-kinetic__detail-image-wrap,
-    .program-kinetic__detail-image-wrap img { will-change: auto; }
-    .program-kinetic__image-wrap img { transition: none; }
+    .program-kinetic *,
+    .program-kinetic *::before,
+    .program-kinetic *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+    }
+
+    .program-kinetic__type {
+        display: none;
+    }
 }
