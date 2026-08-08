@@ -24,6 +24,7 @@ export class TypeTransition {
     this.element = element;
     this.lines = lines;
     this.rtl = rtl;
+    this.restOpacity = Number.parseFloat(window.getComputedStyle(lines[0]).opacity) || 0.16;
   }
 
   in() {
@@ -55,7 +56,7 @@ export class TypeTransition {
       .to(this.lines, {
         keyframes: [
           { opacity: 1, duration: 1, ease: 'power1.in' },
-          { opacity: 0.05, duration: 1.5, ease: 'power1.in' },
+          { opacity: this.restOpacity, duration: 1.5, ease: 'power1.in' },
         ],
       }, 0)
       .set(this.lines, { clearProps: 'opacity,transform' })
