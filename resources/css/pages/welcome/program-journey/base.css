@@ -4,6 +4,10 @@
     --program-muted: rgb(16 47 71 / .72);
     --program-type: #397aa6;
     --program-type-opacity: .16;
+    --program-type-size: clamp(7rem, 18.75vh, 15rem);
+    --program-type-weight: 800;
+    --program-type-leading: .75;
+    --program-type-tracking: -.055em;
     position: relative;
     min-height: 100svh;
     overflow: hidden;
@@ -12,6 +16,20 @@
     color: var(--program-ink);
     font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
+}
+
+.program-kinetic__kinetic-line {
+    width: max-content;
+    white-space: nowrap;
+    color: var(--program-type);
+    opacity: var(--program-type-opacity);
+    font-size: var(--program-type-size);
+    font-weight: var(--program-type-weight);
+    line-height: var(--program-type-leading);
+    letter-spacing: var(--program-type-tracking);
+    text-transform: uppercase;
+    -webkit-text-stroke: 0;
+    paint-order: normal;
 }
 
 .program-kinetic__header {
