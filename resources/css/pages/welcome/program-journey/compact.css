@@ -1,29 +1,48 @@
 @media (max-width: 1023px) {
-    .program-kinetic { min-height: auto; padding-bottom: clamp(3rem, 8vw, 5rem); }
-    .program-kinetic__cards {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: clamp(1.4rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.8rem);
-        padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem);
+    .program-kinetic {
+        padding-bottom: 3rem;
     }
-    .program-kinetic__type-line { font-size: clamp(4.5rem, 16vw, 8rem); }
+
+    .program-kinetic__cards {
+        padding: 0 .5rem 2rem;
+    }
+
+    .program-kinetic__name {
+        font-size: clamp(1rem, 3.6vw, 1.45rem);
+    }
+
     .program-kinetic__detail {
         display: grid;
-        gap: 2rem;
-        padding: 5.5rem clamp(1rem, 5vw, 3rem) 2rem;
+        gap: 1.5rem;
     }
-    .program-kinetic__detail-copy { align-content: end; }
-    .program-kinetic__detail-copy h3 { font-size: clamp(3rem, 13vw, 6.5rem); }
-    .program-kinetic__detail-image-wrap { min-height: 42svh; border-radius: 1rem 1rem 0 0; }
+
+    .program-kinetic__detail-image-wrap {
+        order: -1;
+        height: min(56vw, 28rem);
+    }
+
+    .program-kinetic__detail-copy {
+        width: min(100%, 42rem);
+        padding-bottom: 3rem;
+    }
 }
 
 @media (max-width: 639px) {
-    .program-kinetic__cards { grid-template-columns: 1fr; gap: 2.5rem; padding-inline: clamp(1rem, 6vw, 1.5rem); }
-    .program-kinetic__image-wrap { aspect-ratio: 5 / 4; }
-    .program-kinetic__name { font-size: clamp(1.8rem, 8vw, 2.8rem); }
-    .program-kinetic__summary,
-    .program-kinetic__fallback { max-width: 40rem; font-size: .92rem; }
-    .program-kinetic__detail { gap: 1.4rem; }
-    .program-kinetic__detail-copy h3 { font-size: clamp(3rem, 15vw, 5.2rem); }
-    .program-kinetic__detail-image-wrap { min-height: 36svh; }
+    .program-kinetic__cards {
+        grid-template-columns: 1fr;
+    }
+
+    .program-kinetic__card {
+        width: 100%;
+        margin: 0;
+        padding: 1rem;
+    }
+
+    .program-kinetic__image-wrap img {
+        aspect-ratio: 16 / 11;
+    }
+
+    .program-kinetic__summary {
+        display: block;
+    }
 }
