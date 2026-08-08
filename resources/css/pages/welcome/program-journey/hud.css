@@ -17,7 +17,7 @@
 .program-kinetic__type-line {
     width: max-content;
     white-space: nowrap;
-    color: var(--program-ink);
+    color: #fff;
     opacity: var(--program-type-opacity);
     font-size: clamp(7rem, 18.75vh, 15rem);
     font-weight: 800;
@@ -25,6 +25,8 @@
     letter-spacing: -.055em;
     text-align: center;
     text-transform: uppercase;
+    -webkit-text-stroke: 1px #000;
+    paint-order: stroke fill;
     user-select: none;
     will-change: transform, opacity;
 }
