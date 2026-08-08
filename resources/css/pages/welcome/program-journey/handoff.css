@@ -1,6 +1,7 @@
 .program-kinetic__handoff {
     --handoff-a: #f4f1e9;
     --handoff-b: var(--program-bg);
+    --handoff-line: var(--program-type);
     position: relative;
     z-index: 2;
     display: grid;
@@ -24,6 +25,19 @@
     filter: none;
     box-shadow: none;
     backdrop-filter: none;
+}
+
+.program-kinetic__handoff-step::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        180deg,
+        transparent 0 8px,
+        var(--handoff-line) 8px 10px
+    );
+    opacity: 0;
 }
 
 .program-kinetic__handoff-step:nth-child(1) {
@@ -68,4 +82,40 @@
 
 .program-kinetic__handoff-step:nth-child(11) {
     background: var(--handoff-b);
+}
+
+.program-kinetic__handoff-step:nth-child(2)::after {
+    opacity: .12;
+}
+
+.program-kinetic__handoff-step:nth-child(3)::after {
+    opacity: .22;
+}
+
+.program-kinetic__handoff-step:nth-child(4)::after {
+    opacity: .34;
+}
+
+.program-kinetic__handoff-step:nth-child(5)::after {
+    opacity: .48;
+}
+
+.program-kinetic__handoff-step:nth-child(6)::after {
+    opacity: .62;
+}
+
+.program-kinetic__handoff-step:nth-child(7)::after {
+    opacity: .48;
+}
+
+.program-kinetic__handoff-step:nth-child(8)::after {
+    opacity: .34;
+}
+
+.program-kinetic__handoff-step:nth-child(9)::after {
+    opacity: .22;
+}
+
+.program-kinetic__handoff-step:nth-child(10)::after {
+    opacity: .12;
 }
