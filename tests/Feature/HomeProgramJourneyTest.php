@@ -75,18 +75,23 @@ it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking'
         ->and(file_exists($license))->toBeTrue();
 });
 
-it('uses a sharp eleven-step line halftone handoff into the blue Program field', function (): void {
-    $css = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+it('reveals the blue Program field and kinetic type through the eleven-step sharp handoff', function (): void {
+    $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+    $handoff = file_get_contents(resource_path('css/pages/welcome/program-journey/handoff.css'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
 
-    expect($css)
+    expect($base)
         ->toContain('--program-bg: #e7f5ff')
         ->toContain('--program-type: #397aa6')
+        ->and($handoff)
         ->toContain('grid-template-rows: repeat(11')
-        ->toContain('repeating-linear-gradient(180deg')
-        ->toContain('var(--handoff-a) 0 9px, var(--handoff-b) 9px 10px')
-        ->toContain('var(--handoff-a) 0 1px, var(--handoff-b) 1px 10px')
         ->toContain('.program-kinetic__handoff-type')
+        ->toContain('z-index: 0')
+        ->toContain('repeating-linear-gradient(180deg')
+        ->toContain('var(--handoff-a) 0 9px, transparent 9px 10px')
+        ->toContain('var(--handoff-a) 0 1px, transparent 1px 10px')
+        ->toContain('.program-kinetic__handoff-step:nth-child(11)')
+        ->toContain('background: transparent')
         ->not->toContain('radial-gradient(')
         ->not->toContain('filter: blur(')
         ->not->toContain('backdrop-filter: blur(')
