@@ -1,6 +1,7 @@
 export function collectProgramDom(root) {
   return {
     root,
+    header: root.querySelector('.program-kinetic__header'),
     cardsWrap: root.querySelector('[data-program-cards]'),
     cards: [...root.querySelectorAll('[data-program-card]')],
     triggers: [...root.querySelectorAll('[data-program-open]')],
@@ -26,9 +27,12 @@ export function hideDetails(dom) {
 }
 
 export function detailParts(detail) {
-  if (!detail) return null;
+  if (!detail) return { copy: [], imageWrap: null, image: null };
+
   return {
-    copy: [...detail.querySelectorAll('.program-kinetic__detail-number, .program-kinetic__detail-eyebrow, .program-kinetic__detail-copy h3, .program-kinetic__detail-intro, .program-kinetic__detail-description, .program-kinetic__detail-next')],
+    copy: [...detail.querySelectorAll(
+      '.program-kinetic__detail-number, .program-kinetic__detail-eyebrow, .program-kinetic__detail-copy h3, .program-kinetic__detail-intro, .program-kinetic__detail-description, .program-kinetic__detail-next',
+    )],
     imageWrap: detail.querySelector('[data-program-detail-image-wrap]'),
     image: detail.querySelector('[data-program-detail-image]'),
   };
