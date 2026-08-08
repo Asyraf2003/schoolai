@@ -23,6 +23,10 @@
         font-size: clamp(1rem, 3.6vw, 1.45rem);
     }
 
+    .program-kinetic__summary {
+        display: block;
+    }
+
     .program-kinetic__detail {
         display: grid;
         gap: 1.5rem;
@@ -41,7 +45,11 @@
 
 @media (max-width: 639px) {
     .program-kinetic__handoff {
-        height: clamp(5rem, 22vw, 7rem);
+        height: clamp(9rem, 34vw, 12rem);
+    }
+
+    .program-kinetic__handoff-type {
+        font-size: clamp(2.35rem, 12vw, 4rem);
     }
 
     .program-kinetic__header {
@@ -68,18 +76,11 @@
         aspect-ratio: 4 / 5;
     }
 
-    .program-kinetic__meta,
-    .program-kinetic__eyebrow,
-    .program-kinetic__next {
-        font-size: .68rem;
-    }
-
     .program-kinetic__name {
         font-size: clamp(.95rem, 4.4vw, 1.2rem);
     }
 
     .program-kinetic__summary {
-        display: block;
         font-size: clamp(.72rem, 3.2vw, .86rem);
     }
 }
