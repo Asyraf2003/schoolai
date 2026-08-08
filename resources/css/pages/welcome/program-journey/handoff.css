@@ -32,12 +32,8 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: repeating-linear-gradient(
-        180deg,
-        transparent 0 8px,
-        var(--handoff-line) 8px 10px
-    );
-    opacity: 0;
+    background: none;
+    opacity: .42;
 }
 
 .program-kinetic__handoff-step:nth-child(1) {
@@ -85,37 +81,37 @@
 }
 
 .program-kinetic__handoff-step:nth-child(2)::after {
-    opacity: .12;
+    background: repeating-linear-gradient(180deg, transparent 0 1px, var(--handoff-line) 1px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(3)::after {
-    opacity: .22;
+    background: repeating-linear-gradient(180deg, transparent 0 2px, var(--handoff-line) 2px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(4)::after {
-    opacity: .34;
+    background: repeating-linear-gradient(180deg, transparent 0 3px, var(--handoff-line) 3px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(5)::after {
-    opacity: .48;
+    background: repeating-linear-gradient(180deg, transparent 0 4px, var(--handoff-line) 4px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(6)::after {
-    opacity: .62;
+    background: repeating-linear-gradient(180deg, transparent 0 5px, var(--handoff-line) 5px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(7)::after {
-    opacity: .48;
+    background: repeating-linear-gradient(180deg, transparent 0 6px, var(--handoff-line) 6px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(8)::after {
-    opacity: .34;
+    background: repeating-linear-gradient(180deg, transparent 0 7px, var(--handoff-line) 7px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(9)::after {
-    opacity: .22;
+    background: repeating-linear-gradient(180deg, transparent 0 8px, var(--handoff-line) 8px 10px);
 }
 
 .program-kinetic__handoff-step:nth-child(10)::after {
-    opacity: .12;
+    background: repeating-linear-gradient(180deg, transparent 0 9px, var(--handoff-line) 9px 10px);
 }
