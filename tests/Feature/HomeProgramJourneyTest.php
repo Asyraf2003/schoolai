@@ -32,10 +32,12 @@ it('renders six localized kinetic Program cards and details', function (): void 
         preg_match_all('/\sdata-program-card(?:\s|>)/', $programSection, $cards);
         preg_match_all('/\sdata-program-open(?:\s|>)/', $programSection, $triggers);
         preg_match_all('/\sdata-program-detail(?:\s|>)/', $programSection, $details);
+        preg_match_all('/\sdata-program-handoff-step="\d+"/', $programSection, $handoffSteps);
 
         expect(count($cards[0]))->toBe(6)
             ->and(count($triggers[0]))->toBe(6)
             ->and(count($details[0]))->toBe(6)
+            ->and(count($handoffSteps[0]))->toBe(11)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
             ->and($programSection)->not->toContain('01—06')
@@ -66,4 +68,17 @@ it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking'
         ->toContain('scale: 2.7')
         ->toContain('stagger: 0.04')
         ->and(file_exists($license))->toBeTrue();
+});
+
+it('uses a sharp eleven-step line halftone handoff without optical effects', function (): void {
+    $css = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+
+    expect($css)
+        ->toContain('grid-template-rows: repeat(11')
+        ->toContain('repeating-linear-gradient(90deg')
+        ->toContain('var(--handoff-a) 0 9px, var(--handoff-b) 9px 10px')
+        ->toContain('var(--handoff-a) 0 1px, var(--handoff-b) 1px 10px')
+        ->not->toContain('radial-gradient(')
+        ->not->toContain('filter: blur(')
+        ->not->toContain('backdrop-filter: blur(');
 });
