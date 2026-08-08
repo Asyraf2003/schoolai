@@ -3,26 +3,10 @@
   $arabicHonorific = 'صلى الله عليه وسلم';
   $aboutStory = __('home.about_stats_story');
   $aboutStory = is_array($aboutStory) ? $aboutStory : [];
-  $aboutLabel = match ($locale) {
-    'ar' => 'عن المدرسة',
-    'en' => 'ABOUT',
-    default => 'TENTANG',
-  };
-  $visionLabel = match ($locale) {
-    'ar' => 'الرؤية',
-    'en' => 'VISION',
-    default => 'VISI',
-  };
-  $missionLabel = match ($locale) {
-    'ar' => 'الرسالة',
-    'en' => 'MISSION',
-    default => 'MISI',
-  };
-  $sectionLabel = match ($locale) {
-    'ar' => 'عن المدرسة والرؤية والرسالة',
-    'en' => 'About, Vision and Mission',
-    default => 'Tentang, Visi dan Misi',
-  };
+  $aboutLabel = __('home_vision.labels.about');
+  $visionLabel = __('home_vision.labels.vision');
+  $missionLabel = __('home_vision.labels.mission');
+  $sectionLabel = __('home_vision.section_label');
   $schoolImages = [
     asset('media/home/vision-paper-01.webp'),
     asset('media/home/vision-paper-02.webp'),

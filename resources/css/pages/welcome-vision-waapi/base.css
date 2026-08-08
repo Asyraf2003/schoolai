@@ -40,21 +40,22 @@
 }
 
 .vision-arch__kicker {
-    margin: 0 0 1rem;
+    margin: 0 0 clamp(1.4rem, 3vw, 2.2rem);
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: .76rem;
+    font-size: clamp(2.5rem, 7vw, 5.8rem);
     font-weight: 650;
-    letter-spacing: .2em;
+    line-height: .91;
+    letter-spacing: -.055em;
     text-transform: uppercase;
 }
 
 .vision-arch__heading {
     margin: 0;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(2.5rem, 7vw, 5.8rem);
-    font-weight: 650;
-    line-height: .91;
-    letter-spacing: -.055em;
+    font-size: clamp(1rem, 1.45vw, 1.18rem);
+    font-weight: 400;
+    line-height: 1.62;
+    letter-spacing: normal;
 }
 
 .vision-arch__heading span {
@@ -155,4 +156,5 @@ html[dir="rtl"] .vision-arch__mission-list {
 
 html[dir="rtl"] .vision-arch__kicker {
     text-transform: none;
+    line-height: 1.15;
 }

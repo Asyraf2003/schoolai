@@ -34,8 +34,12 @@
         width: 100%;
     }
 
-    .vision-arch.is-enhanced .vision-arch__heading {
+    .vision-arch.is-enhanced .vision-arch__kicker {
         font-size: clamp(3rem, 4.6vw, 5.7rem);
+    }
+
+    .vision-arch.is-enhanced .vision-arch__heading {
+        font-size: clamp(1rem, 1.45vw, 1.18rem);
     }
 
     .vision-arch.is-enhanced .vision-arch__visuals {
