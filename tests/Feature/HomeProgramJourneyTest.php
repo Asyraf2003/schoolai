@@ -43,10 +43,11 @@ it('renders six localized kinetic Program cards and details', function (): void 
     }
 });
 
-it('implements the Codrops-inspired transition without GSAP or scroll hijacking', function (): void {
+it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome/program-cards.js'));
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
+    $license = base_path('docs/licenses/CODROPS_KINETIC_TYPE_PAGE_TRANSITION_MIT.md');
 
     expect($entry)
         ->toContain('[data-program-kinetic]')
@@ -54,12 +55,13 @@ it('implements the Codrops-inspired transition without GSAP or scroll hijacking'
         ->toContain("event.key === 'Escape'")
         ->toContain('integration.trapTab(event)')
         ->toContain('prefers-reduced-motion')
+        ->toContain("addLabel('typeTransition', 0.3)")
         ->not->toContain('scrollTo(')
         ->not->toContain('wheel')
         ->and($motion)
-        ->toContain('element.animate')
-        ->toContain('scale(2.7)')
-        ->toContain('rotate(')
-        ->toContain('translate3d')
-        ->not->toContain('gsap');
+        ->toContain('gsap@3.7.1')
+        ->toContain("ease: 'power2.inOut'")
+        ->toContain('scale: 2.7')
+        ->toContain('stagger: 0.04')
+        ->and(file_exists($license))->toBeTrue();
 });
