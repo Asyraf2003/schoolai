@@ -10,6 +10,8 @@ function mountReduced(dom, integration) {
     dom.layer.hidden = false;
     showDetail(dom, activeIndex);
     dom.root.classList.add('is-detail-open');
+    dom.back.style.opacity = '1';
+    dom.back.style.pointerEvents = 'auto';
     dom.back.focus({ preventScroll: true });
   };
   const close = () => {
@@ -17,6 +19,8 @@ function mountReduced(dom, integration) {
     dom.layer.hidden = true;
     hideDetails(dom);
     dom.root.classList.remove('is-detail-open');
+    dom.back.style.opacity = '';
+    dom.back.style.pointerEvents = '';
     activeIndex = -1;
     integration.unlock();
   };
@@ -69,10 +73,12 @@ function mountGsap(dom, integration, gsap) {
       .to(dom.header, { duration: 0.8, ease: 'power3', opacity: 0, pointerEvents: 'none' }, 'start')
       .add(typeIn.play(), 'typeTransition')
       .add(() => {
+        gsap.set(dom.back, { pointerEvents: 'auto' });
         dom.layer.hidden = false;
         showDetail(dom, currentItem);
         dom.root.classList.add('is-detail-open');
       }, 'articleOpening')
+      .to(dom.back, { duration: 0.7, opacity: 1 }, 'articleOpening')
       .set(parts.copy, { opacity: 0, y: '50%' }, 'articleOpening')
       .set(parts.imageWrap, { y: '100%' }, 2)
       .set(parts.image, { y: '-100%' }, 2)
@@ -106,6 +112,7 @@ function mountGsap(dom, integration, gsap) {
       .to(parts.imageWrap, { duration: 1, ease: 'power4.in', y: '100%' }, 'start')
       .to(parts.image, { duration: 1, ease: 'power4.in', y: '-100%' }, 'start')
       .add(() => {
+        gsap.set(dom.back, { pointerEvents: 'none' });
         dom.layer.hidden = true;
         hideDetails(dom);
         dom.root.classList.remove('is-detail-open');
@@ -116,8 +123,7 @@ function mountGsap(dom, integration, gsap) {
       }, 'showItems')
       .to(dom.cards, {
         duration: 1, ease: 'power3.inOut', opacity: 1, y: '0%',
-      }, 'showItems')
-      .set(dom.back, { opacity: 1 });
+      }, 'showItems');
   };
 
   const keydown = (event) => {
