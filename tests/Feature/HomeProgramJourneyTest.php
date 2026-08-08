@@ -8,7 +8,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
     $expected = [
         'id' => ['Program Kami', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan'],
         'en' => ['Our Programs', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library'],
-        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة'],
+        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتابة'],
     ];
 
     foreach ($expected as $locale => $copy) {
@@ -75,8 +75,11 @@ it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close',
         ->toContain("ease: 'power2.inOut'")
         ->toContain('scale: 2.7')
         ->toContain('stagger: 0.04')
+        ->toContain('this.restOpacity = Number.parseFloat')
+        ->toContain('opacity: this.restOpacity')
         ->toContain("clearProps: 'opacity,transform'")
         ->toContain("clearProps: 'transform'")
+        ->not->toContain('opacity: 0.05')
         ->and(file_exists($license))->toBeTrue();
 });
 
