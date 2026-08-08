@@ -1,0 +1,57 @@
+<?php
+
+return [
+    'section_label' => 'PROGRAM',
+    'back' => 'Back to programs',
+    'open_item' => 'Open :program',
+    'items' => [
+        [
+            'code' => 'PG',
+            'eyebrow' => 'Early Childhood',
+            'title' => 'Playgroup',
+            'summary' => 'Guided play that builds a sense of security, social skills, and independence.',
+            'description' => 'Warm and purposeful play activities designed to nurture independence, social skills, and curiosity from an early age.',
+            'next' => 'TK',
+        ],
+        [
+            'code' => 'TK',
+            'eyebrow' => 'Childhood Foundation',
+            'title' => 'Kindergarten',
+            'summary' => 'Active learning tailored to each stage of child development.',
+            'description' => 'Early childhood learning that is warm, active, and progressive to prepare children for elementary education.',
+            'next' => 'SD',
+        ],
+        [
+            'code' => 'SD',
+            'eyebrow' => 'Qur’anic Academics',
+            'title' => 'Islamic Elementary School',
+            'summary' => 'An integrated Islamic elementary school that strengthens knowledge and character.',
+            'description' => 'An integrated Islamic elementary education program focused on strengthening academics, character, and Islamic values.',
+            'next' => 'TQ',
+        ],
+        [
+            'code' => 'TQ',
+            'eyebrow' => 'Memorization & Character',
+            'title' => 'Qur’an Memorization',
+            'summary' => 'Qur’an memorization developed alongside consistent character-building habits.',
+            'description' => 'A Qur’an memorization program supported by consistent practice in character, murajaah, and closeness to the Qur’an.',
+            'next' => 'MB',
+        ],
+        [
+            'code' => 'MB',
+            'eyebrow' => 'Arabic & English',
+            'title' => 'Language Partner',
+            'summary' => 'Languages become tools for confidence and global communication.',
+            'description' => 'Arabic and English learning designed to progressively develop global communication skills.',
+            'next' => 'LT',
+        ],
+        [
+            'code' => 'LT',
+            'eyebrow' => 'Reading Culture',
+            'title' => 'Literacy & Library',
+            'summary' => 'A literacy space that nurtures reading interest and independent learning.',
+            'description' => 'A literacy environment that encourages a love of reading and independent learning habits.',
+            'next' => null,
+        ],
+    ],
+];

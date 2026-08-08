@@ -1,75 +1,29 @@
-@media (max-width: 1180px) {
-    .program-journey__intro-copy,
-    .program-journey__intro-guide {
-        justify-content: center;
-        gap: clamp(1.25rem, 2.5svh, 2rem);
-        padding: calc(var(--nav-h, 72px) + 5svh) clamp(1.25rem, 8vw, 5rem) 6svh;
-        text-align: center;
+@media (max-width: 1023px) {
+    .program-kinetic { min-height: auto; padding-bottom: clamp(3rem, 8vw, 5rem); }
+    .program-kinetic__cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(1.4rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.8rem);
+        padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem);
     }
-
-    .program-journey__intro-guide h2,
-    .program-journey__intro-copy h2 {
-        width: 100%;
-        font-size: clamp(3.2rem, 7.5vw, 8rem);
+    .program-kinetic__type-line { font-size: clamp(4.5rem, 16vw, 8rem); }
+    .program-kinetic__detail {
+        display: grid;
+        gap: 2rem;
+        padding: 5.5rem clamp(1rem, 5vw, 3rem) 2rem;
     }
-
-    .program-journey__intro-guide p,
-    .program-journey__copy-slot {
-        width: min(100%, 34rem);
-        margin-inline: auto;
-    }
-
-    .program-journey.is-enhanced .program-journey__title-slot {
-        inset-block-start: calc(var(--nav-h, 72px) + 48px);
-        inset-inline: 18px;
-        width: auto;
-        text-align: center;
-    }
-
-    .program-journey.is-enhanced .program-journey__title-slot h2 {
-        max-width: 16ch;
-        margin-inline: auto;
-        font-size: clamp(2rem, 7.6vw, 4.8rem);
-        transform-origin: center top;
-    }
-
-    .program-journey__rail {
-        display: none;
-    }
-
-    html[dir="rtl"] .program-journey__intro-copy,
-    html[dir="rtl"] .program-journey__intro-guide {
-        padding: calc(var(--nav-h, 72px) + 5svh) clamp(1.25rem, 8vw, 5rem) 6svh;
-        text-align: center;
-    }
-}
-
-@media (min-width: 1024px) and (max-width: 1180px) {
-    .program-journey.is-enhanced .program-journey__title-slot {
-        inset-inline: 17vw;
-    }
-
-    .program-journey__rail {
-        inset-block-start: 50%;
-        inset-inline-end: 20px;
-        display: block;
-        width: 150px;
-        transform: translateY(-50%);
-    }
+    .program-kinetic__detail-copy { align-content: end; }
+    .program-kinetic__detail-copy h3 { font-size: clamp(3rem, 13vw, 6.5rem); }
+    .program-kinetic__detail-image-wrap { min-height: 42svh; border-radius: 1rem 1rem 0 0; }
 }
 
 @media (max-width: 639px) {
-    .program-journey__intro-guide h2,
-    .program-journey__intro-copy h2 {
-        font-size: clamp(2.5rem, 10vw, 4rem);
-    }
-
-    .program-journey.is-enhanced .program-journey__title-slot h2 {
-        font-size: clamp(1.85rem, 9vw, 3rem);
-    }
-
-    .program-journey__link {
-        margin-top: 14px;
-        font-size: .9rem;
-    }
+    .program-kinetic__cards { grid-template-columns: 1fr; gap: 2.5rem; padding-inline: clamp(1rem, 6vw, 1.5rem); }
+    .program-kinetic__image-wrap { aspect-ratio: 5 / 4; }
+    .program-kinetic__name { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+    .program-kinetic__summary,
+    .program-kinetic__fallback { max-width: 40rem; font-size: .92rem; }
+    .program-kinetic__detail { gap: 1.4rem; }
+    .program-kinetic__detail-copy h3 { font-size: clamp(3rem, 15vw, 5.2rem); }
+    .program-kinetic__detail-image-wrap { min-height: 36svh; }
 }

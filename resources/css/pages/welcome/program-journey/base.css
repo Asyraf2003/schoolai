@@ -1,145 +1,114 @@
-.program-journey {
-    --program-blue: #0647c8;
-    --program-accent: #0ea5e9;
-    --program-step: 100dvh;
-    --program-scroll-distance: 0px;
+.program-kinetic {
+    --program-bg: #e9784f;
+    --program-ink: #11110f;
+    --program-paper: #f5f0e7;
+    --program-muted: rgb(17 17 15 / .68);
     position: relative;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    background: #fff;
-    color: #fff;
-    isolation: isolate;
-}
-
-.program-journey__anchor {
-    position: absolute;
-    inset-block-start: calc(var(--program-anchor-step) * var(--program-step));
-    inset-inline-start: 0;
-    width: 1px;
-    height: 1px;
-    scroll-margin: 0;
-    pointer-events: none;
-}
-
-.program-journey__sticky,
-.program-journey__viewport,
-.program-journey__frames {
-    position: relative;
-}
-
-.program-journey.is-enhanced {
-    height: calc(var(--program-step) + var(--program-scroll-distance));
-}
-
-.program-journey.is-enhanced .program-journey__sticky {
-    position: sticky;
-    inset-block-start: 0;
-    width: 100vw;
-    height: var(--program-step);
-    overflow: hidden;
-}
-
-.program-journey.is-enhanced .program-journey__viewport {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.program-journey.is-enhanced .program-journey__frames {
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: var(--program-track-height, 700dvh);
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform;
-}
-
-.program-frame {
-    position: relative;
-    width: 100%;
     min-height: 100svh;
-    min-height: 100dvh;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+    overflow: clip;
+    isolation: isolate;
+    background: var(--program-bg);
+    color: var(--program-ink);
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
 }
 
-.program-frame--intro {
-    display: block;
-    background: #fff;
-}
-
-.program-journey.is-enhanced .program-frame {
-    height: var(--program-step);
-    min-height: var(--program-step);
-}
-
-.program-frame__media {
+.program-kinetic__header {
     position: relative;
-    width: 100vw;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
+    z-index: 4;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: clamp(1rem, 2.4vw, 2rem) clamp(1rem, 2.6vw, 2.5rem);
+    text-transform: uppercase;
+}
+
+.program-kinetic__header h2,
+.program-kinetic__header p { margin: 0; }
+
+.program-kinetic__header h2 {
+    font-size: clamp(.82rem, 1vw, 1rem);
+    letter-spacing: .16em;
+}
+
+.program-kinetic__header p {
+    font-size: .72rem;
+    letter-spacing: .12em;
+}
+
+.program-kinetic__cards { position: relative; z-index: 3; }
+.program-kinetic__card { min-width: 0; will-change: transform, opacity; }
+
+.program-kinetic__trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
     border: 0;
-    border-radius: 0;
-    background: #101828;
-    box-shadow: none;
+    color: inherit;
+    background: transparent;
+    text-align: start;
+    cursor: pointer;
+    font: inherit;
 }
 
-.program-frame__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(90deg, rgb(4 10 24 / .72), rgb(4 10 24 / .16) 54%, rgb(4 10 24 / .05)),
-        linear-gradient(0deg, rgb(4 10 24 / .58), transparent 48%);
-    pointer-events: none;
+.program-kinetic__trigger:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+
+.program-kinetic__image-wrap {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: clamp(.75rem, 1.2vw, 1.1rem);
+    background: rgb(0 0 0 / .1);
 }
 
-html[dir="rtl"] .program-frame__media::after {
-    background:
-        linear-gradient(270deg, rgb(4 10 24 / .72), rgb(4 10 24 / .16) 54%, rgb(4 10 24 / .05)),
-        linear-gradient(0deg, rgb(4 10 24 / .58), transparent 48%);
-}
-
-.program-frame__media img {
+.program-kinetic__image-wrap img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: translateZ(0);
+    transition: transform 520ms cubic-bezier(.22,1,.36,1);
 }
 
-.program-frame__fallback {
-    position: absolute;
-    inset-inline: clamp(20px, 6vw, 96px);
-    inset-block-end: clamp(34px, 8vh, 92px);
-    z-index: 3;
-    max-width: 46rem;
+.program-kinetic__trigger:hover img,
+.program-kinetic__trigger:focus-visible img { transform: scale(1.035); }
+
+.program-kinetic__caption { display: grid; gap: .45rem; padding-top: .85rem; }
+
+.program-kinetic__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: .68rem;
+    letter-spacing: .12em;
 }
 
-.program-frame__fallback h3 {
-    margin: 0 0 14px;
-    font-size: clamp(2.2rem, 6vw, 6rem);
-    line-height: .94;
+.program-kinetic__meta b { font-weight: 750; }
+
+.program-kinetic__eyebrow {
+    margin-top: .25rem;
+    font-size: .7rem;
+    font-weight: 650;
+    letter-spacing: .08em;
+    text-transform: uppercase;
 }
 
-.program-frame__fallback p {
-    max-width: 58ch;
-    margin: 0;
-    line-height: 1.6;
+.program-kinetic__name {
+    font-size: clamp(1.15rem, 1.7vw, 1.75rem);
+    line-height: .96;
+    letter-spacing: -.035em;
 }
 
-.program-frame__fallback a,
-.program-journey__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    min-height: 44px;
-    color: inherit;
-    font-weight: 800;
-    text-decoration: none;
+.program-kinetic__summary {
+    font-size: clamp(.75rem, .88vw, .9rem);
+    line-height: 1.45;
+    color: var(--program-muted);
 }
+
+.program-kinetic__next { margin-top: .3rem; font-size: .72rem; font-weight: 750; letter-spacing: .08em; }
+.program-kinetic__fallback { margin: .8rem 0 0; font-size: .82rem; line-height: 1.55; }
+.program-kinetic.is-enhanced .program-kinetic__fallback { display: none; }
+
+html[dir="rtl"] .program-kinetic { font-family: "Cairo", Arial, sans-serif; }
+html[dir="rtl"] .program-kinetic__header,
+html[dir="rtl"] .program-kinetic__eyebrow,
+html[dir="rtl"] .program-kinetic__meta { letter-spacing: normal; }

@@ -2,7 +2,7 @@ import '../../../css/pages/welcome/program-showcase-desktop.css';
 import { mountProgramJourney } from '../../surfaces/home/program-journey/controller.js';
 
 function startProgramJourney() {
-  var root = document.querySelector('[data-program-journey]');
+  const root = document.querySelector('[data-program-kinetic]');
   if (root) mountProgramJourney(root);
 }
 

@@ -4,56 +4,62 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders one localized Program journey with seven full-screen frames', function (): void {
-    foreach (['id', 'en', 'ar'] as $locale) {
+it('renders six localized kinetic Program cards and details', function (): void {
+    $expected = [
+        'id' => ['PROGRAM', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan'],
+        'en' => ['PROGRAM', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library'],
+        'ar' => ['البرامج', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة'],
+    ];
+
+    foreach ($expected as $locale => $copy) {
         app()->setLocale($locale);
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
-
         $response
             ->assertOk()
             ->assertSee('id="program"', false)
-            ->assertSee('aria-labelledby="program-journey-title"', false)
-            ->assertSee('data-program-intro-frame', false)
-            ->assertSee('data-program-title', false)
-            ->assertSee('data-program-description', false)
-            ->assertSee('data-program-sticky', false)
-            ->assertSee('data-program-frames', false)
-            ->assertSee('data-program-exit', false)
-            ->assertDontSee('data-program-origin', false)
-            ->assertDontSee('data-vision-program', false)
-            ->assertDontSee('data-program-curtain', false);
+            ->assertSee('data-program-kinetic', false)
+            ->assertSee('data-program-type', false)
+            ->assertSee('data-program-cards', false)
+            ->assertSee('data-program-detail-layer', false)
+            ->assertSee('data-program-back', false);
+
+        foreach ($copy as $text) $response->assertSee($text);
 
         $content = $response->getContent();
         preg_match('/<section[^>]+id="program".*?<\/section>/s', $content, $section);
-        preg_match_all('/\sdata-program-frame(?:\s|>)/', $section[0] ?? '', $frames);
-        preg_match_all('/class="program-journey__anchor"/', $section[0] ?? '', $anchors);
-        preg_match_all('/\sdata-program-rail-item(?:\s|>)/', $section[0] ?? '', $railItems);
+        $programSection = $section[0] ?? '';
+        preg_match_all('/\sdata-program-card(?:\s|>)/', $programSection, $cards);
+        preg_match_all('/\sdata-program-open(?:\s|>)/', $programSection, $triggers);
+        preg_match_all('/\sdata-program-detail(?:\s|>)/', $programSection, $details);
 
-        expect(count($frames[0]))->toBe(6)
-            ->and(count($anchors[0]))->toBe(6)
-            ->and(count($railItems[0]))->toBe(6)
-            ->and(substr_count($section[0] ?? '', 'images.unsplash.com'))->toBe(6)
-            ->and(substr_count($section[0] ?? '', 'href="#program-scroll-'))->toBe(6)
-            ->and(substr_count($content, 'id="program-journey-title"'))->toBe(1);
+        expect(count($cards[0]))->toBe(6)
+            ->and(count($triggers[0]))->toBe(6)
+            ->and(count($details[0]))->toBe(6)
+            ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
+            ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
+            ->and($programSection)->not->toContain('data-program-sticky')
+            ->and($programSection)->not->toContain('data-program-rail')
+            ->and($programSection)->not->toContain('data-program-frame');
     }
 });
 
-it('keeps Program independent below the About Vision Mission surface', function (): void {
-    $integration = file_get_contents(resource_path('js/surfaces/home/program-journey/integration.js'));
-    $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
-    $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
-    $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
+it('implements the Codrops-inspired transition without GSAP or scroll hijacking', function (): void {
+    $entry = file_get_contents(resource_path('js/pages/welcome/program-cards.js'));
+    $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
 
-    expect($integration)
-        ->toContain("root.classList.remove('is-integrated')")
-        ->not->toContain('appendChild')
-        ->not->toContain('visionTrack')
-        ->and($geometry)
-        ->not->toContain('programStoryTravel')
-        ->not->toContain('track.scrollWidth - window.innerWidth')
-        ->and($base)
-        ->not->toContain('has-integrated-program')
-        ->not->toContain('.program-journey.is-integrated')
-        ->and(strpos($welcome, "@include('home.sections.vision-mission')"))
-        ->toBeLessThan(strpos($welcome, "@include('home.sections.featured-programs')"));
+    expect($entry)
+        ->toContain('[data-program-kinetic]')
+        ->and($controller)
+        ->toContain("event.key === 'Escape'")
+        ->toContain('integration.trapTab(event)')
+        ->toContain('prefers-reduced-motion')
+        ->not->toContain('scrollTo(')
+        ->not->toContain('wheel')
+        ->and($motion)
+        ->toContain('element.animate')
+        ->toContain('scale(2.7)')
+        ->toContain('rotate(')
+        ->toContain('translate3d')
+        ->not->toContain('gsap');
 });

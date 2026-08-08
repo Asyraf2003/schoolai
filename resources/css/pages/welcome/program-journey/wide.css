@@ -1,25 +1,55 @@
-@media (min-width: 1181px) {
-    .program-journey__rail {
-        inset-block-start: 50%;
-        inset-inline-end: clamp(18px, 2.2vw, 42px);
-        width: 190px;
-        transform: translateY(-50%);
+@media (min-width: 1024px) {
+    .program-kinetic { height: 100svh; min-height: 42rem; }
+    .program-kinetic__header { position: absolute; inset: 0 0 auto; }
+    .program-kinetic__cards {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        align-items: end;
+        gap: clamp(.7rem, 1.2vw, 1.4rem);
+        width: 100%;
+        height: 100%;
+        padding: 8rem clamp(1rem, 2vw, 2rem) clamp(2.5rem, 6vh, 5rem);
     }
-
-    html[dir="rtl"] .program-journey.is-enhanced .program-journey__title-slot {
-        inset-inline-start: auto;
-        inset-inline-end: clamp(22px, 4vw, 72px);
-        text-align: right;
+    .program-kinetic__card { margin-bottom: var(--program-lift, 0); }
+    .program-kinetic__card:nth-child(1) { --program-lift: 0; }
+    .program-kinetic__card:nth-child(2) { --program-lift: 6vh; }
+    .program-kinetic__card:nth-child(3) { --program-lift: 12vh; }
+    .program-kinetic__card:nth-child(4) { --program-lift: 18vh; }
+    .program-kinetic__card:nth-child(5) { --program-lift: 24vh; }
+    .program-kinetic__card:nth-child(6) { --program-lift: 30vh; }
+    .program-kinetic__image-wrap { aspect-ratio: 3 / 4; }
+    .program-kinetic__summary {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
     }
-
-    .program-journey.is-enhanced .program-journey__copy-slot [data-program-description] {
-        font-size: clamp(.95rem, 1.25vw, 1.3rem);
+    .program-kinetic__detail {
+        display: grid;
+        grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+        min-height: 100svh;
+        padding: clamp(6rem, 12vh, 9rem) clamp(2rem, 5vw, 6rem) 0;
+    }
+    .program-kinetic__detail-copy {
+        align-self: center;
+        max-width: 36rem;
+        padding-inline-end: clamp(2rem, 5vw, 5rem);
+    }
+    .program-kinetic__detail-copy h3 { font-size: clamp(4.5rem, 8vw, 8.8rem); }
+    .program-kinetic__detail-intro,
+    .program-kinetic__detail-description { max-width: 34rem; }
+    .program-kinetic__detail-image-wrap {
+        align-self: end;
+        height: min(80svh, 58rem);
+        border-radius: 1.4rem 1.4rem 0 0;
+    }
+    html[dir="rtl"] .program-kinetic__detail-copy {
+        padding-inline-end: 0;
+        padding-inline-start: clamp(2rem, 5vw, 5rem);
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .program-journey__rail a i,
-    .program-journey__rail a span {
-        transition-duration: .01ms !important;
-    }
+@media (min-width: 1536px) {
+    .program-kinetic__cards { gap: 1.35vw; padding-inline: 2.5vw; }
+    .program-kinetic__name { font-size: clamp(1.4rem, 1.55vw, 2rem); }
 }
