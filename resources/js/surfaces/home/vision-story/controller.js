@@ -1,14 +1,13 @@
-import { createVisionTimeline } from './timeline.js';
+import { createVisionGeometry } from './geometry.js';
 import { prepareVisionAssets } from './preparation.js';
-
-const clamp = (value) => Math.max(0, Math.min(1, value));
+import { createVisionTimeline } from './timeline.js';
 
 export function mountVisionStory() {
     const root = document.querySelector('[data-vision-story]');
-    const wide = window.matchMedia('(min-width: 1181px)');
-    if (!root || typeof Element.prototype.animate !== 'function') return null;
+    const wide = window.matchMedia('(min-width: 1024px)');
+    if (!root) return null;
 
-    const track = root.querySelector('[data-vision-track]');
+    const geometry = createVisionGeometry(root);
     let timeline = null;
     let observer = null;
     let resizeTimer = null;
@@ -17,61 +16,29 @@ export function mountVisionStory() {
     let preparing = false;
     let near = false;
     let destroyed = false;
-    let start = 0;
-    let distance = 1;
-    let targetProgress = 0;
-    let renderedProgress = 0;
+    let target = 0;
+    let current = 0;
     let lastFrameTime = performance.now();
 
-    function syncStoryHeight() {
-        if (!track) return 1;
-        if (wide.matches) {
-            const horizontalTravel = Math.max(1, track.scrollWidth - window.innerWidth);
-            const programTravel = Math.max(
-                0,
-                Number(root.dataset.programStoryTravel || 0),
-            );
-            root.style.height = `${window.innerHeight + horizontalTravel + programTravel}px`;
-            return horizontalTravel;
-        }
-        root.style.height = `${Math.max(track.scrollHeight, window.innerHeight + 1)}px`;
-        return Math.max(1, root.offsetHeight - window.innerHeight);
-    }
-
-    function updateProgressTarget() {
-        targetProgress = clamp((window.scrollY - start) / distance);
-    }
-
-    function measure() {
-        const horizontalDistance = syncStoryHeight();
-        const rect = root.getBoundingClientRect();
-        start = window.scrollY + rect.top;
-        distance = wide.matches
-            ? horizontalDistance
-            : Math.max(1, root.offsetHeight - window.innerHeight);
-        updateProgressTarget();
-    }
-
     function render() {
-        if (timeline) timeline.setProgress(renderedProgress);
+        timeline?.setProgress(current);
     }
 
     function tick(now) {
         frame = null;
         if (destroyed || !near || !timeline) return;
-
         const elapsed = Math.min(64, Math.max(1, now - lastFrameTime));
         const alpha = 1 - Math.exp(-elapsed / 88);
-        renderedProgress += (targetProgress - renderedProgress) * alpha;
+        current += (target - current) * alpha;
         lastFrameTime = now;
         render();
 
-        if (Math.abs(targetProgress - renderedProgress) > 0.00015) {
+        if (Math.abs(target - current) > .00015) {
             frame = requestAnimationFrame(tick);
             return;
         }
 
-        renderedProgress = targetProgress;
+        current = target;
         render();
     }
 
@@ -82,45 +49,63 @@ export function mountVisionStory() {
     }
 
     function updateTarget() {
-        if (!prepared || !near || !timeline) return;
-        updateProgressTarget();
+        if (!timeline || !wide.matches) return;
+        target = geometry.readProgress();
         scheduleFrame();
-    }
-
-    function rebuildTimeline() {
-        if (!prepared || destroyed || !root.classList.contains('is-enhanced')) return;
-        if (timeline) timeline.destroy();
-        timeline = null;
-        measure();
-        timeline = createVisionTimeline(root);
-        renderedProgress = targetProgress;
-        render();
-        window.dispatchEvent(new CustomEvent('vision:layout'));
     }
 
     async function prepare() {
-        if (prepared || preparing || destroyed) return;
+        if (prepared || preparing || destroyed || !near || !wide.matches) return;
         preparing = true;
         await prepareVisionAssets(root);
-        if (destroyed) return;
+        if (destroyed || !wide.matches) {
+            preparing = false;
+            return;
+        }
 
         root.classList.add('is-enhanced');
-        measure();
+        geometry.measure();
         timeline = createVisionTimeline(root);
-        renderedProgress = targetProgress;
-        render();
+        target = geometry.readProgress();
+        current = target;
         prepared = true;
         preparing = false;
-        root.classList.remove('is-preparing');
-        window.dispatchEvent(new CustomEvent('vision:layout'));
-        scheduleFrame();
+        render();
+    }
+
+    function disableEnhanced() {
+        if (frame !== null) cancelAnimationFrame(frame);
+        frame = null;
+        timeline?.destroy();
+        timeline = null;
+        prepared = false;
+        root.classList.remove('is-enhanced');
+    }
+
+    function syncMode() {
+        if (!wide.matches) {
+            disableEnhanced();
+            return;
+        }
+        prepare();
+        if (prepared) {
+            geometry.measure();
+            target = geometry.readProgress();
+            current = target;
+            render();
+        }
+    }
+
+    function onResize() {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(syncMode, 140);
     }
 
     function onIntersection(entries) {
         near = entries.some((entry) => entry.isIntersecting);
         root.classList.toggle('is-near', near);
         if (near) {
-            prepare();
+            syncMode();
             updateTarget();
         } else if (frame !== null) {
             cancelAnimationFrame(frame);
@@ -128,62 +113,39 @@ export function mountVisionStory() {
         }
     }
 
-    function onResize() {
-        window.clearTimeout(resizeTimer);
-        resizeTimer = window.setTimeout(rebuildTimeline, 140);
-    }
-
-    function onProgramLayout() {
-        if (prepared) rebuildTimeline();
-    }
-
     function onPageShow(event) {
-        if (!event.persisted || destroyed) return;
-        rebuildTimeline();
-        updateTarget();
+        if (event.persisted) syncMode();
     }
 
-    function onPageHide(event) {
-        if (frame !== null) {
-            cancelAnimationFrame(frame);
-            frame = null;
-        }
-        if (!event.persisted) destroy();
-    }
-
-    function destroy() {
-        if (destroyed) return;
+    function destroy(event) {
+        if (event?.persisted || destroyed) return;
         destroyed = true;
         window.clearTimeout(resizeTimer);
-        if (frame !== null) cancelAnimationFrame(frame);
-        if (observer) observer.disconnect();
-        if (timeline) timeline.destroy();
+        disableEnhanced();
+        observer?.disconnect();
+        root.classList.remove('is-near');
         window.removeEventListener('scroll', updateTarget);
         window.removeEventListener('resize', onResize);
-        window.removeEventListener('program:layout', onProgramLayout);
         window.removeEventListener('pageshow', onPageShow);
-        window.removeEventListener('pagehide', onPageHide);
-        root.style.removeProperty('height');
-        root.classList.remove('is-enhanced', 'is-near', 'is-preparing');
+        window.removeEventListener('pagehide', destroy);
     }
 
     window.addEventListener('scroll', updateTarget, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
-    window.addEventListener('program:layout', onProgramLayout);
-    window.addEventListener('pageshow', onPageShow, { passive: true });
-    window.addEventListener('pagehide', onPageHide, { passive: true });
+    window.addEventListener('pageshow', onPageShow);
+    window.addEventListener('pagehide', destroy);
 
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(onIntersection, {
-            rootMargin: '110% 0px 110% 0px',
+            rootMargin: '90% 0px 90% 0px',
             threshold: 0,
         });
         observer.observe(root);
     } else {
         near = true;
         root.classList.add('is-near');
+        syncMode();
     }
 
-    prepare();
     return { destroy };
 }

@@ -1,65 +1,46 @@
-import {
-    clamp,
-    createPausedAnimation,
-    DURATION,
-    localRange,
-    MOVE_END,
-    MOVE_START,
-    trackTransform,
-} from './geometry.js';
+import { clamp } from './geometry.js';
 
 export function createVisionTimeline(root) {
-    const track = root.querySelector('[data-vision-track]');
-    const frame = root.querySelector('[data-vision-image-frame]');
-    const stack = root.querySelector('[data-vision-image-stack]');
+    const panels = Array.from(root.querySelectorAll('[data-vision-panel]'));
+    const visuals = Array.from(root.querySelectorAll('[data-vision-visual]'));
+    const images = visuals.map((visual) => visual.querySelector('img'));
+    const transitionCount = Math.max(1, visuals.length - 1);
+    let activeIndex = -1;
 
-    if (!track || !frame || !stack) {
-        return {
-            setProgress() {},
-            destroy() {},
-        };
+    function setActive(index) {
+        if (activeIndex === index) return;
+        activeIndex = index;
+        panels.forEach((panel, panelIndex) => {
+            panel.classList.toggle('is-active', panelIndex === index);
+        });
     }
 
-    const horizontal = window.matchMedia('(min-width: 1181px)').matches;
-    const viewportSize = horizontal ? window.innerWidth : window.innerHeight;
-    const trackSize = horizontal ? track.scrollWidth : track.scrollHeight;
-    const endMove = Math.min(0, viewportSize - trackSize);
-    const trackRect = track.getBoundingClientRect();
-    const frameRange = localRange(
-        frame,
-        trackRect,
-        endMove,
-        viewportSize,
-        horizontal,
-    );
-    const animations = [
-        createPausedAnimation(track, [
-            { offset: 0, transform: trackTransform(0, horizontal) },
-            { offset: MOVE_START, transform: trackTransform(0, horizontal) },
-            { offset: MOVE_END, transform: trackTransform(endMove, horizontal) },
-            { offset: 1, transform: trackTransform(endMove, horizontal) },
-        ]),
-        createPausedAnimation(stack, [
-            { offset: 0, transform: 'translate3d(0, 0, 0)' },
-            { offset: frameRange[0], transform: 'translate3d(0, 0, 0)' },
-            {
-                offset: frameRange[1],
-                transform: 'translate3d(0, -50%, 0)',
-                easing: 'cubic-bezier(.22,1,.36,1)',
-            },
-            { offset: 1, transform: 'translate3d(0, -50%, 0)' },
-        ]),
-    ];
+    function setProgress(progress) {
+        const scaled = clamp(progress) * transitionCount;
+        setActive(Math.min(panels.length - 1, Math.floor(scaled + .5)));
 
-    return {
-        setProgress(progress) {
-            const time = clamp(progress) * DURATION;
-            animations.forEach((animation) => {
-                animation.currentTime = time;
-            });
-        },
-        destroy() {
-            animations.forEach((animation) => animation.cancel());
-        },
-    };
+        visuals.forEach((visual, index) => {
+            if (index >= visuals.length - 1) {
+                visual.style.clipPath = 'inset(0 0 0% 0)';
+                return;
+            }
+
+            const transition = clamp(scaled - index);
+            visual.style.clipPath = `inset(0 0 ${(transition * 100).toFixed(3)}% 0)`;
+        });
+
+        images.forEach((image, index) => {
+            if (!image) return;
+            const y = Math.max(-8, Math.min(8, (scaled - index) * 8));
+            image.style.transform = `translate3d(0, ${y.toFixed(3)}%, 0) scale(1.08)`;
+        });
+    }
+
+    function destroy() {
+        panels.forEach((panel) => panel.classList.remove('is-active'));
+        visuals.forEach((visual) => visual.style.removeProperty('clip-path'));
+        images.forEach((image) => image?.style.removeProperty('transform'));
+    }
+
+    return { setProgress, destroy };
 }

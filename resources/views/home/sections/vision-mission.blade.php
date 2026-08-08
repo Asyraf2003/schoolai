@@ -1,6 +1,13 @@
 @php
   $locale = app()->getLocale();
   $arabicHonorific = 'صلى الله عليه وسلم';
+  $aboutStory = __('home.about_stats_story');
+  $aboutStory = is_array($aboutStory) ? $aboutStory : [];
+  $aboutLabel = match ($locale) {
+    'ar' => 'عن المدرسة',
+    'en' => 'ABOUT',
+    default => 'TENTANG',
+  };
   $visionLabel = match ($locale) {
     'ar' => 'الرؤية',
     'en' => 'VISION',
@@ -11,6 +18,11 @@
     'en' => 'MISSION',
     default => 'MISI',
   };
+  $sectionLabel = match ($locale) {
+    'ar' => 'عن المدرسة والرؤية والرسالة',
+    'en' => 'About, Vision and Mission',
+    default => 'Tentang, Visi dan Misi',
+  };
   $schoolImages = [
     asset('media/home/vision-paper-01.webp'),
     asset('media/home/vision-paper-02.webp'),
@@ -19,106 +31,90 @@
 @endphp
 
 <section
-  class="vision-paper"
+  class="vision-arch"
   id="visi-misi"
-  aria-labelledby="vision-paper-title"
+  aria-labelledby="vision-arch-title"
   data-vision-story
 >
-  <div class="vision-paper__pin" data-vision-pin>
-    <div class="vision-paper__track" data-vision-track>
-      <div class="vision-paper__scene" data-vision-intro>
-        <div class="vision-paper__copy-layout">
-          <article
-            class="vision-paper__copy vision-paper__copy--vision"
-            data-vision-copy="vision"
-          >
-            <p class="vision-paper__kicker" data-vision-typography="vision">
-              {{ $visionLabel }}
-            </p>
-            <h2 id="vision-paper-title" class="sr-only">
-              {{ $visiMisi['section_title'] }}
-            </h2>
-            <p
-              class="vision-paper__vision-text"
-              data-vision-typography="vision"
-            >
-              @foreach ($visiMisi['vision']['text_parts'] as $part)
-                @if (! empty($part['mark']))
-                  <strong class="vision-paper__mark vision-paper__mark--{{ $part['mark'] }}">
-                    {{ $part['text'] }}
-                  </strong>
-                @else
-                  {{ $part['text'] }}
-                @endif
-              @endforeach
-            </p>
-          </article>
+  <h2 id="vision-arch-title" class="sr-only">{{ $sectionLabel }}</h2>
 
-          <article
-            class="vision-paper__copy vision-paper__copy--mission"
-            data-vision-copy="mission"
-          >
-            <p class="vision-paper__kicker" data-vision-typography="mission">
-              {{ $missionLabel }}
-            </p>
-            <p
-              class="vision-paper__mission-text"
-              data-vision-mission-text
-              data-vision-typography="mission"
-            >
-              @foreach ($visiMisi['missions'] as $mission)
-                @foreach ($mission['text_parts'] as $part)
-                  @php
-                    $partText = $locale === 'ar'
-                      ? str_replace('ﷺ', $arabicHonorific, $part['text'])
-                      : $part['text'];
-                  @endphp
-                  {{ $partText }}
-                @endforeach
-                @unless ($loop->last) {{ ' ' }} @endunless
-              @endforeach
-            </p>
-          </article>
+  <div class="vision-arch__grid">
+    <div class="vision-arch__stories" data-vision-stories>
+      <article class="vision-arch__story" data-vision-panel="0">
+        <div class="vision-arch__content">
+          <p class="vision-arch__kicker">{{ $aboutLabel }}</p>
+          <h3 class="vision-arch__heading">
+            <span>{{ $aboutStory['headline_line_one'] ?? '' }}</span>
+            <span>{{ $aboutStory['headline_line_two'] ?? '' }}</span>
+          </h3>
+          <p class="vision-arch__description">
+            {{ $aboutStory['description'] ?? '' }}
+          </p>
         </div>
+      </article>
 
-        <figure class="vision-paper__square" data-vision-image-square>
+      <article class="vision-arch__story" data-vision-panel="1">
+        <div class="vision-arch__content">
+          <p class="vision-arch__kicker">{{ $visionLabel }}</p>
+          <h3 class="vision-arch__heading">
+            {{ $visiMisi['vision']['title'] ?? $visiMisi['section_title'] }}
+          </h3>
+          <p class="vision-arch__description vision-arch__description--vision">
+            @foreach ($visiMisi['vision']['text_parts'] ?? [] as $part)
+              @if (! empty($part['mark']))
+                <strong class="vision-arch__mark vision-arch__mark--{{ $part['mark'] }}">
+                  {{ $part['text'] }}
+                </strong>
+              @else
+                {{ $part['text'] }}
+              @endif
+            @endforeach
+          </p>
+        </div>
+      </article>
+
+      <article class="vision-arch__story vision-arch__story--mission" data-vision-panel="2">
+        <div class="vision-arch__content">
+          <p class="vision-arch__kicker">{{ $missionLabel }}</p>
+          <h3 class="vision-arch__heading">
+            {{ $visiMisi['missions_intro']['title'] ?? $missionLabel }}
+          </h3>
+          <ol class="vision-arch__mission-list">
+            @foreach ($visiMisi['missions'] ?? [] as $mission)
+              <li>
+                <h4>{{ $mission['title'] }}</h4>
+                <p>
+                  @foreach ($mission['text_parts'] ?? [] as $part)
+                    @php
+                      $partText = $locale === 'ar'
+                        ? str_replace('ﷺ', $arabicHonorific, $part['text'])
+                        : $part['text'];
+                    @endphp
+                    {{ $partText }}
+                  @endforeach
+                </p>
+              </li>
+            @endforeach
+          </ol>
+        </div>
+      </article>
+    </div>
+
+    <div class="vision-arch__visuals" data-vision-visuals aria-hidden="true">
+      @foreach ($schoolImages as $image)
+        <figure class="vision-arch__visual" data-vision-visual="{{ $loop->index }}">
           <img
-            src="{{ $schoolImages[0] }}"
-            alt="Aktivitas belajar di ruang kelas"
-            width="1600"
-            height="1600"
+            src="{{ $image }}"
+            alt=""
+            width="1920"
+            height="1440"
             loading="lazy"
             decoding="async"
             fetchpriority="low"
             data-vision-art
           />
-
-          <div class="vision-paper__frame" data-vision-image-frame>
-            <div class="vision-paper__image-stack" data-vision-image-stack>
-              <img
-                src="{{ $schoolImages[1] }}"
-                alt="Guru mendampingi kegiatan belajar anak"
-                width="1920"
-                height="1080"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-                data-vision-art
-              />
-              <img
-                src="{{ $schoolImages[2] }}"
-                alt="Anak belajar bersama di kelas"
-                width="1920"
-                height="1080"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-                data-vision-art
-              />
-            </div>
-          </div>
         </figure>
-      </div>
+      @endforeach
     </div>
   </div>
 </section>

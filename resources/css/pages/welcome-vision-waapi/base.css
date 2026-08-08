@@ -1,132 +1,158 @@
-.vision-paper {
+.vision-arch {
     position: relative;
     overflow: clip;
-    background: #fff;
-    color: #111;
+    background: #f4f1e9;
+    color: #151515;
 }
 
-.vision-paper__pin,
-.vision-paper__track,
-.vision-paper__scene {
-    position: relative;
-}
-
-.vision-paper__track {
+.vision-arch__grid {
     display: grid;
+    width: min(100%, 1440px);
+    margin-inline: auto;
+    padding: clamp(4.5rem, 9vw, 8rem) clamp(1rem, 5vw, 4rem);
 }
 
-.vision-paper__scene {
-    min-height: 100svh;
-    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 5rem);
+.vision-arch__stories,
+.vision-arch__visuals {
+    display: contents;
 }
 
-.vision-paper__copy-layout {
+.vision-arch__story,
+.vision-arch__visual {
+    grid-column: 1;
+}
+
+.vision-arch__story {
     display: grid;
-    gap: clamp(3rem, 7vw, 7rem);
+    align-items: center;
+    padding-block: clamp(2.25rem, 7vw, 5rem);
 }
 
-.vision-paper__copy {
-    max-width: 42rem;
+.vision-arch__story[data-vision-panel="0"] { grid-row: 1; }
+.vision-arch__visual[data-vision-visual="0"] { grid-row: 2; }
+.vision-arch__story[data-vision-panel="1"] { grid-row: 3; }
+.vision-arch__visual[data-vision-visual="1"] { grid-row: 4; }
+.vision-arch__story[data-vision-panel="2"] { grid-row: 5; }
+.vision-arch__visual[data-vision-visual="2"] { grid-row: 6; }
+
+.vision-arch__content {
+    width: min(100%, 40rem);
 }
 
-.vision-paper__copy--vision {
-    text-align: center;
-}
-
-.vision-paper__kicker {
-    margin: 0 0 1.25rem;
+.vision-arch__kicker {
+    margin: 0 0 1rem;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 0.82rem;
-    font-weight: 400;
-    letter-spacing: 0.28em;
+    font-size: .76rem;
+    font-weight: 650;
+    letter-spacing: .2em;
     text-transform: uppercase;
 }
 
-.vision-paper__vision-text,
-.vision-paper__mission-text {
+.vision-arch__heading {
     margin: 0;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(1.55rem, 3.2vw, 3.4rem);
-    font-weight: 300;
-    line-height: 1.08;
-    letter-spacing: -0.04em;
+    font-size: clamp(2.5rem, 7vw, 5.8rem);
+    font-weight: 650;
+    line-height: .91;
+    letter-spacing: -.055em;
 }
 
-.vision-paper__vision-text {
-    width: min(100%, 20ch);
-    margin-inline: auto;
+.vision-arch__heading span {
+    display: block;
 }
 
-.vision-paper__reveal-word,
-.vision-paper__reveal-unit {
-    display: inline-block;
+.vision-arch__description {
+    max-width: 38rem;
+    margin: clamp(1.4rem, 3vw, 2.2rem) 0 0;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1rem, 1.45vw, 1.18rem);
+    font-weight: 400;
+    line-height: 1.62;
+    color: rgb(21 21 21 / .72);
 }
 
-.vision-paper__reveal-word {
-    white-space: nowrap;
-}
-
-.vision-paper__reveal-unit {
-    transform-origin: 50% 100%;
-    backface-visibility: hidden;
-}
-
-.vision-paper__mark {
+.vision-arch__mark {
     color: var(--vision-mark-color, currentColor);
     font: inherit;
     font-weight: 700;
 }
 
-.vision-paper__mark--blue { --vision-mark-color: #0369a1; }
-.vision-paper__mark--orange { --vision-mark-color: #c2410c; }
-.vision-paper__mark--green { --vision-mark-color: #15803d; }
-.vision-paper__mark--purple { --vision-mark-color: #7e22ce; }
+.vision-arch__mark--blue { --vision-mark-color: #075985; }
+.vision-arch__mark--orange { --vision-mark-color: #c2410c; }
+.vision-arch__mark--green { --vision-mark-color: #166534; }
+.vision-arch__mark--purple { --vision-mark-color: #6b21a8; }
 
-.vision-paper__square {
-    position: relative;
-    width: min(100%, 44rem);
-    aspect-ratio: 1;
-    margin: 5rem 0 0;
-    overflow: visible;
+.vision-arch__mission-list {
+    margin: clamp(1.5rem, 3vw, 2.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: mission;
 }
 
-.vision-paper__square > img,
-.vision-paper__image-stack img {
+.vision-arch__mission-list li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0 1rem;
+    padding-block: 1rem;
+    border-top: 1px solid rgb(21 21 21 / .2);
+    counter-increment: mission;
+}
+
+.vision-arch__mission-list li::before {
+    content: counter(mission, decimal-leading-zero);
+    grid-row: 1 / span 2;
+    font: 600 .72rem/1.4 "Inter", sans-serif;
+    letter-spacing: .08em;
+}
+
+.vision-arch__mission-list h4,
+.vision-arch__mission-list p {
+    margin: 0;
+}
+
+.vision-arch__mission-list h4 {
+    font-size: .96rem;
+    line-height: 1.3;
+}
+
+.vision-arch__mission-list p {
+    margin-top: .35rem;
+    font-size: .86rem;
+    line-height: 1.55;
+    color: rgb(21 21 21 / .66);
+}
+
+.vision-arch__visual {
+    position: relative;
+    width: 100%;
+    height: clamp(18rem, 66vw, 34rem);
+    margin: 0;
+    overflow: hidden;
+    border-radius: clamp(1rem, 2.2vw, 1.8rem);
+    background: #d8d2c6;
+}
+
+.vision-arch__visual img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 112%;
     object-fit: cover;
+    object-position: center;
+    transform: translate3d(0, -5%, 0) scale(1.035);
 }
 
-.vision-paper__frame {
-    position: absolute;
-    inset-block-start: 50%;
-    inset-inline-start: 42%;
-    width: 72%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    transform: translateY(-50%);
-}
-
-.vision-paper__image-stack {
-    display: grid;
-    grid-template-rows: repeat(2, 50%);
-    width: 100%;
-    height: 200%;
-    transform: translate3d(0, 0, 0);
-}
-
-html[dir="rtl"] .vision-paper__copy {
+html[dir="rtl"] .vision-arch__content {
     direction: rtl;
 }
 
-html[dir="rtl"] .vision-paper__copy--mission {
-    text-align: right;
-}
-
-html[dir="rtl"] .vision-paper__kicker,
-html[dir="rtl"] .vision-paper__vision-text,
-html[dir="rtl"] .vision-paper__mission-text {
+html[dir="rtl"] .vision-arch__kicker,
+html[dir="rtl"] .vision-arch__heading,
+html[dir="rtl"] .vision-arch__description,
+html[dir="rtl"] .vision-arch__mission-list {
     font-family: "Cairo", Arial, sans-serif;
     letter-spacing: normal;
+}
+
+html[dir="rtl"] .vision-arch__kicker {
+    text-transform: none;
 }

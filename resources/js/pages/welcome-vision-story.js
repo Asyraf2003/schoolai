@@ -1,9 +1,6 @@
 const rootElement = document.documentElement;
 const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-const canEnhance = (
-    !motionQuery.matches
-    && typeof Element.prototype.animate === 'function'
-);
+const canEnhance = !motionQuery.matches;
 
 if (canEnhance) rootElement.classList.add('vision-motion-capable');
 
@@ -28,7 +25,6 @@ function loadController() {
 function scheduleAfterHero() {
     if (scheduled || !canEnhance) return;
     scheduled = true;
-
     const run = () => loadController();
 
     if ('requestIdleCallback' in window) {
@@ -41,7 +37,6 @@ function scheduleAfterHero() {
 
 function waitForHeroPresentation() {
     if (!document.querySelector('[data-vision-story]') || !canEnhance) return;
-
     const hero = document.querySelector('[data-hero-slider]');
 
     if (!hero || hero.getAttribute('data-enhanced') === 'true') {

@@ -4,11 +4,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders localized Vision and Mission content without owning Program copy', function (): void {
+it('renders localized About Vision and Mission before Program', function (): void {
     $labels = [
-        'id' => ['vision' => 'VISI', 'mission' => 'MISI'],
-        'en' => ['vision' => 'VISION', 'mission' => 'MISSION'],
-        'ar' => ['vision' => 'الرؤية', 'mission' => 'الرسالة'],
+        'id' => ['about' => 'TENTANG', 'vision' => 'VISI', 'mission' => 'MISI'],
+        'en' => ['about' => 'ABOUT', 'vision' => 'VISION', 'mission' => 'MISSION'],
+        'ar' => ['about' => 'عن المدرسة', 'vision' => 'الرؤية', 'mission' => 'الرسالة'],
     ];
     $missionSnippets = [
         'id' => ['Membentuk generasi Islam berdasarkan', 'baik secara lokal maupun global.'],
@@ -18,40 +18,29 @@ it('renders localized Vision and Mission content without owning Program copy', f
 
     foreach (['id', 'en', 'ar'] as $locale) {
         app()->setLocale($locale);
-
-        $response = $this
-            ->withSession(['locale' => $locale])
-            ->get(route('home'));
+        $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
         $response
             ->assertOk()
             ->assertSee('id="visi-misi"', false)
             ->assertSee('data-vision-story', false)
-            ->assertSee('data-vision-track', false)
-            ->assertSee('data-vision-intro', false)
-            ->assertSee('data-vision-copy="vision"', false)
-            ->assertSee('data-vision-copy="mission"', false)
+            ->assertSee('data-vision-stories', false)
+            ->assertSee('data-vision-visuals', false)
+            ->assertSee($labels[$locale]['about'])
             ->assertSee($labels[$locale]['vision'])
             ->assertSee($labels[$locale]['mission'])
             ->assertSee($missionSnippets[$locale][0])
             ->assertSee($missionSnippets[$locale][1])
-            ->assertSee('data-vision-image-square', false)
-            ->assertSee('data-vision-image-frame', false)
-            ->assertSee('data-vision-image-stack', false)
-            ->assertDontSee('data-vision-program', false)
-            ->assertDontSee('data-program-origin', false)
-            ->assertDontSee('vision-paper__program', false);
+            ->assertDontSee('data-vision-track', false)
+            ->assertDontSee('data-vision-program', false);
 
         $content = $response->getContent();
-
-        expect(substr_count($content, 'data-vision-story'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-track'))->toBe(1)
-            ->and(substr_count($content, 'data-vision-copy='))->toBe(2)
-            ->and(substr_count($content, 'data-vision-typography='))->toBe(4)
+        expect(substr_count($content, 'data-vision-panel='))->toBe(3)
+            ->and(substr_count($content, 'data-vision-visual='))->toBe(3)
             ->and(substr_count($content, 'data-vision-art'))->toBe(3)
             ->and(substr_count($content, 'media/home/vision-paper-'))->toBe(3)
-            ->and(substr_count($content, 'data-vision-program'))->toBe(0)
-            ->and(substr_count($content, 'data-program-origin'))->toBe(0);
+            ->and(strpos($content, 'id="visi-misi"'))
+            ->toBeLessThan(strpos($content, 'id="program"'));
 
         if ($locale === 'ar') {
             expect($content)->toContain('صلى الله عليه وسلم')->not->toContain('ﷺ');
@@ -59,17 +48,22 @@ it('renders localized Vision and Mission content without owning Program copy', f
     }
 });
 
-it('keeps horizontal travel complete before the integrated Program phase begins', function (): void {
+it('uses a native pinned mask reveal without owning document scroll', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/vision-story/controller.js'));
+    $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
     $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($controller)
-        ->toContain('track.scrollWidth - window.innerWidth')
-        ->toContain('root.dataset.programStoryTravel')
-        ->toContain('window.innerHeight + horizontalTravel + programTravel')
-        ->toContain('distance = wide.matches')
-        ->toContain("new CustomEvent('vision:layout')")
+        ->toContain("matchMedia('(min-width: 1024px)')")
+        ->toContain('current += (target - current) * alpha')
+        ->not->toContain('window.scrollTo')
+        ->not->toContain('programStoryTravel')
+        ->not->toContain("new CustomEvent('vision:layout')")
+        ->and($timeline)
+        ->toContain('style.clipPath')
+        ->toContain('translate3d(0, ${y.toFixed(3)}%, 0) scale(1.08)')
         ->and($enhanced)
-        ->not->toContain('430svh')
-        ->not->toContain('vision-paper__program');
+        ->toContain('position: sticky')
+        ->toContain('clip-path: inset(0 0 0% 0)')
+        ->not->toContain('has-integrated-program');
 });

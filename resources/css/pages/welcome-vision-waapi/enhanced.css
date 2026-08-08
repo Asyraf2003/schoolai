@@ -1,128 +1,91 @@
-@media (min-width: 1181px) {
-    .vision-paper__scene {
-        --copy-display-size: clamp(2rem, 2vw, 3rem);
-        --mission-display-size: clamp(1.7rem, min(2vw, 4.4svh), 3rem);
-        --image-height: 100svh;
-        --image-width: calc(var(--image-height) * 11 / 8);
-        --frame-height: calc(var(--image-height) * 2 / 4);
-        --frame-width: calc(var(--frame-height) * 11 / 8);
-        --frame-inside: calc(var(--frame-width) * 2 / 3);
-        --frame-start: calc(var(--image-width) - var(--frame-inside));
-        height: 100svh;
-        min-height: 0;
+@media (min-width: 1024px) {
+    .vision-arch.is-enhanced .vision-arch__grid {
+        grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+        align-items: start;
+        gap: clamp(2.5rem, 5vw, 6.5rem);
+        width: min(92vw, 1320px);
         padding: 0;
     }
 
-    .vision-paper__copy-layout {
-        position: absolute;
-        inset-block-start: 50%;
-        inset-inline-start: 6vw;
+    .vision-arch.is-enhanced .vision-arch__stories,
+    .vision-arch.is-enhanced .vision-arch__visuals {
+        display: block;
+    }
+
+    .vision-arch.is-enhanced .vision-arch__stories {
+        grid-column: 1;
+    }
+
+    .vision-arch.is-enhanced .vision-arch__story {
         display: grid;
-        grid-template-columns: 34vw 34vw;
-        grid-template-areas: "vision mission";
-        align-items: start;
-        gap: 5vw;
-        width: 73vw;
-        height: auto;
-        transform: translateY(-50%);
+        min-height: 100svh;
+        min-height: 100dvh;
+        padding: clamp(6rem, 12vh, 9rem) 0;
+        opacity: .38;
+        transition: opacity 320ms ease;
     }
 
-    .vision-paper__copy--vision {
-        grid-area: vision;
-        align-self: start;
+    .vision-arch.is-enhanced .vision-arch__story.is-active {
+        opacity: 1;
     }
 
-    .vision-paper__copy--mission {
-        grid-area: mission;
-        align-self: start;
-        margin-top: clamp(2.5rem, 8svh, 5rem);
+    .vision-arch.is-enhanced .vision-arch__content {
+        align-self: center;
+        width: 100%;
     }
 
-    html[dir="rtl"] .vision-paper__copy-layout {
-        grid-template-areas: "mission vision";
+    .vision-arch.is-enhanced .vision-arch__heading {
+        font-size: clamp(3rem, 4.6vw, 5.7rem);
     }
 
-    .vision-paper__kicker,
-    .vision-paper__vision-text,
-    .vision-paper__mission-text {
-        font-weight: 300;
-        line-height: 1.08;
-        letter-spacing: -0.04em;
-    }
-
-    .vision-paper__copy--vision .vision-paper__kicker,
-    .vision-paper__vision-text {
-        font-size: var(--copy-display-size);
-    }
-
-    .vision-paper__copy--mission .vision-paper__kicker,
-    .vision-paper__mission-text {
-        font-size: var(--mission-display-size);
-    }
-
-    .vision-paper__kicker {
-        margin: 0 0 0.28em;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-    }
-
-    html[dir="rtl"] .vision-paper__kicker,
-    html[dir="rtl"] .vision-paper__vision-text,
-    html[dir="rtl"] .vision-paper__mission-text {
-        letter-spacing: normal;
-    }
-
-    html[dir="rtl"] .vision-paper__kicker {
-        text-transform: none;
-    }
-
-    .vision-paper__square {
-        position: absolute;
-        inset-block-start: 0;
-        inset-inline-start: 82vw;
-        width: var(--image-width);
-        height: var(--image-height);
-        margin: 0;
-        aspect-ratio: 11 / 8;
-    }
-
-    .vision-paper__frame {
-        z-index: 2;
-        inset-block-start: 50%;
-        inset-inline-start: var(--frame-start);
-        width: var(--frame-width);
-        height: var(--frame-height);
-        aspect-ratio: 11 / 8;
-        transform: translateY(-50%);
-    }
-
-    html.vision-motion-capable .vision-paper.is-enhanced .vision-paper__pin {
+    .vision-arch.is-enhanced .vision-arch__visuals {
         position: sticky;
         inset-block-start: 0;
+        grid-column: 2;
         height: 100svh;
+        height: 100dvh;
         overflow: hidden;
     }
 
-    html.vision-motion-capable .vision-paper.is-enhanced .vision-paper__track {
+    .vision-arch.is-enhanced .vision-arch__visual {
         position: absolute;
-        inset: 0 auto 0 0;
-        display: flex;
-        width: max-content;
-        height: 100svh;
-        direction: ltr;
-        transform: translate3d(0, 0, 0);
+        inset-block-start: 50%;
+        inset-inline: 0;
+        width: 100%;
+        height: min(68svh, 43rem);
+        margin: 0;
+        border-radius: clamp(1.1rem, 1.7vw, 1.6rem);
+        clip-path: inset(0 0 0% 0);
+        transform: translateY(-50%);
+    }
+
+    .vision-arch.is-enhanced .vision-arch__visual[data-vision-visual="0"] { z-index: 3; }
+    .vision-arch.is-enhanced .vision-arch__visual[data-vision-visual="1"] { z-index: 2; }
+    .vision-arch.is-enhanced .vision-arch__visual[data-vision-visual="2"] { z-index: 1; }
+
+    .vision-arch.is-enhanced .vision-arch__visual img {
+        height: 116%;
+        transform: translate3d(0, -8%, 0) scale(1.08);
         backface-visibility: hidden;
     }
 
-    html.vision-motion-capable .vision-paper.is-enhanced .vision-paper__scene {
-        --scene-width: calc(82vw + var(--image-width));
-        z-index: 1;
-        flex: 0 0 var(--scene-width);
-        width: var(--scene-width);
+    .vision-arch.is-enhanced.is-near .vision-arch__visual,
+    .vision-arch.is-enhanced.is-near .vision-arch__visual img {
+        will-change: clip-path, transform;
     }
 
-    .vision-paper.is-enhanced.is-near .vision-paper__track,
-    .vision-paper.is-enhanced.is-near .vision-paper__image-stack {
-        will-change: transform;
+    .vision-arch.is-enhanced .vision-arch__mission-list li {
+        grid-template-columns: 2.2rem 1fr;
+        padding-block: .8rem;
+    }
+
+    .vision-arch.is-enhanced .vision-arch__mission-list p {
+        font-size: clamp(.75rem, .82vw, .9rem);
+    }
+}
+
+@media (min-width: 1280px) {
+    .vision-arch.is-enhanced .vision-arch__grid {
+        grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
     }
 }

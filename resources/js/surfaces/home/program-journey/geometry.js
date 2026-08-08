@@ -37,29 +37,12 @@ export function createProgramGeometry(root, hud, frameCount) {
     applyDescriptionOrigin();
   }
 
-  function integrationContext() {
-    const story = root.closest('[data-vision-story]');
-    const track = story?.querySelector('[data-vision-track]');
-    const integrated = root.classList.contains('is-integrated') && story && track;
-    return { integrated, story, track };
-  }
-
   function measure() {
     const step = Math.max(1, window.innerHeight);
     const trackTravel = Math.max(0, frameCount * step);
     const exitTravel = step;
     const travel = trackTravel + exitTravel;
-    const context = integrationContext();
-    let start = window.scrollY + root.getBoundingClientRect().top;
-
-    if (context.integrated) {
-      const storyStart = window.scrollY + context.story.getBoundingClientRect().top;
-      const horizontalTravel = Math.max(1, context.track.scrollWidth - window.innerWidth);
-      start = storyStart + horizontalTravel;
-      context.story.dataset.programStoryTravel = String(travel);
-      context.story.style.setProperty('--program-story-travel', `${travel}px`);
-      context.story.style.height = `${step + horizontalTravel + travel}px`;
-    }
+    const start = window.scrollY + root.getBoundingClientRect().top;
 
     metrics = { start, step, trackTravel, exitTravel, travel };
     root.style.setProperty('--program-step', `${step}px`);
