@@ -26,7 +26,12 @@
 }
 
 .program-kinetic.gsap-failed .program-kinetic__trigger {
+    pointer-events: none;
     cursor: default;
+}
+
+.program-kinetic.gsap-failed .program-kinetic__fallback {
+    display: block;
 }
 
 @media (prefers-reduced-motion: reduce) {
