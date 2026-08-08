@@ -40,6 +40,11 @@ it('renders six localized kinetic Program cards and details', function (): void 
             ->and(count($handoffSteps[0]))->toBe(11)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
+            ->and(substr_count($programSection, 'class="program-kinetic__summary"'))->toBe(6)
+            ->and($programSection)->toContain('program-kinetic__handoff-type')
+            ->and($programSection)->not->toContain('class="program-kinetic__meta"')
+            ->and($programSection)->not->toContain('class="program-kinetic__eyebrow"')
+            ->and($programSection)->not->toContain('class="program-kinetic__next"')
             ->and($programSection)->not->toContain('01—06')
             ->and($programSection)->not->toContain('data-program-sticky')
             ->and($programSection)->not->toContain('data-program-rail')
@@ -70,15 +75,22 @@ it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking'
         ->and(file_exists($license))->toBeTrue();
 });
 
-it('uses a sharp eleven-step line halftone handoff without optical effects', function (): void {
+it('uses a sharp eleven-step line halftone handoff into the blue Program field', function (): void {
     $css = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+    $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
 
     expect($css)
+        ->toContain('--program-bg: #e7f5ff')
+        ->toContain('--program-type: #397aa6')
         ->toContain('grid-template-rows: repeat(11')
-        ->toContain('repeating-linear-gradient(90deg')
+        ->toContain('repeating-linear-gradient(180deg')
         ->toContain('var(--handoff-a) 0 9px, var(--handoff-b) 9px 10px')
         ->toContain('var(--handoff-a) 0 1px, var(--handoff-b) 1px 10px')
+        ->toContain('.program-kinetic__handoff-type')
         ->not->toContain('radial-gradient(')
         ->not->toContain('filter: blur(')
-        ->not->toContain('backdrop-filter: blur(');
+        ->not->toContain('backdrop-filter: blur(')
+        ->and($hud)
+        ->toContain('color: var(--program-type)')
+        ->toContain('-webkit-text-stroke: 0');
 });
