@@ -18,19 +18,43 @@
     z-index: 2;
     height: clamp(7rem, 12vw, 12rem);
     overflow: hidden;
-    background: linear-gradient(to bottom, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / .72) 46%, #fff 100%);
+    background: linear-gradient(
+        to bottom,
+        #f4f1e9 0%,
+        #f7f5ef 34%,
+        #fbfaf7 68%,
+        #fff 100%
+    );
 }
 
-.program-kinetic__handoff::before {
+.program-kinetic__handoff::before,
+.program-kinetic__handoff::after {
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        repeating-linear-gradient(90deg, rgb(0 0 0 / .22) 0 1px, transparent 1px 5px),
-        repeating-linear-gradient(0deg, rgb(0 0 0 / .08) 0 1px, transparent 1px 8px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 72%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 72%, transparent 100%);
-    opacity: .48;
+    pointer-events: none;
+}
+
+.program-kinetic__handoff::before {
+    background: radial-gradient(
+        circle,
+        rgb(222 216 201 / .96) 0 1px,
+        transparent 1.25px
+    ) 0 0 / 4px 4px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 18%, transparent 88%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 18%, transparent 88%);
+    opacity: .82;
+}
+
+.program-kinetic__handoff::after {
+    background: radial-gradient(
+        circle,
+        rgb(255 255 255 / .98) 0 1px,
+        transparent 1.25px
+    ) 2px 2px / 4px 4px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 6%, #000 44%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 6%, #000 44%, #000 100%);
+    opacity: .9;
 }
 
 .program-kinetic__header {
