@@ -18,9 +18,9 @@
       <span class="program-kinetic__handoff-step" data-program-handoff-step="{{ $handoffStep }}"></span>
     @endfor
     <div class="program-kinetic__handoff-type">
-      @for ($line = 0; $line < 5; $line++)
+      @for ($line = 0; $line < 3; $line++)
         @php($typeItem = $programItems[$line % max(1, $programItems->count())] ?? null)
-        <div class="program-kinetic__handoff-type-line">
+        <div class="program-kinetic__kinetic-line program-kinetic__handoff-type-line">
           {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }}
         </div>
       @endfor
@@ -41,7 +41,7 @@
   <div class="program-kinetic__type" data-program-type aria-hidden="true">
     @for ($line = 0; $line < 10; $line++)
       @php($typeItem = $programItems[$line % max(1, $programItems->count())] ?? null)
-      <div class="program-kinetic__type-line" data-program-type-line>
+      <div class="program-kinetic__kinetic-line program-kinetic__type-line" data-program-type-line>
         {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }}
       </div>
     @endfor
