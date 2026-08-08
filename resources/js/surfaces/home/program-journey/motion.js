@@ -1,95 +1,85 @@
-const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+const GSAP_SRC = 'https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js';
+let gsapRequest = null;
 
-async function animateTo(element, keyframes, options, reduced) {
-  if (!element) return;
-  const finalFrame = keyframes[keyframes.length - 1];
-  if (reduced || !element.animate) {
-    Object.assign(element.style, finalFrame);
-    return;
+export function loadGsap() {
+  if (window.gsap) return Promise.resolve(window.gsap);
+  if (gsapRequest) return gsapRequest;
+
+  gsapRequest = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = GSAP_SRC;
+    script.async = true;
+    script.dataset.programGsap = 'true';
+    script.onload = () => window.gsap ? resolve(window.gsap) : reject(new Error('GSAP unavailable'));
+    script.onerror = () => reject(new Error('Failed to load GSAP'));
+    document.head.appendChild(script);
+  });
+
+  return gsapRequest;
+}
+
+export class TypeTransition {
+  constructor(gsap, element, lines, rtl = false) {
+    this.gsap = gsap;
+    this.element = element;
+    this.lines = lines;
+    this.rtl = rtl;
   }
-  const animation = element.animate(keyframes, { fill: 'forwards', ...options });
-  try {
-    await animation.finished;
-  } catch {
-    return;
+
+  in() {
+    const xLead = this.rtl ? '-20%' : '20%';
+    const xExit = this.rtl ? '200%' : '-200%';
+    const rotation = this.rtl ? 90 : -90;
+
+    return this.gsap.timeline({ paused: true })
+      .to(this.element, { duration: 1.4, ease: 'power2.inOut', scale: 2.7, rotate: rotation })
+      .to(this.lines, {
+        keyframes: [
+          { x: xLead, duration: 1, ease: 'power1.inOut' },
+          { x: xExit, duration: 1.5, ease: 'power1.in' },
+        ],
+        stagger: 0.04,
+      }, 0)
+      .to(this.lines, {
+        keyframes: [
+          { opacity: 1, duration: 1, ease: 'power1.in' },
+          { opacity: 0, duration: 1.5, ease: 'power1.in' },
+        ],
+      }, 0);
   }
-  Object.assign(element.style, finalFrame);
-  animation.cancel();
+
+  out() {
+    return this.gsap.timeline({ paused: true })
+      .to(this.element, { duration: 1.4, ease: 'power2.inOut', scale: 1, rotate: 0 }, 1.2)
+      .to(this.lines, { duration: 2.3, ease: 'back', x: '0%', stagger: -0.04 }, 0)
+      .to(this.lines, {
+        keyframes: [
+          { opacity: 1, duration: 1, ease: 'power1.in' },
+          { opacity: 0.05, duration: 1.5, ease: 'power1.in' },
+        ],
+      }, 0);
+  }
 }
 
-export async function cardsOut(cards, reduced) {
-  await Promise.all(cards.map((card, index) => animateTo(card, [
-    { opacity: '1', transform: 'translate3d(0,0,0)' },
-    { opacity: '0', transform: `translate3d(0,${index % 2 ? '25%' : '-25%'},0)` },
-  ], { duration: 760, easing: 'cubic-bezier(.65,0,.35,1)' }, reduced)));
-}
+export function mountItemHover(gsap, cards) {
+  const cleanups = [];
+  const defaults = { duration: 1, ease: 'expo' };
 
-export async function cardsIn(cards, reduced) {
-  await Promise.all(cards.map((card) => animateTo(card, [
-    { opacity: '0', transform: card.style.transform || 'translate3d(0,0,0)' },
-    { opacity: '1', transform: 'translate3d(0,0,0)' },
-  ], { duration: 900, easing: 'cubic-bezier(.22,1,.36,1)' }, reduced)));
-}
+  cards.forEach((card) => {
+    const parts = [
+      card.querySelector('.program-kinetic__image-wrap img'),
+      card.querySelector('.program-kinetic__name'),
+      card.querySelector('.program-kinetic__summary'),
+    ].filter(Boolean);
+    const enter = () => gsap.timeline({ defaults }).to(parts, { y: (position) => position * 8 - 4 });
+    const leave = () => gsap.timeline({ defaults }).to(parts, { y: 0 });
+    card.addEventListener('mouseenter', enter);
+    card.addEventListener('mouseleave', leave);
+    cleanups.push(() => {
+      card.removeEventListener('mouseenter', enter);
+      card.removeEventListener('mouseleave', leave);
+    });
+  });
 
-export async function typeIn(type, lines, reduced, rtl) {
-  if (reduced) return;
-  const direction = rtl ? -1 : 1;
-  const root = animateTo(type, [
-    { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)' },
-    { transform: `translate(-50%,-50%) scale(2.7) rotate(${direction * -90}deg)` },
-  ], { duration: 1400, easing: 'cubic-bezier(.65,0,.35,1)' }, false);
-  const lineAnimations = lines.map((line, index) => animateTo(line, [
-    { opacity: '.07', transform: 'translate3d(0,0,0)' },
-    { opacity: '1', transform: `translate3d(${direction * 20}%,0,0)`, offset: .4 },
-    { opacity: '0', transform: `translate3d(${direction * -200}%,0,0)` },
-  ], { duration: 2300, delay: index * 38, easing: 'cubic-bezier(.55,.08,.68,.53)' }, false));
-  await Promise.all([root, ...lineAnimations]);
+  return () => cleanups.forEach((cleanup) => cleanup());
 }
-
-export async function typeOut(type, lines, reduced, rtl) {
-  if (reduced) return;
-  const direction = rtl ? -1 : 1;
-  const lineAnimations = [...lines].reverse().map((line, index) => animateTo(line, [
-    { opacity: '0', transform: `translate3d(${direction * -200}%,0,0)` },
-    { opacity: '1', transform: `translate3d(${direction * -20}%,0,0)`, offset: .45 },
-    { opacity: '.07', transform: 'translate3d(0,0,0)' },
-  ], { duration: 2100, delay: index * 32, easing: 'cubic-bezier(.22,1,.36,1)' }, false));
-  const root = animateTo(type, [
-    { transform: `translate(-50%,-50%) scale(2.7) rotate(${direction * -90}deg)` },
-    { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)' },
-  ], { duration: 1400, delay: 800, easing: 'cubic-bezier(.65,0,.35,1)' }, false);
-  await Promise.all([root, ...lineAnimations]);
-}
-
-export async function detailIn(parts, reduced) {
-  if (!parts) return;
-  if (!reduced) await wait(80);
-  const copy = parts.copy.map((element, index) => animateTo(element, [
-    { opacity: '0', transform: 'translate3d(0,50%,0)' },
-    { opacity: '1', transform: 'translate3d(0,0,0)' },
-  ], { duration: 820, delay: index * 45, easing: 'cubic-bezier(.16,1,.3,1)' }, reduced));
-  const imageWrap = animateTo(parts.imageWrap, [
-    { transform: 'translate3d(0,100%,0)' }, { transform: 'translate3d(0,0,0)' },
-  ], { duration: 900, easing: 'cubic-bezier(.16,1,.3,1)' }, reduced);
-  const image = animateTo(parts.image, [
-    { transform: 'translate3d(0,-100%,0) scale(1.04)' }, { transform: 'translate3d(0,0,0) scale(1.04)' },
-  ], { duration: 900, easing: 'cubic-bezier(.16,1,.3,1)' }, reduced);
-  await Promise.all([...copy, imageWrap, image]);
-}
-
-export async function detailOut(parts, reduced) {
-  if (!parts) return;
-  const copy = parts.copy.map((element, index) => animateTo(element, [
-    { opacity: '1', transform: 'translate3d(0,0,0)' },
-    { opacity: '0', transform: 'translate3d(0,45%,0)' },
-  ], { duration: 520, delay: (parts.copy.length - index - 1) * 24, easing: 'cubic-bezier(.7,0,.84,0)' }, reduced));
-  const imageWrap = animateTo(parts.imageWrap, [
-    { transform: 'translate3d(0,0,0)' }, { transform: 'translate3d(0,100%,0)' },
-  ], { duration: 620, easing: 'cubic-bezier(.7,0,.84,0)' }, reduced);
-  const image = animateTo(parts.image, [
-    { transform: 'translate3d(0,0,0) scale(1.04)' }, { transform: 'translate3d(0,-100%,0) scale(1.04)' },
-  ], { duration: 620, easing: 'cubic-bezier(.7,0,.84,0)' }, reduced);
-  await Promise.all([...copy, imageWrap, image]);
-}
-
-export { wait };
