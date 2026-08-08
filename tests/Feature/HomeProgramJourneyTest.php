@@ -83,7 +83,7 @@ it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close',
         ->and(file_exists($license))->toBeTrue();
 });
 
-it('blends Vision into one continuous Program kinetic field', function (): void {
+it('blends Vision into one continuous Program kinetic field with crisp micro-line contrast', function (): void {
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
     $handoff = file_get_contents(resource_path('css/pages/welcome/program-journey/handoff.css'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
@@ -96,10 +96,18 @@ it('blends Vision into one continuous Program kinetic field', function (): void 
         ->toContain('--program-handoff-height: clamp(18rem, 28vw, 30rem)')
         ->and($handoff)
         ->toContain('--handoff-b: var(--program-bg)')
+        ->toContain('--handoff-line: var(--program-type)')
         ->toContain('height: var(--program-handoff-height)')
         ->toContain('grid-template-rows: repeat(11')
         ->toContain('repeating-linear-gradient(180deg')
+        ->toContain('.program-kinetic__handoff-step::after')
+        ->toContain('transparent 0 8px')
+        ->toContain('var(--handoff-line) 8px 10px')
+        ->toContain('.program-kinetic__handoff-step:nth-child(6)::after')
+        ->toContain('opacity: .62')
         ->not->toContain('.program-kinetic__handoff-type')
+        ->not->toContain('filter: blur(')
+        ->not->toContain('backdrop-filter: blur(')
         ->and($hud)
         ->toContain('height: calc(var(--program-handoff-height) + 100svh)')
         ->toContain('padding-top: calc(var(--program-handoff-height) / 11)')
