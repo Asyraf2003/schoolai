@@ -40,6 +40,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
             ->and(count($handoffSteps[0]))->toBe(11)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
+            ->and(substr_count($programSection, 'program-kinetic__kinetic-line'))->toBe(13)
             ->and(substr_count($programSection, 'class="program-kinetic__summary"'))->toBe(6)
             ->and($programSection)->toContain('program-kinetic__handoff-type')
             ->and($programSection)->not->toContain('class="program-kinetic section"')
@@ -76,7 +77,7 @@ it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking'
         ->and(file_exists($license))->toBeTrue();
 });
 
-it('blends Vision into Program with matched colors and intact kinetic type', function (): void {
+it('blends Vision into Program with one shared kinetic type grammar', function (): void {
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
     $handoff = file_get_contents(resource_path('css/pages/welcome/program-journey/handoff.css'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
@@ -85,20 +86,23 @@ it('blends Vision into Program with matched colors and intact kinetic type', fun
         ->toContain('--program-bg: #e7f5ff')
         ->toContain('--program-type: #397aa6')
         ->toContain('--program-type-opacity: .16')
+        ->toContain('--program-type-size: clamp(7rem, 18.75vh, 15rem)')
+        ->toContain('--program-type-weight: 800')
+        ->toContain('--program-type-leading: .75')
+        ->toContain('--program-type-tracking: -.055em')
+        ->toContain('.program-kinetic__kinetic-line')
+        ->toContain('font-size: var(--program-type-size)')
         ->and($handoff)
         ->toContain('--handoff-b: var(--program-bg)')
         ->toContain('grid-template-rows: repeat(11')
         ->toContain('repeating-linear-gradient(180deg')
         ->toContain('var(--handoff-a) 0 9px, var(--handoff-b) 9px 10px')
         ->toContain('var(--handoff-a) 0 1px, var(--handoff-b) 1px 10px')
-        ->toContain('opacity: var(--program-type-opacity)')
-        ->toContain('z-index: 2')
-        ->not->toContain('transparent 9px 10px')
+        ->not->toContain('font-size: clamp(3.4rem, 8vw, 8rem)')
         ->not->toContain('radial-gradient(')
         ->not->toContain('filter: blur(')
         ->not->toContain('backdrop-filter: blur(')
         ->and($hud)
-        ->toContain('color: var(--program-type)')
-        ->toContain('opacity: var(--program-type-opacity)')
-        ->toContain('-webkit-text-stroke: 0');
+        ->not->toContain('font-size: clamp(7rem, 18.75vh, 15rem)')
+        ->toContain('.program-kinetic__type-line');
 });
