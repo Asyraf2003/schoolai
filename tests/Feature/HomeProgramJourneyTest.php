@@ -42,6 +42,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
             ->and(substr_count($programSection, 'class="program-kinetic__summary"'))->toBe(6)
             ->and($programSection)->toContain('program-kinetic__handoff-type')
+            ->and($programSection)->not->toContain('class="program-kinetic section"')
             ->and($programSection)->not->toContain('class="program-kinetic__meta"')
             ->and($programSection)->not->toContain('class="program-kinetic__eyebrow"')
             ->and($programSection)->not->toContain('class="program-kinetic__next"')
@@ -75,7 +76,7 @@ it('uses the Codrops GSAP timing while keeping Program free of scroll hijacking'
         ->and(file_exists($license))->toBeTrue();
 });
 
-it('reveals the blue Program field and kinetic type through the eleven-step sharp handoff', function (): void {
+it('blends Vision into Program with matched colors and intact kinetic type', function (): void {
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
     $handoff = file_get_contents(resource_path('css/pages/welcome/program-journey/handoff.css'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
@@ -83,19 +84,21 @@ it('reveals the blue Program field and kinetic type through the eleven-step shar
     expect($base)
         ->toContain('--program-bg: #e7f5ff')
         ->toContain('--program-type: #397aa6')
+        ->toContain('--program-type-opacity: .16')
         ->and($handoff)
+        ->toContain('--handoff-b: var(--program-bg)')
         ->toContain('grid-template-rows: repeat(11')
-        ->toContain('.program-kinetic__handoff-type')
-        ->toContain('z-index: 0')
         ->toContain('repeating-linear-gradient(180deg')
-        ->toContain('var(--handoff-a) 0 9px, transparent 9px 10px')
-        ->toContain('var(--handoff-a) 0 1px, transparent 1px 10px')
-        ->toContain('.program-kinetic__handoff-step:nth-child(11)')
-        ->toContain('background: transparent')
+        ->toContain('var(--handoff-a) 0 9px, var(--handoff-b) 9px 10px')
+        ->toContain('var(--handoff-a) 0 1px, var(--handoff-b) 1px 10px')
+        ->toContain('opacity: var(--program-type-opacity)')
+        ->toContain('z-index: 2')
+        ->not->toContain('transparent 9px 10px')
         ->not->toContain('radial-gradient(')
         ->not->toContain('filter: blur(')
         ->not->toContain('backdrop-filter: blur(')
         ->and($hud)
         ->toContain('color: var(--program-type)')
+        ->toContain('opacity: var(--program-type-opacity)')
         ->toContain('-webkit-text-stroke: 0');
 });
