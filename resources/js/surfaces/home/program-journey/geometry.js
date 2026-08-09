@@ -27,13 +27,11 @@ export function hideDetails(dom) {
 }
 
 export function detailParts(detail) {
-  if (!detail) return { copy: [], imageWrap: null, image: null };
+  if (!detail) return { copy: [] };
 
   return {
     copy: [...detail.querySelectorAll(
-      '.program-kinetic__detail-number, .program-kinetic__detail-eyebrow, .program-kinetic__detail-copy h3, .program-kinetic__detail-intro, .program-kinetic__detail-description, .program-kinetic__detail-next',
+      '.program-kinetic__detail-copy h3, .program-kinetic__detail-description',
     )],
-    imageWrap: detail.querySelector('[data-program-detail-image-wrap]'),
-    image: detail.querySelector('[data-program-detail-image]'),
   };
 }
