@@ -4,103 +4,92 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-09
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-005-HEADING-FULL-TYPE-RTL-MISSION`
-Source baseline: `1e7b38989ea48df76a62b7aa5d98b71ca7f20bd1`
-Source implementation head: `43c807e2de2fae605fc8fad5119f52748b7f05e1`
+Active batch: `HOME-PROGRAM-006-MINIMAL-DETAIL`
+Source baseline: `9626247838b4155a8590bf0451cb025aaf2fcc94`
+Source implementation head: `9d3d9c60d7f3c7514add92c16470f8be37e1524c`
 Active blueprint: `blueprints/2026-08-08-home-program-kinetic-type-transition.md`
 
 ## Latest owner decision
 
-- Keep the Codrops `KineticTypePageTransition` behavior for Program detail transitions.
-- Keep the six-card SchoolAI composition: desktop `2 + 4`, tablet `3 + 3`, mobile `2 + 2 + 2`.
-- Program idle media remains large landscape/staggered, following the Codrops card geometry grammar.
-- `Program Kami` / `Our Programs` is visually uppercase in LTR.
-- Program heading entrance uses only the Values-style center split: first line rises from the center while the second line drops from the center; no horizontal heading shift is allowed.
-- Arabic heading remains Arabic without uppercase transformation.
-- Program kinetic background must cover the complete content-driven Program height, not only one viewport.
-- The kinetic wall may use localized Islamic vocabulary such as Islam, Iman, Ihsan, Akhlakul Karimah, Qur'an, Adab, Ilmu, Amanah, Hikmah and Taqwa.
-- Program background/type colors remain the existing source tokens; do not invent a new color family.
-- Fix the Arabic Mission list layout so its copy owns the flexible track instead of collapsing into the narrow counter track.
-- Do not change the eleven-step Visi/Misi -> Program handoff, card detail choreography, Hero, Values, Gallery, Articles, navbar or footer in this batch.
+- Keep the Codrops kinetic transition when a Program card is opened.
+- Simplify the final Program detail screen to only localized Back, the selected Program title and one description.
+- Back labels are `Kembali`, `Back`, and `العودة`.
+- Remove detail image, number, eyebrow/category, secondary intro/summary, next-program code and all related layout slots.
+- Detail title should use the same editorial font grammar as the Program section heading.
+- Keep idle cards, the eleven-step Visi/Misi -> Program handoff, Visi/Misi, card geometry and other homepage sections unchanged.
 
-## Implemented Program source contract
+## Implemented minimal detail contract
 
-- Public Program copy and kinetic word banks are locale-owned in `lang/id/home_program.php`, `lang/en/home_program.php`, and `lang/ar/home_program.php`.
-- Blade renders 20 kinetic type lines from the locale word bank and repeats each phrase horizontally to overscan the viewport.
-- The kinetic field is a single Program-owned layer; the removed `.program-kinetic__handoff-type` duplicate is not reintroduced.
-- The type field now spans the actual Program content height using an absolute `top: 0; bottom: 0; height: auto` contract.
-- During Codrops open/close choreography, that same field becomes the fixed transition layer.
-- Program background remains `#e7f5ff`.
-- Program kinetic text remains `#397aa6` at the existing `.16` resting opacity.
-- The eleven-step handoff remains sharp beige `#f4f1e9` -> real Program field reveal with white separator lines.
-- Desktop card geometry remains `2 + 4` with the Codrops-inspired `7svh` base and `9svh` interval.
-- Tablet remains `3 + 3`; mobile remains `2 + 2 + 2`.
-- Card media remains landscape `4 / 3` in active responsive tiers.
-- Card idle copy remains title + description only.
+- Blade renders six detail articles, each with only `h3` title + `.program-kinetic__detail-description`.
+- Detail media markup has been removed; Program now renders only the six idle-card Unsplash images rather than duplicating them inside details.
+- `detailParts()` now collects only title and description.
+- GSAP detail open/close no longer targets image wrapper/image, number, eyebrow, intro or next-code elements.
+- The existing kinetic type transition, card exit, Back fade, Escape handling, Tab containment and focus restoration remain in place.
+- Detail layout is a clean full-viewport field using the existing Program background tokens.
+- ID/EN detail title uses the Program editorial display grammar: light variable weight `360`, tight `-.055em` tracking, large scale and uppercase presentation.
+- Arabic detail title uses Cairo, weight `500`, normal Arabic casing/tracking and Arabic-appropriate line-height.
+- Description is limited to a readable `42rem` measure.
+- Back uses logical `inset-inline-start`; the arrow mirrors under RTL.
 
-## Heading contract
+## Existing Program contract retained
 
-- Heading presentation is isolated in `resources/css/pages/welcome/program-journey/heading.css`.
-- Heading runtime trigger is isolated in `resources/js/surfaces/home/program-journey/heading.js`.
-- The Program controller imports and owns the heading lifecycle.
-- IntersectionObserver triggers the reveal when the heading enters the viewport.
-- LTR line one starts at `translateY(108%)` and resolves upward to zero.
-- LTR line two starts at `translateY(-108%)` and resolves downward to zero.
-- There is no horizontal heading translation.
-- Reduced motion resolves the heading immediately without transition.
-- Arabic single-line heading uses the same vertical reveal contract while retaining Cairo and normal Arabic casing.
+- Program idle cards remain desktop `2 + 4`, tablet `3 + 3`, mobile `2 + 2 + 2`.
+- Idle media remains landscape `4 / 3` with the Codrops-inspired stagger geometry.
+- Idle card copy remains title + description only.
+- `Program Kami` / `Our Programs` remains visually uppercase in LTR and uses the center-split vertical entrance only.
+- Arabic Program heading remains Cairo without Latin uppercase behavior.
+- One Program kinetic type field spans the content-driven Program height.
+- The field renders 20 lines from locale-owned Islamic vocabulary.
+- Program background remains `#e7f5ff`; kinetic type remains `#397aa6` at resting opacity `.16`.
+- The eleven-step handoff remains unchanged.
+- GSAP 3.7.1 remains lazy-loaded from jsDelivr.
+- Open/close restores kinetic resting opacity and clears inline transform/opacity state.
+- No wheel hijacking, document `scrollTo`, WebGL or continuous page RAF was introduced.
 
-## Mission RTL correction
+## Locale contract
 
-FACT from owner runtime screenshot: Arabic Mission copy collapsed into a very narrow vertical column while ID rendered normally.
+Public Program content remains locale-owned in:
 
-Source cause:
+- `lang/id/home_program.php`
+- `lang/en/home_program.php`
+- `lang/ar/home_program.php`
 
-- mission rows used a narrow counter track plus a flexible copy track;
-- `direction: rtl` changed placement behavior;
-- copy/counter grid columns were not explicitly owned;
-- desktop enhanced CSS also redefined the mission tracks with higher specificity.
+Only the detail Back labels changed in this batch:
 
-Implemented correction:
+- ID: `Kembali`
+- EN: `Back`
+- AR: `العودة`
 
-- LTR base row: `2.5rem minmax(0, 1fr)`;
-- RTL base row: `minmax(0, 1fr) 2.5rem`;
-- counter and copy receive explicit grid columns;
-- desktop enhanced LTR row: `2.2rem minmax(0, 1fr)`;
-- desktop enhanced RTL row: `minmax(0, 1fr) 2.2rem`;
-- Arabic copy keeps `text-align: start` and Cairo ownership.
+Existing item metadata remains in locale data but is not rendered in the minimal detail state.
 
-No Mission text, media, scroll choreography or locale content changed.
+## Scope proof
 
-## Existing Codrops transition contract
+Changed implementation surfaces are limited to:
 
-- GSAP 3.7.1 remains lazily loaded from jsDelivr.
-- type scale remains `2.7`;
-- LTR quarter-turn remains `-90deg`, mirrored to `+90deg` in RTL;
-- line travel/stagger, alternating card exit, detail copy reveal and image reveal remain unchanged;
-- close restores the CSS resting opacity and clears inline transform/opacity state;
-- Back, Escape, Tab containment and focus restoration remain owned by Program integration;
-- no wheel hijacking, document `scrollTo`, WebGL or continuous page RAF was introduced.
+- Program locale Back labels;
+- Program detail Blade markup;
+- Program detail DOM collection and GSAP targets;
+- Program detail CSS presentation;
+- removal of obsolete wide/compact detail-media rules;
+- focused Program regression test;
+- Program blueprint/current-state docs.
+
+Idle card geometry, handoff source, Visi/Misi source and unrelated homepage sections were not changed in this batch.
 
 ## Focused source tests
 
 `HomeProgramJourneyTest.php` now locks:
 
 - six localized cards/details;
-- one Program type field with 20 kinetic lines;
-- localized Islamic word-bank presence for ID/EN/AR;
-- center-split heading entrance with no horizontal shift;
-- isolated heading CSS/JS imports;
-- content-height kinetic wall;
-- eleven-step handoff invariants;
-- Codrops GSAP timing/state restoration;
-- desktop/tablet/mobile card geometry.
-
-`HomeVisionMissionHeadingTest.php` now locks:
-
-- localized About/Visi/Misi rendering;
-- existing native pinned mask reveal behavior;
-- explicit LTR/RTL mission counter/copy tracks in base and enhanced desktop CSS.
+- one Program kinetic type field with 20 lines;
+- six idle-card images only;
+- localized short Back labels;
+- exactly six detail descriptions;
+- absence of detail image/number/eyebrow/intro/next markup;
+- absence of obsolete detail-image JS/CSS targets;
+- section-style detail-title typography;
+- existing kinetic transition/state restoration;
+- existing heading, handoff and responsive card geometry contracts.
 
 ## Proof state
 
@@ -116,7 +105,6 @@ Required local proof against current `main`:
 git diff --check
 git status --short
 php artisan test --filter=HomeProgramJourneyTest
-php artisan test --filter=HomeVisionMissionHeadingTest
 php artisan test
 npm run check:structure
 npm run build
@@ -124,12 +112,13 @@ npm run build
 
 Runtime proof required:
 
-- LTR heading visually reads `PROGRAM KAMI` / `OUR PROGRAMS` and enters from the center split only;
-- Arabic heading remains readable and does not receive Latin uppercase behavior;
-- kinetic background text fills the entire Program section through the final card;
-- 20-line wall does not create unacceptable Codrops open/close delay;
-- Program open -> Back repeated twice restores the same resting typography state;
-- Arabic Mission copy uses normal readable line widths on desktop and compact layouts;
+- each of the six cards opens the matching title/description;
+- detail visibly contains only Back, title and one description;
+- ID shows `< Kembali`, EN `< Back`, Arabic mirrors the arrow with `العودة`;
+- long ID/EN/AR titles remain readable without clipping;
+- repeated open -> Back cycles restore the same kinetic resting state;
+- Escape, Tab containment and focus restoration still work;
+- reduced motion remains usable;
 - 360, 390, 640, 768, 1024, 1180/1181, 1280, 1440, 1536 and 1920 widths;
 - Chromium and WebKit.
 
@@ -137,4 +126,4 @@ STATUS: `BLOCKED_BY_MISSING_EVIDENCE`
 
 NEXT EXECUTION CHANNEL: `owner/local terminal`
 
-NEXT VALID STEP: pull current `main`, run the two focused tests, then inspect one LTR Program entrance plus Arabic Mission at desktop width before further visual tuning.
+NEXT VALID STEP: pull current `main`, run `HomeProgramJourneyTest`, then open one Program detail in ID and AR to verify the minimal detail hierarchy and Back direction before further visual tuning.
