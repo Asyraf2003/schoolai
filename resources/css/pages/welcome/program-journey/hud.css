@@ -77,7 +77,7 @@
     z-index: 2;
     display: grid;
     justify-items: start;
-    gap: clamp(.85rem, 1.6vw, 1.35rem);
+    gap: 1rem;
     width: 100%;
 }
 
@@ -86,7 +86,7 @@
     align-items: center;
     gap: .62rem;
     min-height: 44px;
-    margin: 0 0 clamp(.2rem, .5vw, .55rem);
+    margin: 0 0 .5rem;
     padding: 0;
     border: 0;
     background: none;
@@ -94,13 +94,13 @@
     cursor: pointer;
     direction: ltr;
     font: inherit;
-    font-size: clamp(.82rem, .78rem + .2vw, 1rem);
-    font-weight: 650;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .program-kinetic__back-mark {
     display: inline-block;
-    font-weight: 780;
+    font-weight: 700;
     letter-spacing: -.12em;
     transform-origin: center;
 }
@@ -119,24 +119,23 @@
     margin: 0;
     color: var(--program-ink);
     font-family: var(--font-display, Inter, sans-serif);
-    font-size: clamp(2.25rem, 3vw, 4.25rem);
+    font-size: 8vw;
     font-optical-sizing: auto;
     font-synthesis: none;
-    font-variation-settings: "wght" 360;
-    font-weight: 360;
-    letter-spacing: -.055em;
-    line-height: .9;
+    font-variation-settings: "wght" 700;
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: .85;
     text-transform: uppercase;
-    text-wrap: balance;
 }
 
 .program-kinetic__detail-description {
-    width: min(100%, 28rem);
+    width: 100%;
     margin: 0;
-    color: var(--program-muted);
-    font-size: clamp(.94rem, .9rem + .2vw, 1.12rem);
-    font-weight: 430;
-    line-height: 1.58;
+    color: var(--program-ink);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .program-kinetic__detail-media {
@@ -149,7 +148,7 @@
     overflow: hidden;
     width: 100%;
     aspect-ratio: 4 / 5;
-    border-radius: clamp(.8rem, 1.4vw, 1.15rem);
+    border-radius: 17px 17px 0 0;
     background: rgb(57 122 166 / .08);
     transform-origin: 50% 100%;
 }
@@ -172,11 +171,11 @@ html[dir="rtl"] .program-kinetic__detail-copy {
 
 html[dir="rtl"] .program-kinetic__detail-copy h3 {
     font-family: var(--font-ar-display, Cairo, sans-serif);
-    font-size: clamp(2.2rem, 2.8vw, 4rem);
+    font-size: 8vw;
     font-variation-settings: normal;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: normal;
-    line-height: 1.12;
+    line-height: .95;
     text-transform: none;
 }
 
