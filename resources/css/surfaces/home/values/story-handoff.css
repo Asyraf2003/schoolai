@@ -1,22 +1,19 @@
 .program-kinetic.is-values-handoff:not(.is-transitioning):not(.is-detail-open)
 .program-kinetic__type {
-    opacity: calc(1 - var(--program-values-handoff, 0));
-    transform:
-        translate3d(-50%, calc(var(--program-values-handoff, 0) * 22svh), 0)
-        scale(calc(1 - var(--program-values-handoff, 0) * .08));
+    opacity: 1;
 }
 
 .program-kinetic.is-values-handoff:not(.is-transitioning):not(.is-detail-open)
 .program-kinetic__type-line {
-    opacity: calc(
-        var(--program-type-opacity)
-        * (1 - var(--program-values-handoff, 0))
-    );
+    opacity: var(--program-type-opacity);
 }
 
 @media (prefers-reduced-motion: reduce) {
     .program-kinetic.is-values-handoff .program-kinetic__type {
-        opacity: 0;
-        transform: translateX(-50%);
+        opacity: 1;
+    }
+
+    .program-kinetic.is-values-handoff .program-kinetic__type-line {
+        opacity: var(--program-type-opacity);
     }
 }
