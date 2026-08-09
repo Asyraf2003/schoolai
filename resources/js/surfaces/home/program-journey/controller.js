@@ -1,4 +1,5 @@
 import { collectProgramDom, detailParts, hideDetails, showDetail } from './geometry.js';
+import { mountProgramHeading } from './heading.js';
 import { createProgramDialogIntegration } from './integration.js';
 import { loadGsap, mountItemHover, TypeTransition } from './motion.js';
 
@@ -148,8 +149,17 @@ export function mountProgramJourney(root) {
   const dom = collectProgramDom(root);
   if (!dom.triggers.length || !dom.layer || !dom.back || !dom.type) return () => {};
   root.classList.add('is-enhanced');
+  const cleanHeading = mountProgramHeading(root);
   const integration = createProgramDialogIntegration(dom);
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return mountReduced(dom, integration);
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const cleanReduced = mountReduced(dom, integration);
+    return () => {
+      cleanReduced();
+      cleanHeading();
+      root.classList.remove('is-enhanced', 'is-program-heading-revealed', 'is-detail-open');
+    };
+  }
 
   let cleanup = () => {};
   let disposed = false;
@@ -162,6 +172,10 @@ export function mountProgramJourney(root) {
   return () => {
     disposed = true;
     cleanup();
-    root.classList.remove('is-enhanced', 'has-gsap', 'gsap-failed', 'is-transitioning', 'is-detail-open');
+    cleanHeading();
+    root.classList.remove(
+      'is-enhanced', 'has-gsap', 'gsap-failed', 'is-transitioning',
+      'is-detail-open', 'is-program-heading-revealed',
+    );
   };
 }
