@@ -138,9 +138,11 @@ it('reveals the real Program field through an exact 11-step Vision handoff', fun
         ->not->toContain('filter: blur(')
         ->not->toContain('backdrop-filter: blur(')
         ->and($hud)
-        ->toContain('height: 100%')
+        ->toContain('bottom: 0')
+        ->toContain('height: auto')
         ->toContain('min-height: calc(var(--program-handoff-height) + 100svh)')
         ->toContain('justify-content: space-between')
+        ->toContain('bottom: auto')
         ->toContain('position: fixed')
         ->not->toContain('height: calc(var(--program-handoff-height) + 100svh)');
 });
