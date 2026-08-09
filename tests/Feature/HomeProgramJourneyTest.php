@@ -4,11 +4,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders six localized kinetic Program cards and details', function (): void {
+it('renders six localized kinetic Program cards and a full Islamic word field', function (): void {
     $expected = [
-        'id' => ['Program Kami', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan'],
-        'en' => ['Our Programs', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library'],
-        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة'],
+        'id' => ['Program Kami', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan', 'AKHLAKUL KARIMAH'],
+        'en' => ['Our Programs', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library', 'NOBLE CHARACTER'],
+        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة', 'مكارم الأخلاق'],
     ];
 
     foreach ($expected as $locale => $copy) {
@@ -20,6 +20,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
             ->assertSee('data-program-kinetic', false)
             ->assertSee('data-program-handoff', false)
             ->assertSee('data-program-type', false)
+            ->assertSee('data-program-heading', false)
             ->assertSee('data-program-cards', false)
             ->assertSee('data-program-detail-layer', false)
             ->assertSee('data-program-back', false);
@@ -41,7 +42,7 @@ it('renders six localized kinetic Program cards and details', function (): void 
             ->and(count($handoffSteps[0]))->toBe(11)
             ->and(count($typeFields[0]))->toBe(1)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
-            ->and(substr_count($programSection, 'data-program-type-line'))->toBe(10)
+            ->and(substr_count($programSection, 'data-program-type-line'))->toBe(20)
             ->and(substr_count($programSection, 'class="program-kinetic__summary"'))->toBe(6)
             ->and($programSection)->not->toContain('program-kinetic__handoff-type')
             ->and($programSection)->not->toContain('class="program-kinetic section"')
@@ -83,6 +84,26 @@ it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close',
         ->and(file_exists($license))->toBeTrue();
 });
 
+it('reveals the Program heading from the center without horizontal heading shift', function (): void {
+    $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+    $heading = file_get_contents(resource_path('js/surfaces/home/program-journey/heading.js'));
+    $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+
+    expect($base)
+        ->toContain('text-transform: uppercase')
+        ->toContain('translate3d(0, 108%, 0)')
+        ->toContain('translate3d(0, -108%, 0)')
+        ->toContain('is-program-heading-revealed')
+        ->and($heading)
+        ->toContain('IntersectionObserver')
+        ->toContain("rootMargin: '0px 0px -12% 0px'")
+        ->toContain('threshold: 0.16')
+        ->not->toContain('translateX')
+        ->and($controller)
+        ->toContain("from './heading.js'")
+        ->toContain('mountProgramHeading(root)');
+});
+
 it('reveals the real Program field through an exact 11-step Vision handoff', function (): void {
     $vision = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
@@ -114,10 +135,11 @@ it('reveals the real Program field through an exact 11-step Vision handoff', fun
         ->not->toContain('filter: blur(')
         ->not->toContain('backdrop-filter: blur(')
         ->and($hud)
-        ->toContain('height: calc(var(--program-handoff-height) + 100svh)')
-        ->toContain('padding-top: calc(var(--program-handoff-height) / 11)')
+        ->toContain('height: 100%')
+        ->toContain('min-height: calc(var(--program-handoff-height) + 100svh)')
+        ->toContain('justify-content: space-between')
         ->toContain('position: fixed')
-        ->not->toContain('font-size: clamp(7rem, 18.75vh, 15rem)');
+        ->not->toContain('height: calc(var(--program-handoff-height) + 100svh)');
 });
 
 it('adapts Codrops card geometry to the six-card SchoolAI tiers', function (): void {
