@@ -2,6 +2,10 @@
   $programContent = trans('home_program');
   $programItems = collect($programContent['items'] ?? [])->values();
   $programHeadingLines = $programContent['heading_lines'] ?? [$programContent['section_label'] ?? ''];
+  $programKineticWords = collect($programContent['kinetic_words'] ?? [])
+    ->filter(fn ($word) => is_string($word) && trim($word) !== '')
+    ->values();
+  $programKineticLineCount = 20;
   $programMedia = [
     ['url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 42%'],
     ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 46%'],
@@ -14,10 +18,16 @@
 
 <section class="program-kinetic" id="program" aria-labelledby="program-kinetic-title" data-program-kinetic>
   <div class="program-kinetic__type" data-program-type aria-hidden="true">
-    @for ($line = 0; $line < 10; $line++)
-      @php($typeItem = $programItems[$line % max(1, $programItems->count())] ?? null)
+    @for ($line = 0; $line < $programKineticLineCount; $line++)
+      @php
+        $wordCount = max(1, $programKineticWords->count());
+        $lineWords = collect(range(0, 7))
+          ->map(fn ($offset) => $programKineticWords[($line * 3 + $offset) % $wordCount] ?? '')
+          ->filter()
+          ->implode(' ');
+      @endphp
       <div class="program-kinetic__kinetic-line program-kinetic__type-line" data-program-type-line>
-        {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }} {{ $typeItem['title'] ?? '' }}
+        {{ $lineWords }} {{ $lineWords }}
       </div>
     @endfor
   </div>
@@ -29,11 +39,11 @@
   </div>
 
   <header class="program-kinetic__header">
-    <h2 class="program-kinetic__title" id="program-kinetic-title" data-text-role="display"
+    <h2 class="program-kinetic__title" id="program-kinetic-title" data-text-role="display" data-program-heading
       aria-label="{{ $programContent['section_label'] ?? '' }}">
       @foreach ($programHeadingLines as $line)
         <span class="program-kinetic__title-line program-kinetic__title-line--{{ $loop->iteration }}">
-          <span class="program-kinetic__title-text" aria-hidden="true">{{ $line }}</span>
+          <span class="program-kinetic__title-text" data-program-heading-line aria-hidden="true">{{ $line }}</span>
         </span>
       @endforeach
     </h2>
