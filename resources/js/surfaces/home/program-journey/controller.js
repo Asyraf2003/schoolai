@@ -9,19 +9,15 @@ function mountReduced(dom, integration) {
     activeIndex = Number(event.currentTarget.dataset.programIndex);
     integration.lock(event.currentTarget);
     dom.layer.hidden = false;
-    showDetail(dom, activeIndex);
+    const detail = showDetail(dom, activeIndex);
     dom.root.classList.add('is-detail-open');
-    dom.back.style.opacity = '1';
-    dom.back.style.pointerEvents = 'auto';
-    dom.back.focus({ preventScroll: true });
+    detailParts(detail).back?.focus({ preventScroll: true });
   };
   const close = () => {
     if (activeIndex < 0) return;
     dom.layer.hidden = true;
     hideDetails(dom);
     dom.root.classList.remove('is-detail-open');
-    dom.back.style.opacity = '';
-    dom.back.style.pointerEvents = '';
     activeIndex = -1;
     integration.unlock();
   };
@@ -32,11 +28,11 @@ function mountReduced(dom, integration) {
   };
 
   dom.triggers.forEach((trigger) => trigger.addEventListener('click', open));
-  dom.back.addEventListener('click', close);
+  dom.backs.forEach((back) => back.addEventListener('click', close));
   document.addEventListener('keydown', keydown);
   return () => {
     dom.triggers.forEach((trigger) => trigger.removeEventListener('click', open));
-    dom.back.removeEventListener('click', close);
+    dom.backs.forEach((back) => back.removeEventListener('click', close));
     document.removeEventListener('keydown', keydown);
     if (activeIndex >= 0) integration.unlock();
   };
@@ -53,7 +49,8 @@ function mountGsap(dom, integration, gsap) {
     if (isAnimating) return;
     isAnimating = true;
     currentItem = Number(event.currentTarget.dataset.programIndex);
-    const parts = detailParts(dom.details[currentItem]);
+    const detail = dom.details[currentItem];
+    const parts = detailParts(detail);
     const typeIn = typeTransition.in();
     integration.lock(event.currentTarget);
     dom.root.classList.add('is-transitioning');
@@ -61,7 +58,7 @@ function mountGsap(dom, integration, gsap) {
     const timeline = gsap.timeline({ onComplete: () => {
       isAnimating = false;
       dom.root.classList.remove('is-transitioning');
-      dom.back.focus({ preventScroll: true });
+      parts.back?.focus({ preventScroll: true });
     } });
 
     timeline.addLabel('start', 0)
@@ -74,12 +71,10 @@ function mountGsap(dom, integration, gsap) {
       .to(dom.header, { duration: 0.8, ease: 'power3', opacity: 0, pointerEvents: 'none' }, 'start')
       .add(typeIn.play(), 'typeTransition')
       .add(() => {
-        gsap.set(dom.back, { pointerEvents: 'auto' });
         dom.layer.hidden = false;
         showDetail(dom, currentItem);
         dom.root.classList.add('is-detail-open');
       }, 'articleOpening')
-      .to(dom.back, { duration: 0.7, opacity: 1 }, 'articleOpening')
       .set(parts.copy, { opacity: 0, y: '50%' }, 'articleOpening')
       .set(parts.imageWrap, { y: '100%' }, 'articleOpening')
       .set(parts.image, { y: '-100%' }, 'articleOpening')
@@ -108,14 +103,12 @@ function mountGsap(dom, integration, gsap) {
     timeline.addLabel('start', 0)
       .addLabel('typeTransition', 0.5)
       .addLabel('showItems', typeOut.totalDuration() * 0.7 + 0.5)
-      .to(dom.back, { duration: 0.7, ease: 'power1', opacity: 0 }, 'start')
       .to(parts.copy, {
         duration: 1, ease: 'power4.in', opacity: 0, y: '50%', stagger: -0.08,
       }, 'start')
       .to(parts.imageWrap, { duration: 1, ease: 'power4.in', y: '100%' }, 'start')
       .to(parts.image, { duration: 1, ease: 'power4.in', y: '-100%' }, 'start')
       .add(() => {
-        gsap.set(dom.back, { pointerEvents: 'none' });
         dom.layer.hidden = true;
         hideDetails(dom);
         dom.root.classList.remove('is-detail-open');
@@ -136,12 +129,12 @@ function mountGsap(dom, integration, gsap) {
   };
 
   dom.triggers.forEach((trigger) => trigger.addEventListener('click', openItem));
-  dom.back.addEventListener('click', closeItem);
+  dom.backs.forEach((back) => back.addEventListener('click', closeItem));
   document.addEventListener('keydown', keydown);
   return () => {
     cleanHover();
     dom.triggers.forEach((trigger) => trigger.removeEventListener('click', openItem));
-    dom.back.removeEventListener('click', closeItem);
+    dom.backs.forEach((back) => back.removeEventListener('click', closeItem));
     document.removeEventListener('keydown', keydown);
     if (currentItem >= 0) integration.unlock();
   };
@@ -149,7 +142,7 @@ function mountGsap(dom, integration, gsap) {
 
 export function mountProgramJourney(root) {
   const dom = collectProgramDom(root);
-  if (!dom.triggers.length || !dom.layer || !dom.back || !dom.type) return () => {};
+  if (!dom.triggers.length || !dom.layer || !dom.backs.length || !dom.type) return () => {};
   root.classList.add('is-enhanced');
   const cleanHeading = mountProgramHeading(root);
   const integration = createProgramDialogIntegration(dom);
