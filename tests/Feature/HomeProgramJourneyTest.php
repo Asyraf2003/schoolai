@@ -72,7 +72,7 @@ it('uses Codrops GSAP timing and detail media reveal', function (): void {
         ->not->toContain('opacity: 0.05');
 });
 
-it('uses a Codrops-like centered detail composition with local Back above title', function (): void {
+it('matches Codrops desktop detail geometry while keeping local Back above title', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
     $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
@@ -84,16 +84,24 @@ it('uses a Codrops-like centered detail composition with local Back above title'
         ->toContain('&lt;&lt;&lt;')
         ->toContain('class="program-kinetic__detail-media"')
         ->and($hud)
-        ->toContain('.program-kinetic__back {')
-        ->toContain('display: inline-flex')
-        ->not->toContain('inset-inline-start')
-        ->toContain('font-size: clamp(2.25rem, 3vw, 4.25rem)')
-        ->toContain('aspect-ratio: 4 / 5')
+        ->toContain('font-size: 8vw')
+        ->toContain('font-variation-settings: "wght" 700')
+        ->toContain('font-weight: 700')
+        ->toContain('line-height: .85')
+        ->toContain('font-size: 1rem')
+        ->toContain('line-height: normal')
+        ->toContain('border-radius: 17px 17px 0 0')
         ->and($wide)
-        ->toContain('width: min(35vw, 36rem)')
-        ->toContain('height: min(68svh, 43rem)')
-        ->toContain('transform: translate(-50%, -50%)')
-        ->toContain('width: min(41vw, 38rem)')
+        ->toContain('top: 20svh')
+        ->toContain('height: 80svh')
+        ->toContain('width: calc(38vw + 280px)')
+        ->toContain('grid-template-rows: 10vw 2rem 12vw auto 1fr')
+        ->toContain('grid-template-columns: 1.5rem 30% 1fr 1.5rem')
+        ->toContain('display: contents')
+        ->toContain('grid-column: 2 / 4')
+        ->toContain('grid-row: 3')
+        ->toContain('grid-column: 3')
+        ->toContain('grid-row: 1 / 6')
         ->and($compact)
         ->toContain('width: min(78vw, 31rem)')
         ->toContain('grid-row: 1')
