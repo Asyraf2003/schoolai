@@ -4,152 +4,137 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-09
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-004-SINGLE-KINETIC-HANDOFF-RESET`
-Source baseline: `710fbb36b653f357a48db6cfceb8fa9dab7caa1c`
-Source implementation head: `14e64cd6f6c32c9edbc8ca3b5c6d56929456d747`
+Active batch: `HOME-PROGRAM-005-HEADING-FULL-TYPE-RTL-MISSION`
+Source baseline: `1e7b38989ea48df76a62b7aa5d98b71ca7f20bd1`
+Source implementation head: `43c807e2de2fae605fc8fad5119f52748b7f05e1`
 Active blueprint: `blueprints/2026-08-08-home-program-kinetic-type-transition.md`
 
 ## Latest owner decision
 
-- Program should continue to follow the Codrops `KineticTypePageTransition` behavior.
-- The Visi/Misi -> Program handoff must read as one Program field, not a separate transition banner.
-- Remove the duplicate handoff typography layer; one `data-program-type` field must span the handoff and Program body.
-- The kinetic type must restore its CSS baseline after every GSAP close cycle; no stale `0.05` inline opacity may remain.
-- Keep the eleven-step sharp beige -> light-blue handoff.
-- Keep the six SchoolAI programs PG, TK, SD, TQ, MB and LT.
-- Final photography will later be served as optimized WebP/AVIF variants from Cloudflare.
-- Do not change card layout, About/Visi/Misi, or other homepage sections in this batch.
+- Keep the Codrops `KineticTypePageTransition` behavior for Program detail transitions.
+- Keep the six-card SchoolAI composition: desktop `2 + 4`, tablet `3 + 3`, mobile `2 + 2 + 2`.
+- Program idle media remains large landscape/staggered, following the Codrops card geometry grammar.
+- `Program Kami` / `Our Programs` is visually uppercase in LTR.
+- Program heading entrance uses only the Values-style center split: first line rises from the center while the second line drops from the center; no horizontal heading shift is allowed.
+- Arabic heading remains Arabic without uppercase transformation.
+- Program kinetic background must cover the complete content-driven Program height, not only one viewport.
+- The kinetic wall may use localized Islamic vocabulary such as Islam, Iman, Ihsan, Akhlakul Karimah, Qur'an, Adab, Ilmu, Amanah, Hikmah and Taqwa.
+- Program background/type colors remain the existing source tokens; do not invent a new color family.
+- Fix the Arabic Mission list layout so its copy owns the flexible track instead of collapsing into the narrow counter track.
+- Do not change the eleven-step Visi/Misi -> Program handoff, card detail choreography, Hero, Values, Gallery, Articles, navbar or footer in this batch.
 
-## Reference facts
+## Implemented Program source contract
 
-Reference: `https://github.com/codrops/KineticTypePageTransition`.
+- Public Program copy and kinetic word banks are locale-owned in `lang/id/home_program.php`, `lang/en/home_program.php`, and `lang/ar/home_program.php`.
+- Blade renders 20 kinetic type lines from the locale word bank and repeats each phrase horizontally to overscan the viewport.
+- The kinetic field is a single Program-owned layer; the removed `.program-kinetic__handoff-type` duplicate is not reintroduced.
+- The type field now spans the actual Program content height using an absolute `top: 0; bottom: 0; height: auto` contract.
+- During Codrops open/close choreography, that same field becomes the fixed transition layer.
+- Program background remains `#e7f5ff`.
+- Program kinetic text remains `#397aa6` at the existing `.16` resting opacity.
+- The eleven-step handoff remains sharp beige `#f4f1e9` -> real Program field reveal with white separator lines.
+- Desktop card geometry remains `2 + 4` with the Codrops-inspired `7svh` base and `9svh` interval.
+- Tablet remains `3 + 3`; mobile remains `2 + 2 + 2`.
+- Card media remains landscape `4 / 3` in active responsive tiers.
+- Card idle copy remains title + description only.
 
-The source is MIT licensed and uses GSAP `^3.7.1`. Its main transition uses:
+## Heading contract
 
-- item fade/alternating `25%` vertical exit;
-- kinetic type scale `2.7` and `-90deg` rotation;
-- type-line `20% -> -200%` travel with `0.04` stagger;
-- `power*`, `expo` and `back` easing roles;
-- staggered article copy entrance;
-- image-wrapper `100% -> 0` and image `-100% -> 0` reveal;
-- reversed close timeline.
+- Heading presentation is isolated in `resources/css/pages/welcome/program-journey/heading.css`.
+- Heading runtime trigger is isolated in `resources/js/surfaces/home/program-journey/heading.js`.
+- The Program controller imports and owns the heading lifecycle.
+- IntersectionObserver triggers the reveal when the heading enters the viewport.
+- LTR line one starts at `translateY(108%)` and resolves upward to zero.
+- LTR line two starts at `translateY(-108%)` and resolves downward to zero.
+- There is no horizontal heading translation.
+- Reduced motion resolves the heading immediately without transition.
+- Arabic single-line heading uses the same vertical reveal contract while retaining Cairo and normal Arabic casing.
 
-The Adobe/Typekit font referenced by the demo is not treated as MIT-licensed source and is not copied.
+## Mission RTL correction
 
-## Implemented source contract
+FACT from owner runtime screenshot: Arabic Mission copy collapsed into a very narrow vertical column while ID rendered normally.
 
-- Program remains a six-card click-driven showcase, not a scroll journey.
-- Desktop/tablet/mobile card composition is unchanged by this batch.
-- The Program enhancer lazily loads GSAP 3.7.1 from jsDelivr instead of adding it to the main package/lock dependency graph.
-- The GSAP timelines retain the reference durations, easing roles, scale, rotation, line travel, stagger, card exit and article reveal behavior.
-- Exactly one Program kinetic type field now exists in Blade and spans from the handoff into the Program body.
-- The former `.program-kinetic__handoff-type` duplicate layer has been removed.
-- The eleven-step handoff is background-only: `#f4f1e9` -> `#e7f5ff` using sharp `repeating-linear-gradient` steps.
-- Shared type size, weight, leading, tracking, color and opacity come from Program-level CSS tokens.
-- Static kinetic type starts inside the handoff after the first solid beige step and continues behind `Program Kami`.
-- During open/close, that same field becomes the fixed Codrops transition layer.
-- `TypeTransition` captures the computed CSS resting opacity before animation and returns to it on close.
-- GSAP inline opacity/transform state is cleared at the end of close so repeated cycles return to CSS baseline rather than accumulating stale state.
-- RTL mirrors the quarter-turn and kinetic line travel while preserving the PG -> TK -> SD -> TQ -> MB -> LT logical order.
-- Back fades in with the detail and fades out on close; Escape and Tab containment remain supported.
-- Body overflow is locked only while a Program detail dialog is active.
-- Reduced-motion bypasses the kinetic transition and keeps immediate semantic detail access.
-- If GSAP fails to load, the full non-enhanced Program descriptions remain visible.
-- No wheel hijacking, document `scrollTo`, WebGL or continuous RAF loop was introduced.
+Source cause:
 
-## Locale contract
+- mission rows used a narrow counter track plus a flexible copy track;
+- `direction: rtl` changed placement behavior;
+- copy/counter grid columns were not explicitly owned;
+- desktop enhanced CSS also redefined the mission tracks with higher specificity.
 
-Public Program content remains in:
+Implemented correction:
 
-- `lang/id/home_program.php`
-- `lang/en/home_program.php`
-- `lang/ar/home_program.php`
+- LTR base row: `2.5rem minmax(0, 1fr)`;
+- RTL base row: `minmax(0, 1fr) 2.5rem`;
+- counter and copy receive explicit grid columns;
+- desktop enhanced LTR row: `2.2rem minmax(0, 1fr)`;
+- desktop enhanced RTL row: `minmax(0, 1fr) 2.2rem`;
+- Arabic copy keeps `text-align: start` and Cairo ownership.
 
-Blade contains no locale `match` block for public Program copy.
+No Mission text, media, scroll choreography or locale content changed.
 
-## Third-party license contract
+## Existing Codrops transition contract
 
-The required Codrops MIT notice is stored at:
-
-`docs/licenses/CODROPS_KINETIC_TYPE_PAGE_TRANSITION_MIT.md`
-
-## Media contract
-
-Development still uses six Unsplash URLs. Final media is expected to migrate to Cloudflare.
-
-The target Cloudflare delivery pattern is responsive variants, not one oversized source per device:
-
-- small/mobile width variants;
-- medium/tablet variants;
-- desktop variants;
-- WebP/AVIF negotiation;
-- `srcset`/`sizes` once final asset IDs exist;
-- lazy non-critical media;
-- CDN caching.
-
-With that contract, image cost should be dominated by the selected viewport variant rather than the original master file size.
+- GSAP 3.7.1 remains lazily loaded from jsDelivr.
+- type scale remains `2.7`;
+- LTR quarter-turn remains `-90deg`, mirrored to `+90deg` in RTL;
+- line travel/stagger, alternating card exit, detail copy reveal and image reveal remain unchanged;
+- close restores the CSS resting opacity and clears inline transform/opacity state;
+- Back, Escape, Tab containment and focus restoration remain owned by Program integration;
+- no wheel hijacking, document `scrollTo`, WebGL or continuous page RAF was introduced.
 
 ## Focused source tests
 
-`HomeProgramJourneyTest.php` now expects:
+`HomeProgramJourneyTest.php` now locks:
 
-- six localized cards and six details;
-- exactly one Program kinetic type field and ten kinetic type lines;
-- no `.program-kinetic__handoff-type` duplicate;
-- eleven sharp handoff steps;
-- shared Program kinetic type tokens;
-- computed resting opacity restoration plus GSAP `clearProps` cleanup;
-- representative ID/EN/AR content;
-- no obsolete Program sticky/rail/frame markup;
-- GSAP 3.7.1 transition markers;
-- Codrops timing/easing markers;
-- no wheel handling or `scrollTo`;
-- presence of the Codrops MIT notice.
+- six localized cards/details;
+- one Program type field with 20 kinetic lines;
+- localized Islamic word-bank presence for ID/EN/AR;
+- center-split heading entrance with no horizontal shift;
+- isolated heading CSS/JS imports;
+- content-height kinetic wall;
+- eleven-step handoff invariants;
+- Codrops GSAP timing/state restoration;
+- desktop/tablet/mobile card geometry.
 
-## Existing proof before this correction
+`HomeVisionMissionHeadingTest.php` now locks:
 
-Owner-local proof supplied before this correction:
+- localized About/Visi/Misi rendering;
+- existing native pinned mask reveal behavior;
+- explicit LTR/RTL mission counter/copy tracks in base and enhanced desktop CSS.
+
+## Proof state
+
+Owner-local proof from before this batch remains only a baseline:
 
 - Laravel suite: `197 passed (1659 assertions)` in `13.87s`.
-- `npm run check:structure` already failed because of three unrelated pre-existing items:
-  - `resources/js/surfaces/home/vision-story/entry.js` orphan reference;
-  - `resources/js/surfaces/home/vision-story/typography.js` orphan reference;
-  - `resources/css/pages/welcome-hero.css` checksum drift.
 
-Those are outside Program scope and remain untouched. The Laravel pass is a baseline, not post-change proof for this Program correction.
+No post-batch local build/browser proof is available through the GitHub-only execution channel.
 
-## Blocked proof
-
-Run against current `main` locally:
+Required local proof against current `main`:
 
 ```bash
 git diff --check
 git status --short
 php artisan test --filter=HomeProgramJourneyTest
+php artisan test --filter=HomeVisionMissionHeadingTest
 php artisan test
 npm run check:structure
 npm run build
 ```
 
-`check:structure`/`build` may remain blocked by the three unrelated pre-existing structure failures above; report exact output rather than repairing them inside Program scope.
+Runtime proof required:
 
-Runtime proof still required:
-
-- handoff reads as one continuous beige -> light-blue Program field;
-- the same kinetic typography size/color/opacity is visible through handoff and Program body;
-- no separate mini-type banner remains;
-- open one Program detail and close it repeatedly without kinetic text becoming dimmer;
-- card layout remains unchanged;
-- each card opens its correct detail;
-- back/Escape and focus restoration;
-- ID/EN/AR and mirrored RTL motion;
-- reduced motion;
+- LTR heading visually reads `PROGRAM KAMI` / `OUR PROGRAMS` and enters from the center split only;
+- Arabic heading remains readable and does not receive Latin uppercase behavior;
+- kinetic background text fills the entire Program section through the final card;
+- 20-line wall does not create unacceptable Codrops open/close delay;
+- Program open -> Back repeated twice restores the same resting typography state;
+- Arabic Mission copy uses normal readable line widths on desktop and compact layouts;
 - 360, 390, 640, 768, 1024, 1180/1181, 1280, 1440, 1536 and 1920 widths;
-- Chromium and WebKit;
-- final Cloudflare media weight only after real Cloudflare asset variants exist.
+- Chromium and WebKit.
 
 STATUS: `BLOCKED_BY_MISSING_EVIDENCE`
 
 NEXT EXECUTION CHANNEL: `owner/local terminal`
 
-NEXT VALID STEP: pull current `main`, run the focused Program test, then inspect one desktop handoff plus two consecutive open/close cycles before any further visual tuning.
+NEXT VALID STEP: pull current `main`, run the two focused tests, then inspect one LTR Program entrance plus Arabic Mission at desktop width before further visual tuning.
