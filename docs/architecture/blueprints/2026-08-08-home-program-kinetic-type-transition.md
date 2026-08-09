@@ -2,7 +2,7 @@
 
 Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Date: 2026-08-08
-Owner decision: replace Program completely with the Codrops kinetic-type template behavior.
+Owner decision: replace Program with the Codrops kinetic-type transition behavior while adapting SchoolAI content and final detail presentation.
 Reference: `https://github.com/codrops/KineticTypePageTransition`
 Reference license: MIT.
 
@@ -17,18 +17,19 @@ Reference license: MIT.
 
 ## OWNER CORRECTION
 
-The first SchoolAI implementation translated the Codrops behavior to WAAPI. The owner subsequently chose higher reference fidelity and explicitly approved using the template behavior directly.
+The first SchoolAI implementation translated the Codrops behavior to WAAPI. The owner subsequently chose higher reference fidelity and explicitly approved using the template transition behavior directly.
 
-Therefore the active implementation now:
+The active implementation therefore:
 
 - uses GSAP 3.7.1 timing/easing semantics from the reference;
-- preserves the reference scale `2.7`, quarter-turn, line stagger, item exit and article reveal choreography;
+- preserves the reference scale `2.7`, quarter-turn, line stagger, item exit and reversible kinetic choreography;
 - keeps SchoolAI content, locale ownership, accessibility integration and six-card adaptation;
+- intentionally simplifies the final detail screen beyond the reference article layout;
 - does not copy the Codrops images or Adobe Typekit font.
 
 ## GOAL
 
-Render six Program cards in the Codrops staggered composition. Activating one card transitions into its full-viewport detail through the kinetic typography field. Back or Escape reverses the sequence and restores the card composition.
+Render six Program cards in the Codrops staggered composition. Activating one card transitions through the kinetic typography field into a clean full-viewport detail containing only Back, the selected Program title and one description. Back or Escape reverses the sequence and restores the card composition.
 
 ## CONTENT CONTRACT
 
@@ -38,7 +39,27 @@ All public Program copy is locale-owned in:
 - `lang/en/home_program.php`
 - `lang/ar/home_program.php`
 
-Each item owns code, category, title, summary, description and optional next-program code. Blade contains no locale switch/match for public Program copy.
+Blade contains no locale switch/match for public Program copy.
+
+Idle cards render only title + description. The detail state renders only:
+
+- localized Back label (`Kembali`, `Back`, `العودة`);
+- selected Program title;
+- selected Program description.
+
+Item metadata such as code, eyebrow, summary and next code may remain in locale data, but they are not rendered in the public detail state.
+
+## DETAIL PRESENTATION CONTRACT
+
+- No detail image.
+- No `01 / 06` number.
+- No eyebrow/category.
+- No secondary intro/summary.
+- No next-program code.
+- Detail title uses the same editorial grammar as the Program section heading: light display weight, tight Latin tracking, large scale and uppercase presentation in ID/EN.
+- Arabic detail title uses Cairo, normal Arabic casing and Arabic-appropriate tracking/line-height.
+- Description is one restrained readable paragraph below the title.
+- Back remains a semantic button with focus restoration, Escape support and RTL arrow mirroring.
 
 ## REFERENCE FIDELITY
 
@@ -50,9 +71,14 @@ Adopt directly:
 - LTR quarter-turn `-90deg`, mirrored to `+90deg` in RTL;
 - type-line `20% -> -200%` travel with `0.04` stagger, mirrored in RTL;
 - alternating `+25% / -25%` item exit;
-- detail copy entering from `50%` Y with stagger;
-- image wrapper `100% -> 0` and image `-100% -> 0` reveal;
+- detail copy entering vertically;
 - reversible close timeline.
+
+Intentionally do not adopt from the reference detail article:
+
+- article image reveal;
+- article number;
+- multi-paragraph intro + description hierarchy.
 
 Adapt because SchoolAI has six items instead of four:
 
@@ -78,14 +104,14 @@ If GSAP cannot load, full Program descriptions remain available through the non-
 
 ## MEDIA
 
-Current development media uses six Unsplash URLs. Final production media is expected to move to Cloudflare-delivered school photography.
+Current development idle-card media uses six Unsplash URLs. Detail state contains no image. Final production card media is expected to move to Cloudflare-delivered school photography.
 
 Recommended Cloudflare contract:
 
 - source originals retained once;
 - delivery variants sized to viewport need;
 - WebP/AVIF negotiation where supported;
-- responsive `srcset`/`sizes` rather than one 2400px file for every device;
+- responsive `srcset`/`sizes` rather than one oversized file for every device;
 - lazy loading for non-critical Program media;
 - immutable CDN cache headers for versioned assets.
 
@@ -94,6 +120,7 @@ Recommended Cloudflare contract:
 - text direction follows document `dir`;
 - Arabic uses the existing Cairo stack;
 - kinetic rotation and lateral line travel mirror under RTL;
+- Back arrow mirrors under RTL;
 - six-program logical order remains PG -> TK -> SD -> TQ -> MB -> LT;
 - keyboard behavior remains direction-neutral.
 
@@ -125,13 +152,15 @@ Static/local:
 
 Runtime:
 
-- all six cards open the correct detail;
+- all six cards open the correct minimal detail;
+- detail contains only Back, title and one description;
+- ID/EN title typography follows the Program heading grammar;
+- Arabic detail remains readable and mirrors Back direction correctly;
 - back/Escape and focus restoration work;
 - repeated open/close leaves no stale body lock;
 - LTR/RTL kinetic travel is correct;
 - reduced motion is readable;
 - 360 through 1920 widths are usable;
-- Chromium and WebKit match the intended Codrops transition character;
-- Cloudflare image migration is measured separately when final assets exist.
+- Chromium and WebKit match the intended kinetic transition character.
 
 Until runtime proof exists, status remains `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`.
