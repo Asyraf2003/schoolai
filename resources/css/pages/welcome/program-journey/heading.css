@@ -8,7 +8,7 @@
 
 .program-kinetic__title[data-text-role="display"] {
     display: grid;
-    row-gap: .035em;
+    row-gap: .12em;
     width: 100%;
     margin: 0;
     color: var(--program-ink);
@@ -34,8 +34,8 @@
     max-width: 100%;
     overflow: hidden;
     overflow: clip;
-    padding-block: .06em;
-    margin-block: -.06em;
+    padding-block: .04em;
+    margin-block: 0;
 }
 
 .program-kinetic__title-text {
@@ -53,18 +53,18 @@
 .program-kinetic.is-enhanced:not(.is-program-heading-revealed)
 .program-kinetic__title-line:first-child .program-kinetic__title-text {
     opacity: 0;
-    transform: translate3d(0, 108%, 0);
+    transform: translate3d(0, 114%, 0);
 }
 
 .program-kinetic.is-enhanced:not(.is-program-heading-revealed)
 .program-kinetic__title-line:nth-child(2) .program-kinetic__title-text {
     opacity: 0;
-    transform: translate3d(0, -108%, 0);
+    transform: translate3d(0, -114%, 0);
 }
 
 .program-kinetic.is-enhanced:not(.is-program-heading-revealed)
 .program-kinetic__title-line:only-child .program-kinetic__title-text {
-    transform: translate3d(0, 108%, 0);
+    transform: translate3d(0, 114%, 0);
 }
 
 html[dir="rtl"] .program-kinetic__title[data-text-role="display"] {
