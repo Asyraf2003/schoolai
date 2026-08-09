@@ -76,13 +76,7 @@
     aria-modal="true" aria-label="{{ $programContent['section_label'] ?? '' }}" hidden>
     <div class="program-kinetic__details">
       @foreach ($programItems as $program)
-        @php
-          $media = $programMedia[$loop->index] ?? $programMedia[0];
-          $detailTitleLength = mb_strlen(trim((string) ($program['title'] ?? '')));
-          $detailTitleScale = $detailTitleLength <= 12
-            ? 'short'
-            : ($detailTitleLength <= 20 ? 'medium' : 'long');
-        @endphp
+        @php($media = $programMedia[$loop->index] ?? $programMedia[0])
         <article class="program-kinetic__detail" id="program-detail-{{ strtolower($program['code']) }}"
           data-program-detail data-program-index="{{ $loop->index }}" hidden>
           <div class="program-kinetic__detail-copy">
@@ -90,7 +84,7 @@
               <span class="program-kinetic__back-mark" aria-hidden="true">&lt;&lt;&lt;</span>
               <span class="program-kinetic__back-label">{{ $programContent['back'] }}</span>
             </button>
-            <h3 data-title-scale="{{ $detailTitleScale }}">{{ $program['title'] }}</h3>
+            <h3 data-title-scale="{{ mb_strlen(trim((string) ($program['title'] ?? ''))) <= 12 ? 'short' : (mb_strlen(trim((string) ($program['title'] ?? ''))) <= 20 ? 'medium' : 'long') }}">{{ $program['title'] }}</h3>
             <p class="program-kinetic__detail-description">{{ $program['description'] }}</p>
           </div>
           <div class="program-kinetic__detail-media">
