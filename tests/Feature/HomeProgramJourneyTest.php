@@ -10,6 +10,7 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
         'en' => ['Our Programs', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library', 'NOBLE CHARACTER'],
         'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة', 'مكارم الأخلاق'],
     ];
+    $backs = ['id' => 'Kembali', 'en' => 'Back', 'ar' => 'العودة'];
 
     foreach ($expected as $locale => $copy) {
         app()->setLocale($locale);
@@ -23,7 +24,8 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
             ->assertSee('data-program-heading', false)
             ->assertSee('data-program-cards', false)
             ->assertSee('data-program-detail-layer', false)
-            ->assertSee('data-program-back', false);
+            ->assertSee('data-program-back', false)
+            ->assertSee($backs[$locale]);
 
         foreach ($copy as $text) $response->assertSee($text);
 
@@ -41,14 +43,20 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
             ->and(count($details[0]))->toBe(6)
             ->and(count($handoffSteps[0]))->toBe(11)
             ->and(count($typeFields[0]))->toBe(1)
-            ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
+            ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(6)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(20)
             ->and(substr_count($programSection, 'class="program-kinetic__summary"'))->toBe(6)
+            ->and(substr_count($programSection, 'class="program-kinetic__detail-description"'))->toBe(6)
             ->and($programSection)->not->toContain('program-kinetic__handoff-type')
             ->and($programSection)->not->toContain('class="program-kinetic section"')
             ->and($programSection)->not->toContain('class="program-kinetic__meta"')
             ->and($programSection)->not->toContain('class="program-kinetic__eyebrow"')
             ->and($programSection)->not->toContain('class="program-kinetic__next"')
+            ->and($programSection)->not->toContain('program-kinetic__detail-number')
+            ->and($programSection)->not->toContain('program-kinetic__detail-eyebrow')
+            ->and($programSection)->not->toContain('program-kinetic__detail-intro')
+            ->and($programSection)->not->toContain('program-kinetic__detail-next')
+            ->and($programSection)->not->toContain('data-program-detail-image')
             ->and($programSection)->not->toContain('01—06')
             ->and($programSection)->not->toContain('data-program-sticky')
             ->and($programSection)->not->toContain('data-program-rail')
@@ -69,6 +77,8 @@ it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close',
         ->toContain('integration.trapTab(event)')
         ->toContain('prefers-reduced-motion')
         ->toContain("addLabel('typeTransition', 0.3)")
+        ->not->toContain('parts.imageWrap')
+        ->not->toContain('parts.image')
         ->not->toContain('scrollTo(')
         ->not->toContain('wheel')
         ->and($motion)
@@ -82,6 +92,30 @@ it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close',
         ->toContain("clearProps: 'transform'")
         ->not->toContain('opacity: 0.05')
         ->and(file_exists($license))->toBeTrue();
+});
+
+it('keeps Program detail to Back, section-style title and one description', function (): void {
+    $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
+    $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
+    $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
+    $compact = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
+
+    expect($geometry)
+        ->toContain('.program-kinetic__detail-copy h3, .program-kinetic__detail-description')
+        ->not->toContain('imageWrap')
+        ->not->toContain('data-program-detail-image')
+        ->and($hud)
+        ->toContain('font-variation-settings: "wght" 360')
+        ->toContain('font-weight: 360')
+        ->toContain('letter-spacing: -.055em')
+        ->toContain('text-transform: uppercase')
+        ->toContain('width: min(100%, 42rem)')
+        ->not->toContain('.program-kinetic__detail-number')
+        ->not->toContain('.program-kinetic__detail-image-wrap')
+        ->not->toContain('.program-kinetic__detail-intro')
+        ->not->toContain('.program-kinetic__detail-next')
+        ->and($wide)->not->toContain('.program-kinetic__detail-image-wrap')
+        ->and($compact)->not->toContain('.program-kinetic__detail-image-wrap');
 });
 
 it('reveals the Program heading from the center without horizontal heading shift', function (): void {
