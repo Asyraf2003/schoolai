@@ -10,41 +10,50 @@ import {
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
-
-const PI = Math.PI;
+const SAMPLE_COUNT = 180;
 const PATHS = [
     {
-        points: [[-9, -4, .2], [-6, 4, .8], [-1, 6, .2], [6, 3, -.6],
-            [7, -3, .4], [1, -6, .9], [-6, -5, .1]],
-        width: .28, base: [-.8, .4, .8], travel: [3.8, 2.5],
-        phase: .08, ratio: .82, rotation: .42, reveal: [.02, .48],
+        points: [[-12, 4.8, .6], [-9, 6, .55], [-5, 5.4, .45], [-1, 2.8, .3],
+            [2, -.8, .15], [6, -3.6, 0], [10, -2.8, -.2], [12, .5, -.3]],
+        width: .28, reveal: [0, .58],
     },
     {
-        points: [[-10, 3, -.3], [-5, -5, .5], [1, -6, 1], [8, -1, -.5],
-            [5, 6, .4], [-2, 5, -.8], [-8, 7, .2]],
-        width: .22, base: [1.1, -.6, -.5], travel: [4.6, 3.2],
-        phase: .36, ratio: 1.18, rotation: -.58, reveal: [.2, .68],
+        points: [[11, 8, -.5], [8, 6.5, -.4], [5, 3.5, -.2], [3, -.5, 0],
+            [4, -4, .15], [7, -6, .2], [11, -5, .1], [13, -2, 0]],
+        width: .23, reveal: [.22, .82],
     },
     {
-        points: [[-9, -7, .5], [-7, 0, -.4], [-2, 7, .7], [4, 6, -.7],
-            [9, -2, .4], [2, -7, .9], [-6, -4, -.3]],
-        width: .18, base: [-1.4, .2, -1.4], travel: [5.2, 3.8],
-        phase: .67, ratio: 1.46, rotation: .76, reveal: [.38, .9],
+        points: [[-11, -7, -.8], [-8, -5, -.7], [-6, -1, -.5], [-7, 3, -.3],
+            [-4, 6, -.1], [0, 6.7, .1], [4, 5, .2], [6, 1, .2],
+            [5, -3, .1], [8, -6, -.1]],
+        width: .19, reveal: [.48, 1],
     },
 ];
-
 const clamp = (value) => Math.min(1, Math.max(0, value));
-const smooth = (value) => {
-    const progress = clamp(value);
-    return progress * progress * (3 - 2 * progress);
-};
-const phase = (value, start, end) => smooth((value - start) / (end - start));
-
+const rangeProgress = (value, start, end) => (
+    clamp((value - start) / Math.max(.0001, end - start))
+);
+function writePoint(buffer, offset, point) {
+    buffer[offset] = point.x;
+    buffer[offset + 1] = point.y;
+    buffer[offset + 2] = point.z;
+}
+function writeHead(buffer, offset, from, to, amount) {
+    buffer[offset] = from.x + (to.x - from.x) * amount;
+    buffer[offset + 1] = from.y + (to.y - from.y) * amount;
+    buffer[offset + 2] = from.z + (to.z - from.z) * amount;
+}
 function createStroke(definition) {
-    const points = definition.points.map((point) => new Vector3(...point));
-    const curve = new CatmullRomCurve3(points, false, 'catmullrom', .38);
+    const controls = definition.points.map((point) => new Vector3(...point));
+    const curve = new CatmullRomCurve3(controls, false, 'centripetal');
+    const master = curve.getPoints(SAMPLE_COUNT);
+    const buffer = new Float32Array((master.length + 1) * 3);
     const geometry = new LineGeometry();
-    geometry.setFromPoints(curve.getPoints(112));
+    const first = master[0];
+    geometry.setPositions([
+        first.x, first.y, first.z,
+        first.x, first.y, first.z,
+    ]);
     const material = new LineMaterial({
         alphaToCoverage: true,
         color: 0xffffff,
@@ -57,10 +66,32 @@ function createStroke(definition) {
     });
     const line = new Line2(geometry, material);
     line.frustumCulled = false;
-    line.position.set(...definition.base);
-    return { definition, geometry, line, material };
+    return { buffer, definition, geometry, line, master, material };
 }
-
+function revealStroke(stroke, progress) {
+    const { buffer, geometry, master, material } = stroke;
+    const scaled = clamp(progress) * (master.length - 1);
+    const fullIndex = Math.floor(scaled);
+    const fraction = scaled - fullIndex;
+    let pointCount = 0;
+    for (let index = 0; index <= fullIndex; index += 1) {
+        writePoint(buffer, pointCount * 3, master[index]);
+        pointCount += 1;
+    }
+    if (fullIndex < master.length - 1) {
+        writeHead(
+            buffer, pointCount * 3, master[fullIndex],
+            master[fullIndex + 1], fraction,
+        );
+        pointCount += 1;
+    }
+    if (pointCount === 1) {
+        writePoint(buffer, 3, master[0]);
+        pointCount = 2;
+    }
+    geometry.setPositions(buffer.subarray(0, pointCount * 3));
+    material.opacity = clamp(progress * 12);
+}
 export function createValuesSpatialScene(host) {
     const renderer = new WebGLRenderer({
         alpha: true,
@@ -99,7 +130,6 @@ export function createValuesSpatialScene(host) {
         const nextRatio = Math.min(window.devicePixelRatio || 1, cap);
         if (nextWidth === width && nextHeight === height
             && nextRatio === pixelRatio) return;
-
         width = nextWidth;
         height = nextHeight;
         pixelRatio = nextRatio;
@@ -110,26 +140,18 @@ export function createValuesSpatialScene(host) {
         strokes.forEach(({ material }) => material.resolution.copy(resolution));
     }
 
-    function update({ handoffProgress, storyProgress, momentum }) {
+    function update({ handoffProgress, storyProgress }) {
         if (suspended || failed) return;
         resize();
-        const travel = clamp(handoffProgress * .28 + storyProgress * .92);
-        strokes.forEach(({ definition, line, material }, index) => {
-            const cycle = (travel * definition.ratio + definition.phase) * PI;
-            const drift = storyProgress - .5;
-            line.position.x = definition.base[0]
-                + Math.sin(cycle) * definition.travel[0] + drift * (index - 1) * 2.6;
-            line.position.y = definition.base[1]
-                + Math.cos(cycle * .84) * definition.travel[1] - drift * (2.8 + index);
-            line.position.z = definition.base[2] + Math.sin(cycle * .63) * .7;
-            line.rotation.z = definition.rotation * travel
-                + Math.sin(cycle * .48) * .16 + momentum * .035;
-            material.opacity = phase(handoffProgress, ...definition.reveal);
+        const journey = clamp(handoffProgress * .36 + storyProgress * .86);
+        strokes.forEach((stroke) => {
+            const growth = rangeProgress(journey, ...stroke.definition.reveal);
+            revealStroke(stroke, growth);
         });
         renderer.render(scene, camera);
         renderCount += 1;
         canvas.dataset.valuesRenderCount = String(renderCount);
-        canvas.dataset.valuesSpatialProgress = storyProgress.toFixed(4);
+        canvas.dataset.valuesSpatialProgress = journey.toFixed(4);
         host.classList.add('is-spatial-ready');
         setState('ready');
     }
