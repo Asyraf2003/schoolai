@@ -9,7 +9,7 @@
     --program-type-leading: .75;
     --program-type-tracking: -.055em;
     --program-handoff-height: clamp(18rem, 28vw, 30rem);
-    --program-values-clearance: clamp(5rem, 15svh, 10rem);
+    --program-values-clearance: clamp(10rem, 30svh, 20rem);
     position: relative;
     min-height: 100svh;
     overflow: hidden;
