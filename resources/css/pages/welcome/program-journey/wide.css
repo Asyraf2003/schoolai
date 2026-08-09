@@ -75,6 +75,32 @@
         display: block;
         font-size: clamp(.72rem, .72vw, .9rem);
     }
+
+    .program-kinetic__detail {
+        grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+        width: min(88vw, 96rem);
+    }
+
+    .program-kinetic__detail-copy {
+        grid-column: 1;
+        align-self: center;
+    }
+
+    .program-kinetic__detail-image-wrap {
+        grid-column: 2;
+        grid-row: 1;
+        height: min(64svh, 42rem);
+        aspect-ratio: auto;
+        align-self: center;
+    }
+
+    html[dir="rtl"] .program-kinetic__detail-copy {
+        grid-column: 2;
+    }
+
+    html[dir="rtl"] .program-kinetic__detail-image-wrap {
+        grid-column: 1;
+    }
 }
 
 @media (min-width: 1536px) {
