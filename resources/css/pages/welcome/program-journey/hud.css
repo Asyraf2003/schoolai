@@ -57,23 +57,42 @@
     display: none !important;
 }
 
+.program-kinetic__details {
+    min-height: 100%;
+}
+
+.program-kinetic__detail {
+    position: relative;
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    width: min(92vw, 100rem);
+    min-height: 100svh;
+    margin-inline: auto;
+    align-content: center;
+    padding: clamp(5rem, 10svh, 7rem) 0 clamp(3rem, 7svh, 5rem);
+}
+
+.program-kinetic__detail-copy {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    justify-items: start;
+    gap: clamp(.85rem, 1.6vw, 1.35rem);
+    width: 100%;
+}
+
 .program-kinetic__back {
-    position: fixed;
-    top: clamp(1rem, 3vw, 2rem);
-    inset-inline-start: clamp(1rem, 4vw, 3rem);
-    z-index: 1205;
     display: inline-flex;
     align-items: center;
     gap: .62rem;
     min-height: 44px;
-    margin: 0;
+    margin: 0 0 clamp(.2rem, .5vw, .55rem);
     padding: 0;
     border: 0;
-    opacity: 0;
-    pointer-events: none;
     background: none;
     color: var(--program-ink);
     cursor: pointer;
+    direction: ltr;
     font: inherit;
     font-size: clamp(.82rem, .78rem + .2vw, 1rem);
     font-weight: 650;
@@ -81,35 +100,18 @@
 
 .program-kinetic__back-mark {
     display: inline-block;
-    direction: ltr;
     font-weight: 780;
     letter-spacing: -.12em;
     transform-origin: center;
 }
 
+.program-kinetic__back-label {
+    direction: inherit;
+}
+
 .program-kinetic__back:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
-}
-
-.program-kinetic__details {
-    min-height: 100%;
-}
-
-.program-kinetic__detail {
-    display: grid;
-    gap: clamp(2rem, 5vw, 5rem);
-    width: min(92vw, 100rem);
-    min-height: 100svh;
-    margin-inline: auto;
-    align-items: center;
-    padding: clamp(6rem, 12svh, 8rem) 0 clamp(3rem, 8svh, 6rem);
-}
-
-.program-kinetic__detail-copy {
-    display: grid;
-    gap: clamp(1rem, 2vw, 1.75rem);
-    width: 100%;
 }
 
 .program-kinetic__detail-copy h3 {
@@ -129,19 +131,25 @@
 }
 
 .program-kinetic__detail-description {
-    width: min(100%, 42rem);
+    width: min(100%, 28rem);
     margin: 0;
     color: var(--program-muted);
-    font-size: clamp(.96rem, .9rem + .24vw, 1.16rem);
+    font-size: clamp(.94rem, .9rem + .2vw, 1.12rem);
     font-weight: 430;
-    line-height: 1.62;
+    line-height: 1.58;
+}
+
+.program-kinetic__detail-media {
+    position: relative;
+    z-index: 1;
+    width: 100%;
 }
 
 .program-kinetic__detail-image-wrap {
     overflow: hidden;
     width: 100%;
-    aspect-ratio: 16 / 10;
-    border-radius: clamp(.8rem, 1.5vw, 1.35rem);
+    aspect-ratio: 4 / 5;
+    border-radius: clamp(.8rem, 1.4vw, 1.15rem);
     background: rgb(57 122 166 / .08);
     transform-origin: 50% 100%;
 }
@@ -158,6 +166,10 @@ body.program-kinetic-dialog {
     overflow: hidden;
 }
 
+html[dir="rtl"] .program-kinetic__detail-copy {
+    justify-items: start;
+}
+
 html[dir="rtl"] .program-kinetic__detail-copy h3 {
     font-family: var(--font-ar-display, Cairo, sans-serif);
     font-size: clamp(2.2rem, 2.8vw, 4rem);
@@ -170,6 +182,10 @@ html[dir="rtl"] .program-kinetic__detail-copy h3 {
 
 html[dir="rtl"] .program-kinetic__back {
     flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .program-kinetic__back-label {
+    direction: rtl;
 }
 
 html[dir="rtl"] .program-kinetic__back-mark {
