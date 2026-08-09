@@ -55,6 +55,7 @@
     font-weight: 360;
     letter-spacing: -.055em;
     line-height: .84;
+    text-transform: uppercase;
     text-wrap: balance;
 }
 
@@ -70,6 +71,35 @@
     overflow: clip;
     padding-block: .06em;
     margin-block: -.06em;
+}
+
+.program-kinetic__title-text {
+    will-change: transform, opacity;
+}
+
+.program-kinetic.is-enhanced .program-kinetic__title-text {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition:
+        transform 900ms cubic-bezier(.22, 1, .36, 1),
+        opacity 420ms ease;
+}
+
+.program-kinetic.is-enhanced:not(.is-program-heading-revealed)
+.program-kinetic__title-line:first-child .program-kinetic__title-text {
+    opacity: 0;
+    transform: translate3d(0, 108%, 0);
+}
+
+.program-kinetic.is-enhanced:not(.is-program-heading-revealed)
+.program-kinetic__title-line:nth-child(2) .program-kinetic__title-text {
+    opacity: 0;
+    transform: translate3d(0, -108%, 0);
+}
+
+.program-kinetic.is-enhanced:not(.is-program-heading-revealed)
+.program-kinetic__title-line:only-child .program-kinetic__title-text {
+    transform: translate3d(0, 108%, 0);
 }
 
 .program-kinetic__cards {
@@ -161,10 +191,23 @@ html[dir="rtl"] .program-kinetic__title[data-text-role="display"] {
     font-weight: 500;
     letter-spacing: normal;
     line-height: 1.08;
+    text-transform: none;
+}
+
+html[dir="rtl"] .program-kinetic__kinetic-line {
+    font-family: "Cairo", Arial, sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
 }
 
 html[dir="rtl"] .program-kinetic__cards {
     direction: rtl;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .program-kinetic.is-enhanced .program-kinetic__title-text {
+        transition: none;
+    }
 }
 
 @supports not (overflow: clip) {
