@@ -1,7 +1,27 @@
 @media (min-width: 640px) and (max-width: 1023px) {
     .program-kinetic__cards {
+        --program-card-base: 3vw;
+        --program-card-interval: 4vw;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        width: min(94vw, 72rem);
+        column-gap: 1.5vw;
+        row-gap: clamp(1rem, 3vw, 2rem);
+        width: 96vw;
+        align-items: end;
+    }
+
+    .program-kinetic__card {
+        align-self: end;
+        margin-bottom: var(--program-card-base);
+    }
+
+    .program-kinetic__card:nth-child(2),
+    .program-kinetic__card:nth-child(5) {
+        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
+    }
+
+    .program-kinetic__card:nth-child(3),
+    .program-kinetic__card:nth-child(6) {
+        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 2);
     }
 }
 
@@ -17,6 +37,10 @@
 
     .program-kinetic__cards {
         padding-bottom: 2rem;
+    }
+
+    .program-kinetic__image-wrap img {
+        aspect-ratio: 4 / 3;
     }
 
     .program-kinetic__name {
@@ -65,6 +89,7 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 2rem .75rem;
         width: 96vw;
+        align-items: start;
     }
 
     .program-kinetic__card {
@@ -73,7 +98,7 @@
     }
 
     .program-kinetic__image-wrap img {
-        aspect-ratio: 4 / 5;
+        aspect-ratio: 4 / 3;
     }
 
     .program-kinetic__name {
