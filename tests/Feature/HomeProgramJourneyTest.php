@@ -83,29 +83,33 @@ it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close',
         ->and(file_exists($license))->toBeTrue();
 });
 
-it('blends Vision into one continuous Program kinetic field with tapered crisp line geometry', function (): void {
+it('reveals the real Program field through an exact 11-step Vision handoff', function (): void {
+    $vision = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
     $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
     $handoff = file_get_contents(resource_path('css/pages/welcome/program-journey/handoff.css'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
 
-    expect($base)
+    expect($vision)
+        ->toContain('background: #f4f1e9')
+        ->and($base)
         ->toContain('--program-bg: #e7f5ff')
         ->toContain('--program-type: #397aa6')
         ->toContain('--program-type-opacity: .16')
         ->toContain('--program-type-size: clamp(7rem, 18.75vh, 15rem)')
         ->toContain('--program-handoff-height: clamp(18rem, 28vw, 30rem)')
         ->and($handoff)
-        ->toContain('--handoff-b: var(--program-bg)')
-        ->toContain('--handoff-line: var(--program-type)')
-        ->toContain('height: var(--program-handoff-height)')
+        ->toContain('--handoff-a: #f4f1e9')
+        ->toContain('--handoff-line: #fff')
+        ->toContain('z-index: 4')
+        ->toContain('background: transparent')
         ->toContain('grid-template-rows: repeat(11')
-        ->toContain('repeating-linear-gradient(180deg')
-        ->toContain('.program-kinetic__handoff-step::after')
-        ->toContain('opacity: .42')
-        ->toContain('transparent 0 1px, var(--handoff-line) 1px 10px')
-        ->toContain('transparent 0 5px, var(--handoff-line) 5px 10px')
-        ->toContain('transparent 0 9px, var(--handoff-line) 9px 10px')
-        ->not->toContain('opacity: .62')
+        ->toContain('var(--handoff-a) 0 9px, transparent 9px 10px')
+        ->toContain('var(--handoff-a) 0 5px, transparent 5px 10px')
+        ->toContain('var(--handoff-a) 0 1px, transparent 1px 10px')
+        ->toContain('var(--handoff-line) var(--handoff-line-start) var(--handoff-cover)')
+        ->not->toContain('--handoff-b:')
+        ->not->toContain('--handoff-line: var(--program-type)')
+        ->not->toContain('opacity: .42')
         ->not->toContain('.program-kinetic__handoff-type')
         ->not->toContain('filter: blur(')
         ->not->toContain('backdrop-filter: blur(')
