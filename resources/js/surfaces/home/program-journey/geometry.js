@@ -9,7 +9,7 @@ export function collectProgramDom(root) {
     typeLines: [...root.querySelectorAll('[data-program-type-line]')],
     layer: root.querySelector('[data-program-detail-layer]'),
     details: [...root.querySelectorAll('[data-program-detail]')],
-    back: root.querySelector('[data-program-back]'),
+    backs: [...root.querySelectorAll('[data-program-back]')],
   };
 }
 
@@ -27,13 +27,14 @@ export function hideDetails(dom) {
 }
 
 export function detailParts(detail) {
-  if (!detail) return { copy: [], imageWrap: null, image: null };
+  if (!detail) return { copy: [], imageWrap: null, image: null, back: null };
 
   return {
     copy: [...detail.querySelectorAll(
-      '.program-kinetic__detail-copy h3, .program-kinetic__detail-description',
+      '.program-kinetic__back, .program-kinetic__detail-copy h3, .program-kinetic__detail-description',
     )],
     imageWrap: detail.querySelector('[data-program-detail-image-wrap]'),
     image: detail.querySelector('[data-program-detail-image]'),
+    back: detail.querySelector('[data-program-back]'),
   };
 }
