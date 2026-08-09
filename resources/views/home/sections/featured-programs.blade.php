@@ -79,23 +79,11 @@
     </button>
     <div class="program-kinetic__details">
       @foreach ($programItems as $program)
-        @php($media = $programMedia[$loop->index] ?? $programMedia[0])
         <article class="program-kinetic__detail" id="program-detail-{{ strtolower($program['code']) }}"
           data-program-detail data-program-index="{{ $loop->index }}" hidden>
           <div class="program-kinetic__detail-copy">
-            <span class="program-kinetic__detail-number">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }} / 06</span>
-            <p class="program-kinetic__detail-eyebrow">{{ $program['eyebrow'] }}</p>
             <h3>{{ $program['title'] }}</h3>
-            <p class="program-kinetic__detail-intro">{{ $program['summary'] }}</p>
             <p class="program-kinetic__detail-description">{{ $program['description'] }}</p>
-            @if (! empty($program['next']))
-              <span class="program-kinetic__detail-next" aria-hidden="true">→{{ $program['next'] }}</span>
-            @endif
-          </div>
-          <div class="program-kinetic__detail-image-wrap" data-program-detail-image-wrap>
-            <img src="{{ $media['url'] }}" alt="" width="1800" height="1200" decoding="async"
-              referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $media['position'] }}"
-              data-program-detail-image />
           </div>
         </article>
       @endforeach
