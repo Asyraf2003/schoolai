@@ -119,3 +119,26 @@ it('reveals the real Program field through an exact 11-step Vision handoff', fun
         ->toContain('position: fixed')
         ->not->toContain('font-size: clamp(7rem, 18.75vh, 15rem)');
 });
+
+it('adapts Codrops card geometry to the six-card SchoolAI tiers', function (): void {
+    $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
+    $compact = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
+
+    expect($wide)
+        ->toContain('--program-card-base: 7svh')
+        ->toContain('--program-card-interval: 9svh')
+        ->toContain('grid-template-columns: repeat(4, minmax(0, 1fr))')
+        ->toContain('width: 96vw')
+        ->toContain('grid-column: 3')
+        ->toContain('grid-column: 4')
+        ->toContain('calc(var(--program-card-base) + var(--program-card-interval) * 3)')
+        ->toContain('aspect-ratio: 4 / 3')
+        ->and($compact)
+        ->toContain('grid-template-columns: repeat(3, minmax(0, 1fr))')
+        ->toContain('--program-card-base: 3vw')
+        ->toContain('--program-card-interval: 4vw')
+        ->toContain('calc(var(--program-card-base) + var(--program-card-interval) * 2)')
+        ->toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
+        ->toContain('aspect-ratio: 4 / 3')
+        ->not->toContain('aspect-ratio: 4 / 5');
+});
