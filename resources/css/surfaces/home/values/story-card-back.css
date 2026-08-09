@@ -1,63 +1,90 @@
 .values-card__back {
+    display: grid;
+    place-items: center;
     border: clamp(.16rem, .3vw, .28rem) solid rgba(255,255,255,.94);
     background-color: #172cd6;
     background-image:
-        linear-gradient(
-            30deg,
-            rgba(255,255,255,.18) 12%,
-            transparent 12.5% 87%,
-            rgba(255,255,255,.18) 87.5%
+        url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2284%22%20height%3D%2284%22%20viewBox%3D%220%200%2084%2084%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cpolygon%20points%3D%2242%2C10%2047.7%2C28.3%2064.6%2C19.4%2055.7%2C36.3%2074%2C42%2055.7%2C47.7%2064.6%2C64.6%2047.7%2C55.7%2042%2C74%2036.3%2C55.7%2019.4%2C64.6%2028.3%2C47.7%2010%2C42%2028.3%2C36.3%2019.4%2C19.4%2036.3%2C28.3%22%20stroke-opacity%3D%22.23%22%20stroke-width%3D%221.25%22%2F%3E%0A%3Crect%20x%3D%2222%22%20y%3D%2222%22%20width%3D%2240%22%20height%3D%2240%22%20transform%3D%22rotate%2845%2042%2042%29%22%20stroke-opacity%3D%22.14%22%20stroke-width%3D%221%22%2F%3E%0A%3Ccircle%20cx%3D%2242%22%20cy%3D%2242%22%20r%3D%2217%22%20stroke-opacity%3D%22.09%22%20stroke-width%3D%221%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E"),
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,.11),
+            transparent 58%
         ),
-        linear-gradient(
-            150deg,
-            rgba(255,255,255,.18) 12%,
-            transparent 12.5% 87%,
-            rgba(255,255,255,.18) 87.5%
-        ),
-        linear-gradient(
-            30deg,
-            rgba(255,255,255,.11) 12%,
-            transparent 12.5% 87%,
-            rgba(255,255,255,.11) 87.5%
-        ),
-        linear-gradient(
-            150deg,
-            rgba(255,255,255,.11) 12%,
-            transparent 12.5% 87%,
-            rgba(255,255,255,.11) 87.5%
-        ),
-        linear-gradient(
-            60deg,
-            rgba(255,255,255,.14) 25%,
-            transparent 25.5% 75%,
-            rgba(255,255,255,.14) 75.5%
-        ),
-        linear-gradient(145deg, #172cd6, var(--values-blue));
-    background-position:
-        0 0,
-        0 0,
-        2.1rem 3.65rem,
-        2.1rem 3.65rem,
-        0 0,
-        0 0;
-    background-size:
-        4.2rem 7.3rem,
-        4.2rem 7.3rem,
-        4.2rem 7.3rem,
-        4.2rem 7.3rem,
-        4.2rem 7.3rem,
-        auto;
+        linear-gradient(145deg, #1327c8, var(--values-blue));
+    background-position: center, center, center;
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-size: 5.25rem 5.25rem, 100% 100%, 100% 100%;
     box-shadow:
         inset 0 0 0 1px rgba(255,255,255,.28),
-        inset 0 0 5rem rgba(4,12,94,.3);
+        inset 0 0 5rem rgba(4,12,94,.34);
     transform: rotateY(180deg) translateZ(.1px);
+}
+
+.values-card__back::before {
+    position: absolute;
+    z-index: 1;
+    width: 66%;
+    aspect-ratio: 1;
+    background: rgba(255,255,255,.055);
+    clip-path: polygon(
+        50% 0%,
+        61% 27%,
+        85% 15%,
+        73% 39%,
+        100% 50%,
+        73% 61%,
+        85% 85%,
+        61% 73%,
+        50% 100%,
+        39% 73%,
+        15% 85%,
+        27% 61%,
+        0% 50%,
+        27% 39%,
+        15% 15%,
+        39% 27%
+    );
+    content: "";
+    pointer-events: none;
 }
 
 .values-card__back::after {
     position: absolute;
     inset: 7%;
+    z-index: 2;
     border: 1px solid rgba(255,255,255,.42);
     border-radius: .8rem;
     content: "";
     box-shadow: inset 0 0 2.5rem rgba(255,255,255,.08);
+    pointer-events: none;
+}
+
+.values-card__back-brand {
+    position: relative;
+    z-index: 3;
+    display: inline-grid;
+    min-width: 58%;
+    min-height: clamp(3.25rem, 17cqi, 5rem);
+    place-items: center;
+    padding: clamp(.7rem, 4cqi, 1rem) clamp(.85rem, 5cqi, 1.25rem);
+    border: 1px solid rgba(255,255,255,.66);
+    border-radius: 999px;
+    background: rgba(8,20,132,.7);
+    box-shadow:
+        0 .8rem 2.4rem rgba(4,10,80,.25),
+        inset 0 0 0 1px rgba(255,255,255,.08);
+    color: #fff;
+    font-family: var(--font-display, Inter, sans-serif);
+    font-size: clamp(.72rem, 4.8cqi, 1.05rem);
+    font-weight: 700;
+    letter-spacing: .18em;
+    line-height: 1.1;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 1px 12px rgba(255,255,255,.2);
+}
+
+html[lang="ar"] .values-card__back-brand {
+    font-family: var(--font-ar-display, Cairo, sans-serif);
+    letter-spacing: .06em;
 }

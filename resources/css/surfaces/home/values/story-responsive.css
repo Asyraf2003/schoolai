@@ -49,7 +49,7 @@
         --values-content-width: 90vw;
         --values-grid-column-gap: 2vw;
         --values-grid-row-gap: 2vw;
-        --values-story-length: 380svh;
+        --values-story-length: 570svh;
         --values-line-two-shift: clamp(4rem, 7vw, 7rem);
     }
 

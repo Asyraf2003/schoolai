@@ -85,7 +85,9 @@
                       </div>
                     </div>
 
-                    <div class="values-card__face values-card__back" aria-hidden="true"></div>
+                    <div class="values-card__face values-card__back" aria-hidden="true">
+                      <span class="values-card__back-brand">AL MUSTAQBAL</span>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,4 @@
 import {
-    bounceOffset,
     deckAngle,
     exitAmount,
     fanAngle,
@@ -23,7 +22,7 @@ function mixPose(from, to, amount) {
         rz: mix(from.rz, to.rz, amount),
         scale: mix(from.scale, to.scale, amount),
         ry: mix(from.ry, to.ry, amount),
-        floatY: mix(from.floatY, to.floatY, amount),
+        floatY: 0,
     };
 }
 
@@ -83,11 +82,11 @@ export function desktopCardFrame(
     let current = mixPose(
         hidden,
         deck,
-        phase(progress, 0, 0.16),
+        phase(progress, 0, 0.096),
     );
 
-    current = mixPose(current, fan, phase(progress, 0.12, 0.36));
-    current = mixPose(current, preFlip, phase(progress, 0.30, 0.42));
+    current = mixPose(current, fan, phase(progress, 0.072, 0.216));
+    current = mixPose(current, preFlip, phase(progress, 0.18, 0.252));
 
     const localFlip = flipLocal(index, progress);
     const upright = uprightAmount(localFlip);
@@ -96,14 +95,9 @@ export function desktopCardFrame(
     current.rz = mix(current.rz, 0, upright);
     current.x = mix(current.x, 0, upright);
     current.y = mix(current.y, 0, upright)
-        + momentum * geometry.cardHeight * 0.012
         - leave * (geometry.stageHeight + geometry.cardHeight * 0.72);
     current.z = mix(current.z, 0, upright);
-    current.floatY = bounceOffset(
-        index,
-        progress,
-        geometry.cardHeight,
-    );
+    current.floatY = 0;
 
     return current;
 }

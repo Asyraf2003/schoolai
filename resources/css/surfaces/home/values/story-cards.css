@@ -22,6 +22,8 @@
     --values-rz: 0deg;
     --values-scale: 1;
     --values-float-y: 0px;
+    --values-water-float: clamp(.38rem, .72vw, .78rem);
+    --values-water-duration: 5.8s;
     position: relative;
     width: 100%;
     aspect-ratio: .717;
@@ -33,6 +35,26 @@
 .values-card:nth-child(2) { z-index: 39; }
 .values-card:nth-child(3) { z-index: 38; }
 .values-card:nth-child(4) { z-index: 37; }
+
+.values-card:nth-child(1) .values-card__float {
+    --values-water-duration: 5.6s;
+    animation-delay: -1.2s;
+}
+
+.values-card:nth-child(2) .values-card__float {
+    --values-water-duration: 6.3s;
+    animation-delay: -3.7s;
+}
+
+.values-card:nth-child(3) .values-card__float {
+    --values-water-duration: 5.9s;
+    animation-delay: -2.4s;
+}
+
+.values-card:nth-child(4) .values-card__float {
+    --values-water-duration: 6.6s;
+    animation-delay: -4.8s;
+}
 
 .values-story.is-values-ready .values-card {
     --values-ry: 180deg;
@@ -58,9 +80,33 @@
 }
 
 .values-card__float {
-    transform: translate3d(0, var(--values-float-y), 0);
+    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
     will-change: transform;
+    animation:
+        values-card-water-float
+        var(--values-water-duration)
+        ease-in-out
+        infinite
+        alternate;
+}
+
+@keyframes values-card-water-float {
+    0% {
+        transform: translate3d(
+            0,
+            calc(0px - var(--values-water-float)),
+            0
+        );
+    }
+
+    50% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, var(--values-water-float), 0);
+    }
 }
 
 .values-card__inner {
