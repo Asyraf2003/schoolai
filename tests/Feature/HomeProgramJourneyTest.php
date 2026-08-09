@@ -25,6 +25,7 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
         preg_match_all('/\sdata-program-open(?:\s|>)/', $programSection, $triggers);
         preg_match_all('/\sdata-program-detail(?:\s|>)/', $programSection, $details);
         preg_match_all('/\sdata-program-back(?:\s|>)/', $programSection, $backControls);
+        preg_match_all('/\sdata-title-scale="(?:short|medium|long)"/', $programSection, $titleScales);
         preg_match_all('/\sdata-program-handoff-step="\d+"/', $programSection, $handoffSteps);
         preg_match_all('/\sdata-program-type(?:\s|>)/', $programSection, $typeFields);
 
@@ -32,6 +33,7 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
             ->and(count($triggers[0]))->toBe(6)
             ->and(count($details[0]))->toBe(6)
             ->and(count($backControls[0]))->toBe(6)
+            ->and(count($titleScales[0]))->toBe(6)
             ->and(count($handoffSteps[0]))->toBe(11)
             ->and(count($typeFields[0]))->toBe(1)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
@@ -72,7 +74,7 @@ it('uses Codrops GSAP timing and detail media reveal', function (): void {
         ->not->toContain('opacity: 0.05');
 });
 
-it('matches Codrops desktop detail geometry while keeping local Back above title', function (): void {
+it('keeps Codrops geometry while adapting long localized detail titles', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
     $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
@@ -83,6 +85,11 @@ it('matches Codrops desktop detail geometry while keeping local Back above title
         ->toContain('class="program-kinetic__back"')
         ->toContain('&lt;&lt;&lt;')
         ->toContain('class="program-kinetic__detail-media"')
+        ->toContain('mb_strlen')
+        ->toContain("'short'")
+        ->toContain("'medium'")
+        ->toContain("'long'")
+        ->toContain('data-title-scale="{{ $detailTitleScale }}"')
         ->and($hud)
         ->toContain('font-size: 8vw')
         ->toContain('font-variation-settings: "wght" 700')
@@ -95,13 +102,17 @@ it('matches Codrops desktop detail geometry while keeping local Back above title
         ->toContain('top: 20svh')
         ->toContain('height: 80svh')
         ->toContain('width: calc(38vw + 280px)')
-        ->toContain('grid-template-rows: 10vw 2rem 12vw auto 1fr')
+        ->toContain('grid-template-rows: 10vw 2rem auto auto 1fr')
         ->toContain('grid-template-columns: 1.5rem 30% 1fr 1.5rem')
-        ->toContain('display: contents')
+        ->toContain('h3[data-title-scale="short"]')
+        ->toContain('font-size: 5.75vw')
+        ->toContain('font-size: 4.75vw')
+        ->toContain('text-wrap: balance')
         ->toContain('grid-column: 2 / 4')
         ->toContain('grid-row: 3')
         ->toContain('grid-column: 3')
         ->toContain('grid-row: 1 / 6')
+        ->not->toContain('grid-template-rows: 10vw 2rem 12vw auto 1fr')
         ->and($compact)
         ->toContain('width: min(78vw, 31rem)')
         ->toContain('grid-row: 1')
