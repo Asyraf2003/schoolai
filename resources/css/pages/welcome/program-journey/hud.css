@@ -1,10 +1,11 @@
 .program-kinetic__type {
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 50%;
     z-index: 3;
     width: 120vmax;
-    height: 100%;
+    height: auto;
     min-height: calc(var(--program-handoff-height) + 100svh);
     display: flex;
     flex-direction: column;
@@ -29,6 +30,7 @@
 .program-kinetic.is-detail-open .program-kinetic__type {
     position: fixed;
     top: 50%;
+    bottom: auto;
     left: 50%;
     z-index: 1202;
     width: 120vmax;
