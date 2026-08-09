@@ -85,11 +85,12 @@ it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close',
 });
 
 it('reveals the Program heading from the center without horizontal heading shift', function (): void {
-    $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+    $headingCss = file_get_contents(resource_path('css/pages/welcome/program-journey/heading.css'));
     $heading = file_get_contents(resource_path('js/surfaces/home/program-journey/heading.js'));
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $entryCss = file_get_contents(resource_path('css/pages/welcome/program-showcase-desktop.css'));
 
-    expect($base)
+    expect($headingCss)
         ->toContain('text-transform: uppercase')
         ->toContain('translate3d(0, 108%, 0)')
         ->toContain('translate3d(0, -108%, 0)')
@@ -101,7 +102,9 @@ it('reveals the Program heading from the center without horizontal heading shift
         ->not->toContain('translateX')
         ->and($controller)
         ->toContain("from './heading.js'")
-        ->toContain('mountProgramHeading(root)');
+        ->toContain('mountProgramHeading(root)')
+        ->and($entryCss)
+        ->toContain("@import './program-journey/heading.css'");
 });
 
 it('reveals the real Program field through an exact 11-step Vision handoff', function (): void {
