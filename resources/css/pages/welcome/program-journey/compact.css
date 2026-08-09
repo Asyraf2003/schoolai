@@ -50,6 +50,19 @@
     .program-kinetic__summary {
         display: block;
     }
+
+    .program-kinetic__detail {
+        grid-template-columns: minmax(0, 1fr);
+        align-content: center;
+    }
+
+    .program-kinetic__detail-image-wrap {
+        grid-row: 1;
+    }
+
+    .program-kinetic__detail-copy {
+        grid-row: 2;
+    }
 }
 
 @media (max-width: 639px) {
@@ -92,5 +105,11 @@
 
     .program-kinetic__summary {
         font-size: clamp(.72rem, 3.2vw, .86rem);
+    }
+
+    .program-kinetic__detail {
+        width: 90vw;
+        gap: 1.5rem;
+        padding-top: 5.5rem;
     }
 }
