@@ -27,11 +27,13 @@ export function hideDetails(dom) {
 }
 
 export function detailParts(detail) {
-  if (!detail) return { copy: [] };
+  if (!detail) return { copy: [], imageWrap: null, image: null };
 
   return {
     copy: [...detail.querySelectorAll(
       '.program-kinetic__detail-copy h3, .program-kinetic__detail-description',
     )],
+    imageWrap: detail.querySelector('[data-program-detail-image-wrap]'),
+    image: detail.querySelector('[data-program-detail-image]'),
   };
 }
