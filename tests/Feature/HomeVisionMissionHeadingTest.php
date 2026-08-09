@@ -70,6 +70,7 @@ it('uses a native pinned mask reveal without owning document scroll', function (
 
 it('pins Mission copy to the flexible grid track in both LTR and RTL', function (): void {
     $base = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
+    $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($base)
         ->toContain('grid-template-columns: 2.5rem minmax(0, 1fr)')
@@ -78,5 +79,9 @@ it('pins Mission copy to the flexible grid track in both LTR and RTL', function 
         ->toContain('grid-template-columns: minmax(0, 1fr) 2.5rem')
         ->toContain('html[dir="rtl"] .vision-arch__mission-list li::before')
         ->toContain('html[dir="rtl"] .vision-arch__mission-list h4')
-        ->toContain('text-align: start');
+        ->toContain('text-align: start')
+        ->and($enhanced)
+        ->toContain('grid-template-columns: 2.2rem minmax(0, 1fr)')
+        ->toContain('html[dir="rtl"] .vision-arch.is-enhanced .vision-arch__mission-list li')
+        ->toContain('grid-template-columns: minmax(0, 1fr) 2.2rem');
 });
