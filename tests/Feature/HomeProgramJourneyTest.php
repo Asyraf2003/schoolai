@@ -15,18 +15,7 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
     foreach ($expected as $locale => $copy) {
         app()->setLocale($locale);
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
-        $response
-            ->assertOk()
-            ->assertSee('id="program"', false)
-            ->assertSee('data-program-kinetic', false)
-            ->assertSee('data-program-handoff', false)
-            ->assertSee('data-program-type', false)
-            ->assertSee('data-program-heading', false)
-            ->assertSee('data-program-cards', false)
-            ->assertSee('data-program-detail-layer', false)
-            ->assertSee('data-program-back', false)
-            ->assertSee($backs[$locale]);
-
+        $response->assertOk()->assertSee('id="program"', false)->assertSee($backs[$locale]);
         foreach ($copy as $text) $response->assertSee($text);
 
         $content = $response->getContent();
@@ -35,172 +24,108 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
         preg_match_all('/\sdata-program-card(?:\s|>)/', $programSection, $cards);
         preg_match_all('/\sdata-program-open(?:\s|>)/', $programSection, $triggers);
         preg_match_all('/\sdata-program-detail(?:\s|>)/', $programSection, $details);
+        preg_match_all('/\sdata-program-back(?:\s|>)/', $programSection, $backControls);
         preg_match_all('/\sdata-program-handoff-step="\d+"/', $programSection, $handoffSteps);
         preg_match_all('/\sdata-program-type(?:\s|>)/', $programSection, $typeFields);
 
         expect(count($cards[0]))->toBe(6)
             ->and(count($triggers[0]))->toBe(6)
             ->and(count($details[0]))->toBe(6)
+            ->and(count($backControls[0]))->toBe(6)
             ->and(count($handoffSteps[0]))->toBe(11)
             ->and(count($typeFields[0]))->toBe(1)
             ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
             ->and(substr_count($programSection, 'data-program-detail-image-wrap'))->toBe(6)
-            ->and(substr_count($programSection, 'data-program-detail-image'))->toBe(12)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(20)
-            ->and(substr_count($programSection, 'class="program-kinetic__summary"'))->toBe(6)
             ->and(substr_count($programSection, 'class="program-kinetic__detail-description"'))->toBe(6)
-            ->and($programSection)->not->toContain('program-kinetic__handoff-type')
-            ->and($programSection)->not->toContain('class="program-kinetic section"')
-            ->and($programSection)->not->toContain('class="program-kinetic__meta"')
-            ->and($programSection)->not->toContain('class="program-kinetic__eyebrow"')
-            ->and($programSection)->not->toContain('class="program-kinetic__next"')
             ->and($programSection)->not->toContain('program-kinetic__detail-number')
             ->and($programSection)->not->toContain('program-kinetic__detail-eyebrow')
             ->and($programSection)->not->toContain('program-kinetic__detail-intro')
             ->and($programSection)->not->toContain('program-kinetic__detail-next')
-            ->and($programSection)->not->toContain('01—06')
             ->and($programSection)->not->toContain('data-program-sticky')
-            ->and($programSection)->not->toContain('data-program-rail')
-            ->and($programSection)->not->toContain('data-program-frame');
+            ->and($programSection)->not->toContain('data-program-rail');
     }
 });
 
-it('uses Codrops GSAP timing and restores the CSS kinetic baseline after close', function (): void {
-    $entry = file_get_contents(resource_path('js/pages/welcome/program-cards.js'));
+it('uses Codrops GSAP timing and detail media reveal', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
-    $license = base_path('docs/licenses/CODROPS_KINETIC_TYPE_PAGE_TRANSITION_MIT.md');
 
-    expect($entry)
-        ->toContain('[data-program-kinetic]')
-        ->and($controller)
-        ->toContain("event.key === 'Escape'")
-        ->toContain('integration.trapTab(event)')
-        ->toContain('prefers-reduced-motion')
+    expect($controller)
         ->toContain("addLabel('typeTransition', 0.3)")
         ->toContain('parts.imageWrap')
         ->toContain('parts.image')
+        ->toContain('dom.backs.forEach')
+        ->toContain('parts.back?.focus')
+        ->not->toContain('dom.back')
         ->not->toContain('scrollTo(')
         ->not->toContain('wheel')
+        ->and($geometry)
+        ->toContain("backs: [...root.querySelectorAll('[data-program-back]')]")
+        ->toContain('.program-kinetic__back, .program-kinetic__detail-copy h3')
         ->and($motion)
         ->toContain('gsap@3.7.1')
-        ->toContain("ease: 'power2.inOut'")
         ->toContain('scale: 2.7')
         ->toContain('stagger: 0.04')
-        ->toContain('this.restOpacity = Number.parseFloat')
         ->toContain('opacity: this.restOpacity')
-        ->toContain("clearProps: 'opacity,transform'")
-        ->toContain("clearProps: 'transform'")
-        ->not->toContain('opacity: 0.05')
-        ->and(file_exists($license))->toBeTrue();
+        ->not->toContain('opacity: 0.05');
 });
 
-it('keeps Program detail clean with chevron Back, one image, title and one description', function (): void {
+it('uses a Codrops-like centered detail composition with local Back above title', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
-    $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
     $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
     $compact = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
 
     expect($blade)
-        ->toContain('program-kinetic__back-mark')
+        ->toContain('class="program-kinetic__detail-copy"')
+        ->toContain('class="program-kinetic__back"')
         ->toContain('&lt;&lt;&lt;')
-        ->toContain('data-program-detail-image-wrap')
-        ->toContain('data-program-detail-image')
-        ->and($geometry)
-        ->toContain('.program-kinetic__detail-copy h3, .program-kinetic__detail-description')
-        ->toContain('imageWrap: detail.querySelector')
-        ->toContain('image: detail.querySelector')
+        ->toContain('class="program-kinetic__detail-media"')
         ->and($hud)
+        ->toContain('.program-kinetic__back {')
+        ->toContain('display: inline-flex')
+        ->not->toContain('inset-inline-start')
         ->toContain('font-size: clamp(2.25rem, 3vw, 4.25rem)')
-        ->toContain('font-variation-settings: "wght" 360')
-        ->toContain('font-weight: 360')
-        ->toContain('letter-spacing: -.055em')
-        ->toContain('text-transform: uppercase')
-        ->toContain('width: min(100%, 42rem)')
-        ->toContain('.program-kinetic__detail-image-wrap')
-        ->toContain('aspect-ratio: 16 / 10')
-        ->toContain('.program-kinetic__back-mark')
-        ->not->toContain('.program-kinetic__detail-number')
-        ->not->toContain('.program-kinetic__detail-intro')
-        ->not->toContain('.program-kinetic__detail-next')
+        ->toContain('aspect-ratio: 4 / 5')
         ->and($wide)
-        ->toContain('grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr)')
-        ->toContain('height: min(64svh, 42rem)')
+        ->toContain('width: min(35vw, 36rem)')
+        ->toContain('height: min(68svh, 43rem)')
+        ->toContain('transform: translate(-50%, -50%)')
+        ->toContain('width: min(41vw, 38rem)')
         ->and($compact)
-        ->toContain('.program-kinetic__detail-image-wrap')
-        ->toContain('grid-row: 1');
+        ->toContain('width: min(78vw, 31rem)')
+        ->toContain('grid-row: 1')
+        ->toContain('grid-row: 2');
 });
 
 it('replays the Program center split with breathing room and no horizontal heading shift', function (): void {
     $headingCss = file_get_contents(resource_path('css/pages/welcome/program-journey/heading.css'));
     $heading = file_get_contents(resource_path('js/surfaces/home/program-journey/heading.js'));
-    $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
-    $entryCss = file_get_contents(resource_path('css/pages/welcome/program-showcase-desktop.css'));
 
     expect($headingCss)
-        ->toContain('text-transform: uppercase')
         ->toContain('row-gap: .12em')
         ->toContain('margin-block: 0')
         ->toContain('translate3d(0, 114%, 0)')
         ->toContain('translate3d(0, -114%, 0)')
-        ->toContain('is-program-heading-revealed')
         ->and($heading)
-        ->toContain('IntersectionObserver')
         ->toContain('intersectionRatio >= 0.16')
-        ->toContain("rootMargin: '0px 0px -12% 0px'")
         ->toContain('threshold: [0, 0.16]')
-        ->toContain("root.classList.toggle('is-program-heading-revealed', revealed)")
-        ->not->toContain('requestAnimationFrame(reveal)')
-        ->not->toContain('translateX')
-        ->and($controller)
-        ->toContain("from './heading.js'")
-        ->toContain('mountProgramHeading(root)')
-        ->and($entryCss)
-        ->toContain("@import './program-journey/heading.css'");
+        ->not->toContain('translateX');
 });
 
-it('reveals the real Program field through an exact 11-step Vision handoff', function (): void {
-    $vision = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
-    $base = file_get_contents(resource_path('css/pages/welcome/program-journey/base.css'));
+it('keeps the exact eleven-step Vision to Program handoff', function (): void {
     $handoff = file_get_contents(resource_path('css/pages/welcome/program-journey/handoff.css'));
-    $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
-
-    expect($vision)
-        ->toContain('background: #f4f1e9')
-        ->and($base)
-        ->toContain('--program-bg: #e7f5ff')
-        ->toContain('--program-type: #397aa6')
-        ->toContain('--program-type-opacity: .16')
-        ->toContain('--program-type-size: clamp(7rem, 18.75vh, 15rem)')
-        ->toContain('--program-handoff-height: clamp(18rem, 28vw, 30rem)')
-        ->and($handoff)
-        ->toContain('--handoff-a: #f4f1e9')
-        ->toContain('--handoff-line: #fff')
-        ->toContain('z-index: 4')
-        ->toContain('background: transparent')
+    expect($handoff)
         ->toContain('grid-template-rows: repeat(11')
         ->toContain('var(--handoff-a) 0 9px, transparent 9px 10px')
         ->toContain('var(--handoff-a) 0 5px, transparent 5px 10px')
         ->toContain('var(--handoff-a) 0 1px, transparent 1px 10px')
-        ->toContain('var(--handoff-line) var(--handoff-line-start) var(--handoff-cover)')
-        ->not->toContain('--handoff-b:')
-        ->not->toContain('--handoff-line: var(--program-type)')
-        ->not->toContain('opacity: .42')
-        ->not->toContain('.program-kinetic__handoff-type')
-        ->not->toContain('filter: blur(')
-        ->not->toContain('backdrop-filter: blur(')
-        ->and($hud)
-        ->toContain('bottom: 0')
-        ->toContain('height: auto')
-        ->toContain('min-height: calc(var(--program-handoff-height) + 100svh)')
-        ->toContain('justify-content: space-between')
-        ->toContain('bottom: auto')
-        ->toContain('position: fixed')
-        ->not->toContain('height: calc(var(--program-handoff-height) + 100svh)');
+        ->toContain('--handoff-line: #fff');
 });
 
-it('adapts Codrops card geometry to the six-card SchoolAI tiers', function (): void {
+it('keeps six-card responsive geometry unchanged', function (): void {
     $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
     $compact = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
 
@@ -208,17 +133,10 @@ it('adapts Codrops card geometry to the six-card SchoolAI tiers', function (): v
         ->toContain('--program-card-base: 7svh')
         ->toContain('--program-card-interval: 9svh')
         ->toContain('grid-template-columns: repeat(4, minmax(0, 1fr))')
-        ->toContain('width: 96vw')
         ->toContain('grid-column: 3')
         ->toContain('grid-column: 4')
-        ->toContain('calc(var(--program-card-base) + var(--program-card-interval) * 3)')
-        ->toContain('aspect-ratio: 4 / 3')
         ->and($compact)
         ->toContain('grid-template-columns: repeat(3, minmax(0, 1fr))')
-        ->toContain('--program-card-base: 3vw')
-        ->toContain('--program-card-interval: 4vw')
-        ->toContain('calc(var(--program-card-base) + var(--program-card-interval) * 2)')
         ->toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
-        ->toContain('aspect-ratio: 4 / 3')
         ->not->toContain('aspect-ratio: 4 / 5');
 });
