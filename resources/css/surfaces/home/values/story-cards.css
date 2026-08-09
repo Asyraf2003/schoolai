@@ -23,7 +23,7 @@
     --values-scale: 1;
     --values-float-y: 0px;
     --values-water-float: clamp(.38rem, .72vw, .78rem);
-    --values-water-duration: 5.8s;
+    --values-water-duration: 3s;
     position: relative;
     width: 100%;
     aspect-ratio: .717;
@@ -37,23 +37,19 @@
 .values-card:nth-child(4) { z-index: 37; }
 
 .values-card:nth-child(1) .values-card__float {
-    --values-water-duration: 5.6s;
-    animation-delay: -1.2s;
+    animation-delay: 0s;
 }
 
 .values-card:nth-child(2) .values-card__float {
-    --values-water-duration: 6.3s;
-    animation-delay: -3.7s;
+    animation-delay: -.5s;
 }
 
 .values-card:nth-child(3) .values-card__float {
-    --values-water-duration: 5.9s;
-    animation-delay: -2.4s;
+    animation-delay: -1s;
 }
 
 .values-card:nth-child(4) .values-card__float {
-    --values-water-duration: 6.6s;
-    animation-delay: -4.8s;
+    animation-delay: -1.5s;
 }
 
 .values-story.is-values-ready .values-card {
@@ -87,12 +83,11 @@
         values-card-water-float
         var(--values-water-duration)
         ease-in-out
-        infinite
-        alternate;
+        infinite;
 }
 
 @keyframes values-card-water-float {
-    0% {
+    0%, 100% {
         transform: translate3d(
             0,
             calc(0px - var(--values-water-float)),
@@ -101,10 +96,6 @@
     }
 
     50% {
-        transform: translate3d(0, 0, 0);
-    }
-
-    100% {
         transform: translate3d(0, var(--values-water-float), 0);
     }
 }
