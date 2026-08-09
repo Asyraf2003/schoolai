@@ -2,7 +2,6 @@
     --values-blue: #2038ff;
     --values-ink: #11131b;
     --values-entry-height: clamp(12rem, 36svh, 28rem);
-    --values-program-clearance: clamp(5rem, 15svh, 10rem);
     --values-exit-height: clamp(10rem, 24svh, 18rem);
     --values-heading-opacity: 1;
     --values-heading-y: 0px;
@@ -14,9 +13,7 @@
     --values-layout-mode: 1;
     position: relative;
     z-index: 2;
-    margin-block-start: calc(
-        var(--values-program-clearance) - var(--values-entry-height)
-    );
+    margin-block-start: calc(var(--values-entry-height) * -1);
     background: transparent;
     color: #fff;
     isolation: isolate;

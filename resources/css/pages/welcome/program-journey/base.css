@@ -9,10 +9,12 @@
     --program-type-leading: .75;
     --program-type-tracking: -.055em;
     --program-handoff-height: clamp(18rem, 28vw, 30rem);
+    --program-values-clearance: clamp(5rem, 15svh, 10rem);
     position: relative;
     min-height: 100svh;
     overflow: hidden;
     isolation: isolate;
+    padding-bottom: var(--program-values-clearance);
     background: var(--program-bg);
     color: var(--program-ink);
     font-family: "Inter", "Helvetica Neue", Arial, sans-serif;

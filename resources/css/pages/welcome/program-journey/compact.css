@@ -28,7 +28,7 @@
 @media (max-width: 1023px) {
     .program-kinetic {
         min-height: auto;
-        padding-bottom: 3rem;
+        padding-bottom: calc(3rem + var(--program-values-clearance));
     }
 
     .program-kinetic__header {
