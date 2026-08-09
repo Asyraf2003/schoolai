@@ -3,6 +3,20 @@
 return [
     'section_label' => 'Program Kami',
     'heading_lines' => ['Program', 'Kami'],
+    'kinetic_words' => [
+        'ISLAM',
+        'IMAN',
+        'IHSAN',
+        'AKHLAKUL KARIMAH',
+        'AL-QUR’AN',
+        'ADAB',
+        'ILMU',
+        'AMANAH',
+        'HIKMAH',
+        'TAKWA',
+        'RAHMAH',
+        'UKHUWAH',
+    ],
     'back' => 'Kembali ke program',
     'open_item' => 'Buka :program',
     'items' => [
