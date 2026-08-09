@@ -29,8 +29,10 @@ export function collectValuesNodes(root) {
         stage: requiredNode(root, '[data-values-stage]'),
         perspective: requiredNode(root, '[data-values-perspective]'),
         grid: requiredNode(root, '[data-values-cards]'),
-        trailPath: root.querySelector('[data-values-trail-path]'),
-        trailHead: root.querySelector('[data-values-trail-head]'),
+        spatialHost: requiredNode(root, '[data-values-spatial]'),
+        programRoot: root.previousElementSibling?.matches('[data-program-kinetic]')
+            ? root.previousElementSibling
+            : null,
     };
 }
 
@@ -71,7 +73,6 @@ export function measureValuesGeometry(root, cards, nodes) {
         centerDeltaX: cardsCenterX - stageCenterX,
         centerDeltaY: cardsCenterY - stageCenterY,
         rootDocumentTop: rootRect.top + scrollY,
-        trailLength: nodes.trailPath?.getTotalLength?.() || 0,
     };
 }
 

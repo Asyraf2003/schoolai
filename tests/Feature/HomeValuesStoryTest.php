@@ -37,10 +37,9 @@ it('renders the rebuilt localized semantic values story', function (): void {
             ->assertSee('data-values-stage', false)
             ->assertSee('data-values-perspective', false)
             ->assertSee('data-values-cards', false)
+            ->assertSee('data-values-spatial', false)
             ->assertSee('data-values-card-pose', false)
             ->assertSee('data-values-card-inner', false)
-            ->assertSee('data-values-trail-path', false)
-            ->assertSee('data-values-trail-head', false)
             ->assertSee('class="values-story__exit"', false)
             ->assertSee($copy['heading'])
             ->assertSee($copy['honorific'])
@@ -51,6 +50,7 @@ it('renders the rebuilt localized semantic values story', function (): void {
             ->assertDontSee('values-card__footer', false)
             ->assertDontSee('values-card__back-code', false)
             ->assertDontSee('class="values-transition"', false)
+            ->assertDontSee('data-values-trail', false)
             ->assertDontSee('data-school-value-card', false)
             ->assertDontSee('aria-pressed=', false)
             ->assertDontSee('class="nilai-card', false);
@@ -64,8 +64,7 @@ it('renders the rebuilt localized semantic values story', function (): void {
             ->and(substr_count($content, 'values-card__float'))->toBe(4)
             ->and(substr_count($content, 'values-story__title-text'))->toBe(2)
             ->and(substr_count($content, 'role="listitem"'))->toBeGreaterThanOrEqual(4)
-            ->and(substr_count($content, 'pathLength="1"'))->toBe(1)
-            ->and(substr_count($content, 'data-values-trail-head'))->toBe(1);
+            ->and(substr_count($content, 'class="values-story__spatial-fallback'))->toBe(3);
 
         if ($locale === 'ar') {
             expect($content)
@@ -73,4 +72,40 @@ it('renders the rebuilt localized semantic values story', function (): void {
                 ->not->toContain('data-values-story-rtl');
         }
     }
+});
+
+it('owns one lazy deterministic Three.js spatial scene', function (): void {
+    $controller = file_get_contents(resource_path('js/surfaces/home/values/controller.js'));
+    $spatialController = file_get_contents(
+        resource_path('js/surfaces/home/values/spatial-controller.js'),
+    );
+    $scene = file_get_contents(resource_path('js/surfaces/home/values/spatial-scene.js'));
+    $lifecycle = file_get_contents(resource_path('js/surfaces/home/values/lifecycle.js'));
+    $cssEntry = file_get_contents(resource_path('css/pages/welcome-values-story.css'));
+
+    expect($controller)
+        ->toContain('createValuesSpatialBridge')
+        ->toContain('readHandoffProgress')
+        ->not->toContain("from './spatial-scene.js'")
+        ->and($spatialController)
+        ->toContain("import('./spatial-scene.js')")
+        ->and($scene)
+        ->toContain("from 'three'")
+        ->toContain('three/addons/lines/Line2.js')
+        ->toContain('three/addons/lines/LineGeometry.js')
+        ->toContain('three/addons/lines/LineMaterial.js')
+        ->toContain('new WebGLRenderer')
+        ->toContain('renderer.dispose()')
+        ->not->toContain('TubeGeometry')
+        ->not->toContain('Math.random')
+        ->and(substr_count($scene, 'reveal: ['))->toBe(3)
+        ->and($lifecycle)
+        ->toContain('IntersectionObserver')
+        ->toContain('ResizeObserver')
+        ->toContain("window.addEventListener('pagehide'")
+        ->toContain("window.addEventListener('pageshow'")
+        ->and($cssEntry)
+        ->toContain('story-spatial.css')
+        ->toContain('story-handoff.css')
+        ->not->toContain('story-trail.css');
 });

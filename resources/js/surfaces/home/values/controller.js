@@ -3,8 +3,11 @@ import { clearHeadingClasses, createHeadingState,
 import { clearCenterMeasurement, collectValuesNodes,
     exposeCenterMeasurement, measureValuesGeometry } from './geometry.js';
 import { clearValuesStory, paintValuesStory } from './paint.js';
-import { FRAME_MS, createScrollMotion, readStoryProgress,
-    resetScrollMotion, updateScrollMotion } from './motion.js';
+import { mountValuesLifecycle } from './lifecycle.js';
+import { FRAME_MS, createScrollMotion, readHandoffProgress,
+    readStoryProgress, resetScrollMotion, updateScrollMotion } from './motion.js';
+import { createValuesSpatialBridge } from './spatial-controller.js';
+
 function supportsStoryMotion() {
     return typeof CSS !== 'undefined'
         && CSS.supports('overflow', 'clip')
@@ -27,11 +30,10 @@ export function createValuesStory(root) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const capable = supportsStoryMotion();
     const motion = createScrollMotion(0);
+    const handoffMotion = createScrollMotion(0);
     let heading = createHeadingState(0);
     let frame = 0;
-    let observer = null;
-    let resizeObserver = null;
-    let active = true;
+    let active = !('IntersectionObserver' in window);
     let enabled = false;
     let destroyed = false;
     let geometryDirty = true;
@@ -51,23 +53,24 @@ export function createValuesStory(root) {
         }
     }
 
+    const spatial = createValuesSpatialBridge(root, nodes.spatialHost, requestRender);
+    spatial.setActive(active);
+
     function measure() {
         const previousMode = geometry?.mode;
         geometry = measureValuesGeometry(root, cards, nodes);
         exposeCenterMeasurement(root, geometry);
         geometryDirty = false;
-
         if (previousMode && previousMode !== geometry.mode) snapNext = true;
     }
 
     function readFrameTarget() {
+        const rootTop = root.getBoundingClientRect().top;
         const timelineTop = nodes.timeline.getBoundingClientRect().top;
-        const storyTop = geometry.mode === 4
-            ? timelineTop
-            : root.getBoundingClientRect().top;
-
+        const storyTop = geometry.mode === 4 ? timelineTop : rootTop;
         return {
-            target: readStoryProgress(storyTop, geometry),
+            handoff: readHandoffProgress(rootTop, geometry.viewportHeight),
+            story: readStoryProgress(storyTop, geometry),
             timelineTop,
         };
     }
@@ -77,38 +80,35 @@ export function createValuesStory(root) {
         if (!enabled || !active || destroyed || document.hidden) return;
         if (geometryDirty || !geometry) measure();
 
-        const frameTarget = readFrameTarget();
+        const target = readFrameTarget();
         const delta = lastTime ? time - lastTime : FRAME_MS;
         lastTime = time;
-        const snapshot = updateScrollMotion(
-            motion,
-            frameTarget.target,
-            delta,
-            snapNext,
+        const snapshot = updateScrollMotion(motion, target.story, delta, snapNext);
+        const handoff = updateScrollMotion(
+            handoffMotion, target.handoff, delta, snapNext,
         );
         const headingSnapshot = updateHeadingState(
-            heading,
-            frameTarget.target,
-            frameTarget.timelineTop,
-            geometry.viewportHeight,
-            time,
-            geometry.mode >= 3,
+            heading, target.story, target.timelineTop,
+            geometry.viewportHeight, time, geometry.mode >= 3,
         );
 
         syncHeadingClasses(root, headingSnapshot);
         paintValuesStory(
-            root,
-            cards,
-            nodes,
-            snapshot.visual,
-            geometry,
-            snapshot.momentum,
-            headingSnapshot,
+            root, cards, nodes, snapshot.visual, geometry,
+            snapshot.momentum, headingSnapshot, handoff.visual,
         );
+        spatial.update({
+            handoffProgress: handoff.visual,
+            storyProgress: snapshot.visual,
+            momentum: snapshot.momentum,
+        });
         snapNext = false;
 
-        if (!snapshot.settled || !headingSnapshot.settled) requestRender();
-        else lastTime = 0;
+        if (!snapshot.settled || !handoff.settled || !headingSnapshot.settled) {
+            requestRender();
+        } else {
+            lastTime = 0;
+        }
     }
 
     function invalidateGeometry() {
@@ -117,12 +117,28 @@ export function createValuesStory(root) {
     }
 
     function onVisibility() {
-        if (document.hidden) cancelFrame();
-        else invalidateGeometry();
+        if (document.hidden) {
+            cancelFrame();
+            spatial.suspend();
+        } else {
+            spatial.resume();
+            invalidateGeometry();
+        }
+    }
+
+    function onPageHide() {
+        cancelFrame();
+        spatial.suspend();
+    }
+
+    function onPageShow() {
+        spatial.resume();
+        invalidateGeometry();
     }
 
     function onIntersection(entries) {
         active = entries.some((entry) => entry.isIntersecting);
+        spatial.setActive(active);
         root.classList.toggle('is-values-active', active && enabled);
         cancelFrame();
         if (!active) return;
@@ -134,6 +150,7 @@ export function createValuesStory(root) {
     function disable() {
         enabled = false;
         cancelFrame();
+        spatial.setEnabled(false);
         root.classList.remove('is-values-ready', 'is-values-active');
         clearHeadingClasses(root);
         clearCenterMeasurement(root);
@@ -144,10 +161,7 @@ export function createValuesStory(root) {
     function syncPreference() {
         const shouldEnable = capable && !reduced.matches;
         if (shouldEnable === enabled) return;
-        if (!shouldEnable) {
-            disable();
-            return;
-        }
+        if (!shouldEnable) return disable();
 
         enabled = true;
         heading = createHeadingState(0);
@@ -156,43 +170,29 @@ export function createValuesStory(root) {
         geometryDirty = true;
         snapNext = true;
         resetScrollMotion(motion, 0);
+        resetScrollMotion(handoffMotion, 0);
+        spatial.setEnabled(true);
         requestRender();
     }
 
-    window.addEventListener('scroll', requestRender, { passive: true });
-    window.addEventListener('resize', invalidateGeometry, { passive: true });
-    window.addEventListener('pageshow', invalidateGeometry);
-    window.addEventListener('pagehide', cancelFrame);
-    document.addEventListener('visibilitychange', onVisibility);
-    reduced.addEventListener('change', syncPreference);
-
-    if ('IntersectionObserver' in window) {
-        observer = new IntersectionObserver(onIntersection, {
-            rootMargin: '60% 0px 60% 0px',
-            threshold: 0.01,
-        });
-        observer.observe(root);
-    }
-
-    if ('ResizeObserver' in window) {
-        resizeObserver = new ResizeObserver(invalidateGeometry);
-        resizeObserver.observe(nodes.stage);
-        resizeObserver.observe(nodes.grid);
-    }
+    const cleanupLifecycle = mountValuesLifecycle(root, nodes, {
+        onIntersection,
+        onPageHide,
+        onPageShow,
+        onPreference: syncPreference,
+        onResize: invalidateGeometry,
+        onScroll: requestRender,
+        onVisibility,
+        reduced,
+    });
 
     syncPreference();
 
     return function destroy() {
         destroyed = true;
         disable();
-        observer?.disconnect();
-        resizeObserver?.disconnect();
-        window.removeEventListener('scroll', requestRender);
-        window.removeEventListener('resize', invalidateGeometry);
-        window.removeEventListener('pageshow', invalidateGeometry);
-        window.removeEventListener('pagehide', cancelFrame);
-        document.removeEventListener('visibilitychange', onVisibility);
-        reduced.removeEventListener('change', syncPreference);
+        spatial.destroy();
+        cleanupLifecycle();
     };
 }
 

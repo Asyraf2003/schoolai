@@ -1,85 +1,95 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
+Status: `FAIL`
 Updated: 2026-08-09
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-010-ADAPTIVE-DETAIL-TITLE`
-Source baseline: `9ab19955e9a06c90f076dabee58a00bac5a976b5`
-Source implementation head: `1f5f4883c33ba1ef037629134225e2602b7c62a6`
-Active blueprint: `blueprints/2026-08-08-home-program-kinetic-type-transition.md`
+Active batch: `HOME-VALUES-002-SPATIAL-LINES`
+Source baseline: `196a2c02b606dba22db8e6bfbd838f00c6b7f152`
+Source implementation head: uncommitted working tree
+Active blueprint: `blueprints/2026-08-09-home-values-spatial-lines.md`
 
-## Latest owner correction
+## Owner-accepted active goal
 
-Owner runtime proof showed that exact Codrops `8vw` title sizing plus a fixed `12vw` title row fails for longer localized SchoolAI titles such as `Taman Kanak-kanak`: the title wraps to multiple lines, overflows its fixed grid row and collides with the description.
+Create a Three.js pilot for three large solid white spatial lines behind the
+existing Values DOM cards and connect Program's light-blue kinetic field to the
+Values `#2038ff` field as one progressive scroll handoff.
 
-The media geometry itself is accepted for this correction and must not move.
+## Accepted architecture
 
-## Implemented correction
+- Keep cards/content semantic DOM; canvas is decorative and behind them.
+- Install Three.js by npm and use official Line2, LineGeometry, LineMaterial.
+- Reuse the single Values scroll target, smoothing, observers, and RAF.
+- Dynamically load one local renderer only when Values is near-active.
+- Use three deterministic distinct curves with distinct phase/depth/ratio/offset.
+- Use static CSS strokes for reduced motion, unsupported WebGL, and failure.
+- Do not mirror the neutral scene merely because Arabic is RTL.
+- Replace the losing SVG trail; do not add a duplicate visual/controller owner.
 
-- Keep desktop article geometry at `top: 20svh`, `height: 80svh`, `width: calc(38vw + 280px)`.
-- Keep media in column 3 spanning the full article height. No media position/size rule changed in this batch.
-- Replace the fixed desktop title row `12vw` with content-driven `auto`:
-  - `grid-template-rows: 10vw 2rem auto auto 1fr`.
-- The description remains row 4, so it now starts after the rendered title height instead of occupying a fixed coordinate that can collide with wrapped glyphs.
-- Blade derives a locale-aware title scale from the rendered localized title length using `mb_strlen`:
-  - `short` <= 12 characters;
-  - `medium` <= 20 characters;
-  - `long` > 20 characters.
-- Desktop title scale:
-  - short: `8vw`, preserving the reference scale for genuinely short titles;
-  - medium: `5.75vw`;
-  - long: `4.75vw`.
-- The same length tiers apply under RTL; Arabic keeps Cairo and its Arabic line-height/casing contract.
-- `text-wrap: balance` is applied to the desktop detail title.
-- Back remains directly above the title.
-- Description remains reference-like `1rem` copy.
+## Protected contract
 
-## Existing Program contract retained
+- Program cards, detail, title, copy, and interaction remain unchanged.
+- Values copy/cards remain unchanged on the first implementation step.
+- Vision/Mission, Gallery, Articles, Navbar, About, and Testimonial remain
+  unchanged.
+- Existing unrelated local work remains untouched.
 
-- Detail content remains only Back + title + one description + one media item.
-- Detail media and its Codrops reveal animation are unchanged in this batch.
-- Idle cards remain desktop `2 + 4`, tablet `3 + 3`, mobile `2 + 2 + 2`.
-- Program handoff, kinetic background and Center Split heading are unchanged.
-- Visi/Misi and unrelated homepage sections are unchanged.
+## Current FACT / GAP
 
-## Scope proof
-
-Implementation changes in this batch are limited to:
-
-- `resources/views/home/sections/featured-programs.blade.php`
-- `resources/css/pages/welcome/program-journey/wide.css`
-- `tests/Feature/HomeProgramJourneyTest.php`
-- Program blueprint/current-state docs.
+- A fresh fetch proves local `main`, `origin/main`, and `FETCH_HEAD` remain
+  `196a2c02...`.
+- Three.js `0.185.1` is installed through npm and emitted only as a deferred
+  Values scene chunk. The former Values SVG trail is removed.
+- One Values controller still owns the scroll target, smoothing, observers,
+  and RAF; the renderer bridge consumes that state without a second engine.
+- Chromium proves the six required story states, deterministic reverse,
+  reduced-motion fallback, inactive initial load, and stable offscreen render
+  count. WebKitGTK proves desktop, mobile, RTL, reverse, and offscreen pause.
+- Chromium width proof passes at 360, 390, 640, 768, 1024, 1180, 1181, 1280,
+  1536, and 1920 pixels with one canvas and no horizontal overflow.
+- `GAP-VALUES-SPATIAL-GATE-001`: the mandatory repository structure gate fails
+  on three unchanged baseline findings. A clean `git archive HEAD` reproduction
+  returns the same two unreachable Vision modules and Hero CSS checksum error.
+- The full PHP suite has two unrelated failures: the existing Program source
+  assertion rejects `dom.back`, and the user-modified analytics head produces a
+  CSP assertion failure. The Values-focused suite passes.
 
 ## Proof state
 
-No post-batch browser/build proof is available through the GitHub connector.
+Source implementation and browser proof for this bounded surface are complete.
+Publication proof is not complete because mandatory repository-wide gates are
+not green; no commit or push is permitted.
 
 Required local proof:
 
 ```bash
 git diff --check
 git status --short
-php artisan test --filter=HomeProgramJourneyTest
+php artisan test --compact tests/Feature/HomeValuesStoryTest.php
 php artisan test
 npm run check:structure
 npm run build
 ```
 
-Runtime proof required:
+Runtime proof must cover the six owner-named desktop states, offscreen RAF and
+context bounds, then tablet/mobile, AR RTL, reduced motion, and WebKit.
 
-- `Taman Kanak-kanak` no longer collides with its description;
-- short titles retain the large Codrops-like display scale;
-- medium/long titles remain visually dominant but fit in roughly one or two readable lines;
-- description always begins after title content;
-- media position and scale remain identical to the accepted previous screenshot;
-- ID/EN/AR and RTL/LTR remain readable;
-- compact layouts remain unchanged;
-- Chromium and WebKit.
+Proof results:
 
-STATUS: `BLOCKED_BY_MISSING_EVIDENCE`
+- `git diff --check`: PASS.
+- `npm run build`: PASS; deferred `spatial-scene` is 548.96 kB minified and
+  138.72 kB gzip.
+- focused Values Pest: PASS, 2 tests and 124 assertions.
+- Chromium visual/runtime: PASS for A-F, reverse, lifecycle, reduced motion,
+  RTL, and all declared widths.
+- WebKitGTK runtime: PASS for desktop/mobile/RTL/reverse/lifecycle.
+- `npm run check:structure`: FAIL, reproduced unchanged on clean `HEAD`.
+- full `php artisan test --compact`: FAIL, 201 of 203 tests pass; both failures
+  are outside the Values patch.
 
-NEXT EXECUTION CHANNEL: `owner/local terminal`
+STATUS: `FAIL`
 
-NEXT VALID STEP: pull current `main`, run `HomeProgramJourneyTest`, then recheck the same desktop `Taman Kanak-kanak` detail screenshot before changing media geometry again.
+NEXT EXECUTION CHANNEL: `Terminal Codex`
+
+NEXT VALID STEP: obtain owner authorization for a separate baseline-gate repair
+before changing Vision, Hero, Program, or analytics ownership.

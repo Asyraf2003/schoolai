@@ -1,0 +1,63 @@
+.values-story__spatial {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    overflow: clip;
+    pointer-events: none;
+}
+
+.values-story__spatial canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.values-story__spatial.is-spatial-ready:not(.is-spatial-failed) canvas {
+    opacity: 1;
+}
+
+.values-story__spatial-fallback {
+    position: absolute;
+    display: block;
+    width: 150vmax;
+    height: 54vmax;
+    border: clamp(.8rem, 1.7vw, 1.8rem) solid rgba(255,255,255,.44);
+    border-radius: 50%;
+    transition: opacity 240ms ease;
+}
+
+.values-story__spatial-fallback--one {
+    top: -37vmax;
+    left: -46vmax;
+    transform: rotate(18deg);
+}
+
+.values-story__spatial-fallback--two {
+    top: 18%;
+    right: -91vmax;
+    transform: rotate(-31deg);
+}
+
+.values-story__spatial-fallback--three {
+    bottom: -41vmax;
+    left: -27vmax;
+    transform: rotate(42deg);
+}
+
+.values-story__spatial.is-spatial-ready:not(.is-spatial-failed)
+.values-story__spatial-fallback {
+    opacity: 0;
+}
+
+@supports not (overflow: clip) {
+    .values-story__spatial { overflow: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .values-story__spatial-fallback {
+        opacity: .58;
+        transition: none;
+    }
+}

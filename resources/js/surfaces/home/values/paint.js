@@ -9,8 +9,7 @@ const ROOT_PROPERTIES = [
     '--values-heading-opacity', '--values-heading-y',
     '--values-line-one-y', '--values-line-two-y',
     '--values-copy-opacity', '--values-copy-y',
-    '--values-trail-progress', '--values-trail-opacity',
-    '--values-trail-y',
+    '--values-handoff-progress',
 ];
 
 function writeCardFrame(card, state) {
@@ -26,17 +25,7 @@ function writeCardFrame(card, state) {
     );
 }
 
-function readTrailPoint(nodes, geometry, progress) {
-    if (geometry.mode !== 4 || !geometry.trailLength || !nodes.trailPath) {
-        return null;
-    }
-
-    return nodes.trailPath.getPointAtLength(
-        geometry.trailLength * progress,
-    );
-}
-
-function writeRootFrame(root, story) {
+function writeRootFrame(root, nodes, story, handoffProgress) {
     root.style.setProperty(
         '--values-heading-opacity',
         story.headingOpacity.toFixed(4),
@@ -58,15 +47,14 @@ function writeRootFrame(root, story) {
         story.copyOpacity.toFixed(4),
     );
     root.style.setProperty('--values-copy-y', `${story.copyY.toFixed(2)}px`);
-    root.style.setProperty(
-        '--values-trail-progress',
-        story.trailProgress.toFixed(5),
-    );
-    root.style.setProperty(
-        '--values-trail-opacity',
-        story.trailOpacity.toFixed(4),
-    );
-    root.style.setProperty('--values-trail-y', `${story.trailY.toFixed(2)}px`);
+    root.style.setProperty('--values-handoff-progress', handoffProgress.toFixed(4));
+    if (nodes.programRoot) {
+        nodes.programRoot.style.setProperty(
+            '--program-values-handoff',
+            handoffProgress.toFixed(4),
+        );
+        nodes.programRoot.classList.add('is-values-handoff');
+    }
 }
 
 export function paintValuesStory(
@@ -77,6 +65,7 @@ export function paintValuesStory(
     geometry,
     momentum,
     headingState,
+    handoffProgress,
 ) {
     const story = storyFrame(
         progress,
@@ -84,24 +73,13 @@ export function paintValuesStory(
         momentum,
         headingState,
     );
-    const trailPoint = readTrailPoint(
-        nodes,
-        geometry,
-        story.trailProgress,
-    );
-
     cards.forEach((card, index) => {
         writeCardFrame(
             card,
             cardFrame(index, progress, geometry, momentum),
         );
     });
-    writeRootFrame(root, story);
-
-    if (trailPoint && nodes.trailHead) {
-        nodes.trailHead.setAttribute('cx', trailPoint.x.toFixed(2));
-        nodes.trailHead.setAttribute('cy', trailPoint.y.toFixed(2));
-    }
+    writeRootFrame(root, nodes, story, handoffProgress);
 }
 
 export function clearValuesStory(root, cards, nodes) {
@@ -109,6 +87,6 @@ export function clearValuesStory(root, cards, nodes) {
     cards.forEach((card) => {
         CARD_PROPERTIES.forEach((name) => card.style.removeProperty(name));
     });
-    nodes.trailHead?.setAttribute('cx', '-120');
-    nodes.trailHead?.setAttribute('cy', '770');
+    nodes.programRoot?.style.removeProperty('--program-values-handoff');
+    nodes.programRoot?.classList.remove('is-values-handoff');
 }

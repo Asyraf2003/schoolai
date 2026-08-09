@@ -34,26 +34,11 @@
         </p>
       </header>
 
-      <svg
-        class="values-story__trail"
-        viewBox="0 0 1600 900"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          class="values-story__trail-line"
-          data-values-trail-path
-          pathLength="1"
-          d="M-120 770C220 980 500 930 650 650C810 350 760 120 620-80C540-200 760-180 900 40C1080 330 880 610 1070 760C1240 900 1450 570 1720 650"
-        />
-        <circle
-          class="values-story__trail-head"
-          data-values-trail-head
-          cx="-120"
-          cy="770"
-          r="13"
-        />
-      </svg>
+      <div class="values-story__spatial" data-values-spatial aria-hidden="true">
+        <span class="values-story__spatial-fallback values-story__spatial-fallback--one"></span>
+        <span class="values-story__spatial-fallback values-story__spatial-fallback--two"></span>
+        <span class="values-story__spatial-fallback values-story__spatial-fallback--three"></span>
+      </div>
 
       <div class="values-story__perspective" data-values-perspective>
         <div

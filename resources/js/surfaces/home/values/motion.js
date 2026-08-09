@@ -38,6 +38,12 @@ export function readStoryProgress(storyTop, geometry) {
     return clamp((geometry.viewportHeight - storyTop) / Math.max(1, travel));
 }
 
+export function readHandoffProgress(rootTop, viewportHeight) {
+    const start = viewportHeight * 1.06;
+    const travel = viewportHeight * .78;
+    return clamp((start - rootTop) / Math.max(1, travel));
+}
+
 export function createScrollMotion(value = 0) {
     return {
         current: value,

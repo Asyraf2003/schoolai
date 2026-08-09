@@ -44,7 +44,6 @@ export function storyFrame(
     const reveal = headingState?.reveal ?? 1;
     const desktop = geometry.mode === 4;
     const copyEnter = phase(reveal, 0.58, 1);
-    const trailLeave = phase(progress, 0.97, 1);
     const desktopTravel = Math.max(
         1,
         geometry.timelineHeight - geometry.stageHeight,
@@ -59,17 +58,6 @@ export function storyFrame(
             : 0,
         copyOpacity: copyEnter,
         copyY: mix(24, 0, copyEnter),
-        trailProgress: desktop ? phase(progress, 0.06, 0.94) : 0,
-        trailOpacity: desktop
-            ? phase(progress, 0.08, 0.16) * (1 - trailLeave)
-            : 0,
-        trailY: desktop
-            ? mix(
-                geometry.cardHeight * 0.12,
-                -geometry.cardHeight * 0.08,
-                progress,
-            ) + momentum * 14
-            : 0,
         progress: clamp(progress),
     };
 }
