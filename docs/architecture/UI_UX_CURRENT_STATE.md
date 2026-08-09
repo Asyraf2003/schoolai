@@ -4,59 +4,50 @@ Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Updated: 2026-08-09
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-PROGRAM-009-EXACT-CODROPS-DETAIL-GEOMETRY`
-Source baseline: `359f88bfe37cdc98bea3370d9cbedc6b79f4fef3`
-Source implementation head: `42ff4ee0eecf5f00e5eb2c259d351a0012f8d052`
+Active batch: `HOME-PROGRAM-010-ADAPTIVE-DETAIL-TITLE`
+Source baseline: `9ab19955e9a06c90f076dabee58a00bac5a976b5`
+Source implementation head: `1f5f4883c33ba1ef037629134225e2602b7c62a6`
 Active blueprint: `blueprints/2026-08-08-home-program-kinetic-type-transition.md`
 
-## Latest owner decision
+## Latest owner correction
 
-- Keep the existing Program detail content contract: local `<<< Back`, title, one description and one image only.
-- Stop approximating the Codrops desktop composition and use its desktop article geometry directly where compatible with SchoolAI.
-- The only intentional visual deviation is the SchoolAI typeface stack plus the owner-required local Back control directly above the title.
-- Keep idle cards, handoff, Program Center Split, Visi/Misi and unrelated sections unchanged.
+Owner runtime proof showed that exact Codrops `8vw` title sizing plus a fixed `12vw` title row fails for longer localized SchoolAI titles such as `Taman Kanak-kanak`: the title wraps to multiple lines, overflows its fixed grid row and collides with the description.
 
-## Verified reference geometry
-
-The Codrops source defines desktop article geometry as:
-
-- article wrapper begins at `20vh` and occupies `80vh`;
-- article width is `calc(38vw + 280px)`;
-- article grid rows are `10vw 2rem 12vw auto auto`;
-- article grid columns are `1.5rem 30% 1fr 1.5rem`;
-- media owns column 3 and spans the full article height;
-- title spans from column 2 through column 3 and uses `8vw`, line-height `.85`, uppercase and bold weight;
-- body copy inherits the base `1rem` size;
-- image frame uses `17px 17px 0 0` radius.
-
-At a 1920-wide viewport this yields roughly a 34vw media column instead of the previous capped `36rem` media width. The previous SchoolAI implementation therefore rendered materially smaller than the reference.
+The media geometry itself is accepted for this correction and must not move.
 
 ## Implemented correction
 
-- Removed the desktop `min(35vw, 36rem)` / `min(68svh, 43rem)` caps.
-- Desktop detail now uses `top: 20svh`, `height: 80svh`, `width: calc(38vw + 280px)` and the reference grid rows/columns.
-- `.program-kinetic__detail-copy` becomes `display: contents` at desktop so Back, title and description can occupy the reference grid directly.
-- Back occupies column 2 / row 2 directly above the title.
-- Title occupies columns `2 / 4`, row 3, and therefore deliberately crosses over the media just like the reference.
-- Description occupies column 2 / row 4 with the reference-like `1rem` body scale.
-- Media occupies column 3, rows `1 / 6`, fills the entire 80svh article height, and retains the existing Codrops reveal animation.
-- Detail title now uses SchoolAI's display font family at `8vw`, bold weight and `.85` line-height. Arabic keeps Cairo while matching the reference scale/weight intent.
-- RTL mirrors media/copy ownership logically.
+- Keep desktop article geometry at `top: 20svh`, `height: 80svh`, `width: calc(38vw + 280px)`.
+- Keep media in column 3 spanning the full article height. No media position/size rule changed in this batch.
+- Replace the fixed desktop title row `12vw` with content-driven `auto`:
+  - `grid-template-rows: 10vw 2rem auto auto 1fr`.
+- The description remains row 4, so it now starts after the rendered title height instead of occupying a fixed coordinate that can collide with wrapped glyphs.
+- Blade derives a locale-aware title scale from the rendered localized title length using `mb_strlen`:
+  - `short` <= 12 characters;
+  - `medium` <= 20 characters;
+  - `long` > 20 characters.
+- Desktop title scale:
+  - short: `8vw`, preserving the reference scale for genuinely short titles;
+  - medium: `5.75vw`;
+  - long: `4.75vw`.
+- The same length tiers apply under RTL; Arabic keeps Cairo and its Arabic line-height/casing contract.
+- `text-wrap: balance` is applied to the desktop detail title.
+- Back remains directly above the title.
+- Description remains reference-like `1rem` copy.
 
 ## Existing Program contract retained
 
 - Detail content remains only Back + title + one description + one media item.
+- Detail media and its Codrops reveal animation are unchanged in this batch.
 - Idle cards remain desktop `2 + 4`, tablet `3 + 3`, mobile `2 + 2 + 2`.
-- Idle card media remains landscape `4 / 3`.
-- Program kinetic background, Islamic word field, eleven-step handoff and Center Split are unchanged.
-- GSAP type transition and detail-media reveal/reverse reveal are unchanged.
-- No Visi/Misi source changed in this batch.
+- Program handoff, kinetic background and Center Split heading are unchanged.
+- Visi/Misi and unrelated homepage sections are unchanged.
 
 ## Scope proof
 
 Implementation changes in this batch are limited to:
 
-- `resources/css/pages/welcome/program-journey/hud.css`
+- `resources/views/home/sections/featured-programs.blade.php`
 - `resources/css/pages/welcome/program-journey/wide.css`
 - `tests/Feature/HomeProgramJourneyTest.php`
 - Program blueprint/current-state docs.
@@ -78,17 +69,17 @@ npm run build
 
 Runtime proof required:
 
-- on desktop, media begins around 20% viewport height and reaches the viewport bottom like the Codrops reference;
-- media width, article width and title overlap visually match the reference composition;
-- title uses reference-like 8vw scale and `.85` line-height while retaining SchoolAI font family;
-- description uses reference-like 1rem body scale;
-- `<<< Kembali / Back / RTL equivalent` remains immediately above the title and reachable below the site header;
-- ID/EN/AR and LTR/RTL remain readable;
-- compact layouts remain usable;
+- `Taman Kanak-kanak` no longer collides with its description;
+- short titles retain the large Codrops-like display scale;
+- medium/long titles remain visually dominant but fit in roughly one or two readable lines;
+- description always begins after title content;
+- media position and scale remain identical to the accepted previous screenshot;
+- ID/EN/AR and RTL/LTR remain readable;
+- compact layouts remain unchanged;
 - Chromium and WebKit.
 
 STATUS: `BLOCKED_BY_MISSING_EVIDENCE`
 
 NEXT EXECUTION CHANNEL: `owner/local terminal`
 
-NEXT VALID STEP: pull current `main`, run `HomeProgramJourneyTest`, then compare one 1920px desktop Program detail side-by-side with the Codrops reference before any further tuning.
+NEXT VALID STEP: pull current `main`, run `HomeProgramJourneyTest`, then recheck the same desktop `Taman Kanak-kanak` detail screenshot before changing media geometry again.
