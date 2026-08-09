@@ -2,75 +2,68 @@
 
 Status: `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`
 Date: 2026-08-09
-Owner decision: keep Codrops kinetic transition behavior while adapting the final Program detail composition to SchoolAI.
+Owner decision: keep the Codrops kinetic transition and match its desktop detail geometry directly while retaining SchoolAI fonts, locale content and the owner-required local Back control.
 Reference: `https://github.com/codrops/KineticTypePageTransition`
 Reference license: MIT.
 
 ## FACT
 
-- The reference uses a click-driven kinetic typography transition into a strongly centered article composition.
-- SchoolAI Program contains six localized paths and keeps ID/EN/AR, LTR/RTL, reduced motion and responsive tiers.
-- Idle Program card geometry is already separately accepted and is not part of this detail-composition batch.
+The Codrops desktop article source uses:
+
+- `top: 20vh` and `height: 80vh` for the article region;
+- `width: calc(38vw + 280px)`;
+- grid rows `10vw 2rem 12vw auto auto`;
+- grid columns `1.5rem 30% 1fr 1.5rem`;
+- media in the flexible third column spanning the article height;
+- title spanning columns 2 through 3 at `8vw`, line-height `.85`, uppercase and bold weight;
+- body copy at the inherited base `1rem` scale;
+- image radius `17px 17px 0 0`.
+
+The previous SchoolAI adaptation capped media at `36rem × 43rem`, which made the media materially smaller and vertically centered instead of starting at 20vh and reaching the viewport bottom.
 
 ## GOAL
 
-Opening any Program card transitions through the existing kinetic type field into a clean detail state that visually follows the Codrops composition grammar while rendering only:
+Opening a Program card should retain the current kinetic transition, then resolve into a detail composition whose desktop geometry reads like the Codrops reference while containing only:
 
-- localized Back with triple-chevron mark;
+- localized `<<< Back` control;
 - selected Program title;
 - one description;
 - one selected Program image.
 
-## DETAIL COMPOSITION CONTRACT
+## DESKTOP DETAIL CONTRACT
 
-Desktop:
+- detail article: `top: 20svh`, `height: 80svh`, `width: calc(38vw + 280px)`;
+- grid rows: `10vw 2rem 12vw auto 1fr`;
+- grid columns: `1.5rem 30% 1fr 1.5rem`;
+- media: column 3, all rows, full article height;
+- Back: column 2, row 2, directly above title and never viewport-fixed;
+- title: columns `2 / 4`, row 3, deliberate media overlap, `8vw`, `.85` line-height, bold weight;
+- description: column 2, row 4, `1rem` body scale;
+- image radius: `17px 17px 0 0`;
+- SchoolAI Inter/Cairo families remain the only intentional type-family deviation from the reference.
 
-- selected media is the visual anchor and is centered in the viewport;
-- media target scale is `min(35vw, 36rem)` wide and `min(68svh, 43rem)` tall;
-- detail media uses a portrait-like `4 / 5` frame and `object-fit: cover`;
-- copy enters from the logical side and may overlap the centered media, following the Codrops article composition rather than a conventional equal two-column grid;
-- Back belongs to the copy block immediately above the title and must never use viewport-fixed positioning.
+## COMPACT CONTRACT
 
-Compact:
+Compact layouts keep the existing usable one-column adaptation. Desktop coordinates are not blindly forced onto tablet/mobile. Back remains above title and media remains reachable without viewport-fixed controls.
 
-- detail becomes one column;
-- Back remains immediately above the title;
-- media remains centered and follows the copy;
-- no desktop absolute-position coordinates are reused blindly.
+## RTL / LOCALE CONTRACT
 
-RTL:
-
-- copy side mirrors logically;
-- Arabic keeps Cairo and normal Arabic casing;
-- the `<<<` mark mirrors visually to the return direction;
-- Back label remains locale-owned.
-
-## CONTENT CONTRACT
-
-Public copy remains in `lang/id/home_program.php`, `lang/en/home_program.php`, and `lang/ar/home_program.php`.
-
-Forbidden detail content:
-
-- number / `01 / 06`;
-- eyebrow/category;
-- secondary intro/summary;
-- next-program code;
-- unrelated article metadata.
+- Public Program copy remains locale-owned in `lang/id/home_program.php`, `lang/en/home_program.php`, and `lang/ar/home_program.php`.
+- Arabic keeps Cairo and normal Arabic casing.
+- Desktop media/copy grid ownership mirrors logically under RTL.
+- Triple-chevron Back mark mirrors visually to the return direction.
 
 ## MOTION CONTRACT
 
-Retain the active Codrops-derived GSAP behavior:
+Retain without modification:
 
-- type scale `2.7`;
-- mirrored quarter-turn under RTL;
-- line travel/stagger;
-- alternating idle-card exit;
-- copy vertical reveal;
-- image wrapper `100% -> 0` with image `-100% -> 0`;
+- GSAP type transition scale/rotation/line travel;
+- idle-card exit choreography;
+- detail copy vertical reveal;
+- media wrapper `100% -> 0` and image `-100% -> 0` reveal;
 - reversible close timeline;
-- Escape, Tab containment and focus restoration.
-
-Each detail now owns its own Back button. Only the active detail's Back may receive focus. Reduced motion opens the same semantic detail immediately.
+- Escape, Tab containment and focus restoration;
+- reduced-motion semantic fallback.
 
 ## OUT OF SCOPE
 
@@ -94,12 +87,12 @@ Static/local:
 
 Runtime:
 
-- all six details open the matching image/title/description;
-- desktop detail reads as centered media plus overlapping logical-side copy;
-- Back is directly above title and cannot be hidden by the site header;
-- LTR/RTL direction is correct;
-- media reveal/reverse reveal remains intact;
-- reduced motion remains usable;
-- 360 through 1920 widths work in Chromium and WebKit.
+- 1920px desktop side-by-side reference comparison confirms media top/height/width and title overlap character;
+- Back remains immediately above title and is not covered by the site header;
+- title and description scales match the reference grammar while using SchoolAI fonts;
+- all six details open/close correctly;
+- RTL mirrors logically;
+- compact tiers remain usable;
+- Chromium and WebKit.
 
 Until runtime proof exists, status remains `IMPLEMENTED_SOURCE / BLOCKED_BY_MISSING_EVIDENCE`.
