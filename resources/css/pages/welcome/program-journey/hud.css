@@ -64,7 +64,7 @@
     z-index: 1205;
     display: inline-flex;
     align-items: center;
-    gap: .55rem;
+    gap: .62rem;
     min-height: 44px;
     margin: 0;
     padding: 0;
@@ -79,6 +79,14 @@
     font-weight: 650;
 }
 
+.program-kinetic__back-mark {
+    display: inline-block;
+    direction: ltr;
+    font-weight: 780;
+    letter-spacing: -.12em;
+    transform-origin: center;
+}
+
 .program-kinetic__back:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
@@ -90,16 +98,18 @@
 
 .program-kinetic__detail {
     display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
+    width: min(92vw, 100rem);
     min-height: 100svh;
+    margin-inline: auto;
     align-items: center;
-    padding: clamp(6rem, 14svh, 9rem) clamp(1.25rem, 5vw, 5rem);
+    padding: clamp(6rem, 12svh, 8rem) 0 clamp(3rem, 8svh, 6rem);
 }
 
 .program-kinetic__detail-copy {
     display: grid;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-    width: min(90vw, 100rem);
-    margin-inline: auto;
+    gap: clamp(1rem, 2vw, 1.75rem);
+    width: 100%;
 }
 
 .program-kinetic__detail-copy h3 {
@@ -107,13 +117,13 @@
     margin: 0;
     color: var(--program-ink);
     font-family: var(--font-display, Inter, sans-serif);
-    font-size: clamp(3.6rem, 9vw, 11rem);
+    font-size: clamp(2.25rem, 3vw, 4.25rem);
     font-optical-sizing: auto;
     font-synthesis: none;
     font-variation-settings: "wght" 360;
     font-weight: 360;
     letter-spacing: -.055em;
-    line-height: .84;
+    line-height: .9;
     text-transform: uppercase;
     text-wrap: balance;
 }
@@ -122,9 +132,25 @@
     width: min(100%, 42rem);
     margin: 0;
     color: var(--program-muted);
-    font-size: clamp(1rem, .94rem + .32vw, 1.22rem);
+    font-size: clamp(.96rem, .9rem + .24vw, 1.16rem);
     font-weight: 430;
-    line-height: 1.6;
+    line-height: 1.62;
+}
+
+.program-kinetic__detail-image-wrap {
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: clamp(.8rem, 1.5vw, 1.35rem);
+    background: rgb(57 122 166 / .08);
+    transform-origin: 50% 100%;
+}
+
+.program-kinetic__detail-image-wrap img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 html.program-kinetic-dialog,
@@ -134,14 +160,18 @@ body.program-kinetic-dialog {
 
 html[dir="rtl"] .program-kinetic__detail-copy h3 {
     font-family: var(--font-ar-display, Cairo, sans-serif);
-    font-size: clamp(3.2rem, 7vw, 8rem);
+    font-size: clamp(2.2rem, 2.8vw, 4rem);
     font-variation-settings: normal;
     font-weight: 500;
     letter-spacing: normal;
-    line-height: 1.08;
+    line-height: 1.12;
     text-transform: none;
 }
 
-html[dir="rtl"] .program-kinetic__back span:first-child {
+html[dir="rtl"] .program-kinetic__back {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .program-kinetic__back-mark {
     transform: scaleX(-1);
 }
