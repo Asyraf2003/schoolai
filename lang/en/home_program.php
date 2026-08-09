@@ -17,7 +17,7 @@ return [
         'RAHMAH',
         'UKHUWAH',
     ],
-    'back' => 'Back to programs',
+    'back' => 'Back',
     'open_item' => 'Open :program',
     'items' => [
         [
