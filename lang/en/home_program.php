@@ -3,6 +3,20 @@
 return [
     'section_label' => 'Our Programs',
     'heading_lines' => ['Our', 'Programs'],
+    'kinetic_words' => [
+        'ISLAM',
+        'IMAN',
+        'IHSAN',
+        'NOBLE CHARACTER',
+        'QUR’AN',
+        'ADAB',
+        'KNOWLEDGE',
+        'AMANAH',
+        'WISDOM',
+        'TAQWA',
+        'RAHMAH',
+        'UKHUWAH',
+    ],
     'back' => 'Back to programs',
     'open_item' => 'Open :program',
     'items' => [
