@@ -50,21 +50,6 @@
     .program-kinetic__summary {
         display: block;
     }
-
-    .program-kinetic__detail {
-        display: grid;
-        gap: 1.5rem;
-    }
-
-    .program-kinetic__detail-image-wrap {
-        order: -1;
-        height: min(56vw, 28rem);
-    }
-
-    .program-kinetic__detail-copy {
-        width: min(100%, 42rem);
-        padding-bottom: 3rem;
-    }
 }
 
 @media (max-width: 639px) {
