@@ -81,8 +81,13 @@ function mountGsap(dom, integration, gsap) {
       }, 'articleOpening')
       .to(dom.back, { duration: 0.7, opacity: 1 }, 'articleOpening')
       .set(parts.copy, { opacity: 0, y: '50%' }, 'articleOpening')
+      .set(parts.imageWrap, { y: '100%' }, 'articleOpening')
+      .set(parts.image, { y: '-100%' }, 'articleOpening')
       .to(parts.copy, {
         duration: 1, ease: 'expo', opacity: 1, y: '0%', stagger: 0.08,
+      }, 'articleOpening')
+      .to([parts.imageWrap, parts.image], {
+        duration: 1, ease: 'expo', y: '0%',
       }, 'articleOpening');
   };
 
@@ -107,6 +112,8 @@ function mountGsap(dom, integration, gsap) {
       .to(parts.copy, {
         duration: 1, ease: 'power4.in', opacity: 0, y: '50%', stagger: -0.08,
       }, 'start')
+      .to(parts.imageWrap, { duration: 1, ease: 'power4.in', y: '100%' }, 'start')
+      .to(parts.image, { duration: 1, ease: 'power4.in', y: '-100%' }, 'start')
       .add(() => {
         gsap.set(dom.back, { pointerEvents: 'none' });
         dom.layer.hidden = true;
