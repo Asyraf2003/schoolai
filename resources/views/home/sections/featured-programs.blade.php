@@ -74,23 +74,25 @@
 
   <div class="program-kinetic__detail-layer" data-program-detail-layer role="dialog"
     aria-modal="true" aria-label="{{ $programContent['section_label'] ?? '' }}" hidden>
-    <button class="program-kinetic__back" type="button" data-program-back>
-      <span class="program-kinetic__back-mark" aria-hidden="true">&lt;&lt;&lt;</span>
-      <span>{{ $programContent['back'] }}</span>
-    </button>
     <div class="program-kinetic__details">
       @foreach ($programItems as $program)
         @php($media = $programMedia[$loop->index] ?? $programMedia[0])
         <article class="program-kinetic__detail" id="program-detail-{{ strtolower($program['code']) }}"
           data-program-detail data-program-index="{{ $loop->index }}" hidden>
           <div class="program-kinetic__detail-copy">
+            <button class="program-kinetic__back" type="button" data-program-back>
+              <span class="program-kinetic__back-mark" aria-hidden="true">&lt;&lt;&lt;</span>
+              <span class="program-kinetic__back-label">{{ $programContent['back'] }}</span>
+            </button>
             <h3>{{ $program['title'] }}</h3>
             <p class="program-kinetic__detail-description">{{ $program['description'] }}</p>
           </div>
-          <div class="program-kinetic__detail-image-wrap" data-program-detail-image-wrap>
-            <img src="{{ $media['url'] }}" alt="" width="1800" height="1200" loading="lazy" decoding="async"
-              referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $media['position'] }}"
-              data-program-detail-image />
+          <div class="program-kinetic__detail-media">
+            <div class="program-kinetic__detail-image-wrap" data-program-detail-image-wrap>
+              <img src="{{ $media['url'] }}" alt="" width="1800" height="1200" loading="lazy" decoding="async"
+                referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $media['position'] }}"
+                data-program-detail-image />
+            </div>
           </div>
         </article>
       @endforeach
