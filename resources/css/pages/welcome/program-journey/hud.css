@@ -3,11 +3,13 @@
     top: 0;
     left: 50%;
     z-index: 3;
-    width: 100vmax;
-    height: calc(var(--program-handoff-height) + 100svh);
-    display: grid;
-    align-content: start;
-    justify-content: center;
+    width: 120vmax;
+    height: 100%;
+    min-height: calc(var(--program-handoff-height) + 100svh);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
     padding-top: calc(var(--program-handoff-height) / 11);
     pointer-events: none;
     transform: translateX(-50%);
@@ -16,6 +18,8 @@
 }
 
 .program-kinetic__type-line {
+    flex: 0 0 auto;
+    min-width: 100%;
     text-align: center;
     user-select: none;
     will-change: transform, opacity;
@@ -27,9 +31,10 @@
     top: 50%;
     left: 50%;
     z-index: 1202;
-    width: 100vmax;
+    width: 120vmax;
     height: 100vmax;
-    align-content: center;
+    min-height: 0;
+    justify-content: center;
     padding-top: 0;
     transform: translate(-50%, -50%);
     transform-origin: center;
