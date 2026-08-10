@@ -9,11 +9,7 @@
   aria-labelledby="values-story-heading"
   data-values-story
 >
-  <div class="values-story__entry" aria-hidden="true">
-    @for ($handoffStep = 1; $handoffStep <= 11; $handoffStep++)
-      <span class="values-story__entry-step" data-values-entry-step="{{ $handoffStep }}"></span>
-    @endfor
-  </div>
+  <div class="values-story__entry" aria-hidden="true"></div>
 
   <div class="values-story__timeline" data-values-timeline>
     <div class="values-story__clip" data-values-stage>
