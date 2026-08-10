@@ -95,7 +95,7 @@
 
 @media (max-width: 639px) {
     .values-story {
-        --values-entry-height: clamp(6rem, 15svh, 10rem);
+        --values-entry-height: clamp(12rem, 39svh, 24rem);
         --values-exit-height: clamp(8rem, 21svh, 13rem);
     }
 }
