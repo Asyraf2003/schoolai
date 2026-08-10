@@ -1,7 +1,7 @@
 .values-story {
     --values-blue: #2038ff;
     --values-ink: #11131b;
-    --values-entry-height: clamp(12rem, 36svh, 28rem);
+    --values-entry-height: clamp(18rem, 60svh, 42rem);
     --values-exit-height: clamp(10rem, 24svh, 18rem);
     --values-heading-opacity: 1;
     --values-heading-y: 0px;
@@ -37,6 +37,7 @@
 
 .values-story__entry-step {
     position: relative;
+    z-index: 2;
     display: block;
     min-height: 0;
     background-repeat: repeat;
