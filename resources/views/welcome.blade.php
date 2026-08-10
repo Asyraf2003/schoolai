@@ -47,9 +47,42 @@
 
       @include('home.sections.vision-mission')
 
-      @include('home.sections.featured-programs')
+      @php
+        $programValuesContent = trans('home_program');
+        $programValuesWords = collect(is_array($programValuesContent)
+            ? ($programValuesContent['kinetic_words'] ?? [])
+            : [])
+          ->filter(fn ($word) => is_string($word) && trim($word) !== '')
+          ->values();
+        $programValuesWordCount = max(1, $programValuesWords->count());
+        $programValuesKineticLines = collect(range(0, 7))->map(function ($line) use (
+            $programValuesWords,
+            $programValuesWordCount,
+        ) {
+            $words = collect(range(0, 7))
+              ->map(fn ($offset) => $programValuesWords[
+                  ($line * 3 + $offset) % $programValuesWordCount
+              ] ?? '')
+              ->filter()
+              ->implode(' ');
 
-      @include('home.sections.school-values')
+            return trim($words . ' ' . $words);
+        })->filter();
+      @endphp
+
+      <div class="program-values-world" data-program-values-world>
+        <div class="program-values-world__visual" aria-hidden="true">
+          <div class="program-values-world__kinetic">
+            @foreach ($programValuesKineticLines as $line)
+              <span class="program-values-world__kinetic-line">{{ $line }}</span>
+            @endforeach
+          </div>
+        </div>
+
+        @include('home.sections.featured-programs')
+
+        @include('home.sections.school-values')
+      </div>
 
       @include('home.sections.gallery')
 

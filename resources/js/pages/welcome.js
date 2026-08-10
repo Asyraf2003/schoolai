@@ -15,6 +15,7 @@
    ========================================================= */
 
 import './welcome/navigation.js';
+import '../surfaces/home/program-values-world.js';
 import '../surfaces/home/values/controller.js';
 import './welcome/program-cards.js';
 import './welcome/public-content.js';

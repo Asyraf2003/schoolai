@@ -1,19 +1,6 @@
 @php
   $valuesHeading = $schoolValues['heading'] ?? '';
   $valuesHeadingLines = $schoolValues['heading_lines'] ?? [$valuesHeading];
-  $valuesProgramContent = trans('home_program');
-  $valuesKineticWords = collect(is_array($valuesProgramContent) ? ($valuesProgramContent['kinetic_words'] ?? []) : [])
-    ->filter(fn ($word) => is_string($word) && trim($word) !== '')
-    ->values();
-  $valuesKineticWordCount = max(1, $valuesKineticWords->count());
-  $valuesKineticLines = collect(range(0, 9))->map(function ($line) use ($valuesKineticWords, $valuesKineticWordCount) {
-    $words = collect(range(0, 7))
-      ->map(fn ($offset) => $valuesKineticWords[($line * 3 + $offset) % $valuesKineticWordCount] ?? '')
-      ->filter()
-      ->implode(' ');
-
-    return trim($words . ' ' . $words);
-  })->filter();
 @endphp
 
 <section
@@ -26,22 +13,10 @@
     @for ($handoffStep = 1; $handoffStep <= 11; $handoffStep++)
       <span class="values-story__entry-step" data-values-entry-step="{{ $handoffStep }}"></span>
     @endfor
-
-    <div class="values-story__entry-kinetic">
-      @foreach ($valuesKineticLines->take(7) as $line)
-        <span class="values-story__kinetic-line">{{ $line }}</span>
-      @endforeach
-    </div>
   </div>
 
   <div class="values-story__timeline" data-values-timeline>
     <div class="values-story__clip" data-values-stage>
-      <div class="values-story__kinetic" aria-hidden="true">
-        @foreach ($valuesKineticLines as $line)
-          <span class="values-story__kinetic-line">{{ $line }}</span>
-        @endforeach
-      </div>
-
       <header class="values-story__headline" data-values-heading>
         <h2
           class="values-story__title"

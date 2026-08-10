@@ -21,7 +21,7 @@
 }
 
 .values-story__entry {
-    --values-handoff-line: #fff;
+    --values-handoff-line: rgba(255,255,255,.9);
     position: relative;
     z-index: 2;
     display: grid;
@@ -31,7 +31,6 @@
     overflow: hidden;
     overflow: clip;
     background: transparent;
-    box-shadow: 0 3px 0 var(--values-blue);
     pointer-events: none;
 }
 
@@ -40,7 +39,7 @@
     z-index: 2;
     display: block;
     min-height: 0;
-    background-repeat: repeat;
+    background: transparent;
 }
 
 .values-story__entry-step::after {
@@ -51,59 +50,20 @@
     background-repeat: repeat;
 }
 
-.values-story__entry-step:nth-child(1) {
-    background: transparent;
-}
-
 .values-story__entry-step:nth-child(1)::after,
 .values-story__entry-step:nth-child(11)::after {
     display: none;
 }
 
-.values-story__entry-step:nth-child(2) {
-    --values-fill-start: 9px;
-    background: repeating-linear-gradient(180deg, transparent 0 9px, var(--values-blue) 9px 10px);
-}
-
-.values-story__entry-step:nth-child(3) {
-    --values-fill-start: 8px;
-    background: repeating-linear-gradient(180deg, transparent 0 8px, var(--values-blue) 8px 10px);
-}
-
-.values-story__entry-step:nth-child(4) {
-    --values-fill-start: 7px;
-    background: repeating-linear-gradient(180deg, transparent 0 7px, var(--values-blue) 7px 10px);
-}
-
-.values-story__entry-step:nth-child(5) {
-    --values-fill-start: 6px;
-    background: repeating-linear-gradient(180deg, transparent 0 6px, var(--values-blue) 6px 10px);
-}
-
-.values-story__entry-step:nth-child(6) {
-    --values-fill-start: 5px;
-    background: repeating-linear-gradient(180deg, transparent 0 5px, var(--values-blue) 5px 10px);
-}
-
-.values-story__entry-step:nth-child(7) {
-    --values-fill-start: 4px;
-    background: repeating-linear-gradient(180deg, transparent 0 4px, var(--values-blue) 4px 10px);
-}
-
-.values-story__entry-step:nth-child(8) {
-    --values-fill-start: 3px;
-    background: repeating-linear-gradient(180deg, transparent 0 3px, var(--values-blue) 3px 10px);
-}
-
-.values-story__entry-step:nth-child(9) {
-    --values-fill-start: 2px;
-    background: repeating-linear-gradient(180deg, transparent 0 2px, var(--values-blue) 2px 10px);
-}
-
-.values-story__entry-step:nth-child(10) {
-    --values-fill-start: 1px;
-    background: repeating-linear-gradient(180deg, transparent 0 1px, var(--values-blue) 1px 10px);
-}
+.values-story__entry-step:nth-child(2) { --values-fill-start: 9px; }
+.values-story__entry-step:nth-child(3) { --values-fill-start: 8px; }
+.values-story__entry-step:nth-child(4) { --values-fill-start: 7px; }
+.values-story__entry-step:nth-child(5) { --values-fill-start: 6px; }
+.values-story__entry-step:nth-child(6) { --values-fill-start: 5px; }
+.values-story__entry-step:nth-child(7) { --values-fill-start: 4px; }
+.values-story__entry-step:nth-child(8) { --values-fill-start: 3px; }
+.values-story__entry-step:nth-child(9) { --values-fill-start: 2px; }
+.values-story__entry-step:nth-child(10) { --values-fill-start: 1px; }
 
 .values-story__entry-step:nth-child(n + 2):nth-child(-n + 10)::after {
     background: repeating-linear-gradient(
@@ -114,14 +74,10 @@
     );
 }
 
-.values-story__entry-step:nth-child(11) {
-    background: var(--values-blue);
-}
-
 .values-story__timeline {
     position: relative;
     min-height: 100svh;
-    background: var(--values-blue);
+    background: transparent;
 }
 
 .values-story__clip {
@@ -130,7 +86,7 @@
     overflow: hidden;
     overflow: clip;
     padding: clamp(3.25rem, 7vw, 6rem) 0;
-    background: var(--values-blue);
+    background: transparent;
 }
 
 .values-story__clip::before {
