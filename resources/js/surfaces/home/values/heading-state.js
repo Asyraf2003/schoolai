@@ -1,17 +1,9 @@
 import { clamp, easeOutCubic } from './motion.js';
 
 const EPSILON = 0.00005;
-const ENTRY_TRIGGER_RATIO = 0.98;
+const ENTRY_TRIGGER_RATIO = 1.08;
 const REVEAL_DURATION_MS = 900;
 const FAST_RESOLVE_PROGRESS = 0.18;
-
-function resetForEntry(state) {
-    state.phase = 'idle';
-    state.startedAt = 0;
-    state.reveal = 0;
-    state.shifted = false;
-    state.instant = false;
-}
 
 function resolveWithoutEntry(state) {
     state.phase = 'revealed';
@@ -41,32 +33,37 @@ export function updateHeadingState(
     shiftAllowed,
 ) {
     const triggerTop = viewportHeight * ENTRY_TRIGGER_RATIO;
-    const beforeSection = storyProgress <= EPSILON && timelineTop > triggerTop;
     const firstSample = state.previousTop === null;
     const movingDown = firstSample || timelineTop < state.previousTop - 0.5;
-    const entering = timelineTop <= triggerTop
+    const movingUp = !firstSample && timelineTop > state.previousTop + 0.5;
+    const enteringFromAbove = timelineTop <= triggerTop
         && storyProgress < FAST_RESOLVE_PROGRESS
         && movingDown;
 
-    if (beforeSection) resetForEntry(state);
-    else if (state.phase === 'idle') {
-        if (entering) {
+    if (state.phase === 'idle') {
+        if (storyProgress >= FAST_RESOLVE_PROGRESS
+            || (movingUp && timelineTop <= triggerTop)) {
+            resolveWithoutEntry(state);
+        } else if (enteringFromAbove) {
             state.phase = 'revealing';
             state.startedAt = time;
             state.instant = false;
-        } else if (storyProgress >= FAST_RESOLVE_PROGRESS) {
-            resolveWithoutEntry(state);
         }
     }
 
     if (state.phase === 'revealing') {
-        const elapsed = Math.max(0, time - state.startedAt);
-        state.reveal = easeOutCubic(elapsed / REVEAL_DURATION_MS);
+        if (movingUp) {
+            resolveWithoutEntry(state);
+        } else {
+            const elapsed = Math.max(0, time - state.startedAt);
+            state.reveal = easeOutCubic(elapsed / REVEAL_DURATION_MS);
 
-        if (state.reveal >= 0.999 || storyProgress >= FAST_RESOLVE_PROGRESS) {
-            state.reveal = 1;
-            state.phase = 'revealed';
-            state.instant = false;
+            if (state.reveal >= 0.999
+                || storyProgress >= FAST_RESOLVE_PROGRESS) {
+                state.reveal = 1;
+                state.phase = 'revealed';
+                state.instant = false;
+            }
         }
     }
 

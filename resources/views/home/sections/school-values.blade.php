@@ -11,29 +11,29 @@
 >
   <div class="values-story__entry" aria-hidden="true"></div>
 
+  <header class="values-story__headline" data-values-heading>
+    <h2
+      class="values-story__title"
+      id="values-story-heading"
+      data-text-role="display"
+      aria-label="{{ $valuesHeading }}"
+    >
+      @foreach ($valuesHeadingLines as $line)
+        <span class="values-story__title-line values-story__title-line--{{ $loop->first ? 'one' : 'two' }}">
+          <span class="values-story__title-text" aria-hidden="true">
+            {{ $line }}
+          </span>
+        </span>
+      @endforeach
+    </h2>
+
+    <p class="values-story__description" data-text-role="description">
+      {{ $schoolValues['subtitle'] }}
+    </p>
+  </header>
+
   <div class="values-story__timeline" data-values-timeline>
     <div class="values-story__clip" data-values-stage>
-      <header class="values-story__headline" data-values-heading>
-        <h2
-          class="values-story__title"
-          id="values-story-heading"
-          data-text-role="display"
-          aria-label="{{ $valuesHeading }}"
-        >
-          @foreach ($valuesHeadingLines as $line)
-            <span class="values-story__title-line values-story__title-line--{{ $loop->first ? 'one' : 'two' }}">
-              <span class="values-story__title-text" aria-hidden="true">
-                {{ $line }}
-              </span>
-            </span>
-          @endforeach
-        </h2>
-
-        <p class="values-story__description" data-text-role="description">
-          {{ $schoolValues['subtitle'] }}
-        </p>
-      </header>
-
       <div class="values-story__spatial" data-values-spatial aria-hidden="true">
         <span class="values-story__spatial-fallback values-story__spatial-fallback--one"></span>
         <span class="values-story__spatial-fallback values-story__spatial-fallback--two"></span>

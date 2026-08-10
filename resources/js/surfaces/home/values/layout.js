@@ -42,20 +42,13 @@ export function storyFrame(
     headingState,
 ) {
     const reveal = headingState?.reveal ?? 1;
-    const desktop = geometry.mode === 4;
     const copyEnter = phase(reveal, 0.58, 1);
-    const desktopTravel = Math.max(
-        1,
-        geometry.timelineHeight - geometry.stageHeight,
-    );
 
     return {
         lineOneY: mix(108, 0, reveal),
         lineTwoY: mix(-108, 0, reveal),
         headingOpacity: 1,
-        headingY: desktop && progress > 0
-            ? -progress * desktopTravel
-            : 0,
+        headingY: 0,
         copyOpacity: copyEnter,
         copyY: mix(24, 0, copyEnter),
         progress: clamp(progress),

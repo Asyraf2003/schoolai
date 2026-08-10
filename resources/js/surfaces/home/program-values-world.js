@@ -22,8 +22,10 @@ function paintWorld(root, progress) {
 
 export function mountProgramValuesWorld(root) {
   const values = root.querySelector('[data-values-story]');
+  const heading = root.querySelector('[data-values-heading]');
   if (!values) return () => {};
 
+  const morphAnchor = heading ?? values;
   let frame = 0;
   let destroyed = false;
 
@@ -32,11 +34,11 @@ export function mountProgramValuesWorld(root) {
     if (destroyed || document.hidden) return;
 
     const viewportHeight = window.innerHeight || 1;
-    const valuesTop = values.getBoundingClientRect().top;
-    const start = viewportHeight * 1.04;
-    const end = viewportHeight * 0.18;
+    const anchorTop = morphAnchor.getBoundingClientRect().top;
+    const start = viewportHeight * 1.12;
+    const end = viewportHeight * 0.28;
     const progress = clamp(
-      (start - valuesTop) / Math.max(1, start - end),
+      (start - anchorTop) / Math.max(1, start - end),
     );
 
     paintWorld(root, progress);

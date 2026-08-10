@@ -27,8 +27,9 @@
 
 @media (max-width: 1023px) {
     .program-kinetic {
+        --program-values-clearance: clamp(4rem, 11svh, 7rem);
         min-height: auto;
-        padding-bottom: calc(3rem + var(--program-values-clearance));
+        padding-bottom: calc(1.5rem + var(--program-values-clearance));
     }
 
     .program-kinetic__header {
@@ -61,6 +62,11 @@
 }
 
 @media (max-width: 639px) {
+    .program-kinetic {
+        --program-values-clearance: clamp(3rem, 8svh, 5rem);
+        padding-bottom: calc(1rem + var(--program-values-clearance));
+    }
+
     .program-kinetic__handoff {
         height: clamp(9rem, 34vw, 12rem);
     }
