@@ -1,0 +1,92 @@
+.values-story__entry-kinetic,
+.values-story__kinetic {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    width: 120vmax;
+    flex-direction: column;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateX(-50%);
+    user-select: none;
+}
+
+.values-story__entry-kinetic {
+    inset-block: 0;
+    z-index: 3;
+    justify-content: space-between;
+    padding-block: clamp(.5rem, 2svh, 1.5rem);
+    color: #8fcfff;
+    opacity: calc(var(--values-handoff-progress) * .14);
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0,0,0,.28) 30%,
+        #000 62%,
+        #000 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0,0,0,.28) 30%,
+        #000 62%,
+        #000 100%
+    );
+}
+
+.values-story__kinetic {
+    inset-block: 0;
+    z-index: 0;
+    justify-content: space-between;
+    padding-block: clamp(1rem, 3svh, 2rem);
+    color: #8fcfff;
+    opacity: .1;
+}
+
+.values-story__kinetic-line {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+    white-space: nowrap;
+    text-align: center;
+    font-family: var(--font-display, Inter, sans-serif);
+    font-size: clamp(5rem, 13svh, 11rem);
+    font-weight: 800;
+    letter-spacing: -.055em;
+    line-height: .75;
+    text-transform: uppercase;
+}
+
+.values-story__entry-kinetic .values-story__kinetic-line {
+    font-size: clamp(3.5rem, 10svh, 7.5rem);
+}
+
+.values-story__kinetic-line:nth-child(odd) {
+    transform: translateX(-3vw);
+}
+
+.values-story__kinetic-line:nth-child(even) {
+    transform: translateX(3vw);
+}
+
+html[dir="rtl"] .values-story__kinetic-line {
+    font-family: var(--font-ar-display, Cairo, sans-serif);
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+@media (max-width: 767px) {
+    .values-story__kinetic-line {
+        font-size: clamp(3.5rem, 11svh, 6.5rem);
+    }
+
+    .values-story__entry-kinetic .values-story__kinetic-line {
+        font-size: clamp(2.5rem, 8svh, 4.75rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .values-story__kinetic {
+        opacity: .08;
+    }
+}
