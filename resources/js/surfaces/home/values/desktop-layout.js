@@ -37,7 +37,7 @@ function centeredOffsets(index, geometry) {
 function hiddenPose(index, geometry, center) {
     return pose(
         center.x + stackNudge(index, geometry.cardWidth),
-        center.y + geometry.cardHeight * 0.17,
+        center.y + geometry.cardHeight * 0.08,
         -index * 14,
         deckAngle(index),
         0.92,
