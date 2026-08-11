@@ -10,6 +10,8 @@ import {
 } from './desktop-keyframes.js';
 import { mix, phase } from './motion.js';
 
+const TITLE_DECK_GAP_PX = 76;
+
 function pose(x, y, z, rz, scale, ry = 180) {
     return { x, y, z, rz, scale, ry, floatY: 0 };
 }
@@ -34,10 +36,18 @@ function centeredOffsets(index, geometry) {
     };
 }
 
+function titleDeckOffset(index, geometry, extra = 0) {
+    const slot = geometry.slots[index];
+    return geometry.headingTitleBottomOffset
+        + TITLE_DECK_GAP_PX
+        + extra
+        - slot.rootOffsetY;
+}
+
 function hiddenPose(index, geometry, center) {
     return pose(
         center.x + stackNudge(index, geometry.cardWidth),
-        center.y + geometry.cardHeight * 0.17,
+        titleDeckOffset(index, geometry),
         -index * 14,
         deckAngle(index),
         0.92,
@@ -47,7 +57,7 @@ function hiddenPose(index, geometry, center) {
 function deckPose(index, geometry, center) {
     return pose(
         center.x + stackNudge(index, geometry.cardWidth),
-        center.y + geometry.cardHeight * 0.05 + index * 2,
+        titleDeckOffset(index, geometry, index * 2),
         -index * 14,
         deckAngle(index),
         0.97,
