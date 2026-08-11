@@ -2,12 +2,23 @@ import { clamp, easeOutCubic } from './motion.js';
 
 const EPSILON = 0.00005;
 const ENTRY_TRIGGER_RATIO = 1.08;
+const RESET_RATIO = 1.14;
 const REVEAL_DURATION_MS = 900;
+
+function hideAndArm(state) {
+    state.phase = 'idle';
+    state.startedAt = 0;
+    state.reveal = 0;
+    state.shifted = false;
+    state.instant = false;
+    state.armed = true;
+}
 
 function resolveWithoutEntry(state) {
     state.phase = 'revealed';
     state.reveal = 1;
     state.instant = true;
+    state.armed = false;
 }
 
 function startDownwardReveal(state, time) {
@@ -35,39 +46,38 @@ export function createHeadingState(progress = 0) {
 export function updateHeadingState(
     state,
     storyProgress,
-    timelineTop,
+    headingTop,
     viewportHeight,
     time,
     shiftAllowed,
 ) {
     const triggerTop = viewportHeight * ENTRY_TRIGGER_RATIO;
+    const resetTop = viewportHeight * RESET_RATIO;
     const firstSample = state.previousTop === null;
-    const movingDown = !firstSample && timelineTop < state.previousTop - 0.5;
-    const movingUp = !firstSample && timelineTop > state.previousTop + 0.5;
-    const aboveTrigger = timelineTop > triggerTop;
+    const movingDown = !firstSample && headingTop < state.previousTop - 0.5;
+    const movingUp = !firstSample && headingTop > state.previousTop + 0.5;
 
     if (firstSample) {
-        if (storyProgress > EPSILON) {
+        if (headingTop > resetTop) {
+            hideAndArm(state);
+        } else if (storyProgress > EPSILON) {
             resolveWithoutEntry(state);
-            state.armed = false;
-        } else if (aboveTrigger) {
-            state.phase = 'idle';
-            state.reveal = 0;
-            state.instant = false;
-            state.armed = true;
         } else {
             startDownwardReveal(state, time);
         }
     } else if (movingUp) {
-        if (state.phase === 'revealing') resolveWithoutEntry(state);
-        if (aboveTrigger) state.armed = true;
+        if (headingTop > resetTop) {
+            hideAndArm(state);
+        } else if (state.phase !== 'revealed') {
+            resolveWithoutEntry(state);
+        }
     }
 
     const crossedDownward = !firstSample
         && state.armed
         && movingDown
         && state.previousTop > triggerTop
-        && timelineTop <= triggerTop;
+        && headingTop <= triggerTop;
 
     if (crossedDownward) startDownwardReveal(state, time);
 
@@ -88,7 +98,7 @@ export function updateHeadingState(
 
     state.reveal = clamp(state.reveal);
     state.shifted = shiftAllowed && state.phase === 'revealed';
-    state.previousTop = timelineTop;
+    state.previousTop = headingTop;
 
     return {
         reveal: state.reveal,

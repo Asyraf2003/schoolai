@@ -7,6 +7,9 @@ const smooth = (value) => {
   return progress * progress * (3 - 2 * progress);
 };
 
+const MORPH_START_RATIO = 1.82;
+const MORPH_END_RATIO = 1.08;
+
 function paintWorld(root, progress) {
   const eased = smooth(progress);
   root.style.setProperty('--program-values-morph', eased.toFixed(4));
@@ -35,8 +38,8 @@ export function mountProgramValuesWorld(root) {
 
     const viewportHeight = window.innerHeight || 1;
     const anchorTop = morphAnchor.getBoundingClientRect().top;
-    const start = viewportHeight * 1.12;
-    const end = viewportHeight * 0.28;
+    const start = viewportHeight * MORPH_START_RATIO;
+    const end = viewportHeight * MORPH_END_RATIO;
     const progress = clamp(
       (start - anchorTop) / Math.max(1, start - end),
     );

@@ -25,6 +25,7 @@ function requiredNode(root, selector) {
 
 export function collectValuesNodes(root) {
     return {
+        heading: requiredNode(root, '[data-values-heading]'),
         timeline: requiredNode(root, '[data-values-timeline]'),
         stage: requiredNode(root, '[data-values-stage]'),
         perspective: requiredNode(root, '[data-values-perspective]'),

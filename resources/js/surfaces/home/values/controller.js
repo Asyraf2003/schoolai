@@ -66,11 +66,13 @@ export function createValuesStory(root) {
 
     function readFrameTarget() {
         const rootTop = root.getBoundingClientRect().top;
+        const headingTop = nodes.heading.getBoundingClientRect().top;
         const timelineTop = nodes.timeline.getBoundingClientRect().top;
         const storyTop = geometry.mode === 4 ? timelineTop : rootTop;
         return {
             handoff: readHandoffProgress(rootTop, geometry.viewportHeight),
             story: readStoryProgress(storyTop, geometry),
+            headingTop,
             timelineTop,
         };
     }
@@ -88,7 +90,7 @@ export function createValuesStory(root) {
             handoffMotion, target.handoff, delta, snapNext,
         );
         const headingSnapshot = updateHeadingState(
-            heading, target.story, target.timelineTop,
+            heading, target.story, target.headingTop,
             geometry.viewportHeight, time, geometry.mode >= 3,
         );
 
