@@ -6,7 +6,7 @@
     isolation: isolate;
     background: color-mix(
         in srgb,
-        #e7f5ff calc(100% - var(--program-values-morph-pct)),
+        #fff calc(100% - var(--program-values-morph-pct)),
         #2038ff var(--program-values-morph-pct)
     );
 }

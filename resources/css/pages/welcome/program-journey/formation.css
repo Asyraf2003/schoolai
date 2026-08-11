@@ -1,0 +1,44 @@
+.program-kinetic {
+    --program-formation-hold: clamp(8rem, 24svh, 18rem);
+}
+
+.program-kinetic.is-program-formation {
+    padding-bottom: calc(
+        var(--program-values-clearance)
+        + var(--program-formation-hold)
+    );
+}
+
+.program-kinetic.is-program-formation .program-kinetic__trigger:focus-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+    .program-kinetic {
+        --program-formation-hold: clamp(7rem, 19svh, 13rem);
+    }
+
+    .program-kinetic.is-program-formation {
+        padding-bottom: calc(
+            1.5rem
+            + var(--program-values-clearance)
+            + var(--program-formation-hold)
+        );
+    }
+}
+
+@media (max-width: 639px) {
+    .program-kinetic {
+        --program-formation-hold: clamp(5rem, 15svh, 9rem);
+    }
+
+    .program-kinetic.is-program-formation {
+        padding-bottom: calc(
+            1rem
+            + var(--program-values-clearance)
+            + var(--program-formation-hold)
+        );
+    }
+}

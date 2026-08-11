@@ -7,8 +7,8 @@ const smooth = (value) => {
   return progress * progress * (3 - 2 * progress);
 };
 
-const MORPH_START_RATIO = 1.82;
-const MORPH_END_RATIO = 1.08;
+const MORPH_START_BOTTOM_RATIO = 1.2;
+const MORPH_END_BOTTOM_RATIO = 0.52;
 
 function paintWorld(root, progress) {
   const eased = smooth(progress);
@@ -24,11 +24,10 @@ function paintWorld(root, progress) {
 }
 
 export function mountProgramValuesWorld(root) {
+  const program = root.querySelector('[data-program-kinetic]');
   const values = root.querySelector('[data-values-story]');
-  const heading = root.querySelector('[data-values-heading]');
-  if (!values) return () => {};
+  if (!program || !values) return () => {};
 
-  const morphAnchor = heading ?? values;
   let frame = 0;
   let destroyed = false;
 
@@ -37,11 +36,11 @@ export function mountProgramValuesWorld(root) {
     if (destroyed || document.hidden) return;
 
     const viewportHeight = window.innerHeight || 1;
-    const anchorTop = morphAnchor.getBoundingClientRect().top;
-    const start = viewportHeight * MORPH_START_RATIO;
-    const end = viewportHeight * MORPH_END_RATIO;
+    const programBottom = program.getBoundingClientRect().bottom;
+    const start = viewportHeight * MORPH_START_BOTTOM_RATIO;
+    const end = viewportHeight * MORPH_END_BOTTOM_RATIO;
     const progress = clamp(
-      (start - anchorTop) / Math.max(1, start - end),
+      (start - programBottom) / Math.max(1, start - end),
     );
 
     paintWorld(root, progress);
