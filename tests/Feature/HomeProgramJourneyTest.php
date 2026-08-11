@@ -74,6 +74,22 @@ it('uses Codrops GSAP timing and detail media reveal', function (): void {
         ->not->toContain('opacity: 0.05');
 });
 
+it('keeps Program controls functional while GSAP loads, fails, or is opening', function (): void {
+    $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $rail = file_get_contents(resource_path('css/pages/welcome/program-journey/rail.css'));
+
+    expect($controller)
+        ->toContain('pendingTrigger')
+        ->toContain('replayPending')
+        ->toContain('cleanup = mountReduced(dom, integration);')
+        ->toContain('activeTimeline?.kill()')
+        ->toContain('if (isAnimating && opening)')
+        ->and($rail)
+        ->toContain('.program-kinetic.gsap-failed .program-kinetic__trigger')
+        ->toContain('pointer-events: auto')
+        ->toContain('cursor: pointer');
+});
+
 it('keeps Codrops geometry while adapting long localized detail titles', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));

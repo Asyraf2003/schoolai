@@ -26,8 +26,8 @@
 }
 
 .program-kinetic.gsap-failed .program-kinetic__trigger {
-    pointer-events: none;
-    cursor: default;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .program-kinetic.gsap-failed .program-kinetic__fallback {

@@ -44,10 +44,13 @@ function mountGsap(dom, integration, gsap) {
   const cleanHover = mountItemHover(gsap, dom.cards);
   let currentItem = -1;
   let isAnimating = false;
+  let opening = false;
+  let activeTimeline = null;
 
   const openItem = (event) => {
     if (isAnimating) return;
     isAnimating = true;
+    opening = true;
     currentItem = Number(event.currentTarget.dataset.programIndex);
     const detail = dom.details[currentItem];
     const parts = detailParts(detail);
@@ -55,13 +58,15 @@ function mountGsap(dom, integration, gsap) {
     integration.lock(event.currentTarget);
     dom.root.classList.add('is-transitioning');
 
-    const timeline = gsap.timeline({ onComplete: () => {
+    activeTimeline = gsap.timeline({ onComplete: () => {
+      activeTimeline = null;
+      opening = false;
       isAnimating = false;
       dom.root.classList.remove('is-transitioning');
       parts.back?.focus({ preventScroll: true });
     } });
 
-    timeline.addLabel('start', 0)
+    activeTimeline.addLabel('start', 0)
       .addLabel('typeTransition', 0.3)
       .addLabel('articleOpening', typeIn.totalDuration() * 0.75 + 0.3)
       .to(dom.cards, {
@@ -87,20 +92,31 @@ function mountGsap(dom, integration, gsap) {
   };
 
   const closeItem = () => {
-    if (isAnimating || currentItem < 0) return;
+    if (currentItem < 0) return;
+
+    if (isAnimating && opening) {
+      activeTimeline?.kill();
+      activeTimeline = null;
+      opening = false;
+      isAnimating = false;
+      dom.root.classList.remove('is-transitioning');
+    }
+
+    if (isAnimating) return;
     isAnimating = true;
     const parts = detailParts(dom.details[currentItem]);
     const typeOut = typeTransition.out();
     dom.root.classList.add('is-transitioning');
 
-    const timeline = gsap.timeline({ onComplete: () => {
+    activeTimeline = gsap.timeline({ onComplete: () => {
+      activeTimeline = null;
       isAnimating = false;
       currentItem = -1;
       dom.root.classList.remove('is-transitioning');
       integration.unlock();
     } });
 
-    timeline.addLabel('start', 0)
+    activeTimeline.addLabel('start', 0)
       .addLabel('typeTransition', 0.5)
       .addLabel('showItems', typeOut.totalDuration() * 0.7 + 0.5)
       .to(parts.copy, {
@@ -132,6 +148,7 @@ function mountGsap(dom, integration, gsap) {
   dom.backs.forEach((back) => back.addEventListener('click', closeItem));
   document.addEventListener('keydown', keydown);
   return () => {
+    activeTimeline?.kill();
     cleanHover();
     dom.triggers.forEach((trigger) => trigger.removeEventListener('click', openItem));
     dom.backs.forEach((back) => back.removeEventListener('click', closeItem));
@@ -158,14 +175,45 @@ export function mountProgramJourney(root) {
 
   let cleanup = () => {};
   let disposed = false;
+  let pendingTrigger = null;
+
+  const pendingOpen = (event) => {
+    event.preventDefault();
+    pendingTrigger = event.currentTarget;
+  };
+
+  const clearPending = () => {
+    dom.triggers.forEach((trigger) => trigger.removeEventListener('click', pendingOpen));
+  };
+
+  const replayPending = () => {
+    if (!pendingTrigger || disposed) return;
+    const trigger = pendingTrigger;
+    pendingTrigger = null;
+    queueMicrotask(() => {
+      if (!disposed) trigger.click();
+    });
+  };
+
+  dom.triggers.forEach((trigger) => trigger.addEventListener('click', pendingOpen));
+
   loadGsap().then((gsap) => {
     if (disposed) return;
+    clearPending();
     root.classList.add('has-gsap');
     cleanup = mountGsap(dom, integration, gsap);
-  }).catch(() => root.classList.add('gsap-failed'));
+    replayPending();
+  }).catch(() => {
+    if (disposed) return;
+    clearPending();
+    root.classList.add('gsap-failed');
+    cleanup = mountReduced(dom, integration);
+    replayPending();
+  });
 
   return () => {
     disposed = true;
+    clearPending();
     cleanup();
     cleanHeading();
     root.classList.remove(
