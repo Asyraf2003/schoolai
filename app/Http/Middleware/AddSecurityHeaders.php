@@ -20,7 +20,8 @@ final class AddSecurityHeaders
             'Content-Security-Policy',
             $this->contentSecurityPolicy(
                 $nonce,
-                $request->routeIs('home')
+                $request->routeIs('home'),
+                $this->allowsGoogleAnalytics($request)
             )
         );
         $response->headers->set(
@@ -50,12 +51,34 @@ final class AddSecurityHeaders
         return $response;
     }
 
+    private function allowsGoogleAnalytics(Request $request): bool
+    {
+        return config('app.env') === 'production'
+            && $request->routeIs(
+                'home',
+                'ppdb',
+                'artikel',
+                'artikel.native',
+                'galeri'
+            );
+    }
+
     private function contentSecurityPolicy(
         string $nonce,
-        bool $allowDepthGalleryRuntime
+        bool $allowDepthGalleryRuntime,
+        bool $allowGoogleAnalytics
     ): string {
         $threeSource = $allowDepthGalleryRuntime
             ? ' https://cdn.jsdelivr.net'
+            : '';
+        $analyticsScriptSource = $allowGoogleAnalytics
+            ? ' https://www.googletagmanager.com'
+            : '';
+        $analyticsImageSources = $allowGoogleAnalytics
+            ? ' https://*.google-analytics.com https://www.googletagmanager.com'
+            : '';
+        $analyticsConnectSources = $allowGoogleAnalytics
+            ? ' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com'
             : '';
 
         return implode('; ', [
@@ -64,13 +87,13 @@ final class AddSecurityHeaders
             "form-action 'self'",
             "frame-ancestors 'none'",
             "object-src 'none'",
-            "script-src 'self' 'nonce-{$nonce}'{$threeSource}",
+            "script-src 'self' 'nonce-{$nonce}'{$threeSource}{$analyticsScriptSource}",
             "script-src-attr 'none'",
             "style-src 'self' 'nonce-{$nonce}' https://fonts.googleapis.com",
             "style-src-attr 'unsafe-inline'",
-            "img-src 'self' data: blob: https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net",
+            "img-src 'self' data: blob: https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net{$analyticsImageSources}",
             "font-src 'self' data: https://fonts.gstatic.com",
-            "connect-src 'self'{$threeSource}",
+            "connect-src 'self'{$threeSource}{$analyticsConnectSources}",
             "media-src 'self' blob:",
             "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com https://open.spotify.com https://codepen.io",
             "manifest-src 'self'",

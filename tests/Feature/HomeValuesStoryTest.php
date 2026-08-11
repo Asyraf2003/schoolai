@@ -59,7 +59,7 @@ it('renders the rebuilt localized semantic values story', function (): void {
 
         expect(substr_count($content, 'class="values-card"'))->toBe(4)
             ->and(substr_count($content, 'values-card__front'))->toBe(4)
-            ->and(substr_count($content, 'values-card__back'))->toBe(4)
+            ->and(substr_count($content, 'class="values-card__face values-card__back"'))->toBe(4)
             ->and(substr_count($content, 'values-card__pose'))->toBe(4)
             ->and(substr_count($content, 'values-card__float'))->toBe(4)
             ->and(substr_count($content, 'values-story__title-text'))->toBe(2)

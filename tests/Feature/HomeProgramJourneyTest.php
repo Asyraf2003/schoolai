@@ -60,7 +60,7 @@ it('uses Codrops GSAP timing and detail media reveal', function (): void {
         ->toContain('parts.image')
         ->toContain('dom.backs.forEach')
         ->toContain('parts.back?.focus')
-        ->not->toContain('dom.back')
+        ->not->toMatch('/\bdom\.back\b/')
         ->not->toContain('scrollTo(')
         ->not->toContain('wheel')
         ->and($geometry)

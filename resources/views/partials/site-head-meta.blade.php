@@ -20,6 +20,9 @@
       'ar' => 'حرم مدرسة المستقبل وبيئة التعلم',
       default => 'Lingkungan sekolah dan pembelajaran Al Mustaqbal School',
   };
+  $headGoogleAnalyticsId = config('app.env') === 'production'
+      ? 'G-6TERPP05FE'
+      : null;
 
   $headStructuredData = [
       '@context' => 'https://schema.org',
@@ -140,12 +143,19 @@
   ])
 @endif
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TERPP05FE"></script>
-<script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+@if ($headGoogleAnalyticsId !== null)
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    data-google-analytics
+    nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}"
+    src="https://www.googletagmanager.com/gtag/js?id={{ $headGoogleAnalyticsId }}"
+  ></script>
+  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-6TERPP05FE');
-</script>
+    gtag('config', @json($headGoogleAnalyticsId));
+  </script>
+@endif
