@@ -1,95 +1,124 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `FAIL`
-Updated: 2026-08-09
+Status: `FAIL / RELEASE-GATES-OPEN`
+Updated: 2026-08-11
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `HOME-VALUES-002-SPATIAL-LINES`
-Source baseline: `196a2c02b606dba22db8e6bfbd838f00c6b7f152`
-Source implementation head: uncommitted working tree
-Active blueprint: `blueprints/2026-08-09-home-values-spatial-lines.md`
+Active batch: `RELEASE-READINESS-001-PLANNING`
+Source baseline: `ce1aa637c08cc70f13cbe254ed4da32e8bafd254`
+Source implementation head: `ce1aa637c08cc70f13cbe254ed4da32e8bafd254`
+Active blueprint: `blueprints/2026-08-11-release-readiness-program-values-hardening.md`
+Release checklist: `UI_UX_RELEASE_READINESS_CHECKLIST.md`
 
 ## Owner-accepted active goal
 
-Create a Three.js pilot for three large solid white spatial lines behind the
-existing Values DOM cards and connect Program's light-blue kinetic field to the
-Values `#2038ff` field as one progressive scroll handoff.
+Prepare the current application for launch through bounded release gates.
 
-## Accepted architecture
+The active goals are:
 
-- Keep cards/content semantic DOM; canvas is decorative and behind them.
-- Install Three.js by npm and use official Line2, LineGeometry, LineMaterial.
-- Reuse the single Values scroll target, smoothing, observers, and RAF.
-- Dynamically load one local renderer only when Values is near-active.
-- Use three deterministic distinct curves with distinct phase/depth/ratio/offset.
-- Use static CSS strokes for reduced motion, unsupported WebGL, and failure.
-- Do not mirror the neutral scene merely because Arabic is RTL.
-- Replace the losing SVG trail; do not add a duplicate visual/controller owner.
+- Program final background/visual field becomes white.
+- Program transitions intentionally into the existing Character/Values blue
+  field, currently `#2038ff` unless the owner later changes that token.
+- The active UI passes phone, tablet, desktop, Chromium, Safari/WebKit,
+  ID/EN LTR, and AR RTL runtime proof.
+- Production Blade becomes presentation-only: no raw PHP blocks, no `@php`
+  blocks, and no business/data-access logic in `.blade.php` files.
+- All website content media moves to the approved Cloudflare media origin/CDN
+  rather than Laravel `public/` or uncontrolled third-party hotlinks.
+- Login, role isolation, sessions, sensitive mutations, and sensitive-data
+  handling pass a dedicated security gate before release.
 
-## Protected contract
+Gallery and Article visual/refactor work are deferred and require separate owner
+scope later.
 
-- Program cards, detail, title, copy, and interaction remain unchanged.
-- Values copy/cards remain unchanged on the first implementation step.
-- Vision/Mission, Gallery, Articles, Navbar, About, and Testimonial remain
-  unchanged.
-- Existing unrelated local work remains untouched.
+## Current FACT
 
-## Current FACT / GAP
+- Remote `main` was resolved at `ce1aa637c08cc70f13cbe254ed4da32e8bafd254`
+  before the release-readiness docs were prepared.
+- That source head contains the bounded Program/Values test corrections and the
+  production-only GA4 + conditional CSP repair.
+- The owner’s local checkout was proven clean but one commit behind; after
+  `git fetch`, local was `91f9b795...` and `origin/main` was `ce1aa637...`.
+- The owner then reported completing the requested `git merge --ff-only
+  origin/main`.
+- Fresh post-fast-forward output for `git diff --check`, structure check, build,
+  and the full PHP test suite has not yet been recorded. Therefore the automated
+  baseline is `UNPROVEN`, not PASS.
+- No Program-white/Character-blue visual implementation has been executed in this
+  release-readiness batch yet.
+- No repository-wide Blade presentation-boundary audit has been executed yet.
+- No repository-wide Cloudflare media inventory/migration proof has been executed
+  yet.
+- Existing auth architecture is documented in
+  `blueprints/2026-08-02-auth-account-access.md`, but the new release security
+  checklist has not yet been fully re-proven against the current source/deploy.
 
-- A fresh fetch proves local `main`, `origin/main`, and `FETCH_HEAD` remain
-  `196a2c02...`.
-- Three.js `0.185.1` is installed through npm and emitted only as a deferred
-  Values scene chunk. The former Values SVG trail is removed.
-- One Values controller still owns the scroll target, smoothing, observers,
-  and RAF; the renderer bridge consumes that state without a second engine.
-- Chromium proves the six required story states, deterministic reverse,
-  reduced-motion fallback, inactive initial load, and stable offscreen render
-  count. WebKitGTK proves desktop, mobile, RTL, reverse, and offscreen pause.
-- Chromium width proof passes at 360, 390, 640, 768, 1024, 1180, 1181, 1280,
-  1536, and 1920 pixels with one canvas and no horizontal overflow.
-- `GAP-VALUES-SPATIAL-GATE-001`: the mandatory repository structure gate fails
-  on three unchanged baseline findings. A clean `git archive HEAD` reproduction
-  returns the same two unreachable Vision modules and Hero CSS checksum error.
-- The full PHP suite has two unrelated failures: the existing Program source
-  assertion rejects `dom.back`, and the user-modified analytics head produces a
-  CSP assertion failure. The Values-focused suite passes.
+## Active decisions
 
-## Proof state
+1. Program owns a white resting field; Character/Values owns the approved blue
+   resting field.
+2. The white → blue handoff must not introduce an uncontrolled overlay, pointer
+   interception, reverse-scroll flash, or stale transition state.
+3. Responsive/browser/locale proof is a matrix. One desktop Chromium screenshot
+   is insufficient.
+4. Physical Safari proof is recorded separately from generic WebKit evidence.
+5. “Blade without PHP” means no raw `<?php`, no `@php`, and no business/data
+   logic in Blade; normal Blade presentation directives remain allowed.
+6. Cloudflare becomes the canonical owner for content media. Vite-built CSS/JS
+   are application assets and are not part of the content-media migration.
+7. Login/data security is a release gate, not an assumption inherited from old
+   passing tests.
+8. Gallery and Article visuals remain `DEFERRED` until separately opened.
 
-Source implementation and browser proof for this bounded surface are complete.
-Publication proof is not complete because mandatory repository-wide gates are
-not green; no commit or push is permitted.
+## Workflow
 
-Required local proof:
+The active order is:
+
+1. `G0` — prove clean automated baseline.
+2. `G1` — implement and prove Program white → Character blue transition.
+3. `G2/G3` — prove responsive/browser and ID/EN/AR LTR/RTL matrix.
+4. `G4` — audit and enforce Blade presentation boundary.
+5. `G5` — inventory and migrate content media to Cloudflare.
+6. `G6` — run login/data security gate and fix only proven gaps.
+7. `G7` — final deployed regression proof.
+
+A later gate does not become active automatically. Record proof and status before
+opening the next bounded phase.
+
+## Current proof state
+
+Publication proof for source head `ce1aa637...` exists on remote `main`.
+Post-sync local automated proof is still missing.
+
+Required next local proof bundle:
 
 ```bash
-git diff --check
+git rev-parse HEAD
 git status --short
-php artisan test --compact tests/Feature/HomeValuesStoryTest.php
-php artisan test
+git diff --check
 npm run check:structure
 npm run build
+php artisan test
 ```
 
-Runtime proof must cover the six owner-named desktop states, offscreen RAF and
-context bounds, then tablet/mobile, AR RTL, reduced motion, and WebKit.
+Expected head before interpreting results:
 
-Proof results:
+```text
+ce1aa637c08cc70f13cbe254ed4da32e8bafd254
+```
 
-- `git diff --check`: PASS.
-- `npm run build`: PASS; deferred `spatial-scene` is 548.96 kB minified and
-  138.72 kB gzip.
-- focused Values Pest: PASS, 2 tests and 124 assertions.
-- Chromium visual/runtime: PASS for A-F, reverse, lifecycle, reduced motion,
-  RTL, and all declared widths.
-- WebKitGTK runtime: PASS for desktop/mobile/RTL/reverse/lifecycle.
-- `npm run check:structure`: FAIL, reproduced unchanged on clean `HEAD`.
-- full `php artisan test --compact`: FAIL, 201 of 203 tests pass; both failures
-  are outside the Values patch.
+Do not label G0 green unless the source head matches and all mandatory commands
+pass or every failure is separately classified with evidence.
 
-STATUS: `FAIL`
+## STATUS
 
-NEXT EXECUTION CHANNEL: `Terminal Codex`
+`FAIL / RELEASE-GATES-OPEN`
 
-NEXT VALID STEP: obtain owner authorization for a separate baseline-gate repair
-before changing Vision, Hero, Program, or analytics ownership.
+This status means launch readiness is not yet proven. It does not mean every
+existing UI surface is currently broken.
+
+## NEXT VALID STEP
+
+After these documentation updates are synchronized locally, run the post-sync G0
+proof bundle on `ce1aa637...`. If G0 is green, STOP and record it before starting
+the Program-white → Character-blue implementation phase.
