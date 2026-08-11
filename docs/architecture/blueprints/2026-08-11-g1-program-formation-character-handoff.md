@@ -1,280 +1,233 @@
 # G1 Blueprint — Program Formation → Character Color Handoff
 
 BLUEPRINT ID: `G1-PROGRAM-FORMATION-HANDOFF-001`
-STATUS: `OWNER-ACCEPTED / READY-FOR-SOURCE-AUDIT`
+STATUS: `IMPLEMENTED / RUNTIME-PROOF-OPEN`
 OWNER ACCEPTED: 2026-08-11
+UPDATED: 2026-08-12
 PARENT: `2026-08-11-release-readiness-program-values-hardening.md`
 TARGET: `Asyraf2003/schoolai` `main`
+IMPLEMENTATION HEAD BEFORE DOCS SYNC: `5830576134ab69904800f6956dbe4be79f03c86e`
 
 ## Goal
 
 Turn the Program → Character/Values passage into a longer, deliberate scroll
-choreography without changing the accepted Program card geometry, detail UI,
+choreography without redesigning the accepted Program card geometry, detail UI,
 open/back interaction, Values card system, Values worm/line renderer, Gallery,
 or Article.
 
-The accepted visual narrative is:
+Accepted visual narrative:
 
 `WHITE EMPTY FIELD → CARD 1 → CARD 2 → CARD 3 → CARD 4 → CARD 5 → CARD 6 → FULL PROGRAM HOLD → WHITE-TO-BLUE HANDOFF → PONDASI KARAKTER → VALUES`
 
-The user should feel that the Program composition is formed progressively from
-empty space, receives a short complete resting moment, and only then yields the
-visual world to Character/Values.
-
 ## Protected scope
 
-The following are protected and must not be redesigned merely to implement G1:
+The following remain protected unless the owner explicitly opens a new bounded
+scope:
 
-- existing Program card layout/geometry at each responsive tier;
-- Program titles, descriptions, media, detail composition, Back control, and
-  physical hit targets;
-- Program open/detail/close GSAP behavior unless runtime evidence proves a
-  bounded compatibility change is required;
-- existing Program → Values sibling hit-layer fix;
-- Pondasi Karakter copy and accepted directional/replay behavior;
-- Values cards and Values worm/line renderer;
-- Gallery and Article sections;
+- Program card layout/geometry at every responsive tier;
+- Program copy, media, detail composition, Back control, and hit targets;
+- Program open/detail/close GSAP behavior;
+- Program → Values sibling hit-layer protection;
+- Pondasi Karakter copy and directional/replay behavior;
+- Values fan/flip/card choreography except bounded entry-position tuning;
+- Values worm/line/spatial renderer;
+- Gallery and Article;
 - Hero, Vision/Mission, About, Testimonial, and unrelated navigation.
 
 ## Accepted choreography
 
-### Phase 0 — White empty field
+### Phase 0 — White Program field
 
-After the Program heading establishes the section, Program owns a visually white
-field. Before card formation begins, the card composition is visually absent.
+Program begins on a white visual field. Cards may remain in the semantic DOM but
+start visually absent with a small below-position. No large off-screen throw,
+layout jump, or forced document scroll is allowed.
 
-Cards may remain in the semantic DOM and layout ownership. The implementation
-must not remove them from accessibility/semantic ownership merely to create the
-visual reveal.
+### Phase 1 — Sequential formation
 
-The hidden visual state is conceptually:
-
-- opacity at or near zero;
-- a small positive block-axis offset so the card begins slightly below its final
-  resting position;
-- no large off-screen throw;
-- no layout jump;
-- no forced scroll position.
-
-The exact offset is intentionally **not** hard-coded by this blueprint. It must
-be chosen from source geometry and runtime proof for phone/tablet/desktop rather
-than invented as one global pixel value.
-
-### Phase 1 — Sequential card formation
-
-Cards reveal one by one in semantic order as downward native scroll progress
-advances.
-
-Required behavior:
-
-- card 1 becomes visible first;
-- card 2 follows only after card 1 has meaningfully begun/established;
-- continue sequentially through card 6;
-- each card rises a short distance into its existing final layout position while
-  opacity resolves to the accepted visible state;
-- no row appears as one synchronized batch unless later runtime evidence proves
-  one-by-one sequencing is harmful on a specific tier;
-- the existing responsive grid remains unchanged: the reveal animates cards,
-  not layout topology.
-
-The implementation must use scroll progress/state ownership, not six long
-independent time-based animations that continue after the user has reversed
-scroll direction.
-
-### Phase 2 — Accumulation and deterministic reverse
-
-On downward progress the visible set accumulates:
+Cards reveal one by one in semantic order while native scroll advances:
 
 `0 → 1 → 2 → 3 → 4 → 5 → 6`
 
-A card that has formed remains formed while the user continues downward through
-the remaining Program-formation range.
+Each card resolves into the existing layout. The grid itself is not animated or
+restructured merely to create the reveal.
 
-On reverse scroll the state unwinds deterministically:
+### Phase 2 — Deterministic reverse
+
+Reverse scroll unwinds the same state:
 
 `6 → 5 → 4 → 3 → 2 → 1 → 0`
 
-No random replay, bounce, flicker, stale opacity, or multiple competing timelines
-may own the same card state.
+No random replay, stale opacity, timer-driven animation against reverse scroll,
+or duplicate card-motion owner is allowed.
 
-### Phase 3 — Full Program hold / breathing room
+### Phase 3 — Full Program hold
 
-After card 6 is fully formed, all six cards remain complete on the white Program
-field for a dedicated scroll interval.
-
-This interval exists so the complete Program composition can actually be read
-before the color handoff begins.
-
-The background must **not** begin the blue transition immediately at the same
-moment card 6 finishes.
-
-The exact hold distance is not fixed by this blueprint. It must be tuned from
-runtime evidence and remain proportional/comfortable across phone, tablet, and
-desktop rather than being a brittle desktop-only number.
+After card 6 is complete, all six cards remain readable on white for a deliberate
+breathing interval. Blue must not begin at the same instant card 6 finishes.
 
 ### Phase 4 — Continuous white → blue handoff
 
-Only after the full Program hold does the shared visual world begin changing
-from Program white to the accepted Character/Values blue, currently `#2038ff`.
+After the hold, the shared Program/Values visual world transitions continuously
+toward Character/Values blue `#2038ff`.
 
-The transition is continuous and scroll-progress driven.
-
-Required behavior:
-
-- white begins as the actual Program resting field;
-- the visual world interpolates smoothly toward `#2038ff`;
-- no stripe staircase;
-- no sudden wipe;
-- no flash to the body/default background;
-- no uncontrolled overlay that can steal pointer events;
-- no stale blue layer when reversing back into Program;
-- rapid forward/reverse movement resolves to the current scroll target rather
-  than finishing an obsolete animation.
-
-Intermediate colors are implementation details. This blueprint does not approve
-a fixed palette of intermediate stops; the source owner should use one coherent
-continuous interpolation or equivalent single-owner mechanism.
+No stripe staircase, sudden wipe, body-background flash, stale blue overlay, or
+pointer-stealing transition layer is allowed.
 
 ### Phase 5 — Pondasi Karakter takeover
 
-Pondasi Karakter receives the stage only after the Character/Values field has
-meaningfully taken ownership of the background.
-
-Its existing directional contract remains protected:
-
-- downward first entry may reveal from below into position;
-- upward return from below keeps the accepted visible/static behavior;
-- returning far enough into Program may hide/re-arm it;
-- a new downward entry may replay only according to the already accepted
-  re-arm contract.
-
-G1 must not introduce a second heading controller merely to synchronize color.
+Pondasi Karakter receives the stage after Character/Values visual ownership is
+established. Its existing directional/replay controller remains the sole heading
+owner.
 
 ## Scroll-engine contract
 
-G1 must preserve native scrolling.
+Native document scrolling remains the source/target.
 
-Forbidden unless a separate owner decision is opened:
+Forbidden without a new owner decision:
 
 - wheel hijacking;
-- `window.scrollTo` used to force Program landing;
+- `window.scrollTo` used to force landing;
 - automatic snap;
 - projected landing;
 - anchor settling;
 - one-wheel-notch-per-card behavior;
 - click-to-frame behavior;
-- long independent animations that keep running against reverse scroll.
+- RAF writes to document scroll;
+- long independent reveal animations that keep running against reverse scroll.
 
-Preferred model:
+Preferred ownership remains:
 
-- document/native scroll supplies the target progress;
-- one Program/transition owner maps target progress into card-formation and
-  color-handoff states;
-- visual current may smooth toward target using the existing project motion
-  character where appropriate;
-- reverse and rapid scroll remain deterministic.
+`Program formation owner → shared color-world owner → existing Values story owner`
 
-## Responsive contract
+## Implemented architecture
 
-The existing Program layout geometry is protected.
+The source audit selected these existing/smallest owners:
 
-Current intent remains:
+- Program formation/visibility:
+  `resources/js/surfaces/home/program-journey/formation.js`;
+- Program open/detail/back: existing Program journey controller/integration;
+- Program responsive geometry: existing Program journey CSS;
+- shared white → blue field:
+  `resources/js/surfaces/home/program-values-world.js` and
+  `resources/css/surfaces/home/values/story-kinetic.css`;
+- Pondasi heading replay: `values/heading-state.js`;
+- Values story smoothing/progress: existing Values motion/controller;
+- Values card choreography: `values/desktop-layout.js` +
+  `values/desktop-keyframes.js`;
+- Values worm/line/spatial renderer: existing Values spatial ownership.
 
-- phone: existing 2 + 2 + 2 composition;
-- tablet: existing 3 + 3 composition;
-- desktop: existing approved desktop composition.
+G1 did not add a third transition section or duplicate Values controller.
 
-Sequential reveal is card-by-card across these layouts. G1 does not redesign the
-grid to make the animation easier.
+## Current implementation facts
 
-Exact reveal offset, scroll span, and hold span may use tier-aware tokens if
-runtime evidence shows one value cannot preserve the same perceived rhythm.
+At source head `5830576134ab...`:
 
-## Locale and direction contract
+- Program formation is implemented as a dedicated concern;
+- shared world starts white and transitions toward `#2038ff`;
+- Program formation does not force document scroll;
+- the owner has reported the color transition visually OK;
+- Values card motion was restored after a spacing regression and the owner
+  reported the original desired animation behavior returned;
+- current desktop entry tuning changes only the center-relative Y pose ratios:
+  - `hiddenPose = center.y + geometry.cardHeight * 0.012`;
+  - `deckPose = center.y + geometry.cardHeight * 0.008 + index * 2`.
 
-The same semantic Program DOM must support:
+These ratios are visual tuning values, not a literal physical-pixel guarantee.
 
-- Indonesian LTR;
-- English LTR;
-- Arabic RTL.
+## Values entry-spacing regression record
 
-Card reveal order follows semantic Program order. Neutral formation motion is
-block-axis based and must not be mechanically mirrored merely because Arabic is
-RTL.
+The initial request was only to bring the Values entry deck closer to the Pondasi
+heading. Two early ratio-only changes preserved the accepted animation.
 
-Directional text/alignment behavior remains owned by the existing locale system.
+Regression began when spacing was implemented by changing the coordinate system
+rather than the local pose offset:
+
+1. heading DOM geometry was measured into `headingTitleBottomOffset`;
+2. `titleDeckOffset()` replaced center-relative card positions with
+   heading/document-relative positions;
+3. a later `centerRelease()` read raw `window.scrollY` while the existing Values
+   engine still used smoothed story progress.
+
+This created competing coordinate/progress ownership and visibly degraded the
+card path.
+
+The recovery restored `desktop-layout.js` and `geometry.js` to the
+last-known-good choreography baseline from
+`649b5d8d00ca0ed27df1cc3ca41ee43d60a903f2`, then resumed only bounded ratio
+tuning.
+
+### Permanent guardrail
+
+A request to change only Values entry spacing must not:
+
+- introduce heading measurements into card choreography;
+- replace center-relative card poses with document-relative poses;
+- add raw-scroll motion ownership alongside smoothed story progress;
+- add release/capture logic;
+- change fan/flip phases, spring/momentum, or center destination.
+
+Use the smallest local pose adjustment unless the owner explicitly asks to
+redesign motion.
+
+## Responsive and locale contract
+
+Existing Program topology remains protected:
+
+- phone: 2 + 2 + 2;
+- tablet: 3 + 3;
+- desktop: existing approved composition.
+
+The same semantic DOM supports Indonesian LTR, English LTR, and Arabic RTL.
+Neutral formation motion is block-axis based and is not mechanically mirrored
+for RTL.
 
 ## Accessibility and reduced motion
 
-Reduced motion must preserve the information hierarchy and white → blue state
-ownership without requiring six pronounced moving reveals.
+Reduced-motion mode must preserve content readability and white → blue state
+ownership without requiring pronounced sequential translation. JavaScript or
+motion failure must not permanently hide Program content.
 
-Acceptable reduced-motion behavior may shorten or remove translation while
-retaining clear sequential/state progression and readability.
+## Proof still required
 
-No card may become permanently inaccessible because its visual reveal failed,
-JavaScript failed, or motion is reduced.
+G1 is implemented but not PASS. Before closing it, record one frozen source head
+and prove:
 
-## FACT → GAP → implementation workflow
+1. fresh `git diff --check`;
+2. structure check and build;
+3. focused Program/Values tests;
+4. full PHP suite with `0 failed`;
+5. initial white field;
+6. Program card formation 1 → 6;
+7. complete six-card white hold;
+8. white → blue handoff and blue → white reverse;
+9. Pondasi takeover;
+10. rapid down/up/down recovery;
+11. physical Program open/detail/back around the handoff;
+12. no horizontal overflow/layout jump;
+13. reduced-motion readability;
+14. final owner confirmation that the current tight Values entry position keeps
+    the restored animation intact.
 
-Before source mutation, perform a bounded source audit to identify:
+## Values worm/line boundary
 
-1. current Program background owner;
-2. current card visibility/animation owner;
-3. current scroll progress owner;
-4. existing responsive Program spacing/geometry owners;
-5. Program → Values shared visual-world background owner;
-6. Pondasi Karakter trigger/replay owner;
-7. reduced-motion fallback owner;
-8. tests that currently freeze approved Program behavior.
+Values worm/line/spatial is intentionally protected by G1. It is not an implicit
+remaining item required to call Program formation complete.
 
-Do not choose CSS-only, GSAP-only, or a new controller architecture before that
-audit proves which owner can implement G1 with the smallest surface area.
-
-## Proof gates
-
-Focused automated proof must demonstrate at minimum:
-
-- six Program cards still exist semantically;
-- card detail/open/back ownership is unchanged;
-- no forbidden scroll forcing is introduced;
-- Program/Values hit-layer protection remains present;
-- build and relevant Program/Values tests pass.
-
-Runtime proof must demonstrate:
-
-1. initial white Program field;
-2. sequential 1 → 6 downward formation;
-3. complete six-card white hold;
-4. smooth white → blue handoff;
-5. Pondasi Karakter takeover;
-6. deterministic reverse blue → white and 6 → 0 card unwind;
-7. rapid forward/reverse recovery;
-8. physical card open/detail/back click/tap around the transition;
-9. no horizontal overflow or layout jump;
-10. reduced-motion readable fallback.
-
-Representative desktop proof is required before opening the full G2/G3 matrix.
-G1 is not release-complete until G2/G3 later prove the accepted implementation
-across phone/tablet/desktop, Chromium/Safari-WebKit evidence, ID/EN LTR, and AR
-RTL.
+If the owner wants line/worm visual polish, open a separate bounded Values
+spatial-polish scope after G1 is frozen. That work must begin with its own
+FACT/GAP/GOAL and must not reopen Program formation or Values card choreography
+without evidence.
 
 ## Completion definition
 
-G1 may be marked PASS only when:
-
-- the Program field begins/rests white;
-- cards form one by one from a subtle below-position into the unchanged layout;
-- all six receive a deliberate complete hold;
-- color transition begins only after that hold;
-- the shared field reaches the accepted Character/Values blue;
-- Pondasi Karakter takes over without duplicate ownership;
-- forward, reverse, rapid scroll, reduced motion, and Program physical controls
-  remain correct;
-- no protected surface was redesigned as collateral damage.
+G1 becomes PASS only when the bounded implementation is frozen and the automated
+plus representative runtime proof above is recorded. Full responsive/browser
+and locale coverage remains G2/G3 and is not implied by G1 PASS.
 
 ## NEXT VALID STEP
 
-Read-only source audit of the current Program → Values owners listed above.
-Do not edit production source until that audit identifies the smallest existing
-owner for sequential formation and the white-to-blue handoff.
+Freeze visual implementation changes and run the current-head G1 proof bundle.
+Only after that proof should the owner either:
+
+1. open a bounded Values line/worm polish scope, if still desired; or
+2. proceed directly to G2/G3 responsive/browser/locale proof.
