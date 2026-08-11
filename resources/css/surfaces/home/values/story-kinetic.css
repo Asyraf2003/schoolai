@@ -70,6 +70,15 @@
     z-index: 1;
 }
 
+.program-values-world > .values-story {
+    pointer-events: none;
+}
+
+.program-values-world > .program-kinetic.is-transitioning,
+.program-values-world > .program-kinetic.is-detail-open {
+    z-index: 3;
+}
+
 .program-values-world > .program-kinetic,
 .program-values-world .values-story__timeline,
 .program-values-world .values-story__clip {
