@@ -40,8 +40,6 @@ export function collectValuesNodes(root) {
 export function measureValuesGeometry(root, cards, nodes) {
     const rootRect = root.getBoundingClientRect();
     const stageRect = nodes.perspective.getBoundingClientRect();
-    const titleRect = nodes.heading.querySelector('.values-story__title')
-        ?.getBoundingClientRect() ?? nodes.heading.getBoundingClientRect();
     const cardRects = cards.map((card) => card.getBoundingClientRect());
     const cardsRect = unionRect(cardRects);
     const rootStyles = window.getComputedStyle(root);
@@ -66,7 +64,6 @@ export function measureValuesGeometry(root, cards, nodes) {
         stageHeight: Math.max(1, stageRect.height),
         stageCenterX,
         stageCenterY,
-        headingTitleBottomOffset: titleRect.bottom - rootRect.top,
         cardWidth: Math.max(1, cardRects[0].width),
         cardHeight: Math.max(1, cardRects[0].height),
         slots: cardRects.map((rect) => ({
