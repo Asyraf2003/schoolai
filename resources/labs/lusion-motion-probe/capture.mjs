@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { chromium } from 'playwright';
+import { seekEntryCorridor, waitFrames } from './seek.mjs';
 
 const args = new Map();
 for (let i = 2; i < process.argv.length; i += 1) {
@@ -22,14 +23,15 @@ const requestedAncestor = args.has('ancestor') ? Number(args.get('ancestor')) : 
 const sampleCount = Number(args.get('samples') ?? 180);
 const wheelDelta = Number(args.get('delta') ?? 28);
 const interruptAt = args.has('interrupt-at') ? Number(args.get('interrupt-at')) : null;
+const seekDelta = Number(args.get('seek-delta') ?? 420);
+const seekSteps = Number(args.get('seek-steps') ?? 80);
 const headed = !args.has('headless');
 const output = String(args.get('output') ?? `traces/${targetText.toLowerCase()}-${Date.now()}.json`);
 
 function quadMetrics(flat) {
   if (!Array.isArray(flat) || flat.length !== 8) return null;
   const points = Array.from({ length: 4 }, (_, index) => ({
-    x: flat[index * 2],
-    y: flat[index * 2 + 1],
+    x: flat[index * 2], y: flat[index * 2 + 1],
   }));
   const [tl, tr, br, bl] = points;
   const distance = (a, b) => Math.hypot(b.x - a.x, b.y - a.y);
@@ -62,9 +64,6 @@ if (await matches.count() === 0) {
 }
 
 const textNode = matches.first();
-await textNode.scrollIntoViewIfNeeded();
-await page.waitForTimeout(400);
-
 const candidates = await textNode.evaluate((node) => {
   const rows = [];
   let current = node;
@@ -72,16 +71,10 @@ const candidates = await textNode.evaluate((node) => {
     const style = getComputedStyle(current);
     const rect = current.getBoundingClientRect();
     rows.push({
-      level,
-      tag: current.tagName,
-      className: String(current.className ?? ''),
-      width: rect.width,
-      height: rect.height,
-      transform: style.transform,
-      transformOrigin: style.transformOrigin,
-      perspective: style.perspective,
-      perspectiveOrigin: style.perspectiveOrigin,
-      position: style.position,
+      level, tag: current.tagName, className: String(current.className ?? ''),
+      width: rect.width, height: rect.height, transform: style.transform,
+      transformOrigin: style.transformOrigin, perspective: style.perspective,
+      perspectiveOrigin: style.perspectiveOrigin, position: style.position,
     });
   }
   return rows;
@@ -94,14 +87,10 @@ if (mode === 'discover') {
 }
 
 const autoAncestor = candidates.find((candidate) => (
-  candidate.level > 0
-  && candidate.transform !== 'none'
-  && candidate.width > 120
-  && candidate.height > 120
+  candidate.level > 0 && candidate.width > 120 && candidate.height > 120
 ))?.level ?? 1;
 const ancestor = Number.isFinite(requestedAncestor) ? requestedAncestor : autoAncestor;
 const probeId = `schoolai-lusion-probe-${Date.now()}`;
-
 await textNode.evaluate((node, data) => {
   let target = node;
   for (let index = 0; target && index < data.ancestor; index += 1) target = target.parentElement;
@@ -109,32 +98,36 @@ await textNode.evaluate((node, data) => {
   target.setAttribute('data-schoolai-motion-probe', data.probeId);
 }, { ancestor, probeId });
 
+const selector = `[data-schoolai-motion-probe="${probeId}"]`;
+const probe = page.locator(selector);
 const documentNode = await cdp.send('DOM.getDocument', { depth: 1, pierce: true });
 const selected = await cdp.send('DOM.querySelector', {
-  nodeId: documentNode.root.nodeId,
-  selector: `[data-schoolai-motion-probe="${probeId}"]`,
+  nodeId: documentNode.root.nodeId, selector,
 });
 if (!selected.nodeId) throw new Error('Unable to resolve selected probe node through CDP');
 
-const setupDirection = wheelDelta >= 0 ? -1 : 1;
-await page.evaluate(({ viewportHeight, direction }) => {
-  window.scrollBy(0, direction * viewportHeight * 0.9);
-}, { viewportHeight: height, direction: setupDirection });
-await page.waitForTimeout(500);
+const seek = await seekEntryCorridor(page, probe, {
+  height, maxDelta: seekDelta, maxSteps: seekSteps,
+});
+console.log(`SEEK_STEPS=${seek.steps}`);
+console.log(`SEEK_WHEEL_Y=${seek.cumulativeWheelY.toFixed(2)}`);
+console.log(`SEEK_RECT_Y=${seek.rect?.y?.toFixed(2)}`);
 
 const trace = [];
 const inputs = [];
+let cumulativeWheelY = seek.cumulativeWheelY;
 for (let frame = 0; frame < sampleCount; frame += 1) {
   if (frame % 3 === 0) {
     const eventTime = await page.evaluate(() => performance.now());
     const deltaY = Number.isFinite(interruptAt) && frame >= interruptAt ? -wheelDelta : wheelDelta;
-    inputs.push({ t: eventTime, kind: 'wheel', deltaY });
+    cumulativeWheelY += deltaY;
+    inputs.push({ t: eventTime, kind: 'wheel', deltaY, cumulativeWheelY });
     await page.mouse.wheel(0, deltaY);
   }
-  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => resolve())));
+  await waitFrames(page, 1);
   const [quadResult, state] = await Promise.all([
     cdp.send('DOM.getContentQuads', { nodeId: selected.nodeId }).catch(() => ({ quads: [] })),
-    page.locator(`[data-schoolai-motion-probe="${probeId}"]`).evaluate((node) => {
+    probe.evaluate((node) => {
       const rect = node.getBoundingClientRect();
       const style = getComputedStyle(node);
       const ancestors = [];
@@ -142,8 +135,7 @@ for (let frame = 0; frame < sampleCount; frame += 1) {
       for (let level = 1; current && level <= 6; level += 1, current = current.parentElement) {
         const parentStyle = getComputedStyle(current);
         ancestors.push({
-          level,
-          transform: parentStyle.transform,
+          level, transform: parentStyle.transform,
           transformOrigin: parentStyle.transformOrigin,
           perspective: parentStyle.perspective,
           perspectiveOrigin: parentStyle.perspectiveOrigin,
@@ -151,36 +143,26 @@ for (let frame = 0; frame < sampleCount; frame += 1) {
         });
       }
       return {
-        t: performance.now(),
-        scrollY: window.scrollY,
+        t: performance.now(), scrollY: window.scrollY,
         rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
         style: {
-          transform: style.transform,
-          transformOrigin: style.transformOrigin,
-          perspective: style.perspective,
-          perspectiveOrigin: style.perspectiveOrigin,
-        },
-        ancestors,
+          transform: style.transform, transformOrigin: style.transformOrigin,
+          perspective: style.perspective, perspectiveOrigin: style.perspectiveOrigin,
+        }, ancestors,
       };
     }),
   ]);
-  trace.push({ frame, ...state, quad: quadMetrics(quadResult.quads?.[0]) });
+  trace.push({ frame, cumulativeWheelY, ...state, quad: quadMetrics(quadResult.quads?.[0]) });
 }
 
 const payload = {
   meta: {
-    url,
-    targetText,
-    viewport: { width, height, deviceScaleFactor: 1 },
-    ancestor,
-    samples: sampleCount,
-    wheelDelta,
-    interruptAt,
+    url, targetText, viewport: { width, height, deviceScaleFactor: 1 },
+    ancestor, samples: sampleCount, wheelDelta, interruptAt,
+    seek: { delta: seekDelta, maxSteps: seekSteps, ...seek },
     capturedAt: new Date().toISOString(),
   },
-  candidates,
-  inputs,
-  trace,
+  candidates, inputs, trace,
 };
 await fs.mkdir(path.dirname(output), { recursive: true });
 await fs.writeFile(output, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
