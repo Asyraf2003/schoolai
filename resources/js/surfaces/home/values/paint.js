@@ -62,6 +62,7 @@ export function paintValuesStory(
     cards,
     nodes,
     progress,
+    targetProgress,
     geometry,
     momentum,
     headingState,
@@ -76,7 +77,13 @@ export function paintValuesStory(
     cards.forEach((card, index) => {
         writeCardFrame(
             card,
-            cardFrame(index, progress, geometry, momentum),
+            cardFrame(
+                index,
+                progress,
+                geometry,
+                momentum,
+                targetProgress,
+            ),
         );
     });
     writeRootFrame(root, nodes, story, handoffProgress);
