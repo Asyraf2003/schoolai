@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "discover": "node capture.mjs --discover",
+    "capture": "node capture.mjs --capture"
+  },
+  "devDependencies": {
+    "playwright": "1.62.0"
+  }
+}
