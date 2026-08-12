@@ -1,173 +1,199 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `FAIL / G1-RUNTIME-TUNING`
+Status: `FAIL / G2-VALUES-MOTION-STUDY`
 Updated: 2026-08-12
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Active batch: `G1-PROGRAM-FORMATION-HANDOFF-001-RUNTIME`
-Current source head before this docs sync: `5830576134ab69904800f6956dbe4be79f03c86e`
-Active blueprint: `blueprints/2026-08-11-g1-program-formation-character-handoff.md`
-Active checklist: `UI_UX_G1_PROGRAM_FORMATION_CHECKLIST.md`
-Parent release blueprint: `blueprints/2026-08-11-release-readiness-program-values-hardening.md`
+Current UI source head before this docs-only state change: `f8306496575876cfcfd680270871fa0e50b893ed`
+Active G1 blueprint: `blueprints/2026-08-11-g1-program-formation-character-handoff.md`
+Active G1 checklist: `UI_UX_G1_PROGRAM_FORMATION_CHECKLIST.md`
+Active reference study: `references/2026-08-12-lusion-area-of-expertise-motion-study.md`
 Parent release checklist: `UI_UX_RELEASE_READINESS_CHECKLIST.md`
 
 ## Current FACT
 
-- G1 is implemented in production source and is no longer a source-audit-only task.
-- Program now owns a dedicated formation concern in
-  `resources/js/surfaces/home/program-journey/formation.js`.
-- Program formation remains native-scroll driven; it does not add wheel hijacking,
-  snap, projected landing, forced `window.scrollTo`, or RAF document-scroll writes.
-- The shared Program → Values world begins white and continuously transitions to
-  Character/Values blue `#2038ff`.
-- The owner has visually accepted the white → blue transition behavior.
-- Existing Program detail/open/back ownership was intentionally left separate
-  from the formation engine.
-- Existing Values heading, card flip/fan choreography, worm/line renderer, and
-  spatial controller remain separate owners.
-- The owner reported that the original Values card motion was restored after the
-  regression recovery and should now be treated as the protected motion baseline.
-- Current Values desktop entry tuning changes only the existing `hiddenPose` and
-  `deckPose` Y ratios. At source head `5830576134ab...` they are:
-  - `hiddenPose`: `geometry.cardHeight * 0.012`;
-  - `deckPose`: `geometry.cardHeight * 0.008`.
-- Those ratios are a visual tuning target for a much tighter entry deck. They are
-  not proof of a literal physical 30 px gap on every display.
-- The most recent full PHP-suite evidence remains the owner-reported
-  `206 passed (1794 assertions)` from the earlier baseline run. A fresh full
-  automated run on the current G1 head has not yet been recorded.
+- G1 Program formation is implemented.
+- Program rests in a white visual field, forms six cards sequentially, receives a
+  breathing interval, then hands the shared field continuously to Values blue
+  `#2038ff`.
+- The owner has visually accepted the Program → Values color transition.
+- Program open/detail/back behavior remains a separate protected owner.
+- Desktop Values card motion was recovered after an earlier regression and the
+  owner reported that the restored desktop behavior is visually good.
+- The current desktop entry spacing uses only the existing center-relative pose
+  ratios and does not add a second raw-scroll driver.
+- Tablet/compact Values card motion is **not accepted yet**.
+- A mode-3 responsive experiment currently exists at source head
+  `f8306496575876cfcfd680270871fa0e50b893ed`.
+- Runtime screenshots and owner review show that the responsive experiment still
+  does not behave as one coherent spatial system: the projected top edge can be
+  excessively high, rotation and body travel do not feel phase-locked, and fast
+  scroll can feel like state swapping rather than an object constrained to a
+  continuous rail.
+- The current mode-3 experiment includes `tabletRailY(...)`, raw target progress
+  passed into card paint, and a staged `180° → 100° → 10° → 0°` angle sequence.
+  These are now treated as experimental evidence, **not final architecture**.
+- Values line/worm/spatial rendering is not the active defect and remains frozen.
+- The most recent full PHP-suite evidence remains the earlier owner-reported
+  `206 passed (1794 assertions)`; a fresh complete current-head proof still has
+  to be recorded later.
 
-## G1 source audit result
+## Why source is frozen now
 
-The bounded source audit identified these owners:
+Further screenshot-driven angle or Y-offset tuning would accumulate patches on a
+responsive model whose coordinate ownership is not yet proven.
 
-- Program formation/visibility: `program-journey/formation.js`;
-- Program existing open/detail/back: `program-journey/controller.js` + integration;
-- Program responsive geometry: Program journey CSS (`compact.css`, `wide.css`,
-  base/rail ownership);
-- shared white → blue field: `program-values-world.js` +
-  `values/story-kinetic.css`;
-- Pondasi heading replay: `values/heading-state.js`;
-- Values story motion/smoothing: `values/motion.js` + `values/controller.js`;
-- Values desktop card choreography: `values/desktop-layout.js` +
-  `values/desktop-keyframes.js`;
-- Values worm/line/spatial behavior: existing Values spatial controller/renderer;
-- reduced motion: existing Program/Values media-query and controller branches.
+The active question is no longer:
 
-The selected architecture remains:
+`What angle/offset makes this screenshot look closer?`
 
-`Program formation owner → shared color-world owner → existing Values story owner`
+It is:
 
-No third transition section or duplicate Values controller was introduced.
+`What trajectory and transform ownership make the card one coherent object across slow, fast, and reverse scroll?`
 
-## Owner-accepted G1 narrative
+Until that is measured, do not add another responsive Values card patch.
 
-`WHITE EMPTY FIELD → CARD 1 → CARD 2 → CARD 3 → CARD 4 → CARD 5 → CARD 6 → FULL PROGRAM HOLD → WHITE-TO-BLUE HANDOFF → PONDASI KARAKTER → VALUES`
+## Protected baseline
 
-The Program side is now implemented around that narrative. Exact runtime rhythm
-still requires proof before G1 can be marked PASS.
+### Desktop
 
-## Values regression and recovery record
+Freeze the accepted desktop Values behavior:
 
-A runtime regression occurred while tightening the initial Values deck spacing.
-The failure boundary is now documented so future sessions do not repeat it.
+- `desktop-layout.js`;
+- `desktop-keyframes.js`;
+- restored `hidden → deck → fan → preFlip → flip` choreography;
+- accepted entry-spacing tuning;
+- desktop Program → Values handoff.
 
-### Last-known-good choreography baseline
+### Unrelated Values owners
 
-Commit `649b5d8d00ca0ed27df1cc3ca41ee43d60a903f2` preserved the original
-`hidden → deck → fan → preFlip → flip` chain and only changed local Y ratios.
+Freeze:
 
-### Regression cause
+- Pondasi heading choreography;
+- Values line/worm/spatial renderer;
+- card content and visual styling;
+- reduced-motion behavior unless the later rail blueprint explicitly requires a
+  bounded adapter.
 
-The regression began when entry spacing was coupled to heading/document geometry:
+### Other homepage surfaces
 
-- `headingTitleBottomOffset` was introduced;
-- `titleDeckOffset()` replaced the original center-relative pose formula;
-- a later `centerRelease()` read raw `window.scrollY` while the Values story still
-  used smoothed story progress.
+Freeze:
 
-That created competing coordinate/progress ownership inside the same card frame.
+- Program geometry and detail interaction;
+- Hero;
+- Vision/Mission;
+- Gallery;
+- Article;
+- About;
+- Testimonial;
+- unrelated navigation.
 
-### Recovery
+## Active reference study
 
-The recovery restored `desktop-layout.js` and `geometry.js` to the
-last-known-good choreography behavior. After recovery, further spacing tuning is
-allowed only as bounded changes to the existing center-relative pose offsets.
+The current authoritative work item is:
 
-### Guardrail
+`docs/architecture/references/2026-08-12-lusion-area-of-expertise-motion-study.md`
 
-For visual spacing requests around the Values entry deck:
+Its purpose is to measure the Lusion Area of Expertise card motion before a new
+SchoolAI responsive rail architecture is chosen.
 
-- do **not** add heading DOM measurements to card choreography;
-- do **not** add raw `window.scrollY` as a second card-motion driver;
-- do **not** add release/capture logic merely to change entry spacing;
-- do **not** change fan/flip phases, spring/momentum, or center destination unless
-  the owner explicitly opens a motion-redesign scope;
-- prefer one- or two-number local pose tuning when the requested change is only
-  visual entry distance.
+Required study evidence includes:
 
-## Protected scope
+- one card first, not all four at once;
+- primary viewport `841 × 878` CSS px;
+- at least 12 ordered checkpoints P00–P11;
+- `getBoundingClientRect()` geometry;
+- computed `transform` / `matrix` / `matrix3d`;
+- transformed parent ownership;
+- `transform-origin`;
+- `perspective` and `perspective-origin`;
+- top-edge direction/slope behavior;
+- slow scroll;
+- normal scroll;
+- fast scroll;
+- rapid reverse;
+- interruption/recovery.
 
-Do not redesign or optimize these during the remaining G1 proof/tuning unless
-new direct evidence proves a bounded defect:
+Observed facts, architecture inference, and SchoolAI design decisions must remain
+separate.
 
-- Program card geometry/layout;
-- Program copy, media, detail composition, Back control, and hit targets;
-- Program existing open/detail/close behavior;
-- existing Program/Values sibling hit-layer protection;
-- Pondasi Karakter accepted replay/directional contract;
-- Values fan/flip/card choreography beyond bounded entry-spacing ratios;
-- Values worm/line/spatial renderer;
-- Gallery and Article;
-- Hero, Vision/Mission, About, Testimonial, and unrelated navigation.
+## Working hypothesis
 
-## What remains in G1
+The hypothesis to prove or reject is:
 
-G1 is not PASS yet. Remaining evidence on the current source head:
+```text
+native scroll
+    ↓
+scene target progress
+    ↓
+critically damped visual progress
+    ↓
+card-local progress + card offset
+    ↓
+one spatial rail sampler
+    ↓
+{x, y, z, rx, ry, rz, scale}
+    ↓
+one coherent card pose
+```
 
-1. fresh automated proof: `git diff --check`, structure check, build, focused
-   Program/Values tests, and full PHP suite;
-2. desktop runtime proof of Program 1 → 6 formation and complete white hold;
-3. deterministic reverse and rapid down/up/down recovery;
-4. physical Program open/detail/back around the handoff;
-5. reduced-motion proof;
-6. no horizontal overflow/layout jump;
-7. final owner confirmation that the current tight Values entry position is
-   accepted without changing the restored card choreography.
+This is a proposed SchoolAI direction, not a claim about Lusion's private source.
 
-## Values worm/line status
+The critical invariant is that scroll speed may change how quickly the target
+moves, but must not change the geometric path through which the visual card is
+sampled.
 
-The Values worm/line/spatial system is **not an unfinished G1 implementation**.
-It is currently protected and was intentionally not redesigned by the Program →
-Character handoff work.
+## Guardrails from previous regressions
 
-If the owner wants to visually tune the line/worm next, open it as a separate,
-bounded Values spatial-polish scope after the current G1 motion/spacing state is
-frozen. Do not quietly mix line-renderer changes into G1 proof.
+Do not repeat these patterns without new measured evidence:
 
-## Release workflow after G1
+- heading/document geometry used as a second card-motion coordinate system;
+- direct raw `window.scrollY` competing with smoothed Values story progress;
+- release/capture patches added solely to fix visual spacing;
+- separate rotation and body-motion drivers that can lose phase lock;
+- checkpoint-angle tuning presented as a final motion model;
+- modifying desktop because tablet is defective.
 
-1. `G1` — finish current proof/tuning and freeze Program → Character behavior.
-2. Optional owner-opened bounded Values line/spatial polish, only if still desired.
-3. `G2/G3` — full responsive/browser/locale matrix:
-   phone/tablet/desktop, Chromium, Safari/WebKit evidence, ID/EN LTR, AR RTL.
-4. `G4` — Blade presentation boundary.
-5. `G5` — Cloudflare content-media ownership.
-6. `G6` — login/data security gate.
-7. `G7` — final deployed regression proof.
+## G1 status
+
+G1 is still not formally PASS because the complete automated/runtime proof bundle
+has not been recorded on the latest accepted source state.
+
+However, the active visual design problem has moved into G2 responsive motion
+study because:
+
+- desktop is owner-accepted as the protected visual baseline;
+- tablet/compact is the unresolved quality gap;
+- Safari/macOS has not yet received final proof;
+- phone tuning remains later work after the responsive motion model is understood.
+
+## Release sequence from here
+
+1. `G2 Motion Study` — measure Lusion Area of Expertise at tablet width.
+2. `G2 Blueprint` — only after evidence threshold, define SchoolAI responsive
+   card rail architecture.
+3. `G2 Implementation` — replace the disproven mode-3 experiment rather than
+   stacking another patch on it.
+4. `G2 Runtime Proof` — tablet first; then phone adapter; desktop regression check.
+5. `G2 Browser Proof` — Chromium, then Safari/WebKit evidence.
+6. `G3 Locale Proof` — ID/EN LTR and AR RTL.
+7. close remaining G1 automated proof bookkeeping against the accepted source.
+8. `G4` Blade presentation boundary.
+9. `G5` Cloudflare content-media ownership.
+10. `G6` login/data security gate.
+11. `G7` final deployed regression proof.
 
 Gallery and Article visual/refactor work remain `DEFERRED`.
 
 ## STATUS
 
-`FAIL / G1-RUNTIME-TUNING`
+`FAIL / G2-VALUES-MOTION-STUDY`
 
-This status means the bounded implementation exists and has partial owner visual
-validation, but G1 has not yet completed its automated/runtime proof contract.
-It is not a claim that the homepage is globally broken.
+This means the responsive Values card model is intentionally frozen for
+measurement. It does not mean the homepage is globally broken.
 
 ## NEXT VALID STEP
 
-Freeze source changes temporarily and run the **current-head G1 proof bundle**.
-Do not modify Values line/worm or reopen card choreography until that proof shows
-which, if any, bounded defect still remains.
+Capture Lusion Area of Expertise checkpoints P00–P11 at `841 × 878` for one card
+using the active motion-study protocol. Do not push another responsive Values card
+motion change before those measurements are available.
