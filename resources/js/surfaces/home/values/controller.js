@@ -96,7 +96,7 @@ export function createValuesStory(root) {
 
         syncHeadingClasses(root, headingSnapshot);
         paintValuesStory(
-            root, cards, nodes, snapshot.visual, geometry,
+            root, cards, nodes, snapshot.visual, target.story, geometry,
             snapshot.momentum, headingSnapshot, handoff.visual,
         );
         spatial.update({
