@@ -1,11 +1,9 @@
 import {
-    deckAngle,
     exitAmount,
     fanAngle,
     fanArc,
     flipAngle,
     flipLocal,
-    stackNudge,
     uprightAmount,
 } from './desktop-keyframes.js';
 import { mix, phase } from './motion.js';
@@ -36,22 +34,22 @@ function centeredOffsets(index, geometry) {
     };
 }
 
-function hiddenPose(index, geometry, center) {
+function hiddenPose(geometry, center) {
     return pose(
-        center.x + stackNudge(index, geometry.cardWidth),
+        center.x,
         center.y + geometry.cardHeight * 0.012,
-        -index * 14,
-        deckAngle(index),
+        0,
+        0,
         0.92,
     );
 }
 
-function deckPose(index, geometry, center) {
+function deckPose(geometry, center) {
     return pose(
-        center.x + stackNudge(index, geometry.cardWidth),
-        center.y + geometry.cardHeight * 0.008 + index * 2,
-        -index * 14,
-        deckAngle(index),
+        center.x,
+        center.y + geometry.cardHeight * 0.008,
+        0,
+        0,
         0.97,
     );
 }
@@ -77,8 +75,8 @@ export function desktopCardFrame(
     momentum,
 ) {
     const center = centeredOffsets(index, geometry);
-    const hidden = hiddenPose(index, geometry, center);
-    const deck = deckPose(index, geometry, center);
+    const hidden = hiddenPose(geometry, center);
+    const deck = deckPose(geometry, center);
     const fan = fanPose(index, geometry, center);
     const preFlip = preFlipPose(index);
     let current = mixPose(
