@@ -1,25 +1,29 @@
-.vision-arch {
+.home-page {
     --vision-background-default: #f4f1e9;
     --vision-about-color: #efe3ca;
-    --vision-about-pattern:
-        linear-gradient(30deg, transparent 46%, rgb(116 79 29 / .14) 47% 53%, transparent 54%),
-        linear-gradient(-30deg, transparent 46%, rgb(116 79 29 / .14) 47% 53%, transparent 54%),
-        radial-gradient(circle, rgb(142 98 34 / .16) 0 7%, transparent 8%);
-    --vision-about-pattern-size: 7rem 7rem;
-    --vision-about-pattern-position: center;
     --vision-vision-color: #cbdfe4;
-    --vision-vision-pattern:
-        repeating-conic-gradient(from 22.5deg at 50% 50%, rgb(25 91 112 / .13) 0 11.25deg, transparent 11.25deg 45deg),
-        radial-gradient(circle, rgb(255 255 255 / .44) 0 11%, transparent 12% 100%);
-    --vision-vision-pattern-size: 8.5rem 8.5rem;
-    --vision-vision-pattern-position: 50% 46%;
     --vision-mission-color: #d1dfca;
-    --vision-mission-pattern:
-        linear-gradient(45deg, transparent 42%, rgb(44 91 59 / .14) 43% 48%, transparent 49%),
-        linear-gradient(-45deg, transparent 42%, rgb(44 91 59 / .14) 43% 48%, transparent 49%),
-        radial-gradient(circle at center, transparent 0 25%, rgb(255 255 255 / .38) 26% 30%, transparent 31%);
-    --vision-mission-pattern-size: 7.5rem 7.5rem;
-    --vision-mission-pattern-position: center;
+    --vision-program-handoff-color: #edf1e9;
+
+    /*
+     * One Islamic-geometry family, three related states.
+     * The cells are intentionally large so the result reads as architectural
+     * lattice / jali rather than a small wallpaper tile.
+     */
+    --vision-about-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='%23744f23' stroke-width='2.2' stroke-opacity='.19' stroke-linejoin='round'%3E%3Cpath d='M160 12 205 70 276 44 250 115 308 160 250 205 276 276 205 250 160 308 115 250 44 276 70 205 12 160 70 115 44 44 115 70Z'/%3E%3Cpath d='M160 58 196 124 262 160 196 196 160 262 124 196 58 160 124 124Z'/%3E%3Cpath d='M0 80 80 0M240 0 320 80M320 240 240 320M80 320 0 240M0 160H58M262 160H320M160 0V58M160 262V320'/%3E%3C/g%3E%3C/svg%3E");
+    --vision-about-pattern-size: 22rem 22rem;
+    --vision-about-pattern-position: 50% 50%;
+
+    --vision-vision-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cg fill='none' stroke='%23195b70' stroke-width='2.1' stroke-opacity='.18' stroke-linejoin='round'%3E%3Cpath d='M150 16 176 82 237 44 218 114 284 150 218 186 237 256 176 218 150 284 124 218 63 256 82 186 16 150 82 114 63 44 124 82Z'/%3E%3Cpath d='M150 58 180 120 242 150 180 180 150 242 120 180 58 150 120 120Z'/%3E%3Cpath d='M108 108 150 92 192 108 208 150 192 192 150 208 108 192 92 150Z'/%3E%3Ccircle cx='150' cy='150' r='22'/%3E%3Cpath d='M0 0 63 44M300 0 237 44M300 300 237 256M0 300 63 256'/%3E%3C/g%3E%3C/svg%3E");
+    --vision-vision-pattern-size: 20rem 20rem;
+    --vision-vision-pattern-position: 50% 46%;
+
+    --vision-mission-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%232f6244' stroke-width='2.3' stroke-opacity='.18' stroke-linecap='square' stroke-linejoin='round'%3E%3Cpath d='M180 18 228 84 306 54 276 132 342 180 276 228 306 306 228 276 180 342 132 276 54 306 84 228 18 180 84 132 54 54 132 84Z'/%3E%3Cpath d='M180 72 216 144 288 180 216 216 180 288 144 216 72 180 144 144Z'/%3E%3Cpath d='M0 90 54 54 90 0M270 0 306 54 360 90M360 270 306 306 270 360M90 360 54 306 0 270'/%3E%3Cpath d='M0 180H72M288 180H360M180 0V72M180 288V360'/%3E%3Ccircle cx='180' cy='180' r='18'/%3E%3C/g%3E%3C/svg%3E");
+    --vision-mission-pattern-size: 24rem 24rem;
+    --vision-mission-pattern-position: 50% 50%;
+}
+
+.vision-arch {
     background: var(--vision-background-default);
 }
 
@@ -40,20 +44,46 @@
     --vision-state-diffusion: 0px;
     --vision-state-drift: 0%;
     position: absolute;
-    inset: -1.5rem;
+    inset: -2rem;
     background-color: var(--vision-state-color);
-    background-image: var(--vision-state-pattern);
-    background-position: var(--vision-state-pattern-position);
-    background-repeat: repeat;
-    background-size: var(--vision-state-pattern-size);
+    background-image:
+        radial-gradient(circle at 50% 42%, rgb(255 255 255 / .22), transparent 48%),
+        var(--vision-state-pattern);
+    background-position: center, var(--vision-state-pattern-position);
+    background-repeat: no-repeat, repeat;
+    background-size: 100% 100%, var(--vision-state-pattern-size);
     filter: blur(var(--vision-state-diffusion));
     opacity: var(--vision-state-opacity);
-    transform: translate3d(var(--vision-state-drift), 0, 0) scale(1.045);
+    transform: translate3d(var(--vision-state-drift), 0, 0) scale(1.035);
+    transform-origin: center;
     will-change: opacity, filter, transform;
 }
 
 .vision-arch__background-layer[data-vision-background-layer="1"] {
     --vision-state-opacity: 0;
+}
+
+@media (min-width: 1280px) {
+    /*
+     * Mission does not terminate at a hard section edge. Its palette dissolves
+     * into one shared handoff color that the Program world continues from.
+     */
+    .vision-arch::after {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        inset-inline: 0;
+        bottom: 0;
+        height: min(42svh, 26rem);
+        pointer-events: none;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            color-mix(in srgb, var(--vision-mission-color) 74%, transparent) 38%,
+            color-mix(in srgb, var(--vision-mission-color) 58%, var(--vision-program-handoff-color)) 66%,
+            var(--vision-program-handoff-color) 100%
+        );
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
