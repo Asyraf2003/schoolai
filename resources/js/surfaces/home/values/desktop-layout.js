@@ -8,10 +8,10 @@ import {
 } from './desktop-keyframes.js';
 import { mix, phase } from './motion.js';
 
+const SPLIT_START_PROGRESS = 0.042;
 const CENTER_COLLISION_PROGRESS = 0.096;
-const SPLIT_REVEAL_PROGRESS = 0.142;
-const FAN_SETTLE_PROGRESS = 0.216;
-const PREFLIP_SETTLE_PROGRESS = 0.252;
+const FAN_SETTLE_PROGRESS = 0.188;
+const PREFLIP_SETTLE_PROGRESS = 0.228;
 const CARD_SCALE = 1;
 
 function pose(x, y, z, rz, scale, ry = 180) {
@@ -61,10 +61,10 @@ function deckPose(geometry, center) {
 function splitPose(index, geometry, center) {
     const centeredIndex = index - 1.5;
     return pose(
-        center.x + centeredIndex * geometry.cardWidth * 0.055,
-        center.y + Math.abs(centeredIndex) * geometry.cardHeight * 0.012,
-        -index * 1.5,
-        centeredIndex * 2.6,
+        center.x + centeredIndex * geometry.cardWidth * 0.085,
+        center.y + Math.abs(centeredIndex) * geometry.cardHeight * 0.014,
+        -index * 1.8,
+        centeredIndex * 4.2,
         CARD_SCALE,
     );
 }
@@ -104,16 +104,12 @@ export function desktopCardFrame(
     current = mixPose(
         current,
         split,
-        phase(
-            progress,
-            CENTER_COLLISION_PROGRESS,
-            SPLIT_REVEAL_PROGRESS,
-        ),
+        phase(progress, SPLIT_START_PROGRESS, CENTER_COLLISION_PROGRESS),
     );
     current = mixPose(
         current,
         fan,
-        phase(progress, SPLIT_REVEAL_PROGRESS, FAN_SETTLE_PROGRESS),
+        phase(progress, CENTER_COLLISION_PROGRESS, FAN_SETTLE_PROGRESS),
     );
     current = mixPose(
         current,
