@@ -36,7 +36,7 @@
   };
 @endphp
 
-<footer class="site-footer" id="kontak">
+<footer class="site-footer{{ $isHomeFooter ? ' site-footer--home-story' : '' }}" id="kontak">
   <div class="container site-footer__grid">
     <div class="footer-brand">
       @if (! empty($siteFooter['brand']))

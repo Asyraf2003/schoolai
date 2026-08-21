@@ -3,6 +3,9 @@ export class DepthGalleryEndCta {
         this.root = root;
         this.scroll = scroll;
         this.link = root.querySelector('[data-depth-gallery-end-link]');
+        this.articleSeed = root.querySelector(
+            '[data-depth-gallery-article-seed]',
+        );
         this.progress = 0;
     }
 
@@ -14,9 +17,16 @@ export class DepthGalleryEndCta {
         if (!this.link) return;
 
         this.progress = smoothProgress(this.scroll.endProgress);
-        const translateY = (1 - this.progress) * 26;
-        const scale = 0.78 + this.progress * 0.22;
-        const interactive = this.progress >= 0.72;
+        const focused = this.link.contains(document.activeElement);
+        const visibleProgress = focused
+            ? Math.max(this.progress, 0.72)
+            : this.progress;
+        const translateY = (1 - visibleProgress) * 26;
+        const scale = 0.78 + visibleProgress * 0.22;
+        const interactive = this.progress >= 0.72 || focused;
+        const seedProgress = smoothProgress(
+            Math.max(0, (this.progress - 0.42) / 0.58),
+        );
 
         this.root.style.setProperty(
             '--depth-end-progress',
@@ -26,8 +36,16 @@ export class DepthGalleryEndCta {
             '--depth-label-opacity',
             (1 - this.progress).toFixed(4),
         );
+        this.root.style.setProperty(
+            '--depth-article-seed-opacity',
+            seedProgress.toFixed(4),
+        );
+        this.root.style.setProperty(
+            '--depth-article-seed-scale',
+            (0.72 + seedProgress * 0.28).toFixed(4),
+        );
         this.root.classList.toggle('is-depth-end-ready', interactive);
-        this.link.style.opacity = this.progress.toFixed(4);
+        this.link.style.opacity = visibleProgress.toFixed(4);
         this.link.style.transform = [
             `translate3d(0, ${translateY.toFixed(2)}px, 0)`,
             `scale(${scale.toFixed(4)})`,
@@ -47,6 +65,8 @@ export class DepthGalleryEndCta {
         this.progress = 0;
         this.root.style.removeProperty('--depth-end-progress');
         this.root.style.removeProperty('--depth-label-opacity');
+        this.root.style.removeProperty('--depth-article-seed-opacity');
+        this.root.style.removeProperty('--depth-article-seed-scale');
         this.root.classList.remove('is-depth-end-ready');
 
         if (!this.link) return;

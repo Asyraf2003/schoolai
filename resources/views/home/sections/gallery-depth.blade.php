@@ -49,6 +49,7 @@
       && trim((string) ($depthCta['label'] ?? '')) !== '';
   $depthEndSteps = $hasDepthCta ? 1 : 0;
   $depthJourneyCount = max(1, $depthItems->count() + $depthEndSteps);
+  $articlePreview = collect($articlesSection['items'] ?? [])->first();
 @endphp
 
 <div
@@ -129,6 +130,18 @@
 
       @if ($hasDepthCta)
         <div class="depth-gallery__end" data-depth-gallery-end>
+          @if (! empty($articlePreview['thumbnail_url']))
+            <span class="depth-gallery__article-seed" data-depth-gallery-article-seed aria-hidden="true">
+              <img
+                src="{{ $articlePreview['thumbnail_url'] }}"
+                alt=""
+                width="1600"
+                height="900"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          @endif
           <a
             class="depth-gallery__end-link"
             href="{{ $depthCta['href'] }}"

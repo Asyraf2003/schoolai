@@ -90,6 +90,9 @@ trait BuildsHomeSections
         }
 
         $gallery['items'] = $this->latestGalleryItems(6);
+        if (isset($gallery['cta']) && is_array($gallery['cta'])) {
+            $gallery['cta']['href'] = route('galeri');
+        }
 
         return $gallery;
     }

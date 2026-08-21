@@ -1,3 +1,5 @@
+import { initialiseDesktopContinuity } from '../surfaces/home/gallery-heading/desktop-continuity.js';
+
 /* Replay when the gallery section crosses 20% into the viewport while scrolling down. */
 (function () {
     'use strict';
@@ -9,6 +11,12 @@
         var section = heading.closest('.galeri-section') || heading;
         var reducedMotion = window.matchMedia
             && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var desktop = window.matchMedia('(min-width: 1280px)');
+
+        if (desktop.matches && !reducedMotion) {
+            initialiseDesktopContinuity(heading, section, desktop);
+            return;
+        }
 
         heading.classList.add('gallery-heading-motion--ready');
 

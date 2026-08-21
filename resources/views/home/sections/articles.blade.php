@@ -1,165 +1,124 @@
-      <!-- ======================= ARTIKEL ======================= -->
-      @php
-        $articleEditorialHeading = match (app()->getLocale()) {
-          'en' => [
-            'title' => 'Al-Mustaqbal Articles',
-            'line_one' => 'Al-Mustaqbal',
-            'line_two' => 'Articles',
-            'description' => 'School news, educational insights, and stories from student activities that help parents follow learning developments at Al-Mustaqbal.',
-          ],
-          'ar' => [
-            'title' => 'مقالات مدرسة المستقبل',
-            'line_one' => 'مقالات',
-            'line_two' => 'المستقبل',
-            'description' => 'أخبار المدرسة ورؤى تربوية وقصص من أنشطة الطلاب تساعد أولياء الأمور على متابعة تطورات التعلم في مدرسة المستقبل.',
-          ],
-          default => [
-            'title' => 'Artikel Al-Mustaqbal',
-            'line_one' => 'Artikel',
-            'line_two' => 'Al-Mustaqbal',
-            'description' => 'Kabar sekolah, wawasan pendidikan, dan cerita kegiatan anak untuk membantu orang tua mengikuti perkembangan pembelajaran di Al-Mustaqbal.',
-          ],
-        };
-      @endphp
-      <section class="artikel-section section artikel-section--digest" id="artikel" aria-labelledby="artikel-heading">
-        <div class="container">
-          @include('home.partials.editorial-section-heading', [
-            'title' => $articleEditorialHeading['title'],
-            'description' => $articleEditorialHeading['description'],
-            'headingId' => 'artikel-heading',
-            'className' => 'artikel-section__head',
-            'lineOne' => $articleEditorialHeading['line_one'],
-            'lineTwo' => $articleEditorialHeading['line_two'],
-          ])
+@php
+  $articleHeading = (string) ($articlesSection['title'] ?? '');
+  $articleDescription = (string) ($articlesSection['subtitle'] ?? '');
+  $articleItems = collect($articlesSection['items'] ?? [])->take(4)->values();
+  $featuredArticle = $articleItems->first();
+  $horizontalArticles = $articleItems->count() > 1
+      ? $articleItems->slice(1)->values()
+      : $articleItems;
+  $finalArticle = $articleItems->last();
+  $articleCta = is_array($articlesSection['cta'] ?? null)
+      ? $articlesSection['cta']
+      : [];
+@endphp
 
-          @php
-            $articleItems = array_slice($articlesSection['items'] ?? [], 0, 3);
-            $featuredArticle = $articleItems[0] ?? null;
-            $digestArticles = array_slice($articleItems, 1);
-          @endphp
+<section class="article-story" id="artikel" aria-labelledby="article-story-heading" data-article-story>
+  <h2 class="sr-only" id="article-story-heading">{{ $articleHeading }}</h2>
+  <div class="sr-only">
+    <p class="welcome-editorial-heading__description">
+      <span class="sr-only">{{ $articleDescription }}</span>
+      <span class="welcome-editorial-heading__description-clip" aria-hidden="true">
+        <span class="welcome-editorial-heading__description-line">{{ $articleDescription }}</span>
+      </span>
+    </p>
+  </div>
 
-          @if ($featuredArticle)
-            <div class="artikel-digest">
-              <article
-                class="artikel-digest__hero reveal"
-                style="--artikel-g1: {{ $featuredArticle['gradient_from'] ?? 'var(--color-yellow-soft)' }}; --artikel-g2: {{ $featuredArticle['gradient_to'] ?? 'var(--color-orange-soft)' }}"
-              >
-                <div class="artikel-digest__hero-media">
-                  @if (! empty($featuredArticle['thumbnail_url']))
-                    <img
-                      src="{{ $featuredArticle['thumbnail_url'] }}"
-                      alt="{{ $featuredArticle['title'] }}"
-                      class="artikel-digest__media-image"
-                      loading="lazy"
-                      decoding="async"
-                    >
-                  @else
-                    <span class="artikel-digest__emoji" aria-hidden="true">{{ $featuredArticle['emoji'] ?? '📰' }}</span>
-                  @endif
+  @if ($articleItems->isNotEmpty())
+    <nav class="article-story__semantic-links" aria-label="{{ $articlesSection['rail_aria_label'] ?? $articleHeading }}">
+      <ul>
+        @foreach ($articleItems as $article)
+          @if (! empty($article['href']))
+            <li><a href="{{ $article['href'] }}">{{ $article['title'] }}</a></li>
+          @endif
+        @endforeach
+      </ul>
+    </nav>
+  @endif
 
-                  <span class="artikel-digest__issue" aria-hidden="true">{{ $featuredArticle['issue'] ?? '01' }}</span>
-                  <span class="artikel-digest__spark artikel-digest__spark--one" aria-hidden="true"></span>
-                  <span class="artikel-digest__spark artikel-digest__spark--two" aria-hidden="true"></span>
-                </div>
-
-                <div class="artikel-digest__hero-body">
-                  <div class="artikel-digest__meta">
-                    @if (! empty($featuredArticle['category']))
-                      <span>{{ $featuredArticle['category'] }}</span>
-                    @endif
-                    <span>{{ $featuredArticle['date'] }}</span>
-                    @if (! empty($featuredArticle['reading_time']))
-                      <span>{{ $featuredArticle['reading_time'] }}</span>
-                    @endif
-                  </div>
-
-                  <h3 class="artikel-digest__hero-title">
-                    <a href="{{ $featuredArticle['href'] }}">
-                      {{ $featuredArticle['title'] }}
-                    </a>
-                  </h3>
-
-                  <p class="artikel-digest__hero-description">
-                    {{ $featuredArticle['description'] }}
-                  </p>
-
-                  @if (! empty($featuredArticle['highlight']))
-                    <p class="artikel-digest__highlight">
-                      {{ $featuredArticle['highlight'] }}
-                    </p>
-                  @endif
-                </div>
-              </article>
-
-              <div class="artikel-digest__rail" aria-label="{{ $articlesSection['rail_aria_label'] ?? __('home.artikel.rail_aria_label') }}">
-                @forelse ($digestArticles as $article)
-                  <article
-                    class="artikel-digest-card reveal{{ $loop->index > 0 ? ' reveal--delay-' . min($loop->index, 3) : ' reveal--delay-1' }}"
-                    style="--artikel-g1: {{ $article['gradient_from'] ?? 'var(--color-mint-soft)' }}; --artikel-g2: {{ $article['gradient_to'] ?? 'var(--color-blue-soft)' }}"
-                  >
-                    <a
-                      href="{{ $article['href'] }}"
-                      class="artikel-digest-card__link"
-                      aria-label="{{ $articlesSection['read_more'] }}: {{ $article['title'] }}"
-                    >
-                      <span class="artikel-digest-card__media" aria-hidden="true">
-                        @if (! empty($article['thumbnail_url']))
-                          <img
-                            src="{{ $article['thumbnail_url'] }}"
-                            alt=""
-                            class="artikel-digest-card__media-image"
-                            loading="lazy"
-                            decoding="async"
-                          >
-                        @else
-                          <span class="artikel-digest-card__emoji">{{ $article['emoji'] ?? '📚' }}</span>
-                        @endif
-
-                        <span class="artikel-digest-card__issue">{{ $article['issue'] ?? str_pad((string) ($loop->iteration + 1), 2, '0', STR_PAD_LEFT) }}</span>
-                      </span>
-
-                      <span class="artikel-digest-card__content">
-                        <span class="artikel-digest__meta">
-                          @if (! empty($article['category']))
-                            <span>{{ $article['category'] }}</span>
-                          @endif
-                          <span>{{ $article['date'] }}</span>
-                          @if (! empty($article['reading_time']))
-                            <span>{{ $article['reading_time'] }}</span>
-                          @endif
-                        </span>
-
-                        <span class="artikel-digest-card__title">
-                          {{ $article['title'] }}
-                        </span>
-
-                        <span class="artikel-digest-card__description">
-                          {{ $article['description'] }}
-                        </span>
-
-                        @if (! empty($article['highlight']))
-                          <span class="artikel-digest-card__highlight">
-                            {{ $article['highlight'] }}
-                          </span>
-                        @endif
-                      </span>
-                    </a>
-                  </article>
-                @empty
-                  <p class="artikel-empty">{{ $articlesSection['empty'] ?? __('home.artikel.empty') }}</p>
-                @endforelse
-              </div>
+  @if ($featuredArticle)
+    <div class="article-story__journey" data-article-journey>
+      <div class="article-story__stage" data-article-stage>
+        <article class="article-story__opening" data-article-opening>
+          <div class="article-story__feature-frame">
+            <div class="article-story__feature-media">
+              @if (! empty($featuredArticle['thumbnail_url']))
+                <img src="{{ $featuredArticle['thumbnail_url'] }}" alt=""
+                  width="1600" height="900" loading="lazy" decoding="async" />
+              @else
+                <span aria-hidden="true">{{ $featuredArticle['emoji'] ?? '📰' }}</span>
+              @endif
             </div>
 
-            @if (! empty($articlesSection['cta']['href']) && ! empty($articlesSection['cta']['label']))
-              <div class="artikel-section__action">
-                <a href="{{ $articlesSection['cta']['href'] }}" class="btn btn--primary">
-                  {{ $articlesSection['cta']['label'] }}
-                </a>
-              </div>
-            @endif
-          @else
-            <p class="artikel-empty">{{ $articlesSection['empty'] ?? __('home.artikel.empty') }}</p>
+            <div class="article-story__feature-title">
+              <span>{{ $featuredArticle['category'] ?? '' }}</span>
+              <h3>
+                @if (! empty($featuredArticle['href']))
+                  <a href="{{ $featuredArticle['href'] }}">{{ $featuredArticle['title'] }}</a>
+                @else
+                  {{ $featuredArticle['title'] }}
+                @endif
+              </h3>
+            </div>
+
+            <p class="article-story__feature-description">{{ $featuredArticle['description'] }}</p>
+          </div>
+        </article>
+
+        <div class="article-story__horizontal" data-article-horizontal aria-hidden="true">
+          <div class="article-story__track" data-article-track>
+            @foreach ($horizontalArticles as $article)
+              <article class="article-story__panel">
+                <div class="article-story__panel-media">
+                  @if (! empty($article['thumbnail_url']))
+                    <img src="{{ $article['thumbnail_url'] }}" alt="" width="1600" height="1200" loading="lazy" decoding="async" />
+                  @else
+                    <span aria-hidden="true">{{ $article['emoji'] ?? '📰' }}</span>
+                  @endif
+                </div>
+                <div class="article-story__panel-copy">
+                  <span>{{ $article['issue'] ?? str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                  <h3>{{ $article['title'] }}</h3>
+                  <p>{{ $article['description'] }}</p>
+                </div>
+              </article>
+            @endforeach
+          </div>
+        </div>
+
+        <div class="article-story__roll" data-article-roll>
+          <div class="article-story__roll-window" data-article-roll-window>
+            <div class="article-story__roll-stack" data-article-roll-stack>
+              @foreach ($articleItems as $article)
+                <div class="article-story__roll-item">
+                  @if (! empty($article['thumbnail_url']))
+                    <img src="{{ $article['thumbnail_url'] }}" alt="" width="1200" height="900" loading="lazy" decoding="async" />
+                  @else
+                    <span aria-hidden="true">{{ $article['emoji'] ?? '📰' }}</span>
+                  @endif
+                </div>
+              @endforeach
+            </div>
+          </div>
+
+          @if (! empty($articleCta['href']) && ! empty($articleCta['label']))
+            <a
+              class="article-story__final-media article-story__final-link"
+              href="{{ $articleCta['href'] }}"
+              data-article-final-cta
+              aria-label="{{ $articleCta['label'] }}"
+            >
+              @if (! empty($finalArticle['thumbnail_url']))
+                <img src="{{ $finalArticle['thumbnail_url'] }}" alt="" width="1200" height="1600" loading="lazy" decoding="async" />
+              @else
+                <span aria-hidden="true">{{ $finalArticle['emoji'] ?? '📰' }}</span>
+              @endif
+              <span class="article-story__final-label">{{ $articleCta['label'] }}</span>
+            </a>
           @endif
         </div>
-      </section>
+      </div>
+    </div>
+  @else
+    <p class="article-story__empty">{{ $articlesSection['empty'] ?? __('home.artikel.empty') }}</p>
+  @endif
+</section>

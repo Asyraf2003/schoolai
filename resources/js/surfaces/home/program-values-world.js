@@ -8,7 +8,7 @@ const smooth = (value) => {
 };
 
 const MORPH_START_BOTTOM_RATIO = 1.2;
-const MORPH_END_BOTTOM_RATIO = 0.52;
+const MORPH_END_BOTTOM_RATIO = 0.68;
 
 function paintWorld(root, progress) {
   const eased = smooth(progress);

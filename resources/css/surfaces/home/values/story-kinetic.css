@@ -1,4 +1,5 @@
 .program-values-world {
+    --program-values-final-color: #2038ff;
     --program-values-morph: 0;
     --program-values-morph-pct: 0%;
     --program-values-type-opacity: .16;
@@ -7,7 +8,7 @@
     background: color-mix(
         in srgb,
         #fff calc(100% - var(--program-values-morph-pct)),
-        #2038ff var(--program-values-morph-pct)
+        var(--program-values-final-color) var(--program-values-morph-pct)
     );
 }
 

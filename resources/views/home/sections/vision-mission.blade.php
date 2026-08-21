@@ -22,6 +22,11 @@
 >
   <h2 id="vision-arch-title" class="sr-only">{{ $sectionLabel }}</h2>
 
+  <div class="vision-arch__background" data-vision-background aria-hidden="true">
+    <span class="vision-arch__background-layer" data-vision-background-layer="0"></span>
+    <span class="vision-arch__background-layer" data-vision-background-layer="1"></span>
+  </div>
+
   <div class="vision-arch__grid">
     <div class="vision-arch__stories" data-vision-stories>
       <article class="vision-arch__story" data-vision-panel="0">

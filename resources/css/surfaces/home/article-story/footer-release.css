@@ -1,0 +1,14 @@
+@media (min-width: 1280px) {
+    .home-page .site-footer--home-story {
+        display: flex;
+        min-height: 100vh;
+        min-height: 100svh;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .home-page .site-footer--home-story .site-footer__grid {
+        flex: 1;
+        align-content: center;
+    }
+}

@@ -1,0 +1,64 @@
+.vision-arch {
+    --vision-background-default: #f4f1e9;
+    --vision-about-color: #efe3ca;
+    --vision-about-pattern:
+        linear-gradient(30deg, transparent 46%, rgb(116 79 29 / .14) 47% 53%, transparent 54%),
+        linear-gradient(-30deg, transparent 46%, rgb(116 79 29 / .14) 47% 53%, transparent 54%),
+        radial-gradient(circle, rgb(142 98 34 / .16) 0 7%, transparent 8%);
+    --vision-about-pattern-size: 7rem 7rem;
+    --vision-about-pattern-position: center;
+    --vision-vision-color: #cbdfe4;
+    --vision-vision-pattern:
+        repeating-conic-gradient(from 22.5deg at 50% 50%, rgb(25 91 112 / .13) 0 11.25deg, transparent 11.25deg 45deg),
+        radial-gradient(circle, rgb(255 255 255 / .44) 0 11%, transparent 12% 100%);
+    --vision-vision-pattern-size: 8.5rem 8.5rem;
+    --vision-vision-pattern-position: 50% 46%;
+    --vision-mission-color: #d1dfca;
+    --vision-mission-pattern:
+        linear-gradient(45deg, transparent 42%, rgb(44 91 59 / .14) 43% 48%, transparent 49%),
+        linear-gradient(-45deg, transparent 42%, rgb(44 91 59 / .14) 43% 48%, transparent 49%),
+        radial-gradient(circle at center, transparent 0 25%, rgb(255 255 255 / .38) 26% 30%, transparent 31%);
+    --vision-mission-pattern-size: 7.5rem 7.5rem;
+    --vision-mission-pattern-position: center;
+    background: var(--vision-background-default);
+}
+
+.vision-arch__background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.vision-arch__background-layer {
+    --vision-state-color: var(--vision-background-default);
+    --vision-state-pattern: none;
+    --vision-state-pattern-size: auto;
+    --vision-state-pattern-position: center;
+    --vision-state-opacity: 1;
+    --vision-state-diffusion: 0px;
+    --vision-state-drift: 0%;
+    position: absolute;
+    inset: -1.5rem;
+    background-color: var(--vision-state-color);
+    background-image: var(--vision-state-pattern);
+    background-position: var(--vision-state-pattern-position);
+    background-repeat: repeat;
+    background-size: var(--vision-state-pattern-size);
+    filter: blur(var(--vision-state-diffusion));
+    opacity: var(--vision-state-opacity);
+    transform: translate3d(var(--vision-state-drift), 0, 0) scale(1.045);
+    will-change: opacity, filter, transform;
+}
+
+.vision-arch__background-layer[data-vision-background-layer="1"] {
+    --vision-state-opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vision-arch__background-layer {
+        filter: none;
+        transform: none;
+    }
+}

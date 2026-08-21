@@ -1,199 +1,101 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `FAIL / G2-VALUES-MOTION-STUDY`
-Updated: 2026-08-12
+Status: `BLOCKED_BY_MISSING_EVIDENCE / DESKTOP-HOMEPAGE-2026-08-21`
+Updated: 2026-08-21
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Current UI source head before this docs-only state change: `f8306496575876cfcfd680270871fa0e50b893ed`
-Active G1 blueprint: `blueprints/2026-08-11-g1-program-formation-character-handoff.md`
-Active G1 checklist: `UI_UX_G1_PROGRAM_FORMATION_CHECKLIST.md`
-Active reference study: `references/2026-08-12-lusion-area-of-expertise-motion-study.md`
-Parent release checklist: `UI_UX_RELEASE_READINESS_CHECKLIST.md`
+Inspected source HEAD: `f8ae8150b5932c3d2a86d6607da990650de87028`
+
+## Active owner-accepted blueprints
+
+- `blueprints/2026-08-21-desktop-program-values-continuity.md`;
+- `blueprints/2026-08-21-desktop-vision-background-foundation.md`;
+- `blueprints/2026-08-21-desktop-gallery-heading-continuity.md`;
+- `blueprints/2026-08-21-desktop-article-journey.md`.
+
+The owner's 2026-08-21 desktop brief supersedes the former freeze on these
+named surfaces only. Tablet/phone Values rail, Arabic/RTL visual tuning,
+Gallery gateway art direction, and unrelated owners remain frozen.
 
 ## Current FACT
 
-- G1 Program formation is implemented.
-- Program rests in a white visual field, forms six cards sequentially, receives a
-  breathing interval, then hands the shared field continuously to Values blue
-  `#2038ff`.
-- The owner has visually accepted the Program → Values color transition.
-- Program open/detail/back behavior remains a separate protected owner.
-- Desktop Values card motion was recovered after an earlier regression and the
-  owner reported that the restored desktop behavior is visually good.
-- The current desktop entry spacing uses only the existing center-relative pose
-  ratios and does not add a second raw-scroll driver.
-- Tablet/compact Values card motion is **not accepted yet**.
-- A mode-3 responsive experiment currently exists at source head
-  `f8306496575876cfcfd680270871fa0e50b893ed`.
-- Runtime screenshots and owner review show that the responsive experiment still
-  does not behave as one coherent spatial system: the projected top edge can be
-  excessively high, rotation and body travel do not feel phase-locked, and fast
-  scroll can feel like state swapping rather than an object constrained to a
-  continuous rail.
-- The current mode-3 experiment includes `tabletRailY(...)`, raw target progress
-  passed into card paint, and a staged `180° → 100° → 10° → 0°` angle sequence.
-  These are now treated as experimental evidence, **not final architecture**.
-- Values line/worm/spatial rendering is not the active defect and remains frozen.
-- The most recent full PHP-suite evidence remains the earlier owner-reported
-  `206 passed (1794 assertions)`; a fresh complete current-head proof still has
-  to be recorded later.
+- Program geometry remains owned by `program-journey`; formation and dialog
+  controllers remain separate.
+- Program and Values now resolve final blue through
+  `--program-values-final-color: #2038ff` on their shared visual world.
+- Values uses only the existing mode-4 scene progress. Its protected
+  `hidden -> deck -> fan -> preFlip -> flip` sequence and spatial/worm owners
+  remain intact, while the deck collision pose now clamps at the center plane
+  before fan travel begins.
+- Vision uses its existing timeline progress to composite two configurable
+  background layers. About, Vision, and Mission now have distinct desktop
+  palette/pattern tokens and diffuse in both directions without a second scroll
+  driver.
+- Gallery heading owns a desktop-only normalized blur/scale/position entry and
+  exit state. Values and Gallery share one resting-color token, while the
+  `gallery-depth` data, renderer, trail, and route transition remain separate.
+- Gallery ending now seeds the featured Article image behind the CTA and keeps a
+  focused CTA visible during rapid reverse. The final Gallery CTA media itself
+  remains blocked because no authoritative media field exists and the owner has
+  not yet selected reuse versus a dedicated source.
+- Article data remains database-only, newest-first, maximum four, and controller
+  owned. Its presentation grows from a small 16:9 image, reveals copy from blur,
+  uses one sticky desktop scene with vertical input, moves visually horizontal,
+  finishes with a vertical roll plus clickable full-height media, then returns
+  to native flow into the full-viewport Footer.
 
-## Why source is frozen now
+## Runtime proof — Chromium 1440 × 900
 
-Further screenshot-driven angle or Y-offset tuning would accumulate patches on a
-responsive model whose coordinate ownership is not yet proven.
+- Program heading-to-card-field gap: `-28.81px`.
+- Cards-to-Program-end breathing interval: `225.59px` (`25.07%` viewport).
+- Shared and Values tokens: exact `#2038ff`; handoff morph at Pondasi: `1.0000`.
+- Program open/detail/back: open `true`, close `true`.
+- Values heading-to-visual-deck gap: `70.79px` (`1.26/16` viewport height).
+- Values visual center spread remains `15.97px` through collision progress
+  `.096`, then opens to `72px` at `.12` and `496.78px` at `.18`; card Y remains
+  below the collision plane rather than overshooting upward.
+- Rapid forward/reverse leaves finite Values transforms and morph `1.0000`.
+- Vision states resolve to distinct `rgb(239, 227, 202)`,
+  `rgb(203, 223, 228)`, and `rgb(209, 223, 202)` pattern layers; intermediate
+  opacity/diffusion proves gradual compositing.
+- Gallery entry/rest/reverse opacity: `.692 / 1 / .692`; reverse focus remains
+  tabbable, visible, and never receives `aria-hidden=true`.
+- Article opening: `188.02 × 105.75` to `604.8 × 340.19`, ratio `1.78`.
+- Opening copy progresses from opacity `0`/blur `14px` to opacity `.7117`/blur
+  `4.04px` during image growth.
+- Article title-center/corner and description-edge deltas: `0px`.
+- Horizontal track: `-28.57px` to `-2851.12px`; roll: `-4.52px` to `-693px`.
+- Final strip/full-media gap: `240px`, exactly `1/6` of the 1440px viewport.
+- Final full-height media is clickable and resolves to `/artikel`.
+- Article/Footer boundary shares one document coordinate; Footer is `900px`.
+- Every checkpoint had `scrollWidth == clientWidth`; runtime errors: `0`.
 
-The active question is no longer:
+## Automated proof
 
-`What angle/offset makes this screenshot look closer?`
+- `git diff --check`: `PASS`.
+- affected Program/Values/Vision/Gallery/Article suite:
+  `25 passed`, `636 assertions`, `0 failed` on temporary MariaDB.
+- `npm run build`: `PASS`.
+- `npm run check:structure`: baseline `FAIL`; unchanged HEAD already has
+  224/202-line legacy controllers, two orphan Vision modules, and a stale Hero
+  checksum. These unrelated owners were not mutated.
+- full `php artisan test --compact` on temporary MariaDB: `201 passed` from
+  212 with `1804` assertions; five errors require the unavailable GD extension,
+  while six unrelated existing admin/article/security assertions fail in this
+  fallback setup. The affected homepage suite remains fully green.
 
-It is:
+## Deferred and blocked
 
-`What trajectory and transform ownership make the card one coherent object across slow, fast, and reverse scroll?`
-
-Until that is measured, do not add another responsive Values card patch.
-
-## Protected baseline
-
-### Desktop
-
-Freeze the accepted desktop Values behavior:
-
-- `desktop-layout.js`;
-- `desktop-keyframes.js`;
-- restored `hidden → deck → fan → preFlip → flip` choreography;
-- accepted entry-spacing tuning;
-- desktop Program → Values handoff.
-
-### Unrelated Values owners
-
-Freeze:
-
-- Pondasi heading choreography;
-- Values line/worm/spatial renderer;
-- card content and visual styling;
-- reduced-motion behavior unless the later rail blueprint explicitly requires a
-  bounded adapter.
-
-### Other homepage surfaces
-
-Freeze:
-
-- Program geometry and detail interaction;
-- Hero;
-- Vision/Mission;
-- Gallery;
-- Article;
-- About;
-- Testimonial;
-- unrelated navigation.
-
-## Active reference study
-
-The current authoritative work item is:
-
-`docs/architecture/references/2026-08-12-lusion-area-of-expertise-motion-study.md`
-
-Its purpose is to measure the Lusion Area of Expertise card motion before a new
-SchoolAI responsive rail architecture is chosen.
-
-Required study evidence includes:
-
-- one card first, not all four at once;
-- primary viewport `841 × 878` CSS px;
-- at least 12 ordered checkpoints P00–P11;
-- `getBoundingClientRect()` geometry;
-- computed `transform` / `matrix` / `matrix3d`;
-- transformed parent ownership;
-- `transform-origin`;
-- `perspective` and `perspective-origin`;
-- top-edge direction/slope behavior;
-- slow scroll;
-- normal scroll;
-- fast scroll;
-- rapid reverse;
-- interruption/recovery.
-
-Observed facts, architecture inference, and SchoolAI design decisions must remain
-separate.
-
-## Working hypothesis
-
-The hypothesis to prove or reject is:
-
-```text
-native scroll
-    ↓
-scene target progress
-    ↓
-critically damped visual progress
-    ↓
-card-local progress + card offset
-    ↓
-one spatial rail sampler
-    ↓
-{x, y, z, rx, ry, rz, scale}
-    ↓
-one coherent card pose
-```
-
-This is a proposed SchoolAI direction, not a claim about Lusion's private source.
-
-The critical invariant is that scroll speed may change how quickly the target
-moves, but must not change the geometric path through which the visual card is
-sampled.
-
-## Guardrails from previous regressions
-
-Do not repeat these patterns without new measured evidence:
-
-- heading/document geometry used as a second card-motion coordinate system;
-- direct raw `window.scrollY` competing with smoothed Values story progress;
-- release/capture patches added solely to fix visual spacing;
-- separate rotation and body-motion drivers that can lose phase lock;
-- checkpoint-angle tuning presented as a final motion model;
-- modifying desktop because tablet is defective.
-
-## G1 status
-
-G1 is still not formally PASS because the complete automated/runtime proof bundle
-has not been recorded on the latest accepted source state.
-
-However, the active visual design problem has moved into G2 responsive motion
-study because:
-
-- desktop is owner-accepted as the protected visual baseline;
-- tablet/compact is the unresolved quality gap;
-- Safari/macOS has not yet received final proof;
-- phone tuning remains later work after the responsive motion model is understood.
-
-## Release sequence from here
-
-1. `G2 Motion Study` — measure Lusion Area of Expertise at tablet width.
-2. `G2 Blueprint` — only after evidence threshold, define SchoolAI responsive
-   card rail architecture.
-3. `G2 Implementation` — replace the disproven mode-3 experiment rather than
-   stacking another patch on it.
-4. `G2 Runtime Proof` — tablet first; then phone adapter; desktop regression check.
-5. `G2 Browser Proof` — Chromium, then Safari/WebKit evidence.
-6. `G3 Locale Proof` — ID/EN LTR and AR RTL.
-7. close remaining G1 automated proof bookkeeping against the accepted source.
-8. `G4` Blade presentation boundary.
-9. `G5` Cloudflare content-media ownership.
-10. `G6` login/data security gate.
-11. `G7` final deployed regression proof.
-
-Gallery and Article visual/refactor work remain `DEFERRED`.
-
-## STATUS
-
-`FAIL / G2-VALUES-MOTION-STUDY`
-
-This means the responsive Values card model is intentionally frozen for
-measurement. It does not mean the homepage is globally broken.
+- Gallery CTA media owner is awaiting the owner's A/B/C decision: reuse a Gallery
+  item, name an existing local asset, or add a dedicated configurable field.
+- Tablet, phone, Arabic/RTL visual tuning, Values responsive rail, final
+  motif naming, and Gallery cinematic gateway remain deferred.
+- Safari/WebKit, Lighthouse/PageSpeed, RUM/CrUX, and responsive/locale proof are
+  not claimed.
 
 ## NEXT VALID STEP
 
-Capture Lusion Area of Expertise checkpoints P00–P11 at `841 × 878` for one card
-using the active motion-study protocol. Do not push another responsive Values card
-motion change before those measurements are available.
+Obtain the exact Gallery CTA media owner decision, then complete that bounded
+presentation without altering Gallery depth data or adding a cinematic gateway.
+Global release proof also requires a test host with GD and the pre-existing
+structure baseline repaired under separately authorized scope.

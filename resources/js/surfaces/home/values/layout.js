@@ -98,6 +98,7 @@ export function storyFrame(
         headingY: 0,
         copyOpacity: copyEnter,
         copyY: mix(24, 0, copyEnter),
+        surfaceDetail: phase(progress, 0.04, 0.18),
         progress: clamp(progress),
     };
 }

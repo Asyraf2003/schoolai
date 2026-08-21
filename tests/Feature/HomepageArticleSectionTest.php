@@ -16,6 +16,7 @@ it('shows the empty message instead of language dummy articles when no article e
             'articlesSection',
             fn (array $section): bool => ($section['items'] ?? null) === []
         )
+        ->assertSee('data-article-story', false)
         ->assertSee('Belum ada artikel terbaru.')
         ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');
 });
@@ -24,6 +25,9 @@ it('shows the latest database article first on the homepage', function (): void 
     app()->setLocale('id');
 
     Article::query()->create([
+        'article_source' => Article::SOURCE_NATIVE,
+        'article_status' => Article::STATUS_PUBLISHED,
+        'slug' => 'artikel-lama-homepage',
         'title_id' => 'Artikel Lama Homepage',
         'title_en' => 'Older Homepage Article',
         'description_id' => 'Artikel yang lebih lama.',
@@ -36,6 +40,9 @@ it('shows the latest database article first on the homepage', function (): void 
     ]);
 
     Article::query()->create([
+        'article_source' => Article::SOURCE_NATIVE,
+        'article_status' => Article::STATUS_PUBLISHED,
+        'slug' => 'artikel-terbaru-homepage',
         'title_id' => 'Artikel Terbaru Homepage',
         'title_en' => 'Latest Homepage Article',
         'description_id' => 'Artikel yang paling baru.',
@@ -58,6 +65,8 @@ it('shows the latest database article first on the homepage', function (): void 
                 && ($items[0]['title'] ?? null) === 'Artikel Terbaru Homepage'
                 && ($items[1]['title'] ?? null) === 'Artikel Lama Homepage';
         })
+        ->assertSee('data-article-journey', false)
+        ->assertSee('data-article-final-cta', false)
         ->assertSee('Artikel Terbaru Homepage')
         ->assertSee('Artikel Lama Homepage')
         ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');

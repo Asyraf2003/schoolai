@@ -10,6 +10,8 @@ import {
 } from './desktop-keyframes.js';
 import { mix, phase } from './motion.js';
 
+const CENTER_COLLISION_PROGRESS = 0.096;
+
 function pose(x, y, z, rz, scale, ry = 180) {
     return { x, y, z, rz, scale, ry, floatY: 0 };
 }
@@ -82,10 +84,14 @@ export function desktopCardFrame(
     let current = mixPose(
         hidden,
         deck,
-        phase(progress, 0, 0.096),
+        phase(progress, 0, CENTER_COLLISION_PROGRESS),
     );
 
-    current = mixPose(current, fan, phase(progress, 0.072, 0.216));
+    current = mixPose(
+        current,
+        fan,
+        phase(progress, CENTER_COLLISION_PROGRESS, 0.216),
+    );
     current = mixPose(current, preFlip, phase(progress, 0.18, 0.252));
 
     const localFlip = flipLocal(index, progress);

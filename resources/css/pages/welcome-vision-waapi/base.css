@@ -1,11 +1,12 @@
 .vision-arch {
     position: relative;
     overflow: clip;
-    background: #f4f1e9;
     color: #151515;
 }
 
 .vision-arch__grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     width: min(100%, 1440px);
     margin-inline: auto;

@@ -1,9 +1,11 @@
 import { clamp } from './geometry.js';
+import { createVisionBackgroundCompositor } from './background-compositor.js';
 
 export function createVisionTimeline(root) {
     const panels = Array.from(root.querySelectorAll('[data-vision-panel]'));
     const visuals = Array.from(root.querySelectorAll('[data-vision-visual]'));
     const images = visuals.map((visual) => visual.querySelector('img'));
+    const background = createVisionBackgroundCompositor(root, panels);
     const transitionCount = Math.max(1, visuals.length - 1);
     let activeIndex = -1;
 
@@ -16,6 +18,7 @@ export function createVisionTimeline(root) {
     }
 
     function setProgress(progress) {
+        background.setProgress(progress);
         const scaled = clamp(progress) * transitionCount;
         setActive(Math.min(panels.length - 1, Math.floor(scaled + .5)));
 
@@ -37,6 +40,7 @@ export function createVisionTimeline(root) {
     }
 
     function destroy() {
+        background.destroy();
         panels.forEach((panel) => panel.classList.remove('is-active'));
         visuals.forEach((visual) => visual.style.removeProperty('clip-path'));
         images.forEach((image) => image?.style.removeProperty('transform'));

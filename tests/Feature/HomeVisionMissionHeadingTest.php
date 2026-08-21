@@ -26,6 +26,7 @@ it('renders localized About Vision and Mission before Program', function (): voi
             ->assertSee('data-vision-story', false)
             ->assertSee('data-vision-stories', false)
             ->assertSee('data-vision-visuals', false)
+            ->assertSee('data-vision-background', false)
             ->assertSee($labels[$locale]['about'])
             ->assertSee($labels[$locale]['vision'])
             ->assertSee($labels[$locale]['mission'])
@@ -37,6 +38,7 @@ it('renders localized About Vision and Mission before Program', function (): voi
         $content = $response->getContent();
         expect(substr_count($content, 'data-vision-panel='))->toBe(3)
             ->and(substr_count($content, 'data-vision-visual='))->toBe(3)
+            ->and(substr_count($content, 'data-vision-background-layer='))->toBe(2)
             ->and(substr_count($content, 'data-vision-art'))->toBe(3)
             ->and(substr_count($content, 'media/home/vision-paper-'))->toBe(3)
             ->and(strpos($content, 'id="visi-misi"'))
@@ -46,6 +48,37 @@ it('renders localized About Vision and Mission before Program', function (): voi
             expect($content)->toContain('صلى الله عليه وسلم')->not->toContain('ﷺ');
         }
     }
+});
+
+it('provides one configurable gradual Vision background compositor', function (): void {
+    $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
+    $compositor = file_get_contents(
+        resource_path('js/surfaces/home/vision-story/background-compositor.js'),
+    );
+    $background = file_get_contents(
+        resource_path('css/pages/welcome-vision-waapi/background.css'),
+    );
+
+    expect($timeline)
+        ->toContain('createVisionBackgroundCompositor')
+        ->toContain('background.setProgress(progress)')
+        ->and($compositor)
+        ->toContain('visionBackgroundColor')
+        ->toContain('visionBackgroundPattern')
+        ->toContain("pattern: 'none'")
+        ->toContain("const DESKTOP_STATE_NAMES = ['about', 'vision', 'mission']")
+        ->toContain("matchMedia('(min-width: 1280px)')")
+        ->toContain('--vision-state-diffusion')
+        ->not->toContain('Krawangan')
+        ->not->toContain('Mashrabiya')
+        ->and($background)
+        ->toContain('--vision-background-default: #f4f1e9')
+        ->toContain('--vision-about-color: #efe3ca')
+        ->toContain('--vision-vision-color: #cbdfe4')
+        ->toContain('--vision-mission-color: #d1dfca')
+        ->toContain('repeating-conic-gradient')
+        ->toContain('background-image: var(--vision-state-pattern)')
+        ->toContain('filter: blur(var(--vision-state-diffusion))');
 });
 
 it('uses a native pinned mask reveal without owning document scroll', function (): void {

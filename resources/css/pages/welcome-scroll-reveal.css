@@ -1,4 +1,5 @@
 @import "./welcome-gallery-heading.css";
+@import "./welcome-gallery-heading-desktop.css";
 @import "./welcome-gallery-backdrop.css";
 
 /* Directional scroll reveal layer for the public homepage.

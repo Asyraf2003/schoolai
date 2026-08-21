@@ -1,5 +1,5 @@
 .values-story {
-    --values-blue: #2038ff;
+    --values-blue: var(--program-values-final-color);
     --values-ink: #11131b;
     --values-entry-height: clamp(18rem, 60svh, 42rem);
     --values-exit-height: clamp(10rem, 24svh, 18rem);
@@ -10,6 +10,8 @@
     --values-copy-opacity: 1;
     --values-copy-y: 0px;
     --values-handoff-progress: 0;
+    --values-surface-detail: 0;
+    --values-geometry-opacity: 0;
     --values-layout-mode: 1;
     position: relative;
     z-index: 2;
@@ -34,7 +36,7 @@
 .values-story__timeline {
     position: relative;
     min-height: 100svh;
-    background: transparent;
+    background: var(--values-blue);
 }
 
 .values-story__clip {
@@ -54,7 +56,28 @@
         radial-gradient(circle at 50% 54%, rgba(255,255,255,.1), transparent 54%),
         linear-gradient(180deg, rgba(8,18,110,.08), transparent 35%);
     content: "";
+    opacity: var(--values-surface-detail);
     pointer-events: none;
+}
+
+.values-story__clip::after {
+    position: absolute;
+    inset: -8%;
+    z-index: 0;
+    background-image:
+        repeating-conic-gradient(
+            from 22.5deg at 50% 50%,
+            rgb(255 255 255 / .26) 0 6deg,
+            transparent 6deg 45deg
+        ),
+        radial-gradient(circle, transparent 0 31%, rgb(255 255 255 / .2) 32% 34%, transparent 35%);
+    background-position: center;
+    background-size: 9rem 9rem;
+    content: "";
+    mask-image: radial-gradient(circle at 50% 54%, #000 0 28%, transparent 72%);
+    opacity: var(--values-geometry-opacity);
+    pointer-events: none;
+    transform: rotate(5deg) scale(1.08);
 }
 
 .values-story__perspective {
