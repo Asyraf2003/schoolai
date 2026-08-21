@@ -9,8 +9,7 @@ const ROOT_PROPERTIES = [
     '--values-heading-opacity', '--values-heading-y',
     '--values-line-one-y', '--values-line-two-y',
     '--values-copy-opacity', '--values-copy-y',
-    '--values-handoff-progress',
-    '--values-surface-detail', '--values-geometry-opacity',
+    '--values-handoff-progress', '--values-surface-detail',
 ];
 
 function writeCardFrame(card, state) {
@@ -51,10 +50,6 @@ function writeRootFrame(root, nodes, story, handoffProgress) {
     root.style.setProperty(
         '--values-surface-detail',
         story.surfaceDetail.toFixed(4),
-    );
-    root.style.setProperty(
-        '--values-geometry-opacity',
-        (story.surfaceDetail * 0.18).toFixed(4),
     );
     root.style.setProperty('--values-handoff-progress', handoffProgress.toFixed(4));
     if (nodes.programRoot) {
