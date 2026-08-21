@@ -9,6 +9,9 @@ import {
 import { mix, phase } from './motion.js';
 
 const CENTER_COLLISION_PROGRESS = 0.096;
+const SPLIT_REVEAL_PROGRESS = 0.142;
+const FAN_SETTLE_PROGRESS = 0.216;
+const PREFLIP_SETTLE_PROGRESS = 0.252;
 const CARD_SCALE = 1;
 
 function pose(x, y, z, rz, scale, ry = 180) {
@@ -55,6 +58,17 @@ function deckPose(geometry, center) {
     );
 }
 
+function splitPose(index, geometry, center) {
+    const centeredIndex = index - 1.5;
+    return pose(
+        center.x + centeredIndex * geometry.cardWidth * 0.055,
+        center.y + Math.abs(centeredIndex) * geometry.cardHeight * 0.012,
+        -index * 1.5,
+        centeredIndex * 2.6,
+        CARD_SCALE,
+    );
+}
+
 function fanPose(index, geometry, center) {
     return pose(
         center.x * 0.3,
@@ -78,6 +92,7 @@ export function desktopCardFrame(
     const center = centeredOffsets(index, geometry);
     const hidden = hiddenPose(geometry, center);
     const deck = deckPose(geometry, center);
+    const split = splitPose(index, geometry, center);
     const fan = fanPose(index, geometry, center);
     const preFlip = preFlipPose(index);
     let current = mixPose(
@@ -88,10 +103,23 @@ export function desktopCardFrame(
 
     current = mixPose(
         current,
-        fan,
-        phase(progress, CENTER_COLLISION_PROGRESS, 0.216),
+        split,
+        phase(
+            progress,
+            CENTER_COLLISION_PROGRESS,
+            SPLIT_REVEAL_PROGRESS,
+        ),
     );
-    current = mixPose(current, preFlip, phase(progress, 0.18, 0.252));
+    current = mixPose(
+        current,
+        fan,
+        phase(progress, SPLIT_REVEAL_PROGRESS, FAN_SETTLE_PROGRESS),
+    );
+    current = mixPose(
+        current,
+        preFlip,
+        phase(progress, FAN_SETTLE_PROGRESS, PREFLIP_SETTLE_PROGRESS),
+    );
 
     const localFlip = flipLocal(index, progress);
     const upright = uprightAmount(localFlip);
