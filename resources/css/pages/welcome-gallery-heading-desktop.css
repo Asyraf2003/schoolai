@@ -1,6 +1,7 @@
 @media (min-width: 1280px) {
-    .home-page .galeri-section {
-        padding-block-start: clamp(4rem, 7svh, 6rem);
+    .home-page .galeri-section__heading-shell {
+        position: relative;
+        z-index: 5;
     }
 
     .home-page .galeri-section__head.gallery-heading-motion {
@@ -11,6 +12,7 @@
         --gh-blur: 0px;
         --gh-scale: 1;
         margin-block-end: clamp(1.5rem, 3svh, 3rem);
+        transform-origin: 50% 50%;
     }
 
     .home-page .galeri-section .depth-gallery {
@@ -22,6 +24,7 @@
         opacity: var(--gh-opacity);
         filter: blur(var(--gh-blur));
         transform: translate3d(0, var(--gh-top-y), 0) scale(var(--gh-scale));
+        will-change: opacity, filter, transform;
     }
 
     .home-page .gallery-heading-motion--scroll-linked
@@ -29,6 +32,7 @@
         opacity: var(--gh-opacity);
         filter: blur(var(--gh-blur));
         transform: translate3d(var(--gh-shift), var(--gh-bottom-y), 0) scale(var(--gh-scale));
+        will-change: opacity, filter, transform;
     }
 
     .home-page .gallery-heading-motion--scroll-linked
@@ -36,6 +40,7 @@
         opacity: var(--gh-opacity);
         filter: blur(var(--gh-blur));
         transform: translate3d(0, var(--gh-description-y), 0);
+        will-change: opacity, filter, transform;
     }
 
     .home-page .gallery-heading-motion--scroll-linked
@@ -49,6 +54,7 @@
     .home-page .gallery-heading-motion--scroll-linked
     :is(.gallery-heading-motion__line, .gallery-heading-motion__description-line) {
         opacity: 1;
+        filter: none;
         transform: none;
     }
 
