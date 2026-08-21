@@ -8,10 +8,11 @@ import {
 } from './desktop-keyframes.js';
 import { mix, phase } from './motion.js';
 
-const SPLIT_START_PROGRESS = 0.042;
+const SPLIT_START_PROGRESS = 0.006;
+const STACK_REVEAL_PROGRESS = 0.04;
 const CENTER_COLLISION_PROGRESS = 0.096;
-const FAN_SETTLE_PROGRESS = 0.188;
-const PREFLIP_SETTLE_PROGRESS = 0.228;
+const FAN_PEAK_PROGRESS = 0.118;
+const WIDEN_SETTLE_PROGRESS = 0.228;
 const CARD_SCALE = 1;
 
 function pose(x, y, z, rz, scale, ry = 180) {
@@ -61,10 +62,10 @@ function deckPose(geometry, center) {
 function splitPose(index, geometry, center) {
     const centeredIndex = index - 1.5;
     return pose(
-        center.x + centeredIndex * geometry.cardWidth * 0.085,
-        center.y + Math.abs(centeredIndex) * geometry.cardHeight * 0.014,
-        -index * 1.8,
-        centeredIndex * 4.2,
+        center.x + centeredIndex * geometry.cardWidth * 0.052,
+        center.y,
+        0,
+        0,
         CARD_SCALE,
     );
 }
@@ -101,20 +102,25 @@ export function desktopCardFrame(
         phase(progress, 0, CENTER_COLLISION_PROGRESS),
     );
 
+    // Tahap 1: segera setelah card mulai menjauh dari heading, buka stack
+    // sedikit saja agar empat kartu terbaca tanpa gelombang/rotasi.
     current = mixPose(
         current,
         split,
-        phase(progress, SPLIT_START_PROGRESS, CENTER_COLLISION_PROGRESS),
+        phase(progress, SPLIT_START_PROGRESS, STACK_REVEAL_PROGRESS),
     );
+
+    // Tahap 2: mulai fan saat heading masih terlihat. Gelombang, pelebaran,
+    // dan flip kemudian berjalan overlap, bukan menunggu card selesai naik.
     current = mixPose(
         current,
         fan,
-        phase(progress, CENTER_COLLISION_PROGRESS, FAN_SETTLE_PROGRESS),
+        phase(progress, STACK_REVEAL_PROGRESS, FAN_PEAK_PROGRESS),
     );
     current = mixPose(
         current,
         preFlip,
-        phase(progress, FAN_SETTLE_PROGRESS, PREFLIP_SETTLE_PROGRESS),
+        phase(progress, CENTER_COLLISION_PROGRESS, WIDEN_SETTLE_PROGRESS),
     );
 
     const localFlip = flipLocal(index, progress);
