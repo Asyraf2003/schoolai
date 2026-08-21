@@ -68,6 +68,9 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
     $valuesLayout = file_get_contents(
         resource_path('js/surfaces/home/values/desktop-layout.js'),
     );
+    $valuesKeyframes = file_get_contents(
+        resource_path('js/surfaces/home/values/desktop-keyframes.js'),
+    );
     $valuesResponsive = file_get_contents(
         resource_path('css/surfaces/home/values/story-responsive.css'),
     );
@@ -81,20 +84,25 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
         ->and($formation)
         ->toContain('--program-formation-hold: clamp(5.5rem, 14svh, 9.5rem)')
         ->and($valuesLayout)
-        ->toContain('const SPLIT_START_PROGRESS = 0.042')
+        ->toContain('const SPLIT_START_PROGRESS = 0.006')
+        ->toContain('const STACK_REVEAL_PROGRESS = 0.04')
         ->toContain('const CENTER_COLLISION_PROGRESS = 0.096')
-        ->toContain('const FAN_SETTLE_PROGRESS = 0.188')
-        ->toContain('const PREFLIP_SETTLE_PROGRESS = 0.228')
+        ->toContain('const FAN_PEAK_PROGRESS = 0.118')
+        ->toContain('const WIDEN_SETTLE_PROGRESS = 0.228')
         ->toContain('const CARD_SCALE = 1')
         ->toContain('function splitPose')
-        ->toContain('geometry.cardWidth * 0.085')
+        ->toContain('geometry.cardWidth * 0.052')
         ->toContain('center.y + fanArc(index, geometry.cardHeight)')
-        ->toContain('phase(progress, SPLIT_START_PROGRESS, CENTER_COLLISION_PROGRESS)')
-        ->toContain('phase(progress, CENTER_COLLISION_PROGRESS, FAN_SETTLE_PROGRESS)')
+        ->toContain('phase(progress, SPLIT_START_PROGRESS, STACK_REVEAL_PROGRESS)')
+        ->toContain('phase(progress, STACK_REVEAL_PROGRESS, FAN_PEAK_PROGRESS)')
+        ->toContain('phase(progress, CENTER_COLLISION_PROGRESS, WIDEN_SETTLE_PROGRESS)')
         ->not->toContain('ENTRY_DECK_LIFT_RATIO')
         ->not->toContain('stackNudge(')
         ->not->toContain('deckAngle(')
-        ->not->toContain('window.scrollY');
+        ->not->toContain('window.scrollY')
+        ->and($valuesKeyframes)
+        ->toContain('const FLIP_START = 0.052')
+        ->toContain('const FLIP_DURATION = 0.22');
 
     expect($valuesResponsive)
         ->toContain('transform: translate3d(0, 0, 0)')
