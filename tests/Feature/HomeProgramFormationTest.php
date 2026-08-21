@@ -71,6 +71,9 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
     $valuesResponsive = file_get_contents(
         resource_path('css/surfaces/home/values/story-responsive.css'),
     );
+    $valuesHeading = file_get_contents(
+        resource_path('css/surfaces/home/values/story-heading.css'),
+    );
 
     expect($wide)
         ->toContain('margin-block-start: clamp(-4.5rem, -5svh, -2.5rem)')
@@ -79,9 +82,12 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
         ->toContain('--program-formation-hold: clamp(5.5rem, 14svh, 9.5rem)')
         ->and($valuesLayout)
         ->toContain('CENTER_COLLISION_PROGRESS')
+        ->toContain('SPLIT_REVEAL_PROGRESS')
+        ->toContain('FAN_SETTLE_PROGRESS')
         ->toContain('const CARD_SCALE = 1')
+        ->toContain('function splitPose')
         ->toContain('center.y + fanArc(index, geometry.cardHeight)')
-        ->toContain('phase(progress, CENTER_COLLISION_PROGRESS, 0.216)')
+        ->toContain('phase(progress, SPLIT_REVEAL_PROGRESS, FAN_SETTLE_PROGRESS)')
         ->not->toContain('ENTRY_DECK_LIFT_RATIO')
         ->not->toContain('stackNudge(')
         ->not->toContain('deckAngle(')
@@ -89,5 +95,7 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
 
     expect($valuesResponsive)
         ->toContain('transform: translate3d(0, 0, 0)')
-        ->not->toContain('translate3d(0, clamp(-10rem, -16svh, -7rem), 0)');
+        ->not->toContain('translate3d(0, clamp(-10rem, -16svh, -7rem), 0)')
+        ->and($valuesHeading)
+        ->toContain('margin-block-start: clamp(-10rem, -15svh, -7rem)');
 });
