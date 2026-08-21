@@ -9,6 +9,7 @@ import {
 import { mix, phase } from './motion.js';
 
 const CENTER_COLLISION_PROGRESS = 0.096;
+const CARD_SCALE = 1;
 
 function pose(x, y, z, rz, scale, ry = 180) {
     return { x, y, z, rz, scale, ry, floatY: 0 };
@@ -40,7 +41,7 @@ function hiddenPose(geometry, center) {
         center.y + geometry.cardHeight * 0.012,
         0,
         0,
-        0.92,
+        CARD_SCALE,
     );
 }
 
@@ -50,7 +51,7 @@ function deckPose(geometry, center) {
         center.y + geometry.cardHeight * 0.008,
         0,
         0,
-        0.97,
+        CARD_SCALE,
     );
 }
 
@@ -60,12 +61,12 @@ function fanPose(index, geometry, center) {
         center.y + fanArc(index, geometry.cardHeight),
         -index * 3,
         fanAngle(index),
-        1,
+        CARD_SCALE,
     );
 }
 
 function preFlipPose(index) {
-    return pose(0, 0, 0, fanAngle(index), 1);
+    return pose(0, 0, 0, fanAngle(index), CARD_SCALE);
 }
 
 export function desktopCardFrame(
