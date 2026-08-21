@@ -10,39 +10,97 @@ import {
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
-const SAMPLE_COUNT = 180;
+
+const SAMPLE_COUNT = 220;
+const HANDOFF_ENTRY_WEIGHT = .24;
+const STORY_JOURNEY_WEIGHT = .88;
+
 const PATHS = [
     {
-        points: [[-12, 4.8, .6], [-9, 6, .55], [-5, 5.4, .45], [-1, 2.8, .3],
-            [2, -.8, .15], [6, -3.6, 0], [10, -2.8, -.2], [12, .5, -.3]],
-        width: .28, reveal: [0, .58],
+        // C: masuk dari kanan atas, menyapu ke kiri, turun, lalu keluar kanan bawah.
+        points: [
+            [10.8, 7.8, .08],
+            [8.0, 5.5, .08],
+            [3.8, 4.35, .08],
+            [-1.8, 4.05, .08],
+            [-5.3, 2.15, .08],
+            [-5.9, -.75, .08],
+            [-4.6, -3.1, .08],
+            [-1.4, -4.25, .08],
+            [3.4, -4.3, .08],
+            [7.8, -5.45, .08],
+            [11.2, -7.8, .08],
+        ],
+        width: .20,
+        reveal: [0, .68],
     },
     {
-        points: [[11, 8, -.5], [8, 6.5, -.4], [5, 3.5, -.2], [3, -.5, 0],
-            [4, -4, .15], [7, -6, .2], [11, -5, .1], [13, -2, 0]],
-        width: .23, reveal: [.22, .82],
+        // S: masuk dari kiri atas sebelum C selesai dan berakhir ke kanan bawah.
+        points: [
+            [-10.8, 7.8, .20],
+            [-7.6, 5.55, .20],
+            [-3.1, 4.2, .20],
+            [2.6, 3.8, .20],
+            [5.55, 2.05, .20],
+            [4.45, .15, .20],
+            [1.45, -.65, .20],
+            [-2.65, -1.0, .20],
+            [-5.25, -2.55, .20],
+            [-3.45, -4.15, .20],
+            [.35, -4.75, .20],
+            [5.6, -5.35, .20],
+            [10.8, -7.8, .20],
+        ],
+        width: .16,
+        reveal: [.18, .82],
     },
     {
-        points: [[-11, -7, -.8], [-8, -5, -.7], [-6, -1, -.5], [-7, 3, -.3],
-            [-4, 6, -.1], [0, 6.7, .1], [4, 5, .2], [6, 1, .2],
-            [5, -3, .1], [8, -6, -.1]],
-        width: .19, reveal: [.48, 1],
+        // U/O: datang dari kanan, menimpa jalur awal C, membuat U lalu loop,
+        // kemudian turun dan keluar ke kiri bawah.
+        points: [
+            [10.8, 7.8, .72],
+            [8.0, 5.5, .72],
+            [3.8, 4.35, .72],
+            [5.25, 2.0, .72],
+            [5.25, -1.65, .72],
+            [3.65, -3.7, .72],
+            [.45, -4.35, .72],
+            [-3.05, -3.65, .72],
+            [-4.7, -1.3, .72],
+            [-4.0, 1.45, .72],
+            [-1.55, 2.65, .72],
+            [1.35, 2.2, .72],
+            [2.9, .55, .72],
+            [2.25, -1.25, .72],
+            [.2, -2.05, .72],
+            [-2.0, -1.4, .72],
+            [-3.15, .15, .72],
+            [-3.7, -2.9, .72],
+            [-5.6, -5.45, .72],
+            [-9.4, -7.8, .72],
+        ],
+        width: .18,
+        reveal: [.50, 1],
     },
 ];
+
 const clamp = (value) => Math.min(1, Math.max(0, value));
 const rangeProgress = (value, start, end) => (
     clamp((value - start) / Math.max(.0001, end - start))
 );
+
 function writePoint(buffer, offset, point) {
     buffer[offset] = point.x;
     buffer[offset + 1] = point.y;
     buffer[offset + 2] = point.z;
 }
+
 function writeHead(buffer, offset, from, to, amount) {
     buffer[offset] = from.x + (to.x - from.x) * amount;
     buffer[offset + 1] = from.y + (to.y - from.y) * amount;
     buffer[offset + 2] = from.z + (to.z - from.z) * amount;
 }
+
 function createStroke(definition) {
     const controls = definition.points.map((point) => new Vector3(...point));
     const curve = new CatmullRomCurve3(controls, false, 'centripetal');
@@ -66,18 +124,22 @@ function createStroke(definition) {
     });
     const line = new Line2(geometry, material);
     line.frustumCulled = false;
+
     return { buffer, definition, geometry, line, master, material };
 }
+
 function revealStroke(stroke, progress) {
     const { buffer, geometry, master, material } = stroke;
     const scaled = clamp(progress) * (master.length - 1);
     const fullIndex = Math.floor(scaled);
     const fraction = scaled - fullIndex;
     let pointCount = 0;
+
     for (let index = 0; index <= fullIndex; index += 1) {
         writePoint(buffer, pointCount * 3, master[index]);
         pointCount += 1;
     }
+
     if (fullIndex < master.length - 1) {
         writeHead(
             buffer, pointCount * 3, master[fullIndex],
@@ -85,13 +147,16 @@ function revealStroke(stroke, progress) {
         );
         pointCount += 1;
     }
+
     if (pointCount === 1) {
         writePoint(buffer, 3, master[0]);
         pointCount = 2;
     }
+
     geometry.setPositions(buffer.subarray(0, pointCount * 3));
     material.opacity = clamp(progress * 12);
 }
+
 export function createValuesSpatialScene(host) {
     const renderer = new WebGLRenderer({
         alpha: true,
@@ -128,8 +193,10 @@ export function createValuesSpatialScene(host) {
         const nextHeight = Math.max(1, Math.round(host.clientHeight));
         const cap = nextWidth < 768 ? 1.25 : 1.5;
         const nextRatio = Math.min(window.devicePixelRatio || 1, cap);
+
         if (nextWidth === width && nextHeight === height
             && nextRatio === pixelRatio) return;
+
         width = nextWidth;
         height = nextHeight;
         pixelRatio = nextRatio;
@@ -142,12 +209,18 @@ export function createValuesSpatialScene(host) {
 
     function update({ handoffProgress, storyProgress }) {
         if (suspended || failed) return;
+
         resize();
-        const journey = clamp(handoffProgress * .36 + storyProgress * .86);
+        const journey = clamp(
+            handoffProgress * HANDOFF_ENTRY_WEIGHT
+            + storyProgress * STORY_JOURNEY_WEIGHT,
+        );
+
         strokes.forEach((stroke) => {
             const growth = rangeProgress(journey, ...stroke.definition.reveal);
             revealStroke(stroke, growth);
         });
+
         renderer.render(scene, camera);
         renderCount += 1;
         canvas.dataset.valuesRenderCount = String(renderCount);
