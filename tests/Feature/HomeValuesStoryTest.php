@@ -82,6 +82,7 @@ it('owns one lazy deterministic Three.js spatial scene', function (): void {
     $scene = file_get_contents(resource_path('js/surfaces/home/values/spatial-scene.js'));
     $lifecycle = file_get_contents(resource_path('js/surfaces/home/values/lifecycle.js'));
     $cssEntry = file_get_contents(resource_path('css/pages/welcome-values-story.css'));
+    $shell = file_get_contents(resource_path('css/surfaces/home/values/story-shell.css'));
 
     expect($controller)
         ->toContain('createValuesSpatialBridge')
@@ -98,12 +99,18 @@ it('owns one lazy deterministic Three.js spatial scene', function (): void {
         ->toContain('renderer.dispose()')
         ->toContain('const HANDOFF_ENTRY_WEIGHT = .24')
         ->toContain('const STORY_JOURNEY_WEIGHT = .88')
+        ->toContain('[6.55, 3.55, .08]')
+        ->toContain('[-6.55, 3.48, .16]')
+        ->toContain('[6.55, 3.55, .34]')
         ->toContain('reveal: [0, .68]')
         ->toContain('reveal: [.18, .82]')
         ->toContain('reveal: [.50, 1]')
         ->not->toContain('TubeGeometry')
         ->not->toContain('Math.random')
         ->and(substr_count($scene, 'reveal: ['))->toBe(3)
+        ->and($shell)
+        ->not->toContain('repeating-conic-gradient')
+        ->not->toContain('--values-geometry-opacity')
         ->and($lifecycle)
         ->toContain('IntersectionObserver')
         ->toContain('ResizeObserver')
