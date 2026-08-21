@@ -8,6 +8,8 @@ import { FRAME_MS, createScrollMotion, readHandoffProgress,
     readStoryProgress, resetScrollMotion, updateScrollMotion } from './motion.js';
 import { createValuesSpatialBridge } from './spatial-controller.js';
 
+const VALUES_SPATIAL_ENABLED = false;
+
 function supportsStoryMotion() {
     return typeof CSS !== 'undefined'
         && CSS.supports('overflow', 'clip')
@@ -173,7 +175,7 @@ export function createValuesStory(root) {
         snapNext = true;
         resetScrollMotion(motion, 0);
         resetScrollMotion(handoffMotion, 0);
-        spatial.setEnabled(true);
+        spatial.setEnabled(VALUES_SPATIAL_ENABLED);
         requestRender();
     }
 
