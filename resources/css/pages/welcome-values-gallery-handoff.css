@@ -6,8 +6,11 @@
     background: linear-gradient(
         to bottom,
         var(--program-values-final-color) 0%,
-        rgb(32 56 255 / .82) 22%,
-        rgb(255 250 240 / .9) 76%,
+        var(--program-values-final-color) 10%,
+        #5065ff 28%,
+        #9caaff 48%,
+        #d9dcf2 66%,
+        #f3eadf 84%,
         var(--values-gallery-resting-color) 100%
     );
     box-shadow:
@@ -16,11 +19,20 @@
 }
 
 .home-page .values-story__exit::before {
-    background: linear-gradient(
-        to bottom,
-        rgb(32 56 255 / .34),
-        rgb(255 250 240 / .8)
-    );
+    inset: 4% -10% -8%;
+    background:
+        radial-gradient(
+            ellipse at 50% 28%,
+            rgb(92 111 255 / .56),
+            rgb(169 181 255 / .34) 38%,
+            rgb(255 250 240 / 0) 76%
+        ),
+        linear-gradient(
+            to bottom,
+            rgb(32 56 255 / .36),
+            rgb(255 250 240 / .72)
+        );
+    filter: blur(42px);
 }
 
 .home-page .galeri-section,
@@ -30,13 +42,14 @@
 
 @media (min-width: 1280px) {
     .home-page .values-story {
-        --values-exit-height: clamp(13rem, 30svh, 21rem);
+        --values-exit-height: clamp(18rem, 42svh, 30rem);
     }
 
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
-        margin-block-start: clamp(-9rem, -14svh, -6rem);
-        padding-block-start: clamp(6rem, 10svh, 8rem);
+        position: relative;
+        margin-block-start: clamp(-13rem, -22svh, -9rem);
+        padding-block-start: clamp(12rem, 21svh, 17rem);
         padding-block-end: 0;
     }
 
@@ -44,17 +57,24 @@
         position: absolute;
         inset: 0 0 auto;
         z-index: 0;
-        height: clamp(12rem, 32svh, 24rem);
+        height: clamp(22rem, 52svh, 36rem);
         background:
-            repeating-conic-gradient(
-                from 22.5deg at 50% 50%,
-                rgb(32 56 255 / .06) 0 5deg,
-                transparent 5deg 45deg
+            radial-gradient(
+                ellipse at 50% 0%,
+                rgb(32 56 255 / .42) 0%,
+                rgb(111 128 255 / .28) 30%,
+                rgb(211 214 242 / .38) 54%,
+                rgb(255 250 240 / 0) 82%
+            ),
+            linear-gradient(
+                to bottom,
+                rgb(32 56 255 / .18),
+                rgb(255 250 240 / 0) 76%
             );
-        background-size: 9rem 9rem;
         content: "";
-        mask-image: linear-gradient(#000, transparent);
-        opacity: var(--gallery-handoff-progress);
+        opacity: calc(1 - var(--gallery-handoff-progress));
         pointer-events: none;
+        transform: translate3d(0, calc(var(--gallery-handoff-progress) * -4svh), 0);
+        will-change: opacity, transform;
     }
 }
