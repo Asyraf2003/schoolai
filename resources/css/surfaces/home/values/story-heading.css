@@ -149,6 +149,10 @@ html[lang="ar"] .values-story__description {
         pointer-events: none;
     }
 
+    .values-story.is-values-ready .values-story__timeline {
+        margin-block-start: clamp(-10rem, -15svh, -7rem);
+    }
+
     .values-story.is-values-ready .values-story__title {
         width: 100%;
         max-width: none;
@@ -166,6 +170,10 @@ html[lang="ar"] .values-story__description {
 @media (min-width: 1280px) and (max-height: 620px) {
     .values-story.is-values-ready .values-story__headline {
         padding-block: 1rem 2rem;
+    }
+
+    .values-story.is-values-ready .values-story__timeline {
+        margin-block-start: clamp(-7rem, -12svh, -4rem);
     }
 
     .values-story.is-values-ready .values-story__title {
