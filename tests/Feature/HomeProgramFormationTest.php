@@ -79,11 +79,15 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
         ->toContain('--program-formation-hold: clamp(5.5rem, 14svh, 9.5rem)')
         ->and($valuesLayout)
         ->toContain('CENTER_COLLISION_PROGRESS')
+        ->toContain('const CARD_SCALE = 1')
         ->toContain('center.y + fanArc(index, geometry.cardHeight)')
         ->toContain('phase(progress, CENTER_COLLISION_PROGRESS, 0.216)')
         ->not->toContain('ENTRY_DECK_LIFT_RATIO')
+        ->not->toContain('stackNudge(')
+        ->not->toContain('deckAngle(')
         ->not->toContain('window.scrollY');
 
     expect($valuesResponsive)
-        ->toContain('translate3d(0, clamp(-10rem, -16svh, -7rem), 0)');
+        ->toContain('transform: translate3d(0, 0, 0)')
+        ->not->toContain('translate3d(0, clamp(-10rem, -16svh, -7rem), 0)');
 });
