@@ -2,8 +2,8 @@ import { clamp, easeOutCubic, mix, phase } from './motion.js';
 
 const FAN_ANGLES = [-13, -4.5, 4.5, 13];
 const DECK_ANGLES = [-1.8, -.6, .6, 1.8];
-const FLIP_START = 0.228;
-const FLIP_DURATION = 0.162;
+const FLIP_START = 0.052;
+const FLIP_DURATION = 0.22;
 const FLIP_STAGGER = 0.012;
 const FLIP_FRONT_PASS = 0.84;
 const FLIP_OVERSHOOT = -18;
