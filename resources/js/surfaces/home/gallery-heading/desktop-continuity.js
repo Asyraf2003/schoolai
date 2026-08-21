@@ -2,6 +2,11 @@ function clamp(value) {
     return Math.max(0, Math.min(1, value));
 }
 
+function smoothstep(value) {
+    const progress = clamp(value);
+    return progress * progress * (3 - 2 * progress);
+}
+
 export function initialiseDesktopContinuity(heading, section, desktop) {
     const depth = section.querySelector('[data-depth-gallery]');
     let frame = 0;
@@ -31,31 +36,37 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         const depthTop = depth
             ? depth.getBoundingClientRect().top
             : section.getBoundingClientRect().bottom;
-        const enter = clamp(
-            (viewportHeight * 1.08 - sectionTop) / (viewportHeight * 0.52),
-        );
-        const exit = clamp(
-            (viewportHeight * 0.2 - depthTop) / (viewportHeight * 0.38),
-        );
-        const opacity = enter * (1 - exit);
+
+        // The world handoff starts before the Gallery title is fully present so
+        // Values blue can dissolve into the warm Gallery field without a seam.
+        const handoff = smoothstep(clamp(
+            (viewportHeight * 1.28 - sectionTop) / (viewportHeight * 0.92),
+        ));
+        const enter = smoothstep(clamp(
+            (viewportHeight * 1.10 - sectionTop) / (viewportHeight * 0.70),
+        ));
+        const exit = smoothstep(clamp(
+            (viewportHeight * 0.24 - depthTop) / (viewportHeight * 0.46),
+        ));
+        const opacity = smoothstep(enter) * (1 - exit);
 
         heading.style.setProperty('--gh-opacity', opacity.toFixed(4));
         heading.style.setProperty(
-            '--gh-top-y', `${((1 - enter) * 78 - exit * 28).toFixed(2)}%`,
+            '--gh-top-y', `${((1 - enter) * 54 - exit * 26).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-bottom-y', `${((1 - enter) * -78 - exit * 34).toFixed(2)}%`,
+            '--gh-bottom-y', `${((1 - enter) * -54 - exit * 30).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-description-y', `${((1 - enter) * 52 - exit * 24).toFixed(2)}%`,
+            '--gh-description-y', `${((1 - enter) * 38 - exit * 20).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-blur', `${((1 - enter) * 12 + exit * 5).toFixed(2)}px`,
+            '--gh-blur', `${((1 - enter) * 18 + exit * 7).toFixed(2)}px`,
         );
         heading.style.setProperty(
-            '--gh-scale', (0.94 + enter * 0.06).toFixed(4),
+            '--gh-scale', (0.97 + enter * 0.03 - exit * 0.01).toFixed(4),
         );
-        section.style.setProperty('--gallery-handoff-progress', enter.toFixed(4));
+        section.style.setProperty('--gallery-handoff-progress', handoff.toFixed(4));
     }
 
     function requestRender() {
