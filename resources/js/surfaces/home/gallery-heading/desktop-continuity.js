@@ -1,16 +1,10 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const BLIND_COUNT = 30;
-
-/*
- * Timing ini mengikuti Horizontal Blinds source secara langsung:
- * gsap.to(..., { duration: 0.5, ease: 'power3.out', stagger: { each: 0.02,
- * from: 'start' } }). Dengan 30 blind, satu layer selesai dalam 1.08 unit.
- * Gallery memakai dua layer berurutan: bright lalu cream.
- */
 const BLIND_DURATION = 0.5;
 const BLIND_STAGGER = 0.02;
 const LAYER_DURATION = BLIND_DURATION + ((BLIND_COUNT - 1) * BLIND_STAGGER);
 const MASTER_DURATION = LAYER_DURATION * 2;
+const SCRUB_LERP = 0.14;
 
 function clamp(value) {
     return Math.max(0, Math.min(1, value));
@@ -35,7 +29,6 @@ function createBlindSet(group, vbHeight) {
     let currentY = 0;
 
     for (let index = 0; index < BLIND_COUNT; index += 1) {
-        /* Source menyusun blind dari bawah ke atas lalu stagger from:start. */
         const centerY = vbHeight - (currentY + rowHeight / 2);
         const top = document.createElementNS(SVG_NS, 'rect');
         const bottom = document.createElementNS(SVG_NS, 'rect');
@@ -87,26 +80,22 @@ function buildMaskState(section) {
     const host = section.querySelector('[data-gallery-mask-handoff]');
     if (!host) return null;
 
-    const rect = host.getBoundingClientRect();
+    const width = window.innerWidth || host.getBoundingClientRect().width;
+    const height = window.innerHeight || host.getBoundingClientRect().height;
     const light = configureMaskLayer(
         host.querySelector('[data-gallery-mask-layer="light"]'),
-        rect.width,
-        rect.height,
+        width,
+        height,
     );
     const cream = configureMaskLayer(
         host.querySelector('[data-gallery-mask-layer="cream"]'),
-        rect.width,
-        rect.height,
+        width,
+        height,
     );
 
     return { host, light, cream };
 }
 
-/*
- * Reproduksi timeline openBlinds() dari source tanpa membawa GSAP/Lenis kedua
- * ke halaman. masterTime adalah posisi pada master timeline; setiap blind mulai
- * tepat index * 0.02 dan membuka selama 0.5 dengan power3.out.
- */
 function paintBlindTimeline(blinds, masterTime, layerStart) {
     if (!blinds?.length) return;
 
@@ -130,6 +119,8 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
     let destroyed = false;
     let maskState = buildMaskState(section);
     let previousMasterTime = -1;
+    let handoffCurrent = 0;
+    let handoffTarget = 0;
 
     heading.classList.add('gallery-heading-motion--scroll-linked');
     heading.style.setProperty('--gh-media-blur', '0px');
@@ -139,12 +130,20 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         previousMasterTime = -1;
     }
 
+    function resetMaskHost() {
+        if (!maskState?.host) return;
+        maskState.host.style.visibility = 'hidden';
+        maskState.host.style.opacity = '0';
+        maskState.host.style.transform = 'translate3d(0, 0, 0)';
+    }
+
     function clearDesktopState() {
         heading.classList.remove('gallery-heading-motion--scroll-linked');
         heading.classList.add('gallery-heading-motion--static');
         ['--gh-opacity', '--gh-media-blur']
             .forEach((name) => heading.style.removeProperty(name));
         section.style.removeProperty('--gallery-handoff-progress');
+        resetMaskHost();
     }
 
     function render() {
@@ -157,16 +156,39 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
 
         const viewportHeight = window.innerHeight || 1;
         const sectionTop = section.getBoundingClientRect().top;
+        const stageActive = sectionTop < viewportHeight && sectionTop > 0;
 
-        /*
-         * Tetap memakai corridor SchoolAI 60svh, tetapi isi corridor sekarang
-         * persis grammar master timeline source: bright layer selesai dahulu,
-         * baru cream layer mulai. Tidak ada crossfade/overlap antarlayer.
-         */
-        const handoff = clamp(
+        handoffTarget = clamp(
             (viewportHeight - sectionTop) / (viewportHeight * 0.60),
         );
-        const masterTime = handoff * MASTER_DURATION;
+
+        if (!stageActive) {
+            handoffCurrent = sectionTop >= viewportHeight ? 0 : 1;
+        } else {
+            handoffCurrent += (handoffTarget - handoffCurrent) * SCRUB_LERP;
+            if (Math.abs(handoffTarget - handoffCurrent) < 0.0005) {
+                handoffCurrent = handoffTarget;
+            }
+        }
+
+        if (maskState?.host) {
+            if (stageActive) {
+                /*
+                 * Source memakai sticky .layers 100vh. SchoolAI mem-pin layer
+                 * dengan transform yang mengimbangi posisi section, sehingga
+                 * visual tetap benar-benar full viewport selama 60svh handoff.
+                 */
+                maskState.host.style.visibility = 'visible';
+                maskState.host.style.transform = `translate3d(0, ${(-sectionTop).toFixed(2)}px, 0)`;
+                maskState.host.style.opacity = smoothstep(
+                    clamp(handoffCurrent / 0.08),
+                ).toFixed(4);
+            } else {
+                resetMaskHost();
+            }
+        }
+
+        const masterTime = handoffCurrent * MASTER_DURATION;
 
         if (Math.abs(masterTime - previousMasterTime) > 0.0005) {
             paintBlindTimeline(maskState?.light, masterTime, 0);
@@ -179,7 +201,14 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         );
         const headingOpacity = smoothstep(clamp((creamProgress - 0.72) / 0.24));
         heading.style.setProperty('--gh-opacity', headingOpacity.toFixed(4));
-        section.style.setProperty('--gallery-handoff-progress', handoff.toFixed(4));
+        section.style.setProperty(
+            '--gallery-handoff-progress',
+            handoffCurrent.toFixed(4),
+        );
+
+        if (stageActive && Math.abs(handoffTarget - handoffCurrent) > 0.0005) {
+            frame = window.requestAnimationFrame(render);
+        }
     }
 
     function requestRender() {
@@ -208,6 +237,7 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         }
         destroyed = true;
         if (frame) window.cancelAnimationFrame(frame);
+        resetMaskHost();
         window.removeEventListener('scroll', requestRender);
         window.removeEventListener('resize', onResize);
         window.removeEventListener('pageshow', requestRender);
