@@ -8,31 +8,6 @@
 @extends('layouts.public', ['title' => $page['title'] ?? __('pages.galeri.title'), 'description' => $page['description'] ?? __('pages.galeri.description')])
 
 @section('content')
-  <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-    .gallery-wall-subsection__head {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      justify-items: start !important;
-      align-items: start !important;
-      gap: 10px !important;
-      text-align: start !important;
-    }
-
-    .gallery-wall-subsection__head > div,
-    .gallery-wall-subsection__head h2,
-    .gallery-wall-subsection__head p {
-      width: 100%;
-      max-width: 760px;
-      margin-inline: 0 !important;
-      text-align: start !important;
-      justify-self: start !important;
-    }
-
-    .gallery-wall-subsection__head p {
-      margin-top: 0 !important;
-    }
-  </style>
-
   <section class="gallery-wall-hero" aria-labelledby="galeri-title">
     <div class="gallery-wall-bg" aria-hidden="true"></div>
 
@@ -69,15 +44,18 @@
       </div>
 
       @foreach($sections as $section)
-        <section class="gallery-wall-subsection reveal" aria-labelledby="gallery-section-{{ $loop->index }}">
+        <section
+          class="gallery-wall-subsection gallery-wall-subsection--{{ $loop->odd ? 'media-left' : 'media-right' }} reveal"
+          aria-labelledby="gallery-section-{{ $loop->index }}"
+        >
           <header class="gallery-wall-subsection__head">
-            <div>
+            <div class="gallery-wall-subsection__copy">
               <h2 id="gallery-section-{{ $loop->index }}">{{ $section['title'] }}</h2>
-            </div>
 
-            @if(! empty($section['description']))
-              <p>{{ $section['description'] }}</p>
-            @endif
+              @if(! empty($section['description']))
+                <p>{{ $section['description'] }}</p>
+              @endif
+            </div>
           </header>
 
           <div class="gallery-wall-grid gallery-wall-grid--subsection">
