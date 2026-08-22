@@ -2,8 +2,6 @@ export class DepthGalleryEndCta {
     constructor(root, scroll) {
         this.root = root;
         this.scroll = scroll;
-        this.journey = root.querySelector('[data-depth-gallery-journey]');
-        this.viewport = root.querySelector('[data-depth-gallery-viewport]');
         this.link = root.querySelector('[data-depth-gallery-end-link]');
         this.progress = 0;
         this.transitionProgress = 0;
@@ -14,22 +12,7 @@ export class DepthGalleryEndCta {
     }
 
     readTransitionProgress() {
-        if (!this.journey || !this.viewport) return 0;
-
-        const transitionDistance = this.scroll.getTransitionDistance();
-        if (transitionDistance <= 0) return 0;
-
-        const fullTravel = Math.max(
-            1,
-            this.journey.offsetHeight - this.viewport.clientHeight,
-        );
-        const galleryTravel = Math.max(1, fullTravel - transitionDistance);
-        const rawScroll = Math.max(
-            0,
-            -this.journey.getBoundingClientRect().top,
-        );
-
-        return clamp((rawScroll - galleryTravel) / transitionDistance);
+        return this.scroll.getTransitionProgress();
     }
 
     update() {
@@ -47,9 +30,9 @@ export class DepthGalleryEndCta {
             || focused
         );
         const swingProgress = readSwingProgress(this.transitionProgress);
-        const riseProgress = smoothProgress(clamp(
+        const riseProgress = clamp(
             (this.transitionProgress - 0.30) / 0.70,
-        ));
+        );
         const transitionScale = 1 - riseProgress;
         const mediaOneRotation = -3 - 17 * swingProgress;
         const mediaTwoRotation = 4 + 16 * swingProgress;
