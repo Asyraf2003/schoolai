@@ -11,6 +11,8 @@ export class DepthScroll {
         this.transitionMedia = window.matchMedia(TRANSITION_QUERY);
         this.scrollTarget = 0;
         this.scrollCurrent = 0;
+        this.handoffTarget = 0;
+        this.handoffCurrent = 0;
         this.previousScrollCurrent = 0;
         this.progressCurrent = 0;
         this.endProgress = 0;
@@ -50,6 +52,26 @@ export class DepthScroll {
         return enabled === '1' ? this.viewport.clientHeight : 0;
     }
 
+    getTransitionProgress() {
+        const fullTravel = Math.max(
+            1,
+            this.journey.offsetHeight - this.viewport.clientHeight,
+        );
+        const transitionDistance = Math.min(
+            this.getTransitionDistance(),
+            Math.max(0, fullTravel - 1),
+        );
+        if (transitionDistance <= 0) return 0;
+
+        const galleryTravel = Math.max(1, fullTravel - transitionDistance);
+
+        return this.THREE.MathUtils.clamp(
+            (this.handoffCurrent - galleryTravel) / transitionDistance,
+            0,
+            1,
+        );
+    }
+
     readScrollTarget(travel) {
         const rect = this.journey.getBoundingClientRect();
         return this.THREE.MathUtils.clamp(-rect.top, 0, travel);
@@ -81,7 +103,13 @@ export class DepthScroll {
         );
         const travel = Math.max(1, fullTravel - transitionDistance);
 
-        this.scrollTarget = this.readScrollTarget(travel);
+        this.handoffTarget = this.readScrollTarget(fullTravel);
+        this.scrollTarget = Math.min(this.handoffTarget, travel);
+        this.handoffCurrent = this.THREE.MathUtils.lerp(
+            this.handoffCurrent,
+            this.handoffTarget,
+            this.scrollSmoothing,
+        );
         this.scrollCurrent = this.THREE.MathUtils.lerp(
             this.scrollCurrent,
             this.scrollTarget,
