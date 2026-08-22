@@ -19,6 +19,8 @@
   };
 @endphp
 
+@include('home.debug.article-ruler')
+
 <section class="article-story" id="artikel" aria-labelledby="article-story-heading" data-article-story>
   <p>tes1</p>
   <h2 class="sr-only" id="article-story-heading">{{ $articleHeading }}</h2>
