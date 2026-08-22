@@ -57,6 +57,9 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('data-depth-gallery-source')
         ->toContain('data-depth-gallery-end-link')
         ->toContain('data-depth-gallery-end-steps')
+        ->toContain('data-depth-gallery-copy')
+        ->toContain('depth-gallery__end-showcase')
+        ->toContain('depth-gallery__end-media--')
         ->toContain('class="depth-gallery__fallback-item"')
         ->toContain('data-position-x="{{ $preset[\'x\'] }}"')
         ->toContain('data-background-color')
@@ -120,6 +123,7 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('this.endProgress')
         ->and($endCta)
         ->toContain("root.classList.toggle('is-depth-end-ready'")
+        ->toContain('--depth-end-progress')
         ->toContain('--depth-label-opacity')
         ->and($background)
         ->toContain('ShaderMaterial')
@@ -171,7 +175,7 @@ it('keeps Gallery heading continuity locally owned and depth Gallery untouched',
         ->toContain('@media (min-width: 1280px) and (prefers-reduced-motion: reduce)');
 });
 
-it('prepares one article image seed behind the Gallery ending handoff', function (): void {
+it('closes Gallery with two media previews and the gallery CTA', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $controller = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/end-cta.js',
@@ -181,14 +185,16 @@ it('prepares one article image seed behind the Gallery ending handoff', function
     ));
 
     expect($blade)
-        ->toContain('data-depth-gallery-article-seed')
-        ->toContain("collect(\$articlesSection['items'] ?? [])->first()")
+        ->toContain('$depthClosingMedia')
+        ->toContain('slice(max(0, $depthItems->count() - 2))')
+        ->toContain('depth-gallery__end-showcase')
+        ->toContain('depth-gallery__end-copy')
         ->and($controller)
-        ->toContain('--depth-article-seed-opacity')
-        ->toContain('this.link.contains(document.activeElement)')
+        ->toContain('--depth-end-progress')
+        ->toContain('this.scroll.endProgress')
         ->and($styles)
-        ->toContain('.depth-gallery__article-seed')
-        ->toContain('aspect-ratio: 16 / 9');
+        ->toContain('.depth-gallery__end-media--1')
+        ->toContain('.depth-gallery__end-media--2');
 });
 
 it('keeps every active depth gallery source within the file limit', function (): void {

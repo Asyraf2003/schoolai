@@ -49,7 +49,14 @@
       && trim((string) ($depthCta['label'] ?? '')) !== '';
   $depthEndSteps = $hasDepthCta ? 1 : 0;
   $depthJourneyCount = max(1, $depthItems->count() + $depthEndSteps);
-  $articlePreview = collect($articlesSection['items'] ?? [])->first();
+  $depthClosingMedia = $depthItems
+      ->slice(max(0, $depthItems->count() - 2))
+      ->values();
+  $depthClosingCopy = trim((string) (
+      $gallerySection['section_subtitle']
+      ?? $gallerySection['subtitle']
+      ?? ''
+  ));
 @endphp
 
 <div
@@ -128,25 +135,39 @@
 
       @if ($hasDepthCta)
         <div class="depth-gallery__end" data-depth-gallery-end>
-          @if (! empty($articlePreview['thumbnail_url']))
-            <span class="depth-gallery__article-seed" data-depth-gallery-article-seed aria-hidden="true">
-              <img
-                src="{{ $articlePreview['thumbnail_url'] }}"
-                alt=""
-                width="1600"
-                height="900"
-                loading="lazy"
-                decoding="async"
-              />
-            </span>
-          @endif
-          <a
-            class="depth-gallery__end-link"
-            href="{{ $depthCta['href'] }}"
-            data-depth-gallery-end-link
-          >
-            <span>{{ $depthCta['label'] }}</span>
-          </a>
+          <div class="depth-gallery__end-showcase" aria-hidden="true">
+            @foreach ($depthClosingMedia as $closingItem)
+              <figure class="depth-gallery__end-media depth-gallery__end-media--{{ $loop->iteration }}">
+                @if (! empty($closingItem['thumbnail_url']))
+                  <img
+                    src="{{ $closingItem['thumbnail_url'] }}"
+                    alt=""
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                @else
+                  <span aria-hidden="true">{{ $closingItem['fallback_icon'] ?? '📸' }}</span>
+                @endif
+              </figure>
+            @endforeach
+          </div>
+
+          <div class="depth-gallery__end-copy">
+            @if ($depthClosingCopy !== '')
+              <p>{{ $depthClosingCopy }}</p>
+            @endif
+
+            <a
+              class="depth-gallery__end-link"
+              href="{{ $depthCta['href'] }}"
+              data-depth-gallery-end-link
+            >
+              <span>{{ $depthCta['label'] }}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
       @endif
     </div>
