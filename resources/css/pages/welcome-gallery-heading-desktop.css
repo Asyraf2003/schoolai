@@ -19,7 +19,7 @@
         --gh-media-opacity: 1;
         --gh-media-blur: 0px;
         --gh-media-scale: 1;
-        width: min(58rem, 62vw);
+        width: min(72rem, 72vw);
         max-width: none;
         margin: 0 0 0 auto;
         padding: 0;
@@ -48,13 +48,13 @@
 
     .home-page .gallery-heading-motion__line--single {
         display: block;
-        width: min(100%, 10ch);
+        width: min(100%, 12ch);
         max-width: none;
         margin-left: auto;
-        font-size: clamp(5.2rem, 7.8vw, 10.5rem);
-        font-weight: 600;
-        line-height: .8;
-        letter-spacing: -.065em;
+        font-size: clamp(6.6rem, 10.4vw, 14rem);
+        font-weight: 250;
+        line-height: .78;
+        letter-spacing: -.072em;
         text-align: right;
         text-wrap: balance;
         white-space: normal;
@@ -83,8 +83,9 @@
     html[dir="rtl"] .home-page .gallery-heading-motion__line--single {
         margin-left: auto;
         font-family: var(--font-ar-display, Cairo, sans-serif);
-        font-weight: 600;
-        line-height: .96;
+        font-size: clamp(6.2rem, 9.6vw, 13rem);
+        font-weight: 300;
+        line-height: .94;
         letter-spacing: normal;
         text-align: right;
         transform-origin: right top;
