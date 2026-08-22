@@ -1,3 +1,5 @@
+const TRANSITION_QUERY = '(min-width: 1280px) and (prefers-reduced-motion: no-preference)';
+
 export class DepthScroll {
     constructor(THREE, camera, gallery, journey, viewport, endSteps = 0) {
         this.THREE = THREE;
@@ -6,6 +8,7 @@ export class DepthScroll {
         this.journey = journey;
         this.viewport = viewport;
         this.endSteps = Math.max(0, endSteps);
+        this.transitionMedia = window.matchMedia(TRANSITION_QUERY);
         this.scrollTarget = 0;
         this.scrollCurrent = 0;
         this.previousScrollCurrent = 0;
@@ -34,6 +37,19 @@ export class DepthScroll {
         );
     }
 
+    getTransitionDistance() {
+        if (
+            this.journey.dataset.depthGalleryTransition !== 'sticky-scale'
+            || !this.transitionMedia.matches
+        ) return 0;
+
+        const enabled = getComputedStyle(this.journey)
+            .getPropertyValue('--depth-sticky-transition-enabled')
+            .trim();
+
+        return enabled === '1' ? this.viewport.clientHeight : 0;
+    }
+
     readScrollTarget(travel) {
         const rect = this.journey.getBoundingClientRect();
         return this.THREE.MathUtils.clamp(-rect.top, 0, travel);
@@ -55,10 +71,16 @@ export class DepthScroll {
 
     update() {
         this.updateCameraBounds();
-        const travel = Math.max(
+        const fullTravel = Math.max(
             1,
             this.journey.offsetHeight - this.viewport.clientHeight,
         );
+        const transitionDistance = Math.min(
+            this.getTransitionDistance(),
+            Math.max(0, fullTravel - 1),
+        );
+        const travel = Math.max(1, fullTravel - transitionDistance);
+
         this.scrollTarget = this.readScrollTarget(travel);
         this.scrollCurrent = this.THREE.MathUtils.lerp(
             this.scrollCurrent,

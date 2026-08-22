@@ -65,7 +65,11 @@
   data-depth-gallery-end-steps="{{ $depthEndSteps }}"
   style="--depth-gallery-count: {{ $depthJourneyCount }}"
 >
-  <div class="depth-gallery__journey" data-depth-gallery-journey>
+  <div
+    class="depth-gallery__journey"
+    data-depth-gallery-journey
+    data-depth-gallery-transition="sticky-scale"
+  >
     <div class="depth-gallery__viewport" data-depth-gallery-viewport>
       <canvas
         class="depth-gallery__canvas"

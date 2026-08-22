@@ -1,65 +1,45 @@
 @media (max-width: 1279px) {
-    .article-story__sticky {
-        transform: none !important;
-    }
-}
-
-@media (max-width: 900px) {
-    .article-story__intro {
-        width: min(100% - 2rem, 46rem);
+    .article-story__horizontal,
+    .article-story__roll {
+        margin-block-start: 4rem;
     }
 
-    .article-story__sticky {
-        grid-template-columns: 1fr;
-        min-height: 0;
-        padding: clamp(2.5rem, 7vw, 4rem) 1rem;
+    .article-story__roll {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
 
-    .article-story__media {
-        min-height: 0;
-        aspect-ratio: 4 / 3;
-    }
-
-    .article-story__copy {
-        width: min(100%, 42rem);
-        margin-inline: auto;
-    }
-
-    .article-story__copy h3 {
-        max-width: 14ch;
-    }
-}
-
-@media (max-width: 639px) {
-    .article-story__intro {
-        padding-block: 4.5rem 3rem;
-    }
-
-    .article-story__intro h2 {
-        font-size: clamp(2.8rem, 14vw, 4.8rem);
-    }
-
-    .article-story__sticky {
-        gap: 1.4rem;
-        padding-block: 2.5rem;
-    }
-
-    .article-story__copy h3 {
-        font-size: clamp(2rem, 10vw, 3.1rem);
-    }
-
-    .article-story__copy p {
-        font-size: .92rem;
-    }
-
-    .article-story__outro {
-        min-height: 50svh;
+    .article-story__final-link {
+        margin-block-start: 2rem;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .article-story__sticky {
+    .article-story__journey,
+    .article-story__stage {
+        min-height: auto !important;
+        height: auto !important;
+    }
+
+    .article-story__stage {
+        position: relative !important;
+        display: grid !important;
+        gap: 4rem !important;
+        padding: clamp(5rem, 10vw, 9rem) 5vw !important;
+        overflow: visible !important;
+    }
+
+    .article-story__opening,
+    .article-story__horizontal,
+    .article-story__roll {
+        position: relative !important;
+        inset: auto !important;
+        opacity: 1 !important;
         transform: none !important;
-        will-change: auto !important;
+    }
+
+    .article-story__track,
+    .article-story__roll-stack,
+    .article-story__final-link {
+        transform: none !important;
     }
 }

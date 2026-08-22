@@ -58,6 +58,7 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('data-depth-gallery-end-link')
         ->toContain('data-depth-gallery-end-steps')
         ->toContain('data-depth-gallery-copy')
+        ->toContain('data-depth-gallery-transition="sticky-scale"')
         ->toContain('depth-gallery__end-showcase')
         ->toContain('depth-gallery__end-media--')
         ->toContain('class="depth-gallery__fallback-item"')
@@ -119,12 +120,16 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->and($scroll)
         ->toContain('this.scrollSmoothing = 0.08')
         ->toContain('this.velocityDamping = 0.12')
+        ->toContain('getTransitionDistance()')
+        ->toContain('fullTravel - transitionDistance')
         ->toContain('this.scrollCurrent / travel')
         ->toContain('this.endProgress')
         ->and($endCta)
         ->toContain("root.classList.toggle('is-depth-end-ready'")
+        ->toContain('is-depth-transitioning')
         ->toContain('--depth-end-progress')
         ->toContain('--depth-label-opacity')
+        ->toContain('--depth-transition-scale')
         ->and($background)
         ->toContain('ShaderMaterial')
         ->toContain('setMoodBlend')
@@ -175,7 +180,7 @@ it('keeps Gallery heading continuity locally owned and depth Gallery untouched',
         ->toContain('@media (min-width: 1280px) and (prefers-reduced-motion: reduce)');
 });
 
-it('closes Gallery with two media previews and the gallery CTA', function (): void {
+it('uses the closing Gallery composition as the sticky-scale handoff to Article', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $controller = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/end-cta.js',
@@ -189,12 +194,18 @@ it('closes Gallery with two media previews and the gallery CTA', function (): vo
         ->toContain('slice(max(0, $depthItems->count() - 2))')
         ->toContain('depth-gallery__end-showcase')
         ->toContain('depth-gallery__end-copy')
+        ->toContain('data-depth-gallery-transition="sticky-scale"')
         ->and($controller)
         ->toContain('--depth-end-progress')
-        ->toContain('this.scroll.endProgress')
+        ->toContain('--depth-transition-progress')
+        ->toContain('--depth-transition-scale')
+        ->toContain('readTransitionProgress()')
         ->and($styles)
         ->toContain('.depth-gallery__end-media--1')
-        ->toContain('.depth-gallery__end-media--2');
+        ->toContain('.depth-gallery__end-media--2')
+        ->toContain('margin-top: -100svh')
+        ->toContain('transform-origin: 50% 100%')
+        ->toContain('.galeri-section:has(.depth-gallery.is-depth-transitioning)');
 });
 
 it('keeps every active depth gallery source within the file limit', function (): void {
