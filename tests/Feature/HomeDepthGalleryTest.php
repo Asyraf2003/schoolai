@@ -120,7 +120,9 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->and($scroll)
         ->toContain('this.scrollSmoothing = 0.08')
         ->toContain('this.velocityDamping = 0.12')
+        ->toContain('this.handoffCurrent')
         ->toContain('getTransitionDistance()')
+        ->toContain('getTransitionProgress()')
         ->toContain('fullTravel - transitionDistance')
         ->toContain('this.scrollCurrent / travel')
         ->toContain('this.endProgress')
@@ -130,6 +132,7 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('--depth-end-progress')
         ->toContain('--depth-label-opacity')
         ->toContain('--depth-transition-scale')
+        ->toContain('this.scroll.getTransitionProgress()')
         ->and($background)
         ->toContain('ShaderMaterial')
         ->toContain('setMoodBlend')
@@ -200,11 +203,13 @@ it('uses the closing Gallery composition as the sticky-scale handoff to Article'
         ->toContain('--depth-transition-progress')
         ->toContain('--depth-transition-scale')
         ->toContain('readTransitionProgress()')
+        ->toContain('this.scroll.getTransitionProgress()')
+        ->toContain('(this.transitionProgress - 0.30) / 0.70')
         ->and($styles)
         ->toContain('.depth-gallery__end-media--1')
         ->toContain('.depth-gallery__end-media--2')
         ->toContain('margin-top: -100svh')
-        ->toContain('transform-origin: 50% 100%')
+        ->toContain('transform-origin: 50% 0%')
         ->toContain('.galeri-section:has(.depth-gallery.is-depth-transitioning)');
 });
 
