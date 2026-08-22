@@ -20,9 +20,9 @@
         max-width: none;
         margin: 0;
         padding: 0;
-        opacity: calc(
-            var(--gh-handoff-opacity)
-            * var(--gh-media-opacity)
+        opacity: min(
+            var(--gh-handoff-opacity),
+            var(--gh-media-opacity)
         );
         transform: none;
         will-change: opacity;
