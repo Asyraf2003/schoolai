@@ -4,8 +4,9 @@ import { clearCenterMeasurement, collectValuesNodes,
     exposeCenterMeasurement, measureValuesGeometry } from './geometry.js';
 import { clearValuesStory, paintValuesStory } from './paint.js';
 import { mountValuesLifecycle } from './lifecycle.js';
-import { FRAME_MS, createScrollMotion, readHandoffProgress,
-    readStoryProgress, resetScrollMotion, updateScrollMotion } from './motion.js';
+import { FRAME_MS, createScrollMotion, readGalleryHandoffProgress,
+    readHandoffProgress, readStoryProgress, resetScrollMotion,
+    updateScrollMotion } from './motion.js';
 import { createValuesSpatialBridge } from './spatial-controller.js';
 
 const VALUES_SPATIAL_ENABLED = false;
@@ -33,6 +34,7 @@ export function createValuesStory(root) {
     const capable = supportsStoryMotion();
     const motion = createScrollMotion(0);
     const handoffMotion = createScrollMotion(0);
+    const galleryHandoffMotion = createScrollMotion(0);
     let heading = createHeadingState(0);
     let frame = 0;
     let active = !('IntersectionObserver' in window);
@@ -74,6 +76,7 @@ export function createValuesStory(root) {
         return {
             handoff: readHandoffProgress(rootTop, geometry.viewportHeight),
             story: readStoryProgress(storyTop, geometry),
+            galleryHandoff: readGalleryHandoffProgress(storyTop, geometry),
             headingTop,
             timelineTop,
         };
@@ -91,6 +94,9 @@ export function createValuesStory(root) {
         const handoff = updateScrollMotion(
             handoffMotion, target.handoff, delta, snapNext,
         );
+        const galleryHandoff = updateScrollMotion(
+            galleryHandoffMotion, target.galleryHandoff, delta, snapNext,
+        );
         const headingSnapshot = updateHeadingState(
             heading, target.story, target.headingTop,
             geometry.viewportHeight, time, geometry.mode >= 3,
@@ -100,6 +106,7 @@ export function createValuesStory(root) {
         paintValuesStory(
             root, cards, nodes, snapshot.visual, target.story, geometry,
             snapshot.momentum, headingSnapshot, handoff.visual,
+            galleryHandoff.visual,
         );
         spatial.update({
             handoffProgress: handoff.visual,
@@ -108,7 +115,10 @@ export function createValuesStory(root) {
         });
         snapNext = false;
 
-        if (!snapshot.settled || !handoff.settled || !headingSnapshot.settled) {
+        if (!snapshot.settled
+            || !handoff.settled
+            || !galleryHandoff.settled
+            || !headingSnapshot.settled) {
             requestRender();
         } else {
             lastTime = 0;
@@ -175,6 +185,7 @@ export function createValuesStory(root) {
         snapNext = true;
         resetScrollMotion(motion, 0);
         resetScrollMotion(handoffMotion, 0);
+        resetScrollMotion(galleryHandoffMotion, 0);
         spatial.setEnabled(VALUES_SPATIAL_ENABLED);
         requestRender();
     }
