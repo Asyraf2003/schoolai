@@ -8,9 +8,9 @@ function updateGalleryHeading(engine) {
     const totalSteps = Math.max(1, planeSteps + engine.scroll.endSteps);
 
     /*
-     * Clock kedua dimulai setelah handoff selesai: ketika media pertama bergerak
-     * menuju media kedua, heading + description perlahan blur dan menghilang.
-     * Pada media kedua heading sudah habis; perjalanan media berikutnya bebas.
+     * Clock kedua dimulai setelah handoff selesai. Heading memakai progress yang
+     * sama dengan perjalanan media pertama menuju media kedua: semakin media #1
+     * maju ke kamera, heading ikut membesar, blur, lalu habis bersamanya.
      */
     const firstToSecond = engine.THREE.MathUtils.clamp(
         engine.scroll.progressCurrent * totalSteps,
@@ -19,14 +19,16 @@ function updateGalleryHeading(engine) {
     );
     const departure = engine.THREE.MathUtils.smoothstep(
         firstToSecond,
-        0.04,
-        0.96,
+        0.02,
+        0.98,
     );
     const opacity = 1 - departure;
-    const blur = 12 * departure;
+    const blur = 10 * departure;
+    const scale = 1 + departure * 0.58;
 
     heading.style.setProperty('--gh-media-opacity', opacity.toFixed(4));
     heading.style.setProperty('--gh-media-blur', `${blur.toFixed(2)}px`);
+    heading.style.setProperty('--gh-media-scale', scale.toFixed(4));
     heading.dataset.galleryHeadingDeparture = departure.toFixed(4);
 }
 
