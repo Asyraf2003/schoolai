@@ -3,12 +3,18 @@
     --program-values-morph: 0;
     --program-values-morph-pct: 0%;
     --program-values-type-opacity: .16;
+    --values-gallery-world-opacity-pct: 100%;
+    --program-values-world-color: color-mix(
+        in srgb,
+        #fff calc(100% - var(--program-values-morph-pct)),
+        var(--program-values-final-color) var(--program-values-morph-pct)
+    );
     position: relative;
     isolation: isolate;
     background: color-mix(
         in srgb,
-        #fff calc(100% - var(--program-values-morph-pct)),
-        var(--program-values-final-color) var(--program-values-morph-pct)
+        var(--program-values-world-color) var(--values-gallery-world-opacity-pct),
+        transparent
     );
 }
 
