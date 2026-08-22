@@ -1,9 +1,30 @@
+function updateGalleryHeading(engine) {
+    const heading = engine.root
+        ?.closest('.galeri-section')
+        ?.querySelector('[data-gallery-heading]');
+    if (!heading) return;
+
+    const planeSteps = Math.max(0, engine.gallery.planes.length - 1);
+    const totalSteps = Math.max(1, planeSteps + engine.scroll.endSteps);
+    const firstToSecond = engine.THREE.MathUtils.clamp(
+        engine.scroll.progressCurrent * totalSteps,
+        0,
+        1,
+    );
+    const reveal = engine.THREE.MathUtils.smoothstep(firstToSecond, 0, 1);
+    const blur = 14 * (1 - reveal);
+
+    heading.style.setProperty('--gh-media-blur', `${blur.toFixed(2)}px`);
+    heading.dataset.galleryHeadingReveal = reveal.toFixed(4);
+}
+
 export function renderDepthFrame(engine, time = performance.now()) {
     const { THREE, renderer, camera, scene } = engine;
     if (!renderer || engine.disposed) return false;
 
     try {
         engine.scroll.update();
+        updateGalleryHeading(engine);
         engine.endCta.update();
         engine.trail.update(camera, engine.scroll, time);
         engine.gallery.update(camera, engine.scroll);
