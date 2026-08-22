@@ -77,3 +77,120 @@
         display: none;
     }
 }
+
+/*
+ * Temporary handoff diagnostics. Enabled only with ?handoff_debug=1.
+ * These rules never alter layout or animation timing; they only outline the
+ * current visual owners so screenshots reveal which layer owns a seam.
+ */
+.handoff-debug-legend {
+    position: fixed;
+    top: 84px;
+    left: 18px;
+    z-index: 99999;
+    display: grid;
+    gap: 7px;
+    width: min(320px, calc(100vw - 36px));
+    padding: 12px 14px;
+    border: 1px solid rgb(255 255 255 / .35);
+    border-radius: 10px;
+    background: rgb(10 10 14 / .88);
+    color: #fff;
+    font: 600 12px/1.3 Inter, sans-serif;
+    box-shadow: 0 10px 32px rgb(0 0 0 / .28);
+    pointer-events: none;
+}
+
+.handoff-debug-legend strong {
+    margin-bottom: 2px;
+    letter-spacing: .08em;
+}
+
+.handoff-debug-legend span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.handoff-debug-swatch {
+    display: inline-block;
+    flex: 0 0 13px;
+    width: 13px;
+    height: 13px;
+    border-radius: 3px;
+}
+
+.handoff-debug-swatch--kinetic { background: #ff3b30; }
+.handoff-debug-swatch--curtain { background: #d000ff; }
+.handoff-debug-swatch--gallery { background: #22c55e; }
+.handoff-debug-swatch--depth { background: #f59e0b; }
+
+@media (min-width: 1280px) {
+    .home-page.handoff-debug .program-values-world__visual {
+        box-shadow: inset 0 0 0 4px #ff3b30;
+    }
+
+    .home-page.handoff-debug .program-values-world__visual::after {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 20;
+        padding: 7px 9px;
+        border-radius: 6px;
+        content: "A  STICKY KINETIC WORLD";
+        background: #ff3b30;
+        color: #fff;
+        font: 800 11px/1 Inter, sans-serif;
+        letter-spacing: .04em;
+    }
+
+    .home-page.handoff-debug .values-story__clip::after {
+        content: "B  BLUE CURTAIN / CARD EXIT";
+        box-shadow: inset 0 0 0 4px #d000ff;
+        color: #fff;
+        padding: 14px;
+        font: 800 11px/1 Inter, sans-serif;
+        letter-spacing: .04em;
+    }
+
+    .home-page.handoff-debug .galeri-section {
+        box-shadow: inset 0 0 0 4px #22c55e;
+    }
+
+    .home-page.handoff-debug .galeri-section::before {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        z-index: 999;
+        display: block !important;
+        width: max-content;
+        max-width: calc(100vw - 32px);
+        padding: 7px 10px;
+        content: "C  GALLERY SECTION START / TARGET #fffaf0";
+        background: #22c55e;
+        color: #07150a;
+        font: 800 11px/1 Inter, sans-serif;
+        letter-spacing: .04em;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    .home-page.handoff-debug .depth-gallery__viewport {
+        box-shadow: inset 0 0 0 4px #f59e0b;
+    }
+
+    .home-page.handoff-debug .depth-gallery__viewport::before {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 50;
+        padding: 7px 9px;
+        border-radius: 6px;
+        content: "D  GALLERY DEPTH VIEWPORT";
+        background: #f59e0b;
+        color: #171006;
+        font: 800 11px/1 Inter, sans-serif;
+        letter-spacing: .04em;
+        pointer-events: none;
+    }
+}
