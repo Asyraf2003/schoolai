@@ -4,7 +4,7 @@
     position: relative;
     z-index: 2;
     overflow: clip;
-    background: transparent;
+    background: #f6f3eb;
     color: #11131b;
     isolation: isolate;
 }
@@ -43,6 +43,19 @@
     gap: 1.5rem;
     min-height: 78svh;
     padding: clamp(3rem, 7vw, 7rem) 5vw;
+}
+
+.article-story__opening-link {
+    display: grid;
+    gap: 1.5rem;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.article-story__opening-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 6px;
 }
 
 .article-story__opening-media,
