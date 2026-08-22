@@ -19,39 +19,8 @@
   };
 @endphp
 
-@env('local')
-  <style>
-    [data-article-layout-mark] {
-      position: relative !important;
-      box-shadow: inset 0 0 0 1px rgb(255 0 0 / .38);
-    }
-
-    [data-article-layout-mark]::after {
-      content: attr(data-article-layout-mark);
-      position: absolute;
-      z-index: 9999;
-      inset: 6px auto auto 6px;
-      min-width: 2.4rem;
-      padding: .28rem .45rem;
-      border: 1px solid rgb(255 255 255 / .9);
-      border-radius: 4px;
-      background: rgb(12 12 12 / .88);
-      color: #fff;
-      font: 700 11px/1 system-ui, sans-serif;
-      letter-spacing: .04em;
-      text-align: center;
-      pointer-events: none;
-    }
-  </style>
-@endenv
-
-<section
-  class="article-story"
-  id="artikel"
-  aria-labelledby="article-story-heading"
-  data-article-story
-  data-article-layout-mark="A00"
->
+<section class="article-story" id="artikel" aria-labelledby="article-story-heading" data-article-story>
+  <p>tes1</p>
   <h2 class="sr-only" id="article-story-heading">{{ $articleHeading }}</h2>
 
   @if ($articleItems->isNotEmpty())
@@ -65,20 +34,22 @@
       </ul>
     </nav>
 
-    <div class="article-story__journey" data-article-journey data-article-layout-mark="A01">
-      <div class="article-story__stage" data-article-stage data-article-layout-mark="A02">
-        <div class="article-story__horizontal" data-article-horizontal data-article-layout-mark="A03">
-          <div class="article-story__track" data-article-track data-article-layout-mark="A04">
+    <div class="article-story__journey" data-article-journey>
+      <p>tes2</p>
+      <div class="article-story__stage" data-article-stage>
+        <p>tes3</p>
+        <div class="article-story__horizontal" data-article-horizontal>
+          <p>tes4</p>
+          <div class="article-story__track" data-article-track>
+            <p>tes5</p>
             @foreach ($articleItems as $article)
               <article
                 class="article-story__panel{{ $loop->first ? ' article-story__panel--opening' : '' }}"
                 data-article-panel
-                data-article-layout-mark="P{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
               >
-                <div
-                  class="article-story__panel-media"
-                  data-article-layout-mark="M{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
-                >
+                <p>tes6-{{ $loop->iteration }}</p>
+                <div class="article-story__panel-media">
+                  <p>tes7-{{ $loop->iteration }}</p>
                   @if (! empty($article['thumbnail_url']))
                     <img
                       src="{{ $article['thumbnail_url'] }}"
@@ -94,11 +65,8 @@
                   @endif
                 </div>
 
-                <div
-                  class="article-story__panel-heading"
-                  data-article-panel-heading
-                  data-article-layout-mark="H{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
-                >
+                <div class="article-story__panel-heading" data-article-panel-heading>
+                  <p>tes8-{{ $loop->iteration }}</p>
                   <span>
                     {{ $articleDisplayHeading }}
                     ·
@@ -113,11 +81,8 @@
                   </h3>
                 </div>
 
-                <p
-                  class="article-story__panel-description"
-                  data-article-panel-description
-                  data-article-layout-mark="D{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
-                >
+                <p>tes9-{{ $loop->iteration }}</p>
+                <p class="article-story__panel-description" data-article-panel-description>
                   {{ $article['description'] }}
                 </p>
               </article>
@@ -126,25 +91,16 @@
             <section
               class="article-story__closing"
               data-article-closing
-              data-article-layout-mark="C00"
               aria-label="{{ $articleClosingHeading }}"
             >
-              <div
-                class="article-story__roll-window"
-                data-article-roll-window
-                data-article-layout-mark="C01"
-                aria-hidden="true"
-              >
-                <div
-                  class="article-story__roll-stack"
-                  data-article-roll-stack
-                  data-article-layout-mark="C02"
-                >
+              <p>tes10</p>
+              <div class="article-story__roll-window" data-article-roll-window aria-hidden="true">
+                <p>tes11</p>
+                <div class="article-story__roll-stack" data-article-roll-stack>
+                  <p>tes12</p>
                   @foreach ($articleItems as $article)
-                    <figure
-                      class="article-story__roll-item article-story__roll-item--{{ $loop->iteration }}"
-                      data-article-layout-mark="R{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
-                    >
+                    <figure class="article-story__roll-item article-story__roll-item--{{ $loop->iteration }}">
+                      <p>tes13-{{ $loop->iteration }}</p>
                       @if (! empty($article['thumbnail_url']))
                         <img
                           src="{{ $article['thumbnail_url'] }}"
@@ -162,7 +118,8 @@
                 </div>
               </div>
 
-              <div class="article-story__closing-copy" data-article-layout-mark="C03">
+              <div class="article-story__closing-copy">
+                <p>tes14</p>
                 <span>{{ $articleDisplayHeading }}</span>
                 <h3>{{ $articleClosingHeading }}</h3>
                 @if ($articleDescription !== '')
@@ -170,11 +127,11 @@
                 @endif
 
                 @if (! empty($articleCta['href']) && ! empty($articleCta['label']))
+                  <p>tes15</p>
                   <a
                     class="article-story__final-cta"
                     href="{{ $articleCta['href'] }}"
                     data-article-final-cta
-                    data-article-layout-mark="C04"
                   >
                     <span>{{ $articleCta['label'] }}</span>
                     <span aria-hidden="true">↗</span>
