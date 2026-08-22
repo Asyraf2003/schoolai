@@ -14,6 +14,35 @@ const ROOT_PROPERTIES = [
     '--values-gallery-transition', '--values-gallery-bridge-y',
 ];
 
+const WORLD_PROPERTIES = [
+    '--values-gallery-exit-progress',
+    '--values-gallery-kinetic-opacity',
+];
+
+function clamp(value) {
+    return Math.max(0, Math.min(1, value));
+}
+
+function smoothstep(value) {
+    const progress = clamp(value);
+    return progress * progress * (3 - 2 * progress);
+}
+
+function valuesWorldRoot(root, nodes) {
+    const siblingWorld = nodes.programRoot?.parentElement;
+    if (siblingWorld?.matches('[data-program-values-world]')) {
+        return siblingWorld;
+    }
+
+    return root.closest('[data-program-values-world]');
+}
+
+function kineticOpacity(galleryTransition) {
+    // exitAmount() sudah ease-out. Hilangkan kinetic pada sekitar sepertiga awal
+    // fase exit agar tersisa pure blue sebelum Gallery mulai menuju warna pucat.
+    return 1 - smoothstep(galleryTransition / 0.72);
+}
+
 function writeCardFrame(card, state) {
     card.style.setProperty('--values-x', `${state.x.toFixed(2)}px`);
     card.style.setProperty('--values-y', `${state.y.toFixed(2)}px`);
@@ -68,6 +97,19 @@ function writeRootFrame(
         '--values-gallery-bridge-y',
         `${(100 - galleryTransition * 123).toFixed(2)}%`,
     );
+
+    const worldRoot = valuesWorldRoot(root, nodes);
+    if (worldRoot) {
+        worldRoot.style.setProperty(
+            '--values-gallery-exit-progress',
+            galleryTransition.toFixed(4),
+        );
+        worldRoot.style.setProperty(
+            '--values-gallery-kinetic-opacity',
+            kineticOpacity(galleryTransition).toFixed(4),
+        );
+    }
+
     if (nodes.programRoot) {
         nodes.programRoot.style.setProperty(
             '--program-values-handoff',
@@ -124,6 +166,10 @@ export function clearValuesStory(root, cards, nodes) {
     cards.forEach((card) => {
         CARD_PROPERTIES.forEach((name) => card.style.removeProperty(name));
     });
+
+    const worldRoot = valuesWorldRoot(root, nodes);
+    WORLD_PROPERTIES.forEach((name) => worldRoot?.style.removeProperty(name));
+
     nodes.programRoot?.style.removeProperty('--program-values-handoff');
     nodes.programRoot?.classList.remove('is-values-handoff');
 }
