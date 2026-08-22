@@ -2,36 +2,6 @@
     --values-gallery-resting-color: #fffaf0;
 }
 
-.home-page .values-story__exit {
-    background: linear-gradient(
-        to bottom in oklab,
-        var(--program-values-final-color) 0%,
-        var(--program-values-final-color) 22%,
-        #2f4cff 36%,
-        #5d74ff 51%,
-        #8fa0ff 65%,
-        #bec7f4 77%,
-        #e2e3ee 87%,
-        #f4ecdf 95%,
-        var(--values-gallery-resting-color) 100%
-    );
-    box-shadow: 0 -2px 0 var(--program-values-final-color);
-}
-
-.home-page .values-story__exit::before {
-    position: absolute;
-    inset: -8% -10%;
-    background: radial-gradient(
-        ellipse at 50% 50%,
-        rgb(255 255 255 / .10),
-        rgb(255 255 255 / .04) 48%,
-        transparent 80%
-    );
-    content: "";
-    filter: blur(42px);
-    pointer-events: none;
-}
-
 .home-page .depth-gallery__viewport {
     background: var(--values-gallery-resting-color);
 }
@@ -39,11 +9,50 @@
 @media (min-width: 1280px) {
     .home-page .values-story {
         /*
-         * Dasar section desktop:
-         * timeline Values selesai lebih dulu, lalu bridge warna berdiri sendiri.
-         * Exit kartu dipadatkan di JS ke ~1/2 viewport terakhir timeline.
+         * Bridge warna tidak lagi menjadi blok setelah timeline. Ia bergerak
+         * bersama exit kartu di viewport sticky yang sama.
          */
-        --values-exit-height: 52svh;
+        --values-exit-height: 0px;
+    }
+
+    .home-page .values-story__exit {
+        height: 0;
+        margin: 0;
+        background: none;
+        box-shadow: none;
+    }
+
+    .home-page .values-story__exit::before {
+        display: none;
+    }
+
+    .home-page .values-story__clip::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1;
+        height: 130%;
+        content: "";
+        pointer-events: none;
+        background: linear-gradient(
+            to bottom in oklab,
+            var(--program-values-final-color) 0%,
+            var(--program-values-final-color) 24%,
+            #3150ff 34%,
+            #647aff 45%,
+            #aab6ff 57%,
+            #dce1f5 68%,
+            #f2ecdf 78%,
+            var(--values-gallery-resting-color) 88%,
+            var(--values-gallery-resting-color) 100%
+        );
+        transform: translate3d(
+            0,
+            var(--values-gallery-bridge-y, 100%),
+            0
+        );
+        will-change: transform;
     }
 
     .home-page .galeri-section {
@@ -51,24 +60,21 @@
         position: relative;
         z-index: 4;
         /*
-         * Hanya Gallery yang overlap 24svh ke bridge 52svh. Jadi heading hidup
-         * di dalam transisi, tetapi Gallery tidak lagi menimpa satu layar Values.
+         * Gallery baru mengambil alih paruh akhir exit kartu. Bagian atas
+         * transparan supaya bridge sticky tetap terlihat sebagai satu world.
          */
-        margin-block-start: -24svh;
-        padding-block-start: 5svh;
+        margin-block-start: -30svh;
+        padding-block-start: 12svh;
         padding-block-end: 0;
         background: linear-gradient(
             to bottom,
-            rgb(255 250 240 / 0) 0,
-            rgb(255 250 240 / 0) 17svh,
-            rgb(255 250 240 / .22) 20svh,
-            rgb(255 250 240 / .62) 22.5svh,
-            var(--values-gallery-resting-color) 24svh,
+            transparent 0,
+            transparent 30svh,
+            var(--values-gallery-resting-color) 46svh,
             var(--values-gallery-resting-color) 100%
         );
     }
 
-    /* Tidak ada fog/radial kedua. Satu color bridge saja supaya tidak ada band abu-abu. */
     .home-page .galeri-section::before {
         display: none;
     }
