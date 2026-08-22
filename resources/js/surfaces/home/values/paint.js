@@ -1,3 +1,4 @@
+import { exitAmount } from './desktop-keyframes.js';
 import { cardFrame, storyFrame } from './layout.js';
 
 const CARD_PROPERTIES = [
@@ -10,6 +11,7 @@ const ROOT_PROPERTIES = [
     '--values-line-one-y', '--values-line-two-y',
     '--values-copy-opacity', '--values-copy-y',
     '--values-handoff-progress', '--values-surface-detail',
+    '--values-gallery-transition', '--values-gallery-bridge-y',
 ];
 
 function writeCardFrame(card, state) {
@@ -25,7 +27,13 @@ function writeCardFrame(card, state) {
     );
 }
 
-function writeRootFrame(root, nodes, story, handoffProgress) {
+function writeRootFrame(
+    root,
+    nodes,
+    story,
+    handoffProgress,
+    galleryTransition,
+) {
     root.style.setProperty(
         '--values-heading-opacity',
         story.headingOpacity.toFixed(4),
@@ -52,6 +60,14 @@ function writeRootFrame(root, nodes, story, handoffProgress) {
         story.surfaceDetail.toFixed(4),
     );
     root.style.setProperty('--values-handoff-progress', handoffProgress.toFixed(4));
+    root.style.setProperty(
+        '--values-gallery-transition',
+        galleryTransition.toFixed(4),
+    );
+    root.style.setProperty(
+        '--values-gallery-bridge-y',
+        `${(100 - galleryTransition * 123).toFixed(2)}%`,
+    );
     if (nodes.programRoot) {
         nodes.programRoot.style.setProperty(
             '--program-values-handoff',
@@ -78,6 +94,10 @@ export function paintValuesStory(
         momentum,
         headingState,
     );
+    const galleryTransition = geometry.mode === 4
+        ? exitAmount(progress)
+        : 0;
+
     cards.forEach((card, index) => {
         writeCardFrame(
             card,
@@ -90,7 +110,13 @@ export function paintValuesStory(
             ),
         );
     });
-    writeRootFrame(root, nodes, story, handoffProgress);
+    writeRootFrame(
+        root,
+        nodes,
+        story,
+        handoffProgress,
+        galleryTransition,
+    );
 }
 
 export function clearValuesStory(root, cards, nodes) {
