@@ -1,19 +1,29 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const BLIND_COUNT = 30;
-const STAGGER_SPAN = 0.34;
+
+/*
+ * Timing ini mengikuti Horizontal Blinds source secara langsung:
+ * gsap.to(..., { duration: 0.5, ease: 'power3.out', stagger: { each: 0.02,
+ * from: 'start' } }). Dengan 30 blind, satu layer selesai dalam 1.08 unit.
+ * Gallery memakai dua layer berurutan: bright lalu cream.
+ */
+const BLIND_DURATION = 0.5;
+const BLIND_STAGGER = 0.02;
+const LAYER_DURATION = BLIND_DURATION + ((BLIND_COUNT - 1) * BLIND_STAGGER);
+const MASTER_DURATION = LAYER_DURATION * 2;
 
 function clamp(value) {
     return Math.max(0, Math.min(1, value));
 }
 
+function power3Out(value) {
+    const progress = clamp(value);
+    return 1 - ((1 - progress) ** 3);
+}
+
 function smoothstep(value) {
     const progress = clamp(value);
     return progress * progress * (3 - 2 * progress);
-}
-
-function easeOutCubic(value) {
-    const progress = clamp(value);
-    return 1 - ((1 - progress) ** 3);
 }
 
 function createBlindSet(group, vbHeight) {
@@ -25,6 +35,7 @@ function createBlindSet(group, vbHeight) {
     let currentY = 0;
 
     for (let index = 0; index < BLIND_COUNT; index += 1) {
+        /* Source menyusun blind dari bawah ke atas lalu stagger from:start. */
         const centerY = vbHeight - (currentY + rowHeight / 2);
         const top = document.createElementNS(SVG_NS, 'rect');
         const bottom = document.createElementNS(SVG_NS, 'rect');
@@ -91,15 +102,19 @@ function buildMaskState(section) {
     return { host, light, cream };
 }
 
-function paintBlindSet(blinds, progress) {
+/*
+ * Reproduksi timeline openBlinds() dari source tanpa membawa GSAP/Lenis kedua
+ * ke halaman. masterTime adalah posisi pada master timeline; setiap blind mulai
+ * tepat index * 0.02 dan membuka selama 0.5 dengan power3.out.
+ */
+function paintBlindTimeline(blinds, masterTime, layerStart) {
     if (!blinds?.length) return;
 
-    const expanded = clamp(progress) * (1 + STAGGER_SPAN);
-    const denominator = Math.max(1, blinds.length - 1);
-
     blinds.forEach((blind, index) => {
-        const delay = (index / denominator) * STAGGER_SPAN;
-        const local = easeOutCubic(expanded - delay);
+        const blindStart = layerStart + (index * BLIND_STAGGER);
+        const local = power3Out(
+            (masterTime - blindStart) / BLIND_DURATION,
+        );
         const opening = blind.halfHeight * local;
         const height = opening > 0 ? opening + 0.01 : 0;
 
@@ -114,16 +129,14 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
     let frame = 0;
     let destroyed = false;
     let maskState = buildMaskState(section);
-    let previousLight = -1;
-    let previousCream = -1;
+    let previousMasterTime = -1;
 
     heading.classList.add('gallery-heading-motion--scroll-linked');
     heading.style.setProperty('--gh-media-blur', '0px');
 
     function rebuildMasks() {
         maskState = buildMaskState(section);
-        previousLight = -1;
-        previousCream = -1;
+        previousMasterTime = -1;
     }
 
     function clearDesktopState() {
@@ -146,29 +159,25 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         const sectionTop = section.getBoundingClientRect().top;
 
         /*
-         * Gallery dimulai 60svh lebih awal. Saat top section bergerak dari
-         * 100% viewport ke 40%, progress tepat 0 -> 1. Ini membuat stage mask
-         * selesai persis ketika corridor 60svh habis dan depth Gallery datang.
+         * Tetap memakai corridor SchoolAI 60svh, tetapi isi corridor sekarang
+         * persis grammar master timeline source: bright layer selesai dahulu,
+         * baru cream layer mulai. Tidak ada crossfade/overlap antarlayer.
          */
-        const rawHandoff = clamp(
+        const handoff = clamp(
             (viewportHeight - sectionTop) / (viewportHeight * 0.60),
         );
-        const handoff = smoothstep(rawHandoff);
-        const lightProgress = smoothstep(clamp(handoff / 0.66));
-        const creamProgress = smoothstep(clamp((handoff - 0.38) / 0.62));
+        const masterTime = handoff * MASTER_DURATION;
 
-        if (Math.abs(lightProgress - previousLight) > 0.0005) {
-            paintBlindSet(maskState?.light, lightProgress);
-            previousLight = lightProgress;
-        }
-        if (Math.abs(creamProgress - previousCream) > 0.0005) {
-            paintBlindSet(maskState?.cream, creamProgress);
-            previousCream = creamProgress;
+        if (Math.abs(masterTime - previousMasterTime) > 0.0005) {
+            paintBlindTimeline(maskState?.light, masterTime, 0);
+            paintBlindTimeline(maskState?.cream, masterTime, LAYER_DURATION);
+            previousMasterTime = masterTime;
         }
 
-        /* Heading baru hadir setelah mask hampir selesai. Blur berikutnya bukan
-           milik handoff; depth engine akan menghapusnya dari image 1 -> 2. */
-        const headingOpacity = smoothstep(clamp((creamProgress - 0.58) / 0.32));
+        const creamProgress = clamp(
+            (masterTime - LAYER_DURATION) / LAYER_DURATION,
+        );
+        const headingOpacity = smoothstep(clamp((creamProgress - 0.72) / 0.24));
         heading.style.setProperty('--gh-opacity', headingOpacity.toFixed(4));
         section.style.setProperty('--gallery-handoff-progress', handoff.toFixed(4));
     }
