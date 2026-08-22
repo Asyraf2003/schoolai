@@ -1,0 +1,16 @@
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+    .depth-gallery.is-depth-active .depth-gallery__viewport {
+        z-index: 3;
+        background: #fffaf0;
+        transform: scale(var(--depth-transition-scale, 1));
+        transform-origin: 50% 0%;
+        will-change: transform;
+    }
+
+    .depth-gallery.is-depth-active .depth-gallery__canvas,
+    .depth-gallery.is-depth-active .depth-gallery__labels,
+    .depth-gallery.is-depth-active .depth-gallery__end {
+        transform: none;
+        transform-origin: initial;
+    }
+}

@@ -16,13 +16,15 @@ function setNumber(root, name, value) {
 export function mountArticleStory(root) {
     const journey = root.querySelector('[data-article-journey]');
     const track = root.querySelector('[data-article-track]');
+    const panels = [...root.querySelectorAll('[data-article-panel]')];
     const rollWindow = root.querySelector('[data-article-roll-window]');
     const rollStack = root.querySelector('[data-article-roll-stack]');
     const closing = root.querySelector('[data-article-closing]');
     const cta = root.querySelector('[data-article-final-cta]');
     const desktop = window.matchMedia(DESKTOP_QUERY);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!journey || !track || !rollWindow || !rollStack || !closing) {
+
+    if (!journey || !track || panels.length === 0 || !rollWindow || !rollStack || !closing) {
         return () => {};
     }
 
@@ -32,8 +34,6 @@ export function mountArticleStory(root) {
     let observer = null;
     let trackDistance = 0;
     let rollDistance = 0;
-    let featureStart = 680;
-    let featureEnd = 1040;
 
     function enabled() {
         return desktop.matches && !reduced.matches;
@@ -43,47 +43,49 @@ export function mountArticleStory(root) {
         trackDistance = Math.max(0, track.scrollWidth - window.innerWidth);
         rollDistance = Math.max(
             0,
-            rollStack.scrollHeight - rollWindow.clientHeight + window.innerHeight * 0.14,
-        );
-        featureStart = clamp(window.innerWidth * 0.46, 560, 760);
-        featureEnd = Math.min(
-            window.innerWidth * 0.72,
-            window.innerHeight * 0.82 * (16 / 9),
-            1120,
+            rollStack.scrollHeight - rollWindow.clientHeight + window.innerHeight * 0.62,
         );
     }
 
+    function paintPanelMotion(trackX) {
+        const viewportWidth = Math.max(1, window.innerWidth);
+        const viewportCenter = viewportWidth * 0.5;
+
+        panels.forEach((panel, index) => {
+            const panelCenter = panel.offsetLeft + viewportWidth * 0.5 + trackX;
+            const relative = clamp(
+                (panelCenter - viewportCenter) / viewportWidth,
+                -1,
+                1,
+            );
+            const direction = index % 2 === 0 ? -1 : 1;
+            const mediaY = clamp(relative * 8, -8, 8);
+            const headingY = relative * direction * 20;
+            const descriptionY = relative * direction * -16;
+
+            panel.style.setProperty('--article-media-y', `${mediaY.toFixed(3)}%`);
+            panel.style.setProperty('--article-heading-y', `${headingY.toFixed(3)}svh`);
+            panel.style.setProperty(
+                '--article-description-y',
+                `${descriptionY.toFixed(3)}svh`,
+            );
+        });
+    }
+
     function paint(progress) {
-        const opening = phase(progress, 0.01, 0.14);
-        const horizontalIn = phase(progress, 0.16, 0.23);
-        const horizontal = phase(progress, 0.21, 0.62);
-        const horizontalOut = phase(progress, 0.61, 0.69);
-        const closingIn = phase(progress, 0.65, 0.73);
-        const roll = phase(progress, 0.7, 0.88);
-        const exit = phase(progress, 0.88, 1);
+        const horizontal = phase(progress, 0.02, 0.68);
+        const roll = phase(progress, 0.68, 0.90);
+        const exit = phase(progress, 0.90, 1);
         const focused = cta?.contains(document.activeElement) ?? false;
         const effectiveExit = focused ? 0 : exit;
-        const closingOpacity = Math.max(closingIn, focused ? 1 : 0);
+        const trackX = -trackDistance * horizontal;
 
-        root.style.setProperty(
-            '--article-feature-width',
-            `${(featureStart + (featureEnd - featureStart) * opening).toFixed(2)}px`,
-        );
-        setNumber(root, '--article-opening-exit', horizontalIn);
-        setNumber(
-            root,
-            '--article-horizontal-opacity',
-            horizontalIn * (1 - horizontalOut),
-        );
-        root.style.setProperty(
-            '--article-track-x',
-            `${(-trackDistance * horizontal).toFixed(2)}px`,
-        );
-        setNumber(root, '--article-closing-opacity', closingOpacity);
+        root.style.setProperty('--article-track-x', `${trackX.toFixed(2)}px`);
         root.style.setProperty(
             '--article-roll-y',
             `${(-rollDistance * roll).toFixed(2)}px`,
         );
+        paintPanelMotion(trackX);
 
         setNumber(root, '--article-exit-scale', 1 - effectiveExit);
         root.style.setProperty(
@@ -95,7 +97,7 @@ export function mountArticleStory(root) {
             `${(-10 * effectiveExit).toFixed(2)}deg`,
         );
 
-        const ctaReady = (closingIn > 0.72 && effectiveExit < 0.08) || focused;
+        const ctaReady = (roll > 0.56 && effectiveExit < 0.08) || focused;
         root.classList.toggle('is-article-cta-ready', ctaReady);
         root.classList.toggle('is-article-transitioning', effectiveExit > 0.001);
         if (cta) cta.tabIndex = ctaReady ? 0 : -1;
@@ -115,11 +117,22 @@ export function mountArticleStory(root) {
         }
     }
 
+    function resetPanelMotion() {
+        panels.forEach((panel) => {
+            panel.style.removeProperty('--article-media-y');
+            panel.style.removeProperty('--article-heading-y');
+            panel.style.removeProperty('--article-description-y');
+        });
+    }
+
     function reset() {
-        root.classList.remove(
-            'is-article-cta-ready',
-            'is-article-transitioning',
-        );
+        root.classList.remove('is-article-cta-ready', 'is-article-transitioning');
+        root.style.removeProperty('--article-track-x');
+        root.style.removeProperty('--article-roll-y');
+        root.style.removeProperty('--article-exit-scale');
+        root.style.removeProperty('--article-exit-y');
+        root.style.removeProperty('--article-exit-rotation');
+        resetPanelMotion();
         if (cta) cta.removeAttribute('tabindex');
     }
 
