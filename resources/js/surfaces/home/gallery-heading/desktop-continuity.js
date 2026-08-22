@@ -3,7 +3,8 @@ const BLIND_COUNT = 30;
 const BLIND_DURATION = 0.5;
 const BLIND_STAGGER = 0.02;
 const LAYER_DURATION = BLIND_DURATION + ((BLIND_COUNT - 1) * BLIND_STAGGER);
-const MASK_START = 0.06;
+const MASK_START = 0.04;
+const RELEASE_EPSILON = 1;
 
 function clamp(value) {
     return Math.max(0, Math.min(1, value));
@@ -37,7 +38,7 @@ function createBlindSet(group, vbHeight) {
     let currentY = 0;
 
     for (let index = 0; index < BLIND_COUNT; index += 1) {
-        /* Repo source menyusun blind dari bawah ke atas. */
+        /* Repo Hiro-kiii menyusun blind dari bawah ke atas. */
         const centerY = vbHeight - (currentY + rowHeight / 2);
         const top = document.createElementNS(SVG_NS, 'rect');
         const bottom = document.createElementNS(SVG_NS, 'rect');
@@ -46,12 +47,7 @@ function createBlindSet(group, vbHeight) {
             rect.setAttribute('x', '0');
             rect.setAttribute('width', '100');
             rect.setAttribute('height', '0');
-            /*
-             * Source memakai white-on-black untuk membuka image berikutnya.
-             * Di SchoolAI Gallery DOM sudah berada di bawah scene Values, jadi
-             * mask dibalik: rect hitam menghapus cover blue dan memperlihatkan
-             * Gallery asli di bawahnya.
-             */
+            /* Rect hitam menghapus cover blue dan membuka Gallery scene 2. */
             rect.setAttribute('fill', 'black');
             rect.setAttribute('shape-rendering', 'crispEdges');
         });
@@ -141,11 +137,11 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         previousMasterTime = -1;
     }
 
-    function resetMaskHost() {
+    function setStageActive(active) {
+        section.classList.toggle('is-values-gallery-handoff', active);
         if (!maskState?.host) return;
-        maskState.host.style.visibility = 'hidden';
-        maskState.host.style.opacity = '0';
-        maskState.host.style.transform = 'translate3d(0, 0, 0)';
+        maskState.host.style.visibility = active ? 'visible' : 'hidden';
+        maskState.host.style.opacity = active ? '1' : '0';
     }
 
     function clearDesktopState() {
@@ -154,7 +150,7 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         ['--gh-handoff-opacity', '--gh-media-opacity', '--gh-media-blur']
             .forEach((name) => heading.style.removeProperty(name));
         section.style.removeProperty('--gallery-handoff-progress');
-        resetMaskHost();
+        setStageActive(false);
     }
 
     function render() {
@@ -165,23 +161,29 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
             return;
         }
 
-        const exitProgress = readValuesExitProgress(valuesWorld);
+        const sectionTop = section.getBoundingClientRect().top;
+        const rawExitProgress = readValuesExitProgress(valuesWorld);
+
+        /*
+         * Jika halaman dibuka langsung di/dekat Gallery, Values controller bisa
+         * belum menulis variable exit. Posisi Gallery yang sudah lewat viewport
+         * berarti handoff secara semantik selesai.
+         */
+        const exitProgress = rawExitProgress <= 0 && sectionTop <= RELEASE_EPSILON
+            ? 1
+            : rawExitProgress;
         const maskProgress = clamp(
             (exitProgress - MASK_START) / (1 - MASK_START),
         );
-        const sectionTop = section.getBoundingClientRect().top;
-        const stageActive = exitProgress > 0.0001 && exitProgress < 0.9999;
 
-        if (maskState?.host) {
-            if (stageActive) {
-                /* Pin full-viewport layer ke layar selama kartu sedang exit. */
-                maskState.host.style.visibility = 'visible';
-                maskState.host.style.opacity = '1';
-                maskState.host.style.transform = `translate3d(0, ${(-sectionTop).toFixed(2)}px, 0)`;
-            } else {
-                resetMaskHost();
-            }
-        }
+        /*
+         * Clock visual 100% berasal dari card-exit Values. sectionTop hanya
+         * dipakai sebagai release guard supaya fixed Gallery tidak dilepas satu
+         * frame terlalu cepat sebelum posisi normalnya benar-benar mencapai top.
+         */
+        const stageActive = exitProgress > 0.0001
+            && (exitProgress < 0.9999 || sectionTop > RELEASE_EPSILON);
+        setStageActive(stageActive);
 
         const masterTime = maskProgress * LAYER_DURATION;
         if (Math.abs(masterTime - previousMasterTime) > 0.0005) {
@@ -190,8 +192,9 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         }
 
         /*
-         * Heading adalah bagian scene Gallery, jadi baru hadir ketika blinds
-         * hampir selesai. Sesudah itu clock heading diserahkan ke media Gallery.
+         * Heading adalah bagian Gallery scene 2. Ia muncul menjelang blinds
+         * selesai pada koordinat final pojok atas. Sesudah release, media clock
+         * Three.js mengambil alih blur/fade menuju media kedua.
          */
         const headingHandoffOpacity = smoothstep(
             clamp((maskProgress - 0.78) / 0.22),
@@ -232,7 +235,7 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         }
         destroyed = true;
         if (frame) window.cancelAnimationFrame(frame);
-        resetMaskHost();
+        setStageActive(false);
         window.removeEventListener('scroll', requestRender);
         window.removeEventListener('resize', onResize);
         window.removeEventListener('pageshow', requestRender);
