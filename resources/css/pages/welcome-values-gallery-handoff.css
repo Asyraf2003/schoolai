@@ -7,6 +7,25 @@
 }
 
 @media (min-width: 1280px) {
+    /*
+     * Values dan Gallery adalah sibling stacking contexts. World Values ditahan
+     * di level 0 supaya Gallery level 4 benar-benar mengambil alih saat overlap,
+     * bukan membiarkan sticky visual A mencemari corridor C.
+     */
+    .home-page .program-values-world {
+        z-index: 0;
+    }
+
+    /*
+     * Satu clock: exit kartu mengirim opacity langsung ke sticky kinetic world.
+     * Kinetic dissolve pada bagian awal exit, menyisakan pure blue sebelum
+     * corridor Gallery bergerak menuju warna lebih terang dan akhirnya cream.
+     */
+    .home-page .program-values-world__visual {
+        opacity: var(--values-gallery-kinetic-opacity, 1);
+        will-change: opacity;
+    }
+
     .home-page .values-story {
         --values-exit-height: 0px;
     }
