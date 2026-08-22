@@ -1,7 +1,9 @@
 @media (min-width: 1280px) {
     /*
-     * Heading adalah bagian scene Gallery asli. Posisi tetap di pojok awal arah
-     * baca; opacity punya dua clock terpisah: handoff blinds dan media #1 -> #2.
+     * Heading adalah bagian scene Gallery asli. Untuk semua locale ia ditempatkan
+     * di kanan atas. Clock handoff mengatur kemunculan setelah blinds, sedangkan
+     * clock media #1 -> #2 membuat heading ikut membesar lalu menghilang bersama
+     * media pertama saat kamera bergerak maju.
      */
     .home-page .galeri-section__heading-shell {
         position: sticky;
@@ -16,16 +18,19 @@
         --gh-handoff-opacity: 1;
         --gh-media-opacity: 1;
         --gh-media-blur: 0px;
-        width: min(34rem, 34vw);
+        --gh-media-scale: 1;
+        width: min(58rem, 62vw);
         max-width: none;
-        margin: 0;
+        margin: 0 0 0 auto;
         padding: 0;
+        text-align: right;
         opacity: min(
             var(--gh-handoff-opacity),
             var(--gh-media-opacity)
         );
-        transform: none;
-        will-change: opacity;
+        transform: translate3d(0, 0, 0) scale(var(--gh-media-scale));
+        transform-origin: right top;
+        will-change: opacity, transform;
     }
 
     .home-page .gallery-heading-motion__row--top {
@@ -37,43 +42,31 @@
         margin: 0;
     }
 
-    .home-page .gallery-heading-motion__clip,
-    .home-page .gallery-heading-motion__description-clip {
+    .home-page .gallery-heading-motion__clip {
         overflow: visible;
     }
 
     .home-page .gallery-heading-motion__line--single {
-        width: max-content;
+        display: block;
+        width: min(100%, 10ch);
         max-width: none;
-        font-size: clamp(4.4rem, 5.8vw, 7.4rem);
-        font-weight: 500;
-        line-height: .84;
+        margin-left: auto;
+        font-size: clamp(5.2rem, 7.8vw, 10.5rem);
+        font-weight: 600;
+        line-height: .8;
         letter-spacing: -.065em;
+        text-align: right;
+        text-wrap: balance;
+        white-space: normal;
         opacity: 1;
         filter: blur(var(--gh-media-blur));
         transform: none;
-        transform-origin: left center;
-        will-change: filter;
-    }
-
-    .home-page .gallery-heading-motion__description {
-        width: min(100%, 31ch);
-        margin: clamp(.85rem, 1.3svh, 1.25rem) 0 0;
-        font-size: clamp(.78rem, .18vw + .72rem, .92rem);
-        line-height: 1.35;
-        text-align: start;
-    }
-
-    .home-page .gallery-heading-motion--scroll-linked
-    .gallery-heading-motion__description-line {
-        opacity: 1;
-        filter: blur(var(--gh-media-blur));
-        transform: none;
+        transform-origin: right top;
         will-change: filter;
     }
 
     .home-page .gallery-heading-motion--scroll-linked
-    :is(.gallery-heading-motion__line, .gallery-heading-motion__description-line) {
+    .gallery-heading-motion__line {
         animation: none;
         transition: none;
     }
@@ -83,20 +76,18 @@
     }
 
     html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion {
-        margin-inline-start: auto;
+        margin: 0 0 0 auto;
         text-align: right;
     }
 
     html[dir="rtl"] .home-page .gallery-heading-motion__line--single {
+        margin-left: auto;
         font-family: var(--font-ar-display, Cairo, sans-serif);
-        font-weight: 500;
+        font-weight: 600;
+        line-height: .96;
         letter-spacing: normal;
-        transform-origin: right center;
-    }
-
-    html[dir="rtl"] .home-page .gallery-heading-motion__description {
-        margin-inline-start: auto;
         text-align: right;
+        transform-origin: right top;
     }
 }
 
@@ -105,12 +96,13 @@
         --gh-handoff-opacity: 1;
         --gh-media-opacity: 1;
         --gh-media-blur: 0px;
+        --gh-media-scale: 1;
         opacity: 1;
         transform: none;
     }
 
     .home-page .gallery-heading-motion--scroll-linked
-    :is(.gallery-heading-motion__line, .gallery-heading-motion__description-line) {
+    .gallery-heading-motion__line {
         opacity: 1;
         filter: none;
         transform: none;
