@@ -29,14 +29,14 @@
     inset: 8% auto auto 3%;
     width: min(68%, 430px);
     aspect-ratio: 4 / 3;
-    transform: rotate(-3deg);
+    transform: rotate(var(--depth-end-media-1-rotation, -3deg));
 }
 
 .depth-gallery__end-media--2 {
     inset: auto 2% 4% auto;
     width: min(58%, 360px);
     aspect-ratio: 3 / 4;
-    transform: rotate(4deg);
+    transform: rotate(var(--depth-end-media-2-rotation, 4deg));
 }
 
 .depth-gallery__end-media img {
@@ -108,6 +108,10 @@
     transform:
         translate3d(calc((1 - var(--depth-end-progress, 0)) * -4vw), 0, 0)
         scale(calc(.82 + var(--depth-end-progress, 0) * .18));
+}
+
+.depth-gallery.is-depth-active .depth-gallery__end-media {
+    will-change: transform;
 }
 
 .depth-gallery.is-depth-active .depth-gallery__end-copy {
@@ -214,7 +218,8 @@ html[dir="rtl"] .depth-gallery__end-copy {
 
 @media (prefers-reduced-motion: reduce) {
     .depth-gallery.is-depth-active .depth-gallery__end-showcase,
-    .depth-gallery.is-depth-active .depth-gallery__end-copy {
+    .depth-gallery.is-depth-active .depth-gallery__end-copy,
+    .depth-gallery.is-depth-active .depth-gallery__end-media {
         will-change: auto;
     }
 }
