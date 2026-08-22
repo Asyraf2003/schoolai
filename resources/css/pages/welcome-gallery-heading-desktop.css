@@ -1,8 +1,7 @@
 @media (min-width: 1280px) {
     /*
-     * Heading sekarang milik viewport Gallery, bukan hero transisi tersendiri.
-     * Shell dibuat sticky dengan tinggi nol supaya title/copy mengambang di
-     * pojok awal arah baca tanpa menambah jarak ke depth journey.
+     * Heading adalah bagian scene Gallery asli. Posisi tetap di pojok awal arah
+     * baca; opacity punya dua clock terpisah: handoff blinds dan media #1 -> #2.
      */
     .home-page .galeri-section__heading-shell {
         position: sticky;
@@ -14,13 +13,17 @@
     }
 
     .home-page .galeri-section__head.gallery-heading-motion {
-        --gh-opacity: 1;
+        --gh-handoff-opacity: 1;
+        --gh-media-opacity: 1;
         --gh-media-blur: 0px;
         width: min(34rem, 34vw);
         max-width: none;
         margin: 0;
         padding: 0;
-        opacity: var(--gh-opacity);
+        opacity: calc(
+            var(--gh-handoff-opacity)
+            * var(--gh-media-opacity)
+        );
         transform: none;
         will-change: opacity;
     }
@@ -99,6 +102,8 @@
 
 @media (min-width: 1280px) and (prefers-reduced-motion: reduce) {
     .home-page .galeri-section__head.gallery-heading-motion {
+        --gh-handoff-opacity: 1;
+        --gh-media-opacity: 1;
         --gh-media-blur: 0px;
         opacity: 1;
         transform: none;
