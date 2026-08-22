@@ -1,4 +1,5 @@
 const DESKTOP_QUERY = '(min-width: 1280px)';
+const HORIZONTAL_END = 0.78;
 
 const clamp = (value, min = 0, max = 1) => (
     Math.min(max, Math.max(min, value))
@@ -12,7 +13,7 @@ function smoothProgress(value) {
 export function mountArticleStory(root) {
     const journey = root.querySelector('[data-article-journey]');
     const track = root.querySelector('[data-article-track]');
-    const panels = [...root.querySelectorAll('[data-article-panel]')];
+    const mainItems = [...root.querySelectorAll('[data-article-main-item]')];
     const rollWindow = root.querySelector('[data-article-roll-window]');
     const rollStack = root.querySelector('[data-article-roll-stack]');
     const closing = root.querySelector('[data-article-closing]');
@@ -20,7 +21,7 @@ export function mountArticleStory(root) {
     const desktop = window.matchMedia(DESKTOP_QUERY);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    if (!journey || !track || panels.length === 0 || !rollWindow || !rollStack || !closing) {
+    if (!journey || !track || mainItems.length === 0 || !rollWindow || !rollStack || !closing) {
         return () => {};
     }
 
@@ -43,73 +44,69 @@ export function mountArticleStory(root) {
         );
     }
 
-    function paintPanelMotion(trackX) {
+    function paintMainMotion(trackX) {
         const viewportWidth = Math.max(1, window.innerWidth);
+        const viewportHeight = Math.max(1, window.innerHeight);
         const viewportCenter = viewportWidth * 0.5;
+        const mediaSize = viewportHeight;
+        const copyTopMargin = viewportHeight / 24;
 
-        panels.forEach((panel, index) => {
-            const panelLeft = panel.offsetLeft + trackX;
-            const mediaLeft = panelLeft + viewportWidth * 0.30;
-            const mediaCenter = panelLeft + viewportWidth * 0.50;
+        mainItems.forEach((item, index) => {
+            const itemLeft = item.offsetLeft + trackX;
+            const mediaCenter = itemLeft + mediaSize * 0.5;
+            const mediaRight = itemLeft + mediaSize;
             const relative = clamp(
                 (mediaCenter - viewportCenter) / viewportWidth,
                 -1,
                 1,
             );
             const mediaX = clamp(relative * 8, -8, 8);
+            const copy = item.querySelector('[data-article-main-copy]');
 
-            let copyProgress;
-            if (index === 0) {
-                copyProgress = smoothProgress(clamp(
-                    -panelLeft / (viewportWidth * 0.40),
-                ));
-            } else {
-                copyProgress = smoothProgress(clamp(
-                    ((viewportWidth * 0.95) - mediaLeft) / (viewportWidth * 0.40),
-                ));
-            }
+            item.style.setProperty(
+                '--article-main-media-x',
+                `${mediaX.toFixed(3)}%`,
+            );
 
-            const movesUp = index % 2 === 0;
-            const headingY = movesUp
-                ? -20.833333 * copyProgress
-                : 45 * copyProgress;
-            const descriptionY = movesUp
-                ? -33.333333 * copyProgress
-                : 32.5 * copyProgress;
+            if (!copy) return;
 
-            panel.style.setProperty('--article-media-x', `${mediaX.toFixed(3)}%`);
-            panel.style.setProperty('--article-heading-y', `${headingY.toFixed(3)}svh`);
-            panel.style.setProperty(
-                '--article-description-y',
-                `${descriptionY.toFixed(3)}svh`,
+            const copyProgress = smoothProgress(clamp(
+                ((viewportWidth * 0.95) - mediaRight) / (viewportWidth * 0.40),
+            ));
+            const centeredTop = viewportHeight * 0.5 - copy.offsetHeight * 0.5;
+            const targetTop = index % 2 === 0
+                ? copyTopMargin
+                : viewportHeight - copyTopMargin - copy.offsetHeight;
+            const copyY = (targetTop - centeredTop) * copyProgress;
+
+            item.style.setProperty(
+                '--article-main-copy-y',
+                `${copyY.toFixed(2)}px`,
             );
         });
     }
 
-    function paintClosingMotion(trackX) {
-        const viewportWidth = Math.max(1, window.innerWidth);
-        const closingLeft = closing.offsetLeft + trackX;
-        const entry = smoothProgress(clamp(
-            (viewportWidth - closingLeft) / (viewportWidth * 0.80),
-        ));
-
+    function paintClosingMotion(horizontalProgress, rollProgress) {
         root.style.setProperty(
             '--article-roll-y',
-            `${(-rollDistance * entry).toFixed(2)}px`,
+            `${(-rollDistance * rollProgress).toFixed(2)}px`,
         );
 
-        const ctaReady = closingLeft <= viewportWidth * 0.05;
+        const ctaReady = horizontalProgress > 0.995 && rollProgress > 0.12;
         root.classList.toggle('is-article-cta-ready', ctaReady);
         if (cta) cta.tabIndex = ctaReady ? 0 : -1;
     }
 
     function paint(progress) {
-        const horizontal = smoothProgress(progress);
-        const trackX = -trackDistance * horizontal;
+        const horizontalProgress = smoothProgress(clamp(progress / HORIZONTAL_END));
+        const rollProgress = smoothProgress(clamp(
+            (progress - HORIZONTAL_END) / (1 - HORIZONTAL_END),
+        ));
+        const trackX = -trackDistance * horizontalProgress;
 
         root.style.setProperty('--article-track-x', `${trackX.toFixed(2)}px`);
-        paintPanelMotion(trackX);
-        paintClosingMotion(trackX);
+        paintMainMotion(trackX);
+        paintClosingMotion(horizontalProgress, rollProgress);
     }
 
     function render() {
@@ -126,11 +123,10 @@ export function mountArticleStory(root) {
         }
     }
 
-    function resetPanelMotion() {
-        panels.forEach((panel) => {
-            panel.style.removeProperty('--article-media-x');
-            panel.style.removeProperty('--article-heading-y');
-            panel.style.removeProperty('--article-description-y');
+    function resetMainMotion() {
+        mainItems.forEach((item) => {
+            item.style.removeProperty('--article-main-media-x');
+            item.style.removeProperty('--article-main-copy-y');
         });
     }
 
@@ -138,7 +134,7 @@ export function mountArticleStory(root) {
         root.classList.remove('is-article-cta-ready');
         root.style.removeProperty('--article-track-x');
         root.style.removeProperty('--article-roll-y');
-        resetPanelMotion();
+        resetMainMotion();
         if (cta) cta.removeAttribute('tabindex');
     }
 

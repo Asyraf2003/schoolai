@@ -2,6 +2,7 @@
   $articleHeading = (string) ($articlesSection['title'] ?? '');
   $articleDescription = (string) ($articlesSection['subtitle'] ?? '');
   $articleItems = collect($articlesSection['items'] ?? [])->take(5)->values();
+  $openingArticle = $articleItems->first();
   $articleCta = is_array($articlesSection['cta'] ?? null)
       ? $articlesSection['cta']
       : [];
@@ -28,7 +29,7 @@
   data-article-story
   style="--article-count: {{ max(1, $articleItems->count()) }};"
 >
-  <p>tes1</p>
+  <p class="article-debug-mark">tes1</p>
   <h2 class="sr-only" id="article-story-heading">{{ $articleHeading }}</h2>
 
   @if ($articleItems->isNotEmpty())
@@ -43,38 +44,78 @@
     </nav>
 
     <div class="article-story__journey" data-article-journey>
-      <p>tes2</p>
+      <p class="article-debug-mark">tes2</p>
       <div class="article-story__stage" data-article-stage>
-        <p>tes3</p>
+        <p class="article-debug-mark">tes3</p>
         <div class="article-story__horizontal" data-article-horizontal>
-          <p>tes4</p>
+          <p class="article-debug-mark">tes4</p>
           <div class="article-story__track" data-article-track>
-            <p>tes5</p>
-            @foreach ($articleItems as $article)
-              <article
-                class="article-story__panel{{ $loop->first ? ' article-story__panel--opening' : '' }}"
-                data-article-panel
-              >
-                <p>tes6-{{ $loop->iteration }}</p>
-                <div class="article-story__panel-media">
-                  <p>tes7-{{ $loop->iteration }}</p>
-                  @if (! empty($article['thumbnail_url']))
+            <p class="article-debug-mark">tes5</p>
+
+            @if ($openingArticle)
+              <article class="article-story__opening" data-article-opening>
+                <p class="article-debug-mark">tes6-1</p>
+                <div class="article-story__opening-media">
+                  <p class="article-debug-mark">tes7-1</p>
+                  @if (! empty($openingArticle['thumbnail_url']))
                     <img
-                      src="{{ $article['thumbnail_url'] }}"
+                      src="{{ $openingArticle['thumbnail_url'] }}"
                       alt=""
                       width="1600"
                       height="1200"
                       loading="lazy"
                       decoding="async"
-                      data-article-panel-image
+                    />
+                  @else
+                    <span aria-hidden="true">{{ $openingArticle['emoji'] ?? '📰' }}</span>
+                  @endif
+                </div>
+
+                <div class="article-story__opening-heading">
+                  <p class="article-debug-mark">tes8-1</p>
+                  <span>
+                    {{ $articleDisplayHeading }}
+                    ·
+                    {{ $openingArticle['issue'] ?? '01' }}
+                  </span>
+                  <h3>
+                    @if (! empty($openingArticle['href']))
+                      <a href="{{ $openingArticle['href'] }}">{{ $openingArticle['title'] }}</a>
+                    @else
+                      {{ $openingArticle['title'] }}
+                    @endif
+                  </h3>
+                </div>
+
+                <div class="article-story__opening-description">
+                  <p class="article-debug-mark">tes9-1</p>
+                  <p>{{ $openingArticle['description'] }}</p>
+                </div>
+              </article>
+            @endif
+
+            @foreach ($articleItems as $article)
+              <article class="article-story__main-item" data-article-main-item>
+                <p class="article-debug-mark">tes16-{{ $loop->iteration }}</p>
+                <div class="article-story__main-media">
+                  <p class="article-debug-mark">tes17-{{ $loop->iteration }}</p>
+                  @if (! empty($article['thumbnail_url']))
+                    <img
+                      src="{{ $article['thumbnail_url'] }}"
+                      alt=""
+                      width="1600"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async"
+                      data-article-main-image
                     />
                   @else
                     <span aria-hidden="true">{{ $article['emoji'] ?? '📰' }}</span>
                   @endif
                 </div>
 
-                <div class="article-story__panel-heading" data-article-panel-heading>
-                  <p>tes8-{{ $loop->iteration }}</p>
+                <div class="article-story__main-copy" data-article-main-copy>
+                  <p class="article-debug-mark">tes18-{{ $loop->iteration }}</p>
                   <span>
                     {{ $articleDisplayHeading }}
                     ·
@@ -87,12 +128,8 @@
                       {{ $article['title'] }}
                     @endif
                   </h3>
+                  <p class="article-story__main-description">{{ $article['description'] }}</p>
                 </div>
-
-                <p>tes9-{{ $loop->iteration }}</p>
-                <p class="article-story__panel-description" data-article-panel-description>
-                  {{ $article['description'] }}
-                </p>
               </article>
             @endforeach
 
@@ -101,14 +138,14 @@
               data-article-closing
               aria-label="{{ $articleClosingHeading }}"
             >
-              <p>tes10</p>
+              <p class="article-debug-mark">tes10</p>
               <div class="article-story__roll-window" data-article-roll-window aria-hidden="true">
-                <p>tes11</p>
+                <p class="article-debug-mark">tes11</p>
                 <div class="article-story__roll-stack" data-article-roll-stack>
-                  <p>tes12</p>
+                  <p class="article-debug-mark">tes12</p>
                   @foreach ($articleItems as $article)
                     <figure class="article-story__roll-item article-story__roll-item--{{ $loop->iteration }}">
-                      <p>tes13-{{ $loop->iteration }}</p>
+                      <p class="article-debug-mark">tes13-{{ $loop->iteration }}</p>
                       @if (! empty($article['thumbnail_url']))
                         <img
                           src="{{ $article['thumbnail_url'] }}"
@@ -127,7 +164,7 @@
               </div>
 
               <div class="article-story__closing-copy">
-                <p>tes14</p>
+                <p class="article-debug-mark">tes14</p>
                 <span>{{ $articleDisplayHeading }}</span>
                 <h3>{{ $articleClosingHeading }}</h3>
                 @if ($articleDescription !== '')
@@ -135,7 +172,7 @@
                 @endif
 
                 @if (! empty($articleCta['href']) && ! empty($articleCta['label']))
-                  <p>tes15</p>
+                  <p class="article-debug-mark">tes15</p>
                   <a
                     class="article-story__final-cta"
                     href="{{ $articleCta['href'] }}"

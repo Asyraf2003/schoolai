@@ -1,6 +1,6 @@
 @media (min-width: 1280px) {
     .article-story.is-article-story-ready .article-story__journey {
-        min-height: calc(220svh + var(--article-count, 4) * 115svh);
+        min-height: calc(300svh + var(--article-count, 5) * 155svh);
     }
 
     .article-story.is-article-story-ready .article-story__stage {
@@ -31,18 +31,18 @@
         will-change: transform;
     }
 
-    .article-story.is-article-story-ready .article-story__panel {
+    .article-story.is-article-story-ready .article-story__opening {
         position: relative;
-        flex: 0 0 70vw;
-        width: 70vw;
+        flex: 0 0 100vw;
+        width: 100vw;
         height: 100%;
         min-height: 0;
         padding: 0;
         overflow: visible;
-        background: transparent;
+        background: #f6f3eb;
     }
 
-    .article-story.is-article-story-ready .article-story__panel-media {
+    .article-story.is-article-story-ready .article-story__opening-media {
         position: absolute;
         top: 33.333333svh;
         left: 30vw;
@@ -52,38 +52,79 @@
         overflow: hidden;
     }
 
-    .article-story.is-article-story-ready .article-story__panel-media img {
-        transform: translate3d(var(--article-media-x, 0%), 0, 0) scale(1.08);
-        transform-origin: center;
-        will-change: transform;
-    }
-
-    .article-story.is-article-story-ready .article-story__panel-heading {
+    .article-story.is-article-story-ready .article-story__opening-heading {
         position: absolute;
         z-index: 2;
         top: 25svh;
         left: 20vw;
         width: min(24vw, 31rem);
-        transform: translate3d(0, var(--article-heading-y, 0svh), 0);
-        will-change: transform;
     }
 
-    .article-story.is-article-story-ready .article-story__panel-description {
+    .article-story.is-article-story-ready .article-story__opening-heading h3 {
+        font-size: clamp(2.2rem, 3.2vw, 4.6rem);
+    }
+
+    .article-story.is-article-story-ready .article-story__opening-description {
         position: absolute;
         z-index: 2;
         top: 37.5svh;
         left: 75vw;
         width: min(13vw, 15rem);
         min-height: 41.666667svh;
-        transform: translate3d(0, var(--article-description-y, 0svh), 0);
-        will-change: transform;
+    }
+
+    .article-story.is-article-story-ready .article-story__opening-description > p:last-child {
         font-size: clamp(1.15rem, 1.35vw, 1.65rem);
         line-height: 1.28;
         text-wrap: pretty;
     }
 
-    .article-story.is-article-story-ready .article-story__panel-heading h3 {
-        font-size: clamp(2.2rem, 3.2vw, 4.6rem);
+    .article-story.is-article-story-ready .article-story__main-item {
+        position: relative;
+        flex: 0 0 calc(100svh + 30vw);
+        width: calc(100svh + 30vw);
+        height: 100%;
+        min-height: 0;
+        padding: 0;
+        overflow: visible;
+        background: #f6f3eb;
+    }
+
+    .article-story.is-article-story-ready .article-story__main-media {
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 100svh;
+        height: 100svh;
+        aspect-ratio: 1;
+        overflow: hidden;
+    }
+
+    .article-story.is-article-story-ready .article-story__main-media img {
+        transform: translate3d(var(--article-main-media-x, 0%), 0, 0) scale(1.08);
+        transform-origin: center;
+        will-change: transform;
+    }
+
+    .article-story.is-article-story-ready .article-story__main-copy {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: calc(100svh + 2.5vw);
+        width: min(25vw, 30rem);
+        transform:
+            translateY(-50%)
+            translate3d(0, var(--article-main-copy-y, 0px), 0);
+        will-change: transform;
+    }
+
+    .article-story.is-article-story-ready .article-story__main-copy h3 {
+        font-size: clamp(2rem, 2.8vw, 4rem);
+    }
+
+    .article-story.is-article-story-ready .article-story__main-description {
+        max-width: 22ch;
+        font-size: clamp(1.05rem, 1.1vw, 1.38rem);
+        line-height: 1.38;
     }
 
     .article-story.is-article-story-ready .article-story__closing {
@@ -153,5 +194,13 @@
 
     .article-story.is-article-cta-ready .article-story__closing {
         pointer-events: auto;
+    }
+
+    .article-story.is-article-story-ready .article-debug-mark {
+        position: absolute;
+        z-index: 40;
+        margin: 0;
+        font: 400 13px/1.2 system-ui, sans-serif;
+        pointer-events: none;
     }
 }
