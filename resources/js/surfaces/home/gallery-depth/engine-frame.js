@@ -8,25 +8,32 @@ function updateGalleryHeading(engine) {
     const totalSteps = Math.max(1, planeSteps + engine.scroll.endSteps);
 
     /*
-     * Clock kedua dimulai setelah handoff selesai. Heading memakai progress yang
-     * sama dengan perjalanan media pertama menuju media kedua: semakin media #1
-     * maju ke kamera, heading ikut membesar, blur, lalu habis bersamanya.
+     * Scale mengikuti perjalanan media #1 menuju kamera. Tetapi opacity + blur
+     * tidak lagi menebak dari scroll progress: keduanya membaca opacity aktual
+     * plane pertama setelah Gallery selesai mem-paint frame. Dengan begitu judul
+     * tidak mungkin habis ketika media #1 masih jelas terlihat di layar.
      */
     const firstToSecond = engine.THREE.MathUtils.clamp(
         engine.scroll.progressCurrent * totalSteps,
         0,
         1,
     );
-    const departure = engine.THREE.MathUtils.smoothstep(
+    const approach = engine.THREE.MathUtils.smoothstep(
         firstToSecond,
         0.02,
         0.98,
     );
-    const opacity = 1 - departure;
+    const firstPlaneOpacity = engine.THREE.MathUtils.clamp(
+        engine.gallery.planes[0]?.material?.opacity ?? (1 - approach),
+        0,
+        1,
+    );
+    const mediaOpacity = firstToSecond < 0.01 ? 1 : firstPlaneOpacity;
+    const departure = 1 - mediaOpacity;
     const blur = 10 * departure;
-    const scale = 1 + departure * 0.58;
+    const scale = 1 + approach * 0.58;
 
-    heading.style.setProperty('--gh-media-opacity', opacity.toFixed(4));
+    heading.style.setProperty('--gh-media-opacity', mediaOpacity.toFixed(4));
     heading.style.setProperty('--gh-media-blur', `${blur.toFixed(2)}px`);
     heading.style.setProperty('--gh-media-scale', scale.toFixed(4));
     heading.dataset.galleryHeadingDeparture = departure.toFixed(4);
@@ -38,10 +45,10 @@ export function renderDepthFrame(engine, time = performance.now()) {
 
     try {
         engine.scroll.update();
-        updateGalleryHeading(engine);
         engine.endCta.update();
         engine.trail.update(camera, engine.scroll, time);
         engine.gallery.update(camera, engine.scroll);
+        updateGalleryHeading(engine);
         engine.label.update(camera);
 
         const planeBlend = engine.gallery.getPlaneBlendData(camera.position.z);
