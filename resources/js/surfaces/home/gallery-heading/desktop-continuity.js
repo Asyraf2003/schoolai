@@ -37,12 +37,13 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
             ? depth.getBoundingClientRect().top
             : section.getBoundingClientRect().bottom;
 
-        // Gallery mulai hidup di tengah bridge warna, bukan setelah Values selesai total.
+        // Section Gallery overlap 24svh ke bridge Values. Heading baru mulai
+        // ketika bridge sudah benar-benar masuk viewport, bukan saat kartu masih jauh.
         const handoff = smoothstep(clamp(
-            (viewportHeight * 1.44 - sectionTop) / (viewportHeight * 1.08),
+            (viewportHeight * 1.05 - sectionTop) / (viewportHeight * 0.78),
         ));
         const enter = smoothstep(clamp(
-            (viewportHeight * 1.34 - sectionTop) / (viewportHeight * 0.88),
+            (viewportHeight * 0.84 - sectionTop) / (viewportHeight * 0.62),
         ));
         const exit = smoothstep(clamp(
             (viewportHeight * 0.22 - depthTop) / (viewportHeight * 0.50),
