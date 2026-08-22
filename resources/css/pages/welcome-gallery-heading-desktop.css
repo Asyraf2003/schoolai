@@ -1,31 +1,32 @@
 @media (min-width: 1280px) {
+    /*
+     * Heading sekarang milik viewport Gallery, bukan hero transisi tersendiri.
+     * Shell dibuat sticky dengan tinggi nol supaya title/copy mengambang di
+     * pojok awal arah baca tanpa menambah jarak ke depth journey.
+     */
     .home-page .galeri-section__heading-shell {
-        position: relative;
-        z-index: 5;
+        position: sticky;
+        top: calc(var(--nav-h, 4.5rem) + clamp(1rem, 2svh, 1.75rem));
+        z-index: 8;
+        height: 0;
+        overflow: visible;
+        pointer-events: none;
     }
 
     .home-page .galeri-section__head.gallery-heading-motion {
         --gh-opacity: 1;
-        --gh-title-y: 0%;
-        --gh-description-y: 0%;
-        --gh-blur: 0px;
-        --gh-scale: 1;
-        --gh-x: 0vw;
-        width: auto;
+        --gh-media-blur: 0px;
+        width: min(34rem, 34vw);
         max-width: none;
-        margin: 0 clamp(42px, 6vw, 112px) clamp(2.5rem, 5svh, 4.5rem);
+        margin: 0;
         padding: 0;
         opacity: var(--gh-opacity);
-        transform: translate3d(var(--gh-x), 0, 0);
-        transform-origin: 50% 50%;
-        will-change: opacity, transform;
+        transform: none;
+        will-change: opacity;
     }
 
     .home-page .gallery-heading-motion__row--top {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(250px, 33ch);
-        align-items: end;
-        gap: clamp(56px, 7vw, 132px);
+        display: block;
     }
 
     .home-page .gallery-heading-motion__heading {
@@ -33,38 +34,39 @@
         margin: 0;
     }
 
-    .home-page .gallery-heading-motion__clip {
+    .home-page .gallery-heading-motion__clip,
+    .home-page .gallery-heading-motion__description-clip {
         overflow: visible;
     }
 
     .home-page .gallery-heading-motion__line--single {
         width: max-content;
         max-width: none;
-        font-size: clamp(7rem, 12.4vw, 13rem);
+        font-size: clamp(4.4rem, 5.8vw, 7.4rem);
         font-weight: 500;
-        line-height: .82;
+        line-height: .84;
         letter-spacing: -.065em;
         opacity: 1;
-        filter: blur(var(--gh-blur));
-        transform: translate3d(0, var(--gh-title-y), 0) scale(var(--gh-scale));
+        filter: blur(var(--gh-media-blur));
+        transform: none;
         transform-origin: left center;
-        will-change: filter, transform;
+        will-change: filter;
     }
 
     .home-page .gallery-heading-motion__description {
-        align-self: center;
-        justify-self: end;
-        width: min(100%, 33ch);
-        margin: 0 0 .9em;
-        line-height: 1.22;
+        width: min(100%, 31ch);
+        margin: clamp(.85rem, 1.3svh, 1.25rem) 0 0;
+        font-size: clamp(.78rem, .18vw + .72rem, .92rem);
+        line-height: 1.35;
+        text-align: start;
     }
 
     .home-page .gallery-heading-motion--scroll-linked
     .gallery-heading-motion__description-line {
         opacity: 1;
-        filter: blur(var(--gh-blur));
-        transform: translate3d(0, var(--gh-description-y), 0);
-        will-change: filter, transform;
+        filter: blur(var(--gh-media-blur));
+        transform: none;
+        will-change: filter;
     }
 
     .home-page .gallery-heading-motion--scroll-linked
@@ -74,7 +76,12 @@
     }
 
     .home-page .galeri-section .depth-gallery {
-        margin-block-start: clamp(1rem, 2svh, 2rem);
+        margin-block-start: 0;
+    }
+
+    html[dir="rtl"] .home-page .galeri-section__head.gallery-heading-motion {
+        margin-inline-start: auto;
+        text-align: right;
     }
 
     html[dir="rtl"] .home-page .gallery-heading-motion__line--single {
@@ -83,10 +90,16 @@
         letter-spacing: normal;
         transform-origin: right center;
     }
+
+    html[dir="rtl"] .home-page .gallery-heading-motion__description {
+        margin-inline-start: auto;
+        text-align: right;
+    }
 }
 
 @media (min-width: 1280px) and (prefers-reduced-motion: reduce) {
     .home-page .galeri-section__head.gallery-heading-motion {
+        --gh-media-blur: 0px;
         opacity: 1;
         transform: none;
     }
