@@ -1,5 +1,6 @@
 const DESKTOP_QUERY = '(min-width: 1280px)';
 const HORIZONTAL_END = 0.78;
+const HANDOFF_HOLD_VIEWPORTS = 1;
 
 const clamp = (value, min = 0, max = 1) => (
     Math.min(max, Math.max(min, value))
@@ -112,9 +113,16 @@ export function mountArticleStory(root) {
     function render() {
         frame = 0;
         if (destroyed || !active || document.hidden || !enabled()) return;
+
         const rect = journey.getBoundingClientRect();
-        const travel = Math.max(1, journey.offsetHeight - window.innerHeight);
-        paint(clamp(-rect.top / travel));
+        const handoffHold = window.innerHeight * HANDOFF_HOLD_VIEWPORTS;
+        const travelled = Math.max(0, -rect.top - handoffHold);
+        const travel = Math.max(
+            1,
+            journey.offsetHeight - window.innerHeight - handoffHold,
+        );
+
+        paint(clamp(travelled / travel));
     }
 
     function requestRender() {
