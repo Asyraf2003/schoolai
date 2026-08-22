@@ -49,7 +49,12 @@
         --values-content-width: 90vw;
         --values-grid-column-gap: 2vw;
         --values-grid-row-gap: 2vw;
-        --values-story-length: 570svh;
+        /*
+         * Base Values choreography tetap 570svh. Tambahan 100svh hanya menjadi
+         * tail handoff Values -> Gallery agar Horizontal Blinds punya kira-kira
+         * 3x jarak scroll dari versi sebelumnya tanpa memperlambat fase awal.
+         */
+        --values-story-length: 670svh;
         --values-line-two-shift: clamp(4rem, 7vw, 7rem);
     }
 
