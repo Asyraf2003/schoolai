@@ -17,6 +17,7 @@ const ROOT_PROPERTIES = [
 const WORLD_PROPERTIES = [
     '--values-gallery-exit-progress',
     '--values-gallery-kinetic-opacity',
+    '--values-gallery-world-opacity-pct',
 ];
 
 function clamp(value) {
@@ -38,8 +39,6 @@ function valuesWorldRoot(root, nodes) {
 }
 
 function kineticOpacity(galleryTransition) {
-    // exitAmount() sudah ease-out. Hilangkan kinetic pada sekitar sepertiga awal
-    // fase exit agar tersisa pure blue sebelum Gallery mulai menuju warna pucat.
     return 1 - smoothstep(galleryTransition / 0.72);
 }
 
@@ -107,6 +106,10 @@ function writeRootFrame(
         worldRoot.style.setProperty(
             '--values-gallery-kinetic-opacity',
             kineticOpacity(galleryTransition).toFixed(4),
+        );
+        worldRoot.style.setProperty(
+            '--values-gallery-world-opacity-pct',
+            `${((1 - galleryTransition) * 100).toFixed(2)}%`,
         );
     }
 
