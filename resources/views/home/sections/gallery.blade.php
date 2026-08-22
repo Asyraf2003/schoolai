@@ -1,10 +1,9 @@
 @php
-  $galleryHeadingCopy = match (app()->getLocale()) {
-      'en' => ['top' => 'SPACE FOR', 'bottom' => 'GALLERY'],
-      'ar' => ['top' => 'مساحة', 'bottom' => 'للمعرض'],
-      default => ['top' => 'AREA UNTUK', 'bottom' => 'GALERI'],
+  $galleryHeading = match (app()->getLocale()) {
+      'en' => 'GALLERY',
+      'ar' => 'المعرض',
+      default => 'GALERI',
   };
-  $galleryHeadingLabel = trim($galleryHeadingCopy['top'].' '.$galleryHeadingCopy['bottom']);
   $galleryDescription = trim((string) (
       $gallerySection['section_subtitle']
       ?? $gallerySection['subtitle']
@@ -25,13 +24,13 @@
         <h2
           class="gallery-heading-motion__heading"
           id="homepage-gallery-heading"
-          aria-label="{{ $galleryHeadingLabel }}"
         >
           <span class="gallery-heading-motion__clip" aria-hidden="true">
-            <span class="gallery-heading-motion__line gallery-heading-motion__line--top">
-              {{ $galleryHeadingCopy['top'] }}
+            <span class="gallery-heading-motion__line gallery-heading-motion__line--single">
+              {{ $galleryHeading }}
             </span>
           </span>
+          <span class="sr-only">{{ $galleryHeading }}</span>
         </h2>
 
         @if ($galleryDescription !== '')
@@ -45,12 +44,6 @@
             @endforeach
           </p>
         @endif
-      </div>
-
-      <div class="gallery-heading-motion__clip gallery-heading-motion__clip--bottom" aria-hidden="true">
-        <span class="gallery-heading-motion__line gallery-heading-motion__line--bottom">
-          {{ $galleryHeadingCopy['bottom'] }}
-        </span>
       </div>
     </header>
   </div>
