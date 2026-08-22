@@ -18,10 +18,13 @@ export function mountArticleStory(root) {
     const track = root.querySelector('[data-article-track]');
     const rollWindow = root.querySelector('[data-article-roll-window]');
     const rollStack = root.querySelector('[data-article-roll-stack]');
+    const closing = root.querySelector('[data-article-closing]');
     const cta = root.querySelector('[data-article-final-cta]');
     const desktop = window.matchMedia(DESKTOP_QUERY);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!journey || !track || !rollWindow || !rollStack) return () => {};
+    if (!journey || !track || !rollWindow || !rollStack || !closing) {
+        return () => {};
+    }
 
     let frame = 0;
     let destroyed = false;
@@ -29,8 +32,8 @@ export function mountArticleStory(root) {
     let observer = null;
     let trackDistance = 0;
     let rollDistance = 0;
-    let featureStart = 176;
-    let featureEnd = 672;
+    let featureStart = 680;
+    let featureEnd = 1040;
 
     function enabled() {
         return desktop.matches && !reduced.matches;
@@ -40,36 +43,28 @@ export function mountArticleStory(root) {
         trackDistance = Math.max(0, track.scrollWidth - window.innerWidth);
         rollDistance = Math.max(
             0,
-            rollStack.scrollHeight - rollWindow.clientHeight,
+            rollStack.scrollHeight - rollWindow.clientHeight + window.innerHeight * 0.14,
         );
-        featureStart = clamp(window.innerWidth * .13, 176, 224);
+        featureStart = clamp(window.innerWidth * 0.46, 560, 760);
         featureEnd = Math.min(
-            window.innerWidth * .42,
-            window.innerHeight * .82 * (16 / 9),
-            832,
+            window.innerWidth * 0.72,
+            window.innerHeight * 0.82 * (16 / 9),
+            1120,
         );
     }
 
     function paint(progress) {
-        const opening = phase(progress, 0.01, 0.2);
-        const copy = phase(opening, 0.48, 0.92);
-        const horizontalIn = phase(progress, 0.22, 0.3);
-        const horizontal = phase(progress, 0.28, 0.62);
-        const horizontalOut = phase(progress, 0.6, 0.68);
-        const rollIn = phase(progress, 0.64, 0.72);
-        const roll = phase(progress, 0.69, 0.9);
-        const final = phase(progress, 0.88, 0.96);
+        const opening = phase(progress, 0.01, 0.14);
+        const horizontalIn = phase(progress, 0.16, 0.23);
+        const horizontal = phase(progress, 0.21, 0.62);
+        const horizontalOut = phase(progress, 0.61, 0.69);
+        const closingIn = phase(progress, 0.65, 0.73);
+        const roll = phase(progress, 0.7, 0.88);
+        const exit = phase(progress, 0.88, 1);
+        const focused = cta?.contains(document.activeElement) ?? false;
+        const effectiveExit = focused ? 0 : exit;
+        const closingOpacity = Math.max(closingIn, focused ? 1 : 0);
 
-        setNumber(root, '--article-opening', opening);
-        setNumber(root, '--article-copy-opacity', copy);
-        root.style.setProperty(
-            '--article-copy-blur',
-            `${((1 - copy) * 14).toFixed(2)}px`,
-        );
-        root.style.setProperty(
-            '--article-copy-y',
-            `${((1 - copy) * 20).toFixed(2)}px`,
-        );
         root.style.setProperty(
             '--article-feature-width',
             `${(featureStart + (featureEnd - featureStart) * opening).toFixed(2)}px`,
@@ -84,20 +79,25 @@ export function mountArticleStory(root) {
             '--article-track-x',
             `${(-trackDistance * horizontal).toFixed(2)}px`,
         );
-        setNumber(root, '--article-roll-opacity', rollIn);
+        setNumber(root, '--article-closing-opacity', closingOpacity);
         root.style.setProperty(
             '--article-roll-y',
             `${(-rollDistance * roll).toFixed(2)}px`,
         );
-        const hasCtaFocus = cta?.contains(document.activeElement) ?? false;
-        const visibleFinal = hasCtaFocus ? Math.max(final, 0.82) : final;
-        setNumber(root, '--article-final', visibleFinal);
+
+        setNumber(root, '--article-exit-scale', 1 - effectiveExit);
         root.style.setProperty(
-            '--article-cta-y',
-            `${((1 - visibleFinal) * 24).toFixed(2)}px`,
+            '--article-exit-y',
+            `${(effectiveExit * 100).toFixed(2)}svh`,
         );
-        const ctaReady = final > 0.82 || hasCtaFocus;
+        root.style.setProperty(
+            '--article-exit-rotation',
+            `${(-10 * effectiveExit).toFixed(2)}deg`,
+        );
+
+        const ctaReady = (closingIn > 0.72 && effectiveExit < 0.08) || focused;
         root.classList.toggle('is-article-cta-ready', ctaReady);
+        root.classList.toggle('is-article-transitioning', effectiveExit > 0.001);
         if (cta) cta.tabIndex = ctaReady ? 0 : -1;
     }
 
@@ -115,13 +115,20 @@ export function mountArticleStory(root) {
         }
     }
 
+    function reset() {
+        root.classList.remove(
+            'is-article-cta-ready',
+            'is-article-transitioning',
+        );
+        if (cta) cta.removeAttribute('tabindex');
+    }
+
     function syncMode() {
         root.classList.toggle('is-article-story-ready', enabled());
         if (!enabled()) {
             if (frame) window.cancelAnimationFrame(frame);
             frame = 0;
-            root.classList.remove('is-article-cta-ready');
-            if (cta) cta.removeAttribute('tabindex');
+            reset();
             return;
         }
         measure();
@@ -153,7 +160,7 @@ export function mountArticleStory(root) {
 
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(onIntersection, {
-            rootMargin: '80% 0px 80% 0px',
+            rootMargin: '100% 0px 100% 0px',
             threshold: 0,
         });
         observer.observe(root);
@@ -181,6 +188,7 @@ export function mountArticleStory(root) {
         cta?.removeEventListener('focusout', requestRender);
         desktop.removeEventListener('change', syncMode);
         reduced.removeEventListener('change', syncMode);
+        reset();
     };
 }
 
