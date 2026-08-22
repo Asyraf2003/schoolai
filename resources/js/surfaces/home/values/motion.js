@@ -5,6 +5,16 @@ const POSITION_EPSILON = 0.00008;
 const VELOCITY_EPSILON = 0.0008;
 const MAX_PROGRESS_VELOCITY = 2.8;
 
+/*
+ * Desktop base choreography historically lived in 570svh with exit starting at
+ * 89.5%. We now add a 100svh handoff tail. The helpers below preserve every
+ * pre-exit physical timing, stretch the card departure over roughly 2/3 of the
+ * new handoff, and reserve the final ~1/3 for the blinds to finish alone.
+ */
+const DESKTOP_EXIT_START = 0.895;
+const DESKTOP_HANDOFF_EXTRA_VIEWPORTS = 1;
+const DESKTOP_CARD_EXIT_EXTRA_SHARE = 0.5;
+
 export const clamp = (value, min = 0, max = 1) => (
     Math.min(max, Math.max(min, value))
 );
@@ -24,18 +34,69 @@ export function phase(progress, start, end) {
     return smooth((progress - start) / Math.max(0.0001, end - start));
 }
 
+function desktopTravelParts(storyTop, geometry) {
+    const totalTravel = Math.max(
+        1,
+        geometry.timelineHeight - geometry.stageHeight,
+    );
+    const desiredExtra = geometry.viewportHeight * DESKTOP_HANDOFF_EXTRA_VIEWPORTS;
+    const extraTravel = Math.min(Math.max(0, totalTravel - 1), desiredExtra);
+    const baseTravel = Math.max(1, totalTravel - extraTravel);
+    const scrolled = Math.max(0, geometry.stickyTop - storyTop);
+    const exitStartDistance = baseTravel * DESKTOP_EXIT_START;
+    const baseExitTravel = Math.max(1, baseTravel - exitStartDistance);
+
+    return {
+        totalTravel,
+        extraTravel,
+        baseTravel,
+        scrolled,
+        exitStartDistance,
+        baseExitTravel,
+    };
+}
+
 export function readStoryProgress(storyTop, geometry) {
     if (geometry.mode === 4) {
-        const travel = Math.max(
+        const {
+            scrolled,
+            baseTravel,
+            extraTravel,
+            exitStartDistance,
+            baseExitTravel,
+        } = desktopTravelParts(storyTop, geometry);
+
+        if (scrolled <= exitStartDistance) {
+            return clamp(scrolled / baseTravel);
+        }
+
+        const stretchedCardExitTravel = Math.max(
             1,
-            geometry.timelineHeight - geometry.stageHeight,
+            baseExitTravel + extraTravel * DESKTOP_CARD_EXIT_EXTRA_SHARE,
+        );
+        const exitLocal = clamp(
+            (scrolled - exitStartDistance) / stretchedCardExitTravel,
         );
 
-        return clamp((geometry.stickyTop - storyTop) / travel);
+        return DESKTOP_EXIT_START
+            + exitLocal * (1 - DESKTOP_EXIT_START);
     }
 
     const travel = geometry.rootHeight + geometry.viewportHeight;
     return clamp((geometry.viewportHeight - storyTop) / Math.max(1, travel));
+}
+
+export function readGalleryHandoffProgress(storyTop, geometry) {
+    if (geometry.mode !== 4) return 0;
+
+    const {
+        scrolled,
+        totalTravel,
+        exitStartDistance,
+    } = desktopTravelParts(storyTop, geometry);
+    const handoffTravel = Math.max(1, totalTravel - exitStartDistance);
+
+    return clamp((scrolled - exitStartDistance) / handoffTravel);
 }
 
 export function readHandoffProgress(rootTop, viewportHeight) {
