@@ -1,31 +1,31 @@
 .home-page {
     --values-gallery-resting-color: #fffaf0;
-    --values-gallery-bridge-color: #d9dcf2;
 }
 
 .home-page .values-story__exit {
     background: linear-gradient(
-        to bottom,
+        to bottom in oklab,
         var(--program-values-final-color) 0%,
-        #4058ff 18%,
-        #7688ff 38%,
-        #abb7ff 56%,
-        var(--values-gallery-bridge-color) 74%,
-        #f0e8e1 90%,
+        var(--program-values-final-color) 24%,
+        #3150ff 40%,
+        #6077ff 54%,
+        #aab6ff 70%,
+        #dce0f5 84%,
+        #f3ecdf 94%,
         var(--values-gallery-resting-color) 100%
     );
     box-shadow: 0 -2px 0 var(--program-values-final-color);
 }
 
 .home-page .values-story__exit::before {
-    inset: 0 -8%;
+    inset: -8% -10%;
     background: radial-gradient(
-        ellipse at 50% 36%,
-        rgb(114 132 255 / .34),
-        rgb(215 220 246 / .18) 46%,
-        rgb(255 250 240 / 0) 78%
+        ellipse at 50% 46%,
+        rgb(255 255 255 / .13),
+        rgb(255 255 255 / .05) 46%,
+        transparent 78%
     );
-    filter: blur(34px);
+    filter: blur(48px);
 }
 
 .home-page .depth-gallery__viewport {
@@ -34,21 +34,24 @@
 
 @media (min-width: 1280px) {
     .home-page .values-story {
-        --values-exit-height: clamp(14rem, 30svh, 22rem);
+        /* Setelah kartu selesai, seluruh bridge ke Gallery hanya sekitar 1/2 viewport. */
+        --values-exit-height: clamp(24rem, 50svh, 34rem);
     }
 
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
         position: relative;
-        margin-block-start: clamp(-12rem, -18svh, -8rem);
-        padding-block-start: clamp(4.5rem, 9svh, 7rem);
+        /* Tarik heading masuk ke dalam bridge warna, bukan menunggu bridge selesai. */
+        margin-block-start: clamp(-22rem, -38svh, -16rem);
+        padding-block-start: clamp(8rem, 16svh, 12rem);
         padding-block-end: 0;
         background: linear-gradient(
-            to bottom,
-            var(--values-gallery-bridge-color) 0%,
-            #e8e3e7 18%,
-            #f4ece2 40%,
-            var(--values-gallery-resting-color) 68%,
+            to bottom in oklab,
+            rgb(255 250 240 / 0) 0,
+            rgb(255 250 240 / 0) 16svh,
+            rgb(255 250 240 / .18) 28svh,
+            rgb(255 250 240 / .62) 40svh,
+            var(--values-gallery-resting-color) 50svh,
             var(--values-gallery-resting-color) 100%
         );
     }
@@ -57,17 +60,17 @@
         position: absolute;
         inset: 0 0 auto;
         z-index: 0;
-        height: clamp(12rem, 28svh, 20rem);
+        height: 44svh;
         background: radial-gradient(
             ellipse at 50% 0%,
-            rgb(119 136 255 / .20),
-            rgb(222 224 242 / .15) 44%,
-            rgb(255 250 240 / 0) 82%
+            rgb(112 130 255 / .12),
+            rgb(220 224 247 / .08) 44%,
+            transparent 82%
         );
         content: "";
         opacity: calc(1 - var(--gallery-handoff-progress));
         pointer-events: none;
-        transform: translate3d(0, calc(var(--gallery-handoff-progress) * -2svh), 0);
+        transform: translate3d(0, calc(var(--gallery-handoff-progress) * -1.5svh), 0);
         will-change: opacity, transform;
     }
 }
