@@ -6,16 +6,28 @@ function updateGalleryHeading(engine) {
 
     const planeSteps = Math.max(0, engine.gallery.planes.length - 1);
     const totalSteps = Math.max(1, planeSteps + engine.scroll.endSteps);
+
+    /*
+     * Clock kedua dimulai setelah handoff selesai: ketika media pertama bergerak
+     * menuju media kedua, heading + description perlahan blur dan menghilang.
+     * Pada media kedua heading sudah habis; perjalanan media berikutnya bebas.
+     */
     const firstToSecond = engine.THREE.MathUtils.clamp(
         engine.scroll.progressCurrent * totalSteps,
         0,
         1,
     );
-    const reveal = engine.THREE.MathUtils.smoothstep(firstToSecond, 0, 1);
-    const blur = 14 * (1 - reveal);
+    const departure = engine.THREE.MathUtils.smoothstep(
+        firstToSecond,
+        0.04,
+        0.96,
+    );
+    const opacity = 1 - departure;
+    const blur = 12 * departure;
 
+    heading.style.setProperty('--gh-media-opacity', opacity.toFixed(4));
     heading.style.setProperty('--gh-media-blur', `${blur.toFixed(2)}px`);
-    heading.dataset.galleryHeadingReveal = reveal.toFixed(4);
+    heading.dataset.galleryHeadingDeparture = departure.toFixed(4);
 }
 
 export function renderDepthFrame(engine, time = performance.now()) {
