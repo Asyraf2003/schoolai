@@ -46,7 +46,13 @@ export class DepthGalleryEndCta {
             (this.progress >= 0.7 && this.transitionProgress < 0.12)
             || focused
         );
-        const transitionScale = 1 - this.transitionProgress;
+        const swingProgress = readSwingProgress(this.transitionProgress);
+        const riseProgress = smoothProgress(clamp(
+            (this.transitionProgress - 0.30) / 0.70,
+        ));
+        const transitionScale = 1 - riseProgress;
+        const mediaOneRotation = -3 - 17 * swingProgress;
+        const mediaTwoRotation = 4 + 16 * swingProgress;
 
         this.root.style.setProperty(
             '--depth-end-progress',
@@ -63,6 +69,14 @@ export class DepthGalleryEndCta {
         this.root.style.setProperty(
             '--depth-transition-scale',
             transitionScale.toFixed(4),
+        );
+        this.root.style.setProperty(
+            '--depth-end-media-1-rotation',
+            `${mediaOneRotation.toFixed(3)}deg`,
+        );
+        this.root.style.setProperty(
+            '--depth-end-media-2-rotation',
+            `${mediaTwoRotation.toFixed(3)}deg`,
         );
         this.root.classList.toggle('is-depth-end-ready', interactive);
         this.root.classList.toggle(
@@ -88,6 +102,8 @@ export class DepthGalleryEndCta {
         this.root.style.removeProperty('--depth-label-opacity');
         this.root.style.removeProperty('--depth-transition-progress');
         this.root.style.removeProperty('--depth-transition-scale');
+        this.root.style.removeProperty('--depth-end-media-1-rotation');
+        this.root.style.removeProperty('--depth-end-media-2-rotation');
         this.root.classList.remove(
             'is-depth-end-ready',
             'is-depth-transitioning',
@@ -101,6 +117,16 @@ export class DepthGalleryEndCta {
     dispose() {
         this.reset();
     }
+}
+
+function readSwingProgress(progress) {
+    if (progress <= 0.15) {
+        return smoothProgress(progress / 0.15);
+    }
+    if (progress <= 0.30) {
+        return 1 - smoothProgress((progress - 0.15) / 0.15);
+    }
+    return 0;
 }
 
 function clamp(value) {
