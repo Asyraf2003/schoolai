@@ -49,13 +49,13 @@ export function mountArticleStory(root) {
         const viewportWidth = Math.max(1, window.innerWidth);
         const viewportHeight = Math.max(1, window.innerHeight);
         const viewportCenter = viewportWidth * 0.5;
-        const mediaSize = viewportHeight;
+        const mediaWidth = viewportHeight + viewportWidth * 0.10;
         const copyTopMargin = viewportHeight / 24;
 
         mainItems.forEach((item, index) => {
             const itemLeft = item.offsetLeft + trackX;
-            const mediaCenter = itemLeft + mediaSize * 0.5;
-            const mediaRight = itemLeft + mediaSize;
+            const mediaCenter = itemLeft + mediaWidth * 0.5;
+            const mediaRight = itemLeft + mediaWidth;
             const relative = clamp(
                 (mediaCenter - viewportCenter) / viewportWidth,
                 -1,
