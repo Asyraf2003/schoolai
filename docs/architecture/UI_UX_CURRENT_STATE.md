@@ -1,101 +1,135 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `BLOCKED_BY_MISSING_EVIDENCE / DESKTOP-HOMEPAGE-2026-08-21`
-Updated: 2026-08-21
+Status: `HARDENING_ACTIVE / HOMEPAGE-ENGINE-2026-08-23`
+Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected source HEAD: `f8ae8150b5932c3d2a86d6607da990650de87028`
+Inspected runtime-source HEAD: `04e3aa68dc06b0bb2777678538d4e65b01c656ee`
+Durable handoff: `handoffs/2026-08-23-homepage-hardening.md`
 
-## Active owner-accepted blueprints
+## Current phase
 
-- `blueprints/2026-08-21-desktop-program-values-continuity.md`;
-- `blueprints/2026-08-21-desktop-vision-background-foundation.md`;
-- `blueprints/2026-08-21-desktop-gallery-heading-continuity.md`;
-- `blueprints/2026-08-21-desktop-article-journey.md`.
+Homepage visual polishing is PAUSED. The project is now in a bounded hardening
+phase. The next sessions must stabilize engine/state/lifecycle behavior before
+continuing Article composition, Gallery-to-Article art direction, Footer
+transition work, or removing temporary visual rulers/markers.
 
-The owner's 2026-08-21 desktop brief supersedes the former freeze on these
-named surfaces only. Tablet/phone Values rail, Arabic/RTL visual tuning,
-Gallery gateway art direction, and unrelated owners remain frozen.
+The receiving agent must read the mandatory chain in `README.md`, then the
+hardening handoff above. Chat history is not an implementation dependency.
 
 ## Current FACT
 
-- Program geometry remains owned by `program-journey`; formation and dialog
-  controllers remain separate.
-- Program and Values now resolve final blue through
-  `--program-values-final-color: #2038ff` on their shared visual world.
-- Values uses only the existing mode-4 scene progress. Its protected
-  `hidden -> deck -> fan -> preFlip -> flip` sequence and spatial/worm owners
-  remain intact, while the deck collision pose now clamps at the center plane
-  before fan travel begins.
-- Vision uses its existing timeline progress to composite two configurable
-  background layers. About, Vision, and Mission now have distinct desktop
-  palette/pattern tokens and diffuse in both directions without a second scroll
-  driver.
-- Gallery heading owns a desktop-only normalized blur/scale/position entry and
-  exit state. Values and Gallery share one resting-color token, while the
-  `gallery-depth` data, renderer, trail, and route transition remain separate.
-- Gallery ending now seeds the featured Article image behind the CTA and keeps a
-  focused CTA visible during rapid reverse. The final Gallery CTA media itself
-  remains blocked because no authoritative media field exists and the owner has
-  not yet selected reuse versus a dedicated source.
-- Article data remains database-only, newest-first, maximum four, and controller
-  owned. Its presentation grows from a small 16:9 image, reveals copy from blur,
-  uses one sticky desktop scene with vertical input, moves visually horizontal,
-  finishes with a vertical roll plus clickable full-height media, then returns
-  to native flow into the full-viewport Footer.
+- Slow desktop scrolling through the closing Gallery -> Article handoff can
+  expose the dark `.nav-shell` background, switch Gallery into its static
+  fallback, and leave the downstream state visually broken. Faster scrolling
+  can sometimes pass the same region. This is a reproduced runtime symptom,
+  not a claimed final root cause.
+- `renderDepthFrame()` currently calls `isDepthFrameHealthy()`. A frame is
+  considered unhealthy when no Gallery plane has opacity above `.01` and the
+  end CTA is not considered visible, even when the drawing buffer and WebGL
+  context remain otherwise healthy.
+- A false result from `renderDepthFrame()` stops `DepthGalleryEngine` and calls
+  its failure path. `applyFallbackState()` then removes active/ready classes and
+  exposes the static fallback. This is the primary hardening candidate for the
+  slow-scroll failure.
+- The dark color visible during the failure matches the homepage shell
+  background `#071b18`; it becomes visible when Gallery/Article surfaces no
+  longer cover the viewport during the failed state.
+- Gallery uses an internal smoothed camera clock. The handoff has also been
+  adapted to native document progress. These clocks must not be allowed to
+  produce contradictory lifecycle states.
+- `npm run build` has been observed to complete while warning about a chunk over
+  `500 kB`. That warning is not currently proven to cause the slow-scroll
+  fallback bug.
+- Three.js ownership is inconsistent: Gallery runtime-loads `three@0.183.0`
+  from jsDelivr while the package graph currently declares `three ^0.185.1` and
+  other scenes import from the package. Unification is a later hardening step,
+  not the active fix.
+- Article visual work remains intentionally unfinished. Temporary X/Y viewport
+  rulers and `tes...` markers remain useful for later owner feedback and must
+  not be removed during the engine step unless they themselves are proven to
+  cause a runtime defect.
 
-## Runtime proof — Chromium 1440 × 900
+## Owner-accepted durable direction
 
-- Program heading-to-card-field gap: `-28.81px`.
-- Cards-to-Program-end breathing interval: `225.59px` (`25.07%` viewport).
-- Shared and Values tokens: exact `#2038ff`; handoff morph at Pondasi: `1.0000`.
-- Program open/detail/back: open `true`, close `true`.
-- Values heading-to-visual-deck gap: `70.79px` (`1.26/16` viewport height).
-- Values visual center spread remains `15.97px` through collision progress
-  `.096`, then opens to `72px` at `.12` and `496.78px` at `.18`; card Y remains
-  below the collision plane rather than overshooting upward.
-- Rapid forward/reverse leaves finite Values transforms and morph `1.0000`.
-- Vision states resolve to distinct `rgb(239, 227, 202)`,
-  `rgb(203, 223, 228)`, and `rgb(209, 223, 202)` pattern layers; intermediate
-  opacity/diffusion proves gradual compositing.
-- Gallery entry/rest/reverse opacity: `.692 / 1 / .692`; reverse focus remains
-  tabbable, visible, and never receives `aria-hidden=true`.
-- Article opening: `188.02 × 105.75` to `604.8 × 340.19`, ratio `1.78`.
-- Opening copy progresses from opacity `0`/blur `14px` to opacity `.7117`/blur
-  `4.04px` during image growth.
-- Article title-center/corner and description-edge deltas: `0px`.
-- Horizontal track: `-28.57px` to `-2851.12px`; roll: `-4.52px` to `-693px`.
-- Final strip/full-media gap: `240px`, exactly `1/6` of the 1440px viewport.
-- Final full-height media is clickable and resolves to `/artikel`.
-- Article/Footer boundary shares one document coordinate; Footer is `900px`.
-- Every checkpoint had `scrollWidth == clientWidth`; runtime errors: `0`.
+- Hardening comes before further visual polishing.
+- Work proceeds slowly, one bounded capability per session, with proof before
+  the next capability.
+- Blade should ultimately become presentation-only: no inline `@php`, locale
+  `match`, collection shaping, business/data preparation, or other view logic.
+  Prepared view data belongs in controllers/application services/view models or
+  equivalent existing Laravel owners.
+- Media CRUD/index/display should ultimately use Cloudflare-backed delivery.
+  R2 is the expected binary/object-storage direction through the S3-compatible
+  filesystem path; database records remain the metadata/relationship source of
+  truth. Video delivery may be evaluated separately when evidence requires it.
+- Final product support remains six responsive width tiers, ID/EN/AR,
+  LTR/RTL, Chromium and Safari/WebKit. This is a 36-combination certification
+  matrix, not permission to create 36 implementations.
+- Product target remains Lighthouse/PageSpeed `100/100/100/100` on declared
+  lab profiles, while field CWV claims require real p75 field evidence.
+- Media must reserve geometry and be responsive; storage migration must not
+  sacrifice accessibility, locale behavior, WebKit support, or page-speed
+  budgets.
 
-## Automated proof
+## Hardening sequence
 
-- `git diff --check`: `PASS`.
-- affected Program/Values/Vision/Gallery/Article suite:
-  `25 passed`, `636 assertions`, `0 failed` on temporary MariaDB.
-- `npm run build`: `PASS`.
-- `npm run check:structure`: baseline `FAIL`; unchanged HEAD already has
-  224/202-line legacy controllers, two orphan Vision modules, and a stale Hero
-  checksum. These unrelated owners were not mutated.
-- full `php artisan test --compact` on temporary MariaDB: `201 passed` from
-  212 with `1804` assertions; five errors require the unavailable GD extension,
-  while six unrelated existing admin/article/security assertions fail in this
-  fallback setup. The affected homepage suite remains fully green.
+The sequence below is a backlog. Only the first unresolved item may become the
+active step unless new evidence changes priority.
 
-## Deferred and blocked
+1. `H1 Gallery false-fallback hardening`
+   - separate a genuinely unhealthy renderer/context from a temporarily empty
+     visual frame during transition;
+   - prove slow forward/reverse scrolling no longer enters static fallback.
+2. `H2 Gallery lifecycle/state hardening`
+   - make loading/active/ending/handoff/fallback semantics explicit and prevent
+     contradictory class/state transitions.
+3. `H3 Scroll-clock reconciliation`
+   - keep smoothing for visual motion where useful, but make section lifecycle
+     and handoff progress deterministic from one authoritative clock.
+4. `H4 Graphics runtime/bundle hardening`
+   - converge on one Three.js version/runtime strategy; then measure/code-split
+     graphics without hiding bundle warnings by merely increasing limits.
+5. `H5 Blade presentation-purity migration`
+   - move inline data shaping and locale decisions out of Blade incrementally,
+     one surface at a time, with unchanged rendered semantics as proof.
+6. `H6 Cloudflare media migration`
+   - define R2 disk/config, object-key and metadata contracts, upload/delete
+     lifecycle, CDN/public URL strategy, image variants, cache policy, and CRUD
+     migration in bounded steps.
+7. `H7 Release certification`
+   - certify six tiers x three locales x Chromium/WebKit, then Lighthouse/
+     PageSpeed and accessibility/runtime gates.
 
-- Gallery CTA media owner is awaiting the owner's A/B/C decision: reuse a Gallery
-  item, name an existing local asset, or add a dedicated configurable field.
-- Tablet, phone, Arabic/RTL visual tuning, Values responsive rail, final
-  motif naming, and Gallery cinematic gateway remain deferred.
-- Safari/WebKit, Lighthouse/PageSpeed, RUM/CrUX, and responsive/locale proof are
-  not claimed.
+## Protected / deferred during H1
+
+- Do not redesign Gallery, Article, Program, Values, Vision/Mission, navigation,
+  or Footer.
+- Do not tune Article ruler coordinates during H1.
+- Do not migrate media storage during H1.
+- Do not remove Blade `@php` during H1.
+- Do not change Three.js dependency/version during H1.
+- Do not suppress the >500 kB warning by changing only the warning threshold.
+- Do not claim Safari/WebKit, responsive, locale, Lighthouse, PageSpeed, CWV,
+  or accessibility PASS without actually running the corresponding proof.
+
+## Current proof status
+
+- Owner screenshots: `FAIL` for slow-scroll Gallery -> Article stability.
+- Fast-scroll behavior: sometimes visually passes; this does not qualify as
+  deterministic proof.
+- `npm run build`: observed PASS in owner terminal, with >500 kB chunk warning.
+- No new Safari/WebKit, six-tier, three-locale, Lighthouse/PageSpeed, field CWV,
+  or full automated release proof is claimed for this phase.
+- The docs-only hardening checkpoint does not increase runtime progress.
 
 ## NEXT VALID STEP
 
-Obtain the exact Gallery CTA media owner decision, then complete that bounded
-presentation without altering Gallery depth data or adding a cinematic gateway.
-Global release proof also requires a test host with GD and the pre-existing
-structure baseline repaired under separately authorized scope.
+`H1 Gallery false-fallback hardening` only.
+
+Inspect and patch the Gallery frame-health/fallback boundary so a legitimate
+transition frame with no currently visible plane cannot be mistaken for a WebGL
+engine failure. Preserve current visual composition. Prove by repeated slow
+forward and reverse scrolling through the Gallery ending/handoff in Chromium,
+including a deliberate pause inside the transition region, with no static
+fallback spawn, no exposed dark shell, and no console/runtime engine failure.
