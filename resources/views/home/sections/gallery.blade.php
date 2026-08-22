@@ -21,14 +21,14 @@
   <div class="gallery-mask-handoff" data-gallery-mask-handoff aria-hidden="true">
     <svg
       class="gallery-mask-handoff__layer"
-      data-gallery-mask-layer="light"
+      data-gallery-mask-layer="values"
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
     >
       <defs>
-        <mask id="gallery-handoff-mask-light" maskUnits="userSpaceOnUse">
-          <rect data-gallery-mask-base x="0" y="0" width="100" height="100" fill="black" />
-          <g data-gallery-mask-blinds="light"></g>
+        <mask id="gallery-handoff-mask-values" maskUnits="userSpaceOnUse">
+          <rect data-gallery-mask-base x="0" y="0" width="100" height="100" fill="white" />
+          <g data-gallery-mask-blinds="values"></g>
         </mask>
       </defs>
       <rect
@@ -37,31 +37,8 @@
         y="0"
         width="100"
         height="100"
-        fill="#f4f7ff"
-        mask="url(#gallery-handoff-mask-light)"
-      />
-    </svg>
-
-    <svg
-      class="gallery-mask-handoff__layer"
-      data-gallery-mask-layer="cream"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <mask id="gallery-handoff-mask-cream" maskUnits="userSpaceOnUse">
-          <rect data-gallery-mask-base x="0" y="0" width="100" height="100" fill="black" />
-          <g data-gallery-mask-blinds="cream"></g>
-        </mask>
-      </defs>
-      <rect
-        data-gallery-mask-fill
-        x="0"
-        y="0"
-        width="100"
-        height="100"
-        fill="#fffaf0"
-        mask="url(#gallery-handoff-mask-cream)"
+        fill="#2038ff"
+        mask="url(#gallery-handoff-mask-values)"
       />
     </svg>
   </div>
