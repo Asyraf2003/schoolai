@@ -39,7 +39,20 @@ function valuesWorldRoot(root, nodes) {
 }
 
 function kineticOpacity(galleryTransition) {
-    return 1 - smoothstep(galleryTransition / 0.72);
+    /*
+     * Begitu kartu mulai exit, kinetic cepat larut ke pure blue. Setelah itu
+     * SVG blinds menjadi satu-satunya grammar visual yang membuka Gallery.
+     */
+    return 1 - smoothstep(galleryTransition / 0.16);
+}
+
+function worldOpacity(galleryTransition) {
+    /*
+     * Background DOM Values dilepas hampir seketika. Cover biru SVG di Gallery
+     * sudah berada tepat di bawah kartu, sehingga tidak ada flash/seam tetapi
+     * reveal berikutnya benar-benar berasal dari mask, bukan alpha blend.
+     */
+    return 1 - smoothstep(galleryTransition / 0.06);
 }
 
 function writeCardFrame(card, state) {
@@ -109,7 +122,7 @@ function writeRootFrame(
         );
         worldRoot.style.setProperty(
             '--values-gallery-world-opacity-pct',
-            `${((1 - galleryTransition) * 100).toFixed(2)}%`,
+            `${(worldOpacity(galleryTransition) * 100).toFixed(2)}%`,
         );
     }
 
