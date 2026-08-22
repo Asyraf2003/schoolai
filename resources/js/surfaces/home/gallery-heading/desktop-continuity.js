@@ -40,8 +40,9 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         const rtl = document.documentElement.dir === 'rtl';
 
         // Heading lahir di dalam color bridge. Ketika bagian atas heading mulai
-        // menyentuh area atas viewport, seluruh blok bergerak lateral sambil
-        // section Gallery tetap melanjutkan perjalanan vertikalnya.
+        // menyentuh area atas viewport, blok keluar mengikuti arah baca:
+        // LTR bergerak ke kanan, RTL bergerak ke kiri. Gallery tetap berjalan
+        // vertikal sehingga heading tidak pernah menahan depth journey.
         const handoff = smoothstep(clamp(
             (viewportHeight * 1.04 - sectionTop) / (viewportHeight * 0.86),
         ));
@@ -56,7 +57,7 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
         ));
         const exit = Math.max(sideExit, depthExit);
         const opacity = smoothstep(enter) * (1 - exit);
-        const direction = rtl ? 1 : -1;
+        const direction = rtl ? -1 : 1;
 
         heading.style.setProperty('--gh-opacity', opacity.toFixed(4));
         heading.style.setProperty(
