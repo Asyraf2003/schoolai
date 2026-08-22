@@ -52,12 +52,11 @@
     }
 
     /*
-     * Exit kartu desktop dimulai kira-kira 60svh sebelum akhir timeline.
-     * Gallery ditarik naik dengan jarak yang sama sehingga background Gallery
-     * ikut datang bersama kartu, bukan menunggu hampir satu viewport lagi.
-     * Seluruh corridor opaque dan dimiliki Gallery: Values blue -> lighter
-     * blue -> warm neutral -> resting cream. Tidak ada layer alpha lain yang
-     * dapat membentuk seam gelap di tengah perjalanan.
+     * Gallery masuk sekitar 60svh sebelum Values selesai, tetapi depth viewport
+     * mulai kira-kira sepertiga viewport setelah batas C. Karena itu perubahan
+     * warna harus selesai sebelum D mengambil alih. Corridor ini mempertahankan
+     * pure #2038ff sebentar, lalu melembut melalui blue/pale/warm sampai tepat
+     * #fffaf0 pada 34svh sehingga tidak ada lagi potongan biru -> cream mendadak.
      */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
@@ -69,15 +68,15 @@
         background: linear-gradient(
             to bottom in oklab,
             var(--program-values-final-color) 0,
-            var(--program-values-final-color) 7svh,
-            #3149ff 15svh,
-            #5268ff 24svh,
-            #7f91fa 33svh,
-            #aebaf3 41svh,
-            #d2d7ec 48svh,
-            #ebe7e3 53svh,
-            #f7efe3 57svh,
-            var(--values-gallery-resting-color) 60svh,
+            var(--program-values-final-color) 5svh,
+            #334cff 10svh,
+            #5369ff 15svh,
+            #788bfb 20svh,
+            #a8b4f2 25svh,
+            #d1d5e9 29svh,
+            #ebe7df 32svh,
+            #f7efe1 33svh,
+            var(--values-gallery-resting-color) 34svh,
             var(--values-gallery-resting-color) 100%
         );
     }
