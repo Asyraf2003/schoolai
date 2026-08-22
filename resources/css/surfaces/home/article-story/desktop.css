@@ -45,8 +45,8 @@
     .article-story.is-article-story-ready .article-story__opening-media {
         position: absolute;
         top: 33.333333svh;
-        left: 30vw;
-        width: 40vw;
+        left: 25vw;
+        width: 50vw;
         height: 41.666667svh;
         aspect-ratio: auto;
         overflow: hidden;
@@ -68,14 +68,14 @@
         position: absolute;
         z-index: 2;
         top: 37.5svh;
-        left: 75vw;
-        width: min(13vw, 15rem);
+        left: 76vw;
+        width: min(8vw, 9.5rem);
         min-height: 41.666667svh;
     }
 
     .article-story.is-article-story-ready .article-story__opening-description > p:last-child {
-        font-size: clamp(1.15rem, 1.35vw, 1.65rem);
-        line-height: 1.28;
+        font-size: clamp(1.08rem, 1.15vw, 1.48rem);
+        line-height: 1.2;
         text-wrap: pretty;
     }
 
