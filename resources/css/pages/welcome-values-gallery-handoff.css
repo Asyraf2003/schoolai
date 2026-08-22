@@ -12,10 +12,10 @@
 
 @media (min-width: 1280px) {
     /*
-     * Scene 1 = Values. Scene 2 = Gallery asli. Selama overlap, Values berada
-     * satu level di atas Gallery agar kartu tetap terlihat di depan reveal.
-     * Background world Values sendiri dibuat transparan oleh exit progress;
-     * warna biru scene 1 dijaga oleh mask overlay di Gallery di bawah kartu.
+     * Scene 1 = Values. Scene 2 = Gallery asli.
+     * Values tetap satu stacking context di atas Gallery supaya kartu dapat
+     * bergerak naik di foreground, sementara surface biru Values sendiri
+     * dilepas ke transparan dan digantikan cover SVG yang berada di bawah kartu.
      */
     .home-page .program-values-world {
         z-index: 5;
@@ -24,6 +24,20 @@
     .home-page .program-values-world__visual {
         opacity: var(--values-gallery-kinetic-opacity, 1);
         will-change: opacity;
+    }
+
+    /*
+     * Timeline Values sebelumnya punya background biru opaque sendiri. Jika
+     * dibiarkan, ia akan menutup mask + Gallery walaupun world background sudah
+     * transparan. Gunakan clock world yang sama supaya yang tersisa saat exit
+     * hanyalah kartu foreground.
+     */
+    .home-page .values-story__timeline {
+        background: color-mix(
+            in srgb,
+            var(--values-blue) var(--values-gallery-world-opacity-pct, 100%),
+            transparent
+        );
     }
 
     .home-page .values-story {
@@ -43,39 +57,39 @@
     }
 
     /*
-     * Gallery ditarik 60svh ke Values agar scene Gallery sudah berada di balik
-     * kartu ketika exit dimulai. Tidak ada scene bright/cream tambahan lagi:
-     * mask hanya menghapus cover biru dan langsung memperlihatkan Gallery asli.
+     * Penting: Gallery TIDAK lagi ditarik naik dengan negative margin.
+     * Posisi normal Gallery tetap tepat setelah Values. Selama card-exit, JS
+     * mem-pin viewport Gallery asli ke layar sehingga scene 2 sudah diam di
+     * belakang mask. Ketika exit selesai, posisi normal Gallery tepat mencapai
+     * viewport dan fixed -> sticky dapat dilepas tanpa perjalanan vertikal palsu.
      */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
         position: relative;
         z-index: 4;
-        margin-block-start: -60svh;
+        margin-block-start: 0;
         padding-block-start: 0;
         padding-block-end: 0;
         background: var(--values-gallery-resting-color);
     }
 
     /*
-     * Horizontal Blinds grammar dari repo Hiro-kiii:
-     * satu layer SVG full viewport menutup Gallery dengan Values blue. Mask
-     * awalnya putih penuh; 30 pasang rect hitam membuka dari tengah tiap baris,
-     * sehingga cover biru hilang berurutan dan Gallery DOM asli terlihat.
+     * Hiro-kiii / Horizontal Blinds: satu full-viewport scene tetap diam.
+     * Mask biru fixed berada di atas Gallery viewport fixed. Yang bergerak hanya
+     * 30 blinds SVG, bukan section Gallery itu sendiri.
      */
     .home-page .gallery-mask-handoff {
-        position: absolute;
-        inset: 0 0 auto;
-        z-index: 7;
+        position: fixed;
+        inset: 0;
+        z-index: 9;
         display: block;
-        width: 100%;
+        width: 100vw;
         height: 100svh;
         overflow: hidden;
         visibility: hidden;
         opacity: 0;
         pointer-events: none;
         isolation: isolate;
-        will-change: transform, opacity;
     }
 
     .home-page .gallery-mask-handoff__layer {
@@ -90,6 +104,47 @@
 
     .home-page .gallery-mask-handoff__layer rect {
         shape-rendering: crispEdges;
+    }
+
+    /*
+     * Gallery asli menjadi image-2 template selama handoff. Parent dibuat visible
+     * agar fixed descendants tidak terpotong oleh overflow:clip bawaan section.
+     */
+    .home-page .galeri-section.is-values-gallery-handoff {
+        overflow: visible;
+    }
+
+    .home-page .galeri-section.is-values-gallery-handoff
+    .depth-gallery__viewport {
+        position: fixed !important;
+        inset: 0;
+        top: 0;
+        z-index: 1;
+        width: 100vw;
+        height: 100svh;
+        min-height: 100svh;
+        background: var(--values-gallery-resting-color);
+        pointer-events: none;
+    }
+
+    /*
+     * Heading juga scene-2. Saat blinds hampir selesai ia sudah berada di posisi
+     * final pojok kiri atas (RTL: kanan atas), bukan ikut naik bersama section.
+     * Sesudah handoff class dilepas dan rule sticky normal mengambil alih pada
+     * koordinat layar yang sama.
+     */
+    .home-page .galeri-section.is-values-gallery-handoff
+    .galeri-section__heading-shell {
+        position: fixed;
+        inset-inline: 0;
+        top: calc(var(--nav-h, 4.5rem) + clamp(1rem, 2svh, 1.75rem));
+        z-index: 8;
+        width: 100%;
+        height: 0;
+        margin: 0;
+        padding-inline: var(--page-x-gap);
+        overflow: visible;
+        pointer-events: none;
     }
 
     .home-page .depth-gallery__viewport {
@@ -162,7 +217,7 @@
         z-index: 20;
         padding: 7px 9px;
         border-radius: 6px;
-        content: "A  VALUES SCENE / CARDS ABOVE MASK";
+        content: "A  VALUES / CARDS FOREGROUND";
         background: #ff3b30;
         color: #fff;
         font: 800 11px/1 Inter, sans-serif;
@@ -186,7 +241,7 @@
         width: max-content;
         max-width: calc(100vw - 32px);
         padding: 7px 10px;
-        content: "C  GALLERY = SCENE 2 / DIRECT BLINDS REVEAL";
+        content: "C  GALLERY NORMAL FLOW / RELEASE TARGET";
         background: #22c55e;
         color: #07150a;
         font: 800 11px/1 Inter, sans-serif;
@@ -195,8 +250,21 @@
         pointer-events: none;
     }
 
-    .home-page.handoff-debug .gallery-mask-handoff {
-        box-shadow: inset 0 0 0 3px rgb(34 197 94 / .8);
+    .home-page.handoff-debug .gallery-mask-handoff::after {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        z-index: 20;
+        width: max-content;
+        padding: 7px 10px;
+        border-radius: 6px;
+        content: "B  FIXED BLUE SVG BLINDS MASK";
+        background: #d000ff;
+        color: #fff;
+        font: 800 11px/1 Inter, sans-serif;
+        letter-spacing: .04em;
+        transform: translateX(-50%);
+        pointer-events: none;
     }
 
     .home-page.handoff-debug .depth-gallery__viewport {
@@ -210,7 +278,7 @@
         z-index: 50;
         padding: 7px 9px;
         border-radius: 6px;
-        content: "D  GALLERY DEPTH / MEDIA CLOCK";
+        content: "D  GALLERY SCENE 2 / MEDIA CLOCK";
         background: #f59e0b;
         color: #171006;
         font: 800 11px/1 Inter, sans-serif;
