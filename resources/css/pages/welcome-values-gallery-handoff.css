@@ -12,11 +12,13 @@
 
 @media (min-width: 1280px) {
     /*
-     * Values dan Gallery tetap sibling. Kinetic world berhenti pada exit kartu,
-     * lalu handoff memakai stage SVG penuh seperti Horizontal Blinds Codrops.
+     * Scene 1 = Values. Scene 2 = Gallery asli. Selama overlap, Values berada
+     * satu level di atas Gallery agar kartu tetap terlihat di depan reveal.
+     * Background world Values sendiri dibuat transparan oleh exit progress;
+     * warna biru scene 1 dijaga oleh mask overlay di Gallery di bawah kartu.
      */
     .home-page .program-values-world {
-        z-index: 0;
+        z-index: 5;
     }
 
     .home-page .program-values-world__visual {
@@ -41,9 +43,9 @@
     }
 
     /*
-     * Gallery ditarik 60svh ke Values supaya transition dimulai ketika kartu
-     * masih keluar. Tidak ada spacer warna lagi: heading/depth adalah scene
-     * Gallery yang sebenarnya, sedangkan mask stage mengambang di atasnya.
+     * Gallery ditarik 60svh ke Values agar scene Gallery sudah berada di balik
+     * kartu ketika exit dimulai. Tidak ada scene bright/cream tambahan lagi:
+     * mask hanya menghapus cover biru dan langsung memperlihatkan Gallery asli.
      */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
@@ -56,9 +58,10 @@
     }
 
     /*
-     * Plek konsep Horizontal Blinds: sebuah layers viewport 100vh menutup layar,
-     * setiap SVG layer absolute full-screen, lalu 30 blind dibuka berurutan.
-     * JS mem-pin surface ini ke viewport hanya selama section Gallery masuk.
+     * Horizontal Blinds grammar dari repo Hiro-kiii:
+     * satu layer SVG full viewport menutup Gallery dengan Values blue. Mask
+     * awalnya putih penuh; 30 pasang rect hitam membuka dari tengah tiap baris,
+     * sehingga cover biru hilang berurutan dan Gallery DOM asli terlihat.
      */
     .home-page .gallery-mask-handoff {
         position: absolute;
@@ -70,7 +73,6 @@
         overflow: hidden;
         visibility: hidden;
         opacity: 0;
-        background: var(--program-values-final-color);
         pointer-events: none;
         isolation: isolate;
         will-change: transform, opacity;
@@ -105,10 +107,7 @@
     }
 }
 
-/*
- * Temporary handoff diagnostics. Enabled only with ?handoff_debug=1.
- * Hapus setelah Values -> Gallery dinyatakan PASS.
- */
+/* Temporary handoff diagnostics. Hapus setelah Values -> Gallery PASS. */
 .handoff-debug-legend {
     position: fixed;
     top: 84px;
@@ -163,7 +162,7 @@
         z-index: 20;
         padding: 7px 9px;
         border-radius: 6px;
-        content: "A  STICKY KINETIC WORLD";
+        content: "A  VALUES SCENE / CARDS ABOVE MASK";
         background: #ff3b30;
         color: #fff;
         font: 800 11px/1 Inter, sans-serif;
@@ -187,7 +186,7 @@
         width: max-content;
         max-width: calc(100vw - 32px);
         padding: 7px 10px;
-        content: "C  CODROPS HORIZONTAL BLINDS / TARGET #fffaf0";
+        content: "C  GALLERY = SCENE 2 / DIRECT BLINDS REVEAL";
         background: #22c55e;
         color: #07150a;
         font: 800 11px/1 Inter, sans-serif;
@@ -211,7 +210,7 @@
         z-index: 50;
         padding: 7px 9px;
         border-radius: 6px;
-        content: "D  GALLERY DEPTH VIEWPORT";
+        content: "D  GALLERY DEPTH / MEDIA CLOCK";
         background: #f59e0b;
         color: #171006;
         font: 800 11px/1 Inter, sans-serif;
