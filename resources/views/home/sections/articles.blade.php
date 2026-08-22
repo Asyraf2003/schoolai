@@ -1,7 +1,7 @@
 @php
   $articleHeading = (string) ($articlesSection['title'] ?? '');
   $articleDescription = (string) ($articlesSection['subtitle'] ?? '');
-  $articleItems = collect($articlesSection['items'] ?? [])->take(4)->values();
+  $articleItems = collect($articlesSection['items'] ?? [])->take(5)->values();
   $articleCta = is_array($articlesSection['cta'] ?? null)
       ? $articlesSection['cta']
       : [];
@@ -12,16 +12,22 @@
       default => 'ARTICLES',
   };
   $articleClosingHeading = match (app()->getLocale()) {
-      'id' => 'Lihat artikel selengkapnya',
-      'en' => 'Explore more articles',
-      'ar' => 'استكشف المزيد من المقالات',
-      default => 'Explore more articles',
+      'id' => 'Mau lihat artikel selengkapnya?',
+      'en' => 'Want to explore more articles?',
+      'ar' => 'هل ترغب في استكشاف المزيد من المقالات؟',
+      default => 'Want to explore more articles?',
   };
 @endphp
 
 @include('home.debug.article-ruler')
 
-<section class="article-story" id="artikel" aria-labelledby="article-story-heading" data-article-story>
+<section
+  class="article-story"
+  id="artikel"
+  aria-labelledby="article-story-heading"
+  data-article-story
+  style="--article-count: {{ max(1, $articleItems->count()) }};"
+>
   <p>tes1</p>
   <h2 class="sr-only" id="article-story-heading">{{ $articleHeading }}</h2>
 
