@@ -11,7 +11,11 @@ const LAST_CARD_INDEX = 3;
 const ALL_FRONT_PROGRESS = FLIP_START
     + LAST_CARD_INDEX * FLIP_STAGGER
     + FLIP_DURATION;
-const EXIT_START = ALL_FRONT_PROGRESS * 2;
+
+// Desktop Values memakai timeline panjang (570svh). Karena itu exit tidak boleh
+// dimulai segera setelah kartu selesai flip. Mulai di ~89.5% membuat gerak kartu
+// keluar hanya memakai kira-kira setengah viewport terakhir sebelum color bridge.
+const EXIT_START = 0.895;
 
 function smootherStep(value) {
     const progress = clamp(value);
