@@ -18,6 +18,8 @@
       'ar' => 'هل ترغب في استكشاف المزيد من المقالات؟',
       default => 'Want to explore more articles?',
   };
+  $articleOpeningHref = trim((string) ($articleCta['href'] ?? ''));
+  $articleOpeningLabel = trim((string) ($articleCta['label'] ?? $articleDisplayHeading));
 @endphp
 
 @include('home.debug.article-ruler')
@@ -55,42 +57,51 @@
             @if ($openingArticle)
               <article class="article-story__opening" data-article-opening>
                 <p class="article-debug-mark">tes6-1</p>
-                <div class="article-story__opening-media">
-                  <p class="article-debug-mark">tes7-1</p>
-                  @if (! empty($openingArticle['thumbnail_url']))
-                    <img
-                      src="{{ $openingArticle['thumbnail_url'] }}"
-                      alt=""
-                      width="1600"
-                      height="1200"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  @else
-                    <span aria-hidden="true">{{ $openingArticle['emoji'] ?? '📰' }}</span>
-                  @endif
-                </div>
 
-                <div class="article-story__opening-heading">
-                  <p class="article-debug-mark">tes8-1</p>
-                  <span>
-                    {{ $articleDisplayHeading }}
-                    ·
-                    {{ $openingArticle['issue'] ?? '01' }}
-                  </span>
-                  <h3>
-                    @if (! empty($openingArticle['href']))
-                      <a href="{{ $openingArticle['href'] }}">{{ $openingArticle['title'] }}</a>
+                @if ($articleOpeningHref !== '')
+                  <a
+                    class="article-story__opening-link"
+                    href="{{ $articleOpeningHref }}"
+                    aria-label="{{ $articleOpeningLabel !== '' ? $articleOpeningLabel : $articleDisplayHeading }}"
+                    data-article-opening-link
+                  >
+                @else
+                  <div class="article-story__opening-link">
+                @endif
+
+                  <div class="article-story__opening-media">
+                    <p class="article-debug-mark">tes7-1</p>
+                    @if (! empty($openingArticle['thumbnail_url']))
+                      <img
+                        src="{{ $openingArticle['thumbnail_url'] }}"
+                        alt=""
+                        width="1600"
+                        height="1200"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     @else
-                      {{ $openingArticle['title'] }}
+                      <span aria-hidden="true">{{ $openingArticle['emoji'] ?? '📰' }}</span>
                     @endif
-                  </h3>
-                </div>
+                  </div>
 
-                <div class="article-story__opening-description">
-                  <p class="article-debug-mark">tes9-1</p>
-                  <p>{{ $openingArticle['description'] }}</p>
-                </div>
+                  <div class="article-story__opening-heading">
+                    <p class="article-debug-mark">tes8-1</p>
+                    <h3>{{ $articleDisplayHeading }}</h3>
+                  </div>
+
+                  <div class="article-story__opening-description">
+                    <p class="article-debug-mark">tes9-1</p>
+                    @if ($articleDescription !== '')
+                      <p>{{ $articleDescription }}</p>
+                    @endif
+                  </div>
+
+                @if ($articleOpeningHref !== '')
+                  </a>
+                @else
+                  </div>
+                @endif
               </article>
             @endif
 
