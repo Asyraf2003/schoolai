@@ -3,8 +3,7 @@ const BLIND_COUNT = 30;
 const BLIND_DURATION = 0.5;
 const BLIND_STAGGER = 0.02;
 const LAYER_DURATION = BLIND_DURATION + ((BLIND_COUNT - 1) * BLIND_STAGGER);
-const MASTER_DURATION = LAYER_DURATION * 2;
-const SCRUB_LERP = 0.14;
+const MASK_START = 0.06;
 
 function clamp(value) {
     return Math.max(0, Math.min(1, value));
@@ -20,6 +19,15 @@ function smoothstep(value) {
     return progress * progress * (3 - 2 * progress);
 }
 
+function readValuesExitProgress(world) {
+    if (!world) return 0;
+    const raw = getComputedStyle(world)
+        .getPropertyValue('--values-gallery-exit-progress')
+        .trim();
+    const value = Number.parseFloat(raw);
+    return Number.isFinite(value) ? clamp(value) : 0;
+}
+
 function createBlindSet(group, vbHeight) {
     if (!group) return [];
     group.replaceChildren();
@@ -29,6 +37,7 @@ function createBlindSet(group, vbHeight) {
     let currentY = 0;
 
     for (let index = 0; index < BLIND_COUNT; index += 1) {
+        /* Repo source menyusun blind dari bawah ke atas. */
         const centerY = vbHeight - (currentY + rowHeight / 2);
         const top = document.createElementNS(SVG_NS, 'rect');
         const bottom = document.createElementNS(SVG_NS, 'rect');
@@ -37,7 +46,13 @@ function createBlindSet(group, vbHeight) {
             rect.setAttribute('x', '0');
             rect.setAttribute('width', '100');
             rect.setAttribute('height', '0');
-            rect.setAttribute('fill', 'white');
+            /*
+             * Source memakai white-on-black untuk membuka image berikutnya.
+             * Di SchoolAI Gallery DOM sudah berada di bawah scene Values, jadi
+             * mask dibalik: rect hitam menghapus cover blue dan memperlihatkan
+             * Gallery asli di bawahnya.
+             */
+            rect.setAttribute('fill', 'black');
             rect.setAttribute('shape-rendering', 'crispEdges');
         });
 
@@ -82,25 +97,20 @@ function buildMaskState(section) {
 
     const width = window.innerWidth || host.getBoundingClientRect().width;
     const height = window.innerHeight || host.getBoundingClientRect().height;
-    const light = configureMaskLayer(
-        host.querySelector('[data-gallery-mask-layer="light"]'),
-        width,
-        height,
-    );
-    const cream = configureMaskLayer(
-        host.querySelector('[data-gallery-mask-layer="cream"]'),
+    const blinds = configureMaskLayer(
+        host.querySelector('[data-gallery-mask-layer="values"]'),
         width,
         height,
     );
 
-    return { host, light, cream };
+    return { host, blinds };
 }
 
-function paintBlindTimeline(blinds, masterTime, layerStart) {
+function paintBlindTimeline(blinds, masterTime) {
     if (!blinds?.length) return;
 
     blinds.forEach((blind, index) => {
-        const blindStart = layerStart + (index * BLIND_STAGGER);
+        const blindStart = index * BLIND_STAGGER;
         const local = power3Out(
             (masterTime - blindStart) / BLIND_DURATION,
         );
@@ -115,14 +125,15 @@ function paintBlindTimeline(blinds, masterTime, layerStart) {
 }
 
 export function initialiseDesktopContinuity(heading, section, desktop) {
+    const valuesWorld = document.querySelector('[data-program-values-world]');
     let frame = 0;
     let destroyed = false;
     let maskState = buildMaskState(section);
     let previousMasterTime = -1;
-    let handoffCurrent = 0;
-    let handoffTarget = 0;
 
     heading.classList.add('gallery-heading-motion--scroll-linked');
+    heading.style.setProperty('--gh-handoff-opacity', '0');
+    heading.style.setProperty('--gh-media-opacity', '1');
     heading.style.setProperty('--gh-media-blur', '0px');
 
     function rebuildMasks() {
@@ -140,7 +151,7 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
     function clearDesktopState() {
         heading.classList.remove('gallery-heading-motion--scroll-linked');
         heading.classList.add('gallery-heading-motion--static');
-        ['--gh-opacity', '--gh-media-blur']
+        ['--gh-handoff-opacity', '--gh-media-opacity', '--gh-media-blur']
             .forEach((name) => heading.style.removeProperty(name));
         section.style.removeProperty('--gallery-handoff-progress');
         resetMaskHost();
@@ -154,61 +165,45 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
             return;
         }
 
-        const viewportHeight = window.innerHeight || 1;
-        const sectionTop = section.getBoundingClientRect().top;
-        const stageActive = sectionTop < viewportHeight && sectionTop > 0;
-
-        handoffTarget = clamp(
-            (viewportHeight - sectionTop) / (viewportHeight * 0.60),
+        const exitProgress = readValuesExitProgress(valuesWorld);
+        const maskProgress = clamp(
+            (exitProgress - MASK_START) / (1 - MASK_START),
         );
-
-        if (!stageActive) {
-            handoffCurrent = sectionTop >= viewportHeight ? 0 : 1;
-        } else {
-            handoffCurrent += (handoffTarget - handoffCurrent) * SCRUB_LERP;
-            if (Math.abs(handoffTarget - handoffCurrent) < 0.0005) {
-                handoffCurrent = handoffTarget;
-            }
-        }
+        const sectionTop = section.getBoundingClientRect().top;
+        const stageActive = exitProgress > 0.0001 && exitProgress < 0.9999;
 
         if (maskState?.host) {
             if (stageActive) {
-                /*
-                 * Source memakai sticky .layers 100vh. SchoolAI mem-pin layer
-                 * dengan transform yang mengimbangi posisi section, sehingga
-                 * visual tetap benar-benar full viewport selama 60svh handoff.
-                 */
+                /* Pin full-viewport layer ke layar selama kartu sedang exit. */
                 maskState.host.style.visibility = 'visible';
+                maskState.host.style.opacity = '1';
                 maskState.host.style.transform = `translate3d(0, ${(-sectionTop).toFixed(2)}px, 0)`;
-                maskState.host.style.opacity = smoothstep(
-                    clamp(handoffCurrent / 0.08),
-                ).toFixed(4);
             } else {
                 resetMaskHost();
             }
         }
 
-        const masterTime = handoffCurrent * MASTER_DURATION;
-
+        const masterTime = maskProgress * LAYER_DURATION;
         if (Math.abs(masterTime - previousMasterTime) > 0.0005) {
-            paintBlindTimeline(maskState?.light, masterTime, 0);
-            paintBlindTimeline(maskState?.cream, masterTime, LAYER_DURATION);
+            paintBlindTimeline(maskState?.blinds, masterTime);
             previousMasterTime = masterTime;
         }
 
-        const creamProgress = clamp(
-            (masterTime - LAYER_DURATION) / LAYER_DURATION,
+        /*
+         * Heading adalah bagian scene Gallery, jadi baru hadir ketika blinds
+         * hampir selesai. Sesudah itu clock heading diserahkan ke media Gallery.
+         */
+        const headingHandoffOpacity = smoothstep(
+            clamp((maskProgress - 0.78) / 0.22),
         );
-        const headingOpacity = smoothstep(clamp((creamProgress - 0.72) / 0.24));
-        heading.style.setProperty('--gh-opacity', headingOpacity.toFixed(4));
+        heading.style.setProperty(
+            '--gh-handoff-opacity',
+            headingHandoffOpacity.toFixed(4),
+        );
         section.style.setProperty(
             '--gallery-handoff-progress',
-            handoffCurrent.toFixed(4),
+            exitProgress.toFixed(4),
         );
-
-        if (stageActive && Math.abs(handoffTarget - handoffCurrent) > 0.0005) {
-            frame = window.requestAnimationFrame(render);
-        }
     }
 
     function requestRender() {
