@@ -1,8 +1,9 @@
 @php
   $galleryHeading = match (app()->getLocale()) {
+      'id' => 'AREA GALERI',
       'en' => 'AREA OF GALLERY',
       'ar' => 'مساحة المعرض',
-      default => 'AREA GALERI',
+      default => 'AREA OF GALLERY',
   };
 @endphp
 
