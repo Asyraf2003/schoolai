@@ -26,17 +26,7 @@
       'resources/js/pages/welcome-editorial-headings.js',
     ])
   </head>
-  <body class="home-page nav-shell{{ request()->boolean('handoff_debug') ? ' handoff-debug' : '' }}">
-    @if (request()->boolean('handoff_debug'))
-      <aside class="handoff-debug-legend" aria-hidden="true">
-        <strong>HANDOFF DEBUG</strong>
-        <span><i class="handoff-debug-swatch handoff-debug-swatch--kinetic"></i>A = sticky kinetic world</span>
-        <span><i class="handoff-debug-swatch handoff-debug-swatch--curtain"></i>B = blue curtain / card-exit owner</span>
-        <span><i class="handoff-debug-swatch handoff-debug-swatch--gallery"></i>C = Gallery section owner</span>
-        <span><i class="handoff-debug-swatch handoff-debug-swatch--depth"></i>D = Gallery depth viewport</span>
-      </aside>
-    @endif
-
+  <body class="home-page nav-shell">
     <a href="#main-content" class="skip-link">{{ __('home.accessibility.skip_to_content') }}</a>
 
     @include('partials.site-navbar', ['navbar' => $navbar, 'siteNavMode' => 'home'])
