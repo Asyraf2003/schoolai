@@ -243,17 +243,14 @@
 }
 
 @media (max-width: 1080px) {
-    .gallery-wall-subsection,
-    .gallery-wall-subsection--media-right {
+    .gallery-wall-subsection {
         grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.78fr);
+        grid-template-areas: "media copy";
         gap: clamp(28px, 4vw, 52px);
     }
 
-    .gallery-wall-subsection {
-        grid-template-areas: "media copy";
-    }
-
     .gallery-wall-subsection--media-right {
+        grid-template-columns: minmax(240px, 0.78fr) minmax(0, 1.35fr);
         grid-template-areas: "copy media";
     }
 
