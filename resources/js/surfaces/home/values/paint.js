@@ -38,21 +38,20 @@ function valuesWorldRoot(root, nodes) {
     return root.closest('[data-program-values-world]');
 }
 
-function kineticOpacity(galleryTransition) {
+function kineticOpacity(cardExitProgress) {
     /*
-     * Begitu kartu mulai exit, kinetic cepat larut ke pure blue. Setelah itu
-     * SVG blinds menjadi satu-satunya grammar visual yang membuka Gallery.
+     * Kinetic tetap larut pada fase awal card-exit, bukan ikut diperlambat oleh
+     * handoff 3x. Setelah itu scene 1 menjadi pure blue seperti pembahasan.
      */
-    return 1 - smoothstep(galleryTransition / 0.16);
+    return 1 - smoothstep(cardExitProgress / 0.16);
 }
 
-function worldOpacity(galleryTransition) {
+function worldOpacity(cardExitProgress) {
     /*
-     * Background DOM Values dilepas hampir seketika. Cover biru SVG di Gallery
-     * sudah berada tepat di bawah kartu, sehingga tidak ada flash/seam tetapi
-     * reveal berikutnya benar-benar berasal dari mask, bukan alpha blend.
+     * Background DOM Values dilepas cepat dan cover SVG blue mengambil alih.
+     * Blinds boleh berjalan jauh lebih lama tanpa membuat alpha blend baru.
      */
-    return 1 - smoothstep(galleryTransition / 0.06);
+    return 1 - smoothstep(cardExitProgress / 0.06);
 }
 
 function writeCardFrame(card, state) {
@@ -73,7 +72,8 @@ function writeRootFrame(
     nodes,
     story,
     handoffProgress,
-    galleryTransition,
+    cardExitProgress,
+    galleryHandoffProgress,
 ) {
     root.style.setProperty(
         '--values-heading-opacity',
@@ -103,26 +103,30 @@ function writeRootFrame(
     root.style.setProperty('--values-handoff-progress', handoffProgress.toFixed(4));
     root.style.setProperty(
         '--values-gallery-transition',
-        galleryTransition.toFixed(4),
+        cardExitProgress.toFixed(4),
     );
     root.style.setProperty(
         '--values-gallery-bridge-y',
-        `${(100 - galleryTransition * 123).toFixed(2)}%`,
+        `${(100 - galleryHandoffProgress * 123).toFixed(2)}%`,
     );
 
     const worldRoot = valuesWorldRoot(root, nodes);
     if (worldRoot) {
+        /*
+         * Clock yang dibaca Gallery mask sekarang adalah dedicated handoff
+         * progress. Card movement sendiri tetap memakai story/cardExit clock.
+         */
         worldRoot.style.setProperty(
             '--values-gallery-exit-progress',
-            galleryTransition.toFixed(4),
+            galleryHandoffProgress.toFixed(4),
         );
         worldRoot.style.setProperty(
             '--values-gallery-kinetic-opacity',
-            kineticOpacity(galleryTransition).toFixed(4),
+            kineticOpacity(cardExitProgress).toFixed(4),
         );
         worldRoot.style.setProperty(
             '--values-gallery-world-opacity-pct',
-            `${(worldOpacity(galleryTransition) * 100).toFixed(2)}%`,
+            `${(worldOpacity(cardExitProgress) * 100).toFixed(2)}%`,
         );
     }
 
@@ -145,6 +149,7 @@ export function paintValuesStory(
     momentum,
     headingState,
     handoffProgress,
+    galleryHandoffProgress = 0,
 ) {
     const story = storyFrame(
         progress,
@@ -152,7 +157,7 @@ export function paintValuesStory(
         momentum,
         headingState,
     );
-    const galleryTransition = geometry.mode === 4
+    const cardExitProgress = geometry.mode === 4
         ? exitAmount(progress)
         : 0;
 
@@ -173,7 +178,8 @@ export function paintValuesStory(
         nodes,
         story,
         handoffProgress,
-        galleryTransition,
+        cardExitProgress,
+        galleryHandoffProgress,
     );
 }
 
