@@ -52,12 +52,10 @@
     }
 
     /*
-     * Section Gallery sendiri selalu memakai resting cream. Perubahan warna
-     * tidak lagi ditaruh langsung pada background section karena depth viewport
-     * memiliki background cream sendiri dan membentuk batas horizontal yang
-     * terlalu jelas. Satu bridge eksplisit di ::after mengisi bagian atas C,
-     * selesai menjadi #fffaf0 sebelum D datang, lalu mempertahankan warna itu
-     * sampai ujung bridge. Dengan begitu D bertemu warna yang identik.
+     * Handoff warna dibuat langsung pada surface Gallery agar tidak bergantung
+     * pada pseudo layer yang dapat tenggelam di stacking context. Urutannya
+     * sengaja dua tahap: Values blue -> terang/near-white -> warm Gallery cream.
+     * Setelah 46svh warna sudah identik dengan resting Gallery.
      */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
@@ -66,32 +64,34 @@
         margin-block-start: -60svh;
         padding-block-start: 16svh;
         padding-block-end: 0;
-        background: var(--values-gallery-resting-color);
+        background: linear-gradient(
+            to bottom in oklab,
+            var(--program-values-final-color) 0,
+            var(--program-values-final-color) 7svh,
+            #3d56ff 13svh,
+            #667bff 19svh,
+            #9baaff 25svh,
+            #cbd4ff 30svh,
+            #edf0ff 34svh,
+            #f8f8fb 37svh,
+            #fffdf8 40svh,
+            #fff9f1 43svh,
+            var(--values-gallery-resting-color) 46svh,
+            var(--values-gallery-resting-color) 100%
+        );
+    }
+
+    /*
+     * Depth viewport tidak lagi menimpa corridor dengan cream solid tepat di D.
+     * Ia memperlihatkan background Gallery di belakangnya; karena gradient sudah
+     * selesai ke #fffaf0 pada 46svh, perjalanan berikutnya tetap cream stabil.
+     */
+    .home-page .depth-gallery__viewport {
+        background: transparent;
     }
 
     .home-page .galeri-section::after {
-        position: absolute;
-        inset: 0 0 auto;
-        z-index: 0;
-        display: block;
-        height: 42svh;
-        content: "";
-        pointer-events: none;
-        background: linear-gradient(
-            to bottom,
-            var(--program-values-final-color) 0%,
-            var(--program-values-final-color) 12%,
-            #2d47ff 24%,
-            #536aff 36%,
-            #7d8ff8 48%,
-            #a7b3ef 59%,
-            #cbd0e8 68%,
-            #e2e1e4 75%,
-            #f0ebe3 80%,
-            #faf3e7 84%,
-            var(--values-gallery-resting-color) 88%,
-            var(--values-gallery-resting-color) 100%
-        );
+        display: none;
     }
 
     .home-page .galeri-section::before {
