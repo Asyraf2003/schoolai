@@ -6,26 +6,30 @@
     background: linear-gradient(
         to bottom in oklab,
         var(--program-values-final-color) 0%,
-        var(--program-values-final-color) 24%,
-        #3150ff 40%,
-        #6077ff 54%,
-        #aab6ff 70%,
-        #dce0f5 84%,
-        #f3ecdf 94%,
+        var(--program-values-final-color) 22%,
+        #2f4cff 36%,
+        #5d74ff 51%,
+        #8fa0ff 65%,
+        #bec7f4 77%,
+        #e2e3ee 87%,
+        #f4ecdf 95%,
         var(--values-gallery-resting-color) 100%
     );
     box-shadow: 0 -2px 0 var(--program-values-final-color);
 }
 
 .home-page .values-story__exit::before {
+    position: absolute;
     inset: -8% -10%;
     background: radial-gradient(
-        ellipse at 50% 46%,
-        rgb(255 255 255 / .13),
-        rgb(255 255 255 / .05) 46%,
-        transparent 78%
+        ellipse at 50% 50%,
+        rgb(255 255 255 / .10),
+        rgb(255 255 255 / .04) 48%,
+        transparent 80%
     );
-    filter: blur(48px);
+    content: "";
+    filter: blur(42px);
+    pointer-events: none;
 }
 
 .home-page .depth-gallery__viewport {
@@ -34,43 +38,38 @@
 
 @media (min-width: 1280px) {
     .home-page .values-story {
-        /* Setelah kartu selesai, seluruh bridge ke Gallery hanya sekitar 1/2 viewport. */
-        --values-exit-height: clamp(24rem, 50svh, 34rem);
+        /*
+         * Dasar section desktop:
+         * timeline Values selesai lebih dulu, lalu bridge warna berdiri sendiri.
+         * Exit kartu dipadatkan di JS ke ~1/2 viewport terakhir timeline.
+         */
+        --values-exit-height: 52svh;
     }
 
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
         position: relative;
-        /* Tarik heading masuk ke dalam bridge warna, bukan menunggu bridge selesai. */
-        margin-block-start: clamp(-22rem, -38svh, -16rem);
-        padding-block-start: clamp(8rem, 16svh, 12rem);
+        z-index: 4;
+        /*
+         * Hanya Gallery yang overlap 24svh ke bridge 52svh. Jadi heading hidup
+         * di dalam transisi, tetapi Gallery tidak lagi menimpa satu layar Values.
+         */
+        margin-block-start: -24svh;
+        padding-block-start: 5svh;
         padding-block-end: 0;
         background: linear-gradient(
-            to bottom in oklab,
+            to bottom,
             rgb(255 250 240 / 0) 0,
-            rgb(255 250 240 / 0) 16svh,
-            rgb(255 250 240 / .18) 28svh,
-            rgb(255 250 240 / .62) 40svh,
-            var(--values-gallery-resting-color) 50svh,
+            rgb(255 250 240 / 0) 17svh,
+            rgb(255 250 240 / .22) 20svh,
+            rgb(255 250 240 / .62) 22.5svh,
+            var(--values-gallery-resting-color) 24svh,
             var(--values-gallery-resting-color) 100%
         );
     }
 
+    /* Tidak ada fog/radial kedua. Satu color bridge saja supaya tidak ada band abu-abu. */
     .home-page .galeri-section::before {
-        position: absolute;
-        inset: 0 0 auto;
-        z-index: 0;
-        height: 44svh;
-        background: radial-gradient(
-            ellipse at 50% 0%,
-            rgb(112 130 255 / .12),
-            rgb(220 224 247 / .08) 44%,
-            transparent 82%
-        );
-        content: "";
-        opacity: calc(1 - var(--gallery-handoff-progress));
-        pointer-events: none;
-        transform: translate3d(0, calc(var(--gallery-handoff-progress) * -1.5svh), 0);
-        will-change: opacity, transform;
+        display: none;
     }
 }
