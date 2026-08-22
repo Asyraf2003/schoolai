@@ -19,7 +19,39 @@
   };
 @endphp
 
-<section class="article-story" id="artikel" aria-labelledby="article-story-heading" data-article-story>
+@env('local')
+  <style>
+    [data-article-layout-mark] {
+      position: relative !important;
+      box-shadow: inset 0 0 0 1px rgb(255 0 0 / .38);
+    }
+
+    [data-article-layout-mark]::after {
+      content: attr(data-article-layout-mark);
+      position: absolute;
+      z-index: 9999;
+      inset: 6px auto auto 6px;
+      min-width: 2.4rem;
+      padding: .28rem .45rem;
+      border: 1px solid rgb(255 255 255 / .9);
+      border-radius: 4px;
+      background: rgb(12 12 12 / .88);
+      color: #fff;
+      font: 700 11px/1 system-ui, sans-serif;
+      letter-spacing: .04em;
+      text-align: center;
+      pointer-events: none;
+    }
+  </style>
+@endenv
+
+<section
+  class="article-story"
+  id="artikel"
+  aria-labelledby="article-story-heading"
+  data-article-story
+  data-article-layout-mark="A00"
+>
   <h2 class="sr-only" id="article-story-heading">{{ $articleHeading }}</h2>
 
   @if ($articleItems->isNotEmpty())
@@ -33,16 +65,20 @@
       </ul>
     </nav>
 
-    <div class="article-story__journey" data-article-journey>
-      <div class="article-story__stage" data-article-stage>
-        <div class="article-story__horizontal" data-article-horizontal>
-          <div class="article-story__track" data-article-track>
+    <div class="article-story__journey" data-article-journey data-article-layout-mark="A01">
+      <div class="article-story__stage" data-article-stage data-article-layout-mark="A02">
+        <div class="article-story__horizontal" data-article-horizontal data-article-layout-mark="A03">
+          <div class="article-story__track" data-article-track data-article-layout-mark="A04">
             @foreach ($articleItems as $article)
               <article
                 class="article-story__panel{{ $loop->first ? ' article-story__panel--opening' : '' }}"
                 data-article-panel
+                data-article-layout-mark="P{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
               >
-                <div class="article-story__panel-media">
+                <div
+                  class="article-story__panel-media"
+                  data-article-layout-mark="M{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
+                >
                   @if (! empty($article['thumbnail_url']))
                     <img
                       src="{{ $article['thumbnail_url'] }}"
@@ -58,7 +94,11 @@
                   @endif
                 </div>
 
-                <div class="article-story__panel-heading" data-article-panel-heading>
+                <div
+                  class="article-story__panel-heading"
+                  data-article-panel-heading
+                  data-article-layout-mark="H{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
+                >
                   <span>
                     {{ $articleDisplayHeading }}
                     ·
@@ -73,7 +113,11 @@
                   </h3>
                 </div>
 
-                <p class="article-story__panel-description" data-article-panel-description>
+                <p
+                  class="article-story__panel-description"
+                  data-article-panel-description
+                  data-article-layout-mark="D{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
+                >
                   {{ $article['description'] }}
                 </p>
               </article>
@@ -82,12 +126,25 @@
             <section
               class="article-story__closing"
               data-article-closing
+              data-article-layout-mark="C00"
               aria-label="{{ $articleClosingHeading }}"
             >
-              <div class="article-story__roll-window" data-article-roll-window aria-hidden="true">
-                <div class="article-story__roll-stack" data-article-roll-stack>
+              <div
+                class="article-story__roll-window"
+                data-article-roll-window
+                data-article-layout-mark="C01"
+                aria-hidden="true"
+              >
+                <div
+                  class="article-story__roll-stack"
+                  data-article-roll-stack
+                  data-article-layout-mark="C02"
+                >
                   @foreach ($articleItems as $article)
-                    <figure class="article-story__roll-item article-story__roll-item--{{ $loop->iteration }}">
+                    <figure
+                      class="article-story__roll-item article-story__roll-item--{{ $loop->iteration }}"
+                      data-article-layout-mark="R{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}"
+                    >
                       @if (! empty($article['thumbnail_url']))
                         <img
                           src="{{ $article['thumbnail_url'] }}"
@@ -105,7 +162,7 @@
                 </div>
               </div>
 
-              <div class="article-story__closing-copy">
+              <div class="article-story__closing-copy" data-article-layout-mark="C03">
                 <span>{{ $articleDisplayHeading }}</span>
                 <h3>{{ $articleClosingHeading }}</h3>
                 @if ($articleDescription !== '')
@@ -117,6 +174,7 @@
                     class="article-story__final-cta"
                     href="{{ $articleCta['href'] }}"
                     data-article-final-cta
+                    data-article-layout-mark="C04"
                   >
                     <span>{{ $articleCta['label'] }}</span>
                     <span aria-hidden="true">↗</span>
