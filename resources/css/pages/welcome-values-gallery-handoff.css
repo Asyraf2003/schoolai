@@ -12,8 +12,8 @@
 
 @media (min-width: 1280px) {
     /*
-     * Values dan Gallery tetap sibling. Gallery berada di atas world Values saat
-     * overlap, sementara kinetic world hanya bertugas sampai exit kartu.
+     * Values dan Gallery tetap sibling. Kinetic world berhenti pada exit kartu,
+     * lalu handoff memakai stage SVG penuh seperti Horizontal Blinds Codrops.
      */
     .home-page .program-values-world {
         z-index: 0;
@@ -41,36 +41,39 @@
     }
 
     /*
-     * Corridor Gallery dimulai 60svh sebelum Values selesai. Ruang 60svh itu
-     * kini benar-benar dipakai sebagai stage transisi, bukan linear-gradient.
-     * Surface normal Gallery tetap #fffaf0 setelah stage selesai.
+     * Gallery ditarik 60svh ke Values supaya transition dimulai ketika kartu
+     * masih keluar. Tidak ada spacer warna lagi: heading/depth adalah scene
+     * Gallery yang sebenarnya, sedangkan mask stage mengambang di atasnya.
      */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
         position: relative;
         z-index: 4;
         margin-block-start: -60svh;
-        padding-block-start: 60svh;
+        padding-block-start: 0;
         padding-block-end: 0;
         background: var(--values-gallery-resting-color);
     }
 
     /*
-     * Port dari Codrops SVGMaskScrollTransition / Horizontal Blinds:
-     * base field adalah Values blue, dua SVG mask di atasnya membuka bidang
-     * bright-neutral lalu Gallery cream. Rect mask dibuat dinamis oleh JS.
+     * Plek konsep Horizontal Blinds: sebuah layers viewport 100vh menutup layar,
+     * setiap SVG layer absolute full-screen, lalu 30 blind dibuka berurutan.
+     * JS mem-pin surface ini ke viewport hanya selama section Gallery masuk.
      */
     .home-page .gallery-mask-handoff {
         position: absolute;
         inset: 0 0 auto;
-        z-index: 0;
+        z-index: 7;
         display: block;
         width: 100%;
-        height: 60svh;
+        height: 100svh;
         overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
         background: var(--program-values-final-color);
         pointer-events: none;
         isolation: isolate;
+        will-change: transform, opacity;
     }
 
     .home-page .gallery-mask-handoff__layer {
@@ -184,7 +187,7 @@
         width: max-content;
         max-width: calc(100vw - 32px);
         padding: 7px 10px;
-        content: "C  SVG MASK HANDOFF / TARGET #fffaf0";
+        content: "C  CODROPS HORIZONTAL BLINDS / TARGET #fffaf0";
         background: #22c55e;
         color: #07150a;
         font: 800 11px/1 Inter, sans-serif;
@@ -194,7 +197,7 @@
     }
 
     .home-page.handoff-debug .gallery-mask-handoff {
-        box-shadow: inset 0 0 0 2px rgb(34 197 94 / .65);
+        box-shadow: inset 0 0 0 3px rgb(34 197 94 / .8);
     }
 
     .home-page.handoff-debug .depth-gallery__viewport {
