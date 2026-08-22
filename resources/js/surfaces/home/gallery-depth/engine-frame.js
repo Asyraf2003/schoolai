@@ -93,26 +93,21 @@ export function renderDepthFrame(engine, time = performance.now()) {
         renderer.clearDepth();
         renderer.render(scene, camera);
 
-        return isDepthFrameHealthy(engine);
+        return isDepthRendererHealthy(engine);
     } catch (error) {
         console.warn('Depth gallery frame failed', error);
         return false;
     }
 }
 
-function isDepthFrameHealthy(engine) {
+function isDepthRendererHealthy(engine) {
     const size = engine.renderer.getDrawingBufferSize(
         new engine.THREE.Vector2(),
     );
     const context = engine.renderer.getContext();
-    const hasVisiblePlane = engine.gallery.planes.some(
-        (plane) => plane.material.opacity > 0.01,
-    );
-    const hasVisibleEndCta = engine.endCta.isVisible();
 
     return size.x > 1
         && size.y > 1
         && !context.isContextLost()
-        && context.getError() === context.NO_ERROR
-        && (hasVisiblePlane || hasVisibleEndCta);
+        && context.getError() === context.NO_ERROR;
 }
