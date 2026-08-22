@@ -12,9 +12,11 @@ const ALL_FRONT_PROGRESS = FLIP_START
     + LAST_CARD_INDEX * FLIP_STAGGER
     + FLIP_DURATION;
 
-// Desktop Values memakai timeline panjang (570svh). Karena itu exit tidak boleh
-// dimulai segera setelah kartu selesai flip. Mulai di ~89.5% membuat gerak kartu
-// keluar hanya memakai kira-kira setengah viewport terakhir sebelum color bridge.
+/*
+ * Normalized exit tetap mulai di 89.5% dari base Values choreography. Jarak fisik
+ * exit kini diremap oleh motion.js supaya fase sebelum exit tidak berubah, card
+ * departure menjadi lebih panjang, dan SVG blinds memperoleh tail scroll ekstra.
+ */
 const EXIT_START = 0.895;
 
 function smootherStep(value) {
