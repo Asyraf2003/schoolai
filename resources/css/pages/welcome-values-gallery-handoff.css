@@ -8,10 +8,6 @@
 
 @media (min-width: 1280px) {
     .home-page .values-story {
-        /*
-         * Bridge warna tidak lagi menjadi blok setelah timeline. Ia bergerak
-         * bersama exit kartu di viewport sticky yang sama.
-         */
         --values-exit-height: 0px;
     }
 
@@ -26,27 +22,22 @@
         display: none;
     }
 
+    /*
+     * Saat empat kartu mulai naik, bidang biru polos ikut naik dari bawah.
+     * Fungsinya hanya menghapus kinetic type secara halus. Perubahan menuju
+     * cream dimiliki Gallery sendiri, sehingga tidak ada dua gradient yang
+     * bertabrakan dan membentuk pita abu-abu.
+     */
     .home-page .values-story__clip::after {
         position: absolute;
         top: 0;
         right: 0;
         left: 0;
         z-index: 1;
-        height: 130%;
+        height: 118%;
         content: "";
         pointer-events: none;
-        background: linear-gradient(
-            to bottom in oklab,
-            var(--program-values-final-color) 0%,
-            var(--program-values-final-color) 24%,
-            #3150ff 34%,
-            #647aff 45%,
-            #aab6ff 57%,
-            #dce1f5 68%,
-            #f2ecdf 78%,
-            var(--values-gallery-resting-color) 88%,
-            var(--values-gallery-resting-color) 100%
-        );
+        background: var(--program-values-final-color);
         transform: translate3d(
             0,
             var(--values-gallery-bridge-y, 100%),
@@ -55,22 +46,29 @@
         will-change: transform;
     }
 
+    /*
+     * Gallery adalah pemilik satu-satunya perubahan warna sesudah blue curtain.
+     * Top section identik dengan Values blue, lalu bergerak kontinu ke cream.
+     * Tidak ada alpha/transparency di tengah, jadi tidak muncul strip gelap.
+     */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
         position: relative;
         z-index: 4;
-        /*
-         * Gallery baru mengambil alih paruh akhir exit kartu. Bagian atas
-         * transparan supaya bridge sticky tetap terlihat sebagai satu world.
-         */
-        margin-block-start: -30svh;
-        padding-block-start: 12svh;
+        margin-block-start: -34svh;
+        padding-block-start: 18svh;
         padding-block-end: 0;
         background: linear-gradient(
-            to bottom,
-            transparent 0,
-            transparent 30svh,
-            var(--values-gallery-resting-color) 46svh,
+            to bottom in oklab,
+            var(--program-values-final-color) 0,
+            var(--program-values-final-color) 10svh,
+            #3550ff 20svh,
+            #7287ff 31svh,
+            #aebaf6 41svh,
+            #d2d7ef 50svh,
+            #ece8e3 58svh,
+            #f7efe2 65svh,
+            var(--values-gallery-resting-color) 72svh,
             var(--values-gallery-resting-color) 100%
         );
     }
