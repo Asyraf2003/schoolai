@@ -52,11 +52,12 @@
     }
 
     /*
-     * Gallery masuk sekitar 60svh sebelum Values selesai, tetapi depth viewport
-     * mulai kira-kira sepertiga viewport setelah batas C. Karena itu perubahan
-     * warna harus selesai sebelum D mengambil alih. Corridor ini mempertahankan
-     * pure #2038ff sebentar, lalu melembut melalui blue/pale/warm sampai tepat
-     * #fffaf0 pada 34svh sehingga tidak ada lagi potongan biru -> cream mendadak.
+     * Section Gallery sendiri selalu memakai resting cream. Perubahan warna
+     * tidak lagi ditaruh langsung pada background section karena depth viewport
+     * memiliki background cream sendiri dan membentuk batas horizontal yang
+     * terlalu jelas. Satu bridge eksplisit di ::after mengisi bagian atas C,
+     * selesai menjadi #fffaf0 sebelum D datang, lalu mempertahankan warna itu
+     * sampai ujung bridge. Dengan begitu D bertemu warna yang identik.
      */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
@@ -65,24 +66,46 @@
         margin-block-start: -60svh;
         padding-block-start: 16svh;
         padding-block-end: 0;
+        background: var(--values-gallery-resting-color);
+    }
+
+    .home-page .galeri-section::after {
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: 0;
+        display: block;
+        height: 42svh;
+        content: "";
+        pointer-events: none;
         background: linear-gradient(
-            to bottom in oklab,
-            var(--program-values-final-color) 0,
-            var(--program-values-final-color) 5svh,
-            #334cff 10svh,
-            #5369ff 15svh,
-            #788bfb 20svh,
-            #a8b4f2 25svh,
-            #d1d5e9 29svh,
-            #ebe7df 32svh,
-            #f7efe1 33svh,
-            var(--values-gallery-resting-color) 34svh,
+            to bottom,
+            var(--program-values-final-color) 0%,
+            var(--program-values-final-color) 12%,
+            #2d47ff 24%,
+            #536aff 36%,
+            #7d8ff8 48%,
+            #a7b3ef 59%,
+            #cbd0e8 68%,
+            #e2e1e4 75%,
+            #f0ebe3 80%,
+            #faf3e7 84%,
+            var(--values-gallery-resting-color) 88%,
             var(--values-gallery-resting-color) 100%
         );
     }
 
     .home-page .galeri-section::before {
         display: none;
+    }
+
+    .home-page .galeri-section__heading-shell {
+        position: relative;
+        z-index: 5;
+    }
+
+    .home-page .galeri-section .depth-gallery {
+        position: relative;
+        z-index: 1;
     }
 }
 
