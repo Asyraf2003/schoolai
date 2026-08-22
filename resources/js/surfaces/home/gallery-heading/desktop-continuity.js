@@ -37,34 +37,33 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
             ? depth.getBoundingClientRect().top
             : section.getBoundingClientRect().bottom;
 
-        // The world handoff starts before the Gallery title is fully present so
-        // Values blue can dissolve into the warm Gallery field without a seam.
+        // Gallery mulai hidup di tengah bridge warna, bukan setelah Values selesai total.
         const handoff = smoothstep(clamp(
-            (viewportHeight * 1.28 - sectionTop) / (viewportHeight * 0.92),
+            (viewportHeight * 1.44 - sectionTop) / (viewportHeight * 1.08),
         ));
         const enter = smoothstep(clamp(
-            (viewportHeight * 1.10 - sectionTop) / (viewportHeight * 0.70),
+            (viewportHeight * 1.34 - sectionTop) / (viewportHeight * 0.88),
         ));
         const exit = smoothstep(clamp(
-            (viewportHeight * 0.24 - depthTop) / (viewportHeight * 0.46),
+            (viewportHeight * 0.22 - depthTop) / (viewportHeight * 0.50),
         ));
         const opacity = smoothstep(enter) * (1 - exit);
 
         heading.style.setProperty('--gh-opacity', opacity.toFixed(4));
         heading.style.setProperty(
-            '--gh-top-y', `${((1 - enter) * 54 - exit * 26).toFixed(2)}%`,
+            '--gh-top-y', `${((1 - enter) * 44 - exit * 24).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-bottom-y', `${((1 - enter) * -54 - exit * 30).toFixed(2)}%`,
+            '--gh-bottom-y', `${((1 - enter) * -44 - exit * 28).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-description-y', `${((1 - enter) * 38 - exit * 20).toFixed(2)}%`,
+            '--gh-description-y', `${((1 - enter) * 32 - exit * 18).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-blur', `${((1 - enter) * 18 + exit * 7).toFixed(2)}px`,
+            '--gh-blur', `${((1 - enter) * 20 + exit * 6).toFixed(2)}px`,
         );
         heading.style.setProperty(
-            '--gh-scale', (0.97 + enter * 0.03 - exit * 0.01).toFixed(4),
+            '--gh-scale', (0.975 + enter * 0.025 - exit * 0.008).toFixed(4),
         );
         section.style.setProperty('--gallery-handoff-progress', handoff.toFixed(4));
     }
