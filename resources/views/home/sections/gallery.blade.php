@@ -18,6 +18,54 @@
 @endphp
 
 <section class="galeri-section section" id="galeri" aria-labelledby="homepage-gallery-heading">
+  <div class="gallery-mask-handoff" data-gallery-mask-handoff aria-hidden="true">
+    <svg
+      class="gallery-mask-handoff__layer"
+      data-gallery-mask-layer="light"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <mask id="gallery-handoff-mask-light" maskUnits="userSpaceOnUse">
+          <rect data-gallery-mask-base x="0" y="0" width="100" height="100" fill="black" />
+          <g data-gallery-mask-blinds="light"></g>
+        </mask>
+      </defs>
+      <rect
+        data-gallery-mask-fill
+        x="0"
+        y="0"
+        width="100"
+        height="100"
+        fill="#f4f7ff"
+        mask="url(#gallery-handoff-mask-light)"
+      />
+    </svg>
+
+    <svg
+      class="gallery-mask-handoff__layer"
+      data-gallery-mask-layer="cream"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <mask id="gallery-handoff-mask-cream" maskUnits="userSpaceOnUse">
+          <rect data-gallery-mask-base x="0" y="0" width="100" height="100" fill="black" />
+          <g data-gallery-mask-blinds="cream"></g>
+        </mask>
+      </defs>
+      <rect
+        data-gallery-mask-fill
+        x="0"
+        y="0"
+        width="100"
+        height="100"
+        fill="#fffaf0"
+        mask="url(#gallery-handoff-mask-cream)"
+      />
+    </svg>
+  </div>
+
   <div class="container galeri-section__heading-shell">
     <header class="galeri-section__head gallery-heading-motion" data-gallery-heading>
       <div class="gallery-heading-motion__row gallery-heading-motion__row--top">
