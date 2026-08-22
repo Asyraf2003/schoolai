@@ -14,27 +14,28 @@
 
     .depth-gallery__labels {
         inset: auto 0 max(5.5rem, env(safe-area-inset-bottom)) 0;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        align-items: start;
-        gap: 1.2rem;
+        display: block;
         padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));
     }
 
-    .depth-gallery__label-left,
-    .depth-gallery__label-right {
+    .depth-gallery__copy,
+    .depth-gallery__copy[data-depth-gallery-copy-side="left"],
+    .depth-gallery__copy[data-depth-gallery-copy-side="right"] {
         position: static;
-        width: auto;
+        width: min(100%, 34rem);
         max-width: none;
+        margin-inline: auto;
+        transform: none;
+        text-align: start;
     }
 
-    .depth-gallery__label-right {
-        text-align: end;
+    .depth-gallery__copy-title {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
     }
 
-    .depth-gallery__label-left p,
-    .depth-gallery__label-right p {
-        font-size: 0.72rem;
+    .depth-gallery__copy-caption {
+        max-width: 34ch;
+        font-size: 0.86rem;
     }
 
     .depth-gallery__fallback-list {
@@ -67,38 +68,37 @@
 }
 
 @media (min-width: 1024px) {
-    .depth-gallery__label-left {
-        inset-inline-start: clamp(4rem, 8vw, 9rem);
+    .depth-gallery__copy[data-depth-gallery-copy-side="left"] {
+        left: clamp(4rem, 8vw, 9rem);
     }
 
-    .depth-gallery__label-right {
-        inset-inline-end: clamp(4rem, 7vw, 8rem);
+    .depth-gallery__copy[data-depth-gallery-copy-side="right"] {
+        right: clamp(4rem, 7vw, 8rem);
     }
 }
 
 @media (min-width: 1280px) {
-    .depth-gallery__label-left {
-        inset-inline-start: clamp(6rem, 8vw, 11rem);
+    .depth-gallery__copy[data-depth-gallery-copy-side="left"] {
+        left: clamp(6rem, 8vw, 11rem);
     }
 
-    .depth-gallery__label-right {
-        inset-inline-end: clamp(5rem, 7vw, 9rem);
+    .depth-gallery__copy[data-depth-gallery-copy-side="right"] {
+        right: clamp(5rem, 7vw, 9rem);
     }
 }
 
 @media (min-width: 1536px) {
-    .depth-gallery__label-left {
-        inset-inline-start: clamp(8rem, 8vw, 12rem);
+    .depth-gallery__copy[data-depth-gallery-copy-side="left"] {
+        left: clamp(8rem, 8vw, 12rem);
     }
 
-    .depth-gallery__label-right {
-        inset-inline-end: clamp(7rem, 7vw, 10rem);
+    .depth-gallery__copy[data-depth-gallery-copy-side="right"] {
+        right: clamp(7rem, 7vw, 10rem);
     }
 }
 
 @media (max-height: 650px) and (min-width: 640px) {
-    .depth-gallery__label-left,
-    .depth-gallery__label-right {
+    .depth-gallery__copy {
         top: 54%;
     }
 }

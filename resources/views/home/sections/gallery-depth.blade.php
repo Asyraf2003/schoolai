@@ -67,11 +67,9 @@
       ></canvas>
 
       <section class="depth-gallery__labels" data-depth-gallery-labels aria-hidden="true">
-        <div class="depth-gallery__label-left">
-          <p data-depth-gallery-title></p>
-        </div>
-        <article class="depth-gallery__label-right">
-          <p data-depth-gallery-caption></p>
+        <article class="depth-gallery__copy" data-depth-gallery-copy>
+          <p class="depth-gallery__copy-title" data-depth-gallery-title></p>
+          <p class="depth-gallery__copy-caption" data-depth-gallery-caption></p>
         </article>
       </section>
 
