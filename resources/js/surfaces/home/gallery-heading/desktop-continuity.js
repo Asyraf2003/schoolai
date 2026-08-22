@@ -37,13 +37,13 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
             ? depth.getBoundingClientRect().top
             : section.getBoundingClientRect().bottom;
 
-        // Section Gallery overlap 24svh ke bridge Values. Heading baru mulai
-        // ketika bridge sudah benar-benar masuk viewport, bukan saat kartu masih jauh.
+        // Gallery masuk ketika overlap 30svh sudah menyentuh viewport. Heading
+        // ikut hidup di paruh akhir bridge kartu, bukan sesudah Values selesai.
         const handoff = smoothstep(clamp(
-            (viewportHeight * 1.05 - sectionTop) / (viewportHeight * 0.78),
+            (viewportHeight * 1.02 - sectionTop) / (viewportHeight * 0.82),
         ));
         const enter = smoothstep(clamp(
-            (viewportHeight * 0.84 - sectionTop) / (viewportHeight * 0.62),
+            (viewportHeight * 0.98 - sectionTop) / (viewportHeight * 0.66),
         ));
         const exit = smoothstep(clamp(
             (viewportHeight * 0.22 - depthTop) / (viewportHeight * 0.50),
@@ -52,19 +52,19 @@ export function initialiseDesktopContinuity(heading, section, desktop) {
 
         heading.style.setProperty('--gh-opacity', opacity.toFixed(4));
         heading.style.setProperty(
-            '--gh-top-y', `${((1 - enter) * 44 - exit * 24).toFixed(2)}%`,
+            '--gh-top-y', `${((1 - enter) * 42 - exit * 24).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-bottom-y', `${((1 - enter) * -44 - exit * 28).toFixed(2)}%`,
+            '--gh-bottom-y', `${((1 - enter) * -42 - exit * 28).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-description-y', `${((1 - enter) * 32 - exit * 18).toFixed(2)}%`,
+            '--gh-description-y', `${((1 - enter) * 30 - exit * 18).toFixed(2)}%`,
         );
         heading.style.setProperty(
-            '--gh-blur', `${((1 - enter) * 20 + exit * 6).toFixed(2)}px`,
+            '--gh-blur', `${((1 - enter) * 16 + exit * 6).toFixed(2)}px`,
         );
         heading.style.setProperty(
-            '--gh-scale', (0.975 + enter * 0.025 - exit * 0.008).toFixed(4),
+            '--gh-scale', (0.978 + enter * 0.022 - exit * 0.008).toFixed(4),
         );
         section.style.setProperty('--gallery-handoff-progress', handoff.toFixed(4));
     }
