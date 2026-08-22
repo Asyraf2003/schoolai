@@ -6,21 +6,19 @@
     background: var(--values-gallery-resting-color);
 }
 
+.gallery-mask-handoff {
+    display: none;
+}
+
 @media (min-width: 1280px) {
     /*
-     * Values dan Gallery adalah sibling stacking contexts. World Values ditahan
-     * di level 0 supaya Gallery level 4 benar-benar mengambil alih saat overlap,
-     * bukan membiarkan sticky visual A mencemari corridor C.
+     * Values dan Gallery tetap sibling. Gallery berada di atas world Values saat
+     * overlap, sementara kinetic world hanya bertugas sampai exit kartu.
      */
     .home-page .program-values-world {
         z-index: 0;
     }
 
-    /*
-     * Satu clock: exit kartu mengirim opacity langsung ke sticky kinetic world.
-     * Kinetic dissolve pada bagian awal exit, menyisakan pure blue sebelum
-     * corridor Gallery bergerak menuju warna lebih terang dan akhirnya cream.
-     */
     .home-page .program-values-world__visual {
         opacity: var(--values-gallery-kinetic-opacity, 1);
         will-change: opacity;
@@ -37,70 +35,65 @@
         box-shadow: none;
     }
 
-    .home-page .values-story__exit::before {
-        display: none;
-    }
-
-    /*
-     * Desktop handoff memakai satu owner saja. Curtain lama hidup di clock
-     * Values yang berbeda dari Gallery dan terbukti memotong heading serta
-     * membentuk strip gelap ketika kedua section overlap. Gallery sekarang
-     * mengambil alih langsung ketika empat kartu memasuki fase exit.
-     */
+    .home-page .values-story__exit::before,
     .home-page .values-story__clip::after {
         display: none;
     }
 
     /*
-     * Handoff warna dibuat langsung pada surface Gallery agar tidak bergantung
-     * pada pseudo layer yang dapat tenggelam di stacking context. Urutannya
-     * sengaja dua tahap: Values blue -> terang/near-white -> warm Gallery cream.
-     * Setelah 46svh warna sudah identik dengan resting Gallery.
+     * Corridor Gallery dimulai 60svh sebelum Values selesai. Ruang 60svh itu
+     * kini benar-benar dipakai sebagai stage transisi, bukan linear-gradient.
+     * Surface normal Gallery tetap #fffaf0 setelah stage selesai.
      */
     .home-page .galeri-section {
         --gallery-handoff-progress: 0;
         position: relative;
         z-index: 4;
         margin-block-start: -60svh;
-        padding-block-start: 16svh;
+        padding-block-start: 60svh;
         padding-block-end: 0;
-        background: linear-gradient(
-            to bottom in oklab,
-            var(--program-values-final-color) 0,
-            var(--program-values-final-color) 7svh,
-            #3d56ff 13svh,
-            #667bff 19svh,
-            #9baaff 25svh,
-            #cbd4ff 30svh,
-            #edf0ff 34svh,
-            #f8f8fb 37svh,
-            #fffdf8 40svh,
-            #fff9f1 43svh,
-            var(--values-gallery-resting-color) 46svh,
-            var(--values-gallery-resting-color) 100%
-        );
+        background: var(--values-gallery-resting-color);
     }
 
     /*
-     * Depth viewport tidak lagi menimpa corridor dengan cream solid tepat di D.
-     * Ia memperlihatkan background Gallery di belakangnya; karena gradient sudah
-     * selesai ke #fffaf0 pada 46svh, perjalanan berikutnya tetap cream stabil.
+     * Port dari Codrops SVGMaskScrollTransition / Horizontal Blinds:
+     * base field adalah Values blue, dua SVG mask di atasnya membuka bidang
+     * bright-neutral lalu Gallery cream. Rect mask dibuat dinamis oleh JS.
      */
+    .home-page .gallery-mask-handoff {
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: 0;
+        display: block;
+        width: 100%;
+        height: 60svh;
+        overflow: hidden;
+        background: var(--program-values-final-color);
+        pointer-events: none;
+        isolation: isolate;
+    }
+
+    .home-page .gallery-mask-handoff__layer {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .home-page .gallery-mask-handoff__layer rect {
+        shape-rendering: crispEdges;
+    }
+
     .home-page .depth-gallery__viewport {
-        background: transparent;
+        background: var(--values-gallery-resting-color);
     }
 
-    .home-page .galeri-section::after {
-        display: none;
-    }
-
+    .home-page .galeri-section::after,
     .home-page .galeri-section::before {
         display: none;
-    }
-
-    .home-page .galeri-section__heading-shell {
-        position: relative;
-        z-index: 5;
     }
 
     .home-page .galeri-section .depth-gallery {
@@ -111,8 +104,7 @@
 
 /*
  * Temporary handoff diagnostics. Enabled only with ?handoff_debug=1.
- * These rules never alter layout or animation timing; they only outline the
- * current visual owners so screenshots reveal which layer owns a seam.
+ * Hapus setelah Values -> Gallery dinyatakan PASS.
  */
 .handoff-debug-legend {
     position: fixed;
@@ -175,8 +167,6 @@
         letter-spacing: .04em;
     }
 
-    /* B sengaja tidak dirender. Jika garis magenta muncul lagi, berarti ada
-       owner curtain lain yang bocor dan harus dianggap regression. */
     .home-page.handoff-debug .values-story__clip::after {
         display: none;
     }
@@ -194,13 +184,17 @@
         width: max-content;
         max-width: calc(100vw - 32px);
         padding: 7px 10px;
-        content: "C  SINGLE GALLERY HANDOFF OWNER / TARGET #fffaf0";
+        content: "C  SVG MASK HANDOFF / TARGET #fffaf0";
         background: #22c55e;
         color: #07150a;
         font: 800 11px/1 Inter, sans-serif;
         letter-spacing: .04em;
         transform: translateX(-50%);
         pointer-events: none;
+    }
+
+    .home-page.handoff-debug .gallery-mask-handoff {
+        box-shadow: inset 0 0 0 2px rgb(34 197 94 / .65);
     }
 
     .home-page.handoff-debug .depth-gallery__viewport {
