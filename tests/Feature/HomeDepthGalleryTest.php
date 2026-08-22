@@ -108,7 +108,12 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->and($frame)
         ->toContain('renderer.clearDepth()')
         ->toContain('getDrawingBufferSize')
-        ->toContain('hasVisibleEndCta')
+        ->toContain('isDepthRendererHealthy')
+        ->toContain('!context.isContextLost()')
+        ->toContain('context.getError() === context.NO_ERROR')
+        ->not->toContain('hasVisiblePlane')
+        ->not->toContain('hasVisibleEndCta')
+        ->not->toContain('plane.material.opacity > 0.01')
         ->and($planes)
         ->toContain('PlaneGeometry(3, 3)')
         ->toContain('this.planeGap = 5')
@@ -156,6 +161,21 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         'js/surfaces/home/gallery-depth/scene.js'
     )))->toBeFalse();
     expect(file_exists($license))->toBeTrue();
+});
+
+it('keeps empty Gallery transition frames out of the failure contract', function (): void {
+    $frame = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/engine-frame.js'
+    ));
+
+    expect($frame)
+        ->toContain('return isDepthRendererHealthy(engine);')
+        ->toContain('function isDepthRendererHealthy(engine)')
+        ->toContain('getDrawingBufferSize')
+        ->toContain('!context.isContextLost()')
+        ->toContain('context.getError() === context.NO_ERROR')
+        ->not->toContain('engine.gallery.planes.some')
+        ->not->toContain('engine.endCta.isVisible()');
 });
 
 it('keeps Gallery heading continuity locally owned and depth Gallery untouched', function (): void {
