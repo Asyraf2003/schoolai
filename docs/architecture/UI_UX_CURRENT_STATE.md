@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H5_GROUP_1_PASS / H5_GROUP_2_READY`
+Status: `HARDENING_ACTIVE / H5_GROUP_2_PASS / H5_GROUP_3_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `f0997790fc70a6d59b165080e444161c4c5f815b`
+Inspected runtime-source checkpoint: `4889ebf9cbd5225c29098a76b8c3dcd032c0f649`
 
 Durable references:
 
@@ -172,9 +172,42 @@ Proven for shared navbar/footer/meta/locale/admin-layout preparation:
 - structure check still reports only the frozen pre-H5 over-limit,
   unreferenced-candidate and checksum debt; no new H5 file is reported.
 
-H5 owner group 1 is PASS. H5 remains `IMPLEMENTING`: Home section shaping,
-public page shaping and admin list/form/archive/replacement shaping are pending.
-H1-H4 behavior and loading ownership remain unchanged.
+At the group 1 checkpoint, H5 remained `IMPLEMENTING`: Home section shaping,
+public page shaping and admin list/form/archive/replacement shaping were pending.
+H1-H4 behavior and loading ownership remained unchanged.
+
+Published H5 owner group 2 source/test SHA:
+`4889ebf9cbd5225c29098a76b8c3dcd032c0f649`.
+
+Proven for Home section shaping:
+
+- the eight group 2 Blade owners contain no raw PHP or `@php` blocks /
+  expressions; the remaining production Blade inventory is 23 files;
+- final Hero collection/status shaping runs at the included Hero partial
+  boundary, after the registered database Hero composer can replace slides;
+- Home background kinetic lines, Program items/media/title scale, Vision/Mission
+  locale text, Gallery presets/CTA/closing media, Values indices, Article
+  opening/issue/closing state and the latent editorial heading split contract
+  now use bounded exact-view composers plus one shared kinetic-line presenter;
+- the original 8/20 kinetic line counts, six Program cards and repeated media,
+  multibyte title thresholds, Arabic-only honorific expansion, five-preset
+  Gallery cycle, last-two closing media, Article five-item cap, semantic DOM,
+  data attributes and ID/EN/AR visible copy remain covered;
+- every new source and every migrated Home Blade owner is below 200 lines;
+- focused H5 group 2 proof: PASS, 21 tests / 599 assertions;
+- focused H1 regression: PASS, 1 test / 7 assertions; focused H2-H4
+  regressions: PASS, 3 tests / 96 assertions; H5 group 1 regression: PASS,
+  11 tests / 271 assertions;
+- production build: PASS, 144 modules, with the existing deferred 534.39 kB
+  Three package warning;
+- full MariaDB suite: 224 tests, 216 passed and the same 8 known baseline
+  assertion failures; none points to an H5 group 2 owner;
+- structure check still reports only the frozen pre-H5 over-limit,
+  unreferenced-candidate and checksum debt; no new H5 file is reported.
+
+H5 owner group 2 is PASS. H5 remains `IMPLEMENTING`: public page shaping and
+admin list/form/archive/replacement shaping are pending. H1-H4 behavior/loading
+ownership and H5 group 1 shared-chrome semantics remain unchanged.
 
 ## Owner-accepted runtime direction
 
@@ -233,6 +266,7 @@ already uses R2. Article Canvas remains an H6 local-public-disk write owner.
 
 - the durable starting inventory contained 38 Blade files with `@php`;
 - H5 group 1 reduced the remaining count to 31;
+- H5 group 2 reduced the remaining count to 23;
 - no non-Blade PHP preparation file remains under `resources/views`;
 - H5 ownership is grouped into Home/public/shared chrome/admin shaping;
 - migration must preserve semantics and use appropriate composers/presenters/
@@ -356,7 +390,8 @@ gates, update durable state, and never force-push.
 - H3 Gallery scroll-clock reconciliation: PASS.
 - H4 graphics runtime/loading graph hardening: PASS.
 - H5 owner group 1 shared chrome presentation-purity migration: PASS.
-- H5 owner groups 2-4: NOT STARTED.
+- H5 owner group 2 Home section shaping migration: PASS.
+- H5 owner groups 3-4: NOT STARTED.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
 - H6-H7 implementation: NOT STARTED.
@@ -369,6 +404,7 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H5 owner group 2 Home section shaping from the accepted execution packet.
-Keep H1-H4 behavior/loading ownership and H5 group 1 shared-chrome semantics
-proven.
+Begin H5 owner group 3 public page shaping from the accepted execution packet.
+Keep H1-H4 behavior/loading ownership plus H5 group 1 shared-chrome and group 2
+Home section semantics proven. Do not enter owner group 4 admin shaping until
+group 3 is complete.
