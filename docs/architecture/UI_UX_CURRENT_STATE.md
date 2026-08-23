@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H5_GROUP_2_PASS / H5_GROUP_3_READY`
+Status: `HARDENING_ACTIVE / H5_GROUP_3_PASS / H5_GROUP_4_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `4889ebf9cbd5225c29098a76b8c3dcd032c0f649`
+Inspected runtime-source checkpoint: `248499d745265f1121162f635933f032b9102e89`
 
 Durable references:
 
@@ -209,6 +209,43 @@ H5 owner group 2 is PASS. H5 remains `IMPLEMENTING`: public page shaping and
 admin list/form/archive/replacement shaping are pending. H1-H4 behavior/loading
 ownership and H5 group 1 shared-chrome semantics remain unchanged.
 
+Published H5 owner group 3 source/test SHA:
+`248499d745265f1121162f635933f032b9102e89`.
+
+Proven for public page shaping:
+
+- the six group 3 Blade owners contain no raw PHP or `@php` blocks /
+  expressions; the remaining production Blade inventory is 17 files;
+- PPDB page/admission state, fixed parent/school audience partition, localized
+  showcase presentation, restarted audience numbering and initial-tab choice
+  now use one exact-view composer while model-owned URL/open-state behavior is
+  unchanged;
+- Article aliases, read label and fallback numbering, Gallery database-versus-
+  locale precedence, deterministic six-image media fallback and provider/card
+  metadata now use bounded exact-view composers plus one card presenter;
+- the redirected latent Article detail view received only its translation alias
+  migration; its unrelated legacy contract was not revived or cleaned up;
+- route names, PPDB open/closed behavior, Article filtering/external-link/XSS
+  boundaries, Gallery lightbox data attributes, semantic DOM and ID/EN/AR copy
+  remain covered;
+- every new source and every migrated public Blade owner is below 200 lines;
+- focused H5 group 3 proof: PASS, 24 tests / 305 assertions;
+- focused H1 regression: PASS, 1 test / 7 assertions; focused H2-H4
+  regressions: PASS, 3 tests / 96 assertions; H5 group 1 regression: PASS,
+  11 tests / 271 assertions; H5 group 2 regression: PASS, 21 tests / 599
+  assertions;
+- production build: PASS, 144 modules, with the existing deferred 534.39 kB
+  Three package warning;
+- full MariaDB suite: 229 tests, 220 passed and 9 baseline/order-sensitive
+  assertion failures. The additional PPDB archive public-response failure
+  passes in isolation, as do all focused public-page owner gates;
+- structure check still reports only the frozen pre-H5 over-limit,
+  unreferenced-candidate and checksum debt; no new H5 file is reported.
+
+H5 owner group 3 is PASS. H5 remains `IMPLEMENTING`: only admin
+list/form/archive/replacement shaping remains. H1-H4 behavior/loading ownership
+and H5 group 1-2 semantics remain unchanged.
+
 ## Owner-accepted runtime direction
 
 - avoid unnecessary over-engineering;
@@ -267,6 +304,7 @@ already uses R2. Article Canvas remains an H6 local-public-disk write owner.
 - the durable starting inventory contained 38 Blade files with `@php`;
 - H5 group 1 reduced the remaining count to 31;
 - H5 group 2 reduced the remaining count to 23;
+- H5 group 3 reduced the remaining count to 17;
 - no non-Blade PHP preparation file remains under `resources/views`;
 - H5 ownership is grouped into Home/public/shared chrome/admin shaping;
 - migration must preserve semantics and use appropriate composers/presenters/
@@ -391,7 +429,8 @@ gates, update durable state, and never force-push.
 - H4 graphics runtime/loading graph hardening: PASS.
 - H5 owner group 1 shared chrome presentation-purity migration: PASS.
 - H5 owner group 2 Home section shaping migration: PASS.
-- H5 owner groups 3-4: NOT STARTED.
+- H5 owner group 3 public page shaping migration: PASS.
+- H5 owner group 4: NOT STARTED.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
 - H6-H7 implementation: NOT STARTED.
@@ -404,7 +443,7 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H5 owner group 3 public page shaping from the accepted execution packet.
-Keep H1-H4 behavior/loading ownership plus H5 group 1 shared-chrome and group 2
-Home section semantics proven. Do not enter owner group 4 admin shaping until
-group 3 is complete.
+Begin H5 owner group 4 admin list/form/archive/replacement shaping from the
+accepted execution packet. Keep H1-H4 behavior/loading ownership plus H5 group
+1-3 semantics proven. Do not enter H6 or H7 until H5 group 4 and final H5
+repository proof are complete.
