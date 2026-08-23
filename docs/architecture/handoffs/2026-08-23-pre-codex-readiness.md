@@ -1,6 +1,6 @@
 # Pre-Codex Hardening Readiness — 2026-08-23
 
-Status: `DISCOVERY_ACTIVE / 75_PERCENT`
+Status: `DISCOVERY_ACTIVE / 85_PERCENT`
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Source runtime checkpoint: `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`
@@ -116,7 +116,7 @@ problem.
 
 Status: `PASS / DURABLE`.
 
-Durable facts are recorded in this ledger/current state. Key findings:
+Key facts:
 
 - DB/admin URL fields, repo static assets, external URLs, and Article Canvas
   uploads are distinct media owners;
@@ -150,14 +150,9 @@ Migration classes:
 3. shared chrome/locale/meta preparation;
 4. admin form/list/archive/replacement preparation.
 
-The navbar is the clearest violation because view-tree PHP currently performs
-locale copy assembly, routing/anchor construction, menu mutation/filtering,
-login insertion, and media presentation preparation.
-
-Existing `AdminPpdbEditComposer` and `AdminGalleryIndexComposer` prove the repo
-already has a suitable render-data preparation pattern. H5 must not become a
-giant controller refactor; trivial presentation conditions can remain direct
-Blade directives/expressions without `@php`.
+The navbar is the clearest shared-chrome violation. Existing admin view
+composers prove the repo already has a suitable render-data preparation pattern.
+H5 must remain incremental and semantics-preserving.
 
 ## D3 — CSS/JS/runtime ownership inventory
 
@@ -166,31 +161,22 @@ Status: `PASS / DURABLE`.
 Detailed inventory:
 `handoffs/2026-08-23-css-js-runtime-inventory.md`.
 
-### CSS facts
+Key facts:
 
-- `welcome.css` is an active 47-module ordered legacy/cascade aggregate.
-- `welcome-hero.css` is an active nine-module ordered Hero aggregate.
-- both have frozen source-equivalence/checksum drift.
-- bounded Gallery and Article surface aggregates have clearer ownership.
-- Article debug-ruler CSS remains intentionally protected unfinished visual work.
-- `article-story/footer-release.css` is an unreferenced candidate, not proven
-  safe-to-delete.
-
-### JS/runtime facts
-
+- `welcome.css` is an active 47-module ordered legacy/cascade aggregate;
+- `welcome-hero.css` is an active nine-module ordered Hero aggregate;
+- both have frozen source-equivalence/checksum drift;
+- bounded Gallery and Article surface aggregates have clearer ownership;
 - `welcome.js` synchronously owns navigation, Program, Values, Article, public
-  content, gallery-wall, and lazy-media imports.
-- Vision enhancement is deferred after Hero via dynamic import/idle scheduling.
-- Gallery is currently proximity-loaded: its page entry uses IntersectionObserver
-  before importing the controller, and controller proximity then initializes the
-  Three engine. This differs from the accepted future persistent sequential
-  preparation strategy.
-- Program uses external jsDelivr GSAP `3.7.1` with reduced/failure fallback.
-- Program and Article mount functions return cleanup handles, but current page
-  bootstraps do not retain those handles. This is lifecycle proof debt, not proof
-  of a current leak.
+  content, gallery-wall, and lazy-media imports;
+- Vision enhancement is deferred after Hero via dynamic import/idle scheduling;
+- Gallery is currently proximity-loaded, differing from the accepted future
+  persistent sequential preparation strategy;
+- Program uses external jsDelivr GSAP `3.7.1` with reduced/failure fallback;
+- Program and Article expose disposer logic but current bootstraps discard the
+  returned handles, creating lifecycle proof debt rather than proven leaks.
 
-### Graphics hotspot
+Graphics hotspot:
 
 - package graph declares Three `^0.185.1`;
 - Gallery separately loads external Three `0.183.0`;
@@ -199,39 +185,57 @@ Detailed inventory:
 - its dynamic import still causes Vite to emit the large spatial/Three chunk;
 - successful build warns around a 549 kB `spatial-scene` chunk.
 
-Classification: split Three ownership plus runtime-disabled-but-built Values
-spatial is the clearest H4 bundle/runtime hotspot. H4 must measure/converge it,
-not hide it by raising the warning threshold.
+H4 must measure/converge this ownership, not hide it by raising the warning
+threshold.
 
-### Lifecycle facts
+Frozen baseline includes over-200-line files, unreferenced candidates
+`article-story/footer-release.css`, `vision-story/entry.js`,
+`vision-story/typography.js`, and checksum drift for `welcome.css` /
+`welcome-hero.css`. Do not mass-refactor these merely to green the structure
+check.
 
-Gallery and Values have explicit visibility/page/observer cleanup/suspension.
-Article and Program expose disposer logic but current page bootstraps discard the
-returned handles. Multiple RAF owners are not by themselves evidence that a
-giant global scheduler is required. Consolidation is allowed only when actual
-measurement/lifecycle proof shows duplicate work or accumulation.
+## D4 — Functional interaction matrix
 
-### Frozen structure debt
+Status: `PASS / DURABLE / SOURCE-CONTRACT`.
 
-Known baseline includes over-200-line files, the unreferenced candidates:
+Detailed matrix:
+`handoffs/2026-08-23-functional-interaction-matrix.md`.
 
-- `article-story/footer-release.css`;
-- `vision-story/entry.js`;
-- `vision-story/typography.js`;
+Release-critical interaction owners are now bounded for:
 
-and checksum drift for `welcome.css` / `welcome-hero.css`.
+- Hero slide navigation/playback/swipe/keyboard;
+- desktop navigation, mega menus, active section state and smooth anchors;
+- mobile navigation dynamic enhancement plus functional import-failure fallback;
+- ID/EN/AR locale dialog and POST switch/return semantics;
+- Program open/Back/Escape/Tab/focus-restore plus GSAP failure/reduced fallback;
+- Values and Vision/Mission scroll/lifecycle/static degradation;
+- homepage Gallery fallback/WebGL/end-CTA route transition and normal-anchor
+  fallback behavior;
+- Gallery page click/Enter/Space lightbox, Escape/close and focus restore;
+- homepage Article semantic links plus desktop cinematic CTA gating;
+- Article index server-side category + client-side search + native/external link
+  behavior;
+- PPDB availability, audience tabs, pinned wheel/keyboard journey and release;
+- auth/session role routes;
+- release-critical admin Gallery/Article/PPDB CRUD outcomes that H5/H6 must
+  preserve.
 
-Do not mass-refactor these merely to make `check:structure` green.
+Source-proven accessibility/certification gaps are deliberately not auto-fixed:
+
+- Gallery lightbox has close focus + Escape/focus restore but no explicit focus
+  trap proven in source;
+- PPDB uses `role=tab` buttons but no dedicated ArrowLeft/ArrowRight roving-focus
+  behavior is proven;
+- these belong to bounded H7 runtime/accessibility certification, not surprise
+  redesign during discovery.
+
+D4 distinguishes source contract from runtime proof. It does not claim that
+fast/reverse scroll, touch, BFCache, WebKit, or repeated-dialog scenarios already
+PASS merely because handlers exist.
 
 ## Remaining pre-Codex discovery
 
-Three bounded batches remain.
-
-### D4 — Functional interaction matrix
-
-Map primary controls/routes across navigation, locale, Program, Gallery, Article,
-PPDB and release-relevant admin/auth behavior. Record pointer/touch/keyboard,
-repeat interaction, fast/reverse motion, failure and restoration expectations.
+Two bounded batches remain.
 
 ### D5 — Responsive/locale/degraded-runtime proof contract
 
@@ -245,26 +249,30 @@ Freeze baseline failures/warnings and required proof, then create one bounded
 packet per H2-H7 with facts, gaps, editable/read-only/forbidden scope,
 acceptance, stop conditions and proof commands.
 
+Only after D5-D6 are durable and reconciled with current `main` may status become
+`CODEX_READY / 100_PERCENT` and the final Codex execution prompt be created.
+
 ## Progress
 
-Current readiness: `75%`.
+Current readiness: `85%`.
 
 Completed:
 
 - D1 media + DB/data-owner inventory — PASS / DURABLE;
 - D2 Blade presentation-purity inventory — PASS / DURABLE;
-- D3 CSS/JS/runtime ownership inventory — PASS / DURABLE.
+- D3 CSS/JS/runtime ownership inventory — PASS / DURABLE;
+- D4 functional interaction matrix — PASS / DURABLE / SOURCE-CONTRACT.
 
 Remaining:
 
-- D4 functional interaction matrix;
 - D5 responsive/locale/degraded-runtime proof contract;
-- D6 baseline proof ledger + H2-H7 execution packets.
+- D6 frozen baseline proof + bounded H2-H7 execution packets.
 
 This percentage measures delegation readiness, not hardening implementation
 completion.
 
 ## NEXT VALID STEP
 
-Build D4 read-only from current routes, Blade controls, and JS interaction
-owners. Do not change runtime behavior while mapping the contract.
+Build D5 from the accepted six-tier/device-fidelity direction and existing
+responsive/browser/release docs. Freeze a proof matrix only; do not run broad
+runtime mutation or claim PASS without evidence.
