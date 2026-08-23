@@ -1,46 +1,8 @@
-@php
-  $homeFooter = __('home.footer');
-  $homeFooterParity = __('home_parity.footer');
-  $homeFooter = is_array($homeFooter) ? $homeFooter : [];
-  $homeFooterParity = is_array($homeFooterParity) ? $homeFooterParity : [];
-  $homeFooter = array_replace_recursive($homeFooter, $homeFooterParity);
-
-  $siteFooter = $siteFooter ?? ($footerSection ?? $homeFooter);
-  $siteFooter = is_array($siteFooter) ? $siteFooter : [];
-  $siteFooter['links'] = array_values(array_filter(
-      is_array($siteFooter['links'] ?? null) ? $siteFooter['links'] : [],
-      fn (array $link): bool => parse_url((string) ($link['href'] ?? ''), PHP_URL_PATH) !== '/ppdb',
-  ));
-  $isHomeFooter = request()->routeIs('home');
-
-  $normalizeFooterHref = function (mixed $href) use ($isHomeFooter): string {
-      if (! is_string($href) || trim($href) === '') {
-          return '#';
-      }
-
-      $href = trim($href);
-
-      if (str_starts_with($href, '#')) {
-          return $isHomeFooter ? $href : route('home') . $href;
-      }
-
-      return $href;
-  };
-
-  $externalTarget = function (string $href): string {
-      return str_starts_with($href, 'http') ? '_blank' : '_self';
-  };
-
-  $externalRel = function (string $href): string {
-      return str_starts_with($href, 'http') ? 'noopener noreferrer' : '';
-  };
-@endphp
-
 <footer class="site-footer{{ $isHomeFooter ? ' site-footer--home-story' : '' }}" id="kontak">
   <div class="container site-footer__grid">
     <div class="footer-brand">
       @if (! empty($siteFooter['brand']))
-        <a href="{{ $normalizeFooterHref($siteFooter['brand']['href'] ?? '#beranda') }}" class="footer-brand__logo" aria-label="{{ $siteFooter['brand']['name'] ?? __('pages.common.school_name') }}">
+        <a href="{{ $siteFooter['brand']['resolved_href'] }}" class="footer-brand__logo" aria-label="{{ $siteFooter['brand']['name'] ?? __('pages.common.school_name') }}">
           @if (! empty($siteFooter['brand']['image']))
             <img
               src="{{ $siteFooter['brand']['image'] }}"
@@ -71,20 +33,15 @@
 
           <div class="footer-channel-grid">
             @foreach ($siteFooter['channels'] as $channel)
-              @php
-                $isDisabled = ! empty($channel['disabled']);
-                $channelHref = $normalizeFooterHref($channel['href'] ?? '#');
-              @endphp
-
-              @if ($isDisabled)
+              @if ($channel['is_disabled'])
                 <span class="footer-channel footer-channel--{{ $channel['icon'] ?? 'link' }} footer-channel--disabled" aria-disabled="true" aria-label="{{ $channel['label'] ?? '' }}">
               @else
                 <a
-                  href="{{ $channelHref }}"
+                  href="{{ $channel['resolved_href'] }}"
                   class="footer-channel footer-channel--{{ $channel['icon'] ?? 'link' }}"
                   aria-label="{{ $channel['label'] ?? '' }}"
-                  target="{{ $externalTarget($channelHref) }}"
-                  rel="{{ $externalRel($channelHref) }}"
+                  target="{{ $channel['external_target'] }}"
+                  rel="{{ $channel['external_rel'] }}"
                 >
               @endif
                 @if (! empty($channel['asset']))
@@ -100,9 +57,9 @@
                     height="28"
                   />
                 @else
-                  <span class="footer-channel__fallback" aria-hidden="true">{{ substr((string) ($channel['label'] ?? 'LK'), 0, 2) }}</span>
+                  <span class="footer-channel__fallback" aria-hidden="true">{{ $channel['fallback'] }}</span>
                 @endif
-              @if ($isDisabled)
+              @if ($channel['is_disabled'])
                 </span>
               @else
                 </a>
@@ -118,7 +75,7 @@
         <strong class="footer-links__title">{{ $siteFooter['links_title'] ?? __('pages.common.footer.links_title') }}</strong>
         <ul>
           @foreach ($siteFooter['links'] as $link)
-            <li><a href="{{ $normalizeFooterHref($link['href'] ?? '#') }}">{{ $link['label'] ?? '' }}</a></li>
+            <li><a href="{{ $link['resolved_href'] }}">{{ $link['label'] ?? '' }}</a></li>
           @endforeach
         </ul>
       </nav>
@@ -129,7 +86,7 @@
         <strong class="footer-gallery-links__title">{{ $siteFooter['gallery_links_title'] ?? __('pages.common.nav.galeri') }}</strong>
         <ul>
           @foreach ($siteFooter['gallery_links'] as $link)
-            <li><a href="{{ $normalizeFooterHref($link['href'] ?? '#') }}">{{ $link['label'] ?? '' }}</a></li>
+            <li><a href="{{ $link['resolved_href'] }}">{{ $link['label'] ?? '' }}</a></li>
           @endforeach
         </ul>
       </nav>
@@ -141,14 +98,12 @@
 
         <div class="footer-partners__grid">
           @foreach ($siteFooter['partners'] as $partner)
-            @php($partnerHref = $normalizeFooterHref($partner['href'] ?? '#'))
-
             <a
-              href="{{ $partnerHref }}"
+              href="{{ $partner['resolved_href'] }}"
               class="footer-partner-card"
               aria-label="{{ $partner['label'] ?? '' }}"
-              target="{{ $externalTarget($partnerHref) }}"
-              rel="{{ $externalRel($partnerHref) }}"
+              target="{{ $partner['external_target'] }}"
+              rel="{{ $partner['external_rel'] }}"
             >
               @if (! empty($partner['image']))
                 <img

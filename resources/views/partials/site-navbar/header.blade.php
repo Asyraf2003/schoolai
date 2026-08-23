@@ -24,30 +24,11 @@
     <nav class="navbar__menu" id="desktopNavMenu" aria-label="{{ $siteNavbar['aria_label'] ?? __('pages.common.main_nav') }}">
       <ul>
         @foreach ($menuItems as $item)
-          @php
-            $isLanguageItem = ($item['type'] ?? null) === 'language';
-            $isLoginItem = ($item['type'] ?? null) === 'login';
-            $hasMegaMenu = ! $isLanguageItem
-              && ! empty($item['mega']['links'])
-              && is_array($item['mega']['links']);
-            $routePatterns = $item['route_patterns'] ?? [];
-            $isActiveRoute = ! empty($routePatterns) && request()->routeIs(...$routePatterns);
-            $isActiveHomeAnchor = $isHomeNav && $loop->first && ! $isLanguageItem;
-            $isActive = $isActiveRoute || $isActiveHomeAnchor;
-            $megaPanelId = 'navMegaPanel-' . $loop->index;
-            $itemMegaMediaUrl = $item['mega']['media_url'] ?? $megaMediaUrl;
-            $itemMegaMediaAlt = $item['mega']['media_alt'] ?? $megaMediaAlt;
-          @endphp
-
           <li
-            class="nav-item{{ $isLanguageItem ? ' nav-language' : '' }}{{ $isLoginItem ? ' nav-login' : '' }}{{ $hasMegaMenu ? ' nav-mega' : '' }}"
-            @if ($hasMegaMenu) data-nav-mega @endif
+            class="nav-item{{ $item['is_language'] ? ' nav-language' : '' }}{{ $item['is_login'] ? ' nav-login' : '' }}{{ $item['has_mega_menu'] ? ' nav-mega' : '' }}"
+            @if ($item['has_mega_menu']) data-nav-mega @endif
           >
-            @if ($isLanguageItem)
-              @php
-                $currentOption = collect($item['options'] ?? [])->firstWhere('locale', $currentLocale);
-              @endphp
-
+            @if ($item['is_language'])
               <button
                 type="button"
                 class="nav-link nav-language__button"
@@ -58,19 +39,19 @@
               >
                 <span data-nav-roll="main">{{ $item['label'] }}</span>
                 <span class="nav-language__current-flag" aria-hidden="true">
-                  @include('partials.language-flag', ['locale' => $currentOption['locale'] ?? $currentLocale])
+                  @include('partials.language-flag', ['locale' => $item['current_option']['locale'] ?? $currentLocale])
                 </span>
               </button>
-            @elseif ($hasMegaMenu)
+            @elseif ($item['has_mega_menu'])
               <button
                 type="button"
-                class="nav-link nav-mega__trigger {{ $isActive ? 'active' : '' }}"
+                class="nav-link nav-mega__trigger {{ $item['is_active'] ? 'active' : '' }}"
                 data-nav-mega-toggle
                 data-text-role="action"
                 aria-label="{{ $item['mega']['toggle_label'] ?? $item['label'] }}"
                 aria-haspopup="true"
                 aria-expanded="false"
-                aria-controls="{{ $megaPanelId }}"
+                aria-controls="{{ $item['desktop_panel_id'] }}"
               >
                 <span data-nav-roll="main">{{ $item['label'] }}</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -80,15 +61,15 @@
 
               <div
                 class="nav-mega__panel"
-                id="{{ $megaPanelId }}"
+                id="{{ $item['desktop_panel_id'] }}"
                 data-nav-mega-panel
                 aria-hidden="true"
                 inert
               >
                 <div class="nav-mega__media">
                   <img
-                    src="{{ $itemMegaMediaUrl }}"
-                    alt="{{ $itemMegaMediaAlt }}"
+                    src="{{ $item['mega_media_url'] }}"
+                    alt="{{ $item['mega_media_alt'] }}"
                     width="720"
                     height="540"
                     loading="lazy"
@@ -118,9 +99,9 @@
             @else
               <a
                 href="{{ $item['href'] }}"
-                class="nav-link {{ $isActive ? 'active' : '' }}"
+                class="nav-link {{ $item['is_active'] ? 'active' : '' }}"
                 data-text-role="action"
-                @if ($isActiveRoute)
+                @if ($item['is_active_route'])
                   aria-current="page"
                 @endif
               >

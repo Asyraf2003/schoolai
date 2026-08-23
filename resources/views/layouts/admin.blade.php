@@ -1,16 +1,3 @@
-@php
-  $activeAdminPage = $activeAdminPage ?? ($adminPageKey ?? 'dashboard');
-
-  $adminMenu = [
-      ['key' => 'dashboard', 'label' => __('admin.nav.dashboard'), 'route' => 'admin.dashboard'],
-      ['key' => 'accounts', 'label' => __('admin.nav.accounts'), 'route' => 'admin.accounts.index'],
-      ['key' => 'ppdb', 'label' => __('admin.nav.ppdb'), 'route' => 'admin.ppdb'],
-      ['key' => 'artikel', 'label' => __('admin.nav.artikel'), 'route' => 'admin.artikel'],
-      ['key' => 'galeri', 'label' => __('admin.nav.galery'), 'route' => 'admin.galeri'],
-      ['key' => 'stats', 'label' => __('admin.nav.stats'), 'route' => 'admin.stats.edit'],
-  ];
-@endphp
-
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>

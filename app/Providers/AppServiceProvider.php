@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 use App\View\Composers\AdminGalleryIndexComposer;
+use App\View\Composers\AdminLayoutComposer;
 use App\View\Composers\AdminPpdbEditComposer;
+use App\View\Composers\LanguageFlagComposer;
+use App\View\Composers\SiteFooterComposer;
+use App\View\Composers\SiteHeadMetaComposer;
+use App\View\Composers\SiteNavbarComposer;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -44,5 +49,10 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('admin.gallery.index', AdminGalleryIndexComposer::class);
         View::composer('admin.ppdb.edit', AdminPpdbEditComposer::class);
+        View::composer('layouts.admin', AdminLayoutComposer::class);
+        View::composer('partials.language-flag', LanguageFlagComposer::class);
+        View::composer('partials.site-footer', SiteFooterComposer::class);
+        View::composer('partials.site-head-meta', SiteHeadMetaComposer::class);
+        View::composer('partials.site-navbar', SiteNavbarComposer::class);
     }
 }

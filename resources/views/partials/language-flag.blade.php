@@ -1,11 +1,3 @@
-@php
-  $flagLocale = in_array(($locale ?? null), ['id', 'en', 'ar'], true)
-    ? $locale
-    : 'id';
-  $flagImagePath = 'media/home/'.$flagLocale.'.webp';
-  $hasFlagImage = is_file(public_path($flagImagePath));
-@endphp
-
 @include('partials.home-hero-copy-layout')
 
 @once

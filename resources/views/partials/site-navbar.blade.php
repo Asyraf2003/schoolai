@@ -1,11 +1,3 @@
-@php
-
-  require resource_path('views/partials/site-navbar/data/context.php');
-  require resource_path('views/partials/site-navbar/data/menu.php');
-  require resource_path('views/partials/site-navbar/data/presentation.php');
-
-@endphp
-
 <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
 
   @include('partials.site-navbar.styles.language-modal')
