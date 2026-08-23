@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H4_PASS / H5_READY`
+Status: `HARDENING_ACTIVE / H5_GROUP_1_PASS / H5_GROUP_2_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `5836af2ac55f523594eba93bf9a8880729b87dba`
+Inspected runtime-source checkpoint: `f0997790fc70a6d59b165080e444161c4c5f815b`
 
 Durable references:
 
@@ -143,6 +143,39 @@ H4 is PASS. H1 handoff coverage, H2 lifecycle, H3 authoritative scroll clock,
 visual composition, locale semantics and Values spatial disabled state remain
 unchanged.
 
+## H5 Blade-purity gate
+
+Published H5 owner group 1 source/test SHA:
+`f0997790fc70a6d59b165080e444161c4c5f815b`.
+
+Proven for shared navbar/footer/meta/locale/admin-layout preparation:
+
+- the seven group 1 Blade owners contain no raw PHP or `@php` blocks /
+  expressions;
+- the three navbar preparation PHP files were removed from the view tree after
+  all consumers migrated;
+- navbar, footer, head metadata, language-flag and admin-menu shaping now use
+  bounded view composers plus two navbar presenters; every new source file is
+  below 200 lines;
+- navbar mega/modal/language and head-image copy now comes from shared ID/EN/AR
+  translation contracts, while desktop/mobile consume one prepared menu model;
+- home/public anchors, route activity, login placement, PPDB filtering, footer
+  external-link semantics, JSON-LD/CSP/GA behavior, flags and admin active state
+  remain covered;
+- focused H5 group 1 proof: PASS, 11 tests / 272 assertions;
+- focused H1 regression: PASS, 1 test / 7 assertions; focused H2-H4
+  regressions: PASS, 3 tests / 96 assertions;
+- production build: PASS, 144 modules, with the existing deferred 534.39 kB
+  Three package warning;
+- full MariaDB suite: 219 tests, 211 passed and 8 known baseline assertion
+  failures; none points to an H5 group 1 owner;
+- structure check still reports only the frozen pre-H5 over-limit,
+  unreferenced-candidate and checksum debt; no new H5 file is reported.
+
+H5 owner group 1 is PASS. H5 remains `IMPLEMENTING`: Home section shaping,
+public page shaping and admin list/form/archive/replacement shaping are pending.
+H1-H4 behavior and loading ownership remain unchanged.
+
 ## Owner-accepted runtime direction
 
 - avoid unnecessary over-engineering;
@@ -198,8 +231,9 @@ already uses R2. Article Canvas remains an H6 local-public-disk write owner.
 
 `PASS / DURABLE`.
 
-- 38 Blade files contain `@php` blocks/expressions;
-- three raw PHP navbar preparation files exist under the view tree;
+- the durable starting inventory contained 38 Blade files with `@php`;
+- H5 group 1 reduced the remaining count to 31;
+- no non-Blade PHP preparation file remains under `resources/views`;
 - H5 ownership is grouped into Home/public/shared chrome/admin shaping;
 - migration must preserve semantics and use appropriate composers/presenters/
   application owners rather than a monolithic controller rewrite.
@@ -274,10 +308,10 @@ Known structure debt includes:
 
 Known Gallery feature-test debt: one stale continuity assertion predating H1.
 
-Fresh H4 full-suite checkpoint on MariaDB: 216 tests, 197 passed, 14 assertion
-failures, and 5 GD-dependent errors because GD is unavailable. Focused H1-H4
-contracts pass; none of the remaining failures points to the hardened graphics /
-loading owners.
+Fresh H5 group 1 full-suite checkpoint on MariaDB: 219 tests, 211 passed and 8
+known assertion failures. Focused H1-H5 group 1 contracts pass; none of the
+remaining failures points to the hardened graphics/loading or shared-chrome
+owners.
 
 Do not mass-refactor this debt merely to make a command green. Resolve it under
 its proven owner or H7 G0 with semantics-preserving structural work.
@@ -321,9 +355,11 @@ gates, update durable state, and never force-push.
 - H2 Gallery lifecycle/state hardening: PASS.
 - H3 Gallery scroll-clock reconciliation: PASS.
 - H4 graphics runtime/loading graph hardening: PASS.
+- H5 owner group 1 shared chrome presentation-purity migration: PASS.
+- H5 owner groups 2-4: NOT STARTED.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
-- H5-H7 implementation: NOT STARTED.
+- H6-H7 implementation: NOT STARTED.
 - final responsive/locale/WebKit/performance/accessibility/security certification:
   `BLOCKED_BY_MISSING_EVIDENCE` until H7.
 
@@ -333,5 +369,6 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H5 Blade presentation-purity migration from owner group 1 in the accepted
-execution packet. Keep H1-H4 behavior and loading ownership proven.
+Begin H5 owner group 2 Home section shaping from the accepted execution packet.
+Keep H1-H4 behavior/loading ownership and H5 group 1 shared-chrome semantics
+proven.
