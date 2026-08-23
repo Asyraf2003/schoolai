@@ -1,135 +1,194 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / HOMEPAGE-ENGINE-2026-08-23`
+Status: `HARDENING_ACTIVE / PRE_CODEX_DISCOVERY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source HEAD: `04e3aa68dc06b0bb2777678538d4e65b01c656ee`
-Durable handoff: `handoffs/2026-08-23-homepage-hardening.md`
+Inspected runtime-source HEAD: `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`
+Durable hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
+Pre-Codex readiness ledger: `handoffs/2026-08-23-pre-codex-readiness.md`
 
 ## Current phase
 
-Homepage visual polishing is PAUSED. The project is now in a bounded hardening
-phase. The next sessions must stabilize engine/state/lifecycle behavior before
-continuing Article composition, Gallery-to-Article art direction, Footer
-transition work, or removing temporary visual rulers/markers.
+Homepage visual polishing remains PAUSED. H1 has a published minimal source/test
+patch, but its slow forward/reverse browser acceptance has not yet been recorded
+as PASS. The owner has opened a bounded read-only/decision discovery phase to
+prepare H2-H7 facts, constraints, baseline debt, and proof packets before Codex
+execution.
 
-The receiving agent must read the mandatory chain in `README.md`, then the
-hardening handoff above. Chat history is not an implementation dependency.
+This discovery does not authorize H2-H7 runtime mutation. Its purpose is to stop
+future Codex sessions from wasting implementation time rediscovering the project
+or making owner-level architecture decisions by inference.
 
 ## Current FACT
 
-- Slow desktop scrolling through the closing Gallery -> Article handoff can
-  expose the dark `.nav-shell` background, switch Gallery into its static
-  fallback, and leave the downstream state visually broken. Faster scrolling
-  can sometimes pass the same region. This is a reproduced runtime symptom,
-  not a claimed final root cause.
-- `renderDepthFrame()` currently calls `isDepthFrameHealthy()`. A frame is
-  considered unhealthy when no Gallery plane has opacity above `.01` and the
-  end CTA is not considered visible, even when the drawing buffer and WebGL
-  context remain otherwise healthy.
-- A false result from `renderDepthFrame()` stops `DepthGalleryEngine` and calls
-  its failure path. `applyFallbackState()` then removes active/ready classes and
-  exposes the static fallback. This is the primary hardening candidate for the
-  slow-scroll failure.
-- The dark color visible during the failure matches the homepage shell
-  background `#071b18`; it becomes visible when Gallery/Article surfaces no
-  longer cover the viewport during the failed state.
-- Gallery uses an internal smoothed camera clock. The handoff has also been
-  adapted to native document progress. These clocks must not be allowed to
-  produce contradictory lifecycle states.
-- `npm run build` has been observed to complete while warning about a chunk over
-  `500 kB`. That warning is not currently proven to cause the slow-scroll
-  fallback bug.
-- Three.js ownership is inconsistent: Gallery runtime-loads `three@0.183.0`
-  from jsDelivr while the package graph currently declares `three ^0.185.1` and
-  other scenes import from the package. Unification is a later hardening step,
-  not the active fix.
-- Article visual work remains intentionally unfinished. Temporary X/Y viewport
-  rulers and `tes...` markers remain useful for later owner feedback and must
-  not be removed during the engine step unless they themselves are proven to
-  cause a runtime defect.
+- H1 changed Gallery frame health so renderer/context health is no longer tied to
+  whether a Gallery plane or end CTA is visually present during a legitimate
+  transition frame.
+- Published H1 main SHA is `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`.
+- The prior slow-scroll symptom was a dark `.nav-shell` exposure plus static
+  Gallery fallback and broken downstream state. Slow/reverse runtime acceptance
+  of the patch remains unrecorded.
+- Gallery uses internal smoothed visual motion and handoff/document progress;
+  H2/H3 still need explicit lifecycle and authoritative-clock contracts after H1
+  is accepted.
+- `npm run build` passes while warning about a graphics chunk above 500 kB. The
+  warning is not evidence of the H1 failure and must not be hidden by merely
+  raising the threshold.
+- Three.js ownership remains inconsistent: Gallery has been observed loading
+  `three@0.183.0` from a CDN while `package.json` declares `three ^0.185.1`.
+- `npm run check:structure` currently has pre-existing structural debt including
+  over-200-line source, unreferenced candidates, and source checksum drift.
+- One existing `HomeDepthGalleryTest` continuity expectation is stale relative
+  to source that already predates H1; it is baseline debt, not an H1 regression.
+- Article visual work remains intentionally unfinished. Temporary viewport
+  rulers/markers remain protected until visual work resumes.
 
 ## Owner-accepted durable direction
 
 - Hardening comes before further visual polishing.
-- Work proceeds slowly, one bounded capability per session, with proof before
-  the next capability.
-- Blade should ultimately become presentation-only: no inline `@php`, locale
-  `match`, collection shaping, business/data preparation, or other view logic.
-  Prepared view data belongs in controllers/application services/view models or
-  equivalent existing Laravel owners.
+- Avoid unnecessary over-engineering. Extra workflow/architecture work is
+  justified only when critical to H2-H7 hardening or necessary to prevent an
+  implementation agent from guessing.
+- Blade should ultimately become presentation-only: no raw PHP/`@php`, business
+  or data access, collection shaping, or view-owned data preparation. The exact
+  migration destination must follow actual source ownership rather than blindly
+  moving every expression into controllers.
+- Final product support remains six responsive width tiers, ID/EN/AR, LTR/RTL,
+  Chromium and Safari/WebKit. This is a certification matrix, not permission to
+  fork implementations.
+- Phone, tablet, and desktop keep one SchoolAI identity but may have different
+  interaction density because touch and pointer/hover are materially different
+  input models.
+- Phone static/light states must still be polished final compositions, never a
+  visually unfinished fallback.
+- Tablet is semi-interactive/touch-oriented rather than a shrunken desktop.
+- Desktop/laptop is the richest approved interactive/cinematic target, with
+  runtime downgrade allowed when capability requires it.
+- Initial semantic/static content and the first visual composition should become
+  usable as quickly as practical; the owner's approximate 0.1s ambition is an
+  aspiration pending measured critical-path budgets, not an invented universal
+  SLA.
+- After initial readiness, enhancement preparation is aggressive and sequential:
+  Hero -> Program -> Values -> Vision/Mission -> Gallery -> Article -> Footer.
+- The preparation pipeline may continue during fast user scrolling and while the
+  tab is hidden. Prepared sections must remain prepared for reverse scrolling.
+- Aggressive fetch/import/cache/preparation is allowed, but unnecessary
+  continuous offscreen RAF/WebGL/video execution is not.
+- If enhancement is not ready when a section is reached, a complete
+  `STATIC_READY` composition must remain available with no blank shell, loader-
+  only state, broken layout, or missing primary information/action.
 - Media CRUD/index/display should ultimately use Cloudflare-backed delivery.
-  R2 is the expected binary/object-storage direction through the S3-compatible
-  filesystem path; database records remain the metadata/relationship source of
-  truth. Video delivery may be evaluated separately when evidence requires it.
-- Final product support remains six responsive width tiers, ID/EN/AR,
-  LTR/RTL, Chromium and Safari/WebKit. This is a 36-combination certification
-  matrix, not permission to create 36 implementations.
-- Product target remains Lighthouse/PageSpeed `100/100/100/100` on declared
-  lab profiles, while field CWV claims require real p75 field evidence.
-- Media must reserve geometry and be responsive; storage migration must not
-  sacrifice accessibility, locale behavior, WebKit support, or page-speed
-  budgets.
+  Database records remain metadata/relationship source of truth; binary objects
+  are expected to use the R2 S3-compatible filesystem path.
+- Product target remains Lighthouse/PageSpeed `100/100/100/100` on declared lab
+  profiles; field CWV claims require real p75 field evidence.
+
+## Cloudflare/R2 proven discovery
+
+Cloudflare infrastructure is already provisioned; H6 is application migration
+and contract work, not a new Cloudflare account/bucket setup.
+
+- R2 bucket: `almustaqbal`.
+- Location: APAC.
+- Default storage class: Standard.
+- Public access: enabled.
+- Production custom domain: `media.almustaqbal.sch.id`, active.
+- Public `r2.dev` URL exists for development but is not the intended production
+  application URL.
+- CORS policy is currently absent and must not be made permissive without actual
+  browser/canvas/WebGL consumer evidence.
+- Default multipart-abort lifecycle rule after seven days is enabled.
+- Bucket lock, on-demand migration, and local uploads are not active.
+- Laravel generic S3 configuration can target R2, while the checked-in env
+  example still needs an eventual R2-specific contract update.
+- Local Laravel R2 credential/configuration is working. Secret values are not
+  durable documentation.
+- Laravel S3 diagnostic write: PASS.
+- Laravel S3 diagnostic exists check: PASS.
+- Public read through `media.almustaqbal.sch.id`: HTTP 200 PASS.
+- Laravel S3 diagnostic delete: PASS.
+- Post-delete exists: false PASS.
+- Post-delete public custom-domain request: HTTP 404 PASS.
+- Observed Cloudflare response currently reports `cf-cache-status: DYNAMIC`;
+  final media cache/version policy remains an H6 discovery gap.
+
+Full decisions/proof and remaining Cloudflare gaps are recorded in
+`handoffs/2026-08-23-pre-codex-readiness.md`.
 
 ## Hardening sequence
 
-The sequence below is a backlog. Only the first unresolved item may become the
-active step unless new evidence changes priority.
+The sequence below remains the implementation backlog. Pre-Codex discovery may
+inspect later capabilities read-only, but runtime mutation must stay bounded.
 
 1. `H1 Gallery false-fallback hardening`
-   - separate a genuinely unhealthy renderer/context from a temporarily empty
-     visual frame during transition;
-   - prove slow forward/reverse scrolling no longer enters static fallback.
+   - source/test patch published;
+   - slow forward/reverse owner runtime acceptance still pending.
 2. `H2 Gallery lifecycle/state hardening`
-   - make loading/active/ending/handoff/fallback semantics explicit and prevent
-     contradictory class/state transitions.
+   - make loading/static-ready/prepared/active/ending/handoff/fallback semantics
+     explicit and prevent contradictory state/class transitions.
 3. `H3 Scroll-clock reconciliation`
    - keep smoothing for visual motion where useful, but make section lifecycle
-     and handoff progress deterministic from one authoritative clock.
+     and handoff progress deterministic from authoritative state/progress.
 4. `H4 Graphics runtime/bundle hardening`
-   - converge on one Three.js version/runtime strategy; then measure/code-split
-     graphics without hiding bundle warnings by merely increasing limits.
+   - converge on one Three.js runtime strategy and measure/code-split graphics
+     without disguising bundle warnings.
 5. `H5 Blade presentation-purity migration`
-   - move inline data shaping and locale decisions out of Blade incrementally,
-     one surface at a time, with unchanged rendered semantics as proof.
+   - inventory and migrate actual view-owned data preparation incrementally with
+     unchanged rendered semantics.
 6. `H6 Cloudflare media migration`
-   - define R2 disk/config, object-key and metadata contracts, upload/delete
-     lifecycle, CDN/public URL strategy, image variants, cache policy, and CRUD
-     migration in bounded steps.
+   - inventory media/data owners, object-key/URL contract, CRUD lifecycle,
+     variants, CORS/cache policy, migration, rollback, and deployment env.
 7. `H7 Release certification`
-   - certify six tiers x three locales x Chromium/WebKit, then Lighthouse/
-     PageSpeed and accessibility/runtime gates.
+   - certify six tiers x three locales x Chromium/WebKit plus performance,
+     accessibility, failure, lifecycle, and input gates.
 
-## Protected / deferred during H1
+## Protected / deferred
 
 - Do not redesign Gallery, Article, Program, Values, Vision/Mission, navigation,
-  or Footer.
-- Do not tune Article ruler coordinates during H1.
-- Do not migrate media storage during H1.
-- Do not remove Blade `@php` during H1.
-- Do not change Three.js dependency/version during H1.
-- Do not suppress the >500 kB warning by changing only the warning threshold.
-- Do not claim Safari/WebKit, responsive, locale, Lighthouse, PageSpeed, CWV,
-  or accessibility PASS without actually running the corresponding proof.
+  or Footer during discovery/hardening unless the active accepted capability
+  explicitly requires it.
+- Do not tune Article ruler coordinates during engine/readiness work.
+- Do not mass-migrate storage, Blade, CSS, JS, or Three.js merely because the
+  discovery finds debt.
+- Do not mass-delete unreferenced candidates without runtime/import ownership
+  proof.
+- Do not suppress the >500 kB warning by changing only a warning threshold.
+- Do not claim Safari/WebKit, responsive, locale, Lighthouse/PageSpeed, CWV, or
+  accessibility PASS without actual proof.
 
 ## Current proof status
 
-- Owner screenshots: `FAIL` for slow-scroll Gallery -> Article stability.
-- Fast-scroll behavior: sometimes visually passes; this does not qualify as
-  deterministic proof.
-- `npm run build`: observed PASS in owner terminal, with >500 kB chunk warning.
-- No new Safari/WebKit, six-tier, three-locale, Lighthouse/PageSpeed, field CWV,
-  or full automated release proof is claimed for this phase.
-- The docs-only hardening checkpoint does not increase runtime progress.
+- Focused H1 contract: PASS, 1 test / 7 assertions.
+- `git --no-pager diff --check`: PASS.
+- `npm run build`: PASS, 141 modules transformed, graphics chunk warning remains.
+- `npm run check:structure`: FAIL from known baseline structural debt; none of
+  the reported violations targets the H1 `engine-frame.js` change.
+- Full `HomeDepthGalleryTest`: blocked by one stale pre-H1 continuity assertion;
+  focused H1 contract passes.
+- Cloudflare/R2 create/read/delete diagnostic lifecycle: PASS as recorded above.
+- H1 browser slow/reverse acceptance: `BLOCKED_BY_MISSING_EVIDENCE`.
+- Six-tier/three-locale/WebKit/PageSpeed/accessibility release proof:
+  `BLOCKED_BY_MISSING_EVIDENCE`.
+
+## Pre-Codex readiness
+
+Current estimate: `45%` toward `CODEX_READY`.
+
+Remaining bounded discovery batches:
+
+1. media + DB/data-owner inventory;
+2. Blade presentation-purity inventory;
+3. CSS/JS/runtime ownership and performance-hotspot inventory;
+4. functional interaction matrix;
+5. responsive/locale/degraded-runtime proof contract completion;
+6. baseline proof ledger plus bounded H2-H7 execution packets.
+
+The percentage measures delegation readiness, not implementation completion.
+The Codex execution prompt must not be created until the readiness ledger is
+complete and recorded as `CODEX_READY / 100_PERCENT`.
 
 ## NEXT VALID STEP
 
-`H1 Gallery false-fallback hardening` only.
-
-Inspect and patch the Gallery frame-health/fallback boundary so a legitimate
-transition frame with no currently visible plane cannot be mistaken for a WebGL
-engine failure. Preserve current visual composition. Prove by repeated slow
-forward and reverse scrolling through the Gallery ending/handoff in Chromium,
-including a deliberate pause inside the transition region, with no static
-fallback spawn, no exposed dark shell, and no console/runtime engine failure.
+Read-only D1 media + DB/data-owner inventory from current `main`. Record facts
+and gaps only; do not mutate runtime source.
