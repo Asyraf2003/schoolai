@@ -1,6 +1,10 @@
 import { bindGalleryRouteExit } from '../../../components/gallery-route-transition.js';
 import { readGalleryData } from './data.js';
 import { DepthGalleryEngine } from './engine.js';
+import {
+    createGalleryLifecycle,
+    GalleryLifecycleState,
+} from './lifecycle.js';
 import { loadThreeRuntime } from './three-runtime.js';
 
 function createDepthGallery(root) {
@@ -8,86 +12,85 @@ function createDepthGallery(root) {
     const canvas = root.querySelector('[data-depth-gallery-canvas]');
     const fallback = root.querySelector('[data-depth-gallery-fallback]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const lifecycle = createGalleryLifecycle(root, canvas, fallback);
     let engine = null;
     let observer = null;
     let activationFrame = 0;
-    let disposed = false;
     let inView = false;
-    let initializing = false;
-    let active = false;
-
-    const routeTransition = bindGalleryRouteExit(
-        root,
-        () => engine,
-    );
+    let routeTransition = null;
 
     function applyFallbackState(disposeEngine = true) {
         if (activationFrame) cancelAnimationFrame(activationFrame);
         activationFrame = 0;
-        active = false;
-        initializing = false;
-        root.classList.remove(
-            'is-depth-ready',
-            'is-depth-active',
-            'is-depth-end-ready',
-            'is-depth-leaving',
-        );
-        root.classList.add('is-depth-fallback');
-        fallback?.removeAttribute('hidden');
-        fallback?.removeAttribute('aria-hidden');
-        if (fallback) fallback.inert = false;
-        canvas?.setAttribute('aria-hidden', 'true');
-        canvas?.removeAttribute('aria-busy');
-        if (!disposeEngine) return;
-        const failedEngine = engine;
-        engine = null;
-        failedEngine?.dispose();
+        if (disposeEngine) {
+            const failedEngine = engine;
+            engine = null;
+            failedEngine?.dispose();
+        }
+        lifecycle.staticReady();
     }
 
     function activateEngine() {
-        root.classList.remove('is-depth-fallback');
-        root.classList.add('is-depth-ready');
+        if (!lifecycle.is(GalleryLifecycleState.Prepared)) return;
+        lifecycle.transition(GalleryLifecycleState.EnhancementReady);
         activationFrame = requestAnimationFrame(() => {
             activationFrame = 0;
-            if (disposed || !engine || !engine.activate()) {
+            if (
+                lifecycle.is(GalleryLifecycleState.Disposed)
+                || !engine
+                || !engine.activate()
+            ) {
                 applyFallbackState();
                 return;
             }
-            active = true;
-            root.classList.add('is-depth-active');
-            fallback?.removeAttribute('hidden');
-            fallback?.removeAttribute('aria-hidden');
-            if (fallback) fallback.inert = false;
-            canvas?.removeAttribute('aria-busy');
-            if (inView && !document.hidden) engine.start();
+            if (inView && !document.hidden) {
+                lifecycle.transition(GalleryLifecycleState.Active);
+                engine.start();
+            } else {
+                engine.stop();
+                lifecycle.transition(GalleryLifecycleState.Suspended);
+            }
         });
     }
 
     async function initialize() {
         if (
-            disposed
-            || active
-            || initializing
-            || engine
+            !lifecycle.is(GalleryLifecycleState.StaticReady)
             || reducedMotion.matches
             || !canvas
             || config.length < 2
         ) return;
 
-        initializing = true;
-        canvas.setAttribute('aria-busy', 'true');
+        lifecycle.transition(GalleryLifecycleState.Fetching);
         try {
             const THREE = await loadThreeRuntime();
-            if (disposed) return;
-            engine = new DepthGalleryEngine(
+            if (
+                !lifecycle.is(GalleryLifecycleState.Fetching)
+                || reducedMotion.matches
+            ) return;
+
+            const candidate = new DepthGalleryEngine(
                 THREE,
                 root,
                 config,
                 applyFallbackState,
             );
-            const success = await engine.init();
-            initializing = false;
-            if (!success || disposed) {
+            engine = candidate;
+            const success = await candidate.init();
+            if (
+                !success
+                || engine !== candidate
+                || reducedMotion.matches
+                || !lifecycle.is(GalleryLifecycleState.Fetching)
+            ) {
+                candidate.dispose();
+                if (engine === candidate) {
+                    engine = null;
+                    applyFallbackState(false);
+                }
+                return;
+            }
+            if (!lifecycle.transition(GalleryLifecycleState.Prepared)) {
                 applyFallbackState();
                 return;
             }
@@ -98,26 +101,52 @@ function createDepthGallery(root) {
         }
     }
 
+    function start() {
+        if (!engine || !inView || document.hidden) return;
+        if (lifecycle.is(GalleryLifecycleState.Suspended)) {
+            if (!engine.activate()) {
+                applyFallbackState();
+                return;
+            }
+            lifecycle.transition(GalleryLifecycleState.Active);
+        }
+        if (lifecycle.is(GalleryLifecycleState.Active)) engine.start();
+    }
+
+    function stop() {
+        engine?.stop();
+    }
+
+    function suspend() {
+        stop();
+        if (
+            lifecycle.is(GalleryLifecycleState.Prepared)
+            || lifecycle.is(GalleryLifecycleState.EnhancementReady)
+            || lifecycle.is(GalleryLifecycleState.Active)
+        ) lifecycle.transition(GalleryLifecycleState.Suspended);
+    }
+
     const onVisibility = () => {
-        if (document.hidden) engine?.stop();
-        else if (inView && active) engine?.start();
+        if (document.hidden) suspend();
+        else start();
     };
     const onMotionChange = () => {
         if (reducedMotion.matches) applyFallbackState();
         else if (inView) initialize();
     };
     const onPageHide = (event) => {
-        if (event.persisted) engine?.stop();
+        if (event.persisted) suspend();
         else destroy();
     };
-    const onPageShow = () => {
-        if (inView && active) engine?.start();
+    const onPageShow = (event) => {
+        if (event.persisted) routeTransition?.restore();
+        start();
     };
 
     function destroy() {
-        if (disposed) return;
-        disposed = true;
+        if (lifecycle.is(GalleryLifecycleState.Disposed)) return;
         if (activationFrame) cancelAnimationFrame(activationFrame);
+        activationFrame = 0;
         observer?.disconnect();
         engine?.dispose();
         engine = null;
@@ -125,10 +154,12 @@ function createDepthGallery(root) {
         reducedMotion.removeEventListener?.('change', onMotionChange);
         window.removeEventListener('pagehide', onPageHide);
         window.removeEventListener('pageshow', onPageShow);
-        routeTransition.destroy();
+        routeTransition?.destroy();
+        lifecycle.dispose();
     }
 
     applyFallbackState(false);
+    routeTransition = bindGalleryRouteExit(root, () => ({ stop: suspend }));
     document.addEventListener('visibilitychange', onVisibility);
     reducedMotion.addEventListener?.('change', onMotionChange);
     window.addEventListener('pagehide', onPageHide);
@@ -139,9 +170,9 @@ function createDepthGallery(root) {
             inView = entry.isIntersecting;
             if (inView) {
                 initialize();
-                if (active) engine?.start();
+                start();
             } else {
-                engine?.stop();
+                suspend();
             }
         });
     }, { rootMargin: '35% 0px 35% 0px', threshold: 0.01 });

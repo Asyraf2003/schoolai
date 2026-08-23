@@ -7,6 +7,9 @@ it('guards the depth gallery bootstrap and removes its legacy owner', function (
     $controller = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/controller.js'
     ));
+    $lifecycle = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/lifecycle.js'
+    ));
     $engine = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/engine.js'
     ));
@@ -29,9 +32,10 @@ it('guards the depth gallery bootstrap and removes its legacy owner', function (
         ->and($controller)
         ->toContain('requestAnimationFrame')
         ->toContain('engine.activate()')
-        ->toContain("root.classList.add('is-depth-active')")
-        ->toContain('fallback.inert = false')
+        ->toContain('GalleryLifecycleState.Active')
         ->toContain('applyFallbackState()')
+        ->and($lifecycle)
+        ->toContain('fallback.inert = false')
         ->and($engine)
         ->toContain("'ResizeObserver' in window")
         ->toContain('getBoundingClientRect()')

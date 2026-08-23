@@ -5,9 +5,10 @@ export function bindGalleryRouteExit(root, getEngine) {
     const viewport = root.querySelector('[data-depth-gallery-viewport]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let leaving = false;
+    let animations = [];
 
     if (!link || !viewport) {
-        return { destroy() {} };
+        return { destroy() {}, restore() {} };
     }
 
     const onClick = (event) => {
@@ -60,10 +61,13 @@ export function bindGalleryRouteExit(root, getEngine) {
                 },
             ], timing);
 
+            animations = [viewportAnimation, linkAnimation];
             Promise.allSettled([
                 viewportAnimation.finished,
                 linkAnimation.finished,
-            ]).then(() => navigate(link.href));
+            ]).then(() => {
+                if (leaving) navigate(link.href);
+            });
         } catch (error) {
             console.warn('Gallery route transition failed', error);
             navigate(link.href);
@@ -72,8 +76,17 @@ export function bindGalleryRouteExit(root, getEngine) {
 
     link.addEventListener('click', onClick);
 
+    const restore = () => {
+        leaving = false;
+        animations.forEach((animation) => animation.cancel());
+        animations = [];
+        root.classList.remove('is-depth-leaving');
+    };
+
     return {
+        restore,
         destroy() {
+            restore();
             link.removeEventListener('click', onClick);
         },
     };

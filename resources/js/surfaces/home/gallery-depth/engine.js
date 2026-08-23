@@ -5,7 +5,6 @@ import { DepthGalleryPlanes } from './gallery.js';
 import { DepthLabel } from './label.js';
 import { DepthScroll } from './scroll.js';
 import { DepthTrailController } from './trail-controller.js';
-
 export class DepthGalleryEngine {
     constructor(THREE, root, config, onFailure) {
         this.THREE = THREE;
@@ -48,6 +47,8 @@ export class DepthGalleryEngine {
     }
 
     async init() {
+        if (this.disposed) return false;
+        if (this.initialized) return true;
         if (!this.canvas || !this.journey || !this.viewport) return false;
         try {
             this.renderer = new this.THREE.WebGLRenderer({
@@ -140,6 +141,7 @@ export class DepthGalleryEngine {
     }
 
     activate() {
+        if (!this.initialized || this.disposed) return false;
         return this.resize() && this.renderOnce(performance.now());
     }
 
