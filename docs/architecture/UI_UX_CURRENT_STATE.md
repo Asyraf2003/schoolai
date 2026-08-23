@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H2_PASS / H3_READY`
+Status: `HARDENING_ACTIVE / H3_PASS / H4_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `b10bcb7e044fe4bf3d345aef6120dff5f5b9c7d6`
+Inspected runtime-source checkpoint: `9b0eda2aa3651348ff66f77cdbf8dd9acf003818`
 
 Durable references:
 
@@ -80,6 +80,35 @@ Proven on HeadlessChrome 151, Linux x86_64, 1440 x 913:
 
 H2 is PASS. Gallery/Article choreography, scroll-clock ownership and Three
 runtime selection remain unchanged.
+
+## H3 scroll-clock gate
+
+Published H3 source/test SHA:
+`9b0eda2aa3651348ff66f77cdbf8dd9acf003818`.
+
+Proven on HeadlessChrome 151, Linux x86_64, 1440 x 913:
+
+- Gallery target/end/handoff progress is derived from current owned geometry;
+  camera, plane opacity, heading and velocity retain the existing smoothed
+  presentation clock;
+- 33 samples across four end/handoff boundary positions, using slow/fast
+  forward/reverse approaches plus deliberate pauses, produced one semantic
+  signature per position with no link/class mismatch or pause drift;
+- resize from 913px to 820px viewport height recalculated travel and preserved
+  authoritative state without fallback, context failure or duplicate canvas;
+- visual end-progress still varied across approaches while semantic state stayed
+  fixed, proving presentation smoothing remains active;
+- H1 runtime remained PASS across 302 samples and H2 lifecycle runtime remained
+  PASS across observer, visibility, BFCache, context-loss and reduced paths;
+- focused H3 contract: PASS, 1 test / 28 assertions; focused H1: PASS, 4 tests /
+  154 assertions; focused H2: PASS, 1 test / 40 assertions;
+- production build: PASS, 142 modules, with the existing 549.44 kB graphics
+  warning;
+- full MariaDB suite: 215 tests, 196 passed, 14 known assertion failures and 5
+  GD-unavailable errors; no failure points to the H3 clock owner.
+
+H3 is PASS. H1 coverage, H2 lifecycle, Article composition, Gallery visual
+choreography and H4 runtime/dependency ownership remain unchanged.
 
 ## Owner-accepted runtime direction
 
@@ -256,9 +285,10 @@ gates, update durable state, and never force-push.
 - H1 browser slow/reverse mechanics: PASS for renderer/context/fallback health.
 - H1 no-dark-shell acceptance: PASS.
 - H2 Gallery lifecycle/state hardening: PASS.
+- H3 Gallery scroll-clock reconciliation: PASS.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
-- H3-H7 implementation: NOT STARTED.
+- H4-H7 implementation: NOT STARTED.
 - final responsive/locale/WebKit/performance/accessibility/security certification:
   `BLOCKED_BY_MISSING_EVIDENCE` until H7.
 
@@ -268,6 +298,6 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H3 scroll-clock reconciliation from the accepted execution packet. Keep
-H1 handoff coverage, H2 lifecycle behavior, Article composition and H4 ownership
-read-only.
+Begin H4 graphics runtime, loading graph and bundle hardening from the accepted
+execution packet. Keep H1 handoff coverage, H2 lifecycle and H3 authoritative
+clock behavior proven.

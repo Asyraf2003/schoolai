@@ -249,3 +249,20 @@ reverse/rapid samples.
 
 H2 is complete. Exactly one NEXT is H3 scroll-clock reconciliation from the
 accepted execution packet.
+
+## 9. H3 proven checkpoint — 2026-08-23
+
+Source/test commit `9b0eda2aa3651348ff66f77cdbf8dd9acf003818`
+separates Gallery authoritative target/end/handoff progress from the existing
+smoothed camera and visual-motion clock. End-CTA semantic classes and link state
+now consume the authoritative owner without changing visual choreography,
+Article or H1/H2 behavior.
+
+HeadlessChrome 151 on Linux x86_64 at 1440 x 913 passed 33 same-position samples
+across four boundaries using slow/fast forward/reverse approaches and pauses.
+Each position had one semantic signature, with no mismatch, pause drift, runtime
+failure or resize contradiction. Visual opacity smoothing remained active. H1
+passed 302 samples and the full H2 lifecycle runtime remained PASS.
+
+H3 is complete. Exactly one NEXT is H4 graphics runtime, loading graph and
+bundle hardening from the accepted execution packet.
