@@ -12,6 +12,7 @@ Durable references:
 - pre-Codex readiness: `handoffs/2026-08-23-pre-codex-readiness.md`
 - Blade inventory: `handoffs/2026-08-23-blade-purity-inventory.md`
 - CSS/JS/runtime inventory: `handoffs/2026-08-23-css-js-runtime-inventory.md`
+- functional matrix: `handoffs/2026-08-23-functional-interaction-matrix.md`
 
 ## Current phase
 
@@ -19,8 +20,8 @@ Homepage visual polishing remains PAUSED. H1 has a published minimal source/test
 patch, but slow forward/reverse browser acceptance has not yet been recorded as
 PASS.
 
-Pre-Codex discovery is allowed to inspect later capabilities and record durable
-facts/decisions, but does not authorize H2-H7 runtime mutation.
+Pre-Codex discovery may inspect later capabilities and record durable facts and
+proof contracts, but does not authorize H2-H7 runtime mutation.
 
 ## Current FACT
 
@@ -132,6 +133,36 @@ Graphics hotspot:
 H4 must measure and converge this ownership. Raising a warning threshold alone
 is forbidden as a solution.
 
+## D4 functional interaction matrix — PASS / DURABLE / SOURCE-CONTRACT
+
+Detailed contract:
+`handoffs/2026-08-23-functional-interaction-matrix.md`.
+
+Bounded release-critical interaction owners now include:
+
+- Hero slide controls, autoplay, keyboard and touch swipe;
+- desktop navigation/mega menus/smooth anchors and active state;
+- mobile navigation cinematic import plus functional failure fallback;
+- ID/EN/AR locale dialog, POST switch and safe previous-page return;
+- Program detail open/Back/Escape/Tab/focus restore and GSAP/reduced fallback;
+- Values and Vision lifecycle/static degradation;
+- homepage Gallery fallback/WebGL/end CTA/route transition;
+- Gallery page click/Enter/Space lightbox, Escape/close/focus restore;
+- homepage Article semantic links and desktop cinematic CTA state;
+- Article index server category + client search + native/external links;
+- PPDB open/closed state, audience switching, pinned wheel/keyboard journey and
+  release;
+- auth/session role routes and release-critical admin Gallery/Article/PPDB CRUD.
+
+Known certification gaps are recorded rather than silently fixed:
+
+- Gallery lightbox has no explicit focus trap proven in source;
+- PPDB `role=tab` controls have no dedicated ArrowLeft/ArrowRight roving-focus
+  behavior proven in source.
+
+D4 is a source contract, not runtime certification. Fast/reverse scroll, touch,
+BFCache, WebKit, repeat interaction and failure paths still require D5/H7 proof.
+
 ## Hardening sequence
 
 1. `H1 Gallery false-fallback hardening`
@@ -166,31 +197,32 @@ Do not advance implementation sequence from discovery alone.
 - D1 media/data-owner inventory: PASS / DURABLE.
 - D2 Blade purity inventory: PASS / DURABLE.
 - D3 CSS/JS/runtime inventory: PASS / DURABLE.
+- D4 functional interaction matrix: PASS / DURABLE / SOURCE-CONTRACT.
 - H1 browser slow/reverse acceptance: `BLOCKED_BY_MISSING_EVIDENCE`.
 - final six-tier/three-locale/WebKit/performance/accessibility certification:
   `BLOCKED_BY_MISSING_EVIDENCE`.
 
 ## Pre-Codex readiness
 
-Current estimate: `75%` toward `CODEX_READY`.
+Current estimate: `85%` toward `CODEX_READY`.
 
 Completed:
 
 1. D1 media + DB/data-owner inventory;
 2. D2 Blade presentation-purity inventory;
-3. D3 CSS/JS/runtime ownership inventory.
+3. D3 CSS/JS/runtime ownership inventory;
+4. D4 functional interaction matrix.
 
 Remaining:
 
-1. D4 functional interaction matrix;
-2. D5 responsive/locale/degraded-runtime proof contract;
-3. D6 frozen baseline proof + bounded H2-H7 execution packets.
+1. D5 responsive/locale/degraded-runtime proof contract;
+2. D6 frozen baseline proof + bounded H2-H7 execution packets.
 
 The Codex execution prompt must not be produced until readiness is recorded as
 `CODEX_READY / 100_PERCENT`.
 
 ## NEXT VALID STEP
 
-Build D4 read-only from current routes, rendered controls, and JS interaction
-owners. Record semantic action, pointer/touch/keyboard behavior, failure/retry,
-repeat interaction and restoration requirements without changing runtime source.
+Build D5 from the accepted responsive fidelity direction plus the canonical
+responsive/browser/release docs. Freeze exact proof combinations, degraded-mode
+expectations and PASS/BLOCKED rules without claiming unobserved runtime results.
