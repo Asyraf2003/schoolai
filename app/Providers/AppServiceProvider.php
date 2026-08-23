@@ -6,6 +6,7 @@ use App\View\Composers\AdminGalleryIndexComposer;
 use App\View\Composers\AdminLayoutComposer;
 use App\View\Composers\AdminPpdbEditComposer;
 use App\View\Composers\EditorialSectionHeadingComposer;
+use App\View\Composers\GalleryWallCardComposer;
 use App\View\Composers\HomeArticlesComposer;
 use App\View\Composers\HomeGalleryComposer;
 use App\View\Composers\HomeHeroComposer;
@@ -14,6 +15,10 @@ use App\View\Composers\HomeProgramComposer;
 use App\View\Composers\HomeValuesComposer;
 use App\View\Composers\HomeVisionMissionComposer;
 use App\View\Composers\LanguageFlagComposer;
+use App\View\Composers\PublicArticleComposer;
+use App\View\Composers\PublicArticleDetailComposer;
+use App\View\Composers\PublicGalleryComposer;
+use App\View\Composers\PublicPpdbComposer;
 use App\View\Composers\SiteFooterComposer;
 use App\View\Composers\SiteHeadMetaComposer;
 use App\View\Composers\SiteNavbarComposer;
@@ -72,6 +77,11 @@ class AppServiceProvider extends ServiceProvider
         View::composer('partials.site-footer', SiteFooterComposer::class);
         View::composer('partials.site-head-meta', SiteHeadMetaComposer::class);
         View::composer('partials.site-navbar', SiteNavbarComposer::class);
+        View::composer('pages.artikel', PublicArticleComposer::class);
+        View::composer('pages.artikel-detail', PublicArticleDetailComposer::class);
+        View::composer('pages.galeri', PublicGalleryComposer::class);
+        View::composer('pages.partials.gallery-wall-card', GalleryWallCardComposer::class);
+        View::composer('pages.ppdb', PublicPpdbComposer::class);
         View::composer('welcome', HomePageComposer::class);
     }
 }

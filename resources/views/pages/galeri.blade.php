@@ -1,10 +1,3 @@
-@php
-  $page = $page ?? __('pages.galeri');
-  $dbItems = $galleryItems ?? [];
-  $items = ! empty($dbItems) ? $dbItems : ($page['items'] ?? []);
-  $sections = $gallerySections ?? [];
-@endphp
-
 @extends('layouts.public', ['title' => $page['title'] ?? __('pages.galeri.title'), 'description' => $page['description'] ?? __('pages.galeri.description')])
 
 @section('content')

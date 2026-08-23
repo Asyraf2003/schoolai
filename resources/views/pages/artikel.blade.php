@@ -7,13 +7,6 @@
   @vite('resources/css/pages/article-reader.css')
 @endpush
 
-@php
-  $hero = $page['hero'] ?? [];
-  $articleItems = $articles ?? [];
-  $categoryItems = $categories ?? [];
-  $readLabel = __('pages.common.read_more');
-@endphp
-
 @section('content')
   <section class="public-hero public-hero--artikel article-index-hero" aria-labelledby="artikel-title">
     <div class="container">
@@ -76,7 +69,7 @@
                   @if(! empty($article['thumbnail_url']))
                     <img src="{{ $article['thumbnail_url'] }}" alt="{{ $article['title'] }}" loading="lazy" decoding="async">
                   @else
-                    <span>{{ $article['number'] ?? str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                    <span>{{ $article['number'] }}</span>
                   @endif
                 </span>
 

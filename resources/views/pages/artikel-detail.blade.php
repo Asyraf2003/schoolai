@@ -1,7 +1,5 @@
 @extends('layouts.public', ['title' => __('pages.artikel_detail.title'), 'description' => __('pages.artikel_detail.description')])
 
-@php($article = __('pages.artikel_detail'))
-
 @section('content')
   <article class="article-detail-page" aria-labelledby="article-detail-title">
     <header class="article-detail-hero">
