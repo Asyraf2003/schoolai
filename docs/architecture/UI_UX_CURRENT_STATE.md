@@ -13,6 +13,8 @@ Durable references:
 - Blade inventory: `handoffs/2026-08-23-blade-purity-inventory.md`
 - CSS/JS/runtime inventory: `handoffs/2026-08-23-css-js-runtime-inventory.md`
 - functional matrix: `handoffs/2026-08-23-functional-interaction-matrix.md`
+- responsive/locale/degraded proof contract:
+  `handoffs/2026-08-23-responsive-locale-degraded-proof-contract.md`
 
 ## Current phase
 
@@ -62,11 +64,9 @@ Infrastructure and basic Laravel lifecycle are PROVEN:
 
 - bucket `almustaqbal`, APAC, Standard;
 - custom domain `media.almustaqbal.sch.id` active;
-- Laravel authenticated S3 write PASS;
-- exists PASS;
+- Laravel authenticated S3 write/exists PASS;
 - public custom-domain read HTTP 200 PASS;
-- delete PASS;
-- post-delete exists false PASS;
+- delete/post-delete exists false PASS;
 - post-delete public request HTTP 404 PASS.
 
 Secrets remain environment-only. Current public response was observed as
@@ -81,8 +81,8 @@ external URLs, and Article Canvas local-public-disk uploads.
 Current sampled DB rows are primarily external and none of the audited media
 fields already use the R2 custom domain. Article content fields are
 `content_id`, `content_en`, `content_ar` and current local rows contain no
-embedded media URLs. Article Canvas nevertheless remains an H6 write owner
-because it currently stores content/thumbnail files on Laravel's `public` disk.
+embedded media URLs. Article Canvas remains an H6 write owner because it
+currently stores content/thumbnail files on Laravel's `public` disk.
 
 H6 must not be implemented as a blind global filesystem-disk switch.
 
@@ -97,7 +97,7 @@ Repository proof found:
 H5 ownership groups are Home shaping, public-page shaping, shared chrome/meta/
 locale, and admin form/list/archive preparation. Existing admin view composers
 prove a suitable shaping mechanism already exists. H5 must remain incremental
-and semantics-preserving rather than becoming a giant controller refactor.
+and semantics-preserving.
 
 ## D3 CSS/JS/runtime ownership — PASS / DURABLE
 
@@ -108,26 +108,16 @@ Key facts:
 - `welcome-hero.css` is a nine-module ordered aggregate;
 - both currently have source-equivalence/checksum drift;
 - Gallery/Article newer surface CSS has clearer bounded ownership;
-- the known unreferenced candidates remain candidates, not deletion approval.
-
-Runtime ownership:
-
 - `welcome.js` synchronously owns Program, Values and Article control graph plus
   navigation/public helpers;
 - Vision uses deferred dynamic enhancement after Hero;
-- Gallery currently uses proximity-triggered dynamic loading, which differs from
-  the accepted future persistent sequential preparation direction;
+- Gallery currently uses proximity-triggered dynamic loading, differing from the
+  accepted future persistent sequential preparation direction;
 - Program loads external jsDelivr GSAP 3.7.1 with reduced/failure fallback;
-- Program and Article expose cleanup handles that current bootstraps do not
-  retain, creating lifecycle proof debt rather than proven leaks.
-
-Graphics hotspot:
-
-- package Three is `^0.185.1`;
-- Gallery separately loads CDN Three `0.183.0`;
-- Values spatial imports package Three/addons;
-- Values spatial runtime flag is currently false, yet Vite still emits its large
-  chunk;
+- Program and Article expose cleanup handles current bootstraps do not retain,
+  creating lifecycle proof debt rather than proven leaks;
+- package Three is `^0.185.1`, Gallery separately loads CDN Three `0.183.0`, and
+  Values spatial imports package Three/addons while currently runtime-disabled;
 - successful build warns around a 549 kB `spatial-scene` chunk.
 
 H4 must measure and converge this ownership. Raising a warning threshold alone
@@ -138,30 +128,43 @@ is forbidden as a solution.
 Detailed contract:
 `handoffs/2026-08-23-functional-interaction-matrix.md`.
 
-Bounded release-critical interaction owners now include:
+Release-critical interaction owners are bounded for Hero, navigation, locale,
+Program, Values, Vision, homepage Gallery, Gallery lightbox, Article, PPDB,
+auth/session routes and protected admin Gallery/Article/PPDB CRUD.
 
-- Hero slide controls, autoplay, keyboard and touch swipe;
-- desktop navigation/mega menus/smooth anchors and active state;
-- mobile navigation cinematic import plus functional failure fallback;
-- ID/EN/AR locale dialog, POST switch and safe previous-page return;
-- Program detail open/Back/Escape/Tab/focus restore and GSAP/reduced fallback;
-- Values and Vision lifecycle/static degradation;
-- homepage Gallery fallback/WebGL/end CTA/route transition;
-- Gallery page click/Enter/Space lightbox, Escape/close/focus restore;
-- homepage Article semantic links and desktop cinematic CTA state;
-- Article index server category + client search + native/external links;
-- PPDB open/closed state, audience switching, pinned wheel/keyboard journey and
-  release;
-- auth/session role routes and release-critical admin Gallery/Article/PPDB CRUD.
-
-Known certification gaps are recorded rather than silently fixed:
+Known certification gaps are recorded, not silently fixed:
 
 - Gallery lightbox has no explicit focus trap proven in source;
 - PPDB `role=tab` controls have no dedicated ArrowLeft/ArrowRight roving-focus
   behavior proven in source.
 
-D4 is a source contract, not runtime certification. Fast/reverse scroll, touch,
-BFCache, WebKit, repeat interaction and failure paths still require D5/H7 proof.
+D4 is a source contract, not runtime certification.
+
+## D5 responsive/locale/degraded-runtime proof — PASS / DURABLE / PROOF-CONTRACT
+
+Detailed contract:
+`handoffs/2026-08-23-responsive-locale-degraded-proof-contract.md`.
+
+Frozen proof shape:
+
+- 36 logical base cells = six tiers x ID/EN/AR x Chromium/Safari-WebKit family;
+- representatives 360, 390, 640, 768, 1024, 1280, 1440, 1536, 1920;
+- affected boundaries 639/640, 767/768, 1023/1024, 1279/1280,
+  1535/1536, plus 1180/1181 for navigation-sensitive work;
+- normal/reduced motion, keyboard/pointer/touch, delayed/failed enhancement,
+  WebGL failure/context loss, hidden/visible tab, BFCache, fast/reverse/repeat,
+  orientation, short height and 200% zoom;
+- physical Safari and automated WebKit evidence must be labeled separately;
+- unavailable required runtime proof is `BLOCKED_BY_MISSING_EVIDENCE`, never
+  inferred PASS;
+- performance-sensitive H7 lab proof uses at least three comparable cold runs and
+  reports median + worst;
+- Lighthouse 100/100/100/100 remains the lab target, while field CWV remains a
+  separate p75 evidence claim.
+
+Phone static/light, tablet semi-interactive, and desktop full-cinematic are now
+proofable quality contracts rather than vague device labels. Capability downgrade
+may change enhancement density but may not remove semantic content/actions.
 
 ## Hardening sequence
 
@@ -198,31 +201,32 @@ Do not advance implementation sequence from discovery alone.
 - D2 Blade purity inventory: PASS / DURABLE.
 - D3 CSS/JS/runtime inventory: PASS / DURABLE.
 - D4 functional interaction matrix: PASS / DURABLE / SOURCE-CONTRACT.
+- D5 responsive/locale/degraded proof: PASS / DURABLE / PROOF-CONTRACT.
 - H1 browser slow/reverse acceptance: `BLOCKED_BY_MISSING_EVIDENCE`.
 - final six-tier/three-locale/WebKit/performance/accessibility certification:
   `BLOCKED_BY_MISSING_EVIDENCE`.
 
 ## Pre-Codex readiness
 
-Current estimate: `85%` toward `CODEX_READY`.
+Current estimate: `92%` toward `CODEX_READY`.
 
 Completed:
 
 1. D1 media + DB/data-owner inventory;
 2. D2 Blade presentation-purity inventory;
 3. D3 CSS/JS/runtime ownership inventory;
-4. D4 functional interaction matrix.
+4. D4 functional interaction matrix;
+5. D5 responsive/locale/degraded-runtime proof contract.
 
 Remaining:
 
-1. D5 responsive/locale/degraded-runtime proof contract;
-2. D6 frozen baseline proof + bounded H2-H7 execution packets.
+1. D6 frozen baseline proof + bounded H2-H7 execution packets.
 
 The Codex execution prompt must not be produced until readiness is recorded as
 `CODEX_READY / 100_PERCENT`.
 
 ## NEXT VALID STEP
 
-Build D5 from the accepted responsive fidelity direction plus the canonical
-responsive/browser/release docs. Freeze exact proof combinations, degraded-mode
-expectations and PASS/BLOCKED rules without claiming unobserved runtime results.
+Freeze D6 from existing proven baseline and durable D1-D5 facts. Create bounded
+H2-H7 implementation packets with scope, acceptance, stop conditions and proof.
+Preserve H1 slow/reverse browser acceptance as an explicit gate before H2.
