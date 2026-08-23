@@ -1,6 +1,6 @@
 # Pre-Codex Hardening Readiness — 2026-08-23
 
-Status: `DISCOVERY_ACTIVE / 45_PERCENT`
+Status: `DISCOVERY_ACTIVE / 55_PERCENT`
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Source main SHA at discovery checkpoint start: `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`
@@ -203,24 +203,117 @@ Observed public response currently reported `cf-cache-status: DYNAMIC`.
 Therefore Cloudflare routing is proven, while the final media cache policy is
 not yet designed or certified.
 
-### R2 gaps that remain for H6
+## D1 — Media and data-owner inventory
 
-- Inventory every media owner and current `/storage`, external, DB, CSS, JS,
-  seed, and admin-managed reference.
-- Decide/store an object-key contract and URL-resolution ownership from actual
-  data/model evidence.
-- Define upload/replace/delete/soft-delete/restore semantics per current media
-  owner.
-- Determine CORS only from actual browser fetch/canvas/WebGL consumers; do not
-  add permissive CORS speculatively.
-- Define cache/version/immutability policy from actual object naming and update
-  lifecycle.
-- Define image variant/thumbnail/original policy from actual consumers.
-- Confirm compressed video delivery requirements and whether direct R2 remains
-  sufficient or any case genuinely requires another Cloudflare product.
-- Define migration and rollback from current local/third-party media to R2.
-- Update `.env.example`/deployment contract only after H6 architecture is
-  explicit.
+Status: `PASS / DURABLE` for the current local database snapshot and audited H6
+source owners.
+
+### Proven media origin classes
+
+SchoolAI currently has four relevant media ownership/origin classes:
+
+1. DB/admin-managed URL fields;
+2. repository-owned static assets under `/media/...` and `/images/...`;
+3. external URLs, with Unsplash dominating the current sampled DB rows;
+4. Article Canvas uploads that still use Laravel's `public` disk.
+
+This proves H6 must migrate owners deliberately. A blind global default-disk
+switch is not an acceptable migration design.
+
+### Current local DB URL inventory
+
+`hero_slides.media_url`:
+
+- `/media/...`: 2
+- external: 3
+- `/storage/...`: 0
+- `/images/...`: 0
+- R2 custom-domain: 0
+
+`hero_slides.poster_url`:
+
+- `/images/...`: 1
+- external: 4
+- `/storage/...`: 0
+- `/media/...`: 0
+- R2 custom-domain: 0
+
+`gallery_items.media_url`:
+
+- external: 6
+- all audited local/R2 classes: 0
+
+`gallery_page_media_items.media_url`:
+
+- external: 12
+- all audited local/R2 classes: 0
+
+The current local schema does not contain
+`gallery_page_media_items.poster_url`; any later H6 design must follow actual
+schema/source rather than retain that earlier assumption.
+
+`ppdb_showcase_items.media_url`:
+
+- external: 6
+- all audited local/R2 classes: 0
+
+`testimonial_media.media_url`:
+
+- external: 12
+- all audited local/R2 classes: 0
+
+`articles.thumbnail_url`:
+
+- external: 10
+- all audited local/R2 classes: 0
+
+No audited current DB row above already uses `media.almustaqbal.sch.id`.
+
+### Article content media
+
+Article content is stored per locale in:
+
+- `content_id`
+- `content_en`
+- `content_ar`
+
+There is no current `content_html` Article field.
+
+Owner-terminal DB proof found zero embedded media URLs in all three content
+columns across these classes:
+
+- `/storage/...`
+- `/media/...`
+- `/images/...`
+- `media.almustaqbal.sch.id`
+- external HTTP(S)
+
+This describes the current local dataset only; it does not mean Article Canvas
+lacks media capability.
+
+### Article Canvas write owner
+
+Current source proves Article Canvas remains an H6 migration owner:
+
+- purpose is `content` or `thumbnail`;
+- uploads call `store(..., 'public')`;
+- paths are `articles/content/{article_id}` or
+  `articles/thumbnails/{article_id}`;
+- public URL generation uses `Storage::url($path)`;
+- thumbnail uploads update `articles.thumbnail_url`.
+
+Therefore H6 must cover future upload/write/delete/public-URL behavior even
+though the current local article-content rows contain no embedded media URLs.
+
+### D1 conclusions
+
+- Current DB media is primarily third-party/external, not yet R2-backed.
+- Repo-owned Hero/static media must remain a separate owner from DB/admin media.
+- Existing local and external URL compatibility must survive until an explicit
+  migration step owns replacement.
+- H6 still needs object-key/URL-resolution design, upload/replace/delete/restore
+  semantics, variants, cache policy, actual CORS consumer proof, migration and
+  rollback, `.env.example`, and production deploy wiring.
 
 ## Known pre-existing technical debt discovered so far
 
@@ -263,14 +356,8 @@ moved into controllers.
 
 ## Pre-Codex readiness work remaining
 
-The following six discovery batches are intentionally bounded and should be
-completed before the final Codex implementation prompt is produced.
-
-### D1 — Media and data-owner inventory
-
-Map all public/admin media references, models/DB fields, storage calls, upload,
-replace, delete, restore, object/public URL handling, third-party origins, and
-static assets relevant to H6.
+D1 is complete. Five bounded discovery batches remain before the final Codex
+implementation prompt is produced.
 
 ### D2 — Blade presentation-purity inventory
 
@@ -305,19 +392,33 @@ then produce one bounded scope packet per H2-H7 containing facts, gaps,
 decisions, editable/read-only/forbidden owners, acceptance, stop condition, and
 proof requirements.
 
-Only after D1-D6 are durable and reconciled with current `main` may readiness be
-changed to `CODEX_READY / 100_PERCENT` and the Codex execution prompt be
-created.
+Only after the remaining batches are durable and reconciled with current `main`
+may readiness be changed to `CODEX_READY / 100_PERCENT` and the Codex execution
+prompt be created.
 
 ## Progress
 
-Current readiness estimate: `45%`.
+Current readiness estimate: `55%`.
+
+Completed:
+
+- D1 media + DB/data-owner inventory — PASS / DURABLE.
+
+Remaining:
+
+- Blade presentation-purity inventory;
+- CSS/JS/runtime ownership inventory;
+- functional interaction matrix;
+- responsive/locale/degraded-runtime completion;
+- baseline proof ledger + H2-H7 execution packets.
 
 This percentage measures readiness to delegate H2-H7 to Codex without material
-project rediscovery or owner-intent guessing. It is not a claim that 45% of the
+project rediscovery or owner-intent guessing. It is not a claim that 55% of the
 hardening implementation itself is complete.
 
 ## NEXT VALID STEP
 
-Read-only D1 media/data-owner inventory from current `main`. Do not mutate
-runtime source while building this inventory.
+Read-only Blade presentation-purity inventory from current `main`. Do not mutate
+runtime source. Record each actual production view violation, classify the logic
+and current data owner, then map the appropriate migration owner while preserving
+rendered semantics.
