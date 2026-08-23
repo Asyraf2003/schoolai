@@ -15,10 +15,9 @@
    ========================================================= */
 
 import './welcome/navigation.js';
-import '../surfaces/home/program-values-world.js';
-import '../surfaces/home/values/controller.js';
-import '../surfaces/home/article-story/controller.js';
-import './welcome/program-cards.js';
 import './welcome/public-content.js';
 import './welcome/gallery-wall.js';
 import './welcome/lazy-media.js';
+import { scheduleHomepagePreparation } from './welcome/preparation.js';
+
+scheduleHomepagePreparation();

@@ -17,6 +17,9 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
     $runtime = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/three-runtime.js'
     ));
+    $threePackage = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-depth/three-package.js'
+    ));
     $engine = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/engine.js'
     ));
@@ -97,8 +100,11 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('visibilitychange')
         ->not->toContain('createGalleryStoryLightbox')
         ->and($runtime)
-        ->toContain('three@0.183.0')
-        ->toContain('/* @vite-ignore */')
+        ->toContain("import('./three-package.js')")
+        ->not->toContain('cdn.jsdelivr.net')
+        ->not->toContain('/* @vite-ignore */')
+        ->and($threePackage)
+        ->toContain("from 'three'")
         ->and($engine)
         ->toContain('PerspectiveCamera(45, 1, 0.1, 100)')
         ->toContain('new this.THREE.WebGLRenderer')
