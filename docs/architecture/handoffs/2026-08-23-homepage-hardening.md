@@ -216,3 +216,18 @@ not the false-fallback path fixed by the published H1 source patch.
 H2 is still blocked. The next step requires an owner decision to expand the H1
 editable packet narrowly to the Gallery handoff CSS/authoritative scroll-clock
 owner, then rerun this same runtime gate.
+
+## 7. H1 proven checkpoint — 2026-08-23
+
+Owner authorized the narrow coverage expansion. Source commit
+`19a86d1600943ce858da248171d99a1afc7972c1` moves the transitioning background
+owner into `article-handoff.css` and uses the existing Article surface color;
+Gallery scale/timing, Article composition, and Gallery JS are unchanged.
+
+The same HeadlessChrome 151, Linux x86_64, 1440 x 913 gate is PASS: two slow
+forward/pause/reverse cycles, five rapid forward/reverse cycles, 302 healthy
+samples, no fallback/context/frame failure, and no dark-shell exposure at the
+early, middle, paused, Article, or reverse checkpoints.
+
+H1 is complete. Exactly one NEXT is H2 Gallery lifecycle/state hardening from
+the accepted execution packet.

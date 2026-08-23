@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H1_FAIL`
+Status: `HARDENING_ACTIVE / H1_PASS / H2_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `e4df67327eaf0a58713afb94168ecccf096758a0`
+Inspected runtime-source checkpoint: `19a86d1600943ce858da248171d99a1afc7972c1`
 
 Durable references:
 
@@ -32,7 +32,8 @@ Homepage visual polishing remains PAUSED.
 ## H1 gate
 
 Published H1 source/test SHA:
-`6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`.
+`6e5c3ee690773ab138583e31c5dc695bbfa6bf9a` for renderer health and
+`19a86d1600943ce858da248171d99a1afc7972c1` for handoff coverage.
 
 Proven:
 
@@ -42,18 +43,18 @@ Proven:
 - diff check: PASS;
 - Vite production build: PASS with existing graphics warning.
 
-Codex runtime gate on current `main`, Linux x86_64, HeadlessChrome 151,
+Codex runtime gate on H1 source, Linux x86_64, HeadlessChrome 151,
 1440 x 913:
 
 - two slow forward/pause/reverse cycles and five rapid forward/reverse cycles;
 - 302 sampled states with no fallback after ready, no invalid-frame error, and
   no unhealthy drawing buffer/context;
-- FAIL: the Gallery viewport shrinks before Article covers the page background,
-  exposing the body-owned dark `#071b18` shell during the handoff.
+- visual checkpoints at early/middle/pause/Article/reverse show the Article
+  surface covering the shrinking Gallery viewport with no `#071b18` exposure.
 
-H2 remains forbidden. The renderer-health patch is proven stable; the remaining
-failure belongs to the Gallery/Article handoff composition or authoritative
-scroll-clock boundary, which is outside the current H1 editable packet.
+H1 is PASS. The fix moved transition coverage from the transparent Gallery
+end-CTA owner to `article-handoff.css`; scale/timing, semantic DOM, Article
+composition, and Gallery JS remain unchanged.
 
 ## Owner-accepted runtime direction
 
@@ -185,11 +186,10 @@ Known structure debt includes:
 
 Known Gallery feature-test debt: one stale continuity assertion predating H1.
 
-Fresh full-suite baseline on MariaDB: 213 tests, 197 passed, 11 assertion
-failures, and 5 GD-dependent errors because GD is unavailable. The assertion
-debt spans existing Article soft-delete, homepage accessibility, Gallery
-bootstrap/continuity, Hero, Program, Vision, and XSS contracts; none was caused
-by an H1 source mutation in this run.
+Fresh full-suite baseline on MariaDB: 213 tests, 194 passed, 14 assertion
+failures, and 5 GD-dependent errors because GD is unavailable. Focused H1
+contracts pass; none of the remaining failures points to the changed handoff
+coverage owner.
 
 Do not mass-refactor this debt merely to make a command green. Resolve it under
 its proven owner or H7 G0 with semantics-preserving structural work.
@@ -229,7 +229,7 @@ gates, update durable state, and never force-push.
 - H1 source/test patch: published.
 - H1 focused test: PASS.
 - H1 browser slow/reverse mechanics: PASS for renderer/context/fallback health.
-- H1 no-dark-shell acceptance: `FAIL`.
+- H1 no-dark-shell acceptance: PASS.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
 - H2-H7 implementation: NOT STARTED.
@@ -242,7 +242,5 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Reconcile the failed no-dark-shell acceptance with the H1 editable boundary.
-The smallest owner decision is whether to authorize a bounded Gallery handoff
-CSS/scroll-clock correction before rerunning the same H1 runtime gate. H2
-mutation remains forbidden until H1 acceptance is PASS.
+Begin H2 Gallery lifecycle/state hardening from the accepted execution packet.
+Keep Gallery choreography, Article composition, and H3/H4 ownership read-only.
