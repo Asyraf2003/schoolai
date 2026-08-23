@@ -1,12 +1,3 @@
-@php
-  $galleryHeading = match (app()->getLocale()) {
-      'id' => 'AREA GALERI',
-      'en' => 'AREA OF GALLERY',
-      'ar' => 'مساحة المعرض',
-      default => 'AREA OF GALLERY',
-  };
-@endphp
-
 <section class="galeri-section section" id="galeri" aria-labelledby="homepage-gallery-heading">
   <div class="gallery-mask-handoff" data-gallery-mask-handoff aria-hidden="true">
     <svg

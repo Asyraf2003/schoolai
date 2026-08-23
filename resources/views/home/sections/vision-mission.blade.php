@@ -1,19 +1,3 @@
-@php
-  $locale = app()->getLocale();
-  $arabicHonorific = 'صلى الله عليه وسلم';
-  $aboutStory = __('home.about_stats_story');
-  $aboutStory = is_array($aboutStory) ? $aboutStory : [];
-  $aboutLabel = __('home_vision.labels.about');
-  $visionLabel = __('home_vision.labels.vision');
-  $missionLabel = __('home_vision.labels.mission');
-  $sectionLabel = __('home_vision.section_label');
-  $schoolImages = [
-    asset('media/home/vision-paper-01.webp'),
-    asset('media/home/vision-paper-02.webp'),
-    asset('media/home/vision-paper-03.webp'),
-  ];
-@endphp
-
 <section
   class="vision-arch"
   id="visi-misi"
@@ -74,12 +58,7 @@
                 <h4>{{ $mission['title'] }}</h4>
                 <p>
                   @foreach ($mission['text_parts'] ?? [] as $part)
-                    @php
-                      $partText = $locale === 'ar'
-                        ? str_replace('ﷺ', $arabicHonorific, $part['text'])
-                        : $part['text'];
-                    @endphp
-                    {{ $partText }}
+                    {{ $part['text'] }}
                   @endforeach
                 </p>
               </li>

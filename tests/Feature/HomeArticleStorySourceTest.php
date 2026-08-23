@@ -2,6 +2,8 @@
 
 it('separates Article opening, full-height parallax media, and the roll closing', function (): void {
     $view = file_get_contents(resource_path('views/home/sections/articles.blade.php'));
+    $presentation = file_get_contents(app_path('View/Composers/HomeArticlesComposer.php'));
+    $idCopy = file_get_contents(lang_path('id/home_presentation.php'));
     $controller = file_get_contents(
         resource_path('js/surfaces/home/article-story/controller.js'),
     );
@@ -30,11 +32,14 @@ it('separates Article opening, full-height parallax media, and the roll closing'
         ->toContain('article-story__main-description')
         ->toContain('data-article-roll-stack')
         ->toContain('data-article-final-cta')
-        ->toContain("'id' => 'Mau lihat artikel selengkapnya?'")
-        ->toContain('->take(5)')
         ->toContain('article-debug-mark')
+        ->and($presentation)
+        ->toContain('->take(5)')
+        ->toContain("'display_issue'")
+        ->and($idCopy)
+        ->toContain("'closing_heading' => 'Mau lihat artikel selengkapnya?'")
         ->and($controller)
-        ->toContain("const HORIZONTAL_END = 0.78")
+        ->toContain('const HORIZONTAL_END = 0.78')
         ->toContain('const HANDOFF_HOLD_VIEWPORTS = 1')
         ->toContain('closing.offsetLeft')
         ->toContain('const mediaWidth = viewportHeight + viewportWidth * 0.10')

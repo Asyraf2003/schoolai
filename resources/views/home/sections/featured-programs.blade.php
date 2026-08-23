@@ -1,35 +1,10 @@
-@php
-  $programContent = trans('home_program');
-  $programItems = collect($programContent['items'] ?? [])->values();
-  $programHeadingLines = $programContent['heading_lines'] ?? [$programContent['section_label'] ?? ''];
-  $programKineticWords = collect($programContent['kinetic_words'] ?? [])
-    ->filter(fn ($word) => is_string($word) && trim($word) !== '')
-    ->values();
-  $programKineticLineCount = 20;
-  $programMedia = [
-    ['url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 42%'],
-    ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 46%'],
-    ['url' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 40%'],
-    ['url' => 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 48%'],
-    ['url' => 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 44%'],
-    ['url' => 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 50%'],
-  ];
-@endphp
-
 <section class="program-kinetic" id="program" aria-labelledby="program-kinetic-title" data-program-kinetic>
   <div class="program-kinetic__type" data-program-type aria-hidden="true">
-    @for ($line = 0; $line < $programKineticLineCount; $line++)
-      @php
-        $wordCount = max(1, $programKineticWords->count());
-        $lineWords = collect(range(0, 7))
-          ->map(fn ($offset) => $programKineticWords[($line * 3 + $offset) % $wordCount] ?? '')
-          ->filter()
-          ->implode(' ');
-      @endphp
+    @foreach ($programKineticLines as $lineWords)
       <div class="program-kinetic__kinetic-line program-kinetic__type-line" data-program-type-line>
-        {{ $lineWords }} {{ $lineWords }}
+        {{ $lineWords }}
       </div>
-    @endfor
+    @endforeach
   </div>
 
   <div class="program-kinetic__handoff" data-program-handoff aria-hidden="true">
@@ -51,17 +26,16 @@
 
   <div class="program-kinetic__cards" data-program-cards>
     @foreach ($programItems as $program)
-      @php($media = $programMedia[$loop->index] ?? $programMedia[0])
       <article class="program-kinetic__card" data-program-card>
         <button class="program-kinetic__trigger" type="button" data-program-open
           data-program-index="{{ $loop->index }}"
-          aria-controls="program-detail-{{ strtolower($program['code']) }}"
+          aria-controls="{{ $program['detail_id'] }}"
           aria-haspopup="dialog"
           aria-label="{{ __('home_program.open_item', ['program' => $program['title']]) }}">
           <span class="program-kinetic__image-wrap">
-            <img src="{{ $media['url'] }}" alt="{{ $program['title'] }}" width="1800" height="1200"
+            <img src="{{ $program['media']['url'] }}" alt="{{ $program['title'] }}" width="1800" height="1200"
               loading="lazy" decoding="async" referrerpolicy="strict-origin-when-cross-origin"
-              style="object-position: {{ $media['position'] }}" />
+              style="object-position: {{ $program['media']['position'] }}" />
           </span>
           <span class="program-kinetic__caption">
             <strong class="program-kinetic__name">{{ $program['title'] }}</strong>
@@ -76,21 +50,20 @@
     aria-modal="true" aria-label="{{ $programContent['section_label'] ?? '' }}" hidden>
     <div class="program-kinetic__details">
       @foreach ($programItems as $program)
-        @php($media = $programMedia[$loop->index] ?? $programMedia[0])
-        <article class="program-kinetic__detail" id="program-detail-{{ strtolower($program['code']) }}"
+        <article class="program-kinetic__detail" id="{{ $program['detail_id'] }}"
           data-program-detail data-program-index="{{ $loop->index }}" hidden>
           <div class="program-kinetic__detail-copy">
             <button class="program-kinetic__back" type="button" data-program-back>
               <span class="program-kinetic__back-mark" aria-hidden="true">&lt;&lt;&lt;</span>
               <span class="program-kinetic__back-label">{{ $programContent['back'] }}</span>
             </button>
-            <h3 data-title-scale="{{ mb_strlen(trim((string) ($program['title'] ?? ''))) <= 12 ? 'short' : (mb_strlen(trim((string) ($program['title'] ?? ''))) <= 20 ? 'medium' : 'long') }}">{{ $program['title'] }}</h3>
+            <h3 data-title-scale="{{ $program['title_scale'] }}">{{ $program['title'] }}</h3>
             <p class="program-kinetic__detail-description">{{ $program['description'] }}</p>
           </div>
           <div class="program-kinetic__detail-media">
             <div class="program-kinetic__detail-image-wrap" data-program-detail-image-wrap>
-              <img src="{{ $media['url'] }}" alt="" width="1800" height="1200" loading="lazy" decoding="async"
-                referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $media['position'] }}"
+              <img src="{{ $program['media']['url'] }}" alt="" width="1800" height="1200" loading="lazy" decoding="async"
+                referrerpolicy="strict-origin-when-cross-origin" style="object-position: {{ $program['media']['position'] }}"
                 data-program-detail-image />
             </div>
           </div>

@@ -1,64 +1,3 @@
-@php
-  $depthPresets = [
-      [
-          'x' => -0.9,
-          'fallback' => '#feca4f',
-          'accent' => '#feca4f',
-          'background' => '#fffaf0',
-          'blob1' => '#ffdf94',
-          'blob2' => '#fce7c4',
-      ],
-      [
-          'x' => 0.8,
-          'fallback' => '#80455a',
-          'accent' => '#80455a',
-          'background' => '#fffaf0',
-          'blob1' => '#d29a41',
-          'blob2' => '#bb96af',
-      ],
-      [
-          'x' => -0.7,
-          'fallback' => '#fa7b71',
-          'accent' => '#fa7b71',
-          'background' => '#5f81ab',
-          'blob1' => '#f88b8d',
-          'blob2' => '#cfbbdd',
-      ],
-      [
-          'x' => 1,
-          'fallback' => '#3c72c6',
-          'accent' => '#3c72c6',
-          'background' => '#5b9bc2',
-          'blob1' => '#ffaa00',
-          'blob2' => '#00e1ff',
-      ],
-      [
-          'x' => -0.7,
-          'fallback' => '#fdd895',
-          'accent' => '#fdd895',
-          'background' => '#7d936e',
-          'blob1' => '#fdd895',
-          'blob2' => '#a5b599',
-      ],
-  ];
-  $depthItems = collect($gallerySection['items'] ?? [])->values();
-  $depthCta = is_array($gallerySection['cta'] ?? null)
-      ? $gallerySection['cta']
-      : [];
-  $hasDepthCta = trim((string) ($depthCta['href'] ?? '')) !== ''
-      && trim((string) ($depthCta['label'] ?? '')) !== '';
-  $depthEndSteps = $hasDepthCta ? 1 : 0;
-  $depthJourneyCount = max(1, $depthItems->count() + $depthEndSteps);
-  $depthClosingMedia = $depthItems
-      ->slice(max(0, $depthItems->count() - 2))
-      ->values();
-  $depthClosingCopy = trim((string) (
-      $gallerySection['section_subtitle']
-      ?? $gallerySection['subtitle']
-      ?? ''
-  ));
-@endphp
-
 <div
   class="depth-gallery is-depth-fallback"
   data-depth-gallery
@@ -91,34 +30,27 @@
         aria-label="{{ $gallerySection['aria_label'] ?? __('home.galeri.aria_label') }}"
       >
         @foreach ($depthItems as $item)
-          @php
-            $preset = $depthPresets[$loop->index % count($depthPresets)];
-            $thumbnailUrl = (string) ($item['thumbnail_url'] ?? '');
-            $itemTitle = (string) ($item['title'] ?? '');
-            $itemCaption = (string) ($item['caption'] ?? '');
-          @endphp
-
           <article
             class="depth-gallery__fallback-item"
             role="listitem"
             data-depth-gallery-source
             data-gallery-index="{{ $loop->index }}"
-            data-title="{{ $itemTitle }}"
-            data-caption="{{ $itemCaption }}"
-            data-thumbnail-url="{{ $thumbnailUrl }}"
-            data-position-x="{{ $preset['x'] }}"
-            data-fallback-color="{{ $preset['fallback'] }}"
-            data-accent-color="{{ $preset['accent'] }}"
-            data-background-color="{{ $preset['background'] }}"
-            data-blob1-color="{{ $preset['blob1'] }}"
-            data-blob2-color="{{ $preset['blob2'] }}"
+            data-title="{{ $item['title'] }}"
+            data-caption="{{ $item['caption'] }}"
+            data-thumbnail-url="{{ $item['thumbnail_url'] }}"
+            data-position-x="{{ $item['preset']['x'] }}"
+            data-fallback-color="{{ $item['preset']['fallback'] }}"
+            data-accent-color="{{ $item['preset']['accent'] }}"
+            data-background-color="{{ $item['preset']['background'] }}"
+            data-blob1-color="{{ $item['preset']['blob1'] }}"
+            data-blob2-color="{{ $item['preset']['blob2'] }}"
           >
             <div class="depth-gallery__fallback-card">
               <span class="depth-gallery__fallback-media">
-                @if ($thumbnailUrl !== '')
+                @if ($item['thumbnail_url'] !== '')
                   <img
-                    src="{{ $thumbnailUrl }}"
-                    alt="{{ $itemTitle }}"
+                    src="{{ $item['thumbnail_url'] }}"
+                    alt="{{ $item['title'] }}"
                     loading="lazy"
                     decoding="async"
                   />
@@ -127,9 +59,9 @@
                 @endif
               </span>
               <span class="depth-gallery__fallback-copy">
-                <strong>{{ $itemTitle }}</strong>
-                @if ($itemCaption !== '')
-                  <small>{{ $itemCaption }}</small>
+                <strong>{{ $item['title'] }}</strong>
+                @if ($item['caption'] !== '')
+                  <small>{{ $item['caption'] }}</small>
                 @endif
               </span>
             </div>

@@ -1,8 +1,3 @@
-@php
-  $valuesHeading = $schoolValues['heading'] ?? '';
-  $valuesHeadingLines = $schoolValues['heading_lines'] ?? [$valuesHeading];
-@endphp
-
 <section
   class="values-story"
   id="nilai"
@@ -59,7 +54,7 @@
                   <div class="values-card__inner" data-values-card-inner>
                     <div class="values-card__face values-card__front">
                       <span class="values-card__index" data-text-role="meta">
-                        {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
+                        {{ $value['display_index'] }}
                       </span>
 
                       <div class="values-card__copy">

@@ -30,44 +30,9 @@
     @include('partials.site-navbar', ['navbar' => $navbar, 'siteNavMode' => 'home'])
 
     <main id="main-content">
-      @php
-        $heroSlides = collect($hero['slides'] ?? [])->values();
-        $heroSlideCount = $heroSlides->count();
-        $heroStatus = static fn (int $current): string => strtr(
-            (string) ($hero['slide_label'] ?? 'Slide :current / :total'),
-            [
-                ':current' => (string) $current,
-                ':total' => (string) $heroSlideCount,
-            ],
-        );
-      @endphp
-
       @include('home.sections.hero')
 
       @include('home.sections.vision-mission')
-
-      @php
-        $programValuesContent = trans('home_program');
-        $programValuesWords = collect(is_array($programValuesContent)
-            ? ($programValuesContent['kinetic_words'] ?? [])
-            : [])
-          ->filter(fn ($word) => is_string($word) && trim($word) !== '')
-          ->values();
-        $programValuesWordCount = max(1, $programValuesWords->count());
-        $programValuesKineticLines = collect(range(0, 7))->map(function ($line) use (
-            $programValuesWords,
-            $programValuesWordCount,
-        ) {
-            $words = collect(range(0, 7))
-              ->map(fn ($offset) => $programValuesWords[
-                  ($line * 3 + $offset) % $programValuesWordCount
-              ] ?? '')
-              ->filter()
-              ->implode(' ');
-
-            return trim($words . ' ' . $words);
-        })->filter();
-      @endphp
 
       <div class="program-values-world" data-program-values-world>
         <div class="program-values-world__visual" aria-hidden="true">

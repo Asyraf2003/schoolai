@@ -6,6 +6,7 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
     ));
     $gallery = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
     $depth = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
+    $presentation = file_get_contents(app_path('View/Composers/HomeGalleryComposer.php'));
     $entry = file_get_contents(resource_path('css/pages/welcome-depth-gallery.css'));
     $base = file_get_contents(resource_path('css/surfaces/home/gallery-depth/base.css'));
     $responsive = file_get_contents(resource_path(
@@ -65,13 +66,17 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('depth-gallery__end-showcase')
         ->toContain('depth-gallery__end-media--')
         ->toContain('class="depth-gallery__fallback-item"')
-        ->toContain('data-position-x="{{ $preset[\'x\'] }}"')
+        ->toContain('data-position-x="{{ $item[\'preset\'][\'x\'] }}"')
         ->toContain('data-background-color')
         ->not->toContain('<svg')
         ->not->toContain('depth-gallery__card')
         ->not->toContain('data-media-url')
         ->not->toContain('data-is-video')
         ->not->toContain('role="button"')
+        ->and($presentation)
+        ->toContain('$presets[$index % count($presets)]')
+        ->toContain("['x' => -0.9")
+        ->toContain("['x' => 0.8")
         ->and($entry)
         ->toContain('gallery-depth/base.css')
         ->toContain('gallery-depth/cards.css')
@@ -215,6 +220,7 @@ it('keeps Gallery heading continuity locally owned and depth Gallery untouched',
 
 it('uses the closing Gallery composition as the sticky-scale handoff to Article', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
+    $presentation = file_get_contents(app_path('View/Composers/HomeGalleryComposer.php'));
     $controller = file_get_contents(resource_path(
         'js/surfaces/home/gallery-depth/end-cta.js',
     ));
@@ -227,10 +233,11 @@ it('uses the closing Gallery composition as the sticky-scale handoff to Article'
 
     expect($blade)
         ->toContain('$depthClosingMedia')
-        ->toContain('slice(max(0, $depthItems->count() - 2))')
         ->toContain('depth-gallery__end-showcase')
         ->toContain('depth-gallery__end-copy')
         ->toContain('data-depth-gallery-transition="sticky-scale"')
+        ->and($presentation)
+        ->toContain('$items->slice(max(0, $items->count() - 2))->values()')
         ->and($controller)
         ->toContain('--depth-end-progress')
         ->toContain('--depth-transition-progress')

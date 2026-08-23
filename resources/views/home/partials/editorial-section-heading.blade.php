@@ -1,27 +1,3 @@
-@php
-  $headingTitle = trim((string) ($title ?? ''));
-  $headingDescription = trim((string) ($description ?? ''));
-  $headingDomId = trim((string) ($headingId ?? 'section-heading'));
-  $headingExtraClass = trim((string) ($className ?? ''));
-  $headingLineOne = trim((string) ($lineOne ?? ''));
-  $headingLineTwo = trim((string) ($lineTwo ?? ''));
-  $headingLineThree = trim((string) ($lineThree ?? ''));
-
-  if ($headingLineOne === '' && $headingTitle !== '') {
-      $headingWords = preg_split('/\s+/u', $headingTitle, -1, PREG_SPLIT_NO_EMPTY) ?: [];
-      $headingSplit = max(1, (int) ceil(count($headingWords) / 2));
-      $headingLineOne = implode(' ', array_slice($headingWords, 0, $headingSplit));
-      $headingLineTwo = implode(' ', array_slice($headingWords, $headingSplit));
-  }
-
-  $descriptionWords = preg_split('/\s+/u', $headingDescription, -1, PREG_SPLIT_NO_EMPTY) ?: [];
-  $descriptionSplit = max(1, (int) ceil(count($descriptionWords) / 3));
-  $descriptionLines = array_values(array_filter(array_map(
-      static fn (array $words): string => implode(' ', $words),
-      array_chunk($descriptionWords, $descriptionSplit)
-  )));
-@endphp
-
 <header class="section-head welcome-editorial-heading {{ $headingExtraClass }}" data-editorial-heading>
   <div class="welcome-editorial-heading__row">
     <h2 class="welcome-editorial-heading__heading" id="{{ $headingDomId }}" aria-label="{{ $headingTitle }}">

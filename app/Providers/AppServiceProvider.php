@@ -5,6 +5,14 @@ namespace App\Providers;
 use App\View\Composers\AdminGalleryIndexComposer;
 use App\View\Composers\AdminLayoutComposer;
 use App\View\Composers\AdminPpdbEditComposer;
+use App\View\Composers\EditorialSectionHeadingComposer;
+use App\View\Composers\HomeArticlesComposer;
+use App\View\Composers\HomeGalleryComposer;
+use App\View\Composers\HomeHeroComposer;
+use App\View\Composers\HomePageComposer;
+use App\View\Composers\HomeProgramComposer;
+use App\View\Composers\HomeValuesComposer;
+use App\View\Composers\HomeVisionMissionComposer;
 use App\View\Composers\LanguageFlagComposer;
 use App\View\Composers\SiteFooterComposer;
 use App\View\Composers\SiteHeadMetaComposer;
@@ -49,10 +57,21 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('admin.gallery.index', AdminGalleryIndexComposer::class);
         View::composer('admin.ppdb.edit', AdminPpdbEditComposer::class);
+        View::composer('home.partials.editorial-section-heading', EditorialSectionHeadingComposer::class);
+        View::composer('home.sections.articles', HomeArticlesComposer::class);
+        View::composer([
+            'home.sections.gallery',
+            'home.sections.gallery-depth',
+        ], HomeGalleryComposer::class);
+        View::composer('home.sections.hero', HomeHeroComposer::class);
+        View::composer('home.sections.featured-programs', HomeProgramComposer::class);
+        View::composer('home.sections.school-values', HomeValuesComposer::class);
+        View::composer('home.sections.vision-mission', HomeVisionMissionComposer::class);
         View::composer('layouts.admin', AdminLayoutComposer::class);
         View::composer('partials.language-flag', LanguageFlagComposer::class);
         View::composer('partials.site-footer', SiteFooterComposer::class);
         View::composer('partials.site-head-meta', SiteHeadMetaComposer::class);
         View::composer('partials.site-navbar', SiteNavbarComposer::class);
+        View::composer('welcome', HomePageComposer::class);
     }
 }

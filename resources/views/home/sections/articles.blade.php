@@ -1,27 +1,3 @@
-@php
-  $articleHeading = (string) ($articlesSection['title'] ?? '');
-  $articleDescription = (string) ($articlesSection['subtitle'] ?? '');
-  $articleItems = collect($articlesSection['items'] ?? [])->take(5)->values();
-  $openingArticle = $articleItems->first();
-  $articleCta = is_array($articlesSection['cta'] ?? null)
-      ? $articlesSection['cta']
-      : [];
-  $articleDisplayHeading = match (app()->getLocale()) {
-      'id' => 'ARTIKEL',
-      'en' => 'ARTICLES',
-      'ar' => 'المقالات',
-      default => 'ARTICLES',
-  };
-  $articleClosingHeading = match (app()->getLocale()) {
-      'id' => 'Mau lihat artikel selengkapnya?',
-      'en' => 'Want to explore more articles?',
-      'ar' => 'هل ترغب في استكشاف المزيد من المقالات؟',
-      default => 'Want to explore more articles?',
-  };
-  $articleOpeningHref = trim((string) ($articleCta['href'] ?? ''));
-  $articleOpeningLabel = trim((string) ($articleCta['label'] ?? $articleDisplayHeading));
-@endphp
-
 @include('home.debug.article-ruler')
 
 <section
@@ -130,7 +106,7 @@
                   <span>
                     {{ $articleDisplayHeading }}
                     ·
-                    {{ $article['issue'] ?? str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
+                    {{ $article['display_issue'] }}
                   </span>
                   <h3>
                     @if (! empty($article['href']))

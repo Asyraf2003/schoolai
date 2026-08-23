@@ -16,7 +16,9 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
         app()->setLocale($locale);
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
         $response->assertOk()->assertSee('id="program"', false)->assertSee($backs[$locale]);
-        foreach ($copy as $text) $response->assertSee($text);
+        foreach ($copy as $text) {
+            $response->assertSee($text);
+        }
 
         $content = $response->getContent();
         preg_match('/<section[^>]+id="program".*?<\/section>/s', $content, $section);
@@ -92,6 +94,7 @@ it('keeps Program controls functional while GSAP loads, fails, or is opening', f
 
 it('keeps Codrops geometry while adapting long localized detail titles', function (): void {
     $blade = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
+    $composer = file_get_contents(app_path('View/Composers/HomeProgramComposer.php'));
     $hud = file_get_contents(resource_path('css/pages/welcome/program-journey/hud.css'));
     $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
     $compact = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
@@ -101,12 +104,13 @@ it('keeps Codrops geometry while adapting long localized detail titles', functio
         ->toContain('class="program-kinetic__back"')
         ->toContain('&lt;&lt;&lt;')
         ->toContain('class="program-kinetic__detail-media"')
-        ->toContain('mb_strlen')
+        ->toContain('data-title-scale="{{ $program[\'title_scale\'] }}"')
+        ->not->toContain('mb_strlen')
+        ->and($composer)
+        ->toContain('Str::length')
         ->toContain("'short'")
         ->toContain("'medium'")
         ->toContain("'long'")
-        ->toContain('data-title-scale="{{ mb_strlen')
-        ->not->toContain('$detailTitleScale')
         ->and($hud)
         ->toContain('font-size: 8vw')
         ->toContain('font-variation-settings: "wght" 700')
