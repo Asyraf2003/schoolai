@@ -81,10 +81,7 @@
 
     @if($mediaItems->isNotEmpty())
       <div class="admin-media-grid">
-        @foreach($mediaItems as $item)
-          @php($isDeleted = $item->trashed())
-          @php($replacementCandidates = $replacementCandidatesByArchivedId->get($item->getKey(), collect()))
-
+        @foreach($mediaRows as ['item' => $item, 'isDeleted' => $isDeleted, 'replacementCandidates' => $replacementCandidates])
           <article class="admin-media-card {{ $isDeleted ? 'is-deleted' : '' }}">
             <div class="admin-media-card__preview">
               @if($item->is_photo && $item->media_url)

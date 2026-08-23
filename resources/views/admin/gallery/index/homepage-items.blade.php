@@ -57,9 +57,7 @@
           </article>
         @endforeach
 
-        @foreach($archivedItems as $item)
-          @php($replacementCandidates = $replacementCandidatesByArchivedId->get($item->getKey(), collect()))
-
+        @foreach($archivedGalleryItemRows as ['item' => $item, 'replacementCandidates' => $replacementCandidates])
           <article class="gallery-lite-row is-deleted">
             <span class="gallery-lite-row__order">A{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
 

@@ -43,9 +43,7 @@
           </article>
         @endforeach
 
-        @foreach(($archivedPageSections ?? collect()) as $section)
-          @php($replacementCandidates = $sectionReplacementCandidatesByArchivedId->get($section->getKey(), collect()))
-
+        @foreach($archivedPageSectionRows as ['section' => $section, 'replacementCandidates' => $replacementCandidates])
           <article class="admin-section-card is-deleted">
             <div class="admin-section-card__body">
               <span class="gallery-lite-status is-deleted">Dihapus</span>

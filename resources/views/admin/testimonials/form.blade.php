@@ -1,14 +1,3 @@
-@php
-  $isEdit = $mode === 'edit';
-  $action = $isEdit
-    ? route('admin.testimoni.update', $item)
-    : route('admin.testimoni.store');
-  $currentType = old('type', $item->type ?: 'photo');
-  $currentSource = $currentType === 'photo'
-    ? 'upload'
-    : old('source', $item->source ?: 'upload');
-@endphp
-
 @extends('layouts.admin', [
   'title' => $isEdit ? 'Edit Media Testimoni' : 'Tambah Media Testimoni',
   'activeAdminPage' => 'testimoni',

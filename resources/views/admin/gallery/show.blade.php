@@ -1,5 +1,3 @@
-@php($page = __('admin.gallery'))
-
 @extends('layouts.admin', [
   'title' => $page['detail_title'],
   'activeAdminPage' => 'galeri',

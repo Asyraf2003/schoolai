@@ -2,9 +2,20 @@
 
 namespace App\Providers;
 
+use App\View\Composers\AdminArticleFormComposer;
+use App\View\Composers\AdminArticleIndexComposer;
+use App\View\Composers\AdminGalleryFormComposer;
 use App\View\Composers\AdminGalleryIndexComposer;
+use App\View\Composers\AdminGalleryMediaFormComposer;
+use App\View\Composers\AdminGallerySectionFormComposer;
+use App\View\Composers\AdminGallerySectionShowComposer;
+use App\View\Composers\AdminGalleryShowComposer;
+use App\View\Composers\AdminHeroFormComposer;
 use App\View\Composers\AdminLayoutComposer;
+use App\View\Composers\AdminPlaceholderComposer;
 use App\View\Composers\AdminPpdbEditComposer;
+use App\View\Composers\AdminSiteStatisticsEditComposer;
+use App\View\Composers\AdminTestimonialFormComposer;
 use App\View\Composers\EditorialSectionHeadingComposer;
 use App\View\Composers\GalleryWallCardComposer;
 use App\View\Composers\HomeArticlesComposer;
@@ -60,8 +71,19 @@ class AppServiceProvider extends ServiceProvider
 
         Route::middleware('web')->group(base_path('routes/testimonials.php'));
 
+        View::composer('admin.articles.form', AdminArticleFormComposer::class);
+        View::composer('admin.articles.index', AdminArticleIndexComposer::class);
+        View::composer('admin.gallery.form', AdminGalleryFormComposer::class);
         View::composer('admin.gallery.index', AdminGalleryIndexComposer::class);
+        View::composer('admin.gallery.page-media._form', AdminGalleryMediaFormComposer::class);
+        View::composer('admin.gallery.page-sections.form', AdminGallerySectionFormComposer::class);
+        View::composer('admin.gallery.page-sections.show', AdminGallerySectionShowComposer::class);
+        View::composer('admin.gallery.show', AdminGalleryShowComposer::class);
+        View::composer('admin.hero.form', AdminHeroFormComposer::class);
+        View::composer('admin.placeholder', AdminPlaceholderComposer::class);
         View::composer('admin.ppdb.edit', AdminPpdbEditComposer::class);
+        View::composer('admin.site-statistics.edit', AdminSiteStatisticsEditComposer::class);
+        View::composer('admin.testimonials.form', AdminTestimonialFormComposer::class);
         View::composer('home.partials.editorial-section-heading', EditorialSectionHeadingComposer::class);
         View::composer('home.sections.articles', HomeArticlesComposer::class);
         View::composer([

@@ -1,22 +1,3 @@
-@php
-  $isEdit = $mode === 'edit';
-  $continueToMedia = ! $isEdit && (bool) ($continueToMedia ?? false);
-  $action = $isEdit ? route('admin.galeri.sections.update', $section) : route('admin.galeri.sections.store');
-  $formTitle = $isEdit
-    ? 'Edit Bagian Galeri'
-    : ($continueToMedia ? 'Tambah Galeri' : 'Tambah Bagian Galeri');
-
-  $languageCompletion = [
-    'id' => filled(old('title_id', $section->title_id)),
-    'en' => filled(old('title_en', $section->title_en)),
-    'ar' => filled(old('title_ar', $section->title_ar)),
-  ];
-
-  $activeLanguage = $errors->hasAny(['title_ar', 'description_ar'])
-    ? 'ar'
-    : ($errors->hasAny(['title_en', 'description_en']) ? 'en' : 'id');
-@endphp
-
 @extends('layouts.admin', [
   'title' => $formTitle,
   'activeAdminPage' => 'galeri',

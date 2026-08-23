@@ -1,17 +1,3 @@
-@php
-  $adminPageKey = $adminPageKey ?? 'dashboard';
-  $adminPage = __('admin.pages.' . $adminPageKey);
-
-  if (! is_array($adminPage)) {
-      $adminPageKey = 'dashboard';
-      $adminPage = __('admin.pages.dashboard');
-  }
-
-  $simpleText = $adminPageKey === 'dashboard'
-      ? 'ini dashboard'
-      : 'ini ' . strtolower((string) $adminPageKey);
-@endphp
-
 @extends('layouts.admin', [
   'title' => $adminPage['title'],
   'activeAdminPage' => $adminPageKey,

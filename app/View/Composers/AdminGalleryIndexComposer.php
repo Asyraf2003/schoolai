@@ -11,6 +11,20 @@ final class AdminGalleryIndexComposer
 {
     public function compose(View $view): void
     {
+        $data = $view->getData();
+        $activeSections = $this->collection($data['pageSections'] ?? []);
+        $archivedItems = $this->collection($data['archivedItems'] ?? []);
+        $galleryCandidates = $this->collection($data['replacementCandidatesByArchivedId'] ?? []);
+        $view->with([
+            'page' => __('admin.gallery'),
+            'activePageSections' => $activeSections,
+            'homepageLimit' => $data['limits']['max_items'] ?? 6,
+            'archivedGalleryItemRows' => $archivedItems->map(fn ($item): array => [
+                'item' => $item,
+                'replacementCandidates' => $galleryCandidates->get($item->getKey(), collect()),
+            ]),
+        ]);
+
         if (
             ! Schema::hasTable('gallery_page_sections') ||
             ! Schema::hasColumn('gallery_page_sections', 'deleted_at')
@@ -18,16 +32,10 @@ final class AdminGalleryIndexComposer
             $view->with([
                 'archivedPageSections' => collect(),
                 'sectionReplacementCandidatesByArchivedId' => collect(),
+                'archivedPageSectionRows' => collect(),
             ]);
 
             return;
-        }
-
-        $viewData = $view->getData();
-        $activeSections = $viewData['pageSections'] ?? collect();
-
-        if (! $activeSections instanceof Collection) {
-            $activeSections = collect($activeSections);
         }
 
         $archivedSections = GalleryPageSection::onlyTrashed()
@@ -46,8 +54,8 @@ final class AdminGalleryIndexComposer
 
                 return [
                     $archivedSection->getKey() => $identity === null
-                        ? new Collection()
-                        : $activeByIdentity->get($identity, new Collection())->values(),
+                        ? new Collection
+                        : $activeByIdentity->get($identity, new Collection)->values(),
                 ];
             }
         );
@@ -55,6 +63,15 @@ final class AdminGalleryIndexComposer
         $view->with([
             'archivedPageSections' => $archivedSections,
             'sectionReplacementCandidatesByArchivedId' => $replacementCandidates,
+            'archivedPageSectionRows' => $archivedSections->map(fn (GalleryPageSection $section): array => [
+                'section' => $section,
+                'replacementCandidates' => $replacementCandidates->get($section->getKey(), collect()),
+            ]),
         ]);
+    }
+
+    private function collection(mixed $value): Collection
+    {
+        return $value instanceof Collection ? $value : collect($value);
     }
 }

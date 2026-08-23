@@ -6,9 +6,7 @@
         </div>
 
         <div class="ppdb-showcase-list">
-          @foreach ($audienceOptions as $audience => $audienceLabel)
-            @php $items = collect($showcaseItemsByAudience->get($audience, collect()))->values(); @endphp
-
+          @foreach ($showcaseAudienceGroups as ['audienceLabel' => $audienceLabel, 'items' => $items])
             <div class="ppdb-showcase-group">
               <div class="ppdb-showcase-group__title">
                 <span>{{ $audienceLabel }}</span>
@@ -62,9 +60,7 @@
                 <small>{{ $archivedShowcaseItems->count() }} item</small>
               </div>
 
-              @foreach ($archivedShowcaseItems as $item)
-                @php($replacementCandidates = $showcaseReplacementCandidatesByArchivedId->get($item->getKey(), collect()))
-
+              @foreach ($archivedShowcaseRows as ['item' => $item, 'replacementCandidates' => $replacementCandidates])
                 <article class="ppdb-showcase-row is-deleted">
                   <span class="ppdb-showcase-row__order">A{{ $loop->iteration }}</span>
                   <div class="ppdb-showcase-row__body">

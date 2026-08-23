@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Models\PpdbSetting;
 use App\Models\PpdbShowcaseItem;
 use App\Models\SiteStatistic;
 use App\Models\User;
@@ -16,6 +17,13 @@ beforeEach(function (): void {
     Storage::fake('public');
     DB::table('ppdb_showcase_items')->delete();
     DB::table('site_statistics')->delete();
+    PpdbSetting::query()->updateOrCreate(
+        ['id' => 1],
+        [
+            'registration_url' => 'https://apply.example.test/archive-proof',
+            'is_active' => true,
+        ],
+    );
 
     $admin = User::query()->forceCreate([
         'name' => 'Admin Arsip Konten Test',
@@ -41,7 +49,7 @@ it('archives a PPDB showcase item without deleting its file and hides it publicl
     ]);
 
     $this->delete(route('admin.ppdb.showcase.destroy', $item))
-        ->assertRedirect(route('admin.ppdb') . '#ppdb-showcase-admin')
+        ->assertRedirect(route('admin.ppdb').'#ppdb-showcase-admin')
         ->assertSessionHas('success');
 
     $this->assertSoftDeleted('ppdb_showcase_items', ['id' => $item->id]);
@@ -74,7 +82,7 @@ it('restores a PPDB showcase item into the next position of its audience', funct
     $archived->delete();
 
     $this->patch(route('admin.ppdb.showcase.restore', $archived->id))
-        ->assertRedirect(route('admin.ppdb') . '#ppdb-showcase-admin')
+        ->assertRedirect(route('admin.ppdb').'#ppdb-showcase-admin')
         ->assertSessionHas('success');
 
     $restored = $archived->fresh();

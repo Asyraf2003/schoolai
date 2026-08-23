@@ -36,14 +36,7 @@
   <section class="admin-gallery-block" aria-label="Daftar artikel">
     @if($articles->isNotEmpty())
       <div class="gallery-lite-list">
-        @foreach($articles as $article)
-          @php
-            $isDeleted = $article->trashed();
-            $replacementCandidates = $replacementCandidatesByArticle->get($article->getKey(), collect());
-            $statusLabel = $article->statusLabel();
-            $statusClass = $isDeleted || $article->isDraft() || $statusLabel === 'Terjadwal' ? 'is-deleted' : 'is-active';
-          @endphp
-
+        @foreach($articleRows as ['article' => $article, 'isDeleted' => $isDeleted, 'replacementCandidates' => $replacementCandidates, 'statusLabel' => $statusLabel, 'statusClass' => $statusClass])
           <article class="gallery-lite-row {{ $isDeleted ? 'is-deleted' : '' }}">
             <span class="gallery-lite-row__order">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
 

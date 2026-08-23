@@ -1,9 +1,3 @@
-@php
-  $page = __('admin.gallery');
-  $activePageSections = collect($pageSections ?? []);
-  $homepageLimit = $limits['max_items'] ?? 6;
-@endphp
-
 @extends('layouts.admin', [
   'title' => $page['title'],
   'activeAdminPage' => 'galeri',
@@ -18,4 +12,3 @@
   @include('admin.gallery.index.page-sections')
 
 @endsection
-

@@ -7,30 +7,7 @@
       </div>
 
       <div class="gallery-lite-list">
-        @foreach($statistics as $index => $statistic)
-          @php
-            $isCurrentEdit = $editingId === $statistic->id;
-
-            $editValues = [
-              'value' => $isCurrentEdit ? old('value') : $statistic->value,
-              'label' => $isCurrentEdit ? old('label') : $statistic->label,
-              'value_en' => $isCurrentEdit ? old('value_en') : $statistic->value_en,
-              'label_en' => $isCurrentEdit ? old('label_en') : $statistic->label_en,
-              'value_ar' => $isCurrentEdit ? old('value_ar') : $statistic->value_ar,
-              'label_ar' => $isCurrentEdit ? old('label_ar') : $statistic->label_ar,
-            ];
-
-            $editLanguageCompletion = [
-              'id' => filled($editValues['value']) && filled($editValues['label']),
-              'en' => filled($editValues['value_en']) && filled($editValues['label_en']),
-              'ar' => filled($editValues['value_ar']) && filled($editValues['label_ar']),
-            ];
-
-            $editActiveLanguage = $isCurrentEdit && $errors->hasAny(['value_ar', 'label_ar'])
-                ? 'ar'
-                : ($isCurrentEdit && $errors->hasAny(['value_en', 'label_en']) ? 'en' : 'id');
-          @endphp
-
+        @foreach($statisticRows as $index => ['statistic' => $statistic, 'isCurrentEdit' => $isCurrentEdit, 'editValues' => $editValues, 'editLanguageCompletion' => $editLanguageCompletion, 'editActiveLanguage' => $editActiveLanguage])
           <details class="admin-stat-record" @if($isCurrentEdit) open @endif>
             <summary class="gallery-lite-row">
               <span class="gallery-lite-row__order">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
@@ -136,9 +113,7 @@
             <small>{{ $archivedStatistics->count() }} data</small>
           </div>
 
-          @foreach($archivedStatistics as $index => $statistic)
-            @php($replacementCandidates = $replacementCandidatesByArchivedId->get($statistic->getKey(), collect()))
-
+          @foreach($archivedStatisticRows as $index => ['statistic' => $statistic, 'replacementCandidates' => $replacementCandidates])
             <article class="gallery-lite-row is-deleted">
               <span class="gallery-lite-row__order">A{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
 
