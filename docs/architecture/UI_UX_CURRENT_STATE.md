@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H1_PASS / H2_READY`
+Status: `HARDENING_ACTIVE / H2_PASS / H3_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `19a86d1600943ce858da248171d99a1afc7972c1`
+Inspected runtime-source checkpoint: `b10bcb7e044fe4bf3d345aef6120dff5f5b9c7d6`
 
 Durable references:
 
@@ -55,6 +55,31 @@ Codex runtime gate on H1 source, Linux x86_64, HeadlessChrome 151,
 H1 is PASS. The fix moved transition coverage from the transparent Gallery
 end-CTA owner to `article-handoff.css`; scale/timing, semantic DOM, Article
 composition, and Gallery JS remain unchanged.
+
+## H2 lifecycle gate
+
+Published H2 source/test SHA:
+`b10bcb7e044fe4bf3d345aef6120dff5f5b9c7d6`.
+
+Proven on HeadlessChrome 151, Linux x86_64, 1440 x 913:
+
+- one explicit Gallery lifecycle owns semantic/static/fetch/prepared/ready/
+  active/suspended/disposed state and synchronizes DOM/accessibility classes;
+- four offscreen/onscreen cycles, hidden/visible tab, persisted BFCache restore,
+  context-loss fallback and repeated non-persisted disposal produced no
+  contradictory state, runtime error, duplicate canvas, listener remount or
+  unhealthy active context;
+- reduced motion remained semantic `STATIC_READY` with no Three runtime request;
+- the H1 slow/pause/reverse/rapid gate remained PASS across 302 samples;
+- focused H2 contract: PASS, 1 test / 40 assertions; focused H1 regression:
+  PASS, 3 tests / 61 assertions;
+- production build: PASS, 142 modules, with the existing 549.44 kB graphics
+  warning;
+- full MariaDB suite: 214 tests, 200 passed, 9 known assertion failures and 5
+  GD-unavailable errors; no failure points to the H2 lifecycle owner.
+
+H2 is PASS. Gallery/Article choreography, scroll-clock ownership and Three
+runtime selection remain unchanged.
 
 ## Owner-accepted runtime direction
 
@@ -230,9 +255,10 @@ gates, update durable state, and never force-push.
 - H1 focused test: PASS.
 - H1 browser slow/reverse mechanics: PASS for renderer/context/fallback health.
 - H1 no-dark-shell acceptance: PASS.
+- H2 Gallery lifecycle/state hardening: PASS.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
-- H2-H7 implementation: NOT STARTED.
+- H3-H7 implementation: NOT STARTED.
 - final responsive/locale/WebKit/performance/accessibility/security certification:
   `BLOCKED_BY_MISSING_EVIDENCE` until H7.
 
@@ -242,5 +268,6 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H2 Gallery lifecycle/state hardening from the accepted execution packet.
-Keep Gallery choreography, Article composition, and H3/H4 ownership read-only.
+Begin H3 scroll-clock reconciliation from the accepted execution packet. Keep
+H1 handoff coverage, H2 lifecycle behavior, Article composition and H4 ownership
+read-only.

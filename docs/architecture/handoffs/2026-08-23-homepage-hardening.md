@@ -231,3 +231,21 @@ early, middle, paused, Article, or reverse checkpoints.
 
 H1 is complete. Exactly one NEXT is H2 Gallery lifecycle/state hardening from
 the accepted execution packet.
+
+## 8. H2 proven checkpoint — 2026-08-23
+
+Source/test commit `b10bcb7e044fe4bf3d345aef6120dff5f5b9c7d6`
+replaces the Gallery controller's parallel lifecycle booleans with one explicit
+state owner. Route exit, visibility, observer, reduced-motion, failure, BFCache
+and disposal paths now resolve through that contract; choreography and H1 CSS
+are unchanged.
+
+HeadlessChrome 151 on Linux x86_64 at 1440 x 913 passed four repeated
+offscreen/resume cycles, hidden/visible tab, persisted BFCache restore,
+context-loss fallback, idempotent non-persisted disposal and reduced motion.
+There were no state contradictions, runtime errors, duplicate canvases or Three
+requests on the reduced path. The H1 gate remained PASS across 302 slow/pause/
+reverse/rapid samples.
+
+H2 is complete. Exactly one NEXT is H3 scroll-clock reconciliation from the
+accepted execution packet.
