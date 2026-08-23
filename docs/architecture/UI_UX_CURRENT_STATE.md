@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H3_PASS / H4_READY`
+Status: `HARDENING_ACTIVE / H4_PASS / H5_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `9b0eda2aa3651348ff66f77cdbf8dd9acf003818`
+Inspected runtime-source checkpoint: `5836af2ac55f523594eba93bf9a8880729b87dba`
 
 Durable references:
 
@@ -110,6 +110,39 @@ Proven on HeadlessChrome 151, Linux x86_64, 1440 x 913:
 H3 is PASS. H1 coverage, H2 lifecycle, Article composition, Gallery visual
 choreography and H4 runtime/dependency ownership remain unchanged.
 
+## H4 graphics/loading gate
+
+Published H4 source/test SHA:
+`5836af2ac55f523594eba93bf9a8880729b87dba`.
+
+Proven on HeadlessChrome 151, Linux x86_64, 1440 x 913:
+
+- one sequential preparation coordinator completed Hero -> Program -> Values ->
+  Vision -> Gallery -> Article -> Footer with no failed stage or runtime
+  exception;
+- normal motion requested only the project package Three graph; no production
+  CDN Three request remained;
+- reduced motion completed the same preparation order without requesting the
+  Three package chunk or mounting Gallery before proximity;
+- Gallery reached `ACTIVE` with one canvas, a healthy context and no GL error;
+  explicit context loss returned to semantic `STATIC_READY` fallback;
+- the proven Gallery proximity-mount gate remains in place, so early code/runtime
+  preparation does not create an offscreen renderer or continuous loop;
+- initial `welcome.js` output fell from 40.66 kB / 12.22 kB gzip to 16.18 kB /
+  5.09 kB gzip;
+- the deferred Three package chunk is 534.39 kB / 134.00 kB gzip versus the
+  pre-H4 549.44 kB / 138.83 kB gzip spatial chunk; the existing >500 kB warning
+  remains visible and its threshold was not raised;
+- focused H4 contract: PASS, 1 test / 28 assertions; focused H1, H2 and H3
+  regressions: PASS, 7 / 40 / 28 assertions;
+- production build: PASS, 144 modules, with the reported deferred Three warning;
+- full MariaDB suite: 216 tests, 197 passed, 14 known assertion failures and 5
+  GD-unavailable errors; the new H4 test is the sole count delta and passes.
+
+H4 is PASS. H1 handoff coverage, H2 lifecycle, H3 authoritative scroll clock,
+visual composition, locale semantics and Values spatial disabled state remain
+unchanged.
+
 ## Owner-accepted runtime direction
 
 - avoid unnecessary over-engineering;
@@ -176,15 +209,16 @@ already uses R2. Article Canvas remains an H6 local-public-disk write owner.
 `PASS / DURABLE`.
 
 - Welcome CSS aggregates are order-sensitive and have checksum debt;
-- `welcome.js` currently synchronously owns Program/Values/Article helpers;
-- Vision is deferred;
-- Gallery is proximity-loaded rather than future sequentially prepared;
+- `welcome.js` now starts a bounded sequential preparation coordinator after the
+  semantic/static document is ready;
+- Program, Values, Vision, Gallery and Article code is prepared in accepted
+  order while surface activation remains relevance-bounded;
 - Program uses external GSAP 3.7.1 with functional fallback;
-- Three ownership is split between package `^0.185.1`, Gallery CDN `0.183.0`, and
-  package Three/addons for Values;
-- Values spatial is runtime-disabled but still emits the large Three-related
-  chunk;
-- build warns around 549 kB for the spatial/Three chunk.
+- package `three@0.185.1` is the sole Three authority for Gallery and the disabled
+  Values spatial graph; no Gallery CDN runtime remains;
+- Values spatial remains runtime-disabled and does not request a renderer;
+- build still reports the measured 534.39 kB deferred shared Three package
+  chunk, with a separate 21.17 kB disabled Values spatial scene chunk.
 
 ### D4 functional interaction matrix
 
@@ -240,10 +274,10 @@ Known structure debt includes:
 
 Known Gallery feature-test debt: one stale continuity assertion predating H1.
 
-Fresh full-suite baseline on MariaDB: 213 tests, 194 passed, 14 assertion
-failures, and 5 GD-dependent errors because GD is unavailable. Focused H1
-contracts pass; none of the remaining failures points to the changed handoff
-coverage owner.
+Fresh H4 full-suite checkpoint on MariaDB: 216 tests, 197 passed, 14 assertion
+failures, and 5 GD-dependent errors because GD is unavailable. Focused H1-H4
+contracts pass; none of the remaining failures points to the hardened graphics /
+loading owners.
 
 Do not mass-refactor this debt merely to make a command green. Resolve it under
 its proven owner or H7 G0 with semantics-preserving structural work.
@@ -286,9 +320,10 @@ gates, update durable state, and never force-push.
 - H1 no-dark-shell acceptance: PASS.
 - H2 Gallery lifecycle/state hardening: PASS.
 - H3 Gallery scroll-clock reconciliation: PASS.
+- H4 graphics runtime/loading graph hardening: PASS.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
-- H4-H7 implementation: NOT STARTED.
+- H5-H7 implementation: NOT STARTED.
 - final responsive/locale/WebKit/performance/accessibility/security certification:
   `BLOCKED_BY_MISSING_EVIDENCE` until H7.
 
@@ -298,6 +333,5 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H4 graphics runtime, loading graph and bundle hardening from the accepted
-execution packet. Keep H1 handoff coverage, H2 lifecycle and H3 authoritative
-clock behavior proven.
+Begin H5 Blade presentation-purity migration from owner group 1 in the accepted
+execution packet. Keep H1-H4 behavior and loading ownership proven.
