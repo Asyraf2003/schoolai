@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H5_GROUP_3_PASS / H5_GROUP_4_READY`
+Status: `HARDENING_ACTIVE / H5_PASS / H6_READY`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `248499d745265f1121162f635933f032b9102e89`
+Inspected runtime-source checkpoint: `c598e5835ecb7fd06c8dec6fabf631761ce00a8f`
 
 Durable references:
 
@@ -246,6 +246,41 @@ H5 owner group 3 is PASS. H5 remains `IMPLEMENTING`: only admin
 list/form/archive/replacement shaping remains. H1-H4 behavior/loading ownership
 and H5 group 1-2 semantics remain unchanged.
 
+Published H5 owner group 4 source/test SHA:
+`c598e5835ecb7fd06c8dec6fabf631761ce00a8f`.
+
+Proven for admin list/form/archive/replacement shaping and the final H5 gate:
+
+- the final 17 group 4 Blade owners contain no raw PHP or `@php` blocks /
+  expressions; the repository-wide production Blade inventory is now zero;
+- PPDB audience groups/form state, Site Statistic create/edit rows, Hero,
+  Gallery item/section/media, Article, Testimonial and placeholder presentation
+  state now use bounded exact-view composers plus one language-tab presenter;
+- controller/model-owned archive eligibility, ordering, maximum counts,
+  identity matching and atomic restore/replacement transactions remain
+  unchanged;
+- the PPDB archive response failure was reproduced on MariaDB as a fixture
+  precondition: the test depended on the externally resolved default URL. Its
+  fixture now establishes an active deterministic `.example.test` admission
+  URL; the ordered Hero-slide then PPDB-archive proof passes, 15 tests / 85
+  assertions;
+- focused group 4 proof: PASS, 50 tests / 360 assertions; repository-wide
+  zero-Blade-PHP search, Pint and diff check: PASS;
+- focused H1 regression: PASS, 1 test / 7 assertions; focused H2-H4
+  regressions: PASS, 3 tests / 96 assertions; focused shared/public H5
+  regression: PASS, 31 tests / 474 assertions;
+- production build: PASS, 144 modules, with the existing deferred 534.39 kB
+  Three package warning;
+- default full suite: 231 tests, 226 passed and 5 frozen baseline assertion
+  failures; MariaDB full suite: 231 tests, 218 passed and 13 baseline /
+  driver-state-sensitive failures. Focused group 4 and ordered PPDB ownership
+  proofs pass, and none of the remaining failures points to new Blade shaping;
+- structure check still reports exactly the frozen 11 over-limit files, three
+  unreferenced candidates and two checksum drifts; no H5 source is reported.
+
+H5 is PASS and its final repository-wide Blade-purity acceptance is PROVEN.
+H1-H4 behavior/loading ownership and H5 group 1-3 semantics remain unchanged.
+
 ## Owner-accepted runtime direction
 
 - avoid unnecessary over-engineering;
@@ -305,10 +340,12 @@ already uses R2. Article Canvas remains an H6 local-public-disk write owner.
 - H5 group 1 reduced the remaining count to 31;
 - H5 group 2 reduced the remaining count to 23;
 - H5 group 3 reduced the remaining count to 17;
+- H5 group 4 reduced the remaining count to zero;
 - no non-Blade PHP preparation file remains under `resources/views`;
 - H5 ownership is grouped into Home/public/shared chrome/admin shaping;
-- migration must preserve semantics and use appropriate composers/presenters/
-  application owners rather than a monolithic controller rewrite.
+- the completed migration preserved semantics through bounded composers,
+  presenters and existing application owners rather than a monolithic
+  controller rewrite.
 
 ### D3 CSS/JS/runtime ownership
 
@@ -430,7 +467,8 @@ gates, update durable state, and never force-push.
 - H5 owner group 1 shared chrome presentation-purity migration: PASS.
 - H5 owner group 2 Home section shaping migration: PASS.
 - H5 owner group 3 public page shaping migration: PASS.
-- H5 owner group 4: NOT STARTED.
+- H5 owner group 4 admin shaping migration: PASS.
+- H5 final repository-wide zero-Blade-PHP gate: PASS.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
 - H6-H7 implementation: NOT STARTED.
@@ -443,7 +481,6 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H5 owner group 4 admin list/form/archive/replacement shaping from the
-accepted execution packet. Keep H1-H4 behavior/loading ownership plus H5 group
-1-3 semantics proven. Do not enter H6 or H7 until H5 group 4 and final H5
-repository proof are complete.
+Begin H6 R2 media migration from the accepted execution packet. Keep H1-H5
+behavior, loading ownership and presentation semantics proven. Do not enter H7
+until H6 and its durable proof checkpoint are complete.
