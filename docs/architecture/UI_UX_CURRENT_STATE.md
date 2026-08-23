@@ -116,6 +116,58 @@ and contract work, not a new Cloudflare account/bucket setup.
 Full decisions/proof and remaining Cloudflare gaps are recorded in
 `handoffs/2026-08-23-pre-codex-readiness.md`.
 
+## D1 media + DB/data-owner inventory
+
+D1 is now PROVEN for the current local database snapshot plus the audited source
+owners relevant to H6 planning.
+
+Current media ownership/origin classes are:
+
+1. DB/admin-managed URL fields;
+2. repository-owned static `/media/...` and `/images/...` assets;
+3. external URLs, currently dominated by Unsplash in the sampled DB rows;
+4. Article Canvas uploads, whose source path still writes to Laravel's `public`
+   disk even though the current local article-content rows contain no embedded
+   media URLs.
+
+Proven current local DB distribution:
+
+- `hero_slides.media_url`: 2 `/media/...`, 3 external, 0 `/storage/...`, 0
+  `/images/...`, 0 R2 custom-domain URLs.
+- `hero_slides.poster_url`: 1 `/images/...`, 4 external, 0 `/storage/...`, 0
+  `/media/...`, 0 R2 custom-domain URLs.
+- `gallery_items.media_url`: 6 external, 0 audited local/R2 classes.
+- `gallery_page_media_items.media_url`: 12 external, 0 audited local/R2 classes.
+- Current local schema has no `gallery_page_media_items.poster_url`; do not
+  design H6 around that nonexistent field.
+- `ppdb_showcase_items.media_url`: 6 external, 0 audited local/R2 classes.
+- `testimonial_media.media_url`: 12 external, 0 audited local/R2 classes.
+- `articles.thumbnail_url`: 10 external, 0 audited local/R2 classes.
+- No audited current DB media row is already stored on
+  `media.almustaqbal.sch.id`.
+
+Article content uses `content_id`, `content_en`, and `content_ar`; there is no
+`content_html` field in the current Article contract. Runtime DB proof found zero
+embedded media URLs in all three content columns across `/storage`, `/media`,
+`/images`, R2 custom-domain, and external HTTP(S) classes.
+
+Source still proves Article Canvas media migration is required:
+
+- upload purpose can be `content` or `thumbnail`;
+- current writes use `store(..., 'public')`;
+- current directories are `articles/content/{article_id}` and
+  `articles/thumbnails/{article_id}`;
+- URLs are generated through `Storage::url($path)`;
+- thumbnail upload updates `articles.thumbnail_url`.
+
+H6 therefore must migrate storage ownership deliberately; it must not be
+implemented as a blind global `FILESYSTEM_DISK=s3` switch. Existing repo assets,
+external URLs, local-path compatibility, upload/write/delete behavior, and DB
+semantics remain distinct owners until an explicit H6 step owns them.
+
+Object-key design, image/video variants, cache policy, actual CORS need,
+migration/rollback, and production env/deploy wiring remain D10/H6 gaps.
+
 ## Hardening sequence
 
 The sequence below remains the implementation backlog. Pre-Codex discovery may
@@ -167,22 +219,27 @@ inspect later capabilities read-only, but runtime mutation must stay bounded.
 - Full `HomeDepthGalleryTest`: blocked by one stale pre-H1 continuity assertion;
   focused H1 contract passes.
 - Cloudflare/R2 create/read/delete diagnostic lifecycle: PASS as recorded above.
+- D1 media + DB/data-owner inventory: PASS for current local DB snapshot and
+  audited source owners.
 - H1 browser slow/reverse acceptance: `BLOCKED_BY_MISSING_EVIDENCE`.
 - Six-tier/three-locale/WebKit/PageSpeed/accessibility release proof:
   `BLOCKED_BY_MISSING_EVIDENCE`.
 
 ## Pre-Codex readiness
 
-Current estimate: `45%` toward `CODEX_READY`.
+Current estimate: `55%` toward `CODEX_READY`.
+
+Completed bounded discovery batch:
+
+1. media + DB/data-owner inventory — PASS and durable.
 
 Remaining bounded discovery batches:
 
-1. media + DB/data-owner inventory;
-2. Blade presentation-purity inventory;
-3. CSS/JS/runtime ownership and performance-hotspot inventory;
-4. functional interaction matrix;
-5. responsive/locale/degraded-runtime proof contract completion;
-6. baseline proof ledger plus bounded H2-H7 execution packets.
+1. Blade presentation-purity inventory;
+2. CSS/JS/runtime ownership and performance-hotspot inventory;
+3. functional interaction matrix;
+4. responsive/locale/degraded-runtime proof contract completion;
+5. baseline proof ledger plus bounded H2-H7 execution packets.
 
 The percentage measures delegation readiness, not implementation completion.
 The Codex execution prompt must not be created until the readiness ledger is
@@ -190,5 +247,6 @@ complete and recorded as `CODEX_READY / 100_PERCENT`.
 
 ## NEXT VALID STEP
 
-Read-only D1 media + DB/data-owner inventory from current `main`. Record facts
-and gaps only; do not mutate runtime source.
+Read-only Blade presentation-purity inventory from current `main`. Record each
+actual production view violation, classify its logic type/current data owner,
+and identify the appropriate migration owner without changing rendered output.
