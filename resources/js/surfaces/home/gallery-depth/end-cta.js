@@ -2,8 +2,6 @@ export class DepthGalleryEndCta {
     constructor(root, scroll) {
         this.root = root;
         this.scroll = scroll;
-        this.journey = root.querySelector('[data-depth-gallery-journey]');
-        this.viewport = root.querySelector('[data-depth-gallery-viewport]');
         this.link = root.querySelector('[data-depth-gallery-end-link]');
         this.progress = 0;
         this.transitionProgress = 0;
@@ -13,38 +11,25 @@ export class DepthGalleryEndCta {
         this.reset();
     }
 
-    readTransitionProgress() {
-        if (!this.journey || !this.viewport) return 0;
-
-        const transitionDistance = this.scroll.getTransitionDistance();
-        if (transitionDistance <= 0) return 0;
-
-        const fullTravel = Math.max(
-            1,
-            this.journey.offsetHeight - this.viewport.clientHeight,
-        );
-        const galleryTravel = Math.max(1, fullTravel - transitionDistance);
-        const rawScroll = Math.max(
-            0,
-            -this.journey.getBoundingClientRect().top,
-        );
-
-        return clamp((rawScroll - galleryTravel) / transitionDistance);
-    }
-
     update() {
         if (!this.link) return;
 
-        this.transitionProgress = this.readTransitionProgress();
+        this.transitionProgress = this.scroll.getTransitionProgress();
         const galleryProgress = smoothProgress(this.scroll.endProgress);
+        const semanticGalleryProgress = smoothProgress(
+            this.scroll.endProgressTarget,
+        );
         this.progress = this.transitionProgress > 0 ? 1 : galleryProgress;
+        const semanticProgress = this.transitionProgress > 0
+            ? 1
+            : semanticGalleryProgress;
 
         const focused = this.link.contains(document.activeElement);
         const visibleProgress = focused
             ? Math.max(this.progress, 0.78)
             : this.progress;
         const interactive = (
-            (this.progress >= 0.7 && this.transitionProgress < 0.12)
+            (semanticProgress >= 0.7 && this.transitionProgress < 0.12)
             || focused
         );
         const swingProgress = readSwingProgress(this.transitionProgress);

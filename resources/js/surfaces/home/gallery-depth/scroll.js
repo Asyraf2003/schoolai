@@ -12,10 +12,12 @@ export class DepthScroll {
         this.scrollTarget = 0;
         this.scrollCurrent = 0;
         this.handoffTarget = 0;
-        this.handoffCurrent = 0;
         this.previousScrollCurrent = 0;
+        this.progressTarget = 0;
         this.progressCurrent = 0;
+        this.endProgressTarget = 0;
         this.endProgress = 0;
+        this.transitionProgress = 0;
         this.scrollSmoothing = 0.08;
         this.velocity = 0;
         this.velocityDamping = 0.12;
@@ -53,23 +55,7 @@ export class DepthScroll {
     }
 
     getTransitionProgress() {
-        const fullTravel = Math.max(
-            1,
-            this.journey.offsetHeight - this.viewport.clientHeight,
-        );
-        const transitionDistance = Math.min(
-            this.getTransitionDistance(),
-            Math.max(0, fullTravel - 1),
-        );
-        if (transitionDistance <= 0) return 0;
-
-        const galleryTravel = Math.max(1, fullTravel - transitionDistance);
-
-        return this.THREE.MathUtils.clamp(
-            (this.handoffCurrent - galleryTravel) / transitionDistance,
-            0,
-            1,
-        );
+        return this.transitionProgress;
     }
 
     readScrollTarget(travel) {
@@ -77,14 +63,14 @@ export class DepthScroll {
         return this.THREE.MathUtils.clamp(-rect.top, 0, travel);
     }
 
-    updateEndProgress() {
+    readEndProgress(progress) {
         const planeSteps = Math.max(0, this.gallery.planes.length - 1);
         const totalSteps = Math.max(1, planeSteps + this.endSteps);
         const endStart = planeSteps / totalSteps;
 
-        this.endProgress = this.endSteps > 0 && endStart < 1
+        return this.endSteps > 0 && endStart < 1
             ? this.THREE.MathUtils.clamp(
-                (this.progressCurrent - endStart) / (1 - endStart),
+                (progress - endStart) / (1 - endStart),
                 0,
                 1,
             )
@@ -105,11 +91,18 @@ export class DepthScroll {
 
         this.handoffTarget = this.readScrollTarget(fullTravel);
         this.scrollTarget = Math.min(this.handoffTarget, travel);
-        this.handoffCurrent = this.THREE.MathUtils.lerp(
-            this.handoffCurrent,
-            this.handoffTarget,
-            this.scrollSmoothing,
+        this.progressTarget = this.THREE.MathUtils.clamp(
+            this.scrollTarget / travel,
+            0,
+            1,
         );
+        this.transitionProgress = transitionDistance > 0
+            ? this.THREE.MathUtils.clamp(
+                (this.handoffTarget - travel) / transitionDistance,
+                0,
+                1,
+            )
+            : 0;
         this.scrollCurrent = this.THREE.MathUtils.lerp(
             this.scrollCurrent,
             this.scrollTarget,
@@ -133,7 +126,8 @@ export class DepthScroll {
             0,
             1,
         );
-        this.updateEndProgress();
+        this.endProgressTarget = this.readEndProgress(this.progressTarget);
+        this.endProgress = this.readEndProgress(this.progressCurrent);
         this.camera.position.z = this.THREE.MathUtils.lerp(
             this.maxCameraZ,
             this.minCameraZ,
