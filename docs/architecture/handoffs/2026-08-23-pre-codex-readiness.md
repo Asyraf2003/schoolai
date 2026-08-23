@@ -1,6 +1,6 @@
 # Pre-Codex Hardening Readiness — 2026-08-23
 
-Status: `DISCOVERY_ACTIVE / 55_PERCENT`
+Status: `DISCOVERY_ACTIVE / 65_PERCENT`
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Source main SHA at discovery checkpoint start: `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`
@@ -315,6 +315,50 @@ though the current local article-content rows contain no embedded media URLs.
   semantics, variants, cache policy, actual CORS consumer proof, migration and
   rollback, `.env.example`, and production deploy wiring.
 
+## D2 — Blade presentation-purity inventory
+
+Status: `PASS / DURABLE`.
+
+Detailed file-level inventory and H5 classification are recorded in:
+
+`handoffs/2026-08-23-blade-purity-inventory.md`
+
+Owner-terminal repository proof found:
+
+- 38 Blade files containing `@php` blocks/expressions;
+- no raw `<?php` hit reported inside those Blade files;
+- three non-Blade PHP files under `resources/views`, all owned by navbar data/
+  presentation preparation.
+
+The three raw view-tree PHP owners are:
+
+- `resources/views/partials/site-navbar/data/context.php`;
+- `resources/views/partials/site-navbar/data/menu.php`;
+- `resources/views/partials/site-navbar/data/presentation.php`.
+
+The inventory is classified into four migration ownership groups:
+
+1. Home surface data shaping;
+2. public page shaping;
+3. shared chrome/locale/meta preparation;
+4. admin form/list/archive/replacement preparation.
+
+The navbar is the strongest shared-chrome violation: its view-tree PHP performs
+locale resolution, localized mega-menu copy construction, route/anchor
+construction, menu mutation/filtering, login insertion, and presentation-media
+preparation. H5 must move this preparation to a presenter/composer/application
+owner while preserving one semantic navbar for desktop/mobile.
+
+H5 must not respond by blindly moving every expression into controllers.
+Existing `AdminPpdbEditComposer` and `AdminGalleryIndexComposer` already prove
+that composers are an appropriate owner for admin render-data shaping. Trivial
+presentation checks may remain as direct Blade conditions/expressions without
+creating new service layers.
+
+H5 completion proof must include a repository-wide zero result for production
+`@php`/raw-PHP view preparation plus unchanged public/admin behavior, locale,
+routes, and test semantics.
+
 ## Known pre-existing technical debt discovered so far
 
 ### Structure check
@@ -349,21 +393,15 @@ Known examples include:
 
 ### Blade
 
-The project already has an accepted presentation-only target. A repository-wide
-inventory is still required before H5 so `@php`/raw-PHP/data-shaping cases can
-be classified by actual owner and migrated incrementally rather than blindly
-moved into controllers.
+D2 is complete. The current problem is broad but bounded: 38 Blade files plus
+three raw navbar PHP files. H5 execution must follow the durable classification
+in `handoffs/2026-08-23-blade-purity-inventory.md` and preserve rendered
+semantics rather than perform a monolithic controller refactor.
 
 ## Pre-Codex readiness work remaining
 
-D1 is complete. Five bounded discovery batches remain before the final Codex
-implementation prompt is produced.
-
-### D2 — Blade presentation-purity inventory
-
-Enumerate production raw PHP/`@php`/data shaping and classify the correct
-controller/action/service/view-model/component owner without changing rendered
-semantics.
+D1 and D2 are complete. Four bounded discovery batches remain before the final
+Codex implementation prompt is produced.
 
 ### D3 — CSS/JS/runtime ownership inventory
 
@@ -398,27 +436,26 @@ prompt be created.
 
 ## Progress
 
-Current readiness estimate: `55%`.
+Current readiness estimate: `65%`.
 
 Completed:
 
-- D1 media + DB/data-owner inventory — PASS / DURABLE.
+- D1 media + DB/data-owner inventory — PASS / DURABLE;
+- D2 Blade presentation-purity inventory — PASS / DURABLE.
 
 Remaining:
 
-- Blade presentation-purity inventory;
 - CSS/JS/runtime ownership inventory;
 - functional interaction matrix;
 - responsive/locale/degraded-runtime completion;
 - baseline proof ledger + H2-H7 execution packets.
 
 This percentage measures readiness to delegate H2-H7 to Codex without material
-project rediscovery or owner-intent guessing. It is not a claim that 55% of the
+project rediscovery or owner-intent guessing. It is not a claim that 65% of the
 hardening implementation itself is complete.
 
 ## NEXT VALID STEP
 
-Read-only Blade presentation-purity inventory from current `main`. Do not mutate
-runtime source. Record each actual production view violation, classify the logic
-and current data owner, then map the appropriate migration owner while preserving
-rendered semantics.
+Read-only D3 CSS/JS/runtime ownership inventory from current `main`. Start from
+the frozen `check:structure` debt and Vite/import/runtime ownership evidence;
+do not mutate source merely to make structural checks green.
