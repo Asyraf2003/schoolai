@@ -7,6 +7,7 @@ Target branch: `main`
 Inspected runtime-source HEAD: `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`
 Durable hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
 Pre-Codex readiness ledger: `handoffs/2026-08-23-pre-codex-readiness.md`
+Blade purity inventory: `handoffs/2026-08-23-blade-purity-inventory.md`
 
 ## Current phase
 
@@ -118,7 +119,7 @@ Full decisions/proof and remaining Cloudflare gaps are recorded in
 
 ## D1 media + DB/data-owner inventory
 
-D1 is now PROVEN for the current local database snapshot plus the audited source
+D1 is PROVEN for the current local database snapshot plus the audited source
 owners relevant to H6 planning.
 
 Current media ownership/origin classes are:
@@ -168,6 +169,32 @@ semantics remain distinct owners until an explicit H6 step owns them.
 Object-key design, image/video variants, cache policy, actual CORS need,
 migration/rollback, and production env/deploy wiring remain D10/H6 gaps.
 
+## D2 Blade presentation-purity inventory
+
+D2 is PROVEN and durable in
+`handoffs/2026-08-23-blade-purity-inventory.md`.
+
+Owner-terminal repository proof found:
+
+- 38 Blade files containing `@php` blocks or expressions;
+- no raw `<?php` hit reported inside those Blade templates;
+- three raw PHP data/presentation files under
+  `resources/views/partials/site-navbar/data/`.
+
+The violations are classified into four H5 ownership groups: Home surface data
+shaping, public page shaping, shared chrome/locale/meta preparation, and admin
+form/list/archive/replacement preparation.
+
+The navbar is the highest-confidence shared-chrome migration owner because the
+view tree currently performs locale/copy assembly, route/anchor construction,
+menu mutation/filtering, login insertion, and presentation-media construction.
+Existing `AdminPpdbEditComposer` and `AdminGalleryIndexComposer` prove that the
+repo already has a suitable render-data preparation pattern for admin shaping.
+
+H5 must not become a giant controller refactor. Non-trivial shaping moves to its
+actual controller/composer/presenter/model/service owner; trivial presentation
+conditions can remain direct Blade directives/expressions without `@php`.
+
 ## Hardening sequence
 
 The sequence below remains the implementation backlog. Pre-Codex discovery may
@@ -186,8 +213,8 @@ inspect later capabilities read-only, but runtime mutation must stay bounded.
    - converge on one Three.js runtime strategy and measure/code-split graphics
      without disguising bundle warnings.
 5. `H5 Blade presentation-purity migration`
-   - inventory and migrate actual view-owned data preparation incrementally with
-     unchanged rendered semantics.
+   - migrate the durable D2 inventory incrementally with unchanged rendered
+     semantics.
 6. `H6 Cloudflare media migration`
    - inventory media/data owners, object-key/URL contract, CRUD lifecycle,
      variants, CORS/cache policy, migration, rollback, and deployment env.
@@ -221,25 +248,27 @@ inspect later capabilities read-only, but runtime mutation must stay bounded.
 - Cloudflare/R2 create/read/delete diagnostic lifecycle: PASS as recorded above.
 - D1 media + DB/data-owner inventory: PASS for current local DB snapshot and
   audited source owners.
+- D2 Blade presentation-purity inventory: PASS, 38 Blade files plus three raw
+  navbar PHP files classified for H5.
 - H1 browser slow/reverse acceptance: `BLOCKED_BY_MISSING_EVIDENCE`.
 - Six-tier/three-locale/WebKit/PageSpeed/accessibility release proof:
   `BLOCKED_BY_MISSING_EVIDENCE`.
 
 ## Pre-Codex readiness
 
-Current estimate: `55%` toward `CODEX_READY`.
+Current estimate: `65%` toward `CODEX_READY`.
 
-Completed bounded discovery batch:
+Completed bounded discovery batches:
 
-1. media + DB/data-owner inventory — PASS and durable.
+1. media + DB/data-owner inventory — PASS and durable;
+2. Blade presentation-purity inventory — PASS and durable.
 
 Remaining bounded discovery batches:
 
-1. Blade presentation-purity inventory;
-2. CSS/JS/runtime ownership and performance-hotspot inventory;
-3. functional interaction matrix;
-4. responsive/locale/degraded-runtime proof contract completion;
-5. baseline proof ledger plus bounded H2-H7 execution packets.
+1. CSS/JS/runtime ownership and performance-hotspot inventory;
+2. functional interaction matrix;
+3. responsive/locale/degraded-runtime proof contract completion;
+4. baseline proof ledger plus bounded H2-H7 execution packets.
 
 The percentage measures delegation readiness, not implementation completion.
 The Codex execution prompt must not be created until the readiness ledger is
@@ -247,6 +276,6 @@ complete and recorded as `CODEX_READY / 100_PERCENT`.
 
 ## NEXT VALID STEP
 
-Read-only Blade presentation-purity inventory from current `main`. Record each
-actual production view violation, classify its logic type/current data owner,
-and identify the appropriate migration owner without changing rendered output.
+Read-only D3 CSS/JS/runtime ownership inventory from current `main`, starting
+from the frozen `check:structure` debt and actual Vite/import/runtime ownership.
+Do not mutate source merely to make structural checks green.
