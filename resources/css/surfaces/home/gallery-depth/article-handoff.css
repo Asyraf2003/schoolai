@@ -1,4 +1,8 @@
 @media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+    .galeri-section:has(.depth-gallery.is-depth-transitioning) {
+        background: #f6f3eb;
+    }
+
     .depth-gallery.is-depth-active .depth-gallery__viewport {
         z-index: 3;
         background: #fffaf0;

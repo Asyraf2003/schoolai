@@ -215,6 +215,9 @@ it('uses the closing Gallery composition as the sticky-scale handoff to Article'
     $styles = file_get_contents(resource_path(
         'css/surfaces/home/gallery-depth/end-cta.css',
     ));
+    $handoffStyles = file_get_contents(resource_path(
+        'css/surfaces/home/gallery-depth/article-handoff.css',
+    ));
 
     expect($blade)
         ->toContain('$depthClosingMedia')
@@ -236,7 +239,9 @@ it('uses the closing Gallery composition as the sticky-scale handoff to Article'
         ->toContain('.depth-gallery__end-media--2')
         ->toContain('margin-top: -100svh')
         ->toContain('transform-origin: 50% 0%')
-        ->toContain('.galeri-section:has(.depth-gallery.is-depth-transitioning)');
+        ->and($handoffStyles)
+        ->toContain('.galeri-section:has(.depth-gallery.is-depth-transitioning)')
+        ->toContain('background: #f6f3eb');
 });
 
 it('keeps every active depth gallery source within the file limit', function (): void {

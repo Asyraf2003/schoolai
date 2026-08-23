@@ -170,10 +170,6 @@ html[dir="rtl"] .depth-gallery__end-copy {
         transform-origin: 50% 0%;
         will-change: transform, opacity;
     }
-
-    .galeri-section:has(.depth-gallery.is-depth-transitioning) {
-        background: transparent;
-    }
 }
 
 @media (max-width: 820px) {
