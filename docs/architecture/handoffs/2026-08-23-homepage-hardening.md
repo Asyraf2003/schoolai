@@ -199,3 +199,20 @@ exposure, and no Gallery engine failure. Then run focused tests and build.
 The receiving agent must resolve current `main`, read `AGENTS.md` and the
 mandatory architecture chain, reconcile this handoff source SHA, and stop if
 current source materially conflicts with this packet.
+
+## 6. Codex runtime checkpoint — 2026-08-23
+
+Current-main runtime proof at `e4df67327eaf0a58713afb94168ecccf096758a0`
+used HeadlessChrome 151 on Linux x86_64 at 1440 x 913. Two slow
+forward/pause/reverse cycles and five rapid forward/reverse cycles produced 302
+healthy samples: no fallback after ready, invalid-frame failure, lost context,
+or invalid drawing buffer.
+
+H1 nevertheless remains `FAIL`: the scaled Gallery viewport exposes the
+body-owned `#071b18` background before Article covers it. The Gallery remains
+active and its canvas/context remain healthy during the visible gap, so this is
+not the false-fallback path fixed by the published H1 source patch.
+
+H2 is still blocked. The next step requires an owner decision to expand the H1
+editable packet narrowly to the Gallery handoff CSS/authoritative scroll-clock
+owner, then rerun this same runtime gate.

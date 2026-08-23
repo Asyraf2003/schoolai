@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / CODEX_READY`
+Status: `HARDENING_ACTIVE / H1_FAIL`
 Updated: 2026-08-23
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`
+Inspected runtime-source checkpoint: `e4df67327eaf0a58713afb94168ecccf096758a0`
 
 Durable references:
 
@@ -42,19 +42,18 @@ Proven:
 - diff check: PASS;
 - Vite production build: PASS with existing graphics warning.
 
-Still missing before H2 mutation:
+Codex runtime gate on current `main`, Linux x86_64, HeadlessChrome 151,
+1440 x 913:
 
-- repeated slow forward Gallery -> Article;
-- deliberate pause inside ending/handoff;
-- reverse Article -> Gallery;
-- rapid forward/reverse;
-- no spontaneous static fallback;
-- no dark `#071b18` shell;
-- no healthy renderer invalid-frame failure.
+- two slow forward/pause/reverse cycles and five rapid forward/reverse cycles;
+- 302 sampled states with no fallback after ready, no invalid-frame error, and
+  no unhealthy drawing buffer/context;
+- FAIL: the Gallery viewport shrinks before Article covers the page background,
+  exposing the body-owned dark `#071b18` shell during the handoff.
 
-If the execution channel cannot run this proof, status remains
-`BLOCKED_BY_MISSING_EVIDENCE`. Do not change H2 to compensate for missing H1
-acceptance evidence.
+H2 remains forbidden. The renderer-health patch is proven stable; the remaining
+failure belongs to the Gallery/Article handoff composition or authoritative
+scroll-clock boundary, which is outside the current H1 editable packet.
 
 ## Owner-accepted runtime direction
 
@@ -186,6 +185,12 @@ Known structure debt includes:
 
 Known Gallery feature-test debt: one stale continuity assertion predating H1.
 
+Fresh full-suite baseline on MariaDB: 213 tests, 197 passed, 11 assertion
+failures, and 5 GD-dependent errors because GD is unavailable. The assertion
+debt spans existing Article soft-delete, homepage accessibility, Gallery
+bootstrap/continuity, Hero, Program, Vision, and XSS contracts; none was caused
+by an H1 source mutation in this run.
+
 Do not mass-refactor this debt merely to make a command green. Resolve it under
 its proven owner or H7 G0 with semantics-preserving structural work.
 
@@ -223,7 +228,8 @@ gates, update durable state, and never force-push.
 
 - H1 source/test patch: published.
 - H1 focused test: PASS.
-- H1 browser slow/reverse acceptance: `BLOCKED_BY_MISSING_EVIDENCE`.
+- H1 browser slow/reverse mechanics: PASS for renderer/context/fallback health.
+- H1 no-dark-shell acceptance: `FAIL`.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
 - H2-H7 implementation: NOT STARTED.
@@ -236,8 +242,7 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Launch Codex using the short delegation prompt derived from
-`UI_UX_PROMPT_TEMPLATES.md`. Codex must first resolve current `main`, read the
-mandatory docs and execution packet, perform read-only reconciliation, then run
-or request the H1 runtime gate. H2 mutation is forbidden until H1 acceptance is
-PASS.
+Reconcile the failed no-dark-shell acceptance with the H1 editable boundary.
+The smallest owner decision is whether to authorize a bounded Gallery handoff
+CSS/scroll-clock correction before rerunning the same H1 runtime gate. H2
+mutation remains forbidden until H1 acceptance is PASS.
