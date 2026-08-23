@@ -1,6 +1,6 @@
 # Pre-Codex Hardening Readiness — 2026-08-23
 
-Status: `DISCOVERY_ACTIVE / 85_PERCENT`
+Status: `DISCOVERY_ACTIVE / 92_PERCENT`
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Source runtime checkpoint: `6e5c3ee690773ab138583e31c5dc695bbfa6bf9a`
@@ -38,7 +38,7 @@ The final Codex execution prompt must not be produced until readiness reaches
 - Desktop/laptop: richest approved cinematic/pointer/hover experience.
 - Runtime capability may reduce enhancement without losing semantic content,
   identity, primary information, or primary actions.
-- ID/EN use Inter/LTR; AR uses Cairo/RTL under the existing locale contract.
+- ID/EN use Inter/LTR; AR uses Cairo/RTL.
 
 ### Loading/preparation
 
@@ -55,12 +55,12 @@ initial semantic/static viewport
 -> Footer preparation
 ```
 
-Preparation is aggressive and sequential and may continue while the user scrolls
-quickly or while the tab is hidden. Prepared state persists for reverse scroll.
-Preparation is not permission for invisible continuous RAF/WebGL/video work.
+Preparation is aggressive/sequential and may continue during fast scroll or a
+hidden tab. Prepared state persists for reverse scroll. Preparation does not
+justify invisible continuous RAF/WebGL/video execution.
 
-If enhancement is not ready or fails, the section remains a complete polished
-`STATIC_READY` composition rather than blank/loader-only/broken output.
+If enhancement is not ready or fails, a polished `STATIC_READY` composition
+remains available with semantic content and primary actions.
 
 Provisional lifecycle vocabulary for H2/H3:
 
@@ -69,8 +69,8 @@ SEMANTIC -> STATIC_READY -> FETCHING -> PREPARED
 -> ENHANCEMENT_READY -> ACTIVE -> SUSPENDED -> DISPOSED
 ```
 
-The owner's approximate 0.1s initial-display target is an aspiration pending
-measurement, not a fabricated universal SLA.
+The owner's approximate 0.1s initial-display target remains an aspiration until
+measurement converts it into a real critical-path budget.
 
 ## H1 checkpoint
 
@@ -87,30 +87,24 @@ Proven:
 
 Still missing:
 
-- owner browser slow-forward/reverse Gallery acceptance.
+- owner/browser slow-forward/reverse Gallery acceptance.
 
 Therefore H1 is not yet marked complete and implementation must not silently
 advance to H2.
 
 ## Cloudflare/R2 checkpoint
 
-Infrastructure is provisioned and application connectivity is proven:
+Infrastructure and application connectivity are proven:
 
 - bucket `almustaqbal`, APAC, Standard;
-- public custom domain `media.almustaqbal.sch.id` active;
-- Laravel S3-compatible configuration works locally;
-- write PASS;
-- exists PASS;
+- custom domain `media.almustaqbal.sch.id` active;
+- Laravel S3 write/exists PASS;
 - public custom-domain read HTTP 200 PASS;
-- delete PASS;
-- post-delete exists false PASS;
-- post-delete custom-domain HTTP 404 PASS;
-- secret values remain environment-only and are not stored in docs;
-- observed response is currently `cf-cache-status: DYNAMIC`;
-- CORS is currently absent and must be based on actual browser/WebGL consumers.
-
-H6 is therefore an application/media migration problem, not a Cloudflare setup
-problem.
+- delete/post-delete exists false PASS;
+- post-delete public HTTP 404 PASS;
+- secrets remain environment-only;
+- current response observed as `cf-cache-status: DYNAMIC`;
+- CORS/cache/object-key/migration remain H6 contracts based on actual consumers.
 
 ## D1 — Media + DB/data-owner inventory
 
@@ -119,15 +113,15 @@ Status: `PASS / DURABLE`.
 Key facts:
 
 - DB/admin URL fields, repo static assets, external URLs, and Article Canvas
-  uploads are distinct media owners;
-- current sampled DB media is primarily external/Unsplash;
-- no audited DB row already points at the R2 custom domain;
-- current Article content fields are `content_id`, `content_en`, `content_ar`;
-- current local Article content contains no embedded media URLs;
-- Article Canvas still writes to Laravel `public` disk and remains an H6 owner;
+  uploads are distinct owners;
+- sampled DB media is primarily external/Unsplash and no audited row already uses
+  the R2 custom domain;
+- Article content fields are `content_id`, `content_en`, `content_ar`, with no
+  embedded media URL found in the current local dataset;
+- Article Canvas still writes to Laravel `public` disk;
 - `gallery_page_media_items.poster_url` does not exist in current local schema.
 
-H6 must not be implemented as a blind global `FILESYSTEM_DISK=s3` switch.
+H6 must not be a blind global filesystem-disk switch.
 
 ## D2 — Blade presentation-purity inventory
 
@@ -136,23 +130,12 @@ Status: `PASS / DURABLE`.
 Detailed inventory:
 `handoffs/2026-08-23-blade-purity-inventory.md`.
 
-Proven repository inventory:
-
 - 38 Blade files contain `@php` blocks/expressions;
 - no raw `<?php` hit was reported inside those Blade templates;
-- three non-Blade PHP files exist under
-  `resources/views/partials/site-navbar/data/`.
-
-Migration classes:
-
-1. Home surface data shaping;
-2. public page shaping;
-3. shared chrome/locale/meta preparation;
-4. admin form/list/archive/replacement preparation.
-
-The navbar is the clearest shared-chrome violation. Existing admin view
-composers prove the repo already has a suitable render-data preparation pattern.
-H5 must remain incremental and semantics-preserving.
+- three non-Blade PHP navbar preparation files exist under `resources/views`;
+- H5 migration ownership is grouped into Home shaping, public-page shaping,
+  shared chrome/meta/locale, and admin render-data preparation;
+- existing admin composers prove an appropriate shaping pattern already exists.
 
 ## D3 — CSS/JS/runtime ownership inventory
 
@@ -161,38 +144,19 @@ Status: `PASS / DURABLE`.
 Detailed inventory:
 `handoffs/2026-08-23-css-js-runtime-inventory.md`.
 
-Key facts:
+- `welcome.css`: active 47-module ordered aggregate;
+- `welcome-hero.css`: active nine-module ordered aggregate;
+- both have source-equivalence/checksum drift;
+- `welcome.js` synchronously owns Program/Values/Article plus public helpers;
+- Vision is deferred;
+- Gallery is currently proximity-loaded, unlike the accepted future sequential
+  background preparation contract;
+- Program uses external GSAP 3.7.1 with functional reduced/failure fallback;
+- package Three is `^0.185.1`, Gallery separately loads CDN Three `0.183.0`, and
+  Values spatial imports package Three/addons while currently runtime-disabled;
+- successful build warns around a 549 kB spatial/Three chunk.
 
-- `welcome.css` is an active 47-module ordered legacy/cascade aggregate;
-- `welcome-hero.css` is an active nine-module ordered Hero aggregate;
-- both have frozen source-equivalence/checksum drift;
-- bounded Gallery and Article surface aggregates have clearer ownership;
-- `welcome.js` synchronously owns navigation, Program, Values, Article, public
-  content, gallery-wall, and lazy-media imports;
-- Vision enhancement is deferred after Hero via dynamic import/idle scheduling;
-- Gallery is currently proximity-loaded, differing from the accepted future
-  persistent sequential preparation strategy;
-- Program uses external jsDelivr GSAP `3.7.1` with reduced/failure fallback;
-- Program and Article expose disposer logic but current bootstraps discard the
-  returned handles, creating lifecycle proof debt rather than proven leaks.
-
-Graphics hotspot:
-
-- package graph declares Three `^0.185.1`;
-- Gallery separately loads external Three `0.183.0`;
-- Values spatial scene imports package Three/addons;
-- Values currently sets `VALUES_SPATIAL_ENABLED = false`;
-- its dynamic import still causes Vite to emit the large spatial/Three chunk;
-- successful build warns around a 549 kB `spatial-scene` chunk.
-
-H4 must measure/converge this ownership, not hide it by raising the warning
-threshold.
-
-Frozen baseline includes over-200-line files, unreferenced candidates
-`article-story/footer-release.css`, `vision-story/entry.js`,
-`vision-story/typography.js`, and checksum drift for `welcome.css` /
-`welcome-hero.css`. Do not mass-refactor these merely to green the structure
-check.
+H4 must measure/converge ownership, not raise the warning threshold as a fake fix.
 
 ## D4 — Functional interaction matrix
 
@@ -201,71 +165,85 @@ Status: `PASS / DURABLE / SOURCE-CONTRACT`.
 Detailed matrix:
 `handoffs/2026-08-23-functional-interaction-matrix.md`.
 
-Release-critical interaction owners are now bounded for:
+Release-critical behavior is bounded for Hero, desktop/mobile navigation, locale,
+Program, Values, Vision, homepage Gallery, Gallery page/lightbox, homepage
+Article, Article index/detail routing, PPDB, auth/session routes and protected
+admin Gallery/Article/PPDB CRUD.
 
-- Hero slide navigation/playback/swipe/keyboard;
-- desktop navigation, mega menus, active section state and smooth anchors;
-- mobile navigation dynamic enhancement plus functional import-failure fallback;
-- ID/EN/AR locale dialog and POST switch/return semantics;
-- Program open/Back/Escape/Tab/focus-restore plus GSAP failure/reduced fallback;
-- Values and Vision/Mission scroll/lifecycle/static degradation;
-- homepage Gallery fallback/WebGL/end-CTA route transition and normal-anchor
-  fallback behavior;
-- Gallery page click/Enter/Space lightbox, Escape/close and focus restore;
-- homepage Article semantic links plus desktop cinematic CTA gating;
-- Article index server-side category + client-side search + native/external link
-  behavior;
-- PPDB availability, audience tabs, pinned wheel/keyboard journey and release;
-- auth/session role routes;
-- release-critical admin Gallery/Article/PPDB CRUD outcomes that H5/H6 must
-  preserve.
+Known certification gaps are recorded rather than auto-fixed:
 
-Source-proven accessibility/certification gaps are deliberately not auto-fixed:
+- Gallery lightbox has no explicit focus trap proven in source;
+- PPDB ARIA tabs have no dedicated ArrowLeft/ArrowRight roving-focus behavior
+  proven in source.
 
-- Gallery lightbox has close focus + Escape/focus restore but no explicit focus
-  trap proven in source;
-- PPDB uses `role=tab` buttons but no dedicated ArrowLeft/ArrowRight roving-focus
-  behavior is proven;
-- these belong to bounded H7 runtime/accessibility certification, not surprise
-  redesign during discovery.
+D4 is a source contract, not a runtime PASS claim.
 
-D4 distinguishes source contract from runtime proof. It does not claim that
-fast/reverse scroll, touch, BFCache, WebKit, or repeated-dialog scenarios already
-PASS merely because handlers exist.
+## D5 — Responsive / locale / degraded-runtime proof contract
+
+Status: `PASS / DURABLE / PROOF-CONTRACT`.
+
+Detailed contract:
+`handoffs/2026-08-23-responsive-locale-degraded-proof-contract.md`.
+
+Frozen release proof shape:
+
+- 36 logical base cells = 6 width tiers x 3 locales x 2 engine families;
+- representatives: 360, 390, 640, 768, 1024, 1280, 1440, 1536, 1920;
+- affected boundaries: 639/640, 767/768, 1023/1024, 1279/1280,
+  1535/1536 and 1180/1181 for navigation-sensitive work;
+- ID/EN LTR and AR RTL;
+- pointer/keyboard/touch as applicable;
+- normal/reduced motion;
+- JS/enhancement failure, WebGL failure/context loss, delayed network,
+  third-party enhancement failure, hidden/visible tab and BFCache;
+- fast/reverse/repeated scroll/interactions;
+- orientation, short height and 200% zoom;
+- Chromium-family and Safari/WebKit proof labeled accurately;
+- physical Safari unavailable means `BLOCKED_BY_MISSING_EVIDENCE`, never an
+  invented PASS from WebKit automation;
+- performance-sensitive H7 proof uses >=3 comparable cold lab runs and reports
+  median + worst;
+- Lighthouse 100/100/100/100 remains the lab target; field CWV remains a separate
+  p75 RUM/CrUX claim.
+
+Static-first/fidelity policy is now proofable: phone static/light remains final
+quality, tablet remains semi-interactive/touch-oriented, desktop gets richest
+cinematic behavior when capability/performance allows it, and no downgrade may
+remove semantic content or primary actions.
 
 ## Remaining pre-Codex discovery
 
-Two bounded batches remain.
-
-### D5 — Responsive/locale/degraded-runtime proof contract
-
-Freeze proof expectations across six width tiers, ID/EN/AR, LTR/RTL,
-normal/reduced motion, delayed network, fast scrolling, hidden tab, failed
-enhancement, orientation, Chromium and WebKit.
+One bounded batch remains.
 
 ### D6 — Baseline proof + H2-H7 execution packets
 
-Freeze baseline failures/warnings and required proof, then create one bounded
-packet per H2-H7 with facts, gaps, editable/read-only/forbidden scope,
-acceptance, stop conditions and proof commands.
+Freeze:
 
-Only after D5-D6 are durable and reconciled with current `main` may status become
-`CODEX_READY / 100_PERCENT` and the final Codex execution prompt be created.
+- current known baseline PASS/FAIL/BLOCKED evidence;
+- non-regression commands and runtime proof requirements;
+- one bounded implementation packet each for H2-H7;
+- editable/read-only/forbidden ownership;
+- acceptance and stop conditions;
+- the exact handoff order and H1 gate before H2.
+
+After D6 is durable and reconciled with current `main`, readiness may become
+`CODEX_READY / 100_PERCENT` and the final Codex execution prompt may be created.
 
 ## Progress
 
-Current readiness: `85%`.
+Current readiness: `92%`.
 
 Completed:
 
 - D1 media + DB/data-owner inventory — PASS / DURABLE;
 - D2 Blade presentation-purity inventory — PASS / DURABLE;
 - D3 CSS/JS/runtime ownership inventory — PASS / DURABLE;
-- D4 functional interaction matrix — PASS / DURABLE / SOURCE-CONTRACT.
+- D4 functional interaction matrix — PASS / DURABLE / SOURCE-CONTRACT;
+- D5 responsive/locale/degraded-runtime proof contract — PASS / DURABLE /
+  PROOF-CONTRACT.
 
 Remaining:
 
-- D5 responsive/locale/degraded-runtime proof contract;
 - D6 frozen baseline proof + bounded H2-H7 execution packets.
 
 This percentage measures delegation readiness, not hardening implementation
@@ -273,6 +251,6 @@ completion.
 
 ## NEXT VALID STEP
 
-Build D5 from the accepted six-tier/device-fidelity direction and existing
-responsive/browser/release docs. Freeze a proof matrix only; do not run broad
-runtime mutation or claim PASS without evidence.
+Freeze D6 from the already-proven baseline plus H1-H7 facts. Do not rerun or
+invent broad product work merely to fill the packet; mark unavailable runtime
+proof as `BLOCKED_BY_MISSING_EVIDENCE` and preserve H1 as the gate before H2.
