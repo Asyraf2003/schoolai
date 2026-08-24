@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\HeroSlide;
-use App\Rules\SafeImageUpload;
 use App\Support\HeroVideoUrl;
+use App\Support\Media\R2MediaStorage;
 use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait ManagesHeroSlideMedia
 {
@@ -30,24 +23,25 @@ trait ManagesHeroSlideMedia
     }
 
     /** @param array<string, mixed> $data
-     *  @return array{0: array<string, mixed>, 1: array{media: ?string, poster: ?string}}
+     * @return array{0: array<string, mixed>, 1: array{media: ?string, poster: ?string}}
      */
     private function applyMedia(Request $request, array $data, ?HeroSlide $heroSlide = null): array
     {
         $storedPaths = ['media' => null, 'poster' => null];
+        $mediaStorage = app(R2MediaStorage::class);
 
         if ($request->hasFile('media_file')) {
-            $path = $request->file('media_file')->store('hero/slides', 'public');
-            $storedPaths['media'] = $path;
-            $data['media_url'] = '/storage/'.$path;
+            $stored = $mediaStorage->store($request->file('media_file'), 'hero/slides', $heroSlide?->getKey());
+            $storedPaths['media'] = $stored['key'];
+            $data['media_url'] = $stored['url'];
         } elseif (! array_key_exists('media_url', $data) && $heroSlide) {
             $data['media_url'] = $heroSlide->media_url;
         }
 
         if ($request->hasFile('poster_file')) {
-            $path = $request->file('poster_file')->store('hero/posters', 'public');
-            $storedPaths['poster'] = $path;
-            $data['poster_url'] = '/storage/'.$path;
+            $stored = $mediaStorage->store($request->file('poster_file'), 'hero/posters', $heroSlide?->getKey());
+            $storedPaths['poster'] = $stored['key'];
+            $data['poster_url'] = $stored['url'];
         }
 
         return [$data, $storedPaths];

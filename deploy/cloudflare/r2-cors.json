@@ -1,0 +1,24 @@
+{
+  "rules": [
+    {
+      "allowed": {
+        "origins": [
+          "https://almustaqbal.sch.id",
+          "http://localhost",
+          "http://localhost:8000",
+          "http://127.0.0.1:8000"
+        ],
+        "methods": ["GET", "HEAD"],
+        "headers": ["Range"]
+      },
+      "exposeHeaders": [
+        "Accept-Ranges",
+        "Content-Length",
+        "Content-Range",
+        "ETag",
+        "cf-cache-status"
+      ],
+      "maxAgeSeconds": 3600
+    }
+  ]
+}

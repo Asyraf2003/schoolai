@@ -80,6 +80,7 @@ final class AddSecurityHeaders
         $analyticsConnectSources = $allowGoogleAnalytics
             ? ' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com'
             : '';
+        $mediaSource = $this->mediaSource();
 
         return implode('; ', [
             "default-src 'self'",
@@ -91,12 +92,25 @@ final class AddSecurityHeaders
             "script-src-attr 'none'",
             "style-src 'self' 'nonce-{$nonce}' https://fonts.googleapis.com",
             "style-src-attr 'unsafe-inline'",
-            "img-src 'self' data: blob: https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net{$analyticsImageSources}",
+            "img-src 'self' data: blob:{$mediaSource} https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net{$analyticsImageSources}",
             "font-src 'self' data: https://fonts.gstatic.com",
-            "connect-src 'self'{$threeSource}{$analyticsConnectSources}",
-            "media-src 'self' blob:",
+            "connect-src 'self'{$mediaSource}{$threeSource}{$analyticsConnectSources}",
+            "media-src 'self' blob:{$mediaSource}",
             "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com https://open.spotify.com https://codepen.io",
             "manifest-src 'self'",
         ]);
+    }
+
+    private function mediaSource(): string
+    {
+        $url = parse_url((string) config('media.public_url'));
+
+        if (! is_array($url) || ($url['scheme'] ?? null) !== 'https' || empty($url['host'])) {
+            return '';
+        }
+
+        $port = isset($url['port']) ? ':'.$url['port'] : '';
+
+        return ' https://'.$url['host'].$port;
     }
 }

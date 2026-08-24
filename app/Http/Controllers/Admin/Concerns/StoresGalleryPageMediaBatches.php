@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
-use App\Models\GalleryPageMediaItem;
 use App\Models\GalleryPageSection;
 use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -31,7 +27,7 @@ trait StoresGalleryPageMediaBatches
                     'image',
                     'mimes:jpg,jpeg,png,webp',
                     new SafeImageUpload,
-                    'max:' . self::MAX_PHOTO_KB,
+                    'max:'.self::MAX_PHOTO_KB,
                 ],
                 'media_urls' => ['nullable'],
                 'is_published' => ['nullable', 'boolean'],
@@ -50,18 +46,15 @@ trait StoresGalleryPageMediaBatches
                     $created = 0;
 
                     foreach ($request->file('media_files', []) as $file) {
-                        $path = $file->store('gallery/page', 'public');
-
-                        if (! is_string($path) || $path === '') {
-                            throw ValidationException::withMessages([
-                                'media_files' => 'Salah satu foto gagal disimpan. Silakan coba lagi.',
-                            ]);
-                        }
-
-                        $storedPaths[] = $path;
+                        $stored = app(R2MediaStorage::class)->store(
+                            $file,
+                            'gallery/page-media',
+                            $section->getKey(),
+                        );
+                        $storedPaths[] = $stored['key'];
                         $section->mediaItems()->create([
                             'type' => 'photo',
-                            'media_url' => Storage::url($path),
+                            'media_url' => $stored['url'],
                             'is_published' => $request->boolean('is_published'),
                             'published_at' => $validated['published_at'] ?? null,
                             'title_id' => null,

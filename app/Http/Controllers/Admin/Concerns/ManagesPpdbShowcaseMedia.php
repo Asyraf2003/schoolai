@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\PpdbShowcaseItem;
-use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait ManagesPpdbShowcaseMedia
 {
@@ -27,17 +20,14 @@ trait ManagesPpdbShowcaseMedia
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $path = $request->file('media_file')->store('ppdb/showcase', 'public');
+            $stored = app(R2MediaStorage::class)->store(
+                $request->file('media_file'),
+                'ppdb/showcase',
+                $currentItem?->getKey(),
+            );
+            $data['media_url'] = $stored['url'];
 
-            if (! is_string($path) || $path === '') {
-                throw ValidationException::withMessages([
-                    'media_file' => 'Foto gagal disimpan. Silakan coba lagi.',
-                ]);
-            }
-
-            $data['media_url'] = Storage::url($path);
-
-            return [$data, $path, $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO];
+            return [$data, $stored['key'], $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO];
         }
 
         $data['media_url'] = $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO
@@ -50,7 +40,7 @@ trait ManagesPpdbShowcaseMedia
     private function deleteStoredPublicPath(?string $path): void
     {
         if ($path !== null && $path !== '') {
-            Storage::disk('public')->delete($path);
+            app(R2MediaStorage::class)->deleteKey($path);
         }
     }
 
@@ -74,29 +64,29 @@ trait ManagesPpdbShowcaseMedia
         if ($this->hostMatches($host, 'youtu.be') && $path !== '') {
             $parts = explode('/', $path);
 
-            return 'https://www.youtube.com/embed/' . rawurlencode((string) $parts[0]);
+            return 'https://www.youtube.com/embed/'.rawurlencode((string) $parts[0]);
         }
 
         if ($this->hostMatches($host, 'youtube.com')) {
             if (! empty($query['v'])) {
-                return 'https://www.youtube.com/embed/' . rawurlencode((string) $query['v']);
+                return 'https://www.youtube.com/embed/'.rawurlencode((string) $query['v']);
             }
 
             if (preg_match('~(?:^|/)(?:shorts|embed)/([^/?#]+)~', $path, $match)) {
-                return 'https://www.youtube.com/embed/' . rawurlencode($match[1]);
+                return 'https://www.youtube.com/embed/'.rawurlencode($match[1]);
             }
         }
 
         if ($this->hostMatches($host, 'tiktok.com') && preg_match('~(?:^|/)video/(\d+)(?:/|$)~', $path, $match)) {
-            return 'https://www.tiktok.com/embed/v2/' . $match[1];
+            return 'https://www.tiktok.com/embed/v2/'.$match[1];
         }
 
         if ($this->hostMatches($host, 'instagram.com') && preg_match('~^(p|reel|tv)/([^/]+)~', $path, $match)) {
-            return 'https://www.instagram.com/' . $match[1] . '/' . rawurlencode($match[2]) . '/embed';
+            return 'https://www.instagram.com/'.$match[1].'/'.rawurlencode($match[2]).'/embed';
         }
 
         if ($this->hostMatches($host, 'vimeo.com') && preg_match('~^(?:video/)?(\d+)$~', $path, $match)) {
-            return 'https://player.vimeo.com/video/' . $match[1];
+            return 'https://player.vimeo.com/video/'.$match[1];
         }
 
         throw ValidationException::withMessages([

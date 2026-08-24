@@ -2,21 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\HeroSlide;
-use App\Rules\SafeImageUpload;
-use App\Support\HeroVideoUrl;
+use App\Support\Media\R2MediaStorage;
 use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait MaintainsHeroSlideOrdering
 {
@@ -84,17 +73,13 @@ trait MaintainsHeroSlideOrdering
     {
         foreach ($paths as $path) {
             if (is_string($path) && $path !== '') {
-                Storage::disk('public')->delete($path);
+                app(R2MediaStorage::class)->deleteKey($path);
             }
         }
     }
 
     private function deleteStoredFile(?string $url): void
     {
-        if (! is_string($url) || ! str_starts_with($url, '/storage/')) {
-            return;
-        }
-
-        Storage::disk('public')->delete(substr($url, strlen('/storage/')));
+        app(R2MediaStorage::class)->deleteOwnedUrl($url);
     }
 }

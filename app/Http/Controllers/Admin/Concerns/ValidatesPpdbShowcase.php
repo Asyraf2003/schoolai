@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
-use App\Models\PpdbSetting;
 use App\Models\PpdbShowcaseItem;
 use App\Rules\SafeImageUpload;
-use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Validation\Validator;
-use Throwable;
 
 trait ValidatesPpdbShowcase
 {
@@ -43,7 +34,7 @@ trait ValidatesPpdbShowcase
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 new SafeImageUpload,
-                'max:' . PpdbShowcaseItem::MAX_PHOTO_KB,
+                'max:'.PpdbShowcaseItem::MAX_PHOTO_KB,
             ],
             'media_url' => [
                 Rule::requiredIf(fn (): bool => $mediaType === PpdbShowcaseItem::MEDIA_VIDEO),
@@ -88,17 +79,14 @@ trait ValidatesPpdbShowcase
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $path = $request->file('media_file')->store('ppdb/showcase', 'public');
+            $stored = app(R2MediaStorage::class)->store(
+                $request->file('media_file'),
+                'ppdb/showcase',
+                $currentItem?->getKey(),
+            );
+            $data['media_url'] = $stored['url'];
 
-            if (! is_string($path) || $path === '') {
-                throw ValidationException::withMessages([
-                    'media_file' => 'Foto gagal disimpan. Silakan coba lagi.',
-                ]);
-            }
-
-            $data['media_url'] = Storage::url($path);
-
-            return [$data, $path, $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO];
+            return [$data, $stored['key'], $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO];
         }
 
         $data['media_url'] = $currentItem?->media_type === PpdbShowcaseItem::MEDIA_PHOTO
@@ -111,7 +99,7 @@ trait ValidatesPpdbShowcase
     private function deleteStoredPublicPath(?string $path): void
     {
         if ($path !== null && $path !== '') {
-            Storage::disk('public')->delete($path);
+            app(R2MediaStorage::class)->deleteKey($path);
         }
     }
 }

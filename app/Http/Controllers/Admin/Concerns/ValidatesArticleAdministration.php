@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Rules\SafeImageUpload;
+use App\Support\Media\R2MediaStorage;
 use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
-use Throwable;
 
 trait ValidatesArticleAdministration
 {
@@ -36,7 +30,7 @@ trait ValidatesArticleAdministration
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 new SafeImageUpload,
-                'max:' . self::MAX_THUMBNAIL_KB,
+                'max:'.self::MAX_THUMBNAIL_KB,
             ],
             'link_id' => ['required', 'url', 'max:2048'],
             'link_en' => ['nullable', 'url', 'max:2048'],
@@ -66,7 +60,7 @@ trait ValidatesArticleAdministration
                 $url = $this->nullableText($request->input($field));
 
                 if ($url && ! $this->isPublicArticleUrl($url)) {
-                    $validator->errors()->add($field, $label . ' harus memakai URL publik, bukan localhost, IP lokal, login, atau halaman admin.');
+                    $validator->errors()->add($field, $label.' harus memakai URL publik, bukan localhost, IP lokal, login, atau halaman admin.');
                 }
             }
         });
@@ -90,35 +84,32 @@ trait ValidatesArticleAdministration
         return $data;
     }
 
-    private function applyThumbnail(Request $request, array $data): array
+    private function applyThumbnail(Request $request, array $data, ?Article $article = null): array
     {
         if (! $request->hasFile('thumbnail_file')) {
             return [$data, null];
         }
 
-        $path = $request->file('thumbnail_file')->store('articles/thumbnails', 'public');
+        $stored = app(R2MediaStorage::class)->store(
+            $request->file('thumbnail_file'),
+            'articles/thumbnails',
+            $article?->getKey(),
+        );
+        $data['thumbnail_url'] = $stored['url'];
 
-        if (! is_string($path) || $path === '') {
-            throw ValidationException::withMessages([
-                'thumbnail_file' => 'Thumbnail gagal disimpan. Silakan coba lagi.',
-            ]);
-        }
-
-        $data['thumbnail_url'] = Storage::url($path);
-
-        return [$data, $path];
+        return [$data, $stored['key']];
     }
 
     private function deleteStoredPublicPath(?string $path): void
     {
         if ($path !== null && $path !== '') {
-            Storage::disk('public')->delete($path);
+            app(R2MediaStorage::class)->deleteKey($path);
         }
     }
 
     private function deleteStoredPublicFile(?string $url): void
     {
-        if (! $url || ! str_starts_with($url, '/storage/')) {
+        if (! $url) {
             return;
         }
 
@@ -126,13 +117,7 @@ trait ValidatesArticleAdministration
             return;
         }
 
-        $path = substr($url, strlen('/storage/'));
-
-        if ($path === '' || str_contains($path, '..') || str_starts_with($path, '/') || str_contains($path, '\\')) {
-            return;
-        }
-
-        Storage::disk('public')->delete($path);
+        app(R2MediaStorage::class)->deleteOwnedUrl($url);
     }
 
     private function isPublicArticleUrl(string $url): bool

@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\PpdbShowcaseItem;
-use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
+use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait MaintainsPpdbShowcaseItems
 {
     private function deleteStoredPublicFile(?string $url, int|string|null $exceptItemId = null): void
     {
-        if (! $url || ! str_starts_with($url, '/storage/')) {
+        if (! $url) {
             return;
         }
 
@@ -34,13 +26,7 @@ trait MaintainsPpdbShowcaseItems
             return;
         }
 
-        $path = substr($url, strlen('/storage/'));
-
-        if ($path === '' || str_contains($path, '..') || str_starts_with($path, '/') || str_contains($path, '\\')) {
-            return;
-        }
-
-        Storage::disk('public')->delete($path);
+        app(R2MediaStorage::class)->deleteOwnedUrl($url);
     }
 
     private function nextSortOrder(string $audience): int
@@ -77,12 +63,12 @@ trait MaintainsPpdbShowcaseItems
 
     private function redirectToShowcase(): RedirectResponse
     {
-        return redirect()->to(route('admin.ppdb') . '#ppdb-showcase-admin');
+        return redirect()->to(route('admin.ppdb').'#ppdb-showcase-admin');
     }
 
     private function hostMatches(string $host, string $domain): bool
     {
-        return $host === $domain || str_ends_with($host, '.' . $domain);
+        return $host === $domain || str_ends_with($host, '.'.$domain);
     }
 
     private function nullableText(mixed $value): ?string

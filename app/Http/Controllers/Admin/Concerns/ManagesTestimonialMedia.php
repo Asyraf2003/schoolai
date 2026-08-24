@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\TestimonialMedia;
-use App\Rules\SafeImageUpload;
-use App\Support\TestimonialVideoUrl;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 trait ManagesTestimonialMedia
 {
@@ -56,10 +52,16 @@ trait ManagesTestimonialMedia
         }
 
         $data = $this->validatedData($request);
-        $data = $this->applyMedia($request, $data);
+        [$data, $newKey] = $this->applyMedia($request, $data);
         $data['sort_order'] = $this->nextSortOrder();
 
-        TestimonialMedia::query()->create($data);
+        try {
+            TestimonialMedia::query()->create($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredKey($newKey);
+
+            throw $exception;
+        }
         $this->normalizeSortOrders();
 
         return redirect()->route('admin.testimoni.index')
@@ -77,10 +79,21 @@ trait ManagesTestimonialMedia
 
     public function update(Request $request, TestimonialMedia $testimonialMedia): RedirectResponse
     {
+        $oldMediaUrl = $testimonialMedia->media_url;
         $data = $this->validatedData($request, $testimonialMedia);
-        $data = $this->applyMedia($request, $data, $testimonialMedia);
+        [$data, $newKey, $replacesStoredFile] = $this->applyMedia($request, $data, $testimonialMedia);
 
-        $testimonialMedia->update($data);
+        try {
+            $testimonialMedia->update($data);
+        } catch (Throwable $exception) {
+            $this->deleteStoredKey($newKey);
+
+            throw $exception;
+        }
+
+        if ($replacesStoredFile) {
+            $this->deleteStoredFile($oldMediaUrl, $testimonialMedia->getKey());
+        }
 
         return redirect()->route('admin.testimoni.index')
             ->with('success', 'Media testimoni berhasil diperbarui.');

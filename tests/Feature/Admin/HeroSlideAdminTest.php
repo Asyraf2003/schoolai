@@ -4,6 +4,7 @@ use App\Models\Article;
 use App\Models\HeroSlide;
 use App\Models\PpdbSetting;
 use App\Models\User;
+use App\Support\Media\MediaUrlResolver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -66,10 +67,10 @@ it('rejects youtube and stores a raw uploaded hero video', function (): void {
     $response->assertRedirect(route('admin.hero'));
 
     $slide = HeroSlide::query()->firstOrFail();
-    $storedPath = str_replace('/storage/', '', $slide->media_url);
+    $storedPath = app(MediaUrlResolver::class)->ownedKey($slide->media_url);
 
     expect($slide->media_url)
-        ->toStartWith('/storage/hero/slides/')
+        ->toStartWith('https://media.almustaqbal.sch.id/hero/slides/new/')
         ->toEndWith('.mp4')
         ->and($slide->poster_url)->toBe($this->heroArticle->thumbnail_url)
         ->and($slide->is_active)->toBeTrue();

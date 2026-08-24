@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\TestimonialMedia;
-use App\Rules\SafeImageUpload;
+use App\Support\Media\R2MediaStorage;
 use App\Support\TestimonialVideoUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 trait StoresTestimonialMedia
@@ -28,25 +23,50 @@ trait StoresTestimonialMedia
 
             $data['media_url'] = $url;
 
-            return $data;
+            return [$data, null, $current?->source === 'upload'];
         }
 
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $folder = $data['type'] === 'photo' ? 'testimonials/photos' : 'testimonials/videos';
-            $path = $request->file('media_file')->store($folder, 'public');
+            $owner = $data['type'] === 'photo' ? 'testimonials/photos' : 'testimonials/videos';
+            $stored = app(R2MediaStorage::class)->store(
+                $request->file('media_file'),
+                $owner,
+                $current?->getKey(),
+            );
+            $data['media_url'] = $stored['url'];
 
-            if (! is_string($path) || $path === '') {
-                throw ValidationException::withMessages(['media_file' => 'Media gagal disimpan.']);
-            }
-
-            $data['media_url'] = Storage::url($path);
+            return [$data, $stored['key'], $current?->source === 'upload'];
         } elseif ($current?->exists && $current->source === 'upload') {
             $data['media_url'] = $current->media_url;
         }
 
-        return $data;
+        return [$data, null, false];
+    }
+
+    private function deleteStoredKey(?string $key): void
+    {
+        app(R2MediaStorage::class)->deleteKey($key);
+    }
+
+    private function deleteStoredFile(?string $url, int|string|null $exceptItemId = null): void
+    {
+        if (! $url) {
+            return;
+        }
+
+        $otherReference = TestimonialMedia::withTrashed()
+            ->where('media_url', $url)
+            ->when(
+                $exceptItemId !== null,
+                fn ($query) => $query->where('id', '!=', $exceptItemId)
+            )
+            ->exists();
+
+        if (! $otherReference) {
+            app(R2MediaStorage::class)->deleteOwnedUrl($url);
+        }
     }
 
     private function nextSortOrder(): int

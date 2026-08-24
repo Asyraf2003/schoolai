@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\GalleryItem;
-use App\Models\GalleryPageSection;
 use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait ValidatesGalleryItems
 {
@@ -48,7 +41,7 @@ trait ValidatesGalleryItems
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 new SafeImageUpload,
-                'max:' . self::MAX_PHOTO_KB,
+                'max:'.self::MAX_PHOTO_KB,
             ],
             'media_url' => [
                 Rule::requiredIf(fn (): bool => $type === 'video'),
@@ -108,17 +101,14 @@ trait ValidatesGalleryItems
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
-            $path = $request->file('media_file')->store('gallery/photos', 'public');
+            $stored = app(R2MediaStorage::class)->store(
+                $request->file('media_file'),
+                'gallery/homepage',
+                $currentItem?->getKey(),
+            );
+            $data['media_url'] = $stored['url'];
 
-            if (! is_string($path) || $path === '') {
-                throw ValidationException::withMessages([
-                    'media_file' => 'Foto gagal disimpan. Silakan coba lagi.',
-                ]);
-            }
-
-            $data['media_url'] = Storage::url($path);
-
-            return [$data, $path, $currentItem?->type === 'photo'];
+            return [$data, $stored['key'], $currentItem?->type === 'photo'];
         }
 
         return [$data, null, false];
@@ -127,7 +117,7 @@ trait ValidatesGalleryItems
     private function deleteStoredPublicPath(?string $path): void
     {
         if ($path !== null && $path !== '') {
-            Storage::disk('public')->delete($path);
+            app(R2MediaStorage::class)->deleteKey($path);
         }
     }
 }

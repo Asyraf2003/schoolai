@@ -133,6 +133,19 @@ Template `schoolai/.env.production.example` boleh digunakan sebagai acuan, tetap
    DB_DATABASE=...
    DB_USERNAME=...
    DB_PASSWORD=...
+
+   FILESYSTEM_DISK=local
+   MEDIA_DISK=s3
+   MEDIA_PUBLIC_URL=https://media.almustaqbal.sch.id
+   MEDIA_CACHE_CONTROL="public, max-age=31536000, immutable"
+
+   AWS_ACCESS_KEY_ID=...
+   AWS_SECRET_ACCESS_KEY=...
+   AWS_DEFAULT_REGION=auto
+   AWS_BUCKET=almustaqbal
+   AWS_URL=https://media.almustaqbal.sch.id
+   AWS_ENDPOINT=https://ACCOUNT_ID.r2.cloudflarestorage.com
+   AWS_USE_PATH_STYLE_ENDPOINT=true
    ```
 
 8. Biarkan variabel Google OAuth kosong jika login Google tidak digunakan:
@@ -196,6 +209,42 @@ Runner kemudian menulis marker keberhasilan dan mencoba menghapus `deploy_once.p
 
 Jangan membagikan URL token dan jangan menjalankannya sebelum `.env` serta database siap.
 
+### Migrasi media legacy ke R2
+
+Konfigurasikan CORS bucket dari workstation tepercaya memakai
+`deploy/cloudflare/r2-cors.json`, lalu purge cache hostname media setelah policy
+berubah. Contoh Wrangler:
+
+```bash
+npx wrangler r2 bucket cors set almustaqbal --file deploy/cloudflare/r2-cors.json
+npx wrangler r2 bucket cors list almustaqbal
+```
+
+Di server aplikasi, audit lalu migrasikan satu owner per eksekusi:
+
+```bash
+php artisan media:migrate-r2 hero --dry-run
+php artisan media:migrate-r2 hero
+php artisan media:migrate-r2 gallery-homepage
+php artisan media:migrate-r2 gallery-page
+php artisan media:migrate-r2 ppdb
+php artisan media:migrate-r2 testimonials
+php artisan media:migrate-r2 articles
+```
+
+Command bersifat idempotent: hanya URL `/storage/...` dan `media/...` yang
+memiliki binary lokal yang dipindahkan. External/provider URL dan URL R2 yang
+sudah canonical dilewati. Pertahankan `storage/app/public` sampai seluruh owner,
+public rendering, soft-delete, dan restore selesai diverifikasi.
+
+Pengecualian H6 yang eksplisit adalah embed provider sosial/video serta URL
+Unsplash yang sudah ada pada seed, demo/fallback, dan pencarian provider Article
+Canvas. URL tersebut bukan object R2 milik SchoolAI dan tidak boleh ikut siklus
+delete. Memindahkannya memerlukan keputusan lisensi/atribusi dan source binary
+terpisah. Aset brand, chrome, serta semantic/static fallback yang dikemas di
+repository juga tetap release-bundled karena bukan media konten milik CRUD.
+Upload konten first-party baru tidak termasuk pengecualian dan wajib masuk R2.
+
 ## Verifikasi setelah deployment
 
 Periksa secara berurutan:
@@ -206,9 +255,13 @@ Periksa secara berurutan:
 4. Halaman `/ppdb`, `/artikel`, `/galeri`, dan `/login` dapat dibuka.
 5. Login admin dan logout bekerja.
 6. Upload satu media uji melalui admin.
-7. Media uji dapat dibuka melalui URL `/storage/...`.
-8. Edit, toggle, urutan, dan hapus media tetap bekerja.
-9. `public_html/deploy_once.php` sudah tidak ada.
+7. Media uji memakai URL `https://media.almustaqbal.sch.id/...` dan tidak
+   mengekspos endpoint S3.
+8. Respons media memiliki `Content-Type`, cache policy immutable, dukungan
+   range untuk video, dan CORS exact-origin untuk `https://almustaqbal.sch.id`.
+9. Edit/replace menghapus object R2 lama yang owned; soft-delete dan restore
+   mempertahankan object yang sama.
+10. `public_html/deploy_once.php` sudah tidak ada.
 
 ## Deployment pembaruan tanpa kehilangan data file
 

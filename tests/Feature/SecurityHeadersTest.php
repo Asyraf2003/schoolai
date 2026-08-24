@@ -36,6 +36,9 @@ it('adds nonce based security headers to public pages', function (): void {
             ->toContain("default-src 'self'")
             ->toContain("frame-ancestors 'none'")
             ->toContain("script-src-attr 'none'")
+            ->toContain("img-src 'self' data: blob: https://media.almustaqbal.sch.id")
+            ->toContain("connect-src 'self' https://media.almustaqbal.sch.id")
+            ->toContain("media-src 'self' blob: https://media.almustaqbal.sch.id")
             ->toContain(
                 "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com"
             )
@@ -46,7 +49,7 @@ it('adds nonce based security headers to public pages', function (): void {
             expect($csp)
                 ->toContain('https://cdn.jsdelivr.net')
                 ->toContain(
-                    "connect-src 'self' https://cdn.jsdelivr.net"
+                    "connect-src 'self' https://media.almustaqbal.sch.id https://cdn.jsdelivr.net"
                 );
         } else {
             expect($csp)->not->toContain('https://cdn.jsdelivr.net');

@@ -2,10 +2,8 @@
 
 namespace App\Support\Concerns;
 
+use App\Support\Media\MediaUrlResolver;
 use App\Support\PublicUrl;
-use DOMDocument;
-use DOMElement;
-use DOMNode;
 
 trait ValidatesArticleContentUrls
 {
@@ -92,6 +90,10 @@ trait ValidatesArticleContentUrls
         $url = trim($url);
 
         if (preg_match('~^/storage/articles/(?:content|thumbnails)/[A-Za-z0-9/_\-.]+$~', $url) === 1) {
+            return $url;
+        }
+
+        if (app(MediaUrlResolver::class)->ownedKey($url) !== null) {
             return $url;
         }
 

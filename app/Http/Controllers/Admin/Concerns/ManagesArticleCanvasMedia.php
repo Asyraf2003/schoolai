@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Rules\SafeImageUpload;
-use App\Support\ArticleContentSanitizer;
-use Illuminate\Contracts\View\View;
+use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Throwable;
 
 trait ManagesArticleCanvasMedia
@@ -31,7 +24,7 @@ trait ManagesArticleCanvasMedia
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 new SafeImageUpload,
-                'max:' . self::MAX_IMAGE_KB,
+                'max:'.self::MAX_IMAGE_KB,
             ],
         ], [
             'image.required' => 'Pilih gambar yang akan dimasukkan.',
@@ -41,19 +34,24 @@ trait ManagesArticleCanvasMedia
         ]);
 
         $purpose = $data['purpose'] ?? 'content';
-        $directory = $purpose === 'thumbnail' ? 'articles/thumbnails/' : 'articles/content/';
-        $path = $data['image']->store($directory . $article->getKey(), 'public');
-
-        if (! is_string($path) || $path === '') {
-            throw ValidationException::withMessages([
-                'image' => 'Gambar gagal disimpan. Silakan coba lagi.',
-            ]);
-        }
-
-        $url = Storage::url($path);
+        $owner = $purpose === 'thumbnail' ? 'articles/thumbnails' : 'articles/content';
+        $stored = app(R2MediaStorage::class)->store($data['image'], $owner, $article->getKey());
+        $url = $stored['url'];
 
         if ($purpose === 'thumbnail') {
-            $article->update(['thumbnail_url' => $url]);
+            $oldThumbnailUrl = $article->thumbnail_url;
+
+            try {
+                $article->update(['thumbnail_url' => $url]);
+            } catch (Throwable $exception) {
+                app(R2MediaStorage::class)->deleteKey($stored['key']);
+
+                throw $exception;
+            }
+
+            if (! Article::withTrashed()->where('thumbnail_url', $oldThumbnailUrl)->exists()) {
+                app(R2MediaStorage::class)->deleteOwnedUrl($oldThumbnailUrl);
+            }
         }
 
         return response()->json([
@@ -81,7 +79,7 @@ trait ManagesArticleCanvasMedia
 
         try {
             $response = Http::acceptJson()
-                ->withHeaders(['Authorization' => 'Client-ID ' . $accessKey])
+                ->withHeaders(['Authorization' => 'Client-ID '.$accessKey])
                 ->timeout(8)
                 ->retry(1, 200)
                 ->get('https://api.unsplash.com/search/photos', [

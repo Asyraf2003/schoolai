@@ -78,7 +78,7 @@ it('stores a dedicated thumbnail without inserting it into article content', fun
     $article->refresh();
 
     expect($article->thumbnail_url)
-        ->toStartWith('/storage/articles/thumbnails/')
+        ->toStartWith('https://media.almustaqbal.sch.id/articles/thumbnails/'.$article->getKey().'/')
         ->and($article->content_id)->toBeNull();
 });
 

@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
-use App\Rules\SafeImageUpload;
-use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Validation\Validator;
 use Throwable;
 
 trait ManagesArticles
@@ -30,7 +24,7 @@ trait ManagesArticles
             ->get(['id', 'title_id', 'title_en', 'link_id', 'published_at'])
             ->groupBy(function (Article $article): string {
                 return Article::normalizedLinkIdentity($article->link_id)
-                    ?? '__invalid_active_' . $article->getKey();
+                    ?? '__invalid_active_'.$article->getKey();
             });
 
         $replacementCandidatesByArticle = $articles
@@ -108,7 +102,7 @@ trait ManagesArticles
     {
         $oldThumbnailUrl = $article->thumbnail_url;
         $data = $this->validatedData($request, $article);
-        [$data, $newPath] = $this->applyThumbnail($request, $data);
+        [$data, $newPath] = $this->applyThumbnail($request, $data, $article);
 
         try {
             $article->update($data);

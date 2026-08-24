@@ -2,24 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\GalleryPageMediaItem;
 use App\Models\GalleryPageSection;
-use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Throwable;
+use App\Support\Media\R2MediaStorage;
 
 trait MaintainsGalleryPageMedia
 {
     private function deleteStoredPublicFile(?string $url, int|string|null $exceptItemId = null): void
     {
-        if (! $url || ! str_starts_with($url, '/storage/')) {
+        if (! $url) {
             return;
         }
 
@@ -35,13 +26,7 @@ trait MaintainsGalleryPageMedia
             return;
         }
 
-        $path = substr($url, strlen('/storage/'));
-
-        if ($path === '' || str_contains($path, '..') || str_starts_with($path, '/') || str_contains($path, '\\')) {
-            return;
-        }
-
-        Storage::disk('public')->delete($path);
+        app(R2MediaStorage::class)->deleteOwnedUrl($url);
     }
 
     private function activeSectionOrFail(GalleryPageMediaItem $item): GalleryPageSection
