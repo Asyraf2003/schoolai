@@ -1,10 +1,10 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H5_PASS / H6_READY`
-Updated: 2026-08-23
+Status: `HARDENING_ACTIVE / H6_BLOCKED_BY_MISSING_EVIDENCE / H7_NOT_READY`
+Updated: 2026-08-24
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `c598e5835ecb7fd06c8dec6fabf631761ce00a8f`
+Inspected runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
 
 Durable references:
 
@@ -281,6 +281,59 @@ Proven for admin list/form/archive/replacement shaping and the final H5 gate:
 H5 is PASS and its final repository-wide Blade-purity acceptance is PROVEN.
 H1-H4 behavior/loading ownership and H5 group 1-3 semantics remain unchanged.
 
+## H6 R2 media gate
+
+Published H6 source/test SHA:
+`1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`.
+
+Proven in source and bounded owner/lifecycle tests:
+
+- one exact canonical URL resolver recognizes only owned
+  `https://media.almustaqbal.sch.id/...` keys and rejects endpoint/lookalike,
+  encoded, query, fragment and traversal forms;
+- immutable owner/scope keys, content type and one-year immutable cache metadata
+  are applied by one R2 storage owner without unsupported object ACLs;
+- Hero, homepage Gallery, Gallery page media, PPDB showcase, testimonials,
+  Article thumbnails and Article Canvas content now publish first-party uploads
+  to R2;
+- replacement uploads and verifies first, persists the canonical URL, then
+  deletes only the prior resolver-owned object; persistence failure cleans up
+  the new object, while soft delete retains the object for restore;
+- `media:migrate-r2` scans active and archived records one owner at a time,
+  migrates eligible local public/repository media and embedded Article content,
+  is dry-run/idempotent, preserves external/R2 URLs and fails safely when a
+  binary is missing;
+- CSP includes the exact media origin and the deploy contract includes exact
+  GET/HEAD CORS, ranged-media headers, cache purge and per-owner migration proof;
+- explicit non-R2 exceptions are third-party social/video embeds, existing
+  Unsplash seed/demo/fallback and Article Canvas provider search URLs, plus
+  release-bundled brand/chrome/semantic-static assets. They are not R2-owned or
+  deleteable. New first-party content uploads are not excepted.
+
+Proof on Linux x86_64, PHP 8.5.9:
+
+- focused H6 gate: PASS, 20 tests / 237 assertions;
+- focused H1 regression: PASS, 1 test / 7 assertions; focused H2-H4
+  regressions: PASS, 3 tests / 96 assertions; focused H5 presentation
+  regressions: PASS, 15 tests / 256 assertions;
+- Pint, diff check and production build: PASS; build remains 144 modules with
+  the existing deferred 534.39 kB Three package warning;
+- default full suite: 247 tests, 242 passed and the same five frozen pre-H6
+  assertion failures; none points to an H6 owner;
+- structure check still reports exactly the frozen 11 over-limit files, three
+  unreferenced candidates and two checksum drifts; no H6 source is reported;
+- live localhost response is HTTP 200 and CSP contains the exact media origin in
+  `img-src`, `connect-src` and `media-src`;
+- a temporary real-bucket object completed upload, exists, custom-domain ranged
+  read and delete/post-delete exists false. Public response was HTTP 206 with
+  correct content type, immutable cache control, content range and accept-ranges.
+
+The production response still lacks `Access-Control-Allow-Origin` and reports
+`cf-cache-status: DYNAMIC`. Production CORS/cache rollout and per-owner data
+migration remain a separate environment-secret deployment action. Therefore H6
+implementation is PASS, but the H6 capability remains
+`BLOCKED_BY_MISSING_EVIDENCE`; H7 must not begin.
+
 ## Owner-accepted runtime direction
 
 - avoid unnecessary over-engineering;
@@ -313,8 +366,10 @@ SEMANTIC -> STATIC_READY -> FETCHING -> PREPARED
 - public custom-domain read HTTP 200 PASS;
 - delete/post-delete exists false PASS;
 - post-delete public HTTP 404 PASS;
+- immutable object metadata and ranged HTTP 206 read PASS;
 - secrets remain environment-only;
-- observed cache state currently `DYNAMIC`.
+- observed cache state currently `DYNAMIC`;
+- exact-origin CORS is still absent in the production response.
 
 H6 decisions are frozen in the execution packet: preserve existing URL-shaped DB
 contract, store canonical custom-domain URLs for R2-owned media, derive owned
@@ -329,8 +384,10 @@ invent Stream/transformation infrastructure without proof.
 `PASS / DURABLE`.
 
 DB/admin URLs, repo static assets, external URLs and Article Canvas local uploads
-are distinct owners. Current sampled DB media is mainly external; no audited row
-already uses R2. Article Canvas remains an H6 local-public-disk write owner.
+are distinct owners. New Article Canvas and audited admin first-party uploads now
+use R2. The bounded migration command converts eligible legacy local rows and
+embedded Article content during deployment; provider URLs remain explicit
+non-owned exceptions.
 
 ### D2 Blade purity
 
@@ -471,7 +528,10 @@ gates, update durable state, and never force-push.
 - H5 final repository-wide zero-Blade-PHP gate: PASS.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
-- H6-H7 implementation: NOT STARTED.
+- H6 source/lifecycle implementation: PASS.
+- H6 production CORS/cache rollout and per-owner data migration:
+  `BLOCKED_BY_MISSING_EVIDENCE`.
+- H7 implementation: NOT STARTED / NOT READY.
 - final responsive/locale/WebKit/performance/accessibility/security certification:
   `BLOCKED_BY_MISSING_EVIDENCE` until H7.
 
@@ -481,6 +541,9 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H6 R2 media migration from the accepted execution packet. Keep H1-H5
-behavior, loading ownership and presentation semantics proven. Do not enter H7
-until H6 and its durable proof checkpoint are complete.
+From a trusted production deployment channel, apply
+`deploy/cloudflare/r2-cors.json`, purge the media-host cache, deploy the H6 source
+and execute `media:migrate-r2` dry-run then migration one owner at a time. Prove
+exact-origin Gallery texture access, cache status, canonical public rendering,
+replace/delete and soft-delete/restore before marking H6 PASS. Do not enter H7
+until that evidence is durable.
