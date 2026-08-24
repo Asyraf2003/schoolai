@@ -1,6 +1,6 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H6_BLOCKED_BY_MISSING_EVIDENCE / H7_NOT_READY`
+Status: `HARDENING_ACTIVE / H6_PASS / H7_READY`
 Updated: 2026-08-24
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
@@ -328,11 +328,33 @@ Proof on Linux x86_64, PHP 8.5.9:
   read and delete/post-delete exists false. Public response was HTTP 206 with
   correct content type, immutable cache control, content range and accept-ranges.
 
-The production response still lacks `Access-Control-Allow-Origin` and reports
-`cf-cache-status: DYNAMIC`. Production CORS/cache rollout and per-owner data
-migration remain a separate environment-secret deployment action. Therefore H6
-implementation is PASS, but the H6 capability remains
-`BLOCKED_BY_MISSING_EVIDENCE`; H7 must not begin.
+Owner-supplied production proof accepted on 2026-08-24:
+
+- the current H6 source is deployed and `media:migrate-r2` exists in production;
+- Cloudflare SSL mode is `Full (strict)` and the public origin returns HTTP/2
+  200;
+- the R2 CORS policy was applied and read back with the exact production origin,
+  GET/HEAD, `Range` and the expected exposed headers;
+- an exact-origin ranged R2 request returned HTTP 206 with `Content-Range`,
+  `Accept-Ranges` and the expected `Access-Control-Allow-Origin`;
+- a real immutable WebP returned `cf-cache-status: MISS` on its first request,
+  then `HIT` with `age: 2`; both retained
+  `Cache-Control: public, max-age=31536000, immutable`;
+- production media configuration uses disk `s3`, the canonical
+  `https://media.almustaqbal.sch.id` public URL and immutable cache policy; all
+  required AWS/R2 environment entries are present;
+- owner audits completed with zero failures: homepage Gallery 6 scanned / 0
+  eligible, Gallery page 12 / 0, PPDB 6 / 0, testimonials 12 / 0 and Articles
+  10 / 0;
+- Hero had one eligible object and migrated it successfully. One separate
+  legacy `HeroSlide#5` binary was already missing from old production storage;
+  the owner explicitly accepts that existing missing-data condition and it must
+  not be recreated or deleted as H6 work;
+- temporary `h6-proof/cors.txt` and `h6-proof/cache-logo.webp` objects were
+  deleted after proof.
+
+Every H6 acceptance item is now satisfied. H6 is PASS and H7 is READY; no H7
+implementation has started.
 
 ## Owner-accepted runtime direction
 
@@ -368,8 +390,10 @@ SEMANTIC -> STATIC_READY -> FETCHING -> PREPARED
 - post-delete public HTTP 404 PASS;
 - immutable object metadata and ranged HTTP 206 read PASS;
 - secrets remain environment-only;
-- observed cache state currently `DYNAMIC`;
-- exact-origin CORS is still absent in the production response.
+- exact-origin GET/HEAD CORS with ranged-media headers: PASS;
+- immutable custom-domain cache MISS -> HIT with `age: 2`: PASS;
+- production owner audit/migration: PASS, with the owner-accepted pre-existing
+  missing `HeroSlide#5` binary excluded from H6 recovery work.
 
 H6 decisions are frozen in the execution packet: preserve existing URL-shaped DB
 contract, store canonical custom-domain URLs for R2-owned media, derive owned
@@ -529,9 +553,9 @@ gates, update durable state, and never force-push.
 - Cloudflare/R2 basic lifecycle: PASS.
 - D1-D6: PASS / DURABLE.
 - H6 source/lifecycle implementation: PASS.
-- H6 production CORS/cache rollout and per-owner data migration:
-  `BLOCKED_BY_MISSING_EVIDENCE`.
-- H7 implementation: NOT STARTED / NOT READY.
+- H6 production CORS/cache rollout and per-owner data migration: PASS.
+- H6 final acceptance: PASS.
+- H7 implementation: NOT STARTED / READY.
 - final responsive/locale/WebKit/performance/accessibility/security certification:
   `BLOCKED_BY_MISSING_EVIDENCE` until H7.
 
@@ -541,9 +565,6 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-From a trusted production deployment channel, apply
-`deploy/cloudflare/r2-cors.json`, purge the media-host cache, deploy the H6 source
-and execute `media:migrate-r2` dry-run then migration one owner at a time. Prove
-exact-origin Gallery texture access, cache status, canonical public rendering,
-replace/delete and soft-delete/restore before marking H6 PASS. Do not enter H7
-until that evidence is durable.
+Begin H7 release certification and frozen baseline-debt closure from the accepted
+execution packet. Preserve H1-H6 proven behavior and keep H7 bounded to its named
+owners and proof gates.
