@@ -7,6 +7,10 @@ function clamp(value) {
     return Math.max(0, Math.min(1, value));
 }
 
+function clampSigned(value) {
+    return Math.max(-1, Math.min(1, value));
+}
+
 function smoothstep(value) {
     const progress = clamp(value);
     return progress * progress * (3 - (2 * progress));
@@ -84,18 +88,21 @@ function mountGalleryStory(root) {
 
             const mediaCenter = mediaRect.top + (mediaRect.height * 0.5);
             const centerDelta = mediaCenter - viewportCenter;
-            const signed = clamp(centerDelta / (viewportHeight * 0.58));
-            const proximity = smoothstep(1 - Math.abs(signed));
+            const signed = clampSigned(centerDelta / (viewportHeight * 0.52));
+            const openness = smoothstep(1 - Math.abs(signed));
+            const closingInset = 40 * (1 - openness);
+            const topInset = signed >= 0 ? closingInset : 0;
+            const bottomInset = signed < 0 ? closingInset : 0;
 
-            const inset = 20 * (1 - proximity);
-            const imageShiftY = signed * -15;
-            const imageShiftX = signed * 4.5;
+            const imageShiftY = signed * -18;
+            const imageShiftX = signed * 6;
             const mediaY = (1 - entrance) * Math.min(190, viewportHeight * 0.22);
             const copyY = (1 - copyProgress) * Math.min(108, viewportHeight * 0.125);
 
             item.style.setProperty('--gallery-media-y', `${mediaY.toFixed(2)}px`);
             item.style.setProperty('--gallery-media-opacity', entrance.toFixed(4));
-            item.style.setProperty('--gallery-window-inset', `${inset.toFixed(3)}%`);
+            item.style.setProperty('--gallery-window-top', `${topInset.toFixed(3)}%`);
+            item.style.setProperty('--gallery-window-bottom', `${bottomInset.toFixed(3)}%`);
             item.style.setProperty('--gallery-image-shift-y', `${imageShiftY.toFixed(3)}%`);
             item.style.setProperty('--gallery-image-shift-x', `${imageShiftX.toFixed(3)}%`);
             item.style.setProperty('--gallery-copy-y', `${copyY.toFixed(2)}px`);
@@ -121,7 +128,8 @@ function mountGalleryStory(root) {
         items.forEach((item) => {
             item.style.setProperty('--gallery-media-y', '0px');
             item.style.setProperty('--gallery-media-opacity', '1');
-            item.style.setProperty('--gallery-window-inset', '0%');
+            item.style.setProperty('--gallery-window-top', '0%');
+            item.style.setProperty('--gallery-window-bottom', '0%');
             item.style.setProperty('--gallery-image-shift-y', '0%');
             item.style.setProperty('--gallery-image-shift-x', '0%');
             item.style.setProperty('--gallery-copy-y', '0px');
