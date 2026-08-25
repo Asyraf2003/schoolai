@@ -29,18 +29,11 @@ function readValuesExitProgress(valuesWorld) {
     return Number.isFinite(value) ? clamp(value) : 0;
 }
 
-function titleFinalScale() {
-    if (window.innerWidth < 640) return 0.62;
-    if (window.innerWidth < 1024) return 0.54;
-    return 0.46;
-}
-
 function mountGalleryStory(root) {
     if (mounted) return;
     mounted = true;
 
     const section = root.closest('.galeri-section') || root;
-    const intro = root.querySelector('[data-gallery-story-intro]');
     const items = Array.from(root.querySelectorAll('[data-gallery-story-item]'));
     const valuesWorld = document.querySelector('[data-program-values-world]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -55,39 +48,29 @@ function mountGalleryStory(root) {
             && exitProgress > 0.0001 && sectionTop > 1;
 
         section.classList.toggle('is-gallery-handoff', active);
-        root.style.setProperty('--gallery-handoff-color', mixColor(BLUE, GALLERY, exitProgress));
+        root.style.setProperty(
+            '--gallery-handoff-color',
+            mixColor(BLUE, GALLERY, exitProgress),
+        );
         root.style.setProperty('--gallery-handoff-opacity', active ? '1' : '0');
 
         if (active) {
             const headingProgress = smoothstep((exitProgress - 0.68) / 0.32);
-            root.style.setProperty('--gallery-title-y', '0px');
-            root.style.setProperty('--gallery-title-scale', (1.16 + (headingProgress * 0.06)).toFixed(4));
             root.style.setProperty('--gallery-title-opacity', headingProgress.toFixed(4));
+        } else {
+            root.style.setProperty('--gallery-title-opacity', '1');
         }
+
         return active;
-    }
-
-    function paintIntro(handoffActive) {
-        if (!intro || handoffActive || reducedMotion.matches) return;
-        const viewportHeight = Math.max(window.innerHeight, 1);
-        const rect = intro.getBoundingClientRect();
-        const travel = Math.max(intro.offsetHeight - viewportHeight, 1);
-        const progress = smoothstep(clamp(-rect.top / travel));
-        const startY = viewportHeight * (window.innerWidth < 640 ? 0.32 : 0.34);
-        const finalY = Math.min(42, viewportHeight * 0.055);
-        const scale = 1.22 + ((titleFinalScale() - 1.22) * progress);
-
-        root.style.setProperty('--gallery-title-y', `${(startY + ((finalY - startY) * progress)).toFixed(2)}px`);
-        root.style.setProperty('--gallery-title-scale', scale.toFixed(4));
-        root.style.setProperty('--gallery-title-opacity', '1');
     }
 
     function paintItems() {
         if (reducedMotion.matches) return;
+
         const viewportHeight = Math.max(window.innerHeight, 1);
         const viewportCenter = viewportHeight * 0.5;
-        const revealStart = viewportHeight * 0.96;
-        const revealDistance = viewportHeight * 0.7;
+        const revealStart = viewportHeight * 0.98;
+        const revealDistance = viewportHeight * 0.62;
 
         items.forEach((item) => {
             const media = item.querySelector('[data-gallery-story-media]');
@@ -97,19 +80,24 @@ function mountGalleryStory(root) {
             const mediaRect = media.getBoundingClientRect();
             const raw = clamp((revealStart - itemRect.top) / revealDistance);
             const entrance = smoothstep(raw);
-            const copyProgress = smoothstep(clamp((raw - 0.14) / 0.86));
-            const signed = clamp((mediaRect.top + (mediaRect.height * 0.5) - viewportCenter) / viewportHeight);
-            const proximity = 1 - clamp(Math.abs(signed) / 0.72);
-            const open = smoothstep(proximity);
-            const inset = 20 * (1 - open);
-            const imageShift = signed * -7.5;
-            const mediaY = (1 - entrance) * Math.min(185, viewportHeight * 0.21);
+            const copyProgress = smoothstep(clamp((raw - 0.12) / 0.88));
+
+            const mediaCenter = mediaRect.top + (mediaRect.height * 0.5);
+            const centerDelta = mediaCenter - viewportCenter;
+            const signed = clamp(centerDelta / (viewportHeight * 0.58));
+            const proximity = smoothstep(1 - Math.abs(signed));
+
+            const inset = 20 * (1 - proximity);
+            const imageShiftY = signed * -15;
+            const imageShiftX = signed * 4.5;
+            const mediaY = (1 - entrance) * Math.min(190, viewportHeight * 0.22);
             const copyY = (1 - copyProgress) * Math.min(108, viewportHeight * 0.125);
 
             item.style.setProperty('--gallery-media-y', `${mediaY.toFixed(2)}px`);
             item.style.setProperty('--gallery-media-opacity', entrance.toFixed(4));
             item.style.setProperty('--gallery-window-inset', `${inset.toFixed(3)}%`);
-            item.style.setProperty('--gallery-image-shift', `${imageShift.toFixed(3)}%`);
+            item.style.setProperty('--gallery-image-shift-y', `${imageShiftY.toFixed(3)}%`);
+            item.style.setProperty('--gallery-image-shift-x', `${imageShiftX.toFixed(3)}%`);
             item.style.setProperty('--gallery-copy-y', `${copyY.toFixed(2)}px`);
             item.style.setProperty('--gallery-copy-opacity', copyProgress.toFixed(4));
         });
@@ -119,7 +107,6 @@ function mountGalleryStory(root) {
         frame = 0;
         if (destroyed || document.hidden) return;
         const handoffActive = paintHandoff();
-        paintIntro(handoffActive);
         paintItems();
         if (handoffActive) frame = window.requestAnimationFrame(render);
     }
@@ -135,7 +122,8 @@ function mountGalleryStory(root) {
             item.style.setProperty('--gallery-media-y', '0px');
             item.style.setProperty('--gallery-media-opacity', '1');
             item.style.setProperty('--gallery-window-inset', '0%');
-            item.style.setProperty('--gallery-image-shift', '0%');
+            item.style.setProperty('--gallery-image-shift-y', '0%');
+            item.style.setProperty('--gallery-image-shift-x', '0%');
             item.style.setProperty('--gallery-copy-y', '0px');
             item.style.setProperty('--gallery-copy-opacity', '1');
         });
