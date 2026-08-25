@@ -41,6 +41,7 @@ function mountGalleryStory(root) {
     const items = Array.from(root.querySelectorAll('[data-gallery-story-item]'));
     const valuesWorld = document.querySelector('[data-program-values-world]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let activeBackground = '';
     let frame = 0;
     let destroyed = false;
 
@@ -75,6 +76,8 @@ function mountGalleryStory(root) {
         const viewportCenter = viewportHeight * 0.5;
         const revealStart = viewportHeight * 0.98;
         const revealDistance = viewportHeight * 0.62;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+        let nearestBackground = '';
 
         items.forEach((item) => {
             const media = item.querySelector('[data-gallery-story-media]');
@@ -98,6 +101,12 @@ function mountGalleryStory(root) {
             const imageShiftX = signed * 6;
             const mediaY = (1 - entrance) * Math.min(190, viewportHeight * 0.22);
             const copyY = (1 - copyProgress) * Math.min(108, viewportHeight * 0.125);
+            const distance = Math.abs(centerDelta);
+
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestBackground = item.dataset.galleryBackground || '';
+            }
 
             item.style.setProperty('--gallery-media-y', `${mediaY.toFixed(2)}px`);
             item.style.setProperty('--gallery-media-opacity', entrance.toFixed(4));
@@ -108,6 +117,11 @@ function mountGalleryStory(root) {
             item.style.setProperty('--gallery-copy-y', `${copyY.toFixed(2)}px`);
             item.style.setProperty('--gallery-copy-opacity', copyProgress.toFixed(4));
         });
+
+        if (nearestBackground && nearestBackground !== activeBackground) {
+            activeBackground = nearestBackground;
+            section.style.setProperty('--gallery-story-bg', nearestBackground);
+        }
     }
 
     function render() {
