@@ -1,10 +1,6 @@
 <?php
 
-use App\Models\Article;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\View;
-
-uses(RefreshDatabase::class);
 
 it('keeps all H5 group two Blade owners free of PHP shaping', function (): void {
     $files = [
@@ -28,36 +24,19 @@ it('keeps all H5 group two Blade owners free of PHP shaping', function (): void 
     }
 });
 
-it('renders localized Home presentation copy and final Arabic mission text', function (): void {
-    Article::query()->create([
-        'article_source' => Article::SOURCE_NATIVE,
-        'article_status' => Article::STATUS_PUBLISHED,
-        'slug' => 'home-presentation-proof',
-        'title_id' => 'Bukti presentasi Home',
-        'title_en' => 'Home presentation proof',
-        'description_id' => 'Bukti shaping artikel Home.',
-        'description_en' => 'Home article shaping proof.',
-        'thumbnail_url' => '/storage/articles/home-presentation-proof.jpg',
-        'link_id' => '/artikel/home-presentation-proof',
-        'link_en' => '/artikel/home-presentation-proof',
-        'author' => 'SchoolAI',
-        'published_at' => now(),
-    ]);
-
+it('renders localized Home gallery presentation and final Arabic mission text', function (): void {
     $expected = [
-        'id' => ['AREA GALERI', 'ARTIKEL', 'Mau lihat artikel selengkapnya?'],
-        'en' => ['AREA OF GALLERY', 'ARTICLES', 'Want to explore more articles?'],
-        'ar' => ['مساحة المعرض', 'المقالات', 'هل ترغب في استكشاف المزيد من المقالات؟'],
+        'id' => 'AREA GALERI',
+        'en' => 'AREA OF GALLERY',
+        'ar' => 'مساحة المعرض',
     ];
 
-    foreach ($expected as $locale => $copy) {
+    foreach ($expected as $locale => $galleryHeading) {
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
         $response
             ->assertOk()
-            ->assertSee($copy[0])
-            ->assertSee($copy[1])
-            ->assertSee($copy[2]);
+            ->assertSee($galleryHeading);
 
         if ($locale === 'ar') {
             $response
@@ -65,9 +44,14 @@ it('renders localized Home presentation copy and final Arabic mission text', fun
                 ->assertDontSee('ﷺ');
         }
     }
+
+    $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
+    expect($welcome)
+        ->not->toContain("@include('home.sections.articles')")
+        ->not->toContain('welcome-article-story.css');
 });
 
-it('preserves depth Gallery preset cycling journey and closing media shaping', function (): void {
+it('preserves Gallery preset shaping while rendering the editorial stream', function (): void {
     $items = collect(range(1, 7))->map(fn (int $index): array => [
         'title' => 'Gallery '.$index,
         'caption' => 'Caption '.$index,
@@ -75,6 +59,7 @@ it('preserves depth Gallery preset cycling journey and closing media shaping', f
     ])->all();
 
     $html = View::make('home.sections.gallery-depth', [
+        'galleryHeading' => 'Gallery',
         'gallerySection' => [
             'items' => $items,
             'section_subtitle' => 'Closing copy',
@@ -83,12 +68,15 @@ it('preserves depth Gallery preset cycling journey and closing media shaping', f
     ])->render();
 
     expect($html)
-        ->toContain('data-depth-gallery-end-steps="1"')
-        ->toContain('--depth-gallery-count: 8')
-        ->toContain('data-position-x="-0.9"')
-        ->toContain('data-position-x="0.8"')
-        ->and(substr_count($html, 'depth-gallery__end-media--'))->toBe(2)
-        ->and(substr_count($html, 'data-depth-gallery-source'))->toBe(7);
+        ->toContain('data-gallery-story')
+        ->toContain('--gallery-story-count: 7')
+        ->toContain('gallery-story__item--1')
+        ->toContain('gallery-story__item--5')
+        ->toContain('data-gallery-story-media')
+        ->toContain('data-gallery-story-copy')
+        ->toContain('Closing copy')
+        ->toContain('data-depth-gallery-end-link')
+        ->and(substr_count($html, 'data-gallery-story-item'))->toBe(7);
 });
 
 it('shapes the final hero collection at the included section boundary', function (): void {
