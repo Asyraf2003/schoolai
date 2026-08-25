@@ -7,14 +7,11 @@ it('keeps homepage gallery passive and reserves video for the gallery page', fun
     $normalizer = file_get_contents(app_path(
         'Http/Controllers/Concerns/NormalizesHomeGallery.php'
     ));
-    $depthBlade = file_get_contents(resource_path(
+    $storyBlade = file_get_contents(resource_path(
         'views/home/sections/gallery-depth.blade.php'
     ));
     $controller = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/controller.js'
-    ));
-    $transition = file_get_contents(resource_path(
-        'js/components/gallery-route-transition.js'
+        'js/pages/welcome-depth-gallery.js'
     ));
     $galleryPage = file_get_contents(resource_path(
         'views/pages/galeri.blade.php'
@@ -31,21 +28,16 @@ it('keeps homepage gallery passive and reserves video for the gallery page', fun
         ->and($normalizer)
         ->toContain('isDummyGalleryCaption')
         ->toContain("__('home.galeri.section_subtitle')")
-        ->and($depthBlade)
+        ->and($storyBlade)
         ->toContain('data-depth-gallery-end-link')
+        ->toContain('data-gallery-story-item')
         ->not->toContain('data-media-url')
         ->not->toContain('data-is-video')
         ->not->toContain('<iframe')
         ->and($controller)
-        ->toContain('bindGalleryRouteExit')
+        ->toContain('paintItems')
         ->not->toContain('createGalleryStoryLightbox')
         ->not->toContain('openStoryMedia')
-        ->and($transition)
-        ->toContain('rotate(45deg)')
-        ->toContain("filter: 'blur(18px)'")
-        ->toContain('navigate(link.href)')
-        ->toContain('window.location.assign(href)')
-        ->toContain('playGalleryRouteArrival')
         ->and($galleryPage)
         ->toContain('data-gallery-wall-lightbox')
         ->and($galleryWall)
