@@ -1,0 +1,72 @@
+@media (min-width: 1280px) {
+    /*
+     * Continue the Mission world through the section seam, then dissolve the
+     * lattice while revealing Program's kinetic field underneath. This overlay
+     * is document-positioned, not sticky, so it cannot contaminate later Program
+     * or Values states.
+     */
+    .program-values-world::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        inset-inline: 0;
+        top: 0;
+        height: min(48svh, 30rem);
+        pointer-events: none;
+        background-color: var(--vision-program-handoff-color, #edf1e9);
+        background-image:
+            linear-gradient(
+                to bottom,
+                var(--vision-program-handoff-color, #edf1e9) 0%,
+                color-mix(in srgb, var(--vision-program-handoff-color, #edf1e9) 72%, #fff) 36%,
+                rgb(255 255 255 / .88) 72%,
+                #fff 100%
+            ),
+            var(--vision-mission-pattern, none);
+        background-position: center, var(--vision-mission-pattern-position, center);
+        background-repeat: no-repeat, repeat;
+        background-size: 100% 100%, var(--vision-mission-pattern-size, 24rem 24rem);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            #000 0%,
+            #000 22%,
+            rgb(0 0 0 / .88) 48%,
+            transparent 100%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            #000 0%,
+            #000 22%,
+            rgb(0 0 0 / .88) 48%,
+            transparent 100%
+        );
+        backdrop-filter: blur(3px);
+    }
+
+    .program-values-world > .program-kinetic,
+    .program-values-world > .values-story {
+        z-index: 2;
+    }
+
+    .program-values-world > .program-kinetic.is-transitioning,
+    .program-values-world > .program-kinetic.is-detail-open {
+        z-index: 4;
+    }
+}
+
+@media (max-width: 767px) {
+    .program-values-world__kinetic {
+        inset-inline: -20vw;
+    }
+
+    .program-values-world__kinetic-line {
+        min-width: 140%;
+        font-size: clamp(3.75rem, 12svh, 7rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .program-values-world__kinetic-line {
+        animation: none;
+    }
+}

@@ -55,7 +55,11 @@ it('forms Program cards before the white to blue Character handoff', function ()
         ->toContain('opacity: var(--values-surface-detail)')
         ->and($handoff)
         ->toContain('--values-gallery-resting-color: #fffaf0')
-        ->toContain('var(--program-values-final-color) 0%');
+        ->toContain('.home-page .values-story__timeline')
+        ->toContain('var(--values-blue) var(--values-gallery-world-opacity-pct, 100%)')
+        ->toContain('.home-page .gallery-mask-handoff')
+        ->toContain('.home-page .galeri-section.is-values-gallery-handoff')
+        ->not->toContain('var(--program-values-final-color) 0%');
 });
 
 it('uses bounded desktop geometry for the closer Program and Values composition', function (): void {
@@ -76,6 +80,9 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
     );
     $valuesHeading = file_get_contents(
         resource_path('css/surfaces/home/values/story-heading.css'),
+    );
+    $valuesHeadingResponsive = file_get_contents(
+        resource_path('css/surfaces/home/values/story-heading-responsive.css'),
     );
 
     expect($wide)
@@ -108,5 +115,7 @@ it('uses bounded desktop geometry for the closer Program and Values composition'
         ->toContain('transform: translate3d(0, 0, 0)')
         ->not->toContain('translate3d(0, clamp(-10rem, -16svh, -7rem), 0)')
         ->and($valuesHeading)
+        ->toContain('font-family: var(--font-display, Inter, sans-serif)')
+        ->and($valuesHeadingResponsive)
         ->toContain('margin-block-start: clamp(-10rem, -15svh, -7rem)');
 });

@@ -53,10 +53,15 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
 
 it('uses Codrops GSAP timing and detail media reveal', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $gsapController = file_get_contents(resource_path('js/surfaces/home/program-journey/gsap-controller.js'));
     $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
 
     expect($controller)
+        ->toContain("from './gsap-controller.js'")
+        ->not->toContain('scrollTo(')
+        ->not->toContain('wheel')
+        ->and($gsapController)
         ->toContain("addLabel('typeTransition', 0.3)")
         ->toContain('parts.imageWrap')
         ->toContain('parts.image')
@@ -78,12 +83,14 @@ it('uses Codrops GSAP timing and detail media reveal', function (): void {
 
 it('keeps Program controls functional while GSAP loads, fails, or is opening', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $gsapController = file_get_contents(resource_path('js/surfaces/home/program-journey/gsap-controller.js'));
     $rail = file_get_contents(resource_path('css/pages/welcome/program-journey/rail.css'));
 
     expect($controller)
         ->toContain('pendingTrigger')
         ->toContain('replayPending')
         ->toContain('cleanup = mountReduced(dom, integration);')
+        ->and($gsapController)
         ->toContain('activeTimeline?.kill()')
         ->toContain('if (isAnimating && opening)')
         ->and($rail)

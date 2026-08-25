@@ -76,29 +76,36 @@ it('renders the rebuilt localized semantic values story', function (): void {
 
 it('owns one lazy deterministic Three.js spatial scene', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/values/controller.js'));
+    $frameTarget = file_get_contents(resource_path('js/surfaces/home/values/frame-target.js'));
     $spatialController = file_get_contents(
         resource_path('js/surfaces/home/values/spatial-controller.js'),
     );
     $scene = file_get_contents(resource_path('js/surfaces/home/values/spatial-scene.js'));
+    $strokes = file_get_contents(resource_path('js/surfaces/home/values/spatial-strokes.js'));
     $lifecycle = file_get_contents(resource_path('js/surfaces/home/values/lifecycle.js'));
     $cssEntry = file_get_contents(resource_path('css/pages/welcome-values-story.css'));
     $shell = file_get_contents(resource_path('css/surfaces/home/values/story-shell.css'));
 
     expect($controller)
         ->toContain('createValuesSpatialBridge')
-        ->toContain('readHandoffProgress')
+        ->toContain('readValuesFrameTarget')
         ->not->toContain("from './spatial-scene.js'")
+        ->and($frameTarget)
+        ->toContain('readHandoffProgress')
+        ->toContain('readGalleryHandoffProgress')
         ->and($spatialController)
         ->toContain("import('./spatial-scene.js')")
         ->and($scene)
         ->toContain("from 'three'")
-        ->toContain('three/addons/lines/Line2.js')
-        ->toContain('three/addons/lines/LineGeometry.js')
-        ->toContain('three/addons/lines/LineMaterial.js')
+        ->toContain("from './spatial-strokes.js'")
         ->toContain('new WebGLRenderer')
         ->toContain('renderer.dispose()')
         ->toContain('const HANDOFF_ENTRY_WEIGHT = .24')
         ->toContain('const STORY_JOURNEY_WEIGHT = .88')
+        ->and($strokes)
+        ->toContain('three/addons/lines/Line2.js')
+        ->toContain('three/addons/lines/LineGeometry.js')
+        ->toContain('three/addons/lines/LineMaterial.js')
         ->toContain('[6.55, 3.55, .08]')
         ->toContain('[-6.55, 3.48, .16]')
         ->toContain('[6.55, 3.55, .34]')
@@ -107,7 +114,7 @@ it('owns one lazy deterministic Three.js spatial scene', function (): void {
         ->toContain('reveal: [.50, 1]')
         ->not->toContain('TubeGeometry')
         ->not->toContain('Math.random')
-        ->and(substr_count($scene, 'reveal: ['))->toBe(3)
+        ->and(substr_count($strokes, 'reveal: ['))->toBe(3)
         ->and($shell)
         ->not->toContain('repeating-conic-gradient')
         ->not->toContain('--values-geometry-opacity')

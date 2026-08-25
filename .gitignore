@@ -34,6 +34,9 @@ Thumbs.db
 /database/*.sqlite-shm
 /database/*.sqlite-wal
 
+# Wrangler/Miniflare generated local state
+/.wrangler/
+
 # Laravel generated cache
 /bootstrap/cache/*.php
 !/bootstrap/cache/.gitignore

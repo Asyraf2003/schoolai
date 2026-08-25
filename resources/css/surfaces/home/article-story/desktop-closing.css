@@ -1,0 +1,78 @@
+@media (min-width: 1280px) {
+    .article-story.is-article-story-ready .article-story__closing {
+        position: relative;
+        flex: 0 0 100vw;
+        width: 100vw;
+        height: 100%;
+        min-height: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #f6f3eb;
+        pointer-events: none;
+    }
+
+    .article-story.is-article-story-ready .article-story__roll-window {
+        position: absolute;
+        top: 0;
+        left: 5vw;
+        width: 25vw;
+        height: 100%;
+        min-height: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .article-story.is-article-story-ready .article-story__roll-stack {
+        gap: 1.666667svh;
+        padding: 8svh 0 32svh;
+        transform: translate3d(0, var(--article-roll-y), 0);
+        will-change: transform;
+    }
+
+    .article-story.is-article-story-ready .article-story__roll-item {
+        width: 25vw;
+        max-width: none;
+        aspect-ratio: 1;
+        margin: 0;
+        box-shadow: 0 18px 48px rgb(17 19 27 / .1);
+    }
+
+    .article-story.is-article-story-ready .article-story__roll-item:nth-child(odd),
+    .article-story.is-article-story-ready .article-story__roll-item:nth-child(even) {
+        margin-inline: 0;
+        transform: none;
+    }
+
+    .article-story.is-article-story-ready .article-story__closing-copy {
+        position: absolute;
+        top: 33.333333svh;
+        left: 45vw;
+        display: grid;
+        align-content: start;
+        width: 35vw;
+        min-height: 25svh;
+        padding: 0;
+    }
+
+    .article-story.is-article-story-ready .article-story__closing-copy h3 {
+        max-width: 12ch;
+        font-size: clamp(2.8rem, 4.2vw, 5.4rem);
+    }
+
+    .article-story.is-article-story-ready .article-story__closing-copy p {
+        max-width: 28rem;
+        font-size: clamp(1rem, 1.05vw, 1.3rem);
+    }
+
+    .article-story.is-article-cta-ready .article-story__closing {
+        pointer-events: auto;
+    }
+
+    .article-story.is-article-story-ready .article-debug-mark {
+        position: absolute;
+        z-index: 40;
+        margin: 0;
+        font: 400 13px/1.2 system-ui, sans-serif;
+        pointer-events: none;
+    }
+}

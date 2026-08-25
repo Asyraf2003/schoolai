@@ -1,6 +1,7 @@
 @import "../surfaces/home/gallery-depth/base.css";
 @import "../surfaces/home/gallery-depth/cards.css";
 @import "../surfaces/home/gallery-depth/end-cta.css";
+@import "../surfaces/home/gallery-depth/end-cta-responsive.css";
 @import "../surfaces/home/gallery-depth/article-handoff.css";
 @import "../surfaces/home/gallery-depth/responsive.css";
 @import "./welcome-values-gallery-handoff.css";

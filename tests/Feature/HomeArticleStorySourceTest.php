@@ -7,11 +7,20 @@ it('separates Article opening, full-height parallax media, and the roll closing'
     $controller = file_get_contents(
         resource_path('js/surfaces/home/article-story/controller.js'),
     );
+    $motion = file_get_contents(
+        resource_path('js/surfaces/home/article-story/motion.js'),
+    );
     $desktop = file_get_contents(
         resource_path('css/surfaces/home/article-story/desktop.css'),
     );
+    $desktopClosing = file_get_contents(
+        resource_path('css/surfaces/home/article-story/desktop-closing.css'),
+    );
     $base = file_get_contents(
         resource_path('css/surfaces/home/article-story/base.css'),
+    );
+    $closing = file_get_contents(
+        resource_path('css/surfaces/home/article-story/closing.css'),
     );
     $pageCss = file_get_contents(
         resource_path('css/pages/welcome-article-story.css'),
@@ -39,9 +48,14 @@ it('separates Article opening, full-height parallax media, and the roll closing'
         ->and($idCopy)
         ->toContain("'closing_heading' => 'Mau lihat artikel selengkapnya?'")
         ->and($controller)
-        ->toContain('const HORIZONTAL_END = 0.78')
+        ->toContain("from './motion.js'")
         ->toContain('const HANDOFF_HOLD_VIEWPORTS = 1')
         ->toContain('closing.offsetLeft')
+        ->toContain('const handoffHold = window.innerHeight * HANDOFF_HOLD_VIEWPORTS')
+        ->toContain('journey.offsetHeight - window.innerHeight - handoffHold')
+        ->not->toContain('scrollTo(')
+        ->and($motion)
+        ->toContain('const HORIZONTAL_END = 0.78')
         ->toContain('const mediaWidth = viewportHeight + viewportWidth * 0.10')
         ->toContain('const mediaRight = itemLeft + mediaWidth')
         ->toContain('relative * 8')
@@ -49,8 +63,6 @@ it('separates Article opening, full-height parallax media, and the roll closing'
         ->toContain('--article-main-copy-y')
         ->toContain('viewportHeight / 24')
         ->toContain('index % 2 === 0')
-        ->toContain('const handoffHold = window.innerHeight * HANDOFF_HOLD_VIEWPORTS')
-        ->toContain('journey.offsetHeight - window.innerHeight - handoffHold')
         ->toContain('(progress - HORIZONTAL_END) / (1 - HORIZONTAL_END)')
         ->not->toContain('blur')
         ->not->toContain('scrollTo(')
@@ -66,14 +78,18 @@ it('separates Article opening, full-height parallax media, and the roll closing'
         ->toContain('width: calc(100svh + 10vw)')
         ->toContain('height: 100svh')
         ->toContain('left: calc(100svh + 12.5vw)')
+        ->and($desktopClosing)
         ->toContain('width: 25vw')
         ->toContain('left: 45vw')
         ->and($base)
         ->toContain('background: #f6f3eb')
         ->toContain('article-story__opening-link')
         ->toContain('article-story__main-copy')
+        ->and($closing)
         ->toContain('article-story__roll-item')
         ->and($pageCss)
+        ->toContain('closing.css')
+        ->toContain('desktop-closing.css')
         ->toContain('debug-ruler.css')
         ->not->toContain('footer-release.css');
 });

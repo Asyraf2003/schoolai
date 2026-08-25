@@ -4,20 +4,12 @@ import { clearCenterMeasurement, collectValuesNodes,
     exposeCenterMeasurement, measureValuesGeometry } from './geometry.js';
 import { clearValuesStory, paintValuesStory } from './paint.js';
 import { mountValuesLifecycle } from './lifecycle.js';
-import { FRAME_MS, createScrollMotion, readGalleryHandoffProgress,
-    readHandoffProgress, readStoryProgress, resetScrollMotion,
+import { FRAME_MS, createScrollMotion, resetScrollMotion,
     updateScrollMotion } from './motion.js';
 import { createValuesSpatialBridge } from './spatial-controller.js';
+import { readValuesFrameTarget, supportsStoryMotion } from './frame-target.js';
 
 const VALUES_SPATIAL_ENABLED = false;
-
-function supportsStoryMotion() {
-    return typeof CSS !== 'undefined'
-        && CSS.supports('overflow', 'clip')
-        && CSS.supports('position', 'sticky')
-        && CSS.supports('perspective', '800px')
-        && CSS.supports('transform-style', 'preserve-3d');
-}
 
 export function createValuesStory(root) {
     const cards = Array.from(root.querySelectorAll('[data-values-card]'));
@@ -68,26 +60,12 @@ export function createValuesStory(root) {
         if (previousMode && previousMode !== geometry.mode) snapNext = true;
     }
 
-    function readFrameTarget() {
-        const rootTop = root.getBoundingClientRect().top;
-        const headingTop = nodes.heading.getBoundingClientRect().top;
-        const timelineTop = nodes.timeline.getBoundingClientRect().top;
-        const storyTop = geometry.mode === 4 ? timelineTop : rootTop;
-        return {
-            handoff: readHandoffProgress(rootTop, geometry.viewportHeight),
-            story: readStoryProgress(storyTop, geometry),
-            galleryHandoff: readGalleryHandoffProgress(storyTop, geometry),
-            headingTop,
-            timelineTop,
-        };
-    }
-
     function render(time) {
         frame = 0;
         if (!enabled || !active || destroyed || document.hidden) return;
         if (geometryDirty || !geometry) measure();
 
-        const target = readFrameTarget();
+        const target = readValuesFrameTarget(root, nodes, geometry);
         const delta = lastTime ? time - lastTime : FRAME_MS;
         lastTime = time;
         const snapshot = updateScrollMotion(motion, target.story, delta, snapNext);

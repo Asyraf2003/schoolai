@@ -76,9 +76,15 @@ it('provides one configurable gradual Vision background compositor', function ()
         ->toContain('--vision-about-color: #efe3ca')
         ->toContain('--vision-vision-color: #cbdfe4')
         ->toContain('--vision-mission-color: #d1dfca')
-        ->toContain('repeating-conic-gradient')
-        ->toContain('background-image: var(--vision-state-pattern)')
-        ->toContain('filter: blur(var(--vision-state-diffusion))');
+        ->toContain('--vision-about-pattern: url("data:image/svg+xml')
+        ->toContain('--vision-vision-pattern: url("data:image/svg+xml')
+        ->toContain('--vision-mission-pattern: url("data:image/svg+xml')
+        ->toContain('background-image:')
+        ->toContain('radial-gradient(circle at 50% 42%')
+        ->toContain('var(--vision-state-pattern)')
+        ->toContain('background-repeat: no-repeat, repeat')
+        ->toContain('filter: blur(var(--vision-state-diffusion))')
+        ->not->toContain('repeating-conic-gradient');
 });
 
 it('uses a native pinned mask reveal without owning document scroll', function (): void {

@@ -1,7 +1,9 @@
 @import "../surfaces/home/values/story-shell.css";
 @import "../surfaces/home/values/story-handoff.css";
 @import "../surfaces/home/values/story-kinetic.css";
+@import "../surfaces/home/values/story-kinetic-handoff.css";
 @import "../surfaces/home/values/story-heading.css";
+@import "../surfaces/home/values/story-heading-responsive.css";
 @import "../surfaces/home/values/story-spatial.css";
 @import "../surfaces/home/values/story-cards.css";
 @import "../surfaces/home/values/story-card-back.css";

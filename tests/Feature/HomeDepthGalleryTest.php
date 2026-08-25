@@ -81,6 +81,7 @@ it('locks the faithful homepage depth gallery source contract', function (): voi
         ->toContain('gallery-depth/base.css')
         ->toContain('gallery-depth/cards.css')
         ->toContain('gallery-depth/end-cta.css')
+        ->toContain('gallery-depth/end-cta-responsive.css')
         ->toContain('gallery-depth/responsive.css')
         ->and($base)
         ->toContain('height: 100svh')
@@ -194,6 +195,9 @@ it('keeps Gallery heading continuity locally owned and depth Gallery untouched',
     $continuity = file_get_contents(resource_path(
         'js/surfaces/home/gallery-heading/desktop-continuity.js',
     ));
+    $mask = file_get_contents(resource_path(
+        'js/surfaces/home/gallery-heading/desktop-mask.js',
+    ));
     $desktop = file_get_contents(
         resource_path('css/pages/welcome-gallery-heading-desktop.css'),
     );
@@ -202,19 +206,26 @@ it('keeps Gallery heading continuity locally owned and depth Gallery untouched',
         ->toContain("matchMedia('(min-width: 1280px)')")
         ->toContain('initialiseDesktopContinuity')
         ->and($continuity)
-        ->toContain("querySelector('[data-depth-gallery]')")
-        ->toContain('--gh-opacity')
-        ->toContain('--gh-top-y')
-        ->toContain('--gh-bottom-y')
-        ->toContain('--gh-blur')
+        ->toContain("querySelector('[data-program-values-world]')")
+        ->toContain('--gh-handoff-opacity')
+        ->toContain('--gh-media-opacity')
+        ->toContain('--gh-media-blur')
         ->toContain('--gallery-handoff-progress')
         ->toContain("window.addEventListener('pagehide', destroy)")
+        ->toContain("window.removeEventListener('pagehide', destroy)")
+        ->not->toContain("querySelector('[data-depth-gallery]')")
         ->not->toContain('window.scrollTo')
+        ->and($mask)
+        ->toContain("querySelector('[data-gallery-mask-handoff]')")
+        ->toContain('data-gallery-mask-blinds')
         ->and($desktop)
         ->toContain('@media (min-width: 1280px)')
         ->toContain('.gallery-heading-motion--scroll-linked')
-        ->toContain('opacity: var(--gh-opacity)')
-        ->toContain('filter: blur(var(--gh-blur))')
+        ->toContain('opacity: min(')
+        ->toContain('var(--gh-handoff-opacity)')
+        ->toContain('var(--gh-media-opacity)')
+        ->toContain('filter: blur(var(--gh-media-blur))')
+        ->toContain('scale(var(--gh-media-scale))')
         ->toContain('@media (min-width: 1280px) and (prefers-reduced-motion: reduce)');
 });
 
@@ -226,6 +237,9 @@ it('uses the closing Gallery composition as the sticky-scale handoff to Article'
     ));
     $styles = file_get_contents(resource_path(
         'css/surfaces/home/gallery-depth/end-cta.css',
+    ));
+    $responsiveStyles = file_get_contents(resource_path(
+        'css/surfaces/home/gallery-depth/end-cta-responsive.css',
     ));
     $handoffStyles = file_get_contents(resource_path(
         'css/surfaces/home/gallery-depth/article-handoff.css',
@@ -250,6 +264,7 @@ it('uses the closing Gallery composition as the sticky-scale handoff to Article'
         ->and($styles)
         ->toContain('.depth-gallery__end-media--1')
         ->toContain('.depth-gallery__end-media--2')
+        ->and($responsiveStyles)
         ->toContain('margin-top: -100svh')
         ->toContain('transform-origin: 50% 0%')
         ->and($handoffStyles)

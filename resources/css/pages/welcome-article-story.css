@@ -1,4 +1,6 @@
 @import "../surfaces/home/article-story/base.css";
+@import "../surfaces/home/article-story/closing.css";
 @import "../surfaces/home/article-story/desktop.css";
+@import "../surfaces/home/article-story/desktop-closing.css";
 @import "../surfaces/home/article-story/responsive.css";
 @import "../surfaces/home/article-story/debug-ruler.css";

@@ -118,12 +118,12 @@
       "originalSourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db"
     },
     "resources/css/pages/welcome-hero.css": {
-      "sourceSha256": "9e6092c3503d4f58ea25351ea2ef1e2ece84fe1c5acd81a443f72cb3976bc533",
+      "sourceSha256": "ba2343692514b9a13c4311e4a66730f35651710e98df4120292bb1b7fd25345d",
       "orderedModules": [
         {
           "path": "./welcome-hero/001-homepage-hero-and-overlay-navigation-this-file-inten.css",
-          "lines": 177,
-          "sha256": "e67016e9fb5bc3d004a20b45529c85413e63b9ced6961b5177c8c7bd571911dd"
+          "lines": 185,
+          "sha256": "a5495f7c2fe655778cb4798f7b54a8665a667db4650ce8fc6dd86941714d475c"
         },
         {
           "path": "./welcome-hero/002-welcome-hero-cascade-002.css",
@@ -211,7 +211,7 @@
       "originalSourceSha256": "e8c0330c670122a378d6eb0f11fcdab928e257c1e15ee72bc74479a89257fd5e"
     },
     "resources/css/pages/welcome.css": {
-      "sourceSha256": "1d1eb59cd2fa94d4b348b4a840283e380b74a49a23a3d57f94352c31e580cb84",
+      "sourceSha256": "d4b01d22f0f968891469c4b0a35d6f11e969dbadc465182fc630fc73bf798dcd",
       "orderedModules": [
         {
           "path": "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css",
@@ -427,6 +427,11 @@
           "path": "./welcome/043-welcome-cascade-043.css",
           "lines": 182,
           "sha256": "8b5d96ea3355d38ba4ebc6d5e01c2ad83da0e41c42814fde481a46295e172e18"
+        },
+        {
+          "path": "./welcome/043-gallery-page-sections.css",
+          "lines": 105,
+          "sha256": "264493e9ca6780da30c6577c33bae4a658693e43c5f1e1c6e412f5f4c2c0ba8b"
         },
         {
           "path": "./welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css",

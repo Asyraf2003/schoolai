@@ -1,18 +1,33 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\View;
 
 uses(RefreshDatabase::class);
 
-it('exposes editorial descriptions without unsupported paragraph aria labels', function (): void {
-    foreach (['id', 'en', 'ar'] as $locale) {
+it('preserves accessible latent editorial descriptions in every locale', function (): void {
+    $copyByLocale = [
+        'id' => [
+            'title' => 'Kehidupan Sekolah',
+            'description' => 'Belajar bersama untuk masa depan.',
+        ],
+        'en' => [
+            'title' => 'School Life',
+            'description' => 'Learning together for a brighter future.',
+        ],
+        'ar' => [
+            'title' => 'الحياة المدرسية',
+            'description' => 'نتعلم معًا من أجل مستقبل مشرق.',
+        ],
+    ];
+
+    foreach ($copyByLocale as $locale => $copy) {
         app()->setLocale($locale);
 
-        $content = $this
-            ->withSession(['locale' => $locale])
-            ->get(route('home'))
-            ->assertOk()
-            ->getContent();
+        $content = View::make('home.partials.editorial-section-heading', [
+            'title' => $copy['title'],
+            'description' => $copy['description'],
+        ])->render();
 
         preg_match_all(
             '/<p class="welcome-editorial-heading__description"([^>]*)>(.*?)<\/p>/su',
@@ -21,13 +36,14 @@ it('exposes editorial descriptions without unsupported paragraph aria labels', f
             PREG_SET_ORDER,
         );
 
-        expect($descriptions)->not->toBeEmpty();
+        expect($descriptions)->toHaveCount(1);
 
-        foreach ($descriptions as $description) {
-            expect($description[1])
+        foreach ($descriptions as $descriptionMatch) {
+            expect($descriptionMatch[1])
                 ->not->toContain('aria-label')
-                ->and($description[2])
-                ->toContain('class="sr-only"')
+                ->and($descriptionMatch[2])
+                ->toContain('<span class="sr-only">'.e($copy['description']).'</span>')
+                ->toContain('class="welcome-editorial-heading__description-clip"')
                 ->toContain('aria-hidden="true"');
         }
     }
