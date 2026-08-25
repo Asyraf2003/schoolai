@@ -26,17 +26,18 @@ it('keeps all H5 group two Blade owners free of PHP shaping', function (): void 
 
 it('renders localized Home gallery presentation and final Arabic mission text', function (): void {
     $expected = [
-        'id' => 'AREA GALERI',
-        'en' => 'AREA OF GALLERY',
-        'ar' => 'مساحة المعرض',
+        'id' => ['AREA GALERI', 'Lihat selengkapnya'],
+        'en' => ['AREA OF GALLERY', 'View more'],
+        'ar' => ['مساحة المعرض', 'عرض المزيد'],
     ];
 
-    foreach ($expected as $locale => $galleryHeading) {
+    foreach ($expected as $locale => [$galleryHeading, $galleryMore]) {
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
         $response
             ->assertOk()
-            ->assertSee($galleryHeading);
+            ->assertSee($galleryHeading)
+            ->assertSee($galleryMore);
 
         if ($locale === 'ar') {
             $response
@@ -51,7 +52,7 @@ it('renders localized Home gallery presentation and final Arabic mission text', 
         ->not->toContain('welcome-article-story.css');
 });
 
-it('preserves Gallery preset shaping while rendering the editorial stream', function (): void {
+it('preserves Gallery preset shaping while rendering the alternating editorial stream', function (): void {
     $items = collect(range(1, 7))->map(fn (int $index): array => [
         'title' => 'Gallery '.$index,
         'caption' => 'Caption '.$index,
@@ -70,13 +71,15 @@ it('preserves Gallery preset shaping while rendering the editorial stream', func
     expect($html)
         ->toContain('data-gallery-story')
         ->toContain('--gallery-story-count: 7')
-        ->toContain('gallery-story__item--1')
-        ->toContain('gallery-story__item--5')
+        ->toContain('gallery-story__item--right')
+        ->toContain('gallery-story__item--left')
+        ->toContain('data-gallery-background')
         ->toContain('data-gallery-story-media')
         ->toContain('data-gallery-story-copy')
         ->toContain('Closing copy')
         ->toContain('data-depth-gallery-end-link')
-        ->and(substr_count($html, 'data-gallery-story-item'))->toBe(7);
+        ->and(substr_count($html, 'data-gallery-story-item'))->toBe(7)
+        ->and(substr_count($html, 'data-depth-gallery-end-link'))->toBe(1);
 });
 
 it('shapes the final hero collection at the included section boundary', function (): void {
