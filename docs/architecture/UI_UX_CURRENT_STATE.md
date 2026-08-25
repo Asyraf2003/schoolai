@@ -1,7 +1,7 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H6_PASS / H7_READY`
-Updated: 2026-08-24
+Status: `HARDENING_ACTIVE / H7_G0_PASS / H7_RUNTIME_NOT_STARTED`
+Updated: 2026-08-25
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Inspected runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
@@ -527,6 +527,27 @@ For each capability: resolve current `main`, read `AGENTS.md` + mandatory docs,
 reconcile source drift, edit only proven owners, run focused proof + available DOD
 gates, update durable state, and never force-push.
 
+## H7 G0 automated gate
+
+Published H7-G0 source/test checkpoint:
+`8f13f716` (`h7: close automated baseline debt`).
+
+Proven on the intended source:
+
+- the five legacy test owners now assert the accepted production contracts;
+- both checksum drifts were reconciled after ordered-import ownership was proven;
+- three unreferenced candidates were deleted only after supersession/deadness was
+  proven;
+- all 11 over-limit files were split by existing responsibility with import and
+  source-contract coverage preserved;
+- `/.wrangler/` is ignored as generated Miniflare local state while its local R2
+  data remains preserved in place;
+- `git diff --check`, `npm run check:structure`, `npm run build`, and the full
+  247-test / 2,539-assertion suite pass.
+
+H7 runtime, browser, responsive/locale, accessibility, security and performance
+certification has not started. No runtime certification status is implied by G0.
+
 ## Protected / deferred
 
 - no unrelated redesign or visual polishing during hardening;
@@ -555,7 +576,8 @@ gates, update durable state, and never force-push.
 - H6 source/lifecycle implementation: PASS.
 - H6 production CORS/cache rollout and per-owner data migration: PASS.
 - H6 final acceptance: PASS.
-- H7 implementation: NOT STARTED / READY.
+- H7 G0 automated baseline: PASS.
+- H7 runtime certification: NOT STARTED.
 - final responsive/locale/WebKit/performance/accessibility/security certification:
   `BLOCKED_BY_MISSING_EVIDENCE` until H7.
 
@@ -565,6 +587,5 @@ gates, update durable state, and never force-push.
 
 ## NEXT VALID STEP
 
-Begin H7 release certification and frozen baseline-debt closure from the accepted
-execution packet. Preserve H1-H6 proven behavior and keep H7 bounded to its named
-owners and proof gates.
+Begin H7 runtime certification from the accepted execution packet only when the
+owner opens that step. Preserve H1-H6 and the proven H7-G0 source checkpoint.

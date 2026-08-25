@@ -14,11 +14,12 @@ must not substitute for one another.
 
 ## G0 — Clean automated baseline
 
-- [ ] `git diff --check` passes on the intended source head.
-- [ ] `npm run check:structure` passes.
-- [ ] `npm run build` passes.
-- [ ] `php artisan test` passes with `0 failed`.
-- [ ] Source head used for runtime testing is recorded.
+- [x] `git diff --check` passes on the intended source head.
+- [x] `npm run check:structure` passes.
+- [x] `npm run build` passes.
+- [x] `php artisan test` passes with `0 failed`.
+- [x] Intended H7-G0 source/test head is recorded as `8f13f716`; runtime
+      certification has not started.
 
 No visual refactor starts while G0 is unknown or red unless the owner explicitly
 opens a separate bounded incident.
