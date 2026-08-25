@@ -46,6 +46,7 @@ final class HomeGalleryComposer
             'depthItems' => $items,
             'depthCta' => $cta,
             'hasDepthCta' => $hasCta,
+            'galleryMoreLabel' => $this->translator->get('home_presentation.gallery_more'),
             'depthEndSteps' => $endSteps,
             'depthJourneyCount' => max(1, $items->count() + $endSteps),
             'depthClosingMedia' => $items->slice(max(0, $items->count() - 2))->values(),
@@ -61,11 +62,11 @@ final class HomeGalleryComposer
     private function depthPresets(): array
     {
         return [
-            ['x' => -0.9, 'fallback' => '#feca4f', 'accent' => '#feca4f', 'background' => '#fffaf0', 'blob1' => '#ffdf94', 'blob2' => '#fce7c4'],
-            ['x' => 0.8, 'fallback' => '#80455a', 'accent' => '#80455a', 'background' => '#fffaf0', 'blob1' => '#d29a41', 'blob2' => '#bb96af'],
-            ['x' => -0.7, 'fallback' => '#fa7b71', 'accent' => '#fa7b71', 'background' => '#5f81ab', 'blob1' => '#f88b8d', 'blob2' => '#cfbbdd'],
-            ['x' => 1, 'fallback' => '#3c72c6', 'accent' => '#3c72c6', 'background' => '#5b9bc2', 'blob1' => '#ffaa00', 'blob2' => '#00e1ff'],
-            ['x' => -0.7, 'fallback' => '#fdd895', 'accent' => '#fdd895', 'background' => '#7d936e', 'blob1' => '#fdd895', 'blob2' => '#a5b599'],
+            ['x' => 0.9, 'fallback' => '#d8b96f', 'accent' => '#d8b96f', 'background' => '#6f9b72', 'blob1' => '#a9c2a0', 'blob2' => '#d7e3cf'],
+            ['x' => -0.9, 'fallback' => '#9b684f', 'accent' => '#9b684f', 'background' => '#c6ad78', 'blob1' => '#ead9ae', 'blob2' => '#b88e61'],
+            ['x' => 0.9, 'fallback' => '#66849b', 'accent' => '#66849b', 'background' => '#91a8b3', 'blob1' => '#cbd8dc', 'blob2' => '#6f8fa0'],
+            ['x' => -0.9, 'fallback' => '#9b6654', 'accent' => '#9b6654', 'background' => '#b98770', 'blob1' => '#dec0ad', 'blob2' => '#99634f'],
+            ['x' => 0.9, 'fallback' => '#788b61', 'accent' => '#788b61', 'background' => '#9eaa82', 'blob1' => '#d4dabd', 'blob2' => '#71805b'],
         ];
     }
 }
