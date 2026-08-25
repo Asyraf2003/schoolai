@@ -1,286 +1,67 @@
 <?php
 
-it('locks the faithful homepage depth gallery source contract', function (): void {
-    $homeSections = file_get_contents(app_path(
-        'Http/Controllers/Concerns/BuildsHomeSections.php',
-    ));
+it('locks the homepage editorial gallery story contract', function (): void {
     $gallery = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
-    $depth = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
+    $story = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $presentation = file_get_contents(app_path('View/Composers/HomeGalleryComposer.php'));
-    $entry = file_get_contents(resource_path('css/pages/welcome-depth-gallery.css'));
-    $base = file_get_contents(resource_path('css/surfaces/home/gallery-depth/base.css'));
-    $responsive = file_get_contents(resource_path(
-        'css/surfaces/home/gallery-depth/responsive.css'
-    ));
-    $controller = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/controller.js'
-    ));
-    $runtime = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/three-runtime.js'
-    ));
-    $threePackage = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/three-package.js'
-    ));
-    $engine = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/engine.js'
-    ));
-    $frame = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/engine-frame.js'
-    ));
-    $planes = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/gallery.js'
-    ));
-    $motion = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/gallery-motion.js'
-    ));
-    $scroll = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/scroll.js'
-    ));
-    $endCta = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/end-cta.js'
-    ));
-    $background = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/background.js'
-    ));
-    $trail = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/trail.js'
-    ));
-    $trailController = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/trail-controller.js'
-    ));
-    $license = base_path('docs/third-party/codrops-depth-gallery-MIT.txt');
+    $styles = file_get_contents(resource_path('css/pages/welcome-depth-gallery.css'));
+    $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
+    $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
 
-    expect($homeSections)
-        ->toContain("\$gallery['cta']['href'] = route('galeri')")
-        ->and($gallery)
+    expect($gallery)
         ->toContain("@include('home.sections.gallery-depth')")
-        ->not->toContain('galeri-section__action')
-        ->and($depth)
-        ->toContain('data-depth-gallery-canvas')
-        ->toContain('data-depth-gallery-labels')
-        ->toContain('data-depth-gallery-source')
+        ->not->toContain('gallery-mask-handoff')
+        ->and($story)
+        ->toContain('data-gallery-story')
+        ->toContain('data-gallery-story-handoff')
+        ->toContain('data-gallery-story-title')
+        ->toContain('data-gallery-story-intro')
+        ->toContain('data-gallery-story-item')
+        ->toContain('data-gallery-story-media')
+        ->toContain('data-gallery-story-copy')
         ->toContain('data-depth-gallery-end-link')
-        ->toContain('data-depth-gallery-end-steps')
-        ->toContain('data-depth-gallery-copy')
-        ->toContain('data-depth-gallery-transition="sticky-scale"')
-        ->toContain('depth-gallery__end-showcase')
-        ->toContain('depth-gallery__end-media--')
-        ->toContain('class="depth-gallery__fallback-item"')
-        ->toContain('data-position-x="{{ $item[\'preset\'][\'x\'] }}"')
-        ->toContain('data-background-color')
-        ->not->toContain('<svg')
-        ->not->toContain('depth-gallery__card')
+        ->toContain('gallery-story__item--{{ ($loop->index % 5) + 1 }}')
+        ->not->toContain('data-depth-gallery-canvas')
+        ->not->toContain('<canvas')
         ->not->toContain('data-media-url')
         ->not->toContain('data-is-video')
-        ->not->toContain('role="button"')
         ->and($presentation)
         ->toContain('$presets[$index % count($presets)]')
-        ->toContain("['x' => -0.9")
-        ->toContain("['x' => 0.8")
-        ->and($entry)
-        ->toContain('gallery-depth/base.css')
-        ->toContain('gallery-depth/cards.css')
-        ->toContain('gallery-depth/end-cta.css')
-        ->toContain('gallery-depth/end-cta-responsive.css')
-        ->toContain('gallery-depth/responsive.css')
-        ->and($base)
-        ->toContain('height: 100svh')
+        ->and($styles)
+        ->toContain('--gallery-story-bg: #efb84b')
         ->toContain('position: sticky')
-        ->toContain('--depth-step: 280px')
-        ->toContain('--depth-label-opacity: 1')
-        ->not->toContain('perspective:')
-        ->not->toContain('transform-style: preserve-3d')
-        ->and($responsive)
-        ->toContain('@media (min-width: 640px)')
-        ->toContain('@media (min-width: 768px)')
-        ->toContain('@media (min-width: 1024px)')
-        ->toContain('@media (min-width: 1280px)')
-        ->toContain('@media (min-width: 1536px)')
-        ->toContain('--depth-step: 500px')
+        ->toContain('.gallery-story__item--1 .gallery-story__media')
+        ->toContain('.gallery-story__item--5 .gallery-story__media')
+        ->toContain('.galeri-section.is-gallery-handoff')
+        ->toContain('--values-gallery-world-opacity-pct')
+        ->toContain('@media (max-width: 1023px)')
         ->toContain('@media (prefers-reduced-motion: reduce)')
         ->and($controller)
-        ->toContain('loadThreeRuntime')
-        ->toContain('DepthGalleryEngine')
-        ->toContain('bindGalleryRouteExit')
-        ->toContain('IntersectionObserver')
-        ->toContain('visibilitychange')
-        ->not->toContain('createGalleryStoryLightbox')
-        ->and($runtime)
-        ->toContain("import('./three-package.js')")
-        ->not->toContain('cdn.jsdelivr.net')
-        ->not->toContain('/* @vite-ignore */')
-        ->and($threePackage)
-        ->toContain("from 'three'")
-        ->and($engine)
-        ->toContain('PerspectiveCamera(45, 1, 0.1, 100)')
-        ->toContain('new this.THREE.WebGLRenderer')
-        ->toContain('DepthGalleryEndCta')
-        ->toContain('Math.min(window.devicePixelRatio || 1, 1.5)')
-        ->toContain("'ResizeObserver' in window")
-        ->and($frame)
-        ->toContain('renderer.clearDepth()')
-        ->toContain('getDrawingBufferSize')
-        ->toContain('isDepthRendererHealthy')
-        ->toContain('!context.isContextLost()')
-        ->toContain('context.getError() === context.NO_ERROR')
-        ->not->toContain('hasVisiblePlane')
-        ->not->toContain('hasVisibleEndCta')
-        ->not->toContain('plane.material.opacity > 0.01')
-        ->and($planes)
-        ->toContain('PlaneGeometry(3, 3)')
-        ->toContain('this.planeGap = 5')
-        ->toContain('this.desktopPlaneScale = 0.67')
-        ->toContain('this.mobilePlaneScale = 0.44')
-        ->toContain('this.mobileXSpreadFactor = 0.25')
-        ->and($motion)
-        ->toContain('const endOpacity = 1 - scroll.endProgress')
-        ->and($scroll)
-        ->toContain('this.scrollSmoothing = 0.08')
-        ->toContain('this.velocityDamping = 0.12')
-        ->toContain('this.progressTarget')
-        ->toContain('this.endProgressTarget')
-        ->toContain('getTransitionDistance()')
-        ->toContain('getTransitionProgress()')
-        ->toContain('fullTravel - transitionDistance')
-        ->toContain('this.scrollCurrent / travel')
-        ->toContain('this.endProgress')
-        ->and($endCta)
-        ->toContain('this.scroll.getTransitionProgress()')
-        ->toContain('this.scroll.endProgressTarget')
-        ->toContain('semanticProgress >= 0.7')
-        ->toContain("root.classList.toggle('is-depth-end-ready'")
-        ->toContain('is-depth-transitioning')
-        ->toContain('--depth-end-progress')
-        ->toContain('--depth-label-opacity')
-        ->toContain('--depth-transition-scale')
-        ->not->toContain('getBoundingClientRect()')
-        ->and($background)
-        ->toContain('ShaderMaterial')
-        ->toContain('setMoodBlend')
-        ->and($trail)
-        ->toContain('CatmullRomCurve3')
-        ->toContain('createTaperedTube')
-        ->and($trailController)
-        ->toContain('horizontalCycles: 1.85')
-        ->toContain('verticalCycles: 2.1')
-        ->toContain('this.trail.curveTension = 0.67')
-        ->toContain('this.trail.pointSmoothing = 0.53');
-
-    expect(file_exists(resource_path(
-        'js/surfaces/home/gallery-depth/renderer.js'
-    )))->toBeFalse();
-    expect(file_exists(resource_path(
-        'js/surfaces/home/gallery-depth/scene.js'
-    )))->toBeFalse();
-    expect(file_exists($license))->toBeTrue();
+        ->toContain('readValuesExitProgress')
+        ->toContain('mixColor(BLUE, GALLERY, exitProgress)')
+        ->toContain('paintHandoff')
+        ->toContain('paintIntro')
+        ->toContain('paintItems')
+        ->toContain("window.addEventListener('scroll', requestRender")
+        ->toContain("'(prefers-reduced-motion: reduce)'")
+        ->not->toContain('loadThreeRuntime')
+        ->not->toContain('DepthGalleryEngine')
+        ->not->toContain('WebGLRenderer')
+        ->and($welcome)
+        ->not->toContain("@include('home.sections.articles')")
+        ->not->toContain('welcome-article-story.css');
 });
 
-it('keeps empty Gallery transition frames out of the failure contract', function (): void {
-    $frame = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/engine-frame.js'
-    ));
+it('keeps the homepage gallery controller small and scroll owned', function (): void {
+    $file = resource_path('js/pages/welcome-depth-gallery.js');
+    $source = file_get_contents($file);
 
-    expect($frame)
-        ->toContain('return isDepthRendererHealthy(engine);')
-        ->toContain('function isDepthRendererHealthy(engine)')
-        ->toContain('getDrawingBufferSize')
-        ->toContain('!context.isContextLost()')
-        ->toContain('context.getError() === context.NO_ERROR')
-        ->not->toContain('engine.gallery.planes.some')
-        ->not->toContain('engine.endCta.isVisible()');
-});
-
-it('keeps Gallery heading continuity locally owned and depth Gallery untouched', function (): void {
-    $heading = file_get_contents(resource_path('js/pages/welcome-gallery-heading.js'));
-    $continuity = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-heading/desktop-continuity.js',
-    ));
-    $mask = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-heading/desktop-mask.js',
-    ));
-    $desktop = file_get_contents(
-        resource_path('css/pages/welcome-gallery-heading-desktop.css'),
-    );
-
-    expect($heading)
-        ->toContain("matchMedia('(min-width: 1280px)')")
-        ->toContain('initialiseDesktopContinuity')
-        ->and($continuity)
-        ->toContain("querySelector('[data-program-values-world]')")
-        ->toContain('--gh-handoff-opacity')
-        ->toContain('--gh-media-opacity')
-        ->toContain('--gh-media-blur')
-        ->toContain('--gallery-handoff-progress')
+    expect(count(file($file)))->toBeLessThanOrEqual(200)
+        ->and($source)
+        ->toContain('requestAnimationFrame')
+        ->toContain('getBoundingClientRect()')
+        ->toContain('--gallery-media-opacity')
+        ->toContain('--gallery-copy-opacity')
         ->toContain("window.addEventListener('pagehide', destroy)")
-        ->toContain("window.removeEventListener('pagehide', destroy)")
-        ->not->toContain("querySelector('[data-depth-gallery]')")
-        ->not->toContain('window.scrollTo')
-        ->and($mask)
-        ->toContain("querySelector('[data-gallery-mask-handoff]')")
-        ->toContain('data-gallery-mask-blinds')
-        ->and($desktop)
-        ->toContain('@media (min-width: 1280px)')
-        ->toContain('.gallery-heading-motion--scroll-linked')
-        ->toContain('opacity: min(')
-        ->toContain('var(--gh-handoff-opacity)')
-        ->toContain('var(--gh-media-opacity)')
-        ->toContain('filter: blur(var(--gh-media-blur))')
-        ->toContain('scale(var(--gh-media-scale))')
-        ->toContain('@media (min-width: 1280px) and (prefers-reduced-motion: reduce)');
-});
-
-it('uses the closing Gallery composition as the sticky-scale handoff to Article', function (): void {
-    $blade = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
-    $presentation = file_get_contents(app_path('View/Composers/HomeGalleryComposer.php'));
-    $controller = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/end-cta.js',
-    ));
-    $styles = file_get_contents(resource_path(
-        'css/surfaces/home/gallery-depth/end-cta.css',
-    ));
-    $responsiveStyles = file_get_contents(resource_path(
-        'css/surfaces/home/gallery-depth/end-cta-responsive.css',
-    ));
-    $handoffStyles = file_get_contents(resource_path(
-        'css/surfaces/home/gallery-depth/article-handoff.css',
-    ));
-
-    expect($blade)
-        ->toContain('$depthClosingMedia')
-        ->toContain('depth-gallery__end-showcase')
-        ->toContain('depth-gallery__end-copy')
-        ->toContain('data-depth-gallery-transition="sticky-scale"')
-        ->and($presentation)
-        ->toContain('$items->slice(max(0, $items->count() - 2))->values()')
-        ->and($controller)
-        ->toContain('--depth-end-progress')
-        ->toContain('--depth-transition-progress')
-        ->toContain('--depth-transition-scale')
-        ->toContain('this.scroll.getTransitionProgress()')
-        ->toContain('this.scroll.endProgressTarget')
-        ->toContain('semanticProgress >= 0.7')
-        ->toContain('(this.transitionProgress - 0.30) / 0.70')
-        ->not->toContain('getBoundingClientRect()')
-        ->and($styles)
-        ->toContain('.depth-gallery__end-media--1')
-        ->toContain('.depth-gallery__end-media--2')
-        ->and($responsiveStyles)
-        ->toContain('margin-top: -100svh')
-        ->toContain('transform-origin: 50% 0%')
-        ->and($handoffStyles)
-        ->toContain('.galeri-section:has(.depth-gallery.is-depth-transitioning)')
-        ->toContain('background: #f6f3eb');
-});
-
-it('keeps every active depth gallery source within the file limit', function (): void {
-    $files = glob(resource_path('js/surfaces/home/gallery-depth/*.js'));
-    $files[] = resource_path('js/components/gallery-route-transition.js');
-
-    expect($files)->not->toBeEmpty();
-
-    foreach ($files as $file) {
-        $lines = count(file($file));
-        expect($lines, basename($file).' exceeds 200 lines')
-            ->toBeLessThanOrEqual(200);
-    }
+        ->toContain("window.removeEventListener('pagehide', destroy)");
 });
