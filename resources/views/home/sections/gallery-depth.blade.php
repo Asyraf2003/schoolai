@@ -6,7 +6,7 @@
 >
   <div class="gallery-story__handoff" data-gallery-story-handoff aria-hidden="true"></div>
 
-  <div class="gallery-story__title-rail" aria-hidden="true">
+  <div class="gallery-story__title-rail">
     <h2
       class="gallery-story__title"
       id="homepage-gallery-heading"
@@ -16,9 +16,7 @@
     </h2>
   </div>
 
-  <div class="gallery-story__intro" data-gallery-story-intro>
-    <span class="sr-only">{{ $galleryHeading }}</span>
-  </div>
+  <div class="gallery-story__intro" data-gallery-story-intro aria-hidden="true"></div>
 
   <div
     class="gallery-story__stream"
