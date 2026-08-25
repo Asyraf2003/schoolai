@@ -4,7 +4,6 @@ export const HOME_PREPARATION_ORDER = Object.freeze([
   'values',
   'vision',
   'gallery',
-  'article',
   'footer',
 ]);
 
@@ -19,7 +18,6 @@ const preparationSteps = {
     .then(({ prepareHomepageVisionStory }) => prepareHomepageVisionStory()),
   gallery: () => import('../welcome-depth-gallery.js')
     .then(({ prepareHomepageDepthGallery }) => prepareHomepageDepthGallery()),
-  article: () => import('../../surfaces/home/article-story/controller.js'),
   footer: () => Promise.resolve(),
 };
 
