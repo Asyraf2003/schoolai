@@ -1,7 +1,7 @@
 let mounted = false;
 
 const BLUE = [32, 56, 255];
-const GALLERY = [239, 184, 75];
+const GALLERY = [111, 155, 114];
 
 function clamp(value) {
     return Math.max(0, Math.min(1, value));
@@ -17,7 +17,6 @@ function mixColor(from, to, progress) {
     const channels = from.map((channel, index) => Math.round(
         channel + ((to[index] - channel) * value),
     ));
-
     return `rgb(${channels.join(' ')})`;
 }
 
@@ -31,9 +30,9 @@ function readValuesExitProgress(valuesWorld) {
 }
 
 function titleFinalScale() {
-    if (window.innerWidth < 640) return 0.58;
-    if (window.innerWidth < 1024) return 0.50;
-    return 0.42;
+    if (window.innerWidth < 640) return 0.62;
+    if (window.innerWidth < 1024) return 0.54;
+    return 0.46;
 }
 
 function mountGalleryStory(root) {
@@ -52,48 +51,33 @@ function mountGalleryStory(root) {
         const exitProgress = readValuesExitProgress(valuesWorld);
         const sectionTop = section.getBoundingClientRect().top;
         const desktop = window.innerWidth >= 1280;
-        const active = desktop
-            && !reducedMotion.matches
-            && exitProgress > 0.0001
-            && sectionTop > 1;
+        const active = desktop && !reducedMotion.matches
+            && exitProgress > 0.0001 && sectionTop > 1;
 
         section.classList.toggle('is-gallery-handoff', active);
-        root.style.setProperty(
-            '--gallery-handoff-color',
-            mixColor(BLUE, GALLERY, exitProgress),
-        );
+        root.style.setProperty('--gallery-handoff-color', mixColor(BLUE, GALLERY, exitProgress));
         root.style.setProperty('--gallery-handoff-opacity', active ? '1' : '0');
 
         if (active) {
             const headingProgress = smoothstep((exitProgress - 0.68) / 0.32);
             root.style.setProperty('--gallery-title-y', '0px');
-            root.style.setProperty(
-                '--gallery-title-scale',
-                (1.18 + (headingProgress * 0.08)).toFixed(4),
-            );
-            root.style.setProperty(
-                '--gallery-title-opacity',
-                headingProgress.toFixed(4),
-            );
+            root.style.setProperty('--gallery-title-scale', (1.16 + (headingProgress * 0.06)).toFixed(4));
+            root.style.setProperty('--gallery-title-opacity', headingProgress.toFixed(4));
         }
-
         return active;
     }
 
     function paintIntro(handoffActive) {
         if (!intro || handoffActive || reducedMotion.matches) return;
-
         const viewportHeight = Math.max(window.innerHeight, 1);
         const rect = intro.getBoundingClientRect();
         const travel = Math.max(intro.offsetHeight - viewportHeight, 1);
         const progress = smoothstep(clamp(-rect.top / travel));
-        const startY = viewportHeight * (window.innerWidth < 640 ? 0.34 : 0.36);
-        const scale = 1.26 + ((titleFinalScale() - 1.26) * progress);
+        const startY = viewportHeight * (window.innerWidth < 640 ? 0.32 : 0.34);
+        const finalY = Math.min(42, viewportHeight * 0.055);
+        const scale = 1.22 + ((titleFinalScale() - 1.22) * progress);
 
-        root.style.setProperty(
-            '--gallery-title-y',
-            `${(startY * (1 - progress)).toFixed(2)}px`,
-        );
+        root.style.setProperty('--gallery-title-y', `${(startY + ((finalY - startY) * progress)).toFixed(2)}px`);
         root.style.setProperty('--gallery-title-scale', scale.toFixed(4));
         root.style.setProperty('--gallery-title-opacity', '1');
     }
@@ -101,21 +85,31 @@ function mountGalleryStory(root) {
     function paintItems() {
         if (reducedMotion.matches) return;
         const viewportHeight = Math.max(window.innerHeight, 1);
-        const trigger = viewportHeight * 0.91;
-        const distance = viewportHeight * 0.72;
+        const viewportCenter = viewportHeight * 0.5;
+        const revealStart = viewportHeight * 0.96;
+        const revealDistance = viewportHeight * 0.7;
 
         items.forEach((item) => {
-            const rect = item.getBoundingClientRect();
-            const raw = clamp((trigger - rect.top) / distance);
-            const mediaProgress = smoothstep(raw);
-            const copyProgress = smoothstep(clamp((raw - 0.16) / 0.84));
-            const mediaY = (1 - mediaProgress) * Math.min(190, viewportHeight * 0.22);
-            const mediaScale = 0.94 + (mediaProgress * 0.06);
-            const copyY = (1 - copyProgress) * Math.min(112, viewportHeight * 0.13);
+            const media = item.querySelector('[data-gallery-story-media]');
+            if (!media) return;
+
+            const itemRect = item.getBoundingClientRect();
+            const mediaRect = media.getBoundingClientRect();
+            const raw = clamp((revealStart - itemRect.top) / revealDistance);
+            const entrance = smoothstep(raw);
+            const copyProgress = smoothstep(clamp((raw - 0.14) / 0.86));
+            const signed = clamp((mediaRect.top + (mediaRect.height * 0.5) - viewportCenter) / viewportHeight);
+            const proximity = 1 - clamp(Math.abs(signed) / 0.72);
+            const open = smoothstep(proximity);
+            const inset = 20 * (1 - open);
+            const imageShift = signed * -7.5;
+            const mediaY = (1 - entrance) * Math.min(185, viewportHeight * 0.21);
+            const copyY = (1 - copyProgress) * Math.min(108, viewportHeight * 0.125);
 
             item.style.setProperty('--gallery-media-y', `${mediaY.toFixed(2)}px`);
-            item.style.setProperty('--gallery-media-scale', mediaScale.toFixed(4));
-            item.style.setProperty('--gallery-media-opacity', mediaProgress.toFixed(4));
+            item.style.setProperty('--gallery-media-opacity', entrance.toFixed(4));
+            item.style.setProperty('--gallery-window-inset', `${inset.toFixed(3)}%`);
+            item.style.setProperty('--gallery-image-shift', `${imageShift.toFixed(3)}%`);
             item.style.setProperty('--gallery-copy-y', `${copyY.toFixed(2)}px`);
             item.style.setProperty('--gallery-copy-opacity', copyProgress.toFixed(4));
         });
@@ -139,8 +133,9 @@ function mountGalleryStory(root) {
         root.style.setProperty('--gallery-title-opacity', '1');
         items.forEach((item) => {
             item.style.setProperty('--gallery-media-y', '0px');
-            item.style.setProperty('--gallery-media-scale', '1');
             item.style.setProperty('--gallery-media-opacity', '1');
+            item.style.setProperty('--gallery-window-inset', '0%');
+            item.style.setProperty('--gallery-image-shift', '0%');
             item.style.setProperty('--gallery-copy-y', '0px');
             item.style.setProperty('--gallery-copy-opacity', '1');
         });
