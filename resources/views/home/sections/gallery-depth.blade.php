@@ -25,8 +25,9 @@
   >
     @foreach ($depthItems as $item)
       <article
-        class="gallery-story__item gallery-story__item--{{ ($loop->index % 5) + 1 }}"
+        class="gallery-story__item gallery-story__item--{{ $loop->odd ? 'right' : 'left' }}"
         data-gallery-story-item
+        data-gallery-background="{{ $item['preset']['background'] }}"
         role="listitem"
       >
         <figure class="gallery-story__media" data-gallery-story-media>
@@ -51,6 +52,17 @@
           @if ($item['caption'] !== '')
             <p>{{ $item['caption'] }}</p>
           @endif
+
+          @if ($loop->last && $hasDepthCta)
+            <a
+              class="gallery-story__item-link"
+              href="{{ $depthCta['href'] }}"
+              data-depth-gallery-end-link
+            >
+              <span>{{ $galleryMoreLabel }}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          @endif
         </div>
       </article>
     @endforeach
@@ -60,17 +72,6 @@
     <div class="gallery-story__closing-inner">
       @if ($depthClosingCopy !== '')
         <p>{{ $depthClosingCopy }}</p>
-      @endif
-
-      @if ($hasDepthCta)
-        <a
-          class="gallery-story__closing-link"
-          href="{{ $depthCta['href'] }}"
-          data-depth-gallery-end-link
-        >
-          <span>{{ $depthCta['label'] }}</span>
-          <span aria-hidden="true">↗</span>
-        </a>
       @endif
     </div>
   </div>
