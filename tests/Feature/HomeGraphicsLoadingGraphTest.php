@@ -1,14 +1,6 @@
 <?php
 
-it('owns one package Three runtime and a sequential homepage preparation graph', function (): void {
-    $package = json_decode(file_get_contents(base_path('package.json')), true);
-    $lock = json_decode(file_get_contents(base_path('package-lock.json')), true);
-    $runtime = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/three-runtime.js',
-    ));
-    $threePackage = file_get_contents(resource_path(
-        'js/surfaces/home/gallery-depth/three-package.js',
-    ));
+it('keeps a sequential homepage preparation graph with a DOM owned gallery', function (): void {
     $preparation = file_get_contents(resource_path(
         'js/pages/welcome/preparation.js',
     ));
@@ -25,21 +17,13 @@ it('owns one package Three runtime and a sequential homepage preparation graph',
     $vite = file_get_contents(base_path('vite.config.js'));
     $blade = file_get_contents(resource_path('views/welcome.blade.php'));
 
-    expect($package['dependencies']['three'])->toBe('^0.185.1')
-        ->and($lock['packages']['node_modules/three']['version'])->toBe('0.185.1')
-        ->and($runtime)
-        ->toContain("import('./three-package.js')")
-        ->not->toContain('cdn.jsdelivr.net')
-        ->not->toContain('@vite-ignore')
-        ->and($threePackage)
-        ->toContain("from 'three'")
-        ->and($preparation)
-        ->toContain("'hero',\n  'program',\n  'values',\n  'vision',\n  'gallery',\n  'article',\n  'footer',")
+    expect($preparation)
+        ->toContain("'hero',\n  'program',\n  'values',\n  'vision',\n  'gallery',\n  'footer',")
         ->toContain("import('../../surfaces/home/program-values-world.js')")
         ->toContain("import('../../surfaces/home/values/controller.js')")
         ->toContain('prepareHomepageVisionStory')
         ->toContain('prepareHomepageDepthGallery')
-        ->toContain("import('../../surfaces/home/article-story/controller.js')")
+        ->not->toContain("import('../../surfaces/home/article-story/controller.js')")
         ->toContain('for (const section of HOME_PREPARATION_ORDER)')
         ->toContain('await preparationSteps[section]()')
         ->and($page)
@@ -49,9 +33,10 @@ it('owns one package Three runtime and a sequential homepage preparation graph',
         ->and($gallery)
         ->toContain('prepareHomepageDepthGallery')
         ->toContain("'(prefers-reduced-motion: reduce)'")
-        ->toContain('loadThreeRuntime')
-        ->toContain('mountWhenRelevant')
-        ->toContain("rootMargin: '100% 0px 100% 0px'")
+        ->toContain('readValuesExitProgress')
+        ->toContain('paintItems')
+        ->not->toContain('loadThreeRuntime')
+        ->not->toContain('three-package.js')
         ->and($vision)
         ->toContain('prepareHomepageVisionStory')
         ->and($values)
@@ -61,5 +46,6 @@ it('owns one package Three runtime and a sequential homepage preparation graph',
         ->not->toContain("'resources/js/pages/welcome-depth-gallery.js'")
         ->and($blade)
         ->not->toContain("'resources/js/pages/welcome-vision-story.js'")
-        ->not->toContain("'resources/js/pages/welcome-depth-gallery.js'");
+        ->not->toContain("'resources/js/pages/welcome-depth-gallery.js'")
+        ->not->toContain('welcome-article-story.css');
 });
