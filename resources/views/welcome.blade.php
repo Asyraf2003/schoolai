@@ -13,7 +13,6 @@
       'resources/css/pages/welcome-vision-waapi.css',
       'resources/css/pages/welcome-values-story.css',
       'resources/css/pages/welcome-depth-gallery.css',
-      'resources/css/pages/welcome-article-story.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
       'resources/css/public-latin-inter.css',
@@ -49,8 +48,6 @@
       </div>
 
       @include('home.sections.gallery')
-
-      @include('home.sections.articles')
     </main>
 
     @include('partials.site-footer', ['footerSection' => $footerSection])
