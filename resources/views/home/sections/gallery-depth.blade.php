@@ -6,17 +6,17 @@
 >
   <div class="gallery-story__handoff" data-gallery-story-handoff aria-hidden="true"></div>
 
-  <div class="gallery-story__title-rail">
-    <h2
-      class="gallery-story__title"
-      id="homepage-gallery-heading"
-      data-gallery-story-title
-    >
-      {{ $galleryHeading }}
-    </h2>
+  <div class="gallery-story__intro" data-gallery-story-intro>
+    <div class="gallery-story__title-rail">
+      <h2
+        class="gallery-story__title"
+        id="homepage-gallery-heading"
+        data-gallery-story-title
+      >
+        {{ $galleryHeading }}
+      </h2>
+    </div>
   </div>
-
-  <div class="gallery-story__intro" data-gallery-story-intro aria-hidden="true"></div>
 
   <div
     class="gallery-story__stream"
