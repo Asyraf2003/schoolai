@@ -67,12 +67,4 @@
       </article>
     @endforeach
   </div>
-
-  <div class="gallery-story__closing" data-gallery-story-closing>
-    <div class="gallery-story__closing-inner">
-      @if ($depthClosingCopy !== '')
-        <p>{{ $depthClosingCopy }}</p>
-      @endif
-    </div>
-  </div>
 </div>
