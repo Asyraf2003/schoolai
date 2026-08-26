@@ -6,27 +6,6 @@
 >
   <div class="gallery-story__handoff" data-gallery-story-handoff aria-hidden="true"></div>
 
-  <div class="gallery-story__ornaments" aria-hidden="true">
-    <img
-      class="gallery-story__ornament gallery-story__ornament--32"
-      src="{{ asset('media/seed/hero/gallery-ornament-32.webp') }}"
-      alt=""
-      width="793"
-      height="795"
-      loading="lazy"
-      decoding="async"
-    />
-    <img
-      class="gallery-story__ornament gallery-story__ornament--33"
-      src="{{ asset('media/seed/hero/gallery-ornament-33.webp') }}"
-      alt=""
-      width="761"
-      height="758"
-      loading="lazy"
-      decoding="async"
-    />
-  </div>
-
   <div class="gallery-story__intro" data-gallery-story-intro>
     <div class="gallery-story__title-rail">
       <h2

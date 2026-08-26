@@ -10,15 +10,15 @@
      * The cells are intentionally large so the result reads as architectural
      * lattice / jali rather than a small wallpaper tile.
      */
-    --vision-about-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='%23744f23' stroke-width='2.2' stroke-opacity='.19' stroke-linejoin='round'%3E%3Cpath d='M160 12 205 70 276 44 250 115 308 160 250 205 276 276 205 250 160 308 115 250 44 276 70 205 12 160 70 115 44 44 115 70Z'/%3E%3Cpath d='M160 58 196 124 262 160 196 196 160 262 124 196 58 160 124 124Z'/%3E%3Cpath d='M0 80 80 0M240 0 320 80M320 240 240 320M80 320 0 240M0 160H58M262 160H320M160 0V58M160 262V320'/%3E%3C/g%3E%3C/svg%3E");
+    --vision-about-pattern: url("/media/seed/hero/gallery-ornament-33.webp");
     --vision-about-pattern-size: 22rem 22rem;
     --vision-about-pattern-position: 50% 50%;
 
-    --vision-vision-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cg fill='none' stroke='%23195b70' stroke-width='2.1' stroke-opacity='.18' stroke-linejoin='round'%3E%3Cpath d='M150 16 176 82 237 44 218 114 284 150 218 186 237 256 176 218 150 284 124 218 63 256 82 186 16 150 82 114 63 44 124 82Z'/%3E%3Cpath d='M150 58 180 120 242 150 180 180 150 242 120 180 58 150 120 120Z'/%3E%3Cpath d='M108 108 150 92 192 108 208 150 192 192 150 208 108 192 92 150Z'/%3E%3Ccircle cx='150' cy='150' r='22'/%3E%3Cpath d='M0 0 63 44M300 0 237 44M300 300 237 256M0 300 63 256'/%3E%3C/g%3E%3C/svg%3E");
+    --vision-vision-pattern: url("/media/seed/hero/gallery-ornament-32.webp");
     --vision-vision-pattern-size: 20rem 20rem;
     --vision-vision-pattern-position: 50% 46%;
 
-    --vision-mission-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%232f6244' stroke-width='2.3' stroke-opacity='.18' stroke-linecap='square' stroke-linejoin='round'%3E%3Cpath d='M180 18 228 84 306 54 276 132 342 180 276 228 306 306 228 276 180 342 132 276 54 306 84 228 18 180 84 132 54 54 132 84Z'/%3E%3Cpath d='M180 72 216 144 288 180 216 216 180 288 144 216 72 180 144 144Z'/%3E%3Cpath d='M0 90 54 54 90 0M270 0 306 54 360 90M360 270 306 306 270 360M90 360 54 306 0 270'/%3E%3Cpath d='M0 180H72M288 180H360M180 0V72M180 288V360'/%3E%3Ccircle cx='180' cy='180' r='18'/%3E%3C/g%3E%3C/svg%3E");
+    --vision-mission-pattern: url("/media/seed/hero/gallery-ornament-33.webp");
     --vision-mission-pattern-size: 24rem 24rem;
     --vision-mission-pattern-position: 50% 50%;
 }
