@@ -167,12 +167,20 @@ function mountGalleryStory(root) {
         reducedMotion.removeEventListener?.('change', onMotionChange);
     }
 
-    if (reducedMotion.matches) paintStatic();
     window.addEventListener('scroll', requestRender, { passive: true });
     window.addEventListener('resize', requestRender, { passive: true });
     window.addEventListener('pageshow', requestRender);
     window.addEventListener('pagehide', destroy);
     reducedMotion.addEventListener?.('change', onMotionChange);
+
+    if (reducedMotion.matches) {
+        paintStatic();
+    } else {
+        paintHandoff();
+        paintItems();
+    }
+
+    section.classList.add('is-gallery-enhanced');
     requestRender();
 }
 
