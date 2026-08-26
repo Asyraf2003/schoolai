@@ -16,9 +16,24 @@
     transition: background-color 760ms cubic-bezier(.22, .61, .36, 1);
 }
 
+.home-page .galeri-section::before {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url("/media/seed/hero/gallery-ornament-33.webp");
+    background-position: 50% 50%;
+    background-repeat: repeat;
+    background-size: 22rem 22rem;
+    content: "";
+    mix-blend-mode: multiply;
+    opacity: .34;
+    pointer-events: none;
+}
+
 .gallery-story {
     --gallery-title-opacity: 1;
     position: relative;
+    z-index: 1;
     min-height: 100svh;
     background: transparent;
     isolation: isolate;
@@ -259,6 +274,11 @@ html[dir="rtl"] .gallery-story__title {
 }
 
 @media (max-width: 1023px) {
+    .home-page .galeri-section::before {
+        background-size: 18rem 18rem;
+        opacity: .3;
+    }
+
     .gallery-story__title { font-size: clamp(3.3rem, 13vw, 7.5rem); }
     .gallery-story__stream { padding-inline: clamp(1rem, 5vw, 2.5rem); }
     .gallery-story__item {
@@ -292,6 +312,11 @@ html[dir="rtl"] .gallery-story__title {
 }
 
 @media (max-width: 639px) {
+    .home-page .galeri-section::before {
+        background-size: 14rem 14rem;
+        opacity: .27;
+    }
+
     .gallery-story__intro { min-height: 86svh; }
     .gallery-story__title-rail { padding-inline: 1rem; }
     .gallery-story__title {

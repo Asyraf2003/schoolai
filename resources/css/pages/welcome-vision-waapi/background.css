@@ -7,8 +7,8 @@
 
     /*
      * One Islamic-geometry family, three related states.
-     * The cells are intentionally large so the result reads as architectural
-     * lattice / jali rather than a small wallpaper tile.
+     * Each WebP is treated as a repeated texture tile. The white relief surface
+     * is blended into the state color so the tile bounds do not read as gutters.
      */
     --vision-about-pattern: url("/media/seed/hero/gallery-ornament-33.webp");
     --vision-about-pattern-size: 22rem 22rem;
@@ -47,16 +47,28 @@
     inset: -2rem;
     background-color: var(--vision-state-color);
     background-image:
-        radial-gradient(circle at 50% 42%, rgb(255 255 255 / .22), transparent 48%),
-        var(--vision-state-pattern);
-    background-position: center, var(--vision-state-pattern-position);
-    background-repeat: no-repeat, repeat;
-    background-size: 100% 100%, var(--vision-state-pattern-size);
+        radial-gradient(circle at 50% 42%, rgb(255 255 255 / .22), transparent 48%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     filter: blur(var(--vision-state-diffusion));
     opacity: var(--vision-state-opacity);
     transform: translate3d(var(--vision-state-drift), 0, 0) scale(1.035);
     transform-origin: center;
     will-change: opacity, filter, transform;
+}
+
+.vision-arch__background-layer::before {
+    position: absolute;
+    inset: 0;
+    background-image: var(--vision-state-pattern);
+    background-position: var(--vision-state-pattern-position);
+    background-repeat: repeat;
+    background-size: var(--vision-state-pattern-size);
+    content: "";
+    mix-blend-mode: multiply;
+    opacity: .58;
+    pointer-events: none;
 }
 
 .vision-arch__background-layer[data-vision-background-layer="1"] {
