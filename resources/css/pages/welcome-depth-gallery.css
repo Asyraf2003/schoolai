@@ -11,9 +11,14 @@
     margin: 0;
     padding: 0;
     background-color: var(--gallery-story-bg);
+    background-image: none;
     color: var(--gallery-story-ink);
     isolation: isolate;
     transition: background-color 760ms cubic-bezier(.22, .61, .36, 1);
+}
+
+.home-page .galeri-section::after {
+    display: none;
 }
 
 .home-page .galeri-section::before {
