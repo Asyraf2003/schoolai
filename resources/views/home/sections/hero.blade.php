@@ -101,5 +101,19 @@
           </button>
         @endif
 
+        <button
+          type="button"
+          class="hero-cinema__audio"
+          data-hero-audio
+          aria-pressed="false"
+          aria-label="Audio"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 10h4l5-4v12l-5-4H4z" fill="currentColor" />
+            <path class="hero-cinema__audio-wave" d="M16 9c1.5 1.5 1.5 4.5 0 6M18.5 6.5c3 3 3 8 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            <path class="hero-cinema__audio-slash" d="M5 5l14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </button>
+
         <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
       </section>

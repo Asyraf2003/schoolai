@@ -23,6 +23,8 @@ it('renders the R2 video as the first homepage hero slide and keeps carousel nav
             ->assertSee('autoplay', false)
             ->assertSee('muted', false)
             ->assertSee('playsinline', false)
+            ->assertSee('data-hero-audio', false)
+            ->assertSee('aria-pressed="false"', false)
             ->assertSee('data-hero-previous', false)
             ->assertSee('data-hero-next', false)
             ->assertDontSee('hero-cinema__eyebrow', false)

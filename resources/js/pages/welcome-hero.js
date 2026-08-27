@@ -8,6 +8,7 @@ function initHeroSlider(root) {
     var previousButton = root.querySelector('[data-hero-previous]');
     var nextButton = root.querySelector('[data-hero-next]');
     var playbackButton = root.querySelector('[data-hero-playback]');
+    var audioButton = root.querySelector('[data-hero-audio]');
     var currentLabel = root.querySelector('[data-hero-current]');
     var liveRegion = root.querySelector('[data-hero-live]');
     var progressBar = root.querySelector('[data-hero-progress]');
@@ -22,6 +23,7 @@ function initHeroSlider(root) {
         timer: null,
         transitionTimer: null,
         userPaused: false,
+        audioEnabled: false,
         pointerStart: null,
         hasPresentedInitialSlide: false
     };
@@ -54,6 +56,11 @@ function initHeroSlider(root) {
     var scheduleNext = playbackActions.scheduleNext;
     var showSlide = playbackActions.showSlide;
     var updatePlaybackButton = playbackActions.updatePlaybackButton;
+
+    function updateAudioButton() {
+        if (!audioButton) return;
+        audioButton.setAttribute('aria-pressed', state.audioEnabled ? 'true' : 'false');
+    }
 
     slides.forEach(function (slide, index) {
         var video = slide.querySelector('[data-hero-video]');
@@ -94,6 +101,14 @@ function initHeroSlider(root) {
             showSlide(index, true);
         });
     });
+
+    if (audioButton) {
+        audioButton.addEventListener('click', function () {
+            state.audioEnabled = !state.audioEnabled;
+            syncVideos();
+            updateAudioButton();
+        });
+    }
 
     if (playbackButton) {
         playbackButton.addEventListener('click', function () {
@@ -159,6 +174,7 @@ function initHeroSlider(root) {
         });
     }, { once: true });
 
+    updateAudioButton();
     updatePlaybackButton();
     showSlide(state.currentIndex, false);
 }

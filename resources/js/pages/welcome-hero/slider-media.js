@@ -67,12 +67,14 @@ export function createSliderMediaActions(options) {
             syncLoop(video);
 
             if (index !== state.currentIndex) {
+                video.muted = true;
                 video.pause();
                 try { video.currentTime = 0; } catch (error) { /* Metadata may not exist yet. */ }
                 return;
             }
 
             hydrateSlide(slide, true);
+            video.muted = !state.audioEnabled;
 
             if (state.userPaused || document.hidden) {
                 video.pause();

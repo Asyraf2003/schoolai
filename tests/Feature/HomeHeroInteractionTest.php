@@ -104,22 +104,29 @@ it('keeps the primary article title while PPDB is closed', function (): void {
         ->not->toContain('data-hero-title-glow');
 });
 
-it('removes the hero glow runtime and keeps a single video looping', function (): void {
+it('removes hero glow runtime and gates audio behind a user gesture', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome-hero.js'));
     $media = file_get_contents(resource_path('js/pages/welcome-hero/slider-media.js'));
     $title = file_get_contents(resource_path('views/home/partials/hero-title.blade.php'));
+    $hero = file_get_contents(resource_path('views/home/sections/hero.blade.php'));
     $visual = file_get_contents(resource_path('css/pages/welcome-hero-visual.css'));
 
     expect($entry)
         ->not->toContain('initHeroTitleGlow')
         ->not->toContain("./welcome-hero/title-glow.js")
+        ->toContain('audioEnabled: false')
+        ->toContain("audioButton.addEventListener('click'")
         ->and($media)
-        ->toContain('var singleSlide = slides.length === 1')
-        ->toContain('video.loop = singleSlide')
+        ->toContain('video.muted = !state.audioEnabled')
+        ->toContain('video.muted = true')
+        ->and($hero)
+        ->toContain('data-hero-audio')
+        ->toContain('aria-pressed="false"')
         ->and($title)
         ->not->toContain('data-hero-title-glow')
         ->not->toContain('data-hero-title-base')
         ->and($visual)
+        ->toContain('.hero-cinema__audio')
         ->not->toContain('hero-title-glow__overlay');
 
     expect(file_exists(resource_path('js/pages/welcome-hero/title-glow.js')))->toBeFalse()
