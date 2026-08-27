@@ -77,3 +77,56 @@ it('keeps R2 canvas content images through sanitization and public rendering', f
 
     expect($article->fresh()->content_id)->toContain($url);
 });
+
+it('never lets thumbnail replacement delete an article content object', function (): void {
+    $this->post(route('admin.artikel.canvas.start'))->assertRedirect();
+    $article = Article::query()->where('article_source', Article::SOURCE_NATIVE)->firstOrFail();
+
+    $upload = $this->post(route('admin.artikel.canvas.image', $article), [
+        'purpose' => 'content',
+        'image' => UploadedFile::fake()->image('content-cover.jpg', 1200, 675),
+    ])->assertCreated();
+
+    $contentUrl = $upload->json('url');
+    $contentKey = app(MediaUrlResolver::class)->ownedKey($contentUrl);
+
+    $article->update([
+        'thumbnail_url' => $contentUrl,
+        'content_id' => '<img src="'.$contentUrl.'" alt="Indonesia">',
+        'content_en' => '<img src="'.$contentUrl.'" alt="English">',
+        'content_ar' => '<img src="'.$contentUrl.'" alt="العربية">',
+    ]);
+
+    $this->post(route('admin.artikel.canvas.image', $article), [
+        'purpose' => 'thumbnail',
+        'image' => UploadedFile::fake()->image('replacement.jpg', 1200, 675),
+    ])->assertCreated();
+
+    Storage::disk('public')->assertExists($contentKey);
+});
+
+it('keeps a replaced thumbnail object while localized article content references it', function (): void {
+    $this->post(route('admin.artikel.canvas.start'))->assertRedirect();
+    $article = Article::query()->where('article_source', Article::SOURCE_NATIVE)->firstOrFail();
+
+    $firstUpload = $this->post(route('admin.artikel.canvas.image', $article), [
+        'purpose' => 'thumbnail',
+        'image' => UploadedFile::fake()->image('shared-thumbnail.jpg', 1200, 675),
+    ])->assertCreated();
+
+    $sharedUrl = $firstUpload->json('url');
+    $sharedKey = app(MediaUrlResolver::class)->ownedKey($sharedUrl);
+
+    $article->update([
+        'content_id' => '<img src="'.$sharedUrl.'" alt="Indonesia">',
+        'content_en' => '<img src="'.$sharedUrl.'" alt="English">',
+        'content_ar' => '<img src="'.$sharedUrl.'" alt="العربية">',
+    ]);
+
+    $this->post(route('admin.artikel.canvas.image', $article), [
+        'purpose' => 'thumbnail',
+        'image' => UploadedFile::fake()->image('new-thumbnail.webp', 1200, 675),
+    ])->assertCreated();
+
+    Storage::disk('public')->assertExists($sharedKey);
+});

@@ -1,7 +1,7 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
 Status: `HARDENING_ACTIVE / H7_G0_PASS / H7_RUNTIME_NOT_STARTED`
-Updated: 2026-08-25
+Updated: 2026-08-28
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Inspected runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
@@ -587,14 +587,17 @@ certification has not started. No runtime certification status is implied by G0.
 
 ## NEXT VALID STEP
 
-Owner-authorized media-architecture Packet 0 re-established the automated
-baseline on current `main`: `git diff --check`, the 603-file structure gate,
-Vite production build, and the full 245-test / 2,420-assertion suite pass.
-The change reconciles stale source tests, removes two inactive Article motion
-modules plus one superseded Values/Gallery handoff stylesheet, and splits the
-active Gallery CSS without changing its cascade order.
+Owner-authorized media architecture E1 protects Article-owned R2 objects across
+thumbnail replacement. Thumbnail cleanup is now restricted to the
+`articles/thumbnails/` namespace and occurs only after thumbnail plus ID/EN/AR
+body references are absent. `articles/content/` objects cannot be deleted by a
+thumbnail lifecycle.
 
-The owner then corrected the landing-page and media architecture direction.
-No media Packet 1 or later implementation is authorized. The next valid step is
-owner review of the revised architecture plan; runtime certification remains
-`BLOCKED_BY_MISSING_EVIDENCE`.
+Focused E1 proof passes with 12 tests / 102 assertions. Repository gates pass:
+`git diff --check`, the 604-file structure gate, Vite production build, and the
+full 247-test / 2,428-assertion suite. The existing unresolved runtime asset and
+deferred graphics chunk build warnings remain visible and were not changed.
+
+The next owner-authorized atomic capability is E2: simplify Opening Hero
+ownership and select/order promoted Articles without copying Article content.
+Runtime certification remains `BLOCKED_BY_MISSING_EVIDENCE`.

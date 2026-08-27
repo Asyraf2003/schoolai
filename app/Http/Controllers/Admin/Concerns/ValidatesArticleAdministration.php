@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Concerns;
 
 use App\Models\Article;
 use App\Rules\SafeImageUpload;
+use App\Support\ArticleMediaOwnership;
 use App\Support\Media\R2MediaStorage;
 use App\Support\PublicUrl;
 use Illuminate\Http\Request;
@@ -109,15 +110,7 @@ trait ValidatesArticleAdministration
 
     private function deleteStoredPublicFile(?string $url): void
     {
-        if (! $url) {
-            return;
-        }
-
-        if (Article::withTrashed()->where('thumbnail_url', $url)->exists()) {
-            return;
-        }
-
-        app(R2MediaStorage::class)->deleteOwnedUrl($url);
+        app(ArticleMediaOwnership::class)->deleteUnreferencedThumbnail($url);
     }
 
     private function isPublicArticleUrl(string $url): bool

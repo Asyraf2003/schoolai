@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Concerns;
 
 use App\Models\Article;
 use App\Rules\SafeImageUpload;
+use App\Support\ArticleMediaOwnership;
 use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -49,9 +50,7 @@ trait ManagesArticleCanvasMedia
                 throw $exception;
             }
 
-            if (! Article::withTrashed()->where('thumbnail_url', $oldThumbnailUrl)->exists()) {
-                app(R2MediaStorage::class)->deleteOwnedUrl($oldThumbnailUrl);
-            }
+            app(ArticleMediaOwnership::class)->deleteUnreferencedThumbnail($oldThumbnailUrl);
         }
 
         return response()->json([
