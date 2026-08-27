@@ -622,6 +622,18 @@ Focused E3 proof passes with 12 tests / 208 assertions. Repository gates pass:
 the full 246-test / 2,404-assertion suite. Existing unresolved asset and deferred
 graphics chunk build warnings remain visible and were not changed.
 
-The next owner-authorized atomic capability is E4: prune homepage queries to only
-enabled, rendered data owners. Broad runtime certification remains
-`BLOCKED_BY_MISSING_EVIDENCE`.
+E4 is now `PASS` for homepage query ownership. The homepage controller no longer
+builds or exposes data for the disabled Article surface, the non-rendered legacy
+statistics surface, unused quick-info data, or unused PPDB presentation data.
+Consequently, it no longer runs latest-Article or `site_statistics` queries.
+
+The remaining model queries correspond to rendered owners: one bounded promoted
+Article selection for Hero and one Gallery collection query. `testimonial_media`
+remains zero-query. `ppdb_settings` is zero-query for an empty/non-PPDB Opening
+CTA and is queried only when `/ppdb` status must decide whether that CTA is safe
+to render. Query-listener feature proof covers both branches.
+
+The next owner-authorized atomic capability is E5: replace duplicated Gallery
+uploads with one canonical media collection and relational multi-placement while
+preserving the current responsive presentation and scroll/reveal behavior. Broad
+runtime certification remains `BLOCKED_BY_MISSING_EVIDENCE`.

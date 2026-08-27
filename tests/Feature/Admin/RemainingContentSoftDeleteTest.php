@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use App\Models\PpdbSetting;
 use App\Models\PpdbShowcaseItem;
 use App\Models\SiteStatistic;
@@ -192,10 +191,6 @@ it('soft deletes a statistic, hides it publicly, and protects the final active s
 
     $this->assertSoftDeleted('site_statistics', ['id' => $archived->id]);
     expect($survivor->fresh()->sort_order)->toBe(1);
-
-    $homepage = app(HomeController::class)();
-    $labels = collect($homepage->getData()['stats'])->pluck('label');
-    expect($labels)->not->toContain('Label statistik arsip unik');
 
     $this->get(route('admin.stats.edit'))
         ->assertOk()

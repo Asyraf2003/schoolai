@@ -15,14 +15,10 @@ trait BuildsHomePage
             'meta' => $home['meta'] ?? [],
             'hero' => $this->heroData(),
             'navbar' => $this->navbarData(),
-            'stats' => $this->statsData(),
-            'quickInfo' => $home['quick_info']['items'] ?? [],
-            'ppdb' => $home['ppdb'] ?? [],
             'visiMisi' => $home['visi_misi'] ?? [],
             'schoolValues' => $home['nilai_sekolah'] ?? [],
             'featuredPrograms' => $home['program_unggulan'] ?? [],
             'gallerySection' => $this->gallerySectionData(),
-            'articlesSection' => $this->articlesSectionData(),
             'footerSection' => $home['footer'] ?? [],
         ]);
     }

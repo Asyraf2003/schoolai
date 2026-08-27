@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\Article;
+use App\Models\HeroSetting;
+use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
@@ -12,17 +15,16 @@ it('keeps the disabled homepage Article surface out of the rendered DOM', functi
 
     $response
         ->assertOk()
-        ->assertViewHas(
-            'articlesSection',
-            fn (array $section): bool => ($section['items'] ?? null) === []
-        )
         ->assertDontSee('data-article-story', false)
         ->assertDontSee('Belum ada artikel terbaru.')
         ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');
+
+    expect($response->original->getData())->not->toHaveKey('articlesSection');
 });
 
-it('prepares Article data without rendering the disabled homepage surface', function (): void {
+it('does not query disabled homepage data owners', function (): void {
     app()->setLocale('id');
+    HeroSetting::query()->firstOrFail()->update(['cta_url' => '#program']);
 
     Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
@@ -39,34 +41,56 @@ it('prepares Article data without rendering the disabled homepage surface', func
         'published_at' => now()->subDay(),
     ]);
 
-    Article::query()->create([
-        'article_source' => Article::SOURCE_NATIVE,
-        'article_status' => Article::STATUS_PUBLISHED,
-        'slug' => 'artikel-terbaru-homepage',
-        'title_id' => 'Artikel Terbaru Homepage',
-        'title_en' => 'Latest Homepage Article',
-        'description_id' => 'Artikel yang paling baru.',
-        'description_en' => 'The latest article.',
-        'thumbnail_url' => '/storage/articles/thumbnails/latest.jpg',
-        'link_id' => 'https://example.com/artikel-terbaru-homepage',
-        'link_en' => 'https://example.com/latest-homepage-article',
-        'author' => 'Admin Test',
-        'published_at' => now(),
-    ]);
+    $queries = collect();
+    DB::listen(function ($query) use ($queries): void {
+        $queries->push(strtolower($query->sql));
+    });
 
     $response = $this->get(route('home'));
+    $articleQueries = $queries->filter(
+        fn (string $sql): bool => str_contains($sql, 'from "articles"')
+            || str_contains($sql, 'from `articles`')
+    );
 
     $response
         ->assertOk()
-        ->assertViewHas('articlesSection', function (array $section): bool {
-            $items = $section['items'] ?? [];
-
-            return count($items) === 2
-                && ($items[0]['title'] ?? null) === 'Artikel Terbaru Homepage'
-                && ($items[1]['title'] ?? null) === 'Artikel Lama Homepage';
-        })
         ->assertDontSee('data-article-story', false)
         ->assertDontSee('data-article-journey', false)
         ->assertDontSee('data-article-final-cta', false)
         ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');
+
+    expect($response->original->getData())
+        ->not->toHaveKeys(['articlesSection', 'stats', 'quickInfo', 'ppdb'])
+        ->and($articleQueries)->toHaveCount(1)
+        ->and($articleQueries->first())->toContain('hero_position')
+        ->and($queries->contains(
+            fn (string $sql): bool => str_contains($sql, 'site_statistics')
+        ))->toBeFalse()
+        ->and($queries->contains(
+            fn (string $sql): bool => str_contains($sql, 'testimonial_media')
+        ))->toBeFalse()
+        ->and($queries->contains(
+            fn (string $sql): bool => str_contains($sql, 'ppdb_settings')
+        ))->toBeFalse()
+        ->and($queries->contains(
+            fn (string $sql): bool => str_contains($sql, 'gallery_items')
+        ))->toBeTrue();
+});
+
+it('queries PPDB only when the optional Opening CTA targets PPDB', function (): void {
+    HeroSetting::query()->firstOrFail()->update(['cta_url' => '/ppdb']);
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
+    $queries = collect();
+    DB::listen(function ($query) use ($queries): void {
+        $queries->push(strtolower($query->sql));
+    });
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertDontSee('href="/ppdb"', false);
+
+    expect($queries->filter(
+        fn (string $sql): bool => str_contains($sql, 'from "ppdb_settings"')
+            || str_contains($sql, 'from `ppdb_settings`')
+    ))->toHaveCount(1);
 });

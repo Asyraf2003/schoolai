@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use App\Models\SiteStatistic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -89,7 +88,7 @@ it('creates and updates a bilingual homepage statistic', function (): void {
     ]);
 });
 
-it('returns statistic text for the active public locale', function (): void {
+it('does not expose admin statistics to the disabled homepage surface', function (): void {
     SiteStatistic::query()->create([
         'value' => '100+',
         'value_en' => '100+',
@@ -98,21 +97,9 @@ it('returns statistic text for the active public locale', function (): void {
         'sort_order' => 1,
     ]);
 
-    app()->setLocale('id');
+    $response = $this->get(route('home'))->assertOk();
 
-    $indonesianView = app(HomeController::class)();
-    $indonesianStats = $indonesianView->getData()['stats'];
-
-    expect($indonesianStats[0]['value'])->toBe('100+')
-        ->and($indonesianStats[0]['label'])->toBe('Siswa aktif');
-
-    app()->setLocale('en');
-
-    $englishView = app(HomeController::class)();
-    $englishStats = $englishView->getData()['stats'];
-
-    expect($englishStats[0]['value'])->toBe('100+')
-        ->and($englishStats[0]['label'])->toBe('Active students');
+    expect($response->original->getData())->not->toHaveKey('stats');
 });
 
 it('prevents creating more than four statistics', function (): void {
