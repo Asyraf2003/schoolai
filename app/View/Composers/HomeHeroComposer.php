@@ -12,10 +12,13 @@ final class HomeHeroComposer
         $hero = is_array($hero) ? $hero : [];
         $heroVideoUrl = (string) config('media.homepage_hero_video_url');
         $heroSlides = collect($hero['slides'] ?? [])
-            ->take(1)
-            ->map(static function (mixed $slide) use ($heroVideoUrl): ?array {
+            ->map(static function (mixed $slide, int $index) use ($heroVideoUrl): ?array {
                 if (! is_array($slide)) {
                     return null;
+                }
+
+                if ($index !== 0) {
+                    return $slide;
                 }
 
                 return array_replace($slide, [
