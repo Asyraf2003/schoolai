@@ -20,7 +20,6 @@ trait BuildsHomeHero
         $slides = $hero['slides'] ?? [];
         $fallbackImageUrl = $this->publicAssetUrl($hero['fallback_image'] ?? null);
         $normalizedSlides = [];
-        $ppdbSetting = $this->currentPpdbSetting();
 
         if (! is_array($slides)) {
             $slides = [];
@@ -108,7 +107,6 @@ trait BuildsHomeHero
 
         $hero['slides'] = HomeHeroPresentation::decorate(
             $normalizedSlides,
-            $ppdbSetting,
         );
         $hero['fallback_image_url'] = $fallbackImageUrl;
         $hero['autoplay_interval'] = min(

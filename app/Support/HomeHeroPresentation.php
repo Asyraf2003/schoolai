@@ -2,59 +2,26 @@
 
 namespace App\Support;
 
-use App\Models\PpdbSetting;
-
 final class HomeHeroPresentation
 {
     /** @param array<int, array<string, mixed>> $slides */
-    public static function decorate(
-        array $slides,
-        PpdbSetting $ppdbSetting,
-    ): array {
-        $campaignUrl = $ppdbSetting->isRegistrationOpen()
-            ? route('ppdb')
-            : null;
-        $campaign = self::ppdbCampaign();
-
+    public static function decorate(array $slides): array
+    {
         return array_values(array_map(
-            static function (array $slide, int $index) use ($campaignUrl, $campaign): array {
+            static function (array $slide, int $index): array {
                 $isPrimary = $index === 0;
-                $showPpdb = $isPrimary && $campaignUrl !== null;
-                $presentation = [
+
+                return array_replace($slide, [
                     'is_primary_slide' => $isPrimary,
-                    'is_ppdb_campaign' => $showPpdb,
-                    'campaign_link_label' => $showPpdb ? $campaign['link_label'] : null,
-                    'title_href' => $showPpdb
-                        ? $campaignUrl
-                        : self::articleTitleUrl($slide),
-                    'description_href' => $showPpdb ? $campaignUrl : null,
-                ];
-
-                if ($showPpdb) {
-                    $presentation = array_replace($presentation, [
-                        'eyebrow' => $campaign['eyebrow'],
-                        'title' => $campaign['title'],
-                        'description' => $campaign['description'],
-                        'cta' => [],
-                    ]);
-                }
-
-                return array_replace($slide, $presentation);
+                    'is_ppdb_campaign' => false,
+                    'campaign_link_label' => null,
+                    'title_href' => $isPrimary ? null : self::articleTitleUrl($slide),
+                    'description_href' => null,
+                ]);
             },
             $slides,
             array_keys($slides),
         ));
-    }
-
-    /** @return array{eyebrow: string, title: string, description: string, link_label: string} */
-    private static function ppdbCampaign(): array
-    {
-        return [
-            'eyebrow' => __('runtime.home.ppdb_campaign_eyebrow'),
-            'title' => __('runtime.home.ppdb_campaign_title'),
-            'description' => __('runtime.home.ppdb_campaign_description'),
-            'link_label' => __('runtime.home.ppdb_campaign_link_label'),
-        ];
     }
 
     /** @param array<string, mixed> $slide */

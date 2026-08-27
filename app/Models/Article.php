@@ -3,26 +3,33 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Models\Concerns\BuildsArticleQueries;
+use App\Models\Concerns\DescribesArticleState;
+use App\Models\Concerns\ResolvesArticlePresentation;
 use App\Models\Concerns\ResolvesLocalizedContent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Article extends Model
 {
-    use \App\Models\Concerns\BuildsArticleQueries;
-    use \App\Models\Concerns\DescribesArticleState;
-    use \App\Models\Concerns\ResolvesArticlePresentation;
-
     use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
+    use BuildsArticleQueries;
+    use DescribesArticleState;
+    use ResolvesArticlePresentation;
 
     public const DEFAULT_AUTHOR = 'Admin';
+
     public const SOURCE_EXTERNAL = 'external';
+
     public const SOURCE_NATIVE = 'native';
+
     public const STATUS_DRAFT = 'draft';
+
     public const STATUS_PUBLISHED = 'published';
+
     public const STATUS_SCHEDULED = 'scheduled';
+
     public const PLACEHOLDER_THUMBNAIL = '/images/article-placeholder.svg';
 
     protected $fillable = [
@@ -44,6 +51,7 @@ final class Article extends Model
         'tags',
         'word_count',
         'thumbnail_url',
+        'hero_position',
         'link_id',
         'link_en',
         'link_ar',
@@ -56,43 +64,9 @@ final class Article extends Model
     protected $casts = [
         'tags' => 'array',
         'word_count' => 'integer',
+        'hero_position' => 'integer',
         'published_date' => 'date',
         'published_at' => 'datetime',
         'scheduled_at' => 'datetime',
     ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-

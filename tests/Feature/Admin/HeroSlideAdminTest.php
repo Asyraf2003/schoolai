@@ -1,143 +1,84 @@
 <?php
 
 use App\Models\Article;
-use App\Models\HeroSlide;
-use App\Models\PpdbSetting;
+use App\Models\HeroSetting;
 use App\Models\User;
-use App\Support\Media\MediaUrlResolver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
-    DB::table('hero_slides')->delete();
-
-    $admin = User::query()->forceCreate([
+    $this->actingAs(User::query()->forceCreate([
         'name' => 'Admin Hero Test',
         'email' => 'admin-hero@example.test',
         'email_verified_at' => now(),
         'password' => Hash::make('password'),
         'role' => User::ROLE_ADMIN,
-    ]);
+    ]));
+});
 
-    $this->actingAs($admin);
-
-    $this->heroArticle = Article::query()->create([
+function heroAdminArticle(string $slug, string $status = Article::STATUS_PUBLISHED): Article
+{
+    return Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
-        'article_status' => Article::STATUS_PUBLISHED,
-        'slug' => 'hero-database-test',
-        'title_id' => 'Hero Database',
-        'title_en' => 'Database Hero',
-        'title_ar' => 'واجهة قاعدة البيانات',
-        'description_id' => 'Dikelola sebagai artikel dari admin.',
-        'description_en' => 'Managed as an article from admin.',
-        'thumbnail_url' => 'media/home/hero-school.png',
-        'link_id' => '/artikel/hero-database-test',
-        'author' => 'Admin Hero Test',
+        'article_status' => $status,
+        'slug' => $slug,
+        'title_id' => str($slug)->headline()->toString(),
+        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'link_id' => url('/artikel/'.$slug),
         'published_at' => now(),
     ]);
-});
+}
 
-it('rejects youtube and stores a raw uploaded hero video', function (): void {
-    $this->post(route('admin.hero.store'), [
-        'article_id' => $this->heroArticle->getKey(),
-        'type' => 'video',
-        'media_url' => 'https://youtu.be/kb1dXcf3QQs',
-        'focal_position' => 'center center',
-        'overlay_strength' => '0.40',
-        'is_active' => '1',
-    ])->assertSessionHasErrors('media_url');
-
-    Storage::fake('public');
-
-    $response = $this->post(route('admin.hero.store'), [
-        'article_id' => $this->heroArticle->getKey(),
-        'type' => 'video',
-        'media_file' => UploadedFile::fake()->create('school-activity.mp4', 2048, 'video/mp4'),
-        'poster_url' => 'https://i.ytimg.com/vi/kb1dXcf3QQs/hqdefault.jpg',
-        'focal_position' => 'center center',
-        'overlay_strength' => '0.40',
-        'is_active' => '1',
-    ]);
-
-    $response->assertRedirect(route('admin.hero'));
-
-    $slide = HeroSlide::query()->firstOrFail();
-    $storedPath = app(MediaUrlResolver::class)->ownedKey($slide->media_url);
-
-    expect($slide->media_url)
-        ->toStartWith('https://media.almustaqbal.sch.id/hero/slides/new/')
-        ->toEndWith('.mp4')
-        ->and($slide->poster_url)->toBe($this->heroArticle->thumbnail_url)
-        ->and($slide->is_active)->toBeTrue();
-    Storage::disk('public')->assertExists($storedPath);
-
-    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
-
-    $this->withSession(['locale' => 'en'])
-        ->get(route('home'))
+it('edits only Opening copy and optional CTA without exposing media controls', function (): void {
+    $this->get(route('admin.hero'))
         ->assertOk()
-        ->assertSee('data-hero-video', false)
-        ->assertDontSee('youtube', false)
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
-            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
-            && ($hero['slides'][0]['render_type'] ?? null) === 'video'
-            && ($hero['slides'][0]['title'] ?? null) === 'Database Hero');
+        ->assertSee('video sekolah yang fixed')
+        ->assertDontSee('name="media_file"', false)
+        ->assertDontSee('enctype="multipart/form-data"', false);
+
+    $this->put(route('admin.hero.update'), [
+        'eyebrow_id' => 'Sekolah Islam',
+        'title_id' => 'Opening Baru',
+        'description_id' => 'Copy pembuka baru.',
+        'cta_url' => '',
+    ])->assertRedirect()->assertSessionHasNoErrors();
+
+    $setting = HeroSetting::query()->firstOrFail();
+
+    expect($setting->title_id)->toBe('Opening Baru')
+        ->and($setting->description_id)->toBe('Copy pembuka baru.')
+        ->and($setting->cta_url)->toBeNull()
+        ->and($setting->cta_label_id)->toBeNull();
 });
 
-it('edits a seeded public image without forcing a replacement upload', function (): void {
-    $slide = HeroSlide::query()->create([
-        'article_id' => $this->heroArticle->getKey(),
-        'type' => 'image',
-        'media_url' => 'media/home/hero-school.png',
-        'title_id' => 'Hero Lama',
-        'sort_order' => 1,
-        'is_active' => true,
-    ]);
+it('promotes reorders and removes Articles without copying their content', function (): void {
+    $first = heroAdminArticle('artikel-pertama');
+    $second = heroAdminArticle('artikel-kedua');
 
-    $response = $this->put(route('admin.hero.update', $slide), [
-        'article_id' => $this->heroArticle->getKey(),
-        'type' => 'image',
-        'media_url' => 'media/home/hero-school.png',
-        'focal_position' => 'center center',
-        'overlay_strength' => '0.46',
-        'is_active' => '1',
-    ]);
+    $this->post(route('admin.hero.articles.promote'), ['article_id' => $first->getKey()])
+        ->assertRedirect();
+    $this->post(route('admin.hero.articles.promote'), ['article_id' => $second->getKey()])
+        ->assertRedirect();
 
-    $response
-        ->assertRedirect(route('admin.hero'))
-        ->assertSessionHasNoErrors();
+    expect($first->fresh()->hero_position)->toBe(1)
+        ->and($second->fresh()->hero_position)->toBe(2);
 
-    expect($slide->fresh()->title_id)->toBe('Hero Database')
-        ->and($slide->fresh()->media_url)->toBe('media/home/hero-school.png');
+    $this->patch(route('admin.hero.articles.move-up', $second))->assertRedirect();
+
+    expect($second->fresh()->hero_position)->toBe(1)
+        ->and($first->fresh()->hero_position)->toBe(2);
+
+    $this->delete(route('admin.hero.articles.unpromote', $second))->assertRedirect();
+    expect($second->fresh()->hero_position)->toBeNull();
 });
 
-it('reorders and toggles hero slides', function (): void {
-    $first = HeroSlide::query()->create([
-        'type' => 'image',
-        'media_url' => 'media/home/hero-school.png',
-        'title_id' => 'Pertama',
-        'sort_order' => 1,
-        'is_active' => true,
-    ]);
+it('rejects promotion of an unpublished Article', function (): void {
+    $draft = heroAdminArticle('artikel-draft', Article::STATUS_DRAFT);
 
-    $second = HeroSlide::query()->create([
-        'type' => 'image',
-        'media_url' => 'media/home/hero-school.png',
-        'title_id' => 'Kedua',
-        'sort_order' => 2,
-        'is_active' => true,
-    ]);
+    $this->post(route('admin.hero.articles.promote'), ['article_id' => $draft->getKey()])
+        ->assertSessionHasErrors('article');
 
-    $this->patch(route('admin.hero.move-up', $second))->assertRedirect();
-
-    expect($second->fresh()->sort_order)->toBe(1)
-        ->and($first->fresh()->sort_order)->toBe(2);
-
-    $this->patch(route('admin.hero.toggle', $second))->assertRedirect();
-    expect($second->fresh()->is_active)->toBeFalse();
+    expect($draft->fresh()->hero_position)->toBeNull();
 });

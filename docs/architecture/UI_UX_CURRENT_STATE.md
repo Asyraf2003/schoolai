@@ -588,16 +588,22 @@ certification has not started. No runtime certification status is implied by G0.
 ## NEXT VALID STEP
 
 Owner-authorized media architecture E1 protects Article-owned R2 objects across
-thumbnail replacement. Thumbnail cleanup is now restricted to the
-`articles/thumbnails/` namespace and occurs only after thumbnail plus ID/EN/AR
-body references are absent. `articles/content/` objects cannot be deleted by a
-thumbnail lifecycle.
+thumbnail replacement. E2 then replaces mixed HeroSlide runtime/admin ownership
+with one `HeroSetting` copy/CTA singleton and nullable `articles.hero_position`.
+Opening media is fixed by config; promoted Article slides derive their localized
+title, excerpt, thumbnail and URL from a bounded selected-column query. There is
+no automatic latest-Article fallback and no Canvas body hydration.
 
-Focused E1 proof passes with 12 tests / 102 assertions. Repository gates pass:
-`git diff --check`, the 604-file structure gate, Vite production build, and the
-full 247-test / 2,428-assertion suite. The existing unresolved runtime asset and
+The additive E2 migration preserves the legacy `hero_slides` table and objects,
+migrates active Article placements in order, and creates deterministic Opening
+copy when no independent legacy row exists. Old Hero upload/delete routes and
+their source owners are retired without deleting stored objects.
+
+Focused E2 proof passes with 27 tests / 298 assertions. Repository gates pass:
+`git diff --check`, the 598-file structure gate, Vite production build, and the
+full 245-test / 2,366-assertion suite. The existing unresolved runtime asset and
 deferred graphics chunk build warnings remain visible and were not changed.
 
-The next owner-authorized atomic capability is E2: simplify Opening Hero
-ownership and select/order promoted Articles without copying Article content.
+The next owner-authorized atomic capability is E3: make the single-opening path
+avoid carousel download/mount while retaining opening playback/audio readiness.
 Runtime certification remains `BLOCKED_BY_MISSING_EVIDENCE`.

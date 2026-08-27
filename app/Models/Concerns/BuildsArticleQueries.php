@@ -3,12 +3,7 @@
 namespace App\Models\Concerns;
 
 use App\Models\Article;
-use App\Models\Concerns\AuditsAdminChanges;
-use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 trait BuildsArticleQueries
 {
@@ -50,6 +45,15 @@ trait BuildsArticleQueries
             ->orderByDesc('id');
     }
 
+    public function scopePromotedInHero(Builder $query): Builder
+    {
+        return $query
+            ->publiclyVisible()
+            ->whereNotNull('hero_position')
+            ->orderBy('hero_position')
+            ->orderBy('id');
+    }
+
     public function scopePubliclyVisible(Builder $query): Builder
     {
         return $query->where(function (Builder $visibility): void {
@@ -88,10 +92,10 @@ trait BuildsArticleQueries
         $authority = $host;
 
         if ($port !== null && ! (($scheme === 'http' && $port === 80) || ($scheme === 'https' && $port === 443))) {
-            $authority .= ':' . $port;
+            $authority .= ':'.$port;
         }
 
-        $path = '/' . ltrim((string) ($parts['path'] ?? ''), '/');
+        $path = '/'.ltrim((string) ($parts['path'] ?? ''), '/');
         $path = $path === '/' ? '/' : rtrim($path, '/');
         $query = '';
 
@@ -101,6 +105,6 @@ trait BuildsArticleQueries
             $query = http_build_query($queryParameters, '', '&', PHP_QUERY_RFC3986);
         }
 
-        return $scheme . '://' . $authority . $path . ($query !== '' ? '?' . $query : '');
+        return $scheme.'://'.$authority.$path.($query !== '' ? '?'.$query : '');
     }
 }

@@ -10,7 +10,6 @@ use App\View\Composers\AdminGalleryMediaFormComposer;
 use App\View\Composers\AdminGallerySectionFormComposer;
 use App\View\Composers\AdminGallerySectionShowComposer;
 use App\View\Composers\AdminGalleryShowComposer;
-use App\View\Composers\AdminHeroFormComposer;
 use App\View\Composers\AdminLayoutComposer;
 use App\View\Composers\AdminPlaceholderComposer;
 use App\View\Composers\AdminPpdbEditComposer;
@@ -79,7 +78,6 @@ class AppServiceProvider extends ServiceProvider
         View::composer('admin.gallery.page-sections.form', AdminGallerySectionFormComposer::class);
         View::composer('admin.gallery.page-sections.show', AdminGallerySectionShowComposer::class);
         View::composer('admin.gallery.show', AdminGalleryShowComposer::class);
-        View::composer('admin.hero.form', AdminHeroFormComposer::class);
         View::composer('admin.placeholder', AdminPlaceholderComposer::class);
         View::composer('admin.ppdb.edit', AdminPpdbEditComposer::class);
         View::composer('admin.site-statistics.edit', AdminSiteStatisticsEditComposer::class);

@@ -1,15 +1,19 @@
 <?php
 
 use App\Models\Article;
-use App\Models\HeroSlide;
-use App\Models\PpdbSetting;
+use App\Models\HeroSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('uses latest published articles automatically and lets hero placements curate their order', function (): void {
-    HeroSlide::query()->delete();
-    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
+it('keeps Opening first and derives only explicitly promoted published Articles', function (): void {
+    HeroSetting::query()->firstOrFail()->update([
+        'title_id' => 'Opening Sekolah',
+        'title_en' => 'School Opening',
+        'title_ar' => 'افتتاحية المدرسة',
+        'cta_url' => null,
+    ]);
 
     $older = Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
@@ -17,11 +21,10 @@ it('uses latest published articles automatically and lets hero placements curate
         'slug' => 'artikel-lama-test',
         'title_id' => 'Artikel Lama',
         'title_en' => 'Older Article',
-        'description_id' => 'Tetap tersedia di halaman artikel.',
-        'description_en' => 'Still available on the article page.',
+        'description_en' => 'Older excerpt.',
+        'content_en' => '<p>Heavy older Canvas body.</p>',
         'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
         'link_id' => url('/artikel/artikel-lama-test'),
-        'author' => 'Admin Test',
         'published_at' => now()->subDay(),
     ]);
 
@@ -31,51 +34,64 @@ it('uses latest published articles automatically and lets hero placements curate
         'slug' => 'artikel-terbaru-test',
         'title_id' => 'Artikel Terbaru',
         'title_en' => 'Latest Article',
-        'description_id' => 'Otomatis masuk hero ketika belum dikurasi.',
-        'description_en' => 'Automatically enters the hero before curation.',
+        'description_en' => 'Latest excerpt.',
+        'content_en' => '<p>Heavy latest Canvas body.</p>',
         'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
         'link_id' => url('/artikel/artikel-terbaru-test'),
-        'author' => 'Admin Test',
         'published_at' => now(),
     ]);
 
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
         ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 2
-            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
-            && ($hero['slides'][0]['title'] ?? null) === 'Latest Article'
-            && ($hero['slides'][1]['title'] ?? null) === 'Older Article');
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
+            && ($hero['slides'][0]['title'] ?? null) === 'School Opening'
+            && ! isset($hero['slides'][0]['article_id']));
 
-    HeroSlide::query()->create([
-        'article_id' => $older->getKey(),
-        'type' => 'image',
-        'media_url' => Article::PLACEHOLDER_THUMBNAIL,
-        'poster_url' => Article::PLACEHOLDER_THUMBNAIL,
-        'title_id' => $older->title_id,
-        'title_en' => $older->title_en,
-        'description_id' => $older->description_id,
-        'description_en' => $older->description_en,
-        'sort_order' => 1,
-        'is_active' => true,
+    $latest->update(['hero_position' => 1]);
+    $older->update(['hero_position' => 2]);
+    $queries = collect();
+    DB::listen(function ($query) use ($queries): void {
+        $queries->push($query->sql);
+    });
+
+    $this->withSession(['locale' => 'en'])
+        ->get(route('home'))
+        ->assertOk()
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 3
+            && ($hero['slides'][0]['title'] ?? null) === 'School Opening'
+            && ($hero['slides'][1]['title'] ?? null) === 'Latest Article'
+            && ($hero['slides'][1]['description'] ?? null) === 'Latest excerpt.'
+            && ($hero['slides'][2]['title'] ?? null) === 'Older Article');
+
+    $heroQuery = $queries->first(
+        fn (string $sql): bool => str_contains($sql, 'hero_position')
+            && str_contains($sql, 'is not null'),
+    );
+
+    expect($heroQuery)
+        ->toBeString()
+        ->not->toContain('content_id')
+        ->not->toContain('content_en')
+        ->not->toContain('content_ar')
+        ->not->toContain('select *');
+
+    $latest->update([
+        'title_en' => 'Updated Article Title',
+        'description_en' => 'Updated excerpt.',
     ]);
 
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
-        ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
-            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
-            && ($hero['slides'][0]['title'] ?? null) === 'Older Article'
-            && ($hero['slides'][0]['article_id'] ?? null) === $older->getKey());
+        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][1]['title'] ?? null) === 'Updated Article Title'
+            && ($hero['slides'][1]['description'] ?? null) === 'Updated excerpt.');
 
-    expect($latest->fresh()->isPubliclyVisibleNow())->toBeTrue();
-
+    $latest->update(['article_status' => Article::STATUS_DRAFT]);
     $older->delete();
 
-    $this->withSession(['locale' => 'en'])
+    $this->withSession(['locale' => 'id'])
         ->get(route('home'))
         ->assertOk()
         ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
-            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
-            && ($hero['slides'][0]['title'] ?? null) === 'Latest Article');
+            && ($hero['slides'][0]['title'] ?? null) === 'Opening Sekolah');
 });

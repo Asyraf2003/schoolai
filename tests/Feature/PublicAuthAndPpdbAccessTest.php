@@ -44,17 +44,13 @@ it('renders localized role choices before the teacher and student forms', functi
     ['ar', 'rtl', 'اختر نوع الحساب', 'المعلم', 'الطالب'],
 ]);
 
-it('uses the same setting to expose the hero campaign and PPDB route only while open', function (): void {
+it('uses PPDB settings to control its dedicated route without owning Hero copy', function (): void {
     $setting = PpdbSetting::query()->firstOrFail();
     $setting->update([
         'registration_url' => 'https://apply.example.test/form',
         'is_active' => true,
     ]);
 
-    $this->get(route('home'))
-        ->assertOk()
-        ->assertSee('href="'.route('ppdb').'"', escape: false)
-        ->assertDontSee('data-hero-ppdb-cta', escape: false);
     $this->get(route('ppdb'))
         ->assertOk()
         ->assertSee('https://apply.example.test/form', escape: false);
@@ -62,7 +58,6 @@ it('uses the same setting to expose the hero campaign and PPDB route only while 
     $setting->update(['is_active' => false]);
     $this->get(route('home'))
         ->assertOk()
-        ->assertDontSee('href="'.route('ppdb').'"', escape: false)
         ->assertDontSee('data-hero-ppdb-description-link', escape: false);
     $this->get(route('ppdb'))->assertNotFound();
 });

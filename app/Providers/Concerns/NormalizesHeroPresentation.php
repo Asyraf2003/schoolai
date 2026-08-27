@@ -2,17 +2,7 @@
 
 namespace App\Providers\Concerns;
 
-use App\Http\Controllers\Admin\HeroSlideAdminController;
-use App\Models\Article;
-use App\Models\HeroSlide;
-use App\Models\PpdbSetting;
-use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\View as ViewFacade;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\View\View;
 
 trait NormalizesHeroPresentation
 {
@@ -92,20 +82,5 @@ trait NormalizesHeroPresentation
             'ogv', 'ogg' => 'video/ogg',
             default => 'video/mp4',
         };
-    }
-
-    private function currentPpdbSetting(): PpdbSetting
-    {
-        if (! Schema::hasTable('ppdb_settings')) {
-            return new PpdbSetting([
-                'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
-                'is_active' => true,
-            ]);
-        }
-
-        return PpdbSetting::query()->first() ?? new PpdbSetting([
-            'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
-            'is_active' => true,
-        ]);
     }
 }

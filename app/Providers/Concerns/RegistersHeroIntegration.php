@@ -2,16 +2,9 @@
 
 namespace App\Providers\Concerns;
 
-use App\Http\Controllers\Admin\HeroSlideAdminController;
-use App\Models\Article;
-use App\Models\HeroSlide;
-use App\Models\PpdbSetting;
-use App\Support\HeroVideoUrl;
-use App\Support\PublicUrl;
+use App\Http\Controllers\Admin\HeroAdminController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View as ViewFacade;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
 
 trait RegistersHeroIntegration
@@ -36,32 +29,23 @@ trait RegistersHeroIntegration
             'admin',
             'admin.locale',
         ])->group(function (): void {
-            Route::get('/admin/hero', [HeroSlideAdminController::class, 'index'])
+            Route::get('/admin/hero', [HeroAdminController::class, 'index'])
                 ->name('admin.hero');
 
-            Route::get('/admin/hero/create', [HeroSlideAdminController::class, 'create'])
-                ->name('admin.hero.create');
-
-            Route::post('/admin/hero', [HeroSlideAdminController::class, 'store'])
-                ->name('admin.hero.store');
-
-            Route::get('/admin/hero/{heroSlide}/edit', [HeroSlideAdminController::class, 'edit'])
-                ->name('admin.hero.edit');
-
-            Route::put('/admin/hero/{heroSlide}', [HeroSlideAdminController::class, 'update'])
+            Route::put('/admin/hero/opening', [HeroAdminController::class, 'update'])
                 ->name('admin.hero.update');
 
-            Route::delete('/admin/hero/{heroSlide}', [HeroSlideAdminController::class, 'destroy'])
-                ->name('admin.hero.destroy');
+            Route::post('/admin/hero/articles', [HeroAdminController::class, 'promote'])
+                ->name('admin.hero.articles.promote');
 
-            Route::patch('/admin/hero/{heroSlide}/toggle', [HeroSlideAdminController::class, 'toggle'])
-                ->name('admin.hero.toggle');
+            Route::delete('/admin/hero/articles/{article}', [HeroAdminController::class, 'unpromote'])
+                ->name('admin.hero.articles.unpromote');
 
-            Route::patch('/admin/hero/{heroSlide}/move-up', [HeroSlideAdminController::class, 'moveUp'])
-                ->name('admin.hero.move-up');
+            Route::patch('/admin/hero/articles/{article}/move-up', [HeroAdminController::class, 'moveUp'])
+                ->name('admin.hero.articles.move-up');
 
-            Route::patch('/admin/hero/{heroSlide}/move-down', [HeroSlideAdminController::class, 'moveDown'])
-                ->name('admin.hero.move-down');
+            Route::patch('/admin/hero/articles/{article}/move-down', [HeroAdminController::class, 'moveDown'])
+                ->name('admin.hero.articles.move-down');
         });
     }
 }

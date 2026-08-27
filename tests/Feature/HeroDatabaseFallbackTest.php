@@ -1,60 +1,42 @@
 <?php
 
+use App\Models\HeroSetting;
 use App\Models\HeroSlide;
-use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('uses active database hero slides and falls back to locale slides when none are active', function (): void {
-    HeroSlide::query()->delete();
-    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
-
-    HeroSlide::query()->create([
-        'type' => 'image',
-        'media_url' => 'media/home/hero-school.png',
-        'title_id' => 'Hero dari Database',
-        'title_en' => 'Hero from Database',
-        'title_ar' => 'واجهة من قاعدة البيانات',
-        'sort_order' => 1,
-        'is_active' => true,
+it('uses localized singleton Opening copy with the fixed configured video', function (): void {
+    HeroSetting::query()->firstOrFail()->update([
+        'title_id' => 'Opening Indonesia',
+        'title_en' => 'Opening English',
+        'title_ar' => 'الافتتاحية العربية',
+        'cta_label_en' => 'Learn more',
+        'cta_url' => '#program',
     ]);
 
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
         ->assertOk()
-        ->assertDontSee('hero-cinema__title-link', false)
+        ->assertSee('Opening English')
+        ->assertSee('href="#program"', false)
         ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
-            && ($hero['slides'][0]['is_primary_slide'] ?? false) === true
-            && ($hero['slides'][0]['title'] ?? null) === 'Hero from Database');
-
-    HeroSlide::query()->update(['is_active' => false]);
-
-    $this->withSession(['locale' => 'id'])
-        ->get(route('home'))
-        ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) >= 4
-            && ($hero['slides'][0]['title'] ?? null) !== 'Hero dari Database');
+            && ($hero['slides'][0]['media_url'] ?? null) === config('media.homepage_hero_video_url')
+            && ($hero['slides'][0]['is_opening'] ?? false) === true);
 });
 
-it('never renders legacy youtube media or thumbnails in the hero', function (): void {
-    HeroSlide::query()->delete();
-    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
-
+it('ignores legacy HeroSlide rows for runtime presentation', function (): void {
     HeroSlide::query()->create([
         'type' => 'video',
         'media_url' => 'https://www.youtube-nocookie.com/embed/legacy123',
-        'poster_url' => 'https://i.ytimg.com/vi/legacy123/hqdefault.jpg',
-        'title_id' => 'Hero Lama',
+        'title_id' => 'Legacy Hero Copy',
         'sort_order' => 1,
         'is_active' => true,
     ]);
 
     $this->get(route('home'))
         ->assertOk()
+        ->assertDontSee('Legacy Hero Copy')
         ->assertDontSee('youtube', false)
-        ->assertDontSee('ytimg', false)
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
-            && ($hero['slides'][0]['render_type'] ?? null) === 'image'
-            && ! str_contains(strtolower((string) ($hero['slides'][0]['media_url'] ?? '')), 'youtu'));
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1);
 });

@@ -2,50 +2,38 @@
 
 namespace App\Providers\Concerns;
 
-use App\Http\Controllers\Admin\HeroSlideAdminController;
 use App\Models\Article;
-use App\Models\HeroSlide;
-use App\Models\PpdbSetting;
-use App\Support\HeroVideoUrl;
-use App\Support\PublicUrl;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\View as ViewFacade;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\View\View;
 
 trait BuildsArticleHeroSlides
 {
     /** @return array<int, array<string, mixed>> */
-    private function articleHeroSlides(string $locale): array
+    private function promotedArticleHeroSlides(string $locale): array
     {
-        if (! Schema::hasTable('articles')) {
+        if (! Schema::hasTable('articles') || ! Schema::hasColumn('articles', 'hero_position')) {
             return [];
         }
 
-        if (
-            Schema::hasTable('hero_slides')
-            && Schema::hasColumn('hero_slides', 'article_id')
-        ) {
-            $placements = HeroSlide::query()
-                ->with('article')
-                ->activeOrdered()
-                ->whereNotNull('article_id')
-                ->get()
-                ->filter(fn (HeroSlide $slide): bool => $slide->article?->isPubliclyVisibleNow() === true)
-                ->map(fn (HeroSlide $slide): array => $slide->toHeroArray($locale))
-                ->values()
-                ->all();
-
-            if ($placements !== []) {
-                return $placements;
-            }
-        }
-
         return Article::query()
-            ->latestPublished()
-            ->limit(4)
-            ->get()
+            ->promotedInHero()
+            ->get([
+                'id',
+                'article_source',
+                'article_status',
+                'slug',
+                'title_id',
+                'title_en',
+                'title_ar',
+                'description_id',
+                'description_en',
+                'description_ar',
+                'thumbnail_url',
+                'link_id',
+                'link_en',
+                'link_ar',
+                'published_at',
+                'hero_position',
+            ])
             ->map(fn (Article $article): array => $this->articleToHeroArray($article, $locale))
             ->all();
     }
@@ -53,17 +41,16 @@ trait BuildsArticleHeroSlides
     /** @return array<string, mixed> */
     private function articleToHeroArray(Article $article, string $locale): array
     {
-        $tag = collect($article->tags ?? [])
-            ->first(fn (mixed $value): bool => is_string($value) && trim($value) !== '');
+        $thumbnail = $this->publicAssetUrl($article->thumbnail_url)
+            ?? $this->publicAssetUrl(Article::PLACEHOLDER_THUMBNAIL);
 
         return [
             'type' => 'image',
-            'media' => $article->thumbnail_url ?: Article::PLACEHOLDER_THUMBNAIL,
-            'poster' => $article->thumbnail_url ?: Article::PLACEHOLDER_THUMBNAIL,
+            'render_type' => 'image',
+            'media_url' => $thumbnail,
+            'poster_url' => $thumbnail,
             'media_alt' => $article->titleForLocale($locale),
-            'eyebrow' => is_string($tag) && trim($tag) !== ''
-                ? trim($tag)
-                : $this->articleEyebrow($locale),
+            'eyebrow' => $this->articleEyebrow($locale),
             'title' => $article->titleForLocale($locale),
             'title_href' => $article->linkForLocale($locale),
             'description' => $article->descriptionForLocale($locale),
@@ -74,6 +61,8 @@ trait BuildsArticleHeroSlides
             ],
             'focal_position' => 'center center',
             'overlay_strength' => 0.52,
+            'video_mime_type' => 'video/mp4',
+            'is_media_fallback' => $thumbnail === null,
             'article_id' => $article->getKey(),
         ];
     }
@@ -81,9 +70,9 @@ trait BuildsArticleHeroSlides
     private function articleEyebrow(string $locale): string
     {
         return match ($locale) {
-            'ar' => 'أحدث المقالات',
-            'en' => 'Latest story',
-            default => 'Artikel Terbaru',
+            'ar' => 'مقال مميز',
+            'en' => 'Featured story',
+            default => 'Artikel Pilihan',
         };
     }
 

@@ -2,7 +2,8 @@
 
 namespace App\Providers\Concerns;
 
-use App\Models\HeroSlide;
+use App\Models\HeroSetting;
+use App\Models\PpdbSetting;
 use App\Support\HeroVideoUrl;
 use App\Support\HomeHeroPresentation;
 use Illuminate\Support\Facades\Schema;
@@ -14,93 +15,78 @@ trait InjectsDatabaseHero
     {
         $hero = $view->getData()['hero'] ?? [];
         $hero = is_array($hero) ? $hero : [];
-        $fallbackImageUrl = is_string($hero['fallback_image_url'] ?? null)
-            ? $hero['fallback_image_url']
-            : null;
         $locale = app()->getLocale();
-        $ppdbSetting = null;
-        $normalizedSlides = [];
-        $slides = $this->articleHeroSlides($locale);
+        $slides = [
+            $this->openingHeroSlide($hero, $locale),
+            ...$this->promotedArticleHeroSlides($locale),
+        ];
 
-        if ($slides === [] && Schema::hasTable('hero_slides')) {
-            $legacySlides = HeroSlide::query()->activeOrdered();
-
-            if (Schema::hasColumn('hero_slides', 'article_id')) {
-                $legacySlides->whereNull('article_id');
-            }
-
-            $slides = $legacySlides
-                ->get()
-                ->map(fn (HeroSlide $slide): array => $slide->toHeroArray($locale))
-                ->all();
-        }
-
-        if ($slides === []) {
-            return;
-        }
-
-        foreach ($slides as $slide) {
-            $type = in_array(($slide['type'] ?? null), ['image', 'video'], true)
-                ? $slide['type']
-                : 'image';
-            $mediaUrl = $this->publicAssetUrl($slide['media'] ?? null);
-            $posterUrl = $this->publicAssetUrl($slide['poster'] ?? null);
-
-            if (HeroVideoUrl::isYoutubeAsset($mediaUrl)) {
-                $mediaUrl = null;
-            }
-
-            if (HeroVideoUrl::isYoutubeAsset($posterUrl)) {
-                $posterUrl = null;
-            }
-
-            $renderType = $type === 'video'
-                && $mediaUrl !== null
-                && HeroVideoUrl::isDirectVideo($mediaUrl)
-                    ? 'video'
-                    : 'image';
-
-            if ($renderType === 'image') {
-                $mediaUrl = $type === 'image'
-                    ? ($mediaUrl ?: $posterUrl ?: $fallbackImageUrl)
-                    : ($posterUrl ?: $fallbackImageUrl);
-            }
-
-            if ($mediaUrl === null) {
-                continue;
-            }
-
-            $cta = isset($slide['cta']) && is_array($slide['cta']) ? $slide['cta'] : [];
-
-            if (($cta['action'] ?? null) === 'admission') {
-                $ppdbSetting ??= $this->currentPpdbSetting();
-                $cta = [];
-            } else {
-                $cta['href'] = $this->heroLinkUrl($cta['href'] ?? null);
-            }
-
-            $normalizedSlides[] = array_replace($slide, [
-                'type' => $type,
-                'render_type' => $renderType,
-                'media_url' => $mediaUrl,
-                'poster_url' => $posterUrl ?: $fallbackImageUrl,
-                'is_media_fallback' => $type !== $renderType,
-                'focal_position' => $this->heroFocalPosition($slide['focal_position'] ?? null),
-                'overlay_strength' => $this->heroOverlayStrength($slide['overlay_strength'] ?? null),
-                'video_mime_type' => $this->heroVideoMimeType($mediaUrl),
-                'cta' => $cta,
-            ]);
-        }
-
-        if ($normalizedSlides === []) {
-            return;
-        }
-
-        $ppdbSetting ??= $this->currentPpdbSetting();
         $hero['slides'] = HomeHeroPresentation::decorate(
-            $normalizedSlides,
-            $ppdbSetting,
+            array_values(array_filter($slides)),
         );
         $view->with('hero', $hero);
+    }
+
+    /** @param array<string, mixed> $hero
+     * @return array<string, mixed>|null
+     */
+    private function openingHeroSlide(array $hero, string $locale): ?array
+    {
+        $fallback = collect($hero['slides'] ?? [])->first();
+        $fallback = is_array($fallback) ? $fallback : [];
+        $setting = Schema::hasTable('hero_settings')
+            ? HeroSetting::query()->first()
+            : null;
+        $mediaUrl = $this->publicAssetUrl(config('media.homepage_hero_video_url'));
+        $fallbackImage = $this->publicAssetUrl($hero['fallback_image_url'] ?? null);
+        $posterUrl = $this->publicAssetUrl($fallback['poster_url'] ?? null) ?: $fallbackImage;
+        $renderType = $mediaUrl !== null && HeroVideoUrl::isDirectVideo($mediaUrl)
+            ? 'video'
+            : 'image';
+        $renderUrl = $renderType === 'video' ? $mediaUrl : $posterUrl;
+
+        if ($renderUrl === null) {
+            return null;
+        }
+
+        $ctaUrl = $this->heroLinkUrl($setting?->cta_url ?? data_get($fallback, 'cta.href'));
+
+        if ($this->isClosedPpdbLink($ctaUrl)) {
+            $ctaUrl = null;
+        }
+
+        return [
+            'type' => 'video',
+            'render_type' => $renderType,
+            'media_url' => $renderUrl,
+            'poster_url' => $posterUrl,
+            'media_alt' => $fallback['media_alt'] ?? 'Al Mustaqbal School',
+            'eyebrow' => $setting?->eyebrowForLocale($locale) ?? ($fallback['eyebrow'] ?? ''),
+            'title' => $setting?->titleForLocale($locale) ?? ($fallback['title'] ?? 'Al Mustaqbal School'),
+            'description' => $setting?->descriptionForLocale($locale) ?? ($fallback['description'] ?? ''),
+            'cta' => [
+                'label' => $ctaUrl !== null ? $setting?->ctaLabelForLocale($locale) : null,
+                'href' => $ctaUrl,
+                'action' => $ctaUrl !== null ? 'link' : null,
+            ],
+            'focal_position' => 'center center',
+            'overlay_strength' => 0.34,
+            'video_mime_type' => $this->heroVideoMimeType($mediaUrl),
+            'is_media_fallback' => $renderType !== 'video',
+            'is_opening' => true,
+        ];
+    }
+
+    private function isClosedPpdbLink(?string $url): bool
+    {
+        if ($url === null || '/'.ltrim((string) parse_url($url, PHP_URL_PATH), '/') !== '/ppdb') {
+            return false;
+        }
+
+        if (! Schema::hasTable('ppdb_settings')) {
+            return true;
+        }
+
+        return PpdbSetting::query()->first()?->isRegistrationOpen() !== true;
     }
 }

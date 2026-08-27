@@ -10,7 +10,8 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
 
     $filled = static fn (mixed $value): bool => is_string($value) && trim($value) !== '';
     $articles = DB::table('articles')->whereNull('deleted_at')->get();
-    $heroes = DB::table('hero_slides')->where('is_active', true)->get();
+    $heroSettings = DB::table('hero_settings')->get();
+    $promotedArticles = DB::table('articles')->whereNotNull('hero_position')->get();
     $gallery = DB::table('gallery_items')->whereNull('deleted_at')->get();
     $ppdb = DB::table('ppdb_showcase_items')->whereNull('deleted_at')->get();
     $statistics = DB::table('site_statistics')->whereNull('deleted_at')->get();
@@ -25,11 +26,11 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
             && $filled($article->content_id)
             && $filled($article->content_en)
             && $filled($article->content_ar)))->toBeTrue()
-        ->and($heroes)->toHaveCount(5)
-        ->and($heroes->every(fn (object $hero): bool => $filled($hero->title_id)
+        ->and($heroSettings)->toHaveCount(1)
+        ->and($heroSettings->every(fn (object $hero): bool => $filled($hero->title_id)
             && $filled($hero->title_en)
-            && $filled($hero->title_ar)
-            && ! str_contains(strtolower((string) $hero->media_url), 'youtu')))->toBeTrue()
+            && $filled($hero->title_ar)))->toBeTrue()
+        ->and($promotedArticles)->toHaveCount(5)
         ->and($gallery)->toHaveCount(6)
         ->and($gallery->every(fn (object $item): bool => $filled($item->title_id)
             && $filled($item->title_en)
