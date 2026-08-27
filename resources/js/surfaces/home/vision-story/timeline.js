@@ -4,7 +4,7 @@ import { createVisionBackgroundCompositor } from './background-compositor.js';
 export function createVisionTimeline(root) {
     const panels = Array.from(root.querySelectorAll('[data-vision-panel]'));
     const visuals = Array.from(root.querySelectorAll('[data-vision-visual]'));
-    const images = visuals.map((visual) => visual.querySelector('img'));
+    const media = visuals.map((visual) => visual.querySelector('[data-vision-art]'));
     const background = createVisionBackgroundCompositor(root, panels);
     const transitionCount = Math.max(1, visuals.length - 1);
     let activeIndex = -1;
@@ -32,10 +32,10 @@ export function createVisionTimeline(root) {
             visual.style.clipPath = `inset(0 0 ${(transition * 100).toFixed(3)}% 0)`;
         });
 
-        images.forEach((image, index) => {
-            if (!image) return;
+        media.forEach((element, index) => {
+            if (!element) return;
             const y = Math.max(-8, Math.min(8, (scaled - index) * 8));
-            image.style.transform = `translate3d(0, ${y.toFixed(3)}%, 0) scale(1.08)`;
+            element.style.transform = `translate3d(0, ${y.toFixed(3)}%, 0) scale(1.08)`;
         });
     }
 
@@ -43,7 +43,7 @@ export function createVisionTimeline(root) {
         background.destroy();
         panels.forEach((panel) => panel.classList.remove('is-active'));
         visuals.forEach((visual) => visual.style.removeProperty('clip-path'));
-        images.forEach((image) => image?.style.removeProperty('transform'));
+        media.forEach((element) => element?.style.removeProperty('transform'));
     }
 
     return { setProgress, destroy };

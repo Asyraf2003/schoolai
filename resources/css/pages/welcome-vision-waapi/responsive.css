@@ -42,7 +42,7 @@ html[dir="rtl"] .vision-arch__mission-list p {
         transform: none !important;
     }
 
-    .vision-arch__visual img {
+    .vision-arch__visual [data-vision-art] {
         transform: translate3d(0, -5%, 0) scale(1.035) !important;
     }
 }

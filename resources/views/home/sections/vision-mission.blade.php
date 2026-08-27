@@ -68,21 +68,77 @@
       </article>
     </div>
 
-    <div class="vision-arch__visuals" data-vision-visuals aria-hidden="true">
+    <div class="vision-arch__visuals" data-vision-visuals>
       @foreach ($schoolImages as $image)
-        <figure class="vision-arch__visual" data-vision-visual="{{ $loop->index }}">
-          <img
-            src="{{ $image }}"
-            alt=""
-            width="1920"
-            height="1440"
-            loading="lazy"
-            decoding="async"
-            fetchpriority="low"
-            data-vision-art
-          />
+        <figure
+          class="vision-arch__visual"
+          data-vision-visual="{{ $loop->index }}"
+          @if (! $loop->first) aria-hidden="true" @endif
+        >
+          @if ($loop->first)
+            <button
+              type="button"
+              class="vision-arch__video-trigger"
+              data-about-video-open
+              aria-label="{{ $aboutLabel }} video"
+            >
+              <video
+                data-vision-art
+                data-about-video-preview
+                autoplay
+                muted
+                loop
+                playsinline
+                webkit-playsinline
+                preload="metadata"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <source src="{{ config('media.homepage_about_video_url') }}" type="video/mp4" />
+              </video>
+              <span class="vision-arch__video-cue" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                  <path d="M12 8l12 8-12 8Z" />
+                </svg>
+              </span>
+            </button>
+          @else
+            <img
+              src="{{ $image }}"
+              alt=""
+              width="1920"
+              height="1440"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="low"
+              data-vision-art
+            />
+          @endif
         </figure>
       @endforeach
     </div>
   </div>
+
+  <dialog class="vision-video-modal" data-about-video-modal aria-label="{{ $aboutLabel }} video">
+    <div class="vision-video-modal__surface">
+      <button
+        type="button"
+        class="vision-video-modal__close"
+        data-about-video-close
+        aria-label="Close video"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+      <video
+        class="vision-video-modal__player"
+        data-about-video-player
+        controls
+        playsinline
+        webkit-playsinline
+        preload="metadata"
+      >
+        <source src="{{ config('media.homepage_about_video_url') }}" type="video/mp4" />
+      </video>
+    </div>
+  </dialog>
 </section>

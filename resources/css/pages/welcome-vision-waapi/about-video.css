@@ -1,0 +1,130 @@
+.vision-arch__video-trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    color: #fff;
+    background: #0c0c0c;
+    cursor: pointer;
+}
+
+.vision-arch__video-trigger video {
+    pointer-events: none;
+}
+
+.vision-arch__video-cue {
+    position: absolute;
+    inset-inline-end: clamp(1rem, 2vw, 1.5rem);
+    inset-block-end: clamp(1rem, 2vw, 1.5rem);
+    display: grid;
+    place-items: center;
+    width: clamp(2.8rem, 4vw, 3.6rem);
+    aspect-ratio: 1;
+    border: 1px solid rgb(255 255 255 / .7);
+    border-radius: 50%;
+    background: rgb(0 0 0 / .26);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.vision-arch__video-cue svg {
+    width: 45%;
+    fill: currentColor;
+}
+
+.vision-arch__video-trigger:hover .vision-arch__video-cue,
+.vision-arch__video-trigger:focus-visible .vision-arch__video-cue {
+    background: rgb(0 0 0 / .48);
+    transform: scale(1.08);
+}
+
+.vision-arch__video-trigger:focus-visible {
+    outline: 3px solid #ffd166;
+    outline-offset: -6px;
+}
+
+.vision-video-modal {
+    width: min(92vw, 76rem);
+    max-width: none;
+    max-height: 92dvh;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    color: #fff;
+    background: transparent;
+}
+
+.vision-video-modal::backdrop {
+    background: rgb(0 0 0 / .82);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.vision-video-modal__surface {
+    position: relative;
+    overflow: hidden;
+    border-radius: clamp(.85rem, 1.6vw, 1.35rem);
+    background: #000;
+    box-shadow: 0 30px 90px rgb(0 0 0 / .48);
+}
+
+.vision-video-modal__player {
+    display: block;
+    width: 100%;
+    max-height: 88dvh;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #000;
+}
+
+.vision-video-modal__close {
+    position: absolute;
+    z-index: 2;
+    inset-block-start: .9rem;
+    inset-inline-end: .9rem;
+    display: grid;
+    place-items: center;
+    width: 2.8rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / .72);
+    border-radius: 50%;
+    color: #fff;
+    background: rgb(0 0 0 / .42);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    font: 300 2rem/1 Arial, sans-serif;
+    cursor: pointer;
+}
+
+.vision-video-modal__close:hover,
+.vision-video-modal__close:focus-visible {
+    background: rgb(0 0 0 / .7);
+}
+
+.vision-video-modal__close:focus-visible {
+    outline: 3px solid #ffd166;
+    outline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+    .vision-video-modal {
+        width: calc(100vw - 1.25rem);
+    }
+
+    .vision-video-modal__close {
+        inset-block-start: .65rem;
+        inset-inline-end: .65rem;
+        width: 2.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vision-arch__video-cue {
+        transition: none;
+    }
+}
