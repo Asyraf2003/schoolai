@@ -125,24 +125,6 @@
         line-height: 1.58;
     }
 
-    .hero-cinema__arrow {
-        display: none;
-    }
-
-    .hero-cinema__rail {
-        inset-block-end: 34px;
-        grid-template-columns: 1fr auto auto;
-        gap: 15px;
-    }
-
-    .hero-cinema__counter {
-        display: none;
-    }
-
-    .hero-cinema__dots {
-        gap: 6px;
-    }
-
     .hero-cinema__playback {
         width: 38px;
         height: 38px;

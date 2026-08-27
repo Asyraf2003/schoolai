@@ -9,6 +9,9 @@ it('keeps a hero-gated sequential homepage preparation graph with a DOM owned ga
     $heroReadiness = file_get_contents(resource_path(
         'js/pages/welcome-hero/readiness.js',
     ));
+    $heroCarousel = file_get_contents(resource_path(
+        'js/pages/welcome-hero/carousel.js',
+    ));
     $program = file_get_contents(resource_path('js/pages/welcome/program-cards.js'));
     $programController = file_get_contents(resource_path(
         'js/surfaces/home/program-journey/controller.js',
@@ -41,7 +44,12 @@ it('keeps a hero-gated sequential homepage preparation graph with a DOM owned ga
         ->toContain('await yieldToBrowser()')
         ->and($hero)
         ->toContain("import { armHeroReadySignal } from './welcome-hero/readiness.js'")
-        ->toContain('armHeroReadySignal(root, slides[state.currentIndex])')
+        ->toContain('armHeroReadySignal(root, slides[0])')
+        ->toContain("import('./welcome-hero/carousel.js')")
+        ->not->toContain("from './welcome-hero/slider-media.js'")
+        ->and($heroCarousel)
+        ->toContain("import '../../../css/pages/welcome-hero-carousel.css'")
+        ->toContain("from './slider-media.js'")
         ->and($heroReadiness)
         ->toContain("export const HERO_READY_EVENT = 'schoolai:hero-ready'")
         ->toContain("video.addEventListener('playing'")

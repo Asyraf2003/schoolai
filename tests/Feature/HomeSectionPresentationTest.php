@@ -99,9 +99,11 @@ it('shapes the final hero collection at the included section boundary', function
 
     expect($html)
         ->toContain('aria-label="Frame 1 of 1"')
+        ->toContain('data-hero-mode="opening"')
         ->toContain('Final composed hero')
         ->not->toContain('data-hero-previous')
-        ->not->toContain('data-hero-next');
+        ->not->toContain('data-hero-next')
+        ->not->toContain('data-hero-dot');
 });
 
 it('preserves the latent editorial heading split contract', function (): void {

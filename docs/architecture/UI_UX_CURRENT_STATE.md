@@ -604,6 +604,24 @@ Focused E2 proof passes with 27 tests / 298 assertions. Repository gates pass:
 full 245-test / 2,366-assertion suite. The existing unresolved runtime asset and
 deferred graphics chunk build warnings remain visible and were not changed.
 
-The next owner-authorized atomic capability is E3: make the single-opening path
-avoid carousel download/mount while retaining opening playback/audio readiness.
-Runtime certification remains `BLOCKED_BY_MISSING_EVIDENCE`.
+E3 is now `PASS` on the owner-authorized Hero fast-path contract. The server marks
+the sole Opening as `opening`; its fixed video loops and retains audio, play/pause,
+visibility, and Hero-readiness ownership in a bounded controller. It renders no
+arrow, dots, counter, or progress controls and does not mount timer, keyboard,
+swipe, transition, or deferred-slide hydration machinery.
+
+Only a published promoted Article changes the server contract to `carousel`.
+That branch dynamically imports the existing carousel behavior and its extracted
+CSS chunk. Browser network proof on the same temporary SQLite runtime showed zero
+`carousel-*.js` / `carousel-*.css` requests for Opening-only, then both chunks and
+six Article controls after seeded promotions. The sequential homepage preparation
+state still reached `footer` after the Hero-ready event.
+
+Focused E3 proof passes with 12 tests / 208 assertions. Repository gates pass:
+`git diff --check`, the 603-file structure gate, Vite production build, Pint, and
+the full 246-test / 2,404-assertion suite. Existing unresolved asset and deferred
+graphics chunk build warnings remain visible and were not changed.
+
+The next owner-authorized atomic capability is E4: prune homepage queries to only
+enabled, rendered data owners. Broad runtime certification remains
+`BLOCKED_BY_MISSING_EVIDENCE`.

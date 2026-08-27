@@ -1,10 +1,4 @@
 @once
-  @vite([
-    'resources/css/pages/welcome-mega-menu.css',
-    'resources/css/pages/welcome-hero-motion.css',
-    'resources/css/pages/welcome-hero-visual.css',
-  ])
-
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     .home-page .hero-cinema__content {
       padding-block-end: clamp(108px, 12vh, 142px);
@@ -26,54 +20,6 @@
         0 0 56px rgb(0 0 0 / 0.48);
     }
 
-    .home-page .hero-cinema__arrow {
-      inset-block-start: auto;
-      width: clamp(92px, 7.4vw, 128px);
-      height: clamp(52px, 4.5vw, 72px);
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      color: #ffb20b;
-      background: transparent;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      filter: drop-shadow(0 8px 16px rgb(0 0 0 / 0.36));
-      transform: none;
-    }
-
-    .home-page .hero-cinema__arrow--previous {
-      inset-inline-start: auto;
-      inset-inline-end: clamp(118px, 12vw, 205px);
-      inset-block-end: clamp(150px, 18vh, 215px);
-    }
-
-    .home-page .hero-cinema__arrow--next {
-      inset-inline-end: clamp(54px, 6vw, 105px);
-      inset-block-end: clamp(82px, 10vh, 126px);
-    }
-
-    .home-page .hero-cinema__arrow:hover,
-    .home-page .hero-cinema__arrow:focus-visible {
-      color: #ffd166;
-      background: transparent;
-      transform: scale(1.08);
-    }
-
-    .home-page .hero-cinema__arrow:focus-visible {
-      outline: 3px solid rgb(255 255 255 / 0.92);
-      outline-offset: 5px;
-    }
-
-    .home-page .hero-cinema__arrow svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-      fill: currentColor;
-    }
-
-    .home-page .hero-cinema__arrow svg path:nth-child(2) { opacity: 0.82; }
-    .home-page .hero-cinema__arrow svg path:nth-child(3) { opacity: 0.64; }
-
     @media (max-width: 1180px) {
       .home-page .hero-cinema__content {
         padding-block-end: clamp(104px, 12vh, 132px);
@@ -88,15 +34,6 @@
         max-width: 20ch;
       }
 
-      .home-page .hero-cinema__arrow--previous {
-        inset-inline-end: clamp(104px, 11vw, 150px);
-        inset-block-end: clamp(142px, 17vh, 190px);
-      }
-
-      .home-page .hero-cinema__arrow--next {
-        inset-inline-end: clamp(38px, 5vw, 74px);
-        inset-block-end: clamp(78px, 9vh, 112px);
-      }
     }
 
     @media (max-width: 767px) {
@@ -115,30 +52,6 @@
         max-width: 18ch;
       }
 
-      .home-page .hero-cinema__arrow {
-        display: grid;
-        width: 76px;
-        height: 44px;
-        border: 0;
-        background: transparent;
-        box-shadow: none;
-      }
-
-      .home-page .hero-cinema__arrow--previous {
-        inset-inline-start: auto;
-        inset-inline-end: 76px;
-        inset-block-end: 150px;
-      }
-
-      .home-page .hero-cinema__arrow--next {
-        inset-inline-end: 20px;
-        inset-block-end: 96px;
-      }
-
-      .home-page .hero-cinema__arrow svg {
-        width: 100%;
-        height: 100%;
-      }
     }
 
     @media (max-width: 440px) {
@@ -155,20 +68,6 @@
         max-width: 17ch;
       }
 
-      .home-page .hero-cinema__arrow {
-        width: 68px;
-        height: 40px;
-      }
-
-      .home-page .hero-cinema__arrow--previous {
-        inset-inline-end: 70px;
-        inset-block-end: 144px;
-      }
-
-      .home-page .hero-cinema__arrow--next {
-        inset-inline-end: 18px;
-        inset-block-end: 92px;
-      }
     }
   </style>
 @endonce

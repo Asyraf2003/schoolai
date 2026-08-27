@@ -1,4 +1,6 @@
-@include('partials.home-hero-copy-layout')
+@once
+  @vite('resources/css/pages/welcome-mega-menu.css')
+@endonce
 
 @once
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">

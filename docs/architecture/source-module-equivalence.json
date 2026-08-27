@@ -118,7 +118,7 @@
       "originalSourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db"
     },
     "resources/css/pages/welcome-hero.css": {
-      "sourceSha256": "ba2343692514b9a13c4311e4a66730f35651710e98df4120292bb1b7fd25345d",
+      "sourceSha256": "f6b8463d01645987256b2dad5ab4d96968d772bb962f88118cb640504b139df7",
       "orderedModules": [
         {
           "path": "./welcome-hero/001-homepage-hero-and-overlay-navigation-this-file-inten.css",
@@ -147,13 +147,8 @@
         },
         {
           "path": "./welcome-hero/006-welcome-hero-cascade-006.css",
-          "lines": 185,
-          "sha256": "4d2284852164bd3459ab22f3749bf0594a183bfd247802b2a99bb8e320e1b4bb"
-        },
-        {
-          "path": "./welcome-hero/007-tablet-and-mobile-navigation-hero-behavior.css",
-          "lines": 65,
-          "sha256": "372ba319289898b602edb7265c95b97b5e91ed197027e741f2871a59201d6387"
+          "lines": 62,
+          "sha256": "2a62e124c9ccc74c14930fd2a5966a1bd00851495a17cd33b28e9f092f11e783"
         },
         {
           "path": "./welcome-hero/008-welcome-hero-cascade-008.css",
@@ -162,8 +157,8 @@
         },
         {
           "path": "./welcome-hero/009-welcome-hero-cascade-009.css",
-          "lines": 185,
-          "sha256": "6f3463d23152dfd408f77c776efa8d1aeaf999f826e55ea23a3e8ad9bf94197b"
+          "lines": 167,
+          "sha256": "195640fad169721de74a9705197cfb9105641f2327caf28e190761a489a90f7a"
         }
       ],
       "originalSourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a"

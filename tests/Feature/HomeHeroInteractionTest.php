@@ -76,17 +76,47 @@ it('does not let PPDB status replace Opening copy', function (): void {
 
 it('keeps audio user-gesture ownership and no hero glow runtime', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome-hero.js'));
+    $opening = file_get_contents(resource_path('js/pages/welcome-hero/opening.js'));
+    $carousel = file_get_contents(resource_path('js/pages/welcome-hero/carousel.js'));
     $media = file_get_contents(resource_path('js/pages/welcome-hero/slider-media.js'));
     $title = file_get_contents(resource_path('views/home/partials/hero-title.blade.php'));
 
     expect($entry)
         ->not->toContain('initHeroTitleGlow')
-        ->toContain('audioEnabled: false')
-        ->toContain("audioButton.addEventListener('click'")
+        ->toContain("import('./welcome-hero/carousel.js')")
+        ->not->toContain("from './welcome-hero/slider-media.js'")
+        ->not->toContain("from './welcome-hero/slider-playback.js'")
+        ->and($opening)
+        ->toContain('var audioEnabled = false')
+        ->toContain("audioButton?.addEventListener('click'")
+        ->toContain("video.setAttribute('loop', '')")
+        ->not->toContain('setTimeout')
+        ->not->toContain("addEventListener('keydown'")
+        ->and($carousel)
+        ->toContain("import '../../../css/pages/welcome-hero-carousel.css'")
+        ->toContain("from './slider-media.js'")
+        ->toContain("from './slider-playback.js'")
         ->and($media)
         ->toContain('video.muted = !state.audioEnabled')
         ->toContain('video.muted = true')
         ->and($title)
         ->not->toContain('data-hero-title-glow')
         ->not->toContain('data-hero-title-base');
+});
+
+it('renders carousel controls only when a published Article is promoted', function (): void {
+    promotedHeroArticle();
+
+    $response = $this->withSession(['locale' => 'en'])->get(route('home'));
+
+    $response
+        ->assertOk()
+        ->assertSee('data-hero-mode="carousel"', false)
+        ->assertSee('data-hero-previous', false)
+        ->assertSee('data-hero-next', false)
+        ->assertSee('data-hero-dot', false)
+        ->assertSee('data-hero-progress', false)
+        ->assertSee('data-hero-current', false);
+
+    expect(substr_count($response->getContent(), 'data-hero-dot'))->toBe(2);
 });
