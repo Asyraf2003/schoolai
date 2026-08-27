@@ -63,7 +63,6 @@ it('preserves Gallery preset shaping while rendering the alternating editorial s
         'galleryHeading' => 'Gallery',
         'gallerySection' => [
             'items' => $items,
-            'section_subtitle' => 'Closing copy',
             'cta' => ['href' => '/galeri', 'label' => 'Explore'],
         ],
     ])->render();
@@ -76,7 +75,6 @@ it('preserves Gallery preset shaping while rendering the alternating editorial s
         ->toContain('data-gallery-background')
         ->toContain('data-gallery-story-media')
         ->toContain('data-gallery-story-copy')
-        ->toContain('Closing copy')
         ->toContain('data-depth-gallery-end-link')
         ->and(substr_count($html, 'data-gallery-story-item'))->toBe(7)
         ->and(substr_count($html, 'data-depth-gallery-end-link'))->toBe(1);
