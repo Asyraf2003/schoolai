@@ -16,6 +16,10 @@ final class AdminGalleryFormComposer
         $page = __('admin.gallery');
         $isEdit = ($data['mode'] ?? 'create') === 'edit';
         $currentType = old('type', $item->type ?: 'photo');
+        $selectedSectionIds = old(
+            'section_ids',
+            $item->exists ? $item->sections->modelKeys() : [],
+        );
 
         $view->with([
             'page' => $page,
@@ -25,6 +29,7 @@ final class AdminGalleryFormComposer
             'publishedAtValue' => old('published_at', optional($item->published_at)->format('Y-m-d\TH:i')),
             'currentType' => $currentType,
             'isVideo' => $currentType === 'video',
+            'selectedSectionIds' => array_map('intval', $selectedSectionIds),
             'languageCompletion' => $this->languageTabs->completion([
                 'id' => [old('title_id', $item->title_id ?: $item->title), old('category_id', $item->category_id ?: $item->category)],
                 'en' => [old('title_en', $item->title_en), old('category_en', $item->category_en)],

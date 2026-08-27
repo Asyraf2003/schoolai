@@ -97,8 +97,6 @@ function mountGalleryStory(root) {
             const topInset = signed >= 0 ? closingInset : 0;
             const bottomInset = signed < 0 ? closingInset : 0;
 
-            const imageShiftY = signed * -18;
-            const imageShiftX = signed * 6;
             const mediaY = (1 - entrance) * Math.min(190, viewportHeight * 0.22);
             const copyY = (1 - copyProgress) * Math.min(108, viewportHeight * 0.125);
             const distance = Math.abs(centerDelta);
@@ -112,8 +110,6 @@ function mountGalleryStory(root) {
             item.style.setProperty('--gallery-media-opacity', entrance.toFixed(4));
             item.style.setProperty('--gallery-window-top', `${topInset.toFixed(3)}%`);
             item.style.setProperty('--gallery-window-bottom', `${bottomInset.toFixed(3)}%`);
-            item.style.setProperty('--gallery-image-shift-y', `${imageShiftY.toFixed(3)}%`);
-            item.style.setProperty('--gallery-image-shift-x', `${imageShiftX.toFixed(3)}%`);
             item.style.setProperty('--gallery-copy-y', `${copyY.toFixed(2)}px`);
             item.style.setProperty('--gallery-copy-opacity', copyProgress.toFixed(4));
         });
@@ -144,8 +140,6 @@ function mountGalleryStory(root) {
             item.style.setProperty('--gallery-media-opacity', '1');
             item.style.setProperty('--gallery-window-top', '0%');
             item.style.setProperty('--gallery-window-bottom', '0%');
-            item.style.setProperty('--gallery-image-shift-y', '0%');
-            item.style.setProperty('--gallery-image-shift-x', '0%');
             item.style.setProperty('--gallery-copy-y', '0px');
             item.style.setProperty('--gallery-copy-opacity', '1');
         });

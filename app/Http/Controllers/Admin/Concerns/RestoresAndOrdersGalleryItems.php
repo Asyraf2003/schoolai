@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\GalleryItem;
-use App\Models\GalleryPageSection;
-use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait RestoresAndOrdersGalleryItems
 {
@@ -30,17 +22,13 @@ trait RestoresAndOrdersGalleryItems
 
         if ($replacementGalleryItemId === null) {
             DB::transaction(function () use ($galleryItem): void {
-                GalleryItem::query()->lockForUpdate()->get();
-
-                if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
-                    throw ValidationException::withMessages([
-                        'replacement_gallery_item_id' => 'Galeri utama sudah memiliki 6 item aktif. Pilih Pulihkan & Gantikan pada media yang identik.',
-                    ]);
-                }
-
                 $archivedItem = GalleryItem::onlyTrashed()
                     ->lockForUpdate()
                     ->findOrFail($galleryItem);
+
+                if ($archivedItem->show_on_homepage && GalleryItem::query()->homepage()->count() >= self::MAX_ITEMS) {
+                    $archivedItem->show_on_homepage = false;
+                }
 
                 $archivedItem->forceFill(['sort_order' => $this->nextSortOrder()])->save();
                 $archivedItem->restore();
@@ -71,17 +59,6 @@ trait RestoresAndOrdersGalleryItems
                 ]);
             }
 
-            $publishedOthers = GalleryItem::query()
-                ->where('is_published', true)
-                ->where($replacementItem->getKeyName(), '!=', $replacementItem->getKey())
-                ->count();
-
-            if ($replacementItem->is_published && ! $archivedItem->is_published && $publishedOthers < 1) {
-                throw ValidationException::withMessages([
-                    'replacement_gallery_item_id' => 'Penggantian ditolak karena akan menghilangkan satu-satunya item galeri yang terbit.',
-                ]);
-            }
-
             $replacementSortOrder = $replacementItem->sort_order;
 
             $replacementItem->delete();
@@ -98,12 +75,6 @@ trait RestoresAndOrdersGalleryItems
 
     public function toggle(GalleryItem $galleryItem): RedirectResponse
     {
-        if ($galleryItem->is_published && GalleryItem::query()->where('is_published', true)->count() <= 1) {
-            return back()->withErrors([
-                'is_published' => 'Minimal harus ada 1 item galeri yang aktif.',
-            ]);
-        }
-
         $galleryItem->update([
             'is_published' => ! $galleryItem->is_published,
         ]);

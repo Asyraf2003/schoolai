@@ -1,14 +1,17 @@
 <?php
+
 /* GALLERY_PAGE_SECTION_ADMIN_CONTROLLER_FINAL */
 
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GalleryItem;
 use App\Models\GalleryPageSection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 final class GalleryPageSectionAdminController extends Controller
@@ -34,8 +37,8 @@ final class GalleryPageSectionAdminController extends Controller
 
         if ($request->boolean('continue_to_media')) {
             return redirect()
-                ->route('admin.galeri.section-media.create', $section)
-                ->with('success', 'Bagian galeri berhasil dibuat. Sekarang tambahkan medianya.');
+                ->route('admin.galeri.sections.show', $section)
+                ->with('success', 'Bagian galeri berhasil dibuat. Sekarang pilih media dari koleksi.');
         }
 
         return redirect()
@@ -45,34 +48,38 @@ final class GalleryPageSectionAdminController extends Controller
 
     public function show(GalleryPageSection $galleryPageSection): View
     {
-        $galleryPageSection->load([
-            'mediaItemsWithTrashed' => fn ($query) => $query->orderByDesc('published_at')->orderByDesc('id'),
-        ]);
-
-        $mediaItems = $galleryPageSection->mediaItemsWithTrashed;
-        $activeMediaByIdentity = $mediaItems
-            ->reject->trashed()
-            ->filter(fn ($item): bool => $item->replacementIdentity() !== null)
-            ->groupBy(fn ($item): string => (string) $item->replacementIdentity());
-
-        $replacementCandidatesByArchivedId = $mediaItems
-            ->filter->trashed()
-            ->mapWithKeys(function ($archivedItem) use ($activeMediaByIdentity): array {
-                $identity = $archivedItem->replacementIdentity();
-
-                return [
-                    $archivedItem->getKey() => $identity === null
-                        ? collect()
-                        : $activeMediaByIdentity->get($identity, collect())->values(),
-                ];
-            });
+        $galleryPageSection->load('items');
 
         return view('admin.gallery.page-sections.show', [
             'adminPageKey' => 'galeri',
             'section' => $galleryPageSection,
-            'mediaItems' => $mediaItems,
-            'replacementCandidatesByArchivedId' => $replacementCandidatesByArchivedId,
+            'galleryItems' => GalleryItem::query()->ordered()->get(),
         ]);
+    }
+
+    public function updateMediaPlacements(Request $request, GalleryPageSection $galleryPageSection): RedirectResponse
+    {
+        $validated = $request->validate([
+            'gallery_item_ids' => ['nullable', 'array'],
+            'gallery_item_ids.*' => [
+                'integer',
+                'distinct',
+                Rule::exists('gallery_items', 'id')->whereNull('deleted_at'),
+            ],
+        ]);
+
+        $placements = collect($validated['gallery_item_ids'] ?? [])
+            ->mapWithKeys(fn (int|string $galleryItemId, int $index): array => [
+                (int) $galleryItemId => [
+                    'sort_order' => $index + 1,
+                    'is_published' => true,
+                ],
+            ])
+            ->all();
+
+        DB::transaction(fn () => $galleryPageSection->items()->sync($placements));
+
+        return back()->with('success', 'Pilihan media bagian galeri berhasil diperbarui.');
     }
 
     public function edit(GalleryPageSection $galleryPageSection): View

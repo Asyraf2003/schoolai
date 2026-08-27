@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\GalleryItem;
 use App\Models\GalleryPageSection;
-use App\Rules\SafeImageUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Throwable;
 
 trait ManagesGalleryItems
@@ -27,7 +22,7 @@ trait ManagesGalleryItems
     {
         $this->normalizeSortOrdersIfNeeded();
 
-        $activeItems = GalleryItem::query()->ordered()->get();
+        $activeItems = GalleryItem::query()->withCount('sections')->ordered()->get();
         $archivedItems = GalleryItem::onlyTrashed()
             ->orderByDesc('deleted_at')
             ->orderByDesc('id')
@@ -56,7 +51,7 @@ trait ManagesGalleryItems
 
         $pageSections = Schema::hasTable('gallery_page_sections')
             ? GalleryPageSection::query()
-                ->withCount('mediaItems')
+                ->withCount('items')
                 ->orderBy('id')
                 ->get()
             : collect();
@@ -68,28 +63,25 @@ trait ManagesGalleryItems
             'replacementCandidatesByArchivedId' => $replacementCandidatesByArchivedId,
             'pageSections' => $pageSections,
             'limits' => $this->limits(),
-            'canCreate' => $activeItems->count() < self::MAX_ITEMS,
-            'canRestoreWithoutReplacement' => $activeItems->count() < self::MAX_ITEMS,
+            'canCreate' => true,
+            'canRestoreWithoutReplacement' => true,
         ]);
     }
 
     public function show(GalleryItem $galleryItem): View
     {
+        $galleryItem->load('sections');
+
         return view('admin.gallery.show', [
             'adminPageKey' => 'galeri',
             'item' => $galleryItem,
+            'pageSections' => GalleryPageSection::query()->orderBy('id')->get(),
             'limits' => $this->limits(),
         ]);
     }
 
-    public function create(): View|RedirectResponse
+    public function create(): View
     {
-        if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
-            return redirect()
-                ->route('admin.galeri')
-                ->withErrors(['title_id' => 'Maksimal hanya boleh 6 item galeri aktif.']);
-        }
-
         return view('admin.gallery.form', [
             'adminPageKey' => 'galeri',
             'mode' => 'create',
@@ -99,8 +91,11 @@ trait ManagesGalleryItems
                 'category_en' => 'Activities',
                 'sort_order' => $this->nextSortOrder(),
                 'is_published' => true,
+                'show_on_homepage' => false,
+                'show_on_gallery_page' => true,
                 'published_at' => now(),
             ]),
+            'pageSections' => GalleryPageSection::query()->orderBy('id')->get(),
             'limits' => $this->limits(),
             'typeOptions' => $this->typeOptions(),
         ]);
@@ -108,19 +103,20 @@ trait ManagesGalleryItems
 
     public function store(Request $request): RedirectResponse
     {
-        if (GalleryItem::query()->count() >= self::MAX_ITEMS) {
-            throw ValidationException::withMessages([
-                'title_id' => 'Maksimal hanya boleh 6 item galeri aktif.',
-            ]);
-        }
-
         $data = $this->validatedData($request);
+        $sectionIds = $data['section_ids'];
+        unset($data['section_ids']);
         [$data, $newPath] = $this->applyMedia($request, $data);
         $sortOrder = $this->nextSortOrder();
 
         try {
-            $item = new GalleryItem($data);
-            $item->forceFill(['sort_order' => $sortOrder])->save();
+            $item = DB::transaction(function () use ($data, $sectionIds, $sortOrder): GalleryItem {
+                $item = new GalleryItem($data);
+                $item->forceFill(['sort_order' => $sortOrder])->save();
+                $this->syncSections($item, $sectionIds);
+
+                return $item;
+            });
         } catch (Throwable $exception) {
             $this->deleteStoredPublicPath($newPath);
 
@@ -136,10 +132,13 @@ trait ManagesGalleryItems
 
     public function edit(GalleryItem $galleryItem): View
     {
+        $galleryItem->load('sections');
+
         return view('admin.gallery.form', [
             'adminPageKey' => 'galeri',
             'mode' => 'edit',
             'item' => $galleryItem,
+            'pageSections' => GalleryPageSection::query()->orderBy('id')->get(),
             'limits' => $this->limits(),
             'typeOptions' => $this->typeOptions(),
         ]);
@@ -149,10 +148,15 @@ trait ManagesGalleryItems
     {
         $oldMediaUrl = $galleryItem->media_url;
         $data = $this->validatedData($request, $galleryItem);
+        $sectionIds = $data['section_ids'];
+        unset($data['section_ids']);
         [$data, $newPath, $replacesStoredFile] = $this->applyMedia($request, $data, $galleryItem);
 
         try {
-            $galleryItem->update($data);
+            DB::transaction(function () use ($galleryItem, $data, $sectionIds): void {
+                $galleryItem->update($data);
+                $this->syncSections($galleryItem, $sectionIds);
+            });
         } catch (Throwable $exception) {
             $this->deleteStoredPublicPath($newPath);
 
@@ -172,17 +176,25 @@ trait ManagesGalleryItems
 
     public function destroy(GalleryItem $galleryItem): RedirectResponse
     {
-        if ($galleryItem->is_published && GalleryItem::query()->where('is_published', true)->count() <= 1) {
-            return back()->withErrors([
-                'delete' => 'Minimal harus ada 1 item galeri yang aktif.',
-            ]);
-        }
-
         $galleryItem->delete();
         $this->normalizeSortOrders();
 
         return redirect()
             ->route('admin.galeri')
             ->with('success', 'Item galeri dipindahkan ke arsip dan dapat dipulihkan.');
+    }
+
+    private function syncSections(GalleryItem $item, array $sectionIds): void
+    {
+        $placements = collect($sectionIds)
+            ->mapWithKeys(fn (int|string $sectionId, int $index): array => [
+                (int) $sectionId => [
+                    'sort_order' => $index + 1,
+                    'is_published' => true,
+                ],
+            ])
+            ->all();
+
+        $item->sections()->sync($placements);
     }
 }

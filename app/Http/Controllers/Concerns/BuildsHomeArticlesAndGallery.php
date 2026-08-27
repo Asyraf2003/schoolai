@@ -21,6 +21,7 @@ trait BuildsHomeArticlesAndGallery
 
             return GalleryItem::query()
                 ->where('is_published', true)
+                ->homepage()
                 ->where('type', 'photo')
                 ->ordered()
                 ->limit(6)

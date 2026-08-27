@@ -51,6 +51,14 @@ trait ValidatesGalleryItems
                 'max:2048',
             ],
             'is_published' => ['nullable', 'boolean'],
+            'show_on_homepage' => ['nullable', 'boolean'],
+            'show_on_gallery_page' => ['nullable', 'boolean'],
+            'section_ids' => ['nullable', 'array'],
+            'section_ids.*' => [
+                'integer',
+                'distinct',
+                Rule::exists('gallery_page_sections', 'id')->whereNull('deleted_at'),
+            ],
             'published_at' => ['nullable', 'date'],
         ], [
             'title_id.required' => 'Judul Indonesia wajib diisi.',
@@ -76,14 +84,25 @@ trait ValidatesGalleryItems
         $validated['category'] = $validated['category_id'];
         $validated['caption'] = $validated['caption_id'];
         $validated['is_published'] = $request->boolean('is_published');
+        $validated['show_on_homepage'] = $request->boolean('show_on_homepage');
+        $validated['show_on_gallery_page'] = $request->boolean('show_on_gallery_page');
+        $validated['section_ids'] = array_values($validated['section_ids'] ?? []);
 
         if (($validated['published_at'] ?? null) === '') {
             $validated['published_at'] = null;
         }
 
-        if ($this->wouldLeaveNoPublishedItem($galleryItem, $validated['is_published'])) {
+        $homepageCount = GalleryItem::query()
+            ->homepage()
+            ->when(
+                $galleryItem?->exists,
+                fn ($query) => $query->whereKeyNot($galleryItem->getKey()),
+            )
+            ->count();
+
+        if ($validated['show_on_homepage'] && $homepageCount >= self::MAX_ITEMS) {
             throw ValidationException::withMessages([
-                'is_published' => 'Minimal harus ada 1 item galeri yang aktif.',
+                'show_on_homepage' => 'Maksimal 6 media dapat ditempatkan di homepage.',
             ]);
         }
 
@@ -103,7 +122,7 @@ trait ValidatesGalleryItems
         if ($request->hasFile('media_file')) {
             $stored = app(R2MediaStorage::class)->store(
                 $request->file('media_file'),
-                'gallery/homepage',
+                'gallery/media',
                 $currentItem?->getKey(),
             );
             $data['media_url'] = $stored['url'];

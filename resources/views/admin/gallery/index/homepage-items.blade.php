@@ -1,12 +1,12 @@
-  <section class="admin-gallery-block" aria-label="Galeri utama homepage">
+  <section class="admin-gallery-block" aria-label="Koleksi media galeri">
     <div class="admin-gallery-block__head">
       <div>
-        <h2>Galeri Homepage</h2>
-        <p>Hanya item aktif yang dihitung ke batas maksimal dan ditampilkan di homepage.</p>
+        <h2>Koleksi Media Canonical</h2>
+        <p>Upload sekali, lalu tempatkan di homepage, halaman galeri, atau satu maupun beberapa bagian.</p>
       </div>
 
       <span class="admin-counter">
-        {{ $activeItems->count() }}/{{ $homepageLimit }} aktif · {{ $archivedItems->count() }} arsip
+        {{ $homepageCount }}/{{ $homepageLimit }} di homepage · {{ $activeItems->count() }} media · {{ $archivedItems->count() }} arsip
       </span>
     </div>
 
@@ -19,6 +19,11 @@
             <span class="gallery-lite-row__body">
               <strong>{{ $item->admin_title }}</strong>
               <small>{{ $item->type_label }} · {{ $item->admin_category }} · {{ $item->media_label }}</small>
+              <small>
+                {{ $item->show_on_homepage ? 'Homepage' : '—' }} ·
+                {{ $item->show_on_gallery_page ? 'Halaman Galeri' : '—' }} ·
+                {{ $item->sections_count ?? $item->sections()->count() }} bagian
+              </small>
             </span>
 
             <span class="gallery-lite-status {{ $item->is_published ? 'is-active' : 'is-inactive' }}">

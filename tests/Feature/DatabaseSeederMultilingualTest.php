@@ -12,7 +12,12 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
     $articles = DB::table('articles')->whereNull('deleted_at')->get();
     $heroSettings = DB::table('hero_settings')->get();
     $promotedArticles = DB::table('articles')->whereNotNull('hero_position')->get();
-    $gallery = DB::table('gallery_items')->whereNull('deleted_at')->get();
+    $gallery = DB::table('gallery_items')
+        ->whereNull('deleted_at')
+        ->where('show_on_homepage', true)
+        ->get();
+    $canonicalGallery = DB::table('gallery_items')->whereNull('deleted_at')->get();
+    $galleryPlacements = DB::table('gallery_item_gallery_page_section')->get();
     $ppdb = DB::table('ppdb_showcase_items')->whereNull('deleted_at')->get();
     $statistics = DB::table('site_statistics')->whereNull('deleted_at')->get();
 
@@ -32,6 +37,8 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
             && $filled($hero->title_ar)))->toBeTrue()
         ->and($promotedArticles)->toHaveCount(5)
         ->and($gallery)->toHaveCount(6)
+        ->and($canonicalGallery)->toHaveCount(18)
+        ->and($galleryPlacements)->toHaveCount(12)
         ->and($gallery->every(fn (object $item): bool => $filled($item->title_id)
             && $filled($item->title_en)
             && $filled($item->title_ar)

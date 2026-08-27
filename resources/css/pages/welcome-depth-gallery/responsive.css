@@ -16,6 +16,7 @@
     .gallery-story__item--right .gallery-story__media,
     .gallery-story__item--left .gallery-story__media {
         width: min(82vw, 680px);
+        height: min(72svh, 760px);
     }
 
     .gallery-story__item--right .gallery-story__media { margin-inline-start: auto; }
@@ -49,6 +50,7 @@
         letter-spacing: -.06em;
     }
     .gallery-story__item { padding-block: 14svh; }
+    .gallery-story__media { height: min(68svh, 620px); }
     .gallery-story__copy h3 { font-size: clamp(2rem, 10vw, 3.4rem); }
 }
 
@@ -62,11 +64,8 @@
         clip-path: none;
     }
     .gallery-story__media img {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transform: none;
+        width: auto;
+        height: auto;
     }
     .gallery-story__handoff { display: none !important; }
 }

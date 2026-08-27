@@ -1,20 +1,26 @@
 <?php
+
 /* REAL_GALLERY_CRUD_MODEL_FINAL */
 
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
 use App\Models\Concerns\ResolvesLocalizedContent;
+use App\Support\Media\MediaReferenceIdentity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class GalleryItem extends Model
 {
     use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
-    public const MAX_ITEMS = 6;
+    public const MAX_HOMEPAGE_ITEMS = 6;
+
+    public const MAX_ITEMS = self::MAX_HOMEPAGE_ITEMS;
+
     public const MAX_PHOTO_KB = 10240;
 
     protected $fillable = [
@@ -33,14 +39,36 @@ final class GalleryItem extends Model
         'caption_ar',
         'media_url',
         'is_published',
+        'show_on_homepage',
+        'show_on_gallery_page',
         'published_at',
     ];
 
     protected $casts = [
         'sort_order' => 'integer',
         'is_published' => 'boolean',
+        'show_on_homepage' => 'boolean',
+        'show_on_gallery_page' => 'boolean',
         'published_at' => 'datetime',
     ];
+
+    public function sections(): BelongsToMany
+    {
+        return $this->belongsToMany(GalleryPageSection::class)
+            ->withPivot(['sort_order', 'is_published'])
+            ->withTimestamps()
+            ->orderByPivot('sort_order');
+    }
+
+    public function scopeHomepage(Builder $query): Builder
+    {
+        return $query->where('show_on_homepage', true);
+    }
+
+    public function scopeGalleryPage(Builder $query): Builder
+    {
+        return $query->where('show_on_gallery_page', true);
+    }
 
     public function scopeOrdered(Builder $query): Builder
     {
@@ -142,48 +170,13 @@ final class GalleryItem extends Model
 
     public function replacementIdentity(): ?string
     {
-        $normalizedMedia = self::normalizeMediaIdentity($this->media_url);
+        $normalizedMedia = MediaReferenceIdentity::normalize($this->media_url);
 
         if ($normalizedMedia === null) {
             return null;
         }
 
-        return strtolower(trim((string) $this->type)) . '|' . $normalizedMedia;
-    }
-
-    public static function normalizeMediaIdentity(?string $mediaUrl): ?string
-    {
-        if (! is_string($mediaUrl)) {
-            return null;
-        }
-
-        $mediaUrl = trim($mediaUrl);
-
-        if ($mediaUrl === '') {
-            return null;
-        }
-
-        if (str_starts_with($mediaUrl, '/storage/')) {
-            return 'local:' . rtrim($mediaUrl, '/');
-        }
-
-        if (! filter_var($mediaUrl, FILTER_VALIDATE_URL)) {
-            return 'path:' . rtrim($mediaUrl, '/');
-        }
-
-        $scheme = strtolower((string) parse_url($mediaUrl, PHP_URL_SCHEME));
-        $host = strtolower((string) parse_url($mediaUrl, PHP_URL_HOST));
-        $port = parse_url($mediaUrl, PHP_URL_PORT);
-        $path = '/' . ltrim((string) parse_url($mediaUrl, PHP_URL_PATH), '/');
-        $path = $path === '/' ? '/' : rtrim($path, '/');
-        parse_str((string) parse_url($mediaUrl, PHP_URL_QUERY), $query);
-        ksort($query);
-
-        $defaultPort = ($scheme === 'https' && $port === 443) || ($scheme === 'http' && $port === 80);
-        $authority = $host . (($port && ! $defaultPort) ? ':' . $port : '');
-        $queryString = $query === [] ? '' : '?' . http_build_query($query, '', '&', PHP_QUERY_RFC3986);
-
-        return $scheme . '://' . $authority . $path . $queryString;
+        return strtolower(trim((string) $this->type)).'|'.$normalizedMedia;
     }
 
     private function firstFilled(mixed ...$values): string

@@ -2,7 +2,7 @@
     <div class="admin-gallery-block__head">
       <div>
         <h2>Galeri Halaman</h2>
-        <p>Media pada halaman galeri tidak memakai batas enam item homepage.</p>
+        <p>Bagian memilih media dari satu koleksi canonical; media yang sama dapat dipakai di beberapa bagian.</p>
       </div>
 
       <span class="admin-counter">{{ $activePageSections->count() }} aktif · {{ ($archivedPageSections ?? collect())->count() }} arsip</span>
@@ -19,11 +19,11 @@
 
               <h3>{{ $section->admin_title }}</h3>
               <p>{{ $section->admin_description ?: 'Belum ada deskripsi.' }}</p>
-              <small>{{ $section->media_items_count }} media aktif</small>
+              <small>{{ $section->items_count }} media dipilih</small>
             </div>
 
             <div class="gallery-lite-actions admin-section-card__actions">
-              <a href="{{ route('admin.galeri.section-media.create', $section) }}" class="admin-small-action">Tambah Media</a>
+              <a href="{{ route('admin.galeri.sections.show', $section) }}" class="admin-small-action">Pilih Media</a>
               <a href="{{ route('admin.galeri.sections.show', $section) }}" class="admin-small-action admin-small-action--ghost">Detail</a>
 
               <form method="POST" action="{{ route('admin.galeri.sections.toggle', $section) }}">
@@ -50,7 +50,7 @@
               <h3>{{ $section->admin_title }}</h3>
               <p>{{ $section->admin_description ?: 'Belum ada deskripsi.' }}</p>
               <small>
-                {{ $section->media_items_count }} media tersimpan
+                {{ $section->items_count }} placement tersimpan
                 @if($section->deleted_at)
                   · dihapus {{ $section->deleted_at->translatedFormat('d M Y, H:i') }} WIB
                 @endif

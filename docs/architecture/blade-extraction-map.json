@@ -292,36 +292,6 @@
       "sha256": "dd6939237128a08483b4093a9f2babac730aefa5dcaef8698c544d22d7f31042"
     },
     {
-      "source": "resources/views/admin/gallery/page-media/_form.blade.php",
-      "target": "resources/views/admin/gallery/page-media/form/fields.blade.php",
-      "source_lines": [
-        9,
-        127
-      ],
-      "lines": 119,
-      "sha256": "c92aae31e84e0e4b0117a5d270a94395ff87ac9a58a6bf80053d51ab3b334326"
-    },
-    {
-      "source": "resources/views/admin/gallery/page-media/_form.blade.php",
-      "target": "resources/views/admin/gallery/page-media/form/scripts/inputs-and-photos.blade.php",
-      "source_lines": [
-        130,
-        263
-      ],
-      "lines": 134,
-      "sha256": "e8e81042ed365cbb41573f8d4d3bd705dc4b50303d40b411b67a6c3e94f06439"
-    },
-    {
-      "source": "resources/views/admin/gallery/page-media/_form.blade.php",
-      "target": "resources/views/admin/gallery/page-media/form/scripts/video-preview.blade.php",
-      "source_lines": [
-        264,
-        375
-      ],
-      "lines": 112,
-      "sha256": "201d462381b468e1b4f36019618dd09fd6b6397d2a52a9e841b041e29a5582a9"
-    },
-    {
       "source": "resources/views/admin/ppdb/edit.blade.php",
       "target": "resources/views/admin/ppdb/edit/styles.blade.php",
       "source_lines": [

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\GalleryAdminController;
-use App\Http\Controllers\Admin\GalleryPageMediaAdminController;
 use App\Http\Controllers\Admin\GalleryPageSectionAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,29 +39,8 @@ Route::delete('/admin/galeri/bagian/{galleryPageSection}', [GalleryPageSectionAd
 Route::patch('/admin/galeri/bagian/{galleryPageSection}/restore', [GalleryPageSectionAdminController::class, 'restore'])
     ->name('admin.galeri.sections.restore');
 
-Route::get('/admin/galeri/bagian/{galleryPageSection}/media/create', [GalleryPageMediaAdminController::class, 'create'])
-    ->name('admin.galeri.section-media.create');
-
-Route::post('/admin/galeri/bagian/{galleryPageSection}/media', [GalleryPageMediaAdminController::class, 'store'])
-    ->name('admin.galeri.section-media.store');
-
-Route::get('/admin/galeri/media/{galleryPageMediaItem}', [GalleryPageMediaAdminController::class, 'show'])
-    ->name('admin.galeri.section-media.show');
-
-Route::get('/admin/galeri/media/{galleryPageMediaItem}/edit', [GalleryPageMediaAdminController::class, 'edit'])
-    ->name('admin.galeri.section-media.edit');
-
-Route::put('/admin/galeri/media/{galleryPageMediaItem}', [GalleryPageMediaAdminController::class, 'update'])
-    ->name('admin.galeri.section-media.update');
-
-Route::patch('/admin/galeri/media/{galleryPageMediaItem}/toggle', [GalleryPageMediaAdminController::class, 'toggle'])
-    ->name('admin.galeri.section-media.toggle');
-
-Route::delete('/admin/galeri/media/{galleryPageMediaItem}', [GalleryPageMediaAdminController::class, 'destroy'])
-    ->name('admin.galeri.section-media.destroy');
-
-Route::patch('/admin/galeri/media/{galleryPageMediaItem}/restore', [GalleryPageMediaAdminController::class, 'restore'])
-    ->name('admin.galeri.section-media.restore');
+Route::put('/admin/galeri/bagian/{galleryPageSection}/media', [GalleryPageSectionAdminController::class, 'updateMediaPlacements'])
+    ->name('admin.galeri.sections.media.update');
 /* /GALLERY_PAGE_SECTION_ADMIN_ROUTES_FINAL */
 
 Route::get('/admin/galeri/{galleryItem}', [GalleryAdminController::class, 'show'])

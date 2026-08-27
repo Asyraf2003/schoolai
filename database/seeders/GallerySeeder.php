@@ -2,23 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
-use App\Models\GalleryPageSection;
+use Database\Seeders\Concerns\SeedsGalleryItems;
+use Database\Seeders\Concerns\SeedsGalleryPageSections;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 final class GallerySeeder extends Seeder
 {
-    use \Database\Seeders\Concerns\SeedsGalleryItems;
-    use \Database\Seeders\Concerns\SeedsGalleryPageSections;
-
-
-
-
-
-
-
-
+    use SeedsGalleryItems;
+    use SeedsGalleryPageSections;
 }
-

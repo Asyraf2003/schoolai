@@ -633,7 +633,30 @@ remains zero-query. `ppdb_settings` is zero-query for an empty/non-PPDB Opening
 CTA and is queried only when `/ppdb` status must decide whether that CTA is safe
 to render. Query-listener feature proof covers both branches.
 
-The next owner-authorized atomic capability is E5: replace duplicated Gallery
-uploads with one canonical media collection and relational multi-placement while
-preserving the current responsive presentation and scroll/reveal behavior. Broad
+E5 is now `PASS` for canonical Gallery ownership. `gallery_items` is the single
+mutable Gallery media collection. Landing-page and full-page placement are
+explicit booleans; section placement uses the Gallery-specific
+`gallery_item_gallery_page_section` pivot, so one upload can appear in multiple
+sections without duplicate rows or objects. New uploads use `gallery/media/`.
+
+The additive migration preserves the legacy `gallery_page_media_items` table and
+its R2 references for inventory and rollback. Backfill reuses an exact active
+canonical type/URL match, imports unmatched objects with a legacy identifier, and
+preserves archived/unpublished placement state on the pivot. Runtime and admin no
+longer expose the duplicate per-section upload CRUD. Delete/replace checks retain
+legacy references, so this packet deletes no legacy R2 object.
+
+Homepage media keeps the existing scroll/window/reveal lifecycle while images now
+scale proportionally inside max-width/max-height bounds with `object-fit: contain`.
+The full Gallery wall already uses the same no-crop contract. Browser smoke proof
+rendered `/galeri` at 390x844 and 1440x1000 from the migrated/seeded SQLite runtime.
+
+Focused E5 proof passes with 10 tests / 63 assertions; the complete pre-final
+repository gate passes with 244 tests / 2,366 assertions, the 592-file structure
+gate, Vite production build, Pint, and diff check. The existing two unresolved
+Gallery ornament URLs and deferred 549.47 kB Three chunk warning remain visible.
+
+The next and final owner-authorized capability in this execution run is E6:
+retire legacy Testimonial and Statistics admin CRUD/runtime loading while
+preserving static visible/localized content and retained data tables. Broad
 runtime certification remains `BLOCKED_BY_MISSING_EVIDENCE`.

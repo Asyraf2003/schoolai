@@ -19,6 +19,9 @@ final class AdminGalleryIndexComposer
             'page' => __('admin.gallery'),
             'activePageSections' => $activeSections,
             'homepageLimit' => $data['limits']['max_items'] ?? 6,
+            'homepageCount' => $this->collection($data['activeItems'] ?? [])
+                ->where('show_on_homepage', true)
+                ->count(),
             'archivedGalleryItemRows' => $archivedItems->map(fn ($item): array => [
                 'item' => $item,
                 'replacementCandidates' => $galleryCandidates->get($item->getKey(), collect()),
@@ -39,7 +42,7 @@ final class AdminGalleryIndexComposer
         }
 
         $archivedSections = GalleryPageSection::onlyTrashed()
-            ->withCount(['mediaItemsWithTrashed as media_items_count'])
+            ->withCount('items')
             ->orderByDesc('deleted_at')
             ->orderByDesc('id')
             ->get();

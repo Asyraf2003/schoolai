@@ -114,6 +114,8 @@ trait SeedsGalleryItems
                 'media_url' => $image,
 
                 'is_published' => true,
+                'show_on_homepage' => true,
+                'show_on_gallery_page' => true,
                 'published_at' => now()->subDays($index),
             ];
         }

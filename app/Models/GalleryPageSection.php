@@ -1,4 +1,5 @@
 <?php
+
 /* GALLERY_PAGE_SECTION_MODEL_FINAL */
 
 namespace App\Models;
@@ -7,6 +8,7 @@ use App\Models\Concerns\AuditsAdminChanges;
 use App\Models\Concerns\ResolvesLocalizedContent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -28,12 +30,20 @@ final class GalleryPageSection extends Model
         'is_published' => 'boolean',
     ];
 
-    public function mediaItems(): HasMany
+    public function items(): BelongsToMany
+    {
+        return $this->belongsToMany(GalleryItem::class)
+            ->withPivot(['sort_order', 'is_published'])
+            ->withTimestamps()
+            ->orderByPivot('sort_order');
+    }
+
+    public function legacyMediaItems(): HasMany
     {
         return $this->hasMany(GalleryPageMediaItem::class);
     }
 
-    public function mediaItemsWithTrashed(): HasMany
+    public function legacyMediaItemsWithTrashed(): HasMany
     {
         return $this->hasMany(GalleryPageMediaItem::class)->withTrashed();
     }

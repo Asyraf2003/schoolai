@@ -1,12 +1,12 @@
 <?php
+
 /* PUBLIC_GALERI_WALL_CONTROLLER_FINAL */
 
 namespace App\Http\Controllers;
 
-use App\Support\PublicUrl;
 use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
 use App\Models\GalleryPageSection;
+use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
 
@@ -33,6 +33,7 @@ final class GalleryPageController extends Controller
 
         return GalleryItem::query()
             ->where('is_published', true)
+            ->galleryPage()
             ->ordered()
             ->get()
             ->map(function (GalleryItem $item) use ($locale): array {
@@ -55,7 +56,7 @@ final class GalleryPageController extends Controller
 
     private function gallerySections(): array
     {
-        if (! Schema::hasTable('gallery_page_sections') || ! Schema::hasTable('gallery_page_media_items')) {
+        if (! Schema::hasTable('gallery_page_sections') || ! Schema::hasTable('gallery_item_gallery_page_section')) {
             return [];
         }
 
@@ -64,10 +65,9 @@ final class GalleryPageController extends Controller
         return GalleryPageSection::query()
             ->where('is_published', true)
             ->with([
-                'mediaItems' => fn ($query) => $query
-                    ->where('is_published', true)
-                    ->orderByDesc('published_at')
-                    ->orderByDesc('id'),
+                'items' => fn ($query) => $query
+                    ->where('gallery_items.is_published', true)
+                    ->wherePivot('is_published', true),
             ])
             ->orderBy('id')
             ->get()
@@ -75,19 +75,19 @@ final class GalleryPageController extends Controller
                 return [
                     'title' => $section->titleForLocale($locale),
                     'description' => $section->descriptionForLocale($locale),
-                    'items' => $section->mediaItems
-                        ->map(function (GalleryPageMediaItem $item) use ($section, $locale): array {
+                    'items' => $section->items
+                        ->map(function (GalleryItem $item) use ($locale): array {
                             $type = $item->type === 'video' ? 'video' : 'photo';
                             $mediaUrl = $this->trustedMediaUrl($type, $item->media_url);
 
                             return [
-                                'title' => '',
-                                'label' => $section->titleForLocale($locale),
+                                'title' => $item->titleForLocale($locale),
+                                'label' => $item->categoryForLocale($locale),
                                 'type' => $type,
                                 'media_url' => $mediaUrl,
                                 'thumbnail_url' => $type === 'video' ? $this->videoThumbnailUrl($mediaUrl) : $mediaUrl,
                                 'emoji' => $type === 'video' ? '▶️' : '📸',
-                                'badge' => '',
+                                'badge' => $item->typeLabelForLocale($locale),
                             ];
                         })
                         ->filter(fn (array $item): bool => (string) ($item['media_url'] ?? '') !== '')
@@ -191,7 +191,7 @@ final class GalleryPageController extends Controller
         $path = trim((string) parse_url($embedUrl, PHP_URL_PATH), '/');
 
         if ($host === 'www.youtube.com' && preg_match('~^embed/([^/?#]+)$~', $path, $match)) {
-            return 'https://i.ytimg.com/vi/' . rawurlencode($match[1]) . '/hqdefault.jpg';
+            return 'https://i.ytimg.com/vi/'.rawurlencode($match[1]).'/hqdefault.jpg';
         }
 
         return null;

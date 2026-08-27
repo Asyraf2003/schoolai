@@ -3,9 +3,7 @@
 namespace Database\Seeders\Concerns;
 
 use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
 use App\Models\GalleryPageSection;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
 trait SeedsGalleryPageSections
@@ -14,7 +12,7 @@ trait SeedsGalleryPageSections
     {
         if (
             ! Schema::hasTable('gallery_page_sections')
-            || ! Schema::hasTable('gallery_page_media_items')
+            || ! Schema::hasTable('gallery_item_gallery_page_section')
         ) {
             return;
         }
@@ -34,17 +32,26 @@ trait SeedsGalleryPageSections
                 $section->restore();
             }
 
+            $placements = [];
+
             foreach ($mediaItems as $mediaIndex => $media) {
-                $item = GalleryPageMediaItem::withTrashed()->firstOrNew([
-                    'gallery_page_section_id' => $section->getKey(),
+                $item = GalleryItem::withTrashed()->firstOrNew([
+                    'type' => $media['type'],
                     'media_url' => $media['media_url'],
                 ]);
 
                 $item->fill([
-                    'gallery_page_section_id' => $section->getKey(),
+                    'title' => $sectionData['title_id'].' '.($mediaIndex + 1),
+                    'title_id' => $sectionData['title_id'].' '.($mediaIndex + 1),
+                    'title_en' => $sectionData['title_en'].' '.($mediaIndex + 1),
                     'type' => $media['type'],
+                    'category' => 'Galeri Halaman',
+                    'category_id' => 'Galeri Halaman',
+                    'category_en' => 'Gallery Page',
                     'media_url' => $media['media_url'],
                     'is_published' => true,
+                    'show_on_homepage' => false,
+                    'show_on_gallery_page' => false,
                     'published_at' => now()->subDays(
                         ($sectionIndex * 4) + $mediaIndex
                     ),
@@ -55,7 +62,14 @@ trait SeedsGalleryPageSections
                 if ($item->trashed()) {
                     $item->restore();
                 }
+
+                $placements[$item->getKey()] = [
+                    'sort_order' => $mediaIndex + 1,
+                    'is_published' => true,
+                ];
             }
+
+            $section->items()->sync($placements);
         }
     }
 

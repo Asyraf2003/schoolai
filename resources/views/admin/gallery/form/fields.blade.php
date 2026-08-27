@@ -176,6 +176,8 @@
           <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $item->is_published))>
           <span>{{ $form['is_published'] }}</span>
         </label>
+
+        @include('admin.gallery.form.placements')
       </div>
     </section>
 

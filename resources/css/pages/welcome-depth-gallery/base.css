@@ -102,8 +102,12 @@ html[dir="rtl"] .gallery-story__title { text-align: center; }
     z-index: 2;
     min-width: 0;
     width: 92%;
+    max-width: 760px;
+    height: min(80svh, 900px);
+    max-height: 900px;
     margin: 0;
-    aspect-ratio: 4 / 5;
+    display: grid;
+    place-items: center;
     overflow: hidden;
     background: rgba(236, 244, 232, .2);
     box-shadow: 0 28px 86px rgba(15, 39, 22, .16);
@@ -114,20 +118,12 @@ html[dir="rtl"] .gallery-story__title { text-align: center; }
 }
 
 .gallery-story__media img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
     display: block;
-    width: 118%;
-    height: 140%;
-    object-fit: cover;
-    transform: translate3d(
-        calc(-50% + var(--gallery-image-shift-x, 0%)),
-        calc(-50% + var(--gallery-image-shift-y, 0%)),
-        0
-    ) scale(1.03);
-    transform-origin: 50% 50%;
-    will-change: transform;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .gallery-story__media-fallback {

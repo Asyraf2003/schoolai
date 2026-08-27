@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Concerns;
 
 use App\Models\GalleryItem;
+use App\Models\GalleryPageMediaItem;
 use App\Support\Media\R2MediaStorage;
 
 trait MaintainsGalleryOrdering
@@ -25,27 +26,16 @@ trait MaintainsGalleryOrdering
             return;
         }
 
+        if (GalleryPageMediaItem::withTrashed()->where('media_url', $url)->exists()) {
+            return;
+        }
+
         app(R2MediaStorage::class)->deleteOwnedUrl($url);
-    }
-
-    private function wouldLeaveNoPublishedItem(?GalleryItem $currentItem, bool $nextPublished): bool
-    {
-        if ($nextPublished) {
-            return false;
-        }
-
-        $query = GalleryItem::query()->where('is_published', true);
-
-        if ($currentItem?->exists) {
-            $query->where($currentItem->getKeyName(), '!=', $currentItem->getKey());
-        }
-
-        return $query->count() < 1;
     }
 
     private function nextSortOrder(): int
     {
-        return min(((int) GalleryItem::query()->max('sort_order')) + 1, self::MAX_ITEMS);
+        return ((int) GalleryItem::query()->max('sort_order')) + 1;
     }
 
     private function normalizeSortOrdersIfNeeded(): void
@@ -92,7 +82,6 @@ trait MaintainsGalleryOrdering
     {
         return [
             'max_items' => self::MAX_ITEMS,
-            'min_published_items' => 1,
             'max_photo_mb' => 10,
             'max_photo_kb' => self::MAX_PHOTO_KB,
         ];

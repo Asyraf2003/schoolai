@@ -118,8 +118,8 @@ it('matches replacement candidates only when type and normalized media are ident
 
     $this->get(route('admin.galeri'))
         ->assertOk()
-        ->assertSee('Pulihkan &amp; Gantikan #' . $identical->id, false)
-        ->assertDontSee('Pulihkan &amp; Gantikan #' . $unrelated->id, false);
+        ->assertSee('Pulihkan &amp; Gantikan #'.$identical->id, false)
+        ->assertDontSee('Pulihkan &amp; Gantikan #'.$unrelated->id, false);
 });
 
 it('atomically restores an archived gallery item and archives its identical active replacement', function (): void {
@@ -186,11 +186,11 @@ it('rejects replacing an unrelated active gallery item without changing either s
         ->and($unrelated->fresh()->trashed())->toBeFalse();
 });
 
-it('requires replacement restore when all six active gallery slots are occupied', function (): void {
+it('restores a canonical item without exceeding the six homepage placements', function (): void {
     foreach (range(1, GalleryItem::MAX_ITEMS) as $position) {
         galleryItem([
-            'title_id' => 'Galeri aktif ' . $position,
-            'media_url' => '/storage/gallery/photos/active-' . $position . '.jpg',
+            'title_id' => 'Galeri aktif '.$position,
+            'media_url' => '/storage/gallery/photos/active-'.$position.'.jpg',
             'sort_order' => $position,
         ]);
     }
@@ -206,22 +206,15 @@ it('requires replacement restore when all six active gallery slots are occupied'
 
     $response
         ->assertRedirect(route('admin.galeri'))
-        ->assertSessionHasErrors('replacement_gallery_item_id');
+        ->assertSessionHasNoErrors();
 
-    expect($archived->fresh()->trashed())->toBeTrue()
-        ->and(GalleryItem::query()->count())->toBe(GalleryItem::MAX_ITEMS);
+    expect($archived->fresh()->trashed())->toBeFalse()
+        ->and($archived->fresh()->show_on_homepage)->toBeFalse()
+        ->and(GalleryItem::query()->homepage()->count())->toBe(GalleryItem::MAX_ITEMS)
+        ->and(GalleryItem::query()->count())->toBe(GalleryItem::MAX_ITEMS + 1);
 });
 
-it('rejects a replacement that would remove the only published gallery item', function (): void {
-    $archivedDraft = galleryItem([
-        'title_id' => 'Arsip draft',
-        'type' => 'video',
-        'media_url' => 'https://www.youtube.com/embed/only-published',
-        'sort_order' => 1,
-        'is_published' => false,
-    ]);
-    $archivedDraft->delete();
-
+it('allows the canonical collection to have no published item', function (): void {
     $onlyPublished = galleryItem([
         'title_id' => 'Satu-satunya galeri terbit',
         'type' => 'video',
@@ -230,16 +223,11 @@ it('rejects a replacement that would remove the only published gallery item', fu
         'is_published' => true,
     ]);
 
-    $response = $this->from(route('admin.galeri'))->patch(route('admin.galeri.restore', $archivedDraft->id), [
-        'replacement_gallery_item_id' => $onlyPublished->id,
-    ]);
+    $response = $this->patch(route('admin.galeri.toggle', $onlyPublished));
 
-    $response
-        ->assertRedirect(route('admin.galeri'))
-        ->assertSessionHasErrors('replacement_gallery_item_id');
+    $response->assertRedirect();
 
-    expect($archivedDraft->fresh()->trashed())->toBeTrue()
-        ->and($onlyPublished->fresh()->trashed())->toBeFalse();
+    expect($onlyPublished->fresh()->is_published)->toBeFalse();
 });
 
 it('does not allow the restore endpoint to act on an active gallery item', function (): void {
@@ -302,6 +290,8 @@ function galleryItem(array $overrides = []): GalleryItem
         'media_url' => '/storage/gallery/photos/default.jpg',
         'sort_order' => 1,
         'is_published' => true,
+        'show_on_homepage' => true,
+        'show_on_gallery_page' => true,
         'published_at' => now(),
     ], $overrides);
 

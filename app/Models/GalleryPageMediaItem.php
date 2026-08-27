@@ -1,9 +1,11 @@
 <?php
+
 /* GALLERY_PAGE_MEDIA_ITEM_MODEL_FINAL */
 
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
+use App\Support\Media\MediaReferenceIdentity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -59,7 +61,7 @@ final class GalleryPageMediaItem extends Model
 
     public function getAdminTitleAttribute(): string
     {
-        return $this->type_label . ' halaman galeri';
+        return $this->type_label.' halaman galeri';
     }
 
     public function getAdminDescriptionAttribute(): string
@@ -105,47 +107,12 @@ final class GalleryPageMediaItem extends Model
 
     public function replacementIdentity(): ?string
     {
-        $normalizedMedia = self::normalizeMediaIdentity($this->media_url);
+        $normalizedMedia = MediaReferenceIdentity::normalize($this->media_url);
 
         if ($normalizedMedia === null) {
             return null;
         }
 
-        return strtolower(trim((string) $this->type)) . '|' . $normalizedMedia;
-    }
-
-    public static function normalizeMediaIdentity(?string $mediaUrl): ?string
-    {
-        if (! is_string($mediaUrl)) {
-            return null;
-        }
-
-        $mediaUrl = trim($mediaUrl);
-
-        if ($mediaUrl === '') {
-            return null;
-        }
-
-        if (str_starts_with($mediaUrl, '/storage/')) {
-            return 'local:' . rtrim($mediaUrl, '/');
-        }
-
-        if (! filter_var($mediaUrl, FILTER_VALIDATE_URL)) {
-            return 'path:' . rtrim($mediaUrl, '/');
-        }
-
-        $scheme = strtolower((string) parse_url($mediaUrl, PHP_URL_SCHEME));
-        $host = strtolower((string) parse_url($mediaUrl, PHP_URL_HOST));
-        $port = parse_url($mediaUrl, PHP_URL_PORT);
-        $path = '/' . ltrim((string) parse_url($mediaUrl, PHP_URL_PATH), '/');
-        $path = $path === '/' ? '/' : rtrim($path, '/');
-        parse_str((string) parse_url($mediaUrl, PHP_URL_QUERY), $query);
-        ksort($query);
-
-        $defaultPort = ($scheme === 'https' && $port === 443) || ($scheme === 'http' && $port === 80);
-        $authority = $host . (($port && ! $defaultPort) ? ':' . $port : '');
-        $queryString = $query === [] ? '' : '?' . http_build_query($query, '', '&', PHP_QUERY_RFC3986);
-
-        return $scheme . '://' . $authority . $path . $queryString;
+        return strtolower(trim((string) $this->type)).'|'.$normalizedMedia;
     }
 }

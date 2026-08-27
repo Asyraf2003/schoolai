@@ -47,6 +47,9 @@
         <div><dt>{{ $page['category'] }}</dt><dd>{{ $item->admin_category }}</dd></div>
         <div><dt>{{ $page['date'] }}</dt><dd>{{ optional($item->published_at)->format('d M Y H:i') ?? '-' }}</dd></div>
         <div><dt>{{ $page['media'] }}</dt><dd>@if($item->media_url)<a href="{{ $item->media_url }}" target="_blank" rel="noopener">{{ $item->media_label }}</a>@else - @endif</dd></div>
+        <div><dt>Landing page</dt><dd>{{ $item->show_on_homepage ? 'Ya' : 'Tidak' }}</dd></div>
+        <div><dt>Halaman Galeri</dt><dd>{{ $item->show_on_gallery_page ? 'Ya' : 'Tidak' }}</dd></div>
+        <div class="gallery-detail-list__wide"><dt>Bagian Galeri</dt><dd>{{ $item->sections->pluck('admin_title')->join(', ') ?: '-' }}</dd></div>
         <div class="gallery-detail-list__wide"><dt>{{ $page['caption'] }}</dt><dd>{{ $item->admin_caption ?: '-' }}</dd></div>
       </dl>
 
