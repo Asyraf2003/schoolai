@@ -93,7 +93,7 @@ html[dir="rtl"] .gallery-story__title { text-align: center; }
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     align-items: center;
-    min-height: clamp(760px, 108svh, 1180px);
+    min-height: clamp(680px, 94svh, 1040px);
     column-gap: clamp(1rem, 2.2vw, 2.8rem);
 }
 
