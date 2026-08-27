@@ -82,20 +82,17 @@
               data-about-video-open
               aria-label="{{ $aboutLabel }} video"
             >
-              <video
+              <img
+                src="{{ $image }}"
+                alt=""
+                width="1920"
+                height="1440"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
                 data-vision-art
-                data-about-video-preview
-                data-about-video-src="{{ config('media.homepage_about_video_url') }}"
-                data-about-preview-start="30"
-                data-about-preview-end="50"
-                autoplay
-                muted
-                playsinline
-                webkit-playsinline
-                preload="none"
-                tabindex="-1"
-                aria-hidden="true"
-              ></video>
+                data-about-video-poster
+              />
               <span class="vision-arch__video-cue" aria-hidden="true">
                 <svg viewBox="0 0 32 32">
                   <path d="M12 8l12 8-12 8Z" />

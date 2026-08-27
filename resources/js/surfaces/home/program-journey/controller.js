@@ -4,6 +4,11 @@ import { mountProgramHeading } from './heading.js';
 import { createProgramDialogIntegration } from './integration.js';
 import { loadGsap } from './motion.js';
 
+function withReady(cleanup, ready = Promise.resolve()) {
+  cleanup.ready = ready;
+  return cleanup;
+}
+
 function mountReduced(dom, integration) {
   let activeIndex = -1;
   const open = (event) => {
@@ -41,23 +46,30 @@ function mountReduced(dom, integration) {
 
 export function mountProgramJourney(root) {
   const dom = collectProgramDom(root);
-  if (!dom.triggers.length || !dom.layer || !dom.backs.length || !dom.type) return () => {};
+  if (!dom.triggers.length || !dom.layer || !dom.backs.length || !dom.type) {
+    return withReady(() => {});
+  }
+
   root.classList.add('is-enhanced');
   const cleanHeading = mountProgramHeading(root);
   const integration = createProgramDialogIntegration(dom);
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const cleanReduced = mountReduced(dom, integration);
-    return () => {
+    return withReady(() => {
       cleanReduced();
       cleanHeading();
       root.classList.remove('is-enhanced', 'is-program-heading-revealed', 'is-detail-open');
-    };
+    });
   }
 
   let cleanup = () => {};
   let disposed = false;
   let pendingTrigger = null;
+  let resolveReady;
+  const ready = new Promise((resolve) => {
+    resolveReady = resolve;
+  });
 
   const pendingOpen = (event) => {
     event.preventDefault();
@@ -85,16 +97,19 @@ export function mountProgramJourney(root) {
     root.classList.add('has-gsap');
     cleanup = mountGsap(dom, integration, gsap);
     replayPending();
+    resolveReady('gsap');
   }).catch(() => {
     if (disposed) return;
     clearPending();
     root.classList.add('gsap-failed');
     cleanup = mountReduced(dom, integration);
     replayPending();
+    resolveReady('fallback');
   });
 
-  return () => {
+  const destroy = () => {
     disposed = true;
+    resolveReady('disposed');
     clearPending();
     cleanup();
     cleanHeading();
@@ -103,4 +118,6 @@ export function mountProgramJourney(root) {
       'is-detail-open', 'is-program-heading-revealed',
     );
   };
+
+  return withReady(destroy, ready);
 }

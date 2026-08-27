@@ -1,21 +1,24 @@
 export const HOME_PREPARATION_ORDER = Object.freeze([
   'hero',
+  'vision',
   'program',
   'values',
-  'vision',
   'gallery',
   'footer',
 ]);
 
+const HERO_READY_EVENT = 'schoolai:hero-ready';
+
 const preparationSteps = {
   hero: () => Promise.resolve(),
-  program: () => Promise.all([
-    import('../../surfaces/home/program-values-world.js'),
-    import('./program-cards.js'),
-  ]),
-  values: () => import('../../surfaces/home/values/controller.js'),
   vision: () => import('../welcome-vision-story.js')
     .then(({ prepareHomepageVisionStory }) => prepareHomepageVisionStory()),
+  program: () => Promise.all([
+    import('../../surfaces/home/program-values-world.js'),
+    import('./program-cards.js')
+      .then(({ prepareHomepageProgram }) => prepareHomepageProgram()),
+  ]),
+  values: () => import('../../surfaces/home/values/controller.js'),
   gallery: () => import('../welcome-depth-gallery.js')
     .then(({ prepareHomepageDepthGallery }) => prepareHomepageDepthGallery()),
   footer: () => Promise.resolve(),
@@ -33,6 +36,10 @@ function reportStep(section, status) {
   }));
 }
 
+function yieldToBrowser() {
+  return new Promise((resolve) => window.setTimeout(resolve, 0));
+}
+
 async function runPreparation() {
   const failedSections = [];
   document.documentElement.dataset.homePreparationState = 'preparing';
@@ -45,6 +52,10 @@ async function runPreparation() {
       failedSections.push(section);
       reportStep(section, 'failed');
       console.warn(`Homepage ${section} preparation failed.`, error);
+    }
+
+    if (section !== HOME_PREPARATION_ORDER.at(-1)) {
+      await yieldToBrowser();
     }
   }
 
@@ -67,10 +78,31 @@ export function scheduleHomepagePreparation() {
   if (scheduled) return;
   scheduled = true;
 
-  const start = () => window.setTimeout(startHomepagePreparation, 0);
+  const root = document.documentElement;
+  root.dataset.homePreparationState = 'waiting-hero';
+
+  const arm = () => {
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      window.removeEventListener(HERO_READY_EVENT, start);
+      window.setTimeout(startHomepagePreparation, 0);
+    };
+
+    window.addEventListener(HERO_READY_EVENT, start, { once: true });
+
+    if (
+      root.dataset.heroReady === 'true'
+      || !document.querySelector('[data-hero-slider]')
+    ) {
+      start();
+    }
+  };
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start, { once: true });
+    document.addEventListener('DOMContentLoaded', arm, { once: true });
   } else {
-    start();
+    arm();
   }
 }

@@ -11,24 +11,29 @@
     cursor: pointer;
 }
 
-.vision-arch__video-trigger video {
+.vision-arch__video-trigger [data-vision-art] {
     pointer-events: none;
 }
 
 .vision-arch__video-cue {
     position: absolute;
-    inset-inline-end: clamp(1rem, 2vw, 1.5rem);
-    inset-block-end: clamp(1rem, 2vw, 1.5rem);
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
     display: grid;
     place-items: center;
-    width: clamp(2.8rem, 4vw, 3.6rem);
+    width: clamp(3.4rem, 5.5vw, 4.8rem);
     aspect-ratio: 1;
-    border: 1px solid rgb(255 255 255 / .7);
+    border: 1px solid rgb(255 255 255 / .78);
     border-radius: 50%;
-    background: rgb(0 0 0 / .26);
+    background: rgb(0 0 0 / .3);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+    transform: translate(-50%, -50%);
     transition: transform 180ms ease, background-color 180ms ease;
+}
+
+html[dir="rtl"] .vision-arch__video-cue {
+    transform: translate(50%, -50%);
 }
 
 .vision-arch__video-cue svg {
@@ -38,8 +43,13 @@
 
 .vision-arch__video-trigger:hover .vision-arch__video-cue,
 .vision-arch__video-trigger:focus-visible .vision-arch__video-cue {
-    background: rgb(0 0 0 / .48);
-    transform: scale(1.08);
+    background: rgb(0 0 0 / .52);
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+html[dir="rtl"] .vision-arch__video-trigger:hover .vision-arch__video-cue,
+html[dir="rtl"] .vision-arch__video-trigger:focus-visible .vision-arch__video-cue {
+    transform: translate(50%, -50%) scale(1.08);
 }
 
 .vision-arch__video-trigger:focus-visible {
