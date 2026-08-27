@@ -50,16 +50,6 @@
     }
 }
 
-@keyframes hero-cinema-progress {
-    from {
-        transform: scaleX(0);
-    }
-
-    to {
-        transform: scaleX(1);
-    }
-}
-
 /* --------------------------------------------------------------------------
    Tablet and mobile navigation/hero behavior
    -------------------------------------------------------------------------- */

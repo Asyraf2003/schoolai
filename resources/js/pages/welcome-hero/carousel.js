@@ -4,10 +4,8 @@ import { createSliderMediaActions } from './slider-media.js';
 import { createSliderPlaybackActions } from './slider-playback.js';
 
 export function initHeroCarousel(root, slides) {
-    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-hero-dot]'));
     var previousButton = root.querySelector('[data-hero-previous]');
     var nextButton = root.querySelector('[data-hero-next]');
-    var playbackButton = root.querySelector('[data-hero-playback]');
     var audioButton = root.querySelector('[data-hero-audio]');
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var duration = parseInt(root.getAttribute('data-autoplay-interval'), 10);
@@ -35,11 +33,11 @@ export function initHeroCarousel(root, slides) {
     var playbackActions = createSliderPlaybackActions({
         root,
         slides,
-        dots,
-        playbackButton,
-        currentLabel: root.querySelector('[data-hero-current]'),
+        dots: [],
+        playbackButton: null,
+        currentLabel: null,
         liveRegion: root.querySelector('[data-hero-live]'),
-        progressBar: root.querySelector('[data-hero-progress]'),
+        progressBar: null,
         reducedMotion,
         duration,
         transitionDuration: 1060,
@@ -76,31 +74,18 @@ export function initHeroCarousel(root, slides) {
     nextButton?.addEventListener('click', function () {
         playbackActions.showSlide(state.currentIndex + 1, true);
     });
-    dots.forEach(function (dot, index) {
-        dot.addEventListener('click', function () {
-            playbackActions.showSlide(index, true);
-        });
-    });
     audioButton?.addEventListener('click', function () {
         state.audioEnabled = !state.audioEnabled;
         mediaActions.syncVideos();
         updateAudioButton();
     });
-    playbackButton?.addEventListener('click', function () {
-        state.userPaused = !state.userPaused;
-        playbackActions.updatePlaybackButton();
-        mediaActions.syncVideos();
-        playbackActions.scheduleNext();
-    });
 
     root.addEventListener('keydown', function (event) {
         if (event.altKey || event.ctrlKey || event.metaKey) return;
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-
         event.preventDefault();
         playbackActions.showSlide(
-            state.currentIndex + (event.key === 'ArrowRight' ? 1 : -1),
-            true
+            state.currentIndex + (event.key === 'ArrowRight' ? 1 : -1), true,
         );
     });
     root.addEventListener('pointerdown', function (event) {
@@ -109,7 +94,6 @@ export function initHeroCarousel(root, slides) {
     }, { passive: true });
     root.addEventListener('pointerup', function (event) {
         if (!state.pointerStart || state.pointerStart.id !== event.pointerId) return;
-
         var deltaX = event.clientX - state.pointerStart.x;
         var deltaY = event.clientY - state.pointerStart.y;
         state.pointerStart = null;
@@ -127,7 +111,6 @@ export function initHeroCarousel(root, slides) {
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     var removeMotionListener = onMediaQueryChange(reducedMotion, function () {
-        playbackActions.updatePlaybackButton();
         mediaActions.syncVideos();
         playbackActions.scheduleNext();
     });
@@ -142,6 +125,5 @@ export function initHeroCarousel(root, slides) {
     }, { once: true });
 
     updateAudioButton();
-    playbackActions.updatePlaybackButton();
     playbackActions.showSlide(state.currentIndex, false);
 }

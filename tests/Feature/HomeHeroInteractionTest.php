@@ -90,6 +90,8 @@ it('keeps audio user-gesture ownership and no hero glow runtime', function (): v
         ->toContain('var audioEnabled = false')
         ->toContain("audioButton?.addEventListener('click'")
         ->toContain("video.setAttribute('loop', '')")
+        ->not->toContain('data-hero-playback')
+        ->not->toContain('userPaused')
         ->not->toContain('setTimeout')
         ->not->toContain("addEventListener('keydown'")
         ->and($carousel)
@@ -104,7 +106,7 @@ it('keeps audio user-gesture ownership and no hero glow runtime', function (): v
         ->not->toContain('data-hero-title-base');
 });
 
-it('renders carousel controls only when a published Article is promoted', function (): void {
+it('renders only the agreed carousel arrows when a published Article is promoted', function (): void {
     promotedHeroArticle();
 
     $response = $this->withSession(['locale' => 'en'])->get(route('home'));
@@ -114,9 +116,8 @@ it('renders carousel controls only when a published Article is promoted', functi
         ->assertSee('data-hero-mode="carousel"', false)
         ->assertSee('data-hero-previous', false)
         ->assertSee('data-hero-next', false)
-        ->assertSee('data-hero-dot', false)
-        ->assertSee('data-hero-progress', false)
-        ->assertSee('data-hero-current', false);
-
-    expect(substr_count($response->getContent(), 'data-hero-dot'))->toBe(2);
+        ->assertDontSee('data-hero-playback', false)
+        ->assertDontSee('data-hero-dot', false)
+        ->assertDontSee('data-hero-progress', false)
+        ->assertDontSee('data-hero-current', false);
 });

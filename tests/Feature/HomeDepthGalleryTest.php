@@ -13,6 +13,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ],
     ));
     $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
+    $visual = file_get_contents(resource_path('js/pages/welcome/gallery-story-visual.js'));
     $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
 
     expect($gallery)
@@ -25,6 +26,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->toContain('data-gallery-story-intro')
         ->toContain('data-gallery-story-item')
         ->toContain('data-gallery-story-media')
+        ->toContain('data-gallery-story-visual')
         ->toContain('data-gallery-story-copy')
         ->toContain('data-gallery-background')
         ->toContain("gallery-story__item--{{ \$loop->odd ? 'right' : 'left' }}")
@@ -52,6 +54,9 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->not->toContain('aspect-ratio: 4 / 5')
         ->toContain('object-fit: contain')
         ->toContain('max-height: 100%')
+        ->toContain('background: transparent')
+        ->toContain('overflow: visible')
+        ->toContain('is-gallery-enhanced .gallery-story__visual')
         ->toContain('var(--gallery-window-top, 40%)')
         ->toContain('var(--gallery-window-bottom, 0%)')
         ->toContain('.gallery-story__item--right .gallery-story__media')
@@ -74,10 +79,8 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->toContain('readValuesExitProgress')
         ->toContain('mixColor(BLUE, GALLERY, exitProgress)')
         ->toContain('paintHandoff')
-        ->not->toContain('paintIntro')
-        ->toContain('paintItems')
-        ->toContain('clampSigned')
-        ->toContain('viewportCenter')
+        ->toContain('galleryStoryVisual(item)')
+        ->toContain('visualTop')
         ->toContain('Math.abs(signed)')
         ->toContain('signed >= 0 ? closingInset : 0')
         ->toContain('signed < 0 ? closingInset : 0')
@@ -85,13 +88,14 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->toContain("section.style.setProperty('--gallery-story-bg'")
         ->toContain('--gallery-window-top')
         ->toContain('--gallery-window-bottom')
-        ->not->toContain('--gallery-image-shift-x')
-        ->not->toContain('--gallery-image-shift-y')
         ->toContain("window.addEventListener('scroll', requestRender")
         ->toContain("'(prefers-reduced-motion: reduce)'")
         ->not->toContain('loadThreeRuntime')
         ->not->toContain('DepthGalleryEngine')
         ->not->toContain('WebGLRenderer')
+        ->and($visual)
+        ->toContain('media.clientWidth / visual.naturalWidth')
+        ->toContain('media.clientHeight / visual.naturalHeight')
         ->and($welcome)
         ->not->toContain("@include('home.sections.articles')")
         ->not->toContain('welcome-article-story.css');
@@ -101,15 +105,13 @@ it('keeps the homepage gallery controller small and scroll owned', function (): 
     $file = resource_path('js/pages/welcome-depth-gallery.js');
     $source = file_get_contents($file);
 
-    expect(count(file($file)))->toBeLessThanOrEqual(210)
+    expect(count(file($file)))->toBeLessThanOrEqual(200)
         ->and($source)
         ->toContain('requestAnimationFrame')
         ->toContain('getBoundingClientRect()')
         ->toContain('--gallery-media-opacity')
         ->toContain('--gallery-window-top')
         ->toContain('--gallery-window-bottom')
-        ->not->toContain('--gallery-image-shift-x')
-        ->not->toContain('--gallery-image-shift-y')
         ->toContain('--gallery-copy-opacity')
         ->toContain("window.addEventListener('pagehide', destroy)")
         ->toContain("window.removeEventListener('pagehide', destroy)");

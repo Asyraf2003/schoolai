@@ -87,13 +87,8 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     transition: opacity 160ms ease;
 }
 
-.home-page .hero-cinema__audio-line {
-    opacity: 1;
-}
-
-.home-page .hero-cinema__audio-snake {
-    opacity: 0;
-}
+.home-page .hero-cinema__audio-line { opacity: 1; }
+.home-page .hero-cinema__audio-snake { opacity: 0; }
 
 .home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-line {
     opacity: 0;
@@ -103,23 +98,10 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     opacity: 1;
 }
 
-.home-page .hero-cinema__playback {
-    position: absolute;
-    z-index: 9;
-    inset-inline-end: clamp(52px, 5.5vw, 104px);
-    inset-block-end: clamp(232px, 28vh, 330px);
-    cursor: pointer;
-}
-
 @media (max-width: 1180px) {
     .home-page .hero-cinema__audio {
         inset-inline-end: clamp(72px, 8vw, 112px);
         inset-block-end: clamp(205px, 26vh, 270px);
-    }
-
-    .home-page .hero-cinema__playback {
-        inset-inline-end: clamp(24px, 3vw, 58px);
-        inset-block-end: clamp(210px, 26vh, 275px);
     }
 }
 
@@ -129,11 +111,6 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
         inset-block-end: 208px;
         width: 52px;
         height: 52px;
-    }
-
-    .home-page .hero-cinema__playback {
-        inset-inline-end: 22px;
-        inset-block-end: 154px;
     }
 }
 
@@ -145,14 +122,7 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
         height: 48px;
     }
 
-    .home-page .hero-cinema__audio-glyph {
-        width: 29px;
-    }
-
-    .home-page .hero-cinema__playback {
-        inset-inline-end: 18px;
-        inset-block-end: 144px;
-    }
+    .home-page .hero-cinema__audio-glyph { width: 29px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

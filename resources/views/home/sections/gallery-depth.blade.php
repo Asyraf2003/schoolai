@@ -33,6 +33,8 @@
         <figure class="gallery-story__media" data-gallery-story-media>
           @if ($item['thumbnail_url'] !== '')
             <img
+              class="gallery-story__visual"
+              data-gallery-story-visual
               src="{{ $item['thumbnail_url'] }}"
               alt="{{ $item['title'] }}"
               width="1400"
@@ -41,7 +43,11 @@
               decoding="async"
             />
           @else
-            <span class="gallery-story__media-fallback" aria-hidden="true">
+            <span
+              class="gallery-story__media-fallback gallery-story__visual"
+              data-gallery-story-visual
+              aria-hidden="true"
+            >
               {{ $item['fallback_icon'] ?? '📸' }}
             </span>
           @endif

@@ -57,15 +57,11 @@
 @media (prefers-reduced-motion: reduce) {
     .home-page .galeri-section { transition: none; }
     .gallery-story__title { opacity: 1; }
-    .gallery-story__media,
+    .gallery-story__visual,
     .gallery-story__copy {
         transform: none;
         opacity: 1;
         clip-path: none;
-    }
-    .gallery-story__media img {
-        width: auto;
-        height: auto;
     }
     .gallery-story__handoff { display: none !important; }
 }
