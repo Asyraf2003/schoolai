@@ -18,12 +18,8 @@ return new class extends Migration
         });
 
         Schema::create('gallery_item_gallery_page_section', function (Blueprint $table): void {
-            $table->foreignId('gallery_item_id')
-                ->constrained('gallery_items')
-                ->cascadeOnDelete();
-            $table->foreignId('gallery_page_section_id')
-                ->constrained('gallery_page_sections')
-                ->cascadeOnDelete();
+            $table->foreignId('gallery_item_id');
+            $table->foreignId('gallery_page_section_id');
             $table->unsignedSmallInteger('sort_order')->default(1);
             $table->boolean('is_published')->default(true);
             $table->timestamps();
@@ -36,6 +32,14 @@ return new class extends Migration
                 ['gallery_page_section_id', 'sort_order'],
                 'gallery_section_item_order_idx',
             );
+            $table->foreign('gallery_item_id', 'gallery_item_section_item_fk')
+                ->references('id')
+                ->on('gallery_items')
+                ->cascadeOnDelete();
+            $table->foreign('gallery_page_section_id', 'gallery_item_section_section_fk')
+                ->references('id')
+                ->on('gallery_page_sections')
+                ->cascadeOnDelete();
         });
     }
 
