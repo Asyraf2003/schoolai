@@ -6,6 +6,9 @@ it('keeps a hero-gated sequential homepage preparation graph with a DOM owned ga
     ));
     $page = file_get_contents(resource_path('js/pages/welcome.js'));
     $hero = file_get_contents(resource_path('js/pages/welcome-hero.js'));
+    $heroReadiness = file_get_contents(resource_path(
+        'js/pages/welcome-hero/readiness.js',
+    ));
     $program = file_get_contents(resource_path('js/pages/welcome/program-cards.js'));
     $programController = file_get_contents(resource_path(
         'js/surfaces/home/program-journey/controller.js',
@@ -37,7 +40,10 @@ it('keeps a hero-gated sequential homepage preparation graph with a DOM owned ga
         ->toContain('await preparationSteps[section]()')
         ->toContain('await yieldToBrowser()')
         ->and($hero)
-        ->toContain("const HERO_READY_EVENT = 'schoolai:hero-ready'")
+        ->toContain("import { armHeroReadySignal } from './welcome-hero/readiness.js'")
+        ->toContain('armHeroReadySignal(root, slides[state.currentIndex])')
+        ->and($heroReadiness)
+        ->toContain("export const HERO_READY_EVENT = 'schoolai:hero-ready'")
         ->toContain("video.addEventListener('playing'")
         ->toContain('HERO_READY_FALLBACK_MS = 5000')
         ->toContain('window.dispatchEvent(new CustomEvent(HERO_READY_EVENT')
