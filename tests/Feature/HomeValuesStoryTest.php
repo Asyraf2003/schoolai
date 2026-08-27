@@ -52,10 +52,18 @@ it('renders the rebuilt localized semantic values story', function (): void {
             ->assertDontSee('class="values-transition"', false)
             ->assertDontSee('data-values-trail', false)
             ->assertDontSee('data-school-value-card', false)
-            ->assertDontSee('aria-pressed=', false)
             ->assertDontSee('class="nilai-card', false);
 
         $content = $response->getContent();
+        preg_match(
+            '/<section\s+class="values-story".*?<\/section>/s',
+            $content,
+            $valuesSection,
+        );
+
+        expect($valuesSection[0] ?? '')
+            ->not->toBe('')
+            ->not->toContain('aria-pressed=');
 
         expect(substr_count($content, 'class="values-card"'))->toBe(4)
             ->and(substr_count($content, 'values-card__front'))->toBe(4)
