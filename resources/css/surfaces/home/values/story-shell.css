@@ -79,27 +79,26 @@
     background: linear-gradient(
         to bottom,
         var(--values-blue) 0%,
-        rgba(32, 56, 255, .82) 22%,
-        rgba(255, 255, 255, .9) 76%,
-        #fff 91%,
-        #f8fff8 100%
+        var(--values-blue) 18%,
+        var(--values-gallery-bridge-color, #6f9b72) 100%
     );
     pointer-events: none;
     box-shadow:
         0 -3px 0 var(--values-blue),
-        0 3px 0 #f8fff8;
+        0 3px 0 var(--values-gallery-bridge-color, #6f9b72);
 }
 
 .values-story__exit::before {
     position: absolute;
-    inset: 10% -8%;
+    inset: 8% -8%;
     background: linear-gradient(
         to bottom,
-        rgba(32, 56, 255, .36),
-        rgba(255, 255, 255, .82)
+        transparent 0%,
+        var(--values-gallery-bridge-color, #6f9b72) 100%
     );
     content: "";
-    filter: blur(34px);
+    filter: blur(30px);
+    opacity: .42;
 }
 
 @supports not (overflow: clip) {

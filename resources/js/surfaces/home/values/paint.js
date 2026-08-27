@@ -16,9 +16,13 @@ const ROOT_PROPERTIES = [
 
 const WORLD_PROPERTIES = [
     '--values-gallery-exit-progress',
+    '--values-gallery-bridge-color',
     '--values-gallery-kinetic-opacity',
     '--values-gallery-world-opacity-pct',
 ];
+
+const VALUES_BLUE = [32, 56, 255];
+const GALLERY_GREEN = [111, 155, 114];
 
 function clamp(value) {
     return Math.max(0, Math.min(1, value));
@@ -27,6 +31,15 @@ function clamp(value) {
 function smoothstep(value) {
     const progress = clamp(value);
     return progress * progress * (3 - 2 * progress);
+}
+
+function bridgeColor(progress) {
+    const amount = smoothstep(progress);
+    const channels = VALUES_BLUE.map((channel, index) => Math.round(
+        channel + ((GALLERY_GREEN[index] - channel) * amount),
+    ));
+
+    return `rgb(${channels.join(' ')})`;
 }
 
 function valuesWorldRoot(root, nodes) {
@@ -108,6 +121,10 @@ function writeRootFrame(
         worldRoot.style.setProperty(
             '--values-gallery-exit-progress',
             galleryHandoffProgress.toFixed(4),
+        );
+        worldRoot.style.setProperty(
+            '--values-gallery-bridge-color',
+            bridgeColor(galleryHandoffProgress),
         );
         worldRoot.style.setProperty(
             '--values-gallery-kinetic-opacity',

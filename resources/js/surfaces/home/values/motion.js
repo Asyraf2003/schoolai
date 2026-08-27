@@ -14,6 +14,7 @@ const MAX_PROGRESS_VELOCITY = 2.8;
 const DESKTOP_EXIT_START = 0.895;
 const DESKTOP_HANDOFF_EXTRA_VIEWPORTS = 1;
 const DESKTOP_CARD_EXIT_EXTRA_SHARE = 0.5;
+const RESPONSIVE_GALLERY_HANDOFF_START = 0.84;
 
 export const clamp = (value, min = 0, max = 1) => (
     Math.min(max, Math.max(min, value))
@@ -87,7 +88,13 @@ export function readStoryProgress(storyTop, geometry) {
 }
 
 export function readGalleryHandoffProgress(storyTop, geometry) {
-    if (geometry.mode !== 4) return 0;
+    if (geometry.mode !== 4) {
+        return phase(
+            readStoryProgress(storyTop, geometry),
+            RESPONSIVE_GALLERY_HANDOFF_START,
+            1,
+        );
+    }
 
     const {
         scrolled,
