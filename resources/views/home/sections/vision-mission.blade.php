@@ -85,17 +85,17 @@
               <video
                 data-vision-art
                 data-about-video-preview
+                data-about-video-src="{{ config('media.homepage_about_video_url') }}"
+                data-about-preview-start="30"
+                data-about-preview-end="50"
                 autoplay
                 muted
-                loop
                 playsinline
                 webkit-playsinline
-                preload="metadata"
+                preload="none"
                 tabindex="-1"
                 aria-hidden="true"
-              >
-                <source src="{{ config('media.homepage_about_video_url') }}" type="video/mp4" />
-              </video>
+              ></video>
               <span class="vision-arch__video-cue" aria-hidden="true">
                 <svg viewBox="0 0 32 32">
                   <path d="M12 8l12 8-12 8Z" />
@@ -132,13 +132,12 @@
       <video
         class="vision-video-modal__player"
         data-about-video-player
+        data-about-video-src="{{ config('media.homepage_about_video_url') }}"
         controls
         playsinline
         webkit-playsinline
-        preload="metadata"
-      >
-        <source src="{{ config('media.homepage_about_video_url') }}" type="video/mp4" />
-      </video>
+        preload="none"
+      ></video>
     </div>
   </dialog>
 </section>

@@ -120,6 +120,8 @@ it('removes hero glow runtime and gates audio behind a user gesture', function (
         ->toContain('video.muted = !state.audioEnabled')
         ->toContain('video.muted = true')
         ->and($hero)
+        ->toContain('preload="{{ $loop->first ? \'metadata\' : \'none\' }}"')
+        ->not->toContain("$loop->first ? 'auto' : 'none'")
         ->toContain('data-hero-audio')
         ->toContain('aria-pressed="false"')
         ->and($title)
