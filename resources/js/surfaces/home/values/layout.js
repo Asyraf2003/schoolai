@@ -33,9 +33,12 @@ function responsiveTiltLimit(geometry) {
 }
 
 function responsiveTiltAngle(local, geometry) {
-    const edgeEnvelope = Math.sin(Math.PI * clamp(local));
+    const progress = clamp(local);
+    const edgeEnvelope = Math.sin(Math.PI * progress);
+    const faceSide = progress < .5 ? 1 : -1;
 
     return RESPONSIVE_FLIP_DIRECTION
+        * faceSide
         * responsiveTiltLimit(geometry)
         * edgeEnvelope;
 }
