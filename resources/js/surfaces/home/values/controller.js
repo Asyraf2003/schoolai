@@ -44,7 +44,7 @@ export function createValuesStory(root) {
     }
 
     function requestRender() {
-        if (!frame && enabled && active && !destroyed && !document.hidden) {
+        if (!frame && enabled && !destroyed && !document.hidden) {
             frame = window.requestAnimationFrame(render);
         }
     }
@@ -62,18 +62,42 @@ export function createValuesStory(root) {
 
     function render(time) {
         frame = 0;
-        if (!enabled || !active || destroyed || document.hidden) return;
+        if (!enabled || destroyed || document.hidden) return;
         if (geometryDirty || !geometry) measure();
 
         const target = readValuesFrameTarget(root, nodes, geometry);
         const delta = lastTime ? time - lastTime : FRAME_MS;
         lastTime = time;
-        const snapshot = updateScrollMotion(motion, target.story, delta, snapNext);
+        const directScroll = geometry.mode < 4 || !active;
+        let snapshot;
+
+        if (directScroll) {
+            resetScrollMotion(motion, target.story);
+            snapshot = {
+                visual: target.story,
+                momentum: 0,
+                settled: true,
+            };
+        } else {
+            snapshot = updateScrollMotion(
+                motion,
+                target.story,
+                delta,
+                snapNext,
+            );
+        }
+
         const handoff = updateScrollMotion(
-            handoffMotion, target.handoff, delta, snapNext,
+            handoffMotion,
+            target.handoff,
+            delta,
+            true,
         );
         const galleryHandoff = updateScrollMotion(
-            galleryHandoffMotion, target.galleryHandoff, delta, snapNext,
+            galleryHandoffMotion,
+            target.galleryHandoff,
+            delta,
+            true,
         );
         const headingSnapshot = updateHeadingState(
             heading, target.story, target.headingTop,
@@ -93,10 +117,7 @@ export function createValuesStory(root) {
         });
         snapNext = false;
 
-        if (!snapshot.settled
-            || !handoff.settled
-            || !galleryHandoff.settled
-            || !headingSnapshot.settled) {
+        if (active && (!snapshot.settled || !headingSnapshot.settled)) {
             requestRender();
         } else {
             lastTime = 0;
@@ -133,7 +154,6 @@ export function createValuesStory(root) {
         spatial.setActive(active);
         root.classList.toggle('is-values-active', active && enabled);
         cancelFrame();
-        if (!active) return;
         geometryDirty = true;
         snapNext = true;
         requestRender();

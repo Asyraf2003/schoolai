@@ -39,18 +39,10 @@ function valuesWorldRoot(root, nodes) {
 }
 
 function kineticOpacity(cardExitProgress) {
-    /*
-     * Kinetic tetap larut pada fase awal card-exit, bukan ikut diperlambat oleh
-     * handoff 3x. Setelah itu scene 1 menjadi pure blue seperti pembahasan.
-     */
     return 1 - smoothstep(cardExitProgress / 0.16);
 }
 
 function worldOpacity(cardExitProgress) {
-    /*
-     * Background DOM Values dilepas cepat dan cover SVG blue mengambil alih.
-     * Blinds boleh berjalan jauh lebih lama tanpa membuat alpha blend baru.
-     */
     return 1 - smoothstep(cardExitProgress / 0.06);
 }
 
@@ -112,10 +104,6 @@ function writeRootFrame(
 
     const worldRoot = valuesWorldRoot(root, nodes);
     if (worldRoot) {
-        /*
-         * Clock yang dibaca Gallery mask sekarang adalah dedicated handoff
-         * progress. Card movement sendiri tetap memakai story/cardExit clock.
-         */
         worldRoot.style.setProperty(
             '--values-gallery-exit-progress',
             galleryHandoffProgress.toFixed(4),
@@ -158,7 +146,7 @@ export function paintValuesStory(
         headingState,
     );
     const cardExitProgress = geometry.mode === 4
-        ? exitAmount(progress)
+        ? exitAmount(targetProgress)
         : 0;
 
     cards.forEach((card, index) => {

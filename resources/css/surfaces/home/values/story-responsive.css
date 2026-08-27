@@ -41,6 +41,12 @@
     }
 }
 
+@media (max-width: 1279px) {
+    .values-story__perspective {
+        perspective: none;
+    }
+}
+
 @media (min-width: 1280px) {
     .values-story {
         --values-layout-mode: 4;

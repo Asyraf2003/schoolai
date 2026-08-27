@@ -44,6 +44,11 @@ export function measureValuesGeometry(root, cards, nodes) {
     const cardsRect = unionRect(cardRects);
     const rootStyles = window.getComputedStyle(root);
     const stageStyles = window.getComputedStyle(nodes.stage);
+    const gridStyles = window.getComputedStyle(nodes.grid);
+    const mode = Number.parseInt(
+        rootStyles.getPropertyValue('--values-layout-mode'),
+        10,
+    ) || 1;
     const stageCenterX = stageRect.left + stageRect.width / 2;
     const stageCenterY = stageRect.top + stageRect.height / 2;
     const cardsCenterX = cardsRect.left + cardsRect.width / 2;
@@ -51,10 +56,7 @@ export function measureValuesGeometry(root, cards, nodes) {
     const scrollY = window.scrollY || 0;
 
     return {
-        mode: Number.parseInt(
-            rootStyles.getPropertyValue('--values-layout-mode'),
-            10,
-        ) || 1,
+        mode,
         viewportHeight: window.innerHeight || 1,
         viewportWidth: window.innerWidth || 1,
         rootHeight: Math.max(1, root.offsetHeight),
@@ -66,6 +68,7 @@ export function measureValuesGeometry(root, cards, nodes) {
         stageCenterY,
         cardWidth: Math.max(1, cardRects[0].width),
         cardHeight: Math.max(1, cardRects[0].height),
+        rowGap: Math.max(0, numberFrom(gridStyles.rowGap)),
         slots: cardRects.map((rect) => ({
             centerX: rect.left + rect.width / 2,
             centerY: rect.top + rect.height / 2,

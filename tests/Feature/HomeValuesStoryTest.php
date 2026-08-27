@@ -128,3 +128,29 @@ it('owns one lazy deterministic Three.js spatial scene', function (): void {
         ->toContain('story-handoff.css')
         ->not->toContain('story-trail.css');
 });
+
+it('keeps responsive values motion scroll-deterministic and tilt-bounded', function (): void {
+    $controller = file_get_contents(resource_path('js/surfaces/home/values/controller.js'));
+    $layout = file_get_contents(resource_path('js/surfaces/home/values/layout.js'));
+    $geometry = file_get_contents(resource_path('js/surfaces/home/values/geometry.js'));
+    $responsive = file_get_contents(resource_path('css/surfaces/home/values/story-responsive.css'));
+    $paint = file_get_contents(resource_path('js/surfaces/home/values/paint.js'));
+
+    expect($controller)
+        ->toContain('geometry.mode < 4 || !active')
+        ->toContain('target.handoff')
+        ->toContain('target.galleryHandoff')
+        ->not->toContain('if (!active) return;')
+        ->and($layout)
+        ->toContain('RESPONSIVE_MAX_TILT = 20')
+        ->toContain('RESPONSIVE_GAP_RISE_SHARE = .95')
+        ->toContain('Math.sin(Math.PI * clamp(local))')
+        ->not->toContain('tabletRailY')
+        ->not->toContain('TABLET_EDGE_ANGLE')
+        ->and($geometry)
+        ->toContain('rowGap: Math.max(0, numberFrom(gridStyles.rowGap))')
+        ->and($responsive)
+        ->toContain('perspective: none')
+        ->and($paint)
+        ->toContain('exitAmount(targetProgress)');
+});

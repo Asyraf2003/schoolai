@@ -2,8 +2,8 @@ import { responsiveFlipAngle } from './desktop-keyframes.js';
 import { desktopCardFrame } from './desktop-layout.js';
 import { clamp, mix, phase } from './motion.js';
 
-const TABLET_EDGE_ANGLE = 100;
-const TABLET_FRONT_TILT = 10;
+const RESPONSIVE_MAX_TILT = 20;
+const RESPONSIVE_GAP_RISE_SHARE = .95;
 
 function visibleFraction(index, progress, geometry) {
     const travel = geometry.rootHeight + geometry.viewportHeight;
@@ -15,49 +15,41 @@ function visibleFraction(index, progress, geometry) {
     );
 }
 
-function tabletRailAngle(visible) {
-    const edge = phase(visible, 0.16, 0.44);
-    const front = phase(visible, 0.44, 0.60);
-    const settle = phase(visible, 0.60, 0.78);
-    let angle = mix(180, TABLET_EDGE_ANGLE, edge);
-
-    angle = mix(angle, TABLET_FRONT_TILT, front);
-    return mix(angle, 0, settle);
+function responsiveFlipLocal(visible, mode) {
+    const start = mode === 3 ? .16 : .50;
+    const end = mode === 3 ? .78 : 1;
+    return clamp((visible - start) / Math.max(.0001, end - start));
 }
 
-function tabletRailY(progress, targetProgress, geometry) {
-    const travel = geometry.rootHeight + geometry.viewportHeight;
-    return (clamp(targetProgress) - clamp(progress)) * travel;
+function responsiveTiltLimit(geometry) {
+    const maxRise = geometry.rowGap * RESPONSIVE_GAP_RISE_SHARE;
+    const gapLimited = Math.atan2(
+        maxRise,
+        Math.max(1, geometry.cardWidth),
+    ) * 180 / Math.PI;
+
+    return Math.min(RESPONSIVE_MAX_TILT, gapLimited);
 }
 
-function responsiveCardFrame(
-    index,
-    progress,
-    geometry,
-    targetProgress,
-) {
+function responsiveTiltAngle(index, local, geometry) {
+    const direction = index % 2 === 0 ? -1 : 1;
+    const edgeEnvelope = Math.sin(Math.PI * clamp(local));
+
+    return direction
+        * responsiveTiltLimit(geometry)
+        * edgeEnvelope;
+}
+
+function responsiveCardFrame(index, progress, geometry) {
     const visible = visibleFraction(index, progress, geometry);
-
-    if (geometry.mode === 3) {
-        return {
-            x: 0,
-            y: tabletRailY(progress, targetProgress, geometry),
-            z: 0,
-            rz: 0,
-            ry: tabletRailAngle(visible),
-            scale: 1,
-            floatY: 0,
-        };
-    }
-
-    const flip = clamp((visible - 0.5) / 0.5);
+    const local = responsiveFlipLocal(visible, geometry.mode);
 
     return {
         x: 0,
         y: 0,
         z: 0,
-        rz: 0,
-        ry: responsiveFlipAngle(flip),
+        rz: responsiveTiltAngle(index, local, geometry),
+        ry: responsiveFlipAngle(local),
         scale: 1,
         floatY: 0,
     };
@@ -74,12 +66,7 @@ export function cardFrame(
         return desktopCardFrame(index, progress, geometry, momentum);
     }
 
-    return responsiveCardFrame(
-        index,
-        progress,
-        geometry,
-        targetProgress,
-    );
+    return responsiveCardFrame(index, targetProgress, geometry);
 }
 
 export function storyFrame(
