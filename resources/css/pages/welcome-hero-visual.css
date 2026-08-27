@@ -84,11 +84,7 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     stroke-linecap: round;
     stroke-linejoin: round;
     vector-effect: non-scaling-stroke;
-    transform-box: fill-box;
-    transform-origin: center;
-    transition:
-        opacity 160ms ease,
-        transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 160ms ease;
 }
 
 .home-page .hero-cinema__audio-line {
@@ -97,31 +93,14 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
 
 .home-page .hero-cinema__audio-snake {
     opacity: 0;
-    transform: scaleX(0.72) scaleY(0.5);
 }
 
 .home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-line {
     opacity: 0;
-    transform: scaleX(0.62);
 }
 
 .home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-snake {
     opacity: 1;
-    animation: hero-audio-snake-wiggle 760ms ease-in-out infinite alternate;
-}
-
-@keyframes hero-audio-snake-wiggle {
-    0% {
-        transform: translateX(-1.5px) scaleX(0.96) scaleY(0.84);
-    }
-
-    50% {
-        transform: translateX(1px) scaleX(1.02) scaleY(1.08);
-    }
-
-    100% {
-        transform: translateX(1.8px) scaleX(0.98) scaleY(0.9);
-    }
 }
 
 @media (max-width: 1180px) {
@@ -163,10 +142,5 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     .home-page .hero-cinema__audio-line,
     .home-page .hero-cinema__audio-snake {
         transition: none;
-    }
-
-    .home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-snake {
-        animation: none;
-        transform: none;
     }
 }
