@@ -14,8 +14,6 @@ class DatabaseSeeder extends Seeder
             HeroArticleSeeder::class,
             GallerySeeder::class,
             PpdbSeeder::class,
-            SiteStatisticSeeder::class,
-            TestimonialMediaSeeder::class,
         ]);
     }
 }

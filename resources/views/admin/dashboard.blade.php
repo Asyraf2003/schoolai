@@ -26,19 +26,7 @@
       <a href="{{ route('admin.galeri') }}" class="admin-dashboard-metric">
         <span class="admin-dashboard-metric__label">Galeri aktif</span>
         <strong>{{ number_format($galleryMain['active']) }}</strong>
-        <small>{{ $gallerySections['active'] }} bagian · {{ $galleryMedia['active'] }} media bagian</small>
-      </a>
-
-      <a href="{{ route('admin.testimoni.index') }}" class="admin-dashboard-metric">
-        <span class="admin-dashboard-metric__label">Testimoni aktif</span>
-        <strong>{{ number_format($testimonials['active']) }}</strong>
-        <small>{{ $testimonials['inactive'] }} nonaktif · {{ $testimonials['archived'] }} arsip</small>
-      </a>
-
-      <a href="{{ route('admin.stats.edit') }}" class="admin-dashboard-metric">
-        <span class="admin-dashboard-metric__label">Statistik homepage</span>
-        <strong>{{ $statistics['active'] }}/{{ \App\Models\SiteStatistic::MAX_ITEMS }}</strong>
-        <small>{{ $statistics['archived'] }} arsip tersimpan</small>
+        <small>{{ $gallerySections['active'] }} bagian galeri</small>
       </a>
 
       <a href="{{ route('admin.ppdb') }}" class="admin-dashboard-metric {{ $ppdbOpen ? 'is-positive' : 'is-muted' }}">
@@ -123,9 +111,7 @@
           <button type="submit" class="admin-primary-action">Buat Artikel</button>
         </form>
         <a href="{{ route('admin.galeri.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Galeri</a>
-        <a href="{{ route('admin.testimoni.create') }}" class="admin-primary-action admin-primary-action--ghost">Tambah Testimoni</a>
         <a href="{{ route('admin.ppdb') }}" class="admin-primary-action admin-primary-action--ghost">Atur PPDB</a>
-        <a href="{{ route('admin.stats.edit') }}" class="admin-primary-action admin-primary-action--ghost">Atur Statistik</a>
       </div>
     </section>
   </div>

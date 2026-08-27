@@ -656,7 +656,31 @@ repository gate passes with 244 tests / 2,366 assertions, the 592-file structure
 gate, Vite production build, Pint, and diff check. The existing two unresolved
 Gallery ornament URLs and deferred 549.47 kB Three chunk warning remain visible.
 
-The next and final owner-authorized capability in this execution run is E6:
-retire legacy Testimonial and Statistics admin CRUD/runtime loading while
-preserving static visible/localized content and retained data tables. Broad
-runtime certification remains `BLOCKED_BY_MISSING_EVIDENCE`.
+E6 is now `PASS`. Testimonial and Statistics are no longer database-managed
+homepage domains: their public/admin routes, controllers, mutation concerns,
+admin views/composers/menu/dashboard actions and dead-environment seeders are
+retired. The `testimonial_media` and `site_statistics` tables/models remain as
+an explicit inventory boundary; no migration drops data and no R2 object is
+deleted. Static statistic copy remains in the ID/EN/AR locale sources.
+
+The dashboard no longer queries the two retired tables or the retained legacy
+`gallery_page_media_items` inventory. Homepage and dashboard query proof both
+show zero access to those tables. The disabled Testimonial surface now also has
+no Vite entry, dynamic import, admin injection or shared `app.css` import.
+Production transformation fell from 133 to 119 modules; `app.css` fell from
+59.84 kB / 11.08 kB gzip to 55.68 kB / 10.47 kB gzip, and admin `app.js` fell
+from 1.25 kB / 0.72 kB gzip to 0.40 kB / 0.31 kB gzip. The prior 4.12 kB and
+8.14 kB Testimonial CSS outputs plus 5.97 kB and 13.02 kB Testimonial JS outputs
+are absent from the manifest.
+
+Browser proof at 390x844 loaded the homepage successfully and requested no
+Testimonial bundle or API. Focused retirement proof passes with 16 tests / 139
+assertions. Repository gates pass with 235 tests / 2,301 assertions, the
+552-file structure gate, Vite production build, Pint, and diff check. The two
+known unresolved Gallery ornament URLs and deferred 549.47 kB Three warning are
+unchanged.
+
+E1-E6 are complete. Per owner instruction, execution stops here. Static-media
+migration, direct-to-R2 upload, Testimonial UI, Article homepage UI and image
+transformation remain outside this run. Broad runtime certification remains
+`BLOCKED_BY_MISSING_EVIDENCE`.

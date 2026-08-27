@@ -252,46 +252,6 @@
       "sha256": "ef6dc896a6812b13044e6c55243b079fe71db86ceea2e9d1d7533858590265b6"
     },
     {
-      "source": "resources/views/admin/site-statistics/edit.blade.php",
-      "target": "resources/views/admin/site-statistics/edit/header.blade.php",
-      "source_lines": [
-        37,
-        65
-      ],
-      "lines": 29,
-      "sha256": "bb7017b39f98375efeaf991598b0b46e4f18e5dc20d256e10ef6daff7f18c088"
-    },
-    {
-      "source": "resources/views/admin/site-statistics/edit.blade.php",
-      "target": "resources/views/admin/site-statistics/edit/create-form.blade.php",
-      "source_lines": [
-        68,
-        151
-      ],
-      "lines": 84,
-      "sha256": "cb935c06adaf8b0936fce96ff1938416aa719624a1058baf82bb6324059068fc"
-    },
-    {
-      "source": "resources/views/admin/site-statistics/edit.blade.php",
-      "target": "resources/views/admin/site-statistics/edit/statistics-list.blade.php",
-      "source_lines": [
-        153,
-        333
-      ],
-      "lines": 181,
-      "sha256": "fa22001e345c11db539149d1b1ca3e2eadd308a7d4ec9b26aada97ad544bd666"
-    },
-    {
-      "source": "resources/views/admin/site-statistics/edit.blade.php",
-      "target": "resources/views/admin/site-statistics/edit/behavior.blade.php",
-      "source_lines": [
-        336,
-        369
-      ],
-      "lines": 34,
-      "sha256": "dd6939237128a08483b4093a9f2babac730aefa5dcaef8698c544d22d7f31042"
-    },
-    {
       "source": "resources/views/admin/ppdb/edit.blade.php",
       "target": "resources/views/admin/ppdb/edit/styles.blade.php",
       "source_lines": [

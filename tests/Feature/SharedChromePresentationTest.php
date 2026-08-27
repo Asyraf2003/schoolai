@@ -106,5 +106,9 @@ it('preserves the active admin navigation contract', function (): void {
         ->assertSee('aria-current="page"', false);
 
     expect(substr_count($response->getContent(), 'class="admin-side-link'))
-        ->toBe(6);
+        ->toBe(5);
+
+    expect($response->getContent())
+        ->not->toContain('admin/stats')
+        ->not->toContain('admin/testimoni');
 });

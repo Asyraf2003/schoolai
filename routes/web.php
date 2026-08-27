@@ -17,5 +17,4 @@ Route::middleware([
     require __DIR__.'/admin/ppdb.php';
     require __DIR__.'/admin/articles.php';
     require __DIR__.'/admin/gallery.php';
-    require __DIR__.'/admin/statistics.php';
 });

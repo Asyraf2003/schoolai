@@ -2,14 +2,7 @@
 
 namespace App\Http\Controllers\Concerns;
 
-use App\Models\Article;
-use App\Models\GalleryItem;
-use App\Models\PpdbSetting;
-use App\Models\SiteStatistic;
-use App\Support\HeroVideoUrl;
 use App\Support\PublicUrl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Schema;
 
 trait NormalizesHomeMedia
 {
@@ -89,7 +82,7 @@ trait NormalizesHomeMedia
         $path = trim((string) parse_url($embedUrl, PHP_URL_PATH), '/');
 
         if ($host === 'www.youtube.com' && preg_match('~^embed/([^/?#]+)$~', $path, $match)) {
-            return 'https://i.ytimg.com/vi/' . rawurlencode($match[1]) . '/hqdefault.jpg';
+            return 'https://i.ytimg.com/vi/'.rawurlencode($match[1]).'/hqdefault.jpg';
         }
 
         return null;

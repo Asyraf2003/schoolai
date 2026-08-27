@@ -6,12 +6,11 @@
    2. Mobile hamburger menu
    3. Smooth scroll menu + nav aktif saat scroll
    4. Navbar berubah saat discroll
-   5. Animasi angka statistik (counter)
-   6. Filter ekstrakurikuler
-   7. Galeri halaman khusus
-   8. Tombol scroll-to-top
-   9. Animasi reveal saat elemen masuk viewport
-   10. Tilt halus pada ilustrasi hero (opsional)
+   5. Filter ekstrakurikuler
+   6. Galeri halaman khusus
+   7. Tombol scroll-to-top
+   8. Animasi reveal saat elemen masuk viewport
+   9. Tilt halus pada ilustrasi hero (opsional)
    ========================================================= */
 
 import './welcome/navigation.js';

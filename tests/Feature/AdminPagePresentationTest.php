@@ -5,8 +5,6 @@ it('keeps all H5 group four Blade owners free of PHP shaping', function (): void
         resource_path('views/admin/ppdb/edit.blade.php'),
         resource_path('views/admin/ppdb/edit/showcase-list.blade.php'),
         resource_path('views/admin/hero/index.blade.php'),
-        resource_path('views/admin/site-statistics/edit.blade.php'),
-        resource_path('views/admin/site-statistics/edit/statistics-list.blade.php'),
         resource_path('views/admin/gallery/form.blade.php'),
         resource_path('views/admin/gallery/page-sections/form.blade.php'),
         resource_path('views/admin/gallery/page-sections/show.blade.php'),
@@ -17,7 +15,6 @@ it('keeps all H5 group four Blade owners free of PHP shaping', function (): void
         resource_path('views/admin/placeholder.blade.php'),
         resource_path('views/admin/articles/form.blade.php'),
         resource_path('views/admin/articles/index.blade.php'),
-        resource_path('views/admin/testimonials/form.blade.php'),
     ];
 
     foreach ($files as $file) {
@@ -41,8 +38,6 @@ it('registers exact view owners for every group four presentation boundary', fun
         "View::composer('admin.gallery.show', AdminGalleryShowComposer::class)",
         "View::composer('admin.placeholder', AdminPlaceholderComposer::class)",
         "View::composer('admin.ppdb.edit', AdminPpdbEditComposer::class)",
-        "View::composer('admin.site-statistics.edit', AdminSiteStatisticsEditComposer::class)",
-        "View::composer('admin.testimonials.form', AdminTestimonialFormComposer::class)",
     ];
 
     foreach ($registrations as $registration) {

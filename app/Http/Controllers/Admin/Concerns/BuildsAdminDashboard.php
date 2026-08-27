@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
 use App\Models\GalleryPageSection;
 use App\Models\PpdbSetting;
 use App\Models\PpdbShowcaseItem;
-use App\Models\SecurityAuditLog;
-use App\Models\SiteStatistic;
-use App\Models\TestimonialMedia;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
@@ -39,27 +33,6 @@ trait BuildsAdminDashboard
             fn (): int => GalleryPageSection::query()->where('is_published', true)->count(),
             fn (): int => GalleryPageSection::query()->count(),
             fn (): int => GalleryPageSection::onlyTrashed()->count(),
-        );
-
-        $galleryMedia = $this->summary(
-            'gallery_page_media_items',
-            fn (): int => GalleryPageMediaItem::query()->where('is_published', true)->count(),
-            fn (): int => GalleryPageMediaItem::query()->count(),
-            fn (): int => GalleryPageMediaItem::onlyTrashed()->count(),
-        );
-
-        $testimonials = $this->summary(
-            'testimonial_media',
-            fn (): int => TestimonialMedia::query()->where('is_published', true)->count(),
-            fn (): int => TestimonialMedia::query()->count(),
-            fn (): int => TestimonialMedia::onlyTrashed()->count(),
-        );
-
-        $statistics = $this->summary(
-            'site_statistics',
-            fn (): int => SiteStatistic::query()->count(),
-            fn (): int => SiteStatistic::query()->count(),
-            fn (): int => SiteStatistic::onlyTrashed()->count(),
         );
 
         $ppdbShowcase = $this->summary(
@@ -96,27 +69,6 @@ trait BuildsAdminDashboard
                 'route' => 'admin.galeri',
             ],
             [
-                'label' => 'Media Galeri',
-                'active' => $galleryMedia['active'],
-                'inactive' => $galleryMedia['inactive'],
-                'archived' => $galleryMedia['archived'],
-                'route' => 'admin.galeri',
-            ],
-            [
-                'label' => 'Testimoni',
-                'active' => $testimonials['active'],
-                'inactive' => $testimonials['inactive'],
-                'archived' => $testimonials['archived'],
-                'route' => 'admin.testimoni.index',
-            ],
-            [
-                'label' => 'Statistik Homepage',
-                'active' => $statistics['active'],
-                'inactive' => $statistics['inactive'],
-                'archived' => $statistics['archived'],
-                'route' => 'admin.stats.edit',
-            ],
-            [
                 'label' => 'Konten PPDB',
                 'active' => $ppdbShowcase['active'],
                 'inactive' => $ppdbShowcase['inactive'],
@@ -131,9 +83,6 @@ trait BuildsAdminDashboard
             'articles' => $articles,
             'galleryMain' => $galleryMain,
             'gallerySections' => $gallerySections,
-            'galleryMedia' => $galleryMedia,
-            'testimonials' => $testimonials,
-            'statistics' => $statistics,
             'ppdbShowcase' => $ppdbShowcase,
             'ppdbSetting' => $ppdbSetting,
             'ppdbOpen' => $ppdbSetting?->isRegistrationOpen() ?? false,

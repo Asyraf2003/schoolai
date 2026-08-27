@@ -8,8 +8,6 @@ export default defineConfig({
             input: [
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/welcome-hero.js',
-                'resources/js/pages/welcome-testimonial-story.js',
-                'resources/js/pages/welcome-testimonial-extra-nodes.js',
                 'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/js/pages/welcome-editorial-headings.js',
                 'resources/js/pages/ppdb-journey.js',
@@ -22,7 +20,6 @@ export default defineConfig({
                 'resources/css/pages/welcome-values-story.css',
                 'resources/css/pages/welcome-depth-gallery.css',
                 'resources/css/pages/welcome-article-story.css',
-                'resources/css/pages/welcome-testimonial-layout.css',
                 'resources/css/pages/welcome-mega-menu.css',
                 'resources/css/pages/welcome-hero-visual.css',
                 'resources/css/pages/welcome-scroll-reveal.css',

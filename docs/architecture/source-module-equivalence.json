@@ -184,27 +184,6 @@
       ],
       "originalSourceSha256": "cd273206685efc7db07abebe2f24a5fc65469ff8c431200949bdc86addcec0fa"
     },
-    "resources/css/pages/welcome-testimonial-story.css": {
-      "sourceSha256": "8e52594007ba641503a65da540dd09d342557b36211e99ed14b4c2448f92dfad",
-      "orderedModules": [
-        {
-          "path": "./welcome-testimonial-story/001-home-testimonial-media-story-full-screen-video-contr.css",
-          "lines": 184,
-          "sha256": "8dc44a4223ea016b6b43f086c2dff2ef6fd9cba81a20c48fcac7417acae17ca6"
-        },
-        {
-          "path": "./welcome-testimonial-story/002-the-visual-composition-intentionally-stays-identical.css",
-          "lines": 181,
-          "sha256": "86cd35aa874b7a39c7f82b53c454e48b0f14e7becb0f83670484549a585e393e"
-        },
-        {
-          "path": "./welcome-testimonial-story/003-welcome-testimonial-story-cascade-003.css",
-          "lines": 69,
-          "sha256": "a6aae5c6a2e76e3b8cc66bdf650e159d0e7887f4ce8b6a4e84f0557bc01d6d84"
-        }
-      ],
-      "originalSourceSha256": "e8c0330c670122a378d6eb0f11fcdab928e257c1e15ee72bc74479a89257fd5e"
-    },
     "resources/css/pages/welcome.css": {
       "sourceSha256": "d4b01d22f0f968891469c4b0a35d6f11e969dbadc465182fc630fc73bf798dcd",
       "orderedModules": [

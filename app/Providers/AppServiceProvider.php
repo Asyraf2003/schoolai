@@ -11,8 +11,6 @@ use App\View\Composers\AdminGalleryShowComposer;
 use App\View\Composers\AdminLayoutComposer;
 use App\View\Composers\AdminPlaceholderComposer;
 use App\View\Composers\AdminPpdbEditComposer;
-use App\View\Composers\AdminSiteStatisticsEditComposer;
-use App\View\Composers\AdminTestimonialFormComposer;
 use App\View\Composers\EditorialSectionHeadingComposer;
 use App\View\Composers\GalleryWallCardComposer;
 use App\View\Composers\HomeArticlesComposer;
@@ -33,7 +31,6 @@ use App\View\Composers\SiteNavbarComposer;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -66,8 +63,6 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
-        Route::middleware('web')->group(base_path('routes/testimonials.php'));
-
         View::composer('admin.articles.form', AdminArticleFormComposer::class);
         View::composer('admin.articles.index', AdminArticleIndexComposer::class);
         View::composer('admin.gallery.form', AdminGalleryFormComposer::class);
@@ -76,8 +71,6 @@ class AppServiceProvider extends ServiceProvider
         View::composer('admin.gallery.show', AdminGalleryShowComposer::class);
         View::composer('admin.placeholder', AdminPlaceholderComposer::class);
         View::composer('admin.ppdb.edit', AdminPpdbEditComposer::class);
-        View::composer('admin.site-statistics.edit', AdminSiteStatisticsEditComposer::class);
-        View::composer('admin.testimonials.form', AdminTestimonialFormComposer::class);
         View::composer('home.partials.editorial-section-heading', EditorialSectionHeadingComposer::class);
         View::composer('home.sections.articles', HomeArticlesComposer::class);
         View::composer([

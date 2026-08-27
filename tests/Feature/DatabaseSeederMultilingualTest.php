@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('seeds article, hero, gallery, ppdb, and statistic content in three languages', function (): void {
+it('seeds article, hero, gallery, and ppdb content in three languages', function (): void {
     $this->seed();
 
     $filled = static fn (mixed $value): bool => is_string($value) && trim($value) !== '';
@@ -19,7 +19,6 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
     $canonicalGallery = DB::table('gallery_items')->whereNull('deleted_at')->get();
     $galleryPlacements = DB::table('gallery_item_gallery_page_section')->get();
     $ppdb = DB::table('ppdb_showcase_items')->whereNull('deleted_at')->get();
-    $statistics = DB::table('site_statistics')->whereNull('deleted_at')->get();
 
     expect($articles)->toHaveCount(10)
         ->and($articles->every(fn (object $article): bool => $filled($article->title_id)
@@ -55,12 +54,5 @@ it('seeds article, hero, gallery, ppdb, and statistic content in three languages
             && $filled($item->title_ar)
             && $filled($item->description_id)
             && $filled($item->description_en)
-            && $filled($item->description_ar)))->toBeTrue()
-        ->and($statistics)->toHaveCount(4)
-        ->and($statistics->every(fn (object $item): bool => $filled($item->value)
-            && $filled($item->value_en)
-            && $filled($item->value_ar)
-            && $filled($item->label)
-            && $filled($item->label_en)
-            && $filled($item->label_ar)))->toBeTrue();
+            && $filled($item->description_ar)))->toBeTrue();
 });

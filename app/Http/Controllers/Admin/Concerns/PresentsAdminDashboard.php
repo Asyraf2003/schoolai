@@ -2,19 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
-use App\Models\Article;
-use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
-use App\Models\GalleryPageSection;
-use App\Models\PpdbSetting;
-use App\Models\PpdbShowcaseItem;
 use App\Models\SecurityAuditLog;
-use App\Models\SiteStatistic;
-use App\Models\TestimonialMedia;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\View\View;
 
 trait PresentsAdminDashboard
 {
@@ -70,7 +60,7 @@ trait PresentsAdminDashboard
                     'subject_id' => $entry->auditable_id,
                     'time' => $entry->created_at?->diffForHumans() ?? '-',
                     'title' => $entry->created_at
-                        ? $entry->created_at->translatedFormat('d M Y, H:i') . ' WIB'
+                        ? $entry->created_at->translatedFormat('d M Y, H:i').' WIB'
                         : '-',
                 ];
             });
@@ -102,6 +92,6 @@ trait PresentsAdminDashboard
             default => 'Mengubah',
         };
 
-        return $actionLabel . ' ' . $subjectLabel;
+        return $actionLabel.' '.$subjectLabel;
     }
 }

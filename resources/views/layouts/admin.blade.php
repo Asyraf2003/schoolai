@@ -23,7 +23,6 @@
     @include('layouts.admin.styles.desktop-shell')
     @include('layouts.admin.styles.gallery-management')
     @include('layouts.admin.styles.media-detail')
-    @include('layouts.admin.styles.statistics')
     @include('layouts.admin.styles.delete-dialog')
 
   </style>

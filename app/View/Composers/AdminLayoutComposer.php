@@ -40,11 +40,6 @@ final class AdminLayoutComposer
                     'label' => __('admin.nav.galery'),
                     'route' => 'admin.galeri',
                 ],
-                [
-                    'key' => 'stats',
-                    'label' => __('admin.nav.stats'),
-                    'route' => 'admin.stats.edit',
-                ],
             ],
         ]);
     }
