@@ -1,5 +1,3 @@
-@import "./welcome-hero/text-interactions.css";
-
 /* Hero visual refinement. */
 
 .home-page .hero-cinema__media::after,
@@ -24,10 +22,15 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
         0 10px 42px rgb(0 0 0 / 0.2);
 }
 
-.home-page .hero-cinema__description,
-.home-page .hero-cinema__eyebrow,
-.home-page .hero-cinema__cta {
-    text-shadow: 0 2px 14px rgb(0 0 0 / 0.42);
+.home-page .hero-cinema__title-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.home-page .hero-cinema__title-link:focus-visible {
+    outline: 3px solid #ffd166;
+    outline-offset: 6px;
+    border-radius: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {

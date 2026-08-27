@@ -1,7 +1,6 @@
 import { initMegaMenus, onMediaQueryChange } from './welcome-hero/mega-menu.js';
 import { createSliderMediaActions } from './welcome-hero/slider-media.js';
 import { createSliderPlaybackActions } from './welcome-hero/slider-playback.js';
-import { initHeroTitleGlow } from './welcome-hero/title-glow.js';
 
 function initHeroSlider(root) {
     var slides = Array.prototype.slice.call(root.querySelectorAll('[data-hero-slide]'));
@@ -30,8 +29,6 @@ function initHeroSlider(root) {
     if (!slides.length) return;
     if (!Number.isFinite(duration) || duration < 4000) duration = 7000;
 
-    // <article> does not permit role="group". Use a valid landmark-like
-    // role while keeping the carousel slide roledescription and label.
     slides.forEach(function (slide) {
         if (slide.tagName.toLowerCase() === 'article' && slide.getAttribute('role') === 'group') {
             slide.setAttribute('role', 'region');
@@ -40,8 +37,6 @@ function initHeroSlider(root) {
 
     root.style.setProperty('--hero-autoplay-duration', duration + 'ms');
     root.setAttribute('data-enhanced', 'true');
-
-    initHeroTitleGlow(root);
 
     var mediaActions = createSliderMediaActions({ slides, state, statusTemplate });
     var canAutoplay = mediaActions.canAutoplay;
@@ -64,8 +59,13 @@ function initHeroSlider(root) {
         var video = slide.querySelector('[data-hero-video]');
         if (!video) return;
 
-        video.loop = false;
-        video.removeAttribute('loop');
+        if (slides.length === 1) {
+            video.loop = true;
+            video.setAttribute('loop', '');
+        } else {
+            video.loop = false;
+            video.removeAttribute('loop');
+        }
 
         video.addEventListener('ended', function () {
             if (index !== state.currentIndex || !canAutoplay()) return;

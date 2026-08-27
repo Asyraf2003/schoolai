@@ -14,7 +14,7 @@
               class="hero-cinema__slide{{ $loop->first ? ' is-active' : '' }}"
               data-hero-slide
               data-slide-index="{{ $loop->index }}"
-              data-media-type="{{ $slide['type'] }}"
+              data-media-type="video"
               data-slide-title="{{ $slide['title'] }}"
               role="group"
               aria-roledescription="{{ $hero['slide_roledescription'] ?? 'slide' }}"
@@ -26,109 +26,36 @@
                 class="hero-cinema__media"
                 style="--hero-focal-position: {{ $slide['focal_position'] }}; --hero-overlay-strength: {{ $slide['overlay_strength'] }}"
               >
-                @if (($slide['render_type'] ?? 'image') === 'video')
-                  <video
-                    data-hero-video
-                    muted
-                    loop
-                    playsinline
-                    webkit-playsinline
-                    preload="none"
-                    @if (! empty($slide['poster_url'])) poster="{{ $slide['poster_url'] }}" @endif
-                    @if ($loop->first) autoplay @endif
-                    aria-hidden="true"
-                    tabindex="-1"
-                  >
-                    <source
-                      data-src="{{ $slide['media_url'] }}"
-                      type="{{ $slide['video_mime_type'] ?? 'video/mp4' }}"
-                    />
-                  </video>
-                @else
-                  <img
-                    @if ($loop->first)
-                      src="{{ $slide['media_url'] }}"
-                      fetchpriority="high"
-                      loading="eager"
-                    @else
-                      data-src="{{ $slide['media_url'] }}"
-                      loading="lazy"
-                    @endif
-                    alt="{{ $slide['media_alt'] ?? '' }}"
-                    width="1920"
-                    height="1080"
-                    decoding="async"
+                <video
+                  data-hero-video
+                  muted
+                  loop
+                  playsinline
+                  webkit-playsinline
+                  preload="auto"
+                  @if (! empty($slide['poster_url'])) poster="{{ $slide['poster_url'] }}" @endif
+                  autoplay
+                  aria-hidden="true"
+                  tabindex="-1"
+                >
+                  <source
+                    src="{{ $slide['media_url'] }}"
+                    type="video/mp4"
                   />
-                @endif
+                </video>
               </div>
 
               <div class="hero-cinema__content container">
                 <div class="hero-cinema__copy">
-                  @if (! empty($slide['eyebrow']))
-                    <p class="hero-cinema__eyebrow" data-text-role="label">{{ $slide['eyebrow'] }}</p>
-                  @endif
-
                   @include('home.partials.hero-title', [
-                    'headingTag' => $loop->first ? 'h1' : 'h2',
+                    'headingTag' => 'h1',
                     'slide' => $slide,
                   ])
-
-                  @if (! empty($slide['description']))
-                    <p class="hero-cinema__description" data-text-role="description">
-                      @if (! empty($slide['description_href']))
-                        <a
-                          href="{{ $slide['description_href'] }}"
-                          class="hero-cinema__description-link"
-                          data-hero-ppdb-description-link
-                          @if (! empty($slide['campaign_link_label'])) aria-label="{{ $slide['campaign_link_label'] }}" @endif
-                        >{{ $slide['description'] }}</a>
-                      @else
-                        {{ $slide['description'] }}
-                      @endif
-                    </p>
-                  @endif
-
-                  @if (! empty($slide['cta']['label']) && ! empty($slide['cta']['href']))
-                    <a href="{{ $slide['cta']['href'] }}" class="hero-cinema__cta" data-text-role="action">
-                      <span>{{ $slide['cta']['label'] }}</span>
-                      <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                    </a>
-                  @endif
                 </div>
               </div>
             </article>
           @endforeach
         </div>
-
-        @if ($heroSlideCount > 1)
-          <button
-            type="button"
-            class="hero-cinema__arrow hero-cinema__arrow--previous"
-            data-hero-previous
-            aria-label="{{ $hero['previous_label'] ?? 'Previous slide' }}"
-          >
-            <svg viewBox="0 0 128 72" aria-hidden="true">
-              <path d="M42 4 10 36l32 32 14-14-18-18 18-18Z" />
-              <path d="M78 4 46 36l32 32 14-14-18-18 18-18Z" />
-              <path d="M114 4 82 36l32 32 14-14-18-18 18-18Z" />
-            </svg>
-          </button>
-
-          <button
-            type="button"
-            class="hero-cinema__arrow hero-cinema__arrow--next"
-            data-hero-next
-            aria-label="{{ $hero['next_label'] ?? 'Next slide' }}"
-          >
-            <svg viewBox="0 0 128 72" aria-hidden="true">
-              <path d="m14 4 32 32-32 32L0 54l18-18L0 18Z" />
-              <path d="m50 4 32 32-32 32-14-14 18-18-18-18Z" />
-              <path d="m86 4 32 32-32 32-14-14 18-18-18-18Z" />
-            </svg>
-          </button>
-        @endif
 
         <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
       </section>

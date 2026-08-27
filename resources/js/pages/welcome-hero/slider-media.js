@@ -2,6 +2,7 @@ export function createSliderMediaActions(options) {
     var slides = options.slides;
     var state = options.state;
     var statusTemplate = options.statusTemplate;
+    var singleSlide = slides.length === 1;
 
     function formatStatus(index) {
         return statusTemplate
@@ -12,6 +13,12 @@ export function createSliderMediaActions(options) {
     function currentVideo() {
         var slide = slides[state.currentIndex];
         return slide ? slide.querySelector('[data-hero-video]') : null;
+    }
+
+    function syncLoop(video) {
+        video.loop = singleSlide;
+        if (singleSlide) video.setAttribute('loop', '');
+        else video.removeAttribute('loop');
     }
 
     function hydrateSlide(slide, allowVideo) {
@@ -27,8 +34,7 @@ export function createSliderMediaActions(options) {
         var video = slide.querySelector('[data-hero-video]');
         if (!video) return;
 
-        video.loop = false;
-        video.removeAttribute('loop');
+        syncLoop(video);
 
         if (slide.classList.contains('is-active')) {
             video.preload = 'auto';
@@ -58,8 +64,7 @@ export function createSliderMediaActions(options) {
             var video = slide.querySelector('[data-hero-video]');
             if (!video) return;
 
-            video.loop = false;
-            video.removeAttribute('loop');
+            syncLoop(video);
 
             if (index !== state.currentIndex) {
                 video.pause();
@@ -69,8 +74,6 @@ export function createSliderMediaActions(options) {
 
             hydrateSlide(slide, true);
 
-            // Reduced-motion disables automatic carousel movement and animated
-            // transitions, but must not turn a valid active video into a black frame.
             if (state.userPaused || document.hidden) {
                 video.pause();
                 return;
