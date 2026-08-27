@@ -108,10 +108,9 @@
           aria-pressed="false"
           aria-label="Audio"
         >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 10h4l5-4v12l-5-4H4z" fill="currentColor" />
-            <path class="hero-cinema__audio-wave" d="M16 9c1.5 1.5 1.5 4.5 0 6M18.5 6.5c3 3 3 8 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-            <path class="hero-cinema__audio-slash" d="M5 5l14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          <svg class="hero-cinema__audio-glyph" viewBox="0 0 44 20" aria-hidden="true">
+            <path class="hero-cinema__audio-line" d="M8 10H36" />
+            <path class="hero-cinema__audio-snake" d="M4 10C8 2 12 2 16 10S24 18 28 10S36 2 40 10" />
           </svg>
         </button>
 

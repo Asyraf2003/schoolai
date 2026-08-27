@@ -35,26 +35,34 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
 
 .home-page .hero-cinema__audio {
     position: absolute;
-    z-index: 8;
-    inset-inline-start: clamp(20px, 4vw, 64px);
-    inset-block-end: clamp(24px, 4vh, 48px);
+    z-index: 9;
+    inset-inline-start: auto;
+    inset-inline-end: clamp(110px, 10vw, 190px);
+    inset-block-end: clamp(232px, 28vh, 330px);
     display: grid;
     place-items: center;
-    width: 46px;
-    height: 46px;
+    width: clamp(52px, 3.4vw, 58px);
+    height: clamp(52px, 3.4vw, 58px);
     padding: 0;
-    border: 1px solid rgb(255 255 255 / 0.6);
-    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 0.72);
+    border-radius: 50%;
     color: #fff;
-    background: rgb(0 0 0 / 0.28);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background: rgb(0 0 0 / 0.18);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 28px rgb(0 0 0 / 0.18);
     cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
 }
 
 .home-page .hero-cinema__audio:hover,
 .home-page .hero-cinema__audio:focus-visible {
-    background: rgb(0 0 0 / 0.46);
+    border-color: rgb(255 255 255 / 0.96);
+    background: rgb(0 0 0 / 0.34);
+    transform: scale(1.06);
 }
 
 .home-page .hero-cinema__audio:focus-visible {
@@ -62,19 +70,87 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     outline-offset: 4px;
 }
 
-.home-page .hero-cinema__audio svg {
-    width: 24px;
-    height: 24px;
+.home-page .hero-cinema__audio-glyph {
+    width: 32px;
+    height: 20px;
+    overflow: visible;
 }
 
-.home-page .hero-cinema__audio-wave,
-.home-page .hero-cinema__audio-slash {
-    transition: opacity 160ms ease;
+.home-page .hero-cinema__audio-line,
+.home-page .hero-cinema__audio-snake {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+        opacity 160ms ease,
+        transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.home-page .hero-cinema__audio[aria-pressed="false"] .hero-cinema__audio-wave,
-.home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-slash {
+.home-page .hero-cinema__audio-line {
+    opacity: 1;
+}
+
+.home-page .hero-cinema__audio-snake {
     opacity: 0;
+    transform: scaleX(0.72) scaleY(0.5);
+}
+
+.home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-line {
+    opacity: 0;
+    transform: scaleX(0.62);
+}
+
+.home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-snake {
+    opacity: 1;
+    animation: hero-audio-snake-wiggle 760ms ease-in-out infinite alternate;
+}
+
+@keyframes hero-audio-snake-wiggle {
+    0% {
+        transform: translateX(-1.5px) scaleX(0.96) scaleY(0.84);
+    }
+
+    50% {
+        transform: translateX(1px) scaleX(1.02) scaleY(1.08);
+    }
+
+    100% {
+        transform: translateX(1.8px) scaleX(0.98) scaleY(0.9);
+    }
+}
+
+@media (max-width: 1180px) {
+    .home-page .hero-cinema__audio {
+        inset-inline-end: clamp(72px, 8vw, 112px);
+        inset-block-end: clamp(205px, 26vh, 270px);
+    }
+}
+
+@media (max-width: 767px) {
+    .home-page .hero-cinema__audio {
+        inset-inline-end: 52px;
+        inset-block-end: 208px;
+        width: 52px;
+        height: 52px;
+    }
+}
+
+@media (max-width: 440px) {
+    .home-page .hero-cinema__audio {
+        inset-inline-end: 44px;
+        inset-block-end: 196px;
+        width: 48px;
+        height: 48px;
+    }
+
+    .home-page .hero-cinema__audio-glyph {
+        width: 29px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -83,8 +159,14 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
         filter: none !important;
     }
 
-    .home-page .hero-cinema__audio-wave,
-    .home-page .hero-cinema__audio-slash {
+    .home-page .hero-cinema__audio,
+    .home-page .hero-cinema__audio-line,
+    .home-page .hero-cinema__audio-snake {
         transition: none;
+    }
+
+    .home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-snake {
+        animation: none;
+        transform: none;
     }
 }
