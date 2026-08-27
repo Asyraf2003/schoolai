@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders one R2-backed video as the homepage hero for every public locale', function (): void {
+it('renders the R2 video as the first homepage hero slide and keeps carousel navigation', function (): void {
     $heroUrl = (string) config('media.homepage_hero_video_url');
 
     foreach (['id', 'en', 'ar'] as $locale) {
@@ -23,9 +23,8 @@ it('renders one R2-backed video as the homepage hero for every public locale', f
             ->assertSee('autoplay', false)
             ->assertSee('muted', false)
             ->assertSee('playsinline', false)
-            ->assertSee('loop', false)
-            ->assertDontSee('data-hero-previous', false)
-            ->assertDontSee('data-hero-next', false)
+            ->assertSee('data-hero-previous', false)
+            ->assertSee('data-hero-next', false)
             ->assertDontSee('hero-cinema__eyebrow', false)
             ->assertDontSee('hero-cinema__description', false)
             ->assertDontSee('hero-cinema__cta', false)
@@ -39,6 +38,6 @@ it('renders one R2-backed video as the homepage hero for every public locale', f
             ->assertSee('nav-language__flag--ar', false);
 
         expect(substr_count($response->getContent(), 'data-hero-slide'))
-            ->toBe(1);
+            ->toBeGreaterThan(1);
     }
 });
