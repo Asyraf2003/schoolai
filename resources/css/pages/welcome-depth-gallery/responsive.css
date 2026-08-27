@@ -1,3 +1,59 @@
+@media (max-width: 1279px) {
+    .home-page .galeri-section {
+        --gallery-transition-blue: var(--program-values-final-color, #2038ff);
+        background-color: var(--gallery-story-bg);
+        background-image: linear-gradient(
+            to bottom,
+            var(--gallery-transition-blue) 0%,
+            color-mix(
+                in srgb,
+                var(--gallery-transition-blue) 78%,
+                var(--gallery-story-bg)
+            ) 22%,
+            color-mix(
+                in srgb,
+                var(--gallery-transition-blue) 48%,
+                var(--gallery-story-bg)
+            ) 48%,
+            color-mix(
+                in srgb,
+                var(--gallery-transition-blue) 20%,
+                var(--gallery-story-bg)
+            ) 72%,
+            var(--gallery-story-bg) 100%
+        );
+        background-repeat: no-repeat;
+        background-size: 100% clamp(13rem, 32svh, 22rem);
+    }
+
+    .home-page .galeri-section::after {
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: 0;
+        display: block;
+        height: clamp(9rem, 24svh, 16rem);
+        background: linear-gradient(
+            to bottom,
+            color-mix(
+                in srgb,
+                var(--gallery-transition-blue) 66%,
+                var(--gallery-story-bg)
+            ) 0%,
+            color-mix(
+                in srgb,
+                var(--gallery-transition-blue) 42%,
+                var(--gallery-story-bg)
+            ) 44%,
+            transparent 100%
+        );
+        content: "";
+        filter: blur(clamp(22px, 5vw, 52px));
+        opacity: .58;
+        pointer-events: none;
+        transform: translate3d(0, -14%, 0);
+    }
+}
+
 @media (max-width: 1023px) {
     .home-page .galeri-section::before {
         background-size: 18rem 18rem;
