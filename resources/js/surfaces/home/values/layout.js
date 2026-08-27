@@ -4,6 +4,7 @@ import { clamp, mix, phase } from './motion.js';
 
 const RESPONSIVE_MAX_TILT = 20;
 const RESPONSIVE_GAP_RISE_SHARE = .95;
+const RESPONSIVE_FLIP_DIRECTION = -1;
 
 function visibleFraction(index, progress, geometry) {
     const travel = geometry.rootHeight + geometry.viewportHeight;
@@ -31,11 +32,10 @@ function responsiveTiltLimit(geometry) {
     return Math.min(RESPONSIVE_MAX_TILT, gapLimited);
 }
 
-function responsiveTiltAngle(index, local, geometry) {
-    const direction = index % 2 === 0 ? -1 : 1;
+function responsiveTiltAngle(local, geometry) {
     const edgeEnvelope = Math.sin(Math.PI * clamp(local));
 
-    return direction
+    return RESPONSIVE_FLIP_DIRECTION
         * responsiveTiltLimit(geometry)
         * edgeEnvelope;
 }
@@ -48,8 +48,9 @@ function responsiveCardFrame(index, progress, geometry) {
         x: 0,
         y: 0,
         z: 0,
-        rz: responsiveTiltAngle(index, local, geometry),
-        ry: responsiveFlipAngle(local),
+        sy: responsiveTiltAngle(local, geometry),
+        rz: 0,
+        ry: RESPONSIVE_FLIP_DIRECTION * responsiveFlipAngle(local),
         scale: 1,
         floatY: 0,
     };

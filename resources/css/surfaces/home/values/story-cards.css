@@ -20,6 +20,7 @@
     --values-z: 0px;
     --values-ry: 0deg;
     --values-rz: 0deg;
+    --values-sy: 0deg;
     --values-scale: 1;
     --values-float-y: 0px;
     --values-water-float: clamp(.38rem, .72vw, .78rem);
@@ -68,6 +69,7 @@
 .values-card__pose {
     transform:
         translate3d(var(--values-x), var(--values-y), var(--values-z))
+        skewY(var(--values-sy))
         rotateZ(var(--values-rz))
         scale(var(--values-scale));
     transform-origin: center;

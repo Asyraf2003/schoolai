@@ -3,7 +3,7 @@ import { cardFrame, storyFrame } from './layout.js';
 
 const CARD_PROPERTIES = [
     '--values-x', '--values-y', '--values-z', '--values-ry',
-    '--values-rz', '--values-scale', '--values-float-y',
+    '--values-rz', '--values-sy', '--values-scale', '--values-float-y',
 ];
 
 const ROOT_PROPERTIES = [
@@ -52,6 +52,7 @@ function writeCardFrame(card, state) {
     card.style.setProperty('--values-z', `${state.z.toFixed(2)}px`);
     card.style.setProperty('--values-ry', `${state.ry.toFixed(2)}deg`);
     card.style.setProperty('--values-rz', `${state.rz.toFixed(2)}deg`);
+    card.style.setProperty('--values-sy', `${(state.sy ?? 0).toFixed(2)}deg`);
     card.style.setProperty('--values-scale', state.scale.toFixed(4));
     card.style.setProperty(
         '--values-float-y',
