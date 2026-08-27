@@ -4,7 +4,14 @@ it('locks the homepage editorial gallery story contract', function (): void {
     $gallery = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
     $story = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $presentation = file_get_contents(app_path('View/Composers/HomeGalleryComposer.php'));
-    $styles = file_get_contents(resource_path('css/pages/welcome-depth-gallery.css'));
+    $styles = implode("\n", array_map(
+        static fn (string $file): string => file_get_contents(resource_path($file)),
+        [
+            'css/pages/welcome-depth-gallery/base.css',
+            'css/pages/welcome-depth-gallery/handoff.css',
+            'css/pages/welcome-depth-gallery/responsive.css',
+        ],
+    ));
     $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
     $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
 
@@ -31,7 +38,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->not->toContain('data-is-video')
         ->and($presentation)
         ->toContain('$presets[$index % count($presets)]')
-        ->toContain("home_presentation.gallery_more")
+        ->toContain('home_presentation.gallery_more')
         ->toContain("'background' => '#6f9b72'")
         ->toContain("'background' => '#c6ad78'")
         ->and($styles)

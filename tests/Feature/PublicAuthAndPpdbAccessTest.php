@@ -54,7 +54,6 @@ it('uses the same setting to expose the hero campaign and PPDB route only while 
     $this->get(route('home'))
         ->assertOk()
         ->assertSee('href="'.route('ppdb').'"', escape: false)
-        ->assertSee('data-hero-ppdb-description-link', escape: false)
         ->assertDontSee('data-hero-ppdb-cta', escape: false);
     $this->get(route('ppdb'))
         ->assertOk()

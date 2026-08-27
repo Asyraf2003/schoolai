@@ -4,12 +4,6 @@ it('separates Article opening, full-height parallax media, and the roll closing'
     $view = file_get_contents(resource_path('views/home/sections/articles.blade.php'));
     $presentation = file_get_contents(app_path('View/Composers/HomeArticlesComposer.php'));
     $idCopy = file_get_contents(lang_path('id/home_presentation.php'));
-    $controller = file_get_contents(
-        resource_path('js/surfaces/home/article-story/controller.js'),
-    );
-    $motion = file_get_contents(
-        resource_path('js/surfaces/home/article-story/motion.js'),
-    );
     $desktop = file_get_contents(
         resource_path('css/surfaces/home/article-story/desktop.css'),
     );
@@ -47,25 +41,6 @@ it('separates Article opening, full-height parallax media, and the roll closing'
         ->toContain("'display_issue'")
         ->and($idCopy)
         ->toContain("'closing_heading' => 'Mau lihat artikel selengkapnya?'")
-        ->and($controller)
-        ->toContain("from './motion.js'")
-        ->toContain('const HANDOFF_HOLD_VIEWPORTS = 1')
-        ->toContain('closing.offsetLeft')
-        ->toContain('const handoffHold = window.innerHeight * HANDOFF_HOLD_VIEWPORTS')
-        ->toContain('journey.offsetHeight - window.innerHeight - handoffHold')
-        ->not->toContain('scrollTo(')
-        ->and($motion)
-        ->toContain('const HORIZONTAL_END = 0.78')
-        ->toContain('const mediaWidth = viewportHeight + viewportWidth * 0.10')
-        ->toContain('const mediaRight = itemLeft + mediaWidth')
-        ->toContain('relative * 8')
-        ->toContain('--article-main-media-x')
-        ->toContain('--article-main-copy-y')
-        ->toContain('viewportHeight / 24')
-        ->toContain('index % 2 === 0')
-        ->toContain('(progress - HORIZONTAL_END) / (1 - HORIZONTAL_END)')
-        ->not->toContain('blur')
-        ->not->toContain('scrollTo(')
         ->and($desktop)
         ->toContain('article-story__opening-link')
         ->toContain('left: 25vw')

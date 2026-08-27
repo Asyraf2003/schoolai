@@ -587,5 +587,14 @@ certification has not started. No runtime certification status is implied by G0.
 
 ## NEXT VALID STEP
 
-Begin H7 runtime certification from the accepted execution packet only when the
-owner opens that step. Preserve H1-H6 and the proven H7-G0 source checkpoint.
+Owner-authorized media-architecture Packet 0 re-established the automated
+baseline on current `main`: `git diff --check`, the 603-file structure gate,
+Vite production build, and the full 245-test / 2,420-assertion suite pass.
+The change reconciles stale source tests, removes two inactive Article motion
+modules plus one superseded Values/Gallery handoff stylesheet, and splits the
+active Gallery CSS without changing its cascade order.
+
+The owner then corrected the landing-page and media architecture direction.
+No media Packet 1 or later implementation is authorized. The next valid step is
+owner review of the revised architecture plan; runtime certification remains
+`BLOCKED_BY_MISSING_EVIDENCE`.

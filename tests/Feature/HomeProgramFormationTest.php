@@ -18,7 +18,7 @@ it('forms Program cards before the white to blue Character handoff', function ()
         resource_path('css/surfaces/home/values/story-shell.css'),
     );
     $handoff = file_get_contents(
-        resource_path('css/pages/welcome-values-gallery-handoff.css'),
+        resource_path('css/pages/welcome-depth-gallery/handoff.css'),
     );
 
     expect($entry)
@@ -54,11 +54,11 @@ it('forms Program cards before the white to blue Character handoff', function ()
         ->toContain('background: var(--values-blue)')
         ->toContain('opacity: var(--values-surface-detail)')
         ->and($handoff)
-        ->toContain('--values-gallery-resting-color: #fffaf0')
+        ->toContain('--gallery-handoff-color, #2038ff')
         ->toContain('.home-page .values-story__timeline')
         ->toContain('var(--values-blue) var(--values-gallery-world-opacity-pct, 100%)')
-        ->toContain('.home-page .gallery-mask-handoff')
-        ->toContain('.home-page .galeri-section.is-values-gallery-handoff')
+        ->toContain('.gallery-story__handoff')
+        ->toContain('.home-page .galeri-section.is-gallery-handoff')
         ->not->toContain('var(--program-values-final-color) 0%');
 });
 

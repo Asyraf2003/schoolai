@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('shows the empty message instead of language dummy articles when no article exists', function (): void {
+it('keeps the disabled homepage Article surface out of the rendered DOM', function (): void {
     app()->setLocale('id');
 
     $response = $this->get(route('home'));
@@ -16,12 +16,12 @@ it('shows the empty message instead of language dummy articles when no article e
             'articlesSection',
             fn (array $section): bool => ($section['items'] ?? null) === []
         )
-        ->assertSee('data-article-story', false)
-        ->assertSee('Belum ada artikel terbaru.')
+        ->assertDontSee('data-article-story', false)
+        ->assertDontSee('Belum ada artikel terbaru.')
         ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');
 });
 
-it('shows the latest database article first on the homepage', function (): void {
+it('prepares Article data without rendering the disabled homepage surface', function (): void {
     app()->setLocale('id');
 
     Article::query()->create([
@@ -65,9 +65,8 @@ it('shows the latest database article first on the homepage', function (): void 
                 && ($items[0]['title'] ?? null) === 'Artikel Terbaru Homepage'
                 && ($items[1]['title'] ?? null) === 'Artikel Lama Homepage';
         })
-        ->assertSee('data-article-journey', false)
-        ->assertSee('data-article-final-cta', false)
-        ->assertSee('Artikel Terbaru Homepage')
-        ->assertSee('Artikel Lama Homepage')
+        ->assertDontSee('data-article-story', false)
+        ->assertDontSee('data-article-journey', false)
+        ->assertDontSee('data-article-final-cta', false)
         ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');
 });

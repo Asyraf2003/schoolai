@@ -1,7 +1,14 @@
 <?php
 
 it('guards the editorial gallery bootstrap without the legacy canvas owner', function (): void {
-    $styles = file_get_contents(resource_path('css/pages/welcome-depth-gallery.css'));
+    $styles = implode("\n", array_map(
+        static fn (string $file): string => file_get_contents(resource_path($file)),
+        [
+            'css/pages/welcome-depth-gallery/base.css',
+            'css/pages/welcome-depth-gallery/handoff.css',
+            'css/pages/welcome-depth-gallery/responsive.css',
+        ],
+    ));
     $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
     $blade = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $head = file_get_contents(resource_path('views/partials/site-head-meta.blade.php'));

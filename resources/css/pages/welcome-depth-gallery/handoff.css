@@ -1,0 +1,94 @@
+.gallery-story__item--right .gallery-story__media {
+    grid-column: 7 / 13;
+    justify-self: end;
+}
+
+.gallery-story__item--right .gallery-story__copy {
+    grid-column: 2 / 6;
+    grid-row: 1;
+}
+
+.gallery-story__item--left .gallery-story__media {
+    grid-column: 1 / 7;
+    justify-self: start;
+}
+
+.gallery-story__item--left .gallery-story__copy {
+    grid-column: 8 / 12;
+    grid-row: 1;
+}
+
+.gallery-story__item-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    margin-top: clamp(1.4rem, 2.4vw, 2.2rem);
+    padding-block: .45rem;
+    border-bottom: 1px solid currentColor;
+    color: inherit;
+    font-size: clamp(.9rem, .25vw + .84rem, 1.04rem);
+    font-weight: 680;
+    letter-spacing: .01em;
+    text-decoration: none;
+    transition: gap 180ms ease, opacity 180ms ease;
+}
+
+.gallery-story__item-link:hover,
+.gallery-story__item-link:focus-visible {
+    gap: 1rem;
+    opacity: .72;
+}
+
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+    .home-page .program-values-world { position: relative; z-index: 5; }
+    .home-page .program-values-world__visual {
+        opacity: var(--values-gallery-kinetic-opacity, 1);
+        will-change: opacity;
+    }
+
+    .home-page .values-story__timeline {
+        background: color-mix(
+            in srgb,
+            var(--values-blue) var(--values-gallery-world-opacity-pct, 100%),
+            transparent
+        );
+    }
+
+    .home-page .values-story__exit {
+        background: none;
+        box-shadow: none;
+    }
+
+    .home-page .values-story__exit::before { display: none; }
+    .home-page .galeri-section.is-gallery-handoff { overflow: visible; }
+
+    .home-page .galeri-section.is-gallery-handoff .gallery-story__handoff {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        display: block;
+        width: 100vw;
+        height: 100svh;
+        background: var(--gallery-handoff-color, #2038ff);
+        opacity: var(--gallery-handoff-opacity, 1);
+        pointer-events: none;
+    }
+
+    .home-page .galeri-section.is-gallery-handoff .gallery-story__title-rail {
+        position: fixed;
+        inset: 0;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        width: 100vw;
+        height: 100svh;
+        padding: clamp(1.5rem, 4vw, 5rem);
+    }
+
+    .home-page .galeri-section.is-gallery-handoff .gallery-story__title {
+        margin: 0;
+        transform: none;
+        opacity: var(--gallery-title-opacity, 0);
+        text-align: center;
+    }
+}

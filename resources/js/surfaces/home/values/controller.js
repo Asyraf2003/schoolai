@@ -1,27 +1,21 @@
-import { clearHeadingClasses, createHeadingState,
-    syncHeadingClasses, updateHeadingState } from './heading-state.js';
-import { clearCenterMeasurement, collectValuesNodes,
-    exposeCenterMeasurement, measureValuesGeometry } from './geometry.js';
+import { clearHeadingClasses, createHeadingState, syncHeadingClasses, updateHeadingState } from './heading-state.js';
+import { clearCenterMeasurement, collectValuesNodes, exposeCenterMeasurement, measureValuesGeometry } from './geometry.js';
 import { clearValuesStory, paintValuesStory } from './paint.js';
 import { mountValuesLifecycle } from './lifecycle.js';
-import { FRAME_MS, createScrollMotion, resetScrollMotion,
-    updateScrollMotion } from './motion.js';
+import { FRAME_MS, createScrollMotion, resetScrollMotion, updateScrollMotion } from './motion.js';
 import { createValuesSpatialBridge } from './spatial-controller.js';
 import { readValuesFrameTarget, supportsStoryMotion } from './frame-target.js';
 
 const VALUES_SPATIAL_ENABLED = false;
-
 export function createValuesStory(root) {
     const cards = Array.from(root.querySelectorAll('[data-values-card]'));
     if (cards.length !== 4) return () => {};
-
     let nodes;
     try {
         nodes = collectValuesNodes(root);
     } catch {
         return () => {};
     }
-
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const capable = supportsStoryMotion();
     const motion = createScrollMotion(0);
@@ -36,22 +30,18 @@ export function createValuesStory(root) {
     let snapNext = true;
     let lastTime = 0;
     let geometry = null;
-
     function cancelFrame() {
         if (frame) window.cancelAnimationFrame(frame);
         frame = 0;
         lastTime = 0;
     }
-
     function requestRender() {
         if (!frame && enabled && !destroyed && !document.hidden) {
             frame = window.requestAnimationFrame(render);
         }
     }
-
     const spatial = createValuesSpatialBridge(root, nodes.spatialHost, requestRender);
     spatial.setActive(active);
-
     function measure() {
         const previousMode = geometry?.mode;
         geometry = measureValuesGeometry(root, cards, nodes);
@@ -59,7 +49,6 @@ export function createValuesStory(root) {
         geometryDirty = false;
         if (previousMode && previousMode !== geometry.mode) snapNext = true;
     }
-
     function render(time) {
         frame = 0;
         if (!enabled || destroyed || document.hidden) return;
@@ -86,7 +75,6 @@ export function createValuesStory(root) {
                 snapNext,
             );
         }
-
         const handoff = updateScrollMotion(
             handoffMotion,
             target.handoff,
@@ -103,7 +91,6 @@ export function createValuesStory(root) {
             heading, target.story, target.headingTop,
             geometry.viewportHeight, time, geometry.mode >= 3,
         );
-
         syncHeadingClasses(root, headingSnapshot);
         paintValuesStory(
             root, cards, nodes, snapshot.visual, target.story, geometry,
@@ -123,7 +110,6 @@ export function createValuesStory(root) {
             lastTime = 0;
         }
     }
-
     function invalidateGeometry() {
         geometryDirty = true;
         requestRender();
