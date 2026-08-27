@@ -7,12 +7,23 @@ export function galleryStoryVisual(item) {
 function fitImage(media, visual) {
     if (!(visual instanceof HTMLImageElement) || !visual.naturalWidth) return;
 
+    media.style.removeProperty('width');
+    media.style.removeProperty('height');
+    visual.style.removeProperty('width');
+    visual.style.removeProperty('height');
+    if (!media.clientWidth || !media.clientHeight) return;
+
     const scale = Math.min(
         media.clientWidth / visual.naturalWidth,
         media.clientHeight / visual.naturalHeight,
     );
-    visual.style.width = `${(visual.naturalWidth * scale).toFixed(2)}px`;
-    visual.style.height = `${(visual.naturalHeight * scale).toFixed(2)}px`;
+    const fittedWidth = visual.naturalWidth * scale;
+    const fittedHeight = visual.naturalHeight * scale;
+
+    media.style.width = `${fittedWidth.toFixed(2)}px`;
+    media.style.height = `${fittedHeight.toFixed(2)}px`;
+    visual.style.width = `${fittedWidth.toFixed(2)}px`;
+    visual.style.height = `${fittedHeight.toFixed(2)}px`;
 }
 
 export function fitGalleryStoryVisuals(items, onReady) {

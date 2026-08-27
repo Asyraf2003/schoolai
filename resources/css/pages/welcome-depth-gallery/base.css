@@ -81,6 +81,7 @@
 html[dir="rtl"] .gallery-story__title { text-align: center; }
 
 .gallery-story__stream {
+    --gallery-item-gap: clamp(1rem, 2.6svh, 2.25rem);
     position: relative;
     z-index: 3;
     width: min(100%, 1600px);
@@ -93,8 +94,12 @@ html[dir="rtl"] .gallery-story__title { text-align: center; }
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     align-items: center;
-    min-height: clamp(680px, 94svh, 1040px);
+    min-height: 0;
     column-gap: clamp(1rem, 2.2vw, 2.8rem);
+}
+
+.gallery-story__item + .gallery-story__item {
+    margin-top: var(--gallery-item-gap);
 }
 
 .gallery-story__media {
