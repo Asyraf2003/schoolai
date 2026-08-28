@@ -104,11 +104,30 @@
 @media (max-width: 1279px) {
     .values-story__exit {
         height: var(--values-gallery-responsive-overlap, var(--values-exit-height));
-        background: var(--values-blue);
-        box-shadow: 0 -3px 0 var(--values-blue);
+        overflow: hidden;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            color-mix(in srgb, var(--values-blue) 14%, transparent) 20%,
+            color-mix(in srgb, var(--values-blue) 38%, transparent) 42%,
+            color-mix(in srgb, var(--values-blue) 72%, transparent) 70%,
+            var(--values-blue) 100%
+        );
+        box-shadow: none;
     }
 
-    .values-story__exit::before { display: none; }
+    .values-story__exit::before {
+        inset: -12% -8% 18%;
+        display: block;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            color-mix(in srgb, var(--values-blue) 34%, transparent) 52%,
+            color-mix(in srgb, var(--values-blue) 76%, transparent) 100%
+        );
+        filter: blur(clamp(12px, 2vw, 24px));
+        opacity: .54;
+    }
 }
 
 @supports not (overflow: clip) {
