@@ -35,11 +35,12 @@ function heroSlideHtml(string $content, int $index): string
 
 it('keeps Opening as the sole h1 and links a promoted Article as a later slide', function (): void {
     $article = promotedHeroArticle();
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
     HeroSetting::query()->firstOrFail()->update([
         'title_en' => 'Independent School Opening',
         'description_en' => 'Independent opening copy.',
         'cta_label_en' => 'Admissions',
-        'cta_url' => '/ppdb',
+        'cta_url' => '#program',
     ]);
 
     $response = $this->withSession(['locale' => 'en'])->get(route('home'));
@@ -51,7 +52,7 @@ it('keeps Opening as the sole h1 and links a promoted Article as a later slide',
     expect(substr_count($content, '<h1'))->toBe(1)
         ->and($opening)->toContain('Independent School Opening')
         ->toContain('Independent opening copy.')
-        ->toContain('href="/ppdb"')
+        ->toContain('href="#program"')
         ->not->toContain('hero-cinema__title-link')
         ->and($promoted)->toContain('<h2')
         ->toContain('Linked Hero Story')
@@ -60,19 +61,63 @@ it('keeps Opening as the sole h1 and links a promoted Article as a later slide',
         ->not->toContain('Canvas body must not become Hero copy.');
 });
 
-it('does not let PPDB status replace Opening copy', function (): void {
+it('lets an open PPDB campaign own localized Opening copy and the semantic title link', function (
+    string $locale,
+    string $eyebrow,
+    string $title,
+    string $description,
+    string $linkLabel,
+): void {
     HeroSetting::query()->firstOrFail()->update([
-        'title_id' => 'Copy Opening Milik Sekolah',
-        'cta_url' => null,
+        'eyebrow_id' => 'Eyebrow admin lama',
+        'title_id' => 'Copy Opening Milik Admin',
+        'description_id' => 'Deskripsi opening milik admin.',
+        'cta_label_id' => 'CTA admin',
+        'cta_url' => '#program',
     ]);
-    PpdbSetting::query()->firstOrFail()->update(['is_active' => true]);
+    PpdbSetting::query()->firstOrFail()->update([
+        'registration_url' => 'https://apply.example.test/form',
+        'is_active' => true,
+    ]);
 
-    $opening = heroSlideHtml($this->get(route('home'))->getContent(), 0);
+    $opening = heroSlideHtml(
+        $this->withSession(['locale' => $locale])->get(route('home'))->getContent(),
+        0,
+    );
 
     expect($opening)
-        ->toContain('Copy Opening Milik Sekolah')
-        ->not->toContain(__('runtime.home.ppdb_campaign_title'));
-});
+        ->toContain($eyebrow)
+        ->toContain($title)
+        ->toContain($description)
+        ->toContain('hero-cinema__title-link')
+        ->toContain('href="/ppdb"')
+        ->toContain('aria-label="'.e($linkLabel).'"')
+        ->not->toContain('Copy Opening Milik Admin')
+        ->not->toContain('Deskripsi opening milik admin.')
+        ->not->toContain('hero-cinema__cta');
+})->with([
+    'Indonesia' => [
+        'id',
+        'Penerimaan Peserta Didik Baru',
+        'Langkah Awal Menuju Pendidikan yang Bermakna',
+        'Bergabunglah bersama Al-Mustaqbal dan tumbuhkan potensi anak melalui pendidikan yang berakar pada nilai Islam.',
+        'Buka informasi pendaftaran PPDB',
+    ],
+    'English' => [
+        'en',
+        'New Student Admissions',
+        'Begin a Meaningful Learning Journey',
+        'Join Al-Mustaqbal and nurture every child’s potential through education rooted in Islamic values.',
+        'Open admission information',
+    ],
+    'Arabic' => [
+        'ar',
+        'التسجيل للطلاب الجدد',
+        'بداية رحلة تعليمية هادفة',
+        'انضموا إلى المستقبل، ولننمِّ قدرات أبنائنا من خلال تعليم راسخ في القيم الإسلامية.',
+        'فتح معلومات التسجيل والقبول',
+    ],
+]);
 
 it('keeps audio user-gesture ownership and no hero glow runtime', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome-hero.js'));
