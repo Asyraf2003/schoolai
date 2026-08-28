@@ -22,12 +22,31 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
         0 10px 42px rgb(0 0 0 / 0.2);
 }
 
-.home-page .hero-cinema__title-link {
+.home-page .hero-cinema__title-link,
+.home-page .hero-cinema__campaign-link {
     color: inherit;
     text-decoration: none;
 }
 
-.home-page .hero-cinema__title-link:focus-visible {
+.home-page .hero-cinema__campaign-link {
+    cursor: pointer;
+}
+
+.home-page .hero-cinema__eyebrow-link,
+.home-page .hero-cinema__description-link {
+    transition:
+        opacity 160ms ease,
+        text-decoration-color 160ms ease;
+}
+
+.home-page .hero-cinema__eyebrow-link:hover,
+.home-page .hero-cinema__description-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+}
+
+.home-page .hero-cinema__campaign-link:focus-visible {
     outline: 3px solid #ffd166;
     outline-offset: 6px;
     border-radius: 4px;
@@ -149,6 +168,8 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
         filter: none !important;
     }
 
+    .home-page .hero-cinema__eyebrow-link,
+    .home-page .hero-cinema__description-link,
     .home-page .navbar__hero-audio-icon,
     .home-page .navbar__hero-audio-line,
     .home-page .navbar__hero-audio-snake {
