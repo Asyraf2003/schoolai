@@ -12,6 +12,9 @@ final class HomeHeroPresentation
                 $isPrimary = $index === 0;
                 $isPpdbCampaign = $isPrimary
                     && ($slide['is_ppdb_campaign'] ?? false) === true;
+                $campaignHref = $isPpdbCampaign
+                    ? self::publicTitleUrl($slide['title_href'] ?? null)
+                    : null;
 
                 return array_replace($slide, [
                     'is_primary_slide' => $isPrimary,
@@ -19,10 +22,15 @@ final class HomeHeroPresentation
                     'campaign_link_label' => $isPpdbCampaign
                         ? self::stringOrNull($slide['campaign_link_label'] ?? null)
                         : null,
+                    'eyebrow_href' => $isPpdbCampaign
+                        ? self::publicTitleUrl($slide['eyebrow_href'] ?? $campaignHref)
+                        : null,
                     'title_href' => $isPpdbCampaign
-                        ? self::publicTitleUrl($slide['title_href'] ?? null)
+                        ? $campaignHref
                         : ($isPrimary ? null : self::articleTitleUrl($slide)),
-                    'description_href' => null,
+                    'description_href' => $isPpdbCampaign
+                        ? self::publicTitleUrl($slide['description_href'] ?? $campaignHref)
+                        : null,
                 ]);
             },
             $slides,
