@@ -32,10 +32,6 @@
         padding-bottom: calc(1.5rem + var(--program-values-clearance));
     }
 
-    .program-kinetic__header {
-        padding-top: clamp(1rem, 4vw, 2.5rem);
-    }
-
     .program-kinetic__cards {
         padding-bottom: 2rem;
     }
@@ -73,15 +69,6 @@
 
     .program-kinetic__handoff-type {
         font-size: clamp(2.35rem, 12vw, 4rem);
-    }
-
-    .program-kinetic__header {
-        width: 92vw;
-        padding-bottom: clamp(2rem, 10vw, 3.5rem);
-    }
-
-    .program-kinetic__title[data-text-role="display"] {
-        font-size: clamp(3.25rem, 16vw, 5rem);
     }
 
     .program-kinetic__cards {
