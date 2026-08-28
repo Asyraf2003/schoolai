@@ -9,17 +9,17 @@ it('renders the rebuilt localized semantic values story', function (): void {
         'id' => [
             'removed_title' => 'Nilai yang Menjadi Arah Tumbuh Anak',
             'heading' => 'PONDASI KARAKTER',
-            'honorific' => 'Rasulullah shallallahu ‘alaihi wasallam',
+            'quranic_copy' => 'Rasulullah SAW',
         ],
         'en' => [
             'removed_title' => 'Values That Guide Every Child’s Growth',
             'heading' => 'VALUES STUDENTS',
-            'honorific' => 'the Messenger of Allah, peace and blessings be upon him',
+            'quranic_copy' => 'the Messenger of Allah',
         ],
         'ar' => [
             'removed_title' => 'قيم ترسم مسار نمو الطفل',
             'heading' => 'أَسَاسُ الْمَدْرَسَةِ',
-            'honorific' => 'رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ',
+            'quranic_copy' => 'رسول الله صلى الله عليه وسلم',
         ],
     ];
 
@@ -42,7 +42,7 @@ it('renders the rebuilt localized semantic values story', function (): void {
             ->assertSee('data-values-card-inner', false)
             ->assertSee('class="values-story__exit"', false)
             ->assertSee($copy['heading'])
-            ->assertSee($copy['honorific'])
+            ->assertSee($copy['quranic_copy'])
             ->assertDontSee($copy['removed_title'])
             ->assertDontSee('values-story__eyebrow', false)
             ->assertDontSee('values-card__code', false)
