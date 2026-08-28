@@ -2,7 +2,7 @@
     .program-kinetic__cards {
         --program-card-base: 3vw;
         --program-card-interval: 4vw;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         column-gap: 1.5vw;
         row-gap: clamp(1rem, 3vw, 2rem);
         width: 96vw;
@@ -14,16 +14,16 @@
         margin-bottom: var(--program-card-base);
     }
 
-    .program-kinetic__card:nth-child(3n + 2) {
+    .program-kinetic__card:nth-child(4n + 2) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
     }
 
-    .program-kinetic__card:nth-child(3n) {
+    .program-kinetic__card:nth-child(4n + 3) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 2);
     }
 
-    .program-kinetic__card:last-child:nth-child(3n + 1) {
-        grid-column: 2;
+    .program-kinetic__card:nth-child(4n) {
+        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 3);
     }
 }
 
