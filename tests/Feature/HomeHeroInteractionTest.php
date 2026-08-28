@@ -88,7 +88,7 @@ it('keeps audio user-gesture ownership and no hero glow runtime', function (): v
         ->not->toContain("from './welcome-hero/slider-playback.js'")
         ->and($opening)
         ->toContain('var audioEnabled = false')
-        ->toContain("audioButton?.addEventListener('click'")
+        ->toContain("button.addEventListener('click'")
         ->toContain("video.setAttribute('loop', '')")
         ->not->toContain('data-hero-playback')
         ->not->toContain('userPaused')
