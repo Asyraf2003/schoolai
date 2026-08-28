@@ -71,7 +71,6 @@
         opacity: .3;
     }
 
-    .gallery-story__title { font-size: clamp(3.3rem, 13vw, 7.5rem); }
     .gallery-story__stream {
         --gallery-item-gap: clamp(.9rem, 2.8svh, 1.8rem);
         padding-inline: clamp(1rem, 5vw, 2.5rem);
@@ -119,11 +118,6 @@
     }
 
     .gallery-story__intro { min-height: 86svh; }
-    .gallery-story__title-rail { padding-inline: 1rem; }
-    .gallery-story__title {
-        font-size: clamp(3rem, 15vw, 5.2rem);
-        letter-spacing: -.06em;
-    }
     .gallery-story__stream { --gallery-item-gap: clamp(.75rem, 2.4svh, 1.35rem); }
     .gallery-story__media { height: min(68svh, 620px); }
     .gallery-story__copy,
