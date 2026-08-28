@@ -1,6 +1,6 @@
 <?php
 
-it('owns the database-backed three-card Lead Rail Article showcase without legacy story instrumentation', function (): void {
+it('owns the database-backed three-card Lead Rail Article showcase without redundant read cues', function (): void {
     $view = file_get_contents(resource_path('views/home/sections/articles.blade.php'));
     $galleryView = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $programView = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
@@ -28,6 +28,8 @@ it('owns the database-backed three-card Lead Rail Article showcase without legac
         ->toContain('article-showcase__body')
         ->toContain('article-showcase__all')
         ->toContain('article-showcase__all-icon')
+        ->not->toContain('article-showcase__description')
+        ->not->toContain('article-showcase__read')
         ->not->toContain('data-article-variant')
         ->not->toContain('article-showcase__review')
         ->not->toContain('data-article-story')
@@ -48,6 +50,8 @@ it('owns the database-backed three-card Lead Rail Article showcase without legac
         ->toContain('->limit(3)')
         ->not->toContain("'media/home/")
         ->not->toContain("\$preview['items']")
+        ->not->toContain('articleDescription')
+        ->not->toContain('articleReadLabel')
         ->not->toContain('article_variant')
         ->not->toContain('Request')
         ->and($baseCss)
@@ -58,12 +62,14 @@ it('owns the database-backed three-card Lead Rail Article showcase without legac
         ->toContain('--article-cta-arrow-x: -2px')
         ->toContain('--article-cta-arrow-scale-x: -1')
         ->toContain('scaleX(var(--article-cta-arrow-scale-x))')
+        ->not->toContain('.article-showcase__read')
         ->and($responsiveCss)
         ->toContain('grid-template-columns: repeat(12, minmax(0, 1fr))')
         ->toContain('grid-template-rows: repeat(2, minmax(14rem, 1fr))')
         ->toContain('grid-column: 1 / span 8')
         ->toContain('grid-column: 9 / 13')
         ->not->toContain('.article-showcase__card:nth-child(4)')
+        ->not->toContain('.article-showcase__read')
         ->toContain('@media (min-width: 768px)')
         ->toContain('@media (max-width: 767px)')
         ->and($sharedHeadingCss)
@@ -74,6 +80,7 @@ it('owns the database-backed three-card Lead Rail Article showcase without legac
         ->toContain('line-height: 1.08')
         ->and($typographyCss)
         ->toContain('@import "../section-display-heading.css"')
+        ->not->toContain('article-showcase__description')
         ->not->toContain('font-size: clamp(7rem, 12vw, 16rem)')
         ->not->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
         ->and($galleryBaseCss)
