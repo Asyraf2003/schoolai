@@ -5,7 +5,6 @@
   aria-labelledby="homepage-testimonial-heading"
 >
   <header class="testimonial-wall__intro">
-    <p class="testimonial-wall__eyebrow" data-text-role="label">{{ $testimonialSection['eyebrow'] ?? '' }}</p>
     <h2
       class="testimonial-wall__title"
       id="homepage-testimonial-heading"

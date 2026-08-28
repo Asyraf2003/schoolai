@@ -1,11 +1,15 @@
 .testimonial-wall {
   --testimonial-gap: clamp(0.55rem, 0.8vw, 0.9rem);
   --testimonial-card-width: calc((100vw - (2 * var(--testimonial-gap))) / 2.3333);
+  --testimonial-handoff-height: clamp(7rem, 14vw, 14rem);
   position: relative;
   overflow: hidden;
   overflow: clip;
-  padding-block: clamp(6rem, 11vw, 11rem) clamp(5rem, 8vw, 8rem);
-  background: #f4f3ef;
+  padding-block: calc(var(--testimonial-handoff-height) + clamp(3.5rem, 5vw, 5.5rem)) clamp(5rem, 8vw, 8rem);
+  background:
+    linear-gradient(180deg, var(--gallery-story-bg, #6f9b72) 0%, #f4f3ef 100%)
+    top / 100% var(--testimonial-handoff-height) no-repeat,
+    #f4f3ef;
   color: #151515;
 }
 
@@ -13,11 +17,6 @@
   width: min(92vw, 68rem);
   margin-inline: auto;
   text-align: center;
-}
-
-.testimonial-wall__eyebrow {
-  margin: 0 0 1rem;
-  text-transform: uppercase;
 }
 
 .testimonial-wall__title {

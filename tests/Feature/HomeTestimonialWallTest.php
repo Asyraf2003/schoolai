@@ -13,6 +13,7 @@ it('renders the testimonial wall after gallery with three seven-card tracks', fu
     expect($galleryPosition)->not->toBeFalse()
         ->and($testimonialPosition)->not->toBeFalse()
         ->and($galleryPosition)->toBeLessThan($testimonialPosition)
+        ->and($html)->not->toContain('testimonial-wall__eyebrow')
         ->and(substr_count($html, 'data-testimonial-track'))->toBe(3)
         ->and(substr_count($html, 'data-testimonial-card'))->toBe(21);
 });
