@@ -61,7 +61,7 @@ it('keeps Opening as the sole h1 and links a promoted Article as a later slide',
         ->not->toContain('Canvas body must not become Hero copy.');
 });
 
-it('lets an open PPDB campaign own localized Opening copy and the semantic title link', function (
+it('makes every open PPDB campaign copy affordance lead to localized PPDB information', function (
     string $locale,
     string $eyebrow,
     string $title,
@@ -89,12 +89,15 @@ it('lets an open PPDB campaign own localized Opening copy and the semantic title
         ->toContain($eyebrow)
         ->toContain($title)
         ->toContain($description)
+        ->toContain($linkLabel)
+        ->toContain('hero-cinema__eyebrow-link')
         ->toContain('hero-cinema__title-link')
-        ->toContain('href="/ppdb"')
-        ->toContain('aria-label="'.e($linkLabel).'"')
+        ->toContain('hero-cinema__description-link')
+        ->toContain('hero-cinema__cta')
+        ->and(substr_count($opening, 'href="/ppdb"'))->toBe(4)
+        ->and($opening)->toContain('aria-label="'.e($linkLabel).'"')
         ->not->toContain('Copy Opening Milik Admin')
-        ->not->toContain('Deskripsi opening milik admin.')
-        ->not->toContain('hero-cinema__cta');
+        ->not->toContain('Deskripsi opening milik admin.');
 })->with([
     'Indonesia' => [
         'id',
