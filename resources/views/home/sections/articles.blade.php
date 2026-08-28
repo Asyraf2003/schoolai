@@ -59,8 +59,8 @@
     </div>
 
     <a class="article-showcase__all" href="{{ route('artikel') }}">
-      <span>{{ $articleCtaLabel }}</span>
-      <span aria-hidden="true">↗</span>
+      <span class="article-showcase__all-label">{{ $articleCtaLabel }}</span>
+      <span class="article-showcase__all-icon" aria-hidden="true">↗</span>
     </a>
   </div>
 </section>
