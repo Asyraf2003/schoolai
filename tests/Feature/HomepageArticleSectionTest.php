@@ -111,8 +111,8 @@ it('uses a lean latest-published Article query for the homepage showcase', funct
         ))->toBeFalse();
 });
 
-it('queries PPDB only when the optional Opening CTA targets PPDB', function (): void {
-    HeroSetting::query()->firstOrFail()->update(['cta_url' => '/ppdb']);
+it('queries PPDB exactly once to resolve the homepage campaign state', function (): void {
+    HeroSetting::query()->firstOrFail()->update(['cta_url' => '#program']);
     PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
     $queries = collect();
     DB::listen(function ($query) use ($queries): void {
