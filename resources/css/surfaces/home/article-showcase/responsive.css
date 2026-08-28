@@ -77,10 +77,6 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
     }
-
-    .article-showcase__card:not(:first-child) .article-showcase__read {
-        display: none;
-    }
 }
 
 @media (max-width: 767px) {
