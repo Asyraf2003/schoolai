@@ -4,25 +4,25 @@
   data-article-showcase
   aria-labelledby="homepage-article-heading"
 >
+  <header class="article-showcase__header home-section-display__header">
+    <h2
+      class="article-showcase__title home-section-display__title"
+      id="homepage-article-heading"
+      data-text-role="display"
+    >
+      @foreach ($articleHeadingLines as $line)
+        <span class="article-showcase__title-line home-section-display__line">{{ $line }}</span>
+      @endforeach
+    </h2>
+
+    @if ($articleDescription !== '')
+      <p class="article-showcase__description" data-text-role="description">
+        {{ $articleDescription }}
+      </p>
+    @endif
+  </header>
+
   <div class="article-showcase__shell">
-    <header class="article-showcase__header home-section-display__header">
-      <h2
-        class="article-showcase__title home-section-display__title"
-        id="homepage-article-heading"
-        data-text-role="display"
-      >
-        @foreach ($articleHeadingLines as $line)
-          <span class="article-showcase__title-line home-section-display__line">{{ $line }}</span>
-        @endforeach
-      </h2>
-
-      @if ($articleDescription !== '')
-        <p class="article-showcase__description" data-text-role="description">
-          {{ $articleDescription }}
-        </p>
-      @endif
-    </header>
-
     <div class="article-showcase__grid">
       @foreach ($articleItems as $article)
         <article class="article-showcase__card article-showcase__card--{{ $loop->iteration }}">
