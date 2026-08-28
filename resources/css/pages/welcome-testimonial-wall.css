@@ -96,6 +96,7 @@
   color: #fff;
   font-size: clamp(0.62rem, 1.22vw, 1.15rem);
   line-height: 1.15;
+  text-align: left;
 }
 
 .testimonial-wall__quote p {
@@ -103,8 +104,7 @@
 }
 
 .testimonial-wall__quote,
-.testimonial-wall__name,
-.testimonial-wall__role {
+.testimonial-wall__name {
   -webkit-text-stroke: 0.35px rgba(0, 0, 0, 0.92);
   text-shadow:
     0 1px 2px rgba(0, 0, 0, 0.65),
@@ -112,27 +112,24 @@
 }
 
 .testimonial-wall__meta {
-  display: grid;
-  gap: 0.12rem;
   margin-top: 0.35rem;
+  text-align: left;
 }
 
 .testimonial-wall__name {
   color: #fff;
-  font-size: clamp(0.52rem, 0.7vw, 0.8125rem);
+  font-size: clamp(0.56rem, 0.78vw, 0.88rem);
   font-style: normal;
   line-height: 1.15;
 }
 
-.testimonial-wall__role {
-  color: rgba(255, 255, 255, 0.86);
-  font-size: clamp(0.48rem, 0.62vw, 0.75rem);
-  line-height: 1.15;
+html[dir="rtl"] .testimonial-wall__quote {
+  direction: rtl;
+  text-align: right;
 }
 
-html[dir="rtl"] .testimonial-wall__intro,
-html[dir="rtl"] .testimonial-wall__content {
-  text-align: start;
+html[dir="rtl"] .testimonial-wall__meta {
+  text-align: left;
 }
 
 @media (min-width: 768px) {

@@ -41,8 +41,7 @@
                 </blockquote>
 
                 <footer class="testimonial-wall__meta">
-                  <cite class="testimonial-wall__name" data-text-role="meta">{{ $card['name'] ?? '' }}</cite>
-                  <span class="testimonial-wall__role" data-text-role="label">{{ $card['role'] ?? '' }}</span>
+                  <cite class="testimonial-wall__name" data-text-role="meta">{{ $card['name'] ?? $card['role'] ?? '' }}</cite>
                 </footer>
               </div>
             </article>
