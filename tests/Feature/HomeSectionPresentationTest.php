@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\View;
+
+uses(RefreshDatabase::class);
 
 it('keeps all H5 group two Blade owners free of PHP shaping', function (): void {
     $files = [
