@@ -205,17 +205,34 @@ Presentation:
 - the homepage query selects presentation fields only and does not select `content_id`, `content_en`, or `content_ar`;
 - Hero manual promotion remains independent.
 
-Dummy item arrays were removed from ID/EN/AR `home_article_preview` translations. Those translation files now own only section copy and labels.
+Dummy item arrays were removed from ID/EN/AR `home_article_preview` translations. Those translation files own only section heading, generic category fallback and the listing CTA label.
 
-### Implementation source checkpoint
+### Presentation simplification after DB integration
 
-Database-backed homepage Article source and tests were implemented through commit:
+The homepage Article surface was simplified after the database connection:
+
+- the descriptive paragraph below the section display heading was removed;
+- the per-card `Baca artikel ↗` / `Read article ↗` / Arabic equivalent cue was removed;
+- each Article card remains one full clickable `<a>` surface, so the extra nested read cue was redundant;
+- the card's own article description remains inside the media overlay;
+- the separate `Lihat selengkapnya` listing CTA remains unchanged, including its LTR/RTL directional arrow behavior.
+
+The removed presentation copy and selectors were also deleted from the composer, ID/EN/AR translations and Article showcase CSS rather than merely hidden.
+
+### Implementation source checkpoints
+
+Database-backed homepage Article source and initial tests were implemented through commit:
 
 `4c140476d6af88e0c190c82af81f6224523b6420`
 
-The key implementation files are:
+The later presentation simplification is covered by the source/runtime contracts updated after that integration.
+
+Key implementation files:
 
 - `app/View/Composers/HomeArticlesComposer.php`;
+- `resources/views/home/sections/articles.blade.php`;
+- `resources/css/surfaces/home/article-showcase/base.css`;
+- `resources/css/surfaces/home/article-showcase/typography.css`;
 - `resources/css/surfaces/home/article-showcase/responsive.css`;
 - `lang/id/home_article_preview.php`;
 - `lang/en/home_article_preview.php`;
@@ -239,16 +256,17 @@ No homepage pin schema is authorized yet.
 
 ## Verification status
 
-Source-level verification completed:
+Source-level verification completed for the DB integration and simplified presentation contracts:
 
 - homepage composer no longer reads dummy item arrays;
 - homepage composer uses `latestPublished()` and `limit(3)`;
-- desktop Lead Rail is now 1 + 2;
-- homepage tests were rewritten around real DB Article records and three-card ordering;
+- desktop Lead Rail is 1 + 2;
+- section description and redundant per-card read cue have been removed at source level;
+- homepage tests target real DB Article records and three-card ordering;
 - Hero Article code was not redesigned;
 - no homepage pin schema was added.
 
-Runtime/build/test execution has **not** been claimed from the GitHub connector. Local verification is still required before marking the implementation PASS.
+Runtime/build/test execution for the latest presentation simplification must still be run locally before marking it PASS.
 
 Recommended local gate:
 
