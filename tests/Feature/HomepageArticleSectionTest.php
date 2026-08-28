@@ -108,7 +108,7 @@ it('uses a lean latest-published Article query for the homepage showcase', funct
         ))->toBeFalse()
         ->and($queries->contains(
             fn (string $sql): bool => str_contains($sql, 'gallery_items')
-        ))->toBeTrue();
+        ))->toBeFalse();
 });
 
 it('queries PPDB only when the optional Opening CTA targets PPDB', function (): void {
