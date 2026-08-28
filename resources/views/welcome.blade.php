@@ -7,6 +7,10 @@
       'pageTitle' => $meta['title'],
       'pageDescription' => $meta['description'],
     ])
+    <link rel="preload" as="image" type="image/webp" href="https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp" />
+    <link rel="preload" as="image" type="image/webp" href="https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp" />
+    <link rel="preload" as="image" type="image/webp" href="https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp" />
+    <link rel="preload" as="image" type="image/webp" href="https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp" />
     @vite([
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
