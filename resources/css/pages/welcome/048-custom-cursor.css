@@ -71,7 +71,6 @@
             calc(var(--home-cursor-y) - var(--home-cursor-hotspot-y)),
             0
         );
-        rotate: 0deg;
         will-change: transform;
         contain: layout paint style;
     }
@@ -93,7 +92,6 @@
 
     .home-cursor[data-state="dizzy"] {
         --home-cursor-image: var(--home-cursor-dizzy-image);
-        animation: home-cursor-dizzy 160ms ease-in-out infinite alternate;
     }
 
     .home-cursor[data-state="annoyed"] {
@@ -106,15 +104,5 @@
 
     .home-cursor.is-visible:not([data-state="disabled"]) {
         opacity: 1;
-    }
-
-    @keyframes home-cursor-dizzy {
-        from {
-            rotate: -7deg;
-        }
-
-        to {
-            rotate: 7deg;
-        }
     }
 }
