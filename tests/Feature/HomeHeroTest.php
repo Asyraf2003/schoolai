@@ -36,3 +36,19 @@ it('renders the fixed R2 video as the sole Opening slide when no Article is prom
         expect(substr_count($response->getContent(), 'data-slide-index='))->toBe(1);
     }
 });
+
+it('keeps the desktop hero audio label on the shared navigation typography contract', function (): void {
+    $header = file_get_contents(resource_path('views/partials/site-navbar/header.blade.php'));
+    $heroVisual = file_get_contents(resource_path('css/pages/welcome-hero-visual.css'));
+    $arabicTypography = file_get_contents(resource_path('css/arabic-typography.css'));
+
+    expect($header)
+        ->toContain('class="nav-link nav-hero-audio__text"')
+        ->toContain('data-hero-audio')
+        ->toContain('data-text-role="action"')
+        ->and($heroVisual)
+        ->toContain('.nav-hero-audio__text')
+        ->not->toContain('font: inherit')
+        ->and($arabicTypography)
+        ->toContain('[data-text-role="action"]');
+});
