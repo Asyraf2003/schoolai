@@ -52,6 +52,24 @@
         grid-row: 1;
     }
 
+    .program-kinetic__detail-copy h3 {
+        max-width: 100%;
+        text-wrap: balance;
+        overflow-wrap: anywhere;
+    }
+
+    .program-kinetic__detail-copy h3[data-title-scale="short"] {
+        font-size: clamp(2.4rem, 8vw, 5rem);
+    }
+
+    .program-kinetic__detail-copy h3[data-title-scale="medium"] {
+        font-size: clamp(2.05rem, 6.5vw, 4rem);
+    }
+
+    .program-kinetic__detail-copy h3[data-title-scale="long"] {
+        font-size: clamp(1.75rem, 5.5vw, 3.4rem);
+    }
+
     .program-kinetic__detail-media {
         grid-row: 2;
         width: min(78vw, 31rem);
