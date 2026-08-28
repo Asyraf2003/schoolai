@@ -18,14 +18,6 @@
     grid-row: 1;
 }
 
-.gallery-story__cta-variants {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: .72rem;
-    margin-top: clamp(1.4rem, 2.4vw, 2.2rem);
-}
-
 .gallery-story__item-link {
     display: inline-flex;
     align-items: center;
@@ -33,7 +25,7 @@
     gap: .8rem;
     min-height: 3rem;
     width: fit-content;
-    margin: 0;
+    margin-top: clamp(1.4rem, 2.4vw, 2.2rem);
     padding: .5rem .55rem .5rem 1.05rem;
     border: 0;
     border-radius: 999px;
@@ -47,8 +39,7 @@
     transition:
         transform 220ms cubic-bezier(.22, 1, .36, 1),
         background-color 220ms ease,
-        color 220ms ease,
-        border-color 220ms ease;
+        color 220ms ease;
 }
 
 .gallery-story__item-link:hover,
@@ -71,10 +62,7 @@
     font-size: 1rem;
     font-weight: 500;
     letter-spacing: 0;
-    transition:
-        transform 220ms cubic-bezier(.22, 1, .36, 1),
-        background-color 220ms ease,
-        color 220ms ease;
+    transition: transform 220ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .gallery-story__item-link:hover .gallery-story__cta-icon,
@@ -91,46 +79,6 @@
 .gallery-story__item-link--filled .gallery-story__cta-icon {
     background: rgba(255, 255, 255, .14);
     color: currentColor;
-}
-
-.gallery-story__item-link--outline {
-    border: 1px solid color-mix(in srgb, var(--gallery-story-ink) 36%, transparent);
-    background: color-mix(in srgb, var(--gallery-story-bg) 88%, white);
-}
-
-.gallery-story__item-link--outline .gallery-story__cta-icon {
-    border: 1px solid color-mix(in srgb, var(--gallery-story-ink) 28%, transparent);
-}
-
-.gallery-story__item-link--split {
-    gap: .52rem;
-    min-height: 0;
-    padding: 0;
-    background: transparent;
-}
-
-.gallery-story__item-link--split .gallery-story__cta-label {
-    display: inline-flex;
-    align-items: center;
-    min-height: 3rem;
-    padding: 0 1.08rem;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--gallery-story-ink) 10%, transparent);
-}
-
-.gallery-story__item-link--split .gallery-story__cta-icon {
-    width: 3rem;
-    height: 3rem;
-    background: var(--gallery-story-ink);
-    color: var(--gallery-story-bg);
-    box-shadow: 0 12px 28px rgba(16, 24, 18, .12);
-}
-
-@media (max-width: 639px) {
-    .gallery-story__cta-variants {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
