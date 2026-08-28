@@ -34,6 +34,34 @@
     text-wrap: pretty;
 }
 
+@media (min-width: 1024px) {
+    .article-showcase__header {
+        position: relative;
+        left: 50%;
+        width: 90vw;
+        max-width: none;
+        transform: translateX(-50%);
+    }
+
+    .article-showcase__title[data-text-role="display"] {
+        font-size: clamp(7rem, 12vw, 16rem);
+        line-height: .78;
+    }
+}
+
+@media (max-width: 639px) {
+    .article-showcase__header {
+        position: relative;
+        left: 50%;
+        width: 92vw;
+        transform: translateX(-50%);
+    }
+
+    .article-showcase__title[data-text-role="display"] {
+        font-size: clamp(3.25rem, 16vw, 5rem);
+    }
+}
+
 html[dir="rtl"] .article-showcase__title {
     font-family: var(--font-ar-display, Cairo, sans-serif);
     font-variation-settings: normal;
