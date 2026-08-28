@@ -3,16 +3,3 @@
 .article-showcase__title {
     color: var(--article-ink);
 }
-
-.article-showcase__description {
-    max-width: 42rem;
-    margin: 0;
-    color: var(--article-muted);
-    font-size: clamp(1rem, .4vw + .92rem, 1.22rem);
-    line-height: 1.62;
-    text-wrap: pretty;
-}
-
-html[dir="rtl"] .article-showcase__description {
-    font-family: var(--font-ar-body, Cairo, sans-serif);
-}
