@@ -18,6 +18,8 @@ import './welcome/gallery-wall.js';
 import './welcome/lazy-media.js';
 import './welcome/about-video-modal.js';
 import './welcome/testimonial-wall.js';
+import { initHomepageCursor } from './welcome/cursor.js';
 import { scheduleHomepagePreparation } from './welcome/preparation.js';
 
+initHomepageCursor();
 scheduleHomepagePreparation();
