@@ -55,9 +55,7 @@ final class HomeArticlesComposer
 
         $view->with([
             'articleHeadingLines' => array_values($preview['heading_lines'] ?? []),
-            'articleDescription' => (string) ($preview['description'] ?? ''),
             'articleItems' => $items,
-            'articleReadLabel' => (string) ($preview['read_label'] ?? ''),
             'articleCtaLabel' => (string) ($preview['cta_label'] ?? ''),
         ]);
     }
