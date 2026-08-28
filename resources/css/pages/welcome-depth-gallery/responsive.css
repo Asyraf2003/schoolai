@@ -66,6 +66,10 @@
 }
 
 @media (max-width: 1023px) {
+    .gallery-story {
+        --gallery-intro-height: clamp(28rem, 62svh, 38rem);
+    }
+
     .home-page .galeri-section::before {
         background-size: 18rem 18rem;
         opacity: .3;
@@ -112,12 +116,15 @@
 }
 
 @media (max-width: 639px) {
+    .gallery-story {
+        --gallery-intro-height: clamp(22rem, 56svh, 30rem);
+    }
+
     .home-page .galeri-section::before {
         background-size: 14rem 14rem;
         opacity: .27;
     }
 
-    .gallery-story__intro { min-height: 86svh; }
     .gallery-story__stream { --gallery-item-gap: clamp(.75rem, 2.4svh, 1.35rem); }
     .gallery-story__media { height: min(68svh, 620px); }
     .gallery-story__copy,
