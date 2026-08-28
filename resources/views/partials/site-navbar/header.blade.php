@@ -29,6 +29,7 @@
               type="button"
               class="nav-link nav-hero-audio__text"
               data-hero-audio
+              data-text-role="action"
               data-hero-audio-label-off="{{ __('shared.navbar.audio.enable_label') }}"
               data-hero-audio-label-on="{{ __('shared.navbar.audio.disable_label') }}"
               aria-pressed="false"
