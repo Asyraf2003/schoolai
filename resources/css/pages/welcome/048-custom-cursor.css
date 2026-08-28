@@ -1,79 +1,30 @@
 @media (hover: hover) and (pointer: fine) {
     body.home-page[data-cursor-character="cwo"] {
-        --home-cursor-default: url("https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp") 15 48, auto;
-        --home-cursor-interactive: url("https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp") 81 44, pointer;
+        --home-cursor-default-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp");
+        --home-cursor-default-hotspot-x: 15px;
+        --home-cursor-default-hotspot-y: 48px;
+        --home-cursor-interactive-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp");
+        --home-cursor-interactive-hotspot-x: 81px;
+        --home-cursor-interactive-hotspot-y: 44px;
     }
 
     body.home-page[data-cursor-character="cwe"] {
-        --home-cursor-default: url("https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp") 11 40, auto;
-        --home-cursor-interactive: url("https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp") 80 40, pointer;
+        --home-cursor-default-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp");
+        --home-cursor-default-hotspot-x: 11px;
+        --home-cursor-default-hotspot-y: 40px;
+        --home-cursor-interactive-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp");
+        --home-cursor-interactive-hotspot-x: 80px;
+        --home-cursor-interactive-hotspot-y: 40px;
     }
 
     /*
-     * Cursor is a page-level visual contract. Lock every rendered descendant
-     * so late-loaded section CSS, nested spans/SVGs, and browser defaults do
-     * not briefly fall back to the native cursor.
+     * Hide Chromium's native cursor throughout the homepage and render one
+     * compositor-friendly fixed overlay instead. This avoids native-cursor
+     * flashes at viewport/browser-chrome boundaries and nested UI targets.
      */
     body.home-page[data-cursor-character],
     body.home-page[data-cursor-character] * {
-        cursor: var(--home-cursor-default) !important;
-    }
-
-    body.home-page[data-cursor-character] :is(
-        a[href],
-        button,
-        [role="button"],
-        summary,
-        label[for],
-        input[type="button"],
-        input[type="submit"],
-        input[type="reset"],
-        select,
-        .nav-mega__trigger,
-        .nav-language__button,
-        .nav-language__option,
-        .nav-hero-audio__text,
-        .navbar__hero-audio-icon,
-        .nilai-card,
-        .program-card,
-        .program-kinetic__trigger,
-        .galeri-story-card,
-        .galeri-story-visual__panel.is-active,
-        .galeri-story-visual__media,
-        .galeri-story-visual__play,
-        .galeri-story-card__mobile-media,
-        .galeri-story-card__mobile-play,
-        .gallery-wall-card,
-        .faq-card summary
-    ):not([disabled]):not([aria-disabled="true"]):not(.is-disabled):not(.footer-channel--disabled):not(.nav-link--dummy),
-    body.home-page[data-cursor-character] :is(
-        a[href],
-        button,
-        [role="button"],
-        summary,
-        label[for],
-        input[type="button"],
-        input[type="submit"],
-        input[type="reset"],
-        select,
-        .nav-mega__trigger,
-        .nav-language__button,
-        .nav-language__option,
-        .nav-hero-audio__text,
-        .navbar__hero-audio-icon,
-        .nilai-card,
-        .program-card,
-        .program-kinetic__trigger,
-        .galeri-story-card,
-        .galeri-story-visual__panel.is-active,
-        .galeri-story-visual__media,
-        .galeri-story-visual__play,
-        .galeri-story-card__mobile-media,
-        .galeri-story-card__mobile-play,
-        .gallery-wall-card,
-        .faq-card summary
-    ):not([disabled]):not([aria-disabled="true"]):not(.is-disabled):not(.footer-channel--disabled):not(.nav-link--dummy) * {
-        cursor: var(--home-cursor-interactive) !important;
+        cursor: none !important;
     }
 
     body.home-page[data-cursor-character] :is(
@@ -91,8 +42,40 @@
         cursor: not-allowed !important;
     }
 
-    body.home-page[data-cursor-character] .nav-link--dummy,
-    body.home-page[data-cursor-character] .nav-link--dummy * {
-        cursor: var(--home-cursor-default) !important;
+    .home-cursor {
+        --home-cursor-x: -200px;
+        --home-cursor-y: -200px;
+        --home-cursor-image: var(--home-cursor-default-image);
+        --home-cursor-hotspot-x: var(--home-cursor-default-hotspot-x);
+        --home-cursor-hotspot-y: var(--home-cursor-default-hotspot-y);
+
+        position: fixed;
+        inset: 0 auto auto 0;
+        z-index: 2147483647;
+        width: 96px;
+        height: 96px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: var(--home-cursor-image) center / 96px 96px no-repeat;
+        opacity: 0;
+        pointer-events: none !important;
+        transform: translate3d(
+            calc(var(--home-cursor-x) - var(--home-cursor-hotspot-x)),
+            calc(var(--home-cursor-y) - var(--home-cursor-hotspot-y)),
+            0
+        );
+        will-change: transform;
+        contain: layout paint style;
+    }
+
+    .home-cursor[data-state="interactive"] {
+        --home-cursor-image: var(--home-cursor-interactive-image);
+        --home-cursor-hotspot-x: var(--home-cursor-interactive-hotspot-x);
+        --home-cursor-hotspot-y: var(--home-cursor-interactive-hotspot-y);
+    }
+
+    .home-cursor.is-visible:not([data-state="disabled"]) {
+        opacity: 1;
     }
 }
