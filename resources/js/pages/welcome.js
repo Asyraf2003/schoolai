@@ -1,4 +1,3 @@
-
 /* =========================================================
    SEKOLAH CERIA NUSANTARA — SCRIPT.JS
    Daftar isi:
@@ -18,6 +17,7 @@ import './welcome/public-content.js';
 import './welcome/gallery-wall.js';
 import './welcome/lazy-media.js';
 import './welcome/about-video-modal.js';
+import './welcome/testimonial-wall.js';
 import { scheduleHomepagePreparation } from './welcome/preparation.js';
 
 scheduleHomepagePreparation();

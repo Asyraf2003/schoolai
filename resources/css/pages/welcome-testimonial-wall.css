@@ -1,0 +1,197 @@
+.testimonial-wall {
+  --testimonial-gap: clamp(0.55rem, 0.8vw, 0.9rem);
+  --testimonial-card-width: calc((100vw - (2 * var(--testimonial-gap))) / 2.3333);
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+  padding-block: clamp(6rem, 11vw, 11rem) clamp(5rem, 8vw, 8rem);
+  background: #f4f3ef;
+  color: #151515;
+}
+
+.testimonial-wall__intro {
+  width: min(92vw, 68rem);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.testimonial-wall__eyebrow {
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+}
+
+.testimonial-wall__title {
+  max-width: 16ch;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+
+.testimonial-wall__description {
+  max-width: 46rem;
+  margin: 1.4rem auto 0;
+  color: #6c6a66;
+  text-wrap: pretty;
+}
+
+.testimonial-wall__rows {
+  display: grid;
+  gap: clamp(0.65rem, 1vw, 1rem);
+  margin-top: clamp(4rem, 7vw, 7rem);
+}
+
+.testimonial-wall__viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.testimonial-wall.is-testimonial-enhanced .testimonial-wall__viewport {
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.testimonial-wall__track {
+  display: flex;
+  width: max-content;
+  gap: var(--testimonial-gap);
+  transform: translate3d(var(--testimonial-track-x, 0px), 0, 0);
+}
+
+.testimonial-wall.is-testimonial-active .testimonial-wall__track {
+  will-change: transform;
+}
+
+.testimonial-wall__card {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 var(--testimonial-card-width);
+  height: clamp(14rem, 58vw, 18rem);
+  overflow: hidden;
+  border-radius: clamp(1rem, 1.6vw, 1.45rem);
+  background: #20201d;
+}
+
+.testimonial-wall__card::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.54) 100%),
+    linear-gradient(135deg, rgba(5, 20, 18, 0.08), rgba(0, 0, 0, 0.3));
+}
+
+.testimonial-wall__media {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.86) contrast(0.96);
+  transform: scale(1.015);
+}
+
+.testimonial-wall__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: clamp(1rem, 2vw, 1.65rem);
+  color: #fff;
+}
+
+.testimonial-wall__quote {
+  margin: 0;
+  color: #fff;
+}
+
+.testimonial-wall__quote p {
+  margin: 0;
+}
+
+.testimonial-wall__quote,
+.testimonial-wall__name,
+.testimonial-wall__role {
+  -webkit-text-stroke: 0.35px rgba(0, 0, 0, 0.92);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.65),
+    0 2px 12px rgba(0, 0, 0, 0.36);
+}
+
+.testimonial-wall__meta {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 1rem;
+}
+
+.testimonial-wall__name {
+  color: #fff;
+  font-style: normal;
+}
+
+.testimonial-wall__role {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+html[dir="rtl"] .testimonial-wall__intro,
+html[dir="rtl"] .testimonial-wall__content {
+  text-align: start;
+}
+
+@media (min-width: 768px) {
+  .testimonial-wall {
+    --testimonial-card-width: calc((100vw - (3 * var(--testimonial-gap))) / 3.3333);
+  }
+
+  .testimonial-wall__card {
+    height: clamp(15rem, 27vw, 18.5rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  .testimonial-wall {
+    --testimonial-card-width: calc((100vw - (5 * var(--testimonial-gap))) / 5.3333);
+  }
+
+  .testimonial-wall__card {
+    height: clamp(15rem, 17vw, 19rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-wall {
+    overflow: visible;
+  }
+
+  .testimonial-wall__viewport {
+    overflow: visible;
+  }
+
+  .testimonial-wall__track {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    transform: none !important;
+  }
+
+  .testimonial-wall__card {
+    width: auto;
+    height: auto;
+    min-height: 14rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 640px) {
+  .testimonial-wall__track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .testimonial-wall__track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

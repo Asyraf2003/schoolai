@@ -48,6 +48,8 @@
       </div>
 
       @include('home.sections.gallery')
+
+      @include('home.sections.testimonials')
     </main>
 
     @include('partials.site-footer', ['footerSection' => $footerSection])

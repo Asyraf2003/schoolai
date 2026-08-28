@@ -19,6 +19,7 @@ trait BuildsHomePage
             'schoolValues' => $home['nilai_sekolah'] ?? [],
             'featuredPrograms' => $home['program_unggulan'] ?? [],
             'gallerySection' => $this->gallerySectionData(),
+            'testimonialSection' => $this->testimonialSectionData(),
             'footerSection' => $home['footer'] ?? [],
         ]);
     }
