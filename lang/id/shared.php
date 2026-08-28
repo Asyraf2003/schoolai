@@ -5,6 +5,12 @@ return [
         'image_alt' => 'Lingkungan sekolah dan pembelajaran Al Mustaqbal School',
     ],
     'navbar' => [
+        'audio' => [
+            'off' => 'Suara : Off',
+            'on' => 'Suara : On',
+            'enable_label' => 'Aktifkan suara hero',
+            'disable_label' => 'Matikan suara hero',
+        ],
         'language_modal' => [
             'title' => 'Pilih bahasa',
             'close' => 'Tutup pilihan bahasa',

@@ -6,7 +6,7 @@ import { createSliderPlaybackActions } from './slider-playback.js';
 export function initHeroCarousel(root, slides) {
     var previousButton = root.querySelector('[data-hero-previous]');
     var nextButton = root.querySelector('[data-hero-next]');
-    var audioButton = root.querySelector('[data-hero-audio]');
+    var audioButtons = Array.from(document.querySelectorAll('[data-hero-audio]'));
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var duration = parseInt(root.getAttribute('data-autoplay-interval'), 10);
     var state = {
@@ -49,8 +49,14 @@ export function initHeroCarousel(root, slides) {
         syncVideos: mediaActions.syncVideos
     });
 
-    function updateAudioButton() {
-        audioButton?.setAttribute('aria-pressed', state.audioEnabled ? 'true' : 'false');
+    function updateAudioButtons() {
+        audioButtons.forEach(function (button) {
+            button.setAttribute('aria-pressed', state.audioEnabled ? 'true' : 'false');
+            var label = state.audioEnabled
+                ? button.getAttribute('data-hero-audio-label-on')
+                : button.getAttribute('data-hero-audio-label-off');
+            if (label) button.setAttribute('aria-label', label);
+        });
     }
 
     slides.forEach(function (slide, index) {
@@ -74,10 +80,12 @@ export function initHeroCarousel(root, slides) {
     nextButton?.addEventListener('click', function () {
         playbackActions.showSlide(state.currentIndex + 1, true);
     });
-    audioButton?.addEventListener('click', function () {
-        state.audioEnabled = !state.audioEnabled;
-        mediaActions.syncVideos();
-        updateAudioButton();
+    audioButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            state.audioEnabled = !state.audioEnabled;
+            mediaActions.syncVideos();
+            updateAudioButtons();
+        });
     });
 
     root.addEventListener('keydown', function (event) {
@@ -124,6 +132,6 @@ export function initHeroCarousel(root, slides) {
         });
     }, { once: true });
 
-    updateAudioButton();
+    updateAudioButtons();
     playbackActions.showSlide(state.currentIndex, false);
 }

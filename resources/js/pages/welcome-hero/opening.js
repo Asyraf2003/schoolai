@@ -1,6 +1,6 @@
 export function initOpeningHero(root, slide) {
     var video = slide.querySelector('[data-hero-video]');
-    var audioButton = root.querySelector('[data-hero-audio]');
+    var audioButtons = Array.from(document.querySelectorAll('[data-hero-audio]'));
     var audioEnabled = false;
 
     root.setAttribute('data-enhanced', 'true');
@@ -8,6 +8,16 @@ export function initOpeningHero(root, slide) {
 
     video.loop = true;
     video.setAttribute('loop', '');
+
+    function updateAudioButtons() {
+        audioButtons.forEach(function (button) {
+            button.setAttribute('aria-pressed', audioEnabled ? 'true' : 'false');
+            var label = audioEnabled
+                ? button.getAttribute('data-hero-audio-label-on')
+                : button.getAttribute('data-hero-audio-label-off');
+            if (label) button.setAttribute('aria-label', label);
+        });
+    }
 
     function syncVideo() {
         video.muted = !audioEnabled;
@@ -25,10 +35,12 @@ export function initOpeningHero(root, slide) {
         }
     }
 
-    audioButton?.addEventListener('click', function () {
-        audioEnabled = !audioEnabled;
-        audioButton.setAttribute('aria-pressed', audioEnabled ? 'true' : 'false');
-        syncVideo();
+    audioButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            audioEnabled = !audioEnabled;
+            updateAudioButtons();
+            syncVideo();
+        });
     });
     video.addEventListener('loadeddata', function () {
         slide.classList.remove('has-video-playback-fallback');
@@ -39,5 +51,6 @@ export function initOpeningHero(root, slide) {
         video.pause();
     }, { once: true });
 
+    updateAudioButtons();
     syncVideo();
 }

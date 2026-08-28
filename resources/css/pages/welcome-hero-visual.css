@@ -33,51 +33,85 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     border-radius: 4px;
 }
 
-.home-page .hero-cinema__audio {
-    position: absolute;
-    z-index: 9;
-    inset-inline-start: auto;
-    inset-inline-end: clamp(110px, 10vw, 190px);
-    inset-block-end: clamp(232px, 28vh, 330px);
-    display: grid;
+.home-page .nav-hero-audio__text {
+    border: 0;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+}
+
+.home-page .nav-hero-audio__label--on { display: none; }
+
+.home-page .nav-hero-audio__text[aria-pressed="true"] .nav-hero-audio__label--off {
+    display: none;
+}
+
+.home-page .nav-hero-audio__text[aria-pressed="true"] .nav-hero-audio__label--on {
+    display: inline;
+}
+
+.home-page .navbar__mobile-actions {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-inline-start: auto;
+}
+
+.home-page .navbar__hero-audio-icon {
+    position: relative;
+    z-index: calc(var(--hero-layer-header) + 2);
+    display: none;
     place-items: center;
-    width: clamp(52px, 3.4vw, 58px);
-    height: clamp(52px, 3.4vw, 58px);
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
     padding: 0;
-    border: 1px solid rgb(255 255 255 / 0.72);
-    border-radius: 50%;
-    color: #fff;
-    background: rgb(0 0 0 / 0.18);
+    border: 1px solid rgb(255 255 255 / 0.5);
+    border-radius: 999px;
+    color: inherit;
+    background: rgb(255 255 255 / 0.08);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    box-shadow: 0 10px 28px rgb(0 0 0 / 0.18);
     cursor: pointer;
     transition:
+        color 180ms ease,
         background-color 180ms ease,
         border-color 180ms ease,
         transform 180ms ease;
 }
 
-.home-page .hero-cinema__audio:hover,
-.home-page .hero-cinema__audio:focus-visible {
-    border-color: rgb(255 255 255 / 0.96);
-    background: rgb(0 0 0 / 0.34);
-    transform: scale(1.06);
+.home-page .navbar__hero-audio-icon:hover,
+.home-page .navbar__hero-audio-icon:focus-visible {
+    border-color: rgb(255 255 255 / 0.9);
+    background: rgb(255 255 255 / 0.16);
+    transform: scale(1.05);
 }
 
-.home-page .hero-cinema__audio:focus-visible {
+.home-page .navbar__hero-audio-icon:focus-visible {
     outline: 3px solid #ffd166;
-    outline-offset: 4px;
+    outline-offset: 3px;
 }
 
-.home-page .hero-cinema__audio-glyph {
-    width: 32px;
+.home-page .navbar.is-scrolled .navbar__hero-audio-icon,
+.home-page .navbar.has-open-menu .navbar__hero-audio-icon {
+    border-color: rgb(23 79 66 / 0.14);
+    background: #fff8ec;
+}
+
+.home-page .navbar__hero-audio-icon[aria-pressed="true"] {
+    border-color: rgb(247 178 75 / 0.88);
+    background: rgb(247 178 75 / 0.2);
+}
+
+.home-page .navbar__hero-audio-glyph {
+    width: 29px;
     height: 20px;
     overflow: visible;
 }
 
-.home-page .hero-cinema__audio-line,
-.home-page .hero-cinema__audio-snake {
+.home-page .navbar__hero-audio-line,
+.home-page .navbar__hero-audio-snake {
     fill: none;
     stroke: currentColor;
     stroke-width: 2.2;
@@ -87,42 +121,27 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     transition: opacity 160ms ease;
 }
 
-.home-page .hero-cinema__audio-line { opacity: 1; }
-.home-page .hero-cinema__audio-snake { opacity: 0; }
+.home-page .navbar__hero-audio-line { opacity: 1; }
+.home-page .navbar__hero-audio-snake { opacity: 0; }
 
-.home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-line {
+.home-page .navbar__hero-audio-icon[aria-pressed="true"] .navbar__hero-audio-line {
     opacity: 0;
 }
 
-.home-page .hero-cinema__audio[aria-pressed="true"] .hero-cinema__audio-snake {
+.home-page .navbar__hero-audio-icon[aria-pressed="true"] .navbar__hero-audio-snake {
     opacity: 1;
 }
 
 @media (max-width: 1180px) {
-    .home-page .hero-cinema__audio {
-        inset-inline-end: clamp(72px, 8vw, 112px);
-        inset-block-end: clamp(205px, 26vh, 270px);
-    }
+    .home-page .nav-hero-audio--desktop { display: none; }
+
+    .home-page .navbar__mobile-actions { display: flex; }
+
+    .home-page .navbar__hero-audio-icon { display: grid; }
 }
 
-@media (max-width: 767px) {
-    .home-page .hero-cinema__audio {
-        inset-inline-end: 52px;
-        inset-block-end: 208px;
-        width: 52px;
-        height: 52px;
-    }
-}
-
-@media (max-width: 440px) {
-    .home-page .hero-cinema__audio {
-        inset-inline-end: 44px;
-        inset-block-end: 196px;
-        width: 48px;
-        height: 48px;
-    }
-
-    .home-page .hero-cinema__audio-glyph { width: 29px; }
+@media (min-width: 1181px) {
+    .home-page .navbar__mobile-actions { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -131,9 +150,9 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
         filter: none !important;
     }
 
-    .home-page .hero-cinema__audio,
-    .home-page .hero-cinema__audio-line,
-    .home-page .hero-cinema__audio-snake {
+    .home-page .navbar__hero-audio-icon,
+    .home-page .navbar__hero-audio-line,
+    .home-page .navbar__hero-audio-snake {
         transition: none;
     }
 }

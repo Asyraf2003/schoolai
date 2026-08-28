@@ -105,28 +105,5 @@
           </button>
         @endif
 
-        <button
-          type="button"
-          class="hero-cinema__audio"
-          data-hero-audio
-          aria-pressed="false"
-          aria-label="Audio"
-        >
-          <svg class="hero-cinema__audio-glyph" viewBox="0 0 44 20" aria-hidden="true">
-            <path class="hero-cinema__audio-line" d="M8 10H36" />
-            <path
-              class="hero-cinema__audio-snake"
-              d="M6 10C10 3 18 3 22 10C26 17 34 17 38 10"
-            >
-              <animate
-                attributeName="d"
-                dur="820ms"
-                repeatCount="indefinite"
-                values="M6 10C10 3 18 3 22 10C26 17 34 17 38 10;M6 10C10 17 18 17 22 10C26 3 34 3 38 10;M6 10C10 3 18 3 22 10C26 17 34 17 38 10"
-              />
-            </path>
-          </svg>
-        </button>
-
         <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
       </section>

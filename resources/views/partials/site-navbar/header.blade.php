@@ -112,6 +112,23 @@
               </a>
             @endif
           </li>
+
+          @if ($isHomeNav && $loop->first)
+            <li class="nav-item nav-hero-audio nav-hero-audio--desktop">
+              <button
+                type="button"
+                class="nav-link nav-hero-audio__text"
+                data-hero-audio
+                data-hero-audio-label-off="{{ __('shared.navbar.audio.enable_label') }}"
+                data-hero-audio-label-on="{{ __('shared.navbar.audio.disable_label') }}"
+                aria-pressed="false"
+                aria-label="{{ __('shared.navbar.audio.enable_label') }}"
+              >
+                <span class="nav-hero-audio__label nav-hero-audio__label--off">{{ __('shared.navbar.audio.off') }}</span>
+                <span class="nav-hero-audio__label nav-hero-audio__label--on">{{ __('shared.navbar.audio.on') }}</span>
+              </button>
+            </li>
+          @endif
         @endforeach
       </ul>
 
@@ -122,16 +139,57 @@
       @endif
     </nav>
 
-    <button
-      class="hamburger"
-      id="hamburgerBtn"
-      aria-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
-      data-mobile-open-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
-      data-mobile-close-label="{{ $siteNavbar['mobile_close_label'] ?? __('pages.common.mobile_menu_close') }}"
-      aria-expanded="false"
-      aria-controls="navMenu"
-    >
-      <span></span><span></span><span></span>
-    </button>
+    @if ($isHomeNav)
+      <div class="navbar__mobile-actions">
+        <button
+          type="button"
+          class="navbar__hero-audio-icon"
+          data-hero-audio
+          data-hero-audio-label-off="{{ __('shared.navbar.audio.enable_label') }}"
+          data-hero-audio-label-on="{{ __('shared.navbar.audio.disable_label') }}"
+          aria-pressed="false"
+          aria-label="{{ __('shared.navbar.audio.enable_label') }}"
+        >
+          <svg class="navbar__hero-audio-glyph" viewBox="0 0 44 20" aria-hidden="true">
+            <path class="navbar__hero-audio-line" d="M8 10H36" />
+            <path
+              class="navbar__hero-audio-snake"
+              d="M6 10C10 3 18 3 22 10C26 17 34 17 38 10"
+            >
+              <animate
+                attributeName="d"
+                dur="820ms"
+                repeatCount="indefinite"
+                values="M6 10C10 3 18 3 22 10C26 17 34 17 38 10;M6 10C10 17 18 17 22 10C26 3 34 3 38 10;M6 10C10 3 18 3 22 10C26 17 34 17 38 10"
+              />
+            </path>
+          </svg>
+        </button>
+
+        <button
+          class="hamburger"
+          id="hamburgerBtn"
+          aria-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
+          data-mobile-open-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
+          data-mobile-close-label="{{ $siteNavbar['mobile_close_label'] ?? __('pages.common.mobile_menu_close') }}"
+          aria-expanded="false"
+          aria-controls="navMenu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    @else
+      <button
+        class="hamburger"
+        id="hamburgerBtn"
+        aria-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
+        data-mobile-open-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
+        data-mobile-close-label="{{ $siteNavbar['mobile_close_label'] ?? __('pages.common.mobile_menu_close') }}"
+        aria-expanded="false"
+        aria-controls="navMenu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    @endif
   </div>
 </header>

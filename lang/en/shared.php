@@ -5,6 +5,12 @@ return [
         'image_alt' => 'Al Mustaqbal School campus and learning environment',
     ],
     'navbar' => [
+        'audio' => [
+            'off' => 'Sound : Off',
+            'on' => 'Sound : On',
+            'enable_label' => 'Turn hero sound on',
+            'disable_label' => 'Turn hero sound off',
+        ],
         'language_modal' => [
             'title' => 'Choose language',
             'close' => 'Close language chooser',
