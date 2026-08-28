@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
 it('uses a static about poster and intent-loads the R2 modal video', function (): void {
     $url = (string) config('media.homepage_about_video_url');
     $response = $this->get(route('home'));
