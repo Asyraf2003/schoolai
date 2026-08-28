@@ -2,12 +2,15 @@
 
 use App\Models\Article;
 use App\Models\HeroSetting;
+use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
 it('keeps Opening first and derives only explicitly promoted published Articles', function (): void {
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
+
     HeroSetting::query()->firstOrFail()->update([
         'title_id' => 'Opening Sekolah',
         'title_en' => 'School Opening',
