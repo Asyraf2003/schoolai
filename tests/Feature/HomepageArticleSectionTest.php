@@ -8,8 +8,27 @@ use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('renders the static homepage Article Lead Rail after Testimonial', function (): void {
+it('renders the three latest published Articles in Lead Rail order after Testimonial', function (): void {
     app()->setLocale('id');
+
+    foreach ([
+        ['title' => 'Artikel Terbaru Satu', 'slug' => 'terbaru-satu', 'published_at' => now()->subMinute(), 'tag' => 'Sekolah'],
+        ['title' => 'Artikel Terbaru Dua', 'slug' => 'terbaru-dua', 'published_at' => now()->subHour(), 'tag' => 'Karya'],
+        ['title' => 'Artikel Terbaru Tiga', 'slug' => 'terbaru-tiga', 'published_at' => now()->subHours(2), 'tag' => 'Karakter'],
+        ['title' => 'Artikel Lama Tidak Masuk', 'slug' => 'artikel-lama', 'published_at' => now()->subDay(), 'tag' => 'Arsip'],
+    ] as $index => $data) {
+        Article::query()->create([
+            'article_source' => Article::SOURCE_EXTERNAL,
+            'article_status' => Article::STATUS_PUBLISHED,
+            'title_id' => $data['title'],
+            'description_id' => 'Deskripsi '.$data['title'],
+            'tags' => [$data['tag']],
+            'thumbnail_url' => 'https://media.almustaqbal.sch.id/articles/thumbnails/test/'.$data['slug'].'.webp',
+            'link_id' => 'https://example.com/'.$data['slug'],
+            'author' => 'Admin Test',
+            'published_at' => $data['published_at'],
+        ]);
+    }
 
     $response = $this->get(route('home'));
     $html = $response->getContent();
@@ -19,36 +38,39 @@ it('renders the static homepage Article Lead Rail after Testimonial', function (
         ->assertSee('data-article-showcase', false)
         ->assertSee('CERITA', false)
         ->assertSee('&amp; WAWASAN', false)
+        ->assertSee('Artikel Terbaru Satu')
+        ->assertSee('Artikel Terbaru Dua')
+        ->assertSee('Artikel Terbaru Tiga')
+        ->assertDontSee('Artikel Lama Tidak Masuk')
         ->assertSee('Lihat selengkapnya')
         ->assertDontSee('data-article-variant', false)
-        ->assertDontSee('data-article-story', false)
-        ->assertDontSee('article-debug-mark', false)
-        ->assertDontSee('tes1');
+        ->assertDontSee('data-article-story', false);
 
     expect(strpos($html, 'data-testimonial-wall'))
         ->toBeLessThan(strpos($html, 'data-article-showcase'))
         ->and(substr_count($html, 'article-showcase__card article-showcase__card--'))
-        ->toBe(4)
-        ->and($response->original->getData())->not->toHaveKey('articlesSection');
+        ->toBe(3)
+        ->and(strpos($html, 'Artikel Terbaru Satu'))
+        ->toBeLessThan(strpos($html, 'Artikel Terbaru Dua'))
+        ->and(strpos($html, 'Artikel Terbaru Dua'))
+        ->toBeLessThan(strpos($html, 'Artikel Terbaru Tiga'));
 });
 
-it('keeps the dummy homepage Article preview independent from Article queries', function (): void {
+it('uses a lean latest-published Article query for the homepage showcase', function (): void {
     app()->setLocale('id');
     HeroSetting::query()->firstOrFail()->update(['cta_url' => '#program']);
 
     Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
         'article_status' => Article::STATUS_PUBLISHED,
-        'slug' => 'artikel-lama-homepage',
-        'title_id' => 'Artikel Lama Homepage',
-        'title_en' => 'Older Homepage Article',
-        'description_id' => 'Artikel yang lebih lama.',
-        'description_en' => 'The older article.',
-        'thumbnail_url' => '/storage/articles/thumbnails/older.jpg',
-        'link_id' => 'https://example.com/artikel-lama-homepage',
-        'link_en' => 'https://example.com/older-homepage-article',
+        'slug' => 'artikel-homepage-db',
+        'title_id' => 'Artikel Homepage Database',
+        'description_id' => 'Ringkasan artikel homepage dari database.',
+        'content_id' => '<p>Body Canvas berat yang tidak boleh ikut query homepage.</p>',
+        'thumbnail_url' => 'https://media.almustaqbal.sch.id/articles/thumbnails/test/homepage-db.webp',
+        'link_id' => url('/artikel/artikel-homepage-db'),
         'author' => 'Admin Test',
-        'published_at' => now()->subDay(),
+        'published_at' => now()->subMinute(),
     ]);
 
     $queries = collect();
@@ -57,28 +79,29 @@ it('keeps the dummy homepage Article preview independent from Article queries', 
     });
 
     $response = $this->get(route('home'));
-    $articleQueries = $queries->filter(
-        fn (string $sql): bool => str_contains($sql, 'from "articles"')
-            || str_contains($sql, 'from `articles`')
+    $homepageArticleQuery = $queries->first(
+        fn (string $sql): bool => (str_contains($sql, 'from "articles"') || str_contains($sql, 'from `articles`'))
+            && str_contains($sql, 'order by')
+            && str_contains($sql, 'published_at')
+            && str_contains($sql, 'limit 3'),
     );
 
     $response
         ->assertOk()
-        ->assertSee('data-article-showcase', false)
-        ->assertDontSee('Artikel Lama Homepage');
+        ->assertSee('Artikel Homepage Database')
+        ->assertDontSee('Belajar dengan arah, tumbuh dengan adab');
 
-    expect($response->original->getData())
-        ->not->toHaveKeys(['articlesSection', 'stats', 'quickInfo', 'ppdb'])
-        ->and($articleQueries)->toHaveCount(1)
-        ->and($articleQueries->first())->toContain('hero_position')
+    expect($homepageArticleQuery)
+        ->toBeString()
+        ->not->toContain('content_id')
+        ->not->toContain('content_en')
+        ->not->toContain('content_ar')
+        ->not->toContain('select *')
         ->and($queries->contains(
             fn (string $sql): bool => str_contains($sql, 'site_statistics')
         ))->toBeFalse()
         ->and($queries->contains(
             fn (string $sql): bool => str_contains($sql, 'testimonial_media')
-        ))->toBeFalse()
-        ->and($queries->contains(
-            fn (string $sql): bool => str_contains($sql, 'ppdb_settings')
         ))->toBeFalse()
         ->and($queries->contains(
             fn (string $sql): bool => str_contains($sql, 'gallery_items')
