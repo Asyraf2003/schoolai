@@ -95,6 +95,7 @@
   margin: 0;
   color: #fff;
   font-size: clamp(0.62rem, 1.22vw, 1.15rem);
+  font-weight: 700;
   line-height: 1.15;
   text-align: left;
 }
@@ -103,17 +104,11 @@
   margin: 0;
 }
 
-.testimonial-wall__quote,
-.testimonial-wall__name {
-  -webkit-text-stroke: 0.35px rgba(0, 0, 0, 0.92);
-  text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.65),
-    0 2px 12px rgba(0, 0, 0, 0.36);
-}
-
 .testimonial-wall__meta {
+  width: min(50%, 12rem);
   margin-top: 0.35rem;
-  text-align: left;
+  margin-left: auto;
+  text-align: right;
 }
 
 .testimonial-wall__name {
@@ -129,6 +124,8 @@ html[dir="rtl"] .testimonial-wall__quote {
 }
 
 html[dir="rtl"] .testimonial-wall__meta {
+  margin-right: auto;
+  margin-left: 0;
   text-align: left;
 }
 
