@@ -101,10 +101,6 @@
         margin-block-end: 2rem;
     }
 
-    .article-showcase__title {
-        font-size: clamp(3rem, 17vw, 5.2rem);
-    }
-
     .article-showcase__grid {
         grid-template-columns: 1fr;
     }
