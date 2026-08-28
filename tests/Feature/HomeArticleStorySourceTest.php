@@ -2,13 +2,18 @@
 
 it('owns the static Lead Rail Article preview without legacy story instrumentation', function (): void {
     $view = file_get_contents(resource_path('views/home/sections/articles.blade.php'));
+    $galleryView = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
+    $programView = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
     $presentation = file_get_contents(app_path('View/Composers/HomeArticlesComposer.php'));
     $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
     $pageCss = file_get_contents(resource_path('css/pages/welcome-article-showcase.css'));
     $baseCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/base.css'));
     $responsiveCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/responsive.css'));
     $typographyCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/typography.css'));
+    $sharedHeadingCss = file_get_contents(resource_path('css/surfaces/home/section-display-heading.css'));
+    $galleryBaseCss = file_get_contents(resource_path('css/pages/welcome-depth-gallery/base.css'));
     $galleryResponsiveCss = file_get_contents(resource_path('css/pages/welcome-depth-gallery/responsive.css'));
+    $programHeadingCss = file_get_contents(resource_path('css/pages/welcome/program-journey/heading.css'));
     $programWideCss = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
     $programCompactCss = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
     $vite = file_get_contents(base_path('vite.config.js'));
@@ -16,6 +21,9 @@ it('owns the static Lead Rail Article preview without legacy story instrumentati
     expect($view)
         ->toContain('data-article-showcase')
         ->toContain('article-showcase__title-line')
+        ->toContain('home-section-display__header')
+        ->toContain('home-section-display__title')
+        ->toContain('home-section-display__line')
         ->toContain('article-showcase__grid')
         ->toContain('article-showcase__body')
         ->toContain('article-showcase__all')
@@ -26,6 +34,14 @@ it('owns the static Lead Rail Article preview without legacy story instrumentati
         ->not->toContain('data-article-journey')
         ->not->toContain('article-debug-mark')
         ->not->toContain('home.debug.article-ruler')
+        ->and($galleryView)
+        ->toContain('home-section-display__header')
+        ->toContain('home-section-display__title')
+        ->toContain('home-section-display__line')
+        ->and($programView)
+        ->toContain('home-section-display__header')
+        ->toContain('home-section-display__title')
+        ->toContain('home-section-display__line')
         ->and($presentation)
         ->toContain('->take(4)')
         ->not->toContain('article_variant')
@@ -44,16 +60,27 @@ it('owns the static Lead Rail Article preview without legacy story instrumentati
         ->toContain('grid-column: 9 / 13')
         ->toContain('@media (min-width: 768px)')
         ->toContain('@media (max-width: 767px)')
+        ->and($sharedHeadingCss)
+        ->toContain('font-size: clamp(3.4rem, 15vw, 7rem)')
+        ->toContain('font-size: clamp(7rem, 12vw, 16rem)')
+        ->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->toContain('line-height: .84')
+        ->toContain('line-height: 1.08')
         ->and($typographyCss)
-        ->toContain('font-size: clamp(7rem, 12vw, 16rem)')
-        ->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->toContain('@import "../section-display-heading.css"')
+        ->not->toContain('font-size: clamp(7rem, 12vw, 16rem)')
+        ->not->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->and($galleryBaseCss)
+        ->toContain('section-display-heading.css')
         ->and($galleryResponsiveCss)
-        ->toContain('font-size: clamp(7rem, 12vw, 16rem)')
-        ->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->not->toContain('font-size: clamp(7rem, 12vw, 16rem)')
+        ->not->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->and($programHeadingCss)
+        ->toContain('section-display-heading.css')
         ->and($programWideCss)
-        ->toContain('font-size: clamp(7rem, 12vw, 16rem)')
+        ->not->toContain('font-size: clamp(7rem, 12vw, 16rem)')
         ->and($programCompactCss)
-        ->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->not->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
         ->and($welcome)
         ->toContain("'resources/css/pages/welcome-article-showcase.css'")
         ->toContain("@include('home.sections.testimonials')")
