@@ -37,7 +37,6 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     border: 0;
     color: inherit;
     background: transparent;
-    font: inherit;
     cursor: pointer;
 }
 
