@@ -39,3 +39,14 @@ it('keeps testimonial sample content complete in every public locale', function 
         }
     }
 });
+
+it('mirrors Testimonial travel physically in RTL without reversing row phase', function (): void {
+    $script = file_get_contents(resource_path('js/pages/welcome/testimonial-wall.js'));
+
+    expect($script)
+        ->toContain('const signedTravel = isRtl ? travel : -travel;')
+        ->toContain('const startX = towardInlineStart ? 0 : signedTravel;')
+        ->toContain('const endX = towardInlineStart ? signedTravel : 0;')
+        ->toContain('const travel = overflow * 0.9;')
+        ->not->toContain('towardInlineStart ? -travel : 0');
+});
