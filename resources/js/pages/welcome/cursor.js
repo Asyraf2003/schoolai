@@ -45,9 +45,9 @@ const SHAKE = Object.freeze({
     burstRefractoryMs: 650,
     burstWindowMs: 5000,
     burstsForAnger: 3,
-    dizzyMs: 800,
-    annoyedMs: 1000,
-    angryMs: 1000,
+    dizzyMs: 3000,
+    annoyedMs: 3000,
+    angryMs: 3000,
     cooldownMs: 3500,
 });
 
@@ -96,6 +96,7 @@ export function initHomepageCursor() {
     let baseState = 'default';
     let emotionState = null;
     let emotionTimer = 0;
+    let emotionSequenceActive = false;
     let cooldownUntil = 0;
 
     let lastX = null;
@@ -148,6 +149,10 @@ export function initHomepageCursor() {
     };
 
     const showDizzy = () => {
+        if (emotionSequenceActive) {
+            return;
+        }
+
         clearEmotionTimer();
         emotionState = 'dizzy';
         syncVisualState();
@@ -159,28 +164,39 @@ export function initHomepageCursor() {
         }, SHAKE.dizzyMs);
     };
 
-    const startAnnoyedAngrySequence = () => {
+    const startEmotionSequence = () => {
         clearEmotionTimer();
         reversalTimes = [];
         burstTimes = [];
-        emotionState = 'annoyed';
+        emotionSequenceActive = true;
+        emotionState = 'dizzy';
         syncVisualState();
 
         emotionTimer = window.setTimeout(() => {
-            emotionState = 'angry';
+            emotionState = 'annoyed';
             syncVisualState();
 
             emotionTimer = window.setTimeout(() => {
-                emotionTimer = 0;
-                emotionState = null;
-                cooldownUntil = performance.now() + SHAKE.cooldownMs;
+                emotionState = 'angry';
                 syncVisualState();
-            }, SHAKE.angryMs);
-        }, SHAKE.annoyedMs);
+
+                emotionTimer = window.setTimeout(() => {
+                    emotionTimer = 0;
+                    emotionState = null;
+                    emotionSequenceActive = false;
+                    cooldownUntil = performance.now() + SHAKE.cooldownMs;
+                    syncVisualState();
+                }, SHAKE.angryMs);
+            }, SHAKE.annoyedMs);
+        }, SHAKE.dizzyMs);
     };
 
     const registerShakeBurst = (now) => {
-        if (now < cooldownUntil || now - lastBurstAt < SHAKE.burstRefractoryMs) {
+        if (
+            emotionSequenceActive ||
+            now < cooldownUntil ||
+            now - lastBurstAt < SHAKE.burstRefractoryMs
+        ) {
             return;
         }
 
@@ -189,7 +205,7 @@ export function initHomepageCursor() {
         burstTimes.push(now);
 
         if (burstTimes.length >= SHAKE.burstsForAnger) {
-            startAnnoyedAngrySequence();
+            startEmotionSequence();
             return;
         }
 
@@ -199,8 +215,7 @@ export function initHomepageCursor() {
     const detectShake = (event, now) => {
         if (
             baseState === 'disabled' ||
-            emotionState === 'annoyed' ||
-            emotionState === 'angry' ||
+            emotionSequenceActive ||
             now < cooldownUntil
         ) {
             return;
