@@ -57,12 +57,9 @@ function mountTestimonialWall(root) {
 
     metrics.forEach(({ track, travel }, index) => {
       const towardInlineStart = index % 2 === 0;
-      const startX = isRtl
-        ? (towardInlineStart ? -travel : 0)
-        : (towardInlineStart ? 0 : -travel);
-      const endX = isRtl
-        ? (towardInlineStart ? 0 : -travel)
-        : (towardInlineStart ? -travel : 0);
+      const signedTravel = isRtl ? travel : -travel;
+      const startX = towardInlineStart ? 0 : signedTravel;
+      const endX = towardInlineStart ? signedTravel : 0;
       const x = startX + (endX - startX) * progress;
 
       track.style.setProperty('--testimonial-track-x', `${x.toFixed(2)}px`);
