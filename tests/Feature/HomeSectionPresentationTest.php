@@ -47,7 +47,8 @@ it('renders localized Home gallery presentation and final Arabic mission text', 
 
     $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
     expect($welcome)
-        ->not->toContain("@include('home.sections.articles')")
+        ->toContain("@include('home.sections.articles')")
+        ->toContain('welcome-article-showcase.css')
         ->not->toContain('welcome-article-story.css');
 });
 

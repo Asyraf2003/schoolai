@@ -97,7 +97,8 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->toContain('media.clientWidth / visual.naturalWidth')
         ->toContain('media.clientHeight / visual.naturalHeight')
         ->and($welcome)
-        ->not->toContain("@include('home.sections.articles')")
+        ->toContain("@include('home.sections.articles')")
+        ->toContain('welcome-article-showcase.css')
         ->not->toContain('welcome-article-story.css');
 });
 
