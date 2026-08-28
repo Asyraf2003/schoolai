@@ -47,7 +47,7 @@ it('owns the database-backed three-card Lead Rail Article showcase without legac
         ->toContain('->latestPublished()')
         ->toContain('->limit(3)')
         ->not->toContain("'media/home/")
-        ->not->toContain("$preview['items']")
+        ->not->toContain("\$preview['items']")
         ->not->toContain('article_variant')
         ->not->toContain('Request')
         ->and($baseCss)
