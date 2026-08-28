@@ -101,6 +101,16 @@
     opacity: .42;
 }
 
+@media (max-width: 1279px) {
+    .values-story__exit {
+        height: var(--values-gallery-responsive-overlap, var(--values-exit-height));
+        background: var(--values-blue);
+        box-shadow: 0 -3px 0 var(--values-blue);
+    }
+
+    .values-story__exit::before { display: none; }
+}
+
 @supports not (overflow: clip) {
     .values-story__entry,
     .values-story__clip {
