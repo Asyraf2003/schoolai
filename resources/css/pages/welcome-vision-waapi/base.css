@@ -67,10 +67,10 @@
     max-width: 38rem;
     margin: clamp(1.4rem, 3vw, 2.2rem) 0 0;
     font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(1rem, 1.45vw, 1.18rem);
+    font-size: clamp(1.08rem, 1.55vw, 1.28rem);
     font-weight: 400;
-    line-height: 1.62;
-    color: rgb(21 21 21 / .72);
+    line-height: 1.58;
+    color: rgb(21 21 21 / .84);
 }
 
 .vision-arch__mark {
@@ -122,9 +122,9 @@
 
 .vision-arch__mission-list p {
     margin-top: .35rem;
-    font-size: .86rem;
-    line-height: 1.55;
-    color: rgb(21 21 21 / .66);
+    font-size: clamp(.92rem, .25vw + .87rem, 1rem);
+    line-height: 1.58;
+    color: rgb(21 21 21 / .78);
 }
 
 .vision-arch__visual {
