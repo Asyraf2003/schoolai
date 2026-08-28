@@ -1,6 +1,6 @@
 <label class="admin-check-field">
   <input type="checkbox" name="show_on_homepage" value="1" @checked(old('show_on_homepage', $item->show_on_homepage))>
-  <span>Tampilkan di landing page (maksimal 6)</span>
+  <span>Tampilkan di landing page (maksimal 9)</span>
 </label>
 
 <label class="admin-check-field">

@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Models\GalleryItem;
 use App\Models\GalleryPageSection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ final class AdminGalleryIndexComposer
         $view->with([
             'page' => __('admin.gallery'),
             'activePageSections' => $activeSections,
-            'homepageLimit' => $data['limits']['max_items'] ?? 6,
+            'homepageLimit' => $data['limits']['max_items'] ?? GalleryItem::MAX_HOMEPAGE_ITEMS,
             'homepageCount' => $this->collection($data['activeItems'] ?? [])
                 ->where('show_on_homepage', true)
                 ->count(),

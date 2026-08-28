@@ -40,7 +40,8 @@ it('renders localized Home facilities presentation and final Arabic mission text
         $response
             ->assertOk()
             ->assertSee($copy['heading'])
-            ->assertSee($copy['facility']);
+            ->assertSee($copy['facility'])
+            ->assertSee('data-depth-gallery-end-link', false);
 
         expect(substr_count($response->getContent(), 'data-gallery-story-item'))->toBe(9);
 

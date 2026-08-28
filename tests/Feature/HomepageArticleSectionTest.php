@@ -108,7 +108,7 @@ it('uses a lean latest-published Article query for the homepage showcase', funct
         ))->toBeFalse()
         ->and($queries->contains(
             fn (string $sql): bool => str_contains($sql, 'gallery_items')
-        ))->toBeFalse();
+        ))->toBeTrue();
 });
 
 it('queries PPDB exactly once to resolve the homepage campaign state', function (): void {

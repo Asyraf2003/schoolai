@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Concerns;
 
+use App\Models\GalleryItem;
+
 trait BuildsHomeSections
 {
     private function navbarData(): array
@@ -30,16 +32,23 @@ trait BuildsHomeSections
         $isFacilities = ($gallery['source'] ?? null) === 'facilities';
 
         if ($isFacilities) {
-            $gallery['items'] = collect($gallery['items'] ?? [])
-                ->filter(static fn (mixed $item): bool => is_array($item))
-                ->values()
-                ->all();
-            $gallery['cta'] = [];
+            $databaseItems = $this->latestGalleryItems(GalleryItem::MAX_HOMEPAGE_ITEMS);
+
+            $gallery['items'] = $databaseItems !== []
+                ? $databaseItems
+                : collect($gallery['items'] ?? [])
+                    ->filter(static fn (mixed $item): bool => is_array($item))
+                    ->values()
+                    ->all();
+            $gallery['cta'] = [
+                'label' => (string) __('home_presentation.gallery_more'),
+                'href' => route('galeri'),
+            ];
 
             return $gallery;
         }
 
-        $gallery['items'] = $this->latestGalleryItems(6);
+        $gallery['items'] = $this->latestGalleryItems(GalleryItem::MAX_HOMEPAGE_ITEMS);
         if (isset($gallery['cta']) && is_array($gallery['cta'])) {
             $gallery['cta']['href'] = route('galeri');
         }

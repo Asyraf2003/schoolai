@@ -17,7 +17,7 @@ final class GalleryItem extends Model
 {
     use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
-    public const MAX_HOMEPAGE_ITEMS = 6;
+    public const MAX_HOMEPAGE_ITEMS = 9;
 
     public const MAX_ITEMS = self::MAX_HOMEPAGE_ITEMS;
 

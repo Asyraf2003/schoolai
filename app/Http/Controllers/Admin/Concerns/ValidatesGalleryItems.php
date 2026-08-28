@@ -102,7 +102,7 @@ trait ValidatesGalleryItems
 
         if ($validated['show_on_homepage'] && $homepageCount >= self::MAX_ITEMS) {
             throw ValidationException::withMessages([
-                'show_on_homepage' => 'Maksimal 6 media dapat ditempatkan di homepage.',
+                'show_on_homepage' => 'Maksimal 9 media dapat ditempatkan di homepage.',
             ]);
         }
 

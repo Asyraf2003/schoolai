@@ -17,6 +17,8 @@ trait SeedsGalleryPageSections
             return;
         }
 
+        $this->seedFacilitiesSection();
+
         foreach ($this->pageSections() as $sectionIndex => $sectionData) {
             $mediaItems = $sectionData['media'];
             unset($sectionData['media']);
@@ -73,6 +75,43 @@ trait SeedsGalleryPageSections
         }
     }
 
+    private function seedFacilitiesSection(): void
+    {
+        $section = GalleryPageSection::withTrashed()->firstOrNew([
+            'title_id' => 'Fasilitas',
+        ]);
+
+        $section->fill([
+            'title_id' => 'Fasilitas',
+            'title_en' => 'Facilities',
+            'title_ar' => 'المرافق',
+            'description_id' => 'Ruang dan layanan pendukung yang dirancang untuk membuat kegiatan belajar, ibadah, kesehatan, dan pendampingan keluarga berjalan lebih utuh.',
+            'description_en' => 'Spaces and support services designed to strengthen learning, worship, wellbeing, physical activity, and partnership with families.',
+            'description_ar' => 'مساحات وخدمات مساندة صُممت لدعم التعلم والعبادة والصحة والنشاط البدني والشراكة مع الأسرة.',
+            'is_published' => true,
+        ]);
+        $section->save();
+
+        if ($section->trashed()) {
+            $section->restore();
+        }
+
+        $placements = GalleryItem::query()
+            ->where('category_id', 'Fasilitas')
+            ->homepage()
+            ->ordered()
+            ->get()
+            ->mapWithKeys(fn (GalleryItem $item, int $index): array => [
+                $item->getKey() => [
+                    'sort_order' => $index + 1,
+                    'is_published' => true,
+                ],
+            ])
+            ->all();
+
+        $section->items()->sync($placements);
+    }
+
     /** @return array<int, array<string, mixed>> */
     private function pageSections(): array
     {
@@ -81,92 +120,45 @@ trait SeedsGalleryPageSections
                 'title_id' => 'Belajar dengan Rasa Ingin Tahu',
                 'title_en' => 'Learning with Curiosity',
                 'title_ar' => 'التعلّم بدافع الفضول',
-
                 'description_id' => 'Momen ketika siswa mengamati, mencoba, bertanya, dan menemukan jawaban melalui pengalaman belajar nyata.',
                 'description_en' => 'Moments when students observe, experiment, ask questions, and discover answers through authentic learning experiences.',
                 'description_ar' => 'لحظات يلاحظ فيها الطلاب ويجرّبون ويطرحون الأسئلة ويكتشفون الإجابات من خلال تجارب تعلّم واقعية.',
-
                 'is_published' => true,
-
                 'media' => [
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'video',
-                        'media_url' => 'https://www.youtube.com/embed/n5cW4FpGvhI',
-                    ],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'video', 'media_url' => 'https://www.youtube.com/embed/n5cW4FpGvhI'],
                 ],
             ],
-
             [
                 'title_id' => 'Karya, Seni, dan Keberanian',
                 'title_en' => 'Creativity, Art, and Courage',
                 'title_ar' => 'الإبداع والفن والشجاعة',
-
                 'description_id' => 'Ruang bagi siswa untuk berkarya, tampil, menyampaikan gagasan, dan membangun keberanian dengan cara yang bermakna.',
                 'description_en' => 'A space for students to create, perform, express their ideas, and build courage in meaningful ways.',
                 'description_ar' => 'مساحة تتيح للطلاب الإبداع وتقديم أعمالهم والتعبير عن أفكارهم وبناء الثقة والشجاعة بأساليب هادفة.',
-
                 'is_published' => true,
-
                 'media' => [
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1600&q=82',
-                    ],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1600&q=82'],
                 ],
             ],
-
             [
                 'title_id' => 'Kebersamaan dan Karakter',
                 'title_en' => 'Togetherness and Character',
                 'title_ar' => 'التآلف وبناء الشخصية',
-
                 'description_id' => 'Kebersamaan di sekolah menjadi tempat bertumbuhnya adab, tanggung jawab, kepedulian, dan rasa saling menghargai.',
                 'description_en' => 'Life together at school nurtures good character, responsibility, care, and mutual respect.',
                 'description_ar' => 'تُسهم الحياة المشتركة في المدرسة في تنمية الأدب والمسؤولية والاهتمام بالآخرين والاحترام المتبادل.',
-
                 'is_published' => true,
-
                 'media' => [
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?auto=format&fit=crop&w=1600&q=82',
-                    ],
-                    [
-                        'type' => 'photo',
-                        'media_url' => 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1600&q=82',
-                    ],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?auto=format&fit=crop&w=1600&q=82'],
+                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1600&q=82'],
                 ],
             ],
         ];

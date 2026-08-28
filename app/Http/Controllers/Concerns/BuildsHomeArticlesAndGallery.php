@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Schema;
 
 trait BuildsHomeArticlesAndGallery
 {
-    private function latestGalleryItems(int $limit = 6): array
+    private function latestGalleryItems(int $limit = GalleryItem::MAX_HOMEPAGE_ITEMS): array
     {
-        $limit = max(3, min($limit, 6));
+        $limit = max(1, min($limit, GalleryItem::MAX_HOMEPAGE_ITEMS));
 
         return array_slice($this->allGalleryItems(), 0, $limit);
     }
@@ -24,7 +24,7 @@ trait BuildsHomeArticlesAndGallery
                 ->homepage()
                 ->where('type', 'photo')
                 ->ordered()
-                ->limit(6)
+                ->limit(GalleryItem::MAX_HOMEPAGE_ITEMS)
                 ->get()
                 ->map(fn (GalleryItem $item): array => $this->normalizeGalleryItem([
                     'title' => $item->titleForLocale($locale),
