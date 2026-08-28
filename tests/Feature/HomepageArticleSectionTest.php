@@ -16,7 +16,7 @@ it('renders the three latest published Articles in Lead Rail order after Testimo
         ['title' => 'Artikel Terbaru Dua', 'slug' => 'terbaru-dua', 'published_at' => now()->subHour(), 'tag' => 'Karya'],
         ['title' => 'Artikel Terbaru Tiga', 'slug' => 'terbaru-tiga', 'published_at' => now()->subHours(2), 'tag' => 'Karakter'],
         ['title' => 'Artikel Lama Tidak Masuk', 'slug' => 'artikel-lama', 'published_at' => now()->subDay(), 'tag' => 'Arsip'],
-    ] as $index => $data) {
+    ] as $data) {
         Article::query()->create([
             'article_source' => Article::SOURCE_EXTERNAL,
             'article_status' => Article::STATUS_PUBLISHED,
@@ -42,6 +42,9 @@ it('renders the three latest published Articles in Lead Rail order after Testimo
         ->assertSee('Artikel Terbaru Dua')
         ->assertSee('Artikel Terbaru Tiga')
         ->assertDontSee('Artikel Lama Tidak Masuk')
+        ->assertDontSee('Artikel, kabar, dan catatan yang merekam proses belajar, karya, dan kehidupan di Al Mustaqbal.')
+        ->assertDontSee('Baca artikel')
+        ->assertDontSee('article-showcase__read', false)
         ->assertSee('Lihat selengkapnya')
         ->assertDontSee('data-article-variant', false)
         ->assertDontSee('data-article-story', false);
