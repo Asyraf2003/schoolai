@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HeroSetting;
 use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -44,7 +45,13 @@ it('renders localized role choices before the teacher and student forms', functi
     ['ar', 'rtl', 'اختر نوع الحساب', 'المعلم', 'الطالب'],
 ]);
 
-it('uses PPDB settings to control its dedicated route without owning Hero copy', function (): void {
+it('uses PPDB settings to control its dedicated route and homepage campaign ownership', function (): void {
+    $hero = HeroSetting::query()->firstOrFail();
+    $hero->update([
+        'title_id' => 'Opening Admin Saat PPDB Tutup',
+        'cta_url' => '#program',
+    ]);
+
     $setting = PpdbSetting::query()->firstOrFail();
     $setting->update([
         'registration_url' => 'https://apply.example.test/form',
@@ -55,10 +62,20 @@ it('uses PPDB settings to control its dedicated route without owning Hero copy',
         ->assertOk()
         ->assertSee('https://apply.example.test/form', escape: false);
 
-    $setting->update(['is_active' => false]);
     $this->get(route('home'))
         ->assertOk()
-        ->assertDontSee('data-hero-ppdb-description-link', escape: false);
+        ->assertSee(__('runtime.home.ppdb_campaign_title'))
+        ->assertSee('href="/ppdb"', escape: false)
+        ->assertDontSee('Opening Admin Saat PPDB Tutup');
+
+    $setting->update(['is_active' => false]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('Opening Admin Saat PPDB Tutup')
+        ->assertDontSee(__('runtime.home.ppdb_campaign_title'))
+        ->assertDontSee('href="/ppdb"', escape: false);
+
     $this->get(route('ppdb'))->assertNotFound();
 });
 
