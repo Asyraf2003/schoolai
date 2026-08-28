@@ -7,6 +7,10 @@ it('owns the static Lead Rail Article preview without legacy story instrumentati
     $pageCss = file_get_contents(resource_path('css/pages/welcome-article-showcase.css'));
     $baseCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/base.css'));
     $responsiveCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/responsive.css'));
+    $typographyCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/typography.css'));
+    $galleryResponsiveCss = file_get_contents(resource_path('css/pages/welcome-depth-gallery/responsive.css'));
+    $programWideCss = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
+    $programCompactCss = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
     $vite = file_get_contents(base_path('vite.config.js'));
 
     expect($view)
@@ -34,6 +38,16 @@ it('owns the static Lead Rail Article preview without legacy story instrumentati
         ->toContain('grid-column: 9 / 13')
         ->toContain('@media (min-width: 768px)')
         ->toContain('@media (max-width: 767px)')
+        ->and($typographyCss)
+        ->toContain('font-size: clamp(7rem, 12vw, 16rem)')
+        ->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->and($galleryResponsiveCss)
+        ->toContain('font-size: clamp(7rem, 12vw, 16rem)')
+        ->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
+        ->and($programWideCss)
+        ->toContain('font-size: clamp(7rem, 12vw, 16rem)')
+        ->and($programCompactCss)
+        ->toContain('font-size: clamp(3.25rem, 16vw, 5rem)')
         ->and($welcome)
         ->toContain("'resources/css/pages/welcome-article-showcase.css'")
         ->toContain("@include('home.sections.testimonials')")
