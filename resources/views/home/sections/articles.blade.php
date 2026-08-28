@@ -17,39 +17,50 @@
   </header>
 
   <div class="article-showcase__shell">
-    <div class="article-showcase__grid">
-      @foreach ($articleItems as $article)
-        <article class="article-showcase__card article-showcase__card--{{ $loop->iteration }}">
-          <a class="article-showcase__card-link" href="{{ $article['href'] }}">
-            <figure class="article-showcase__media">
-              <img
-                src="{{ $article['media_url'] }}"
-                alt="{{ $article['title'] }}"
-                width="1200"
-                height="800"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-              />
-            </figure>
+    @if (empty($articleItems))
+      <div class="article-showcase__empty">
+        <span class="article-showcase__empty-kicker">{{ $articleEmptyKicker }}</span>
 
-            <div class="article-showcase__body">
-              <div class="article-showcase__meta">
-                <span>{{ $article['category'] }}</span>
-                <span>{{ $article['meta'] }}</span>
+        <div class="article-showcase__empty-copy">
+          <h3>{{ $articleEmptyTitle }}</h3>
+          <p>{{ $articleEmptyDescription }}</p>
+        </div>
+      </div>
+    @else
+      <div class="article-showcase__grid">
+        @foreach ($articleItems as $article)
+          <article class="article-showcase__card article-showcase__card--{{ $loop->iteration }}">
+            <a class="article-showcase__card-link" href="{{ $article['href'] }}">
+              <figure class="article-showcase__media">
+                <img
+                  src="{{ $article['media_url'] }}"
+                  alt="{{ $article['title'] }}"
+                  width="1200"
+                  height="800"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                />
+              </figure>
+
+              <div class="article-showcase__body">
+                <div class="article-showcase__meta">
+                  <span>{{ $article['category'] }}</span>
+                  <span>{{ $article['meta'] }}</span>
+                </div>
+
+                <h3>{{ $article['title'] }}</h3>
+                <p>{{ $article['description'] }}</p>
               </div>
+            </a>
+          </article>
+        @endforeach
+      </div>
 
-              <h3>{{ $article['title'] }}</h3>
-              <p>{{ $article['description'] }}</p>
-            </div>
-          </a>
-        </article>
-      @endforeach
-    </div>
-
-    <a class="article-showcase__all" href="{{ route('artikel') }}">
-      <span class="article-showcase__all-label">{{ $articleCtaLabel }}</span>
-      <span class="article-showcase__all-icon" aria-hidden="true">↗</span>
-    </a>
+      <a class="article-showcase__all" href="{{ route('artikel') }}">
+        <span class="article-showcase__all-label">{{ $articleCtaLabel }}</span>
+        <span class="article-showcase__all-icon" aria-hidden="true">↗</span>
+      </a>
+    @endif
   </div>
 </section>

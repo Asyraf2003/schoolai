@@ -24,6 +24,74 @@
     gap: clamp(.85rem, 1.5vw, 1.35rem);
 }
 
+.article-showcase__empty {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, .6fr) minmax(0, 1fr);
+    align-items: end;
+    gap: clamp(2rem, 6vw, 7rem);
+    min-height: clamp(19rem, 34vw, 30rem);
+    padding-block: clamp(1.75rem, 4vw, 3.5rem);
+    border-block: 1px solid var(--article-line);
+    overflow: hidden;
+}
+
+.article-showcase__empty::after {
+    content: "";
+    position: absolute;
+    inset-block-end: clamp(-13rem, -17vw, -8rem);
+    inset-inline-end: clamp(-7rem, -8vw, -2rem);
+    width: clamp(16rem, 32vw, 31rem);
+    aspect-ratio: 1;
+    border: 1px solid rgb(21 32 24 / .1);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 clamp(2.5rem, 5vw, 5rem) rgb(21 32 24 / .035),
+        0 0 0 clamp(5rem, 10vw, 10rem) rgb(21 32 24 / .018);
+    pointer-events: none;
+}
+
+.article-showcase__empty-kicker,
+.article-showcase__empty-copy {
+    position: relative;
+    z-index: 1;
+}
+
+.article-showcase__empty-kicker {
+    align-self: start;
+    font-size: clamp(.7rem, .18vw + .66rem, .82rem);
+    font-weight: 800;
+    letter-spacing: .11em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.article-showcase__empty-copy {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.article-showcase__empty-copy h3,
+.article-showcase__empty-copy p {
+    margin: 0;
+}
+
+.article-showcase__empty-copy h3 {
+    max-width: 12ch;
+    font-size: clamp(2.65rem, 5.4vw, 6rem);
+    font-weight: 650;
+    letter-spacing: -.055em;
+    line-height: .92;
+    text-wrap: balance;
+}
+
+.article-showcase__empty-copy p {
+    max-width: 42ch;
+    color: rgb(21 32 24 / .68);
+    font-size: clamp(.95rem, .28vw + .88rem, 1.12rem);
+    line-height: 1.6;
+}
+
 .article-showcase__card {
     min-width: 0;
 }
@@ -185,6 +253,19 @@
     .article-showcase__card-link:hover .article-showcase__media img,
     .article-showcase__card-link:focus-visible .article-showcase__media img {
         transform: scale(1.035);
+    }
+}
+
+@media (max-width: 767px) {
+    .article-showcase__empty {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 3rem;
+        min-height: 25rem;
+    }
+
+    .article-showcase__empty-copy h3 {
+        max-width: 10ch;
     }
 }
 

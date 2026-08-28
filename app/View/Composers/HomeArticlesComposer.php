@@ -57,6 +57,9 @@ final class HomeArticlesComposer
             'articleHeadingLines' => array_values($preview['heading_lines'] ?? []),
             'articleItems' => $items,
             'articleCtaLabel' => (string) ($preview['cta_label'] ?? ''),
+            'articleEmptyKicker' => (string) ($preview['empty_kicker'] ?? ''),
+            'articleEmptyTitle' => (string) ($preview['empty_title'] ?? ''),
+            'articleEmptyDescription' => (string) ($preview['empty_description'] ?? ''),
         ]);
     }
 
