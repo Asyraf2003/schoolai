@@ -1,3 +1,15 @@
+@media (min-width: 1024px) {
+    .gallery-story__title-rail {
+        width: 90vw;
+        max-width: none;
+    }
+
+    .gallery-story__title[data-text-role="display"] {
+        font-size: clamp(7rem, 12vw, 16rem);
+        line-height: .78;
+    }
+}
+
 @media (max-width: 1279px) {
     .home-page {
         --values-gallery-responsive-overlap: clamp(10rem, 24svh, 18rem);
@@ -118,6 +130,13 @@
     }
 
     .gallery-story__intro { min-height: 86svh; }
+    .gallery-story__title-rail {
+        width: 92vw;
+        padding-bottom: clamp(2rem, 10vw, 3.5rem);
+    }
+    .gallery-story__title[data-text-role="display"] {
+        font-size: clamp(3.25rem, 16vw, 5rem);
+    }
     .gallery-story__stream { --gallery-item-gap: clamp(.75rem, 2.4svh, 1.35rem); }
     .gallery-story__media { height: min(68svh, 620px); }
     .gallery-story__copy,
