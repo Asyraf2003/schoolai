@@ -36,11 +36,8 @@ function mountTestimonialWall(root) {
 
     metrics = tracks.map((track) => {
       const viewport = track.closest('[data-testimonial-viewport]');
-      const firstCard = track.querySelector('[data-testimonial-card]');
-      const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 0;
-      const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
       const overflow = viewport ? Math.max(track.scrollWidth - viewport.clientWidth, 0) : 0;
-      const travel = Math.min(overflow * 0.82, cardWidth * 1.35 + gap);
+      const travel = overflow * 0.9;
 
       return { track, travel };
     });
