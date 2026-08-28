@@ -11,9 +11,10 @@
       <h2
         class="gallery-story__title"
         id="homepage-gallery-heading"
+        data-text-role="display"
         data-gallery-story-title
       >
-        {{ $galleryHeading }}
+        <span class="gallery-story__title-line">{{ $galleryHeading }}</span>
       </h2>
     </div>
   </div>
