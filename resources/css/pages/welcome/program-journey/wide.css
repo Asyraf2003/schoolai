@@ -3,16 +3,6 @@
         min-height: 100svh;
     }
 
-    .program-kinetic__header {
-        width: 90vw;
-        max-width: none;
-        padding: clamp(1.5rem, 4svh, 3rem) 0 clamp(3rem, 7svh, 5.5rem);
-    }
-
-    .program-kinetic__title[data-text-role="display"] {
-        font-size: clamp(7rem, 12vw, 16rem);
-    }
-
     .program-kinetic__cards {
         --program-card-base: 7svh;
         --program-card-interval: 9svh;
@@ -172,10 +162,6 @@
 @media (min-width: 1280px) {
     .program-kinetic {
         --program-values-clearance: clamp(4.5rem, 11svh, 7.5rem);
-    }
-
-    .program-kinetic__header {
-        padding: clamp(.75rem, 1.6svh, 1.5rem) 0 clamp(.75rem, 1.8svh, 1.5rem);
     }
 
     .program-kinetic__cards {
