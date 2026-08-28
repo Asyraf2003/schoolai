@@ -50,6 +50,21 @@ it('renders localized About Vision and Mission before Program', function (): voi
     }
 });
 
+it('keeps About Vision and Mission body copy readable without enlarging the headings', function (): void {
+    $base = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
+    $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
+
+    expect($base)
+        ->toContain('font-size: clamp(1.08rem, 1.55vw, 1.28rem)')
+        ->toContain('color: rgb(21 21 21 / .84)')
+        ->toContain('font-size: clamp(.92rem, .25vw + .87rem, 1rem)')
+        ->toContain('color: rgb(21 21 21 / .78)')
+        ->toContain('font-size: clamp(2.5rem, 7vw, 5.8rem)')
+        ->and($enhanced)
+        ->toContain('font-size: clamp(.92rem, .3vw + .86rem, 1rem)')
+        ->toContain('font-size: clamp(3rem, 4.6vw, 5.7rem)');
+});
+
 it('provides one configurable gradual Vision background compositor', function (): void {
     $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
     $compositor = file_get_contents(
