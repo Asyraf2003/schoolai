@@ -13,44 +13,42 @@
         cursor: var(--home-cursor-default);
     }
 
-    body.home-page[data-cursor-character]
-        :is(
-            a[href],
-            button,
-            [role="button"],
-            summary,
-            label[for],
-            input[type="button"],
-            input[type="submit"],
-            input[type="reset"],
-            select,
-            .nav-mega__trigger,
-            .nav-language__button,
-            .nav-language__option,
-            .nav-hero-audio__text,
-            .navbar__hero-audio-icon,
-            .nilai-card,
-            .program-card,
-            .program-kinetic__trigger,
-            .galeri-story-card,
-            .galeri-story-visual__panel.is-active,
-            .galeri-story-visual__media,
-            .galeri-story-visual__play,
-            .galeri-story-card__mobile-media,
-            .galeri-story-card__mobile-play,
-            .gallery-wall-card,
-            .faq-card summary
-        )
-        :not([disabled])
-        :not([aria-disabled="true"])
-        :not(.is-disabled)
-        :not(.footer-channel--disabled)
-        :not(.nav-link--dummy) {
+    body.home-page[data-cursor-character] :is(
+        a[href],
+        button,
+        [role="button"],
+        summary,
+        label[for],
+        input[type="button"],
+        input[type="submit"],
+        input[type="reset"],
+        select,
+        .nav-mega__trigger,
+        .nav-language__button,
+        .nav-language__option,
+        .nav-hero-audio__text,
+        .navbar__hero-audio-icon,
+        .nilai-card,
+        .program-card,
+        .program-kinetic__trigger,
+        .galeri-story-card,
+        .galeri-story-visual__panel.is-active,
+        .galeri-story-visual__media,
+        .galeri-story-visual__play,
+        .galeri-story-card__mobile-media,
+        .galeri-story-card__mobile-play,
+        .gallery-wall-card,
+        .faq-card summary
+    ):not([disabled]):not([aria-disabled="true"]):not(.is-disabled):not(.footer-channel--disabled):not(.nav-link--dummy) {
         cursor: var(--home-cursor-interactive);
     }
 
-    body.home-page[data-cursor-character]
-        :is([disabled], [aria-disabled="true"], .is-disabled, .footer-channel--disabled) {
+    body.home-page[data-cursor-character] :is(
+        [disabled],
+        [aria-disabled="true"],
+        .is-disabled,
+        .footer-channel--disabled
+    ) {
         cursor: not-allowed;
     }
 
