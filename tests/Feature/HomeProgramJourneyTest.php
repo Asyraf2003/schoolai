@@ -149,13 +149,17 @@ it('keeps Codrops geometry while adapting long localized detail titles', functio
 
 it('replays the Program center split with breathing room and no horizontal heading shift', function (): void {
     $headingCss = file_get_contents(resource_path('css/pages/welcome/program-journey/heading.css'));
+    $sharedHeadingCss = file_get_contents(resource_path('css/surfaces/home/section-display-heading.css'));
     $heading = file_get_contents(resource_path('js/surfaces/home/program-journey/heading.js'));
 
     expect($headingCss)
-        ->toContain('row-gap: .12em')
-        ->toContain('margin-block: 0')
+        ->toContain('section-display-heading.css')
         ->toContain('translate3d(0, 114%, 0)')
         ->toContain('translate3d(0, -114%, 0)')
+        ->and($sharedHeadingCss)
+        ->toContain('row-gap: .12em')
+        ->toContain('margin-block: 0')
+        ->toContain('line-height: .84')
         ->and($heading)
         ->toContain('intersectionRatio >= 0.16')
         ->toContain('threshold: [0, 0.16]')
