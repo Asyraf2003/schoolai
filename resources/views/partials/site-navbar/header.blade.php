@@ -23,6 +23,23 @@
 
     <nav class="navbar__menu" id="desktopNavMenu" aria-label="{{ $siteNavbar['aria_label'] ?? __('pages.common.main_nav') }}">
       <ul>
+        @if ($isHomeNav)
+          <li class="nav-item nav-hero-audio nav-hero-audio--desktop">
+            <button
+              type="button"
+              class="nav-link nav-hero-audio__text"
+              data-hero-audio
+              data-hero-audio-label-off="{{ __('shared.navbar.audio.enable_label') }}"
+              data-hero-audio-label-on="{{ __('shared.navbar.audio.disable_label') }}"
+              aria-pressed="false"
+              aria-label="{{ __('shared.navbar.audio.enable_label') }}"
+            >
+              <span class="nav-hero-audio__label nav-hero-audio__label--off">{{ __('shared.navbar.audio.off') }}</span>
+              <span class="nav-hero-audio__label nav-hero-audio__label--on">{{ __('shared.navbar.audio.on') }}</span>
+            </button>
+          </li>
+        @endif
+
         @foreach ($menuItems as $item)
           <li
             class="nav-item{{ $item['is_language'] ? ' nav-language' : '' }}{{ $item['is_login'] ? ' nav-login' : '' }}{{ $item['has_mega_menu'] ? ' nav-mega' : '' }}"
@@ -112,23 +129,6 @@
               </a>
             @endif
           </li>
-
-          @if ($isHomeNav && $loop->first)
-            <li class="nav-item nav-hero-audio nav-hero-audio--desktop">
-              <button
-                type="button"
-                class="nav-link nav-hero-audio__text"
-                data-hero-audio
-                data-hero-audio-label-off="{{ __('shared.navbar.audio.enable_label') }}"
-                data-hero-audio-label-on="{{ __('shared.navbar.audio.disable_label') }}"
-                aria-pressed="false"
-                aria-label="{{ __('shared.navbar.audio.enable_label') }}"
-              >
-                <span class="nav-hero-audio__label nav-hero-audio__label--off">{{ __('shared.navbar.audio.off') }}</span>
-                <span class="nav-hero-audio__label nav-hero-audio__label--on">{{ __('shared.navbar.audio.on') }}</span>
-              </button>
-            </li>
-          @endif
         @endforeach
       </ul>
 
@@ -183,7 +183,7 @@
         class="hamburger"
         id="hamburgerBtn"
         aria-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
-        data-mobile-open-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_open') }}"
+        data-mobile-open-label="{{ $siteNavbar['mobile_open_label'] ?? __('pages.common.mobile_menu_close') }}"
         data-mobile-close-label="{{ $siteNavbar['mobile_close_label'] ?? __('pages.common.mobile_menu_close') }}"
         aria-expanded="false"
         aria-controls="navMenu"
