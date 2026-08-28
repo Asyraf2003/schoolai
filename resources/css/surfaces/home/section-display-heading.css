@@ -1,0 +1,87 @@
+.home-section-display__header {
+    box-sizing: border-box;
+    position: relative;
+    z-index: 20;
+    width: min(90vw, 100rem);
+    margin-inline: auto;
+    padding: clamp(1rem, 2.6vw, 2.5rem) 0 clamp(2.5rem, 6vw, 5rem);
+    text-align: start;
+}
+
+.home-section-display__title[data-text-role="display"] {
+    display: grid;
+    row-gap: .12em;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    font-family: var(--font-display, Inter, sans-serif);
+    font-size: clamp(3.4rem, 15vw, 7rem);
+    font-optical-sizing: auto;
+    font-synthesis: none;
+    font-variation-settings: "wght" 360;
+    font-weight: 360;
+    letter-spacing: -.055em;
+    line-height: .84;
+    text-transform: uppercase;
+    text-wrap: balance;
+}
+
+.home-section-display__line {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    overflow: hidden;
+    overflow: clip;
+    padding-block: .04em;
+    margin-block: 0;
+}
+
+html[dir="rtl"] .home-section-display__title[data-text-role="display"] {
+    font-family: var(--font-ar-display, Cairo, sans-serif);
+    font-variation-settings: normal;
+    font-weight: 500;
+    letter-spacing: normal;
+    line-height: 1.08;
+    text-transform: none;
+}
+
+@media (max-width: 1023px) {
+    .home-section-display__header {
+        padding-top: clamp(1rem, 4vw, 2.5rem);
+    }
+}
+
+@media (max-width: 639px) {
+    .home-section-display__header {
+        width: 92vw;
+        padding-bottom: clamp(2rem, 10vw, 3.5rem);
+    }
+
+    .home-section-display__title[data-text-role="display"] {
+        font-size: clamp(3.25rem, 16vw, 5rem);
+    }
+}
+
+@media (min-width: 1024px) {
+    .home-section-display__header {
+        width: 90vw;
+        max-width: none;
+        padding: clamp(1.5rem, 4svh, 3rem) 0 clamp(3rem, 7svh, 5.5rem);
+    }
+
+    .home-section-display__title[data-text-role="display"] {
+        font-size: clamp(7rem, 12vw, 16rem);
+    }
+}
+
+@media (min-width: 1280px) {
+    .home-section-display__header {
+        padding: clamp(.75rem, 1.6svh, 1.5rem) 0 clamp(.75rem, 1.8svh, 1.5rem);
+    }
+}
+
+@supports not (overflow: clip) {
+    .home-section-display__line {
+        overflow: hidden;
+    }
+}
