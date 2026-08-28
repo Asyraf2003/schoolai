@@ -49,7 +49,7 @@ it('soft deletes a gallery item without deleting its media and hides it publicly
     expect(Storage::disk('public')->exists('gallery/photos/arsip.jpg'))->toBeTrue();
     expect($survivor->fresh()->sort_order)->toBe(1);
 
-    $this->get(route('home'))
+    $this->get(route('galeri'))
         ->assertOk()
         ->assertDontSee('Galeri untuk diarsipkan');
 
@@ -86,7 +86,7 @@ it('restores an archived gallery item into the next active sort position', funct
         ->and($archived->fresh()->deleted_at)->toBeNull()
         ->and($archived->fresh()->sort_order)->toBe(2);
 
-    $this->get(route('home'))
+    $this->get(route('galeri'))
         ->assertOk()
         ->assertSee('Galeri lama');
 });
@@ -152,7 +152,7 @@ it('atomically restores an archived gallery item and archives its identical acti
         ->and($archived->fresh()->sort_order)->toBe(1);
     $this->assertSoftDeleted('gallery_items', ['id' => $replacement->id]);
 
-    $this->get(route('home'))
+    $this->get(route('galeri'))
         ->assertOk()
         ->assertSee('Galeri lama identik')
         ->assertDontSee('Galeri aktif pengganti');
