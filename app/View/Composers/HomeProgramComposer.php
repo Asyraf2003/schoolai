@@ -9,6 +9,18 @@ use Illuminate\View\View;
 
 final class HomeProgramComposer
 {
+    /** @var array<int, string> */
+    private const HOMEPAGE_FEATURED_CODES = [
+        'TQ',
+        'KH',
+        'LC',
+        'SJ',
+        'TS',
+        'IT',
+        'FD',
+        'SC',
+    ];
+
     public function __construct(
         private Translator $translator,
         private HomeKineticLinePresenter $kineticLinePresenter,
@@ -19,20 +31,30 @@ final class HomeProgramComposer
         $content = $this->translator->get('home_program');
         $content = is_array($content) ? $content : [];
         $media = $this->media();
-        $items = collect($content['items'] ?? [])->values()->map(
-            static function (mixed $item, int $index) use ($media): array {
-                $item = is_array($item) ? $item : [];
-                $titleLength = Str::length(trim((string) ($item['title'] ?? '')));
+        $items = collect($content['items'] ?? [])
+            ->filter(
+                static fn (mixed $item): bool => is_array($item)
+                    && in_array(
+                        (string) ($item['code'] ?? ''),
+                        self::HOMEPAGE_FEATURED_CODES,
+                        true,
+                    )
+            )
+            ->values()
+            ->map(
+                static function (mixed $item, int $index) use ($media): array {
+                    $item = is_array($item) ? $item : [];
+                    $titleLength = Str::length(trim((string) ($item['title'] ?? '')));
 
-                return array_replace($item, [
-                    'detail_id' => 'program-detail-'.Str::lower((string) ($item['code'] ?? '')),
-                    'media' => $media[$index % count($media)],
-                    'title_scale' => $titleLength <= 12
-                        ? 'short'
-                        : ($titleLength <= 20 ? 'medium' : 'long'),
-                ]);
-            }
-        );
+                    return array_replace($item, [
+                        'detail_id' => 'program-detail-'.Str::lower((string) ($item['code'] ?? '')),
+                        'media' => $media[$index % count($media)],
+                        'title_scale' => $titleLength <= 12
+                            ? 'short'
+                            : ($titleLength <= 20 ? 'medium' : 'long'),
+                    ]);
+                }
+            );
         $words = collect($content['kinetic_words'] ?? [])
             ->filter(
                 static fn (mixed $word): bool => is_string($word)
