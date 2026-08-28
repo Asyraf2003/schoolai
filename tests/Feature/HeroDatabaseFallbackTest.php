@@ -2,11 +2,14 @@
 
 use App\Models\HeroSetting;
 use App\Models\HeroSlide;
+use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 it('uses localized singleton Opening copy with the fixed configured video', function (): void {
+    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
+
     HeroSetting::query()->firstOrFail()->update([
         'title_id' => 'Opening Indonesia',
         'title_en' => 'Opening English',
