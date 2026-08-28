@@ -13,11 +13,11 @@
     @endfor
   </div>
 
-  <header class="program-kinetic__header">
-    <h2 class="program-kinetic__title" id="program-kinetic-title" data-text-role="display" data-program-heading
+  <header class="program-kinetic__header home-section-display__header">
+    <h2 class="program-kinetic__title home-section-display__title" id="program-kinetic-title" data-text-role="display" data-program-heading
       aria-label="{{ $programContent['section_label'] ?? '' }}">
       @foreach ($programHeadingLines as $line)
-        <span class="program-kinetic__title-line program-kinetic__title-line--{{ $loop->iteration }}">
+        <span class="program-kinetic__title-line home-section-display__line program-kinetic__title-line--{{ $loop->iteration }}">
           <span class="program-kinetic__title-text" data-program-heading-line aria-hidden="true">{{ $line }}</span>
         </span>
       @endforeach
