@@ -7,8 +7,11 @@
   overflow: clip;
   padding-block: calc(var(--testimonial-handoff-height) + clamp(3.5rem, 5vw, 5.5rem)) clamp(5rem, 8vw, 8rem);
   background:
-    linear-gradient(180deg, var(--gallery-story-bg, #6f9b72) 0%, #f4f3ef 100%)
-    top / 100% var(--testimonial-handoff-height) no-repeat,
+    linear-gradient(
+      180deg,
+      var(--gallery-story-final-bg, var(--gallery-story-bg, #6f9b72)) 0%,
+      #f4f3ef 100%
+    ) top / 100% var(--testimonial-handoff-height) no-repeat,
     #f4f3ef;
   color: #151515;
 }

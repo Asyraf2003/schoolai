@@ -154,12 +154,12 @@ return [
         ],
     ],
     'nilai_sekolah' => [
-        'subtitle' => 'Q-III adalah empat pondasi karakter Al-Mustaqbal: Quranic, Inspiration, Innovation, dan Integrity.',
+        'subtitle' => 'Q-III adalah empat pondasi karakter Al-Mustaqbal: Qur’ani, inspiratif, inovatif, dan berintegritas.',
         'aria_label' => 'Nilai Q-III Al-Mustaqbal',
         'items' => [
             [
                 'code' => 'Q',
-                'title' => 'Quranic (Qur’ani)',
+                'title' => 'Qur’ani',
                 'accent' => '#22c55e',
                 'summary' => 'Berakar pada Al-Qur’an dan Sunnah Rasulullah SAW.',
                 'text_parts' => [
@@ -170,7 +170,7 @@ return [
             ],
             [
                 'code' => 'I',
-                'title' => 'Inspiration (Inspiratif)',
+                'title' => 'Inspiratif',
                 'accent' => '#a855f7',
                 'summary' => 'Menumbuhkan semangat untuk menginspirasi lingkungan sekitar.',
                 'text_parts' => [
@@ -181,7 +181,7 @@ return [
             ],
             [
                 'code' => 'I',
-                'title' => 'Innovation (Inovatif)',
+                'title' => 'Inovatif',
                 'accent' => '#f97316',
                 'summary' => 'Berpikir kritis, kreatif, dan berani mencoba hal baru.',
                 'text_parts' => [
@@ -192,7 +192,7 @@ return [
             ],
             [
                 'code' => 'I',
-                'title' => 'Integrity (Integritas)',
+                'title' => 'Integritas',
                 'accent' => '#0ea5e9',
                 'summary' => 'Jujur, amanah, dan berakhlak mulia.',
                 'text_parts' => [

@@ -159,7 +159,7 @@ return [
         'items' => [
             [
                 'code' => 'Q',
-                'title' => 'قرآني (Quranic)',
+                'title' => 'قرآني',
                 'accent' => '#22c55e',
                 'summary' => 'راسخ في القرآن وسنة رسول الله صلى الله عليه وسلم.',
                 'text_parts' => [
@@ -170,7 +170,7 @@ return [
             ],
             [
                 'code' => 'I',
-                'title' => 'الإلهام (Inspiration)',
+                'title' => 'الإلهام',
                 'accent' => '#a855f7',
                 'summary' => 'تنمية روح الإلهام والنفع للمحيط.',
                 'text_parts' => [
@@ -181,7 +181,7 @@ return [
             ],
             [
                 'code' => 'I',
-                'title' => 'الابتكار (Innovation)',
+                'title' => 'الابتكار',
                 'accent' => '#f97316',
                 'summary' => 'تفكير نقدي وإبداعي مع الشجاعة لتجربة الجديد.',
                 'text_parts' => [
@@ -192,7 +192,7 @@ return [
             ],
             [
                 'code' => 'I',
-                'title' => 'النزاهة (Integrity)',
+                'title' => 'النزاهة',
                 'accent' => '#0ea5e9',
                 'summary' => 'صدق وأمانة وأخلاق كريمة.',
                 'text_parts' => [

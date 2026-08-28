@@ -35,12 +35,18 @@ function mountGalleryStory(root) {
     mounted = true;
 
     const section = root.closest('.galeri-section') || root;
+    const page = section.closest('.home-page');
     const items = Array.from(root.querySelectorAll('[data-gallery-story-item]'));
+    const finalBackground = items[items.length - 1]?.dataset.galleryBackground || '';
     const valuesWorld = document.querySelector('[data-program-values-world]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let activeBackground = '';
     let frame = 0;
     let destroyed = false;
+
+    if (page && finalBackground) {
+        page.style.setProperty('--gallery-story-final-bg', finalBackground);
+    }
 
     function paintHandoff() {
         const exitProgress = readValuesExitProgress(valuesWorld);
