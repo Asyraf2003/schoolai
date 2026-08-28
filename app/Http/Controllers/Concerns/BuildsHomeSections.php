@@ -27,6 +27,18 @@ trait BuildsHomeSections
             return ['items' => []];
         }
 
+        $isFacilities = ($gallery['source'] ?? null) === 'facilities';
+
+        if ($isFacilities) {
+            $gallery['items'] = collect($gallery['items'] ?? [])
+                ->filter(static fn (mixed $item): bool => is_array($item))
+                ->values()
+                ->all();
+            $gallery['cta'] = [];
+
+            return $gallery;
+        }
+
         $gallery['items'] = $this->latestGalleryItems(6);
         if (isset($gallery['cta']) && is_array($gallery['cta'])) {
             $gallery['cta']['href'] = route('galeri');

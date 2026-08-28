@@ -94,9 +94,20 @@
     padding-top: .85rem;
 }
 
+.program-kinetic__eyebrow,
 .program-kinetic__name,
 .program-kinetic__summary {
     display: block;
+}
+
+.program-kinetic__eyebrow {
+    margin-bottom: .35rem;
+    color: rgb(16 47 71 / .58);
+    font-size: clamp(.64rem, .62vw, .76rem);
+    font-weight: 720;
+    line-height: 1.25;
+    letter-spacing: .08em;
+    text-transform: uppercase;
 }
 
 .program-kinetic__name {
@@ -126,4 +137,9 @@ html[dir="rtl"] .program-kinetic__kinetic-line {
 
 html[dir="rtl"] .program-kinetic__cards {
     direction: rtl;
+}
+
+html[dir="rtl"] .program-kinetic__eyebrow {
+    letter-spacing: normal;
+    text-transform: none;
 }

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'gallery_heading' => 'AREA OF GALLERY',
+    'gallery_heading' => 'OUR FACILITIES',
     'gallery_more' => 'View more',
     'article' => [
         'display_heading' => 'ARTICLES',

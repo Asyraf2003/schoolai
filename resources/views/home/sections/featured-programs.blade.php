@@ -38,8 +38,11 @@
               style="object-position: {{ $program['media']['position'] }}" />
           </span>
           <span class="program-kinetic__caption">
+            @if (! empty($program['eyebrow']))
+              <span class="program-kinetic__eyebrow">{{ $program['eyebrow'] }}</span>
+            @endif
             <strong class="program-kinetic__name">{{ $program['title'] }}</strong>
-            <span class="program-kinetic__summary">{{ $program['description'] }}</span>
+            <span class="program-kinetic__summary">{{ $program['summary'] }}</span>
           </span>
         </button>
       </article>

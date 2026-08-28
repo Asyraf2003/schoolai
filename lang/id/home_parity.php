@@ -53,7 +53,7 @@ return [
                 'title' => 'Lingkungan yang Mengundang Anak untuk Tumbuh dan Menemukan Potensinya',
                 'description' => 'Ruang belajar yang baik bukan sekadar tempat, tetapi bagian dari pengalaman yang menumbuhkan rasa ingin tahu, keberanian, dan kebersamaan.',
                 'cta' => [
-                    'label' => 'Lihat Kehidupan Sekolah',
+                    'label' => 'Lihat Fasilitas Sekolah',
                     'href' => '#galeri',
                     'action' => 'anchor',
                 ],
@@ -72,6 +72,9 @@ return [
             'line_2' => 'School',
         ],
         'items' => [
+            2 => [
+                'label' => 'Fasilitas',
+            ],
             5 => [
                 'options' => [
                     ['locale' => 'id', 'label' => 'Indonesia', 'short' => 'ID'],
@@ -93,6 +96,169 @@ return [
             ],
             1 => [
                 'title' => 'Ekstrakurikuler',
+            ],
+        ],
+    ],
+    'visi_misi' => [
+        'missions_intro' => [
+            'title' => 'Lima Jaminan Mutu Lulusan Al-Mustaqbal',
+        ],
+        'missions' => [
+            [
+                'title' => 'Generasi Islami Berlandaskan Al-Qur’an & Sunnah',
+                'accent' => '#22c55e',
+                'text_parts' => [
+                    ['text' => 'Membentuk generasi Islami berdasarkan '],
+                    ['text' => 'Al-Qur’an dan Sunnah Rasulullah SAW', 'mark' => 'green'],
+                    ['text' => '.'],
+                ],
+            ],
+            [
+                'title' => 'Academic Excellence & IT Literate',
+                'accent' => '#0ea5e9',
+                'text_parts' => [
+                    ['text' => 'Membangun '],
+                    ['text' => 'keunggulan akademik', 'mark' => 'blue'],
+                    ['text' => ' sekaligus '],
+                    ['text' => 'literasi teknologi informasi', 'mark' => 'orange'],
+                    ['text' => ' yang relevan dengan perkembangan zaman.'],
+                ],
+            ],
+            [
+                'title' => 'Komunikasi Aktif Tiga Bahasa',
+                'accent' => '#f97316',
+                'text_parts' => [
+                    ['text' => 'Mengembangkan kemampuan komunikasi aktif dalam tiga bahasa: '],
+                    ['text' => 'Arab, Inggris, dan Indonesia', 'mark' => 'orange'],
+                    ['text' => '.'],
+                ],
+            ],
+            [
+                'title' => 'Gemar Membaca & Menulis',
+                'accent' => '#a855f7',
+                'text_parts' => [
+                    ['text' => 'Menumbuhkan '],
+                    ['text' => 'kegemaran membaca dan menulis', 'mark' => 'purple'],
+                    ['text' => ' sebagai budaya belajar sepanjang hayat.'],
+                ],
+            ],
+            [
+                'title' => 'Peduli Lingkungan',
+                'accent' => '#14b8a6',
+                'text_parts' => [
+                    ['text' => 'Menumbuhkan karakter '],
+                    ['text' => 'peduli lingkungan', 'mark' => 'green'],
+                    ['text' => ' dan kebiasaan menjaga alam dalam kehidupan sehari-hari.'],
+                ],
+            ],
+        ],
+    ],
+    'nilai_sekolah' => [
+        'subtitle' => 'Q-III adalah empat pondasi karakter Al-Mustaqbal: Quranic, Inspiration, Innovation, dan Integrity.',
+        'aria_label' => 'Nilai Q-III Al-Mustaqbal',
+        'items' => [
+            [
+                'code' => 'Q',
+                'title' => 'Quranic (Qur’ani)',
+                'accent' => '#22c55e',
+                'summary' => 'Berakar pada Al-Qur’an dan Sunnah Rasulullah SAW.',
+                'text_parts' => [
+                    ['text' => 'Berakar pada '],
+                    ['text' => 'Al-Qur’an dan Sunnah Rasulullah SAW', 'mark' => 'green'],
+                    ['text' => ' sebagai dasar cara belajar, bersikap, dan bertumbuh.'],
+                ],
+            ],
+            [
+                'code' => 'I',
+                'title' => 'Inspiration (Inspiratif)',
+                'accent' => '#a855f7',
+                'summary' => 'Menumbuhkan semangat untuk menginspirasi lingkungan sekitar.',
+                'text_parts' => [
+                    ['text' => 'Menumbuhkan semangat untuk '],
+                    ['text' => 'menginspirasi dan memberi manfaat', 'mark' => 'purple'],
+                    ['text' => ' bagi lingkungan sekitar.'],
+                ],
+            ],
+            [
+                'code' => 'I',
+                'title' => 'Innovation (Inovatif)',
+                'accent' => '#f97316',
+                'summary' => 'Berpikir kritis, kreatif, dan berani mencoba hal baru.',
+                'text_parts' => [
+                    ['text' => 'Mendorong pola pikir '],
+                    ['text' => 'kritis, kreatif, dan berani mencoba hal baru', 'mark' => 'orange'],
+                    ['text' => ' dalam proses belajar.'],
+                ],
+            ],
+            [
+                'code' => 'I',
+                'title' => 'Integrity (Integritas)',
+                'accent' => '#0ea5e9',
+                'summary' => 'Jujur, amanah, dan berakhlak mulia.',
+                'text_parts' => [
+                    ['text' => 'Membentuk karakter '],
+                    ['text' => 'jujur, amanah, dan berakhlak mulia', 'mark' => 'blue'],
+                    ['text' => ' dalam perkataan maupun tindakan.'],
+                ],
+            ],
+        ],
+    ],
+    'galeri' => [
+        'source' => 'facilities',
+        'section_title' => 'FASILITAS KAMI',
+        'section_subtitle' => 'Ruang dan layanan pendukung yang dirancang untuk membuat kegiatan belajar, ibadah, kesehatan, dan pendampingan keluarga berjalan lebih utuh.',
+        'title' => 'Fasilitas Al Mustaqbal School',
+        'subtitle' => 'Fasilitas sekolah mendukung pembelajaran akademik, teknologi, ibadah, kesehatan, aktivitas fisik, serta keterlibatan orang tua.',
+        'aria_label' => 'Daftar fasilitas Al Mustaqbal School',
+        'cta' => [
+            'label' => '',
+            'href' => '',
+        ],
+        'items' => [
+            [
+                'title' => 'Fasilitas Multimedia & Lab IT',
+                'caption' => 'Perangkat multimedia dan ruang teknologi untuk mendukung literasi digital serta pembelajaran berbasis IT.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Mushallah',
+                'caption' => 'Ruang ibadah yang mendukung pembiasaan sholat berjamaah dan kegiatan keislaman siswa.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Aula Multifungsi',
+                'caption' => 'Ruang bersama untuk kegiatan sekolah, presentasi, pertemuan, dan aktivitas komunitas.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Kolam Renang',
+                'caption' => 'Fasilitas aktivitas air untuk mendukung latihan renang, kebugaran, dan keberanian anak.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Perpustakaan & Laboratorium',
+                'caption' => 'Ruang untuk membaca, bereksperimen, mengamati, dan membangun kebiasaan belajar mandiri.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Konseling Psikologis',
+                'caption' => 'Layanan pendampingan psikologis untuk membantu perkembangan anak dan komunikasi sekolah dengan keluarga.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Parents Class',
+                'caption' => 'Ruang belajar bersama orang tua untuk menyelaraskan pendampingan anak di sekolah dan di rumah.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Dental Health Care',
+                'caption' => 'Dukungan edukasi dan perhatian terhadap kesehatan gigi sebagai bagian dari kebiasaan hidup sehat.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=82',
+            ],
+            [
+                'title' => 'Layanan Full Day School',
+                'caption' => 'Pendampingan kegiatan anak dalam jadwal sekolah yang lebih panjang, terstruktur, aman, dan terarah.',
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82',
             ],
         ],
     ],

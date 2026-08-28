@@ -11,9 +11,9 @@ it('renders localized About Vision and Mission before Program', function (): voi
         'ar' => ['about' => 'عن المدرسة', 'vision' => 'الرؤية', 'mission' => 'الرسالة'],
     ];
     $missionSnippets = [
-        'id' => ['Membentuk generasi Islam berdasarkan', 'baik secara lokal maupun global.'],
-        'en' => ['Nurturing a Muslim generation based on the', 'both locally and globally.'],
-        'ar' => ['تنشئة جيل مسلم يستند إلى', 'على المستويين المحلي والعالمي.'],
+        'id' => ['Membentuk generasi Islami berdasarkan', 'peduli lingkungan'],
+        'en' => ['Nurturing an Islamic generation based on the', 'environmental awareness'],
+        'ar' => ['تنشئة جيل إسلامي يستند إلى', 'الوعي البيئي'],
     ];
 
     foreach (['id', 'en', 'ar'] as $locale) {

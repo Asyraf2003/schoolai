@@ -26,7 +26,7 @@ final class HomeProgramComposer
 
                 return array_replace($item, [
                     'detail_id' => 'program-detail-'.Str::lower((string) ($item['code'] ?? '')),
-                    'media' => $media[$index] ?? $media[0],
+                    'media' => $media[$index % count($media)],
                     'title_scale' => $titleLength <= 12
                         ? 'short'
                         : ($titleLength <= 20 ? 'medium' : 'long'),

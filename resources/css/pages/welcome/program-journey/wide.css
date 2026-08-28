@@ -7,7 +7,7 @@
         --program-card-base: 7svh;
         --program-card-interval: 9svh;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        grid-template-rows: auto auto;
+        grid-auto-rows: auto;
         column-gap: 2vw;
         row-gap: clamp(1rem, 2vw, 2rem);
         width: 96vw;
@@ -21,26 +21,46 @@
         margin-bottom: var(--program-card-base);
     }
 
-    .program-kinetic__card:nth-child(1) { grid-column: 3; grid-row: 1; }
+    .program-kinetic__card:nth-child(1) {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
     .program-kinetic__card:nth-child(2) {
-        grid-column: 4;
+        grid-column: 3;
         grid-row: 1;
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
     }
-    .program-kinetic__card:nth-child(3) { grid-column: 1; grid-row: 2; }
-    .program-kinetic__card:nth-child(4) {
-        grid-column: 2;
-        grid-row: 2;
-        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
-    }
-    .program-kinetic__card:nth-child(5) {
-        grid-column: 3;
-        grid-row: 2;
+
+    .program-kinetic__card:nth-child(3) {
+        grid-column: 4;
+        grid-row: 1;
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 2);
     }
-    .program-kinetic__card:nth-child(6) {
-        grid-column: 4;
-        grid-row: 2;
+
+    .program-kinetic__card:nth-child(n + 4):nth-child(-n + 7) { grid-row: 2; }
+    .program-kinetic__card:nth-child(n + 8):nth-child(-n + 11) { grid-row: 3; }
+    .program-kinetic__card:nth-child(n + 12):nth-child(-n + 15) { grid-row: 4; }
+    .program-kinetic__card:nth-child(n + 16):nth-child(-n + 19) { grid-row: 5; }
+
+    .program-kinetic__card:nth-child(5),
+    .program-kinetic__card:nth-child(9),
+    .program-kinetic__card:nth-child(13),
+    .program-kinetic__card:nth-child(17) {
+        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
+    }
+
+    .program-kinetic__card:nth-child(6),
+    .program-kinetic__card:nth-child(10),
+    .program-kinetic__card:nth-child(14),
+    .program-kinetic__card:nth-child(18) {
+        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 2);
+    }
+
+    .program-kinetic__card:nth-child(7),
+    .program-kinetic__card:nth-child(11),
+    .program-kinetic__card:nth-child(15),
+    .program-kinetic__card:nth-child(19) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 3);
     }
 

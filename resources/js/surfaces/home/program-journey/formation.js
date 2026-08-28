@@ -19,10 +19,19 @@ function readLiftOffset(viewportHeight, viewportWidth) {
   return clamp(viewportHeight * 0.06, 34, 60);
 }
 
-function readTarget(card, index, viewportHeight) {
+function readStaggerIndex(index, viewportWidth) {
+  if (viewportWidth >= 1024) {
+    return index < 3 ? index : (index - 3) % 4;
+  }
+  if (viewportWidth >= 640) return index % 3;
+  return index % 2;
+}
+
+function readTarget(card, index, viewportHeight, viewportWidth) {
   const cardTop = card.getBoundingClientRect().top;
+  const staggerIndex = readStaggerIndex(index, viewportWidth);
   const triggerLine = viewportHeight * (
-    CARD_START_RATIO - CARD_STEP_RATIO * index
+    CARD_START_RATIO - CARD_STEP_RATIO * staggerIndex
   );
   const revealDistance = Math.max(
     1,
@@ -57,7 +66,7 @@ export function mountProgramFormation(root) {
     liftOffset = readLiftOffset(viewportHeight, viewportWidth);
 
     cards.forEach((card, index) => {
-      targets[index] = readTarget(card, index, viewportHeight);
+      targets[index] = readTarget(card, index, viewportHeight, viewportWidth);
     });
   }
 

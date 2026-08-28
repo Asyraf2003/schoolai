@@ -14,14 +14,16 @@
         margin-bottom: var(--program-card-base);
     }
 
-    .program-kinetic__card:nth-child(2),
-    .program-kinetic__card:nth-child(5) {
+    .program-kinetic__card:nth-child(3n + 2) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
     }
 
-    .program-kinetic__card:nth-child(3),
-    .program-kinetic__card:nth-child(6) {
+    .program-kinetic__card:nth-child(3n) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 2);
+    }
+
+    .program-kinetic__card:last-child:nth-child(3n + 1) {
+        grid-column: 2;
     }
 }
 
@@ -81,6 +83,12 @@
     .program-kinetic__card {
         width: 100%;
         margin: 0;
+    }
+
+    .program-kinetic__card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc((100% - .75rem) / 2);
     }
 
     .program-kinetic__image-wrap img { aspect-ratio: 4 / 3; }

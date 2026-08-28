@@ -4,11 +4,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders six localized kinetic Program cards and a full Islamic word field', function (): void {
+it('renders nineteen localized kinetic Program cards and a full Islamic word field', function (): void {
     $expected = [
-        'id' => ['Program Kami', 'Kelompok Bermain', 'Tahfidz Al-Qur’an', 'Literasi & Perpustakaan', 'AKHLAKUL KARIMAH'],
-        'en' => ['Our Programs', 'Playgroup', 'Qur’an Memorization', 'Literacy & Library', 'NOBLE CHARACTER'],
-        'ar' => ['برامجنا', 'مجموعة اللعب', 'تحفيظ القرآن', 'القراءة والمكتبة', 'مكارم الأخلاق'],
+        'id' => ['Program Kami', 'PAUD Tahfidz / Kelompok Bermain', 'Khitobah (Public Speaking)', 'Outing Class', 'AKHLAKUL KARIMAH'],
+        'en' => ['Our Programs', 'Tahfidz Early Childhood / Playgroup', 'Khitobah (Public Speaking)', 'Outing Class', 'NOBLE CHARACTER'],
+        'ar' => ['برامجنا', 'الطفولة المبكرة لتحفيظ القرآن / مجموعة اللعب', 'الخطابة (التحدث أمام الجمهور)', 'الرحلات التعليمية', 'مكارم الأخلاق'],
     ];
     $backs = ['id' => 'Kembali', 'en' => 'Back', 'ar' => 'العودة'];
 
@@ -31,17 +31,17 @@ it('renders six localized kinetic Program cards and a full Islamic word field', 
         preg_match_all('/\sdata-program-handoff-step="\d+"/', $programSection, $handoffSteps);
         preg_match_all('/\sdata-program-type(?:\s|>)/', $programSection, $typeFields);
 
-        expect(count($cards[0]))->toBe(6)
-            ->and(count($triggers[0]))->toBe(6)
-            ->and(count($details[0]))->toBe(6)
-            ->and(count($backControls[0]))->toBe(6)
-            ->and(count($titleScales[0]))->toBe(6)
+        expect(count($cards[0]))->toBe(19)
+            ->and(count($triggers[0]))->toBe(19)
+            ->and(count($details[0]))->toBe(19)
+            ->and(count($backControls[0]))->toBe(19)
+            ->and(count($titleScales[0]))->toBe(19)
             ->and(count($handoffSteps[0]))->toBe(11)
             ->and(count($typeFields[0]))->toBe(1)
-            ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(12)
-            ->and(substr_count($programSection, 'data-program-detail-image-wrap'))->toBe(6)
+            ->and(substr_count($programSection, 'images.unsplash.com'))->toBe(38)
+            ->and(substr_count($programSection, 'data-program-detail-image-wrap'))->toBe(19)
             ->and(substr_count($programSection, 'data-program-type-line'))->toBe(20)
-            ->and(substr_count($programSection, 'class="program-kinetic__detail-description"'))->toBe(6)
+            ->and(substr_count($programSection, 'class="program-kinetic__detail-description"'))->toBe(19)
             ->and($programSection)->not->toContain('program-kinetic__detail-number')
             ->and($programSection)->not->toContain('program-kinetic__detail-eyebrow')
             ->and($programSection)->not->toContain('program-kinetic__detail-intro')
@@ -176,18 +176,27 @@ it('keeps the exact eleven-step Vision to Program handoff', function (): void {
         ->toContain('--handoff-line: #fff');
 });
 
-it('keeps six-card responsive geometry unchanged', function (): void {
+it('keeps nineteen-card responsive geometry bounded across desktop tablet and mobile', function (): void {
     $wide = file_get_contents(resource_path('css/pages/welcome/program-journey/wide.css'));
     $compact = file_get_contents(resource_path('css/pages/welcome/program-journey/compact.css'));
+    $formation = file_get_contents(resource_path('js/surfaces/home/program-journey/formation.js'));
 
     expect($wide)
         ->toContain('--program-card-base: 7svh')
         ->toContain('--program-card-interval: 9svh')
         ->toContain('grid-template-columns: repeat(4, minmax(0, 1fr))')
-        ->toContain('grid-column: 3')
-        ->toContain('grid-column: 4')
+        ->toContain('.program-kinetic__card:nth-child(1)')
+        ->toContain('grid-column: 2')
+        ->toContain('nth-child(n + 16):nth-child(-n + 19)')
         ->and($compact)
         ->toContain('grid-template-columns: repeat(3, minmax(0, 1fr))')
+        ->toContain('last-child:nth-child(3n + 1)')
         ->toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
-        ->not->toContain('aspect-ratio: 4 / 5');
+        ->toContain('last-child:nth-child(odd)')
+        ->not->toContain('aspect-ratio: 4 / 5')
+        ->and($formation)
+        ->toContain('function readStaggerIndex(index, viewportWidth)')
+        ->toContain('return index < 3 ? index : (index - 3) % 4')
+        ->toContain('if (viewportWidth >= 640) return index % 3')
+        ->toContain('return index % 2');
 });

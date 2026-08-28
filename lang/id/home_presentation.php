@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'gallery_heading' => 'AREA GALERI',
+    'gallery_heading' => 'FASILITAS KAMI',
     'gallery_more' => 'Lihat selengkapnya',
     'article' => [
         'display_heading' => 'ARTIKEL',
