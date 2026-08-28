@@ -14,12 +14,6 @@
         <span class="article-showcase__title-line home-section-display__line">{{ $line }}</span>
       @endforeach
     </h2>
-
-    @if ($articleDescription !== '')
-      <p class="article-showcase__description" data-text-role="description">
-        {{ $articleDescription }}
-      </p>
-    @endif
   </header>
 
   <div class="article-showcase__shell">
@@ -47,11 +41,6 @@
 
               <h3>{{ $article['title'] }}</h3>
               <p>{{ $article['description'] }}</p>
-
-              <span class="article-showcase__read">
-                <span>{{ $articleReadLabel }}</span>
-                <span aria-hidden="true">↗</span>
-              </span>
             </div>
           </a>
         </article>
