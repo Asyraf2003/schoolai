@@ -6,6 +6,9 @@
         --home-cursor-interactive-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp");
         --home-cursor-interactive-hotspot-x: 81px;
         --home-cursor-interactive-hotspot-y: 44px;
+        --home-cursor-dizzy-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo3.webp");
+        --home-cursor-annoyed-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo4.webp");
+        --home-cursor-angry-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo5.webp");
     }
 
     body.home-page[data-cursor-character="cwe"] {
@@ -15,6 +18,9 @@
         --home-cursor-interactive-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp");
         --home-cursor-interactive-hotspot-x: 80px;
         --home-cursor-interactive-hotspot-y: 40px;
+        --home-cursor-dizzy-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe3.webp");
+        --home-cursor-annoyed-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe4.webp");
+        --home-cursor-angry-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe5.webp");
     }
 
     /*
@@ -65,6 +71,7 @@
             calc(var(--home-cursor-y) - var(--home-cursor-hotspot-y)),
             0
         );
+        rotate: 0deg;
         will-change: transform;
         contain: layout paint style;
     }
@@ -75,7 +82,39 @@
         --home-cursor-hotspot-y: var(--home-cursor-interactive-hotspot-y);
     }
 
+    .home-cursor:is(
+        [data-state="dizzy"],
+        [data-state="annoyed"],
+        [data-state="angry"]
+    ) {
+        --home-cursor-hotspot-x: 48px;
+        --home-cursor-hotspot-y: 48px;
+    }
+
+    .home-cursor[data-state="dizzy"] {
+        --home-cursor-image: var(--home-cursor-dizzy-image);
+        animation: home-cursor-dizzy 160ms ease-in-out infinite alternate;
+    }
+
+    .home-cursor[data-state="annoyed"] {
+        --home-cursor-image: var(--home-cursor-annoyed-image);
+    }
+
+    .home-cursor[data-state="angry"] {
+        --home-cursor-image: var(--home-cursor-angry-image);
+    }
+
     .home-cursor.is-visible:not([data-state="disabled"]) {
         opacity: 1;
+    }
+
+    @keyframes home-cursor-dizzy {
+        from {
+            rotate: -7deg;
+        }
+
+        to {
+            rotate: 7deg;
+        }
     }
 }
