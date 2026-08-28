@@ -61,35 +61,14 @@
           @endif
 
           @if ($loop->last && $hasDepthCta)
-            <div class="gallery-story__cta-variants" aria-label="{{ __('Pilihan tampilan tombol galeri') }}">
-              <a
-                class="gallery-story__item-link gallery-story__item-link--filled"
-                href="{{ $depthCta['href'] }}"
-                data-depth-gallery-end-link
-                data-gallery-cta-variant="filled"
-              >
-                <span class="gallery-story__cta-label">{{ $galleryMoreLabel }}</span>
-                <span class="gallery-story__cta-icon" aria-hidden="true">↗</span>
-              </a>
-
-              <a
-                class="gallery-story__item-link gallery-story__item-link--outline"
-                href="{{ $depthCta['href'] }}"
-                data-gallery-cta-variant="outline"
-              >
-                <span class="gallery-story__cta-label">{{ $galleryMoreLabel }}</span>
-                <span class="gallery-story__cta-icon" aria-hidden="true">↗</span>
-              </a>
-
-              <a
-                class="gallery-story__item-link gallery-story__item-link--split"
-                href="{{ $depthCta['href'] }}"
-                data-gallery-cta-variant="split"
-              >
-                <span class="gallery-story__cta-label">{{ $galleryMoreLabel }}</span>
-                <span class="gallery-story__cta-icon" aria-hidden="true">↗</span>
-              </a>
-            </div>
+            <a
+              class="gallery-story__item-link gallery-story__item-link--filled"
+              href="{{ $depthCta['href'] }}"
+              data-depth-gallery-end-link
+            >
+              <span class="gallery-story__cta-label">{{ $galleryMoreLabel }}</span>
+              <span class="gallery-story__cta-icon" aria-hidden="true">↗</span>
+            </a>
           @endif
         </div>
       </article>
