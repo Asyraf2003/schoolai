@@ -60,6 +60,9 @@ trait InjectsDatabaseHero
         }
 
         $ppdbUrl = $ppdbOpen ? route('ppdb', absolute: false) : null;
+        $ppdbLinkLabel = $ppdbOpen
+            ? __('runtime.home.ppdb_campaign_link_label')
+            : null;
 
         return [
             'type' => 'video',
@@ -76,17 +79,17 @@ trait InjectsDatabaseHero
             'description' => $ppdbOpen
                 ? __('runtime.home.ppdb_campaign_description')
                 : ($setting?->descriptionForLocale($locale) ?? ($fallback['description'] ?? '')),
+            'eyebrow_href' => $ppdbUrl,
             'title_href' => $ppdbUrl,
-            'campaign_link_label' => $ppdbOpen
-                ? __('runtime.home.ppdb_campaign_link_label')
-                : null,
+            'description_href' => $ppdbUrl,
+            'campaign_link_label' => $ppdbLinkLabel,
             'is_ppdb_campaign' => $ppdbOpen,
             'cta' => [
-                'label' => ! $ppdbOpen && $ctaUrl !== null
-                    ? $setting?->ctaLabelForLocale($locale)
-                    : null,
-                'href' => ! $ppdbOpen ? $ctaUrl : null,
-                'action' => ! $ppdbOpen && $ctaUrl !== null ? 'link' : null,
+                'label' => $ppdbOpen
+                    ? $ppdbLinkLabel
+                    : ($ctaUrl !== null ? $setting?->ctaLabelForLocale($locale) : null),
+                'href' => $ppdbOpen ? $ppdbUrl : $ctaUrl,
+                'action' => ($ppdbOpen || $ctaUrl !== null) ? 'link' : null,
             ],
             'focal_position' => 'center center',
             'overlay_strength' => 0.34,
