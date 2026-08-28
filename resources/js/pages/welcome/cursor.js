@@ -55,10 +55,21 @@ function closestMatch(target, selector) {
     return target instanceof Element ? target.closest(selector) : null;
 }
 
-function preloadEmotionAssets(character) {
-    ['3', '4', '5'].forEach((suffix) => {
+function preloadCursorAssets(character) {
+    ['1', '2', '3', '4', '5'].forEach((suffix) => {
+        const href = `${CURSOR_MEDIA_BASE}/${character}${suffix}.webp`;
+
+        if (!document.head.querySelector(`link[rel="preload"][href="${href}"]`)) {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.type = 'image/webp';
+            link.href = href;
+            document.head.append(link);
+        }
+
         const image = new Image();
-        image.src = `${CURSOR_MEDIA_BASE}/${character}${suffix}.webp`;
+        image.src = href;
     });
 }
 
@@ -80,7 +91,7 @@ export function initHomepageCursor() {
         ];
 
     body.dataset.cursorCharacter = character;
-    preloadEmotionAssets(character);
+    preloadCursorAssets(character);
 
     const cursor = document.createElement('span');
     cursor.className = 'home-cursor';
