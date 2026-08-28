@@ -1,4 +1,5 @@
 const HOMEPAGE_CURSOR_CHARACTERS = ['cwo', 'cwe'];
+const CURSOR_MEDIA_BASE = 'https://media.almustaqbal.sch.id/ui/cursor';
 
 const INTERACTIVE_SELECTOR = [
     'a[href]',
@@ -35,8 +36,30 @@ const DISABLED_SELECTOR = [
     '.footer-channel--disabled',
 ].join(',');
 
+const SHAKE = Object.freeze({
+    minVectorPx: 4,
+    minSpeedPxPerMs: 0.5,
+    reversalCosine: -0.55,
+    reversalWindowMs: 650,
+    reversalsPerBurst: 3,
+    burstRefractoryMs: 650,
+    burstWindowMs: 5000,
+    burstsForAnger: 3,
+    dizzyMs: 800,
+    annoyedMs: 1000,
+    angryMs: 1000,
+    cooldownMs: 3500,
+});
+
 function closestMatch(target, selector) {
     return target instanceof Element ? target.closest(selector) : null;
+}
+
+function preloadEmotionAssets(character) {
+    ['3', '4', '5'].forEach((suffix) => {
+        const image = new Image();
+        image.src = `${CURSOR_MEDIA_BASE}/${character}${suffix}.webp`;
+    });
 }
 
 export function initHomepageCursor() {
@@ -57,6 +80,7 @@ export function initHomepageCursor() {
         ];
 
     body.dataset.cursorCharacter = character;
+    preloadEmotionAssets(character);
 
     const cursor = document.createElement('span');
     cursor.className = 'home-cursor';
@@ -68,7 +92,19 @@ export function initHomepageCursor() {
     let pointerX = -200;
     let pointerY = -200;
     let frameId = 0;
-    let state = 'default';
+    let renderedState = 'default';
+    let baseState = 'default';
+    let emotionState = null;
+    let emotionTimer = 0;
+    let cooldownUntil = 0;
+
+    let lastX = null;
+    let lastY = null;
+    let lastMoveAt = 0;
+    let previousVector = null;
+    let reversalTimes = [];
+    let burstTimes = [];
+    let lastBurstAt = -Infinity;
 
     const paint = () => {
         frameId = 0;
@@ -82,30 +118,152 @@ export function initHomepageCursor() {
         }
     };
 
-    const setState = (nextState) => {
-        if (state === nextState) {
+    const setRenderedState = (nextState) => {
+        if (renderedState === nextState) {
             return;
         }
 
-        state = nextState;
+        renderedState = nextState;
         cursor.dataset.state = nextState;
     };
 
+    const syncVisualState = () => {
+        if (baseState === 'disabled') {
+            setRenderedState('disabled');
+            cursor.classList.remove('is-visible');
+            return;
+        }
+
+        setRenderedState(emotionState ?? baseState);
+        cursor.classList.add('is-visible');
+    };
+
+    const clearEmotionTimer = () => {
+        if (!emotionTimer) {
+            return;
+        }
+
+        window.clearTimeout(emotionTimer);
+        emotionTimer = 0;
+    };
+
+    const showDizzy = () => {
+        clearEmotionTimer();
+        emotionState = 'dizzy';
+        syncVisualState();
+
+        emotionTimer = window.setTimeout(() => {
+            emotionTimer = 0;
+            emotionState = null;
+            syncVisualState();
+        }, SHAKE.dizzyMs);
+    };
+
+    const startAnnoyedAngrySequence = () => {
+        clearEmotionTimer();
+        reversalTimes = [];
+        burstTimes = [];
+        emotionState = 'annoyed';
+        syncVisualState();
+
+        emotionTimer = window.setTimeout(() => {
+            emotionState = 'angry';
+            syncVisualState();
+
+            emotionTimer = window.setTimeout(() => {
+                emotionTimer = 0;
+                emotionState = null;
+                cooldownUntil = performance.now() + SHAKE.cooldownMs;
+                syncVisualState();
+            }, SHAKE.angryMs);
+        }, SHAKE.annoyedMs);
+    };
+
+    const registerShakeBurst = (now) => {
+        if (now < cooldownUntil || now - lastBurstAt < SHAKE.burstRefractoryMs) {
+            return;
+        }
+
+        lastBurstAt = now;
+        burstTimes = burstTimes.filter((time) => now - time <= SHAKE.burstWindowMs);
+        burstTimes.push(now);
+
+        if (burstTimes.length >= SHAKE.burstsForAnger) {
+            startAnnoyedAngrySequence();
+            return;
+        }
+
+        showDizzy();
+    };
+
+    const detectShake = (event, now) => {
+        if (
+            baseState === 'disabled' ||
+            emotionState === 'annoyed' ||
+            emotionState === 'angry' ||
+            now < cooldownUntil
+        ) {
+            return;
+        }
+
+        if (lastX === null || lastY === null) {
+            lastX = event.clientX;
+            lastY = event.clientY;
+            lastMoveAt = now;
+            return;
+        }
+
+        const dx = event.clientX - lastX;
+        const dy = event.clientY - lastY;
+        const dt = Math.max(now - lastMoveAt, 1);
+        const distance = Math.hypot(dx, dy);
+
+        lastX = event.clientX;
+        lastY = event.clientY;
+        lastMoveAt = now;
+
+        if (distance < SHAKE.minVectorPx) {
+            return;
+        }
+
+        const speed = distance / dt;
+        const currentVector = { dx, dy, distance };
+
+        if (previousVector && speed >= SHAKE.minSpeedPxPerMs) {
+            const dot = dx * previousVector.dx + dy * previousVector.dy;
+            const cosine = dot / (distance * previousVector.distance);
+
+            if (cosine <= SHAKE.reversalCosine) {
+                reversalTimes = reversalTimes.filter(
+                    (time) => now - time <= SHAKE.reversalWindowMs,
+                );
+                reversalTimes.push(now);
+
+                if (reversalTimes.length >= SHAKE.reversalsPerBurst) {
+                    reversalTimes = [];
+                    registerShakeBurst(now);
+                }
+            }
+        }
+
+        previousVector = currentVector;
+    };
+
     const handlePointerMove = (event) => {
+        const now = performance.now();
         pointerX = event.clientX;
         pointerY = event.clientY;
 
         const disabled = closestMatch(event.target, DISABLED_SELECTOR);
         if (disabled) {
-            setState('disabled');
-            cursor.classList.remove('is-visible');
-            schedulePaint();
-            return;
+            baseState = 'disabled';
+        } else {
+            const interactive = closestMatch(event.target, INTERACTIVE_SELECTOR);
+            baseState = interactive ? 'interactive' : 'default';
         }
 
-        const interactive = closestMatch(event.target, INTERACTIVE_SELECTOR);
-        setState(interactive ? 'interactive' : 'default');
-        cursor.classList.add('is-visible');
+        detectShake(event, now);
+        syncVisualState();
         schedulePaint();
     };
 
