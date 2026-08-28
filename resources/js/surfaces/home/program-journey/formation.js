@@ -20,10 +20,7 @@ function readLiftOffset(viewportHeight, viewportWidth) {
 }
 
 function readStaggerIndex(index, viewportWidth) {
-  if (viewportWidth >= 1024) {
-    return index < 3 ? index : (index - 3) % 4;
-  }
-  if (viewportWidth >= 640) return index % 3;
+  if (viewportWidth >= 640) return index % 4;
   return index % 2;
 }
 
