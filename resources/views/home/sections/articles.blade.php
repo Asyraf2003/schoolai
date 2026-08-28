@@ -5,14 +5,14 @@
   aria-labelledby="homepage-article-heading"
 >
   <div class="article-showcase__shell">
-    <header class="article-showcase__header">
+    <header class="article-showcase__header home-section-display__header">
       <h2
-        class="article-showcase__title"
+        class="article-showcase__title home-section-display__title"
         id="homepage-article-heading"
         data-text-role="display"
       >
         @foreach ($articleHeadingLines as $line)
-          <span class="article-showcase__title-line">{{ $line }}</span>
+          <span class="article-showcase__title-line home-section-display__line">{{ $line }}</span>
         @endforeach
       </h2>
 
