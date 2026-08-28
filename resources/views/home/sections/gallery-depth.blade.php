@@ -7,14 +7,14 @@
   <div class="gallery-story__handoff" data-gallery-story-handoff aria-hidden="true"></div>
 
   <div class="gallery-story__intro" data-gallery-story-intro>
-    <div class="gallery-story__title-rail">
+    <div class="gallery-story__title-rail home-section-display__header">
       <h2
-        class="gallery-story__title"
+        class="gallery-story__title home-section-display__title"
         id="homepage-gallery-heading"
         data-text-role="display"
         data-gallery-story-title
       >
-        <span class="gallery-story__title-line">{{ $galleryHeading }}</span>
+        <span class="gallery-story__title-line home-section-display__line">{{ $galleryHeading }}</span>
       </h2>
     </div>
   </div>
