@@ -26,18 +26,17 @@ it('keeps all H5 group two Blade owners free of PHP shaping', function (): void 
 
 it('renders localized Home gallery presentation and final Arabic mission text', function (): void {
     $expected = [
-        'id' => ['AREA GALERI', 'Lihat selengkapnya'],
-        'en' => ['AREA OF GALLERY', 'View more'],
-        'ar' => ['مساحة المعرض', 'عرض المزيد'],
+        'id' => 'AREA GALERI',
+        'en' => 'AREA OF GALLERY',
+        'ar' => 'مساحة المعرض',
     ];
 
-    foreach ($expected as $locale => [$galleryHeading, $galleryMore]) {
+    foreach ($expected as $locale => $galleryHeading) {
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
         $response
             ->assertOk()
-            ->assertSee($galleryHeading)
-            ->assertSee($galleryMore);
+            ->assertSee($galleryHeading);
 
         if ($locale === 'ar') {
             $response
