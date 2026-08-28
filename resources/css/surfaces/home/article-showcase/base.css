@@ -3,7 +3,6 @@
     --article-ink: #152018;
     --article-muted: rgb(21 32 24 / .66);
     --article-line: rgb(21 32 24 / .16);
-    --article-accent: #567f60;
     position: relative;
     background: var(--article-bg);
     color: var(--article-ink);
@@ -22,38 +21,9 @@
     text-align: start;
 }
 
-.article-showcase__review {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .55rem;
-    margin-block: -1.5rem 2.5rem;
-}
-
-.article-showcase__review a {
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    padding: .55rem .75rem;
-    border: 1px solid var(--article-line);
-    border-radius: 999px;
-    color: inherit;
-    font-size: .72rem;
-    text-decoration: none;
-}
-
-.article-showcase__review a[aria-current="page"] {
-    border-color: var(--article-ink);
-    background: var(--article-ink);
-    color: var(--article-bg);
-}
-
-.article-showcase__review strong {
-    font-size: .78rem;
-}
-
 .article-showcase__grid {
     display: grid;
-    gap: clamp(1rem, 2vw, 2rem);
+    gap: clamp(.85rem, 1.5vw, 1.35rem);
 }
 
 .article-showcase__card {
@@ -61,49 +31,66 @@
 }
 
 .article-showcase__card-link {
-    display: grid;
+    position: relative;
+    display: block;
+    min-height: 25rem;
     height: 100%;
-    color: inherit;
+    overflow: hidden;
+    border-radius: clamp(.8rem, 1vw, 1.15rem);
+    background: #cfd5d0;
+    color: #fff;
     text-decoration: none;
 }
 
 .article-showcase__media {
-    position: relative;
+    position: absolute;
+    inset: 0;
     margin: 0;
-    overflow: hidden;
-    background: #d9ddd8;
-    aspect-ratio: 16 / 10;
+}
+
+.article-showcase__media,
+.article-showcase__media img {
+    width: 100%;
+    height: 100%;
 }
 
 .article-showcase__media img {
     display: block;
-    width: 100%;
-    height: 100%;
     object-fit: cover;
-    transition: transform 380ms cubic-bezier(.22, 1, .36, 1);
+    transition: transform 420ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .article-showcase__body {
-    display: grid;
-    align-content: start;
-    gap: .8rem;
-    padding-block: 1.15rem;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: .75rem;
+    padding: clamp(1.25rem, 2.4vw, 2.25rem);
+    background: linear-gradient(
+        to top,
+        rgb(6 18 12 / .9) 0%,
+        rgb(6 18 12 / .56) 46%,
+        rgb(6 18 12 / .08) 78%,
+        transparent 100%
+    );
 }
 
 .article-showcase__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: .55rem 1rem;
-    color: var(--article-accent);
-    font-size: .7rem;
+    gap: .5rem .9rem;
+    color: rgb(255 255 255 / .84);
+    font-size: .68rem;
     font-weight: 800;
-    letter-spacing: .06em;
+    letter-spacing: .05em;
     text-transform: uppercase;
 }
 
 .article-showcase__meta span + span {
-    color: var(--article-muted);
-    font-weight: 650;
+    font-weight: 600;
     letter-spacing: 0;
     text-transform: none;
 }
@@ -114,19 +101,19 @@
 }
 
 .article-showcase__body h3 {
-    max-width: 22ch;
-    font-size: clamp(1.25rem, 1vw + 1rem, 2rem);
+    max-width: 20ch;
+    font-size: clamp(1.45rem, 1.4vw + 1rem, 2.65rem);
     font-weight: 720;
     letter-spacing: -.035em;
-    line-height: 1.05;
+    line-height: 1.02;
     text-wrap: balance;
 }
 
 .article-showcase__body p {
-    max-width: 42ch;
-    color: var(--article-muted);
-    font-size: .94rem;
-    line-height: 1.52;
+    max-width: 44ch;
+    color: rgb(255 255 255 / .84);
+    font-size: clamp(.88rem, .22vw + .82rem, 1rem);
+    line-height: 1.5;
 }
 
 .article-showcase__read,
@@ -139,13 +126,13 @@
 
 .article-showcase__read {
     width: fit-content;
-    margin-block-start: .35rem;
-    font-size: .78rem;
+    margin-block-start: .2rem;
+    font-size: .76rem;
     font-weight: 760;
 }
 
 .article-showcase__all {
-    width: min(100%, 25rem);
+    width: min(100%, 28rem);
     margin-block-start: clamp(2.5rem, 5vw, 4.5rem);
     padding-block: 1rem;
     border-bottom: 1px solid currentColor;
@@ -155,8 +142,7 @@
 }
 
 .article-showcase__card-link:focus-visible,
-.article-showcase__all:focus-visible,
-.article-showcase__review a:focus-visible {
+.article-showcase__all:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 5px;
 }

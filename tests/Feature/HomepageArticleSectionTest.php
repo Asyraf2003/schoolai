@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('renders the static homepage Article preview after Testimonial', function (): void {
+it('renders the static homepage Article Lead Rail after Testimonial', function (): void {
     app()->setLocale('id');
 
     $response = $this->get(route('home'));
@@ -17,15 +17,18 @@ it('renders the static homepage Article preview after Testimonial', function ():
     $response
         ->assertOk()
         ->assertSee('data-article-showcase', false)
-        ->assertSee('data-article-variant="b"', false)
         ->assertSee('CERITA', false)
         ->assertSee('&amp; WAWASAN', false)
+        ->assertSee('Lihat selengkapnya')
+        ->assertDontSee('data-article-variant', false)
         ->assertDontSee('data-article-story', false)
         ->assertDontSee('article-debug-mark', false)
         ->assertDontSee('tes1');
 
     expect(strpos($html, 'data-testimonial-wall'))
         ->toBeLessThan(strpos($html, 'data-article-showcase'))
+        ->and(substr_count($html, 'article-showcase__card article-showcase__card--'))
+        ->toBe(4)
         ->and($response->original->getData())->not->toHaveKey('articlesSection');
 });
 

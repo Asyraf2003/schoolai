@@ -4,8 +4,7 @@ return [
     'heading_lines' => ['CERITA', '& WAWASAN'],
     'description' => 'Artikel, kabar, dan catatan yang merekam proses belajar, karya, dan kehidupan di Al Mustaqbal.',
     'read_label' => 'Baca artikel',
-    'cta_label' => 'Lihat semua artikel',
-    'review_label' => 'Pilih komposisi dummy Artikel',
+    'cta_label' => 'Lihat selengkapnya',
     'items' => [
         [
             'category' => 'PENDIDIKAN',

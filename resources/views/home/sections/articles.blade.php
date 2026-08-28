@@ -1,8 +1,7 @@
 <section
-  class="article-showcase article-showcase--{{ $articleVariant }}"
+  class="article-showcase"
   id="artikel"
   data-article-showcase
-  data-article-variant="{{ $articleVariant }}"
   aria-labelledby="homepage-article-heading"
 >
   <div class="article-showcase__shell">
@@ -23,20 +22,6 @@
         </p>
       @endif
     </header>
-
-    @if ($articleReviewMode)
-      <nav class="article-showcase__review" aria-label="{{ $articleReviewLabel }}">
-        @foreach ($articleVariants as $key => $label)
-          <a
-            href="{{ route('home', ['article_variant' => $key]) }}#artikel"
-            @if ($key === $articleVariant) aria-current="page" @endif
-          >
-            <strong>{{ strtoupper($key) }}</strong>
-            <span>{{ $label }}</span>
-          </a>
-        @endforeach
-      </nav>
-    @endif
 
     <div class="article-showcase__grid">
       @foreach ($articleItems as $article)
