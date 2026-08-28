@@ -37,6 +37,10 @@ trait InjectsDatabaseHero
         $setting = Schema::hasTable('hero_settings')
             ? HeroSetting::query()->first()
             : null;
+        $ppdbSetting = Schema::hasTable('ppdb_settings')
+            ? PpdbSetting::query()->first()
+            : null;
+        $ppdbOpen = $ppdbSetting?->isRegistrationOpen() === true;
         $mediaUrl = $this->publicAssetUrl(config('media.homepage_hero_video_url'));
         $fallbackImage = $this->publicAssetUrl($hero['fallback_image_url'] ?? null);
         $posterUrl = $this->publicAssetUrl($fallback['poster_url'] ?? null) ?: $fallbackImage;
@@ -51,9 +55,11 @@ trait InjectsDatabaseHero
 
         $ctaUrl = $this->heroLinkUrl($setting?->cta_url ?? data_get($fallback, 'cta.href'));
 
-        if ($this->isClosedPpdbLink($ctaUrl)) {
+        if (! $ppdbOpen && $this->isPpdbLink($ctaUrl)) {
             $ctaUrl = null;
         }
+
+        $ppdbUrl = $ppdbOpen ? route('ppdb', absolute: false) : null;
 
         return [
             'type' => 'video',
@@ -61,13 +67,26 @@ trait InjectsDatabaseHero
             'media_url' => $renderUrl,
             'poster_url' => $posterUrl,
             'media_alt' => $fallback['media_alt'] ?? 'Al Mustaqbal School',
-            'eyebrow' => $setting?->eyebrowForLocale($locale) ?? ($fallback['eyebrow'] ?? ''),
-            'title' => $setting?->titleForLocale($locale) ?? ($fallback['title'] ?? 'Al Mustaqbal School'),
-            'description' => $setting?->descriptionForLocale($locale) ?? ($fallback['description'] ?? ''),
+            'eyebrow' => $ppdbOpen
+                ? __('runtime.home.ppdb_campaign_eyebrow')
+                : ($setting?->eyebrowForLocale($locale) ?? ($fallback['eyebrow'] ?? '')),
+            'title' => $ppdbOpen
+                ? __('runtime.home.ppdb_campaign_title')
+                : ($setting?->titleForLocale($locale) ?? ($fallback['title'] ?? 'Al Mustaqbal School')),
+            'description' => $ppdbOpen
+                ? __('runtime.home.ppdb_campaign_description')
+                : ($setting?->descriptionForLocale($locale) ?? ($fallback['description'] ?? '')),
+            'title_href' => $ppdbUrl,
+            'campaign_link_label' => $ppdbOpen
+                ? __('runtime.home.ppdb_campaign_link_label')
+                : null,
+            'is_ppdb_campaign' => $ppdbOpen,
             'cta' => [
-                'label' => $ctaUrl !== null ? $setting?->ctaLabelForLocale($locale) : null,
-                'href' => $ctaUrl,
-                'action' => $ctaUrl !== null ? 'link' : null,
+                'label' => ! $ppdbOpen && $ctaUrl !== null
+                    ? $setting?->ctaLabelForLocale($locale)
+                    : null,
+                'href' => ! $ppdbOpen ? $ctaUrl : null,
+                'action' => ! $ppdbOpen && $ctaUrl !== null ? 'link' : null,
             ],
             'focal_position' => 'center center',
             'overlay_strength' => 0.34,
@@ -77,16 +96,9 @@ trait InjectsDatabaseHero
         ];
     }
 
-    private function isClosedPpdbLink(?string $url): bool
+    private function isPpdbLink(?string $url): bool
     {
-        if ($url === null || '/'.ltrim((string) parse_url($url, PHP_URL_PATH), '/') !== '/ppdb') {
-            return false;
-        }
-
-        if (! Schema::hasTable('ppdb_settings')) {
-            return true;
-        }
-
-        return PpdbSetting::query()->first()?->isRegistrationOpen() !== true;
+        return $url !== null
+            && '/'.ltrim((string) parse_url($url, PHP_URL_PATH), '/') === '/ppdb';
     }
 }
