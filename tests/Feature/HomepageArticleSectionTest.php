@@ -8,21 +8,28 @@ use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('keeps the disabled homepage Article surface out of the rendered DOM', function (): void {
+it('renders the static homepage Article preview after Testimonial', function (): void {
     app()->setLocale('id');
 
     $response = $this->get(route('home'));
+    $html = $response->getContent();
 
     $response
         ->assertOk()
+        ->assertSee('data-article-showcase', false)
+        ->assertSee('data-article-variant="b"', false)
+        ->assertSee('CERITA', false)
+        ->assertSee('&amp; WAWASAN', false)
         ->assertDontSee('data-article-story', false)
-        ->assertDontSee('Belum ada artikel terbaru.')
-        ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');
+        ->assertDontSee('article-debug-mark', false)
+        ->assertDontSee('tes1');
 
-    expect($response->original->getData())->not->toHaveKey('articlesSection');
+    expect(strpos($html, 'data-testimonial-wall'))
+        ->toBeLessThan(strpos($html, 'data-article-showcase'))
+        ->and($response->original->getData())->not->toHaveKey('articlesSection');
 });
 
-it('does not query disabled homepage data owners', function (): void {
+it('keeps the dummy homepage Article preview independent from Article queries', function (): void {
     app()->setLocale('id');
     HeroSetting::query()->firstOrFail()->update(['cta_url' => '#program']);
 
@@ -54,10 +61,8 @@ it('does not query disabled homepage data owners', function (): void {
 
     $response
         ->assertOk()
-        ->assertDontSee('data-article-story', false)
-        ->assertDontSee('data-article-journey', false)
-        ->assertDontSee('data-article-final-cta', false)
-        ->assertDontSee('Children’s Learning Rhythm: Calm, Directed, and Not Rushed');
+        ->assertSee('data-article-showcase', false)
+        ->assertDontSee('Artikel Lama Homepage');
 
     expect($response->original->getData())
         ->not->toHaveKeys(['articlesSection', 'stats', 'quickInfo', 'ppdb'])

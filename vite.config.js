@@ -19,7 +19,7 @@ export default defineConfig({
                 'resources/css/pages/welcome-vision-waapi.css',
                 'resources/css/pages/welcome-values-story.css',
                 'resources/css/pages/welcome-depth-gallery.css',
-                'resources/css/pages/welcome-article-story.css',
+                'resources/css/pages/welcome-article-showcase.css',
                 'resources/css/pages/welcome-mega-menu.css',
                 'resources/css/pages/welcome-hero-visual.css',
                 'resources/css/pages/welcome-scroll-reveal.css',
