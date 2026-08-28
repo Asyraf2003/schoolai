@@ -37,6 +37,7 @@
 
 .gallery-story {
     --gallery-title-opacity: 1;
+    --gallery-intro-height: clamp(34rem, 68svh, 48rem);
     position: relative;
     z-index: 1;
     min-height: 100svh;
@@ -51,7 +52,7 @@
     z-index: 1;
     display: grid;
     place-items: center;
-    min-height: 100svh;
+    min-height: var(--gallery-intro-height);
 }
 
 .gallery-story__title-rail {
