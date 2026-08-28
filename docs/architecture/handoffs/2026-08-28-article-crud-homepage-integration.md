@@ -7,7 +7,7 @@ Audit baseline: `6da7fec4e2bdf1666092418d5682b44633d4355b`
 
 ## Scope
 
-This handoff records the current Article architecture before homepage Article data is connected to the database. It covers:
+This handoff records the current Article architecture before and after the first homepage Article database integration. It covers:
 
 - Article model/domain state;
 - admin CRUD for external and native/Canvas articles;
@@ -16,10 +16,10 @@ This handoff records the current Article architecture before homepage Article da
 - Hero promotion;
 - Article media through Cloudflare R2;
 - soft delete/restore;
-- current homepage Article source;
+- homepage Article source;
 - known gaps and the agreed next implementation.
 
-## Current assessment
+## Current assessment before homepage integration
 
 Overall Article foundation before homepage integration: **7.4/10**.
 
@@ -35,7 +35,7 @@ Overall Article foundation before homepage integration: **7.4/10**.
 | `/artikel` listing | 8/10 | Reads published Article records from DB |
 | Native article reader | 8.5/10 | Publication visibility, localization, related articles, admin preview |
 | Hero Article integration | 9/10 | DB-backed explicit promotion and ordered runtime slides |
-| Homepage Article section | 2.5/10 | Still dummy translation content and local placeholder media |
+| Homepage Article section | 2.5/10 | Was dummy translation content and local placeholder media |
 
 ## Facts: Article domain
 
@@ -170,63 +170,108 @@ Opening Hero remains first. Article Hero entries are manually selected and order
 
 This manual editorial promotion is intentionally separate from the normal Article homepage section.
 
-## Gap: homepage Article section before this handoff implementation
+## Previous gap: homepage Article section
 
-Before the next implementation step, `HomeArticlesComposer` reads dummy `home_article_preview` items and assigns local media:
+Before this implementation, `HomeArticlesComposer` read dummy `home_article_preview` items and assigned local media:
 
 - `media/home/2.png`
 - `media/home/5.png`
 - `media/home/11.png`
 - `media/home/12.png`
 
-Every dummy card links only to `/artikel`.
+Every dummy card linked only to `/artikel`.
 
-Therefore an Article created in admin currently reaches:
+Therefore an Article created in admin reached `/artikel`, native detail and optionally Hero, but not the homepage Article Lead Rail.
 
-- `/artikel`: yes;
-- native detail: yes;
-- Hero when promoted: yes;
-- homepage Article Lead Rail: **no**.
+## Decision implemented in this session
 
-## Decision for this session
+The homepage Article section is now connected to the database with the **three latest publicly visible Articles**.
 
-Connect the homepage Article section to the database with the **three latest publicly visible Articles**.
-
-Initial rule:
+Current rule:
 
 `Article::latestPublished() -> newest #1, #2, #3`
 
-Presentation target:
+Presentation:
 
-- desktop: Article #1 remains the large Lead card; #2 and #3 become the right rail;
+- desktop: Article #1 is the large Lead card; #2 and #3 are the right rail;
 - tablet: #1 lead, then #2 and #3 in the supporting grid;
 - mobile: #1, #2, #3 flow vertically;
 - `Lihat selengkapnya` continues to route to `/artikel`;
-- localized title/description/link and real thumbnail are used;
+- localized title/description/link are derived from the Article model;
+- real Article thumbnail URLs are used, including the canonical R2 public URL;
+- the first Article tag is used as card category, with a localized generic fallback;
+- native articles show localized reading time plus publication date;
+- external articles show publication date;
+- the homepage query selects presentation fields only and does not select `content_id`, `content_en`, or `content_ar`;
 - Hero manual promotion remains independent.
+
+Dummy item arrays were removed from ID/EN/AR `home_article_preview` translations. Those translation files now own only section copy and labels.
+
+### Implementation source checkpoint
+
+Database-backed homepage Article source and tests were implemented through commit:
+
+`4c140476d6af88e0c190c82af81f6224523b6420`
+
+The key implementation files are:
+
+- `app/View/Composers/HomeArticlesComposer.php`;
+- `resources/css/surfaces/home/article-showcase/responsive.css`;
+- `lang/id/home_article_preview.php`;
+- `lang/en/home_article_preview.php`;
+- `lang/ar/home_article_preview.php`;
+- `tests/Feature/HomepageArticleSectionTest.php`;
+- `tests/Feature/HomeArticleStorySourceTest.php`.
 
 ## Pinning decision
 
 A dedicated homepage pinning model is **not** added in this first connection.
 
-Reason: first establish one source of truth and a working automatic latest-three path. Editorial pinning may be introduced later if the school needs to keep an older Article in the homepage set. That future feature should be explicit and separate from `hero_position`, not overloaded onto Hero ordering.
+Reason: establish one source of truth and a working automatic latest-three path first. Editorial pinning may be introduced later if the school needs to keep an older Article in the homepage set.
 
-Possible future rule:
+That future feature must be separate from `hero_position`.
+
+Candidate future rule:
 
 `homepage pinned articles first -> fill remaining slots from latestPublished()`
 
-but no schema is authorized by this handoff yet.
+No homepage pin schema is authorized yet.
 
-## Execution order after this document
+## Verification status
 
-1. Replace dummy homepage Article items with the three latest public DB Articles.
-2. Preserve the existing section heading, description and CTA translation copy.
-3. Adapt Lead Rail layout from 1+3 to 1+2 without changing the broader homepage choreography.
-4. Update homepage Article tests from dummy/4-card assumptions to DB-backed/3-card contracts.
-5. Verify source state and record the resulting commit SHA in this handoff.
-6. Runtime/build tests must be run locally before claiming PASS.
+Source-level verification completed:
 
-## Out of scope for the immediate homepage connection
+- homepage composer no longer reads dummy item arrays;
+- homepage composer uses `latestPublished()` and `limit(3)`;
+- desktop Lead Rail is now 1 + 2;
+- homepage tests were rewritten around real DB Article records and three-card ordering;
+- Hero Article code was not redesigned;
+- no homepage pin schema was added.
+
+Runtime/build/test execution has **not** been claimed from the GitHub connector. Local verification is still required before marking the implementation PASS.
+
+Recommended local gate:
+
+```bash
+sai pull
+php artisan test --filter=HomepageArticleSectionTest
+php artisan test --filter=HomeArticleStorySourceTest
+npm run build
+```
+
+If the focused tests pass, run the broader Article test group before deployment.
+
+## Remaining Article hardening after homepage connection
+
+Priority order:
+
+1. fix Arabic Canvas autosave parity;
+2. add inline Article media ownership/reconciliation for R2 orphan cleanup;
+3. add admin Article search/status/source filters;
+4. decide archive-forever versus guarded permanent purge policy;
+5. only then evaluate homepage pinning if editorial usage proves it is needed.
+
+## Out of scope for this implementation
 
 - Arabic Canvas autosave fix;
 - Article inline-media garbage collection;
