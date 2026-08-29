@@ -6,6 +6,7 @@ uses(RefreshDatabase::class);
 
 it('renders the fixed R2 video as the sole Opening slide when no Article is promoted', function (): void {
     $heroUrl = (string) config('media.homepage_hero_video_url');
+    $posterUrl = (string) config('media.static.hero_school');
 
     foreach (['id', 'en', 'ar'] as $locale) {
         $response = $this->withSession(['locale' => $locale])->get(route('home'));
@@ -17,6 +18,7 @@ it('renders the fixed R2 video as the sole Opening slide when no Article is prom
             ->assertSee('data-media-type="video"', false)
             ->assertSee('data-hero-video', false)
             ->assertSee('src="'.e($heroUrl).'"', false)
+            ->assertSee('poster="'.e($posterUrl).'"', false)
             ->assertSee('autoplay', false)
             ->assertSee('loop', false)
             ->assertSee('muted', false)
@@ -29,6 +31,8 @@ it('renders the fixed R2 video as the sole Opening slide when no Article is prom
             ->assertDontSee('data-hero-progress', false)
             ->assertDontSee('data-hero-current', false)
             ->assertDontSee('welcome-hero-carousel', false)
+            ->assertDontSee('interactive-examples.mdn.mozilla.net', false)
+            ->assertDontSee('images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2400&q=82', false)
             ->assertSee('hero-cinema__eyebrow', false)
             ->assertSee('hero-cinema__description', false)
             ->assertDontSee('<iframe', false);
