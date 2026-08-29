@@ -24,7 +24,7 @@
     @endif
     @stack('head')
   </head>
-  <body class="public-page-body public-content-page nav-shell">
+  <body class="public-page-body public-content-page site-cursor-page nav-shell">
     <a href="#main-content" class="skip-link">{{ __('pages.common.skip') }}</a>
 
     @include('partials.site-navbar')
