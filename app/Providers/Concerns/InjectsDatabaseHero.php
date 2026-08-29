@@ -43,7 +43,8 @@ trait InjectsDatabaseHero
         $ppdbOpen = $ppdbSetting?->isRegistrationOpen() === true;
         $mediaUrl = $this->publicAssetUrl(config('media.homepage_hero_video_url'));
         $fallbackImage = $this->publicAssetUrl($hero['fallback_image_url'] ?? null);
-        $posterUrl = $this->publicAssetUrl($fallback['poster_url'] ?? null) ?: $fallbackImage;
+        $posterUrl = $fallbackImage
+            ?: $this->publicAssetUrl($fallback['poster_url'] ?? null);
         $renderType = $mediaUrl !== null && HeroVideoUrl::isDirectVideo($mediaUrl)
             ? 'video'
             : 'image';
