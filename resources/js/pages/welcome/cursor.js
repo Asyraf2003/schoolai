@@ -10,6 +10,7 @@ const INTERACTIVE_SELECTOR = [
     'input[type="button"]',
     'input[type="submit"]',
     'input[type="reset"]',
+    'input[type="range"]',
     'select',
     '.nav-mega__trigger',
     '.nav-language__button',
@@ -73,6 +74,16 @@ function activeModalDialog() {
     return null;
 }
 
+function activeCursorLayerHost() {
+    const fullscreenElement = document.fullscreenElement ?? document.webkitFullscreenElement;
+
+    if (fullscreenElement instanceof Element) {
+        return fullscreenElement;
+    }
+
+    return activeModalDialog();
+}
+
 function preloadCursorAssets(character) {
     ['1', '2', '3', '4', '5'].forEach((suffix) => {
         const href = `${CURSOR_MEDIA_BASE}/${character}${suffix}.webp`;
@@ -94,7 +105,7 @@ function preloadCursorAssets(character) {
 export function initHomepageCursor() {
     const body = document.body;
 
-    if (!body?.classList.contains('home-page')) {
+    if (!body?.classList.contains('site-cursor-page')) {
         return;
     }
 
@@ -119,7 +130,7 @@ export function initHomepageCursor() {
     body.append(cursor);
 
     const syncCursorLayer = () => {
-        const host = activeModalDialog() ?? body;
+        const host = activeCursorLayerHost() ?? body;
 
         if (cursor.parentElement !== host) {
             host.append(cursor);
@@ -132,6 +143,9 @@ export function initHomepageCursor() {
         attributes: true,
         attributeFilter: ['open'],
     });
+
+    document.addEventListener('fullscreenchange', syncCursorLayer, { passive: true });
+    document.addEventListener('webkitfullscreenchange', syncCursorLayer, { passive: true });
     syncCursorLayer();
 
     let pointerX = -200;
