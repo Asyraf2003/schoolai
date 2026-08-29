@@ -20,7 +20,7 @@ trait ManagesArticles
             ->paginate(20);
 
         $activeArticlesByIdentity = Article::query()
-            ->latestPublished()
+            ->latestForAdmin()
             ->get(['id', 'title_id', 'title_en', 'link_id', 'published_at'])
             ->groupBy(function (Article $article): string {
                 return Article::normalizedLinkIdentity($article->link_id)
