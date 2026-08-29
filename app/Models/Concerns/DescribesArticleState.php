@@ -23,13 +23,15 @@ trait DescribesArticleState
 
     public function isPubliclyVisibleNow(): bool
     {
+        if ($this->trashed() || $this->published_at === null || $this->published_at->isFuture()) {
+            return false;
+        }
+
         if (! $this->isNative()) {
             return true;
         }
 
-        return in_array($this->article_status, [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED], true)
-            && $this->published_at !== null
-            && $this->published_at->lessThanOrEqualTo(now());
+        return in_array($this->article_status, [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED], true);
     }
 
     public function statusLabel(): string
@@ -39,7 +41,7 @@ trait DescribesArticleState
         }
 
         if (! $this->isNative()) {
-            return 'Eksternal';
+            return $this->isPubliclyVisibleNow() ? 'Eksternal' : 'Terjadwal';
         }
 
         if ($this->article_status === self::STATUS_DRAFT) {

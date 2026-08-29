@@ -1,6 +1,6 @@
 <?php
 
-it('owns the database-backed three-card Lead Rail Article showcase without redundant read cues', function (): void {
+it('owns the database-backed four-card Lead Rail Article showcase without redundant read cues', function (): void {
     $view = file_get_contents(resource_path('views/home/sections/articles.blade.php'));
     $galleryView = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $programView = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
@@ -50,8 +50,8 @@ it('owns the database-backed three-card Lead Rail Article showcase without redun
         ->toContain('home-section-display__line')
         ->and($presentation)
         ->toContain('Article::query()')
-        ->toContain('->latestPublished()')
-        ->toContain('->limit(3)')
+        ->toContain('->homepageFeatured()')
+        ->toContain('->limit(Article::HOMEPAGE_FEATURED_LIMIT)')
         ->toContain("'articleEmptyKicker'")
         ->toContain("'articleEmptyTitle'")
         ->toContain("'articleEmptyDescription'")
@@ -74,10 +74,11 @@ it('owns the database-backed three-card Lead Rail Article showcase without redun
         ->not->toContain('.article-showcase__read')
         ->and($responsiveCss)
         ->toContain('grid-template-columns: repeat(12, minmax(0, 1fr))')
-        ->toContain('grid-template-rows: repeat(2, minmax(14rem, 1fr))')
+        ->toContain('grid-template-rows: repeat(3, minmax(11rem, 1fr))')
         ->toContain('grid-column: 1 / span 8')
         ->toContain('grid-column: 9 / 13')
-        ->not->toContain('.article-showcase__card:nth-child(4)')
+        ->toContain('.article-showcase__card:nth-child(4)')
+        ->not->toContain('.article-showcase__card:nth-child(5)')
         ->not->toContain('.article-showcase__read')
         ->toContain('@media (min-width: 768px)')
         ->toContain('@media (max-width: 767px)')

@@ -24,6 +24,7 @@ final class AdminArticleIndexComposer
             return [
                 'article' => $article,
                 'isDeleted' => $isDeleted,
+                'canPlace' => ! $isDeleted && $article->isPubliclyVisibleNow(),
                 'replacementCandidates' => $candidates->get($article->getKey(), collect()),
                 'statusLabel' => $statusLabel,
                 'statusClass' => $isDeleted || $article->isDraft() || $statusLabel === 'Terjadwal'

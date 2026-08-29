@@ -19,6 +19,15 @@ Route::post('/admin/artikel/canvas/start', [ArticleCanvasAdminController::class,
 Route::get('/admin/artikel/canvas/unsplash', [ArticleCanvasAdminController::class, 'searchUnsplash'])
     ->name('admin.artikel.canvas.unsplash');
 
+Route::patch('/admin/artikel/homepage/order', [ArticleAdminController::class, 'reorderHomepage'])
+    ->name('admin.artikel.homepage.order');
+
+Route::post('/admin/artikel/{article}/homepage', [ArticleAdminController::class, 'pinHomepage'])
+    ->name('admin.artikel.homepage.pin');
+
+Route::delete('/admin/artikel/{article}/homepage', [ArticleAdminController::class, 'unpinHomepage'])
+    ->name('admin.artikel.homepage.unpin');
+
 Route::get('/admin/artikel/{article}/canvas', [ArticleCanvasAdminController::class, 'edit'])
     ->name('admin.artikel.canvas.edit');
 

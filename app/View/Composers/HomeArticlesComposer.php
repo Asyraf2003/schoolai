@@ -19,8 +19,8 @@ final class HomeArticlesComposer
         $categoryFallback = (string) ($preview['category_fallback'] ?? 'Artikel');
 
         $items = Article::query()
-            ->latestPublished()
-            ->limit(3)
+            ->homepageFeatured()
+            ->limit(Article::HOMEPAGE_FEATURED_LIMIT)
             ->get([
                 'id',
                 'article_source',

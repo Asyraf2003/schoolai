@@ -28,7 +28,7 @@ it('publishes replaces archives and restores article thumbnails through R2', fun
         'thumbnail_file' => UploadedFile::fake()->image('article.jpg'),
         'link_id' => 'https://example.test/article-r2',
         'published_at' => now()->format('Y-m-d H:i:s'),
-    ])->assertRedirect();
+    ])->assertRedirect(route('admin.artikel'));
 
     $article = Article::query()->where('title_id', 'Artikel R2')->firstOrFail();
     $oldKey = app(MediaUrlResolver::class)->ownedKey($article->thumbnail_url);
@@ -41,7 +41,7 @@ it('publishes replaces archives and restores article thumbnails through R2', fun
         'thumbnail_file' => UploadedFile::fake()->image('article-new.webp'),
         'link_id' => 'https://example.test/article-r2',
         'published_at' => now()->format('Y-m-d H:i:s'),
-    ])->assertRedirect(route('admin.artikel.show', $article));
+    ])->assertRedirect(route('admin.artikel'));
 
     $newKey = app(MediaUrlResolver::class)->ownedKey($article->fresh()->thumbnail_url);
 

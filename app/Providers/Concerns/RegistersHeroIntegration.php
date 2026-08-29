@@ -38,6 +38,9 @@ trait RegistersHeroIntegration
             Route::post('/admin/hero/articles', [HeroAdminController::class, 'promote'])
                 ->name('admin.hero.articles.promote');
 
+            Route::patch('/admin/hero/articles/order', [HeroAdminController::class, 'reorder'])
+                ->name('admin.hero.articles.order');
+
             Route::delete('/admin/hero/articles/{article}', [HeroAdminController::class, 'unpromote'])
                 ->name('admin.hero.articles.unpromote');
 
