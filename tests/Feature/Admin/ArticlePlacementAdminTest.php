@@ -24,7 +24,7 @@ function placementAdminArticle(string $slug, mixed $publishedAt = null): Article
         'article_status' => Article::STATUS_PUBLISHED,
         'title_id' => str($slug)->headline()->toString(),
         'description_id' => 'Ringkasan '.$slug,
-        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'thumbnail_url' => (string) config('media.static.seo.home_og'),
         'link_id' => 'https://example.test/'.$slug,
         'published_at' => $publishedAt ?? now()->subMinute(),
     ]);
