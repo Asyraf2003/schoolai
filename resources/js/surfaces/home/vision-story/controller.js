@@ -137,7 +137,7 @@ export function mountVisionStory() {
 
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(onIntersection, {
-            rootMargin: '90% 0px 90% 0px',
+            rootMargin: '0px 0px -5% 0px',
             threshold: 0,
         });
         observer.observe(root);
