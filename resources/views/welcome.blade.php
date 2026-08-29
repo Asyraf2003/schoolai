@@ -8,6 +8,7 @@
       'pageDescription' => $meta['description'],
     ])
     @vite([
+      'resources/css/pages/welcome-critical.css',
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
       'resources/css/pages/welcome-vision-waapi.css',
@@ -15,8 +16,9 @@
       'resources/css/pages/welcome-depth-gallery.css',
       'resources/css/pages/welcome-article-showcase.css',
       'resources/css/text-system.css',
-      'resources/css/arabic-typography.css',
-      'resources/css/public-latin-inter.css',
+      app()->getLocale() === 'ar'
+        ? 'resources/css/arabic-typography.css'
+        : 'resources/css/public-latin-inter.css',
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
       'resources/js/pages/welcome.js',
@@ -48,6 +50,7 @@
     </script>
 
     <noscript>
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-vision-waapi.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-values-story.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-depth-gallery.css') }}">
