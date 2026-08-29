@@ -93,7 +93,7 @@ html[dir="rtl"] .vision-arch__video-trigger:focus-visible .vision-arch__video-cu
 
 .vision-video-modal__close {
     position: absolute;
-    z-index: 2;
+    z-index: 4;
     inset-block-start: .9rem;
     inset-inline-end: .9rem;
     display: grid;
@@ -121,6 +121,134 @@ html[dir="rtl"] .vision-arch__video-trigger:focus-visible .vision-arch__video-cu
     outline-offset: 3px;
 }
 
+.vision-video-modal__controls {
+    position: absolute;
+    z-index: 3;
+    inset-inline: 0;
+    inset-block-end: 0;
+    display: grid;
+    grid-template-columns: auto auto minmax(5rem, 1fr) auto auto minmax(4rem, 7rem) auto;
+    align-items: center;
+    gap: clamp(.4rem, 1vw, .75rem);
+    padding: 2.5rem clamp(.65rem, 1.6vw, 1.1rem) clamp(.65rem, 1.4vw, .9rem);
+    background: linear-gradient(to bottom, transparent, rgb(0 0 0 / .86));
+}
+
+.vision-video-modal__control {
+    display: grid;
+    place-items: center;
+    width: 2.35rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    background: rgb(0 0 0 / .32);
+    font: 700 1rem/1 Arial, sans-serif;
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.vision-video-modal__control:hover,
+.vision-video-modal__control:focus-visible {
+    background: rgb(255 255 255 / .18);
+    transform: scale(1.06);
+}
+
+.vision-video-modal__control:focus-visible,
+.vision-video-modal__seek:focus-visible,
+.vision-video-modal__volume:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+.vision-video-modal__control--mute {
+    font-size: .98rem;
+}
+
+.vision-video-modal__control--fullscreen {
+    font-size: 1.2rem;
+}
+
+.vision-video-modal__time {
+    min-width: 2.6rem;
+    color: rgb(255 255 255 / .92);
+    font: 600 .78rem/1.2 ui-sans-serif, system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.vision-video-modal__seek,
+.vision-video-modal__volume {
+    width: 100%;
+    min-width: 0;
+    height: 1.15rem;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+}
+
+.vision-video-modal__seek::-webkit-slider-runnable-track,
+.vision-video-modal__volume::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / .56);
+}
+
+.vision-video-modal__seek::-webkit-slider-thumb,
+.vision-video-modal__volume::-webkit-slider-thumb {
+    width: .85rem;
+    height: .85rem;
+    margin-top: -.34rem;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #fff;
+}
+
+.vision-video-modal__seek::-moz-range-track,
+.vision-video-modal__volume::-moz-range-track {
+    height: 3px;
+    border: 0;
+    border-radius: 999px;
+    background: rgb(255 255 255 / .56);
+}
+
+.vision-video-modal__seek::-moz-range-thumb,
+.vision-video-modal__volume::-moz-range-thumb {
+    width: .7rem;
+    height: .7rem;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.vision-video-modal__surface:fullscreen,
+.vision-video-modal__surface:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    background: #000;
+    box-shadow: none;
+}
+
+.vision-video-modal__surface:fullscreen .vision-video-modal__player,
+.vision-video-modal__surface:-webkit-full-screen .vision-video-modal__player {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+}
+
+.vision-video-modal__surface:fullscreen .vision-video-modal__controls,
+.vision-video-modal__surface:-webkit-full-screen .vision-video-modal__controls {
+    padding-block-end: max(.9rem, env(safe-area-inset-bottom));
+    padding-inline-start: max(1rem, env(safe-area-inset-left));
+    padding-inline-end: max(1rem, env(safe-area-inset-right));
+}
+
 @media (max-width: 639px) {
     .vision-video-modal {
         width: calc(100vw - 1.25rem);
@@ -131,10 +259,20 @@ html[dir="rtl"] .vision-arch__video-trigger:focus-visible .vision-arch__video-cu
         inset-inline-end: .65rem;
         width: 2.5rem;
     }
+
+    .vision-video-modal__controls {
+        grid-template-columns: auto auto minmax(4rem, 1fr) auto auto auto;
+        gap: .4rem;
+    }
+
+    .vision-video-modal__volume {
+        display: none;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .vision-arch__video-cue {
+    .vision-arch__video-cue,
+    .vision-video-modal__control {
         transition: none;
     }
 }
