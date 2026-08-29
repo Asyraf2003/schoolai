@@ -16,6 +16,7 @@ trait BuildsArticleHeroSlides
 
         return Article::query()
             ->promotedInHero()
+            ->limit(Article::HERO_SPOTLIGHT_LIMIT)
             ->get([
                 'id',
                 'article_source',
