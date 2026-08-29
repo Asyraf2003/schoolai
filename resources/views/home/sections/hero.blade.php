@@ -35,7 +35,7 @@
                     muted
                     playsinline
                     webkit-playsinline
-                    preload="{{ $loop->first ? 'metadata' : 'none' }}"
+                    preload="{{ $loop->first ? 'auto' : 'none' }}"
                     @if (! empty($slide['poster_url'])) poster="{{ $slide['poster_url'] }}" @endif
                     @if ($loop->first) autoplay @endif
                     @if ($heroSlideCount === 1) loop @endif
