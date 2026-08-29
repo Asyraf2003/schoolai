@@ -45,7 +45,8 @@ final class SiteNavbarPresenter
         $logo = is_array($siteNavbar['logo'] ?? null)
             ? $siteNavbar['logo']
             : [];
-        $logoImageUrl = $logo['image_url'] ?? null;
+        $logoImageUrl = config('media.static.brand.logo_nav')
+            ?: ($logo['image_url'] ?? null);
 
         if (empty($logoImageUrl) && ! empty($logo['image'])) {
             $logoImageUrl = asset(ltrim((string) $logo['image'], '/'));
