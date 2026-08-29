@@ -13,11 +13,13 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ],
     ));
     $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
+    $pattern = file_get_contents(resource_path('js/pages/welcome/gallery-pattern.js'));
     $visual = file_get_contents(resource_path('js/pages/welcome/gallery-story-visual.js'));
     $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
 
     expect($gallery)
         ->toContain("@include('home.sections.gallery-depth')")
+        ->toContain("config('media.static.ornaments.geometry_33')")
         ->not->toContain('gallery-mask-handoff')
         ->and($story)
         ->toContain('data-gallery-story')
@@ -46,9 +48,11 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->and($styles)
         ->toContain('--gallery-story-bg: #6f9b72')
         ->toContain('transition: background-color 760ms')
-        ->toContain('gallery-ornament-33.webp')
+        ->toContain('--gallery-story-pattern: none')
+        ->toContain('.is-gallery-pattern-ready::before')
         ->toContain('background-repeat: repeat')
         ->toContain('background-image: none')
+        ->not->toContain('/media/seed/hero/')
         ->not->toContain('data:image/svg+xml')
         ->not->toContain('repeating-conic-gradient')
         ->not->toContain('aspect-ratio: 4 / 5')
@@ -79,6 +83,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->toContain('@media (max-width: 1023px)')
         ->toContain('@media (prefers-reduced-motion: reduce)')
         ->and($controller)
+        ->toContain('armGalleryPattern')
         ->toContain('readValuesExitProgress')
         ->toContain('mixColor(BLUE, GALLERY, exitProgress)')
         ->toContain('paintHandoff')
@@ -96,6 +101,9 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->not->toContain('loadThreeRuntime')
         ->not->toContain('DepthGalleryEngine')
         ->not->toContain('WebGLRenderer')
+        ->and($pattern)
+        ->toContain("rootMargin: '75% 0px 75% 0px'")
+        ->toContain("section.classList.add('is-gallery-pattern-ready')")
         ->and($visual)
         ->toContain('media.clientWidth / visual.naturalWidth')
         ->toContain('media.clientHeight / visual.naturalHeight')
