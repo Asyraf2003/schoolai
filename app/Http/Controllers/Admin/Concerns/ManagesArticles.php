@@ -231,7 +231,7 @@ trait ManagesArticles
 
         return redirect()
             ->route('admin.artikel')
-            ->with('success', 'Artikel dipindahkan ke arsip, dilepas dari Homepage/Hero, dan dapat dipulihkan.');
+            ->with('success', 'Artikel dipindahkan ke arsip dan dapat dipulihkan.');
     }
 
     public function restore(Request $request, int $article): RedirectResponse
@@ -249,7 +249,7 @@ trait ManagesArticles
 
             return redirect()
                 ->route('admin.artikel')
-                ->with('success', 'Artikel berhasil dipulihkan. Placement tidak dipulihkan otomatis; pin lagi jika memang masih relevan.');
+                ->with('success', 'Artikel berhasil dipulihkan.');
         }
 
         DB::transaction(function () use ($article, $replacementArticleId): void {
