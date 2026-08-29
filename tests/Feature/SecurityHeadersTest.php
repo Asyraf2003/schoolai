@@ -42,6 +42,8 @@ it('adds nonce based security headers to public pages', function (): void {
             ->toContain(
                 "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com"
             )
+            ->not->toContain('https://images.unsplash.com')
+            ->not->toContain('https://resources.finalsite.net')
             ->not->toContain('frame-src *')
             ->not->toContain('frame-src https:');
 
