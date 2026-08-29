@@ -3,6 +3,7 @@
   id="visi-misi"
   aria-labelledby="vision-arch-title"
   data-vision-story
+  style="--vision-about-pattern: url('{{ config('media.static.ornaments.geometry_33') }}'); --vision-vision-pattern: url('{{ config('media.static.ornaments.geometry_32') }}'); --vision-mission-pattern: url('{{ config('media.static.ornaments.geometry_33') }}')"
 >
   <h2 id="vision-arch-title" class="sr-only">{{ $sectionLabel }}</h2>
 
