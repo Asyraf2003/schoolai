@@ -10,19 +10,24 @@ it('guards the editorial gallery bootstrap without the legacy canvas owner', fun
         ],
     ));
     $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
+    $pattern = file_get_contents(resource_path('js/pages/welcome/gallery-pattern.js'));
     $blade = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
+    $sectionBlade = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
     $head = file_get_contents(resource_path('views/partials/site-head-meta.blade.php'));
 
     expect($styles)
         ->toContain('.gallery-story__title-rail')
         ->toContain('.gallery-story__handoff')
         ->toContain('.gallery-story__stream')
-        ->toContain('gallery-ornament-33.webp')
+        ->toContain('--gallery-story-pattern: none')
+        ->toContain('.is-gallery-pattern-ready::before')
         ->toContain('background-repeat: repeat')
         ->toContain('background-image: none')
         ->toContain('.home-page .galeri-section::after')
+        ->not->toContain('/media/seed/hero/gallery-ornament-33.webp')
         ->not->toContain('@import "../surfaces/home/gallery-depth/base.css"')
         ->and($controller)
+        ->toContain('armGalleryPattern')
         ->toContain('requestAnimationFrame')
         ->toContain('paintHandoff()')
         ->toContain('paintItems()')
@@ -31,6 +36,11 @@ it('guards the editorial gallery bootstrap without the legacy canvas owner', fun
         ->toContain('reducedMotion.addEventListener')
         ->not->toContain('loadThreeRuntime')
         ->not->toContain('DepthGalleryEngine')
+        ->and($pattern)
+        ->toContain("rootMargin: '75% 0px 75% 0px'")
+        ->toContain("section.classList.add('is-gallery-pattern-ready')")
+        ->and($sectionBlade)
+        ->toContain("config('media.static.ornaments.geometry_33')")
         ->and($blade)
         ->toContain('data-gallery-story')
         ->toContain('aria-hidden="true"')
