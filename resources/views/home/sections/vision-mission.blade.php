@@ -83,7 +83,8 @@
               aria-label="{{ $aboutLabel }} video"
             >
               <img
-                src="{{ $image }}"
+                data-lazy-media
+                data-lazy-src="{{ $image }}"
                 alt=""
                 width="1920"
                 height="1440"
@@ -101,7 +102,8 @@
             </button>
           @else
             <img
-              src="{{ $image }}"
+              data-lazy-media
+              data-lazy-src="{{ $image }}"
               alt=""
               width="1920"
               height="1440"
