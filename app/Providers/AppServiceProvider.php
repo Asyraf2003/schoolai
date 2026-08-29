@@ -100,6 +100,7 @@ class AppServiceProvider extends ServiceProvider
     private function configureDeferredHomeStyles(): void
     {
         $deferredHomeStyles = [
+            'resources/css/pages/welcome.css',
             'resources/css/pages/welcome-scroll-reveal.css',
             'resources/css/pages/welcome-vision-waapi.css',
             'resources/css/pages/welcome-values-story.css',
