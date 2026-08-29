@@ -104,15 +104,15 @@ final class HomeArticlesComposer
 
     private function mediaUrl(?string $url): string
     {
+        $fallback = (string) config('media.static.seo.home_og');
         $url = trim((string) $url);
 
         if ($url === '') {
-            return asset(ltrim(Article::PLACEHOLDER_THUMBNAIL, '/'));
+            return $fallback;
         }
 
         if (filter_var($url, FILTER_VALIDATE_URL)) {
-            return PublicUrl::normalize($url)
-                ?? asset(ltrim(Article::PLACEHOLDER_THUMBNAIL, '/'));
+            return PublicUrl::normalize($url) ?? $fallback;
         }
 
         return asset(ltrim($url, '/'));
