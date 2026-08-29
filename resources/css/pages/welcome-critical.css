@@ -1,0 +1,6 @@
+/*
+ * Minimal homepage foundation needed before first paint.
+ * The full legacy welcome.css remains earlier than hero CSS in document order,
+ * but is activated after first paint so its established cascade stays intact.
+ */
+@import "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css";
