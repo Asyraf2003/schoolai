@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/pages/public-login.js',
                 'resources/js/pages/student-account.js',
                 'resources/js/pages/admin-accounts.js',
+                'resources/css/pages/welcome-critical.css',
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-hero.css',
                 'resources/css/pages/welcome-vision-waapi.css',
