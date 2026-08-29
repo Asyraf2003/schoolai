@@ -64,6 +64,12 @@ html[dir="rtl"] .hero-cinema__media::after {
     transform: translateY(0);
 }
 
+.hero-cinema__slide[data-slide-index="0"] .hero-cinema__copy {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
 .hero-cinema__eyebrow {
     display: inline-flex;
     align-items: center;
