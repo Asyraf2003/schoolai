@@ -43,7 +43,7 @@ trait BuildsArticleHeroSlides
     private function articleToHeroArray(Article $article, string $locale): array
     {
         $thumbnail = $this->publicAssetUrl($article->thumbnail_url)
-            ?? $this->publicAssetUrl(Article::PLACEHOLDER_THUMBNAIL);
+            ?? (string) config('media.static.seo.home_og');
 
         return [
             'type' => 'image',
@@ -63,7 +63,7 @@ trait BuildsArticleHeroSlides
             'focal_position' => 'center center',
             'overlay_strength' => 0.52,
             'video_mime_type' => 'video/mp4',
-            'is_media_fallback' => $thumbnail === null,
+            'is_media_fallback' => false,
             'article_id' => $article->getKey(),
         ];
     }
