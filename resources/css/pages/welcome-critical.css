@@ -4,3 +4,15 @@
  * but is activated after first paint so its established cascade stays intact.
  */
 @import "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css";
+
+/* Prevent the accessibility jump link from flashing before legacy CSS wakes. */
+.skip-link {
+    position: fixed;
+    inset-block-start: 0;
+    left: -999px;
+    z-index: 1000;
+}
+
+.skip-link:focus {
+    left: 0;
+}
