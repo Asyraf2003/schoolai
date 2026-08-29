@@ -3,6 +3,7 @@
   id="nilai"
   aria-labelledby="values-story-heading"
   data-values-story
+  style="--values-card-pattern-image: url('{{ config('media.static.ornaments.geometry_32') }}')"
 >
   <div class="values-story__entry" aria-hidden="true"></div>
 
