@@ -55,6 +55,24 @@ function closestMatch(target, selector) {
     return target instanceof Element ? target.closest(selector) : null;
 }
 
+function activeModalDialog() {
+    const openDialogs = Array.from(document.querySelectorAll('dialog[open]'));
+
+    for (let index = openDialogs.length - 1; index >= 0; index -= 1) {
+        const dialog = openDialogs[index];
+
+        try {
+            if (dialog.matches(':modal')) {
+                return dialog;
+            }
+        } catch {
+            return dialog;
+        }
+    }
+
+    return null;
+}
+
 function preloadCursorAssets(character) {
     ['1', '2', '3', '4', '5'].forEach((suffix) => {
         const href = `${CURSOR_MEDIA_BASE}/${character}${suffix}.webp`;
@@ -99,6 +117,22 @@ export function initHomepageCursor() {
     cursor.dataset.state = 'default';
     cursor.setAttribute('aria-hidden', 'true');
     body.append(cursor);
+
+    const syncCursorLayer = () => {
+        const host = activeModalDialog() ?? body;
+
+        if (cursor.parentElement !== host) {
+            host.append(cursor);
+        }
+    };
+
+    const modalLayerObserver = new MutationObserver(syncCursorLayer);
+    modalLayerObserver.observe(body, {
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['open'],
+    });
+    syncCursorLayer();
 
     let pointerX = -200;
     let pointerY = -200;
