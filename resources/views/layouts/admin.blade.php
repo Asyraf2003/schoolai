@@ -17,6 +17,7 @@
     @include('layouts.admin.styles.foundation')
     @include('layouts.admin.styles.topbar')
     @include('layouts.admin.styles.gallery-list')
+    @include('layouts.admin.styles.article-placement')
     @include('layouts.admin.styles.gallery-detail')
     @include('layouts.admin.styles.forms')
     @include('layouts.admin.styles.notifications')
