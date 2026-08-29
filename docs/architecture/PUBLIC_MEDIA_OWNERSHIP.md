@@ -51,9 +51,18 @@ Examples:
 - `site/vision/vision-paper-01.webp`
 - `site/vision/vision-paper-02.webp`
 - `site/vision/vision-paper-03.webp`
+- `site/brand/*-vN.*`
+- `site/footer/*-vN.*`
+- `site/providers/*-vN.*`
+- `site/ornaments/*-vN.*`
+- `site/seo/*-vN.*`
 
 Static runtime media should be referenced through `config/media.php`, not
 hardcoded to `/media/...` paths in views/composers.
+
+Stable static objects that receive one-year immutable browser caching use a
+versioned key. If bytes change, bump the `-vN` suffix. Never overwrite a
+different object behind an already published immutable version.
 
 ### 3. User/admin uploaded media
 
@@ -83,6 +92,61 @@ New long-lived public raster/video media should normally be moved to R2.
 
 Do not introduce new fixed `/media/...` runtime references without an explicit
 architecture reason.
+
+## Versioned static publisher
+
+The repository owns one bounded manifest at `config/media.php` under
+`static_publish`.
+
+It covers current static browser/runtime owners including:
+
+- favicon and Apple touch icon;
+- navbar/footer/structured-data logos;
+- homepage Open Graph image;
+- Vision/Gallery Islamic geometry ornaments;
+- footer channel and partner marks;
+- supported social/video-provider marks.
+
+Publish command:
+
+```bash
+php artisan media:publish-static-r2 --dry-run
+php artisan media:publish-static-r2
+```
+
+`StaticPublicMediaPublisher` must:
+
+- refuse invalid source/key traversal;
+- require `site/...` target keys;
+- preserve configured immutable cache control;
+- verify the object exists after upload;
+- verify R2 object size matches the local source;
+- treat an existing same-size version as already published;
+- fail rather than overwrite an existing version whose size differs.
+
+The source code may reference the future R2 URL before deployment, but
+production must not be switched to that release until the publish command
+reports `failed = 0`.
+
+Local source files are retained until post-deploy production network evidence
+proves the R2 runtime path. Upload success alone is not deletion proof.
+
+## Homepage loading policy
+
+Static ownership and loading priority are separate decisions.
+
+- Opening hero video and its first-party poster are eager critical media.
+- Vision paper artwork is R2-owned but emitted as `data-lazy-src` and hydrated
+  only near the Vision viewport.
+- Vision geometry patterns are R2-owned and only become active when the Vision
+  motion compositor is mounted.
+- Gallery ornament is R2-owned and only becomes an active CSS background when
+  Gallery approaches the viewport.
+- Native below-fold image lazy loading remains in place for Gallery/Footer
+  media where applicable.
+
+Do not make the opening hero lazy merely to improve a synthetic transfer score.
+Its delivery asset must instead remain bounded and appropriate for eager use.
 
 ## Cleanup safety rule
 
@@ -123,3 +187,21 @@ Resolution:
 
 This incident is the reason production/runtime evidence is required before
 future media deletion.
+
+## 2026-08-29 PageSpeed static-media follow-up
+
+A later production PageSpeed capture still proved Laravel-origin runtime
+requests for `logo-nav.webp` and the two Gallery/Vision ornament files. A source
+audit then found additional static public assets still represented by legacy
+`public/media/**` paths in locale/config presentation data.
+
+Decision:
+
+- centralize runtime resolution in presenters/config instead of editing three
+  large locale files independently;
+- publish the complete bounded static manifest to versioned R2 keys before the
+  next production release;
+- keep legacy locale values as source compatibility data until production
+  network proof confirms they are no longer emitted;
+- do not deploy a release containing new R2 runtime URLs before the static
+  publisher succeeds.
