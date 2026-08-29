@@ -159,8 +159,7 @@
   <section class="admin-gallery-block" aria-label="Daftar artikel">
     @if($articles->isNotEmpty())
       <div class="gallery-lite-list">
-        @foreach($articleRows as ['article' => $article, 'isDeleted' => $isDeleted, 'replacementCandidates' => $replacementCandidates, 'statusLabel' => $statusLabel, 'statusClass' => $statusClass])
-          @php($canPlace = ! $isDeleted && $article->isPubliclyVisibleNow())
+        @foreach($articleRows as ['article' => $article, 'isDeleted' => $isDeleted, 'canPlace' => $canPlace, 'replacementCandidates' => $replacementCandidates, 'statusLabel' => $statusLabel, 'statusClass' => $statusClass])
           <article class="gallery-lite-row article-admin-row {{ $isDeleted ? 'is-deleted' : '' }}">
             <span class="gallery-lite-row__order">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
 
