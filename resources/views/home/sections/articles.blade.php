@@ -19,9 +19,8 @@
   <div class="article-showcase__shell">
     @if (empty($articleItems))
       <div class="article-showcase__empty">
-        <span class="article-showcase__empty-kicker">{{ $articleEmptyKicker }}</span>
-
         <div class="article-showcase__empty-copy">
+          <span class="article-showcase__empty-kicker">{{ $articleEmptyKicker }}</span>
           <h3>{{ $articleEmptyTitle }}</h3>
           <p>{{ $articleEmptyDescription }}</p>
         </div>
