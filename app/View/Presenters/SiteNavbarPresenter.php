@@ -56,7 +56,7 @@ final class SiteNavbarPresenter
             .' '.($logo['line_2'] ?? '')
         ));
         $megaMediaUrl = $siteNavbar['mega_media_url']
-            ?? asset('media/home/hero-school.png');
+            ?? config('media.static.hero_school');
         $megaMediaAlt = $siteNavbar['mega_media_alt'] ?? $logoLabel;
 
         return [

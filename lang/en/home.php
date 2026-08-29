@@ -21,14 +21,14 @@ return [
         'pause_label' => 'Pause slideshow',
         'play_label' => 'Play slideshow',
         'autoplay_interval' => 7200,
-        'fallback_image' => 'media/home/hero-school.png',
+        'fallback_image' => config('media.static.hero_school'),
         'fallback_image_alt' => 'Al Mustaqbal School environment',
         'fallback_title' => 'Nurturing a Muslim generation ready to fulfill their role as Khalifatullah',
         'fallback_description' => 'A holistic education rooted in the Qur’an, innovation, inspiration, and integrity.',
         'slides' => [
             [
                 'type' => 'image',
-                'media' => 'media/home/hero-school.png',
+                'media' => config('media.static.hero_school'),
                 'poster' => null,
                 'media_alt' => 'Al Mustaqbal School building and surroundings',
                 'eyebrow' => 'Al Mustaqbal School',

@@ -26,7 +26,7 @@ return [
             ],
             1 => [
                 'type' => 'image',
-                'media' => 'media/home/hero-school.png',
+                'media' => config('media.static.hero_school'),
                 'poster' => null,
                 'media_alt' => 'Al Mustaqbal School building and surroundings',
                 'eyebrow' => 'Al Mustaqbal School',

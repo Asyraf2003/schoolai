@@ -47,14 +47,14 @@ final class SiteNavbarMenuPresenter
                     $item,
                     $megaCopy['gallery'] ?? [],
                     'galeri',
-                    'media/hero/activity.jpg',
+                    (string) config('media.static.navigation.gallery'),
                 );
             } elseif ($index === 3) {
                 $item = $this->preparePublicItem(
                     $item,
                     $megaCopy['article'] ?? [],
                     'artikel',
-                    'media/hero/library.jpg',
+                    (string) config('media.static.navigation.article'),
                 );
                 $item['route_patterns'] = [
                     'artikel',
@@ -98,7 +98,9 @@ final class SiteNavbarMenuPresenter
     {
         $item['href'] = $homeAnchor('#program');
         $item['route_patterns'] = [];
-        $item['mega']['media_url'] = asset('media/hero/teaching.jpg');
+        $item['mega']['media_url'] = config(
+            'media.static.navigation.education'
+        );
 
         if (! isset($item['mega']['links']) || ! is_array($item['mega']['links'])) {
             return;
@@ -127,14 +129,14 @@ final class SiteNavbarMenuPresenter
         array $item,
         array $copy,
         string $routeName,
-        string $mediaPath,
+        string $mediaUrl,
     ): array {
         $links = is_array($copy['links'] ?? null) ? $copy['links'] : [];
         $item['href'] = route($routeName);
         $item['route_patterns'] = [$routeName];
         $item['mega'] = array_replace($copy, [
             'toggle_label' => $copy['eyebrow'] ?? '',
-            'media_url' => asset($mediaPath),
+            'media_url' => $mediaUrl,
             'media_alt' => $copy['title'] ?? '',
             'links' => array_map(
                 fn (array $link): array => array_merge($link, [

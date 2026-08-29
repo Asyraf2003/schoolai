@@ -21,14 +21,14 @@ return [
         'pause_label' => 'إيقاف العرض التلقائي مؤقتًا',
         'play_label' => 'تشغيل العرض التلقائي',
         'autoplay_interval' => 7200,
-        'fallback_image' => 'media/home/hero-school.png',
+        'fallback_image' => config('media.static.hero_school'),
         'fallback_image_alt' => 'بيئة مدرسة المستقبل',
         'fallback_title' => 'تنشئة جيل مسلم مستعد للقيام بدوره خليفةً لله في الأرض',
         'fallback_description' => 'تعليم شمولي قرآني يقوم على الابتكار والإلهام والنزاهة.',
         'slides' => [
             [
                 'type' => 'image',
-                'media' => 'media/home/hero-school.png',
+                'media' => config('media.static.hero_school'),
                 'poster' => null,
                 'media_alt' => 'مبنى ومرافق مدرسة المستقبل',
                 'eyebrow' => 'مدرسة المستقبل',

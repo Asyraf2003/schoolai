@@ -21,14 +21,14 @@ return [
         'pause_label' => 'Jeda slideshow',
         'play_label' => 'Putar slideshow',
         'autoplay_interval' => 7200,
-        'fallback_image' => 'media/home/hero-school.png',
+        'fallback_image' => config('media.static.hero_school'),
         'fallback_image_alt' => 'Lingkungan Al Mustaqbal School',
         'fallback_title' => 'Menumbuhkan generasi Muslim untuk menjalankan peran sebagai Khalifatullah',
         'fallback_description' => 'Pendidikan holistik yang Qurani, inovatif, inspiratif, dan berintegritas.',
         'slides' => [
             [
                 'type' => 'image',
-                'media' => 'media/home/hero-school.png',
+                'media' => config('media.static.hero_school'),
                 'poster' => null,
                 'media_alt' => 'Gedung dan lingkungan Al Mustaqbal School',
                 'eyebrow' => 'Al Mustaqbal School',

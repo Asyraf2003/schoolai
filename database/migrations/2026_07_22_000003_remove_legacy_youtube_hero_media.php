@@ -53,7 +53,7 @@ return new class extends Migration
 
                 if (self::isYoutubeAsset($mediaUrl)) {
                     $updates['type'] = 'image';
-                    $updates['media_url'] = $safePoster ?: 'media/home/hero-school.png';
+                    $updates['media_url'] = $safePoster ?: config('media.static.hero_school');
                 }
 
                 if (self::isYoutubeAsset($posterUrl)) {
