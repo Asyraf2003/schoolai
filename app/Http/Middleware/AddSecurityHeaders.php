@@ -86,7 +86,7 @@ final class AddSecurityHeaders
             "script-src-attr 'none'",
             "style-src 'self' 'nonce-{$nonce}'",
             "style-src-attr 'unsafe-inline'",
-            "img-src 'self' data: blob:{$mediaSource} https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net",
+            "img-src 'self' data: blob:{$mediaSource} https://i.ytimg.com",
             "font-src 'self' data:",
             "connect-src 'self'{$mediaSource}{$externalHomeScriptSource}",
             "media-src 'self' blob:{$mediaSource}",
