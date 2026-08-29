@@ -18,7 +18,7 @@ function promotedHeroArticle(): Article
         'description_id' => 'Deskripsi artikel hero.',
         'description_en' => 'Hero article description.',
         'content_en' => '<p>Canvas body must not become Hero copy.</p>',
-        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'thumbnail_url' => (string) config('media.static.seo.home_og'),
         'hero_position' => 1,
         'link_id' => url('/artikel/hero-linked-story'),
         'published_at' => now(),
@@ -58,6 +58,7 @@ it('keeps Opening as the sole h1 and links a promoted Article as a later slide',
         ->toContain('Linked Hero Story')
         ->toContain('Hero article description.')
         ->toContain('href="'.e($articleUrl).'"')
+        ->toContain((string) config('media.static.seo.home_og'))
         ->not->toContain('Canvas body must not become Hero copy.');
 });
 
