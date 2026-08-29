@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
 
 uses(RefreshDatabase::class);
 
@@ -38,6 +39,32 @@ it('renders versioned static public media from R2 on every homepage locale', fun
             ->not->toContain('href="'.url('/apple-touch-icon.png'))
             ->not->toContain('/media/seed/hero/gallery-ornament-');
     }
+});
+
+it('rejects legacy static media URLs from Vite-owned source', function (): void {
+    $roots = [resource_path('css'), resource_path('js')];
+    $violations = [];
+
+    foreach ($roots as $root) {
+        foreach (File::allFiles($root) as $file) {
+            if (! in_array($file->getExtension(), ['css', 'js'], true)) {
+                continue;
+            }
+
+            $source = $file->getContents();
+            if (! str_contains($source, '/media/')) {
+                continue;
+            }
+
+            $violations[] = str_replace(
+                base_path().DIRECTORY_SEPARATOR,
+                '',
+                $file->getPathname(),
+            );
+        }
+    }
+
+    expect($violations)->toBe([], 'Legacy /media/ Vite references: '.implode(', ', $violations));
 });
 
 it('keeps the static R2 publish manifest complete versioned and collision free', function (): void {
