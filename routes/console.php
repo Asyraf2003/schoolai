@@ -2,6 +2,7 @@
 
 use App\Actions\Auth\BootstrapAdmin;
 use App\Support\Media\LegacyMediaMigrator;
+use App\Support\Media\StaticPublicMediaPublisher;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Command\Command;
@@ -63,3 +64,27 @@ Artisan::command('media:migrate-r2 {owner?} {--dry-run}', function (): int {
 
     return $stats['failed'] === 0 ? Command::SUCCESS : Command::FAILURE;
 })->purpose('Migrate bounded legacy first-party media owners to canonical R2 URLs');
+
+Artisan::command('media:publish-static-r2 {--dry-run}', function (): int {
+    $stats = app(StaticPublicMediaPublisher::class)->publish(
+        (bool) $this->option('dry-run'),
+    );
+
+    $this->table(
+        ['scanned', 'eligible', 'uploaded', 'existing', 'failed', 'bytes'],
+        [[
+            $stats['scanned'],
+            $stats['eligible'],
+            $stats['uploaded'],
+            $stats['existing'],
+            $stats['failed'],
+            $stats['bytes'],
+        ]],
+    );
+
+    foreach ($stats['errors'] as $error) {
+        $this->error($error);
+    }
+
+    return $stats['failed'] === 0 ? Command::SUCCESS : Command::FAILURE;
+})->purpose('Publish versioned static public media to R2 and verify object sizes');
