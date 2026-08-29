@@ -30,6 +30,10 @@ final class Article extends Model
 
     public const STATUS_SCHEDULED = 'scheduled';
 
+    public const HOMEPAGE_FEATURED_LIMIT = 4;
+
+    public const HERO_SPOTLIGHT_LIMIT = 3;
+
     public const PLACEHOLDER_THUMBNAIL = '/images/article-placeholder.svg';
 
     protected $fillable = [
@@ -52,6 +56,7 @@ final class Article extends Model
         'word_count',
         'thumbnail_url',
         'hero_position',
+        'homepage_position',
         'link_id',
         'link_en',
         'link_ar',
@@ -65,6 +70,7 @@ final class Article extends Model
         'tags' => 'array',
         'word_count' => 'integer',
         'hero_position' => 'integer',
+        'homepage_position' => 'integer',
         'published_date' => 'date',
         'published_at' => 'datetime',
         'scheduled_at' => 'datetime',
