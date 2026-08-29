@@ -6,19 +6,19 @@
     --vision-program-handoff-color: #edf1e9;
 
     /*
-     * One Islamic-geometry family, three related states.
-     * Each WebP is treated as a repeated texture tile. The white relief surface
-     * is blended into the state color so the tile bounds do not read as gutters.
+     * Runtime ornament URLs are injected from config/media.php on the Vision
+     * section. CSS keeps safe no-media defaults so the stylesheet itself never
+     * pulls legacy /media assets into the initial network path.
      */
-    --vision-about-pattern: url("/media/seed/hero/gallery-ornament-33.webp");
+    --vision-about-pattern: none;
     --vision-about-pattern-size: 22rem 22rem;
     --vision-about-pattern-position: 50% 50%;
 
-    --vision-vision-pattern: url("/media/seed/hero/gallery-ornament-32.webp");
+    --vision-vision-pattern: none;
     --vision-vision-pattern-size: 40rem 40rem;
     --vision-vision-pattern-position: 50% 46%;
 
-    --vision-mission-pattern: url("/media/seed/hero/gallery-ornament-33.webp");
+    --vision-mission-pattern: none;
     --vision-mission-pattern-size: 24rem 24rem;
     --vision-mission-pattern-position: 50% 50%;
 }
