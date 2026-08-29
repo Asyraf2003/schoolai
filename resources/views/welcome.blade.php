@@ -24,7 +24,7 @@
       'resources/js/pages/welcome-editorial-headings.js',
     ])
   </head>
-  <body class="home-page nav-shell">
+  <body class="home-page site-cursor-page nav-shell">
     <a href="#main-content" class="skip-link">{{ __('home.accessibility.skip_to_content') }}</a>
 
     @include('partials.site-navbar', ['navbar' => $navbar, 'siteNavMode' => 'home'])
