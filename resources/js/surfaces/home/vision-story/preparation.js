@@ -6,11 +6,12 @@ function boundedWait(work, timeoutMs) {
 }
 
 function hydrateImages(root) {
-    root.querySelectorAll('[data-vision-art][data-src]').forEach((image) => {
-        const source = image.dataset.src;
+    root.querySelectorAll('[data-vision-art][data-lazy-src]').forEach((image) => {
+        const source = image.dataset.lazySrc;
         if (!source) return;
+        image.dataset.lazyHydrated = '1';
         image.src = source;
-        image.removeAttribute('data-src');
+        image.removeAttribute('data-lazy-src');
     });
 }
 
