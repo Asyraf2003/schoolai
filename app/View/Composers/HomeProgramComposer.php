@@ -21,6 +21,18 @@ final class HomeProgramComposer
         'SC',
     ];
 
+    /** @var array<string, array{0: string, 1: string}> */
+    private const PROGRAM_MEDIA = [
+        'TQ' => ['tahfiz', 'center 44%'],
+        'KH' => ['pidato', 'center 45%'],
+        'LC' => ['aula', 'center 46%'],
+        'SJ' => ['solatjamaah', 'center 46%'],
+        'TS' => ['taekwondo', 'center 45%'],
+        'IT' => ['labit', 'center 45%'],
+        'FD' => ['fullday', 'center 45%'],
+        'SC' => ['perpustakaan', 'center 45%'],
+    ];
+
     public function __construct(
         private Translator $translator,
         private HomeKineticLinePresenter $kineticLinePresenter,
@@ -30,7 +42,6 @@ final class HomeProgramComposer
     {
         $content = $this->translator->get('home_program');
         $content = is_array($content) ? $content : [];
-        $media = $this->media();
         $items = collect($content['items'] ?? [])
             ->filter(
                 static fn (mixed $item): bool => is_array($item)
@@ -41,20 +52,19 @@ final class HomeProgramComposer
                     )
             )
             ->values()
-            ->map(
-                static function (mixed $item, int $index) use ($media): array {
-                    $item = is_array($item) ? $item : [];
-                    $titleLength = Str::length(trim((string) ($item['title'] ?? '')));
+            ->map(static function (mixed $item): array {
+                $item = is_array($item) ? $item : [];
+                $code = (string) ($item['code'] ?? '');
+                $titleLength = Str::length(trim((string) ($item['title'] ?? '')));
 
-                    return array_replace($item, [
-                        'detail_id' => 'program-detail-'.Str::lower((string) ($item['code'] ?? '')),
-                        'media' => $media[$index % count($media)],
-                        'title_scale' => $titleLength <= 12
-                            ? 'short'
-                            : ($titleLength <= 20 ? 'medium' : 'long'),
-                    ]);
-                }
-            );
+                return array_replace($item, [
+                    'detail_id' => 'program-detail-'.Str::lower($code),
+                    'media' => self::mediaFor($code),
+                    'title_scale' => $titleLength <= 12
+                        ? 'short'
+                        : ($titleLength <= 20 ? 'medium' : 'long'),
+                ]);
+            });
         $words = collect($content['kinetic_words'] ?? [])
             ->filter(
                 static fn (mixed $word): bool => is_string($word)
@@ -71,16 +81,14 @@ final class HomeProgramComposer
         ]);
     }
 
-    /** @return array<int, array{url: string, position: string}> */
-    private function media(): array
+    /** @return array{url: string, position: string} */
+    private static function mediaFor(string $code): array
     {
+        [$key, $position] = self::PROGRAM_MEDIA[$code] ?? ['aula', 'center center'];
+
         return [
-            ['url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 42%'],
-            ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 46%'],
-            ['url' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 40%'],
-            ['url' => 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 48%'],
-            ['url' => 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 44%'],
-            ['url' => 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1800&q=82', 'position' => 'center 50%'],
+            'url' => (string) config('media.static.school_life.'.$key),
+            'position' => $position,
         ];
     }
 }
