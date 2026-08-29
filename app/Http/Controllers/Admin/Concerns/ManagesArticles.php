@@ -91,7 +91,7 @@ trait ManagesArticles
         [$data, $newPath] = $this->applyThumbnail($request, $data);
 
         try {
-            $article = Article::query()->create($data);
+            Article::query()->create($data);
         } catch (Throwable $exception) {
             $this->deleteStoredPublicPath($newPath);
 
@@ -99,8 +99,8 @@ trait ManagesArticles
         }
 
         return redirect()
-            ->route('admin.artikel.show', $article)
-            ->with('success', 'Artikel berhasil ditambahkan.');
+            ->route('admin.artikel')
+            ->with('success', 'Artikel berhasil ditambahkan. Atur placement-nya langsung dari daftar Artikel.');
     }
 
     public function show(Article $article): View
@@ -143,7 +143,7 @@ trait ManagesArticles
         }
 
         return redirect()
-            ->route('admin.artikel.show', $article)
+            ->route('admin.artikel')
             ->with('success', 'Artikel berhasil diperbarui.');
     }
 
@@ -249,7 +249,7 @@ trait ManagesArticles
 
             return redirect()
                 ->route('admin.artikel')
-                ->with('success', 'Artikel berhasil dipulihkan.');
+                ->with('success', 'Artikel berhasil dipulihkan. Placement tidak dipulihkan otomatis; pin lagi jika memang masih relevan.');
         }
 
         DB::transaction(function () use ($article, $replacementArticleId): void {
@@ -339,11 +339,11 @@ trait ManagesArticles
             ->whereNotNull($field)
             ->orderBy($field)
             ->orderBy('id')
-            ->limit($limit)
             ->lockForUpdate()
             ->get(['id', $field]);
 
-        $this->rewritePositions($articles, $articles->modelKeys(), $field);
+        $keptIds = array_slice($articles->modelKeys(), 0, $limit);
+        $this->rewritePositions($articles, $keptIds, $field);
     }
 
     /**
