@@ -4,6 +4,8 @@ import { mountProgramHeading } from './heading.js';
 import { createProgramDialogIntegration } from './integration.js';
 import { loadGsap } from './motion.js';
 
+const PROGRAM_ENHANCEMENT_ROOT_MARGIN = '100% 0px 100% 0px';
+
 function withReady(cleanup, ready = Promise.resolve()) {
   cleanup.ready = ready;
   return cleanup;
@@ -64,17 +66,10 @@ export function mountProgramJourney(root) {
   }
 
   let cleanup = () => {};
+  let observer = null;
   let disposed = false;
+  let started = false;
   let pendingTrigger = null;
-  let resolveReady;
-  const ready = new Promise((resolve) => {
-    resolveReady = resolve;
-  });
-
-  const pendingOpen = (event) => {
-    event.preventDefault();
-    pendingTrigger = event.currentTarget;
-  };
 
   const clearPending = () => {
     dom.triggers.forEach((trigger) => trigger.removeEventListener('click', pendingOpen));
@@ -89,27 +84,51 @@ export function mountProgramJourney(root) {
     });
   };
 
+  const startEnhanced = () => {
+    if (started || disposed) return;
+    started = true;
+    observer?.disconnect();
+    observer = null;
+
+    loadGsap().then((gsap) => {
+      if (disposed) return;
+      clearPending();
+      root.classList.add('has-gsap');
+      cleanup = mountGsap(dom, integration, gsap);
+      replayPending();
+    }).catch(() => {
+      if (disposed) return;
+      clearPending();
+      root.classList.add('gsap-failed');
+      cleanup = mountReduced(dom, integration);
+      replayPending();
+    });
+  };
+
+  function pendingOpen(event) {
+    event.preventDefault();
+    pendingTrigger = event.currentTarget;
+    startEnhanced();
+  }
+
   dom.triggers.forEach((trigger) => trigger.addEventListener('click', pendingOpen));
 
-  loadGsap().then((gsap) => {
-    if (disposed) return;
-    clearPending();
-    root.classList.add('has-gsap');
-    cleanup = mountGsap(dom, integration, gsap);
-    replayPending();
-    resolveReady('gsap');
-  }).catch(() => {
-    if (disposed) return;
-    clearPending();
-    root.classList.add('gsap-failed');
-    cleanup = mountReduced(dom, integration);
-    replayPending();
-    resolveReady('fallback');
-  });
+  if ('IntersectionObserver' in window) {
+    observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) startEnhanced();
+    }, {
+      rootMargin: PROGRAM_ENHANCEMENT_ROOT_MARGIN,
+      threshold: 0,
+    });
+    observer.observe(root);
+  } else {
+    window.setTimeout(startEnhanced, 0);
+  }
 
   const destroy = () => {
     disposed = true;
-    resolveReady('disposed');
+    observer?.disconnect();
+    observer = null;
     clearPending();
     cleanup();
     cleanHeading();
@@ -119,5 +138,5 @@ export function mountProgramJourney(root) {
     );
   };
 
-  return withReady(destroy, ready);
+  return withReady(destroy, Promise.resolve('armed'));
 }
