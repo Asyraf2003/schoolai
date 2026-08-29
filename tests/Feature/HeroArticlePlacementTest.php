@@ -18,6 +18,7 @@ it('keeps Opening first and derives only explicitly promoted published Articles'
         'cta_url' => null,
     ]);
 
+    $fallback = (string) config('media.static.seo.home_og');
     $older = Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
         'article_status' => Article::STATUS_PUBLISHED,
@@ -26,7 +27,7 @@ it('keeps Opening first and derives only explicitly promoted published Articles'
         'title_en' => 'Older Article',
         'description_en' => 'Older excerpt.',
         'content_en' => '<p>Heavy older Canvas body.</p>',
-        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'thumbnail_url' => $fallback,
         'link_id' => url('/artikel/artikel-lama-test'),
         'published_at' => now()->subDay(),
     ]);
@@ -39,7 +40,7 @@ it('keeps Opening first and derives only explicitly promoted published Articles'
         'title_en' => 'Latest Article',
         'description_en' => 'Latest excerpt.',
         'content_en' => '<p>Heavy latest Canvas body.</p>',
-        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'thumbnail_url' => $fallback,
         'link_id' => url('/artikel/artikel-terbaru-test'),
         'published_at' => now(),
     ]);
