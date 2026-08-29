@@ -15,7 +15,11 @@ it('renders the testimonial wall after gallery with three seven-card tracks', fu
         ->and($galleryPosition)->toBeLessThan($testimonialPosition)
         ->and($html)->not->toContain('testimonial-wall__eyebrow')
         ->and(substr_count($html, 'data-testimonial-track'))->toBe(3)
-        ->and(substr_count($html, 'data-testimonial-card'))->toBe(21);
+        ->and(substr_count($html, 'data-testimonial-card'))->toBe(21)
+        ->and($html)->toContain((string) config('media.static.testimonials.0'))
+        ->and($html)->toContain((string) config('media.static.testimonials.20'))
+        ->and($html)->not->toContain((string) config('media.static.testimonials.21'))
+        ->and($html)->not->toContain('testimonial-nature-');
 });
 
 it('keeps testimonial sample content complete in every public locale', function (): void {
