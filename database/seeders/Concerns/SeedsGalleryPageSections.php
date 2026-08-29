@@ -26,7 +26,6 @@ trait SeedsGalleryPageSections
             $section = GalleryPageSection::withTrashed()->firstOrNew([
                 'title_id' => $sectionData['title_id'],
             ]);
-
             $section->fill($sectionData);
             $section->save();
 
@@ -42,24 +41,23 @@ trait SeedsGalleryPageSections
                     'media_url' => $media['media_url'],
                 ]);
 
-                $item->fill([
-                    'title' => $sectionData['title_id'].' '.($mediaIndex + 1),
-                    'title_id' => $sectionData['title_id'].' '.($mediaIndex + 1),
-                    'title_en' => $sectionData['title_en'].' '.($mediaIndex + 1),
-                    'type' => $media['type'],
-                    'category' => 'Galeri Halaman',
-                    'category_id' => 'Galeri Halaman',
-                    'category_en' => 'Gallery Page',
-                    'media_url' => $media['media_url'],
-                    'is_published' => true,
-                    'show_on_homepage' => false,
-                    'show_on_gallery_page' => false,
-                    'published_at' => now()->subDays(
-                        ($sectionIndex * 4) + $mediaIndex
-                    ),
-                ]);
-
-                $item->save();
+                if (! $item->exists) {
+                    $item->fill([
+                        'title' => $sectionData['title_id'].' '.($mediaIndex + 1),
+                        'title_id' => $sectionData['title_id'].' '.($mediaIndex + 1),
+                        'title_en' => $sectionData['title_en'].' '.($mediaIndex + 1),
+                        'type' => $media['type'],
+                        'category' => 'Galeri Halaman',
+                        'category_id' => 'Galeri Halaman',
+                        'category_en' => 'Gallery Page',
+                        'media_url' => $media['media_url'],
+                        'is_published' => true,
+                        'show_on_homepage' => false,
+                        'show_on_gallery_page' => false,
+                        'published_at' => now()->subDays(($sectionIndex * 4) + $mediaIndex),
+                    ]);
+                    $item->save();
+                }
 
                 if ($item->trashed()) {
                     $item->restore();
@@ -80,7 +78,6 @@ trait SeedsGalleryPageSections
         $section = GalleryPageSection::withTrashed()->firstOrNew([
             'title_id' => 'Fasilitas',
         ]);
-
         $section->fill([
             'title_id' => 'Fasilitas',
             'title_en' => 'Facilities',
@@ -125,10 +122,10 @@ trait SeedsGalleryPageSections
                 'description_ar' => 'لحظات يلاحظ فيها الطلاب ويجرّبون ويطرحون الأسئلة ويكتشفون الإجابات من خلال تجارب تعلّم واقعية.',
                 'is_published' => true,
                 'media' => [
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'video', 'media_url' => 'https://www.youtube.com/embed/n5cW4FpGvhI'],
+                    $this->schoolPhoto('labit'),
+                    $this->schoolPhoto('perpustakaan'),
+                    $this->schoolPhoto('renang2'),
+                    $this->schoolPhoto('haji2'),
                 ],
             ],
             [
@@ -140,10 +137,10 @@ trait SeedsGalleryPageSections
                 'description_ar' => 'مساحة تتيح للطلاب الإبداع وتقديم أعمالهم والتعبير عن أفكارهم وبناء الثقة والشجاعة بأساليب هادفة.',
                 'is_published' => true,
                 'media' => [
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1600&q=82'],
+                    $this->schoolPhoto('pidato'),
+                    $this->schoolPhoto('taekwondo'),
+                    $this->schoolPhoto('haji'),
+                    $this->schoolPhoto('aula'),
                 ],
             ],
             [
@@ -155,12 +152,21 @@ trait SeedsGalleryPageSections
                 'description_ar' => 'تُسهم الحياة المشتركة في المدرسة في تنمية الأدب والمسؤولية والاهتمام بالآخرين والاحترام المتبادل.',
                 'is_published' => true,
                 'media' => [
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?auto=format&fit=crop&w=1600&q=82'],
-                    ['type' => 'photo', 'media_url' => 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1600&q=82'],
+                    $this->schoolPhoto('solatjamaah'),
+                    $this->schoolPhoto('tahfiz'),
+                    $this->schoolPhoto('ibadah'),
+                    $this->schoolPhoto('fullday'),
                 ],
             ],
+        ];
+    }
+
+    /** @return array{type: string, media_url: string} */
+    private function schoolPhoto(string $key): array
+    {
+        return [
+            'type' => 'photo',
+            'media_url' => (string) config('media.static.school_life.'.$key),
         ];
     }
 }
