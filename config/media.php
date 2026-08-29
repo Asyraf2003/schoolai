@@ -5,6 +5,34 @@ $publicUrl = rtrim(
     '/'
 );
 
+$schoolLife = [];
+foreach ([
+    'aula',
+    'fullday',
+    'gigianak',
+    'haji',
+    'haji2',
+    'ibadah',
+    'labit',
+    'mushalla',
+    'parenting',
+    'perpustakaan',
+    'pidato',
+    'psikolog',
+    'renang',
+    'renang2',
+    'solatjamaah',
+    'taekwondo',
+    'tahfiz',
+] as $name) {
+    $schoolLife[$name] = $publicUrl.'/site/school-life/'.$name.'-v1.webp';
+}
+
+$testimonials = [];
+for ($index = 1; $index <= 22; $index++) {
+    $testimonials[] = $publicUrl.sprintf('/site/testimonials/testi-%02d-v1.webp', $index);
+}
+
 return [
     'disk' => env('MEDIA_DISK', 's3'),
     'public_url' => $publicUrl,
@@ -15,6 +43,8 @@ return [
 
     'static' => [
         'hero_school' => $publicUrl.'/site/hero/hero-school.webp',
+        'school_life' => $schoolLife,
+        'testimonials' => $testimonials,
 
         'brand' => [
             'logo_nav' => $publicUrl.'/site/brand/logo-nav-v1.webp',
