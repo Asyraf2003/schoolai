@@ -2,12 +2,16 @@
 
 namespace App\View\Composers;
 
+use App\View\Presenters\SiteFooterMediaPresenter;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 final class SiteFooterComposer
 {
-    public function __construct(private Request $request) {}
+    public function __construct(
+        private Request $request,
+        private SiteFooterMediaPresenter $mediaPresenter,
+    ) {}
 
     public function compose(View $view): void
     {
@@ -23,6 +27,7 @@ final class SiteFooterComposer
             ?? $viewData['footerSection']
             ?? $homeFooter;
         $siteFooter = is_array($siteFooter) ? $siteFooter : [];
+        $siteFooter = $this->mediaPresenter->present($siteFooter);
         $isHomeFooter = $this->request->routeIs('home');
 
         $siteFooter['links'] = $this->prepareLinks(
