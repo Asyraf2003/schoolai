@@ -4,8 +4,8 @@
 <meta name="theme-color" content="#137a4c" />
 
 <link rel="canonical" href="{{ $headCanonicalUrl }}" />
-<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
+<link rel="icon" type="image/x-icon" href="{{ config('media.static.brand.favicon') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ config('media.static.brand.apple_touch_icon') }}" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="{{ $headSiteName }}" />
