@@ -1,5 +1,5 @@
 @media (hover: hover) and (pointer: fine) {
-    body.home-page[data-cursor-character="cwo"] {
+    body.site-cursor-page[data-cursor-character="cwo"] {
         --home-cursor-default-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp");
         --home-cursor-default-hotspot-x: 15px;
         --home-cursor-default-hotspot-y: 48px;
@@ -11,7 +11,7 @@
         --home-cursor-angry-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo5.webp");
     }
 
-    body.home-page[data-cursor-character="cwe"] {
+    body.site-cursor-page[data-cursor-character="cwe"] {
         --home-cursor-default-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp");
         --home-cursor-default-hotspot-x: 11px;
         --home-cursor-default-hotspot-y: 40px;
@@ -24,22 +24,21 @@
     }
 
     /*
-     * Hide Chromium's native cursor throughout the homepage and render one
-     * compositor-friendly fixed overlay instead. This avoids native-cursor
-     * flashes at viewport/browser-chrome boundaries and nested UI targets.
+     * Hide the native cursor only on explicitly opted-in public site surfaces
+     * and render one compositor-friendly fixed overlay instead.
      */
-    body.home-page[data-cursor-character],
-    body.home-page[data-cursor-character] * {
+    body.site-cursor-page[data-cursor-character],
+    body.site-cursor-page[data-cursor-character] * {
         cursor: none !important;
     }
 
-    body.home-page[data-cursor-character] :is(
+    body.site-cursor-page[data-cursor-character] :is(
         [disabled],
         [aria-disabled="true"],
         .is-disabled,
         .footer-channel--disabled
     ),
-    body.home-page[data-cursor-character] :is(
+    body.site-cursor-page[data-cursor-character] :is(
         [disabled],
         [aria-disabled="true"],
         .is-disabled,
