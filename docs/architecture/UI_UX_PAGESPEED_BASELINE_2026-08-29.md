@@ -22,6 +22,11 @@ The PageSpeed capture predates the latest cursor/about-player commits by roughly
 No CrUX/field data was available in the supplied reports. Lab evidence does not
 prove field CWV `3/3`.
 
+Repository file presence is not runtime proof. In particular, old JPG/PNG files
+may remain as legacy/source artifacts. A performance decision may call a media
+file "runtime" only when a current Blade/config/DB path or production network
+trace proves that it is delivered.
+
 ## 2. Baseline scores and metrics
 
 | Metric | Mobile | Desktop |
@@ -102,34 +107,52 @@ Decision:
 This is the safest first optimization batch because it is isolated, measurable,
 and directly intersects the LCP text path.
 
-### P0-C — Hero/local media payload is far above budget
+### P0-C — Hero payload is high, but runtime ownership must be proven first
 
-Repository-confirmed local files:
+The repository contains old local files under `public/media/hero/`, including
+multi-megabyte JPG files and an MP4. Their presence alone does **not** prove the
+current homepage renders or downloads them.
 
-- `public/media/hero/activity.jpg`: 2,636,109 bytes;
-- `public/media/hero/library.jpg`: 2,090,143 bytes;
-- `public/media/hero/teaching.jpg`: 1,311,473 bytes;
-- `public/media/hero/mainvideo.mp4`: 19,602,803 bytes.
+Current source evidence instead shows that the opening hero is injected from
+`config('media.homepage_hero_video_url')` with poster/fallback handling, while
+promoted article hero slides use article `thumbnail_url` values from the
+database. Source search does not currently prove direct runtime references to
+`activity.jpg`, `library.jpg`, or `teaching.jpg`.
 
-Desktop PSI downloaded the three JPEGs at approximately 2.58 MiB, 2.04 MiB and
-1.28 MiB respectively. Total desktop payload reached about 7.18 MiB.
+The desktop PSI report still records a much larger total payload than mobile,
+about 7.18 MiB, so hero/media transfer remains a real investigation target. The
+next valid evidence is the production network request list mapped back to
+current config/DB/source ownership.
 
 The Blade markup correctly leaves non-first image slides as `data-src`, but
 `resources/js/pages/welcome-hero/slider-playback.js` explicitly hydrates the
 next non-video slide during `showSlide()`. This confirms at least one hidden
-hero image is fetched before it is needed.
+hero image can be fetched before it is visible, but it does not prove which
+specific production asset it is.
 
 Decision:
 
-- create right-sized modern hero variants rather than shipping multi-megabyte
-  JPEG originals to normal viewports;
-- use responsive source selection where appropriate;
-- keep initial media/poster quality high but bounded;
-- remove automatic next-slide image hydration from the initial critical window;
-  hydrate on safe idle proximity, autoplay proximity or user intent instead;
+- do not convert, delete, or optimize legacy JPG/PNG merely because files exist;
+- first identify the exact production hero/poster/article requests and owners;
+- keep non-active media unhydrated until justified by idle proximity, autoplay
+  proximity, or user intent;
 - keep non-active video sources unhydrated until required;
-- do not infer from current source alone that all three desktop JPEG requests
-  come from the same hydration function. That requires a network trace.
+- only right-size/encode assets that are proven runtime resources;
+- preserve current visual quality while bounding payload per viewport.
+
+### Runtime media-format contract
+
+Owner decision for public runtime media:
+
+- photographic/raster media: WebP by default;
+- video media: MP4 using the existing conditioned/optimized delivery path;
+- SVG: appropriate for logos, icons, marks, ornaments, or other genuinely
+  vector artwork;
+- JPG/PNG may exist as legacy/source artifacts, but must not silently become
+  public runtime media without an explicit reason and evidence.
+
+Performance work must verify the delivered URL/format rather than infer it from
+repository extensions.
 
 ### P0-D — Decorative repeated textures are oversized
 
@@ -144,8 +167,9 @@ resources and estimates meaningful image-delivery savings.
 
 Decision:
 
-- generate much smaller texture-source dimensions/quality for repetition;
-- evaluate AVIF/WebP based on actual decode/visual result;
+- generate much smaller texture-source dimensions/quality for repetition only
+  if visual/runtime proof confirms the current files are materially costly;
+- keep WebP unless measured format/decode evidence justifies another choice;
 - do not use hundreds of KiB for a repeating decorative tile unless visual
   comparison proves the cost necessary.
 
@@ -269,6 +293,7 @@ Do NOT:
 - remove cinematic effects without a trace proving they are the bottleneck;
 - use `preload` for many below-fold assets;
 - preload hidden carousel media merely to make transitions instant;
+- convert/delete JPG/PNG only because they exist in the repository;
 - set one-year immutable caching on fixed-name mutable media;
 - enable HSTS preload before subdomain readiness is proven;
 - treat a single Lighthouse score fluctuation as proof.
@@ -278,13 +303,14 @@ Do NOT:
 1. Self-host Inter and remove Google Fonts from the public ID/EN critical path.
 2. Re-run comparable PageSpeed/Lighthouse and record delta.
 3. Restructure critical vs deferred home CSS entries.
-4. Compress/right-size hero and decorative media; stop premature hero hydration.
-5. Apply safe cache policy for hashed/versioned assets.
-6. Evaluate delayed analytics loading.
-7. Resolve media-origin video failure.
-8. Reduce DOM/style/rendering cost using trace evidence.
-9. Repair accessibility/agentic semantics and touch targets.
-10. Handle security hardening as its own verified batch.
+4. Capture exact production media requests and map each to config/DB/source.
+5. Fix only proven runtime media payload/hydration problems.
+6. Apply safe cache policy for hashed/versioned assets.
+7. Evaluate delayed analytics loading.
+8. Resolve media-origin video failure.
+9. Reduce DOM/style/rendering cost using trace evidence.
+10. Repair accessibility/agentic semantics and touch targets.
+11. Handle security hardening as its own verified batch.
 
 Only one numbered batch should be changed between comparable measurements when
 practical, so attribution remains credible.
