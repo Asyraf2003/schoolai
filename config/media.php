@@ -20,6 +20,8 @@ return [
             'logo_nav' => $publicUrl.'/site/brand/logo-nav-v1.webp',
             'logo_footer' => $publicUrl.'/site/brand/logo-footer-v1.webp',
             'logo_square' => $publicUrl.'/site/brand/logo-square-v1.png',
+            'favicon' => $publicUrl.'/site/brand/favicon-v1.ico',
+            'apple_touch_icon' => $publicUrl.'/site/brand/apple-touch-icon-v1.png',
         ],
 
         'seo' => [
@@ -68,6 +70,8 @@ return [
     ],
 
     'static_publish' => [
+        ['source' => 'favicon.ico', 'key' => 'site/brand/favicon-v1.ico'],
+        ['source' => 'apple-touch-icon.png', 'key' => 'site/brand/apple-touch-icon-v1.png'],
         ['source' => 'media/home/logo-nav.webp', 'key' => 'site/brand/logo-nav-v1.webp'],
         ['source' => 'media/home/logo-footer.webp', 'key' => 'site/brand/logo-footer-v1.webp'],
         ['source' => 'media/home/logo.png', 'key' => 'site/brand/logo-square-v1.png'],
