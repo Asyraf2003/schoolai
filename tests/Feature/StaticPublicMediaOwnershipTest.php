@@ -34,6 +34,7 @@ it('renders versioned static public media from R2 on every homepage locale', fun
 
         expect($content)
             ->not->toContain('images.unsplash.com')
+            ->not->toContain('resources.finalsite.net')
             ->not->toContain('testimonial-nature-')
             ->not->toContain('src="/media/')
             ->not->toContain('href="'.url('/favicon.ico'))
