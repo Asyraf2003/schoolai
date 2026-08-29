@@ -1,7 +1,7 @@
 # UI/UX Performance and Browser Matrix
 
 Status: ACTIVE
-Updated: 2026-07-31
+Updated: 2026-08-29
 
 ## 1. Target interpretation
 
@@ -27,7 +27,7 @@ Record exact browser/OS/hardware/input/capability tier.
 | Chromium tablet | touch/orientation and MD/LG transition |
 | Chromium desktop | XL/2XL, keyboard, trace, graphics |
 | WebKit mobile | 360/390, touch, viewport/media/canvas |
-| WebKit tablet | MD/LG, orientation, memory/lifecycle |
+| WebKit tablet | MD/LG, orientation and memory/lifecycle |
 | Safari desktop | XL/2XL, keyboard, media/graphics |
 
 Use `UI_UX_RESPONSIVE_LOCALE_MATRIX.md` for the full six-tier/locale proof.
@@ -36,10 +36,15 @@ be mistaken for application behavior.
 
 ## 3. Baseline before feature budgets
 
-Resolve `BASELINE-GAP-001` before selecting the first WebGL engine or
-implementing a cinematic scene.
+`BASELINE-GAP-001` now has an initial production lab capture dated 2026-08-29.
+See `UI_UX_PAGESPEED_BASELINE_2026-08-29.md` for the evidence boundary,
+mobile/desktop metrics, correlated repository facts and optimization order.
 
-Record:
+The capture provides a first lab baseline, not a final PASS and not field CWV.
+It also predates the latest cursor/about-player commits by roughly ten minutes,
+so every performance batch still requires a new comparable production run.
+
+Baseline records must include:
 
 - HTML transfer and TTFB;
 - critical/total CSS;
@@ -175,11 +180,17 @@ Performance regression is a product failure, not deferred polish.
 
 ## 13. Proof status
 
-Until baseline and runtime evidence exist:
+Current evidence state:
 
-- target: accepted;
+- target: accepted, `100/100/100/100`;
 - architecture: defined;
-- current PageSpeed/CWV/browser parity: `BLOCKED_BY_MISSING_EVIDENCE`.
+- production lab baseline: CAPTURED on 2026-08-29;
+- baseline details: `UI_UX_PAGESPEED_BASELINE_2026-08-29.md`;
+- mobile baseline: Performance 79, Accessibility 97, Best Practices 96, SEO 100;
+- desktop baseline: Performance 77, Accessibility 97, Best Practices 96, SEO 100;
+- field CWV/CrUX: `BLOCKED_BY_MISSING_FIELD_DATA`;
+- browser parity: not yet proven from this PSI capture alone;
+- current target status: NOT PASS.
 
 ## 14. Primary references
 
