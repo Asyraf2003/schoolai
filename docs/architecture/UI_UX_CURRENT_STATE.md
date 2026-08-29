@@ -1,7 +1,7 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
 Status: `HARDENING_ACTIVE / H7_G0_PASS / H7_RUNTIME_NOT_STARTED`
-Updated: 2026-08-28
+Updated: 2026-08-29
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Inspected runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
@@ -684,3 +684,25 @@ E1-E6 are complete. Per owner instruction, execution stops here. Static-media
 migration, direct-to-R2 upload, Testimonial UI, Article homepage UI and image
 transformation remain outside this run. Broad runtime certification remains
 `BLOCKED_BY_MISSING_EVIDENCE`.
+
+## PageSpeed P0 Inter critical-path batch
+
+The owner opened one bounded PageSpeed batch on 2026-08-29. Source at
+`12d7d97edd5f4c2317db40852db54b37e3e6e574` still placed the ID/EN text LCP
+behind the Google Fonts stylesheet and Inter WOFF2 request documented in the
+production baseline. The public Latin typography adapter now owns one licensed
+48,256-byte Inter variable Latin WOFF2 through Vite, while the shared head no
+longer emits Google Fonts stylesheet or preconnect requests. AR/Cairo, DOM,
+copy, layout, responsive behavior, motion, media and analytics are unchanged.
+
+Focused shared-chrome proof passes with 4 tests / 92 assertions. The full suite
+passes with 259 tests / 2,689 assertions, Pint and the Vite production build
+pass, and Vite emits one hashed first-party Inter WOFF2. The current structure
+gate fails on pre-existing over-limit, unreferenced-module, checksum and import-
+order findings outside this patch; none names the changed font/head/test owners.
+Chromium/WebKit visual parity and comparable production PageSpeed runs remain
+`BLOCKED_BY_MISSING_EVIDENCE` until deployment.
+
+The one valid next step is owner/AI diff review followed by deployment and at
+least three comparable cold mobile and desktop PageSpeed runs. Critical CSS
+restructuring remains a separate later batch so its effect stays attributable.

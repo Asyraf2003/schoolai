@@ -5,6 +5,23 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+it('self-hosts the public Latin font without a Google Fonts dependency', function (): void {
+    $head = file_get_contents(resource_path('views/partials/site-head-meta.blade.php'));
+    $latinTypography = file_get_contents(resource_path('css/public-latin-inter.css'));
+    $font = resource_path('fonts/inter/inter-latin-variable.woff2');
+
+    expect($head)
+        ->not->toContain('fonts.googleapis.com')
+        ->not->toContain('fonts.gstatic.com')
+        ->and($latinTypography)
+        ->toContain('@font-face')
+        ->toContain('font-weight: 100 900')
+        ->toContain('font-display: swap')
+        ->toContain('../fonts/inter/inter-latin-variable.woff2')
+        ->and($font)->toBeFile()
+        ->and(filesize($font))->toBeGreaterThan(0);
+});
+
 it('preserves shared public chrome semantics for every locale', function (): void {
     $localeContracts = [
         'id' => [

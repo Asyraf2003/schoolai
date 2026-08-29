@@ -7,15 +7,6 @@
 <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
 
-@if ($headLanguage !== 'ar')
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-  />
-@endif
-
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="{{ $headSiteName }}" />
 <meta property="og:locale" content="{{ $headLocale }}" />
