@@ -36,10 +36,7 @@
     line-height: 1;
     text-decoration: none;
     text-transform: uppercase;
-    transition:
-        transform 220ms cubic-bezier(.22, 1, .36, 1),
-        background-color 220ms ease,
-        color 220ms ease;
+    transition: transform 220ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .gallery-story__item-link:hover,
