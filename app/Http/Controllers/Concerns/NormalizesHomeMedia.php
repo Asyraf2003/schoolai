@@ -59,16 +59,11 @@ trait NormalizesHomeMedia
             return null;
         }
 
-        $path = match ($provider) {
-            'youtube' => 'media/home/youtube.webp',
-            'instagram' => 'media/home/instagram.svg',
-            'facebook' => 'media/home/facebook.webp',
-            'tiktok' => 'media/home/tiktok.webp',
-            'vimeo' => 'media/home/vimeo.webp',
-            default => null,
-        };
+        $url = config('media.static.providers.'.$provider);
 
-        return $this->publicAssetUrl($path);
+        return is_string($url) && $url !== ''
+            ? PublicUrl::normalize($url)
+            : null;
     }
 
     private function videoThumbnailUrl(?string $embedUrl): ?string
