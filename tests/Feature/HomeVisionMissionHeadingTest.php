@@ -36,10 +36,13 @@ it('renders localized About Vision and Mission before Program', function (): voi
             ->assertDontSee('data-vision-program', false);
 
         $content = $response->getContent();
+        preg_match_all('/<img(?=[^>]*data-vision-art)[^>]*\ssrc=/', $content, $eagerVisionImages);
         expect(substr_count($content, 'data-vision-panel='))->toBe(3)
             ->and(substr_count($content, 'data-vision-visual='))->toBe(3)
             ->and(substr_count($content, 'data-vision-background-layer='))->toBe(2)
             ->and(substr_count($content, 'data-vision-art'))->toBe(3)
+            ->and(substr_count($content, 'data-lazy-src='))->toBeGreaterThanOrEqual(3)
+            ->and(count($eagerVisionImages[0]))->toBe(0)
             ->and(substr_count(
                 $content,
                 'media.almustaqbal.sch.id/site/vision/vision-paper-'
@@ -77,6 +80,9 @@ it('provides one configurable gradual Vision background compositor', function ()
     $background = file_get_contents(
         resource_path('css/pages/welcome-vision-waapi/background.css'),
     );
+    $blade = file_get_contents(
+        resource_path('views/home/sections/vision-mission.blade.php'),
+    );
 
     expect($timeline)
         ->toContain('createVisionBackgroundCompositor')
@@ -95,29 +101,34 @@ it('provides one configurable gradual Vision background compositor', function ()
         ->toContain('--vision-about-color: #efe3ca')
         ->toContain('--vision-vision-color: #cbdfe4')
         ->toContain('--vision-mission-color: #d1dfca')
-        ->toContain('--vision-about-pattern: url("/media/seed/hero/gallery-ornament-33.webp")')
-        ->toContain('--vision-vision-pattern: url("/media/seed/hero/gallery-ornament-32.webp")')
-        ->toContain('--vision-mission-pattern: url("/media/seed/hero/gallery-ornament-33.webp")')
-        ->toContain('background-image:')
+        ->toContain('--vision-about-pattern: none')
+        ->toContain('--vision-vision-pattern: none')
+        ->toContain('--vision-mission-pattern: none')
+        ->not->toContain('/media/seed/hero/')
         ->toContain('radial-gradient(circle at 50% 42%')
         ->toContain('var(--vision-state-pattern)')
-        ->toContain('background-repeat: no-repeat')
-        ->toContain('background-repeat: repeat')
         ->toContain('filter: blur(var(--vision-state-diffusion))')
-        ->not->toContain('repeating-conic-gradient');
+        ->and($blade)
+        ->toContain("config('media.static.ornaments.geometry_32')")
+        ->toContain("config('media.static.ornaments.geometry_33')");
 });
 
 it('uses a native pinned mask reveal without owning document scroll', function (): void {
     $controller = file_get_contents(resource_path('js/surfaces/home/vision-story/controller.js'));
+    $preparation = file_get_contents(resource_path('js/surfaces/home/vision-story/preparation.js'));
     $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
     $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($controller)
         ->toContain("matchMedia('(min-width: 1024px)')")
+        ->toContain("rootMargin: '0px 0px -5% 0px'")
         ->toContain('current += (target - current) * alpha')
         ->not->toContain('window.scrollTo')
         ->not->toContain('programStoryTravel')
         ->not->toContain("new CustomEvent('vision:layout')")
+        ->and($preparation)
+        ->toContain("[data-vision-art][data-lazy-src]")
+        ->toContain("image.dataset.lazyHydrated = '1'")
         ->and($timeline)
         ->toContain('style.clipPath')
         ->toContain('translate3d(0, ${y.toFixed(3)}%, 0) scale(1.08)')
