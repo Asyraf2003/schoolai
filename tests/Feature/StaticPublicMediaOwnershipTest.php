@@ -8,6 +8,8 @@ it('renders versioned static public media from R2 on every homepage locale', fun
     $expectedUrls = array_values(array_filter([
         config('media.static.brand.logo_nav'),
         config('media.static.brand.logo_footer'),
+        config('media.static.brand.favicon'),
+        config('media.static.brand.apple_touch_icon'),
         config('media.static.seo.home_og'),
         config('media.static.ornaments.geometry_32'),
         config('media.static.ornaments.geometry_33'),
@@ -32,6 +34,8 @@ it('renders versioned static public media from R2 on every homepage locale', fun
         expect($content)
             ->not->toContain('src="/media/home/')
             ->not->toContain('src="'.url('/media/home/'))
+            ->not->toContain('href="'.url('/favicon.ico'))
+            ->not->toContain('href="'.url('/apple-touch-icon.png'))
             ->not->toContain('/media/seed/hero/gallery-ornament-');
     }
 });
