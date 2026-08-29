@@ -7,7 +7,7 @@
 }
 
 .home-page .galeri-section {
-    --gallery-story-pattern: url("/media/seed/hero/gallery-ornament-33.webp");
+    --gallery-story-pattern: none;
     position: relative;
     z-index: 4;
     overflow: clip;
