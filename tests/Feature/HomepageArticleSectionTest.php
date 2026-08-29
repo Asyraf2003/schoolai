@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('renders the three latest published Articles in Lead Rail order after Testimonial', function (): void {
+it('renders four latest published Articles in one Head plus three Rail order after Testimonial', function (): void {
     app()->setLocale('id');
 
     foreach ([
+        ['title' => 'Artikel Masa Depan', 'slug' => 'masa-depan', 'published_at' => now()->addDay(), 'tag' => 'Nanti'],
         ['title' => 'Artikel Terbaru Satu', 'slug' => 'terbaru-satu', 'published_at' => now()->subMinute(), 'tag' => 'Sekolah'],
         ['title' => 'Artikel Terbaru Dua', 'slug' => 'terbaru-dua', 'published_at' => now()->subHour(), 'tag' => 'Karya'],
         ['title' => 'Artikel Terbaru Tiga', 'slug' => 'terbaru-tiga', 'published_at' => now()->subHours(2), 'tag' => 'Karakter'],
+        ['title' => 'Artikel Terbaru Empat', 'slug' => 'terbaru-empat', 'published_at' => now()->subHours(3), 'tag' => 'Prestasi'],
         ['title' => 'Artikel Lama Tidak Masuk', 'slug' => 'artikel-lama', 'published_at' => now()->subDay(), 'tag' => 'Arsip'],
     ] as $data) {
         Article::query()->create([
@@ -41,6 +43,8 @@ it('renders the three latest published Articles in Lead Rail order after Testimo
         ->assertSee('Artikel Terbaru Satu')
         ->assertSee('Artikel Terbaru Dua')
         ->assertSee('Artikel Terbaru Tiga')
+        ->assertSee('Artikel Terbaru Empat')
+        ->assertDontSee('Artikel Masa Depan')
         ->assertDontSee('Artikel Lama Tidak Masuk')
         ->assertDontSee('Artikel, kabar, dan catatan yang merekam proses belajar, karya, dan kehidupan di Al Mustaqbal.')
         ->assertDontSee('Baca artikel')
@@ -52,14 +56,55 @@ it('renders the three latest published Articles in Lead Rail order after Testimo
     expect(strpos($html, 'data-testimonial-wall'))
         ->toBeLessThan(strpos($html, 'data-article-showcase'))
         ->and(substr_count($html, 'article-showcase__card article-showcase__card--'))
-        ->toBe(3)
+        ->toBe(4)
         ->and(strpos($html, 'Artikel Terbaru Satu'))
         ->toBeLessThan(strpos($html, 'Artikel Terbaru Dua'))
         ->and(strpos($html, 'Artikel Terbaru Dua'))
-        ->toBeLessThan(strpos($html, 'Artikel Terbaru Tiga'));
+        ->toBeLessThan(strpos($html, 'Artikel Terbaru Tiga'))
+        ->and(strpos($html, 'Artikel Terbaru Tiga'))
+        ->toBeLessThan(strpos($html, 'Artikel Terbaru Empat'));
 });
 
-it('uses a lean latest-published Article query for the homepage showcase', function (): void {
+it('prioritizes homepage pins and fills remaining slots with latest published Articles', function (): void {
+    app()->setLocale('id');
+
+    $pinned = Article::query()->create([
+        'article_source' => Article::SOURCE_EXTERNAL,
+        'article_status' => Article::STATUS_PUBLISHED,
+        'title_id' => 'Prestasi Lama Tetap Head',
+        'description_id' => 'Artikel lama yang sengaja dipin.',
+        'thumbnail_url' => 'https://media.almustaqbal.sch.id/articles/thumbnails/test/pinned.webp',
+        'link_id' => 'https://example.com/pinned',
+        'published_at' => now()->subMonth(),
+        'homepage_position' => 1,
+    ]);
+
+    foreach ([1, 2, 3, 4] as $index) {
+        Article::query()->create([
+            'article_source' => Article::SOURCE_EXTERNAL,
+            'article_status' => Article::STATUS_PUBLISHED,
+            'title_id' => 'Latest Auto '.$index,
+            'description_id' => 'Auto '.$index,
+            'thumbnail_url' => 'https://media.almustaqbal.sch.id/articles/thumbnails/test/auto-'.$index.'.webp',
+            'link_id' => 'https://example.com/auto-'.$index,
+            'published_at' => now()->subMinutes($index),
+        ]);
+    }
+
+    $html = $this->get(route('home'))
+        ->assertOk()
+        ->assertSee($pinned->title_id)
+        ->assertSee('Latest Auto 1')
+        ->assertSee('Latest Auto 2')
+        ->assertSee('Latest Auto 3')
+        ->assertDontSee('Latest Auto 4')
+        ->getContent();
+
+    expect(strpos($html, 'Prestasi Lama Tetap Head'))
+        ->toBeLessThan(strpos($html, 'Latest Auto 1'));
+});
+
+it('uses a lean pinned-first Article query for the homepage showcase', function (): void {
     app()->setLocale('id');
     HeroSetting::query()->firstOrFail()->update(['cta_url' => '#program']);
 
@@ -84,9 +129,9 @@ it('uses a lean latest-published Article query for the homepage showcase', funct
     $response = $this->get(route('home'));
     $homepageArticleQuery = $queries->first(
         fn (string $sql): bool => (str_contains($sql, 'from "articles"') || str_contains($sql, 'from `articles`'))
-            && str_contains($sql, 'order by')
+            && str_contains($sql, 'homepage_position')
             && str_contains($sql, 'published_at')
-            && str_contains($sql, 'limit 3'),
+            && str_contains($sql, 'limit 4'),
     );
 
     $response
