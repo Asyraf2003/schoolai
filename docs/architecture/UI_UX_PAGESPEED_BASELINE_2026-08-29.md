@@ -332,3 +332,268 @@ Minimum proof:
 
 Current product target remains Lighthouse/PageSpeed `100/100/100/100`. The
 2026-08-29 report is a baseline, not an accepted final score.
+
+## 10. Post-optimization checkpoint — 2026-08-29 15:13 GMT+8
+
+Production was measured again after commit `404cd455`
+(`perf: harden homepage critical path`).
+
+### Scores
+
+| Metric | Original baseline | Post-optimization |
+|---|---:|---:|
+| Performance | 79 | 91 |
+| Accessibility | 97 | 100 |
+| Best Practices | 96 | 96 |
+| SEO | 100 | 100 |
+| Agentic Browsing | 1/2 | 2/2 |
+| FCP | 2.7 s | 1.8 s |
+| LCP | 4.5 s | 3.0 s |
+| TBT | 40 ms | 0 ms |
+| CLS | 0 | 0 |
+| Speed Index | 3.7 s | 3.8 s |
+
+This confirms the critical-path batch produced a material mobile improvement
+without introducing layout shift or main-thread blocking.
+
+### Completed in this batch
+
+- Inter is self-hosted and Google Fonts were removed from the public critical
+  path.
+- Google Analytics / `gtag.js` was removed from the application.
+- Cloudflare Web Analytics is now the analytics owner.
+- obsolete Google Analytics and Google Fonts CSP hosts were removed.
+- `cdn.jsdelivr.net` remains intentionally allowed because the Program journey
+  still lazy-loads GSAP from that origin.
+- hashed Vite assets receive
+  `Cache-Control: public, max-age=31536000, immutable`.
+- seven clearly below-fold home CSS entries are deferred after initial paint.
+- invalid accessibility list roles were removed.
+- hero campaign touch targets were enlarged.
+- non-composited nav-link color transition was removed.
+- Agentic Browsing improved from 1/2 to 2/2.
+- Accessibility improved from 97 to 100.
+
+### Production proof
+
+Hashed Vite CSS returned:
+
+- HTTP 200;
+- one-year immutable browser cache;
+- Cloudflare `HIT`.
+
+Production CSP after deployment no longer contains Google Analytics or Google
+Fonts hosts. It allows:
+
+- `https://static.cloudflareinsights.com/beacon.min.js`;
+- `https://cdn.jsdelivr.net` for the current GSAP runtime.
+
+### Correctness regression found after media cleanup
+
+The following files were incorrectly classified as unused during the media
+cleanup and produced production 404 responses:
+
+- `public/media/home/vision-paper-01.webp`
+- `public/media/home/vision-paper-02.webp`
+- `public/media/home/vision-paper-03.webp`
+
+They are runtime assets of the Vision/Mission presentation and were restored
+from the local quarantine on 2026-08-29.
+
+Do not delete them again based only on repository-reference heuristics.
+Production network/runtime ownership is authoritative.
+
+## 11. Handoff debt for next performance session
+
+The following work is intentionally deferred to a subsequent session. Do not
+re-open already-completed batches unless a new measurement proves regression.
+
+### P0 — Hero video UX and transport
+
+Current opening hero video:
+
+- URL:
+  `https://media.almustaqbal.sch.id/hero/slides/main/5d918256-de1e-4eae-ad27-3d031acc202d.mp4`
+- codec: H.264;
+- resolution: 1920x1080;
+- frame rate: 30 fps;
+- duration: approximately 363.47 seconds;
+- size: 93,956,351 bytes (~89.6 MiB);
+- video bitrate: approximately 1.93 Mbps;
+- AAC audio bitrate: approximately 129 kbps;
+- total bitrate: approximately 2.07 Mbps.
+
+The first hero `<video>` currently renders with `preload="metadata"` while its
+source URL is present immediately. Active-slide hydration later promotes the
+video preload to `auto`.
+
+Hero readiness currently waits for video `playing` or `error`, with a 5 second
+fallback signal.
+
+User-visible symptom: the opening hero can feel lazy/dark before the video is
+visually ready. The owner explicitly dislikes this behavior.
+
+Do NOT solve this merely by changing the existing ~90 MiB video to unconditional
+`preload="auto"`.
+
+Recommended next-session direction:
+
+1. create a dedicated short/conditioned hero delivery asset rather than using
+   the full six-minute source as an eager homepage asset;
+2. retain the full-quality/full-duration source separately if required;
+3. provide an immediate first-party poster so the hero never presents an ugly
+   dark/unloaded state;
+4. evaluate replacing the current Unsplash poster with an owned/R2 hero poster;
+5. only then decide whether the conditioned hero asset can safely use eager or
+   `preload="auto"` behavior;
+6. verify mobile Safari/Chromium autoplay behavior;
+7. re-run Lighthouse after the transport change.
+
+Current Lighthouse still logs
+`net::ERR_CONNECTION_FAILED` for the hero MP4 under Slow 4G despite direct HTTP
+checks returning 200. Treat this as a payload/delivery-path issue until proven
+otherwise.
+
+### P0/P1 — Hero LCP render delay
+
+The new LCP is the hero title:
+
+`Begin a Meaningful Learning Journey`
+
+New LCP breakdown:
+
+- TTFB: ~10 ms;
+- element render delay: ~2.18 s;
+- total LCP: 3.0 s.
+
+Backend response is therefore not the current bottleneck.
+
+Investigate hero opening/readiness/opacity/transform choreography. The first SSR
+hero title should ideally be paintable immediately while preserving cinematic
+transitions for subsequent slide changes.
+
+Do not remove hero effects blindly. Trace exact visibility/render gating first.
+
+### P1 — Remaining general `welcome.css`
+
+Lighthouse reports:
+
+- `welcome-DLGuNsCf.css`: about 20.9 KiB transfer;
+- estimated unused CSS saving: about 17.2 KiB.
+
+This is now the dominant remaining first-party CSS opportunity.
+
+Do not randomly split the 48-module legacy cascade. Respect:
+
+- `scripts/verify-source-structure.mjs`;
+- `docs/architecture/source-module-equivalence.json`;
+- established module ordering and checksum contracts.
+
+A future refactor should identify the genuinely above-fold shell/nav/base
+modules and preserve source-equivalence guarantees.
+
+Current render-blocking opportunity is only about 190 ms, so this should not
+displace the hero render-delay work.
+
+### P1 — Remaining external hero poster
+
+Lighthouse currently sees an Unsplash hero poster of approximately 215 KiB and
+estimates roughly 33.5 KiB image-delivery savings.
+
+Prefer an owned first-party/R2 poster if visual parity is acceptable. Avoid
+adding speculative preconnects; Lighthouse currently reports no useful
+preconnect candidate.
+
+### P1/P2 — Fixed-name media cache lifetime
+
+Lighthouse still reports approximately four-hour cache lifetime for fixed-name
+media, especially:
+
+- `gallery-ornament-32.webp` (~376 KiB transfer);
+- `gallery-ornament-33.webp` (~215 KiB transfer);
+- `logo-nav.webp`.
+
+Do not apply one-year immutable caching to mutable fixed-name media without a
+versioning/invalidation contract.
+
+A future session may move stable decorative assets to content-hashed/versioned
+URLs before assigning long immutable cache lifetime.
+
+### P2 — Decorative ornaments
+
+The same two geometry ornaments remain relatively large.
+
+Earlier audit showed their rendered/tile dimensions make the source dimensions
+plausible, so do not recompress them merely because Lighthouse lists them.
+
+Only optimize after visual comparison and actual transfer/cache evidence.
+
+### P2 — DOM size
+
+Latest Lighthouse:
+
+- total elements: 1,727;
+- maximum depth: 16;
+- most children: 20 in `.program-kinetic__type`.
+
+TBT is now 0 ms, so DOM reduction is not a P0 regression blocker. Investigate
+only after LCP/media work.
+
+### P2 — Cloudflare utility requests
+
+Production now includes:
+
+- Cloudflare Web Analytics beacon (~10 KiB);
+- `/cdn-cgi/rum`;
+- Cloudflare email decode utility.
+
+Web Analytics is intentional.
+
+Review Cloudflare Email Address Obfuscation separately. Disable it only if the
+site does not require the protection and after verifying rendered contact
+addresses.
+
+### Security debt kept separate
+
+Still intentionally deferred:
+
+- COOP;
+- Trusted Types;
+- CSP `strict-dynamic`;
+- HSTS `includeSubDomains`;
+- HSTS preload.
+
+Do not enable these for Lighthouse score alone. Validate OAuth/popup behavior,
+all HTTPS subdomains, embedded third parties and admin/public compatibility
+first.
+
+## 12. Next-session starting point
+
+Start from production commit `404cd455` plus the Vision/Mission runtime asset
+restore commit that follows this checkpoint.
+
+Do not repeat the completed Inter/media-cleanup/GA/accessibility work.
+
+Priority order:
+
+1. prove Vision/Mission restored assets return HTTP 200;
+2. condition the six-minute hero video into an appropriate homepage delivery
+   asset and remove the ugly unloaded state;
+3. reduce hero-title LCP render delay;
+4. re-run comparable mobile PageSpeed;
+5. only then consider the remaining `welcome.css`, fixed-media caching,
+   ornaments and DOM work.
+
+Latest accepted mobile reference before the Vision/Mission restore:
+
+- Performance 91;
+- Accessibility 100;
+- Best Practices 96;
+- SEO 100;
+- Agentic Browsing 2/2;
+- FCP 1.8 s;
+- LCP 3.0 s;
+- TBT 0 ms;
+- CLS 0;
+- Speed Index 3.8 s.
+
