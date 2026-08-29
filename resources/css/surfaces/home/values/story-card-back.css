@@ -23,7 +23,7 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background-image: url("/media/seed/hero/gallery-ornament-32.webp");
+    background-image: var(--values-card-pattern-image, none);
     background-position: center;
     background-repeat: repeat;
     background-size: clamp(5rem, 26cqi, 7rem) clamp(5rem, 26cqi, 7rem);
