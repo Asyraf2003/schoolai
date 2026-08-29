@@ -1,7 +1,7 @@
 # SchoolAI UI/UX Architecture Index
 
 Status: ACTIVE
-Updated: 2026-08-08
+Updated: 2026-08-29
 
 ## Purpose
 
@@ -34,6 +34,8 @@ Read when relevant:
 
 8. `UI_UX_PERFORMANCE_BROWSER_MATRIX.md`
    - PageSpeed/CWV, capability tiers, budgets, Chromium, and WebKit.
+   - current measured production baseline and optimization priorities are in
+     `UI_UX_PAGESPEED_BASELINE_2026-08-29.md`.
 9. `UI_UX_WEBGL_3D_PIPELINE.md`
    - renderer, cinematic scenes, models, shaders, lifecycle, and fallback.
 10. `UI_UX_LUSION_REFERENCE.md`
