@@ -42,10 +42,30 @@ function mountGalleryStory(root) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let activeBackground = '';
     let frame = 0;
+    let patternObserver = null;
     let destroyed = false;
 
     if (page && finalBackground) {
         page.style.setProperty('--gallery-story-final-bg', finalBackground);
+    }
+
+    function armPattern() {
+        const activate = () => section.classList.add('is-gallery-pattern-ready');
+        if (!('IntersectionObserver' in window)) {
+            activate();
+            return;
+        }
+
+        patternObserver = new IntersectionObserver((entries) => {
+            if (!entries.some((entry) => entry.isIntersecting)) return;
+            activate();
+            patternObserver?.disconnect();
+            patternObserver = null;
+        }, {
+            rootMargin: '75% 0px 75% 0px',
+            threshold: 0,
+        });
+        patternObserver.observe(section);
     }
 
     function paintHandoff() {
@@ -158,6 +178,7 @@ function mountGalleryStory(root) {
         if (event?.persisted) return;
         destroyed = true;
         if (frame) window.cancelAnimationFrame(frame);
+        patternObserver?.disconnect();
         window.removeEventListener('scroll', requestRender);
         window.removeEventListener('resize', onResize);
         window.removeEventListener('pageshow', requestRender);
@@ -170,6 +191,7 @@ function mountGalleryStory(root) {
     window.addEventListener('pageshow', requestRender);
     window.addEventListener('pagehide', destroy);
     reducedMotion.addEventListener?.('change', onMotionChange);
+    armPattern();
     fitGalleryStoryVisuals(items, requestRender);
 
     if (reducedMotion.matches) paintStatic();
