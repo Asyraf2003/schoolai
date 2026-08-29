@@ -5,6 +5,15 @@ function boundedWait(work, timeoutMs) {
     return Promise.race([work, timeout]);
 }
 
+function hydrateImages(root) {
+    root.querySelectorAll('[data-vision-art][data-src]').forEach((image) => {
+        const source = image.dataset.src;
+        if (!source) return;
+        image.src = source;
+        image.removeAttribute('data-src');
+    });
+}
+
 function decodeImages(root) {
     const images = Array.from(root.querySelectorAll('[data-vision-art]'));
     const work = Promise.allSettled(images.map((image) => {
@@ -21,5 +30,6 @@ function waitForFonts() {
 
 export async function prepareVisionAssets(root) {
     root.classList.add('is-preparing');
+    hydrateImages(root);
     await Promise.all([decodeImages(root), waitForFonts()]);
 }
