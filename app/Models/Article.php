@@ -34,8 +34,6 @@ final class Article extends Model
 
     public const HERO_SPOTLIGHT_LIMIT = 3;
 
-    public const PLACEHOLDER_THUMBNAIL = '/images/article-placeholder.svg';
-
     protected $fillable = [
         'article_source',
         'article_status',
