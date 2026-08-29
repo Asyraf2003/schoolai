@@ -25,8 +25,8 @@ final class SiteHeadMetaComposer
         ));
         $headCanonicalUrl = $this->request->url();
         $headHomeUrl = route('home');
-        $headLogoUrl = asset('media/home/logo.png');
-        $headImageUrl = asset('media/home/og-home.jpg');
+        $headLogoUrl = (string) config('media.static.brand.logo_square');
+        $headImageUrl = (string) config('media.static.seo.home_og');
         $locale = $this->translator->getLocale();
         $headLanguage = in_array($locale, ['id', 'en', 'ar'], true)
             ? $locale
