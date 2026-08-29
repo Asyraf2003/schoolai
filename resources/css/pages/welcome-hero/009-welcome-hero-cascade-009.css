@@ -61,7 +61,7 @@
 }
 
 .nav-shell .nav-link {
-    transition: color 360ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: none;
 }
 
 @media (max-width: 767px) {

@@ -48,20 +48,3 @@
     'resources/js/pages/welcome-scroll-reveal.js',
   ])
 @endif
-
-@if ($headGoogleAnalyticsId !== null)
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    data-google-analytics
-    nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}"
-    src="https://www.googletagmanager.com/gtag/js?id={{ $headGoogleAnalyticsId }}"
-  ></script>
-  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', @json($headGoogleAnalyticsId));
-  </script>
-@endif

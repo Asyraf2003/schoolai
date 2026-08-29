@@ -21,15 +21,12 @@
 
   <div
     class="gallery-story__stream"
-    role="list"
-    aria-label="{{ $gallerySection['aria_label'] ?? __('home.galeri.aria_label') }}"
   >
     @foreach ($depthItems as $item)
       <article
         class="gallery-story__item gallery-story__item--{{ $loop->odd ? 'right' : 'left' }}"
         data-gallery-story-item
         data-gallery-background="{{ $item['preset']['background'] }}"
-        role="listitem"
       >
         <figure class="gallery-story__media" data-gallery-story-media>
           @if ($item['thumbnail_url'] !== '')

@@ -23,6 +23,38 @@
       'resources/js/pages/welcome-hero.js',
       'resources/js/pages/welcome-editorial-headings.js',
     ])
+
+    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
+      (() => {
+        const deferredStyles = document.querySelectorAll(
+          'link[data-home-deferred-style]'
+        );
+
+        if (deferredStyles.length === 0) {
+          return;
+        }
+
+        const activateDeferredStyles = () => {
+          deferredStyles.forEach((stylesheet) => {
+            stylesheet.media = 'all';
+            stylesheet.removeAttribute('data-home-deferred-style');
+          });
+        };
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(activateDeferredStyles);
+        });
+      })();
+    </script>
+
+    <noscript>
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-vision-waapi.css') }}">
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-values-story.css') }}">
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-depth-gallery.css') }}">
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-article-showcase.css') }}">
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-editorial-headings.css') }}">
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-editorial-description-desktop.css') }}">
+    </noscript>
   </head>
   <body class="home-page site-cursor-page nav-shell">
     <a href="#main-content" class="skip-link">{{ __('home.accessibility.skip_to_content') }}</a>

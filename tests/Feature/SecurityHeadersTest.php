@@ -79,45 +79,25 @@ it('adds nonce based security headers to public pages', function (): void {
     }
 });
 
-it('enables nonce protected Google Analytics only for production public pages', function (): void {
+it('allows Cloudflare Web Analytics only on production public pages', function (): void {
     config(['app.env' => 'production']);
 
     $response = $this->get(route('home'))->assertOk();
     $content = $response->getContent();
     $csp = (string) $response->headers->get('Content-Security-Policy');
 
-    expect(
-        preg_match(
-            "/script-src 'self' 'nonce-([^']+)'/",
-            $csp,
-            $matches
-        )
-    )->toBe(1);
-
-    $nonce = $matches[1];
-
     expect($content)
-        ->toContain('data-google-analytics')
-        ->toContain('nonce="'.$nonce.'"')
-        ->toContain(
-            'src="https://www.googletagmanager.com/gtag/js?id=G-6TERPP05FE"'
-        );
+        ->not->toContain('data-google-analytics')
+        ->not->toContain('googletagmanager.com');
 
     expect($csp)
-        ->toContain('https://www.googletagmanager.com')
-        ->toContain('https://*.google-analytics.com')
-        ->toContain('https://*.analytics.google.com')
-        ->not->toContain('doubleclick.net')
-        ->not->toContain('googlesyndication.com');
-
-    preg_match_all(
-        '/<(?:script|style)\b(?![^>]*\bnonce=)[^>]*>/i',
-        $content,
-        $missingNonces
-    );
-
-    expect($missingNonces[0])->toBe([]);
+        ->toContain('https://static.cloudflareinsights.com/beacon.min.js')
+        ->not->toContain('googletagmanager.com')
+        ->not->toContain('google-analytics.com')
+        ->not->toContain('fonts.googleapis.com')
+        ->not->toContain('fonts.gstatic.com');
 });
+
 
 it('adds the same security policy to authenticated admin pages', function (): void {
     $admin = User::query()->forceCreate([

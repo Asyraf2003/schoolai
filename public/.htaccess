@@ -1,3 +1,11 @@
+<IfModule mod_setenvif.c>
+    SetEnvIf Request_URI "^/build/assets/" vite_immutable_asset=1
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=31536000, immutable" env=vite_immutable_asset
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes

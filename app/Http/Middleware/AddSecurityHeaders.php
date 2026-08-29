@@ -21,7 +21,7 @@ final class AddSecurityHeaders
             $this->contentSecurityPolicy(
                 $nonce,
                 $request->routeIs('home'),
-                $this->allowsGoogleAnalytics($request)
+                $this->allowsCloudflareWebAnalytics($request)
             )
         );
         $response->headers->set(
@@ -51,7 +51,7 @@ final class AddSecurityHeaders
         return $response;
     }
 
-    private function allowsGoogleAnalytics(Request $request): bool
+    private function allowsCloudflareWebAnalytics(Request $request): bool
     {
         return config('app.env') === 'production'
             && $request->routeIs(
@@ -65,20 +65,14 @@ final class AddSecurityHeaders
 
     private function contentSecurityPolicy(
         string $nonce,
-        bool $allowDepthGalleryRuntime,
-        bool $allowGoogleAnalytics
+        bool $allowExternalHomeRuntime,
+        bool $allowCloudflareWebAnalytics
     ): string {
-        $threeSource = $allowDepthGalleryRuntime
+        $externalHomeScriptSource = $allowExternalHomeRuntime
             ? ' https://cdn.jsdelivr.net'
             : '';
-        $analyticsScriptSource = $allowGoogleAnalytics
-            ? ' https://www.googletagmanager.com'
-            : '';
-        $analyticsImageSources = $allowGoogleAnalytics
-            ? ' https://*.google-analytics.com https://www.googletagmanager.com'
-            : '';
-        $analyticsConnectSources = $allowGoogleAnalytics
-            ? ' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com'
+        $cloudflareAnalyticsSource = $allowCloudflareWebAnalytics
+            ? ' https://static.cloudflareinsights.com/beacon.min.js'
             : '';
         $mediaSource = $this->mediaSource();
 
@@ -88,13 +82,13 @@ final class AddSecurityHeaders
             "form-action 'self'",
             "frame-ancestors 'none'",
             "object-src 'none'",
-            "script-src 'self' 'nonce-{$nonce}'{$threeSource}{$analyticsScriptSource}",
+            "script-src 'self' 'nonce-{$nonce}'{$externalHomeScriptSource}{$cloudflareAnalyticsSource}",
             "script-src-attr 'none'",
-            "style-src 'self' 'nonce-{$nonce}' https://fonts.googleapis.com",
+            "style-src 'self' 'nonce-{$nonce}'",
             "style-src-attr 'unsafe-inline'",
-            "img-src 'self' data: blob:{$mediaSource} https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net{$analyticsImageSources}",
-            "font-src 'self' data: https://fonts.gstatic.com",
-            "connect-src 'self'{$mediaSource}{$threeSource}{$analyticsConnectSources}",
+            "img-src 'self' data: blob:{$mediaSource} https://i.ytimg.com https://images.unsplash.com https://resources.finalsite.net",
+            "font-src 'self' data:",
+            "connect-src 'self'{$mediaSource}{$externalHomeScriptSource}",
             "media-src 'self' blob:{$mediaSource}",
             "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://www.instagram.com https://www.facebook.com https://player.vimeo.com https://open.spotify.com https://codepen.io",
             "manifest-src 'self'",

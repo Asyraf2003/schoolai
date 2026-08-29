@@ -71,7 +71,8 @@ it('renders the rebuilt localized semantic values story', function (): void {
             ->and(substr_count($content, 'values-card__pose'))->toBe(4)
             ->and(substr_count($content, 'values-card__float'))->toBe(4)
             ->and(substr_count($content, 'values-story__title-text'))->toBe(2)
-            ->and(substr_count($content, 'role="listitem"'))->toBeGreaterThanOrEqual(4)
+            ->and(substr_count($content, 'role="listitem"'))->toBe(0)
+            ->and(substr_count($content, 'role="list"'))->toBe(0)
             ->and(substr_count($content, 'class="values-story__spatial-fallback'))->toBe(3);
 
         if ($locale === 'ar') {

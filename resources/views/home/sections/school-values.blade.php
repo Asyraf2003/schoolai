@@ -38,14 +38,11 @@
       <div class="values-story__perspective" data-values-perspective>
         <div
           class="values-story__grid"
-          role="list"
-          aria-label="{{ $schoolValues['aria_label'] ?? __('home.nilai_sekolah.aria_label') }}"
           data-values-cards
         >
           @foreach ($schoolValues['items'] as $value)
             <article
               class="values-card"
-              role="listitem"
               data-values-card
               style="--values-accent: {{ $value['accent'] ?? '#7c3aed' }}"
             >

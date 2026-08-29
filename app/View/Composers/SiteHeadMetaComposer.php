@@ -38,9 +38,6 @@ final class SiteHeadMetaComposer
             default => 'id_ID',
         };
         $headImageAlt = $this->translator->get('shared.head.image_alt');
-        $headGoogleAnalyticsId = config('app.env') === 'production'
-            ? 'G-6TERPP05FE'
-            : null;
         $headStructuredData = $this->structuredData(
             $headSiteName,
             $headTitle,
@@ -63,7 +60,6 @@ final class SiteHeadMetaComposer
             'headDirection',
             'headLocale',
             'headImageAlt',
-            'headGoogleAnalyticsId',
             'headStructuredData',
         ));
     }

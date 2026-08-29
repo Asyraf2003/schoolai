@@ -32,6 +32,18 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     cursor: pointer;
 }
 
+.home-page .hero-cinema__eyebrow-link {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+}
+
+.home-page .hero-cinema__title-link {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+}
+
 .home-page .hero-cinema__eyebrow-link,
 .home-page .hero-cinema__description-link {
     transition:

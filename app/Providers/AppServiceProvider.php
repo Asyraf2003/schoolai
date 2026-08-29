@@ -32,6 +32,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -49,6 +50,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->configureDeferredHomeStyles();
+
         RateLimiter::for('google-oauth', function (Request $request): array {
             $sessionId = $request->session()->getId();
             $key = app('encrypter')->getKey();
@@ -93,4 +96,34 @@ class AppServiceProvider extends ServiceProvider
         View::composer('pages.ppdb', PublicPpdbComposer::class);
         View::composer('welcome', HomePageComposer::class);
     }
+
+    private function configureDeferredHomeStyles(): void
+    {
+        $deferredHomeStyles = [
+            'resources/css/pages/welcome-scroll-reveal.css',
+            'resources/css/pages/welcome-vision-waapi.css',
+            'resources/css/pages/welcome-values-story.css',
+            'resources/css/pages/welcome-depth-gallery.css',
+            'resources/css/pages/welcome-article-showcase.css',
+            'resources/css/pages/welcome-editorial-headings.css',
+            'resources/css/pages/welcome-editorial-description-desktop.css',
+        ];
+
+        Vite::useStyleTagAttributes(
+            static function (
+                ?string $src,
+                string $url,
+                ?array $chunk,
+                ?array $manifest,
+            ) use ($deferredHomeStyles): array {
+                $deferred = in_array($src, $deferredHomeStyles, true);
+
+                return [
+                    'media' => $deferred ? 'print' : false,
+                    'data-home-deferred-style' => $deferred,
+                ];
+            }
+        );
+    }
+
 }
