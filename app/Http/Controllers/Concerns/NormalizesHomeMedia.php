@@ -60,11 +60,11 @@ trait NormalizesHomeMedia
         }
 
         $path = match ($provider) {
-            'youtube' => 'media/home/youtube.png',
+            'youtube' => 'media/home/youtube.webp',
             'instagram' => 'media/home/instagram.svg',
-            'facebook' => 'media/home/facebook.png',
-            'tiktok' => 'media/home/tiktok.png',
-            'vimeo' => 'media/home/vimeo.png',
+            'facebook' => 'media/home/facebook.webp',
+            'tiktok' => 'media/home/tiktok.webp',
+            'vimeo' => 'media/home/vimeo.webp',
             default => null,
         };
 
