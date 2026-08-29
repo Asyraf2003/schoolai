@@ -29,7 +29,7 @@ it('retires Hero media mutation without deleting legacy R2 objects', function ()
     ]);
     $article = Article::query()->create([
         'title_id' => 'Promoted Article',
-        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'thumbnail_url' => (string) config('media.static.seo.home_og'),
         'link_id' => 'https://example.test/promoted',
         'published_at' => now(),
     ]);
