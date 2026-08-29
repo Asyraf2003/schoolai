@@ -25,7 +25,7 @@ function heroAdminArticle(string $slug, string $status = Article::STATUS_PUBLISH
         'article_status' => $status,
         'slug' => $slug,
         'title_id' => str($slug)->headline()->toString(),
-        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'thumbnail_url' => (string) config('media.static.seo.home_og'),
         'link_id' => url('/artikel/'.$slug),
         'published_at' => now(),
     ]);
