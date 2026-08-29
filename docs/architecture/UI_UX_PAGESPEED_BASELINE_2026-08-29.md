@@ -597,3 +597,49 @@ Latest accepted mobile reference before the Vision/Mission restore:
 - CLS 0;
 - Speed Index 3.8 s.
 
+
+## 13. Vision media incident final resolution
+
+The initial recovery restored the three Vision/Mission paper WebP files to
+`public/media/home/` so their runtime ownership could be proven.
+
+That restore was diagnostic, not the final architecture.
+
+Final ownership:
+
+- `https://media.almustaqbal.sch.id/site/vision/vision-paper-01.webp`
+- `https://media.almustaqbal.sch.id/site/vision/vision-paper-02.webp`
+- `https://media.almustaqbal.sch.id/site/vision/vision-paper-03.webp`
+
+All three R2 objects were verified HTTP 200 with:
+
+`Cache-Control: public, max-age=31536000, immutable`
+
+The application now resolves these assets through `config/media.php`.
+
+See:
+
+`docs/architecture/PUBLIC_MEDIA_OWNERSHIP.md`
+
+## 13. Vision media incident final resolution
+
+The initial recovery restored the three Vision/Mission paper WebP files to
+`public/media/home/` so their runtime ownership could be proven.
+
+That restore was diagnostic, not the final architecture.
+
+Final ownership:
+
+- `https://media.almustaqbal.sch.id/site/vision/vision-paper-01.webp`
+- `https://media.almustaqbal.sch.id/site/vision/vision-paper-02.webp`
+- `https://media.almustaqbal.sch.id/site/vision/vision-paper-03.webp`
+
+All three R2 objects were verified HTTP 200 with:
+
+`Cache-Control: public, max-age=31536000, immutable`
+
+The application now resolves these assets through `config/media.php`.
+
+See:
+
+`docs/architecture/PUBLIC_MEDIA_OWNERSHIP.md`

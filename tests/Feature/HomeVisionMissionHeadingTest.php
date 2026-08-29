@@ -40,7 +40,11 @@ it('renders localized About Vision and Mission before Program', function (): voi
             ->and(substr_count($content, 'data-vision-visual='))->toBe(3)
             ->and(substr_count($content, 'data-vision-background-layer='))->toBe(2)
             ->and(substr_count($content, 'data-vision-art'))->toBe(3)
-            ->and(substr_count($content, 'media/home/vision-paper-'))->toBe(3)
+            ->and(substr_count(
+                $content,
+                'media.almustaqbal.sch.id/site/vision/vision-paper-'
+            ))->toBe(3)
+            ->and($content)->not->toContain('/media/home/vision-paper-')
             ->and(strpos($content, 'id="visi-misi"'))
             ->toBeLessThan(strpos($content, 'id="program"'));
 

@@ -2,7 +2,6 @@
 
 namespace App\View\Composers;
 
-use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\View\View;
 
@@ -10,7 +9,6 @@ final class HomeVisionMissionComposer
 {
     public function __construct(
         private Translator $translator,
-        private UrlGenerator $urlGenerator,
     ) {}
 
     public function compose(View $view): void
@@ -47,11 +45,12 @@ final class HomeVisionMissionComposer
             'visionLabel' => $this->translator->get('home_vision.labels.vision'),
             'missionLabel' => $this->translator->get('home_vision.labels.mission'),
             'sectionLabel' => $this->translator->get('home_vision.section_label'),
-            'schoolImages' => collect(range(1, 3))->map(
-                fn (int $index): string => $this->urlGenerator->asset(
-                    sprintf('media/home/vision-paper-%02d.webp', $index)
+            'schoolImages' => collect(config('media.static.vision', []))
+                ->filter(
+                    static fn (mixed $url): bool =>
+                        is_string($url) && trim($url) !== ''
                 )
-            ),
+                ->values(),
         ]);
     }
 }

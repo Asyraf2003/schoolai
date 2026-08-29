@@ -16,6 +16,12 @@ return [
     'static' => [
         'hero_school' => $publicUrl.'/site/hero/hero-school.webp',
 
+        'vision' => [
+            'paper_01' => $publicUrl.'/site/vision/vision-paper-01.webp',
+            'paper_02' => $publicUrl.'/site/vision/vision-paper-02.webp',
+            'paper_03' => $publicUrl.'/site/vision/vision-paper-03.webp',
+        ],
+
         'navigation' => [
             'education' => $publicUrl.'/site/navigation/teaching.webp',
             'gallery' => $publicUrl.'/site/navigation/activity.webp',
