@@ -31,11 +31,12 @@ function heroAdminArticle(string $slug, string $status = Article::STATUS_PUBLISH
     ]);
 }
 
-it('edits only Opening copy and optional CTA without exposing media controls', function (): void {
+it('edits only Opening copy while Article Spotlight management lives on the Article index', function (): void {
     $this->get(route('admin.hero'))
         ->assertOk()
-        ->assertSee('video sekolah yang fixed')
-        ->assertDontSee('name="media_file"', false)
+        ->assertSee('Opening video selalu tampil pertama')
+        ->assertSee('Kelola Article Spotlight')
+        ->assertDontSee('name="article_id"', false)
         ->assertDontSee('enctype="multipart/form-data"', false);
 
     $this->put(route('admin.hero.update'), [
@@ -53,25 +54,53 @@ it('edits only Opening copy and optional CTA without exposing media controls', f
         ->and($setting->cta_label_id)->toBeNull();
 });
 
-it('promotes reorders and removes Articles without copying their content', function (): void {
+it('promotes reorders and removes Hero Spotlight Articles without copying their content', function (): void {
     $first = heroAdminArticle('artikel-pertama');
     $second = heroAdminArticle('artikel-kedua');
+    $third = heroAdminArticle('artikel-ketiga');
 
-    $this->post(route('admin.hero.articles.promote'), ['article_id' => $first->getKey()])
-        ->assertRedirect();
-    $this->post(route('admin.hero.articles.promote'), ['article_id' => $second->getKey()])
-        ->assertRedirect();
+    foreach ([$first, $second, $third] as $article) {
+        $this->post(route('admin.hero.articles.promote'), ['article_id' => $article->getKey()])
+            ->assertRedirect()
+            ->assertSessionHasNoErrors();
+    }
 
     expect($first->fresh()->hero_position)->toBe(1)
+        ->and($second->fresh()->hero_position)->toBe(2)
+        ->and($third->fresh()->hero_position)->toBe(3);
+
+    $this->patch(route('admin.hero.articles.order'), [
+        'article_ids' => [$third->getKey(), $first->getKey(), $second->getKey()],
+    ])->assertRedirect()->assertSessionHasNoErrors();
+
+    expect($third->fresh()->hero_position)->toBe(1)
+        ->and($first->fresh()->hero_position)->toBe(2)
+        ->and($second->fresh()->hero_position)->toBe(3);
+
+    $this->delete(route('admin.hero.articles.unpromote', $first))->assertRedirect();
+
+    expect($first->fresh()->hero_position)->toBeNull()
+        ->and($third->fresh()->hero_position)->toBe(1)
         ->and($second->fresh()->hero_position)->toBe(2);
+});
 
-    $this->patch(route('admin.hero.articles.move-up', $second))->assertRedirect();
+it('limits Hero Spotlight to three Articles besides the fixed Opening video', function (): void {
+    $articles = collect(range(1, 4))->map(
+        fn (int $index): Article => heroAdminArticle('spotlight-'.$index)
+    );
 
-    expect($second->fresh()->hero_position)->toBe(1)
-        ->and($first->fresh()->hero_position)->toBe(2);
+    foreach ($articles->take(3) as $article) {
+        $this->post(route('admin.hero.articles.promote'), ['article_id' => $article->getKey()])
+            ->assertSessionHasNoErrors();
+    }
 
-    $this->delete(route('admin.hero.articles.unpromote', $second))->assertRedirect();
-    expect($second->fresh()->hero_position)->toBeNull();
+    $fourth = $articles->last();
+
+    $this->post(route('admin.hero.articles.promote'), ['article_id' => $fourth->getKey()])
+        ->assertSessionHasErrors('article');
+
+    expect($fourth->fresh()->hero_position)->toBeNull()
+        ->and(Article::query()->whereNotNull('hero_position')->count())->toBe(3);
 });
 
 it('rejects promotion of an unpublished Article', function (): void {
