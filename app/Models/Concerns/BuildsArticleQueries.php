@@ -38,6 +38,16 @@ trait BuildsArticleQueries
             ->orderByDesc('id');
     }
 
+    public function scopeHomepageFeatured(Builder $query): Builder
+    {
+        return $query
+            ->publiclyVisible()
+            ->orderByRaw('CASE WHEN homepage_position IS NULL THEN 1 ELSE 0 END')
+            ->orderBy('homepage_position')
+            ->orderByDesc('published_at')
+            ->orderByDesc('id');
+    }
+
     public function scopeLatestForAdmin(Builder $query): Builder
     {
         return $query
@@ -56,17 +66,18 @@ trait BuildsArticleQueries
 
     public function scopePubliclyVisible(Builder $query): Builder
     {
-        return $query->where(function (Builder $visibility): void {
-            $visibility
-                ->where('article_source', self::SOURCE_EXTERNAL)
-                ->orWhere(function (Builder $native): void {
-                    $native
-                        ->where('article_source', self::SOURCE_NATIVE)
-                        ->whereIn('article_status', [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED])
-                        ->whereNotNull('published_at')
-                        ->where('published_at', '<=', now());
-                });
-        });
+        return $query
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->where(function (Builder $visibility): void {
+                $visibility
+                    ->where('article_source', self::SOURCE_EXTERNAL)
+                    ->orWhere(function (Builder $native): void {
+                        $native
+                            ->where('article_source', self::SOURCE_NATIVE)
+                            ->whereIn('article_status', [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED]);
+                    });
+            });
     }
 
     public static function normalizedLinkIdentity(?string $url): ?string
