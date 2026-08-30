@@ -4,8 +4,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('uses in-view About and Mission video previews with the shared modal player', function (): void {
+it('uses in-view About Vision and Mission video previews with shared modal only where interactive', function (): void {
     $aboutUrl = (string) config('media.homepage_about_video_url');
+    $visionUrl = (string) config('media.homepage_vision_video_url');
     $missionUrl = (string) config('media.homepage_mission_video_url');
     $response = $this->get(route('home'));
 
@@ -28,7 +29,12 @@ it('uses in-view About and Mission video previews with the shared modal player',
         ->assertSee('loop', false)
         ->assertSee('playsinline', false)
         ->assertSee($aboutUrl, false)
+        ->assertSee($visionUrl, false)
         ->assertSee($missionUrl, false);
+
+    $content = $response->getContent();
+    expect(substr_count($content, 'data-vision-video-preview'))->toBe(3)
+        ->and(substr_count($content, 'data-vision-video-open'))->toBe(2);
 
     $section = file_get_contents(resource_path('views/home/sections/vision-mission.blade.php'));
     $composer = file_get_contents(app_path('View/Composers/HomeVisionMissionComposer.php'));
@@ -42,7 +48,9 @@ it('uses in-view About and Mission video previews with the shared modal player',
         ->toContain('data-vision-video-open')
         ->toContain('data-vision-video-preview')
         ->toContain('$visionVideoSources[$loop->index]')
+        ->toContain("$visionVideoSources[$loop->index]['interactive']")
         ->toContain("config('media.homepage_about_video_url')")
+        ->not->toContain("config('media.homepage_vision_video_url')")
         ->not->toContain("config('media.homepage_mission_video_url')")
         ->toContain('muted')
         ->toContain('loop')
@@ -58,7 +66,9 @@ it('uses in-view About and Mission video previews with the shared modal player',
         ->not->toContain('vision-arch__video-cue--pending')
         ->and($composer)
         ->toContain("config('media.homepage_about_video_url')")
+        ->toContain("config('media.homepage_vision_video_url')")
         ->toContain("config('media.homepage_mission_video_url')")
+        ->toContain("'interactive' => false")
         ->toContain("'visionVideoSources' => [")
         ->and($modal)
         ->toContain("querySelectorAll('[data-vision-video-preview]')")
