@@ -29,16 +29,12 @@ export function createSliderMediaActions(options) {
             image.removeAttribute('data-src');
         });
 
-        if (!allowVideo) return;
+        if (!allowVideo || state.videoHydrationReady !== true) return;
 
         var video = slide.querySelector('[data-hero-video]');
         if (!video) return;
 
         syncLoop(video);
-
-        if (slide.classList.contains('is-active')) {
-            video.preload = 'auto';
-        }
 
         if (video.getAttribute('data-hydrated') === 'true') return;
 
@@ -70,6 +66,11 @@ export function createSliderMediaActions(options) {
                 video.muted = true;
                 video.pause();
                 try { video.currentTime = 0; } catch (error) { /* Metadata may not exist yet. */ }
+                return;
+            }
+
+            if (state.videoHydrationReady !== true) {
+                video.pause();
                 return;
             }
 
