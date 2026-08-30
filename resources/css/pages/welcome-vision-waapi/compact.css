@@ -28,8 +28,8 @@
     }
 
     .vision-arch__visual {
-        height: min(72svh, 28rem);
-        border-radius: 1rem;
+        height: min(60svh, 23.333333rem);
+        border-radius: 0;
     }
 
     .vision-arch__mission-list li {
@@ -50,6 +50,6 @@
     }
 
     .vision-arch__visual {
-        height: min(62svh, 34rem);
+        height: min(51.666667svh, 28.333333rem);
     }
 }

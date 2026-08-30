@@ -128,10 +128,10 @@
 }
 
 .vision-arch__visual {
-    --vision-media-contact-x: clamp(4px, .5vw, 8px);
-    --vision-media-contact-y: clamp(6px, .7vw, 12px);
-    --vision-media-shadow-x: clamp(18px, 2vw, 32px);
-    --vision-media-shadow-y: clamp(22px, 3vw, 46px);
+    --vision-media-contact-x: clamp(2px, .25vw, 4px);
+    --vision-media-contact-y: clamp(4px, .35vw, 6px);
+    --vision-media-shadow-x: clamp(14px, 1.25vw, 20px);
+    --vision-media-shadow-y: clamp(18px, 1.7vw, 28px);
     position: relative;
     width: 83.333333%;
     height: clamp(15rem, 55vw, 28.333333rem);
@@ -142,23 +142,27 @@
     border-radius: 0;
     border-image: linear-gradient(
         135deg,
-        rgb(18 18 18 / .82) 0%,
-        rgb(176 181 184 / .74) 52%,
-        rgb(40 40 40 / .58) 100%
+        rgb(255 255 255 / .9) 0%,
+        rgb(198 202 204 / .8) 26%,
+        rgb(96 98 99 / .72) 60%,
+        rgb(22 22 22 / .84) 100%
     ) 1;
     background: #d8d2c6;
     box-shadow:
         var(--vision-media-contact-x)
         var(--vision-media-contact-y)
-        clamp(.65rem, 1.2vw, 1.15rem)
-        rgb(0 0 0 / .2),
+        clamp(2px, .28vw, 4px)
+        clamp(-1px, -.06vw, 0px)
+        rgb(0 0 0 / .4),
         var(--vision-media-shadow-x)
         var(--vision-media-shadow-y)
-        clamp(2.5rem, 5.5vw, 5.5rem)
-        rgb(0 0 0 / .3),
-        0
-        clamp(2.2rem, 4vw, 4rem)
-        clamp(3.8rem, 8vw, 8rem)
+        clamp(.75rem, 1.15vw, 1.2rem)
+        clamp(-.5rem, -.4vw, -.25rem)
+        rgb(0 0 0 / .34),
+        calc(var(--vision-media-shadow-x) * 1.45)
+        calc(var(--vision-media-shadow-y) * 1.45)
+        clamp(1.75rem, 2.7vw, 2.8rem)
+        clamp(-1rem, -.75vw, -.55rem)
         rgb(0 0 0 / .18);
 }
 
@@ -176,8 +180,8 @@ html[dir="rtl"] .vision-arch__content {
 }
 
 html[dir="rtl"] .vision-arch__visual {
-    --vision-media-contact-x: clamp(-8px, -.5vw, -4px);
-    --vision-media-shadow-x: clamp(-32px, -2vw, -18px);
+    --vision-media-contact-x: clamp(-4px, -.25vw, -2px);
+    --vision-media-shadow-x: clamp(-20px, -1.25vw, -14px);
 }
 
 html[dir="rtl"] .vision-arch__kicker,

@@ -43,8 +43,9 @@
     }
 
     .vision-arch.is-enhanced .vision-arch__visuals {
-        --vision-cast-contact-x: clamp(4px, .5vw, 8px);
-        --vision-cast-shadow-x: clamp(18px, 2vw, 32px);
+        --vision-cast-contact-x: clamp(3px, .3vw, 5px);
+        --vision-cast-shadow-x: clamp(14px, 1.25vw, 20px);
+        --vision-cast-penumbra-x: clamp(22px, 1.85vw, 30px);
         position: sticky;
         isolation: isolate;
         inset-block-start: 0;
@@ -63,26 +64,30 @@
         width: 83.333333%;
         height: min(56.666667svh, 35.833333rem);
         pointer-events: none;
-        background: rgb(0 0 0 / .01);
+        background: transparent;
         box-shadow:
             var(--vision-cast-contact-x)
-            clamp(6px, .7vw, 12px)
-            clamp(.75rem, 1.4vw, 1.3rem)
-            rgb(0 0 0 / .22),
+            clamp(4px, .4vw, 7px)
+            clamp(3px, .28vw, 5px)
+            -1px
+            rgb(0 0 0 / .44),
             var(--vision-cast-shadow-x)
-            clamp(26px, 3.2vw, 50px)
-            clamp(3rem, 6vw, 6rem)
-            rgb(0 0 0 / .32),
-            0
-            clamp(2.8rem, 4.5vw, 4.8rem)
-            clamp(4.5rem, 9vw, 9rem)
+            clamp(18px, 1.7vw, 28px)
+            clamp(12px, 1.1vw, 18px)
+            clamp(-8px, -.5vw, -5px)
+            rgb(0 0 0 / .36),
+            var(--vision-cast-penumbra-x)
+            clamp(30px, 2.6vw, 42px)
+            clamp(30px, 3vw, 46px)
+            clamp(-18px, -1.1vw, -12px)
             rgb(0 0 0 / .2);
         transform: translateY(-50%);
     }
 
     html[dir="rtl"] .vision-arch.is-enhanced .vision-arch__visuals {
-        --vision-cast-contact-x: clamp(-8px, -.5vw, -4px);
-        --vision-cast-shadow-x: clamp(-32px, -2vw, -18px);
+        --vision-cast-contact-x: clamp(-5px, -.3vw, -3px);
+        --vision-cast-shadow-x: clamp(-20px, -1.25vw, -14px);
+        --vision-cast-penumbra-x: clamp(-30px, -1.85vw, -22px);
     }
 
     .vision-arch.is-enhanced .vision-arch__visual {
