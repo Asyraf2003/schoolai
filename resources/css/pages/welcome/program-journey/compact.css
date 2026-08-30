@@ -14,18 +14,15 @@
         margin-bottom: var(--program-card-base);
     }
 
-    .program-kinetic__card:nth-child(2),
-    .program-kinetic__card:nth-child(6) {
+    .program-kinetic__card:nth-child(4n + 2) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
     }
 
-    .program-kinetic__card:nth-child(3),
-    .program-kinetic__card:nth-child(7) {
+    .program-kinetic__card:nth-child(4n + 3) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 2);
     }
 
-    .program-kinetic__card:nth-child(4),
-    .program-kinetic__card:nth-child(8) {
+    .program-kinetic__card:nth-child(4n) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 3);
     }
 }
