@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders the fixed R2 video as the sole Opening slide when no Article is promoted', function (): void {
+it('renders the fixed R2 video as a deferred autoplay Opening slide when no Article is promoted', function (): void {
     $heroUrl = (string) config('media.homepage_hero_video_url');
     $posterUrl = (string) config('media.static.hero_school');
 
@@ -17,8 +17,10 @@ it('renders the fixed R2 video as the sole Opening slide when no Article is prom
             ->assertSee('data-hero-mode="opening"', false)
             ->assertSee('data-media-type="video"', false)
             ->assertSee('data-hero-video', false)
-            ->assertSee('src="'.e($heroUrl).'"', false)
+            ->assertSee('data-src="'.e($heroUrl).'"', false)
+            ->assertDontSee('src="'.e($heroUrl).'"', false)
             ->assertSee('poster="'.e($posterUrl).'"', false)
+            ->assertSee('preload="none"', false)
             ->assertSee('autoplay', false)
             ->assertSee('loop', false)
             ->assertSee('muted', false)
@@ -39,6 +41,24 @@ it('renders the fixed R2 video as the sole Opening slide when no Article is prom
 
         expect(substr_count($response->getContent(), 'data-slide-index='))->toBe(1);
     }
+
+    $opening = file_get_contents(resource_path('js/pages/welcome-hero/opening.js'));
+    $carousel = file_get_contents(resource_path('js/pages/welcome-hero/carousel.js'));
+    $media = file_get_contents(resource_path('js/pages/welcome-hero/slider-media.js'));
+
+    expect($opening)
+        ->toContain("source[data-src]")
+        ->toContain("video.setAttribute('data-hydrated', 'true')")
+        ->toContain("'requestIdleCallback' in window")
+        ->toContain('timeout: 900')
+        ->toContain('window.setTimeout(startDeferredVideo, 120)')
+        ->and($carousel)
+        ->toContain('videoHydrationReady: false')
+        ->toContain("'requestIdleCallback' in window")
+        ->toContain('window.requestIdleCallback(startDeferredVideo, { timeout: 900 })')
+        ->and($media)
+        ->toContain('state.videoHydrationReady !== true')
+        ->toContain("source[data-src]");
 });
 
 it('keeps the desktop hero audio label on the shared navigation typography contract', function (): void {
