@@ -29,7 +29,20 @@
         data-gallery-background="{{ $item['preset']['background'] }}"
       >
         <figure class="gallery-story__media" data-gallery-story-media>
-          @if ($item['thumbnail_url'] !== '')
+          @if ($item['is_direct_video'] && $item['media_url'] !== '')
+            <video
+              class="gallery-story__visual gallery-story__video"
+              data-gallery-story-visual
+              data-gallery-video-preview
+              data-gallery-video-src="{{ $item['media_url'] }}"
+              muted
+              loop
+              playsinline
+              webkit-playsinline
+              preload="none"
+              aria-hidden="true"
+            ></video>
+          @elseif ($item['thumbnail_url'] !== '')
             <img
               class="gallery-story__visual"
               data-gallery-story-visual
