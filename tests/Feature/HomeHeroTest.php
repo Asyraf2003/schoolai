@@ -18,7 +18,7 @@ it('renders the fixed R2 video as a deferred autoplay Opening slide when no Arti
             ->assertSee('data-media-type="video"', false)
             ->assertSee('data-hero-video', false)
             ->assertSee('data-src="'.e($heroUrl).'"', false)
-            ->assertDontSee('src="'.e($heroUrl).'"', false)
+            ->assertDontSee('<source src="'.e($heroUrl).'"', false)
             ->assertSee('poster="'.e($posterUrl).'"', false)
             ->assertSee('preload="none"', false)
             ->assertSee('autoplay', false)
