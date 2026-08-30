@@ -77,14 +77,34 @@
           @if ($loop->index === 1) aria-hidden="true" @endif
         >
           @if (isset($visionVideoSources[$loop->index]))
-            <button
-              type="button"
-              class="vision-arch__video-trigger"
-              data-vision-video-open
-              data-vision-video-src="{{ $visionVideoSources[$loop->index]['url'] }}"
-              data-vision-video-label="{{ $visionVideoSources[$loop->index]['label'] }}"
-              aria-label="{{ $visionVideoSources[$loop->index]['label'] }} video"
-            >
+            @if ($visionVideoSources[$loop->index]['interactive'])
+              <button
+                type="button"
+                class="vision-arch__video-trigger"
+                data-vision-video-open
+                data-vision-video-src="{{ $visionVideoSources[$loop->index]['url'] }}"
+                data-vision-video-label="{{ $visionVideoSources[$loop->index]['label'] }}"
+                aria-label="{{ $visionVideoSources[$loop->index]['label'] }} video"
+              >
+                <video
+                  class="vision-arch__video-preview"
+                  data-vision-video-preview
+                  data-vision-video-src="{{ $visionVideoSources[$loop->index]['url'] }}"
+                  data-vision-art
+                  muted
+                  loop
+                  playsinline
+                  webkit-playsinline
+                  preload="none"
+                  aria-hidden="true"
+                ></video>
+                <span class="vision-arch__video-cue" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">
+                    <path d="M12 8l12 8-12 8Z" />
+                  </svg>
+                </span>
+              </button>
+            @else
               <video
                 class="vision-arch__video-preview"
                 data-vision-video-preview
@@ -97,12 +117,7 @@
                 preload="none"
                 aria-hidden="true"
               ></video>
-              <span class="vision-arch__video-cue" aria-hidden="true">
-                <svg viewBox="0 0 32 32">
-                  <path d="M12 8l12 8-12 8Z" />
-                </svg>
-              </span>
-            </button>
+            @endif
           @else
             <img
               data-lazy-media

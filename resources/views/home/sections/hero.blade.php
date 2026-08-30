@@ -35,7 +35,7 @@
                     muted
                     playsinline
                     webkit-playsinline
-                    preload="{{ $loop->first ? 'auto' : 'none' }}"
+                    preload="none"
                     @if (! empty($slide['poster_url'])) poster="{{ $slide['poster_url'] }}" @endif
                     @if ($loop->first) autoplay @endif
                     @if ($heroSlideCount === 1) loop @endif
@@ -43,7 +43,7 @@
                     tabindex="-1"
                   >
                     <source
-                      @if ($loop->first) src="{{ $slide['media_url'] }}" @else data-src="{{ $slide['media_url'] }}" @endif
+                      data-src="{{ $slide['media_url'] }}"
                       type="{{ $slide['video_mime_type'] ?? 'video/mp4' }}"
                     />
                   </video>

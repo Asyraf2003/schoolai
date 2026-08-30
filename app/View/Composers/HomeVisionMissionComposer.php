@@ -58,10 +58,17 @@ final class HomeVisionMissionComposer
                 0 => [
                     'url' => (string) config('media.homepage_about_video_url'),
                     'label' => $aboutLabel,
+                    'interactive' => true,
+                ],
+                1 => [
+                    'url' => (string) config('media.homepage_vision_video_url'),
+                    'label' => $visionLabel,
+                    'interactive' => false,
                 ],
                 2 => [
                     'url' => (string) config('media.homepage_mission_video_url'),
                     'label' => $missionLabel,
+                    'interactive' => true,
                 ],
             ],
         ]);

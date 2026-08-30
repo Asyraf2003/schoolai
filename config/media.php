@@ -40,6 +40,7 @@ return [
 
     'homepage_hero_video_url' => $publicUrl.'/site/hero/homepage-opening-v2.mp4',
     'homepage_about_video_url' => $publicUrl.'/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4',
+    'homepage_vision_video_url' => $publicUrl.'/site/vision/vision-video-v1.mp4',
     'homepage_mission_video_url' => $publicUrl.'/site/vision/mission-video-v1.mp4',
 
     'static' => [
