@@ -32,6 +32,8 @@ it('renders localized About Vision and Mission before Program', function (): voi
             ->assertSee($labels[$locale]['mission'])
             ->assertSee($missionSnippets[$locale][0])
             ->assertSee($missionSnippets[$locale][1])
+            ->assertSee((string) config('media.homepage_about_video_url'), false)
+            ->assertSee((string) config('media.homepage_mission_video_url'), false)
             ->assertDontSee('data-vision-track', false)
             ->assertDontSee('data-vision-program', false);
 
@@ -41,12 +43,13 @@ it('renders localized About Vision and Mission before Program', function (): voi
             ->and(substr_count($content, 'data-vision-visual='))->toBe(3)
             ->and(substr_count($content, 'data-vision-background-layer='))->toBe(2)
             ->and(substr_count($content, 'data-vision-art'))->toBe(3)
-            ->and(substr_count($content, 'data-lazy-src='))->toBeGreaterThanOrEqual(3)
+            ->and(substr_count($content, 'data-vision-video-preview'))->toBe(2)
+            ->and(substr_count($content, 'data-lazy-src='))->toBe(1)
             ->and(count($eagerVisionImages[0]))->toBe(0)
             ->and(substr_count(
                 $content,
                 'media.almustaqbal.sch.id/site/vision/vision-paper-'
-            ))->toBe(3)
+            ))->toBe(1)
             ->and($content)->not->toContain('/media/home/vision-paper-')
             ->and(strpos($content, 'id="visi-misi"'))
             ->toBeLessThan(strpos($content, 'id="program"'));
