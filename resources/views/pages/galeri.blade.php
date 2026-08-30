@@ -29,7 +29,7 @@
   @endphp
 
   <div class="gallery-perspective" data-gallery-perspective>
-    <nav class="gallery-perspective__nav" data-gallery-category-nav aria-label="{{ $page['wall']['title'] ?? __('pages.galeri.title') }}">
+    <nav id="gallery-category-navigation" class="gallery-perspective__nav" data-gallery-category-nav aria-label="{{ $page['wall']['title'] ?? __('pages.galeri.title') }}">
       <div class="gallery-perspective__nav-inner">
         <p class="gallery-perspective__nav-kicker">{{ $page['hero']['heading'] ?? __('pages.galeri.title') }}</p>
         <div class="gallery-perspective__nav-list">
@@ -72,14 +72,14 @@
             >
               <span class="gallery-codrops__menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
               <span class="gallery-codrops__menu-copy">
-                <small>{{ count($galleryCategories) }} kategori</small>
+                <small>{{ str_pad((string) count($galleryCategories), 2, '0', STR_PAD_LEFT) }}</small>
                 <strong data-gallery-active-category>{{ $galleryCategories[0]['title'] }}</strong>
               </span>
             </button>
           @endif
         </header>
 
-        <div id="gallery-category-navigation" class="gallery-codrops__panels" data-gallery-category-panels>
+        <div class="gallery-codrops__panels" data-gallery-category-panels>
           @forelse($galleryCategories as $categoryIndex => $category)
             @php
               $effectNumber = ($categoryIndex % 8) + 1;
