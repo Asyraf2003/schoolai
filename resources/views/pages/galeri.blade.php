@@ -1,65 +1,134 @@
 @extends('layouts.public', ['title' => $page['title'] ?? __('pages.galeri.title'), 'description' => $page['description'] ?? __('pages.galeri.description')])
 
 @section('content')
-  <section class="gallery-wall-hero" aria-labelledby="galeri-title">
-    <div class="gallery-wall-bg" aria-hidden="true"></div>
+  @php
+    $galleryCategories = [];
+    $primaryItems = is_array($items ?? null) ? $items : [];
 
-    <div class="container gallery-wall-hero__inner">
-      <article class="gallery-wall-hero-card reveal">
-        <h1 id="galeri-title">{{ $page['hero']['heading'] ?? '' }}</h1>
+    if ($primaryItems !== []) {
+        $galleryCategories[] = [
+            'title' => (string) ($page['wall']['title'] ?? $page['hero']['heading'] ?? __('pages.galeri.title')),
+            'description' => (string) ($page['hero']['subtitle'] ?? ''),
+            'items' => $primaryItems,
+        ];
+    }
 
-        @if(! empty($page['hero']['subtitle']))
-          <p>{{ $page['hero']['subtitle'] }}</p>
-        @endif
-      </article>
+    foreach ((is_array($sections ?? null) ? $sections : []) as $section) {
+        $sectionItems = is_array($section['items'] ?? null) ? $section['items'] : [];
 
-      <div class="gallery-wall-flash reveal reveal--delay-1" aria-hidden="true">
-        @foreach(($page['hero']['cards'] ?? []) as $card)
-          <span style="--flash-g1: {{ $card['gradient'][0] ?? '#DCF1F7' }}; --flash-g2: {{ $card['gradient'][1] ?? '#FFC93C' }};">
-            <strong>{{ $card['emoji'] ?? '📸' }}</strong>
-            <small>{{ $card['label'] ?? '' }}</small>
-          </span>
-        @endforeach
+        if ($sectionItems === []) {
+            continue;
+        }
+
+        $galleryCategories[] = [
+            'title' => (string) ($section['title'] ?? __('pages.galeri.title')),
+            'description' => (string) ($section['description'] ?? ''),
+            'items' => $sectionItems,
+        ];
+    }
+  @endphp
+
+  <div class="gallery-perspective" data-gallery-perspective>
+    <nav class="gallery-perspective__nav" data-gallery-category-nav aria-label="{{ $page['wall']['title'] ?? __('pages.galeri.title') }}">
+      <div class="gallery-perspective__nav-inner">
+        <p class="gallery-perspective__nav-kicker">{{ $page['hero']['heading'] ?? __('pages.galeri.title') }}</p>
+        <div class="gallery-perspective__nav-list">
+          @foreach($galleryCategories as $categoryIndex => $category)
+            <button
+              type="button"
+              class="gallery-perspective__nav-item{{ $categoryIndex === 0 ? ' is-active' : '' }}"
+              data-gallery-category-target="gallery-category-{{ $categoryIndex }}"
+              aria-controls="gallery-category-{{ $categoryIndex }}"
+              aria-pressed="{{ $categoryIndex === 0 ? 'true' : 'false' }}"
+              style="--gallery-nav-order: {{ $categoryIndex }}"
+            >
+              <span>{{ str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) }}</span>
+              <strong>{{ $category['title'] }}</strong>
+            </button>
+          @endforeach
+        </div>
       </div>
-    </div>
-  </section>
+    </nav>
 
-  <section class="gallery-wall-section" aria-labelledby="gallery-wall-title">
-    <div class="container">
-      <header class="gallery-wall-head reveal">
-        <h2 id="gallery-wall-title">{{ $page['wall']['title'] ?? '' }}</h2>
-      </header>
+    <div class="gallery-perspective__stage" data-gallery-perspective-stage>
+      <section class="gallery-codrops" aria-labelledby="galeri-title">
+        <header class="gallery-codrops__hero">
+          <div class="gallery-codrops__hero-copy">
+            <p class="gallery-codrops__eyebrow">{{ $page['title'] ?? __('pages.galeri.title') }}</p>
+            <h1 id="galeri-title">{{ $page['hero']['heading'] ?? '' }}</h1>
 
-      <div class="gallery-wall-grid" data-gallery-wall>
-        @foreach($items as $item)
-          @include('pages.partials.gallery-wall-card', ['item' => $item])
-        @endforeach
-      </div>
-
-      @foreach($sections as $section)
-        <section
-          class="gallery-wall-subsection gallery-wall-subsection--{{ $loop->odd ? 'media-left' : 'media-right' }} reveal"
-          aria-labelledby="gallery-section-{{ $loop->index }}"
-        >
-          <header class="gallery-wall-subsection__head">
-            <div class="gallery-wall-subsection__copy">
-              <h2 id="gallery-section-{{ $loop->index }}">{{ $section['title'] }}</h2>
-
-              @if(! empty($section['description']))
-                <p>{{ $section['description'] }}</p>
-              @endif
-            </div>
-          </header>
-
-          <div class="gallery-wall-grid gallery-wall-grid--subsection">
-            @foreach($section['items'] as $item)
-              @include('pages.partials.gallery-wall-card', ['item' => $item])
-            @endforeach
+            @if(! empty($page['hero']['subtitle']))
+              <p>{{ $page['hero']['subtitle'] }}</p>
+            @endif
           </div>
-        </section>
-      @endforeach
+
+          @if($galleryCategories !== [])
+            <button
+              type="button"
+              class="gallery-codrops__menu-trigger"
+              data-gallery-menu-trigger
+              aria-expanded="false"
+              aria-controls="gallery-category-navigation"
+            >
+              <span class="gallery-codrops__menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="gallery-codrops__menu-copy">
+                <small>{{ count($galleryCategories) }} kategori</small>
+                <strong data-gallery-active-category>{{ $galleryCategories[0]['title'] }}</strong>
+              </span>
+            </button>
+          @endif
+        </header>
+
+        <div id="gallery-category-navigation" class="gallery-codrops__panels" data-gallery-category-panels>
+          @forelse($galleryCategories as $categoryIndex => $category)
+            @php
+              $effectNumber = ($categoryIndex % 8) + 1;
+              $panelId = 'gallery-category-'.$categoryIndex;
+              $ratios = ['wide', 'portrait', 'square', 'landscape', 'tall', 'cinema'];
+            @endphp
+
+            <section
+              id="{{ $panelId }}"
+              class="gallery-codrops__panel{{ $categoryIndex === 0 ? ' is-active' : '' }}"
+              data-gallery-category-panel
+              data-gallery-effect="{{ $effectNumber }}"
+              @if($categoryIndex !== 0) hidden @endif
+              aria-labelledby="{{ $panelId }}-title"
+            >
+              <header class="gallery-codrops__panel-head">
+                <div>
+                  <span>{{ str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                  <h2 id="{{ $panelId }}-title">{{ $category['title'] }}</h2>
+                </div>
+
+                @if($category['description'] !== '')
+                  <p>{{ $category['description'] }}</p>
+                @endif
+              </header>
+
+              <div class="gallery-codrops-grid effect-{{ $effectNumber }}" data-gallery-grid>
+                @foreach($category['items'] as $item)
+                  @php($ratio = $ratios[$loop->index % count($ratios)])
+                  <div
+                    class="gallery-codrops-grid__item gallery-codrops-grid__item--{{ $ratio }}"
+                    data-gallery-load-item
+                    style="--gallery-item-order: {{ $loop->index }}"
+                  >
+                    @include('pages.partials.gallery-wall-card', ['item' => $item])
+                  </div>
+                @endforeach
+              </div>
+            </section>
+          @empty
+            <section class="gallery-codrops__empty">
+              <h2>{{ $page['wall']['title'] ?? __('pages.galeri.title') }}</h2>
+              <p>{{ $page['description'] ?? '' }}</p>
+            </section>
+          @endforelse
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 
   <div class="gallery-wall-lightbox" data-gallery-wall-lightbox data-gallery-wall-video-title="{{ __('pages.common.gallery_video_title') }}" hidden role="dialog" aria-modal="true" aria-label="{{ __('pages.common.view_gallery') }}">
     <button type="button" class="gallery-wall-lightbox__backdrop" data-gallery-wall-lightbox-close aria-label="{{ __('pages.common.close') }}"></button>
