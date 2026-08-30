@@ -12,12 +12,7 @@ final class LanguageFlagComposer
         $flagLocale = in_array($locale, ['id', 'en', 'ar'], true)
             ? $locale
             : 'id';
-        $flagImagePath = 'media/home/'.$flagLocale.'.webp';
 
-        $view->with([
-            'flagLocale' => $flagLocale,
-            'flagImagePath' => $flagImagePath,
-            'hasFlagImage' => is_file(public_path($flagImagePath)),
-        ]);
+        $view->with('flagLocale', $flagLocale);
     }
 }
