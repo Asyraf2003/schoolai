@@ -55,7 +55,8 @@
 }
 
 .gallery-wall-card__media img,
-.gallery-wall-card__media iframe {
+.gallery-wall-card__media iframe,
+.gallery-wall-card__media video {
     width: 100%;
     height: 100%;
     border: 0;
