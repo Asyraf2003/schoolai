@@ -117,7 +117,8 @@ class AppServiceProvider extends ServiceProvider
                 ?array $chunk,
                 ?array $manifest,
             ) use ($deferredHomeStyles): array {
-                $deferred = in_array($src, $deferredHomeStyles, true);
+                $deferred = request()->routeIs('home')
+                    && in_array($src, $deferredHomeStyles, true);
 
                 return [
                     'media' => $deferred ? 'print' : false,
