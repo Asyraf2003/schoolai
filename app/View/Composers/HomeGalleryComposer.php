@@ -28,7 +28,10 @@ final class HomeGalleryComposer
                 $item = is_array($item) ? $item : [];
 
                 return array_replace($item, [
+                    'type' => (string) ($item['type'] ?? 'photo'),
+                    'media_url' => (string) ($item['media_url'] ?? ''),
                     'thumbnail_url' => (string) ($item['thumbnail_url'] ?? ''),
+                    'is_direct_video' => (bool) ($item['is_direct_video'] ?? false),
                     'title' => (string) ($item['title'] ?? ''),
                     'caption' => (string) ($item['caption'] ?? ''),
                     'preset' => $presets[$index % count($presets)],
