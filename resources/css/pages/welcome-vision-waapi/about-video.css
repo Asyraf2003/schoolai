@@ -15,6 +15,16 @@
     pointer-events: none;
 }
 
+.vision-arch__video-preview {
+    background: #0c0c0c;
+    opacity: 0;
+    transition: opacity 220ms ease;
+}
+
+.vision-arch__video-preview.is-ready {
+    opacity: 1;
+}
+
 .vision-arch__video-cue {
     position: absolute;
     z-index: 2;
@@ -44,10 +54,6 @@
 .vision-arch__video-trigger:focus-visible .vision-arch__video-cue {
     background: rgb(0 0 0 / .54);
     transform: scale(1.08);
-}
-
-.vision-arch__video-cue--pending {
-    pointer-events: none;
 }
 
 .vision-arch__video-trigger:focus-visible {
@@ -269,6 +275,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .vision-arch__video-preview,
     .vision-arch__video-cue,
     .vision-video-modal__control {
         transition: none;

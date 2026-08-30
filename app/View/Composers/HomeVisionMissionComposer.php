@@ -37,13 +37,16 @@ final class HomeVisionMissionComposer
             }
         )->all();
         $aboutStory = $this->translator->get('home.about_stats_story');
+        $aboutLabel = $this->translator->get('home_vision.labels.about');
+        $visionLabel = $this->translator->get('home_vision.labels.vision');
+        $missionLabel = $this->translator->get('home_vision.labels.mission');
 
         $view->with([
             'visiMisi' => $visiMisi,
             'aboutStory' => is_array($aboutStory) ? $aboutStory : [],
-            'aboutLabel' => $this->translator->get('home_vision.labels.about'),
-            'visionLabel' => $this->translator->get('home_vision.labels.vision'),
-            'missionLabel' => $this->translator->get('home_vision.labels.mission'),
+            'aboutLabel' => $aboutLabel,
+            'visionLabel' => $visionLabel,
+            'missionLabel' => $missionLabel,
             'sectionLabel' => $this->translator->get('home_vision.section_label'),
             'schoolImages' => collect(config('media.static.vision', []))
                 ->filter(
@@ -51,6 +54,16 @@ final class HomeVisionMissionComposer
                         is_string($url) && trim($url) !== ''
                 )
                 ->values(),
+            'visionVideoSources' => [
+                0 => [
+                    'url' => (string) config('media.homepage_about_video_url'),
+                    'label' => $aboutLabel,
+                ],
+                2 => [
+                    'url' => (string) config('media.homepage_mission_video_url'),
+                    'label' => $missionLabel,
+                ],
+            ],
         ]);
     }
 }

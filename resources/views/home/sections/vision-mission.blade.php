@@ -74,27 +74,29 @@
         <figure
           class="vision-arch__visual"
           data-vision-visual="{{ $loop->index }}"
-          @if (! $loop->first) aria-hidden="true" @endif
+          @if ($loop->index === 1) aria-hidden="true" @endif
         >
-          @if ($loop->first)
+          @if (isset($visionVideoSources[$loop->index]))
             <button
               type="button"
               class="vision-arch__video-trigger"
-              data-about-video-open
-              aria-label="{{ $aboutLabel }} video"
+              data-vision-video-open
+              data-vision-video-src="{{ $visionVideoSources[$loop->index]['url'] }}"
+              data-vision-video-label="{{ $visionVideoSources[$loop->index]['label'] }}"
+              aria-label="{{ $visionVideoSources[$loop->index]['label'] }} video"
             >
-              <img
-                data-lazy-media
-                data-lazy-src="{{ $image }}"
-                alt=""
-                width="1920"
-                height="1440"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
+              <video
+                class="vision-arch__video-preview"
+                data-vision-video-preview
+                data-vision-video-src="{{ $visionVideoSources[$loop->index]['url'] }}"
                 data-vision-art
-                data-about-video-poster
-              />
+                muted
+                loop
+                playsinline
+                webkit-playsinline
+                preload="none"
+                aria-hidden="true"
+              ></video>
               <span class="vision-arch__video-cue" aria-hidden="true">
                 <svg viewBox="0 0 32 32">
                   <path d="M12 8l12 8-12 8Z" />
@@ -113,25 +115,13 @@
               fetchpriority="low"
               data-vision-art
             />
-
-            @if ($loop->last)
-              <span
-                class="vision-arch__video-cue vision-arch__video-cue--pending"
-                data-mission-video-cue
-                aria-hidden="true"
-              >
-                <svg viewBox="0 0 32 32">
-                  <path d="M12 8l12 8-12 8Z" />
-                </svg>
-              </span>
-            @endif
           @endif
         </figure>
       @endforeach
     </div>
   </div>
 
-  <dialog class="vision-video-modal" data-about-video-modal aria-label="{{ $aboutLabel }} video">
+  <dialog class="vision-video-modal" data-about-video-modal aria-label="{{ $sectionLabel }} video">
     <div class="vision-video-modal__surface" data-about-video-shell>
       <button
         type="button"
