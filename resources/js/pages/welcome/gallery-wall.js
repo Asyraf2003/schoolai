@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var title = card.getAttribute('data-gallery-title') || '';
     var mediaUrl = card.getAttribute('data-gallery-media-url') || '';
     var isVideo = card.getAttribute('data-gallery-is-video') === '1';
+    var isDirectVideo = card.getAttribute('data-gallery-is-direct-video') === '1';
     var emoji = card.getAttribute('data-gallery-emoji') || '📸';
     var g1 = getComputedStyle(card).getPropertyValue('--gallery-g1') || '#DCF1F7';
     var g2 = getComputedStyle(card).getPropertyValue('--gallery-g2') || '#FFC93C';
@@ -35,7 +36,17 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaBox.style.setProperty('--gallery-g1', g1);
     mediaBox.style.setProperty('--gallery-g2', g2);
 
-    if (mediaUrl && isVideo) {
+    if (mediaUrl && isVideo && isDirectVideo) {
+      var video = document.createElement('video');
+      video.src = mediaUrl;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      mediaBox.appendChild(video);
+    } else if (mediaUrl && isVideo) {
       var iframe = document.createElement('iframe');
       iframe.src = mediaUrl;
       iframe.title = title || wallVideoTitleFallback;
