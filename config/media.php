@@ -46,6 +46,12 @@ return [
         'school_life' => $schoolLife,
         'testimonials' => $testimonials,
 
+        'language_flags' => [
+            'id' => $publicUrl.'/site/language/id-v1.webp',
+            'en' => $publicUrl.'/site/language/en-v1.webp',
+            'ar' => $publicUrl.'/site/language/ar-v1.webp',
+        ],
+
         'brand' => [
             'logo_nav' => $publicUrl.'/site/brand/logo-nav-v1.webp',
             'logo_footer' => $publicUrl.'/site/brand/logo-footer-v1.webp',
