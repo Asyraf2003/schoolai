@@ -8,6 +8,10 @@
     color: var(--article-ink);
 }
 
+.article-showcase__title-line {
+    width: 100%;
+}
+
 .article-showcase__title-text {
     display: block;
     transform: translate3d(0, 0, 0);
