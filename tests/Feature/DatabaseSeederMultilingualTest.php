@@ -55,9 +55,9 @@ it('seeds article, hero, gallery, and ppdb content in three languages', function
         ->and($gallery->every(fn (object $item): bool => $item->type === 'video'))
         ->toBeTrue()
         ->and($canonicalGallery)->toHaveCount(17)
-        ->and($galleryPlacements)->toHaveCount(16)
+        ->and($galleryPlacements)->toHaveCount(21)
         ->and($facilitySection)->not->toBeNull()
-        ->and($facilityPlacements)->toHaveCount(4)
+        ->and($facilityPlacements)->toHaveCount(9)
         ->and($canonicalGallery->every(fn (object $item): bool =>
             str_starts_with((string) $item->media_url, $mediaBase.'/site/school-life/')
             || str_starts_with((string) $item->media_url, $mediaBase.'/gallery/media/')))->toBeTrue()
