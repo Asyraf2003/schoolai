@@ -128,13 +128,27 @@
 }
 
 .vision-arch__visual {
+    --vision-media-shadow-x: clamp(10px, 1.4vw, 22px);
+    --vision-media-shadow-y: clamp(12px, 1.6vw, 26px);
     position: relative;
     width: 100%;
     height: clamp(18rem, 66vw, 34rem);
     margin: 0;
     overflow: hidden;
-    border-radius: clamp(1rem, 2.2vw, 1.8rem);
+    border: 1px solid transparent;
+    border-radius: 0;
+    border-image: linear-gradient(
+        135deg,
+        rgb(18 18 18 / .82) 0%,
+        rgb(176 181 184 / .74) 52%,
+        rgb(40 40 40 / .58) 100%
+    ) 1;
     background: #d8d2c6;
+    box-shadow:
+        var(--vision-media-shadow-x)
+        var(--vision-media-shadow-y)
+        clamp(1.7rem, 3vw, 3.2rem)
+        rgb(0 0 0 / .16);
 }
 
 .vision-arch__visual [data-vision-art] {
@@ -148,6 +162,10 @@
 
 html[dir="rtl"] .vision-arch__content {
     direction: rtl;
+}
+
+html[dir="rtl"] .vision-arch__visual {
+    --vision-media-shadow-x: clamp(-22px, -1.4vw, -10px);
 }
 
 html[dir="rtl"] .vision-arch__kicker,
