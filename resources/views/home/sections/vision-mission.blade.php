@@ -74,28 +74,21 @@
         <figure
           class="vision-arch__visual"
           data-vision-visual="{{ $loop->index }}"
-          @if (! $loop->first) aria-hidden="true" @endif
+          @if ($loop->index === 1) aria-hidden="true" @endif
         >
-          @if ($loop->first || $loop->last)
-            @php
-              $videoSource = $loop->first
-                ? config('media.homepage_about_video_url')
-                : config('media.homepage_mission_video_url');
-              $videoLabel = $loop->first ? $aboutLabel : $missionLabel;
-            @endphp
-
+          @if (isset($visionVideoSources[$loop->index]))
             <button
               type="button"
               class="vision-arch__video-trigger"
               data-vision-video-open
-              data-vision-video-src="{{ $videoSource }}"
-              data-vision-video-label="{{ $videoLabel }}"
-              aria-label="{{ $videoLabel }} video"
+              data-vision-video-src="{{ $visionVideoSources[$loop->index]['url'] }}"
+              data-vision-video-label="{{ $visionVideoSources[$loop->index]['label'] }}"
+              aria-label="{{ $visionVideoSources[$loop->index]['label'] }} video"
             >
               <video
                 class="vision-arch__video-preview"
                 data-vision-video-preview
-                data-vision-video-src="{{ $videoSource }}"
+                data-vision-video-src="{{ $visionVideoSources[$loop->index]['url'] }}"
                 data-vision-art
                 muted
                 loop
