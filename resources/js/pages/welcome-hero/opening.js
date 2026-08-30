@@ -9,6 +9,22 @@ export function initOpeningHero(root, slide) {
     video.loop = true;
     video.setAttribute('loop', '');
 
+    function hydrateVideo() {
+        if (video.getAttribute('data-hydrated') === 'true') return true;
+
+        var hydratedSource = false;
+        video.querySelectorAll('source[data-src]').forEach(function (source) {
+            source.src = source.getAttribute('data-src');
+            source.removeAttribute('data-src');
+            hydratedSource = true;
+        });
+
+        if (!hydratedSource) return false;
+        video.setAttribute('data-hydrated', 'true');
+        video.load();
+        return true;
+    }
+
     function updateAudioButtons() {
         audioButtons.forEach(function (button) {
             button.setAttribute('aria-pressed', audioEnabled ? 'true' : 'false');
@@ -22,7 +38,7 @@ export function initOpeningHero(root, slide) {
     function syncVideo() {
         video.muted = !audioEnabled;
 
-        if (document.hidden) {
+        if (document.hidden || video.getAttribute('data-hydrated') !== 'true') {
             video.pause();
             return;
         }
@@ -35,10 +51,16 @@ export function initOpeningHero(root, slide) {
         }
     }
 
+    function startDeferredVideo() {
+        hydrateVideo();
+        syncVideo();
+    }
+
     audioButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             audioEnabled = !audioEnabled;
             updateAudioButtons();
+            hydrateVideo();
             syncVideo();
         });
     });
@@ -52,5 +74,10 @@ export function initOpeningHero(root, slide) {
     }, { once: true });
 
     updateAudioButtons();
-    syncVideo();
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(startDeferredVideo, { timeout: 900 });
+    } else {
+        window.setTimeout(startDeferredVideo, 120);
+    }
 }
