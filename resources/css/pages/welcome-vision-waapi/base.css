@@ -128,8 +128,10 @@
 }
 
 .vision-arch__visual {
-    --vision-media-shadow-x: clamp(12px, 1.5vw, 24px);
-    --vision-media-shadow-y: clamp(14px, 1.7vw, 28px);
+    --vision-media-contact-x: clamp(4px, .5vw, 8px);
+    --vision-media-contact-y: clamp(6px, .7vw, 12px);
+    --vision-media-shadow-x: clamp(18px, 2vw, 32px);
+    --vision-media-shadow-y: clamp(22px, 3vw, 46px);
     position: relative;
     width: 83.333333%;
     height: clamp(15rem, 55vw, 28.333333rem);
@@ -146,14 +148,18 @@
     ) 1;
     background: #d8d2c6;
     box-shadow:
-        calc(var(--vision-media-shadow-x) * .4)
-        calc(var(--vision-media-shadow-y) * .4)
-        clamp(.65rem, 1.15vw, 1.15rem)
-        rgb(0 0 0 / .18),
+        var(--vision-media-contact-x)
+        var(--vision-media-contact-y)
+        clamp(.65rem, 1.2vw, 1.15rem)
+        rgb(0 0 0 / .2),
         var(--vision-media-shadow-x)
         var(--vision-media-shadow-y)
-        clamp(1.55rem, 2.7vw, 3rem)
-        rgb(0 0 0 / .24);
+        clamp(2.5rem, 5.5vw, 5.5rem)
+        rgb(0 0 0 / .3),
+        0
+        clamp(2.2rem, 4vw, 4rem)
+        clamp(3.8rem, 8vw, 8rem)
+        rgb(0 0 0 / .18);
 }
 
 .vision-arch__visual [data-vision-art] {
@@ -170,7 +176,8 @@ html[dir="rtl"] .vision-arch__content {
 }
 
 html[dir="rtl"] .vision-arch__visual {
-    --vision-media-shadow-x: clamp(-24px, -1.5vw, -12px);
+    --vision-media-contact-x: clamp(-8px, -.5vw, -4px);
+    --vision-media-shadow-x: clamp(-32px, -2vw, -18px);
 }
 
 html[dir="rtl"] .vision-arch__kicker,

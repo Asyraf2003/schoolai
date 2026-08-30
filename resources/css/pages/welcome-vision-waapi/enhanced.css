@@ -43,12 +43,46 @@
     }
 
     .vision-arch.is-enhanced .vision-arch__visuals {
+        --vision-cast-contact-x: clamp(4px, .5vw, 8px);
+        --vision-cast-shadow-x: clamp(18px, 2vw, 32px);
         position: sticky;
+        isolation: isolate;
         inset-block-start: 0;
         grid-column: 2;
         height: 100svh;
         height: 100dvh;
-        overflow: hidden;
+        overflow: visible;
+    }
+
+    .vision-arch.is-enhanced .vision-arch__visuals::before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        inset-block-start: 50%;
+        inset-inline-start: 8.333333%;
+        width: 83.333333%;
+        height: min(56.666667svh, 35.833333rem);
+        pointer-events: none;
+        background: rgb(0 0 0 / .01);
+        box-shadow:
+            var(--vision-cast-contact-x)
+            clamp(6px, .7vw, 12px)
+            clamp(.75rem, 1.4vw, 1.3rem)
+            rgb(0 0 0 / .22),
+            var(--vision-cast-shadow-x)
+            clamp(26px, 3.2vw, 50px)
+            clamp(3rem, 6vw, 6rem)
+            rgb(0 0 0 / .32),
+            0
+            clamp(2.8rem, 4.5vw, 4.8rem)
+            clamp(4.5rem, 9vw, 9rem)
+            rgb(0 0 0 / .2);
+        transform: translateY(-50%);
+    }
+
+    html[dir="rtl"] .vision-arch.is-enhanced .vision-arch__visuals {
+        --vision-cast-contact-x: clamp(-8px, -.5vw, -4px);
+        --vision-cast-shadow-x: clamp(-32px, -2vw, -18px);
     }
 
     .vision-arch.is-enhanced .vision-arch__visual {
@@ -60,6 +94,7 @@
         height: min(56.666667svh, 35.833333rem);
         margin: 0;
         border-radius: 0;
+        box-shadow: none;
         clip-path: inset(0 0 0% 0);
         transform: translateY(-50%);
     }
