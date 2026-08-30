@@ -18,6 +18,9 @@ it('keeps homepage Gallery motion previews direct, lazy, muted, and iframe free'
     $controller = file_get_contents(resource_path(
         'js/pages/welcome-depth-gallery.js'
     ));
+    $previewRuntime = file_get_contents(resource_path(
+        'js/pages/welcome/gallery-video-preview.js'
+    ));
     $galleryPage = file_get_contents(resource_path(
         'views/pages/galeri.blade.php'
     ));
@@ -52,13 +55,15 @@ it('keeps homepage Gallery motion previews direct, lazy, muted, and iframe free'
         ->not->toContain('<iframe')
         ->not->toContain('gallery-story__play')
         ->and($controller)
+        ->toContain('mountGalleryVideoPreviews')
+        ->toContain('paintItems')
+        ->not->toContain('createGalleryStoryLightbox')
+        ->not->toContain('openStoryMedia')
+        ->and($previewRuntime)
         ->toContain("querySelectorAll('[data-gallery-video-preview]')")
         ->toContain("rootMargin: '180px 0px'")
         ->toContain('preview.src = source')
         ->toContain('preview.pause()')
-        ->toContain('paintItems')
-        ->not->toContain('createGalleryStoryLightbox')
-        ->not->toContain('openStoryMedia')
         ->and($galleryPage)
         ->toContain('data-gallery-wall-lightbox')
         ->and($galleryWall)
