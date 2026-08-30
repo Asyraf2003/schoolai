@@ -4,39 +4,54 @@ export function galleryStoryVisual(item) {
     return media && visual ? { media, visual } : null;
 }
 
-function intrinsicSize(visual) {
-    if (visual instanceof HTMLImageElement && visual.naturalWidth && visual.naturalHeight) {
-        return { width: visual.naturalWidth, height: visual.naturalHeight };
-    }
-
-    if (visual instanceof HTMLVideoElement && visual.videoWidth && visual.videoHeight) {
-        return { width: visual.videoWidth, height: visual.videoHeight };
-    }
-
-    return null;
-}
-
-function fitMedia(media, visual) {
-    const size = intrinsicSize(visual);
-    if (!size) return;
+function fitImage(media, visual) {
+    if (!(visual instanceof HTMLImageElement) || !visual.naturalWidth) return false;
 
     media.style.removeProperty('width');
     media.style.removeProperty('height');
     visual.style.removeProperty('width');
     visual.style.removeProperty('height');
-    if (!media.clientWidth || !media.clientHeight) return;
+    if (!media.clientWidth || !media.clientHeight) return false;
 
     const scale = Math.min(
-        media.clientWidth / size.width,
-        media.clientHeight / size.height,
+        media.clientWidth / visual.naturalWidth,
+        media.clientHeight / visual.naturalHeight,
     );
-    const fittedWidth = size.width * scale;
-    const fittedHeight = size.height * scale;
+    const fittedWidth = visual.naturalWidth * scale;
+    const fittedHeight = visual.naturalHeight * scale;
 
     media.style.width = `${fittedWidth.toFixed(2)}px`;
     media.style.height = `${fittedHeight.toFixed(2)}px`;
     visual.style.width = `${fittedWidth.toFixed(2)}px`;
     visual.style.height = `${fittedHeight.toFixed(2)}px`;
+    return true;
+}
+
+function fitVideo(media, visual) {
+    if (!(visual instanceof HTMLVideoElement) || !visual.videoWidth || !visual.videoHeight) return false;
+
+    media.style.removeProperty('width');
+    media.style.removeProperty('height');
+    visual.style.removeProperty('width');
+    visual.style.removeProperty('height');
+    if (!media.clientWidth || !media.clientHeight) return false;
+
+    const scale = Math.min(
+        media.clientWidth / visual.videoWidth,
+        media.clientHeight / visual.videoHeight,
+    );
+    const fittedWidth = visual.videoWidth * scale;
+    const fittedHeight = visual.videoHeight * scale;
+
+    media.style.width = `${fittedWidth.toFixed(2)}px`;
+    media.style.height = `${fittedHeight.toFixed(2)}px`;
+    visual.style.width = `${fittedWidth.toFixed(2)}px`;
+    visual.style.height = `${fittedHeight.toFixed(2)}px`;
+    return true;
+}
+
+function fitMedia(media, visual) {
+    return fitImage(media, visual) || fitVideo(media, visual);
 }
 
 export function fitGalleryStoryVisuals(items, onReady) {
