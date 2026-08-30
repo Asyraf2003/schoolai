@@ -128,12 +128,13 @@
 }
 
 .vision-arch__visual {
-    --vision-media-shadow-x: clamp(10px, 1.4vw, 22px);
-    --vision-media-shadow-y: clamp(12px, 1.6vw, 26px);
+    --vision-media-shadow-x: clamp(12px, 1.5vw, 24px);
+    --vision-media-shadow-y: clamp(14px, 1.7vw, 28px);
     position: relative;
-    width: 100%;
-    height: clamp(18rem, 66vw, 34rem);
+    width: 83.333333%;
+    height: clamp(15rem, 55vw, 28.333333rem);
     margin: 0;
+    margin-inline: auto;
     overflow: hidden;
     border: 1px solid transparent;
     border-radius: 0;
@@ -145,10 +146,14 @@
     ) 1;
     background: #d8d2c6;
     box-shadow:
+        calc(var(--vision-media-shadow-x) * .4)
+        calc(var(--vision-media-shadow-y) * .4)
+        clamp(.65rem, 1.15vw, 1.15rem)
+        rgb(0 0 0 / .18),
         var(--vision-media-shadow-x)
         var(--vision-media-shadow-y)
-        clamp(1.7rem, 3vw, 3.2rem)
-        rgb(0 0 0 / .16);
+        clamp(1.55rem, 2.7vw, 3rem)
+        rgb(0 0 0 / .24);
 }
 
 .vision-arch__visual [data-vision-art] {
@@ -165,7 +170,7 @@ html[dir="rtl"] .vision-arch__content {
 }
 
 html[dir="rtl"] .vision-arch__visual {
-    --vision-media-shadow-x: clamp(-22px, -1.4vw, -10px);
+    --vision-media-shadow-x: clamp(-24px, -1.5vw, -12px);
 }
 
 html[dir="rtl"] .vision-arch__kicker,
