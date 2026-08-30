@@ -10,4 +10,10 @@ final class GallerySeeder extends Seeder
 {
     use SeedsGalleryItems;
     use SeedsGalleryPageSections;
+
+    private function galleryMotionUrl(string $filename): string
+    {
+        return rtrim((string) config('media.public_url'), '/')
+            .'/gallery/media/'.ltrim($filename, '/');
+    }
 }
