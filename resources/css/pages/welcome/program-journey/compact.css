@@ -1,29 +1,29 @@
 @media (min-width: 640px) and (max-width: 1023px) {
     .program-kinetic__cards {
-        --program-card-base: clamp(1rem, 3vw, 1.8rem);
-        --program-card-interval: clamp(1.5rem, 4vw, 2.4rem);
+        --program-card-interval: clamp(1.25rem, 2.8vw, 2rem);
         grid-template-columns: repeat(4, minmax(0, 1fr));
         column-gap: 1.5vw;
-        row-gap: clamp(1rem, 3vw, 2rem);
+        row-gap: clamp(1.5rem, 4vw, 2.5rem);
         width: 96vw;
-        align-items: end;
+        align-items: start;
     }
 
     .program-kinetic__card {
-        align-self: end;
-        margin-bottom: var(--program-card-base);
+        align-self: start;
+        margin-top: calc(var(--program-card-interval) * 3);
+        margin-bottom: 0;
     }
 
     .program-kinetic__card:nth-child(4n + 2) {
-        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
+        margin-top: calc(var(--program-card-interval) * 2);
     }
 
     .program-kinetic__card:nth-child(4n + 3) {
-        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 2);
+        margin-top: var(--program-card-interval);
     }
 
     .program-kinetic__card:nth-child(4n) {
-        margin-bottom: calc(var(--program-card-base) + var(--program-card-interval) * 3);
+        margin-top: 0;
     }
 }
 

@@ -211,7 +211,8 @@ it('keeps eight-card responsive geometry bounded across desktop tablet and mobil
         ->not->toContain('aspect-ratio: 4 / 5')
         ->and($formation)
         ->toContain('function readStaggerIndex(index, viewportWidth)')
-        ->toContain('if (viewportWidth >= 640) return index % 4')
+        ->toContain('if (viewportWidth >= 1024) return index % 4')
+        ->toContain('if (viewportWidth >= 640) return 0')
         ->toContain('return index % 2')
         ->not->toContain('return index % 3');
 });
