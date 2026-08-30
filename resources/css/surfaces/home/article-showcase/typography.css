@@ -8,8 +8,10 @@
     color: var(--article-ink);
 }
 
-.article-showcase__title-line {
-    width: 100%;
+.article-showcase__title-line--bottom {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    will-change: transform;
 }
 
 .article-showcase__title-text {
@@ -17,6 +19,55 @@
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     will-change: transform, opacity;
+}
+
+/*
+ * Keep the reveal clip on the line wrapper, but move the horizontal shift
+ * to that wrapper instead of translating text inside a clipped box.
+ * This mirrors the structural split used by the Values/Pondasi heading.
+ */
+.home-page .article-showcase__header.welcome-editorial-heading--animated
+.article-showcase__title-text.welcome-editorial-heading__line--bottom {
+    animation: article-showcase-heading-drop 1900ms 190ms both;
+}
+
+.home-page .article-showcase__header.welcome-editorial-heading--animated
+.article-showcase__title-line--bottom {
+    animation: article-showcase-heading-shift 1900ms 190ms both;
+}
+
+.home-page .article-showcase__header.welcome-editorial-heading--static
+.article-showcase__title-text.welcome-editorial-heading__line--bottom {
+    transform: none;
+}
+
+.home-page .article-showcase__header.welcome-editorial-heading--static
+.article-showcase__title-line--bottom {
+    transform: translate3d(var(--editorial-shift), 0, 0);
+}
+
+@keyframes article-showcase-heading-drop {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -116%, 0);
+    }
+
+    40%,
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes article-showcase-heading-shift {
+    0%,
+    56% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(var(--editorial-shift), 0, 0);
+    }
 }
 
 html[dir="rtl"] .article-showcase__header {
@@ -35,5 +86,15 @@ html[dir="rtl"] .article-showcase__header {
         opacity: 1 !important;
         transform: none !important;
         animation: none !important;
+    }
+
+    .home-page .article-showcase__header
+    .article-showcase__title-text.welcome-editorial-heading__line--bottom {
+        transform: none !important;
+    }
+
+    .home-page .article-showcase__header .article-showcase__title-line--bottom {
+        transform: translate3d(var(--editorial-shift), 0, 0);
+        animation: none;
     }
 }
