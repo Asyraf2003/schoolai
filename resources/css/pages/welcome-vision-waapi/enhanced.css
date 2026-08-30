@@ -54,9 +54,10 @@
     .vision-arch.is-enhanced .vision-arch__visual {
         position: absolute;
         inset-block-start: 50%;
-        inset-inline: 0;
-        width: 100%;
-        height: min(68svh, 43rem);
+        inset-inline-start: 8.333333%;
+        inset-inline-end: auto;
+        width: 83.333333%;
+        height: min(56.666667svh, 35.833333rem);
         margin: 0;
         border-radius: 0;
         clip-path: inset(0 0 0% 0);
