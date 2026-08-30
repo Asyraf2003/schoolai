@@ -65,6 +65,20 @@ it('renders four latest published Articles in one Head plus three Rail order aft
         ->toBeLessThan(strpos($html, 'Artikel Terbaru Empat'));
 });
 
+it('keeps Article heading reveal clipping separate from its horizontal shift', function (): void {
+    $blade = file_get_contents(resource_path('views/home/sections/articles.blade.php'));
+    $typography = file_get_contents(resource_path('css/surfaces/home/article-showcase/typography.css'));
+
+    expect($blade)
+        ->toContain('article-showcase__title-line--{{ $loop->first ? \'top\' : \'bottom\' }}')
+        ->and($typography)
+        ->toContain('.article-showcase__title-line--bottom')
+        ->toContain('article-showcase-heading-drop')
+        ->toContain('article-showcase-heading-shift')
+        ->toContain('transform: translate3d(var(--editorial-shift), 0, 0)')
+        ->not->toContain(".article-showcase__title-line {\n    width: 100%;");
+});
+
 it('prioritizes homepage pins and fills remaining slots with latest published Articles', function (): void {
     app()->setLocale('id');
 

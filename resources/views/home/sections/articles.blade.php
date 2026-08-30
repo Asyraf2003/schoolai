@@ -14,7 +14,7 @@
       data-text-role="display"
     >
       @foreach ($articleHeadingLines as $line)
-        <span class="article-showcase__title-line home-section-display__line">
+        <span class="article-showcase__title-line article-showcase__title-line--{{ $loop->first ? 'top' : 'bottom' }} home-section-display__line">
           <span class="article-showcase__title-text welcome-editorial-heading__line--{{ $loop->first ? 'top' : 'bottom' }}">{{ $line }}</span>
         </span>
       @endforeach
