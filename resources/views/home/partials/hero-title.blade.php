@@ -37,7 +37,10 @@
 @endif
 
 @if (! empty(data_get($slide, 'cta.href')) && ! empty(data_get($slide, 'cta.label')))
-  <a class="hero-cinema__cta" href="{{ data_get($slide, 'cta.href') }}">
+  <a
+    class="hero-cinema__cta{{ ! empty($slide['campaign_link_label']) ? ' hero-cinema__cta--campaign' : '' }}"
+    href="{{ data_get($slide, 'cta.href') }}"
+  >
     <span>{{ data_get($slide, 'cta.label') }}</span>
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
