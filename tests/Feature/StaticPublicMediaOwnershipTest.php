@@ -19,6 +19,7 @@ it('renders versioned static public media from R2 on every homepage locale', fun
         config('media.static.footer.instagram'),
         config('media.static.footer.facebook'),
         config('media.static.footer.gmail'),
+        ...config('media.static.language_flags', []),
         ...config('media.static.footer.partners', []),
     ], static fn (mixed $url): bool => is_string($url) && $url !== ''));
 
@@ -77,11 +78,13 @@ it('keeps static content media out of the public filesystem', function (): void 
 it('keeps real school media and testimonial URLs versioned on canonical R2', function (): void {
     $schoolLife = config('media.static.school_life', []);
     $testimonials = config('media.static.testimonials', []);
+    $languageFlags = config('media.static.language_flags', []);
 
     expect($schoolLife)->toBeArray()->toHaveCount(17)
-        ->and($testimonials)->toBeArray()->toHaveCount(22);
+        ->and($testimonials)->toBeArray()->toHaveCount(22)
+        ->and($languageFlags)->toBeArray()->toHaveCount(3);
 
-    foreach ([...array_values($schoolLife), ...array_values($testimonials)] as $url) {
+    foreach ([...array_values($schoolLife), ...array_values($testimonials), ...array_values($languageFlags)] as $url) {
         expect($url)->toBeString()
             ->and($url)->toStartWith('https://media.almustaqbal.sch.id/site/')
             ->and(preg_match('/-v\d+\.webp$/', $url))->toBe(1);
