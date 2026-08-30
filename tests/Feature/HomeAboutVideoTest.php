@@ -48,7 +48,7 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
         ->toContain('data-vision-video-open')
         ->toContain('data-vision-video-preview')
         ->toContain('$visionVideoSources[$loop->index]')
-        ->toContain("$visionVideoSources[$loop->index]['interactive']")
+        ->toContain("\$visionVideoSources[\$loop->index]['interactive']")
         ->toContain("config('media.homepage_about_video_url')")
         ->not->toContain("config('media.homepage_vision_video_url')")
         ->not->toContain("config('media.homepage_mission_video_url')")
