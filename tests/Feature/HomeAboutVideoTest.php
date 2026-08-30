@@ -31,6 +31,7 @@ it('uses in-view About and Mission video previews with the shared modal player',
         ->assertSee($missionUrl, false);
 
     $section = file_get_contents(resource_path('views/home/sections/vision-mission.blade.php'));
+    $composer = file_get_contents(app_path('View/Composers/HomeVisionMissionComposer.php'));
     $modal = file_get_contents(resource_path('js/pages/welcome/about-video-modal.js'));
     $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
     $css = file_get_contents(resource_path('css/pages/welcome-vision-waapi/about-video.css'));
@@ -40,8 +41,9 @@ it('uses in-view About and Mission video previews with the shared modal player',
     expect($section)
         ->toContain('data-vision-video-open')
         ->toContain('data-vision-video-preview')
+        ->toContain('$visionVideoSources[$loop->index]')
         ->toContain("config('media.homepage_about_video_url')")
-        ->toContain("config('media.homepage_mission_video_url')")
+        ->not->toContain("config('media.homepage_mission_video_url')")
         ->toContain('muted')
         ->toContain('loop')
         ->toContain('playsinline')
@@ -54,6 +56,10 @@ it('uses in-view About and Mission video previews with the shared modal player',
         ->not->toContain('data-about-video-poster')
         ->not->toContain('data-mission-video-cue')
         ->not->toContain('vision-arch__video-cue--pending')
+        ->and($composer)
+        ->toContain("config('media.homepage_about_video_url')")
+        ->toContain("config('media.homepage_mission_video_url')")
+        ->toContain("'visionVideoSources' => [")
         ->and($modal)
         ->toContain("querySelectorAll('[data-vision-video-preview]')")
         ->toContain("querySelectorAll('[data-vision-video-open]')")
