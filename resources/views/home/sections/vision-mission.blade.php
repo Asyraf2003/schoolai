@@ -113,6 +113,18 @@
               fetchpriority="low"
               data-vision-art
             />
+
+            @if ($loop->last)
+              <span
+                class="vision-arch__video-cue vision-arch__video-cue--pending"
+                data-mission-video-cue
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 32 32">
+                  <path d="M12 8l12 8-12 8Z" />
+                </svg>
+              </span>
+            @endif
           @endif
         </figure>
       @endforeach
