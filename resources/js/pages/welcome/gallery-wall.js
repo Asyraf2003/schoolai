@@ -1,24 +1,28 @@
 import { playGalleryRouteArrival } from '../../components/gallery-route-transition.js';
 import { applyGalleryMediaLayout } from './gallery-media-layout.js';
 
-function syncGalleryBodyLock() {
-  var menuOpen = Boolean(document.querySelector('[data-gallery-perspective].is-menu-open'));
+function syncGalleryOverlayLock() {
   var lightboxOpen = Boolean(document.querySelector('[data-gallery-wall-lightbox]:not([hidden])'));
-
-  document.body.classList.toggle('gallery-overlay-open', menuOpen || lightboxOpen);
+  document.body.classList.toggle('gallery-overlay-open', lightboxOpen);
 }
 
 function initPerspectiveGallery() {
   var perspective = document.querySelector('[data-gallery-perspective]');
   if (!perspective) return;
 
-  var stage = perspective.querySelector('[data-gallery-perspective-stage]');
+  var page = perspective.querySelector('[data-gallery-perspective-stage]');
+  var wrapper = perspective.querySelector('[data-gallery-perspective-wrapper]');
   var trigger = perspective.querySelector('[data-gallery-menu-trigger]');
   var activeLabel = perspective.querySelector('[data-gallery-active-category]');
   var navButtons = Array.prototype.slice.call(perspective.querySelectorAll('[data-gallery-category-target]'));
   var panels = Array.prototype.slice.call(perspective.querySelectorAll('[data-gallery-category-panel]'));
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var activeObserver = null;
+  var docScroll = 0;
+  var closing = false;
+  var closeTimer = null;
+
+  if (!page || !wrapper || !trigger) return;
 
   function revealPanel(panel) {
     if (!panel) return;
@@ -79,8 +83,7 @@ function initPerspectiveGallery() {
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
 
       if (active && activeLabel) {
-        var title = button.querySelector('strong');
-        activeLabel.textContent = title ? title.textContent.trim() : '';
+        activeLabel.textContent = button.textContent.trim();
       }
     });
 
@@ -88,12 +91,25 @@ function initPerspectiveGallery() {
     return nextPanel;
   }
 
-  function openMenu() {
-    if (!trigger || perspective.classList.contains('is-menu-open')) return;
+  function currentScrollY() {
+    return window.pageYOffset || document.documentElement.scrollTop || 0;
+  }
 
-    perspective.classList.add('is-menu-open');
+  function openMenu() {
+    if (perspective.classList.contains('modalview') || closing) return;
+
+    docScroll = currentScrollY();
+    wrapper.style.top = (docScroll * -1) + 'px';
+
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+
+    perspective.classList.add('modalview');
     trigger.setAttribute('aria-expanded', 'true');
-    syncGalleryBodyLock();
+
+    window.setTimeout(function () {
+      perspective.classList.add('animate');
+    }, 25);
 
     var currentButton = navButtons.find(function (button) {
       return button.classList.contains('is-active');
@@ -104,64 +120,84 @@ function initPerspectiveGallery() {
     }, reducedMotion ? 0 : 180);
   }
 
-  function closeMenu(restoreFocus) {
-    if (!trigger || !perspective.classList.contains('is-menu-open')) return;
+  function closeMenu(restoreFocus, restoreScrollY) {
+    if (!perspective.classList.contains('modalview') || closing) return;
 
-    perspective.classList.remove('is-menu-open');
-    trigger.setAttribute('aria-expanded', 'false');
-    syncGalleryBodyLock();
+    closing = true;
+    var targetScroll = typeof restoreScrollY === 'number' ? restoreScrollY : docScroll;
+    page.classList.add('transform');
 
-    if (restoreFocus !== false) {
-      window.setTimeout(function () {
+    var finished = false;
+    var finishClose = function () {
+      if (finished) return;
+      finished = true;
+
+      window.clearTimeout(closeTimer);
+      page.removeEventListener('transitionend', onTransitionEnd);
+      perspective.classList.remove('modalview');
+      page.classList.remove('transform');
+      wrapper.style.top = '0px';
+      trigger.setAttribute('aria-expanded', 'false');
+
+      document.body.scrollTop = targetScroll;
+      document.documentElement.scrollTop = targetScroll;
+      window.scrollTo(0, targetScroll);
+
+      closing = false;
+
+      if (restoreFocus !== false) {
         trigger.focus({ preventScroll: true });
-      }, reducedMotion ? 0 : 220);
-    }
+      }
+    };
+
+    var onTransitionEnd = function (event) {
+      if (event.target !== page || event.propertyName.indexOf('transform') === -1) return;
+      finishClose();
+    };
+
+    page.addEventListener('transitionend', onTransitionEnd);
+    perspective.classList.remove('animate');
+    closeTimer = window.setTimeout(finishClose, reducedMotion ? 0 : 460);
   }
 
-  if (trigger) {
-    trigger.addEventListener('click', function () {
-      if (perspective.classList.contains('is-menu-open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-  }
+  trigger.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (perspective.classList.contains('modalview')) {
+      closeMenu(true, docScroll);
+    } else {
+      openMenu();
+    }
+  });
 
   navButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      var wasActive = button.classList.contains('is-active');
       var targetId = button.getAttribute('data-gallery-category-target');
       var nextPanel = activatePanel(targetId);
-      closeMenu(false);
-
       if (!nextPanel) return;
 
-      window.setTimeout(function () {
-        var heading = nextPanel.querySelector('.gallery-codrops__panel-head');
-        if (!heading) return;
-
-        heading.scrollIntoView({
-          behavior: reducedMotion ? 'auto' : 'smooth',
-          block: 'start',
-        });
-      }, reducedMotion ? 0 : 260);
+      closeMenu(false, wasActive ? docScroll : 0);
     });
   });
 
-  if (stage) {
-    stage.addEventListener('click', function (event) {
-      if (!perspective.classList.contains('is-menu-open')) return;
-      if (event.target.closest('[data-gallery-menu-trigger]')) return;
+  page.addEventListener('click', function (event) {
+    if (!perspective.classList.contains('animate')) return;
+    if (event.target.closest('[data-gallery-menu-trigger]')) return;
 
-      event.preventDefault();
-      event.stopPropagation();
-      closeMenu();
-    }, true);
-  }
+    event.preventDefault();
+    event.stopPropagation();
+    closeMenu(true, docScroll);
+  }, true);
 
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape' && perspective.classList.contains('is-menu-open')) {
-      closeMenu();
+    if (event.key === 'Escape' && perspective.classList.contains('modalview')) {
+      event.preventDefault();
+      closeMenu(true, docScroll);
     }
   });
 
@@ -241,7 +277,7 @@ function initGalleryLightbox() {
     }
 
     lightbox.hidden = false;
-    syncGalleryBodyLock();
+    syncGalleryOverlayLock();
 
     var closeButton = lightbox.querySelector('.gallery-wall-lightbox__close');
     if (closeButton) closeButton.focus();
@@ -250,7 +286,7 @@ function initGalleryLightbox() {
   function closeLightbox() {
     lightbox.hidden = true;
     clearMedia();
-    syncGalleryBodyLock();
+    syncGalleryOverlayLock();
 
     if (lastFocused && lastFocused.focus) {
       lastFocused.focus({ preventScroll: true });
