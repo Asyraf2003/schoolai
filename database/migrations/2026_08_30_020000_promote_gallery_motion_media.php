@@ -91,8 +91,7 @@ return new class extends Migration
 
     private function schoolLifeUrl(string $key): string
     {
-        return rtrim((string) config('media.public_url'), '/')
-            .'/site/school-life/'.$key.'-v1.webp';
+        return (string) config('media.static.school_life.'.$key);
     }
 
     private function galleryMotionUrl(string $filename): string
