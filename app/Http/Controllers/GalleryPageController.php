@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GalleryItem;
 use App\Models\GalleryPageSection;
+use App\Support\Media\MediaUrlResolver;
 use App\Support\PublicUrl;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Schema;
@@ -36,19 +37,7 @@ final class GalleryPageController extends Controller
             ->galleryPage()
             ->ordered()
             ->get()
-            ->map(function (GalleryItem $item) use ($locale): array {
-                $type = $item->type === 'video' ? 'video' : 'photo';
-                $mediaUrl = $this->trustedMediaUrl($type, $item->media_url);
-
-                return [
-                    'title' => $item->titleForLocale($locale),
-                    'type' => $type,
-                    'media_url' => $mediaUrl,
-                    'thumbnail_url' => $type === 'video' ? $this->videoThumbnailUrl($mediaUrl) : $mediaUrl,
-                    'emoji' => $type === 'video' ? '▶️' : '📸',
-                    'badge' => $item->typeLabelForLocale($locale),
-                ];
-            })
+            ->map(fn (GalleryItem $item): array => $this->presentItem($item, $locale))
             ->filter(fn (array $item): bool => trim((string) ($item['title'] ?? '')) !== '')
             ->values()
             ->all();
@@ -76,20 +65,7 @@ final class GalleryPageController extends Controller
                     'title' => $section->titleForLocale($locale),
                     'description' => $section->descriptionForLocale($locale),
                     'items' => $section->items
-                        ->map(function (GalleryItem $item) use ($locale): array {
-                            $type = $item->type === 'video' ? 'video' : 'photo';
-                            $mediaUrl = $this->trustedMediaUrl($type, $item->media_url);
-
-                            return [
-                                'title' => $item->titleForLocale($locale),
-                                'label' => $item->categoryForLocale($locale),
-                                'type' => $type,
-                                'media_url' => $mediaUrl,
-                                'thumbnail_url' => $type === 'video' ? $this->videoThumbnailUrl($mediaUrl) : $mediaUrl,
-                                'emoji' => $type === 'video' ? '▶️' : '📸',
-                                'badge' => $item->typeLabelForLocale($locale),
-                            ];
-                        })
+                        ->map(fn (GalleryItem $item): array => $this->presentItem($item, $locale, true))
                         ->filter(fn (array $item): bool => (string) ($item['media_url'] ?? '') !== '')
                         ->values()
                         ->all(),
@@ -98,6 +74,44 @@ final class GalleryPageController extends Controller
             ->filter(fn (array $section): bool => ! empty($section['items']))
             ->values()
             ->all();
+    }
+
+    private function presentItem(GalleryItem $item, string $locale, bool $sectionItem = false): array
+    {
+        $type = $item->type === 'video' ? 'video' : 'photo';
+        $directVideoUrl = $type === 'video'
+            ? $this->trustedGalleryDirectVideoUrl($item->media_url)
+            : null;
+        $mediaUrl = $directVideoUrl ?? $this->trustedMediaUrl($type, $item->media_url);
+
+        return [
+            'title' => $item->titleForLocale($locale),
+            'label' => $sectionItem ? $item->categoryForLocale($locale) : null,
+            'type' => $type,
+            'media_url' => $mediaUrl,
+            'thumbnail_url' => $type === 'video' && $directVideoUrl === null
+                ? $this->videoThumbnailUrl($mediaUrl)
+                : ($type === 'photo' ? $mediaUrl : null),
+            'is_direct_video' => $directVideoUrl !== null,
+            'emoji' => $type === 'video' ? '▶️' : '📸',
+            'badge' => $item->typeLabelForLocale($locale),
+        ];
+    }
+
+    private function trustedGalleryDirectVideoUrl(?string $url): ?string
+    {
+        if (! is_string($url) || trim($url) === '') {
+            return null;
+        }
+
+        $url = trim($url);
+        $key = app(MediaUrlResolver::class)->ownedKey($url);
+
+        return $key !== null
+            && str_starts_with($key, 'gallery/media/')
+            && str_ends_with(strtolower($key), '.mp4')
+                ? $url
+                : null;
     }
 
     private function trustedMediaUrl(string $type, ?string $url): ?string

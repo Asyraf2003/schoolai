@@ -95,7 +95,11 @@ trait SeedsGalleryPageSections
 
         $placements = GalleryItem::query()
             ->where('category_id', 'Fasilitas')
-            ->homepage()
+            ->where('is_published', true)
+            ->where(function ($query): void {
+                $query->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            })
             ->ordered()
             ->get()
             ->mapWithKeys(fn (GalleryItem $item, int $index): array => [
@@ -122,7 +126,7 @@ trait SeedsGalleryPageSections
                 'description_ar' => 'لحظات يلاحظ فيها الطلاب ويجرّبون ويطرحون الأسئلة ويكتشفون الإجابات من خلال تجارب تعلّم واقعية.',
                 'is_published' => true,
                 'media' => [
-                    $this->schoolPhoto('labit'),
+                    $this->schoolVideo('it-v1.mp4'),
                     $this->schoolPhoto('perpustakaan'),
                     $this->schoolPhoto('renang2'),
                     $this->schoolPhoto('haji2'),
@@ -138,9 +142,9 @@ trait SeedsGalleryPageSections
                 'is_published' => true,
                 'media' => [
                     $this->schoolPhoto('pidato'),
-                    $this->schoolPhoto('taekwondo'),
+                    $this->schoolVideo('tekwondo-v1.mp4'),
                     $this->schoolPhoto('haji'),
-                    $this->schoolPhoto('aula'),
+                    $this->schoolVideo('aula-v1.mp4'),
                 ],
             ],
             [
@@ -167,6 +171,15 @@ trait SeedsGalleryPageSections
         return [
             'type' => 'photo',
             'media_url' => (string) config('media.static.school_life.'.$key),
+        ];
+    }
+
+    /** @return array{type: string, media_url: string} */
+    private function schoolVideo(string $filename): array
+    {
+        return [
+            'type' => 'video',
+            'media_url' => $this->galleryMotionUrl($filename),
         ];
     }
 }

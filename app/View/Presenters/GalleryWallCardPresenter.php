@@ -16,6 +16,7 @@ final class GalleryWallCardPresenter
     {
         $type = (string) ($item['type'] ?? 'photo');
         $isVideo = $type === 'video';
+        $isDirectVideo = $isVideo && (bool) ($item['is_direct_video'] ?? false);
         $title = (string) ($item['title'] ?? '');
         $label = (string) ($item['label'] ?? $title);
         $mediaUrl = $item['media_url'] ?? null;
@@ -30,6 +31,7 @@ final class GalleryWallCardPresenter
             $thumbnailUrl = $mediaUrl;
             $type = 'photo';
             $isVideo = false;
+            $isDirectVideo = false;
         }
 
         $gradient = $item['gradient'] ?? ['#DCF1F7', '#FFC93C'];
@@ -37,6 +39,7 @@ final class GalleryWallCardPresenter
         return [
             'type' => $type,
             'isVideo' => $isVideo,
+            'isDirectVideo' => $isDirectVideo,
             'title' => $title,
             'label' => $label,
             'mediaUrl' => $mediaUrl,

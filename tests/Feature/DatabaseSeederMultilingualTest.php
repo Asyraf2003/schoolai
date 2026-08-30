@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\GalleryItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 
@@ -10,12 +9,14 @@ it('seeds article, hero, gallery, and ppdb content in three languages', function
     $this->seed();
 
     $filled = static fn (mixed $value): bool => is_string($value) && trim($value) !== '';
+    $mediaBase = rtrim((string) config('media.public_url'), '/');
     $articles = DB::table('articles')->whereNull('deleted_at')->get();
     $heroSettings = DB::table('hero_settings')->get();
     $promotedArticles = DB::table('articles')->whereNotNull('hero_position')->get();
     $gallery = DB::table('gallery_items')
         ->whereNull('deleted_at')
         ->where('show_on_homepage', true)
+        ->orderBy('sort_order')
         ->get();
     $canonicalGallery = DB::table('gallery_items')->whereNull('deleted_at')->get();
     $galleryPlacements = DB::table('gallery_item_gallery_page_section')->get();
@@ -43,15 +44,23 @@ it('seeds article, hero, gallery, and ppdb content in three languages', function
             && $filled($hero->title_en)
             && $filled($hero->title_ar)))->toBeTrue()
         ->and($promotedArticles)->toHaveCount(5)
-        ->and($gallery)->toHaveCount(GalleryItem::MAX_HOMEPAGE_ITEMS)
+        ->and($gallery)->toHaveCount(5)
+        ->and($gallery->pluck('media_url', 'title_id')->all())->toBe([
+            'Fasilitas Multimedia & Lab IT' => $mediaBase.'/gallery/media/it-v1.mp4',
+            'Mushallah' => $mediaBase.'/gallery/media/musola-v1.mp4',
+            'Aula Multifungsi' => $mediaBase.'/gallery/media/aula-v1.mp4',
+            'Kolam Renang' => $mediaBase.'/gallery/media/renang-v1.mp4',
+            'Taekwondo' => $mediaBase.'/gallery/media/tekwondo-v1.mp4',
+        ])
+        ->and($gallery->every(fn (object $item): bool => $item->type === 'video'))
+        ->toBeTrue()
         ->and($canonicalGallery)->toHaveCount(17)
         ->and($galleryPlacements)->toHaveCount(21)
         ->and($facilitySection)->not->toBeNull()
-        ->and($facilityPlacements)->toHaveCount(GalleryItem::MAX_HOMEPAGE_ITEMS)
+        ->and($facilityPlacements)->toHaveCount(9)
         ->and($canonicalGallery->every(fn (object $item): bool =>
-            str_starts_with((string) $item->media_url, 'https://media.almustaqbal.sch.id/site/school-life/')
-            && ! str_contains((string) $item->media_url, 'testimonial-nature-')
-            && ! str_contains((string) $item->media_url, 'images.unsplash.com')))->toBeTrue()
+            str_starts_with((string) $item->media_url, $mediaBase.'/site/school-life/')
+            || str_starts_with((string) $item->media_url, $mediaBase.'/gallery/media/')))->toBeTrue()
         ->and($gallery->every(fn (object $item): bool => $filled($item->title_id)
             && $filled($item->title_en)
             && $filled($item->title_ar)
@@ -60,8 +69,7 @@ it('seeds article, hero, gallery, and ppdb content in three languages', function
             && $filled($item->category_ar)
             && $filled($item->caption_id)
             && $filled($item->caption_en)
-            && $filled($item->caption_ar)
-            && $item->category_id === 'Fasilitas'))
+            && $filled($item->caption_ar)))
         ->toBeTrue()
         ->and($ppdb)->toHaveCount(6)
         ->and($ppdb->every(fn (object $item): bool => $filled($item->title_id)

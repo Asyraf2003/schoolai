@@ -7,12 +7,24 @@
   data-gallery-media-url="{{ $mediaUrl }}"
   data-gallery-thumb-url="{{ $thumbnailUrl ?? '' }}"
   data-gallery-is-video="{{ $isVideo ? '1' : '0' }}"
+  data-gallery-is-direct-video="{{ $isDirectVideo ? '1' : '0' }}"
   data-gallery-emoji="{{ $emoji }}"
   data-gallery-badge="{{ $badge }}"
   style="--gallery-g1: {{ $gradient[0] ?? '#DCF1F7' }}; --gallery-g2: {{ $gradient[1] ?? '#FFC93C' }};"
 >
   <div class="gallery-wall-card__media">
-    @if($isVideo && $thumbnailUrl)
+    @if($isDirectVideo)
+      <video
+        class="gallery-wall-card__direct-video"
+        src="{{ $mediaUrl }}"
+        muted
+        playsinline
+        webkit-playsinline
+        preload="metadata"
+        aria-hidden="true"
+      ></video>
+      <span class="gallery-wall-card__play" aria-hidden="true">▶</span>
+    @elseif($isVideo && $thumbnailUrl)
       <img
         data-lazy-media
         data-lazy-src="{{ $thumbnailUrl }}"
