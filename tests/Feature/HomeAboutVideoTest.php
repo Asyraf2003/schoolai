@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('uses a static about poster and intent-loads the R2 modal video with custom controls', function (): void {
+it('uses framed vision media with corner video cues and intent-loads the R2 about modal', function (): void {
     $url = (string) config('media.homepage_about_video_url');
     $response = $this->get(route('home'));
 
@@ -12,6 +12,7 @@ it('uses a static about poster and intent-loads the R2 modal video with custom c
         ->assertOk()
         ->assertSee('data-about-video-open', false)
         ->assertSee('data-about-video-poster', false)
+        ->assertSee('data-mission-video-cue', false)
         ->assertSee('data-about-video-modal', false)
         ->assertSee('data-about-video-shell', false)
         ->assertSee('data-about-video-player', false)
@@ -30,9 +31,13 @@ it('uses a static about poster and intent-loads the R2 modal video with custom c
     $modal = file_get_contents(resource_path('js/pages/welcome/about-video-modal.js'));
     $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
     $css = file_get_contents(resource_path('css/pages/welcome-vision-waapi/about-video.css'));
+    $baseCss = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
+    $enhancedCss = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($section)
         ->toContain('data-about-video-poster')
+        ->toContain('data-mission-video-cue')
+        ->toContain('vision-arch__video-cue--pending')
         ->toContain('data-about-video-shell')
         ->toContain('data-about-video-toggle')
         ->toContain('data-about-video-seek')
@@ -56,10 +61,20 @@ it('uses a static about poster and intent-loads the R2 modal video with custom c
         ->not->toContain('IntersectionObserver')
         ->not->toContain('preview.')
         ->and($css)
-        ->toContain('inset-block-start: 50%')
-        ->toContain('inset-inline-start: 50%')
+        ->toContain('inset-block-end:')
+        ->toContain('inset-inline-end:')
+        ->not->toContain('inset-block-start: 50%')
+        ->not->toContain('inset-inline-start: 50%')
         ->toContain('.vision-video-modal__surface:fullscreen')
         ->toContain('.vision-video-modal__controls')
+        ->and($baseCss)
+        ->toContain('border-radius: 0')
+        ->toContain('border-image: linear-gradient(')
+        ->toContain('--vision-media-shadow-x')
+        ->toContain('html[dir="rtl"] .vision-arch__visual')
+        ->and($enhancedCss)
+        ->toContain('width: min(96vw, 1600px)')
+        ->toContain('grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr)')
         ->and($timeline)
         ->toContain("visual.querySelector('[data-vision-art]')")
         ->not->toContain("visual.querySelector('img')");
