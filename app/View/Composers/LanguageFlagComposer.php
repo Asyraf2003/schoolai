@@ -13,6 +13,9 @@ final class LanguageFlagComposer
             ? $locale
             : 'id';
 
-        $view->with('flagLocale', $flagLocale);
+        $view->with([
+            'flagLocale' => $flagLocale,
+            'flagImageUrl' => config('media.static.language_flags.'.$flagLocale),
+        ]);
     }
 }
