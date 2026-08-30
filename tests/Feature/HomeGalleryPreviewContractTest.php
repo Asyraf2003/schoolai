@@ -24,8 +24,17 @@ it('keeps homepage Gallery motion previews direct, lazy, muted, and iframe free'
     $galleryPage = file_get_contents(resource_path(
         'views/pages/galeri.blade.php'
     ));
+    $galleryCard = file_get_contents(resource_path(
+        'views/pages/partials/gallery-wall-card.blade.php'
+    ));
     $galleryWall = file_get_contents(resource_path(
         'js/pages/welcome/gallery-wall.js'
+    ));
+    $galleryCardCss = file_get_contents(resource_path(
+        'css/pages/welcome/041-welcome-cascade-041.css'
+    ));
+    $galleryLightboxCss = file_get_contents(resource_path(
+        'css/pages/welcome/042-welcome-cascade-042.css'
     ));
     $seeder = file_get_contents(database_path(
         'seeders/Concerns/SeedsGalleryItems.php'
@@ -66,9 +75,21 @@ it('keeps homepage Gallery motion previews direct, lazy, muted, and iframe free'
         ->toContain('preview.pause()')
         ->and($galleryPage)
         ->toContain('data-gallery-wall-lightbox')
+        ->and($galleryCard)
+        ->toContain('data-gallery-is-direct-video')
+        ->toContain('gallery-wall-card__direct-video')
+        ->toContain('src="{{ $mediaUrl }}"')
+        ->toContain('preload="metadata"')
         ->and($galleryWall)
-        ->toContain("if (mediaUrl && isVideo)")
+        ->toContain("var isDirectVideo = card.getAttribute('data-gallery-is-direct-video') === '1'")
+        ->toContain('if (mediaUrl && isVideo && isDirectVideo)')
+        ->toContain("document.createElement('video')")
+        ->toContain('} else if (mediaUrl && isVideo)')
         ->toContain("document.createElement('iframe')")
+        ->and($galleryCardCss)
+        ->toContain('.gallery-wall-card__media video')
+        ->and($galleryLightboxCss)
+        ->toContain('.gallery-wall-lightbox__media video')
         ->and($seeder)
         ->not->toContain('Dokumentasi dummy untuk pratinjau galeri sekolah.')
         ->not->toContain('Sample documentation for the school gallery preview.')
