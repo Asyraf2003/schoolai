@@ -36,12 +36,18 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     display: inline-flex;
     min-height: 48px;
     align-items: center;
+    font-size: clamp(0.82rem, 1vw, 0.94rem);
+    letter-spacing: 0.16em;
 }
 
 .home-page .hero-cinema__title-link {
     display: inline-flex;
     min-height: 48px;
     align-items: center;
+}
+
+.home-page .hero-cinema__cta--campaign {
+    margin-block-start: clamp(16px, 2.2vh, 22px);
 }
 
 .home-page .hero-cinema__eyebrow-link,
@@ -168,6 +174,17 @@ html[dir="rtl"] .home-page .hero-cinema__media::after {
     .home-page .navbar__mobile-actions { display: flex; }
 
     .home-page .navbar__hero-audio-icon { display: grid; }
+}
+
+@media (max-width: 767px) {
+    .home-page .hero-cinema__eyebrow-link {
+        font-size: 0.76rem;
+        letter-spacing: 0.14em;
+    }
+
+    .home-page .hero-cinema__cta--campaign {
+        margin-block-start: 14px;
+    }
 }
 
 @media (min-width: 1181px) {

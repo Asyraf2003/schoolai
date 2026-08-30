@@ -175,7 +175,7 @@
 .gallery-story__copy p {
     max-width: 38ch;
     margin-top: clamp(1rem, 1.8vw, 1.6rem);
-    font-size: clamp(.94rem, .44vw + .78rem, 1.18rem);
+    font-size: clamp(1.02rem, .5vw + .84rem, 1.3rem);
     font-weight: 430;
     line-height: 1.58;
     color: var(--gallery-story-muted);

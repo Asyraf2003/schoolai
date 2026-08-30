@@ -4,14 +4,19 @@
   data-article-showcase
   aria-labelledby="homepage-article-heading"
 >
-  <header class="article-showcase__header home-section-display__header">
+  <header
+    class="article-showcase__header home-section-display__header"
+    data-editorial-heading
+  >
     <h2
       class="article-showcase__title home-section-display__title"
       id="homepage-article-heading"
       data-text-role="display"
     >
       @foreach ($articleHeadingLines as $line)
-        <span class="article-showcase__title-line home-section-display__line">{{ $line }}</span>
+        <span class="article-showcase__title-line home-section-display__line">
+          <span class="article-showcase__title-text welcome-editorial-heading__line--{{ $loop->first ? 'top' : 'bottom' }}">{{ $line }}</span>
+        </span>
       @endforeach
     </h2>
   </header>

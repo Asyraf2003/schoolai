@@ -1,5 +1,35 @@
 @import "../section-display-heading.css";
 
+.article-showcase__header {
+    --editorial-shift: clamp(2.75rem, 7vw, 9rem);
+}
+
 .article-showcase__title {
     color: var(--article-ink);
+}
+
+.article-showcase__title-text {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+
+html[dir="rtl"] .article-showcase__header {
+    --editorial-shift: calc(clamp(2.75rem, 7vw, 9rem) * -1);
+}
+
+@media (max-width: 639px) {
+    .article-showcase__header,
+    html[dir="rtl"] .article-showcase__header {
+        --editorial-shift: 0rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .article-showcase__title-text {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
 }
