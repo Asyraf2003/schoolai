@@ -17,6 +17,7 @@ export function initHeroCarousel(root, slides) {
         transitionTimer: null,
         userPaused: false,
         audioEnabled: false,
+        videoHydrationReady: false,
         pointerStart: null,
         hasPresentedInitialSlide: false
     };
@@ -59,6 +60,12 @@ export function initHeroCarousel(root, slides) {
         });
     }
 
+    function startDeferredVideo() {
+        if (state.videoHydrationReady) return;
+        state.videoHydrationReady = true;
+        mediaActions.syncVideos();
+    }
+
     slides.forEach(function (slide, index) {
         var video = slide.querySelector('[data-hero-video]');
         if (!video) return;
@@ -83,6 +90,7 @@ export function initHeroCarousel(root, slides) {
     audioButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             state.audioEnabled = !state.audioEnabled;
+            startDeferredVideo();
             mediaActions.syncVideos();
             updateAudioButtons();
         });
@@ -134,4 +142,10 @@ export function initHeroCarousel(root, slides) {
 
     updateAudioButtons();
     playbackActions.showSlide(state.currentIndex, false);
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(startDeferredVideo, { timeout: 900 });
+    } else {
+        window.setTimeout(startDeferredVideo, 120);
+    }
 }
