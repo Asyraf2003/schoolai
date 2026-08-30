@@ -52,8 +52,82 @@ function activeFullscreenElement() {
     return document.fullscreenElement ?? document.webkitFullscreenElement ?? null;
 }
 
+function initVisionVideoPreviews() {
+    const previews = Array.from(document.querySelectorAll('[data-vision-video-preview]'));
+    const activePreviews = new Set();
+    if (!previews.length) return { pause: () => {}, resume: () => {} };
+
+    function hydrate(preview) {
+        if (preview.dataset.visionVideoHydrated === 'true') return;
+        const source = preview.dataset.visionVideoSrc || '';
+        if (!source) return;
+
+        preview.dataset.visionVideoHydrated = 'true';
+        preview.muted = true;
+        preview.defaultMuted = true;
+        preview.loop = true;
+        preview.playsInline = true;
+        preview.src = source;
+        preview.load();
+    }
+
+    function play(preview) {
+        hydrate(preview);
+        if (!document.hidden) safePlay(preview);
+    }
+
+    previews.forEach((preview) => {
+        preview.addEventListener('loadeddata', () => {
+            preview.classList.add('is-ready');
+        }, { once: true });
+    });
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const preview = entry.target;
+                if (entry.isIntersecting) {
+                    activePreviews.add(preview);
+                    play(preview);
+                } else {
+                    activePreviews.delete(preview);
+                    preview.pause();
+                }
+            });
+        }, {
+            rootMargin: '180px 0px',
+            threshold: 0.01,
+        });
+
+        previews.forEach((preview) => observer.observe(preview));
+    } else {
+        previews.forEach((preview) => {
+            activePreviews.add(preview);
+            play(preview);
+        });
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            previews.forEach((preview) => preview.pause());
+            return;
+        }
+
+        activePreviews.forEach(play);
+    });
+
+    return {
+        pause() {
+            previews.forEach((preview) => preview.pause());
+        },
+        resume() {
+            activePreviews.forEach(play);
+        },
+    };
+}
+
 export function initAboutVideoModal() {
-    const trigger = document.querySelector('[data-about-video-open]');
+    const triggers = Array.from(document.querySelectorAll('[data-vision-video-open]'));
     const modal = document.querySelector('[data-about-video-modal]');
     const shell = document.querySelector('[data-about-video-shell]');
     const closeButton = document.querySelector('[data-about-video-close]');
@@ -67,9 +141,10 @@ export function initAboutVideoModal() {
     const muteIcon = document.querySelector('[data-about-video-mute-icon]');
     const volume = document.querySelector('[data-about-video-volume]');
     const fullscreenButton = document.querySelector('[data-about-video-fullscreen]');
+    const previewController = initVisionVideoPreviews();
 
     if (
-        !trigger ||
+        !triggers.length ||
         !modal ||
         !shell ||
         !closeButton ||
@@ -89,17 +164,20 @@ export function initAboutVideoModal() {
 
     const locale = document.documentElement.lang?.split('-')[0] || 'en';
     const labels = VIDEO_LABELS[locale] ?? VIDEO_LABELS.en;
-    const playerSource = player.dataset.aboutVideoSrc || '';
-    let playerHydrated = false;
+    const defaultSource = player.dataset.aboutVideoSrc || '';
+    let activeSource = defaultSource;
+    let hydratedSource = '';
 
     seek.setAttribute('aria-label', labels.timeline);
     volume.setAttribute('aria-label', labels.volume);
 
-    function hydratePlayer() {
-        if (playerHydrated || playerSource === '') return;
-        playerHydrated = true;
-        player.src = playerSource;
+    function hydratePlayer(source = activeSource) {
+        if (!source || hydratedSource === source) return;
+        player.pause();
+        hydratedSource = source;
+        player.src = source;
         player.load();
+        updateTimeline();
     }
 
     function isShellFullscreen() {
@@ -209,24 +287,34 @@ export function initAboutVideoModal() {
             modal.close();
         } else {
             modal.removeAttribute('open');
+            player.pause();
+            player.muted = true;
+            previewController.resume();
         }
     }
 
-    function openModal() {
+    function openModal(trigger) {
+        activeSource = trigger.dataset.visionVideoSrc || defaultSource;
+        const label = trigger.dataset.visionVideoLabel || '';
+        if (label) modal.setAttribute('aria-label', `${label} video`);
+
         if (typeof modal.showModal === 'function') {
             if (!modal.open) modal.showModal();
         } else {
             modal.setAttribute('open', '');
         }
 
-        hydratePlayer();
+        previewController.pause();
+        hydratePlayer(activeSource);
         player.muted = false;
         volume.value = String(player.volume || 1);
         updateMuteState();
         safePlay(player);
     }
 
-    trigger.addEventListener('click', openModal);
+    triggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => openModal(trigger));
+    });
     closeButton.addEventListener('click', closeModal);
     toggleButton.addEventListener('click', togglePlayback);
     muteButton.addEventListener('click', toggleMute);
@@ -262,6 +350,7 @@ export function initAboutVideoModal() {
     modal.addEventListener('close', () => {
         player.pause();
         player.muted = true;
+        previewController.resume();
     });
 
     document.addEventListener('fullscreenchange', updateFullscreenState);
