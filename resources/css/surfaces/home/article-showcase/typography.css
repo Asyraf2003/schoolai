@@ -1,7 +1,7 @@
 @import "../section-display-heading.css";
 
 .article-showcase__header {
-    --article-heading-shift: clamp(2.75rem, 7vw, 9rem);
+    --editorial-shift: clamp(2.75rem, 7vw, 9rem);
 }
 
 .article-showcase__title {
@@ -15,76 +15,14 @@
     will-change: transform, opacity;
 }
 
-.article-showcase__header.welcome-editorial-heading--ready:not(.welcome-editorial-heading--animated):not(.welcome-editorial-heading--static)
-.article-showcase__title-line--top .article-showcase__title-text {
-    opacity: 0;
-    transform: translate3d(0, 116%, 0);
-}
-
-.article-showcase__header.welcome-editorial-heading--ready:not(.welcome-editorial-heading--animated):not(.welcome-editorial-heading--static)
-.article-showcase__title-line--bottom .article-showcase__title-text {
-    opacity: 0;
-    transform: translate3d(0, -116%, 0);
-}
-
-.article-showcase__header.welcome-editorial-heading--animated
-.article-showcase__title-line--top .article-showcase__title-text {
-    animation: article-heading-rise 920ms cubic-bezier(.16, 1, .3, 1) both;
-}
-
-.article-showcase__header.welcome-editorial-heading--animated
-.article-showcase__title-line--bottom .article-showcase__title-text {
-    animation: article-heading-drop-shift 1900ms 190ms both;
-}
-
-.article-showcase__header.welcome-editorial-heading--static
-.article-showcase__title-line--top .article-showcase__title-text {
-    opacity: 1;
-    transform: none;
-    animation: none;
-}
-
-.article-showcase__header.welcome-editorial-heading--static
-.article-showcase__title-line--bottom .article-showcase__title-text {
-    opacity: 1;
-    transform: translate3d(var(--article-heading-shift), 0, 0);
-    animation: none;
-}
-
 html[dir="rtl"] .article-showcase__header {
-    --article-heading-shift: calc(clamp(2.75rem, 7vw, 9rem) * -1);
-}
-
-@keyframes article-heading-rise {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 116%, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@keyframes article-heading-drop-shift {
-    0% {
-        opacity: 0;
-        transform: translate3d(0, -116%, 0);
-    }
-    40%, 56% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-    100% {
-        opacity: 1;
-        transform: translate3d(var(--article-heading-shift), 0, 0);
-    }
+    --editorial-shift: calc(clamp(2.75rem, 7vw, 9rem) * -1);
 }
 
 @media (max-width: 639px) {
     .article-showcase__header,
     html[dir="rtl"] .article-showcase__header {
-        --article-heading-shift: 0rem;
+        --editorial-shift: 0rem;
     }
 }
 
