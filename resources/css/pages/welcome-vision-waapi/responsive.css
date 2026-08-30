@@ -22,8 +22,9 @@ html[dir="rtl"] .vision-arch__mission-list p {
         gap: clamp(2rem, 3.5vw, 3.5rem);
     }
 
-    .vision-arch.is-enhanced .vision-arch__visual {
-        height: min(62svh, 36rem);
+    .vision-arch.is-enhanced .vision-arch__visual,
+    .vision-arch.is-enhanced .vision-arch__visuals::before {
+        height: min(51.666667svh, 30rem);
     }
 
     .vision-arch.is-enhanced .vision-arch__heading {
