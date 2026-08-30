@@ -95,7 +95,11 @@ trait SeedsGalleryPageSections
 
         $placements = GalleryItem::query()
             ->where('category_id', 'Fasilitas')
-            ->homepage()
+            ->where('is_published', true)
+            ->where(function ($query): void {
+                $query->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            })
             ->ordered()
             ->get()
             ->mapWithKeys(fn (GalleryItem $item, int $index): array => [
