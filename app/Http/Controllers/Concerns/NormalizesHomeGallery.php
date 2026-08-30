@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Concerns;
 
+use App\Support\Media\MediaUrlResolver;
 use App\Support\PublicUrl;
 
 trait NormalizesHomeGallery
@@ -23,9 +24,13 @@ trait NormalizesHomeGallery
         }
 
         $rawMedia = $item['media_url'] ?? $item['thumbnail'] ?? null;
+        $directVideoUrl = $type === 'video'
+            ? $this->trustedGalleryDirectVideoUrl($rawMedia)
+            : null;
         $mediaUrl = $type === 'video'
-            ? $this->trustedVideoEmbedUrl($rawMedia)
+            ? ($directVideoUrl ?? $this->trustedVideoEmbedUrl($rawMedia))
             : $this->publicAssetUrl($rawMedia);
+        $isDirectVideo = $type === 'video' && $directVideoUrl !== null;
 
         if ($mediaUrl === null) {
             $fallbackImages = [
@@ -41,11 +46,12 @@ trait NormalizesHomeGallery
 
             $mediaUrl = $fallbackImages[$fallbackIndex];
             $type = 'photo';
+            $isDirectVideo = false;
         }
 
-        $videoProvider = $type === 'video'
+        $videoProvider = $type === 'video' && ! $isDirectVideo
             ? $this->videoProvider($mediaUrl)
-            : null;
+            : ($isDirectVideo ? 'direct' : null);
         $caption = trim((string) ($item['caption'] ?? ''));
 
         if ($this->isDummyGalleryCaption($caption)) {
@@ -57,14 +63,17 @@ trait NormalizesHomeGallery
             $type === 'video' ? __('runtime.home.video') : __('runtime.home.photo')
         ));
         $item['is_video'] = $type === 'video';
+        $item['is_direct_video'] = $isDirectVideo;
         $item['variant'] = $variant;
         $item['instagram_url'] = $this->instagramUrl($item['instagram_url'] ?? null);
         $item['media_url'] = $mediaUrl;
         $item['thumbnail_url'] = $type === 'photo'
             ? $mediaUrl
-            : $this->videoThumbnailUrl($mediaUrl);
+            : ($isDirectVideo ? null : $this->videoThumbnailUrl($mediaUrl));
         $item['video_provider'] = $videoProvider;
-        $item['video_provider_logo_url'] = $this->videoProviderLogoUrl($videoProvider);
+        $item['video_provider_logo_url'] = $isDirectVideo
+            ? null
+            : $this->videoProviderLogoUrl($videoProvider);
         $item['video_provider_label'] = match ($videoProvider) {
             'youtube' => 'YouTube',
             'instagram' => 'Instagram',
@@ -90,6 +99,22 @@ trait NormalizesHomeGallery
             'Sample documentation for the school gallery preview.',
             'محتوى تجريبي لمعاينة معرض المدرسة.',
         ], true);
+    }
+
+    private function trustedGalleryDirectVideoUrl(mixed $url): ?string
+    {
+        if (! is_string($url) || trim($url) === '') {
+            return null;
+        }
+
+        $url = trim($url);
+        $key = app(MediaUrlResolver::class)->ownedKey($url);
+
+        return $key !== null
+            && str_starts_with($key, 'gallery/media/')
+            && str_ends_with(strtolower($key), '.mp4')
+                ? $url
+                : null;
     }
 
     private function trustedVideoEmbedUrl(mixed $url): ?string

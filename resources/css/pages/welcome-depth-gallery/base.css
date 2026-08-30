@@ -114,7 +114,8 @@
     will-change: transform, opacity, clip-path;
 }
 
-.gallery-story__media img {
+.gallery-story__media img,
+.gallery-story__media video {
     display: block;
     width: 100%;
     max-width: 100%;
@@ -122,6 +123,15 @@
     max-height: 100%;
     object-fit: contain;
     box-shadow: 0 28px 86px rgba(15, 39, 22, .16);
+}
+
+.gallery-story__video {
+    background: #0c0c0c;
+    visibility: hidden;
+}
+
+.gallery-story__video.is-ready {
+    visibility: visible;
 }
 
 .gallery-story__media-fallback {

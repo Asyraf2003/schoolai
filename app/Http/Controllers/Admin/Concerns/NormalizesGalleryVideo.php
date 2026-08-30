@@ -2,19 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
-use App\Models\GalleryItem;
-use App\Models\GalleryPageSection;
-use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
+use App\Support\Media\MediaUrlResolver;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait NormalizesGalleryVideo
 {
@@ -35,6 +24,15 @@ trait NormalizesGalleryVideo
             throw ValidationException::withMessages([
                 'media_url' => 'URL video tidak valid.',
             ]);
+        }
+
+        $ownedKey = app(MediaUrlResolver::class)->ownedKey($url);
+        if (
+            $ownedKey !== null &&
+            str_starts_with($ownedKey, 'gallery/media/') &&
+            str_ends_with(strtolower($ownedKey), '.mp4')
+        ) {
+            return $url;
         }
 
         if ($this->hostMatches($host, 'youtu.be') && $path !== '') {
@@ -77,7 +75,7 @@ trait NormalizesGalleryVideo
         }
 
         throw ValidationException::withMessages([
-            'media_url' => 'URL video belum didukung. Gunakan YouTube, TikTok, Instagram, Vimeo, atau Facebook Reel/Watch. Link Facebook share/r belum didukung.',
+            'media_url' => 'URL video belum didukung. Gunakan MP4 R2 milik Galeri, YouTube, TikTok, Instagram, Vimeo, atau Facebook Reel/Watch.',
         ]);
     }
 

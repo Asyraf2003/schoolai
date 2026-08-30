@@ -9,6 +9,22 @@
     white-space: nowrap;
 }
 
+/* Header state owns main-menu color. Hover/focus only animate the underline. */
+.nav-shell .navbar:not(.is-scrolled):not(.has-open-menu) .nav-link:not(.active),
+.nav-shell .navbar:not(.is-scrolled):not(.has-open-menu) .nav-link:not(.active):hover,
+.nav-shell .navbar:not(.is-scrolled):not(.has-open-menu) .nav-link:not(.active):focus-visible {
+    color: #ffffff;
+}
+
+.nav-shell .navbar.is-scrolled .nav-link:not(.active),
+.nav-shell .navbar.has-open-menu .nav-link:not(.active),
+.nav-shell .navbar.is-scrolled .nav-link:not(.active):hover,
+.nav-shell .navbar.has-open-menu .nav-link:not(.active):hover,
+.nav-shell .navbar.is-scrolled .nav-link:not(.active):focus-visible,
+.nav-shell .navbar.has-open-menu .nav-link:not(.active):focus-visible {
+    color: #172c28;
+}
+
 .nav-shell .nav-link::after {
     content: "";
     position: absolute;

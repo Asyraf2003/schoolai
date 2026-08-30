@@ -3,6 +3,7 @@ import {
     galleryStoryVisual,
 } from './welcome/gallery-story-visual.js';
 import { armGalleryPattern } from './welcome/gallery-pattern.js';
+import { mountGalleryVideoPreviews } from './welcome/gallery-video-preview.js';
 
 let mounted = false;
 const BLUE = [32, 56, 255];
@@ -42,6 +43,7 @@ function mountGalleryStory(root) {
     const valuesWorld = document.querySelector('[data-program-values-world]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const cleanPattern = armGalleryPattern(section);
+    let cleanVideoPreviews = () => {};
     let activeBackground = '';
     let frame = 0;
     let destroyed = false;
@@ -161,6 +163,7 @@ function mountGalleryStory(root) {
         destroyed = true;
         if (frame) window.cancelAnimationFrame(frame);
         cleanPattern();
+        cleanVideoPreviews();
         window.removeEventListener('scroll', requestRender);
         window.removeEventListener('resize', onResize);
         window.removeEventListener('pageshow', requestRender);
@@ -174,6 +177,7 @@ function mountGalleryStory(root) {
     window.addEventListener('pagehide', destroy);
     reducedMotion.addEventListener?.('change', onMotionChange);
     fitGalleryStoryVisuals(items, requestRender);
+    cleanVideoPreviews = mountGalleryVideoPreviews(root);
 
     if (reducedMotion.matches) paintStatic();
     else {

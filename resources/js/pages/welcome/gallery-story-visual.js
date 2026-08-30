@@ -5,13 +5,13 @@ export function galleryStoryVisual(item) {
 }
 
 function fitImage(media, visual) {
-    if (!(visual instanceof HTMLImageElement) || !visual.naturalWidth) return;
+    if (!(visual instanceof HTMLImageElement) || !visual.naturalWidth) return false;
 
     media.style.removeProperty('width');
     media.style.removeProperty('height');
     visual.style.removeProperty('width');
     visual.style.removeProperty('height');
-    if (!media.clientWidth || !media.clientHeight) return;
+    if (!media.clientWidth || !media.clientHeight) return false;
 
     const scale = Math.min(
         media.clientWidth / visual.naturalWidth,
@@ -24,6 +24,34 @@ function fitImage(media, visual) {
     media.style.height = `${fittedHeight.toFixed(2)}px`;
     visual.style.width = `${fittedWidth.toFixed(2)}px`;
     visual.style.height = `${fittedHeight.toFixed(2)}px`;
+    return true;
+}
+
+function fitVideo(media, visual) {
+    if (!(visual instanceof HTMLVideoElement) || !visual.videoWidth || !visual.videoHeight) return false;
+
+    media.style.removeProperty('width');
+    media.style.removeProperty('height');
+    visual.style.removeProperty('width');
+    visual.style.removeProperty('height');
+    if (!media.clientWidth || !media.clientHeight) return false;
+
+    const scale = Math.min(
+        media.clientWidth / visual.videoWidth,
+        media.clientHeight / visual.videoHeight,
+    );
+    const fittedWidth = visual.videoWidth * scale;
+    const fittedHeight = visual.videoHeight * scale;
+
+    media.style.width = `${fittedWidth.toFixed(2)}px`;
+    media.style.height = `${fittedHeight.toFixed(2)}px`;
+    visual.style.width = `${fittedWidth.toFixed(2)}px`;
+    visual.style.height = `${fittedHeight.toFixed(2)}px`;
+    return true;
+}
+
+function fitMedia(media, visual) {
+    return fitImage(media, visual) || fitVideo(media, visual);
 }
 
 export function fitGalleryStoryVisuals(items, onReady) {
@@ -34,11 +62,20 @@ export function fitGalleryStoryVisuals(items, onReady) {
 
         if (visual instanceof HTMLImageElement && !visual.complete) {
             visual.addEventListener('load', () => {
-                fitImage(media, visual);
+                fitMedia(media, visual);
                 onReady();
             }, { once: true });
             return;
         }
-        fitImage(media, visual);
+
+        if (visual instanceof HTMLVideoElement && visual.readyState < 1) {
+            visual.addEventListener('loadedmetadata', () => {
+                fitMedia(media, visual);
+                onReady();
+            }, { once: true });
+            return;
+        }
+
+        fitMedia(media, visual);
     });
 }

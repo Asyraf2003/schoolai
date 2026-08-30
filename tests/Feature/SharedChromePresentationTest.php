@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PpdbSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -81,6 +82,38 @@ it('preserves shared public chrome semantics for every locale', function (): voi
             ->toContain('<html lang="'.$locale.'" dir="'.$contract['direction'].'">')
             ->toContain('href="'.route('home').'#visi-misi"')
             ->not->toContain('class="site-footer site-footer--home-story"');
+    }
+});
+
+it('keeps main-menu color owned by header state across public routes', function (): void {
+    $navCss = file_get_contents(resource_path(
+        'css/pages/welcome-hero/002-welcome-hero-cascade-002.css'
+    ));
+
+    expect($navCss)
+        ->toContain('.navbar:not(.is-scrolled):not(.has-open-menu) .nav-link:not(.active):hover')
+        ->toContain('color: #ffffff')
+        ->toContain('.navbar.is-scrolled .nav-link:not(.active):hover')
+        ->toContain('.navbar.has-open-menu .nav-link:not(.active):hover')
+        ->toContain('color: #172c28')
+        ->not->toMatch('/\.nav-link:hover\s*\{[^}]*color\s*:/s');
+
+    PpdbSetting::query()->updateOrCreate(
+        ['id' => 1],
+        [
+            'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
+            'is_active' => true,
+        ],
+    );
+
+    foreach (['ppdb', 'galeri', 'artikel'] as $routeName) {
+        $content = $this->get(route($routeName))->assertOk()->getContent();
+
+        expect($content)
+            ->toContain('class="navbar navbar--public"')
+            ->toContain('id="navbar"')
+            ->toContain('class="navbar__menu"')
+            ->toContain('nav-mega__trigger');
     }
 });
 
