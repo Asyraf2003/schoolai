@@ -14,7 +14,8 @@
         margin-bottom: var(--program-card-base);
     }
 
-    .program-kinetic__card:nth-child(4n + 2) {
+    .program-kinetic__card:nth-child(4n + 2),
+    .program-kinetic__card:nth-child(5) {
         margin-bottom: calc(var(--program-card-base) + var(--program-card-interval));
     }
 
