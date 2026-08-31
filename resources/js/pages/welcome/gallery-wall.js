@@ -94,6 +94,7 @@ function initGalleryGridDemo() {
     items.forEach(function (item) {
       item.classList.remove('shown', 'animate');
       item.style.animationDuration = '';
+      item.style.opacity = '0';
     });
 
     var paint = function () {
@@ -101,6 +102,7 @@ function initGalleryGridDemo() {
 
       if (reducedMotion || !('IntersectionObserver' in window)) {
         items.forEach(function (item) {
+          item.style.opacity = '';
           item.classList.add('shown');
         });
         return;
@@ -122,6 +124,7 @@ function initGalleryGridDemo() {
           item.addEventListener('animationend', function () {
             item.classList.remove('animate');
             item.classList.add('shown');
+            item.style.opacity = '';
           }, { once: true });
         });
       }, {
