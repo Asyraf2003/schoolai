@@ -46,12 +46,16 @@
                   @if($item['isDirectVideo'] && $item['mediaUrl'] !== '')
                     <video src="{{ $item['mediaUrl'] }}" muted playsinline webkit-playsinline preload="metadata" aria-hidden="true"></video>
                     <span class="gallery-grid__play" aria-hidden="true">▶</span>
-                  @elseif($item['thumbnailUrl'] !== '')
+                  @endif
+
+                  @if(! $item['isDirectVideo'] && $item['thumbnailUrl'] !== '')
                     <img src="{{ $item['thumbnailUrl'] }}" alt="{{ $item['title'] }}" decoding="async">
                     @if($item['isVideo'])
                       <span class="gallery-grid__play" aria-hidden="true">▶</span>
                     @endif
-                  @else
+                  @endif
+
+                  @if(! $item['isDirectVideo'] && $item['thumbnailUrl'] === '')
                     <span class="gallery-grid__fallback" aria-hidden="true">{{ $item['emoji'] }}</span>
                     <span class="gallery-grid__play" aria-hidden="true">▶</span>
                   @endif
