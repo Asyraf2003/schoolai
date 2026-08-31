@@ -41,6 +41,33 @@ it('keeps homepage interaction styles out of the first paint path', function ():
         ->not->toContain("'resources/css/pages/welcome-hero-visual.css'");
 });
 
+it('inlines asset-safe homepage critical styles in production without changing cascade order', function (): void {
+    $blade = file_get_contents(resource_path('views/welcome.blade.php'));
+    $foundationInline = "Vite::content('resources/css/pages/welcome-critical.css')";
+    $legacyEntry = "'resources/css/pages/welcome.css'";
+    $heroInline = "Vite::content('resources/css/pages/welcome-home-hero.css')";
+    $visionEntry = "'resources/css/pages/welcome-vision-waapi.css'";
+    $typeEntry = '@vite($homeTypeAsset)';
+
+    expect($blade)
+        ->toContain("app()->environment('production')")
+        ->toContain('data-home-critical-style="foundation"')
+        ->toContain($foundationInline)
+        ->toContain('data-home-critical-style="hero"')
+        ->toContain($heroInline)
+        ->toContain($typeEntry)
+        ->not->toContain('Vite::content($homeTypeAsset)');
+
+    expect(strpos($blade, $foundationInline))
+        ->toBeLessThan(strpos($blade, $legacyEntry))
+        ->and(strpos($blade, $legacyEntry))
+        ->toBeLessThan(strpos($blade, $heroInline))
+        ->and(strpos($blade, $heroInline))
+        ->toBeLessThan(strpos($blade, $visionEntry))
+        ->and(strpos($blade, $visionEntry))
+        ->toBeLessThan(strpos($blade, $typeEntry));
+});
+
 it('keeps the shared public foundation single-owned by the critical entry', function (): void {
     $critical = file_get_contents(resource_path('css/pages/welcome-critical.css'));
     $legacy = file_get_contents(resource_path('css/pages/welcome.css'));
