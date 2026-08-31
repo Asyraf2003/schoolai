@@ -317,7 +317,7 @@
     position: absolute;
     z-index: 3;
     left: 18px;
-    bottom: 16px;
+    top: 10px;
     max-width: min(70vw, 52rem);
     margin: 0;
     padding: .55rem .75rem;
