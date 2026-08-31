@@ -47,7 +47,8 @@ it('inlines asset-safe homepage critical styles in production without changing c
     $legacyEntry = "'resources/css/pages/welcome.css'";
     $heroInline = "Vite::content('resources/css/pages/welcome-home-hero.css')";
     $visionEntry = "'resources/css/pages/welcome-vision-waapi.css'";
-    $typeEntry = '@vite($homeTypeAsset)';
+    $latinTypeEntry = "@vite('resources/css/pages/welcome-home-type-latin.css')";
+    $arabicTypeEntry = "@vite('resources/css/pages/welcome-home-type-arabic.css')";
 
     expect($blade)
         ->toContain("app()->environment('production')")
@@ -55,8 +56,10 @@ it('inlines asset-safe homepage critical styles in production without changing c
         ->toContain($foundationInline)
         ->toContain('data-home-critical-style="hero"')
         ->toContain($heroInline)
-        ->toContain($typeEntry)
-        ->not->toContain('Vite::content($homeTypeAsset)');
+        ->toContain($latinTypeEntry)
+        ->toContain($arabicTypeEntry)
+        ->not->toContain("Vite::content('resources/css/pages/welcome-home-type-latin.css')")
+        ->not->toContain("Vite::content('resources/css/pages/welcome-home-type-arabic.css')");
 
     expect(strpos($blade, $foundationInline))
         ->toBeLessThan(strpos($blade, $legacyEntry))
@@ -65,7 +68,9 @@ it('inlines asset-safe homepage critical styles in production without changing c
         ->and(strpos($blade, $heroInline))
         ->toBeLessThan(strpos($blade, $visionEntry))
         ->and(strpos($blade, $visionEntry))
-        ->toBeLessThan(strpos($blade, $typeEntry));
+        ->toBeLessThan(strpos($blade, $arabicTypeEntry))
+        ->and(strpos($blade, $visionEntry))
+        ->toBeLessThan(strpos($blade, $latinTypeEntry));
 });
 
 it('keeps the shared public foundation single-owned by the critical entry', function (): void {
