@@ -31,7 +31,7 @@ it('keeps the landing page as the persistent Codrops perspective surface', funct
         ->and($runtime)
         ->toContain("activateState(button.getAttribute('data-login-role-target'))")
         ->toContain("container.addEventListener('click', closePerspective)")
-        ->not->toContain("activateState(role, link.href)");
+        ->not->toContain('activateState(role, link.href)');
 });
 
 it('keeps the custom cursor in viewport coordinates outside the transformed Codrops wrapper', function (): void {
@@ -73,7 +73,7 @@ it('binds popup OAuth results to the active browser attempt instead of relying o
     expect($login)
         ->toContain("popupUrl.searchParams.set('popup_token', token)")
         ->and($bridge)
-        ->toContain("payload.token !== activeToken")
+        ->toContain('payload.token !== activeToken')
         ->toContain("new BroadcastChannel('schoolai-google-auth')")
         ->toContain("event.key !== 'schoolai-google-auth'")
         ->and($auth)
@@ -109,7 +109,7 @@ it('keeps direct login URLs on the existing fallback auth shell', function (): v
     }
 
     expect($view)
-        ->toContain("@if (\$currentRole === null)")
+        ->toContain('@if ($currentRole === null)')
         ->toContain("@elseif (\$currentRole === 'admin')")
         ->toContain("@elseif (\$currentRole === 'guru')")
         ->toContain("href=\"{{ route('portal.login') }}\"");

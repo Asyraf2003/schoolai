@@ -100,7 +100,6 @@ it('allows Cloudflare Web Analytics only on production public pages', function (
         ->not->toContain('fonts.gstatic.com');
 });
 
-
 it('adds the same security policy to authenticated admin pages', function (): void {
     $admin = User::query()->forceCreate([
         'name' => 'Security Header Admin',

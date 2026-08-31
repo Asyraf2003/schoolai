@@ -9,7 +9,9 @@ use Illuminate\Http\UploadedFile;
 final class SafeImageUpload implements ValidationRule
 {
     private const MAX_WIDTH = 8192;
+
     private const MAX_HEIGHT = 8192;
+
     private const MAX_PIXELS = 40_000_000;
 
     public function validate(string $attribute, mixed $value, Closure $fail): void

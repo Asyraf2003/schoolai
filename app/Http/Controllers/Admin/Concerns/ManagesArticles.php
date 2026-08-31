@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -314,8 +315,8 @@ trait ManagesArticles
     }
 
     /**
-     * @param array<int, int|string> $currentIds
-     * @param array<int, int> $submittedIds
+     * @param  array<int, int|string>  $currentIds
+     * @param  array<int, int>  $submittedIds
      */
     private function ensureSamePlacementSet(array $currentIds, array $submittedIds, string $field): void
     {
@@ -347,8 +348,8 @@ trait ManagesArticles
     }
 
     /**
-     * @param \Illuminate\Support\Collection<int, Article> $articles
-     * @param array<int, int|string> $articleIds
+     * @param  Collection<int, Article>  $articles
+     * @param  array<int, int|string>  $articleIds
      */
     private function rewritePositions($articles, array $articleIds, string $field): void
     {

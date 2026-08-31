@@ -50,8 +50,7 @@ final class HomeVisionMissionComposer
             'sectionLabel' => $this->translator->get('home_vision.section_label'),
             'schoolImages' => collect(config('media.static.vision', []))
                 ->filter(
-                    static fn (mixed $url): bool =>
-                        is_string($url) && trim($url) !== ''
+                    static fn (mixed $url): bool => is_string($url) && trim($url) !== ''
                 )
                 ->values(),
             'visionVideoSources' => [

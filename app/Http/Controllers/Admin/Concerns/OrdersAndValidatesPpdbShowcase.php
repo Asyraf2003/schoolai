@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\PpdbShowcaseItem;
 use App\Rules\SafeImageUpload;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait OrdersAndValidatesPpdbShowcase
 {
@@ -82,7 +76,7 @@ trait OrdersAndValidatesPpdbShowcase
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 new SafeImageUpload,
-                'max:' . PpdbShowcaseItem::MAX_PHOTO_KB,
+                'max:'.PpdbShowcaseItem::MAX_PHOTO_KB,
             ],
             'media_url' => [
                 Rule::requiredIf(fn (): bool => $mediaType === PpdbShowcaseItem::MEDIA_VIDEO),

@@ -3,7 +3,6 @@
 namespace Database\Seeders\Concerns;
 
 use App\Models\Article;
-use Illuminate\Database\Seeder;
 
 trait SeedsArticles
 {

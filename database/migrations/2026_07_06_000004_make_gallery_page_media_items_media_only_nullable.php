@@ -1,4 +1,5 @@
 <?php
+
 /* GALLERY_PAGE_MEDIA_MEDIA_ONLY_NULLABLE_MIGRATION_FINAL */
 
 use Illuminate\Database\Migrations\Migration;

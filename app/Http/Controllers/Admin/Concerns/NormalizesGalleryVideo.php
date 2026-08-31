@@ -38,25 +38,25 @@ trait NormalizesGalleryVideo
         if ($this->hostMatches($host, 'youtu.be') && $path !== '') {
             $parts = explode('/', $path);
 
-            return 'https://www.youtube.com/embed/' . rawurlencode((string) $parts[0]);
+            return 'https://www.youtube.com/embed/'.rawurlencode((string) $parts[0]);
         }
 
         if ($this->hostMatches($host, 'youtube.com')) {
             if (! empty($query['v'])) {
-                return 'https://www.youtube.com/embed/' . rawurlencode((string) $query['v']);
+                return 'https://www.youtube.com/embed/'.rawurlencode((string) $query['v']);
             }
 
             if (preg_match('~(?:^|/)(?:shorts|embed)/([^/?#]+)~', $path, $match)) {
-                return 'https://www.youtube.com/embed/' . rawurlencode($match[1]);
+                return 'https://www.youtube.com/embed/'.rawurlencode($match[1]);
             }
         }
 
         if ($this->hostMatches($host, 'tiktok.com') && preg_match('~(?:^|/)(?:video|player/v1|embed/v2)/(\d+)(?:/|$)~', $path, $match)) {
-            return 'https://www.tiktok.com/player/v1/' . $match[1];
+            return 'https://www.tiktok.com/player/v1/'.$match[1];
         }
 
         if ($this->hostMatches($host, 'instagram.com') && preg_match('~^(p|reel|tv)/([^/]+)~', $path, $match)) {
-            return 'https://www.instagram.com/' . $match[1] . '/' . rawurlencode($match[2]) . '/embed';
+            return 'https://www.instagram.com/'.$match[1].'/'.rawurlencode($match[2]).'/embed';
         }
 
         if ($scheme === 'https' && $this->hostMatches($host, 'facebook.com')) {
@@ -71,7 +71,7 @@ trait NormalizesGalleryVideo
         }
 
         if ($this->hostMatches($host, 'vimeo.com') && preg_match('~^(?:video/)?(\d+)$~', $path, $match)) {
-            return 'https://player.vimeo.com/video/' . $match[1];
+            return 'https://player.vimeo.com/video/'.$match[1];
         }
 
         throw ValidationException::withMessages([
@@ -107,9 +107,9 @@ trait NormalizesGalleryVideo
 
     private function facebookReelEmbedUrl(string $reelId): string
     {
-        $reelUrl = 'https://www.facebook.com/reel/' . rawurlencode($reelId) . '/';
+        $reelUrl = 'https://www.facebook.com/reel/'.rawurlencode($reelId).'/';
 
-        return 'https://www.facebook.com/plugins/video.php?' . http_build_query([
+        return 'https://www.facebook.com/plugins/video.php?'.http_build_query([
             'height' => 476,
             'href' => $reelUrl,
             'show_text' => 'false',
@@ -120,6 +120,6 @@ trait NormalizesGalleryVideo
 
     private function hostMatches(string $host, string $domain): bool
     {
-        return $host === $domain || str_ends_with($host, '.' . $domain);
+        return $host === $domain || str_ends_with($host, '.'.$domain);
     }
 }

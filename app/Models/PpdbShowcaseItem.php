@@ -14,9 +14,13 @@ final class PpdbShowcaseItem extends Model
     use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
 
     public const AUDIENCE_PARENTS = 'parents';
+
     public const AUDIENCE_SCHOOL = 'school';
+
     public const MEDIA_PHOTO = 'photo';
+
     public const MEDIA_VIDEO = 'video';
+
     public const MAX_PHOTO_KB = 10240;
 
     public const AUDIENCES = [
@@ -134,7 +138,7 @@ final class PpdbShowcaseItem extends Model
             return null;
         }
 
-        return $audience . '|' . $title;
+        return $audience.'|'.$title;
     }
 
     public static function normalizeIdentityText(?string $value): ?string

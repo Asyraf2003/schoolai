@@ -34,7 +34,7 @@ return new class extends Migration
 
             $valueEn = trim(
                 (string) ($item['count'] ?? '')
-                . (string) ($item['suffix'] ?? '')
+                .(string) ($item['suffix'] ?? '')
             );
 
             $labelEn = trim((string) ($item['label'] ?? ''));

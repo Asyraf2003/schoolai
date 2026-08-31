@@ -12,9 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class PersistArabicArticleCanvas
 {
-    public function __construct(private readonly ArticleContentSanitizer $sanitizer)
-    {
-    }
+    public function __construct(private readonly ArticleContentSanitizer $sanitizer) {}
 
     public function handle(Request $request, Closure $next): Response
     {

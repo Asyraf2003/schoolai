@@ -110,8 +110,7 @@ final class AuditLogger
         $key = mb_strtolower($key);
 
         foreach (
-            self::SENSITIVE_KEY_FRAGMENTS
-            as $fragment
+            self::SENSITIVE_KEY_FRAGMENTS as $fragment
         ) {
             if (str_contains($key, $fragment)) {
                 return true;

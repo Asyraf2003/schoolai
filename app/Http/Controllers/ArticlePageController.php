@@ -62,7 +62,7 @@ final class ArticlePageController extends Controller
     }
 
     /**
-     * @param Collection<int, Article> $articles
+     * @param  Collection<int, Article>  $articles
      * @return array<int, string>
      */
     private function categories(Collection $articles): array
@@ -78,7 +78,7 @@ final class ArticlePageController extends Controller
     }
 
     /**
-     * @param Collection<int, Article> $articles
+     * @param  Collection<int, Article>  $articles
      * @return array<int, array<string, mixed>>
      */
     private function articleItems(Collection $articles): array

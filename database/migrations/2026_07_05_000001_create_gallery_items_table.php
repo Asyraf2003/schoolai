@@ -1,6 +1,8 @@
 <?php
+
 /* REAL_GALLERY_CRUD_MIGRATION_FINAL */
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -55,8 +57,8 @@ return new class extends Migration
 
             if (! empty($item['published_at']) && is_string($item['published_at'])) {
                 try {
-                    $publishedAt = \Carbon\Carbon::parse($item['published_at']);
-                } catch (\Throwable) {
+                    $publishedAt = Carbon::parse($item['published_at']);
+                } catch (Throwable) {
                     $publishedAt = $now->copy()->subDays($index);
                 }
             }

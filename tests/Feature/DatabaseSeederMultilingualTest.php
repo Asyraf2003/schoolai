@@ -58,8 +58,7 @@ it('seeds article, hero, gallery, and ppdb content in three languages', function
         ->and($galleryPlacements)->toHaveCount(21)
         ->and($facilitySection)->not->toBeNull()
         ->and($facilityPlacements)->toHaveCount(9)
-        ->and($canonicalGallery->every(fn (object $item): bool =>
-            str_starts_with((string) $item->media_url, $mediaBase.'/site/school-life/')
+        ->and($canonicalGallery->every(fn (object $item): bool => str_starts_with((string) $item->media_url, $mediaBase.'/site/school-life/')
             || str_starts_with((string) $item->media_url, $mediaBase.'/gallery/media/')))->toBeTrue()
         ->and($gallery->every(fn (object $item): bool => $filled($item->title_id)
             && $filled($item->title_en)

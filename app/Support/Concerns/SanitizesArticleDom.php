@@ -2,7 +2,6 @@
 
 namespace App\Support\Concerns;
 
-use DOMDocument;
 use DOMElement;
 use DOMNode;
 
@@ -13,6 +12,7 @@ trait SanitizesArticleDom
         foreach (iterator_to_array($parent->childNodes) as $node) {
             if ($node->nodeType === XML_COMMENT_NODE) {
                 $parent->removeChild($node);
+
                 continue;
             }
 
@@ -24,6 +24,7 @@ trait SanitizesArticleDom
 
             if (in_array($tag, self::DROP_WITH_CONTENT, true)) {
                 $parent->removeChild($node);
+
                 continue;
             }
 
@@ -35,6 +36,7 @@ trait SanitizesArticleDom
                 }
 
                 $parent->removeChild($node);
+
                 continue;
             }
 
@@ -80,6 +82,7 @@ trait SanitizesArticleDom
 
             if ($source === null) {
                 $element->parentNode?->removeChild($element);
+
                 return;
             }
 
@@ -96,6 +99,7 @@ trait SanitizesArticleDom
 
             if ($source === null) {
                 $element->parentNode?->removeChild($element);
+
                 return;
             }
 

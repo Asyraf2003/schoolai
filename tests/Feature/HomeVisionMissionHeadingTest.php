@@ -131,7 +131,7 @@ it('uses a native pinned mask reveal without owning document scroll', function (
         ->not->toContain('programStoryTravel')
         ->not->toContain("new CustomEvent('vision:layout')")
         ->and($preparation)
-        ->toContain("[data-vision-art][data-lazy-src]")
+        ->toContain('[data-vision-art][data-lazy-src]')
         ->toContain("image.dataset.lazyHydrated = '1'")
         ->and($timeline)
         ->toContain('style.clipPath')

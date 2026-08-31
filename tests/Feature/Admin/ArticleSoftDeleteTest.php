@@ -140,8 +140,8 @@ it('offers restore and replace only for an active article with an identical norm
     $this->get(route('admin.artikel'))
         ->assertOk()
         ->assertSee('Pulihkan &amp; Gantikan', false)
-        ->assertSee('Gantikan ID ' . $identicalActive->id)
-        ->assertDontSee('Gantikan ID ' . $unrelatedActive->id);
+        ->assertSee('Gantikan ID '.$identicalActive->id)
+        ->assertDontSee('Gantikan ID '.$unrelatedActive->id);
 });
 
 it('restores an archived article and archives the identical active replacement atomically', function (): void {

@@ -2,13 +2,6 @@
 
 namespace App\Models\Concerns;
 
-use App\Models\Concerns\AuditsAdminChanges;
-use App\Models\Concerns\ResolvesLocalizedContent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 trait DescribesArticleState
 {
     public function isNative(): bool

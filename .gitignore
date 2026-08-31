@@ -46,3 +46,6 @@ Thumbs.db
 /.agents
 /.claude
 .commit_counter
+
+# Local Lighthouse reports
+*.report.html

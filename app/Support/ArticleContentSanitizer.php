@@ -2,15 +2,15 @@
 
 namespace App\Support;
 
-use DOMDocument;
-use DOMElement;
-use DOMNode;
+use App\Support\Concerns\SanitizesArticleContent;
+use App\Support\Concerns\SanitizesArticleDom;
+use App\Support\Concerns\ValidatesArticleContentUrls;
 
 final class ArticleContentSanitizer
 {
-    use \App\Support\Concerns\SanitizesArticleContent;
-    use \App\Support\Concerns\SanitizesArticleDom;
-    use \App\Support\Concerns\ValidatesArticleContentUrls;
+    use SanitizesArticleContent;
+    use SanitizesArticleDom;
+    use ValidatesArticleContentUrls;
 
     private const MAX_BYTES = 2_000_000;
 
@@ -24,27 +24,4 @@ final class ArticleContentSanitizer
         'applet', 'audio', 'canvas', 'embed', 'form', 'input', 'link', 'math',
         'meta', 'object', 'script', 'style', 'svg', 'template', 'textarea', 'video',
     ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-

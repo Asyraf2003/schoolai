@@ -75,7 +75,7 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
         ->toContain("querySelectorAll('[data-vision-video-open]')")
         ->toContain('new IntersectionObserver')
         ->toContain("rootMargin: '180px 0px'")
-        ->toContain("preview.src = source")
+        ->toContain('preview.src = source')
         ->toContain('preview.pause()')
         ->toContain('player.src = source')
         ->toContain('hydratePlayer(activeSource)')

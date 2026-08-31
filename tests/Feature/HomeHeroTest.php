@@ -47,7 +47,7 @@ it('renders the fixed R2 video as an interaction-gated Opening slide when no Art
     $media = file_get_contents(resource_path('js/pages/welcome-hero/slider-media.js'));
 
     expect($opening)
-        ->toContain("source[data-src]")
+        ->toContain('source[data-src]')
         ->toContain("video.setAttribute('data-hydrated', 'true')")
         ->toContain("root.addEventListener('pointermove', startInteractiveVideo")
         ->toContain("window.addEventListener('scroll', startInteractiveVideo")
@@ -61,7 +61,7 @@ it('renders the fixed R2 video as an interaction-gated Opening slide when no Art
         ->toContain('window.requestIdleCallback(startDeferredVideo, { timeout: 900 })')
         ->and($media)
         ->toContain('state.videoHydrationReady !== true')
-        ->toContain("source[data-src]");
+        ->toContain('source[data-src]');
 });
 
 it('keeps the desktop hero audio label on the shared navigation typography contract', function (): void {

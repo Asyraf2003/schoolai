@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
-use App\Rules\SafeImageUpload;
-use App\Support\ArticleContentSanitizer;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 trait PublishesArticleCanvas
 {
@@ -105,7 +97,7 @@ trait PublishesArticleCanvas
             ->where('slug', $slug)
             ->where($article->getKeyName(), '!=', $article->getKey())
             ->exists()) {
-            $slug = $base . '-' . $suffix;
+            $slug = $base.'-'.$suffix;
             $suffix++;
         }
 

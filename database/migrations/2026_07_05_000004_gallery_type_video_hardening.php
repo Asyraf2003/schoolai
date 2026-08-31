@@ -1,4 +1,5 @@
 <?php
+
 /* GALLERY_TYPE_VIDEO_HARDENING_FINAL */
 
 use Illuminate\Database\Migrations\Migration;

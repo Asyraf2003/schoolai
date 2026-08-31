@@ -4,7 +4,6 @@ namespace App\Support\Concerns;
 
 use DOMDocument;
 use DOMElement;
-use DOMNode;
 
 trait SanitizesArticleContent
 {

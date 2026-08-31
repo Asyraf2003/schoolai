@@ -13,8 +13,8 @@ final class PublicUrl
      * The application never fetches these URLs server-side. If that changes,
      * every redirect hop must be revalidated before a response body is read.
      *
-     * @param array<int, string> $blockedPathPrefixes
-     * @param array<int, string>|null $resolvedAddresses Test override for DNS results.
+     * @param  array<int, string>  $blockedPathPrefixes
+     * @param  array<int, string>|null  $resolvedAddresses  Test override for DNS results.
      */
     public static function isSafe(
         string $url,
@@ -49,12 +49,12 @@ final class PublicUrl
             return false;
         }
 
-        $path = '/' . ltrim((string) ($parts['path'] ?? ''), '/');
+        $path = '/'.ltrim((string) ($parts['path'] ?? ''), '/');
 
         foreach ($blockedPathPrefixes as $prefix) {
-            $prefix = '/' . trim($prefix, '/');
+            $prefix = '/'.trim($prefix, '/');
 
-            if ($path === $prefix || str_starts_with($path, $prefix . '/')) {
+            if ($path === $prefix || str_starts_with($path, $prefix.'/')) {
                 return false;
             }
         }

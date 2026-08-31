@@ -27,13 +27,13 @@ final class SecurityAuditLog extends Model
 
     protected static function booted(): void
     {
-        static::updating(function (): never {
+        self::updating(function (): never {
             throw new LogicException(
                 'Security audit logs are append-only.'
             );
         });
 
-        static::deleting(function (): never {
+        self::deleting(function (): never {
             throw new LogicException(
                 'Security audit logs are append-only.'
             );
