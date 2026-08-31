@@ -36,6 +36,7 @@ it('returns a successful popup bridge after authenticating an allowed admin', fu
     $response = $this->withSession([
         'google_login_role' => AccountRole::Admin->value,
         'google_login_popup' => true,
+        'google_login_popup_token' => 'admin-popup-token',
     ])->get(route('google.callback'));
 
     $response
@@ -46,7 +47,8 @@ it('returns a successful popup bridge after authenticating an allowed admin', fu
     expect($response->viewData('ok'))->toBeTrue()
         ->and($response->viewData('role'))->toBe(AccountRole::Admin->value)
         ->and($response->viewData('redirect'))->toBe(route('admin.dashboard'))
-        ->and($response->viewData('message'))->toBe(__('app.auth.success.logged_in'));
+        ->and($response->viewData('message'))->toBe(__('app.auth.success.logged_in'))
+        ->and($response->viewData('popupToken'))->toBe('admin-popup-token');
     $this->assertAuthenticatedAs($admin);
 });
 
@@ -56,6 +58,7 @@ it('returns a failed popup bridge without authenticating an unavailable account'
     $response = $this->withSession([
         'google_login_role' => AccountRole::Guru->value,
         'google_login_popup' => true,
+        'google_login_popup_token' => 'guru-popup-token',
     ])->get(route('google.callback'));
 
     $response
@@ -67,6 +70,7 @@ it('returns a failed popup bridge without authenticating an unavailable account'
         ->and($response->viewData('role'))->toBe(AccountRole::Guru->value)
         ->and($response->viewData('redirect'))->toBeNull()
         ->and($response->viewData('message'))->toBe(__('app.auth.errors.access_unavailable'))
-        ->and($response->viewData('fallbackUrl'))->toBe(route('guru.login'));
+        ->and($response->viewData('fallbackUrl'))->toBe(route('guru.login'))
+        ->and($response->viewData('popupToken'))->toBe('guru-popup-token');
     $this->assertGuest();
 });
