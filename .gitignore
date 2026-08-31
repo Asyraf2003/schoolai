@@ -19,6 +19,7 @@
 /public/build
 /public/fonts-manifest.dev.json
 /public/hot
+/public/media/
 /public/storage
 /storage/*.key
 /storage/pail
@@ -45,5 +46,3 @@ Thumbs.db
 /.agents
 /.claude
 .commit_counter
-/public/media/hero/drone.mp4
-/public/media/hero/drone for website.mov
