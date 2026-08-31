@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('keeps the same education gallery and article mega menus on every public page', function (): void {
+it('keeps the unified education gallery and article mega menu contract on every public page', function (): void {
     foreach (['home', 'ppdb', 'artikel', 'galeri'] as $routeName) {
         $response = $this
             ->withSession(['locale' => 'id'])
@@ -21,16 +21,15 @@ it('keeps the same education gallery and article mega menus on every public page
             ->assertSee('Pendidikan')
             ->assertSee('Galeri')
             ->assertSee('Artikel')
-            ->assertSee('Kegiatan')
-            ->assertSee('Prestasi')
-            ->assertSee('Program')
-            ->assertSee('Pendidikan');
+            ->assertSee('Program');
 
         $content = $response->getContent();
 
         expect(substr_count($content, 'data-nav-mega'))->toBeGreaterThanOrEqual(3)
             ->and(substr_count($content, 'data-nav-roll="main"'))->toBeGreaterThanOrEqual(12)
-            ->and(substr_count($content, 'data-nav-roll="sub"'))->toBeGreaterThanOrEqual(24);
+            ->and(substr_count($content, 'data-nav-roll="sub"'))->toBeGreaterThanOrEqual(24)
+            ->and($content)->toContain('#galeri')
+            ->and(substr_count($content, '#gallery-section-'))->toBeGreaterThanOrEqual(2);
     }
 });
 
