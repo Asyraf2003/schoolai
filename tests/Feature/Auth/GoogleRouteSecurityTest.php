@@ -21,28 +21,32 @@ it('sets separate admin and guru OAuth intents without using them as authorizati
     $this->get(route('google.redirect'))
         ->assertRedirect('https://accounts.google.com')
         ->assertSessionHas('google_login_role', 'admin')
-        ->assertSessionHas('google_login_popup', false);
+        ->assertSessionHas('google_login_popup', false)
+        ->assertSessionHas('google_login_popup_token', '');
 
     $this->get(route('google.guru.redirect'))
         ->assertRedirect('https://accounts.google.com')
         ->assertSessionHas('google_login_role', 'guru')
-        ->assertSessionHas('google_login_popup', false);
+        ->assertSessionHas('google_login_popup', false)
+        ->assertSessionHas('google_login_popup_token', '');
 });
 
-it('stores popup presentation intent separately from the authorized Google role', function (): void {
+it('stores popup presentation state separately from the authorized Google role', function (): void {
     $provider = Mockery::mock();
     $provider->shouldReceive('redirect')->twice()->andReturn(redirect('https://accounts.google.com'));
     Socialite::shouldReceive('driver')->with('google')->twice()->andReturn($provider);
 
-    $this->get(route('google.redirect', ['popup' => 1]))
+    $this->get(route('google.redirect', ['popup' => 1, 'popup_token' => 'admin-attempt-token']))
         ->assertRedirect('https://accounts.google.com')
         ->assertSessionHas('google_login_role', 'admin')
-        ->assertSessionHas('google_login_popup', true);
+        ->assertSessionHas('google_login_popup', true)
+        ->assertSessionHas('google_login_popup_token', 'admin-attempt-token');
 
-    $this->get(route('google.guru.redirect', ['popup' => 1]))
+    $this->get(route('google.guru.redirect', ['popup' => 1, 'popup_token' => 'guru-attempt-token']))
         ->assertRedirect('https://accounts.google.com')
         ->assertSessionHas('google_login_role', 'guru')
-        ->assertSessionHas('google_login_popup', true);
+        ->assertSessionHas('google_login_popup', true)
+        ->assertSessionHas('google_login_popup_token', 'guru-attempt-token');
 });
 
 it('applies the named limiter to every Google OAuth endpoint', function (): void {
