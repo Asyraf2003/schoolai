@@ -7,18 +7,40 @@
       'pageTitle' => $meta['title'],
       'pageDescription' => $meta['description'],
     ])
+
+    @php
+      $homeTypeAsset = app()->getLocale() === 'ar'
+        ? 'resources/css/pages/welcome-home-type-arabic.css'
+        : 'resources/css/pages/welcome-home-type-latin.css';
+    @endphp
+
+    @if (app()->environment('production'))
+      <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" data-home-critical-style="foundation">{!! \Illuminate\Support\Facades\Vite::content('resources/css/pages/welcome-critical.css') !!}</style>
+    @else
+      @vite('resources/css/pages/welcome-critical.css')
+    @endif
+
     @vite([
-      'resources/css/pages/welcome-critical.css',
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-login-perspective.css',
-      'resources/css/pages/welcome-home-hero.css',
+    ])
+
+    @if (app()->environment('production'))
+      <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" data-home-critical-style="hero">{!! \Illuminate\Support\Facades\Vite::content('resources/css/pages/welcome-home-hero.css') !!}</style>
+    @else
+      @vite('resources/css/pages/welcome-home-hero.css')
+    @endif
+
+    @vite([
       'resources/css/pages/welcome-vision-waapi.css',
       'resources/css/pages/welcome-values-story.css',
       'resources/css/pages/welcome-depth-gallery.css',
       'resources/css/pages/welcome-article-showcase.css',
-      app()->getLocale() === 'ar'
-        ? 'resources/css/pages/welcome-home-type-arabic.css'
-        : 'resources/css/pages/welcome-home-type-latin.css',
+    ])
+
+    @vite($homeTypeAsset)
+
+    @vite([
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
       'resources/js/pages/welcome.js',
