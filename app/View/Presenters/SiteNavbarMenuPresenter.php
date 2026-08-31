@@ -175,7 +175,11 @@ final class SiteNavbarMenuPresenter
             'href' => $homeAnchor('#galeri'),
         ];
 
-        $item['label'] = (string) $this->translator->get('pages.galeri.title');
+        $item['label'] = match ($this->translator->getLocale()) {
+            'en' => 'Gallery',
+            'ar' => 'المعرض',
+            default => 'Galeri',
+        };
         $item['href'] = route('galeri');
         $item['route_patterns'] = ['galeri'];
         $item['mega'] = array_replace($copy, [
