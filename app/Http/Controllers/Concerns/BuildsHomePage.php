@@ -7,7 +7,8 @@ use Illuminate\Contracts\View\View;
 
 trait BuildsHomePage
 {
-    private ?array $resolvedHomeData = null;
+    /** @var array<string, array<string, mixed>> */
+    private array $resolvedHomeDataByLocale = [];
 
     public function __invoke(): View
     {
@@ -28,8 +29,10 @@ trait BuildsHomePage
 
     private function homeData(): array
     {
-        if ($this->resolvedHomeData !== null) {
-            return $this->resolvedHomeData;
+        $locale = app()->getLocale();
+
+        if (isset($this->resolvedHomeDataByLocale[$locale])) {
+            return $this->resolvedHomeDataByLocale[$locale];
         }
 
         $base = __('home');
@@ -37,7 +40,7 @@ trait BuildsHomePage
         $base = is_array($base) ? $base : [];
         $parity = is_array($parity) ? $parity : [];
 
-        return $this->resolvedHomeData = $this->canonicalizeHomeMedia(
+        return $this->resolvedHomeDataByLocale[$locale] = $this->canonicalizeHomeMedia(
             array_replace_recursive($base, $parity)
         );
     }
