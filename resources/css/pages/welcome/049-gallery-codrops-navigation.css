@@ -14,27 +14,13 @@
 
 .gallery-grid-demo__header {
     margin: 0 auto;
-    padding: 2em;
+    padding: calc(78px + 2em) 2em 1em;
     text-align: center;
     background: rgb(0 0 0 / .01);
 }
 
-.gallery-grid-demo__header h1 {
-    margin: 0;
-    font-size: 2.625em;
-    font-weight: 300;
-    line-height: 1.3;
-}
-
-.gallery-grid-demo__header h1 span {
-    display: block;
-    padding: 0 0 .6em .1em;
-    font-size: 60%;
-    opacity: .8;
-}
-
 .gallery-grid-demo__demos {
-    padding-top: 1em;
+    padding-top: 0;
     font-size: .9em;
 }
 
@@ -426,11 +412,7 @@ body.gallery-modal-open {
 
 @media (max-width: 640px) {
     .gallery-grid-demo__header {
-        padding: 1.5em 1em;
-    }
-
-    .gallery-grid-demo__header h1 {
-        font-size: 2em;
+        padding: calc(78px + 1.5em) 1em 1em;
     }
 
     .gallery-grid-demo__demos a {
