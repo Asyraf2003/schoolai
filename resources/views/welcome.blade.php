@@ -33,9 +33,17 @@
     ])
 
     @if (app()->getLocale() === 'ar')
-      @vite('resources/css/pages/welcome-home-type-arabic.css')
+      @if (app()->environment('production'))
+        <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" data-home-critical-style="type">{!! \Illuminate\Support\Facades\Vite::content('resources/css/pages/welcome-home-type-arabic.css') !!}</style>
+      @else
+        @vite('resources/css/pages/welcome-home-type-arabic.css')
+      @endif
     @else
-      @vite('resources/css/pages/welcome-home-type-latin.css')
+      @if (app()->environment('production'))
+        <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" data-home-critical-style="type">{!! \Illuminate\Support\Facades\Vite::content('resources/css/pages/welcome-home-type-latin.css') !!}</style>
+      @else
+        @vite('resources/css/pages/welcome-home-type-latin.css')
+      @endif
     @endif
 
     @vite([
