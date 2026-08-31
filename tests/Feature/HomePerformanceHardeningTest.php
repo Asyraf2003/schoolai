@@ -41,6 +41,24 @@ it('keeps homepage interaction styles out of the first paint path', function ():
         ->not->toContain("'resources/css/pages/welcome-hero-visual.css'");
 });
 
+it('keeps the shared public foundation single-owned by the critical entry', function (): void {
+    $critical = file_get_contents(resource_path('css/pages/welcome-critical.css'));
+    $legacy = file_get_contents(resource_path('css/pages/welcome.css'));
+    $publicLayout = file_get_contents(resource_path('views/layouts/public.blade.php'));
+    $foundation = '001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css';
+
+    expect($critical)
+        ->toContain($foundation)
+        ->and($legacy)
+        ->not->toContain($foundation)
+        ->and($publicLayout)
+        ->toContain("'resources/css/pages/welcome-critical.css'")
+        ->toContain("'resources/css/pages/welcome.css'");
+
+    expect(strpos($publicLayout, "'resources/css/pages/welcome-critical.css'"))
+        ->toBeLessThan(strpos($publicLayout, "'resources/css/pages/welcome.css'"));
+});
+
 it('keeps the structure audit explicit while npm lifecycle scripts stay disabled', function (): void {
     $package = file_get_contents(base_path('package.json'));
     $npmrc = file_get_contents(base_path('.npmrc'));
