@@ -26,10 +26,6 @@
         aria-label="{{ __('app.auth.portal.choices_label') }}"
     >
         <section class="login-perspective__state" data-login-perspective-state="choices">
-            <p class="login-perspective__eyebrow">LOGIN</p>
-            <h2>{{ __('app.auth.portal.heading') }}</h2>
-            <p class="login-perspective__description">{{ __('app.auth.portal.description') }}</p>
-
             <div class="login-perspective__choices">
                 <button type="button" data-login-role-target="admin">
                     {{ $perspectiveRoleLabels['admin'] }}
