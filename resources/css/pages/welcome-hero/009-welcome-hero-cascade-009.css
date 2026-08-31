@@ -64,6 +64,34 @@
     transition: none;
 }
 
+/* Public content routes (PPDB, Artikel, Galeri) never use the hero-transparent state. */
+.nav-shell .navbar.navbar--public,
+.nav-shell .navbar.navbar--public.is-scrolled,
+.nav-shell .navbar.navbar--public.has-open-menu {
+    min-height: 78px;
+    color: #172c28;
+    background: #fffcf6;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 10px 30px rgb(7 27 24 / 0.08);
+}
+
+.nav-shell .navbar.navbar--public::before,
+.nav-shell .navbar.navbar--public.is-scrolled::before,
+.nav-shell .navbar.navbar--public.has-open-menu::before {
+    opacity: 0;
+}
+
+.nav-shell .navbar.navbar--public:not(.is-scrolled):not(.has-open-menu) .nav-link:not(.active),
+.nav-shell .navbar.navbar--public:not(.is-scrolled):not(.has-open-menu) .nav-link:not(.active):hover,
+.nav-shell .navbar.navbar--public:not(.is-scrolled):not(.has-open-menu) .nav-link:not(.active):focus-visible {
+    color: #172c28;
+}
+
+.nav-shell .navbar.navbar--public .nav-link.active {
+    color: #aa541a;
+}
+
 @media (max-width: 767px) {
     :root {
         --hero-nav-height: 78px;
