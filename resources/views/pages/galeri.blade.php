@@ -50,18 +50,16 @@
 
     <div class="gallery-grid-demo__panels">
       @foreach($galleryCategories as $categoryIndex => $category)
-        @php($effectNumber = ($categoryIndex % 8) + 1)
-
         <section
           id="{{ $category['anchor'] }}"
           class="gallery-grid-demo__panel{{ $categoryIndex === 0 ? ' is-active' : '' }}"
           data-gallery-category-panel
           data-gallery-title="{{ $category['title'] }}"
-          @if($categoryIndex !== 0) hidden @endif
+          {{ $categoryIndex !== 0 ? 'hidden' : '' }}
         >
           <ul
             id="gallery-grid-{{ $categoryIndex }}"
-            class="gallery-grid effect-{{ $effectNumber }}"
+            class="gallery-grid effect-{{ ($categoryIndex % 8) + 1 }}"
             data-gallery-grid
           >
             @foreach($category['items'] as $item)
@@ -91,18 +89,18 @@
                   data-gallery-is-direct-video="{{ $isDirectVideo ? '1' : '0' }}"
                   aria-label="{{ $title }}"
                 >
-                  @if($isDirectVideo && $mediaUrl !== '')
+                  <?php if ($isDirectVideo && $mediaUrl !== ''): ?>
                     <video src="{{ $mediaUrl }}" muted playsinline webkit-playsinline preload="metadata" aria-hidden="true"></video>
                     <span class="gallery-grid__play" aria-hidden="true">▶</span>
-                  @elseif($displayUrl !== '')
+                  <?php elseif ($displayUrl !== ''): ?>
                     <img src="{{ $displayUrl }}" alt="{{ $title }}" decoding="async">
-                    @if($isVideo)
+                    <?php if ($isVideo): ?>
                       <span class="gallery-grid__play" aria-hidden="true">▶</span>
-                    @endif
-                  @else
+                    <?php endif; ?>
+                  <?php else: ?>
                     <span class="gallery-grid__fallback" aria-hidden="true">{{ $item['emoji'] ?? '▶' }}</span>
                     <span class="gallery-grid__play" aria-hidden="true">▶</span>
-                  @endif
+                  <?php endif; ?>
                 </button>
               </li>
             @endforeach
