@@ -18,17 +18,17 @@ class LoginController extends Controller
 
     public function choose(): View
     {
-        return view('auth.login-choice');
+        return view('auth.login-perspective', ['activeRole' => null]);
     }
 
     public function show(): View
     {
-        return view('auth.login');
+        return view('auth.login-perspective', ['activeRole' => 'admin']);
     }
 
     public function showGuru(): View
     {
-        return view('auth.guru-login');
+        return view('auth.login-perspective', ['activeRole' => 'guru']);
     }
 
     public function logout(Request $request)
