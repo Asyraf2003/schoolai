@@ -1,8 +1,4 @@
 @once
-  @vite('resources/css/pages/welcome-mega-menu.css')
-@endonce
-
-@once
   <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
     /* Keep the established flag-only chooser while using canonical media. */
     .language-modal__dialog {
