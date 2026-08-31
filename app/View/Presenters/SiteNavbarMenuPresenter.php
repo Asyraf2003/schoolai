@@ -134,7 +134,20 @@ final class SiteNavbarMenuPresenter
         callable $homeAnchor,
         string $mediaUrl,
     ): array {
-        $links = [];
+        $facilityLabel = trim((string) ($item['label'] ?? ''));
+
+        if ($facilityLabel === '') {
+            $facilityLabel = match ($this->translator->getLocale()) {
+                'en' => 'Facilities',
+                'ar' => 'المرافق',
+                default => 'Fasilitas',
+            };
+        }
+
+        $links = [[
+            'label' => $facilityLabel,
+            'href' => $homeAnchor('#galeri'),
+        ]];
 
         if (
             Schema::hasTable('gallery_page_sections')
@@ -154,26 +167,10 @@ final class SiteNavbarMenuPresenter
             foreach ($sections as $section) {
                 $links[] = [
                     'label' => $section->titleForLocale($locale),
-                    'description' => $section->descriptionForLocale($locale),
                     'href' => route('galeri').'#gallery-section-'.$section->id,
                 ];
             }
         }
-
-        if ($links === []) {
-            $links[] = [
-                'label' => (string) ($copy['title'] ?? $this->translator->get('pages.galeri.title')),
-                'description' => (string) ($copy['description'] ?? ''),
-                'href' => route('galeri').'#gallery-main',
-            ];
-        }
-
-        $links = array_slice($links, 0, 3);
-        $links[] = [
-            'label' => (string) ($copy['home_link_label'] ?? $this->translator->get('home_presentation.gallery_heading')),
-            'description' => (string) ($copy['home_link_description'] ?? ''),
-            'href' => $homeAnchor('#galeri'),
-        ];
 
         $item['label'] = match ($this->translator->getLocale()) {
             'en' => 'Gallery',
