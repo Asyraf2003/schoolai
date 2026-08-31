@@ -35,7 +35,7 @@ export function mountPerspectiveGoogleBridge(panel, activateState, stateElement,
     window.addEventListener('message', function (event) {
         if (event.origin !== window.location.origin || !event.data) return;
         if (event.data.source !== 'schoolai-google-auth') return;
-        if (activePopup && event.source !== activePopup) return;
+        if (!activePopup || event.source !== activePopup) return;
 
         popupMessageReceived = true;
         stopPopupWatch();
