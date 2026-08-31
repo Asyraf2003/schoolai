@@ -65,3 +65,20 @@ it('keeps gallery body copy contrast hardened across rotating backgrounds', func
         ->toContain('--gallery-story-muted: #1c281f;')
         ->not->toContain('--gallery-story-muted: rgba(16, 24, 18, 0.7);');
 });
+
+it('keeps the homepage request path free from repeat data rebuilds and schema probes', function (): void {
+    $page = file_get_contents(app_path(
+        'Http/Controllers/Concerns/BuildsHomePage.php'
+    ));
+    $gallery = file_get_contents(app_path(
+        'Http/Controllers/Concerns/BuildsHomeArticlesAndGallery.php'
+    ));
+
+    expect($page)
+        ->toContain('private ?array $resolvedHomeData = null;')
+        ->toContain('if ($this->resolvedHomeData !== null)')
+        ->toContain('return $this->resolvedHomeData = $this->canonicalizeHomeMedia(')
+        ->and($gallery)
+        ->not->toContain('Schema::hasTable')
+        ->not->toContain('Illuminate\\Support\\Facades\\Schema');
+});
