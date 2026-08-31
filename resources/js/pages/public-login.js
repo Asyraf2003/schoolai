@@ -100,6 +100,18 @@ export function resetGoogleLogin(link) {
     if (label && link.dataset.idleLabel) label.textContent = link.dataset.idleLabel;
 }
 
+function popupToken() {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+    }
+
+    var bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    return Array.prototype.map.call(bytes, function (byte) {
+        return byte.toString(16).padStart(2, '0');
+    }).join('');
+}
+
 export function mountGoogleLogin(link) {
     if (!link || link.dataset.authMounted === '1') return;
     link.dataset.authMounted = '1';
@@ -120,8 +132,10 @@ export function mountGoogleLogin(link) {
         }
 
         event.preventDefault();
+        var token = popupToken();
         var popupUrl = new URL(link.href, window.location.href);
         popupUrl.searchParams.set('popup', '1');
+        popupUrl.searchParams.set('popup_token', token);
         var popup = window.open(
             popupUrl.toString(),
             'schoolai-google-auth',
@@ -136,7 +150,7 @@ export function mountGoogleLogin(link) {
         link.setAttribute('aria-disabled', 'true');
         if (label) label.textContent = link.dataset.loadingLabel || 'Loading…';
         window.dispatchEvent(new CustomEvent('auth:google-popup-opened', {
-            detail: { popup: popup, role: link.dataset.authRole || null, link: link }
+            detail: { popup: popup, token: token, role: link.dataset.authRole || null, link: link }
         }));
     });
 }
