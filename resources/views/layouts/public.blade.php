@@ -8,6 +8,7 @@
       'pageDescription' => $description ?? __('pages.common.site_description'),
     ])
     @vite([
+      'resources/css/pages/welcome-critical.css',
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
       'resources/css/text-system.css',
