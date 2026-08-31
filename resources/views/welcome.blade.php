@@ -16,10 +16,9 @@
       'resources/css/pages/welcome-values-story.css',
       'resources/css/pages/welcome-depth-gallery.css',
       'resources/css/pages/welcome-article-showcase.css',
-      'resources/css/text-system.css',
       app()->getLocale() === 'ar'
-        ? 'resources/css/arabic-typography.css'
-        : 'resources/css/public-latin-inter.css',
+        ? 'resources/css/pages/welcome-home-type-arabic.css'
+        : 'resources/css/pages/welcome-home-type-latin.css',
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
       'resources/js/pages/welcome.js',
