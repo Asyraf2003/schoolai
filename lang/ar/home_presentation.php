@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'gallery_heading' => 'مرافقنا',
+    'gallery_heading' => 'المعرض',
     'gallery_more' => 'عرض المزيد',
     'article' => [
         'display_heading' => 'المقالات',
