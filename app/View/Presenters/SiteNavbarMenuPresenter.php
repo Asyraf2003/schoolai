@@ -279,7 +279,7 @@ final class SiteNavbarMenuPresenter
                     'href' => route($routeName, [
                         'kategori' => $link['category'],
                     ]),
-                ),
+                ]),
                 $links,
             ),
         ]);
