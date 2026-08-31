@@ -1,137 +1,65 @@
 <?php
 
-use App\Models\GalleryItem;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+it('uses the Codrops GridLoadingEffects contract for the public gallery', function (): void {
+    $galleryPage = file_get_contents(resource_path('views/pages/galeri.blade.php'));
+    $galleryRuntime = file_get_contents(resource_path('js/pages/welcome/gallery-wall.js'));
+    $galleryCss = file_get_contents(resource_path('css/pages/welcome/049-gallery-codrops-navigation.css'));
 
-uses(RefreshDatabase::class);
-
-it('keeps homepage Gallery motion previews direct, lazy, muted, and iframe free', function (): void {
-    $homeQuery = file_get_contents(app_path(
-        'Http/Controllers/Concerns/BuildsHomeArticlesAndGallery.php'
-    ));
-    $normalizer = file_get_contents(app_path(
-        'Http/Controllers/Concerns/NormalizesHomeGallery.php'
-    ));
-    $storyBlade = file_get_contents(resource_path(
-        'views/home/sections/gallery-depth.blade.php'
-    ));
-    $controller = file_get_contents(resource_path(
-        'js/pages/welcome-depth-gallery.js'
-    ));
-    $previewRuntime = file_get_contents(resource_path(
-        'js/pages/welcome/gallery-video-preview.js'
-    ));
-    $galleryPage = file_get_contents(resource_path(
-        'views/pages/galeri.blade.php'
-    ));
-    $galleryCard = file_get_contents(resource_path(
-        'views/pages/partials/gallery-wall-card.blade.php'
-    ));
-    $galleryWall = file_get_contents(resource_path(
-        'js/pages/welcome/gallery-wall.js'
-    ));
-    $galleryCardCss = file_get_contents(resource_path(
-        'css/pages/welcome/041-welcome-cascade-041.css'
-    ));
-    $galleryLightboxCss = file_get_contents(resource_path(
-        'css/pages/welcome/042-welcome-cascade-042.css'
-    ));
-    $seeder = file_get_contents(database_path(
-        'seeders/Concerns/SeedsGalleryItems.php'
-    ));
-
-    expect($homeQuery)
-        ->toContain("'/gallery/media/%'")
-        ->toContain("->where('type', 'video')")
-        ->toContain("->where('type', 'photo')")
-        ->toContain("\$normalized['is_direct_video']")
-        ->and($normalizer)
-        ->toContain('trustedGalleryDirectVideoUrl')
-        ->toContain("str_starts_with(\$key, 'gallery/media/')")
-        ->toContain("str_ends_with(strtolower(\$key), '.mp4')")
-        ->toContain('is_direct_video')
-        ->toContain('isDummyGalleryCaption')
-        ->toContain("__('home.galeri.section_subtitle')")
-        ->and($storyBlade)
-        ->toContain('data-depth-gallery-end-link')
-        ->toContain('data-gallery-story-item')
-        ->toContain('data-gallery-video-preview')
-        ->toContain('data-gallery-video-src')
-        ->toContain('muted')
-        ->toContain('loop')
-        ->toContain('playsinline')
-        ->toContain('preload="none"')
-        ->not->toContain('<iframe')
-        ->not->toContain('gallery-story__play')
-        ->and($controller)
-        ->toContain('mountGalleryVideoPreviews')
-        ->toContain('paintItems')
-        ->not->toContain('createGalleryStoryLightbox')
-        ->not->toContain('openStoryMedia')
-        ->and($previewRuntime)
-        ->toContain("querySelectorAll('[data-gallery-video-preview]')")
-        ->toContain("rootMargin: '180px 0px'")
-        ->toContain('preview.src = source')
-        ->toContain('preview.pause()')
-        ->and($galleryPage)
-        ->toContain('data-gallery-wall-lightbox')
-        ->and($galleryCard)
-        ->toContain('data-gallery-is-direct-video')
-        ->toContain('gallery-wall-card__direct-video')
-        ->toContain('src="{{ $mediaUrl }}"')
-        ->toContain('preload="metadata"')
-        ->and($galleryWall)
-        ->toContain("var isDirectVideo = card.getAttribute('data-gallery-is-direct-video') === '1'")
-        ->toContain('if (mediaUrl && isVideo && isDirectVideo)')
+    expect($galleryPage)
+        ->toContain("@extends('layouts.public'")
+        ->toContain('gallery-grid-demo__demos')
+        ->toContain('data-gallery-category-target')
+        ->toContain('class="gallery-grid effect-{{ $effectNumber }}"')
+        ->toContain('data-gallery-modal-open')
+        ->toContain('data-gallery-modal-title')
+        ->toContain('gallery-grid-modal__close')
+        ->not->toContain('gallery-perspective')
+        ->not->toContain('layouts.public-gallery')
+        ->and($galleryRuntime)
+        ->toContain("if (window.matchMedia('(max-width: 400px)').matches) return 1")
+        ->toContain("if (window.matchMedia('(max-width: 900px)').matches) return 2")
+        ->toContain('return 3;')
+        ->toContain('Math.random() * .3 + .4')
+        ->toContain('threshold: .2')
         ->toContain("document.createElement('video')")
-        ->toContain('} else if (mediaUrl && isVideo)')
         ->toContain("document.createElement('iframe')")
-        ->and($galleryCardCss)
-        ->toContain('.gallery-wall-card__media video')
-        ->and($galleryLightboxCss)
-        ->toContain('.gallery-wall-lightbox__media video')
-        ->and($seeder)
-        ->not->toContain('Dokumentasi dummy untuk pratinjau galeri sekolah.')
-        ->not->toContain('Sample documentation for the school gallery preview.')
-        ->not->toContain('محتوى تجريبي لمعاينة معرض المدرسة.');
-
-    expect(file_exists(resource_path(
-        'js/pages/welcome/gallery-story-lightbox.js'
-    )))->toBeFalse();
+        ->toContain("document.createElement('img')")
+        ->and($galleryCss)
+        ->toContain('max-width: 69em;')
+        ->toContain('width: 33.333333%;')
+        ->toContain('transform: translateY(200px);')
+        ->toContain('transform: scale(.6);')
+        ->toContain('translateZ(400px) translateY(300px) rotateX(-90deg)')
+        ->toContain('transform: rotateX(-180deg);')
+        ->toContain('transform: rotateX(-80deg);')
+        ->toContain('transform: rotateY(-180deg);')
+        ->toContain('transform: scale(.4);')
+        ->toContain('@media screen and (max-width: 900px)')
+        ->toContain('@media screen and (max-width: 400px)');
 });
 
-it('renders only owned Gallery MP4 video rows as homepage motion thumbnails', function (): void {
-    GalleryItem::query()->update(['show_on_homepage' => false]);
+it('replaces the homepage facilities story with up to three gallery section links', function (): void {
+    $galleryBlade = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
+    $composer = file_get_contents(app_path('View/Composers/HomeGalleryComposer.php'));
+    $idPresentation = file_get_contents(lang_path('id/home_presentation.php'));
+    $enPresentation = file_get_contents(lang_path('en/home_presentation.php'));
+    $arPresentation = file_get_contents(lang_path('ar/home_presentation.php'));
 
-    $directUrl = rtrim((string) config('media.public_url'), '/')
-        .'/gallery/media/manual/gallery-preview-v1.mp4';
-    $providerUrl = 'https://www.youtube.com/embed/kb1dXcf3QQs';
-
-    foreach ([
-        ['url' => $directUrl, 'title' => 'Direct Gallery Motion', 'order' => 1],
-        ['url' => $providerUrl, 'title' => 'Provider Gallery Video', 'order' => 2],
-    ] as $video) {
-        $item = GalleryItem::query()->create([
-            'title' => $video['title'],
-            'title_id' => $video['title'],
-            'type' => 'video',
-            'category' => 'Kegiatan',
-            'category_id' => 'Kegiatan',
-            'media_url' => $video['url'],
-            'is_published' => true,
-            'show_on_homepage' => true,
-            'show_on_gallery_page' => false,
-            'published_at' => now(),
-        ]);
-        $item->forceFill(['sort_order' => $video['order']])->save();
-    }
-
-    $content = $this->get(route('home'))->assertOk()->getContent();
-
-    expect($content)
-        ->toContain('data-gallery-video-preview')
-        ->toContain('data-gallery-video-src="'.e($directUrl).'"')
-        ->not->toContain(' src="'.e($directUrl).'"')
-        ->not->toContain($providerUrl)
-        ->not->toContain('<iframe');
+    expect($galleryBlade)
+        ->toContain('home-gallery-links__list')
+        ->toContain('home-gallery-links__item')
+        ->toContain("{{ $teaser['href'] }}")
+        ->not->toContain("@include('home.sections.gallery-depth')")
+        ->and($composer)
+        ->toContain('GalleryPageSection::query()')
+        ->toContain("route('galeri').'#gallery-main'")
+        ->toContain("route('galeri').'#gallery-section-'.\$section->id")
+        ->toContain('->limit(2)')
+        ->toContain('array_slice($teasers, 0, 3)')
+        ->and($idPresentation)
+        ->toContain("'gallery_heading' => 'GALERI'")
+        ->and($enPresentation)
+        ->toContain("'gallery_heading' => 'GALLERY'")
+        ->and($arPresentation)
+        ->toContain("'gallery_heading' => 'المعرض'");
 });
