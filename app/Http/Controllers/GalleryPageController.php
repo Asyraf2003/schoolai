@@ -62,6 +62,8 @@ final class GalleryPageController extends Controller
             ->get()
             ->map(function (GalleryPageSection $section) use ($locale): array {
                 return [
+                    'id' => $section->id,
+                    'anchor' => 'gallery-section-'.$section->id,
                     'title' => $section->titleForLocale($locale),
                     'description' => $section->descriptionForLocale($locale),
                     'items' => $section->items
