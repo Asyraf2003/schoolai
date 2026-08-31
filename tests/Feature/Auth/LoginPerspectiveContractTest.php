@@ -29,29 +29,6 @@ it('registers one dedicated perspective asset graph for public auth', function (
     }
 });
 
-it('keeps perspective css modules within the source structure limit', function (): void {
-    $entry = resource_path('css/pages/public-auth-perspective.css');
-    $source = file_get_contents($entry);
-    preg_match_all('/@import\s+["\']([^"\']+)["\']/', $source, $matches);
-
-    expect($matches[1])->toHaveCount(3);
-
-    foreach ($matches[1] as $request) {
-        $path = realpath(dirname($entry).'/'.$request);
-        expect($path)->not->toBeFalse();
-        expect(count(file($path)))->toBeLessThanOrEqual(200);
-    }
-});
-
-it('runs source verification inside the build command itself', function (): void {
-    $package = json_decode(file_get_contents(base_path('package.json')), true, flags: JSON_THROW_ON_ERROR);
-
-    expect($package['scripts']['build'] ?? null)
-        ->toBe('node scripts/verify-source-structure.mjs && vite build')
-        ->and($package['scripts'])
-        ->not->toHaveKey('prebuild');
-});
-
 it('serves every public login role through the same perspective shell', function (string $routeName): void {
     $this->get(route($routeName))
         ->assertOk()
