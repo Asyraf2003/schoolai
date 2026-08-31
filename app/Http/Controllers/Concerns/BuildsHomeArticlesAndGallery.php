@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Concerns;
 
 use App\Models\GalleryItem;
-use Illuminate\Support\Facades\Schema;
 
 trait BuildsHomeArticlesAndGallery
 {
@@ -16,77 +15,43 @@ trait BuildsHomeArticlesAndGallery
 
     private function allGalleryItems(): array
     {
-        if (Schema::hasTable('gallery_items')) {
-            $locale = app()->getLocale();
-            $directVideoPrefix = rtrim((string) config('media.public_url'), '/')
-                .'/gallery/media/%';
+        $locale = app()->getLocale();
+        $directVideoPrefix = rtrim((string) config('media.public_url'), '/')
+            .'/gallery/media/%';
 
-            return GalleryItem::query()
-                ->where('is_published', true)
-                ->homepage()
-                ->where(function ($query) use ($directVideoPrefix): void {
-                    $query->where('type', 'photo')
-                        ->orWhere(function ($videoQuery) use ($directVideoPrefix): void {
-                            $videoQuery->where('type', 'video')
-                                ->where('media_url', 'like', $directVideoPrefix);
-                        });
-                })
-                ->ordered()
-                ->limit(GalleryItem::MAX_HOMEPAGE_ITEMS)
-                ->get()
-                ->map(function (GalleryItem $item) use ($locale): ?array {
-                    $normalized = $this->normalizeGalleryItem([
-                        'title' => $item->titleForLocale($locale),
-                        'type' => $item->is_video ? 'video' : 'photo',
-                        'type_label' => $item->typeLabelForLocale($locale),
-                        'media_url' => $item->media_url,
-                        'published_at' => optional($item->published_at)->toDateString() ?? '',
-                        'date' => optional($item->published_at)->translatedFormat('j F Y') ?? '',
-                        'caption' => $item->captionForLocale($locale),
-                        'category' => $item->categoryForLocale($locale),
-                    ]);
+        return GalleryItem::query()
+            ->where('is_published', true)
+            ->homepage()
+            ->where(function ($query) use ($directVideoPrefix): void {
+                $query->where('type', 'photo')
+                    ->orWhere(function ($videoQuery) use ($directVideoPrefix): void {
+                        $videoQuery->where('type', 'video')
+                            ->where('media_url', 'like', $directVideoPrefix);
+                    });
+            })
+            ->ordered()
+            ->limit(GalleryItem::MAX_HOMEPAGE_ITEMS)
+            ->get()
+            ->map(function (GalleryItem $item) use ($locale): ?array {
+                $normalized = $this->normalizeGalleryItem([
+                    'title' => $item->titleForLocale($locale),
+                    'type' => $item->is_video ? 'video' : 'photo',
+                    'type_label' => $item->typeLabelForLocale($locale),
+                    'media_url' => $item->media_url,
+                    'published_at' => optional($item->published_at)->toDateString() ?? '',
+                    'date' => optional($item->published_at)->translatedFormat('j F Y') ?? '',
+                    'caption' => $item->captionForLocale($locale),
+                    'category' => $item->categoryForLocale($locale),
+                ]);
 
-                    if ($item->is_video && ! ($normalized['is_direct_video'] ?? false)) {
-                        return null;
-                    }
+                if ($item->is_video && ! ($normalized['is_direct_video'] ?? false)) {
+                    return null;
+                }
 
-                    return $normalized;
-                })
-                ->filter()
-                ->values()
-                ->all();
-        }
-
-        $gallery = $this->homeSection('galeri');
-        $items = $gallery['items'] ?? [];
-
-        if (! is_array($items)) {
-            return [];
-        }
-
-        $photoItems = array_filter(
-            $items,
-            static fn (mixed $item): bool => is_array($item)
-                && (($item['type'] ?? 'photo') === 'photo'),
-        );
-
-        $normalizedItems = array_values(array_filter(
-            array_map(
-                fn (mixed $item): ?array => is_array($item)
-                    ? $this->normalizeGalleryItem($item)
-                    : null,
-                $photoItems,
-            ),
-        ));
-
-        usort(
-            $normalizedItems,
-            fn (array $first, array $second): int => strcmp(
-                (string) ($second['published_at'] ?? ''),
-                (string) ($first['published_at'] ?? ''),
-            ),
-        );
-
-        return $normalizedItems;
+                return $normalized;
+            })
+            ->filter()
+            ->values()
+            ->all();
     }
 }
