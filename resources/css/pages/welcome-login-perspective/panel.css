@@ -1,0 +1,186 @@
+.login-perspective__panel.outer-nav {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    z-index: 20;
+    width: min(430px, 36vw);
+    color: #fff;
+    transform: translateY(-50%);
+    transform-style: preserve-3d;
+}
+
+.login-perspective__state {
+    width: 100%;
+    opacity: 0;
+    transform: translateX(-150px);
+    transition: transform .4s, opacity .4s;
+}
+
+.login-perspective.animate .login-perspective__state:not([hidden]) {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.login-perspective__state[hidden] {
+    display: none !important;
+}
+
+.login-perspective__eyebrow {
+    margin: 0 0 10px;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+    opacity: .72;
+}
+
+.login-perspective__state h2 {
+    margin: 0;
+    font-family: var(--text-family-heading);
+    font-size: clamp(2rem, 3.2vw, 3.8rem);
+    font-weight: 300;
+    line-height: .98;
+}
+
+.login-perspective__description {
+    max-width: 38ch;
+    margin: 16px 0 24px;
+    font-size: .94rem;
+    line-height: 1.65;
+    opacity: .82;
+}
+
+.login-perspective__choices {
+    display: grid;
+    gap: 10px;
+}
+
+.login-perspective__choices button,
+.login-perspective__back {
+    border: 0;
+    color: #fff;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.login-perspective__choices button {
+    padding: 7px 0;
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-weight: 300;
+}
+
+.login-perspective__choices button:hover,
+.login-perspective__choices button:focus-visible,
+.login-perspective__back:hover,
+.login-perspective__back:focus-visible {
+    color: #ffdccd;
+}
+
+.login-perspective__primary,
+.login-perspective__form button[type="submit"] {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid rgb(255 255 255 / 48%);
+    padding: 12px 18px;
+    color: #fff;
+    background: rgb(255 255 255 / 8%);
+    font: inherit;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.login-perspective__back {
+    display: block;
+    margin-top: 18px;
+    padding: 6px 0;
+    font-size: .88rem;
+    font-weight: 700;
+}
+
+.login-perspective__form {
+    display: grid;
+    gap: 14px;
+}
+
+.login-perspective__form label {
+    display: grid;
+    gap: 7px;
+    font-size: .84rem;
+    font-weight: 700;
+}
+
+.login-perspective__form input {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+    border: 1px solid rgb(255 255 255 / 42%);
+    border-radius: 0;
+    padding: 10px 12px;
+    color: #17201d;
+    background: rgb(255 255 255 / 92%);
+    font: inherit;
+}
+
+.login-perspective__message {
+    min-height: 1.4em;
+    margin: 0 0 14px;
+    color: #ffe0dc;
+    font-size: .86rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.login-perspective__message:empty {
+    display: none;
+}
+
+.login-perspective__message[data-auth-tone="success"] {
+    color: #dcffe7;
+}
+
+.login-perspective [aria-disabled="true"],
+.login-perspective__form button:disabled {
+    cursor: wait;
+    opacity: .58;
+}
+
+html[dir="rtl"] .login-perspective__panel.outer-nav {
+    right: 25%;
+    left: auto;
+}
+
+html[dir="rtl"] .login-perspective__state {
+    transform: translateX(150px);
+}
+
+html[dir="rtl"] .login-perspective.animate .login-perspective__state:not([hidden]) {
+    transform: translateX(0);
+}
+
+html[dir="rtl"] .login-perspective__choices button,
+html[dir="rtl"] .login-perspective__back {
+    text-align: right;
+}
+
+@media (max-width: 767px) {
+    .login-perspective__panel.outer-nav {
+        left: 8%;
+        width: min(82vw, 390px);
+    }
+
+    html[dir="rtl"] .login-perspective__panel.outer-nav {
+        right: 8%;
+        left: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-perspective__state {
+        transition-duration: .01ms !important;
+    }
+}
