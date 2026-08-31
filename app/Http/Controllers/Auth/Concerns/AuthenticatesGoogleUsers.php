@@ -6,6 +6,7 @@ use App\Enums\AccountRole;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 use Throwable;
 
@@ -14,6 +15,7 @@ trait AuthenticatesGoogleUsers
     public function redirect(Request $request): RedirectResponse
     {
         $request->session()->put('google_login_role', AccountRole::Admin->value);
+        $request->session()->put('google_login_popup', $request->boolean('popup'));
 
         return Socialite::driver('google')->redirect();
     }
@@ -21,12 +23,14 @@ trait AuthenticatesGoogleUsers
     public function redirectGuru(Request $request): RedirectResponse
     {
         $request->session()->put('google_login_role', AccountRole::Guru->value);
+        $request->session()->put('google_login_popup', $request->boolean('popup'));
 
         return Socialite::driver('google')->redirect();
     }
 
-    public function callback(Request $request): RedirectResponse
+    public function callback(Request $request): RedirectResponse|Response
     {
+        $popup = (bool) $request->session()->pull('google_login_popup', false);
         $intendedRole = AccountRole::tryFrom((string) $request->session()->pull(
             'google_login_role',
         ));
@@ -35,13 +39,25 @@ trait AuthenticatesGoogleUsers
             : 'login';
 
         if (! in_array($intendedRole, [AccountRole::Admin, AccountRole::Guru], true)) {
-            return $this->denyGoogle('invalid_login_intent', null, $denialRoute);
+            return $this->denyGoogle(
+                'invalid_login_intent',
+                null,
+                $denialRoute,
+                $popup,
+                $intendedRole?->value,
+            );
         }
 
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (Throwable) {
-            return $this->denyGoogle('provider_error', null, $denialRoute);
+            return $this->denyGoogle(
+                'provider_error',
+                null,
+                $denialRoute,
+                $popup,
+                $intendedRole->value,
+            );
         }
 
         $email = mb_strtolower(trim((string) $googleUser->getEmail()));
@@ -52,7 +68,13 @@ trait AuthenticatesGoogleUsers
             ?? null;
 
         if ($email === '' || $googleId === '' || $verified !== true) {
-            return $this->denyGoogle('invalid_provider_identity', null, $denialRoute);
+            return $this->denyGoogle(
+                'invalid_provider_identity',
+                null,
+                $denialRoute,
+                $popup,
+                $intendedRole->value,
+            );
         }
 
         $resolution = $this->resolveUser($email, $googleId, $intendedRole);
@@ -70,7 +92,13 @@ trait AuthenticatesGoogleUsers
             || $user->isDisabled()
             || $user->role !== $intendedRole
         ) {
-            return $this->denyGoogle('access_unavailable', $user, $denialRoute);
+            return $this->denyGoogle(
+                'access_unavailable',
+                $user,
+                $denialRoute,
+                $popup,
+                $intendedRole->value,
+            );
         }
 
         if ($resolution['bound']) {
@@ -92,8 +120,19 @@ trait AuthenticatesGoogleUsers
             subject: $user,
         );
 
+        $dashboardRoute = $user->isAdmin() ? 'admin.dashboard' : 'guru.dashboard';
+        if ($popup) {
+            return $this->googlePopupResult(
+                true,
+                $intendedRole->value,
+                route($dashboardRoute),
+                __('app.auth.success.logged_in'),
+                route($denialRoute),
+            );
+        }
+
         return redirect()
-            ->route($user->isAdmin() ? 'admin.dashboard' : 'guru.dashboard')
+            ->route($dashboardRoute)
             ->with('success', __('app.auth.success.logged_in'));
     }
 
@@ -101,7 +140,9 @@ trait AuthenticatesGoogleUsers
         string $reason,
         ?User $user = null,
         string $route = 'login',
-    ): RedirectResponse {
+        bool $popup = false,
+        ?string $role = null,
+    ): RedirectResponse|Response {
         $this->auditLogger->record(
             'auth.google.login_denied',
             actor: $user,
@@ -109,8 +150,35 @@ trait AuthenticatesGoogleUsers
             metadata: ['reason' => $reason],
         );
 
+        $message = __('app.auth.errors.access_unavailable');
+        if ($popup) {
+            return $this->googlePopupResult(
+                false,
+                $role,
+                null,
+                $message,
+                route($route),
+            );
+        }
+
         return redirect()
             ->route($route)
-            ->withErrors(['email' => __('app.auth.errors.access_unavailable')]);
+            ->withErrors(['email' => $message]);
+    }
+
+    private function googlePopupResult(
+        bool $ok,
+        ?string $role,
+        ?string $redirect,
+        string $message,
+        string $fallbackUrl,
+    ): Response {
+        return response()->view('auth.google-popup-result', [
+            'ok' => $ok,
+            'role' => $role,
+            'redirect' => $redirect,
+            'message' => $message,
+            'fallbackUrl' => $fallbackUrl,
+        ]);
     }
 }
