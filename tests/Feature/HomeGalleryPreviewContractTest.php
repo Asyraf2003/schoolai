@@ -9,10 +9,12 @@ it('uses the Codrops GridLoadingEffects contract for the public gallery', functi
         ->toContain("@extends('layouts.public'")
         ->toContain('gallery-grid-demo__demos')
         ->toContain('data-gallery-category-target')
-        ->toContain('class="gallery-grid effect-{{ $effectNumber }}"')
+        ->toContain('class="gallery-grid effect-{{ ($categoryIndex % 8) + 1 }}"')
         ->toContain('data-gallery-modal-open')
         ->toContain('data-gallery-modal-title')
         ->toContain('gallery-grid-modal__close')
+        ->not->toContain('@elseif')
+        ->not->toContain('@else')
         ->not->toContain('gallery-perspective')
         ->not->toContain('layouts.public-gallery')
         ->and($galleryRuntime)
@@ -62,4 +64,18 @@ it('replaces the homepage facilities story with up to three gallery section link
         ->toContain("'gallery_heading' => 'GALLERY'")
         ->and($arPresentation)
         ->toContain("'gallery_heading' => 'المعرض'");
+});
+
+it('builds the gallery navbar from three random page sections plus the homepage gallery link', function (): void {
+    $presenter = file_get_contents(app_path('View/Presenters/SiteNavbarMenuPresenter.php'));
+
+    expect($presenter)
+        ->toContain('prepareGalleryItem(')
+        ->toContain('GalleryPageSection::query()')
+        ->toContain('->inRandomOrder()')
+        ->toContain('->limit(3)')
+        ->toContain("route('galeri').'#gallery-section-'.\$section->id")
+        ->toContain("'href' => \$homeAnchor('#galeri')")
+        ->toContain("\$item['label'] = (string) \$this->translator->get('pages.galeri.title')")
+        ->toContain("\$item['route_patterns'] = ['galeri']");
 });
