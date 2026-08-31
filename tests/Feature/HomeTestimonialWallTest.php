@@ -44,6 +44,17 @@ it('keeps testimonial sample content complete in every public locale', function 
     }
 });
 
+it('keeps testimonial JS and CSS off the initial homepage graph', function (): void {
+    $entry = file_get_contents(resource_path('js/pages/welcome.js'));
+
+    expect($entry)
+        ->not->toContain("import './welcome/testimonial-wall.js';")
+        ->toContain("import('./welcome/testimonial-wall.js')")
+        ->toContain("document.querySelector('[data-testimonial-wall]')")
+        ->toContain("rootMargin: '150% 0px'")
+        ->toContain("'IntersectionObserver' in window");
+});
+
 it('mirrors Testimonial travel physically in RTL without reversing row phase', function (): void {
     $script = file_get_contents(resource_path('js/pages/welcome/testimonial-wall.js'));
 
