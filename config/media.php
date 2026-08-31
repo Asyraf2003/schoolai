@@ -73,7 +73,7 @@ return [
         ],
 
         'ornaments' => [
-            'geometry_32' => $publicUrl.'/site/ornaments/gallery-ornament-32-v1.webp',
+            'geometry_32' => $publicUrl.'/site/ornaments/gallery-ornament-32-v3.webp',
             'geometry_33' => $publicUrl.'/site/ornaments/gallery-ornament-33-v1.webp',
         ],
 
