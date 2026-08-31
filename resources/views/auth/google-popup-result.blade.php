@@ -11,15 +11,8 @@
 
     <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
         (() => {
-            const payload = @json([
-                'source' => 'schoolai-google-auth',
-                'token' => $popupToken,
-                'ok' => $ok,
-                'role' => $role,
-                'redirect' => $redirect,
-                'message' => $message,
-            ]);
-            const fallbackUrl = @json($fallbackUrl);
+            const payload = {{ \Illuminate\Support\Js::from($payload) }};
+            const fallbackUrl = {{ \Illuminate\Support\Js::from($fallbackUrl) }};
 
             if ('BroadcastChannel' in window) {
                 const channel = new BroadcastChannel('schoolai-google-auth');
