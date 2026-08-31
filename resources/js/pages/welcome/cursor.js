@@ -125,6 +125,7 @@ export function initHomepageCursor() {
     const cursor = document.createElement('span');
     cursor.className = 'home-cursor';
     cursor.dataset.homeCursor = '';
+    cursor.dataset.viewportOverlay = '';
     cursor.dataset.state = 'default';
     cursor.setAttribute('aria-hidden', 'true');
     body.append(cursor);
