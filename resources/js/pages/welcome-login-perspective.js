@@ -1,4 +1,5 @@
 import { mountPublicLogin, resetGoogleLogin } from './public-login.js';
+import { mountPerspectiveGoogleBridge } from './welcome/login-perspective-google.js';
 
 function initWelcomeLoginPerspective() {
     var template = document.querySelector('[data-login-perspective-template]');
@@ -14,10 +15,6 @@ function initWelcomeLoginPerspective() {
     var docScroll = 0;
     var isOpen = false;
     var closeTimer = null;
-    var activePopup = null;
-    var activeGoogleLink = null;
-    var popupWatch = null;
-    var popupMessageReceived = false;
     var currentState = 'choices';
 
     root.className = 'login-perspective effect-airbnb';
@@ -61,15 +58,17 @@ function initWelcomeLoginPerspective() {
         target.focus({ preventScroll: true });
     }
 
-    function activateState(name) {
+    function activateState(name, shouldFocus) {
         var next = stateElement(name) || stateElement('choices');
         currentState = next.getAttribute('data-login-perspective-state');
         states.forEach(function (state) {
             state.hidden = state !== next;
         });
-        window.requestAnimationFrame(function () {
-            focusState(next);
-        });
+        if (shouldFocus !== false) {
+            window.requestAnimationFrame(function () {
+                focusState(next);
+            });
+        }
     }
 
     function resetMessages() {
@@ -78,24 +77,6 @@ function initWelcomeLoginPerspective() {
             message.removeAttribute('data-auth-tone');
         });
         panel.querySelectorAll('[data-google-login]').forEach(resetGoogleLogin);
-    }
-
-    function stopPopupWatch() {
-        if (popupWatch) window.clearInterval(popupWatch);
-        popupWatch = null;
-    }
-
-    function watchPopup() {
-        stopPopupWatch();
-        popupWatch = window.setInterval(function () {
-            if (!activePopup || !activePopup.closed) return;
-            stopPopupWatch();
-            window.setTimeout(function () {
-                if (!popupMessageReceived) resetGoogleLogin(activeGoogleLink);
-                activePopup = null;
-                activeGoogleLink = null;
-            }, 300);
-        }, 400);
     }
 
     function openPerspective(event) {
@@ -112,7 +93,7 @@ function initWelcomeLoginPerspective() {
         wrapper.style.top = (docScroll * -1) + 'px';
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-        activateState('choices');
+        activateState('choices', false);
         panel.hidden = false;
         root.classList.add('modalview');
         isOpen = true;
@@ -120,9 +101,9 @@ function initWelcomeLoginPerspective() {
         triggers.forEach(function (trigger) {
             trigger.setAttribute('aria-expanded', 'true');
         });
-
         window.setTimeout(function () {
             root.classList.add('animate');
+            focusState(stateElement('choices'));
         }, 25);
     }
 
@@ -133,7 +114,7 @@ function initWelcomeLoginPerspective() {
         wrapper.style.top = '0px';
         panel.hidden = true;
         isOpen = false;
-        activateState('choices');
+        activateState('choices', false);
         resetMessages();
         document.body.scrollTop = docScroll;
         document.documentElement.scrollTop = docScroll;
@@ -169,40 +150,12 @@ function initWelcomeLoginPerspective() {
         if (event.key === 'Escape' && isOpen) closePerspective();
     });
 
-    window.addEventListener('auth:google-popup-opened', function (event) {
-        if (!event.detail || !panel.contains(event.detail.link)) return;
-        activePopup = event.detail.popup;
-        activeGoogleLink = event.detail.link;
-        popupMessageReceived = false;
-        watchPopup();
-    });
-
-    window.addEventListener('message', function (event) {
-        if (event.origin !== window.location.origin || !event.data) return;
-        if (event.data.source !== 'schoolai-google-auth') return;
-        if (activePopup && event.source !== activePopup) return;
-
-        popupMessageReceived = true;
-        stopPopupWatch();
-        var role = event.data.role || currentState;
-        activateState(role);
-        var state = stateElement(role);
-        var message = state ? state.querySelector('[data-auth-message]') : null;
-        resetGoogleLogin(activeGoogleLink);
-
-        if (message) {
-            message.textContent = event.data.message || '';
-            if (event.data.ok) message.setAttribute('data-auth-tone', 'success');
-        }
-
-        activePopup = null;
-        activeGoogleLink = null;
-        if (event.data.ok && event.data.redirect) {
-            window.setTimeout(function () {
-                window.location.assign(event.data.redirect);
-            }, 450);
-        }
-    });
+    mountPerspectiveGoogleBridge(
+        panel,
+        activateState,
+        stateElement,
+        function () { return currentState; }
+    );
 }
 
 if (document.readyState === 'loading') {
