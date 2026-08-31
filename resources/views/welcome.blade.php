@@ -10,6 +10,7 @@
     @vite([
       'resources/css/pages/welcome-critical.css',
       'resources/css/pages/welcome.css',
+      'resources/css/pages/welcome-login-perspective.css',
       'resources/css/pages/welcome-hero.css',
       'resources/css/pages/welcome-vision-waapi.css',
       'resources/css/pages/welcome-values-story.css',
@@ -22,6 +23,7 @@
       'resources/css/pages/welcome-editorial-headings.css',
       'resources/css/pages/welcome-editorial-description-desktop.css',
       'resources/js/pages/welcome.js',
+      'resources/js/pages/welcome-login-perspective.js',
       'resources/js/pages/welcome-hero.js',
       'resources/js/pages/welcome-editorial-headings.js',
     ])
@@ -51,6 +53,7 @@
 
     <noscript>
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome.css') }}">
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-login-perspective.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-vision-waapi.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-values-story.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-depth-gallery.css') }}">
@@ -91,5 +94,6 @@
     </main>
 
     @include('partials.site-footer', ['footerSection' => $footerSection])
+    @include('home.partials.login-perspective-template')
   </body>
 </html>
