@@ -32,6 +32,10 @@ function initWelcomeLoginPerspective() {
     });
 
     Array.prototype.slice.call(body.childNodes).forEach(function (node) {
+        if (node instanceof Element && node.matches('[data-viewport-overlay]')) {
+            return;
+        }
+
         wrapper.appendChild(node);
     });
 
