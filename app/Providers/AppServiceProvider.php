@@ -101,6 +101,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $deferredHomeStyles = [
             'resources/css/pages/welcome.css',
+            'resources/css/pages/welcome-login-perspective.css',
+            'resources/css/pages/welcome-mega-menu.css',
             'resources/css/pages/welcome-scroll-reveal.css',
             'resources/css/pages/welcome-vision-waapi.css',
             'resources/css/pages/welcome-values-story.css',

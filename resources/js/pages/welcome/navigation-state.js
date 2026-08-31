@@ -60,9 +60,9 @@ export function initializeNavigationState() {
     }
   });
 
-  function updateActiveNavLink() {
+  function resolveActiveNavLink() {
     var navbarEl = document.getElementById('navbar');
-    if (!navbarEl || !sections.length) return;
+    if (!navbarEl || !sections.length) return undefined;
 
     var navHeight = navbarEl.offsetHeight || 0;
     var topActivationLine = window.scrollY + navHeight + 48;
@@ -93,15 +93,21 @@ export function initializeNavigationState() {
       }
     });
 
-    if (current) {
-      setOnlyActiveNavLink(current.link);
+    return current ? current.link : null;
+  }
+
+  function applyActiveNavLink(activeLink) {
+    if (typeof activeLink === 'undefined') return;
+
+    if (activeLink) {
+      setOnlyActiveNavLink(activeLink);
       return;
     }
 
     restoreDefaultActiveNavLinks();
   }
 
-  /* ---------- 4. NAVBAR BERUBAH SAAT SCROLL ---------- */
+  /* ---------- 4. NAVBAR BERUBAH SAAT DISCROLL ---------- */
   var navbar = document.getElementById('navbar');
   var hero = document.getElementById('beranda');
   var navbarScrolled = navbar ? navbar.classList.contains('is-scrolled') : false;
@@ -113,21 +119,30 @@ export function initializeNavigationState() {
   );
 
   function handleNavbarScroll() {
-    if (!navbar) return;
+    if (!navbar) return false;
 
     var threshold = navbarScrolled ? 24 : 48;
     var nextScrolled = window.scrollY > threshold;
-    if (nextScrolled === navbarScrolled) return;
+    if (nextScrolled === navbarScrolled) return false;
 
     navbarScrolled = nextScrolled;
     navbar.classList.toggle('is-scrolled', nextScrolled);
+    return true;
   }
 
   function runNavigationUpdate() {
     navigationFrame = 0;
-    handleNavbarScroll();
+
+    // Resolve layout-dependent state before mutating the navbar geometry.
+    var activeLink = resolveActiveNavLink();
     headerVisibility.update();
-    updateActiveNavLink();
+    applyActiveNavLink(activeLink);
+
+    // is-scrolled changes navbar min-height. Commit it last, then measure the
+    // settled geometry on the next frame instead of forcing sync layout now.
+    if (handleNavbarScroll()) {
+      requestNavigationUpdate();
+    }
   }
 
   function requestNavigationUpdate() {
@@ -138,9 +153,7 @@ export function initializeNavigationState() {
   window.addEventListener('scroll', requestNavigationUpdate, { passive: true });
   window.addEventListener('resize', requestNavigationUpdate, { passive: true });
 
-  handleNavbarScroll();
-  headerVisibility.update();
-  updateActiveNavLink();
+  requestNavigationUpdate();
 
   /* ---------- 9. ANIMASI REVEAL SAAT SCROLL ---------- */
   var revealEls = document.querySelectorAll('.reveal');

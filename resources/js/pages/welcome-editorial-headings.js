@@ -61,11 +61,19 @@
                 heading: heading,
                 section: section,
                 previousTop: top,
-                armed: top > triggerLine
+                armed: top > triggerLine,
+                replayFrame: 0
             };
         });
 
+        function cancelReplay(item) {
+            if (!item.replayFrame) return;
+            window.cancelAnimationFrame(item.replayFrame);
+            item.replayFrame = 0;
+        }
+
         function prepare(item) {
+            cancelReplay(item);
             item.heading.classList.remove(
                 'welcome-editorial-heading--animated',
                 'welcome-editorial-heading--static'
@@ -73,14 +81,20 @@
         }
 
         function showStatic(item) {
+            cancelReplay(item);
             item.heading.classList.remove('welcome-editorial-heading--animated');
             item.heading.classList.add('welcome-editorial-heading--static');
         }
 
         function replay(item) {
             prepare(item);
-            void item.heading.offsetWidth;
-            item.heading.classList.add('welcome-editorial-heading--animated');
+
+            // Let the reset state paint before re-adding the animation class.
+            // This restarts the CSS animation without a synchronous layout read.
+            item.replayFrame = window.requestAnimationFrame(function () {
+                item.replayFrame = 0;
+                item.heading.classList.add('welcome-editorial-heading--animated');
+            });
         }
 
         function resetPresentation() {

@@ -25,7 +25,6 @@ export default defineConfig({
                 'resources/css/pages/welcome-depth-gallery.css',
                 'resources/css/pages/welcome-article-showcase.css',
                 'resources/css/pages/welcome-mega-menu.css',
-                'resources/css/pages/welcome-hero-visual.css',
                 'resources/css/pages/welcome-scroll-reveal.css',
                 'resources/css/pages/welcome-editorial-headings.css',
                 'resources/css/pages/welcome-editorial-description-desktop.css',
