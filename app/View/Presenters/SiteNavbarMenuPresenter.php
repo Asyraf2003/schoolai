@@ -66,24 +66,6 @@ final class SiteNavbarMenuPresenter
         }
         unset($item);
 
-        $loginLabels = match ($this->translator->getLocale()) {
-            'en' => [
-                'admin' => 'Login as Admin',
-                'guru' => 'Login as Teacher',
-                'murid' => 'Login as Student',
-            ],
-            'ar' => [
-                'admin' => 'تسجيل الدخول كمسؤول',
-                'guru' => 'تسجيل الدخول كمعلم',
-                'murid' => 'تسجيل الدخول كطالب',
-            ],
-            default => [
-                'admin' => 'Login sebagai Admin',
-                'guru' => 'Login sebagai Guru',
-                'murid' => 'Login sebagai Murid',
-            ],
-        };
-
         $loginItem = [
             'label' => $this->translator->get('app.auth.navigation.login'),
             'type' => 'login',
@@ -93,23 +75,6 @@ final class SiteNavbarMenuPresenter
                 'login',
                 'guru.login',
                 'murid.login',
-            ],
-            'mega' => [
-                'toggle_label' => $this->translator->get('app.auth.navigation.toggle'),
-                'links' => [
-                    [
-                        'label' => $loginLabels['admin'],
-                        'href' => route('login'),
-                    ],
-                    [
-                        'label' => $loginLabels['guru'],
-                        'href' => route('guru.login'),
-                    ],
-                    [
-                        'label' => $loginLabels['murid'],
-                        'href' => route('murid.login'),
-                    ],
-                ],
             ],
         ];
         $languageIndex = collect($menuItems)->search(
@@ -314,7 +279,7 @@ final class SiteNavbarMenuPresenter
                     'href' => route($routeName, [
                         'kategori' => $link['category'],
                     ]),
-                ]),
+                ),
                 $links,
             ),
         ]);
