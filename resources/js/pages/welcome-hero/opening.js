@@ -82,7 +82,6 @@ export function initOpeningHero(root, slide) {
 
     if (mobileViewport.matches) {
         root.addEventListener('pointerdown', startMobileVideo, { once: true, passive: true });
-        root.addEventListener('keydown', startMobileVideo, { once: true });
         return;
     }
 
