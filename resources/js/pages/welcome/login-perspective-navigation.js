@@ -2,15 +2,10 @@ function initLoginPerspectiveNavigation() {
   var loginItems = Array.prototype.slice.call(document.querySelectorAll('.nav-login'));
   if (!loginItems.length) return;
 
-  var sourceLinks = Array.prototype.slice.call(
-    loginItems[0].querySelectorAll('.nav-mega__link')
-  );
-  if (!sourceLinks.length) return;
-
   var triggers = [];
 
   loginItems.forEach(function (item) {
-    var trigger = item.querySelector('[data-nav-mega-toggle]');
+    var trigger = item.querySelector('.nav-link');
     if (!trigger) return;
 
     item.classList.remove('nav-mega', 'is-open');
@@ -33,6 +28,33 @@ function initLoginPerspectiveNavigation() {
 
   if (!triggers.length) return;
 
+  var locale = (document.documentElement.lang || 'id').toLowerCase();
+  var labels = locale.indexOf('ar') === 0
+    ? {
+        admin: 'تسجيل الدخول كمسؤول',
+        guru: 'تسجيل الدخول كمعلم',
+        murid: 'تسجيل الدخول كطالب',
+      }
+    : locale.indexOf('en') === 0
+      ? {
+          admin: 'Login as Admin',
+          guru: 'Login as Teacher',
+          murid: 'Login as Student',
+        }
+      : {
+          admin: 'Login sebagai Admin',
+          guru: 'Login sebagai Guru',
+          murid: 'Login sebagai Murid',
+        };
+
+  var portalUrl = new URL(triggers[0].href, window.location.href);
+  var loginPath = portalUrl.pathname.replace(/\/+$/, '');
+  var roles = [
+    { label: labels.admin, href: portalUrl.origin + loginPath + '/admin' },
+    { label: labels.guru, href: portalUrl.origin + loginPath + '/guru' },
+    { label: labels.murid, href: portalUrl.origin + loginPath + '/murid' },
+  ];
+
   var nav = document.createElement('nav');
   nav.id = 'loginPerspectiveNav';
   nav.className = 'login-perspective__nav outer-nav left vertical';
@@ -40,10 +62,10 @@ function initLoginPerspectiveNavigation() {
   nav.setAttribute('aria-label', triggers[0].getAttribute('aria-label') || 'Login');
   nav.hidden = true;
 
-  sourceLinks.forEach(function (sourceLink) {
+  roles.forEach(function (role) {
     var link = document.createElement('a');
-    link.href = sourceLink.href;
-    link.textContent = (sourceLink.textContent || '').trim();
+    link.href = role.href;
+    link.textContent = role.label;
     nav.appendChild(link);
   });
 
