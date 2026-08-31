@@ -20,6 +20,7 @@ export default defineConfig({
                 'resources/css/pages/welcome.css',
                 'resources/css/pages/welcome-login-perspective.css',
                 'resources/css/pages/welcome-hero.css',
+                'resources/css/pages/welcome-home-hero.css',
                 'resources/css/pages/welcome-vision-waapi.css',
                 'resources/css/pages/welcome-values-story.css',
                 'resources/css/pages/welcome-depth-gallery.css',

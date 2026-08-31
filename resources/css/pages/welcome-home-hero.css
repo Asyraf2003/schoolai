@@ -1,0 +1,6 @@
+/* Homepage-only critical hero composition.
+ * Keep the shared hero module graph checksum-stable for public routes while
+ * folding the small visual refinement into the homepage's blocking hero CSS.
+ */
+@import "./welcome-hero.css";
+@import "./welcome-hero-visual.css";
