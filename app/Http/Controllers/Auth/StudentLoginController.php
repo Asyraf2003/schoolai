@@ -13,7 +13,7 @@ final class StudentLoginController extends Controller
 {
     public function show(): View
     {
-        return view('auth.student-login');
+        return view('auth.login-perspective', ['activeRole' => 'murid']);
     }
 
     public function store(
