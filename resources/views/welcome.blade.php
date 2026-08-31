@@ -68,16 +68,8 @@
 
     <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
       (() => {
-        const deferredStyles = document.querySelectorAll(
-          'link[data-home-deferred-style]'
-        );
-
-        if (deferredStyles.length === 0) {
-          return;
-        }
-
         const activateDeferredStyles = () => {
-          deferredStyles.forEach((stylesheet) => {
+          document.querySelectorAll('link[data-home-deferred-style]').forEach((stylesheet) => {
             stylesheet.media = 'all';
             stylesheet.removeAttribute('data-home-deferred-style');
           });
@@ -86,6 +78,8 @@
         requestAnimationFrame(() => {
           requestAnimationFrame(activateDeferredStyles);
         });
+
+        document.addEventListener('DOMContentLoaded', activateDeferredStyles, { once: true });
       })();
     </script>
 
