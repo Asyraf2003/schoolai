@@ -48,7 +48,7 @@ it('replaces the homepage facilities story with up to three gallery section link
     expect($galleryBlade)
         ->toContain('home-gallery-links__list')
         ->toContain('home-gallery-links__item')
-        ->toContain("{{ $teaser['href'] }}")
+        ->toContain("href=\"{{ \$teaser['href'] }}\"")
         ->not->toContain("@include('home.sections.gallery-depth')")
         ->and($composer)
         ->toContain('GalleryPageSection::query()')
