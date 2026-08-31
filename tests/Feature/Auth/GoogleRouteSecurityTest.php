@@ -20,11 +20,29 @@ it('sets separate admin and guru OAuth intents without using them as authorizati
 
     $this->get(route('google.redirect'))
         ->assertRedirect('https://accounts.google.com')
-        ->assertSessionHas('google_login_role', 'admin');
+        ->assertSessionHas('google_login_role', 'admin')
+        ->assertSessionHas('google_login_popup', false);
 
     $this->get(route('google.guru.redirect'))
         ->assertRedirect('https://accounts.google.com')
-        ->assertSessionHas('google_login_role', 'guru');
+        ->assertSessionHas('google_login_role', 'guru')
+        ->assertSessionHas('google_login_popup', false);
+});
+
+it('stores popup presentation intent separately from the authorized Google role', function (): void {
+    $provider = Mockery::mock();
+    $provider->shouldReceive('redirect')->twice()->andReturn(redirect('https://accounts.google.com'));
+    Socialite::shouldReceive('driver')->with('google')->twice()->andReturn($provider);
+
+    $this->get(route('google.redirect', ['popup' => 1]))
+        ->assertRedirect('https://accounts.google.com')
+        ->assertSessionHas('google_login_role', 'admin')
+        ->assertSessionHas('google_login_popup', true);
+
+    $this->get(route('google.guru.redirect', ['popup' => 1]))
+        ->assertRedirect('https://accounts.google.com')
+        ->assertSessionHas('google_login_role', 'guru')
+        ->assertSessionHas('google_login_popup', true);
 });
 
 it('applies the named limiter to every Google OAuth endpoint', function (): void {
