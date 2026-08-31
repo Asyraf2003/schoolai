@@ -1,15 +1,19 @@
 @extends('layouts.public', ['title' => $page['title'] ?? __('pages.galeri.title'), 'description' => $page['description'] ?? __('pages.galeri.description')])
 
 @php
-  $galleryCategories = [];
   $primaryItems = is_array($items ?? null) ? $items : [];
+  $sectionCategories = [];
+  $allItemsByKey = [];
 
-  $galleryCategories[] = [
-      'anchor' => 'gallery-main',
-      'title' => (string) ($page['wall']['title'] ?? $page['title'] ?? 'Index'),
-      'description' => (string) ($page['hero']['subtitle'] ?? ''),
-      'items' => $primaryItems,
-  ];
+  foreach ($primaryItems as $item) {
+      $itemKey = trim((string) ($item['media_url'] ?? $item['thumbnail_url'] ?? ''));
+
+      if ($itemKey === '') {
+          $itemKey = (string) ($item['type'] ?? 'photo').'|'.(string) ($item['title'] ?? $item['label'] ?? '');
+      }
+
+      $allItemsByKey[$itemKey] = $item;
+  }
 
   foreach ((is_array($sections ?? null) ? $sections : []) as $section) {
       $sectionItems = is_array($section['items'] ?? null) ? $section['items'] : [];
@@ -18,12 +22,31 @@
           continue;
       }
 
-      $galleryCategories[] = [
-          'anchor' => (string) ($section['anchor'] ?? ('gallery-section-'.($section['id'] ?? count($galleryCategories)))),
+      $sectionCategories[] = [
+          'anchor' => (string) ($section['anchor'] ?? ('gallery-section-'.($section['id'] ?? count($sectionCategories)))),
           'title' => trim((string) ($section['title'] ?? '')) !== '' ? (string) $section['title'] : 'Index',
-          'description' => (string) ($section['description'] ?? ''),
           'items' => $sectionItems,
       ];
+
+      foreach ($sectionItems as $item) {
+          $itemKey = trim((string) ($item['media_url'] ?? $item['thumbnail_url'] ?? ''));
+
+          if ($itemKey === '') {
+              $itemKey = (string) ($item['type'] ?? 'photo').'|'.(string) ($item['title'] ?? $item['label'] ?? '');
+          }
+
+          $allItemsByKey[$itemKey] = $item;
+      }
+  }
+
+  $galleryCategories = [[
+      'anchor' => 'gallery-all',
+      'title' => 'All',
+      'items' => array_values($allItemsByKey),
+  ]];
+
+  foreach ($sectionCategories as $sectionCategory) {
+      $galleryCategories[] = $sectionCategory;
   }
 @endphp
 
