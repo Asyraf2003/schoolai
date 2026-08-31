@@ -30,6 +30,23 @@ it('keeps the landing page as the persistent Codrops perspective surface', funct
         ->not->toContain("activateState(role, link.href)");
 });
 
+it('binds popup OAuth results to the active browser attempt instead of relying on opener alone', function (): void {
+    $login = file_get_contents(resource_path('js/pages/public-login.js'));
+    $bridge = file_get_contents(resource_path('js/pages/welcome/login-perspective-google.js'));
+    $callback = file_get_contents(resource_path('views/auth/google-popup-result.blade.php'));
+
+    expect($login)
+        ->toContain("popupUrl.searchParams.set('popup_token', token)")
+        ->and($bridge)
+        ->toContain("payload.token !== activeToken")
+        ->toContain("new BroadcastChannel('schoolai-google-auth')")
+        ->toContain("event.key !== 'schoolai-google-auth'")
+        ->and($callback)
+        ->toContain("'token' => \$popupToken")
+        ->toContain("new BroadcastChannel('schoolai-google-auth')")
+        ->toContain("localStorage.setItem('schoolai-google-auth'");
+});
+
 it('does not restore the deleted import-based homepage perspective implementation', function (): void {
     $welcomeJs = file_get_contents(resource_path('js/pages/welcome.js'));
     $welcomeCss = file_get_contents(resource_path('css/pages/welcome.css'));
