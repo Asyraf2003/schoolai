@@ -75,9 +75,10 @@ it('keeps the homepage request path free from repeat data rebuilds and schema pr
     ));
 
     expect($page)
-        ->toContain('private ?array $resolvedHomeData = null;')
-        ->toContain('if ($this->resolvedHomeData !== null)')
-        ->toContain('return $this->resolvedHomeData = $this->canonicalizeHomeMedia(')
+        ->toContain('private array $resolvedHomeDataByLocale = [];')
+        ->toContain('$locale = app()->getLocale();')
+        ->toContain('if (isset($this->resolvedHomeDataByLocale[$locale]))')
+        ->toContain('return $this->resolvedHomeDataByLocale[$locale] = $this->canonicalizeHomeMedia(')
         ->and($gallery)
         ->not->toContain('Schema::hasTable')
         ->not->toContain('Illuminate\\Support\\Facades\\Schema');
