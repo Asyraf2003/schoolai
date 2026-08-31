@@ -56,10 +56,15 @@ function mountAuthPerspective(root) {
         }, 460);
     }
 
+    function panelForRole(role) {
+        return panels.find(function (panel) {
+            return panel.getAttribute('data-auth-role-panel') === role;
+        }) || null;
+    }
+
     function activateRole(role, href) {
         panels.forEach(function (panel) {
-            var active = panel.getAttribute('data-auth-role-panel') === role;
-            panel.hidden = !active;
+            panel.hidden = panel !== panelForRole(role);
         });
 
         if (href && window.history && window.history.replaceState) {
@@ -88,8 +93,10 @@ function mountAuthPerspective(root) {
 
     roleLinks.forEach(function (link) {
         link.addEventListener('click', function (event) {
-            event.preventDefault();
             var role = link.getAttribute('data-auth-role-target');
+            if (!panelForRole(role)) return;
+
+            event.preventDefault();
             activateRole(role, link.href);
             closeMenu();
         });
