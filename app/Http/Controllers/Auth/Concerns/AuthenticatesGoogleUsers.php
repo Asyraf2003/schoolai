@@ -16,6 +16,7 @@ trait AuthenticatesGoogleUsers
     {
         $request->session()->put('google_login_role', AccountRole::Admin->value);
         $request->session()->put('google_login_popup', $request->boolean('popup'));
+        $request->session()->put('google_login_popup_token', mb_substr((string) $request->query('popup_token', ''), 0, 128));
 
         return Socialite::driver('google')->redirect();
     }
@@ -24,6 +25,7 @@ trait AuthenticatesGoogleUsers
     {
         $request->session()->put('google_login_role', AccountRole::Guru->value);
         $request->session()->put('google_login_popup', $request->boolean('popup'));
+        $request->session()->put('google_login_popup_token', mb_substr((string) $request->query('popup_token', ''), 0, 128));
 
         return Socialite::driver('google')->redirect();
     }
@@ -31,50 +33,27 @@ trait AuthenticatesGoogleUsers
     public function callback(Request $request): RedirectResponse|Response
     {
         $popup = (bool) $request->session()->pull('google_login_popup', false);
-        $intendedRole = AccountRole::tryFrom((string) $request->session()->pull(
-            'google_login_role',
-        ));
-        $denialRoute = $intendedRole === AccountRole::Guru
-            ? 'guru.login'
-            : 'login';
+        $popupToken = (string) $request->session()->pull('google_login_popup_token', '');
+        $intendedRole = AccountRole::tryFrom((string) $request->session()->pull('google_login_role'));
+        $denialRoute = $intendedRole === AccountRole::Guru ? 'guru.login' : 'login';
 
         if (! in_array($intendedRole, [AccountRole::Admin, AccountRole::Guru], true)) {
-            return $this->denyGoogle(
-                'invalid_login_intent',
-                null,
-                $denialRoute,
-                $popup,
-                $intendedRole?->value,
-            );
+            return $this->denyGoogle('invalid_login_intent', null, $denialRoute, $popup, $intendedRole?->value, $popupToken);
         }
 
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (Throwable) {
-            return $this->denyGoogle(
-                'provider_error',
-                null,
-                $denialRoute,
-                $popup,
-                $intendedRole->value,
-            );
+            return $this->denyGoogle('provider_error', null, $denialRoute, $popup, $intendedRole->value, $popupToken);
         }
 
         $email = mb_strtolower(trim((string) $googleUser->getEmail()));
         $googleId = trim((string) $googleUser->getId());
         $rawUser = is_array($googleUser->user ?? null) ? $googleUser->user : [];
-        $verified = $rawUser['email_verified']
-            ?? $rawUser['verified_email']
-            ?? null;
+        $verified = $rawUser['email_verified'] ?? $rawUser['verified_email'] ?? null;
 
         if ($email === '' || $googleId === '' || $verified !== true) {
-            return $this->denyGoogle(
-                'invalid_provider_identity',
-                null,
-                $denialRoute,
-                $popup,
-                $intendedRole->value,
-            );
+            return $this->denyGoogle('invalid_provider_identity', null, $denialRoute, $popup, $intendedRole->value, $popupToken);
         }
 
         $resolution = $this->resolveUser($email, $googleId, $intendedRole);
@@ -87,18 +66,8 @@ trait AuthenticatesGoogleUsers
             );
         }
 
-        if (
-            ! $user instanceof User
-            || $user->isDisabled()
-            || $user->role !== $intendedRole
-        ) {
-            return $this->denyGoogle(
-                'access_unavailable',
-                $user,
-                $denialRoute,
-                $popup,
-                $intendedRole->value,
-            );
+        if (! $user instanceof User || $user->isDisabled() || $user->role !== $intendedRole) {
+            return $this->denyGoogle('access_unavailable', $user, $denialRoute, $popup, $intendedRole->value, $popupToken);
         }
 
         if ($resolution['bound']) {
@@ -113,9 +82,7 @@ trait AuthenticatesGoogleUsers
         $user = $this->sessionManager->login($request, $user);
 
         $this->auditLogger->record(
-            $user->isAdmin()
-                ? 'auth.admin.login_succeeded'
-                : 'auth.guru.login_succeeded',
+            $user->isAdmin() ? 'auth.admin.login_succeeded' : 'auth.guru.login_succeeded',
             actor: $user,
             subject: $user,
         );
@@ -128,12 +95,11 @@ trait AuthenticatesGoogleUsers
                 route($dashboardRoute),
                 __('app.auth.success.logged_in'),
                 route($denialRoute),
+                $popupToken,
             );
         }
 
-        return redirect()
-            ->route($dashboardRoute)
-            ->with('success', __('app.auth.success.logged_in'));
+        return redirect()->route($dashboardRoute)->with('success', __('app.auth.success.logged_in'));
     }
 
     private function denyGoogle(
@@ -142,6 +108,7 @@ trait AuthenticatesGoogleUsers
         string $route = 'login',
         bool $popup = false,
         ?string $role = null,
+        string $popupToken = '',
     ): RedirectResponse|Response {
         $this->auditLogger->record(
             'auth.google.login_denied',
@@ -152,18 +119,10 @@ trait AuthenticatesGoogleUsers
 
         $message = __('app.auth.errors.access_unavailable');
         if ($popup) {
-            return $this->googlePopupResult(
-                false,
-                $role,
-                null,
-                $message,
-                route($route),
-            );
+            return $this->googlePopupResult(false, $role, null, $message, route($route), $popupToken);
         }
 
-        return redirect()
-            ->route($route)
-            ->withErrors(['email' => $message]);
+        return redirect()->route($route)->withErrors(['email' => $message]);
     }
 
     private function googlePopupResult(
@@ -172,6 +131,7 @@ trait AuthenticatesGoogleUsers
         ?string $redirect,
         string $message,
         string $fallbackUrl,
+        string $popupToken,
     ): Response {
         return response()->view('auth.google-popup-result', [
             'ok' => $ok,
@@ -179,6 +139,7 @@ trait AuthenticatesGoogleUsers
             'redirect' => $redirect,
             'message' => $message,
             'fallbackUrl' => $fallbackUrl,
+            'popupToken' => $popupToken,
         ]);
     }
 }
