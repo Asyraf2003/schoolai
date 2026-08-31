@@ -51,7 +51,7 @@ it('renders the fixed R2 video as a deferred autoplay Opening slide when no Arti
         ->toContain("video.setAttribute('data-hydrated', 'true')")
         ->toContain("window.matchMedia('(max-width: 767px)')")
         ->toContain("root.addEventListener('pointerdown', startMobileVideo")
-        ->toContain("root.addEventListener('keydown', startMobileVideo")
+        ->not->toContain("addEventListener('keydown'")
         ->toContain("'requestIdleCallback' in window")
         ->toContain('timeout: 900')
         ->toContain('window.setTimeout(startDeferredVideo, 120)')
