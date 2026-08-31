@@ -4,14 +4,12 @@
   $galleryCategories = [];
   $primaryItems = is_array($items ?? null) ? $items : [];
 
-  if ($primaryItems !== []) {
-      $galleryCategories[] = [
-          'anchor' => 'gallery-main',
-          'title' => (string) ($page['wall']['title'] ?? $page['title'] ?? 'Index'),
-          'description' => (string) ($page['hero']['subtitle'] ?? ''),
-          'items' => $primaryItems,
-      ];
-  }
+  $galleryCategories[] = [
+      'anchor' => 'gallery-main',
+      'title' => (string) ($page['wall']['title'] ?? $page['title'] ?? 'Index'),
+      'description' => (string) ($page['hero']['subtitle'] ?? ''),
+      'items' => $primaryItems,
+  ];
 
   foreach ((is_array($sections ?? null) ? $sections : []) as $section) {
       $sectionItems = is_array($section['items'] ?? null) ? $section['items'] : [];
@@ -37,23 +35,21 @@
         <span data-gallery-active-title>{{ $galleryCategories[0]['title'] ?? 'Index' }}</span>
       </h1>
 
-      @if($galleryCategories !== [])
-        <nav class="gallery-grid-demo__demos" aria-label="{{ $page['wall']['title'] ?? __('pages.galeri.title') }}">
-          @foreach($galleryCategories as $categoryIndex => $category)
-            <a
-              href="#{{ $category['anchor'] }}"
-              class="{{ $categoryIndex === 0 ? 'current-demo' : '' }}"
-              data-gallery-category-target="{{ $category['anchor'] }}"
-            >
-              {{ $category['title'] !== '' ? $category['title'] : 'Index' }}
-            </a>
-          @endforeach
-        </nav>
-      @endif
+      <nav class="gallery-grid-demo__demos" aria-label="{{ $page['wall']['title'] ?? __('pages.galeri.title') }}">
+        @foreach($galleryCategories as $categoryIndex => $category)
+          <a
+            href="#{{ $category['anchor'] }}"
+            class="{{ $categoryIndex === 0 ? 'current-demo' : '' }}"
+            data-gallery-category-target="{{ $category['anchor'] }}"
+          >
+            {{ $category['title'] !== '' ? $category['title'] : 'Index' }}
+          </a>
+        @endforeach
+      </nav>
     </header>
 
     <div class="gallery-grid-demo__panels">
-      @forelse($galleryCategories as $categoryIndex => $category)
+      @foreach($galleryCategories as $categoryIndex => $category)
         @php($effectNumber = ($categoryIndex % 8) + 1)
 
         <section
@@ -63,60 +59,62 @@
           data-gallery-title="{{ $category['title'] }}"
           @if($categoryIndex !== 0) hidden @endif
         >
-          <ul
-            id="gallery-grid-{{ $categoryIndex }}"
-            class="gallery-grid effect-{{ $effectNumber }}"
-            data-gallery-grid
-          >
-            @foreach($category['items'] as $item)
-              @php
-                $type = (string) ($item['type'] ?? 'photo');
-                $isVideo = $type === 'video';
-                $isDirectVideo = $isVideo && (bool) ($item['is_direct_video'] ?? false);
-                $title = trim((string) ($item['title'] ?? $item['label'] ?? ''));
-                $mediaUrl = (string) ($item['media_url'] ?? '');
-                $thumbnailUrl = (string) ($item['thumbnail_url'] ?? '');
-                $displayUrl = $thumbnailUrl !== '' ? $thumbnailUrl : $mediaUrl;
+          @if($category['items'] !== [])
+            <ul
+              id="gallery-grid-{{ $categoryIndex }}"
+              class="gallery-grid effect-{{ $effectNumber }}"
+              data-gallery-grid
+            >
+              @foreach($category['items'] as $item)
+                @php
+                  $type = (string) ($item['type'] ?? 'photo');
+                  $isVideo = $type === 'video';
+                  $isDirectVideo = $isVideo && (bool) ($item['is_direct_video'] ?? false);
+                  $title = trim((string) ($item['title'] ?? $item['label'] ?? ''));
+                  $mediaUrl = (string) ($item['media_url'] ?? '');
+                  $thumbnailUrl = (string) ($item['thumbnail_url'] ?? '');
+                  $displayUrl = $thumbnailUrl !== '' ? $thumbnailUrl : $mediaUrl;
 
-                if (!$isVideo && $displayUrl === '') {
-                    $displayUrl = (string) config('media.static.hero_school');
-                }
-              @endphp
+                  if (!$isVideo && $displayUrl === '') {
+                      $displayUrl = (string) config('media.static.hero_school');
+                  }
+                @endphp
 
-              <li>
-                <button
-                  type="button"
-                  class="gallery-grid__media"
-                  data-gallery-modal-open
-                  data-gallery-title="{{ $title }}"
-                  data-gallery-media-url="{{ $mediaUrl }}"
-                  data-gallery-thumbnail-url="{{ $displayUrl }}"
-                  data-gallery-is-video="{{ $isVideo ? '1' : '0' }}"
-                  data-gallery-is-direct-video="{{ $isDirectVideo ? '1' : '0' }}"
-                  aria-label="{{ $title }}"
-                >
-                  @if($isDirectVideo && $mediaUrl !== '')
-                    <video src="{{ $mediaUrl }}" muted playsinline webkit-playsinline preload="metadata" aria-hidden="true"></video>
-                    <span class="gallery-grid__play" aria-hidden="true">▶</span>
-                  @elseif($displayUrl !== '')
-                    <img src="{{ $displayUrl }}" alt="{{ $title }}" loading="lazy" decoding="async">
-                    @if($isVideo)
+                <li>
+                  <button
+                    type="button"
+                    class="gallery-grid__media"
+                    data-gallery-modal-open
+                    data-gallery-title="{{ $title }}"
+                    data-gallery-media-url="{{ $mediaUrl }}"
+                    data-gallery-thumbnail-url="{{ $displayUrl }}"
+                    data-gallery-is-video="{{ $isVideo ? '1' : '0' }}"
+                    data-gallery-is-direct-video="{{ $isDirectVideo ? '1' : '0' }}"
+                    aria-label="{{ $title }}"
+                  >
+                    @if($isDirectVideo && $mediaUrl !== '')
+                      <video src="{{ $mediaUrl }}" muted playsinline webkit-playsinline preload="metadata" aria-hidden="true"></video>
+                      <span class="gallery-grid__play" aria-hidden="true">▶</span>
+                    @elseif($displayUrl !== '')
+                      <img src="{{ $displayUrl }}" alt="{{ $title }}" decoding="async">
+                      @if($isVideo)
+                        <span class="gallery-grid__play" aria-hidden="true">▶</span>
+                      @endif
+                    @else
+                      <span class="gallery-grid__fallback" aria-hidden="true">{{ $item['emoji'] ?? '▶' }}</span>
                       <span class="gallery-grid__play" aria-hidden="true">▶</span>
                     @endif
-                  @else
-                    <span class="gallery-grid__fallback" aria-hidden="true">{{ $item['emoji'] ?? '▶' }}</span>
-                    <span class="gallery-grid__play" aria-hidden="true">▶</span>
-                  @endif
-                </button>
-              </li>
-            @endforeach
-          </ul>
+                  </button>
+                </li>
+              @endforeach
+            </ul>
+          @else
+            <div class="gallery-grid-demo__empty">
+              <h2>{{ $category['title'] !== '' ? $category['title'] : 'Index' }}</h2>
+            </div>
+          @endif
         </section>
-      @empty
-        <section id="gallery-main" class="gallery-grid-demo__empty">
-          <h2>{{ $page['wall']['title'] ?? __('pages.galeri.title') }}</h2>
-        </section>
-      @endforelse
+      @endforeach
     </div>
   </div>
 
