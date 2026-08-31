@@ -12,6 +12,7 @@
    9. Tilt halus pada ilustrasi hero (opsional)
    ========================================================= */
 
+import './welcome/login-perspective-navigation.js';
 import './welcome/navigation.js';
 import './welcome/public-content.js';
 import './welcome/gallery-wall.js';
