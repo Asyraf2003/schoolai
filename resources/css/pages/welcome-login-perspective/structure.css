@@ -1,0 +1,78 @@
+/* Codrops PerspectivePageViewNavigation, template 1 / Airbnb effect. */
+.login-perspective {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #b8b6b4;
+}
+
+.login-perspective__container {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    background: #fff;
+    outline: 1px solid rgb(0 0 0 / 0%);
+    transform-origin: 50% 50%;
+    transition: transform .4s;
+}
+
+.login-perspective__container.transform {
+    transform: translateZ(0) translateX(0) rotateY(0deg);
+}
+
+.login-perspective__container::after {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    height: 0;
+    background: rgb(0 0 0 / 20%);
+    content: "";
+    opacity: 0;
+    transition: opacity .4s, height 0s .4s;
+}
+
+.login-perspective__wrapper {
+    position: relative;
+}
+
+.login-perspective.modalview {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    perspective: 1500px;
+}
+
+.login-perspective.modalview .login-perspective__container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    backface-visibility: hidden;
+}
+
+.login-perspective.modalview .login-perspective__wrapper {
+    transform: translateZ(-1px);
+}
+
+.login-perspective.animate .login-perspective__container::after {
+    height: 101%;
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.login-perspective.effect-airbnb.animate .login-perspective__container {
+    transform: translateZ(-1500px) translateX(100%) rotateY(-45deg);
+}
+
+html[dir="rtl"] .login-perspective.effect-airbnb.animate .login-perspective__container {
+    transform: translateZ(-1500px) translateX(-100%) rotateY(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-perspective__container {
+        transition-duration: .01ms !important;
+    }
+}
