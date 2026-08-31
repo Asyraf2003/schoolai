@@ -7,6 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/pages/welcome.js',
+                'resources/js/pages/welcome-login-perspective.js',
                 'resources/js/pages/welcome-hero.js',
                 'resources/js/pages/welcome-scroll-reveal.js',
                 'resources/js/pages/welcome-editorial-headings.js',
@@ -17,6 +18,7 @@ export default defineConfig({
                 'resources/js/pages/admin-accounts.js',
                 'resources/css/pages/welcome-critical.css',
                 'resources/css/pages/welcome.css',
+                'resources/css/pages/welcome-login-perspective.css',
                 'resources/css/pages/welcome-hero.css',
                 'resources/css/pages/welcome-vision-waapi.css',
                 'resources/css/pages/welcome-values-story.css',
