@@ -5,6 +5,8 @@ it('keeps homepage interaction styles out of the first paint path', function ():
     $head = file_get_contents(resource_path('views/partials/site-head-meta.blade.php'));
     $sharedHero = file_get_contents(resource_path('css/pages/welcome-hero.css'));
     $homeHero = file_get_contents(resource_path('css/pages/welcome-home-hero.css'));
+    $latinType = file_get_contents(resource_path('css/pages/welcome-home-type-latin.css'));
+    $arabicType = file_get_contents(resource_path('css/pages/welcome-home-type-arabic.css'));
     $blade = file_get_contents(resource_path('views/welcome.blade.php'));
     $vite = file_get_contents(base_path('vite.config.js'));
 
@@ -16,13 +18,26 @@ it('keeps homepage interaction styles out of the first paint path', function ():
         ->and($homeHero)
         ->toContain('@import "./welcome-hero.css";')
         ->toContain('@import "./welcome-hero-visual.css";')
+        ->and($latinType)
+        ->toContain('@import "../text-system.css";')
+        ->toContain('@import "../public-latin-inter.css";')
+        ->and($arabicType)
+        ->toContain('@import "../text-system.css";')
+        ->toContain('@import "../arabic-typography.css";')
         ->and($blade)
         ->toContain("'resources/css/pages/welcome-home-hero.css'")
+        ->toContain("'resources/css/pages/welcome-home-type-latin.css'")
+        ->toContain("'resources/css/pages/welcome-home-type-arabic.css'")
         ->not->toContain("'resources/css/pages/welcome-hero.css'")
+        ->not->toContain("'resources/css/text-system.css'")
+        ->not->toContain("'resources/css/public-latin-inter.css'")
+        ->not->toContain("'resources/css/arabic-typography.css'")
         ->and($head)
         ->not->toContain("'resources/css/pages/welcome-hero-visual.css'")
         ->and($vite)
         ->toContain("'resources/css/pages/welcome-home-hero.css'")
+        ->toContain("'resources/css/pages/welcome-home-type-latin.css'")
+        ->toContain("'resources/css/pages/welcome-home-type-arabic.css'")
         ->not->toContain("'resources/css/pages/welcome-hero-visual.css'");
 });
 
