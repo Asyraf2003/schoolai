@@ -61,13 +61,15 @@ final class GalleryWallCardPresenter
     /** @return array<int, string> */
     private function fallbackImages(): array
     {
-        return [
-            'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=82',
-            'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=82',
-            'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1400&q=82',
-            'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1400&q=82',
-            'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=82',
-            'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1400&q=82',
-        ];
+        $schoolLife = array_values(array_filter(
+            config('media.static.school_life', []),
+            static fn (mixed $url): bool => is_string($url) && trim($url) !== '',
+        ));
+
+        if ($schoolLife !== []) {
+            return $schoolLife;
+        }
+
+        return [(string) config('media.static.hero_school')];
     }
 }
