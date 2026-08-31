@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
 it('keeps the landing page as the persistent Codrops perspective surface', function (): void {
     $vite = file_get_contents(base_path('vite.config.js'));
     $home = file_get_contents(resource_path('views/welcome.blade.php'));
@@ -34,6 +38,7 @@ it('binds popup OAuth results to the active browser attempt instead of relying o
     $login = file_get_contents(resource_path('js/pages/public-login.js'));
     $bridge = file_get_contents(resource_path('js/pages/welcome/login-perspective-google.js'));
     $callback = file_get_contents(resource_path('views/auth/google-popup-result.blade.php'));
+    $auth = file_get_contents(app_path('Http/Controllers/Auth/Concerns/AuthenticatesGoogleUsers.php'));
 
     expect($login)
         ->toContain("popupUrl.searchParams.set('popup_token', token)")
@@ -41,8 +46,10 @@ it('binds popup OAuth results to the active browser attempt instead of relying o
         ->toContain("payload.token !== activeToken")
         ->toContain("new BroadcastChannel('schoolai-google-auth')")
         ->toContain("event.key !== 'schoolai-google-auth'")
-        ->and($callback)
+        ->and($auth)
         ->toContain("'token' => \$popupToken")
+        ->and($callback)
+        ->toContain('Js::from($payload)')
         ->toContain("new BroadcastChannel('schoolai-google-auth')")
         ->toContain("localStorage.setItem('schoolai-google-auth'");
 });
@@ -70,6 +77,12 @@ it('keeps direct login URLs on the existing fallback auth shell', function (): v
         expect($vite)->toContain($asset);
         expect($view)->toContain($asset);
     }
+
+    expect($view)
+        ->toContain("@if (\$currentRole === null)")
+        ->toContain("@elseif (\$currentRole === 'admin')")
+        ->toContain("@elseif (\$currentRole === 'guru')")
+        ->toContain("href=\"{{ route('portal.login') }}\"");
 });
 
 it('renders the homepage login state template without replacing the landing page', function (): void {
