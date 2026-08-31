@@ -37,6 +37,7 @@
     @endif
 
     @vite([
+      'resources/css/pages/welcome-mega-menu.css',
       'resources/css/pages/welcome-vision-waapi.css',
       'resources/css/pages/welcome-values-story.css',
       'resources/css/pages/welcome-depth-gallery.css',
@@ -86,6 +87,7 @@
     <noscript>
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-login-perspective.css') }}">
+      <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-mega-menu.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-vision-waapi.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-values-story.css') }}">
       <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/pages/welcome-depth-gallery.css') }}">
