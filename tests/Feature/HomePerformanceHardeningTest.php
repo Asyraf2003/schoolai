@@ -41,14 +41,17 @@ it('keeps homepage interaction styles out of the first paint path', function ():
         ->not->toContain("'resources/css/pages/welcome-hero-visual.css'");
 });
 
-it('inlines asset-safe homepage critical styles in production without changing cascade order', function (): void {
+it('inlines asset-safe homepage critical and locale typography styles without changing cascade order', function (): void {
     $blade = file_get_contents(resource_path('views/welcome.blade.php'));
     $foundationInline = "Vite::content('resources/css/pages/welcome-critical.css')";
     $legacyEntry = "'resources/css/pages/welcome.css'";
     $heroInline = "Vite::content('resources/css/pages/welcome-home-hero.css')";
     $visionEntry = "'resources/css/pages/welcome-vision-waapi.css'";
-    $latinTypeEntry = "@vite('resources/css/pages/welcome-home-type-latin.css')";
-    $arabicTypeEntry = "@vite('resources/css/pages/welcome-home-type-arabic.css')";
+    $latinTypeInline = "Vite::content('resources/css/pages/welcome-home-type-latin.css')";
+    $arabicTypeInline = "Vite::content('resources/css/pages/welcome-home-type-arabic.css')";
+    $latinTypeDevEntry = "@vite('resources/css/pages/welcome-home-type-latin.css')";
+    $arabicTypeDevEntry = "@vite('resources/css/pages/welcome-home-type-arabic.css')";
+    $editorialEntry = "'resources/css/pages/welcome-editorial-headings.css'";
 
     expect($blade)
         ->toContain("app()->environment('production')")
@@ -56,10 +59,11 @@ it('inlines asset-safe homepage critical styles in production without changing c
         ->toContain($foundationInline)
         ->toContain('data-home-critical-style="hero"')
         ->toContain($heroInline)
-        ->toContain($latinTypeEntry)
-        ->toContain($arabicTypeEntry)
-        ->not->toContain("Vite::content('resources/css/pages/welcome-home-type-latin.css')")
-        ->not->toContain("Vite::content('resources/css/pages/welcome-home-type-arabic.css')");
+        ->toContain('data-home-critical-style="type"')
+        ->toContain($latinTypeInline)
+        ->toContain($arabicTypeInline)
+        ->toContain($latinTypeDevEntry)
+        ->toContain($arabicTypeDevEntry);
 
     expect(strpos($blade, $foundationInline))
         ->toBeLessThan(strpos($blade, $legacyEntry))
@@ -68,9 +72,13 @@ it('inlines asset-safe homepage critical styles in production without changing c
         ->and(strpos($blade, $heroInline))
         ->toBeLessThan(strpos($blade, $visionEntry))
         ->and(strpos($blade, $visionEntry))
-        ->toBeLessThan(strpos($blade, $arabicTypeEntry))
+        ->toBeLessThan(strpos($blade, $arabicTypeInline))
         ->and(strpos($blade, $visionEntry))
-        ->toBeLessThan(strpos($blade, $latinTypeEntry));
+        ->toBeLessThan(strpos($blade, $latinTypeInline))
+        ->and(strpos($blade, $arabicTypeInline))
+        ->toBeLessThan(strpos($blade, $editorialEntry))
+        ->and(strpos($blade, $latinTypeInline))
+        ->toBeLessThan(strpos($blade, $editorialEntry));
 });
 
 it('keeps the shared public foundation single-owned by the critical entry', function (): void {
