@@ -2,7 +2,6 @@ export function initOpeningHero(root, slide) {
     var video = slide.querySelector('[data-hero-video]');
     var audioButtons = Array.from(document.querySelectorAll('[data-hero-audio]'));
     var audioEnabled = false;
-    var mobileViewport = window.matchMedia('(max-width: 767px)');
 
     root.setAttribute('data-enhanced', 'true');
     if (!video) return;
@@ -52,13 +51,9 @@ export function initOpeningHero(root, slide) {
         }
     }
 
-    function startDeferredVideo() {
+    function startInteractiveVideo() {
         hydrateVideo();
         syncVideo();
-    }
-
-    function startMobileVideo() {
-        startDeferredVideo();
     }
 
     audioButtons.forEach(function (button) {
@@ -80,14 +75,6 @@ export function initOpeningHero(root, slide) {
 
     updateAudioButtons();
 
-    if (mobileViewport.matches) {
-        root.addEventListener('pointerdown', startMobileVideo, { once: true, passive: true });
-        return;
-    }
-
-    if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(startDeferredVideo, { timeout: 900 });
-    } else {
-        window.setTimeout(startDeferredVideo, 120);
-    }
+    root.addEventListener('pointermove', startInteractiveVideo, { once: true, passive: true });
+    window.addEventListener('scroll', startInteractiveVideo, { once: true, passive: true });
 }
