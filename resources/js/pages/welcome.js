@@ -17,9 +17,40 @@ import './welcome/public-content.js';
 import './welcome/gallery-wall.js';
 import './welcome/lazy-media.js';
 import './welcome/about-video-modal.js';
-import './welcome/testimonial-wall.js';
 import { initHomepageCursor } from './welcome/cursor.js';
 import { scheduleHomepagePreparation } from './welcome/preparation.js';
 
+function scheduleTestimonialWall() {
+    var root = document.querySelector('[data-testimonial-wall]');
+    if (!root) return;
+
+    var started = false;
+    var observer = null;
+
+    function start() {
+        if (started) return;
+        started = true;
+        if (observer) observer.disconnect();
+
+        import('./welcome/testimonial-wall.js').catch(function (error) {
+            console.warn('Homepage testimonial preparation failed.', error);
+        });
+    }
+
+    if (!('IntersectionObserver' in window)) {
+        window.setTimeout(start, 0);
+        return;
+    }
+
+    observer = new IntersectionObserver(function (entries) {
+        if (entries.some(function (entry) { return entry.isIntersecting; })) {
+            start();
+        }
+    }, { rootMargin: '150% 0px' });
+
+    observer.observe(root);
+}
+
 initHomepageCursor();
 scheduleHomepagePreparation();
+scheduleTestimonialWall();
