@@ -2,7 +2,9 @@
 
 namespace App\View\Presenters;
 
+use App\Models\Article;
 use App\Models\GalleryPageSection;
+use App\Support\PublicUrl;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Support\Facades\Schema;
 
@@ -52,17 +54,12 @@ final class SiteNavbarMenuPresenter
                     (string) config('media.static.navigation.gallery'),
                 );
             } elseif ($index === 3) {
-                $item = $this->preparePublicItem(
+                $item = $this->prepareArticleItem(
                     $item,
                     $megaCopy['article'] ?? [],
-                    'artikel',
+                    $homeAnchor,
                     (string) config('media.static.navigation.article'),
                 );
-                $item['route_patterns'] = [
-                    'artikel',
-                    'artikel.detail',
-                    'artikel.native',
-                ];
             } elseif ($index === 4) {
                 $item['href'] = $homeAnchor('#kontak');
             }
@@ -179,6 +176,75 @@ final class SiteNavbarMenuPresenter
         };
         $item['href'] = route('galeri');
         $item['route_patterns'] = ['galeri'];
+        $item['mega'] = array_replace($copy, [
+            'toggle_label' => $copy['eyebrow'] ?? '',
+            'media_url' => $mediaUrl,
+            'media_alt' => $copy['title'] ?? '',
+            'links' => $links,
+        ]);
+
+        return $item;
+    }
+
+    /**
+     * @param  array<string, mixed>  $item
+     * @param  array<string, mixed>  $copy
+     * @param  callable(string): string  $homeAnchor
+     * @return array<string, mixed>
+     */
+    private function prepareArticleItem(
+        array $item,
+        array $copy,
+        callable $homeAnchor,
+        string $mediaUrl,
+    ): array {
+        $articleLabel = trim((string) ($item['label'] ?? ''));
+
+        if ($articleLabel === '') {
+            $articleLabel = match ($this->translator->getLocale()) {
+                'en' => 'Articles',
+                'ar' => 'المقالات',
+                default => 'Artikel',
+            };
+        }
+
+        $links = [[
+            'label' => $articleLabel,
+            'href' => $homeAnchor('#artikel'),
+        ]];
+
+        if (Schema::hasTable('articles')) {
+            $locale = $this->translator->getLocale();
+            $categories = Article::query()
+                ->latestPublished()
+                ->get()
+                ->filter(fn (Article $article): bool => $article->isNative()
+                    || PublicUrl::normalize(
+                        $article->linkForLocale($locale),
+                        ['/admin', '/login', '/auth'],
+                    ) !== null)
+                ->flatMap(fn (Article $article): array => array_values($article->tags ?? []))
+                ->filter(fn (mixed $tag): bool => is_string($tag) && trim($tag) !== '')
+                ->map(fn (string $tag): string => trim($tag))
+                ->unique(fn (string $tag): string => mb_strtolower($tag))
+                ->shuffle()
+                ->take(3)
+                ->values();
+
+            foreach ($categories as $category) {
+                $links[] = [
+                    'label' => $category,
+                    'href' => route('artikel', ['kategori' => $category]),
+                ];
+            }
+        }
+
+        $item['href'] = route('artikel');
+        $item['route_patterns'] = [
+            'artikel',
+            'artikel.detail',
+            'artikel.native',
+        ];
         $item['mega'] = array_replace($copy, [
             'toggle_label' => $copy['eyebrow'] ?? '',
             'media_url' => $mediaUrl,
