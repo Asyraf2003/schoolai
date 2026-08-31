@@ -133,6 +133,15 @@ trait AuthenticatesGoogleUsers
         string $fallbackUrl,
         string $popupToken,
     ): Response {
+        $payload = [
+            'source' => 'schoolai-google-auth',
+            'token' => $popupToken,
+            'ok' => $ok,
+            'role' => $role,
+            'redirect' => $redirect,
+            'message' => $message,
+        ];
+
         return response()->view('auth.google-popup-result', [
             'ok' => $ok,
             'role' => $role,
@@ -140,6 +149,7 @@ trait AuthenticatesGoogleUsers
             'message' => $message,
             'fallbackUrl' => $fallbackUrl,
             'popupToken' => $popupToken,
+            'payload' => $payload,
         ]);
     }
 }
