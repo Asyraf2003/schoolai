@@ -34,6 +34,36 @@ it('keeps the landing page as the persistent Codrops perspective surface', funct
         ->not->toContain("activateState(role, link.href)");
 });
 
+it('keeps the custom cursor in viewport coordinates outside the transformed Codrops wrapper', function (): void {
+    $cursor = file_get_contents(resource_path('js/pages/welcome/cursor.js'));
+    $perspective = file_get_contents(resource_path('js/pages/welcome-login-perspective.js'));
+
+    expect($cursor)
+        ->toContain("cursor.dataset.viewportOverlay = ''")
+        ->and($perspective)
+        ->toContain("node.matches('[data-viewport-overlay]')")
+        ->toContain('wrapper.appendChild(node);');
+});
+
+it('keeps the initial login perspective state limited to the three role choices', function (): void {
+    $template = file_get_contents(resource_path('views/home/partials/login-perspective-template.blade.php'));
+    $choicesStart = strpos($template, 'data-login-perspective-state="choices"');
+    $adminStart = strpos($template, 'data-login-perspective-state="admin"');
+
+    expect($choicesStart)->not->toBeFalse()
+        ->and($adminStart)->not->toBeFalse();
+
+    $choices = substr($template, (int) $choicesStart, (int) $adminStart - (int) $choicesStart);
+
+    expect($choices)
+        ->toContain('data-login-role-target="admin"')
+        ->toContain('data-login-role-target="guru"')
+        ->toContain('data-login-role-target="murid"')
+        ->not->toContain('login-perspective__eyebrow')
+        ->not->toContain('<h2>')
+        ->not->toContain('login-perspective__description');
+});
+
 it('binds popup OAuth results to the active browser attempt instead of relying on opener alone', function (): void {
     $login = file_get_contents(resource_path('js/pages/public-login.js'));
     $bridge = file_get_contents(resource_path('js/pages/welcome/login-perspective-google.js'));
