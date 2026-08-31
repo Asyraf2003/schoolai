@@ -136,7 +136,7 @@ it('preserves Gallery database precedence and deterministic fallback cards', fun
         ->and($fallbackHtml)
         ->toContain('data-gallery-title="Fallback Item"')
         ->toContain('data-gallery-is-video="0"')
-        ->toContain('images.unsplash.com');
+        ->toContain((string) config('media.public_url').'/site/school-life/');
 });
 
 it('preserves Gallery video provider fallback presentation', function (): void {
