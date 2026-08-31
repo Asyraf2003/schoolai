@@ -40,7 +40,7 @@ it('uses the Codrops GridLoadingEffects contract for the public gallery', functi
         ->toContain('@media screen and (max-width: 400px)');
 });
 
-it('replaces the homepage facilities story with up to three gallery section links', function (): void {
+it('keeps the homepage gallery section unchanged', function (): void {
     $galleryBlade = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
     $composer = file_get_contents(app_path('View/Composers/HomeGalleryComposer.php'));
     $idPresentation = file_get_contents(lang_path('id/home_presentation.php'));
@@ -48,25 +48,22 @@ it('replaces the homepage facilities story with up to three gallery section link
     $arPresentation = file_get_contents(lang_path('ar/home_presentation.php'));
 
     expect($galleryBlade)
-        ->toContain('home-gallery-links__list')
-        ->toContain('home-gallery-links__item')
-        ->toContain("href=\"{{ \$teaser['href'] }}\"")
-        ->not->toContain("@include('home.sections.gallery-depth')")
+        ->toContain('class="galeri-section section"')
+        ->toContain("@include('home.sections.gallery-depth')")
+        ->not->toContain('home-gallery-links__list')
         ->and($composer)
-        ->toContain('GalleryPageSection::query()')
-        ->toContain("route('galeri').'#gallery-main'")
-        ->toContain("route('galeri').'#gallery-section-'.\$section->id")
-        ->toContain('->limit(2)')
-        ->toContain('array_slice($teasers, 0, 3)')
+        ->toContain("\$gallerySection = \$view->getData()['gallerySection'] ?? []")
+        ->toContain("'depthItems' => \$items")
+        ->not->toContain('GalleryPageSection::query()')
         ->and($idPresentation)
-        ->toContain("'gallery_heading' => 'GALERI'")
+        ->toContain("'gallery_heading' => 'FASILITAS KAMI'")
         ->and($enPresentation)
-        ->toContain("'gallery_heading' => 'GALLERY'")
+        ->toContain("'gallery_heading' => 'OUR FACILITIES'")
         ->and($arPresentation)
-        ->toContain("'gallery_heading' => 'المعرض'");
+        ->toContain("'gallery_heading' => 'مرافقنا'");
 });
 
-it('builds the gallery navbar from three random page sections plus the homepage gallery link', function (): void {
+it('builds the Gallery navbar from three random page sections plus the existing homepage gallery section', function (): void {
     $presenter = file_get_contents(app_path('View/Presenters/SiteNavbarMenuPresenter.php'));
 
     expect($presenter)
@@ -76,6 +73,8 @@ it('builds the gallery navbar from three random page sections plus the homepage 
         ->toContain('->limit(3)')
         ->toContain("route('galeri').'#gallery-section-'.\$section->id")
         ->toContain("'href' => \$homeAnchor('#galeri')")
-        ->toContain("\$item['label'] = (string) \$this->translator->get('pages.galeri.title')")
+        ->toContain("default => 'Galeri'")
+        ->toContain("'en' => 'Gallery'")
+        ->toContain("'ar' => 'المعرض'")
         ->toContain("\$item['route_patterns'] = ['galeri']");
 });
