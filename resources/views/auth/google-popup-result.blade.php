@@ -13,6 +13,7 @@
         (() => {
             const payload = @json([
                 'source' => 'schoolai-google-auth',
+                'token' => $popupToken,
                 'ok' => $ok,
                 'role' => $role,
                 'redirect' => $redirect,
@@ -20,18 +21,34 @@
             ]);
             const fallbackUrl = @json($fallbackUrl);
 
+            if ('BroadcastChannel' in window) {
+                const channel = new BroadcastChannel('schoolai-google-auth');
+                channel.postMessage(payload);
+                channel.close();
+            }
+
+            try {
+                localStorage.setItem('schoolai-google-auth', JSON.stringify({
+                    ...payload,
+                    emittedAt: Date.now(),
+                }));
+                localStorage.removeItem('schoolai-google-auth');
+            } catch (error) {
+                // Storage can be unavailable; opener/BroadcastChannel remain valid paths.
+            }
+
             if (window.opener && !window.opener.closed) {
                 window.opener.postMessage(payload, window.location.origin);
-                window.close();
-                return;
             }
 
-            if (payload.ok && payload.redirect) {
-                window.location.replace(payload.redirect);
-                return;
-            }
-
-            window.location.replace(fallbackUrl);
+            window.close();
+            window.setTimeout(() => {
+                if (payload.ok && payload.redirect) {
+                    window.location.replace(payload.redirect);
+                    return;
+                }
+                window.location.replace(fallbackUrl);
+            }, 120);
         })();
     </script>
 </body>
