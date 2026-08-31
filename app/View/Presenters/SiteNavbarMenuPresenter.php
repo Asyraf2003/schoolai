@@ -2,7 +2,9 @@
 
 namespace App\View\Presenters;
 
+use App\Models\GalleryPageSection;
 use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Support\Facades\Schema;
 
 final class SiteNavbarMenuPresenter
 {
@@ -43,10 +45,10 @@ final class SiteNavbarMenuPresenter
             } elseif ($index === 1) {
                 $this->prepareEducationItem($item, $homeAnchor);
             } elseif ($index === 2) {
-                $item = $this->preparePublicItem(
+                $item = $this->prepareGalleryItem(
                     $item,
                     $megaCopy['gallery'] ?? [],
-                    'galeri',
+                    $homeAnchor,
                     (string) config('media.static.navigation.gallery'),
                 );
             } elseif ($index === 3) {
@@ -118,6 +120,71 @@ final class SiteNavbarMenuPresenter
                 : $href;
         }
         unset($link);
+    }
+
+    /**
+     * @param  array<string, mixed>  $item
+     * @param  array<string, mixed>  $copy
+     * @param  callable(string): string  $homeAnchor
+     * @return array<string, mixed>
+     */
+    private function prepareGalleryItem(
+        array $item,
+        array $copy,
+        callable $homeAnchor,
+        string $mediaUrl,
+    ): array {
+        $links = [];
+
+        if (
+            Schema::hasTable('gallery_page_sections')
+            && Schema::hasTable('gallery_item_gallery_page_section')
+            && Schema::hasTable('gallery_items')
+        ) {
+            $locale = $this->translator->getLocale();
+            $sections = GalleryPageSection::query()
+                ->where('is_published', true)
+                ->whereHas('items', fn ($query) => $query
+                    ->where('gallery_items.is_published', true)
+                    ->where('gallery_item_gallery_page_section.is_published', true))
+                ->inRandomOrder()
+                ->limit(3)
+                ->get();
+
+            foreach ($sections as $section) {
+                $links[] = [
+                    'label' => $section->titleForLocale($locale),
+                    'description' => $section->descriptionForLocale($locale),
+                    'href' => route('galeri').'#gallery-section-'.$section->id,
+                ];
+            }
+        }
+
+        if ($links === []) {
+            $links[] = [
+                'label' => (string) ($copy['title'] ?? $this->translator->get('pages.galeri.title')),
+                'description' => (string) ($copy['description'] ?? ''),
+                'href' => route('galeri').'#gallery-main',
+            ];
+        }
+
+        $links = array_slice($links, 0, 3);
+        $links[] = [
+            'label' => (string) ($copy['home_link_label'] ?? $this->translator->get('home_presentation.gallery_heading')),
+            'description' => (string) ($copy['home_link_description'] ?? ''),
+            'href' => $homeAnchor('#galeri'),
+        ];
+
+        $item['href'] = route('galeri');
+        $item['route_patterns'] = ['galeri'];
+        $item['mega'] = array_replace($copy, [
+            'toggle_label' => $copy['eyebrow'] ?? '',
+            'media_url' => $mediaUrl,
+            'media_alt' => $copy['title'] ?? '',
+            'links' => $links,
+        ]);
+
+        return $item;
     }
 
     /**
