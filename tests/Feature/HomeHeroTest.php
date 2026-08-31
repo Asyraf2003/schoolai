@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders the fixed R2 video as a deferred autoplay Opening slide when no Article is promoted', function (): void {
+it('renders the fixed R2 video as an interaction-gated Opening slide when no Article is promoted', function (): void {
     $heroUrl = (string) config('media.homepage_hero_video_url');
     $posterUrl = (string) config('media.static.hero_school');
 
@@ -49,12 +49,12 @@ it('renders the fixed R2 video as a deferred autoplay Opening slide when no Arti
     expect($opening)
         ->toContain("source[data-src]")
         ->toContain("video.setAttribute('data-hydrated', 'true')")
-        ->toContain("window.matchMedia('(max-width: 767px)')")
-        ->toContain("root.addEventListener('pointerdown', startMobileVideo")
+        ->toContain("root.addEventListener('pointermove', startInteractiveVideo")
+        ->toContain("window.addEventListener('scroll', startInteractiveVideo")
+        ->not->toContain("window.matchMedia('(max-width: 767px)')")
         ->not->toContain("addEventListener('keydown'")
-        ->toContain("'requestIdleCallback' in window")
-        ->toContain('timeout: 900')
-        ->toContain('window.setTimeout(startDeferredVideo, 120)')
+        ->not->toContain("'requestIdleCallback' in window")
+        ->not->toContain('startDeferredVideo')
         ->and($carousel)
         ->toContain('videoHydrationReady: false')
         ->toContain("'requestIdleCallback' in window")
