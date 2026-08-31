@@ -1,0 +1,6 @@
+/* Homepage-only Latin typography bundle.
+ * Keep text-system first and the locale adapter second so the existing
+ * cascade order remains unchanged while the browser fetches one stylesheet.
+ */
+@import "../text-system.css";
+@import "../public-latin-inter.css";
