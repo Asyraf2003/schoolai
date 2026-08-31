@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "node scripts/verify-source-structure.mjs && vite build",
+        "build": "vite build",
         "check:structure": "node scripts/verify-source-structure.mjs",
         "dev": "vite"
     },

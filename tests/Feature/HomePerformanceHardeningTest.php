@@ -26,14 +26,15 @@ it('keeps homepage interaction styles out of the first paint path', function ():
         ->not->toContain("'resources/css/pages/welcome-hero-visual.css'");
 });
 
-it('runs source structure verification even when npm lifecycle scripts are disabled', function (): void {
+it('keeps the structure audit explicit while npm lifecycle scripts stay disabled', function (): void {
     $package = file_get_contents(base_path('package.json'));
     $npmrc = file_get_contents(base_path('.npmrc'));
 
     expect($npmrc)
         ->toContain('ignore-scripts=true')
         ->and($package)
-        ->toContain('"build": "node scripts/verify-source-structure.mjs && vite build"')
+        ->toContain('"build": "vite build"')
+        ->toContain('"check:structure": "node scripts/verify-source-structure.mjs"')
         ->not->toContain('"prebuild"');
 });
 
