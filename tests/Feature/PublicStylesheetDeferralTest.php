@@ -19,3 +19,14 @@ it('defers shared welcome styles only on the homepage', function (): void {
             ->not->toContain('media="print"');
     }
 });
+
+it('activates deferred homepage styles that are emitted later in the body', function (): void {
+    $blade = file_get_contents(resource_path('views/welcome.blade.php'));
+    $languageFlag = file_get_contents(resource_path('views/partials/language-flag.blade.php'));
+
+    expect($blade)
+        ->toContain("document.querySelectorAll('link[data-home-deferred-style]')")
+        ->toContain("document.addEventListener('DOMContentLoaded', activateDeferredStyles, { once: true });")
+        ->and($languageFlag)
+        ->toContain("@vite('resources/css/pages/welcome-mega-menu.css')");
+});
