@@ -20,13 +20,22 @@
 }
 
 .gallery-grid-demo__demos {
+    display: flex;
+    width: 100%;
+    max-width: 69em;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin: 0 auto;
     padding-top: 0;
+    overflow: visible;
     font-size: .9em;
 }
 
 .gallery-grid-demo__demos a {
     display: inline-block;
-    margin: .5em;
+    margin: 0;
     padding: .7em 1.1em;
     border: 3px solid #6b7381;
     color: #6b7381;
@@ -415,8 +424,11 @@ body.gallery-modal-open {
         padding: calc(78px + 1.5em) 1em 1em;
     }
 
+    .gallery-grid-demo__demos {
+        gap: .6em;
+    }
+
     .gallery-grid-demo__demos a {
-        margin: .3em;
         padding: .55em .75em;
         border-width: 2px;
     }
