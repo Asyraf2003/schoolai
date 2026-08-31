@@ -30,11 +30,6 @@
 @section('content')
   <div class="gallery-grid-demo" data-gallery-grid-demo>
     <header class="gallery-grid-demo__header">
-      <h1 id="galeri-title">
-        {{ $page['title'] ?? __('pages.galeri.title') }}
-        <span data-gallery-active-title>{{ $galleryCategories[0]['title'] ?? 'Index' }}</span>
-      </h1>
-
       <nav class="gallery-grid-demo__demos" aria-label="{{ $page['wall']['title'] ?? __('pages.galeri.title') }}">
         @foreach($galleryCategories as $categoryIndex => $category)
           <a
