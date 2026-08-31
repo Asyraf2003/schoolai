@@ -8,12 +8,6 @@
       'pageDescription' => $meta['description'],
     ])
 
-    @php
-      $homeTypeAsset = app()->getLocale() === 'ar'
-        ? 'resources/css/pages/welcome-home-type-arabic.css'
-        : 'resources/css/pages/welcome-home-type-latin.css';
-    @endphp
-
     @if (app()->environment('production'))
       <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" data-home-critical-style="foundation">{!! \Illuminate\Support\Facades\Vite::content('resources/css/pages/welcome-critical.css') !!}</style>
     @else
@@ -38,7 +32,11 @@
       'resources/css/pages/welcome-article-showcase.css',
     ])
 
-    @vite($homeTypeAsset)
+    @if (app()->getLocale() === 'ar')
+      @vite('resources/css/pages/welcome-home-type-arabic.css')
+    @else
+      @vite('resources/css/pages/welcome-home-type-latin.css')
+    @endif
 
     @vite([
       'resources/css/pages/welcome-editorial-headings.css',
