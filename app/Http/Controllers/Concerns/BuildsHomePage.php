@@ -7,6 +7,8 @@ use Illuminate\Contracts\View\View;
 
 trait BuildsHomePage
 {
+    private ?array $resolvedHomeData = null;
+
     public function __invoke(): View
     {
         $home = $this->homeData();
@@ -26,12 +28,18 @@ trait BuildsHomePage
 
     private function homeData(): array
     {
+        if ($this->resolvedHomeData !== null) {
+            return $this->resolvedHomeData;
+        }
+
         $base = __('home');
         $parity = __('home_parity');
         $base = is_array($base) ? $base : [];
         $parity = is_array($parity) ? $parity : [];
 
-        return $this->canonicalizeHomeMedia(array_replace_recursive($base, $parity));
+        return $this->resolvedHomeData = $this->canonicalizeHomeMedia(
+            array_replace_recursive($base, $parity)
+        );
     }
 
     /** @param array<string, mixed> $home */
