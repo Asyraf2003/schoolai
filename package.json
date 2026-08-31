@@ -3,8 +3,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "node scripts/verify-source-structure.mjs && vite build",
+        "build": "vite build",
         "check:structure": "node scripts/verify-source-structure.mjs",
+        "prebuild": "npm run check:structure",
         "dev": "vite"
     },
     "devDependencies": {
