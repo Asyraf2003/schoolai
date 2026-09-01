@@ -39,6 +39,7 @@ export default defineConfig({
                 'resources/css/pages/article-canvas.css',
                 'resources/css/pages/article-reader.css',
                 'resources/css/surfaces/public/article-detail.css',
+                'resources/css/surfaces/public/gallery.css',
                 'resources/css/text-system.css',
                 'resources/css/arabic-typography.css',
                 'resources/css/public-latin-inter.css',

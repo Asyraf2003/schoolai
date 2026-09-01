@@ -1,5 +1,9 @@
 @extends('layouts.public', ['title' => $page['title'] ?? __('pages.galeri.title'), 'description' => $page['description'] ?? __('pages.galeri.description')])
 
+@push('head')
+  @vite('resources/css/surfaces/public/gallery.css')
+@endpush
+
 @section('content')
   <div class="gallery-grid-demo" data-gallery-grid-demo>
     <header class="gallery-grid-demo__header">

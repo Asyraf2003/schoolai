@@ -24,3 +24,26 @@ it('loads Article Detail styling only from its public surface adapter', function
         ->and($vite)
         ->toContain("'resources/css/surfaces/public/article-detail.css'");
 });
+
+it('loads Gallery styling only from its public surface adapter', function (): void {
+    $sharedEntry = file_get_contents(resource_path('css/pages/welcome.css'));
+    $legacyGallery = file_get_contents(resource_path('css/pages/welcome/049-gallery-codrops-navigation.css'));
+    $surface = file_get_contents(resource_path('css/surfaces/public/gallery.css'));
+    $view = file_get_contents(resource_path('views/pages/galeri.blade.php'));
+    $vite = file_get_contents(base_path('vite.config.js'));
+
+    expect($sharedEntry)
+        ->not->toContain('./welcome/049-gallery-codrops-navigation.css')
+        ->and($surface)
+        ->toContain('.gallery-grid-demo {')
+        ->toContain('.gallery-grid.effect-8 li.animate')
+        ->toContain('.gallery-grid-modal {')
+        ->not->toContain('.home-gallery-links')
+        ->and($legacyGallery)
+        ->toContain('.home-gallery-links')
+        ->and($view)
+        ->toContain("@vite('resources/css/surfaces/public/gallery.css')")
+        ->toContain('data-gallery-grid')
+        ->and($vite)
+        ->toContain("'resources/css/surfaces/public/gallery.css'");
+});
