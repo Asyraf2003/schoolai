@@ -38,6 +38,8 @@ trait BuildsHomeArticlesAndGallery
                     'type' => $item->is_video ? 'video' : 'photo',
                     'type_label' => $item->typeLabelForLocale($locale),
                     'media_url' => $item->media_url,
+                    'media_width' => $item->media_width,
+                    'media_height' => $item->media_height,
                     'published_at' => optional($item->published_at)->toDateString() ?? '',
                     'date' => optional($item->published_at)->translatedFormat('j F Y') ?? '',
                     'caption' => $item->captionForLocale($locale),

@@ -38,6 +38,8 @@ final class GalleryItem extends Model
         'caption_en',
         'caption_ar',
         'media_url',
+        'media_width',
+        'media_height',
         'is_published',
         'show_on_homepage',
         'show_on_gallery_page',
@@ -46,6 +48,8 @@ final class GalleryItem extends Model
 
     protected $casts = [
         'sort_order' => 'integer',
+        'media_width' => 'integer',
+        'media_height' => 'integer',
         'is_published' => 'boolean',
         'show_on_homepage' => 'boolean',
         'show_on_gallery_page' => 'boolean',

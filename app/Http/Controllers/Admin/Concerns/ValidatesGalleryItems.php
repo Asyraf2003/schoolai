@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Concerns;
 
 use App\Models\GalleryItem;
 use App\Rules\SafeImageUpload;
+use App\Support\Media\ImageDimensions;
 use App\Support\Media\R2MediaStorage;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -113,6 +115,8 @@ trait ValidatesGalleryItems
     {
         if ($data['type'] === 'video') {
             $data['media_url'] = $this->normalizeVideoUrl((string) ($data['media_url'] ?? ''));
+            $data['media_width'] = null;
+            $data['media_height'] = null;
 
             return [$data, null, $currentItem?->type === 'photo'];
         }
@@ -120,12 +124,21 @@ trait ValidatesGalleryItems
         unset($data['media_url']);
 
         if ($request->hasFile('media_file')) {
+            $file = $request->file('media_file');
+
+            if (! $file instanceof UploadedFile) {
+                return [$data, null, false];
+            }
+
+            $dimensions = app(ImageDimensions::class)->fromUploadedFile($file);
             $stored = app(R2MediaStorage::class)->store(
-                $request->file('media_file'),
+                $file,
                 'gallery/media',
                 $currentItem?->getKey(),
             );
             $data['media_url'] = $stored['url'];
+            $data['media_width'] = $dimensions['width'] ?? null;
+            $data['media_height'] = $dimensions['height'] ?? null;
 
             return [$data, $stored['key'], $currentItem?->type === 'photo'];
         }

@@ -48,8 +48,10 @@
               data-gallery-story-visual
               src="{{ $item['thumbnail_url'] }}"
               alt="{{ $item['title'] }}"
-              width="1400"
-              height="1050"
+              @if (($item['media_width'] ?? 0) > 0 && ($item['media_height'] ?? 0) > 0)
+                width="{{ (int) $item['media_width'] }}"
+                height="{{ (int) $item['media_height'] }}"
+              @endif
               loading="lazy"
               decoding="async"
             />
