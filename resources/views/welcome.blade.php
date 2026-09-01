@@ -8,17 +8,6 @@
       'pageDescription' => $meta['description'],
     ])
 
-    @if (app()->environment('production') && app()->getLocale() !== 'ar')
-      <link
-        rel="preload"
-        href="{{ \Illuminate\Support\Facades\Vite::asset('resources/fonts/inter/inter-latin-variable.woff2') }}"
-        as="font"
-        type="font/woff2"
-        crossorigin="anonymous"
-        data-home-critical-font="inter"
-      >
-    @endif
-
     @if (app()->environment('production'))
       <style nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}" data-home-critical-style="foundation">{!! \Illuminate\Support\Facades\Vite::content('resources/css/pages/welcome-critical.css') !!}</style>
     @else
