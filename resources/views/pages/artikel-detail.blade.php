@@ -1,5 +1,9 @@
 @extends('layouts.public', ['title' => __('pages.artikel_detail.title'), 'description' => __('pages.artikel_detail.description')])
 
+@push('head')
+  @vite('resources/css/surfaces/public/article-detail.css')
+@endpush
+
 @section('content')
   <article class="article-detail-page" aria-labelledby="article-detail-title">
     <header class="article-detail-hero">
