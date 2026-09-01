@@ -1,6 +1,6 @@
 @import "./welcome/002-tombol.css";
-@import "./welcome/003-8-quick-info.css";
 @import "./welcome/005-19-footer.css";
+@import "../core/reveal.css";
 @import "./welcome/006-23-aksesibilitas.css";
 @import "./welcome/021-footer-putih-mitra-kami-logo-dijaga-proporsinya-heig.css";
 @import "./welcome/022-welcome-cascade-022.css";
