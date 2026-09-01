@@ -21,7 +21,7 @@ it('renders versioned static public media from R2 on every homepage locale', fun
         config('media.static.footer.gmail'),
         ...config('media.static.language_flags', []),
         ...config('media.static.footer.partners', []),
-    ], static fn (mixed $url): bool => is_string($url) && $url !== '')));
+    ], static fn (mixed $url): bool => is_string($url) && $url !== ''));
 
     foreach (['id', 'en', 'ar'] as $locale) {
         app()->setLocale($locale);
