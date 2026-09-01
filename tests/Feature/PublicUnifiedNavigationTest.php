@@ -24,12 +24,13 @@ it('keeps the unified education gallery and article mega menu contract on every 
             ->assertSee('Program');
 
         $content = $response->getContent();
-        $subRollCount = substr_count($content, 'data-nav-roll="sub"');
+        $subRollLabelCount = substr_count($content, '<strong data-nav-roll="sub"');
+        $megaLinkCount = substr_count($content, 'class="nav-mega__link"');
 
         expect(substr_count($content, 'data-nav-mega'))->toBeGreaterThanOrEqual(3)
             ->and(substr_count($content, 'data-nav-roll="main"'))->toBeGreaterThanOrEqual(12)
-            ->and($subRollCount)->toBeGreaterThan(0)
-            ->and($subRollCount % 2)->toBe(0)
+            ->and($subRollLabelCount)->toBeGreaterThan(0)
+            ->and($subRollLabelCount)->toBe($megaLinkCount)
             ->and($content)->toContain('#galeri');
     }
 });
