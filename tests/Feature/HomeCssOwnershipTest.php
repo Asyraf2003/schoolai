@@ -4,6 +4,7 @@ it('keeps retired homepage visual families out of the active legacy entry', func
     $entry = file_get_contents(resource_path('css/pages/welcome.css'));
 
     $retiredImports = [
+        './welcome/003-8-quick-info.css',
         './welcome/004-11-nilai-sekolah.css',
         './welcome/007-welcome-cascade-007.css',
         './welcome/008-welcome-cascade-008.css',
@@ -24,6 +25,24 @@ it('keeps retired homepage visual families out of the active legacy entry', func
     foreach ($retiredImports as $retiredImport) {
         expect($entry)->not->toContain($retiredImport);
     }
+});
+
+it('keeps shared reveal behavior owned by core instead of legacy footer CSS', function (): void {
+    $entry = file_get_contents(resource_path('css/pages/welcome.css'));
+    $coreReveal = file_get_contents(resource_path('css/core/reveal.css'));
+    $legacyFooter = file_get_contents(resource_path('css/pages/welcome/005-19-footer.css'));
+    $navigation = file_get_contents(resource_path('js/pages/welcome/navigation-state.js'));
+
+    expect($entry)
+        ->toContain('@import "../core/reveal.css";')
+        ->and($coreReveal)
+        ->toContain('.reveal {')
+        ->toContain('.reveal.is-visible')
+        ->and($legacyFooter)
+        ->not->toContain('.reveal {')
+        ->not->toContain('.reveal--delay-')
+        ->and($navigation)
+        ->toContain("document.querySelectorAll('.reveal')");
 });
 
 it('keeps rebuilt home surfaces owned by their dedicated adapters', function (): void {
