@@ -20,12 +20,16 @@ it('keeps retired homepage visual families out of the active legacy entry', func
         './welcome/018-editorial-article-layout-featured-story-compact-side.css',
         './welcome/019-welcome-cascade-019.css',
         './welcome/020-kartu-program-dipindah-ke-kiri-spotlight-besar-ke-ka.css',
+        './welcome/038-welcome-cascade-038.css',
+        './welcome/039-welcome-cascade-039.css',
         './welcome/040-welcome-cascade-040.css',
         './welcome/041-welcome-cascade-041.css',
         './welcome/042-welcome-cascade-042.css',
         './welcome/043-welcome-cascade-043.css',
         './welcome/043-gallery-page-sections.css',
         './welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css',
+        './welcome/046-social-video-covers-provider-identity-without-loadin.css',
+        './welcome/047-welcome-cascade-047.css',
     ];
 
     foreach ($retiredImports as $retiredImport) {
@@ -89,6 +93,28 @@ it('routes the active footer cascade through one chrome adapter', function (): v
         expect($entry)->not->toContain($footerImport);
         expect($footer)->toContain($footerImport);
     }
+});
+
+it('keeps rebuilt public PPDB and Gallery routes off their retired CSS generations', function (): void {
+    $entry = file_get_contents(resource_path('css/pages/welcome.css'));
+    $ppdbView = file_get_contents(resource_path('views/pages/ppdb/showcase.blade.php'));
+    $ppdbEntry = file_get_contents(resource_path('css/pages/ppdb-journey.css'));
+    $galleryView = file_get_contents(resource_path('views/pages/galeri.blade.php'));
+
+    expect($entry)
+        ->not->toContain('./welcome/038-welcome-cascade-038.css')
+        ->not->toContain('./welcome/039-welcome-cascade-039.css')
+        ->not->toContain('./welcome/046-social-video-covers-provider-identity-without-loadin.css')
+        ->not->toContain('./welcome/047-welcome-cascade-047.css')
+        ->and($ppdbView)
+        ->toContain('class="ppdb-liftoff"')
+        ->not->toContain('class="ppdb-journey-section"')
+        ->and($ppdbEntry)
+        ->toContain('.ppdb-liftoff')
+        ->and($galleryView)
+        ->toContain('class="gallery-grid-demo"')
+        ->toContain('class="gallery-grid"')
+        ->not->toContain('social-video-cover');
 });
 
 it('keeps rebuilt home surfaces owned by their dedicated adapters', function (): void {
