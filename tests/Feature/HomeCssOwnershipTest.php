@@ -20,6 +20,12 @@ it('keeps retired homepage visual families out of the active legacy entry', func
         './welcome/018-editorial-article-layout-featured-story-compact-side.css',
         './welcome/019-welcome-cascade-019.css',
         './welcome/020-kartu-program-dipindah-ke-kiri-spotlight-besar-ke-ka.css',
+        './welcome/040-welcome-cascade-040.css',
+        './welcome/041-welcome-cascade-041.css',
+        './welcome/042-welcome-cascade-042.css',
+        './welcome/043-welcome-cascade-043.css',
+        './welcome/043-gallery-page-sections.css',
+        './welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css',
     ];
 
     foreach ($retiredImports as $retiredImport) {
@@ -43,6 +49,23 @@ it('keeps shared reveal behavior owned by core instead of legacy footer CSS', fu
         ->not->toContain('.reveal--delay-')
         ->and($navigation)
         ->toContain("document.querySelectorAll('.reveal')");
+});
+
+it('keeps lazy media visibility owned by core instead of retired gallery wall CSS', function (): void {
+    $entry = file_get_contents(resource_path('css/pages/welcome.css'));
+    $lazyMedia = file_get_contents(resource_path('css/core/media/lazy-media.css'));
+    $visionView = file_get_contents(resource_path('views/home/sections/vision-mission.blade.php'));
+    $lazyMediaRuntime = file_get_contents(resource_path('js/pages/welcome/lazy-media.js'));
+
+    expect($entry)
+        ->toContain('@import "../core/media/lazy-media.css";')
+        ->and($lazyMedia)
+        ->toContain('[data-lazy-media][data-lazy-src]')
+        ->toContain('.is-lazy-loaded')
+        ->and($visionView)
+        ->toContain('data-lazy-media')
+        ->and($lazyMediaRuntime)
+        ->toContain("document.querySelectorAll('[data-lazy-media][data-lazy-src]')");
 });
 
 it('routes the active footer cascade through one chrome adapter', function (): void {
