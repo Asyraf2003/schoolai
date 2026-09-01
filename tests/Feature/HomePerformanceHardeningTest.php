@@ -51,6 +51,7 @@ it('keeps homepage interaction styles out of the first paint path', function ():
 
 it('inlines asset-safe homepage critical and locale typography styles without changing cascade order', function (): void {
     $blade = file_get_contents(resource_path('views/welcome.blade.php'));
+    $latinFontPreload = "Vite::asset('resources/fonts/inter/inter-latin-variable.woff2')";
     $foundationInline = "Vite::content('resources/css/pages/welcome-critical.css')";
     $legacyEntry = "'resources/css/pages/welcome.css'";
     $heroInline = "Vite::content('resources/css/pages/welcome-home-hero.css')";
@@ -62,8 +63,13 @@ it('inlines asset-safe homepage critical and locale typography styles without ch
     $editorialEntry = "'resources/css/pages/welcome-editorial-headings.css'";
 
     expect($blade)
-        ->not->toContain("Vite::asset('resources/fonts/inter/inter-latin-variable.woff2')")
-        ->not->toContain('data-home-critical-font="inter"')
+        ->toContain("app()->environment('production') && app()->getLocale() !== 'ar'")
+        ->toContain($latinFontPreload)
+        ->toContain('data-home-critical-font="inter"')
+        ->toContain('rel="preload"')
+        ->toContain('as="font"')
+        ->toContain('type="font/woff2"')
+        ->toContain('crossorigin="anonymous"')
         ->toContain("app()->environment('production')")
         ->toContain('data-home-critical-style="foundation"')
         ->toContain($foundationInline)
@@ -75,7 +81,9 @@ it('inlines asset-safe homepage critical and locale typography styles without ch
         ->toContain($latinTypeDevEntry)
         ->toContain($arabicTypeDevEntry);
 
-    expect(strpos($blade, $foundationInline))
+    expect(strpos($blade, $latinFontPreload))
+        ->toBeLessThan(strpos($blade, $foundationInline))
+        ->and(strpos($blade, $foundationInline))
         ->toBeLessThan(strpos($blade, $legacyEntry))
         ->and(strpos($blade, $legacyEntry))
         ->toBeLessThan(strpos($blade, $heroInline))
