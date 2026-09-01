@@ -1,6 +1,7 @@
 @import "./welcome/002-tombol.css";
 @import "./welcome/005-19-footer.css";
 @import "../core/reveal.css";
+@import "../core/media/lazy-media.css";
 @import "./welcome/006-23-aksesibilitas.css";
 @import "../chrome/site-footer.css";
 @import "./welcome/029-switch-bahasa-server-side-session-cookie-tetap-aktif.css";
@@ -14,12 +15,6 @@
 @import "./welcome/037-welcome-cascade-037.css";
 @import "./welcome/038-welcome-cascade-038.css";
 @import "./welcome/039-welcome-cascade-039.css";
-@import "./welcome/040-welcome-cascade-040.css";
-@import "./welcome/041-welcome-cascade-041.css";
-@import "./welcome/042-welcome-cascade-042.css";
-@import "./welcome/043-welcome-cascade-043.css";
-@import "./welcome/043-gallery-page-sections.css";
-@import "./welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css";
 @import "./welcome/045-halaman-artikel-clean-editorial-grid-3-2-1-gambar-ko.css";
 @import "./welcome/046-social-video-covers-provider-identity-without-loadin.css";
 @import "./welcome/047-welcome-cascade-047.css";
