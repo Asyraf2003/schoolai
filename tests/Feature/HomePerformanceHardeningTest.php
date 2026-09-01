@@ -3,6 +3,7 @@
 it('keeps homepage interaction styles out of the first paint path', function (): void {
     $provider = file_get_contents(app_path('Providers/AppServiceProvider.php'));
     $head = file_get_contents(resource_path('views/partials/site-head-meta.blade.php'));
+    $navbar = file_get_contents(resource_path('views/partials/site-navbar.blade.php'));
     $sharedHero = file_get_contents(resource_path('css/pages/welcome-hero.css'));
     $homeHero = file_get_contents(resource_path('css/pages/welcome-home-hero.css'));
     $latinType = file_get_contents(resource_path('css/pages/welcome-home-type-latin.css'));
@@ -12,7 +13,9 @@ it('keeps homepage interaction styles out of the first paint path', function ():
 
     expect($provider)
         ->toContain("'resources/css/pages/welcome-login-perspective.css'")
-        ->toContain("'resources/css/pages/welcome-mega-menu.css'")
+        ->not->toContain("'resources/css/pages/welcome-mega-menu.css'")
+        ->and($navbar)
+        ->toContain("Vite::content('resources/css/pages/welcome-mega-menu.css')")
         ->and($sharedHero)
         ->not->toContain('@import "./welcome-hero-visual.css";')
         ->and($homeHero)
