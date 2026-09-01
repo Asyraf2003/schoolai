@@ -13,11 +13,11 @@ fi
 
 listing_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-zip-list.XXXXXX")"
 index_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-index.XXXXXX")"
-deploy_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-deploy-once.XXXXXX")"
+clear_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-clear.XXXXXX")"
 permissions_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-zip-permissions.XXXXXX")"
 
 cleanup() {
-    rm -f "$listing_file" "$index_file" "$deploy_file" "$permissions_file"
+    rm -f "$listing_file" "$index_file" "$clear_file" "$permissions_file"
 }
 trap cleanup EXIT
 
@@ -48,13 +48,14 @@ fi
 
 require_entry "$app_dir/artisan"
 require_entry "$app_dir/vendor/autoload.php"
+require_entry "$app_dir/.env"
 require_entry "$app_dir/.env.example"
 require_entry "$app_dir/.env.production.example"
 require_entry "$app_dir/.public-path"
 require_entry "$public_dir/index.php"
 require_entry "$public_dir/.htaccess"
 require_entry "$public_dir/build/manifest.json"
-require_entry "$public_dir/deploy_once.php"
+require_entry "$public_dir/clear.php"
 
 require_mode() {
     local entry="$1"
@@ -68,9 +69,10 @@ require_mode() {
 }
 
 require_mode "$app_dir/" "drwxr-xr-x"
+require_mode "$app_dir/.env" "-rw-------"
 require_mode "$public_dir/" "drwxr-xr-x"
 require_mode "$public_dir/index.php" "-rw-r--r--"
-require_mode "$public_dir/deploy_once.php" "-rw-r--r--"
+require_mode "$public_dir/clear.php" "-rw-r--r--"
 require_mode "$public_dir/build/" "drwxr-xr-x"
 require_mode "$public_dir/build/manifest.json" "-rw-r--r--"
 
@@ -86,10 +88,10 @@ done < <(awk -v prefix="$public_dir/build/" 'index($NF, prefix) == 1 {print $1 "
 
 while IFS= read -r entry; do
     case "$entry" in
-        "$app_dir/.env.example"|"$app_dir/.env.production.example")
+        "$app_dir/.env"|"$app_dir/.env.example"|"$app_dir/.env.production.example")
             ;;
-        "$app_dir/.env"|"$app_dir/.env."*)
-            fail "environment rahasia ikut ZIP: $entry"
+        "$app_dir/.env."*)
+            fail "variasi environment tak diizinkan ikut ZIP: $entry"
             ;;
     esac
 
@@ -116,13 +118,13 @@ while IFS= read -r entry; do
 done < "$listing_file"
 
 unzip -p "$zip_file" "$public_dir/index.php" > "$index_file"
-unzip -p "$zip_file" "$public_dir/deploy_once.php" > "$deploy_file"
+unzip -p "$zip_file" "$public_dir/clear.php" > "$clear_file"
 
-if grep -Fq "__APP_DIR_NAME__" "$index_file" "$deploy_file"; then
+if grep -Fq "__APP_DIR_NAME__" "$index_file" "$clear_file"; then
     fail "placeholder APP_DIR_NAME belum diganti"
 fi
 
-if grep -Fq "__DEPLOY_TOKEN_HASH__" "$deploy_file"; then
+if grep -Fq "__DEPLOY_TOKEN_HASH__" "$clear_file"; then
     fail "placeholder token belum diganti"
 fi
 
@@ -130,8 +132,12 @@ if ! grep -Fq "usePublicPath(__DIR__)" "$index_file"; then
     fail "index.php belum mengatur public path ke public_html"
 fi
 
-if ! grep -Eq "[a-f0-9]{64}" "$deploy_file"; then
-    fail "hash token sekali pakai tidak ditemukan"
+if ! grep -Eq "[a-f0-9]{64}" "$clear_file"; then
+    fail "hash token clear.php tidak ditemukan"
+fi
+
+if ! grep -Fq "migrate" "$clear_file" || ! grep -Fq "optimize:clear" "$clear_file" || ! grep -Fq "optimize" "$clear_file"; then
+    fail "clear.php belum memuat kontrak migrate/clear/optimize"
 fi
 
 public_path_marker="$(unzip -p "$zip_file" "$app_dir/.public-path")"
@@ -144,4 +150,4 @@ if (( failures > 0 )); then
     exit 1
 fi
 
-echo "OK: ZIP structure, secrets, caches, media, vendor, and Vite manifest verified."
+echo "OK: ZIP structure, packaged .env, clear.php, caches, media, vendor, and Vite manifest verified."
