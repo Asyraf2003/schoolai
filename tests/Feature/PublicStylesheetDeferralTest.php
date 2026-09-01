@@ -20,24 +20,32 @@ it('defers shared welcome styles only on the homepage', function (): void {
     }
 });
 
-it('keeps the shared mega menu stylesheet owned by document heads', function (): void {
+it('keeps mega menu final cascade owned by the navbar after its inline layout styles', function (): void {
+    $navbar = file_get_contents(resource_path('views/partials/site-navbar.blade.php'));
     $homeBlade = file_get_contents(resource_path('views/welcome.blade.php'));
     $publicLayout = file_get_contents(resource_path('views/layouts/public.blade.php'));
     $languageFlag = file_get_contents(resource_path('views/partials/language-flag.blade.php'));
-    $heroEntry = "'resources/css/pages/welcome-home-hero.css'";
-    $sharedHeroEntry = "'resources/css/pages/welcome-hero.css'";
-    $megaEntry = "'resources/css/pages/welcome-mega-menu.css'";
+    $provider = file_get_contents(app_path('Providers/AppServiceProvider.php'));
+    $desktopLayout = "@include('partials.site-navbar.styles.desktop-mega-layout')";
+    $megaEntry = 'resources/css/pages/welcome-mega-menu.css';
+    $megaInline = "Vite::content('{$megaEntry}')";
+    $headerInclude = "@include('partials.site-navbar.header')";
 
-    expect($homeBlade)
-        ->toContain($megaEntry)
-        ->toContain("document.querySelectorAll('link[data-home-deferred-style]')")
+    expect($navbar)
+        ->toContain($megaInline)
+        ->toContain("@vite('{$megaEntry}')")
+        ->toContain('data-site-navbar-style="mega"')
+        ->and($homeBlade)
+        ->not->toContain($megaEntry)
         ->and($publicLayout)
-        ->toContain($megaEntry)
+        ->not->toContain($megaEntry)
         ->and($languageFlag)
-        ->not->toContain("@vite('resources/css/pages/welcome-mega-menu.css')");
+        ->not->toContain($megaEntry)
+        ->and($provider)
+        ->not->toContain($megaEntry);
 
-    expect(strpos($homeBlade, $heroEntry))
-        ->toBeLessThan(strpos($homeBlade, $megaEntry))
-        ->and(strpos($publicLayout, $sharedHeroEntry))
-        ->toBeLessThan(strpos($publicLayout, $megaEntry));
+    expect(strpos($navbar, $desktopLayout))
+        ->toBeLessThan(strpos($navbar, $megaInline))
+        ->and(strpos($navbar, $megaInline))
+        ->toBeLessThan(strpos($navbar, $headerInclude));
 });
