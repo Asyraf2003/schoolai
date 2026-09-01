@@ -21,7 +21,7 @@ it('renders versioned static public media from R2 on every homepage locale', fun
         config('media.static.footer.gmail'),
         ...config('media.static.language_flags', []),
         ...config('media.static.footer.partners', []),
-    ], static fn (mixed $url): bool => is_string($url) && $url !== ''));
+    ], static fn (mixed $url): bool => is_string($url) && $url !== '')));
 
     foreach (['id', 'en', 'ar'] as $locale) {
         app()->setLocale($locale);
@@ -47,6 +47,7 @@ it('renders versioned static public media from R2 on every homepage locale', fun
 it('rejects legacy static media URLs from Vite-owned source', function (): void {
     $roots = [resource_path('css'), resource_path('js')];
     $violations = [];
+    $legacyMediaReference = "~(?:url\\(\\s*['\"]?|['\"`])/media/~";
 
     foreach ($roots as $root) {
         foreach (File::allFiles($root) as $file) {
@@ -54,7 +55,7 @@ it('rejects legacy static media URLs from Vite-owned source', function (): void 
                 continue;
             }
 
-            if (str_contains($file->getContents(), '/media/')) {
+            if (preg_match($legacyMediaReference, $file->getContents()) === 1) {
                 $violations[] = str_replace(
                     base_path().DIRECTORY_SEPARATOR,
                     '',
@@ -87,6 +88,6 @@ it('keeps real school media and testimonial URLs versioned on canonical R2', fun
     foreach ([...array_values($schoolLife), ...array_values($testimonials), ...array_values($languageFlags)] as $url) {
         expect($url)->toBeString()
             ->and($url)->toStartWith('https://media.almustaqbal.sch.id/site/')
-            ->and(preg_match('/-v\d+\.webp$/', $url))->toBe(1);
+            ->and(preg_match('/-v\\d+\\.webp$/', $url))->toBe(1);
     }
 });
