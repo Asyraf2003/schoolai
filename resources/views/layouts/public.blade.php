@@ -11,7 +11,6 @@
       'resources/css/pages/welcome-critical.css',
       'resources/css/pages/welcome.css',
       'resources/css/pages/welcome-hero.css',
-      'resources/css/pages/welcome-mega-menu.css',
       'resources/css/text-system.css',
       'resources/css/arabic-typography.css',
       'resources/css/public-latin-inter.css',
