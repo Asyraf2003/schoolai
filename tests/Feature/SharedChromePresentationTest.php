@@ -17,7 +17,8 @@ it('self-hosts the public Latin font without a Google Fonts dependency', functio
         ->and($latinTypography)
         ->toContain('@font-face')
         ->toContain('font-weight: 100 900')
-        ->toContain('font-display: swap')
+        ->toContain('font-display: optional')
+        ->not->toContain('font-display: swap')
         ->toContain('../fonts/inter/inter-latin-variable.woff2')
         ->and($font)->toBeFile()
         ->and(filesize($font))->toBeGreaterThan(0);
