@@ -113,7 +113,7 @@ it('keeps rebuilt public PPDB and Gallery routes off their retired CSS generatio
         ->toContain('.ppdb-liftoff')
         ->and($galleryView)
         ->toContain('class="gallery-grid-demo"')
-        ->toContain('class="gallery-grid"')
+        ->toContain('class="gallery-grid gallery-grid--grid"')
         ->not->toContain('social-video-cover');
 });
 
