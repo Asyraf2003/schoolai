@@ -45,6 +45,29 @@ it('keeps shared reveal behavior owned by core instead of legacy footer CSS', fu
         ->toContain("document.querySelectorAll('.reveal')");
 });
 
+it('routes the active footer cascade through one chrome adapter', function (): void {
+    $entry = file_get_contents(resource_path('css/pages/welcome.css'));
+    $footer = file_get_contents(resource_path('css/chrome/site-footer.css'));
+
+    $footerImports = [
+        '021-footer-putih-mitra-kami-logo-dijaga-proporsinya-heig.css',
+        '022-welcome-cascade-022.css',
+        '023-footer-model-screenshot-putih-kolom-rapi-galeri-hany.css',
+        '024-welcome-cascade-024.css',
+        '025-footer-kontak-ringkas-lokasi-klik-ke-google-maps-det.css',
+        '026-wa-ig-fb-email-jadi-satu-ui-seragam-berbasis-inline.css',
+        '027-channel-footer-pakai-asset-lokal-public-lazy-img-aga.css',
+        '028-urutan-footer-logo-sekolah-media-sosial-halaman-kami.css',
+    ];
+
+    expect($entry)->toContain('@import "../chrome/site-footer.css";');
+
+    foreach ($footerImports as $footerImport) {
+        expect($entry)->not->toContain($footerImport);
+        expect($footer)->toContain($footerImport);
+    }
+});
+
 it('keeps rebuilt home surfaces owned by their dedicated adapters', function (): void {
     $valuesView = file_get_contents(resource_path('views/home/sections/school-values.blade.php'));
     $programView = file_get_contents(resource_path('views/home/sections/featured-programs.blade.php'));
