@@ -78,49 +78,6 @@
         background: #f3eadb;
     }
 
-    .nav-shell .nav-mega__panel {
-        position: static;
-        width: 100%;
-        min-height: 0;
-        max-height: 0;
-        display: grid;
-        grid-template-columns: 1fr;
-        margin: 0;
-        overflow: hidden;
-        border: 0;
-        border-radius: 16px;
-        background: #f4ecdf;
-        box-shadow: none;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: none;
-        transform: none;
-        clip-path: none;
-        transition: max-height 280ms ease;
-    }
-
-    .nav-shell .nav-mega.is-open .nav-mega__panel {
-        max-height: 560px;
-        margin-block: 6px 12px;
-        pointer-events: auto;
-        transform: none;
-        clip-path: none;
-    }
-
-    .nav-shell .nav-mega__media,
-    .nav-shell .nav-mega__intro {
-        display: none;
-    }
-
-    .nav-shell .nav-mega__links {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    .nav-shell .nav-mega__link {
-        padding: 13px 14px;
-    }
-
     .nav-shell .nav-language {
         width: 100%;
         margin-block-start: 10px;

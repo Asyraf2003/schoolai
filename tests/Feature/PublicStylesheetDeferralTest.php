@@ -52,31 +52,51 @@ it('keeps mega menu final cascade owned by the navbar through the proven Vite st
         ->toBeLessThan(strpos($navbar, $headerInclude));
 });
 
-it('locks the approved full-viewport desktop mega menu geometry independently of asset timing', function (): void {
-    $desktop = file_get_contents(resource_path(
-        'views/partials/site-navbar/styles/desktop-mega-layout.blade.php'
-    ));
+it('gives mega menu content one canonical stylesheet owner instead of hero fallbacks', function (): void {
     $canonical = file_get_contents(resource_path(
         'css/pages/welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css'
+    ));
+    $desktop = file_get_contents(resource_path(
+        'views/partials/site-navbar/styles/desktop-mega-layout.blade.php'
     ));
 
     foreach ([
         'position: fixed;',
         'inset-block-start: 77px;',
         'inset-inline: 0;',
+        'z-index: var(--hero-layer-menu);',
         'width: 100vw;',
         'min-height: clamp(400px, 50vh, 540px);',
+        'display: grid;',
         'border-radius: 0;',
         'height: clamp(280px, 34vh, 360px);',
+        'max-width: 620px;',
         'grid-template-columns: repeat(2, minmax(0, 1fr));',
+        'font-size: clamp(1rem, 0.84rem + 0.2vw, 1.1rem);',
     ] as $contract) {
-        expect($desktop)->toContain($contract)
-            ->and($canonical)->toContain($contract);
+        expect($canonical)->toContain($contract);
     }
 
     expect($desktop)
+        ->not->toContain("\n  .nav-shell .nav-mega__panel {")
+        ->not->toContain("\n  .nav-shell .nav-mega__links {")
+        ->not->toContain("\n  .nav-shell .nav-mega__link {")
         ->toContain('.nav-shell .nav-login .nav-mega__panel')
         ->toContain('width: min(420px, calc(100vw - 48px));')
         ->toContain('.nav-shell .nav-login .nav-mega__links')
         ->toContain('grid-template-columns: 1fr;');
+
+    foreach ([
+        'css/pages/welcome-hero/002-welcome-hero-cascade-002.css',
+        'css/pages/welcome-hero/003-welcome-hero-cascade-003.css',
+        'css/pages/welcome-hero/008-welcome-hero-cascade-008.css',
+    ] as $legacyHeroModule) {
+        $hero = file_get_contents(resource_path($legacyHeroModule));
+
+        expect($hero)
+            ->not->toContain('.nav-shell .nav-mega__panel')
+            ->not->toContain('.nav-shell .nav-mega__media')
+            ->not->toContain('.nav-shell .nav-mega__links')
+            ->not->toContain('.nav-shell .nav-mega__link');
+    }
 });
