@@ -51,3 +51,32 @@ it('keeps mega menu final cascade owned by the navbar through the proven Vite st
         ->and(strpos($navbar, $megaLoad))
         ->toBeLessThan(strpos($navbar, $headerInclude));
 });
+
+it('locks the approved full-viewport desktop mega menu geometry independently of asset timing', function (): void {
+    $desktop = file_get_contents(resource_path(
+        'views/partials/site-navbar/styles/desktop-mega-layout.blade.php'
+    ));
+    $canonical = file_get_contents(resource_path(
+        'css/pages/welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css'
+    ));
+
+    foreach ([
+        'position: fixed;',
+        'inset-block-start: 77px;',
+        'inset-inline: 0;',
+        'width: 100vw;',
+        'min-height: clamp(400px, 50vh, 540px);',
+        'border-radius: 0;',
+        'height: clamp(280px, 34vh, 360px);',
+        'grid-template-columns: repeat(2, minmax(0, 1fr));',
+    ] as $contract) {
+        expect($desktop)->toContain($contract)
+            ->and($canonical)->toContain($contract);
+    }
+
+    expect($desktop)
+        ->toContain('.nav-shell .nav-login .nav-mega__panel')
+        ->toContain('width: min(420px, calc(100vw - 48px));')
+        ->toContain('.nav-shell .nav-login .nav-mega__links')
+        ->toContain('grid-template-columns: 1fr;');
+});
