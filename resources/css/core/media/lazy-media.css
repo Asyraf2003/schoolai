@@ -1,0 +1,11 @@
+[data-lazy-media][data-lazy-src] {
+    opacity: 0;
+}
+
+[data-lazy-media] {
+    transition: opacity 0.18s ease;
+}
+
+[data-lazy-media].is-lazy-loaded {
+    opacity: 1;
+}
