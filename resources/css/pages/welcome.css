@@ -2,14 +2,7 @@
 @import "./welcome/005-19-footer.css";
 @import "../core/reveal.css";
 @import "./welcome/006-23-aksesibilitas.css";
-@import "./welcome/021-footer-putih-mitra-kami-logo-dijaga-proporsinya-heig.css";
-@import "./welcome/022-welcome-cascade-022.css";
-@import "./welcome/023-footer-model-screenshot-putih-kolom-rapi-galeri-hany.css";
-@import "./welcome/024-welcome-cascade-024.css";
-@import "./welcome/025-footer-kontak-ringkas-lokasi-klik-ke-google-maps-det.css";
-@import "./welcome/026-wa-ig-fb-email-jadi-satu-ui-seragam-berbasis-inline.css";
-@import "./welcome/027-channel-footer-pakai-asset-lokal-public-lazy-img-aga.css";
-@import "./welcome/028-urutan-footer-logo-sekolah-media-sosial-halaman-kami.css";
+@import "../chrome/site-footer.css";
 @import "./welcome/029-switch-bahasa-server-side-session-cookie-tetap-aktif.css";
 @import "./welcome/030-welcome-cascade-030.css";
 @import "./welcome/031-welcome-cascade-031.css";
