@@ -71,19 +71,19 @@ it('renders homepage gallery photos from item dimensions instead of a shared har
 
     $html = View::make('home.sections.gallery-depth', [
         'galleryHeading' => 'Gallery',
-        'depthItems' => collect([[
-            'title' => 'Aula',
-            'caption' => '',
-            'media_url' => 'https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp',
-            'thumbnail_url' => 'https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp',
-            'media_width' => 1920,
-            'media_height' => 1200,
-            'is_direct_video' => false,
-            'preset' => ['background' => '#6f9b72'],
-        ]]),
-        'depthCta' => [],
-        'hasDepthCta' => false,
-        'galleryMoreLabel' => 'View gallery',
+        'gallerySection' => [
+            'items' => [[
+                'title' => 'Aula',
+                'caption' => '',
+                'type' => 'photo',
+                'media_url' => 'https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp',
+                'thumbnail_url' => 'https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp',
+                'media_width' => 1920,
+                'media_height' => 1200,
+                'is_direct_video' => false,
+            ]],
+            'cta' => [],
+        ],
     ])->render();
 
     expect($html)
