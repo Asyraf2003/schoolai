@@ -51,13 +51,14 @@ for required_file in \
     artisan \
     composer.json \
     composer.lock \
+    .env \
     .env.example \
     package.json \
     package-lock.json \
     public/index.php \
     public/.htaccess \
     deploy/cpanel/index.php.template \
-    deploy/cpanel/deploy_once.php.template \
+    deploy/cpanel/clear.php.template \
     deploy/cpanel/.env.production.example; do
     if [[ ! -f "$required_file" ]]; then
         echo "ERROR: file wajib tidak ditemukan: $required_file" >&2
@@ -152,8 +153,10 @@ rsync -a ./ "$app_stage/" \
     --exclude "/sai.sh" \
     --exclude "/sai.ssh"
 
+cp .env "$app_stage/.env"
 cp .env.example "$app_stage/.env.example"
 cp deploy/cpanel/.env.production.example "$app_stage/.env.production.example"
+chmod 0600 "$app_stage/.env"
 
 mkdir -p \
     "$app_stage/bootstrap/cache" \
@@ -176,16 +179,16 @@ rsync -a public/ "$public_stage/" \
 sed "s/__APP_DIR_NAME__/$APP_DIR_NAME/g" \
     deploy/cpanel/index.php.template > "$public_stage/index.php"
 
-deploy_token="$(php -r 'echo bin2hex(random_bytes(32));')"
-deploy_token_hash="$(php -r 'echo hash("sha256", $argv[1]);' "$deploy_token")"
+clear_token="$(php -r 'echo bin2hex(random_bytes(32));')"
+clear_token_hash="$(php -r 'echo hash("sha256", $argv[1]);' "$clear_token")"
 
 sed \
     -e "s/__APP_DIR_NAME__/$APP_DIR_NAME/g" \
-    -e "s/__DEPLOY_TOKEN_HASH__/$deploy_token_hash/g" \
-    deploy/cpanel/deploy_once.php.template > "$public_stage/deploy_once.php"
+    -e "s/__DEPLOY_TOKEN_HASH__/$clear_token_hash/g" \
+    deploy/cpanel/clear.php.template > "$public_stage/clear.php"
 
 php -l "$public_stage/index.php" >/dev/null
-php -l "$public_stage/deploy_once.php" >/dev/null
+php -l "$public_stage/clear.php" >/dev/null
 
 echo "==> Install production Composer dependencies"
 (
@@ -198,7 +201,7 @@ echo "==> Install production Composer dependencies"
 )
 
 # Environment-specific caches must only be generated on the hosting server
-# after the production .env file has been installed.
+# after the packaged production .env is in its final location.
 rm -f \
     "$app_stage/bootstrap/cache/config.php" \
     "$app_stage/bootstrap/cache/events.php" \
@@ -208,6 +211,7 @@ echo "==> Normalize shared-hosting permissions"
 find "$app_stage" "$public_stage" -type d -exec chmod 0755 {} +
 find "$app_stage" "$public_stage" -type f -exec chmod 0644 {} +
 chmod 0755 "$app_stage/artisan"
+chmod 0600 "$app_stage/.env"
 
 echo "==> Create ZIP: $zip_file"
 zip_file_absolute="$ROOT_DIR/$zip_file"
@@ -223,17 +227,17 @@ bash scripts/verify-cpanel-package.sh \
     "$PUBLIC_DIR_NAME"
 
 {
-    echo "SchoolAI one-time deployment"
+    echo "SchoolAI cPanel deployment"
     echo "ZIP: $(basename "$zip_file")"
     echo "Extract into the cPanel home directory."
-    echo "Place the production .env at: $APP_DIR_NAME/.env"
-    echo "Complete the database setup before running the URL below."
-    echo "URL: $SITE_URL/deploy_once.php?token=$deploy_token"
-    echo "The setup script deletes itself after a successful run."
+    echo "Packaged environment: $APP_DIR_NAME/.env"
+    echo "WARNING: the ZIP contains production secrets from the local .env; keep it private."
+    echo "URL: $SITE_URL/clear.php?token=$clear_token"
+    echo "clear.php runs optimize:clear, migrate --force, and optimize after deployment."
 } > "$setup_file"
 chmod 600 "$zip_file" "$setup_file"
 
 echo "==> Done"
 echo "ZIP: $zip_file"
 echo "SETUP: $setup_file"
-echo "Keep the setup file private; it contains the one-time token."
+echo "Keep both files private; the ZIP contains .env and the setup file contains the clear.php token."
