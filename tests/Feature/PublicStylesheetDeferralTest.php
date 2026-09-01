@@ -20,7 +20,7 @@ it('defers shared welcome styles only on the homepage', function (): void {
     }
 });
 
-it('keeps mega menu final cascade owned by the navbar after its inline layout styles', function (): void {
+it('keeps mega menu final cascade owned by the navbar through the proven Vite stylesheet path', function (): void {
     $navbar = file_get_contents(resource_path('views/partials/site-navbar.blade.php'));
     $homeBlade = file_get_contents(resource_path('views/welcome.blade.php'));
     $publicLayout = file_get_contents(resource_path('views/layouts/public.blade.php'));
@@ -28,13 +28,15 @@ it('keeps mega menu final cascade owned by the navbar after its inline layout st
     $provider = file_get_contents(app_path('Providers/AppServiceProvider.php'));
     $desktopLayout = "@include('partials.site-navbar.styles.desktop-mega-layout')";
     $megaEntry = 'resources/css/pages/welcome-mega-menu.css';
+    $megaLoad = "@vite('{$megaEntry}')";
     $megaInline = "Vite::content('{$megaEntry}')";
     $headerInclude = "@include('partials.site-navbar.header')";
 
     expect($navbar)
-        ->toContain($megaInline)
-        ->toContain("@vite('{$megaEntry}')")
-        ->toContain('data-site-navbar-style="mega"')
+        ->toContain('@once')
+        ->toContain($megaLoad)
+        ->not->toContain($megaInline)
+        ->not->toContain('data-site-navbar-style="mega"')
         ->and($homeBlade)
         ->not->toContain($megaEntry)
         ->and($publicLayout)
@@ -45,7 +47,7 @@ it('keeps mega menu final cascade owned by the navbar after its inline layout st
         ->not->toContain($megaEntry);
 
     expect(strpos($navbar, $desktopLayout))
-        ->toBeLessThan(strpos($navbar, $megaInline))
-        ->and(strpos($navbar, $megaInline))
+        ->toBeLessThan(strpos($navbar, $megaLoad))
+        ->and(strpos($navbar, $megaLoad))
         ->toBeLessThan(strpos($navbar, $headerInclude));
 });
