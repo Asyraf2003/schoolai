@@ -48,7 +48,7 @@ it('keeps rebuilt home surfaces owned by their dedicated adapters', function ():
         ->toContain('class="program-kinetic"')
         ->not->toContain('class="program-card')
         ->and($programLoader)
-        ->toContain("import('../../../css/pages/welcome/program-showcase-desktop.css')")
+        ->toContain("import '../../../css/pages/welcome/program-showcase-desktop.css';")
         ->and($galleryView)
         ->toContain('class="gallery-story"')
         ->not->toContain('class="galeri-story"')
