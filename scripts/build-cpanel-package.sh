@@ -23,6 +23,38 @@ validate_name() {
     fi
 }
 
+set_env_value() {
+    local file="$1"
+    local key="$2"
+    local value="$3"
+
+    php -r '
+        $file = $argv[1];
+        $key = $argv[2];
+        $value = $argv[3];
+        $contents = file_get_contents($file);
+
+        if ($contents === false) {
+            fwrite(STDERR, "Unable to read staged environment file.\n");
+            exit(1);
+        }
+
+        $pattern = "/^".preg_quote($key, "/")."=.*$/m";
+        $line = $key."=".$value;
+
+        if (preg_match($pattern, $contents) === 1) {
+            $contents = preg_replace($pattern, $line, $contents, 1);
+        } else {
+            $contents = rtrim($contents).PHP_EOL.$line.PHP_EOL;
+        }
+
+        if ($contents === null || file_put_contents($file, $contents, LOCK_EX) === false) {
+            fwrite(STDERR, "Unable to write staged environment file.\n");
+            exit(1);
+        }
+    ' "$file" "$key" "$value"
+}
+
 validate_name "APP_NAME" "$APP_NAME"
 validate_name "APP_DIR_NAME" "$APP_DIR_NAME"
 validate_name "PUBLIC_DIR_NAME" "$PUBLIC_DIR_NAME"
@@ -153,9 +185,38 @@ rsync -a ./ "$app_stage/" \
     --exclude "/sai.sh" \
     --exclude "/sai.ssh"
 
+# Start from the developer's local .env so existing AWS/Google credentials and
+# other project-specific values are carried into the package. Only values that
+# must differ in production are overwritten below.
 cp .env "$app_stage/.env"
 cp .env.example "$app_stage/.env.example"
 cp deploy/cpanel/.env.production.example "$app_stage/.env.production.example"
+
+echo "==> Convert staged .env to production"
+set_env_value "$app_stage/.env" "APP_NAME" "School"
+set_env_value "$app_stage/.env" "APP_ENV" "production"
+set_env_value "$app_stage/.env" "APP_KEY" "base64:tx01Hkpu3XouFanMD5F/m685fe7YJuxJ8vDQX3Wi8o0="
+set_env_value "$app_stage/.env" "APP_TIMEZONE" "Asia/Jakarta"
+set_env_value "$app_stage/.env" "APP_DEBUG" "false"
+set_env_value "$app_stage/.env" "APP_URL" "$SITE_URL"
+set_env_value "$app_stage/.env" "APP_LOCALE" "en"
+set_env_value "$app_stage/.env" "APP_FALLBACK_LOCALE" "id"
+set_env_value "$app_stage/.env" "APP_FAKER_LOCALE" "en_US"
+set_env_value "$app_stage/.env" "APP_MAINTENANCE_DRIVER" "file"
+set_env_value "$app_stage/.env" "BCRYPT_ROUNDS" "12"
+set_env_value "$app_stage/.env" "LOG_CHANNEL" "stack"
+set_env_value "$app_stage/.env" "LOG_STACK" "single"
+set_env_value "$app_stage/.env" "LOG_DEPRECATIONS_CHANNEL" "null"
+set_env_value "$app_stage/.env" "LOG_LEVEL" "debug"
+set_env_value "$app_stage/.env" "DB_CONNECTION" "mysql"
+set_env_value "$app_stage/.env" "DB_HOST" "127.0.0.1"
+set_env_value "$app_stage/.env" "DB_PORT" "3306"
+set_env_value "$app_stage/.env" "DB_DATABASE" "almusta2_database"
+set_env_value "$app_stage/.env" "DB_USERNAME" "almusta2_database"
+set_env_value "$app_stage/.env" "DB_PASSWORD" "almusta2_database"
+set_env_value "$app_stage/.env" "DB_TIMEZONE" "+07:00"
+set_env_value "$app_stage/.env" "SESSION_SECURE_COOKIE" "true"
+set_env_value "$app_stage/.env" "GOOGLE_REDIRECT_URI" "$SITE_URL/auth/google/callback"
 chmod 0600 "$app_stage/.env"
 
 mkdir -p \
@@ -224,20 +285,21 @@ echo "==> Verify deployment package"
 bash scripts/verify-cpanel-package.sh \
     "$zip_file" \
     "$APP_DIR_NAME" \
-    "$PUBLIC_DIR_NAME"
+    "$PUBLIC_DIR_NAME" \
+    "$SITE_URL"
 
 {
     echo "SchoolAI cPanel deployment"
     echo "ZIP: $(basename "$zip_file")"
-    echo "Extract into the cPanel home directory."
-    echo "Packaged environment: $APP_DIR_NAME/.env"
-    echo "WARNING: the ZIP contains production secrets from the local .env; keep it private."
+    echo "Extract the ZIP directly into the cPanel home directory."
+    echo "The packaged $APP_DIR_NAME/.env is already converted to production values."
+    echo "After extraction, open this one-time maintenance URL:"
     echo "URL: $SITE_URL/clear.php?token=$clear_token"
-    echo "clear.php runs optimize:clear, migrate --force, and optimize after deployment."
+    echo "clear.php runs optimize:clear, migrate --force, optimize, then deletes itself after success."
 } > "$setup_file"
 chmod 600 "$zip_file" "$setup_file"
 
 echo "==> Done"
 echo "ZIP: $zip_file"
 echo "SETUP: $setup_file"
-echo "Keep both files private; the ZIP contains .env and the setup file contains the clear.php token."
+echo "Keep both files private; the ZIP contains production credentials and the setup file contains the one-time clear.php token."
