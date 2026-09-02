@@ -5,6 +5,8 @@ set -Eeuo pipefail
 zip_file="${1:-}"
 app_dir="${2:-schoolai}"
 public_dir="${3:-public_html}"
+site_url="${4:-https://almustaqbal.sch.id}"
+site_url="${site_url%/}"
 
 if [[ -z "$zip_file" || ! -f "$zip_file" ]]; then
     echo "ERROR: ZIP deployment tidak ditemukan: $zip_file" >&2
@@ -14,10 +16,11 @@ fi
 listing_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-zip-list.XXXXXX")"
 index_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-index.XXXXXX")"
 clear_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-clear.XXXXXX")"
+env_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-env.XXXXXX")"
 permissions_file="$(mktemp "${TMPDIR:-/tmp}/schoolai-zip-permissions.XXXXXX")"
 
 cleanup() {
-    rm -f "$listing_file" "$index_file" "$clear_file" "$permissions_file"
+    rm -f "$listing_file" "$index_file" "$clear_file" "$env_file" "$permissions_file"
 }
 trap cleanup EXIT
 
@@ -119,6 +122,7 @@ done < "$listing_file"
 
 unzip -p "$zip_file" "$public_dir/index.php" > "$index_file"
 unzip -p "$zip_file" "$public_dir/clear.php" > "$clear_file"
+unzip -p "$zip_file" "$app_dir/.env" > "$env_file"
 
 if grep -Fq "__APP_DIR_NAME__" "$index_file" "$clear_file"; then
     fail "placeholder APP_DIR_NAME belum diganti"
@@ -140,6 +144,40 @@ if ! grep -Fq "migrate" "$clear_file" || ! grep -Fq "optimize:clear" "$clear_fil
     fail "clear.php belum memuat kontrak migrate/clear/optimize"
 fi
 
+if ! grep -Fq 'unlink(__FILE__)' "$clear_file"; then
+    fail "clear.php belum dikonfigurasi menghapus dirinya setelah sukses"
+fi
+
+for required_env_line in \
+    "APP_NAME=School" \
+    "APP_ENV=production" \
+    "APP_DEBUG=false" \
+    "APP_URL=$site_url" \
+    "APP_TIMEZONE=Asia/Jakarta" \
+    "APP_LOCALE=en" \
+    "APP_FALLBACK_LOCALE=id" \
+    "APP_FAKER_LOCALE=en_US" \
+    "DB_CONNECTION=mysql" \
+    "DB_HOST=127.0.0.1" \
+    "DB_PORT=3306" \
+    "DB_DATABASE=almusta2_database" \
+    "DB_USERNAME=almusta2_database" \
+    "DB_TIMEZONE=+07:00" \
+    "SESSION_SECURE_COOKIE=true" \
+    "GOOGLE_REDIRECT_URI=$site_url/auth/google/callback"; do
+    if ! grep -Fxq "$required_env_line" "$env_file"; then
+        fail "production .env belum benar: $required_env_line"
+    fi
+done
+
+if ! grep -Eq '^APP_KEY=base64:.+' "$env_file"; then
+    fail "production APP_KEY tidak tersedia"
+fi
+
+if grep -Eq '^(APP_ENV=local|APP_DEBUG=true|APP_URL=http://localhost|GOOGLE_REDIRECT_URI=http://127\.0\.0\.1)' "$env_file"; then
+    fail "nilai development masih tersisa pada key production utama"
+fi
+
 public_path_marker="$(unzip -p "$zip_file" "$app_dir/.public-path")"
 if [[ "$public_path_marker" != "../$public_dir" ]]; then
     fail ".public-path tidak menunjuk ke ../$public_dir"
@@ -150,4 +188,4 @@ if (( failures > 0 )); then
     exit 1
 fi
 
-echo "OK: ZIP structure, packaged .env, clear.php, caches, media, vendor, and Vite manifest verified."
+echo "OK: ZIP structure, production .env, self-deleting clear.php, caches, media, vendor, and Vite manifest verified."
