@@ -162,13 +162,19 @@ try {
         $fail('Maintenance succeeded, but the completion marker could not be written.');
     }
 
+    $selfDeleted = @unlink(__FILE__);
+
     echo "MAINTENANCE COMPLETE\n";
     foreach ($results as $result) {
         echo $result."\n";
     }
-    echo "Keep clear.php private behind its token.\n";
+
+    echo $selfDeleted
+        ? "OK: clear.php deleted itself.\n"
+        : "WARNING: maintenance succeeded, but clear.php could not delete itself. Delete it manually.\n";
 } catch (Throwable $exception) {
     http_response_code(500);
     echo "MAINTENANCE FAILED\n";
     echo $exception->getMessage()."\n";
+    echo "clear.php was kept so the same URL can be retried after fixing the problem.\n";
 }
