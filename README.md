@@ -10,6 +10,10 @@
 
 </div>
 
+<p align="center">
+  <img src=".github/assets/readme/homepage-desktop.png" alt="SchoolAI multilingual school homepage" width="100%">
+</p>
+
 > **SchoolAI is not a template-driven school website.** It combines a multilingual public-facing experience with article publishing, gallery composition, admissions presentation, role-specific portals, account/session controls, media workflows, and production deployment concerns in one maintained application.
 
 ---
