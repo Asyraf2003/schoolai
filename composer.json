@@ -58,7 +58,7 @@
             "@php artisan test"
         ],
         "post-autoload-dump": [
-            "Composer\\Config::disableProcessTimeout",
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
@@ -74,7 +74,7 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "pre-package-uninstall": [
-            "Composer\\Config::disableProcessTimeout"
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ]
     },
     "extra": {
