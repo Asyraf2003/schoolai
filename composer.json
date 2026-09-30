@@ -7,7 +7,7 @@
         "laravel",
         "framework"
     ],
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": "^8.3",
         "laravel/framework": "^13.8",
@@ -58,7 +58,7 @@
             "@php artisan test"
         ],
         "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "Composer\\Config::disableProcessTimeout",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
@@ -74,7 +74,7 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "pre-package-uninstall": [
-            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+            "Composer\\Config::disableProcessTimeout"
         ]
     },
     "extra": {
