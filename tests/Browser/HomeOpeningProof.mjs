@@ -23,7 +23,7 @@ for(const [engine,type] of Object.entries({chromium,webkit})) {
                 await page.setViewportSize({width,height:900});await delay(25);
                 const state=await snapshot(page);assert.ok(state.loaderVisible&&state.hero&&state.ppdb,JSON.stringify(state));
                 assert.equal(state.value,40);assert.equal(state.lang,locale);assert.equal(state.dir,locale==='ar'?'rtl':'ltr');
-                assert.ok(state.horizontalOverflow<=2);assert.equal(state.duplicates,1);
+                assert.ok(state.horizontalOverflow<=2);assert.equal(state.duplicates,1);assert.equal(state.desktop,width>=1181);
                 const input=await nativeScroll(page,engine,width===390);assert.equal(input.after,0);
                 if([360,390,640,768,1024,1280,1440,1536,1920].includes(width))await page.screenshot({path:`${dir}/${engine}-${locale}-${motion}-${width}-pending.png`});
                 save({engine,version:browser.version(),key:`${locale}-${motion}-${width}-pending`,state,input});
