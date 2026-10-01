@@ -34,7 +34,9 @@ canonical open never ran; only fallback dialog focus ran. Source is unchanged
 from baseline; history 87bfb14c restored that fallback with flag appearance.
 MAP-06A browser proof also recorded first-frame focus while dialog visibility
 was hidden (Chromium, ID reduced motion, 1180px). Computed visibility gates focus; the existing visibility transition supplies
-a retry, with cancellation on close/exit. CSS visibility/motion stays unchanged.
+a retry, with cancellation on close/exit. Global reduced-motion duration also
+transitions descendants inherited visibility; focus waits for visible flag
+controls, and Tab excludes hidden controls (actual WebKit/Chromium proof). CSS visibility/motion stays unchanged.
 Exactly one NEXT: Terminal Codex verifies bounded MAP-06A modal lifecycle repair.
 Final MAP-06 resumes only after this prerequisite is verified/merged.
 This map changes no production runtime/style/content unless new failure evidence

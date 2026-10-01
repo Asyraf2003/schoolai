@@ -27,12 +27,12 @@ function environment() {
     }
     const origin = node(true), hamburger = node(), nav = node(), header = node(), modal = node(), dialog = node();
     const hiddenClose = node(); hiddenClose.getClientRects = () => [];
-    const options = [node(),node()]; dialog.querySelectorAll = () => [hiddenClose,...options];
+    const options = [node(),node()]; dialog.querySelectorAll = selector => selector === '.language-modal__option' ? options : [hiddenClose,...options];
     const backdrop = node(); modal.querySelector = () => dialog; modal.querySelectorAll = () => [backdrop];
     doc.querySelector = () => modal; doc.getElementById = id => ({ hamburgerBtn: hamburger, navMenu: nav, navbar: header }[id]);
     doc.documentElement = { contains: value => value.connected };
     doc.body = { style: { overflow: 'clip' } }; doc.activeElement = origin;
-    const win = { ...target(), getComputedStyle: element => ({ visibility: element.visibility || 'visible' }), requestAnimationFrame(callback) { frames.set(++nextId,callback); return nextId; }, cancelAnimationFrame(id) { frames.delete(id); } };
+    const win = { ...target(), getComputedStyle: element => ({ visibility: element.visibility || modal.visibility || 'visible' }), requestAnimationFrame(callback) { frames.set(++nextId,callback); return nextId; }, cancelAnimationFrame(id) { frames.delete(id); } };
     const globals = { document: doc, window: win, AbortController, CustomEvent: class { constructor(type,init) { this.type=type;this.detail=init.detail; } } };
     const boot = () => runInNewContext(source,globals);
     const tick = () => { const callbacks=[...frames.values()];frames.clear();callbacks.forEach(callback=>callback()); };
@@ -83,4 +83,14 @@ test('focus waits for actual visibility transition and late completion never foc
     e.modal.visibility='visible';e.modal.fire('transitionend',{target:e.modal,propertyName:'visibility'});
     e.tick();assert.equal(e.doc.activeElement,e.dialog);e.close();
     e.modal.fire('transitionend',{target:e.modal,propertyName:'visibility'});assert.equal(e.frames.size,0);
+});
+
+test('inherited reduced-motion visibility waits for flag choices before dialog focus and Tab excludes hidden choices', () => {
+    const e=environment();e.options.forEach(option=>option.visibility='hidden');e.boot();e.open();e.tick();
+    assert.equal(e.doc.activeElement,e.origin);
+    assert.equal(e.doc.fire('keydown',{key:'Tab'}).prevented,true);assert.equal(e.doc.activeElement,e.origin);
+    e.options.forEach(option=>option.visibility='visible');
+    e.modal.fire('transitionend',{target:e.options[1],propertyName:'visibility'});e.tick();
+    assert.equal(e.doc.activeElement,e.dialog);e.doc.fire('keydown',{key:'Tab'});
+    assert.equal(e.doc.activeElement,e.options[0]);e.close();
 });

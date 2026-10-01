@@ -458,3 +458,11 @@ motion. Frame count is not visibility readiness. The bounded owner will focus
 only after computed visibility is visible; its existing CSS visibility
 transition completion supplies the retry, cancelled/disposed with the owner.
 No duration/timeout/stronger selector is introduced.
+
+Final visibility root cause: the existing global reduced-motion rule gives every
+element a 0.01ms transition duration. Descendants with default transition-property
+all also transition inherited visibility. WebKit recorded visible dialog but
+hidden flag buttons during native Tab; Chromium reproduced the same focus miss.
+Keep that visual owner untouched. Canonical initial focus must wait for both
+dialog and actual flag controls to be visible; bubbling visibility completion
+reschedules the one cancellable frame. Tab considers only truly visible controls.

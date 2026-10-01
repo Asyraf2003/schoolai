@@ -24,8 +24,12 @@
       cancelFocus();
       focusFrame = window.requestAnimationFrame(function () {
         focusFrame = 0;
-        if (dialog && modal.classList.contains('is-open')
-            && window.getComputedStyle(modal).visibility === 'visible') dialog.focus({ preventScroll: true });
+        if (!dialog || !modal.classList.contains('is-open')) return;
+        var choices = Array.prototype.slice.call(dialog.querySelectorAll('.language-modal__option'));
+        if (window.getComputedStyle(dialog).visibility === 'visible'
+            && choices.every(function (choice) { return window.getComputedStyle(choice).visibility === 'visible'; })) {
+          dialog.focus({ preventScroll: true });
+        }
       });
     }
 
@@ -91,7 +95,7 @@
     }, { capture: true, signal: lifecycle.signal });
 
     modal.addEventListener('transitionend', function (event) {
-      if (event.target === modal && event.propertyName === 'visibility'
+      if (event.propertyName === 'visibility'
           && modal.classList.contains('is-open') && !dialog.contains(document.activeElement)) focusDialog();
     }, options);
 
@@ -107,7 +111,7 @@
       if (event.key !== 'Tab' || !modal.classList.contains('is-open') || !dialog) return;
       var controls = Array.prototype.slice.call(dialog.querySelectorAll(
         'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
-      )).filter(function (control) { return control.getClientRects().length; });
+      )).filter(function (control) { return control.getClientRects().length && window.getComputedStyle(control).visibility === 'visible'; });
       if (!controls.length) { event.preventDefault(); return; }
       var first = controls[0];
       var last = controls[controls.length - 1];
