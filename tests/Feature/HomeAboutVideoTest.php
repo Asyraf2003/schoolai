@@ -14,6 +14,7 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
         ->assertOk()
         ->assertSee('data-vision-video-open', false)
         ->assertSee('data-vision-video-preview', false)
+        ->assertSee('data-vision-preview-poster', false)
         ->assertSee('data-about-video-modal', false)
         ->assertSee('data-about-video-shell', false)
         ->assertSee('data-about-video-player', false)
@@ -38,7 +39,7 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
 
     $section = readOwnedSource(resource_path('views/home/sections/vision-mission.blade.php'), ['resources/views/home/partials/vision-video-dialog.blade.php']);
     $composer = file_get_contents(app_path('View/Composers/HomeVisionMissionComposer.php'));
-    $modal = readOwnedSource(resource_path('js/pages/welcome/about-video-modal.js'), ['resources/js/pages/welcome/video-previews.js', 'resources/js/pages/welcome/video-fullscreen.js', 'resources/js/pages/welcome/video-utilities.js']);
+    $modal = readOwnedSource(resource_path('js/pages/welcome/about-video-modal.js'), ['resources/js/pages/welcome/video-previews.js', 'resources/js/pages/welcome/video-readiness.js', 'resources/js/pages/welcome/video-fullscreen.js', 'resources/js/pages/welcome/video-utilities.js']);
     $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
     $css = readOwnedSource(resource_path('css/pages/welcome-vision-waapi/about-video.css'), ['resources/css/pages/welcome-vision-waapi/video-preview.css', 'resources/css/pages/welcome-vision-waapi/video-modal.css', 'resources/css/pages/welcome-vision-waapi/video-controls.css']);
     $baseCss = readOwnedSource(resource_path('css/pages/welcome-vision-waapi/base.css'), ['resources/css/pages/welcome-vision-waapi/base-layout.css', 'resources/css/pages/welcome-vision-waapi/base-rtl.css']);
@@ -74,8 +75,8 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
         ->toContain("querySelectorAll('[data-vision-video-preview]')")
         ->toContain("querySelectorAll('[data-vision-video-open]')")
         ->toContain('new IntersectionObserver')
-        ->toContain("rootMargin: '180px 0px'")
-        ->toContain('preview.src = source')
+        ->toContain("rootMargin: '100% 0px'")
+        ->toContain('preview.src = preview.dataset.visionVideoSrc')
         ->toContain('preview.pause()')
         ->toContain('player.src = source')
         ->toContain('hydratePlayer(activeSource)')

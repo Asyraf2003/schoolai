@@ -77,6 +77,9 @@
           @if ($loop->index === 1) aria-hidden="true" @endif
         >
           @if (isset($visionVideoSources[$loop->index]))
+            <img class="vision-arch__preview-poster" data-vision-preview-poster
+              src="{{ config('media.static.hero_school') }}" alt="" width="1920" height="1440"
+              loading="lazy" decoding="async" fetchpriority="low" />
             @if ($visionVideoSources[$loop->index]['interactive'])
               <button
                 type="button"

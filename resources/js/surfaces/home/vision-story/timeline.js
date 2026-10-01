@@ -8,6 +8,7 @@ export function createVisionTimeline(root) {
     const background = createVisionBackgroundCompositor(root, panels);
     const transitionCount = Math.max(1, visuals.length - 1);
     let activeIndex = -1;
+    let mediaRange = '';
 
     function setActive(index) {
         if (activeIndex === index) return;
@@ -20,6 +21,12 @@ export function createVisionTimeline(root) {
     function setProgress(progress) {
         background.setProgress(progress);
         const scaled = clamp(progress) * transitionCount;
+        const nextRange = `${Math.floor(scaled)},${Math.ceil(scaled)}`;
+        if (mediaRange !== nextRange) {
+            mediaRange = nextRange;
+            root.dataset.visionMediaRange = mediaRange;
+            root.dispatchEvent(new CustomEvent('schoolai:vision-media-range', { bubbles: true }));
+        }
         setActive(Math.min(panels.length - 1, Math.floor(scaled + .5)));
 
         visuals.forEach((visual, index) => {
@@ -41,6 +48,7 @@ export function createVisionTimeline(root) {
 
     function destroy() {
         background.destroy();
+        delete root.dataset.visionMediaRange;
         panels.forEach((panel) => panel.classList.remove('is-active'));
         visuals.forEach((visual) => visual.style.removeProperty('clip-path'));
         media.forEach((element) => element?.style.removeProperty('transform'));

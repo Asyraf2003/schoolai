@@ -150,7 +150,7 @@ Native R2 range probe returns HTTP 206, 1,024 bytes of a 94,907,995-byte asset;
 ongoing playback may buffer further. Durable results/hashes: runtime proof JSON.
 Linux WebKit codec environment was repaired only in /tmp before final playback
 proof; initial unsupported-codec and request-count-only runs were invalidated.
-STATUS: CLOSED (verified; publication follows green CI).
+STATUS: CLOSED (merged #51 after CI; main `eecaf918`).
 
 ### MAP-03 — First journey readiness and access-safe scroll gate
 GOAL: prepare Vision truthfully before meaningful scroll; progressive next owners.
@@ -163,8 +163,17 @@ TESTS: unresolved/ready/static/failed/disposed; PPDB/nav/keyboard remain reachab
 hash/restore paths, locale switch, resize, reduced motion and no-JS access.
 DoD: readiness reports actual prepared/fallback state; no fake timer progress or
 infinite lock; section N+1 preparation begins before viewport entry.
-PROOF: pending.
-STATUS: PLANNED.
+PROOF: Issue #52 / PR #53; source `f30301cf`. Executed Node 18 PASS,
+focused PHP 8/273, full 304/3,491, structure 593, build 143, Pint/diff PASS.
+86 Chromium/WebKit cases PASS: six tiers × three locales × normal/reduced,
+pending wheel, Escape/deadline cancellation, PPDB, hash, no-JS, source failure,
+visible media range/reverse and persisted restore. Real font API scopes glyphs
+rather than waiting on a global FontFaceSet.ready WebKit hang. Three isolated
+Chromium traces show actual Vision prepared/frame-ready before unlock and zero
+first-scroll network requests. FCP median/worst 612/1,008ms; renderer-main
+Layout 117.004/383.435ms; FunctionCall 83.255/151.836ms. Local variable evidence,
+not field CWV or attributed decode/GPU. Raw-trace hashes/results in proof JSON.
+STATUS: CLOSED (verified; publish only after green CI).
 
 ### MAP-04 — Progressive Program, Values, Gallery and wall preparation
 GOAL: remove remaining proximity-triggered initialization bursts with bounded work.
@@ -205,7 +214,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 verified CLOSED; merge #51 before MAP-03 implementation.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 verified; merge #53 before MAP-04.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
@@ -223,3 +232,42 @@ objects 3/4/5 are UNKNOWN for external consumers: remove repository references,
 retain bucket objects. `cursor-layer.js` duplicate character constant is unused
 in all scopes and DEAD_CONFIRMED. Replace five-state preload helper with default
 load plus hover intent; preserve all interactive selectors/top-layer policy.
+
+## MAP-03 bounded packet — FACT / GAP / DECISION
+
+FACT: Vision is immediately after Hero. The schoolImages collection still contains retired paper URLs
+protected by an explicit no-paper test; three preview videos currently lack posters and share 180px
+playback proximity. Controller prepares only when near/wide and returns early;
+fonts/decode races resolve fake success after 700/900ms. Current CSS owns all
+media crop/fade and timeline geometry; no losing selector is removed.
+GAP: first-scroll changes layout and starts three media workloads after the
+coordinator has already reported prepared. No-JS/reduced video boxes are black. Retired paper assets are not valid fallback
+owners; keep their no-render contract and retain unknown legacy config.
+DECISION: await actual first poster/frame, applicable stylesheet/fonts and
+existing timeline before normal unlock. Deadline/error/access intent cancels
+late enhancement and selects the existing static semantic composition. Reuse the active Hero school-photo asset (already loaded) beneath the existing video fade; preserve DOM story order,
+layout, controls, crop and animation durations. Gate CSS owns only root overflow
+and reserved scrollbar geometry; navigation continues to own body overflow.
+Immediate hash/restored position, links, focus outside Hero and Escape select
+static fallback before access. No-JS has no gate attribute. Remaining previews
+prepare sequentially ahead; playback is actual visible geometry only.
+Editable: coordinator/gate, Vision wrapper/controller/preparation, previews and
+bounded readiness helper, Vision Blade/poster CSS, critical gate CSS, tests/docs.
+Read-only: business/locale data, typography, Hero, Program/Values/Gallery motion.
+Proof: pending gate cannot scroll, ready and static fallback can; primary actions
+work immediately, aborted work cannot later mutate timeline; actual browser
+matrix and executed contracts plus existing canonical gates.
+
+MAP-03 playback audit: at 1440×900, first transition had two prepared previews
+playing plus a third preparing beneath fully covered masks. Proximity alone
+cannot express stacked cinematic visibility. Keep existing timeline curves;
+emit only changes to the integer floor/ceil visible media range, and pause
+prepared previews outside that range. Warm-up remains a bounded first-frame
+operation. Without IO keep semantic posters rather than continuous blind play.
+
+MAP-03 WebKit readiness proof: stylesheet and first frame were ready; font faces
+reported loaded, but global FontFaceSet.ready stayed pending until the eight-
+second static deadline. Await only the computed heading/body font descriptors
+and actual locale glyphs used by Vision (check/load); preserve Inter/Cairo,
+weights, font-display and all typography owners. Executed regression keeps the
+global promise pending while proving local glyph readiness settles. No UA fork.

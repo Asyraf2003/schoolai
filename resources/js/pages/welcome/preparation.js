@@ -1,3 +1,5 @@
+import { createHomepageScrollGate } from './scroll-gate.js';
+
 export const HOME_PREPARATION_ORDER = Object.freeze([
   'hero',
   'vision',
@@ -9,10 +11,13 @@ export const HOME_PREPARATION_ORDER = Object.freeze([
 
 const HERO_READY_EVENT = 'schoolai:hero-ready';
 
+const firstJourney = new AbortController();
+let scrollGate = null;
+
 const preparationSteps = {
   hero: () => Promise.resolve(),
   vision: () => import('../welcome-vision-story.js')
-    .then(({ prepareHomepageVisionStory }) => prepareHomepageVisionStory()),
+    .then(({ prepareHomepageVisionStory }) => prepareHomepageVisionStory({ signal: firstJourney.signal })),
   program: () => Promise.all([
     import('../../surfaces/home/program-values-world.js'),
     import('./program-cards.js')
@@ -46,9 +51,14 @@ async function runPreparation() {
 
   for (const section of HOME_PREPARATION_ORDER) {
     try {
-      await preparationSteps[section]();
-      reportStep(section, 'prepared');
+      const work = preparationSteps[section]();
+      const result = section === 'vision'
+        ? await Promise.race([work, scrollGate?.fallbackReady || new Promise(() => {})])
+        : await work;
+      if (section === 'vision') scrollGate?.release(result?.state || 'prepared');
+      reportStep(section, result?.state || 'prepared');
     } catch (error) {
+      if (section === 'vision') { firstJourney.abort(); scrollGate?.release('static-fallback'); }
       failedSections.push(section);
       reportStep(section, 'failed');
       console.warn(`Homepage ${section} preparation failed.`, error);
@@ -77,6 +87,7 @@ export function startHomepagePreparation() {
 export function scheduleHomepagePreparation() {
   if (scheduled) return;
   scheduled = true;
+  scrollGate = createHomepageScrollGate(() => firstJourney.abort());
 
   const root = document.documentElement;
   root.dataset.homePreparationState = 'waiting-hero';
