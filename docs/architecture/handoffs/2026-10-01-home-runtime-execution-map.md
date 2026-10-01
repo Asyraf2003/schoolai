@@ -255,3 +255,10 @@ cannot express stacked cinematic visibility. Keep existing timeline curves;
 emit only changes to the integer floor/ceil visible media range, and pause
 prepared previews outside that range. Warm-up remains a bounded first-frame
 operation. Without IO keep semantic posters rather than continuous blind play.
+
+MAP-03 WebKit readiness proof: stylesheet and first frame were ready; font faces
+reported loaded, but global FontFaceSet.ready stayed pending until the eight-
+second static deadline. Await only the computed heading/body font descriptors
+and actual locale glyphs used by Vision (check/load); preserve Inter/Cairo,
+weights, font-display and all typography owners. Executed regression keeps the
+global promise pending while proving local glyph readiness settles. No UA fork.

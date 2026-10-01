@@ -141,3 +141,17 @@ test('stacked Vision plays only the visible transition range and pauses hidden/d
         e.event(e.win, 'pagehide', { persisted: false }); assert.ok(observers.every(o => o.disconnected));
     } finally { globalThis.IntersectionObserver = previousObserver; e.restore(); }
 });
+
+
+test('Vision scopes font readiness to its actual text when global font readiness remains pending', async () => {
+    const e = environment();
+    try {
+        const globalFonts = deferred(); const localFonts = deferred(); let loads = 0;
+        e.doc.fonts = { ready: globalFonts.promise, check: () => false, load(font, text) { loads++; assert.ok(font.includes('Inter')); assert.equal(text, 'Vision'); return localFonts.promise; } };
+        e.win.getComputedStyle = () => ({ fontStyle: 'normal', fontWeight: '700', fontSize: '32px', fontFamily: 'Inter' });
+        const v = preview(e); e.vision.querySelector = s => s.includes('preview') ? v : null; e.vision.querySelectorAll = () => [{ textContent: 'Vision' }];
+        const work = prepareVisionAssets(e.vision, undefined, false); await new Promise(setImmediate); e.event(v, 'loadeddata');
+        assert.equal(loads, 1); localFonts.resolve(); assert.equal(await work, 'frame-ready');
+        assert.equal(e.vision.dataset.visionFontsReady, 'true');
+    } finally { e.restore(); }
+});
