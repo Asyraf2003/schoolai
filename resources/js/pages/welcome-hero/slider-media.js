@@ -29,7 +29,8 @@ export function createSliderMediaActions(options) {
             image.removeAttribute('data-src');
         });
 
-        if (!allowVideo || state.videoHydrationReady !== true) return;
+        if (!allowVideo || state.videoHydrationReady !== true
+            || ((state.reducedMotion?.matches || document.hidden || state.suspended) && !state.audioEnabled)) return;
 
         var video = slide.querySelector('[data-hero-video]');
         if (!video) return;
@@ -96,7 +97,8 @@ export function createSliderMediaActions(options) {
             var playAttempt = video.play();
             if (playAttempt && typeof playAttempt.catch === 'function') {
                 playAttempt.catch(function () {
-                    options.root.dataset.heroMediaState = 'autoplay-blocked';
+                    if (index !== state.currentIndex || state.suspended || document.hidden || state.inViewport === false) return;
+                    options.root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
                     slide.classList.add('has-video-playback-fallback');
                 });
             }

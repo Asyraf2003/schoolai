@@ -53,13 +53,14 @@ export function initOpeningHero(root, slide) {
         if (playAttempt && typeof playAttempt.catch === 'function') {
             playAttempt.catch(function () {
                 if (lifecycle.signal.aborted || document.hidden || suspended || !inViewport) return;
-                root.dataset.heroMediaState = 'autoplay-blocked';
+                root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
                 slide.classList.add('has-video-playback-fallback');
             });
         }
     }
 
     function warmVideo() {
+        if (document.hidden || suspended || !inViewport) { video.pause(); return; }
         if (reducedMotion.matches && !audioEnabled) {
             root.dataset.heroMediaState = 'static-reduced';
             video.pause();

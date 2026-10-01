@@ -72,6 +72,8 @@ test('autoplay rejection cannot block shell; hidden/offscreen/BFCache suspend an
     try {
         armHeroReadySignal(e.root);initOpeningHero(e.root,e.slide);e.flush();e.flush();await Promise.resolve();
         assert.equal(e.root.dataset.heroReady,'true');assert.equal(e.root.dataset.heroMediaState,'autoplay-blocked');
+        e.video.error={code:4};e.fire(e.doc,'visibilitychange');await Promise.resolve();
+        assert.equal(e.root.dataset.heroMediaState,'media-error');e.video.error=null;
         e.observers[0].callback([{isIntersecting:false}]);assert.equal(e.video.paused,true);
         e.observers[0].callback([{isIntersecting:true}]);
         e.doc.hidden=true;e.fire(e.doc,'visibilitychange');assert.equal(e.video.paused,true);
@@ -81,6 +83,16 @@ test('autoplay rejection cannot block shell; hidden/offscreen/BFCache suspend an
         e.fire(e.win,'pagehide',{persisted:false});const final=e.video.plays;
         e.fire(e.button,'click');e.fire(e.win,'pageshow');assert.equal(e.video.plays,final);
         assert.equal(e.observers[0].disconnected,true);await Promise.resolve();
+    } finally {e.restore();}
+});
+
+test('hidden startup paints shell contract without attaching media until visible', () => {
+    const e=environment({hidden:true});
+    try {
+        armHeroReadySignal(e.root);initOpeningHero(e.root,e.slide);e.flush();e.flush();
+        assert.equal(e.video.loads,0);assert.equal(e.root.dataset.heroReady,'true');
+        e.doc.hidden=false;e.fire(e.doc,'visibilitychange');assert.equal(e.video.loads,1);
+        e.fire(e.win,'pagehide',{persisted:false});
     } finally {e.restore();}
 });
 
