@@ -20,7 +20,7 @@ for(const [engine,type] of Object.entries({chromium,webkit})) {
             const initial=await snapshot(page);assert.equal(initial.root.homeScrollGate,'locked');assert.ok(initial.loaderVisible&&initial.hero&&initial.ppdb);
             await page.evaluate(()=>{window.openingProof.reference=window.schoolaiHomeOpening;window.holdOpeningHandoff=true;});
             for(const width of widths) {
-                await page.setViewportSize({width,height:900});await delay(25);
+                await page.setViewportSize({width,height:900});await page.waitForFunction(expected=>{const s=getComputedStyle(document.querySelector('#desktopNavMenu'));return(s.display!=='none'&&s.visibility!=='hidden')===expected},width>=1181);
                 const state=await snapshot(page);assert.ok(state.loaderVisible&&state.hero&&state.ppdb,JSON.stringify(state));
                 assert.equal(state.value,40);assert.equal(state.lang,locale);assert.equal(state.dir,locale==='ar'?'rtl':'ltr');
                 assert.ok(state.horizontalOverflow<=2);assert.equal(state.duplicates,1);assert.equal(state.desktop,width>=1181);

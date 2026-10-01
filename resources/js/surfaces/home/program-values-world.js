@@ -54,4 +54,3 @@ export function mountProgramValuesWorld(root, { signal } = {}) {
   }
   return destroy;
 }
-

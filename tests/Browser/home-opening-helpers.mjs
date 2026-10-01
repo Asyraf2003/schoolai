@@ -46,7 +46,7 @@ export async function snapshot(page) {
         const visible=e=>{const rect=e.getBoundingClientRect(),style=getComputedStyle(e);return rect.width>0&&rect.height>0&&rect.top<innerHeight&&rect.bottom>0&&style.visibility==='visible'&&style.display!=='none';};
         const hero=document.querySelector('[data-hero-slider]'),ppdb=document.querySelector('.hero-cinema__cta[href$="/ppdb"]');
         return {root:{...document.documentElement.dataset},value:bar.value,percent:loader.innerText,loaderVisible:visible(loader),loader:{x:r.x,y:r.y,width:r.width,height:r.height},
-            hero:visible(hero.querySelector('h1')),desktop:visible(document.querySelector('#desktopNavMenu')),navbar:visible(document.querySelector('#navbar')),heroRect:hero.getBoundingClientRect().toJSON(),ppdb:visible(ppdb),scrollY,
+            hero:visible(hero.querySelector('h1')),desktop:getComputedStyle(document.querySelector('#desktopNavMenu')).display!=='none'&&getComputedStyle(document.querySelector('#desktopNavMenu')).visibility!=='hidden',navbar:visible(document.querySelector('#navbar')),heroRect:hero.getBoundingClientRect().toJSON(),ppdb:visible(ppdb),scrollY,
             horizontalOverflow:document.documentElement.scrollWidth-innerWidth,lang:document.documentElement.lang,dir:document.documentElement.dir,
             family:getComputedStyle(loader).fontFamily,program:document.querySelector('[data-program-kinetic]').dataset.programReady,
             values:document.querySelector('[data-values-story]').dataset.valuesReady,gallery:document.querySelector('[data-gallery-story]').dataset.galleryReady,
