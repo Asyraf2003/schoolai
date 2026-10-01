@@ -51,9 +51,12 @@ export async function proveOpeningLifecycle(browser,engine,base,save) {
         let release;const held=new Promise(resolve=>release=resolve);
         await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
         await page.goto(base,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('progress').value===40);
-        await page.locator('#hamburgerBtn').click();await page.locator('#navMenu a[href$="/ppdb"]').last().click();
+        await page.locator('#hamburgerBtn').click();await page.locator('#navMenu [data-nav-mega-toggle]').first().click();
+        await page.locator('#navMenu a[href="#program"]').first().click();
+        assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'unlocked');
+        await page.locator('.hero-cinema__cta[href$="/ppdb"]').click();
         await page.waitForURL('**/ppdb');assert.ok(await page.locator('h1').first().isVisible());release();
-        save({engine,key:'mobile-navbar-ppdb-loading',url:page.url()});await context.close();
+        save({engine,key:'mobile-navigation-loading-and-ppdb',url:page.url()});await context.close();
     }
     {
         const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
@@ -68,6 +71,15 @@ export async function proveOpeningLifecycle(browser,engine,base,save) {
         if(await page.locator('[data-about-video-modal]').isVisible())await page.locator('[data-about-video-close]').click();
         assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'unlocked');release();
         save({engine,key:'loading-video-modal-fullscreen',fullscreen,profile:engine==='webkit'?'WebKit fullscreen native/capability fallback recorded':'Chromium native fullscreen intent'});await context.close();
+    }
+    {
+        const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
+        await page.setViewportSize({width:780,height:390});
+        let release;const held=new Promise(resolve=>release=resolve);
+        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
+        await page.goto(base,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('progress').value===40);
+        await page.locator('[data-home-opening-direct]').click();await page.waitForURL('**/ppdb');
+        assert.ok(await page.locator('h1').first().isVisible());release();save({engine,key:'short-viewport-direct-ppdb-loading',url:page.url()});await context.close();
     }
     {
         const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();

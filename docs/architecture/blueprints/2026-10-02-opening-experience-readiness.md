@@ -87,7 +87,11 @@ XS360–639 (prove360/390), SM640–767, MD768–1023, LG1024–1279,
 XL1280–1535, 2XL≥1536: same DOM, ledger, critical gate and controls. Progress
 uses intrinsic bounded width and reserved bottom inset, without changing Hero
 content/crop. All boundary pairs and interior widths; navigation1180/1181.
-Short-height/orientation/200% zoom retain visible primary actions and focus.
+Short-height/orientation/200% zoom retain primary access and focus. Because
+existing Hero min-height places its CTA below a short viewport, the loader
+reuses the same PPDB destination/label at heights≤560px; normal Hero copy/layout
+is unchanged. The mobile menu has no PPDB item in current source, so prove
+its actual Program navigation and the independent Hero/short-height PPDB paths.
 ID/EN use existing Inter/LTR; AR existing Cairo/RTL. Logical positioning, shared
 vertical readiness/time. Only functional loading copy changes. Server locale
 switch during preparation bypasses, disposes outgoing work and creates one new

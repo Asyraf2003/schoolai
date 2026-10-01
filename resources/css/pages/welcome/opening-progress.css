@@ -31,3 +31,7 @@ html[data-home-scroll-gate="locked"] .home-opening { visibility: visible; }
 .home-opening__progress::-moz-progress-bar { background: #fff; }
 .home-opening__exit { pointer-events: auto; color: inherit; display: inline-block; margin-block-start: .5rem; }
 .home-opening__exit[hidden] { display: none; }
+.home-opening__direct { display: none; color: inherit; pointer-events: auto; margin-block-start: .5rem; }
+@media (max-height: 560px) {
+    .home-opening__direct { display: inline-block; }
+}
