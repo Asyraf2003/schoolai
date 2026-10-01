@@ -3219,5 +3219,1952 @@
       "physical Safari/iOS"
     ],
     "toolEnvironment": "Linux WebKit required matching GStreamer 1.28.2 core/scanner/libav extracted only in /tmp; isolated raw-video playback passes after fixing test environment; initial unsupported error invalidated playback runs."
+  },
+  "firstJourney": {
+    "map": "MAP-03",
+    "source": "f30301cf6a2be5a0f0fcf02fdab2856d26e0cb84",
+    "profile": "Chromium 153.0.8010.47, Linux headless, 1440x900 DPR1, no CPU/network throttle, disabled browser cache, isolated testing SQLite, software graphics",
+    "browserCases": [
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "pending-escape",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "deadline",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "ppdb",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "hash",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "no-js",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "source-failure",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "media-range",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "id",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "en",
+        "dir": "ltr",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "gate": "unlocked",
+        "experience": "prepared",
+        "vision": "prepared",
+        "enhanced": true,
+        "media": "frame-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "gate": "unlocked",
+        "experience": "static-ready",
+        "vision": "static-ready",
+        "enhanced": false,
+        "media": "poster-ready",
+        "decodeErrors": [],
+        "posterComplete": true,
+        "poster": 1920,
+        "lang": "ar",
+        "dir": "rtl",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "pending-escape",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "deadline",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "ppdb",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "hash",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "no-js",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "source-failure",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "media-range",
+        "status": "PASS"
+      }
+    ],
+    "runs": [
+      {
+        "run": 1,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 780
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 1008
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 288.90000000037253,
+              "dom": 1521.9000000003725
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 780
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 1008
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 288.90000000037253,
+              "dom": 1521.9000000003725
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 9939.014559
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C975hUBG.js",
+            "type": "Script",
+            "timestamp": 9939.114109
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 9939.832765
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-DfoTy7gp.js",
+            "type": "Script",
+            "timestamp": 9940.51669
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 9940.517206
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 9940.543501
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C82UOXd3.js",
+            "type": "Script",
+            "timestamp": 9940.575918
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 9942.049751
+          }
+        ],
+        "firstScrollRequests": [],
+        "rendererThreads": [
+          [
+            57326,
+            57326
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 4253,
+            "totalMs": 2824.372,
+            "maxMs": 289.734
+          },
+          "FunctionCall": {
+            "count": 229,
+            "totalMs": 151.836,
+            "maxMs": 20.742
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 104.163,
+            "maxMs": 35.79
+          },
+          "Layout": {
+            "count": 32,
+            "totalMs": 383.435,
+            "maxMs": 188.894
+          },
+          "UpdateLayoutTree": {
+            "count": 130,
+            "totalMs": 329.483,
+            "maxMs": 71.218
+          },
+          "Paint": {
+            "count": 443,
+            "totalMs": 70.916,
+            "maxMs": 4.786
+          }
+        },
+        "rendererMainLongTasksMs": [
+          158.232,
+          226.281,
+          92.779,
+          65.671,
+          138.987,
+          289.734,
+          95.735,
+          77.345,
+          95.213,
+          59.839
+        ],
+        "rawTrace": "/tmp/schoolai-home-readiness-trace-1.json",
+        "rawTraceSHA256": "c3b8bb9529361ceb3979aca324b7446275065625c83d0ff7e0b1604a77345e19"
+      },
+      {
+        "run": 2,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 360
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 612
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 144.2999999988824,
+              "dom": 577.5999999996275
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 360
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 612
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 144.2999999988824,
+              "dom": 577.5999999996275
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 9947.460815
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C975hUBG.js",
+            "type": "Script",
+            "timestamp": 9947.490906
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 9947.502855
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-DfoTy7gp.js",
+            "type": "Script",
+            "timestamp": 9948.118735
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 9948.11954
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 9948.182661
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C82UOXd3.js",
+            "type": "Script",
+            "timestamp": 9948.207793
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 9949.30407
+          }
+        ],
+        "firstScrollRequests": [],
+        "rendererThreads": [
+          [
+            57326,
+            57326
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 5564,
+            "totalMs": 1357.66,
+            "maxMs": 121.781
+          },
+          "FunctionCall": {
+            "count": 272,
+            "totalMs": 83.255,
+            "maxMs": 8.228
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 5.668,
+            "maxMs": 1.907
+          },
+          "Layout": {
+            "count": 31,
+            "totalMs": 117.004,
+            "maxMs": 72.479
+          },
+          "UpdateLayoutTree": {
+            "count": 120,
+            "totalMs": 168.976,
+            "maxMs": 42.063
+          },
+          "Paint": {
+            "count": 506,
+            "totalMs": 46.888,
+            "maxMs": 3.3
+          }
+        },
+        "rendererMainLongTasksMs": [
+          68.217,
+          121.781
+        ],
+        "rawTrace": "/tmp/schoolai-home-readiness-trace-2.json",
+        "rawTraceSHA256": "4454d4ac304427cc98d0e0030c29e96197962a3b52cb6d05321a191935bc18d5"
+      },
+      {
+        "run": 3,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 332
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 332
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 61.5,
+              "dom": 340.40000000037253
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 332
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 332
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 61.5,
+              "dom": 340.40000000037253
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 9954.927039
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C975hUBG.js",
+            "type": "Script",
+            "timestamp": 9954.935817
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 9955.05688
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-DfoTy7gp.js",
+            "type": "Script",
+            "timestamp": 9955.655899
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 9955.656321
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 9955.660219
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C82UOXd3.js",
+            "type": "Script",
+            "timestamp": 9955.723449
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 9956.739616
+          }
+        ],
+        "firstScrollRequests": [],
+        "rendererThreads": [
+          [
+            57326,
+            57326
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 5063,
+            "totalMs": 1143.016,
+            "maxMs": 76.057
+          },
+          "FunctionCall": {
+            "count": 304,
+            "totalMs": 80.864,
+            "maxMs": 6.932
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 6.189,
+            "maxMs": 2.024
+          },
+          "Layout": {
+            "count": 30,
+            "totalMs": 76.977,
+            "maxMs": 21.234
+          },
+          "UpdateLayoutTree": {
+            "count": 119,
+            "totalMs": 138.55,
+            "maxMs": 13.072
+          },
+          "Paint": {
+            "count": 481,
+            "totalMs": 36.014,
+            "maxMs": 2.783
+          }
+        },
+        "rendererMainLongTasksMs": [
+          76.057
+        ],
+        "rawTrace": "/tmp/schoolai-home-readiness-trace-3.json",
+        "rawTraceSHA256": "9465f83c2ecf5100ff13b053f1b4f485c42b70cbdee7293e1fa9c9966cfe7009"
+      }
+    ],
+    "summary": {
+      "fcpMs": {
+        "median": 612,
+        "worst": 1008
+      },
+      "RunTaskTotalMs": {
+        "median": 1357.66,
+        "worst": 2824.372
+      },
+      "FunctionCallTotalMs": {
+        "median": 83.255,
+        "worst": 151.836
+      },
+      "EvaluateScriptTotalMs": {
+        "median": 6.189,
+        "worst": 104.163
+      },
+      "LayoutTotalMs": {
+        "median": 117.004,
+        "worst": 383.435
+      },
+      "UpdateLayoutTreeTotalMs": {
+        "median": 168.976,
+        "worst": 329.483
+      },
+      "PaintTotalMs": {
+        "median": 46.888,
+        "worst": 70.916
+      }
+    },
+    "tests": {
+      "node": 18,
+      "phpTests": 304,
+      "phpAssertions": 3491,
+      "targetedTests": 8,
+      "targetedAssertions": 273,
+      "structureSources": 593,
+      "buildModules": 143
+    },
+    "unmeasured": [
+      "GPU hardware/compositing cost",
+      "attributed media decode duration",
+      "field CWV",
+      "physical Safari/iOS"
+    ],
+    "toolEnvironment": "Playwright Chromium 153 / Linux WebKit 26.6 using matched GStreamer 1.28.2 in /tmp. No physical Safari/iOS claim. Browser input waits for actual state; no-JS wheel requires load completion and pointer over document."
   }
 }

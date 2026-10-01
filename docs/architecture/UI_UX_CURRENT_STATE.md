@@ -57,8 +57,14 @@ PASS. Final 76 Chromium/WebKit cases PASS; all three traces play before input,
 first scroll adds no Hero load. Local FCP 492ms median / 1,416ms worst; Layout
 157.75ms / 587.85ms. Proof JSON contains declared profile and raw-trace hashes.
 MAP-02 merged after green CI (#51): main `eecaf918ae4eb4422411a84a2dc9b862693bcc22`.
-ACTIVE: MAP-03 first-journey readiness and access-safe gate.
-NEXT CHANNEL: Terminal Codex. NEXT: execute bounded Vision/gate packet below.
+MAP-03 CLOSED: real first-preview/font/stylesheet/timeline preparation precedes
+normal unlock. Access/deadline cancels late enhancement into static semantic
+fallback; no-JS stays unlocked. Visible mask range owns preview playback.
+Node 18, PHP 304/3,491, structure 593, build 143, Pint/diff PASS; final 86
+Chromium/WebKit cases PASS. Three traces: Vision ready before unlock, no first-
+scroll requests; FCP 612/1,008ms median/worst, Layout 117.004/383.435ms.
+ACTIVE: publish verified MAP-03 (#53). NEXT CHANNEL: Terminal Codex.
+NEXT: merge/sync then MAP-04 progressive section preparation.
 
 - hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
 - pre-Codex readiness: `handoffs/2026-08-23-pre-codex-readiness.md`

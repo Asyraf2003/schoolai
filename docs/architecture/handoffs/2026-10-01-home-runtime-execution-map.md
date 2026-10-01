@@ -163,8 +163,17 @@ TESTS: unresolved/ready/static/failed/disposed; PPDB/nav/keyboard remain reachab
 hash/restore paths, locale switch, resize, reduced motion and no-JS access.
 DoD: readiness reports actual prepared/fallback state; no fake timer progress or
 infinite lock; section N+1 preparation begins before viewport entry.
-PROOF: pending.
-STATUS: IN_PROGRESS.
+PROOF: Issue #52 / PR #53; source `f30301cf`. Executed Node 18 PASS,
+focused PHP 8/273, full 304/3,491, structure 593, build 143, Pint/diff PASS.
+86 Chromium/WebKit cases PASS: six tiers × three locales × normal/reduced,
+pending wheel, Escape/deadline cancellation, PPDB, hash, no-JS, source failure,
+visible media range/reverse and persisted restore. Real font API scopes glyphs
+rather than waiting on a global FontFaceSet.ready WebKit hang. Three isolated
+Chromium traces show actual Vision prepared/frame-ready before unlock and zero
+first-scroll network requests. FCP median/worst 612/1,008ms; renderer-main
+Layout 117.004/383.435ms; FunctionCall 83.255/151.836ms. Local variable evidence,
+not field CWV or attributed decode/GPU. Raw-trace hashes/results in proof JSON.
+STATUS: CLOSED (verified; publish only after green CI).
 
 ### MAP-04 — Progressive Program, Values, Gallery and wall preparation
 GOAL: remove remaining proximity-triggered initialization bursts with bounded work.
@@ -205,7 +214,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). Execute MAP-03 Vision/gate only.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 verified; merge #53 before MAP-04.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
