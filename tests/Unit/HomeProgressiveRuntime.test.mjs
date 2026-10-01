@@ -73,7 +73,9 @@ test('Program actual GSAP readiness, hidden suspension and permanent disposal do
         let timelines = 0; e.win.gsap = { set() {}, timeline: () => { timelines++; return {}; } };
         const p = e.program(), cleanup = mountProgramJourney(p.root);
         assert.equal((await cleanup.ready).state, 'gsap'); assert.equal(timelines, 0);
+        p.root.classList.add('is-transitioning', 'is-detail-open');
         e.reduced.matches = true; e.fire(e.reduced, 'change'); assert.equal(p.root.dataset.programReady, 'static-fallback');
+        assert.equal(p.root.classes.has('is-transitioning'), false); assert.equal(p.root.classes.has('is-detail-open'), false);
         p.trigger.click(); assert.equal(p.detail.hidden, false); p.back.click();
         e.reduced.matches = false; e.fire(e.reduced, 'change'); await flush(); assert.equal(p.root.dataset.programReady, 'gsap');
         e.fire(e.win, 'pagehide', { persisted: true }); e.fire(e.win, 'pageshow', { persisted: true });

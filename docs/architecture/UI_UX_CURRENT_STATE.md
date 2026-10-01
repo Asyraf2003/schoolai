@@ -16,8 +16,13 @@ Durable references:
 MAP-03 is merged after green CI (#53): main
 `c9f93c0d91de862c6351d259996707ad65d00597`. Its 86 browser cases and
 18 Node contracts remain durable proof, not production certification.
-Exactly one NEXT: Terminal Codex implements MAP-04 progressive section
-readiness/lifecycle under its bounded packet. No typography or visual redesign.
+MAP-04 source `6c52cc0c` is in draft PR #55 / Issue #54. CI PASS.
+Automated proof PASS: 25 executed Node contracts, focused section PHP 13/485
+plus poster 3/23, full PHP 305/3,500, structure 595, build 145, Pint/diff.
+Initial 82 browser cases passed; final build matrix/lifecycle is being verified
+again after tightening cancellation and reduced-motion interruption.
+Exactly one NEXT: Terminal Codex completes MAP-04 final runtime proof and merge.
+No typography or visual redesign. MAP-05 remains read-only audit.
 
 ## Current execution authority — 2026-10-01
 

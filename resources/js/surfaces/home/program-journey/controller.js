@@ -70,6 +70,7 @@ export function mountProgramJourney(root) {
     clearPending();
     cleanup();
     dom.layer.hidden = true;
+    root.classList.remove('has-gsap', 'is-transitioning', 'is-detail-open');
     cleanup = mountReduced(dom, integration);
     settled('static-fallback');
     replayPending();
@@ -106,7 +107,11 @@ export function mountProgramJourney(root) {
   window.addEventListener('pageshow', resume, { signal: lifecycle.signal });
   document.addEventListener('visibilitychange', () => document.hidden ? suspend() : resume(), { signal: lifecycle.signal });
   reduced.addEventListener('change', () => {
-    if (!reduced.matches) { cleanup(); started = false; startEnhanced(); return; }
+    if (!reduced.matches) {
+      cleanup(); dom.layer.hidden = true;
+      root.classList.remove('is-detail-open', 'is-transitioning');
+      started = false; startEnhanced(); return;
+    }
     installStatic();
     const details = dom.details.flatMap(detail => {
       const parts = detailParts(detail);
