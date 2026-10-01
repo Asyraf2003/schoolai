@@ -88,8 +88,8 @@ exact browser/profile/SHA/tool and unavailable gates truthfully.
 
 ## Ordered execution
 
-ACTIVE: MAP-02 Hero startup; MAP-00/00A/01 are CLOSED and published.
-PENDING: cursor → Hero → first journey → progressive
+ACTIVE: MAP-02 publication; MAP-00/00A/01 are CLOSED and published.
+PENDING: first journey → progressive
 sections → measured RAF audit → complete regression/handoff.
 Only the active map may mutate its source. State becomes PROVEN only after all
 declared gates pass; publication alone does not prove completion.

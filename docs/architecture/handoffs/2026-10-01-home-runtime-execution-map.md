@@ -136,8 +136,21 @@ TESTS: no-input hydration, shell independent of playing, media error/blocked
 autoplay, audio intent, hidden/restore, Opening and promoted carousel regression.
 DoD: first-scroll performs no media startup; native range fetch remains bounded
 by metadata/active playback; poster remains usable on failure.
-PROOF: pending.
-STATUS: IN_PROGRESS.
+PROOF: Issue #50 / PR #51; source `68f6c19e`. Executed Node 10 PASS;
+focused PHP 9/228, full 304/3,488, structure 591, build 141, Pint/diff PASS.
+76 final Chromium 153 / Linux WebKit 26.6 cases cover six tiers × three
+locales × normal/reduced, source failure and real controller carousel fixture.
+No-input warm-up, first-frame playback, zero additional Hero load calls on
+scroll, active-only source and usable failure poster PASS, zero exceptions.
+Three isolated Chromium runs: media playing before input in all three; first
+scroll starts no Hero hydration. FCP median 492ms / worst 1,416ms; renderer-main
+Layout median 157.75ms / worst 587.85ms, JS FunctionCall 89.29ms / 159.10ms.
+These variable local samples do not attribute media decode/GPU or prove CWV.
+Native R2 range probe returns HTTP 206, 1,024 bytes of a 94,907,995-byte asset;
+ongoing playback may buffer further. Durable results/hashes: runtime proof JSON.
+Linux WebKit codec environment was repaired only in /tmp before final playback
+proof; initial unsupported-codec and request-count-only runs were invalidated.
+STATUS: CLOSED (verified; publication follows green CI).
 
 ### MAP-03 — First journey readiness and access-safe scroll gate
 GOAL: prepare Vision truthfully before meaningful scroll; progressive next owners.
@@ -192,7 +205,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). Execute MAP-02 Hero only.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 verified CLOSED; merge #51 before MAP-03 implementation.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
