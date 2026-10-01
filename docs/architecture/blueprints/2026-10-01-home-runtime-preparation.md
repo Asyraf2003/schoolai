@@ -88,7 +88,7 @@ exact browser/profile/SHA/tool and unavailable gates truthfully.
 
 ## Ordered execution
 
-ACTIVE: MAP-04 progressive section preparation; MAP-00/00A/01/02/03 are CLOSED and published.
+ACTIVE: MAP-05 measured scroll-frame consolidation; MAP-00/00A/01/02/03/04 are CLOSED and published.
 PENDING: first journey → progressive
 sections → measured RAF audit → complete regression/handoff.
 Only the active map may mutate its source. State becomes PROVEN only after all

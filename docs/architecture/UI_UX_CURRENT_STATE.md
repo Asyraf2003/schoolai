@@ -16,14 +16,17 @@ Durable references:
 MAP-03 is merged after green CI (#53): main
 `c9f93c0d91de862c6351d259996707ad65d00597`. Its 86 browser cases and
 18 Node contracts remain durable proof, not production certification.
-MAP-04 source `4022eba0` is verified in PR #55 / Issue #54.
-PASS: 25 Node contracts; PHP 305/3,500; structure 595; build 145; Pint/diff.
-86 functional Chromium/WebKit cases PASS, including final real-pointer motion
-interruption. Three cold traces: all surfaces ready before input, zero first-
-scroll requests; FCP median/worst 752/816ms. Local proof only.
-Exactly one NEXT: Terminal Codex publishes proof, waits for final green CI and
-merges MAP-04. MAP-05 remains read-only; measured burst 160 card reads and
-37 idle Gallery handoff RAFs justify its bounded scheduler packet.
+MAP-04 merged after CI PASS (#55): main
+`9ec739fac9be6cf62528178dd97ed13ef72a529b`. Its 86 browser cases and
+25 Node contracts remain durable proof.
+MAP-05 verified production build `088acb7e`: 33 executed Node contracts,
+305 PHP tests / 3,504 assertions, structure 597, build 147, Pint/diff PASS.
+86 Chromium/WebKit cases and three cold traces PASS. Card event reads 160 -> 0,
+shared frame reads 8; three observed settled idle windows have zero shared work.
+Existing motion formulas and local efficient clocks remain. Proof is in the
+scheduler key of the durable JSON; timing variance is explicitly retained.
+Exactly one NEXT: Terminal Codex publishes proof and merges #57 after final CI.
+MAP-06 implementation begins only after main sync confirms that merge.
 
 ## Current execution authority — 2026-10-01
 

@@ -1,3 +1,5 @@
+import { subscribeHomepageFrame } from './welcome/scroll-frame.js';
+import { readGalleryItems } from './welcome/gallery-story-frame.js';
 import {
     fitGalleryStoryVisuals,
     galleryStoryVisual,
@@ -5,10 +7,10 @@ import {
 import { armGalleryPattern } from './welcome/gallery-pattern.js';
 import { mountGalleryVideoPreviews } from './welcome/gallery-video-preview.js';
 let mounted = false;
+let preparationPromise = null;
 const BLUE = [32, 56, 255];
 const GALLERY = [111, 155, 114];
 const clamp = (value) => Math.max(0, Math.min(1, value));
-const clampSigned = (value) => Math.max(-1, Math.min(1, value));
 function smoothstep(value) {
     const progress = clamp(value);
     return progress * progress * (3 - (2 * progress));
@@ -22,6 +24,8 @@ function mixColor(from, to, progress) {
 }
 function readValuesExitProgress(valuesWorld) {
     if (!valuesWorld) return 0;
+    const cached = valuesWorld.dataset.valuesGalleryExitProgress;
+    if (cached !== undefined) return clamp(Number.parseFloat(cached) || 0);
     const raw = getComputedStyle(valuesWorld)
         .getPropertyValue('--values-gallery-exit-progress').trim();
     const value = Number.parseFloat(raw);
@@ -39,15 +43,11 @@ function mountGalleryStory(root) {
     const cleanPattern = armGalleryPattern(section);
     let cleanVideoPreviews = () => {};
     let activeBackground = '';
-    let frame = 0;
     let destroyed = false;
-    let suspended = false;
     if (page && finalBackground) {
         page.style.setProperty('--gallery-story-final-bg', finalBackground);
     }
-    function paintHandoff() {
-        const exitProgress = readValuesExitProgress(valuesWorld);
-        const sectionTop = section.getBoundingClientRect().top;
+    function paintHandoff({ exitProgress, sectionTop }) {
         const desktop = window.innerWidth >= 1280;
         const active = desktop && !reducedMotion.matches
             && exitProgress > 0.0001 && sectionTop > 1;
@@ -62,38 +62,8 @@ function mountGalleryStory(root) {
         );
         return active;
     }
-    function paintItems() {
-        if (reducedMotion.matches) return;
-        const viewportHeight = Math.max(window.innerHeight, 1);
-        const viewportCenter = viewportHeight * 0.5;
-        const revealStart = viewportHeight * 0.98;
-        const revealDistance = viewportHeight * 0.62;
-        let nearestDistance = Number.POSITIVE_INFINITY;
-        let nearestBackground = '';
-        items.forEach((item) => {
-            const target = galleryStoryVisual(item);
-            if (!target) return;
-            const { media, visual } = target;
-            const boundRect = media.getBoundingClientRect();
-            const visualHeight = visual.offsetHeight || visual.getBoundingClientRect().height;
-            const visualTop = boundRect.top + ((boundRect.height - visualHeight) * 0.5);
-            const raw = clamp((revealStart - visualTop) / revealDistance);
-            const entrance = smoothstep(raw);
-            const copyProgress = smoothstep(clamp((raw - 0.12) / 0.88));
-            const mediaCenter = visualTop + (visualHeight * 0.5);
-            const centerDelta = mediaCenter - viewportCenter;
-            const signed = clampSigned(centerDelta / (viewportHeight * 0.52));
-            const openness = smoothstep(1 - Math.abs(signed));
-            const closingInset = 40 * (1 - openness);
-            const topInset = signed >= 0 ? closingInset : 0;
-            const bottomInset = signed < 0 ? closingInset : 0;
-            const mediaY = (1 - entrance) * Math.min(190, viewportHeight * 0.22);
-            const copyY = (1 - copyProgress) * Math.min(108, viewportHeight * 0.125);
-            const distance = Math.abs(centerDelta);
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearestBackground = item.dataset.galleryBackground || '';
-            }
+    function paintItems({ frames, nearestBackground }) {
+        frames.forEach(({ item, visual, mediaY, entrance, topInset, bottomInset, copyY, copyProgress }) => {
             visual.style.setProperty('--gallery-media-y', `${mediaY.toFixed(2)}px`);
             visual.style.setProperty('--gallery-media-opacity', entrance.toFixed(4));
             visual.style.setProperty('--gallery-window-top', `${topInset.toFixed(3)}%`);
@@ -106,21 +76,21 @@ function mountGalleryStory(root) {
             section.style.setProperty('--gallery-story-bg', nearestBackground);
         }
     }
-    function render() {
-        frame = 0;
-        if (destroyed || suspended || document.hidden) return;
-        const handoffActive = paintHandoff();
-        paintItems();
-        if (handoffActive) frame = window.requestAnimationFrame(render);
-    }
-    function requestRender() {
-        if (!frame && !destroyed && !suspended && !document.hidden) frame = window.requestAnimationFrame(render);
-    }
-    function resume() { suspended = false; requestRender(); }
-    function onVisibility() {
-        if (document.hidden) { if (frame) window.cancelAnimationFrame(frame); frame = 0; }
-        else requestRender();
-    }
+    let resolveReady;
+    const ready = new Promise(resolve => { resolveReady = resolve; });
+    const shared = subscribeHomepageFrame(() => ({
+        exitProgress: readValuesExitProgress(valuesWorld),
+        sectionTop: section.getBoundingClientRect().top,
+        items: readGalleryItems(reducedMotion.matches ? [] : items),
+    }), snapshot => {
+        if (destroyed) return;
+        paintHandoff(snapshot);
+        paintItems(snapshot.items);
+        section.classList.add('is-gallery-enhanced');
+        root.dataset.galleryReady = reducedMotion.matches ? 'static-fallback' : 'prepared';
+        resolveReady({ state: root.dataset.galleryReady });
+    });
+    function requestRender() { if (!destroyed) shared.request(); }
     function paintStatic() {
         section.classList.remove('is-gallery-handoff');
         root.style.setProperty('--gallery-title-opacity', '1');
@@ -145,39 +115,31 @@ function mountGalleryStory(root) {
         requestRender();
     }
     function destroy(event) {
-        if (event?.persisted) { suspended = true; if (frame) window.cancelAnimationFrame(frame); frame = 0; return; }
+        if (event?.persisted) return;
         destroyed = true;
-        if (frame) window.cancelAnimationFrame(frame);
-        frame = 0;
+        shared.remove();
+        resolveReady({ state: 'disposed' });
         cleanPattern();
         cleanVideoPreviews();
-        window.removeEventListener('scroll', requestRender);
+        valuesWorld?.removeEventListener('schoolai:values-frame', requestRender);
         window.removeEventListener('resize', onResize);
-        window.removeEventListener('pageshow', resume);
-        document.removeEventListener('visibilitychange', onVisibility);
         window.removeEventListener('pagehide', destroy);
         reducedMotion.removeEventListener?.('change', onMotionChange);
     }
-    window.addEventListener('scroll', requestRender, { passive: true });
+    valuesWorld?.addEventListener('schoolai:values-frame', requestRender);
     window.addEventListener('resize', onResize, { passive: true });
-    window.addEventListener('pageshow', resume);
-    document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('pagehide', destroy);
     reducedMotion.addEventListener?.('change', onMotionChange);
     fitGalleryStoryVisuals(items, requestRender);
     cleanVideoPreviews = mountGalleryVideoPreviews(root);
     if (reducedMotion.matches) paintStatic();
-    else {
-        paintHandoff();
-        paintItems();
-    }
-    section.classList.add('is-gallery-enhanced');
-    root.dataset.galleryReady = reducedMotion.matches ? 'static-fallback' : 'prepared';
+
     requestRender();
+    return ready;
 }
 export function prepareHomepageDepthGallery() {
     const root = document.querySelector('[data-gallery-story]');
     if (!root) return Promise.resolve(null);
-    mountGalleryStory(root);
-    return Promise.resolve({ state: root.dataset.galleryReady });
+    preparationPromise ||= mountGalleryStory(root);
+    return preparationPromise;
 }

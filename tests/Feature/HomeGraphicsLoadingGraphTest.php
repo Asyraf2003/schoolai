@@ -16,9 +16,7 @@ it('keeps a hero-gated sequential homepage preparation graph with a DOM owned ga
     $programController = file_get_contents(resource_path(
         'js/surfaces/home/program-journey/controller.js',
     ));
-    $gallery = file_get_contents(resource_path(
-        'js/pages/welcome-depth-gallery.js',
-    ));
+    $gallery = readOwnedSource(resource_path('js/pages/welcome-depth-gallery.js'), ['resources/js/pages/welcome/gallery-story-frame.js', 'resources/js/pages/welcome/scroll-frame.js']);
     $vision = file_get_contents(resource_path(
         'js/pages/welcome-vision-story.js',
     ));

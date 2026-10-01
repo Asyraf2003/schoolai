@@ -9,7 +9,7 @@ it('guards the editorial gallery bootstrap without the legacy canvas owner', fun
             'css/pages/welcome-depth-gallery/responsive.css',
         ],
     ));
-    $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
+    $controller = readOwnedSource(resource_path('js/pages/welcome-depth-gallery.js'), ['resources/js/pages/welcome/gallery-story-frame.js', 'resources/js/pages/welcome/scroll-frame.js']);
     $pattern = file_get_contents(resource_path('js/pages/welcome/gallery-pattern.js'));
     $blade = file_get_contents(resource_path('views/home/sections/gallery-depth.blade.php'));
     $sectionBlade = file_get_contents(resource_path('views/home/sections/gallery.blade.php'));
@@ -29,8 +29,8 @@ it('guards the editorial gallery bootstrap without the legacy canvas owner', fun
         ->and($controller)
         ->toContain('armGalleryPattern')
         ->toContain('requestAnimationFrame')
-        ->toContain('paintHandoff()')
-        ->toContain('paintItems()')
+        ->toContain('paintHandoff(snapshot)')
+        ->toContain('paintItems(snapshot.items)')
         ->toContain('paintStatic()')
         ->toContain('prepareHomepageDepthGallery')
         ->toContain('reducedMotion.addEventListener')

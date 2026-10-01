@@ -195,7 +195,7 @@ Three isolated cold Chromium traces show all required surfaces prepared before
 input and zero first-scroll requests/errors. FCP median/worst 752/816ms;
 renderer-main Layout 147.143/428.690ms, FunctionCall 96.929/186.237ms.
 Local variable samples, not field/decode/GPU evidence. Durable proof JSON.
-STATUS: CLOSED (verified; merge #55 only after final CI PASS).
+STATUS: CLOSED (merged #55 after CI PASS; main `9ec739fa`).
 
 ### MAP-05 — Measured scheduler and dead-code audit
 GOAL: consolidate only demonstrated redundant work while preserving motion clocks.
@@ -207,8 +207,22 @@ RISKS: smoothing changes, cross-surface write/read dependency and stale geometry
 TESTS: same offset/same semantic state, burst frame coalescing, reads-before-writes,
 resize/orientation, reverse, hidden and disposal; retain efficient local clocks.
 DoD: evidence-backed reduction; UNKNOWN CSS/JS retained; no generic architecture.
-PROOF: pending.
-STATUS: PLANNED.
+PROOF: Issue #56 / PR #57; runtime build `088acb7e`. Node 33 PASS;
+focused PHP 7/257, full 305/3,504, structure 597, build 147, Pint/diff PASS.
+86 Chromium/WebKit cases PASS (72 tier/locale/motion + 12 failure/lifecycle +
+2 real-pointer interruption cases). Twenty synchronous scroll events: 160 ->
+0 immediate card reads; 8 reads in shared frame; one queued shared RAF; Gallery
+own read-after-write count 18 -> 0. Initial idle window retained two bounded
+settling frames; all three subsequent 600ms windows had zero shared frames/card
+reads. Old Gallery idle polling: 37/600ms -> 0. Counts are not measured CPU/FPS.
+Three isolated cold traces: every required readiness outcome before input,
+zero first-scroll requests/errors. FCP median/worst 604/636ms; renderer-main
+Layout 150.433/291.449ms, FunctionCall 136.948/155.449ms. Variance and changed
+pre-input media playback prevent claiming all timing differences as savings.
+Durable scheduler proof JSON includes raw trace hashes and every idle window.
+No CSS/assets deleted; UNKNOWN owners retained. World endpoints/reverse/dispose
+are covered by an additional executed contract; production build is unchanged.
+STATUS: CLOSED (all proof PASS; merge #57 before any MAP-06 implementation).
 
 ### MAP-06 — Full proof and documentation closure
 GOAL: certify final main and close linked Issues/PRs with durable proof.
@@ -224,7 +238,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 merged (#53). MAP-04 is the sole active implementation.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 merged (#53). MAP-04 merged (#55); MAP-05 is the sole active implementation.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
@@ -327,3 +341,50 @@ scheduled 37 further RAFs in 600ms with no user input. These are work counts;
 no decoder/GPU attribution or measured frame-drop claim. Current source/history
 shows polling follows Values handoff; retain its clock, notify consumers when
 paint changes, and consolidate proven samplers with explicit read/write phases.
+
+## MAP-05 bounded packet — FACT / GAP / DECISION
+
+Main `9ec739fac9be6cf62528178dd97ed13ef72a529b`; channel Terminal Codex.
+FACT: source/history preserve Formation's 105ms settle and Values spring/heading
+clock. Actual browser counters reproduce 160 immediate card reads for 20 scroll
+events, separate world/Formation/Gallery RAF scheduling, Gallery geometry after
+its own style writes, and 37 redundant handoff RAFs over 600ms settled idle.
+Navigation already coalesces and reads before navbar geometry changes; Vision
+has cached geometry and bounded 88ms settle; Values is a bounded deterministic
+clock; wall uses cached travel with a proximity guard. Keep these local clocks.
+GOAL: one bounded sampler for the proven three owners, preserve their output.
+IMPACT: event callbacks mark dirty; one frame reads all selected geometry before
+any selected owner writes. Formation continues its same exponential settle
+while reusing targets until scroll/resize/owned geometry invalidates them.
+DECISION: simple shared homepage frame queue and viewport snapshot, no enterprise
+ports/adapters. World becomes a read/write subscriber; Gallery reads all media
+geometry before painting. Values publishes its existing rounded handoff value
+and a paint notification; Gallery requests a frame from that notification rather
+than polling the same CSS state forever. CSS properties remain for other owners.
+Editable: bounded queue, Formation/world/Gallery samplers, Gallery frame helper,
+Values handoff paint notification, targeted runtime/source tests and proof/docs.
+Read-only/forbidden: all CSS/Blade, copy/type/business/media/dependencies, motion
+easing/distances/timings, Hero/cursor and retained navigation/Vision/wall clocks.
+Six tiers and ID/EN/AR retain existing formulas; shared vertical time is not RTL
+mirrored. Reduced mode stays static, hidden/BFCache cancels/resumes, permanent exit
+disposes clients/listeners. No unsupported IO/RO branch becomes content-blocking.
+TESTS: executed burst coalescing, all reads before writes, reentrant scheduling,
+subscriber disposal, hidden/restore; Formation targets/output and same 105ms
+clock; existing Gallery/Values/Program regressions; canonical gates and functional
+Chromium/WebKit matrix plus exact before/after count audit and cold traces.
+DoD: immediate geometry reads 160 -> 0, one shared queued frame, Gallery idle
+polling -> 0, same final semantic/visual states and no motion timing redesign.
+
+MAP-05 cleanup ledger: old per-owner RAF/event producers for the three migrated
+owners are ACTIVE_REDUNDANT, replaced only after the shared path is proven.
+Values CSS handoff properties remain USED_AND_EFFECTIVE (including legacy
+Gallery-heading consumers). Legacy Gallery-heading modules are LEGACY_REQUIRED
+or UNKNOWN outside this runtime graph; keep source/tests. Gallery/Article/wall
+media and deferred disabled spatial graph remain ACTIVE_NONCRITICAL/LEGACY_REQUIRED.
+No CSS/assets are cleanup candidates in this map. No UNKNOWN module is removed.
+
+MAP-05 proof interpretation: a burst can reuse a frame already queued by real
+preparation/resize work; the browser counter counts new schedules, while the
+executed queue contract proves one outstanding frame. Initial settling work is
+recorded separately from three observed zero-work idle windows. No timer or
+animation personality was changed to produce those counts.
