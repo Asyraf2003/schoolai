@@ -25,8 +25,17 @@ MAP-05 verified production build `088acb7e`: 33 executed Node contracts,
 shared frame reads 8; three observed settled idle windows have zero shared work.
 Existing motion formulas and local efficient clocks remain. Proof is in the
 scheduler key of the durable JSON; timing variance is explicitly retained.
-Exactly one NEXT: Terminal Codex publishes proof and merges #57 after final CI.
-MAP-06 implementation begins only after main sync confirms that merge.
+MAP-05 merged after final-head CI PASS (#57): main
+`efe558fe1ccac7bf302f169e59526d6c4bd86e41` (fresh fetch + fast-forward).
+MAP-06 browser proof found a pre-existing conflicting language-modal opener:
+flag partial capture listener stopImmediatePropagation blocks canonical behavior,
+so close has no saved focus/overflow. Executed rendered-script diagnostics show
+canonical open never ran; only fallback dialog focus ran. Source is unchanged
+from baseline; history 87bfb14c restored that fallback with flag appearance.
+Exactly one NEXT: Terminal Codex executes bounded MAP-06A modal lifecycle repair.
+Final MAP-06 resumes only after this prerequisite is verified/merged.
+This map changes no production runtime/style/content unless new failure evidence
+requires reopening its proven owner; such evidence must be recorded first.
 
 ## Current execution authority — 2026-10-01
 

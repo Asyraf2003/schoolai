@@ -9143,5 +9143,24 @@
       "physical Safari/iOS"
     ],
     "notes": "Selected samplers only: Formation/world/Gallery. All read-phase work precedes their writes; efficient local navigation/Vision/Values/wall clocks retained. Exact work counts are not CPU savings. Raw traces are local /tmp artifacts with durable SHA256 below."
+  },
+  "navigationDiscovery": {
+    "source": "efe558fe1ccac7bf302f169e59526d6c4bd86e41",
+    "engine": "Chromium 153.0.8010.12",
+    "profile": "1440x900 DPR1, normal motion; native focus/Enter/Escape",
+    "failure": "closed language modal retains active dialog; expected original navbar trigger",
+    "rootCause": "language flag capture stopImmediatePropagation prevents canonical opener; canonical closer has no saved focus/previous overflow",
+    "actualDiagnostics": {
+      "canonicalOpenExecuted": false,
+      "canonicalCloseSavedFocus": null,
+      "focusCalls": [
+        "language-modal__dialog"
+      ],
+      "modalOpenAfterEscape": false,
+      "activeAfterEscape": "language-modal__dialog"
+    },
+    "baselineUnchangedSource": true,
+    "historicalFallbackReason": "87bfb14c restored flag-only appearance and load-order fallback",
+    "decision": "migrate early delegated opening to canonical owner; retain all flag CSS/media/DOM; cancel pending focus on close/disposal"
   }
 }

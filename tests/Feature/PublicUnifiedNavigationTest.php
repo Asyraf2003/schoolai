@@ -44,6 +44,8 @@ it('mounts the mobile navigation layer after the fixed header', function (): voi
         ->assertOk()
         ->assertSee('id="desktopNavMenu"', false)
         ->assertSee('data-mobile-navigation-layer', false)
+        ->assertSee("modal.dataset.languageModalBooted = 'true'", false)
+        ->assertDontSee('event.stopImmediatePropagation()', false)
         ->assertDontSee('id="navOverlay"', false);
 
     $content = $response->getContent();

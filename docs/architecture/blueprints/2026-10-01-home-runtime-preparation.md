@@ -88,8 +88,8 @@ exact browser/profile/SHA/tool and unavailable gates truthfully.
 
 ## Ordered execution
 
-ACTIVE: MAP-05 measured scroll-frame consolidation; MAP-00/00A/01/02/03/04 are CLOSED and published.
-PENDING: first journey → progressive
-sections → measured RAF audit → complete regression/handoff.
+ACTIVE: MAP-06A proven language-modal lifecycle prerequisite; MAP-06 final proof pauses for its merge.
+MAP-00/00A/01/02/03/04/05 are CLOSED; all mutation maps are merged.
+PENDING: final proof publication and green main checkpoint.
 Only the active map may mutate its source. State becomes PROVEN only after all
 declared gates pass; publication alone does not prove completion.
