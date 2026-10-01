@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHomepageScrollGate } from '../../resources/js/pages/welcome/scroll-gate.js';
 import { prepareVisionPreview } from '../../resources/js/pages/welcome/video-readiness.js';
+import { initVisionVideoPreviews } from '../../resources/js/pages/welcome/video-previews.js';
 import { prepareVisionAssets } from '../../resources/js/surfaces/home/vision-story/preparation.js';
 
 function deferred() { let resolve; const promise = new Promise(done => { resolve = done; }); return { promise, resolve }; }
@@ -114,4 +115,29 @@ test('Vision assets await actual font readiness as well as first playable frame'
         await Promise.resolve(); await Promise.resolve(); e.event(v, 'loadeddata'); await Promise.resolve(); assert.equal(ready, false);
         fonts.resolve(); assert.equal(await work, 'frame-ready');
     } finally { e.restore(); }
+});
+
+
+test('stacked Vision plays only the visible transition range and pauses hidden/disposed previews', async () => {
+    const e = environment(); const previousObserver = globalThis.IntersectionObserver;
+    try {
+        e.html.dataset.homeScrollGate = 'unlocked'; e.html.dataset.homeExperienceState = 'prepared';
+        e.vision.classList.contains = () => true; e.vision.dataset.visionMediaRange = '0,0';
+        const videos = [0, 1, 2].map(index => {
+            const v = preview(e); const visual = { dataset: { visionVisual: String(index) }, querySelector: () => ({ decode: () => Promise.resolve() }) };
+            v.closest = selector => selector === '[data-vision-story]' ? e.vision : visual; return v;
+        });
+        for (const v of videos) { const work = prepareVisionPreview(v); await Promise.resolve(); await Promise.resolve(); e.event(v, 'loadeddata'); await work; }
+        const observers = []; e.win.IntersectionObserver = true;
+        globalThis.IntersectionObserver = class { constructor(callback) { this.callback = callback; observers.push(this); } observe() {} disconnect() { this.disconnected = true; } };
+        e.doc.querySelectorAll = () => videos; e.win.matchMedia = () => Object.assign(new EventTarget(), { matches: false });
+        initVisionVideoPreviews(); observers[0].callback(videos.map(target => ({ target, isIntersecting: true })));
+        await Promise.resolve(); await Promise.resolve(); assert.deepEqual(videos.map(v => v.paused), [false, true, true]);
+        e.vision.dataset.visionMediaRange = '0,1'; e.event(e.doc, 'schoolai:vision-media-range'); await Promise.resolve(); await Promise.resolve();
+        assert.deepEqual(videos.map(v => v.paused), [false, false, true]);
+        e.vision.dataset.visionMediaRange = '1,2'; e.event(e.doc, 'schoolai:vision-media-range'); await Promise.resolve(); await Promise.resolve();
+        assert.deepEqual(videos.map(v => v.paused), [true, false, false]);
+        e.doc.hidden = true; e.event(e.doc, 'visibilitychange'); assert.ok(videos.every(v => v.paused));
+        e.event(e.win, 'pagehide', { persisted: false }); assert.ok(observers.every(o => o.disconnected));
+    } finally { globalThis.IntersectionObserver = previousObserver; e.restore(); }
 });

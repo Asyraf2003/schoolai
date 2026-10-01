@@ -16,13 +16,19 @@ export function initVisionVideoPreviews() {
     let next = 1;
     let preparingNext = false;
 
+    function visibleLayer(preview) {
+        const root = preview.closest('[data-vision-story]');
+        if (!root.classList.contains('is-enhanced')) return true;
+        const index = preview.closest('[data-vision-visual]').dataset.visionVisual;
+        return root.dataset.visionMediaRange?.split(',').includes(index);
+    }
     function play(preview) {
         if (document.documentElement.dataset.homeExperienceState === 'static-fallback'
-            || paused || suspended || reduced.matches || document.hidden
+            || !visibleLayer(preview) || paused || suspended || reduced.matches || document.hidden
             || document.documentElement.dataset.homeScrollGate !== 'unlocked') return;
         prepareVisionPreview(preview).then(() => {
             if (activePreviews.has(preview) && !paused && !suspended && !document.hidden && !reduced.matches
-                && preview.dataset.visionVideoState === 'frame-ready') safePlay(preview);
+                && visibleLayer(preview) && preview.dataset.visionVideoState === 'frame-ready') safePlay(preview);
         });
     }
 
@@ -54,9 +60,11 @@ export function initVisionVideoPreviews() {
         }, { rootMargin: '100% 0px', threshold: 0 });
         ahead.observe(previews[0].closest('[data-vision-story]'));
     } else {
-        previews.forEach(preview => activePreviews.add(preview));
         prepareNext();
     }
+    document.addEventListener('schoolai:vision-media-range', () => {
+        activePreviews.forEach(preview => { if (visibleLayer(preview)) play(preview); else preview.pause(); });
+    }, options);
     document.addEventListener('schoolai:first-journey-ready', () => { activePreviews.forEach(play); prepareNext(); }, options);
     function resume() {
         paused = false;

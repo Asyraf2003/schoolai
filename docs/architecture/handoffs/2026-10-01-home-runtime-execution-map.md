@@ -248,3 +248,10 @@ Read-only: business/locale data, typography, Hero, Program/Values/Gallery motion
 Proof: pending gate cannot scroll, ready and static fallback can; primary actions
 work immediately, aborted work cannot later mutate timeline; actual browser
 matrix and executed contracts plus existing canonical gates.
+
+MAP-03 playback audit: at 1440×900, first transition had two prepared previews
+playing plus a third preparing beneath fully covered masks. Proximity alone
+cannot express stacked cinematic visibility. Keep existing timeline curves;
+emit only changes to the integer floor/ceil visible media range, and pause
+prepared previews outside that range. Warm-up remains a bounded first-frame
+operation. Without IO keep semantic posters rather than continuous blind play.
