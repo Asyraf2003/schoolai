@@ -1,4 +1,3 @@
-const HOMEPAGE_CURSOR_CHARACTERS = ['cwo', 'cwe'];
 const CURSOR_MEDIA_BASE = 'https://media.almustaqbal.sch.id/ui/cursor';
 
 export const INTERACTIVE_SELECTOR = [
@@ -69,21 +68,17 @@ export function activeCursorLayerHost() {
     return activeModalDialog();
 }
 
-export function preloadCursorAssets(character) {
-    ['1', '2', '3', '4', '5'].forEach((suffix) => {
-        const href = `${CURSOR_MEDIA_BASE}/${character}${suffix}.webp`;
-
-        if (!document.head.querySelector(`link[rel="preload"][href="${href}"]`)) {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = 'image';
-            link.type = 'image/webp';
-            link.href = href;
-            document.head.append(link);
-        }
-
-        const image = new Image();
-        image.src = href;
-    });
+export function loadCursorAsset(character, suffix, onReady) {
+    const image = new Image();
+    image.onload = () => {
+        const decoded = typeof image.decode === 'function' ? image.decode() : Promise.resolve();
+        decoded.then(() => onReady(true), () => onReady(false));
+    };
+    image.onerror = () => onReady(false);
+    image.src = `${CURSOR_MEDIA_BASE}/${character}${suffix}.webp`;
+    return () => {
+        image.onload = null;
+        image.onerror = null;
+        image.removeAttribute?.('src');
+    };
 }
-

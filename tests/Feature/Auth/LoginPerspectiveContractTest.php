@@ -35,7 +35,7 @@ it('keeps the landing page as the persistent Codrops perspective surface', funct
 });
 
 it('keeps the custom cursor in viewport coordinates outside the transformed Codrops wrapper', function (): void {
-    $cursor = readOwnedSource(resource_path('js/pages/welcome/cursor.js'), ['resources/js/pages/welcome/cursor-layer.js', 'resources/js/pages/welcome/cursor-gesture.js']);
+    $cursor = readOwnedSource(resource_path('js/pages/welcome/cursor.js'), ['resources/js/pages/welcome/cursor-layer.js']);
     $perspective = file_get_contents(resource_path('js/pages/welcome-login-perspective.js'));
 
     expect($cursor)

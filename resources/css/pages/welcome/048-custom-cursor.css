@@ -6,9 +6,6 @@
         --home-cursor-interactive-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp");
         --home-cursor-interactive-hotspot-x: 81px;
         --home-cursor-interactive-hotspot-y: 44px;
-        --home-cursor-dizzy-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo3.webp");
-        --home-cursor-annoyed-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo4.webp");
-        --home-cursor-angry-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwo5.webp");
     }
 
     body.site-cursor-page[data-cursor-character="cwe"] {
@@ -18,9 +15,6 @@
         --home-cursor-interactive-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp");
         --home-cursor-interactive-hotspot-x: 80px;
         --home-cursor-interactive-hotspot-y: 40px;
-        --home-cursor-dizzy-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe3.webp");
-        --home-cursor-annoyed-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe4.webp");
-        --home-cursor-angry-image: url("https://media.almustaqbal.sch.id/ui/cursor/cwe5.webp");
     }
 
     /*
@@ -78,27 +72,6 @@
         --home-cursor-image: var(--home-cursor-interactive-image);
         --home-cursor-hotspot-x: var(--home-cursor-interactive-hotspot-x);
         --home-cursor-hotspot-y: var(--home-cursor-interactive-hotspot-y);
-    }
-
-    .home-cursor:is(
-        [data-state="dizzy"],
-        [data-state="annoyed"],
-        [data-state="angry"]
-    ) {
-        --home-cursor-hotspot-x: 48px;
-        --home-cursor-hotspot-y: 48px;
-    }
-
-    .home-cursor[data-state="dizzy"] {
-        --home-cursor-image: var(--home-cursor-dizzy-image);
-    }
-
-    .home-cursor[data-state="annoyed"] {
-        --home-cursor-image: var(--home-cursor-annoyed-image);
-    }
-
-    .home-cursor[data-state="angry"] {
-        --home-cursor-image: var(--home-cursor-angry-image);
     }
 
     .home-cursor.is-visible:not([data-state="disabled"]) {

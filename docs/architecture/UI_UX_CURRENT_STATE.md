@@ -42,8 +42,9 @@ entries are byte-identical to the original baseline. Dead CSS removal ledger:
 `handoffs/2026-10-01-baseline-owner-audit.md`. Node fullscreen behavior test and
 Chromium modal/bootstrap smoke PASS with zero runtime exceptions. The lost
 locale-label closure found by smoke was repaired before publication.
-ACTIVE: publish verified MAP-00A (#46). NEXT CHANNEL: Terminal Codex.
-NEXT after verified merge/sync: MAP-01 cursor simplification.
+MAP-00A published: Issue #46 / PR #47, main `bcc6d3876acb8c2dec904425d85fdcf0c0d776c7`, CI PASS.
+ACTIVE: MAP-01 cursor simplification. NEXT CHANNEL: Terminal Codex.
+NEXT: remove hidden interaction machinery, retain visual hover and lifecycle.
 
 - hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
 - pre-Codex readiness: `handoffs/2026-08-23-pre-codex-readiness.md`

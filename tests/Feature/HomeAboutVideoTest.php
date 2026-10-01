@@ -111,7 +111,7 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
 it('opts only public site surfaces into the character cursor and follows fullscreen top layers', function (): void {
     $home = file_get_contents(resource_path('views/welcome.blade.php'));
     $publicLayout = file_get_contents(resource_path('views/layouts/public.blade.php'));
-    $cursor = readOwnedSource(resource_path('js/pages/welcome/cursor.js'), ['resources/js/pages/welcome/cursor-layer.js', 'resources/js/pages/welcome/cursor-gesture.js']);
+    $cursor = readOwnedSource(resource_path('js/pages/welcome/cursor.js'), ['resources/js/pages/welcome/cursor-layer.js']);
     $cursorCss = file_get_contents(resource_path('css/pages/welcome/048-custom-cursor.css'));
 
     expect($home)
