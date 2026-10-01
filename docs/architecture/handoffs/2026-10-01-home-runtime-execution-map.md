@@ -434,7 +434,7 @@ chooser appearance unchanged. Only redundant JS fallback is migrated/removed.
 PROOF: native keyboard failure at source `efe558fe` and rendered instrumentation
 recorded in `navigationDiscovery` of durable proof; no repository mutation during
 diagnosis. Native focus remains dialog after close; canonical open never executes.
-STATUS: IN_PROGRESS.
+STATUS: CLOSED (proof PASS; publication #60 pending final-head CI/merge).
 
 MAP-06A bounded decision: turn the already rendered canonical behavior into an
 immediate guarded owner, delegate capture click after full navbar/modal markup,
@@ -466,3 +466,11 @@ hidden flag buttons during native Tab; Chromium reproduced the same focus miss.
 Keep that visual owner untouched. Canonical initial focus must wait for both
 dialog and actual flag controls to be visible; bubbling visibility completion
 reschedules the one cancellable frame. Tab considers only truly visible controls.
+
+MAP-06A closure proof: Issue #59 / PR #60, verified runtime source `fe0315eb`.
+54 Chromium/WebKit records (48 viewport/locale/motion cells each exercising
+pointer plus native keyboard, six held-experience/held-home-JS/lifecycle cases)
+and 60 rapid reduced-motion native keyboard cycles PASS. Node 40 (seven new),
+focused PHP 11/258, full 305/3,506, structure 597, build 147, Pint/diff PASS.
+Flag CSS SHA256 and byte-identical non-script markup retained in navigation
+proof. Publication is the only next step; final proof resumes after main sync.

@@ -37,7 +37,10 @@ was hidden (Chromium, ID reduced motion, 1180px). Computed visibility gates focu
 a retry, with cancellation on close/exit. Global reduced-motion duration also
 transitions descendants inherited visibility; focus waits for visible flag
 controls, and Tab excludes hidden controls (actual WebKit/Chromium proof). CSS visibility/motion stays unchanged.
-Exactly one NEXT: Terminal Codex verifies bounded MAP-06A modal lifecycle repair.
+MAP-06A source `fe0315eb` proof PASS: 54 Chromium/WebKit records plus 60 rapid
+keyboard cycles; Node 40, PHP 305/3,506, structure 597, build 147, Pint/diff PASS.
+All flag CSS/non-script markup are byte-identical to the prior main.
+Exactly one NEXT: Terminal Codex publishes verified MAP-06A PR #60 after final-head CI.
 Final MAP-06 resumes only after this prerequisite is verified/merged.
 This map changes no production runtime/style/content unless new failure evidence
 requires reopening its proven owner; such evidence must be recorded first.

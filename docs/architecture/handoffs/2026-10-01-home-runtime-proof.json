@@ -9162,5 +9162,1126 @@
     "baselineUnchangedSource": true,
     "historicalFallbackReason": "87bfb14c restored flag-only appearance and load-order fallback",
     "decision": "migrate early delegated opening to canonical owner; retain all flag CSS/media/DOM; cancel pending focus on close/disposal"
+  },
+  "navigation": {
+    "source": "fe0315eb33300d683db281b511e296be56f84bef",
+    "issue": 59,
+    "pr": 60,
+    "profile": "Playwright 1.63.0 Chromium 153.0.8010.12 / WebKit 26.6 Linux WSL2 headless; actual native pointer/keyboard; WebKit is not physical Safari/iOS",
+    "rows": [
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "mode": "held-experience",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "mode": "held-home-js",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "mode": "lifecycle",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "no-preference",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "motion": "reduce",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "no-preference",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "motion": "reduce",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "no-preference",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 390,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 1180,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 1181,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "motion": "reduce",
+        "width": 1440,
+        "modes": [
+          "pointer",
+          "native keyboard"
+        ],
+        "focusReturn": true,
+        "tabWrap": true,
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "mode": "held-experience",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "mode": "held-home-js",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "mode": "lifecycle",
+        "status": "PASS"
+      }
+    ],
+    "stress": [
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 0,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 1,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 2,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 3,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 4,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 5,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 6,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 7,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 8,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 390,
+        "cycle": 9,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 0,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 1,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 2,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 3,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 4,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 5,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 6,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 7,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 8,
+        "status": "PASS"
+      },
+      {
+        "locale": "id",
+        "width": 1180,
+        "cycle": 9,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 0,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 1,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 2,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 3,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 4,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 5,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 6,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 7,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 8,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "cycle": 9,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 0,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 1,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 2,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 3,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 4,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 5,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 6,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 7,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 8,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "width": 1180,
+        "cycle": 9,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 0,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 1,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 2,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 3,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 4,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 5,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 6,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 7,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 8,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 390,
+        "cycle": 9,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 0,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 1,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 2,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 3,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 4,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 5,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 6,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 7,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 8,
+        "status": "PASS"
+      },
+      {
+        "locale": "ar",
+        "width": 1180,
+        "cycle": 9,
+        "status": "PASS"
+      }
+    ],
+    "automated": {
+      "nodeRuntimeContracts": 40,
+      "newNavigationContracts": 7,
+      "focusedPhp": {
+        "tests": 11,
+        "assertions": 258
+      },
+      "php": {
+        "tests": 305,
+        "assertions": 3506
+      },
+      "structure": 597,
+      "buildModules": 147,
+      "diff": "PASS",
+      "pint": "PASS"
+    },
+    "retainedStyle": {
+      "classification": "USED_AND_EFFECTIVE",
+      "sha256": "bb108764cd0408e5b0f12a0daca300b06a1c9894eef77799f57cdbc64d14e97d",
+      "allNonScriptMarkupByteIdenticalTo": "efe558fe"
+    },
+    "removedJs": {
+      "classification": "ACTIVE_REDUNDANT after migration",
+      "owner": "language-flag.blade.php competing capture opener",
+      "replacement": "existing canonical navbar behavior executed immediately after complete markup"
+    },
+    "visibilityEvidence": {
+      "preFixSource": "701d8be0",
+      "actualDialogVisibility": "visible",
+      "actualFlagControlVisibility": "hidden",
+      "actualTabFocusStayed": "language-modal__dialog",
+      "cause": "global reduced-motion 0.01ms duration transitions inherited visibility on default all descendants",
+      "finalBehavior": "one cancellable focus frame waits for visible dialog and all flag choices; bubbling visibility completion retries; Tab excludes invisible controls"
+    },
+    "limits": [
+      "BFCache and permanent lifecycle handler cases dispatch synthetic PageTransitionEvents; native history is verified separately in final map",
+      "No CSS or motion duration changed",
+      "Raw temporary diagnostic files are summarized here; source hashes identify executed owner"
+    ],
+    "harnessHashes": {
+      "schoolai-navigation-browser.mjs": "2155b5dcd5cb3be2ea1375e3fe67310d5013a77573904ebfd4248efc8c32988d",
+      "schoolai-navigation-stress.mjs": "f65f3b9557e4712a05e7e407bd17a9ec0e3c605863d8c78786fc58812734cb7a"
+    }
   }
 }
