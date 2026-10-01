@@ -32,7 +32,7 @@ function environment() {
     doc.querySelector = () => modal; doc.getElementById = id => ({ hamburgerBtn: hamburger, navMenu: nav, navbar: header }[id]);
     doc.documentElement = { contains: value => value.connected };
     doc.body = { style: { overflow: 'clip' } }; doc.activeElement = origin;
-    const win = { ...target(), requestAnimationFrame(callback) { frames.set(++nextId,callback); return nextId; }, cancelAnimationFrame(id) { frames.delete(id); } };
+    const win = { ...target(), getComputedStyle: element => ({ visibility: element.visibility || 'visible' }), requestAnimationFrame(callback) { frames.set(++nextId,callback); return nextId; }, cancelAnimationFrame(id) { frames.delete(id); } };
     const globals = { document: doc, window: win, AbortController, CustomEvent: class { constructor(type,init) { this.type=type;this.detail=init.detail; } } };
     const boot = () => runInNewContext(source,globals);
     const tick = () => { const callbacks=[...frames.values()];frames.clear();callbacks.forEach(callback=>callback()); };
@@ -52,15 +52,19 @@ test('immediate Escape cancels stale dialog focus and repeated boot/open retains
     const e=environment();e.boot();e.boot();assert.equal(e.doc.listeners.get('click').length,1);
     e.open();e.open();assert.equal(e.frames.size,1);e.close();e.tick();
     assert.equal(e.doc.activeElement,e.origin);assert.equal(e.doc.body.style.overflow,'clip');assert.equal(e.frames.size,0);
+    e.modal.visibility='hidden';e.open();e.tick();assert.equal(e.doc.activeElement,e.origin);
+    e.modal.visibility='visible';e.modal.fire('transitionend',{target:e.modal,propertyName:'visibility'});
+    assert.equal(e.frames.size,1);e.close();e.tick();
+    assert.equal(e.doc.activeElement,e.origin);assert.equal(e.frames.size,0);
 });
 test('mobile language intent closes its navigation and restores focus to the hamburger with the original lock', () => {
     const e=environment();e.nav.classList.add('active');e.header.classList.add('has-open-menu');e.doc.body.style.overflow='hidden';
     e.doc.addEventListener('mobile-navigation:request-close',()=>{e.nav.classList.remove('active');e.hamburger.setAttribute('aria-expanded','false');e.doc.body.style.overflow='clip';});
-    e.boot();e.open();e.tick();e.close();assert.equal(e.doc.activeElement,e.hamburger);assert.equal(e.doc.body.style.overflow,'clip');
+    e.boot();e.open();e.tick();e.tick();e.close();assert.equal(e.doc.activeElement,e.hamburger);assert.equal(e.doc.body.style.overflow,'clip');
     assert.equal(e.hamburger.getAttribute('aria-expanded'),'false');
 });
 test('Tab wraps actual visible choices and skips the hidden flag-only close control', () => {
-    const e=environment();e.boot();e.open();e.tick();
+    const e=environment();e.boot();e.open();e.tick();e.tick();
     assert.equal(e.doc.fire('keydown',{key:'Tab'}).prevented,true);assert.equal(e.doc.activeElement,e.options[0]);
     e.doc.fire('keydown',{key:'Tab',shiftKey:true});assert.equal(e.doc.activeElement,e.options[1]);
     e.doc.fire('keydown',{key:'Tab'});assert.equal(e.doc.activeElement,e.options[0]);e.close();
@@ -71,4 +75,12 @@ test('BFCache suspends the pending focus frame, resumes one owner, and permanent
     e.tick();assert.equal(e.doc.activeElement,e.dialog);e.win.fire('pagehide',{persisted:false});
     assert.equal(e.doc.body.style.overflow,'clip');assert.equal(e.modal.classList.contains('is-open'),false);
     assert.equal(e.doc.listeners.get('click').length,0);e.open();assert.equal(e.frames.size,0);
+});
+
+test('focus waits for actual visibility transition and late completion never focuses a closed dialog', () => {
+    const e=environment();e.modal.visibility='hidden';e.boot();e.open();e.tick();
+    assert.equal(e.doc.activeElement,e.origin);assert.equal(e.frames.size,0);
+    e.modal.visibility='visible';e.modal.fire('transitionend',{target:e.modal,propertyName:'visibility'});
+    e.tick();assert.equal(e.doc.activeElement,e.dialog);e.close();
+    e.modal.fire('transitionend',{target:e.modal,propertyName:'visibility'});assert.equal(e.frames.size,0);
 });

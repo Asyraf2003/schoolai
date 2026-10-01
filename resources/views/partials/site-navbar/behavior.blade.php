@@ -24,7 +24,8 @@
       cancelFocus();
       focusFrame = window.requestAnimationFrame(function () {
         focusFrame = 0;
-        if (dialog && modal.classList.contains('is-open')) dialog.focus({ preventScroll: true });
+        if (dialog && modal.classList.contains('is-open')
+            && window.getComputedStyle(modal).visibility === 'visible') dialog.focus({ preventScroll: true });
       });
     }
 
@@ -88,6 +89,11 @@
       event.stopPropagation();
       openLanguageModal(trigger);
     }, { capture: true, signal: lifecycle.signal });
+
+    modal.addEventListener('transitionend', function (event) {
+      if (event.target === modal && event.propertyName === 'visibility'
+          && modal.classList.contains('is-open') && !dialog.contains(document.activeElement)) focusDialog();
+    }, options);
 
     closeControls.forEach(function (control) {
       control.addEventListener('click', closeLanguageModal, options);

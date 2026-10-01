@@ -446,3 +446,15 @@ inside the existing dialog using visible controls; the hidden flag-only close
 control must not receive focus. Native keyboard verification covers both ends. No new
 framework, layout, typography, business or motion animation changes. Terminal
 Codex is the sole channel. Durable proof must pass before final map resumes.
+
+MAP-06A new browser evidence: Chromium ID reduced motion at 1180px recorded the
+first focus callback while dialog visibility was still hidden (then visible).
+The scheduled focus now follows two paint frames, preserving the exact CSS
+visibility transition. Both queued stages share cancellation on Escape/exit;
+unit proof checks no early focus, actual final focus and stale callback disposal.
+
+Follow-up proof: two RAFs alone also observed hidden visibility at 390px reduced
+motion. Frame count is not visibility readiness. The bounded owner will focus
+only after computed visibility is visible; its existing CSS visibility
+transition completion supplies the retry, cancelled/disposed with the owner.
+No duration/timeout/stronger selector is introduced.
