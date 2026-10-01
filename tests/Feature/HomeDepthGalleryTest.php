@@ -12,7 +12,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
             'css/pages/welcome-depth-gallery/responsive.css',
         ],
     ));
-    $controller = file_get_contents(resource_path('js/pages/welcome-depth-gallery.js'));
+    $controller = readOwnedSource(resource_path('js/pages/welcome-depth-gallery.js'), ['resources/js/pages/welcome/gallery-story-frame.js', 'resources/js/pages/welcome/scroll-frame.js']);
     $pattern = file_get_contents(resource_path('js/pages/welcome/gallery-pattern.js'));
     $visual = file_get_contents(resource_path('js/pages/welcome/gallery-story-visual.js'));
     $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
@@ -96,7 +96,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->toContain("section.style.setProperty('--gallery-story-bg'")
         ->toContain('--gallery-window-top')
         ->toContain('--gallery-window-bottom')
-        ->toContain("window.addEventListener('scroll', requestRender")
+        ->toContain('subscribeHomepageFrame')
         ->toContain("'(prefers-reduced-motion: reduce)'")
         ->not->toContain('loadThreeRuntime')
         ->not->toContain('DepthGalleryEngine')
@@ -115,7 +115,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
 
 it('keeps the homepage gallery controller small and scroll owned', function (): void {
     $file = resource_path('js/pages/welcome-depth-gallery.js');
-    $source = file_get_contents($file);
+    $source = readOwnedSource($file, ['resources/js/pages/welcome/gallery-story-frame.js', 'resources/js/pages/welcome/scroll-frame.js']);
 
     expect(count(file($file)))->toBeLessThanOrEqual(200)
         ->and($source)

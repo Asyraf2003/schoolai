@@ -16,14 +16,12 @@ Durable references:
 MAP-03 is merged after green CI (#53): main
 `c9f93c0d91de862c6351d259996707ad65d00597`. Its 86 browser cases and
 18 Node contracts remain durable proof, not production certification.
-MAP-04 source `4022eba0` is verified in PR #55 / Issue #54.
-PASS: 25 Node contracts; PHP 305/3,500; structure 595; build 145; Pint/diff.
-86 functional Chromium/WebKit cases PASS, including final real-pointer motion
-interruption. Three cold traces: all surfaces ready before input, zero first-
-scroll requests; FCP median/worst 752/816ms. Local proof only.
-Exactly one NEXT: Terminal Codex publishes proof, waits for final green CI and
-merges MAP-04. MAP-05 remains read-only; measured burst 160 card reads and
-37 idle Gallery handoff RAFs justify its bounded scheduler packet.
+MAP-04 merged after CI PASS (#55): main
+`9ec739fac9be6cf62528178dd97ed13ef72a529b`. Its 86 browser cases and
+25 Node contracts remain durable proof.
+Exactly one NEXT: Terminal Codex implements MAP-05 under its bounded packet.
+Counts (160 pre-frame card reads; 37 idle Gallery RAFs) justify only the three
+selected owners; efficient navigation/Vision/Values/wall clocks remain local.
 
 ## Current execution authority — 2026-10-01
 

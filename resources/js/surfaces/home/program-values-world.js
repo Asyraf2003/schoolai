@@ -1,3 +1,5 @@
+import { subscribeHomepageFrame } from '../../pages/welcome/scroll-frame.js';
+
 const clamp = (value, min = 0, max = 1) => (
   Math.min(max, Math.max(min, value))
 );
@@ -28,54 +30,27 @@ export function mountProgramValuesWorld(root) {
   const values = root.querySelector('[data-values-story]');
   if (!program || !values) return () => {};
 
-  let frame = 0;
   let destroyed = false;
 
-  function render() {
-    frame = 0;
-    if (destroyed || document.hidden) return;
-
-    const viewportHeight = window.innerHeight || 1;
+  const shared = subscribeHomepageFrame(({ height }) => {
+    const viewportHeight = height;
     const programBottom = program.getBoundingClientRect().bottom;
     const start = viewportHeight * MORPH_START_BOTTOM_RATIO;
     const end = viewportHeight * MORPH_END_BOTTOM_RATIO;
-    const progress = clamp(
-      (start - programBottom) / Math.max(1, start - end),
-    );
+    return clamp((start - programBottom) / Math.max(1, start - end));
+  }, progress => { if (!destroyed) paintWorld(root, progress); });
+  const lifecycle = new AbortController();
+  window.addEventListener('pagehide', event => { if (!event.persisted) destroy(); }, { signal: lifecycle.signal });
 
-    paintWorld(root, progress);
-  }
-
-  function requestRender() {
-    if (!frame && !destroyed) {
-      frame = window.requestAnimationFrame(render);
-    }
-  }
-
-  function onVisibility() {
-    if (document.hidden) {
-      if (frame) window.cancelAnimationFrame(frame);
-      frame = 0;
-      return;
-    }
-    requestRender();
-  }
-
-  window.addEventListener('scroll', requestRender, { passive: true });
-  window.addEventListener('resize', requestRender);
-  document.addEventListener('visibilitychange', onVisibility);
-  requestRender();
-
-  return () => {
+  function destroy() {
     destroyed = true;
-    if (frame) window.cancelAnimationFrame(frame);
-    window.removeEventListener('scroll', requestRender);
-    window.removeEventListener('resize', requestRender);
-    document.removeEventListener('visibilitychange', onVisibility);
+    shared.remove();
+    lifecycle.abort();
     root.style.removeProperty('--program-values-morph');
     root.style.removeProperty('--program-values-morph-pct');
     root.style.removeProperty('--program-values-type-opacity');
-  };
+  }
+  return destroy;
 }
 
 const programValuesWorld = document.querySelector('[data-program-values-world]');

@@ -90,6 +90,7 @@ function writeRootFrame(
 
     const worldRoot = valuesWorldRoot(root, nodes);
     if (worldRoot) {
+        worldRoot.dataset.valuesGalleryExitProgress = galleryHandoffProgress.toFixed(4);
         worldRoot.style.setProperty(
             '--values-gallery-exit-progress',
             galleryHandoffProgress.toFixed(4),
@@ -107,6 +108,8 @@ function writeRootFrame(
             `${(worldOpacity(cardExitProgress) * 100).toFixed(2)}%`,
         );
     }
+
+    worldRoot?.dispatchEvent(new CustomEvent('schoolai:values-frame', { bubbles: true }));
 
     if (nodes.programRoot) {
         nodes.programRoot.style.setProperty(
@@ -169,6 +172,8 @@ export function clearValuesStory(root, cards, nodes) {
 
     const worldRoot = valuesWorldRoot(root, nodes);
     WORLD_PROPERTIES.forEach((name) => worldRoot?.style.removeProperty(name));
+    if (worldRoot) delete worldRoot.dataset.valuesGalleryExitProgress;
+    worldRoot?.dispatchEvent(new CustomEvent('schoolai:values-frame', { bubbles: true }));
 
     nodes.programRoot?.style.removeProperty('--program-values-handoff');
     nodes.programRoot?.classList.remove('is-values-handoff');

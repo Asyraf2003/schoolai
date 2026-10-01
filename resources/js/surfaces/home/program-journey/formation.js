@@ -1,3 +1,5 @@
+import { subscribeHomepageFrame } from '../../../pages/welcome/scroll-frame.js';
+
 const CARD_START_RATIO = 0.88;
 const CARD_STEP_RATIO = 0.065;
 const REVEAL_DISTANCE_RATIO = 0.16;
@@ -46,16 +48,14 @@ export function mountProgramFormation(root) {
 
   root.classList.add('is-program-formation');
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) {
-    return () => root.classList.remove('is-program-formation');
-  }
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const targets = cards.map(() => 0);
   const current = cards.map(() => 0);
   let liftOffset = 40;
-  let frame = 0;
+  let sampledRevision = -1;
   let lastTime = 0;
+  let motionEpoch = -1;
   let destroyed = false;
 
   function readTargets() {
@@ -79,15 +79,13 @@ export function mountProgramFormation(root) {
     trigger.style.willChange = 'transform, opacity';
   }
 
-  function requestRender() {
-    if (!frame && !destroyed && !document.hidden) {
-      frame = window.requestAnimationFrame(render);
-    }
-  }
+  function requestRender() { if (!destroyed) shared.request(); }
 
-  function render(time) {
-    frame = 0;
+  function render(_, viewport) {
+    const { time } = viewport;
+    if (viewport.motionEpoch !== motionEpoch) { lastTime = 0; motionEpoch = viewport.motionEpoch; }
     if (destroyed || document.hidden) return;
+    if (reduced.matches) { current.fill(1); clearTriggers(); lastTime = 0; return; }
 
     const delta = lastTime ? Math.min(64, Math.max(0, time - lastTime)) : 16.67;
     lastTime = time;
@@ -108,49 +106,42 @@ export function mountProgramFormation(root) {
       paint(index);
     });
 
-    if (unsettled) requestRender();
-    else lastTime = 0;
+    if (!unsettled) lastTime = 0;
+    return unsettled;
   }
 
-  function sample() {
-    readTargets();
-    requestRender();
-  }
-
-  function onVisibility() {
-    if (document.hidden) {
-      if (frame) window.cancelAnimationFrame(frame);
-      frame = 0;
-      lastTime = 0;
-      return;
+  const shared = subscribeHomepageFrame(viewport => {
+    if (sampledRevision !== viewport.revision) {
+      if (reduced.matches) targets.fill(1);
+      else readTargets();
+      sampledRevision = viewport.revision;
     }
-    sample();
-  }
+  }, render);
 
-  readTargets();
+  if (reduced.matches) targets.fill(1);
+  else readTargets();
   targets.forEach((target, index) => {
     current[index] = target;
-    paint(index);
+    if (!reduced.matches) paint(index);
   });
 
-  window.addEventListener('scroll', sample, { passive: true });
-  window.addEventListener('resize', sample);
-  document.addEventListener('visibilitychange', onVisibility);
+  const onPreference = () => { sampledRevision = -1; lastTime = 0; requestRender(); };
+  reduced.addEventListener?.('change', onPreference);
+  const observer = 'ResizeObserver' in window ? new ResizeObserver(() => {
+    sampledRevision = -1; requestRender();
+  }) : null;
+  observer?.observe(root);
 
+  function clearTriggers() {
+    triggers.forEach(trigger => ['opacity', 'transform', 'pointer-events', 'will-change']
+      .forEach(property => trigger.style.removeProperty(property)));
+  }
   return () => {
     destroyed = true;
-    if (frame) window.cancelAnimationFrame(frame);
-    window.removeEventListener('scroll', sample);
-    window.removeEventListener('resize', sample);
-    document.removeEventListener('visibilitychange', onVisibility);
-
-    triggers.forEach((trigger) => {
-      trigger.style.removeProperty('opacity');
-      trigger.style.removeProperty('transform');
-      trigger.style.removeProperty('pointer-events');
-      trigger.style.removeProperty('will-change');
-    });
-
+    shared.remove();
+    observer?.disconnect();
+    reduced.removeEventListener?.('change', onPreference);
+    clearTriggers();
     root.classList.remove('is-program-formation');
   };
 }
