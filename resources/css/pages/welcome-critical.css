@@ -16,3 +16,11 @@
 .skip-link:focus {
     left: 0;
 }
+
+html[data-home-scroll-gate] {
+    scrollbar-gutter: stable;
+}
+
+html[data-home-scroll-gate="locked"] {
+    overflow: hidden;
+}

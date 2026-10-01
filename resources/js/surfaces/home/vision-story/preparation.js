@@ -1,36 +1,40 @@
-function boundedWait(work, timeoutMs) {
-    const timeout = new Promise((resolve) => {
-        window.setTimeout(resolve, timeoutMs);
-    });
-    return Promise.race([work, timeout]);
-}
+import { prepareVisionPreview } from '../../../pages/welcome/video-readiness.js';
 
-function hydrateImages(root) {
-    root.querySelectorAll('[data-vision-art][data-lazy-src]').forEach((image) => {
-        const source = image.dataset.lazySrc;
-        if (!source) return;
-        image.dataset.lazyHydrated = '1';
-        image.src = source;
-        image.removeAttribute('data-lazy-src');
-    });
-}
-
-function decodeImages(root) {
-    const images = Array.from(root.querySelectorAll('[data-vision-art]'));
-    const work = Promise.allSettled(images.map((image) => {
-        if (typeof image.decode !== 'function') return Promise.resolve();
-        return image.decode();
+function waitForStyle(signal) {
+    const styles = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+        .filter(style => style.href.includes('welcome-vision-waapi'));
+    return Promise.all(styles.map(style => {
+        if (style.sheet) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+            const cleanup = () => {
+                style.removeEventListener('load', load);
+                style.removeEventListener('error', fail);
+                signal?.removeEventListener('abort', fail);
+            };
+            const load = () => { cleanup(); resolve(); };
+            const fail = () => { cleanup(); reject(new Error('Vision stylesheet unavailable')); };
+            style.addEventListener('load', load, { once: true });
+            style.addEventListener('error', fail, { once: true });
+            signal?.addEventListener('abort', fail, { once: true });
+            if (signal?.aborted) fail();
+        });
     }));
-    return boundedWait(work, 900);
 }
 
-function waitForFonts() {
-    if (!document.fonts?.ready) return Promise.resolve();
-    return boundedWait(document.fonts.ready, 700);
-}
-
-export async function prepareVisionAssets(root) {
+export async function prepareVisionAssets(root, signal, staticOnly) {
     root.classList.add('is-preparing');
-    hydrateImages(root);
-    await Promise.all([decodeImages(root), waitForFonts()]);
+    const preview = root.querySelector('[data-vision-video-preview]');
+    const image = root.querySelector('[data-vision-art][data-lazy-src]');
+    if (image?.dataset.lazySrc) {
+        image.dataset.lazyHydrated = '1';
+        image.loading = 'eager';
+        image.src = image.dataset.lazySrc;
+        image.removeAttribute('data-lazy-src');
+    }
+    const [media] = await Promise.all([
+        preview ? prepareVisionPreview(preview, { signal, staticOnly }) : image?.decode?.(),
+        staticOnly ? Promise.resolve() : document.fonts?.ready,
+        waitForStyle(signal),
+    ]);
+    return media || 'semantic-ready';
 }

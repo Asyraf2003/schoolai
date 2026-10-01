@@ -150,7 +150,7 @@ Native R2 range probe returns HTTP 206, 1,024 bytes of a 94,907,995-byte asset;
 ongoing playback may buffer further. Durable results/hashes: runtime proof JSON.
 Linux WebKit codec environment was repaired only in /tmp before final playback
 proof; initial unsupported-codec and request-count-only runs were invalidated.
-STATUS: CLOSED (verified; publication follows green CI).
+STATUS: CLOSED (merged #51 after CI; main `eecaf918`).
 
 ### MAP-03 — First journey readiness and access-safe scroll gate
 GOAL: prepare Vision truthfully before meaningful scroll; progressive next owners.
@@ -164,7 +164,7 @@ hash/restore paths, locale switch, resize, reduced motion and no-JS access.
 DoD: readiness reports actual prepared/fallback state; no fake timer progress or
 infinite lock; section N+1 preparation begins before viewport entry.
 PROOF: pending.
-STATUS: PLANNED.
+STATUS: IN_PROGRESS.
 
 ### MAP-04 — Progressive Program, Values, Gallery and wall preparation
 GOAL: remove remaining proximity-triggered initialization bursts with bounded work.
@@ -205,7 +205,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 verified CLOSED; merge #51 before MAP-03 implementation.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). Execute MAP-03 Vision/gate only.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
@@ -223,3 +223,28 @@ objects 3/4/5 are UNKNOWN for external consumers: remove repository references,
 retain bucket objects. `cursor-layer.js` duplicate character constant is unused
 in all scopes and DEAD_CONFIRMED. Replace five-state preload helper with default
 load plus hover intent; preserve all interactive selectors/top-layer policy.
+
+## MAP-03 bounded packet — FACT / GAP / DECISION
+
+FACT: Vision is immediately after Hero. The schoolImages collection still contains retired paper URLs
+protected by an explicit no-paper test; three preview videos currently lack posters and share 180px
+playback proximity. Controller prepares only when near/wide and returns early;
+fonts/decode races resolve fake success after 700/900ms. Current CSS owns all
+media crop/fade and timeline geometry; no losing selector is removed.
+GAP: first-scroll changes layout and starts three media workloads after the
+coordinator has already reported prepared. No-JS/reduced video boxes are black. Retired paper assets are not valid fallback
+owners; keep their no-render contract and retain unknown legacy config.
+DECISION: await actual first poster/frame, applicable stylesheet/fonts and
+existing timeline before normal unlock. Deadline/error/access intent cancels
+late enhancement and selects the existing static semantic composition. Reuse the active Hero school-photo asset (already loaded) beneath the existing video fade; preserve DOM story order,
+layout, controls, crop and animation durations. Gate CSS owns only root overflow
+and reserved scrollbar geometry; navigation continues to own body overflow.
+Immediate hash/restored position, links, focus outside Hero and Escape select
+static fallback before access. No-JS has no gate attribute. Remaining previews
+prepare sequentially ahead; playback is actual visible geometry only.
+Editable: coordinator/gate, Vision wrapper/controller/preparation, previews and
+bounded readiness helper, Vision Blade/poster CSS, critical gate CSS, tests/docs.
+Read-only: business/locale data, typography, Hero, Program/Values/Gallery motion.
+Proof: pending gate cannot scroll, ready and static fallback can; primary actions
+work immediately, aborted work cannot later mutate timeline; actual browser
+matrix and executed contracts plus existing canonical gates.

@@ -7,7 +7,7 @@
     overflow: hidden;
     border: 0;
     color: #fff;
-    background: #0c0c0c;
+    background: transparent;
     cursor: pointer;
 }
 
@@ -61,3 +61,13 @@
     outline-offset: -6px;
 }
 
+
+.vision-arch__preview-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+}

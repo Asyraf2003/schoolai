@@ -56,8 +56,9 @@ BFCache safety. Node 10, focused PHP 9/228, full 304/3,488, structure/build/diff
 PASS. Final 76 Chromium/WebKit cases PASS; all three traces play before input,
 first scroll adds no Hero load. Local FCP 492ms median / 1,416ms worst; Layout
 157.75ms / 587.85ms. Proof JSON contains declared profile and raw-trace hashes.
-ACTIVE: publish verified MAP-02 (#51) after CI; no MAP-03 source mutation yet.
-NEXT CHANNEL: Terminal Codex. NEXT: merge/sync, then first-journey readiness.
+MAP-02 merged after green CI (#51): main `eecaf918ae4eb4422411a84a2dc9b862693bcc22`.
+ACTIVE: MAP-03 first-journey readiness and access-safe gate.
+NEXT CHANNEL: Terminal Codex. NEXT: execute bounded Vision/gate packet below.
 
 - hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
 - pre-Codex readiness: `handoffs/2026-08-23-pre-codex-readiness.md`

@@ -1,24 +1,25 @@
 const rootElement = document.documentElement;
-const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-const canEnhance = !motionQuery.matches;
-
-if (canEnhance) rootElement.classList.add('vision-motion-capable');
-
 let controllerPromise = null;
 
-export function prepareHomepageVisionStory() {
-    if (!document.querySelector('[data-vision-story]') || !canEnhance) {
-        return Promise.resolve(null);
+export function prepareHomepageVisionStory({ signal } = {}) {
+    const root = document.querySelector('[data-vision-story]');
+    if (!root) return Promise.resolve({ state: 'absent' });
+    if (signal?.aborted) {
+        root.dataset.visionState = 'static-fallback';
+        return Promise.resolve({ state: 'static-fallback' });
     }
     if (controllerPromise) return controllerPromise;
-
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    rootElement.classList.toggle('vision-motion-capable', !motionQuery.matches);
     controllerPromise = import('../surfaces/home/vision-story/controller.js')
-        .then(({ mountVisionStory }) => mountVisionStory())
-        .catch((error) => {
-            controllerPromise = null;
+        .then(({ mountVisionStory }) => {
+            if (signal?.aborted) return { state: 'static-fallback' };
+            return mountVisionStory({ signal }).ready;
+        }).catch(error => {
             rootElement.classList.remove('vision-motion-capable');
-            console.error('Vision story enhancement failed.', error);
+            root.dataset.visionState = 'static-fallback';
+            console.warn('Vision preparation uses semantic fallback.', error);
+            return { state: 'static-fallback' };
         });
-
     return controllerPromise;
 }
