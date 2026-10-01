@@ -1,0 +1,94 @@
+.article-showcase {
+    --article-bg: #f4f3ef;
+    --article-ink: #152018;
+    --article-line: rgb(21 32 24 / .16);
+    position: relative;
+    background: var(--article-bg);
+    color: var(--article-ink);
+    padding-block: clamp(5rem, 9vw, 9rem);
+}
+
+.article-showcase__shell {
+    width: min(90vw, 100rem);
+    margin-inline: auto;
+}
+
+.article-showcase__header {
+    display: grid;
+    margin-block-end: clamp(2.5rem, 5vw, 5rem);
+    text-align: start;
+}
+
+.article-showcase__grid {
+    display: grid;
+    gap: clamp(.85rem, 1.5vw, 1.35rem);
+}
+
+.article-showcase__empty {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: clamp(18rem, 26vw, 24rem);
+    padding-block: clamp(2.5rem, 5vw, 4.75rem);
+    border-block: 1px solid var(--article-line);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.article-showcase__empty::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset-block-start: 50%;
+    inset-inline-end: clamp(-9rem, -6vw, -3rem);
+    width: clamp(18rem, 28vw, 28rem);
+    aspect-ratio: 1;
+    border: 1px solid rgb(21 32 24 / .09);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 clamp(2rem, 4vw, 4rem) rgb(21 32 24 / .03),
+        0 0 0 clamp(4rem, 8vw, 8rem) rgb(21 32 24 / .014);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.article-showcase__empty-copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(.8rem, 1.35vw, 1.2rem);
+    width: min(100%, 48rem);
+    margin-inline-start: clamp(0rem, 7vw, 7rem);
+    margin-inline-end: auto;
+}
+
+.article-showcase__empty-kicker {
+    margin-block-end: clamp(.25rem, .5vw, .5rem);
+    font-size: clamp(.7rem, .18vw + .66rem, .82rem);
+    font-weight: 800;
+    letter-spacing: .11em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.article-showcase__empty-copy h3,
+.article-showcase__empty-copy p {
+    margin: 0;
+}
+
+.article-showcase__empty-copy h3 {
+    max-width: 14ch;
+    font-size: clamp(2.4rem, 3.8vw, 4.75rem);
+    font-weight: 650;
+    letter-spacing: -.05em;
+    line-height: .96;
+    text-wrap: balance;
+}
+
+.article-showcase__empty-copy p {
+    max-width: 44ch;
+    color: rgb(21 32 24 / .68);
+    font-size: clamp(.95rem, .28vw + .88rem, 1.12rem);
+    line-height: 1.6;
+}
+

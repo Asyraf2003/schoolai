@@ -1,0 +1,95 @@
+.gallery-grid.effect-1 li.animate {
+    animation: galleryFadeIn .65s ease forwards;
+}
+
+@keyframes galleryFadeIn {
+    to { opacity: 1; }
+}
+
+.gallery-grid.effect-2 li.animate {
+    transform: translateY(200px);
+    animation: galleryMoveUp .65s ease forwards;
+}
+
+@keyframes galleryMoveUp {
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.gallery-grid.effect-3 li.animate {
+    transform: scale(.6);
+    animation: galleryScaleUp .65s ease-in-out forwards;
+}
+
+@keyframes galleryScaleUp {
+    to { transform: scale(1); opacity: 1; }
+}
+
+.gallery-grid.effect-4,
+.gallery-grid.effect-5,
+.gallery-grid.effect-6,
+.gallery-grid.effect-7,
+.gallery-grid.effect-8 {
+    perspective: 1300px;
+}
+
+.gallery-grid.effect-4 li.animate {
+    transform-style: preserve-3d;
+    transform: translateZ(400px) translateY(300px) rotateX(-90deg);
+    animation: galleryFallPerspective .8s ease-in-out forwards;
+}
+
+@keyframes galleryFallPerspective {
+    to { transform: translateZ(0) translateY(0) rotateX(0deg); opacity: 1; }
+}
+
+.gallery-grid.effect-5 li.animate {
+    transform-style: preserve-3d;
+    transform-origin: 50% 50% -300px;
+    transform: rotateX(-180deg);
+    animation: galleryFly .8s ease-in-out forwards;
+}
+
+@keyframes galleryFly {
+    to { transform: rotateX(0deg); opacity: 1; }
+}
+
+.gallery-grid.effect-6 li.animate {
+    transform-style: preserve-3d;
+    transform-origin: 0 0;
+    transform: rotateX(-80deg);
+    animation: galleryFlip .8s ease-in-out forwards;
+}
+
+@keyframes galleryFlip {
+    to { transform: rotateX(0deg); opacity: 1; }
+}
+
+.gallery-grid.effect-7 li.animate {
+    transform-style: preserve-3d;
+    transform: rotateY(-180deg);
+    animation: galleryHelix .8s ease-in-out forwards;
+}
+
+@keyframes galleryHelix {
+    to { transform: rotateY(0deg); opacity: 1; }
+}
+
+.gallery-grid.effect-8 li.animate {
+    transform-style: preserve-3d;
+    transform: scale(.4);
+    animation: galleryPopUp .8s ease-in forwards;
+}
+
+@keyframes galleryPopUp {
+    70% { transform: scale(1.1); opacity: .8; animation-timing-function: ease-out; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.gallery-grid-demo__empty {
+    min-height: 60svh;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+    text-align: center;
+}
+

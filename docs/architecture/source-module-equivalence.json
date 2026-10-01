@@ -118,7 +118,7 @@
       "originalSourceSha256": "adb5ca529a52f74b92f9becc7d12beecccee53ad9aee649e05d46522510a05db"
     },
     "resources/css/pages/welcome-hero.css": {
-      "sourceSha256": "f6b8463d01645987256b2dad5ab4d96968d772bb962f88118cb640504b139df7",
+      "sourceSha256": "7f073f1c748275b0ab4a215b29718a07f579c04cbc055400cd784187785e2ade",
       "orderedModules": [
         {
           "path": "./welcome-hero/001-homepage-hero-and-overlay-navigation-this-file-inten.css",
@@ -127,13 +127,13 @@
         },
         {
           "path": "./welcome-hero/002-welcome-hero-cascade-002.css",
-          "lines": 176,
-          "sha256": "101831f1420aeca081973fa02df16cca896e153ac8aaa86e61583a3f1893b10e"
+          "lines": 113,
+          "sha256": "bd49518247cf5702dedd05db219cbfa1ca508711e1719e1d264b33809cb21049"
         },
         {
           "path": "./welcome-hero/003-welcome-hero-cascade-003.css",
-          "lines": 182,
-          "sha256": "58ad8b49fb594410d2dd351445ad2f81b7f0863bbb0684c30c82998ca4bf5630"
+          "lines": 81,
+          "sha256": "7cbd1db76ef1f3296776e55b4093dbfce268069d5d56901e22c73c857832a594"
         },
         {
           "path": "./welcome-hero/004-full-viewport-mixed-media-hero.css",
@@ -142,34 +142,34 @@
         },
         {
           "path": "./welcome-hero/005-welcome-hero-cascade-005.css",
-          "lines": 130,
-          "sha256": "113e77b32c941217f7f86ffbbb6b75d6c86c6c1707b8fbba6c03ad5d2afa37f6"
+          "lines": 136,
+          "sha256": "17ef4265cd6b8d61f5fc50117ab2dcde9332790a1bfb3320da2d2f72637e36f2"
         },
         {
           "path": "./welcome-hero/006-welcome-hero-cascade-006.css",
-          "lines": 62,
-          "sha256": "2a62e124c9ccc74c14930fd2a5966a1bd00851495a17cd33b28e9f092f11e783"
+          "lines": 29,
+          "sha256": "d711530b64d6dc83eaff96478ae3322c96e980128dc3cef154925580df3aa02a"
         },
         {
           "path": "./welcome-hero/008-welcome-hero-cascade-008.css",
-          "lines": 167,
-          "sha256": "93d3008578aeb75644aa2eec1450a72e1aca273ec5e880a76b01d282b3277e87"
+          "lines": 124,
+          "sha256": "e964f15545a5b5648d9885a1740c04cd71c3fc3955f12c2087c691edce593abc"
         },
         {
           "path": "./welcome-hero/009-welcome-hero-cascade-009.css",
-          "lines": 167,
-          "sha256": "195640fad169721de74a9705197cfb9105641f2327caf28e190761a489a90f7a"
+          "lines": 190,
+          "sha256": "81bbd0534c78294454c0b12cf077b3a0855e093bfaeffff5c1511f43e9324f63"
         }
       ],
       "originalSourceSha256": "3d234ec54fb0583b504a57c3693db235e5cd7d7a839c638371965f6f957b100a"
     },
     "resources/css/pages/welcome-mega-menu.css": {
-      "sourceSha256": "9f8672c430a52b07ca299301c4d8d83ac21bcbc372a199ad5dacd6d19bb31a41",
+      "sourceSha256": "8be7918686ad1558cc44318515da11d0975370bb77ee4511d6235b7da1b02838",
       "orderedModules": [
         {
           "path": "./welcome-mega-menu/001-homepage-mega-navigation-polish-desktop-full-width-u.css",
-          "lines": 177,
-          "sha256": "63f92e2bb0750997758e495a09dfede9f0288020d8291dc5f602f9074bb5bdff"
+          "lines": 175,
+          "sha256": "89392d5f975052b873141333fd11475c9060709431cc22e09de942c5ee5823e6"
         },
         {
           "path": "./welcome-mega-menu/002-welcome-mega-menu-cascade-002.css",
@@ -185,32 +185,27 @@
       "originalSourceSha256": "cd273206685efc7db07abebe2f24a5fc65469ff8c431200949bdc86addcec0fa"
     },
     "resources/css/pages/welcome.css": {
-      "sourceSha256": "d4b01d22f0f968891469c4b0a35d6f11e969dbadc465182fc630fc73bf798dcd",
+      "sourceSha256": "ddf394729d200f6103b5446a78aed951a1ab5d1558513852e156f97340bff7f4",
       "orderedModules": [
-        {
-          "path": "./welcome/001-sekolah-ceria-nusantara-stylesheet-struktur-file-1-r.css",
-          "lines": 190,
-          "sha256": "1ea540d9858ad779aad84f88825c73f5854174296fb191425318f89408fcb5d9"
-        },
         {
           "path": "./welcome/002-tombol.css",
           "lines": 182,
           "sha256": "da6cc92d1d555219eb2b1cbfc86066b8b1a8b6d97c37ece3eda4df7b17a3ba1e"
         },
         {
-          "path": "./welcome/003-8-quick-info.css",
-          "lines": 173,
-          "sha256": "bcbdd0f4692301f0ed674a58fb3d45f14a77b27c3aacb75d232c53db6f5ae01d"
-        },
-        {
-          "path": "./welcome/004-11-nilai-sekolah.css",
-          "lines": 156,
-          "sha256": "b1d92dd5488e35e107fc4179e595656653232cf30037c90416b69b51bc3f297d"
-        },
-        {
           "path": "./welcome/005-19-footer.css",
-          "lines": 164,
-          "sha256": "1ce6039f7c977e674877d9ae6caf608d4a2d5b867e9eb09691953c1d6af85c19"
+          "lines": 142,
+          "sha256": "d3b9cdc59ed81f7b91f47951191300b16726a78c7146913ebf968c4409b06d80"
+        },
+        {
+          "path": "../core/reveal.css",
+          "lines": 12,
+          "sha256": "514cb36cbcbbc088c9925624d7730d8c5b034a5e5bf1e68372556ac6cc406469"
+        },
+        {
+          "path": "../core/media/lazy-media.css",
+          "lines": 11,
+          "sha256": "5d7508fddad3b7546416a714898dca445a4543919a47cdac6012c4dd7687656a"
         },
         {
           "path": "./welcome/006-23-aksesibilitas.css",
@@ -218,114 +213,9 @@
           "sha256": "5c7616f6d315f44c5f3b10212782f35072574946d599c7cb7ae5d4a128c8d5d2"
         },
         {
-          "path": "./welcome/007-welcome-cascade-007.css",
-          "lines": 1,
-          "sha256": "55d5864ed6ca951f299ad38c28a56ed10da7e6fe7375b983fdced15961ed765f"
-        },
-        {
-          "path": "./welcome/008-welcome-cascade-008.css",
-          "lines": 1,
-          "sha256": "91a3716c76d8017fcd82cbe2b4ef1e13199ede62b823fc53f4623cf3609326bd"
-        },
-        {
-          "path": "./welcome/009-welcome-cascade-009.css",
-          "lines": 112,
-          "sha256": "cfe4ea13c247f33bebad7c026d6ac7307b05b86d8df7c0b9bdf163c869e62042"
-        },
-        {
-          "path": "./welcome/010-welcome-cascade-010.css",
-          "lines": 187,
-          "sha256": "1655db8adac9d166bcf3b83a15d2d2384d3abddf659db2cc50fca0b71dc9bf23"
-        },
-        {
-          "path": "./welcome/011-welcome-cascade-011.css",
-          "lines": 173,
-          "sha256": "e63a278dea826d0ef704da524a094299b36d056c555c1f423146be96543c2e62"
-        },
-        {
-          "path": "./welcome/012-welcome-cascade-012.css",
-          "lines": 179,
-          "sha256": "0ce7dbee084834b56169d863c1bd7cc23439d8e3ceac747b6b463e1f08ddd8bc"
-        },
-        {
-          "path": "./welcome/013-welcome-cascade-013.css",
-          "lines": 174,
-          "sha256": "f10c17ac004a537d187f876ffbbd59d77fe36d1256f9e666d0c9e4fe19d0defe"
-        },
-        {
-          "path": "./welcome/014-gallery-teaser-data-ready-local.css",
-          "lines": 180,
-          "sha256": "43da17c30905e6036e09ddd1e1b58d249d4a6f8494c52e299ed0041aaa929932"
-        },
-        {
-          "path": "./welcome/015-premium-compact-gallery-buffer-like-centered-header.css",
-          "lines": 185,
-          "sha256": "aad9d05f9468c042219c36a0e3247208235f0763d2e5a48ce7a6b7c9f4355b6d"
-        },
-        {
-          "path": "./welcome/016-edit-di-sini-jarak-antara-teks-kiri-dan-gambar-kanan.css",
-          "lines": 189,
-          "sha256": "0d3e8f039202f0bb8f37735d04e3460c23a9acbbb841078e2edc1f9b34291cf0"
-        },
-        {
-          "path": "./welcome/017-edit-di-sini-mobile-jangan-geser-gambar-di-tablet-hp.css",
-          "lines": 152,
-          "sha256": "0ed8a6c26716e2456bf12bda116bf47bde1b3f3efcd3b8015ce17122044aa24a"
-        },
-        {
-          "path": "./welcome/018-editorial-article-layout-featured-story-compact-side.css",
-          "lines": 186,
-          "sha256": "9e7b358af7b048302a0c49409e8d5a8395657a8f2346023cd976aadea2bc0401"
-        },
-        {
-          "path": "./welcome/019-welcome-cascade-019.css",
-          "lines": 188,
-          "sha256": "a525477055d84cab1328e9d18af21dbfad58f833e32f364e2792723558483bc5"
-        },
-        {
-          "path": "./welcome/020-kartu-program-dipindah-ke-kiri-spotlight-besar-ke-ka.css",
-          "lines": 185,
-          "sha256": "f668302ca1227be199f188b81359a6c27812b1770c6b09aa3db0d07b8e7f3f4a"
-        },
-        {
-          "path": "./welcome/021-footer-putih-mitra-kami-logo-dijaga-proporsinya-heig.css",
-          "lines": 182,
-          "sha256": "1a9e8c4d1564d3c0a507976eb20d37ef3829a2a6fe51c626e8e75f604ec3fac4"
-        },
-        {
-          "path": "./welcome/022-welcome-cascade-022.css",
-          "lines": 181,
-          "sha256": "d3dd49353e36e9ee66101e640fea324b241466459f7499174d63ccb4f82b611a"
-        },
-        {
-          "path": "./welcome/023-footer-model-screenshot-putih-kolom-rapi-galeri-hany.css",
-          "lines": 179,
-          "sha256": "e74b3080818f06dd3c834de91081ce64035039fee707a5b9843fb47c0ccd3f59"
-        },
-        {
-          "path": "./welcome/024-welcome-cascade-024.css",
-          "lines": 185,
-          "sha256": "c92f853d166fa569480035a64efd9eddf7614b413aaf1a9585356e7b266b66e9"
-        },
-        {
-          "path": "./welcome/025-footer-kontak-ringkas-lokasi-klik-ke-google-maps-det.css",
-          "lines": 186,
-          "sha256": "023592e39d60a4d7260c6d51ef56aa7d2c13a0a935764451b091fdd01f93b5a2"
-        },
-        {
-          "path": "./welcome/026-wa-ig-fb-email-jadi-satu-ui-seragam-berbasis-inline.css",
-          "lines": 179,
-          "sha256": "d71b36490a8465b15fd1f8529a06bce12529f2e7e3d5b0a2f49ac05cb2759ab5"
-        },
-        {
-          "path": "./welcome/027-channel-footer-pakai-asset-lokal-public-lazy-img-aga.css",
-          "lines": 183,
-          "sha256": "9f5d71e7618bb8f346ef4c92145112e53f4dafeb8bae1c5b365c6244fd5238fb"
-        },
-        {
-          "path": "./welcome/028-urutan-footer-logo-sekolah-media-sosial-halaman-kami.css",
-          "lines": 162,
-          "sha256": "ccef90a90d72561b7cf51dfa7b3ebb4d8f6ef4e7fe366efc93299d463aa9d9ef"
+          "path": "../chrome/site-footer.css",
+          "lines": 8,
+          "sha256": "e2a3a147ec8ccc05cd96a7ea76ef6669b73543e1b01b65d03682a10f503bbd8d"
         },
         {
           "path": "./welcome/029-switch-bahasa-server-side-session-cookie-tetap-aktif.css",
@@ -359,58 +249,8 @@
         },
         {
           "path": "./welcome/035-welcome-cascade-035.css",
-          "lines": 189,
-          "sha256": "19ed04eb67430db0669dfd035c82cf5fa2ff8dbd4dc04b457fdf29e6af9e329f"
-        },
-        {
-          "path": "./welcome/036-welcome-cascade-036.css",
-          "lines": 171,
-          "sha256": "44f40be2934d80ada89f5006bd401f58bd41c8e868e2b4b5580745d7413ef615"
-        },
-        {
-          "path": "./welcome/037-welcome-cascade-037.css",
-          "lines": 189,
-          "sha256": "46504a646fad1b5bb0076a006771bf1264a3ebb77549f2536d6d1eded90aa844"
-        },
-        {
-          "path": "./welcome/038-welcome-cascade-038.css",
-          "lines": 183,
-          "sha256": "ed2b55e8edd02294f79752b93b02659d80083a7886535041c352b831afb74aab"
-        },
-        {
-          "path": "./welcome/039-welcome-cascade-039.css",
-          "lines": 185,
-          "sha256": "a716b444421a43f6924ed40d596eed2480e00bfd38b7f7e32578fa953ca3851d"
-        },
-        {
-          "path": "./welcome/040-welcome-cascade-040.css",
-          "lines": 176,
-          "sha256": "0b54193de0992d6cf42dec74548ef63d4dc6da306e9e20f08c2acbbd81fc1308"
-        },
-        {
-          "path": "./welcome/041-welcome-cascade-041.css",
-          "lines": 181,
-          "sha256": "1f34f18d0a4a1f54e0b8158587c71349ab92ee979214945b18e1cc8ef416355c"
-        },
-        {
-          "path": "./welcome/042-welcome-cascade-042.css",
-          "lines": 186,
-          "sha256": "ccb1972f5a7e90ef8622696eeb342ed75f2c6ea26440c3969b2849fbb0eeac42"
-        },
-        {
-          "path": "./welcome/043-welcome-cascade-043.css",
-          "lines": 182,
-          "sha256": "8b5d96ea3355d38ba4ebc6d5e01c2ad83da0e41c42814fde481a46295e172e18"
-        },
-        {
-          "path": "./welcome/043-gallery-page-sections.css",
-          "lines": 105,
-          "sha256": "264493e9ca6780da30c6577c33bae4a658693e43c5f1e1c6e412f5f4c2c0ba8b"
-        },
-        {
-          "path": "./welcome/044-scoped-typography-rhythm-only-do-not-touch-gallery-s.css",
-          "lines": 184,
-          "sha256": "7542f9c6c37d5ec949d07c34bad497912cf2c287969e99639f43a40c8c96a133"
+          "lines": 129,
+          "sha256": "68227d8f0a1061d96fdb95736b693a10188d5110b1a903f857496248b8ff10a0"
         },
         {
           "path": "./welcome/045-halaman-artikel-clean-editorial-grid-3-2-1-gambar-ko.css",
@@ -418,14 +258,9 @@
           "sha256": "33659c50a6361319c5b1539c8504158cce57b6022e23e74d967e317783da716a"
         },
         {
-          "path": "./welcome/046-social-video-covers-provider-identity-without-loadin.css",
-          "lines": 189,
-          "sha256": "23a67497c99b146f44a8608fb626fa57351aa01cd327fb857a33d2ff94835762"
-        },
-        {
-          "path": "./welcome/047-welcome-cascade-047.css",
-          "lines": 24,
-          "sha256": "e7308a01c84ce7969314f9951d674abc35f277b874ab4aa3607d0da1eca8cd7d"
+          "path": "./welcome/048-custom-cursor.css",
+          "lines": 107,
+          "sha256": "b970c29cd0abfa5e0bb5ac0434c1dc7a45a45a038f1f6e1da624ba64f76ea5bd"
         }
       ],
       "originalSourceSha256": "dff73225f718b861c3c331303b1e97bf82796d444d88d2ab4323364cafbf54ed"

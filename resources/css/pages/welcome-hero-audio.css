@@ -1,0 +1,135 @@
+.home-page .nav-hero-audio__text {
+    border: 0;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+}
+
+.home-page .nav-hero-audio__label--on { display: none; }
+
+.home-page .nav-hero-audio__text[aria-pressed="true"] .nav-hero-audio__label--off {
+    display: none;
+}
+
+.home-page .nav-hero-audio__text[aria-pressed="true"] .nav-hero-audio__label--on {
+    display: inline;
+}
+
+.home-page .navbar__mobile-actions {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-inline-start: auto;
+}
+
+.home-page .navbar__hero-audio-icon {
+    position: relative;
+    z-index: calc(var(--hero-layer-header) + 2);
+    display: none;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 0.5);
+    border-radius: 999px;
+    color: inherit;
+    background: rgb(255 255 255 / 0.08);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition:
+        color 180ms ease,
+        background-color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+}
+
+.home-page .navbar__hero-audio-icon:hover,
+.home-page .navbar__hero-audio-icon:focus-visible {
+    border-color: rgb(255 255 255 / 0.9);
+    background: rgb(255 255 255 / 0.16);
+    transform: scale(1.05);
+}
+
+.home-page .navbar__hero-audio-icon:focus-visible {
+    outline: 3px solid #ffd166;
+    outline-offset: 3px;
+}
+
+.home-page .navbar.is-scrolled .navbar__hero-audio-icon,
+.home-page .navbar.has-open-menu .navbar__hero-audio-icon {
+    border-color: rgb(23 79 66 / 0.14);
+    background: #fff8ec;
+}
+
+.home-page .navbar__hero-audio-icon[aria-pressed="true"] {
+    border-color: rgb(247 178 75 / 0.88);
+    background: rgb(247 178 75 / 0.2);
+}
+
+.home-page .navbar__hero-audio-glyph {
+    width: 29px;
+    height: 20px;
+    overflow: visible;
+}
+
+.home-page .navbar__hero-audio-line,
+.home-page .navbar__hero-audio-snake {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    transition: opacity 160ms ease;
+}
+
+.home-page .navbar__hero-audio-line { opacity: 1; }
+.home-page .navbar__hero-audio-snake { opacity: 0; }
+
+.home-page .navbar__hero-audio-icon[aria-pressed="true"] .navbar__hero-audio-line {
+    opacity: 0;
+}
+
+.home-page .navbar__hero-audio-icon[aria-pressed="true"] .navbar__hero-audio-snake {
+    opacity: 1;
+}
+
+@media (max-width: 1180px) {
+    .home-page .nav-hero-audio--desktop { display: none; }
+
+    .home-page .navbar__mobile-actions { display: flex; }
+
+    .home-page .navbar__hero-audio-icon { display: grid; }
+}
+
+@media (max-width: 767px) {
+    .home-page .hero-cinema__eyebrow-link {
+        font-size: 0.76rem;
+        letter-spacing: 0.14em;
+    }
+
+    .home-page .hero-cinema__cta--campaign {
+        margin-block-start: 14px;
+    }
+}
+
+@media (min-width: 1181px) {
+    .home-page .navbar__mobile-actions { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .hero-cinema__media img,
+    .home-page .hero-cinema__media video {
+        filter: none !important;
+    }
+
+    .home-page .hero-cinema__eyebrow-link,
+    .home-page .hero-cinema__description-link,
+    .home-page .navbar__hero-audio-icon,
+    .home-page .navbar__hero-audio-line,
+    .home-page .navbar__hero-audio-snake {
+        transition: none;
+    }
+}

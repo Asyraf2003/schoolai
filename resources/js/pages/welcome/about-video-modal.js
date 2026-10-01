@@ -1,131 +1,6 @@
-const VIDEO_LABELS = Object.freeze({
-    id: {
-        play: 'Putar video',
-        pause: 'Jeda video',
-        mute: 'Bisukan video',
-        unmute: 'Aktifkan suara',
-        timeline: 'Linimasa video',
-        volume: 'Volume video',
-        enterFullscreen: 'Layar penuh',
-        exitFullscreen: 'Keluar dari layar penuh',
-    },
-    ar: {
-        play: 'تشغيل الفيديو',
-        pause: 'إيقاف الفيديو مؤقتًا',
-        mute: 'كتم صوت الفيديو',
-        unmute: 'تشغيل صوت الفيديو',
-        timeline: 'المخطط الزمني للفيديو',
-        volume: 'مستوى صوت الفيديو',
-        enterFullscreen: 'ملء الشاشة',
-        exitFullscreen: 'الخروج من ملء الشاشة',
-    },
-    en: {
-        play: 'Play video',
-        pause: 'Pause video',
-        mute: 'Mute video',
-        unmute: 'Unmute video',
-        timeline: 'Video timeline',
-        volume: 'Video volume',
-        enterFullscreen: 'Enter fullscreen',
-        exitFullscreen: 'Exit fullscreen',
-    },
-});
-
-function safePlay(video) {
-    const attempt = video.play();
-    if (attempt && typeof attempt.catch === 'function') {
-        attempt.catch(() => {});
-    }
-}
-
-function formatTime(seconds) {
-    if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
-
-    const wholeSeconds = Math.floor(seconds);
-    const minutes = Math.floor(wholeSeconds / 60);
-    const remainder = wholeSeconds % 60;
-
-    return `${minutes}:${String(remainder).padStart(2, '0')}`;
-}
-
-function activeFullscreenElement() {
-    return document.fullscreenElement ?? document.webkitFullscreenElement ?? null;
-}
-
-function initVisionVideoPreviews() {
-    const previews = Array.from(document.querySelectorAll('[data-vision-video-preview]'));
-    const activePreviews = new Set();
-    if (!previews.length) return { pause: () => {}, resume: () => {} };
-
-    function hydrate(preview) {
-        if (preview.dataset.visionVideoHydrated === 'true') return;
-        const source = preview.dataset.visionVideoSrc || '';
-        if (!source) return;
-
-        preview.dataset.visionVideoHydrated = 'true';
-        preview.muted = true;
-        preview.defaultMuted = true;
-        preview.loop = true;
-        preview.playsInline = true;
-        preview.src = source;
-        preview.load();
-    }
-
-    function play(preview) {
-        hydrate(preview);
-        if (!document.hidden) safePlay(preview);
-    }
-
-    previews.forEach((preview) => {
-        preview.addEventListener('loadeddata', () => {
-            preview.classList.add('is-ready');
-        }, { once: true });
-    });
-
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                const preview = entry.target;
-                if (entry.isIntersecting) {
-                    activePreviews.add(preview);
-                    play(preview);
-                } else {
-                    activePreviews.delete(preview);
-                    preview.pause();
-                }
-            });
-        }, {
-            rootMargin: '180px 0px',
-            threshold: 0.01,
-        });
-
-        previews.forEach((preview) => observer.observe(preview));
-    } else {
-        previews.forEach((preview) => {
-            activePreviews.add(preview);
-            play(preview);
-        });
-    }
-
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            previews.forEach((preview) => preview.pause());
-            return;
-        }
-
-        activePreviews.forEach(play);
-    });
-
-    return {
-        pause() {
-            previews.forEach((preview) => preview.pause());
-        },
-        resume() {
-            activePreviews.forEach(play);
-        },
-    };
-}
-
+import { VIDEO_LABELS, safePlay, syncVideoTimeline } from './video-utilities.js';
+import { initVisionVideoPreviews } from './video-previews.js';
+import { createVideoFullscreenController } from './video-fullscreen.js';
 export function initAboutVideoModal() {
     const triggers = Array.from(document.querySelectorAll('[data-vision-video-open]'));
     const modal = document.querySelector('[data-about-video-modal]');
@@ -180,9 +55,8 @@ export function initAboutVideoModal() {
         updateTimeline();
     }
 
-    function isShellFullscreen() {
-        return activeFullscreenElement() === shell;
-    }
+    const { isShellFullscreen, updateFullscreenState, toggleFullscreen, exitFullscreen } =
+        createVideoFullscreenController(shell, fullscreenButton, labels);
 
     function updatePlaybackState() {
         const paused = player.paused || player.ended;
@@ -197,21 +71,7 @@ export function initAboutVideoModal() {
     }
 
     function updateTimeline() {
-        const duration = Number.isFinite(player.duration) ? player.duration : 0;
-        const current = Number.isFinite(player.currentTime) ? player.currentTime : 0;
-        const progress = duration > 0 ? Math.round((current / duration) * 1000) : 0;
-
-        seek.value = String(Math.min(1000, Math.max(0, progress)));
-        currentTimeLabel.textContent = formatTime(current);
-        durationLabel.textContent = formatTime(duration);
-    }
-
-    function updateFullscreenState() {
-        fullscreenButton.setAttribute(
-            'aria-label',
-            isShellFullscreen() ? labels.exitFullscreen : labels.enterFullscreen,
-        );
-        shell.classList.toggle('is-fullscreen', isShellFullscreen());
+        syncVideoTimeline(player, seek, currentTimeLabel, durationLabel);
     }
 
     function togglePlayback() {
@@ -236,39 +96,6 @@ export function initAboutVideoModal() {
         }
 
         updateMuteState();
-    }
-
-    function requestShellFullscreen() {
-        const request = shell.requestFullscreen ?? shell.webkitRequestFullscreen;
-        if (typeof request !== 'function') return;
-
-        const attempt = request.call(shell);
-        if (attempt && typeof attempt.catch === 'function') {
-            attempt.catch(() => {});
-        }
-    }
-
-    function exitFullscreen() {
-        const exit = document.exitFullscreen ?? document.webkitExitFullscreen;
-        if (typeof exit !== 'function') return null;
-
-        try {
-            return exit.call(document);
-        } catch {
-            return null;
-        }
-    }
-
-    function toggleFullscreen() {
-        if (isShellFullscreen()) {
-            const attempt = exitFullscreen();
-            if (attempt && typeof attempt.catch === 'function') {
-                attempt.catch(() => {});
-            }
-            return;
-        }
-
-        requestShellFullscreen();
     }
 
     async function closeModal() {

@@ -143,7 +143,7 @@ it('keeps responsive values motion scroll-deterministic and tilt-bounded', funct
     $layout = file_get_contents(resource_path('js/surfaces/home/values/layout.js'));
     $geometry = file_get_contents(resource_path('js/surfaces/home/values/geometry.js'));
     $responsive = file_get_contents(resource_path('css/surfaces/home/values/story-responsive.css'));
-    $paint = file_get_contents(resource_path('js/surfaces/home/values/paint.js'));
+    $paint = readOwnedSource(resource_path('js/surfaces/home/values/paint.js'), ['resources/js/surfaces/home/values/paint-color.js']);
 
     expect($controller)
         ->toContain('geometry.mode < 4 || !active')

@@ -1,0 +1,67 @@
+.auth-login__home:focus-visible,
+.auth-login__menu-button:focus-visible,
+.auth-login__google:focus-visible,
+.auth-login__switch:focus-visible,
+.auth-login__form input:focus-visible,
+.auth-login__form button:focus-visible,
+.auth-perspective__nav a:focus-visible {
+    outline: 3px solid rgb(49 84 76 / 35%);
+    outline-offset: 4px;
+}
+
+html[dir="rtl"] .auth-login__home {
+    right: clamp(20px, 4vw, 64px);
+    left: auto;
+}
+
+html[dir="rtl"] .auth-login__panel {
+    text-align: right;
+}
+
+html[dir="rtl"] .auth-perspective__nav.outer-nav.left {
+    right: 25%;
+    left: auto;
+}
+
+html[dir="rtl"] .effect-airbnb.animate .auth-perspective__container {
+    transform: translateZ(-1500px) translateX(-100%) rotateY(45deg);
+}
+
+html[dir="rtl"] .auth-perspective__nav a {
+    transform: translateX(150px);
+}
+
+html[dir="rtl"] .effect-airbnb.animate .auth-perspective__nav a {
+    transform: translateX(0);
+}
+
+@media (max-width: 700px) {
+    .auth-login {
+        place-items: end start;
+        padding: 112px 24px 48px;
+    }
+
+    .auth-login__panel h1 {
+        font-size: clamp(2.5rem, 13vw, 4.8rem);
+    }
+
+    .auth-perspective__nav.outer-nav {
+        font-size: clamp(1.2rem, 5vw, 1.75rem);
+    }
+
+    .auth-perspective__nav.outer-nav.left {
+        left: 12%;
+    }
+
+    html[dir="rtl"] .auth-perspective__nav.outer-nav.left {
+        right: 12%;
+        left: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-perspective__container,
+    .auth-perspective__nav a {
+        transition-duration: .01ms !important;
+    }
+}

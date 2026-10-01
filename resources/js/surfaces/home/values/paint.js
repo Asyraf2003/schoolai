@@ -1,3 +1,4 @@
+import { bridgeColor, kineticOpacity, worldOpacity } from './paint-color.js';
 import { exitAmount } from './desktop-keyframes.js';
 import { cardFrame, storyFrame } from './layout.js';
 
@@ -21,27 +22,6 @@ const WORLD_PROPERTIES = [
     '--values-gallery-world-opacity-pct',
 ];
 
-const VALUES_BLUE = [32, 56, 255];
-const GALLERY_GREEN = [111, 155, 114];
-
-function clamp(value) {
-    return Math.max(0, Math.min(1, value));
-}
-
-function smoothstep(value) {
-    const progress = clamp(value);
-    return progress * progress * (3 - 2 * progress);
-}
-
-function bridgeColor(progress) {
-    const amount = smoothstep(progress);
-    const channels = VALUES_BLUE.map((channel, index) => Math.round(
-        channel + ((GALLERY_GREEN[index] - channel) * amount),
-    ));
-
-    return `rgb(${channels.join(' ')})`;
-}
-
 function valuesWorldRoot(root, nodes) {
     const siblingWorld = nodes.programRoot?.parentElement;
     if (siblingWorld?.matches('[data-program-values-world]')) {
@@ -49,14 +29,6 @@ function valuesWorldRoot(root, nodes) {
     }
 
     return root.closest('[data-program-values-world]');
-}
-
-function kineticOpacity(cardExitProgress) {
-    return 1 - smoothstep(cardExitProgress / 0.16);
-}
-
-function worldOpacity(cardExitProgress) {
-    return 1 - smoothstep(cardExitProgress / 0.06);
 }
 
 function writeCardFrame(card, state) {

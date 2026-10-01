@@ -1,12 +1,49 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HARDENING_ACTIVE / H7_G0_PASS / H7_RUNTIME_NOT_STARTED`
-Updated: 2026-08-29
+Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`
+Updated: 2026-10-01
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Inspected runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
 
 Durable references:
+
+- current execution map: `handoffs/2026-10-01-home-runtime-execution-map.md`;
+- current accepted runtime blueprint: `blueprints/2026-10-01-home-runtime-preparation.md`.
+
+## Current execution authority — 2026-10-01
+
+The owner has authorized homepage runtime refactoring through verified Issue,
+branch, PR and merge to `Asyraf2003/schoolai` main. The owner separately approved
+baseline structure repair outside homepage (including reported admin/auth owners).
+This current scope supersedes historical NEXT/stop instructions below.
+
+Fresh fetched main is `ebdc0db5df9ca18df719c0d80269cfe7a000096a`.
+Full SQLite suite PASS: 304 tests / 3,487 assertions. Focused homepage regression
+PASS: 45 tests / 1,013 assertions. Build PASS: 133 modules, deferred 549.47 kB
+spatial chunk warning retained. Diff PASS. Structure FAIL: 52 findings (19 line
+limits, 29 unreferenced CSS files, three checksums and one import-order finding).
+Historical G0 PASS is checkpoint evidence and does not certify current source.
+
+Current source/runtime confirms interaction-driven Opening video hydration,
+five-state cursor emotion/shake machinery, and coordinator promises that do not
+wait for Vision assets/timeline or Program GSAP readiness. Current rendered
+Testimonials/Articles and three Vision video previews supersede old disabled/
+static-cover descriptions. No source runtime has changed in this audit.
+
+Work follows the linked map; publication never substitutes for runtime proof.
+MAP-00 read-only audit is CLOSED: three local Chromium 1440×900 runs reproduce
+Hero hydration plus three Vision requests after first scroll. Two runs show
+coordinator complete before Vision/Program enhancement readiness. Local FCP
+median 816ms / worst 2,388ms; no production/decode/GPU/CWV claim.
+MAP-00A CLOSED: structure PASS (592 files ≤200 lines), full PHP PASS
+304 / 3,487, build PASS (142 modules), Pint/diff PASS. All 29 emitted CSS
+entries are byte-identical to the original baseline. Dead CSS removal ledger:
+`handoffs/2026-10-01-baseline-owner-audit.md`. Node fullscreen behavior test and
+Chromium modal/bootstrap smoke PASS with zero runtime exceptions. The lost
+locale-label closure found by smoke was repaired before publication.
+ACTIVE: publish verified MAP-00A (#46). NEXT CHANNEL: Terminal Codex.
+NEXT after verified merge/sync: MAP-01 cursor simplification.
 
 - hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
 - pre-Codex readiness: `handoffs/2026-08-23-pre-codex-readiness.md`

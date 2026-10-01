@@ -66,7 +66,7 @@ it('renders the fixed R2 video as an interaction-gated Opening slide when no Art
 
 it('keeps the desktop hero audio label on the shared navigation typography contract', function (): void {
     $header = file_get_contents(resource_path('views/partials/site-navbar/header.blade.php'));
-    $heroVisual = file_get_contents(resource_path('css/pages/welcome-hero-visual.css'));
+    $heroVisual = readOwnedSource(resource_path('css/pages/welcome-hero-visual.css'), ['resources/css/pages/welcome-hero-appearance.css', 'resources/css/pages/welcome-hero-audio.css']);
     $arabicTypography = file_get_contents(resource_path('css/arabic-typography.css'));
 
     expect($header)
