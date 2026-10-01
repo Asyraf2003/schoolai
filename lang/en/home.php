@@ -10,6 +10,8 @@ return [
         'skip_to_content' => 'Skip to main content',
     ],
 
+    'opening' => ['continue' => 'Continue to the page', 'preparing' => 'Preparing your experience'],
+
     'hero' => [
         'section_label' => 'Al Mustaqbal School Highlights',
         'carousel_roledescription' => 'carousel',

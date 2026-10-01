@@ -1,6 +1,6 @@
 <?php
 
-it('keeps a hero-gated sequential homepage preparation graph with a DOM owned gallery', function (): void {
+it('keeps five real opening units and a critical gate with a DOM owned gallery', function (): void {
     $preparation = file_get_contents(resource_path(
         'js/pages/welcome/preparation.js',
     ));
@@ -27,20 +27,23 @@ it('keeps a hero-gated sequential homepage preparation graph with a DOM owned ga
     $blade = file_get_contents(resource_path('views/welcome.blade.php'));
 
     expect($preparation)
-        ->toContain("'hero',\n  'vision',\n  'program',\n  'values',\n  'gallery',\n  'footer',")
+        ->toContain('HOME_PREPARATION_ORDER = REQUIRED_OPENING_UNITS')
+        ->toContain('createOpeningLedger')
+        ->toContain('prepareHeroActiveMedia')
+        ->toContain('await progress.complete()')
         ->toContain("const HERO_READY_EVENT = 'schoolai:hero-ready'")
         ->toContain('waiting-hero')
         ->toContain('window.addEventListener(HERO_READY_EVENT')
         ->toContain("import('../../surfaces/home/program-values-world.js')")
         ->toContain('prepareHomepageProgram')
-        ->toContain("import('../../surfaces/home/values/controller.js')")
+        ->toContain("import('../../surfaces/home/values/preparation.js')")
         ->toContain('prepareHomepageVisionStory')
         ->toContain('prepareHomepageDepthGallery')
         ->not->toContain("import('../../surfaces/home/article-story/controller.js')")
         ->toContain('for (const section of HOME_PREPARATION_ORDER)')
-        ->toContain('const work = preparationSteps[section]()')
-        ->toContain('scrollGate?.fallbackReady')
-        ->toContain('firstJourney.signal')
+        ->toContain('preparationSteps[section]()')
+        ->not->toContain("section === 'vision'")
+        ->toContain('preparationSignal.signal')
         ->toContain('await yieldToBrowser()')
         ->and($hero)
         ->toContain("import { armHeroReadySignal } from './welcome-hero/readiness.js'")
@@ -89,6 +92,7 @@ it('keeps a hero-gated sequential homepage preparation graph with a DOM owned ga
         ->not->toContain("'resources/js/pages/welcome-depth-gallery.js'")
         ->and($blade)
         ->toContain("'resources/css/pages/welcome-critical.css'")
+        ->toContain('home.partials.opening-bootstrap')
         ->toContain("app()->getLocale() === 'ar'")
         ->not->toContain("'resources/js/pages/welcome-vision-story.js'")
         ->not->toContain("'resources/js/pages/welcome-depth-gallery.js'")

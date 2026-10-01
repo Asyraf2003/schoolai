@@ -236,12 +236,15 @@ DoD: global task checklist satisfied; median/worst by workload and final main SH
 PROOF: source `efe558fe`; 108 Chromium boundary/locale/motion/zoom/orientation
 cases plus eight early-access/fallback/history cases PASS. Keyboard focus FAIL:
 flag capture opener blocks canonical opener, leaving saved focus null.
-STATUS: BLOCKED (owned runtime failure; MAP-06A repairs it before final resume).
+STATUS: IN_PROGRESS (MAP-06A CLOSED/merged #60; final proof resumed).
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 merged (#53). MAP-04 merged (#55); MAP-05 merged (#57); MAP-06 awaits the sole active MAP-06A prerequisite.
+MAP-00/00A/01/02/03/04/05 and MAP-06A are CLOSED and merged. MAP-06 runtime,
+trace and Lighthouse capture are complete; final certification remains FAIL.
 Exactly one execution channel: Terminal Codex.
+One NEXT: prepare a bounded accessible-name repair blueprint for the proven
+Hero title, navbar audio and Gallery/Article mega-toggle label owners.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
 ## MAP-01 FACT / GAP / DECISION / removal ledger
@@ -434,7 +437,7 @@ chooser appearance unchanged. Only redundant JS fallback is migrated/removed.
 PROOF: native keyboard failure at source `efe558fe` and rendered instrumentation
 recorded in `navigationDiscovery` of durable proof; no repository mutation during
 diagnosis. Native focus remains dialog after close; canonical open never executes.
-STATUS: CLOSED (proof PASS; publication #60 pending final-head CI/merge).
+STATUS: CLOSED (proof PASS; merged #60 after final-head CI PASS).
 
 MAP-06A bounded decision: turn the already rendered canonical behavior into an
 immediate guarded owner, delegate capture click after full navbar/modal markup,
@@ -474,3 +477,87 @@ and 60 rapid reduced-motion native keyboard cycles PASS. Node 40 (seven new),
 focused PHP 11/258, full 305/3,506, structure 597, build 147, Pint/diff PASS.
 Flag CSS SHA256 and byte-identical non-script markup retained in navigation
 proof. Publication is the only next step; final proof resumes after main sync.
+
+MAP-06 resume: fresh main `8c399a280b8cc5df1ae70c39aee8be72803f371c` after
+MAP-06A merged (#60). Source/readiness/motion are read-only. Terminal Codex only.
+Final source runs all 40 Node contracts and canonical gates, expanded boundary/
+locale/motion/early-action/lifecycle cases, three cold traces and Lighthouse.
+Restarted lab lost temporary traces and scripts; committed structured proof and
+hashes remain. Add three supplemental baseline traces from isolated original
+source `ebdc0db5`, same current browser/host/SQLite schema, before comparison.
+No dependency changes to repo; lab tools and baseline archive live only in /tmp.
+
+## MAP-06 final capture checkpoint — 2026-10-02
+
+FACT: fresh fetched main remains `8c399a280b8cc5df1ae70c39aee8be72803f371c`.
+Production owners are unchanged. Existing final browser proof has 238 cases;
+the six cold trace files validate against their SHA256s. Supplemental original
+baseline owners match the `ebdc0db5` archive; every Lighthouse run requests the
+same welcome asset hashes as the freshly rebuilt final manifest.
+EXECUTION/PROOF: diff PASS; structure 597 PASS; Vite 8.1.3 build 147 PASS;
+Node 40/40 PASS; full PHP 305/3506 PASS on PHP 8.5.4 and Node 24.21.0.
+Linux WSL2 x86_64, Ryzen AI 7 445, 12 logical CPUs, software graphics.
+
+Three no-throttle 1440x900/DPR1 cold Chromium 153.0.8010.12 runs per source,
+6s idle + scrollTo(0,400) + 1s: first-scroll requests 5 -> 0; first-scroll
+Layout median/worst 12.818/13.776 -> 3.508/3.549ms; FunctionCall
+44.087/80.785 -> 36.185/38.475ms. Overall FCP 644/1252 -> 284/304ms.
+Final media and all required readiness outcomes precede input, with zero errors.
+Overall RunTask worst increases 1270.530 -> 1349.069ms; pre-input playback is
+different. Do not add nested trace categories or attribute every change to savings.
+LCP changes from title to video/poster, 736/1376 -> 1264/1420ms; no equivalent
+LCP improvement or decode/GPU/physical-device claim is made.
+
+Lighthouse 13.5.0, three cold local production-mode ID runs per profile:
+
+| Metric (median / worst) | Mobile 390x844/DPR1.75 | Desktop 1350x940/DPR1 |
+|---|---:|---:|
+| Performance score | 78 / 77 | 86 / 86 |
+| Accessibility / Best Practices / SEO | 100 / 100 / 100 each run | 100 / 100 / 100 each run |
+| FCP ms | 3155.140 / 3155.243 | 647.294 / 648.873 |
+| LCP ms | 3608.572 / 3610.280 | 1373.090 / 1376.272 |
+| TBT ms | 24 / 31 | 0 / 0 |
+| CLS | 0.000314113 / 0.000314113 | 0 / 0 |
+| Speed Index ms | 6662.563 / 7938.963 | 5521.933 / 5576.690 |
+
+Mobile uses simulated 150ms RTT/1638.4Kbps/4x CPU; desktop 40ms/10240Kbps/1x.
+Raw fetch timestamps/settings/benchmark indexes, report hashes and transfer by
+type are retained in proof JSON. Local HTML is uncompressed, 185165 body bytes;
+the PHP development server is not production delivery. R2 video transfer during
+the audit is variable and includes active buffering; metadata is not a fixed cap.
+No deployment-to-deployment PageSpeed comparison or field CWV claim is made.
+
+GAP FINAL-PERF-001: target 100/100/100/100 FAIL. Mobile paint and both-profile
+Speed Index miss target; reports show blocking mega-menu CSS, unprioritized
+desktop LCP poster and media transfer. These are observations, not permission
+to defer early navigation styles or suppress automatic Hero playback.
+GAP FINAL-A11Y-001: experimental label-content-name-mismatch FAIL with weight
+zero despite scored accessibility 100. Live axe-core 4.13 reproduction:
+ID/EN 390 each one node; ID/EN 1440 each four; AR 390 zero; AR 1440 one.
+Root owners: Hero title uses campaign destination label instead of title text;
+navbar audio SSR/runtime replaces visible Off/On text with action labels;
+desktop/mobile mega toggles use editorial eyebrow labels instead of menu text.
+Read-only source tracing confirms the same ownership across all three locales.
+One-rule AR 390 result is not a manual or full accessibility PASS.
+
+DECISION: preserve source and accepted choreography; record failed gates before
+reopening owners. MAP-06 stays IN_PROGRESS, work FAIL; blueprint IMPLEMENTING.
+Physical Safari, deployed PSI, field p75 and complete decode/GPU attribution
+remain BLOCKED_BY_MISSING_EVIDENCE. Source is not changed to hide proof failures.
+PROGRESS: capture complete; task certification/publication closure remains open.
+NEXT CHANNEL: Terminal Codex.
+ONE NEXT: prepare a bounded accessible-name repair blueprint for FINAL-A11Y-001.
+Next packet audits Hero title, header/mobile mega markup, audio Opening/carousel
+label writers and their locale sources; CSS/type/copy/assets/business data remain
+read-only. Expected proof: visible labels included in accessible names, audio
+state consistency, ID/EN/AR at 390/1180/1181/1440 in Chromium/WebKit, no visual
+change, focused contracts and canonical gates. Performance is a separate step.
+
+## MAP-06B — accepted opening correction (2026-10-02)
+
+ACTIVE/IMPLEMENTING; status FAIL until correction gates pass. Owner accepted
+`../blueprints/2026-10-02-opening-experience-readiness.md` with mandatory earliest
+critical gate and bounded media warm-up. Issue#61, branch fix/home-opening-readiness.
+This entry supersedes all earlier final-certification/accessibility NEXT values.
+NEXT CHANNEL: Terminal Codex. ONE NEXT: implement/test/prove MAP-06B, then
+performance comparison→PR→CI→verified merge; keep global certification open.

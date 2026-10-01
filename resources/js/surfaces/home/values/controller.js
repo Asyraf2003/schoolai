@@ -191,10 +191,3 @@ export function createValuesStory(root) {
     }
     destroy.ready = ready; return destroy;
 }
-let preparation = null;
-export function prepareHomepageValues() {
-    if (preparation) return preparation;
-    const root = document.querySelector('[data-values-story]');
-    preparation = root ? createValuesStory(root).ready : Promise.resolve({ state: 'absent' });
-    return preparation;
-}

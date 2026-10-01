@@ -51,7 +51,7 @@ export async function prepareVisionAssets(root, signal, staticOnly) {
         if (!signal?.aborted) root.dataset.visionFontsReady = 'true';
     });
     const [media] = await Promise.all([
-        preview ? prepareVisionPreview(preview, { signal, staticOnly }) : image?.decode?.(),
+        preview ? prepareVisionPreview(preview, { signal, staticOnly: true }) : image?.decode?.(),
         fonts,
         styles,
     ]);

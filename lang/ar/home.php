@@ -10,6 +10,8 @@ return [
         'skip_to_content' => 'الانتقال مباشرة إلى المحتوى الرئيسي',
     ],
 
+    'opening' => ['continue' => 'متابعة إلى الصفحة', 'preparing' => 'جارٍ تجهيز التجربة'],
+
     'hero' => [
         'section_label' => 'أبرز ما في مدرسة المستقبل',
         'carousel_roledescription' => 'عارض شرائح',

@@ -1,6 +1,9 @@
 import { detailParts, hideDetails, showDetail } from './geometry.js';
 
+const mounted = new WeakMap();
+
 export function mountReduced(dom, integration) {
+  mounted.get(dom.root)?.();
   let activeIndex = -1;
   const open = (event) => {
     activeIndex = Number(event.currentTarget.dataset.programIndex);
@@ -27,11 +30,14 @@ export function mountReduced(dom, integration) {
   dom.triggers.forEach((trigger) => trigger.addEventListener('click', open));
   dom.backs.forEach((back) => back.addEventListener('click', close));
   document.addEventListener('keydown', keydown);
-  return () => {
+  const cleanup = () => {
     dom.triggers.forEach((trigger) => trigger.removeEventListener('click', open));
     dom.backs.forEach((back) => back.removeEventListener('click', close));
     document.removeEventListener('keydown', keydown);
     if (activeIndex >= 0) integration.unlock();
+    mounted.delete(dom.root);
   };
+  mounted.set(dom.root, cleanup);
+  return cleanup;
 }
 

@@ -1,0 +1,33 @@
+.home-opening {
+    position: fixed;
+    inset-block-end: max(1.5rem, env(safe-area-inset-bottom));
+    inset-inline: 0;
+    margin-inline: auto;
+    inline-size: min(22rem, calc(100% - 3rem));
+    color: #fff;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 3;
+}
+html[data-home-scroll-gate="locked"] .home-opening { visibility: visible; }
+.home-opening__status {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block-end: .5rem;
+}
+.home-opening__progress {
+    display: block;
+    appearance: none;
+    inline-size: 100%;
+    block-size: 3px;
+    border: 0;
+    border-radius: 0;
+    background: rgb(255 255 255 / 25%);
+    color: #fff;
+}
+.home-opening__progress::-webkit-progress-bar { background: rgb(255 255 255 / 25%); }
+.home-opening__progress::-webkit-progress-value { background: #fff; }
+.home-opening__progress::-moz-progress-bar { background: #fff; }
+.home-opening__exit { pointer-events: auto; color: inherit; display: inline-block; margin-block-start: .5rem; }
+.home-opening__exit[hidden] { display: none; }

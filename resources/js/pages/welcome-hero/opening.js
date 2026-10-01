@@ -12,6 +12,7 @@ export function initOpeningHero(root, slide) {
     var options = { signal: lifecycle.signal };
     var inViewport = true;
     var suspended = false;
+    var openingFallback = root.dataset.heroPreparationFallback === 'true';
     var observer = null;
     video.loop = true;
     video.setAttribute('loop', '');
@@ -45,7 +46,7 @@ export function initOpeningHero(root, slide) {
 
     function syncVideo() {
         video.muted = !audioEnabled;
-        if (root.dataset.heroMediaState === 'media-error' || document.hidden || suspended || !inViewport || (reducedMotion.matches && !audioEnabled)
+        if ((document.documentElement.dataset.homeScrollGate === 'locked' && !audioEnabled) || openingFallback || root.dataset.heroMediaState === 'media-error' || document.hidden || suspended || !inViewport || (reducedMotion.matches && !audioEnabled)
             || video.getAttribute('data-hydrated') !== 'true') {
             video.pause();
             return;
@@ -56,6 +57,7 @@ export function initOpeningHero(root, slide) {
                 if (lifecycle.signal.aborted || document.hidden || suspended || !inViewport) return;
                 if (root.dataset.heroMediaState !== 'media-error') {
                     root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
+                    video.dispatchEvent(new Event('schoolai:hero-media-state'));
                 }
                 slide.classList.add('has-video-playback-fallback');
             });
@@ -63,9 +65,10 @@ export function initOpeningHero(root, slide) {
     }
 
     function warmVideo() {
-        if (document.hidden || suspended || !inViewport) { video.pause(); return; }
+        if (openingFallback || document.hidden || suspended || !inViewport) { video.pause(); return; }
         if (reducedMotion.matches && !audioEnabled) {
             root.dataset.heroMediaState = 'static-reduced';
+            video.dispatchEvent(new Event('schoolai:hero-media-state'));
             video.pause();
             return;
         }
@@ -76,6 +79,7 @@ export function initOpeningHero(root, slide) {
     audioButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             audioEnabled = !audioEnabled;
+            if (audioEnabled) openingFallback = false;
             updateAudioButtons();
             hydrateVideo();
             if (video.error || root.dataset.heroMediaState === 'media-error') {
@@ -92,6 +96,7 @@ export function initOpeningHero(root, slide) {
             performance.mark('schoolai:hero-first-frame');
         }
         slide.classList.remove('has-video-playback-fallback');
+        if (document.documentElement.dataset.homeScrollGate === 'locked' && !audioEnabled) video.pause();
     }, options);
     video.addEventListener('playing', function () { root.dataset.heroMediaState = 'playing'; }, options);
     function mediaError() {
@@ -104,6 +109,17 @@ export function initOpeningHero(root, slide) {
         if (document.hidden) video.pause();
         else if (root.dataset.heroReady === 'true') warmVideo();
     }, options);
+    document.addEventListener('schoolai:hero-media-fallback', () => {
+        openingFallback = true;
+        video.pause();
+        if (video.getAttribute('data-hydrated') === 'true') {
+            video.querySelectorAll('source[src]').forEach(source => { source.setAttribute('data-src', source.src); source.removeAttribute('src'); });
+            video.removeAttribute('data-hydrated');
+            video.load();
+        }
+        root.dataset.heroMediaState = 'static-fallback';
+    }, options);
+    document.addEventListener('schoolai:first-journey-ready', warmVideo, options);
     reducedMotion.addEventListener('change', warmVideo, options);
     window.addEventListener('pagehide', function (event) {
         video.pause();

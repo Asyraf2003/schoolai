@@ -105,5 +105,7 @@
           </button>
         @endif
 
+        @include('home.partials.opening-progress')
+
         <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
       </section>

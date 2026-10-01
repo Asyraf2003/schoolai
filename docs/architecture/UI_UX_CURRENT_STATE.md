@@ -1,6 +1,6 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`
+Status: `HOME_RUNTIME_REFACTOR_ACTIVE / MAP_06B_IMPLEMENTING`
 Updated: 2026-10-02
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
@@ -10,6 +10,21 @@ Durable references:
 
 - current execution map: `handoffs/2026-10-01-home-runtime-execution-map.md`;
 - current accepted runtime blueprint: `blueprints/2026-10-01-home-runtime-preparation.md`.
+
+## Active owner correction — MAP-06B (2026-10-02)
+
+Owner accepted `blueprints/2026-10-02-opening-experience-readiness.md`, including
+mandatory pre-gate closure and startup media budget. This supersedes every
+historical accessibility/final-certification NEXT below. Issue #61, branch
+`fix/home-opening-readiness`, source main `8c399a280b8cc5df1ae70c39aee8be72803f371c`.
+One map, one Terminal Codex execution channel. Status FAIL; blueprint IMPLEMENTING.
+Read-only audit proved early input0→900 before deferred gate, Vision-only unlock,
+zero visible progress consumers and required post-unlock work. Immediate native
+first scroll saw3/4/8 requests. Fresh LH mobile69/50 desktop86/85 median/worst,
+transfer33.56/28.57MB; original baseline83/82 and97/97. Audit raw evidence is
+retained in the MAP-06B proof packet when corrected proof is captured.
+NEXT: implement/test/browser-prove this accepted map, then performance comparison,
+PR/CI/verified merge. Accessibility-label and global final certification deferred.
 
 ## Active publication checkpoint
 
@@ -40,8 +55,37 @@ controls, and Tab excludes hidden controls (actual WebKit/Chromium proof). CSS v
 MAP-06A source `fe0315eb` proof PASS: 54 Chromium/WebKit records plus 60 rapid
 keyboard cycles; Node 40, PHP 305/3,506, structure 597, build 147, Pint/diff PASS.
 All flag CSS/non-script markup are byte-identical to the prior main.
-Exactly one NEXT: Terminal Codex publishes verified MAP-06A PR #60 after final-head CI.
-Final MAP-06 resumes only after this prerequisite is verified/merged.
+MAP-06A merged after final-head CI PASS (#60): main
+`8c399a280b8cc5df1ae70c39aee8be72803f371c`, fetched and fast-forward synced.
+MAP-06 combined runtime proof PASS: 238 final Chromium/WebKit cases, with all
+WebKit cases repeated after restored TLS/media capability. Twelve local
+production-mode locale/360/1440 semantic-tree/screenshot cases preserve Hero
+composition; wide normal Vision prepared in both engines. Screenshot-tool-only
+CSP rejection is documented; application/CSP errors before screenshot are zero.
+MAP-06 performance capture is complete and validated against final build assets:
+three supplemental original-baseline traces, three final traces and three cold
+Lighthouse runs per mobile/desktop profile. All raw-trace hashes verified.
+First-scroll requests 5 -> 0 in every sample; first-scroll Layout median/worst
+12.818/13.776ms -> 3.508/3.549ms. FCP median/worst 644/1252ms -> 284/304ms.
+LCP candidates changed from title to full Hero video/poster, so the 736/1376ms
+-> 1264/1420ms measurements do not prove like-for-like LCP improvement.
+Lighthouse 13.5 local production-mode ID median/worst scores: mobile
+78/77, desktop 86/86; scored A/BP/SEO are 100 in all six runs. Mobile LCP
+median/worst 3608.572/3610.280ms; desktop 1373.090/1376.272ms. Performance
+target FAIL. Local uncompressed PHP/SQLite delivery is not deployed PSI proof.
+The zero-weight experimental label-content-name-mismatch audit FAILS despite
+the scored accessibility 100. Live axe-core 4.13 proof reproduces it in ID/EN
+at 390/1440 and AR at 1440. Proven owners: Hero title aria-label, navigation
+audio labels and Gallery/Article mega toggle labels. AR 390 has no reported
+violation in this one-rule audit; that is not full accessibility certification.
+Fresh automated gates PASS: diff, structure 597, build 147, Node 40 and PHP
+305 tests / 3506 assertions. The deferred 549.47 kB chunk warning remains.
+MAP-06 remains IN_PROGRESS; work status FAIL, blueprint IMPLEMENTING. Physical
+Safari, deployed PSI, field CWV and complete decode/GPU attribution remain
+BLOCKED_BY_MISSING_EVIDENCE. Durable evidence: proof JSON finalPerformance,
+finalAccessibilityDiscovery, finalVerification and finalClosure keys.
+Exactly one NEXT: Terminal Codex prepares the bounded accessible-name repair
+blueprint for these proven Hero/navigation owners before implementation.
 This map changes no production runtime/style/content unless new failure evidence
 requires reopening its proven owner; such evidence must be recorded first.
 

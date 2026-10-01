@@ -88,10 +88,16 @@ exact browser/profile/SHA/tool and unavailable gates truthfully.
 
 ## Ordered execution
 
-ACTIVE: publish CLOSED MAP-06A (#60) after green final-head CI; then sync main
-and resume MAP-06. Modal proof: 54 browser records plus 60 rapid keyboard cycles,
-40 executed Node contracts, 305 PHP tests / 3,506 assertions, all gates PASS.
-MAP-00/00A/01/02/03/04/05 are CLOSED; all mutation maps are merged.
-PENDING: final proof publication and green main checkpoint.
-Only the active map may mutate its source. State becomes PROVEN only after all
-declared gates pass; publication alone does not prove completion.
+ACTIVE: MAP-06B Opening Experience & Readiness Contract Correction.
+Owner accepted the bounded correction and mandatory pre-gate/media-budget changes
+on2026-10-02; matching blueprint is `2026-10-02-opening-experience-readiness.md`.
+Issue#61, branch `fix/home-opening-readiness`, source main `8c399a28`.
+MAP-06 final certification and accessibility-label repair are deferred. The
+previous6s-idle first-scroll0 proof does not establish an opening readiness barrier.
+Fresh audit proves Vision-only unlock, no progress consumer and startup transfer
+33.56MB mobile/28.57MB desktop. Fresh LH median/worst69/50 and86/85 respectively.
+Work status FAIL, correction blueprint IMPLEMENTING until all correction gates
+pass. Historical MAP-00/00A/01/02/03/04/05 and06A publication remains recorded.
+NEXT: Terminal Codex implements/tests/browser-proves this one opening correction,
+then performance comparison, PR, CI and verified merge. Global certification
+remains open; only this active capability may mutate its accepted owners.

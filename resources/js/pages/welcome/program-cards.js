@@ -4,7 +4,7 @@ import { mountProgramJourney } from '../../surfaces/home/program-journey/control
 
 let preparationPromise = null;
 
-export function prepareHomepageProgram() {
+export function prepareHomepageProgram({ signal } = {}) {
   if (preparationPromise) return preparationPromise;
 
   const root = document.querySelector('[data-program-kinetic]');
@@ -17,7 +17,7 @@ export function prepareHomepageProgram() {
     window.removeEventListener('pagehide', onPageHide);
   };
   window.addEventListener('pagehide', onPageHide);
-  const journeyCleanup = mountProgramJourney(root);
+  const journeyCleanup = mountProgramJourney(root, { signal });
 
   preparationPromise = Promise.resolve(journeyCleanup.ready)
     .then(result => result);

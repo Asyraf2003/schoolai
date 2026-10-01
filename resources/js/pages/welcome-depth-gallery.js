@@ -31,7 +31,7 @@ function readValuesExitProgress(valuesWorld) {
     const value = Number.parseFloat(raw);
     return Number.isFinite(value) ? clamp(value) : 0;
 }
-function mountGalleryStory(root) {
+function mountGalleryStory(root, signal) {
     if (mounted) return;
     mounted = true;
     const section = root.closest('.galeri-section') || root;
@@ -134,12 +134,15 @@ function mountGalleryStory(root) {
     cleanVideoPreviews = mountGalleryVideoPreviews(root);
     if (reducedMotion.matches) paintStatic();
 
-    requestRender();
+    const fallback = () => { destroy(); paintStatic(); root.dataset.galleryReady = 'static-fallback'; };
+    signal?.addEventListener('abort', fallback, { once: true });
+    if (signal?.aborted) fallback();
+    else requestRender();
     return ready;
 }
-export function prepareHomepageDepthGallery() {
+export function prepareHomepageDepthGallery({ signal } = {}) {
     const root = document.querySelector('[data-gallery-story]');
     if (!root) return Promise.resolve(null);
-    preparationPromise ||= mountGalleryStory(root);
+    preparationPromise ||= mountGalleryStory(root, signal);
     return preparationPromise;
 }

@@ -12,9 +12,7 @@ export function initVisionVideoPreviews() {
     let suspended = false;
     let observer = null;
     let ahead = null;
-    let nearby = !('IntersectionObserver' in window);
-    let next = 1;
-    let preparingNext = false;
+    const queued = new Set();
 
     function visibleLayer(preview) {
         const root = preview.closest('[data-vision-story]');
@@ -26,24 +24,30 @@ export function initVisionVideoPreviews() {
         if (document.documentElement.dataset.homeExperienceState === 'static-fallback'
             || !visibleLayer(preview) || paused || suspended || reduced.matches || document.hidden
             || document.documentElement.dataset.homeScrollGate !== 'unlocked') return;
+        const index = previews.indexOf(preview);
+        const rect = preview.closest('[data-vision-story]').getBoundingClientRect();
+        if (rect.top + index * Math.max(0, rect.height - innerHeight) / previews.length >= innerHeight * .8) return;
         prepareVisionPreview(preview).then(() => {
             if (activePreviews.has(preview) && !paused && !suspended && !document.hidden && !reduced.matches
                 && visibleLayer(preview) && preview.dataset.visionVideoState === 'frame-ready') safePlay(preview);
         });
     }
 
-    async function prepareNext() {
-        if (document.documentElement.dataset.homeExperienceState === 'static-fallback'
-            || paused || !nearby || preparingNext || suspended || document.hidden || reduced.matches
+    function prepareNext() {
+        if (paused || suspended || document.hidden || reduced.matches
             || document.documentElement.dataset.homeScrollGate !== 'unlocked') return;
-        preparingNext = true;
-        // Await the first journey rather than racing three decoders at startup.
-        await prepareVisionPreview(previews[0], { staticOnly: reduced.matches });
-        while (!paused && nearby && next < previews.length && !lifecycle.signal.aborted && !suspended && !document.hidden && !reduced.matches) {
-            await prepareVisionPreview(previews[next++], { signal: lifecycle.signal });
-            await new Promise(resolve => window.setTimeout(resolve, 0));
-        }
-        preparingNext = false;
+        previews.forEach((preview, index) => {
+            const root = preview.closest('[data-vision-story]');
+            const rect = root.getBoundingClientRect();
+            const top = root.classList.contains('is-enhanced')
+                ? rect.top + index * Math.max(0, rect.height - innerHeight) / previews.length
+                : preview.closest('[data-vision-visual]').getBoundingClientRect().top;
+            if (top >= innerHeight * .8 || top < -innerHeight || queued.has(preview)) return;
+            queued.add(preview);
+            prepareVisionPreview(preview, { signal: lifecycle.signal }).then(() => {
+                if (activePreviews.has(preview)) play(preview);
+            });
+        });
     }
 
     if ('IntersectionObserver' in window) {
@@ -55,14 +59,15 @@ export function initVisionVideoPreviews() {
         }, { rootMargin: '0px 0px', threshold: 0.01 });
         previews.forEach(preview => observer.observe(preview));
         ahead = new IntersectionObserver(entries => {
-            nearby = entries.some(entry => entry.isIntersecting);
-            if (nearby) prepareNext();
+            if (entries.some(entry => entry.isIntersecting)) prepareNext();
         }, { rootMargin: '100% 0px', threshold: 0 });
         ahead.observe(previews[0].closest('[data-vision-story]'));
     } else {
         prepareNext();
     }
+    window.addEventListener('scroll', prepareNext, { passive: true, ...options });
     document.addEventListener('schoolai:vision-media-range', () => {
+        prepareNext();
         activePreviews.forEach(preview => { if (visibleLayer(preview)) play(preview); else preview.pause(); });
     }, options);
     document.addEventListener('schoolai:first-journey-ready', () => { activePreviews.forEach(play); prepareNext(); }, options);

@@ -11,7 +11,7 @@ function withReady(cleanup, ready = Promise.resolve()) {
   return cleanup;
 }
 
-export function mountProgramJourney(root) {
+export function mountProgramJourney(root, { signal } = {}) {
   const dom = collectProgramDom(root);
   if (!dom.triggers.length || !dom.layer || !dom.backs.length || !dom.type) {
     return withReady(() => {});
@@ -51,8 +51,8 @@ export function mountProgramJourney(root) {
     if (started || disposed) return;
     started = true;
 
-    loadGsap({ signal: lifecycle.signal }).then((gsap) => {
-      if (disposed) return;
+    loadGsap({ signal: AbortSignal.any([lifecycle.signal, ...(signal ? [signal] : [])]) }).then((gsap) => {
+      if (disposed || signal?.aborted) return;
       if (reduced.matches) { installStatic(); return; }
       clearPending();
       root.classList.add('has-gsap');
@@ -84,7 +84,8 @@ export function mountProgramJourney(root) {
 
   dom.triggers.forEach((trigger) => trigger.addEventListener('click', pendingOpen));
 
-  if (reduced.matches) installStatic();
+  signal?.addEventListener('abort', installStatic, { once: true, signal: lifecycle.signal });
+  if (reduced.matches || signal?.aborted) installStatic();
   else startEnhanced();
 
   const destroy = () => {

@@ -1,4 +1,6 @@
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
 import assert from 'node:assert/strict';
 import { createHomepageScrollGate } from '../../resources/js/pages/welcome/scroll-gate.js';
 import { prepareVisionPreview } from '../../resources/js/pages/welcome/video-readiness.js';
@@ -7,12 +9,13 @@ import { prepareVisionAssets } from '../../resources/js/surfaces/home/vision-sto
 
 function deferred() { let resolve; const promise = new Promise(done => { resolve = done; }); return { promise, resolve }; }
 function environment({ hash = '', scrollY = 0 } = {}) {
-    const previous = { window: globalThis.window, document: globalThis.document };
+    const previous = { window: globalThis.window, document: globalThis.document, innerHeight: globalThis.innerHeight };
     class Element extends EventTarget {
         constructor() { super(); this.dataset = {}; this.attributes = new Map(); this.classList = { add() {}, remove() {} }; }
         setAttribute(key, value) { this.attributes.set(key, value); }
         removeAttribute(key) { this.attributes.delete(key); }
         closest() { return null; }
+        getBoundingClientRect() { return { top: 0, height: 900 }; }
     }
     const html = new Element(); const hero = new Element(); const vision = new Element(); const timers = new Map();
     hero.contains = target => target === hero;
@@ -24,7 +27,9 @@ function environment({ hash = '', scrollY = 0 } = {}) {
     const win = Object.assign(new EventTarget(), { scrollY, location: { hash },
         setTimeout(callback) { timers.set(callback, callback); return callback; }, clearTimeout(id) { timers.delete(id); },
     });
-    Object.assign(globalThis, { window: win, document: doc });
+    Object.assign(globalThis, { window: win, document: doc, innerHeight: 900 });
+    const source = readFileSync(new URL('../../resources/views/home/partials/opening-bootstrap.blade.php', import.meta.url), 'utf8').match(/<script[^>]*>([\s\S]*?)<\/script>/)[1];
+    runInNewContext(source, { window: win, document: doc, location: win.location, scrollY, performance: { mark() {}, getEntriesByType: () => [] }, setTimeout: win.setTimeout, clearTimeout: win.clearTimeout, AbortController, CustomEvent });
     return { html, hero, vision, doc, win, timers, Element,
         restore() { Object.assign(globalThis, previous); },
         event(target, name, properties = {}) {
@@ -35,21 +40,25 @@ function environment({ hash = '', scrollY = 0 } = {}) {
     };
 }
 
-test('gate stays pending until actual readiness; release retains semantic actions and cleans deadline', () => {
+test('critical gate is adopted once and release requires five units, paint, handoff and an active lifecycle', () => {
     const e = environment();
     try {
-        let fallback = 0; const gate = createHomepageScrollGate(() => { fallback++; });
-        assert.equal(e.html.dataset.homeScrollGate, 'locked'); assert.equal(e.vision.attributes.get('aria-busy'), 'true');
-        e.event(e.doc, 'focusin', { target: e.hero }); assert.equal(fallback, 0);
-        gate.release('prepared'); assert.equal(e.html.dataset.homeScrollGate, 'unlocked');
-        assert.equal(e.html.dataset.homeExperienceState, 'prepared'); assert.equal(e.timers.size, 0);
-        assert.equal(e.vision.attributes.has('aria-busy'), false);
-        e.event(e.win, 'pagehide'); assert.equal(fallback, 0);
+        const instance = e.win.schoolaiHomeOpening;
+        assert.equal(e.html.dataset.homeScrollGate, 'locked');
+        const gate = createHomepageScrollGate(() => {});
+        assert.equal(gate, instance); assert.equal(gate.adopt(() => {}), false);
+        for (const proof of [{}, { settled: 4, painted: true, handoff: true }, { settled: 5, handoff: true }, { settled: 5, painted: true }]) {
+            assert.equal(gate.release(proof), false); assert.equal(e.html.dataset.homeScrollGate, 'locked');
+        }
+        e.doc.hidden = true; assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), false);
+        e.doc.hidden = false; assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), true);
+        assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), false);
+        assert.equal(e.html.dataset.homeScrollGate, 'unlocked'); assert.equal(e.timers.size, 0);
     } finally { e.restore(); }
 });
 
-test('deadline and access intent select actual static fallback exactly once without preventing the action', async () => {
-    for (const reason of ['deadline', 'link', 'focus', 'escape', 'pagehide']) {
+test('deadline requests real fallback without unlocking; explicit access bypasses without claiming preparation', () => {
+    for (const reason of ['deadline', 'link', 'focus', 'escape']) {
         const e = environment();
         try {
             let count = 0; const gate = createHomepageScrollGate(() => { count++; });
@@ -58,18 +67,18 @@ test('deadline and access intent select actual static fallback exactly once with
             if (reason === 'link') e.event(e.doc, 'click', { target: action });
             if (reason === 'focus') e.event(e.doc, 'focusin', { target: action });
             if (reason === 'escape') e.event(e.doc, 'keydown', { key: 'Escape' });
-            if (reason === 'pagehide') e.event(e.win, 'pagehide');
-            assert.equal((await gate.fallbackReady).state, 'static-fallback');
-            assert.equal(count, 1); assert.equal(e.html.dataset.homeScrollGate, 'unlocked'); assert.equal(e.timers.size, 0);
-            gate.release('prepared'); assert.equal(e.html.dataset.homeExperienceState, 'static-fallback');
+            assert.equal(count, 1);
+            assert.equal(e.html.dataset.homeScrollGate, reason === 'deadline' ? 'locked' : 'unlocked');
+            assert.notEqual(e.html.dataset.homeExperienceState, 'prepared');
+            if (reason !== 'deadline') assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), false);
         } finally { e.restore(); }
     }
 });
 
-test('hash and restored position never acquire a scroll lock', async () => {
+test('hash and restored position never acquire an initial scroll lock', () => {
     for (const options of [{ hash: '#program' }, { scrollY: 1200 }]) {
         const e = environment(options);
-        try { const gate = createHomepageScrollGate(() => {}); assert.equal(e.timers.size, 0); assert.equal(e.html.dataset.homeScrollGate, 'unlocked'); assert.equal((await gate.fallbackReady).reason, 'position-or-anchor'); }
+        try { assert.equal(e.html.dataset.homeScrollGate, 'unlocked'); assert.equal(e.timers.size, 0); }
         finally { e.restore(); }
     }
 });
@@ -113,7 +122,7 @@ test('Vision assets await actual font readiness as well as first playable frame'
         const fonts = deferred(); e.doc.fonts = { ready: fonts.promise }; const v = preview(e); e.vision.querySelector = s => s.includes('preview') ? v : null;
         let ready = false; const work = prepareVisionAssets(e.vision, undefined, false).then(state => { ready = true; return state; });
         await Promise.resolve(); await Promise.resolve(); e.event(v, 'loadeddata'); await Promise.resolve(); assert.equal(ready, false);
-        fonts.resolve(); assert.equal(await work, 'frame-ready');
+        fonts.resolve(); assert.equal(await work, 'poster-ready');
     } finally { e.restore(); }
 });
 
@@ -151,7 +160,7 @@ test('Vision scopes font readiness to its actual text when global font readiness
         e.win.getComputedStyle = () => ({ fontStyle: 'normal', fontWeight: '700', fontSize: '32px', fontFamily: 'Inter' });
         const v = preview(e); e.vision.querySelector = s => s.includes('preview') ? v : null; e.vision.querySelectorAll = () => [{ textContent: 'Vision' }];
         const work = prepareVisionAssets(e.vision, undefined, false); await new Promise(setImmediate); e.event(v, 'loadeddata');
-        assert.equal(loads, 1); localFonts.resolve(); assert.equal(await work, 'frame-ready');
+        assert.equal(loads, 1); localFonts.resolve(); assert.equal(await work, 'poster-ready');
         assert.equal(e.vision.dataset.visionFontsReady, 'true');
     } finally { e.restore(); }
 });

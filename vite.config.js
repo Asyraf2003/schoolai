@@ -7,6 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/pages/welcome.js',
+                'resources/js/pages/welcome/opening-recovery.js',
                 'resources/js/pages/welcome-login-perspective.js',
                 'resources/js/pages/welcome-hero.js',
                 'resources/js/pages/welcome-scroll-reveal.js',

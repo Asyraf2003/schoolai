@@ -35,7 +35,7 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
 
     $content = $response->getContent();
     expect(substr_count($content, 'data-vision-video-preview'))->toBe(3)
-        ->and(substr_count($content, 'data-vision-video-open'))->toBe(2);
+        ->and(preg_match_all('/<button\b[^>]*\bdata-vision-video-open(?=[\s>])/', $content))->toBe(2);
 
     $section = readOwnedSource(resource_path('views/home/sections/vision-mission.blade.php'), ['resources/views/home/partials/vision-video-dialog.blade.php']);
     $composer = file_get_contents(app_path('View/Composers/HomeVisionMissionComposer.php'));
