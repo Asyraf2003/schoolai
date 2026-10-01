@@ -42,6 +42,7 @@ export function createSliderMediaActions(options) {
         var hydratedSource = false;
         video.querySelectorAll('source[data-src]').forEach(function (source) {
             source.addEventListener('error', () => {
+                video.pause();
                 if (slide === slides[state.currentIndex]) options.root.dataset.heroMediaState = 'media-error';
                 slide.classList.add('has-video-playback-fallback');
             }, { once: true, signal: state.lifecycleSignal });

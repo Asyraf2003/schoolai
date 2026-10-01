@@ -78,7 +78,10 @@ export function initOpeningHero(root, slide) {
             audioEnabled = !audioEnabled;
             updateAudioButtons();
             hydrateVideo();
-            if (video.error) video.load();
+            if (video.error || root.dataset.heroMediaState === 'media-error') {
+                root.dataset.heroMediaState = 'preparing';
+                video.load();
+            }
             syncVideo();
         }, options);
     });
@@ -92,6 +95,7 @@ export function initOpeningHero(root, slide) {
     }, options);
     video.addEventListener('playing', function () { root.dataset.heroMediaState = 'playing'; }, options);
     function mediaError() {
+        video.pause();
         root.dataset.heroMediaState = 'media-error';
         slide.classList.add('has-video-playback-fallback');
     }
