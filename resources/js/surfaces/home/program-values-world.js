@@ -25,7 +25,8 @@ function paintWorld(root, progress) {
   );
 }
 
-export function mountProgramValuesWorld(root) {
+export function mountProgramValuesWorld(root, { signal } = {}) {
+  if (!root || signal?.aborted) return () => {};
   const program = root.querySelector('[data-program-kinetic]');
   const values = root.querySelector('[data-values-story]');
   if (!program || !values) return () => {};
@@ -40,6 +41,7 @@ export function mountProgramValuesWorld(root) {
     return clamp((start - programBottom) / Math.max(1, start - end));
   }, progress => { if (!destroyed) paintWorld(root, progress); });
   const lifecycle = new AbortController();
+  signal?.addEventListener('abort', destroy, { once: true, signal: lifecycle.signal });
   window.addEventListener('pagehide', event => { if (!event.persisted) destroy(); }, { signal: lifecycle.signal });
 
   function destroy() {
@@ -53,5 +55,3 @@ export function mountProgramValuesWorld(root) {
   return destroy;
 }
 
-const programValuesWorld = document.querySelector('[data-program-values-world]');
-if (programValuesWorld) mountProgramValuesWorld(programValuesWorld);

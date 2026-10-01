@@ -132,3 +132,10 @@ test('Program/Values world keeps its visible morph endpoints and reverse state, 
         cleanup(); assert.equal(properties.size, 0); e.fire(e.win, 'scroll'); assert.equal(e.frames.size, 0);
     } finally { e.restore(); }
 });
+
+test('cancelled Program/Values world never mounts or paints a late shared owner', async () => {
+    const { mountProgramValuesWorld } = await import('../../resources/js/surfaces/home/program-values-world.js');
+    const signal = new AbortController(); signal.abort();
+    const root = { querySelector() { throw new Error('Aborted owner must not touch DOM'); } };
+    assert.equal(typeof mountProgramValuesWorld(root, { signal: signal.signal }), 'function');
+});

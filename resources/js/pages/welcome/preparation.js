@@ -15,7 +15,9 @@ const preparationSteps = {
     vision: () => import('../welcome-vision-story.js')
         .then(({ prepareHomepageVisionStory }) => preparationSignal.signal.aborted ? { state: 'static-fallback' } : prepareHomepageVisionStory({ signal: preparationSignal.signal })),
     program: () => Promise.all([
-        import('../../surfaces/home/program-values-world.js'),
+        import('../../surfaces/home/program-values-world.js').then(({ mountProgramValuesWorld }) => {
+            mountProgramValuesWorld(document.querySelector('[data-program-values-world]'), { signal: preparationSignal.signal });
+        }),
         import('./program-cards.js').then(({ prepareHomepageProgram }) => preparationSignal.signal.aborted ? { state: 'static-fallback' } : prepareHomepageProgram({ signal: preparationSignal.signal })),
     ]).then(([, result]) => result),
     values: () => import('../../surfaces/home/values/preparation.js')
