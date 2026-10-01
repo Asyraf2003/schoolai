@@ -113,3 +113,22 @@ test('Formation resumes its 105ms clock without counting hidden time and reduced
         e.reduced.matches = false; e.fire(e.reduced,'change'); e.tick(); assert.ok(Number(triggers[0].style.opacity)>0); cleanup();
     } finally { e.restore(); }
 });
+
+test('Program/Values world keeps its visible morph endpoints and reverse state, and clears owned output on disposal', async () => {
+    const e = environment();
+    try {
+        let bottom = 2000;
+        const properties = new Map();
+        const program = { getBoundingClientRect: () => ({ bottom }) };
+        const root = { querySelector: selector => selector.includes('program-kinetic') ? program : {},
+            style: { setProperty: (key, value) => properties.set(key, value), removeProperty: key => properties.delete(key) } };
+        const { mountProgramValuesWorld } = await import('../../resources/js/surfaces/home/program-values-world.js');
+        const cleanup = mountProgramValuesWorld(root);
+        e.tick(); assert.equal(properties.get('--program-values-morph'), '0.0000');
+        bottom = 846; e.fire(e.win, 'scroll'); e.tick(); assert.equal(properties.get('--program-values-morph'), '0.5000');
+        bottom = 0; e.fire(e.win, 'scroll'); e.tick(); assert.equal(properties.get('--program-values-morph-pct'), '100.00%');
+        assert.equal(properties.get('--program-values-type-opacity'), '0.1100');
+        bottom = 2000; e.fire(e.win, 'scroll'); e.tick(); assert.equal(properties.get('--program-values-morph'), '0.0000');
+        cleanup(); assert.equal(properties.size, 0); e.fire(e.win, 'scroll'); assert.equal(e.frames.size, 0);
+    } finally { e.restore(); }
+});

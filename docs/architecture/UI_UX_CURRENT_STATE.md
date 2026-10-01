@@ -19,9 +19,14 @@ MAP-03 is merged after green CI (#53): main
 MAP-04 merged after CI PASS (#55): main
 `9ec739fac9be6cf62528178dd97ed13ef72a529b`. Its 86 browser cases and
 25 Node contracts remain durable proof.
-Exactly one NEXT: Terminal Codex implements MAP-05 under its bounded packet.
-Counts (160 pre-frame card reads; 37 idle Gallery RAFs) justify only the three
-selected owners; efficient navigation/Vision/Values/wall clocks remain local.
+MAP-05 verified production build `088acb7e`: 33 executed Node contracts,
+305 PHP tests / 3,504 assertions, structure 597, build 147, Pint/diff PASS.
+86 Chromium/WebKit cases and three cold traces PASS. Card event reads 160 -> 0,
+shared frame reads 8; three observed settled idle windows have zero shared work.
+Existing motion formulas and local efficient clocks remain. Proof is in the
+scheduler key of the durable JSON; timing variance is explicitly retained.
+Exactly one NEXT: Terminal Codex publishes proof and merges #57 after final CI.
+MAP-06 implementation begins only after main sync confirms that merge.
 
 ## Current execution authority — 2026-10-01
 

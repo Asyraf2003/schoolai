@@ -7121,5 +7121,2027 @@
       "physical Safari/iOS"
     ],
     "notes": "Functional matrix reuses per-locale/touch-tier browser cache; performance traces are isolated cold cache. Gallery videos in browser proof replace two fixture images in temporary DOM only; business DB unchanged."
+  },
+  "scheduler": {
+    "map": "MAP-05",
+    "source": "088acb7e2382f547d9133b6a237aa7a434b86774",
+    "profile": "Chromium 153.0.8010.47, Linux headless, 1440x900 DPR1, no CPU/network throttle, disabled browser cache, isolated testing SQLite, software graphics",
+    "browserCases": [
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "gsap-error",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "gsap-deadline",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "gsap-dispose",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "gallery-media",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "lifecycle",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "program-motion",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "state": {
+          "lang": "id",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "state": {
+          "lang": "en",
+          "dir": "ltr",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "gsap",
+          "values": "prepared",
+          "gallery": "prepared",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "state": {
+          "lang": "ar",
+          "dir": "rtl",
+          "program": "static-fallback",
+          "values": "static-fallback",
+          "gallery": "static-fallback",
+          "scroll": 0
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "gsap-error",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "gsap-deadline",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "gsap-dispose",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "gallery-media",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "lifecycle",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "program-motion",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "mode": "real-pointer-reduced-motion-interruption",
+        "state": {
+          "transitioning": false,
+          "detail": false,
+          "pointer": "auto",
+          "opacity": "1"
+        },
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "mode": "real-pointer-reduced-motion-interruption",
+        "state": {
+          "transitioning": false,
+          "detail": false,
+          "pointer": "auto",
+          "opacity": "1"
+        },
+        "status": "PASS"
+      }
+    ],
+    "runs": [
+      {
+        "run": 1,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": "gsap",
+          "valuesState": "prepared",
+          "galleryState": "prepared",
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 608
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 636
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 187.09999999776483,
+              "dom": 997.8000000007451
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": "gsap",
+          "valuesState": "prepared",
+          "galleryState": "prepared",
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 608
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 636
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 187.09999999776483,
+              "dom": 997.8000000007451
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 24459.59311
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-DzxxLMN8.js",
+            "type": "Script",
+            "timestamp": 24459.671732
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 24460.067468
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-BWbn5WS6.js",
+            "type": "Script",
+            "timestamp": 24460.763368
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 24460.764071
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 24460.781891
+          },
+          {
+            "url": "https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js",
+            "type": "Script",
+            "timestamp": 24460.836531
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-DkzW-_zC.js",
+            "type": "Script",
+            "timestamp": 24460.981257
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 24462.08516
+          }
+        ],
+        "firstScrollRequests": [],
+        "rendererMain": {
+          "RunTask": {
+            "count": 5810,
+            "totalMs": 2333.642,
+            "maxMs": 193.282
+          },
+          "FunctionCall": {
+            "count": 181,
+            "totalMs": 136.948,
+            "maxMs": 17.79
+          },
+          "EvaluateScript": {
+            "count": 9,
+            "totalMs": 35.086,
+            "maxMs": 13.441
+          },
+          "Layout": {
+            "count": 25,
+            "totalMs": 291.449,
+            "maxMs": 141.19
+          },
+          "UpdateLayoutTree": {
+            "count": 134,
+            "totalMs": 256.627,
+            "maxMs": 43.636
+          },
+          "Paint": {
+            "count": 469,
+            "totalMs": 74.072,
+            "maxMs": 4.114
+          }
+        },
+        "rendererMainLongTasksMs": [
+          79.947,
+          134.031,
+          79.281,
+          193.282,
+          90.34,
+          169.769
+        ],
+        "rawTrace": "/tmp/schoolai-home-frame-trace-1.json",
+        "rawTraceSHA256": "30e5a09038754a90cbfb62bf7713499f8a21f6ccafc40bcca7685eb6170af464"
+      },
+      {
+        "run": 2,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": "gsap",
+          "valuesState": "prepared",
+          "galleryState": "prepared",
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 604
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 604
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 138.10000000149012,
+              "dom": 598.8999999985099
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": "gsap",
+          "valuesState": "prepared",
+          "galleryState": "prepared",
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 604
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 604
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 138.10000000149012,
+              "dom": 598.8999999985099
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 24468.277538
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-DzxxLMN8.js",
+            "type": "Script",
+            "timestamp": 24468.354672
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 24468.402317
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-BWbn5WS6.js",
+            "type": "Script",
+            "timestamp": 24471.125243
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 24471.126215
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 24471.12966
+          },
+          {
+            "url": "https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js",
+            "type": "Script",
+            "timestamp": 24471.160073
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-DkzW-_zC.js",
+            "type": "Script",
+            "timestamp": 24471.214553
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 24471.666541
+          }
+        ],
+        "firstScrollRequests": [],
+        "rendererMain": {
+          "RunTask": {
+            "count": 4081,
+            "totalMs": 1598.94,
+            "maxMs": 106.859
+          },
+          "FunctionCall": {
+            "count": 242,
+            "totalMs": 155.449,
+            "maxMs": 58.373
+          },
+          "EvaluateScript": {
+            "count": 9,
+            "totalMs": 9.669,
+            "maxMs": 2.171
+          },
+          "Layout": {
+            "count": 26,
+            "totalMs": 150.433,
+            "maxMs": 56.492
+          },
+          "UpdateLayoutTree": {
+            "count": 133,
+            "totalMs": 223.694,
+            "maxMs": 25.757
+          },
+          "Paint": {
+            "count": 480,
+            "totalMs": 51.786,
+            "maxMs": 3.011
+          }
+        },
+        "rendererMainLongTasksMs": [
+          106.859,
+          87.616,
+          92.82,
+          70.907
+        ],
+        "rawTrace": "/tmp/schoolai-home-frame-trace-2.json",
+        "rawTraceSHA256": "023e1245ca05c3a2d80c425ef126894e8e74d9375473258d4cd82102fab2404c"
+      },
+      {
+        "run": 3,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": "gsap",
+          "valuesState": "prepared",
+          "galleryState": "prepared",
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 396
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 396
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 78.89999999850988,
+              "dom": 445.19999999925494
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "homeScrollGate": "unlocked",
+          "experience": "prepared",
+          "visionMediaState": "frame-ready",
+          "visionFontsReady": "true",
+          "visionStyleReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": "gsap",
+          "valuesState": "prepared",
+          "galleryState": "prepared",
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 396
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 396
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 78.89999999850988,
+              "dom": 445.19999999925494
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 24476.081594
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-DzxxLMN8.js",
+            "type": "Script",
+            "timestamp": 24476.132188
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 24476.152524
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-BWbn5WS6.js",
+            "type": "Script",
+            "timestamp": 24476.582831
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 24476.583686
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 24476.590647
+          },
+          {
+            "url": "https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js",
+            "type": "Script",
+            "timestamp": 24476.620224
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-DkzW-_zC.js",
+            "type": "Script",
+            "timestamp": 24476.674305
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 24477.722535
+          }
+        ],
+        "firstScrollRequests": [],
+        "rendererMain": {
+          "RunTask": {
+            "count": 4999,
+            "totalMs": 1362.697,
+            "maxMs": 85.922
+          },
+          "FunctionCall": {
+            "count": 253,
+            "totalMs": 118.335,
+            "maxMs": 19.023
+          },
+          "EvaluateScript": {
+            "count": 9,
+            "totalMs": 6.322,
+            "maxMs": 1.807
+          },
+          "Layout": {
+            "count": 26,
+            "totalMs": 99.186,
+            "maxMs": 42.489
+          },
+          "UpdateLayoutTree": {
+            "count": 107,
+            "totalMs": 168.559,
+            "maxMs": 21.443
+          },
+          "Paint": {
+            "count": 449,
+            "totalMs": 42.036,
+            "maxMs": 2.274
+          }
+        },
+        "rendererMainLongTasksMs": [
+          85.922,
+          77.231,
+          57.821
+        ],
+        "rawTrace": "/tmp/schoolai-home-frame-trace-3.json",
+        "rawTraceSHA256": "de30cac2b3f0103d1bc6ac4ca343cfc7e60dba1b30e2f2892fe6e2d4655fa333"
+      }
+    ],
+    "summary": {
+      "fcpMs": {
+        "median": 604,
+        "worst": 636
+      },
+      "RunTaskTotalMs": {
+        "median": 1598.94,
+        "worst": 2333.642
+      },
+      "FunctionCallTotalMs": {
+        "median": 136.948,
+        "worst": 155.449
+      },
+      "EvaluateScriptTotalMs": {
+        "median": 9.669,
+        "worst": 35.086
+      },
+      "LayoutTotalMs": {
+        "median": 150.433,
+        "worst": 291.449
+      },
+      "UpdateLayoutTreeTotalMs": {
+        "median": 223.694,
+        "worst": 256.627
+      },
+      "PaintTotalMs": {
+        "median": 51.786,
+        "worst": 74.072
+      }
+    },
+    "before": {
+      "profile": "Chromium 153 / Linux, 1440x900 DPR1; synchronous count proof; no timing/CPU claim",
+      "burst": {
+        "cardReads": 160,
+        "galleryReadsAfterOwnWrite": 0,
+        "scheduled": {
+          "welcome-": 2,
+          "program-values-world": 1,
+          "program-cards": 1,
+          "other": 1,
+          "welcome-depth-gallery": 1
+        },
+        "galleryWrites": 0
+      },
+      "afterBurst": {
+        "cardReads": 160,
+        "galleryReadsAfterOwnWrite": 18,
+        "scheduled": {
+          "welcome-": 2,
+          "program-values-world": 1,
+          "program-cards": 1,
+          "other": 1,
+          "welcome-depth-gallery": 1
+        },
+        "galleryWrites": 57
+      },
+      "handoff": {
+        "top": 999.796875,
+        "active": true,
+        "progress": "1.0000"
+      },
+      "beforeIdle": {
+        "cardReads": 616,
+        "galleryReadsAfterOwnWrite": 2686,
+        "scheduled": {
+          "welcome-": 116,
+          "program-values-world": 58,
+          "program-cards": 60,
+          "other": 82,
+          "welcome-depth-gallery": 182
+        },
+        "galleryWrites": 57
+      },
+      "afterIdle": {
+        "cardReads": 616,
+        "galleryReadsAfterOwnWrite": 3204,
+        "scheduled": {
+          "welcome-": 116,
+          "program-values-world": 58,
+          "program-cards": 60,
+          "other": 82,
+          "welcome-depth-gallery": 219
+        },
+        "galleryWrites": 57
+      },
+      "galleryIdleScheduled": 37
+    },
+    "after": {
+      "idleWindows": [
+        {
+          "sharedFrames": 0,
+          "cardReads": 0,
+          "galleryFrames": 0
+        },
+        {
+          "sharedFrames": 0,
+          "cardReads": 0,
+          "galleryFrames": 0
+        },
+        {
+          "sharedFrames": 0,
+          "cardReads": 0,
+          "galleryFrames": 0
+        }
+      ],
+      "profile": "Chromium 153 / Linux, 1440x900 DPR1; synchronous count proof; no timing/CPU claim",
+      "burst": {
+        "cardReads": 0,
+        "galleryReadsAfterOwnWrite": 0,
+        "scheduled": {
+          "welcome-": 2,
+          "scroll-frame": 1,
+          "other": 1
+        },
+        "galleryWrites": 0
+      },
+      "afterBurst": {
+        "cardReads": 8,
+        "galleryReadsAfterOwnWrite": 0,
+        "scheduled": {
+          "welcome-": 2,
+          "scroll-frame": 2,
+          "other": 5
+        },
+        "galleryWrites": 0
+      },
+      "handoff": {
+        "top": 999.796875,
+        "active": true,
+        "progress": "1.0000"
+      },
+      "beforeIdle": {
+        "cardReads": 408,
+        "galleryReadsAfterOwnWrite": 0,
+        "scheduled": {
+          "welcome-": 102,
+          "scroll-frame": 71,
+          "other": 80
+        },
+        "galleryWrites": 57
+      },
+      "afterIdle": {
+        "cardReads": 416,
+        "galleryReadsAfterOwnWrite": 0,
+        "scheduled": {
+          "welcome-": 102,
+          "scroll-frame": 73,
+          "other": 81
+        },
+        "galleryWrites": 57
+      },
+      "galleryIdleScheduled": 0
+    },
+    "tests": {
+      "node": 33,
+      "phpTests": 305,
+      "phpAssertions": 3504,
+      "targetedTests": 7,
+      "targetedAssertions": 257,
+      "structureSources": 597,
+      "buildModules": 147
+    },
+    "unmeasured": [
+      "attributed media decode duration",
+      "hardware GPU/compositing duration",
+      "frame drops",
+      "field CWV",
+      "physical Safari/iOS"
+    ],
+    "notes": "Selected samplers only: Formation/world/Gallery. All read-phase work precedes their writes; efficient local navigation/Vision/Values/wall clocks retained. Exact work counts are not CPU savings. Raw traces are local /tmp artifacts with durable SHA256 below."
   }
 }

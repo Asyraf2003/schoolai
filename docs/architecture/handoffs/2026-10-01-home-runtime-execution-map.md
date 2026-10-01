@@ -207,8 +207,22 @@ RISKS: smoothing changes, cross-surface write/read dependency and stale geometry
 TESTS: same offset/same semantic state, burst frame coalescing, reads-before-writes,
 resize/orientation, reverse, hidden and disposal; retain efficient local clocks.
 DoD: evidence-backed reduction; UNKNOWN CSS/JS retained; no generic architecture.
-PROOF: baseline source `4022eba0`, exact counts in progressive.schedulerBefore.
-STATUS: IN_PROGRESS.
+PROOF: Issue #56 / PR #57; runtime build `088acb7e`. Node 33 PASS;
+focused PHP 7/257, full 305/3,504, structure 597, build 147, Pint/diff PASS.
+86 Chromium/WebKit cases PASS (72 tier/locale/motion + 12 failure/lifecycle +
+2 real-pointer interruption cases). Twenty synchronous scroll events: 160 ->
+0 immediate card reads; 8 reads in shared frame; one queued shared RAF; Gallery
+own read-after-write count 18 -> 0. Initial idle window retained two bounded
+settling frames; all three subsequent 600ms windows had zero shared frames/card
+reads. Old Gallery idle polling: 37/600ms -> 0. Counts are not measured CPU/FPS.
+Three isolated cold traces: every required readiness outcome before input,
+zero first-scroll requests/errors. FCP median/worst 604/636ms; renderer-main
+Layout 150.433/291.449ms, FunctionCall 136.948/155.449ms. Variance and changed
+pre-input media playback prevent claiming all timing differences as savings.
+Durable scheduler proof JSON includes raw trace hashes and every idle window.
+No CSS/assets deleted; UNKNOWN owners retained. World endpoints/reverse/dispose
+are covered by an additional executed contract; production build is unchanged.
+STATUS: CLOSED (all proof PASS; merge #57 before any MAP-06 implementation).
 
 ### MAP-06 — Full proof and documentation closure
 GOAL: certify final main and close linked Issues/PRs with durable proof.
@@ -368,3 +382,9 @@ Gallery-heading consumers). Legacy Gallery-heading modules are LEGACY_REQUIRED
 or UNKNOWN outside this runtime graph; keep source/tests. Gallery/Article/wall
 media and deferred disabled spatial graph remain ACTIVE_NONCRITICAL/LEGACY_REQUIRED.
 No CSS/assets are cleanup candidates in this map. No UNKNOWN module is removed.
+
+MAP-05 proof interpretation: a burst can reuse a frame already queued by real
+preparation/resize work; the browser counter counts new schedules, while the
+executed queue contract proves one outstanding frame. Initial settling work is
+recorded separately from three observed zero-work idle windows. No timer or
+animation personality was changed to produce those counts.
