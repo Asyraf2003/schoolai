@@ -13,7 +13,9 @@ function mountTestimonialWall(root) {
   if (!rows || tracks.length === 0) return;
 
   const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY);
-  let nearby = false;
+  const lifecycle = new AbortController();
+  let suspended = false;
+  let nearby = !('IntersectionObserver' in window);
   let active = false;
   let frame = null;
   let rangeStart = 0;
@@ -74,7 +76,7 @@ function mountTestimonialWall(root) {
   const onScroll = () => scheduleRender();
 
   const syncActivity = () => {
-    const shouldAnimate = nearby && !reducedMotion.matches && !document.hidden;
+    const shouldAnimate = nearby && !suspended && !reducedMotion.matches && !document.hidden;
 
     if (shouldAnimate === active) {
       if (active) scheduleRender();
@@ -105,28 +107,40 @@ function mountTestimonialWall(root) {
     syncActivity();
   };
 
-  const intersectionObserver = new IntersectionObserver((entries) => {
+  const intersectionObserver = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
     nearby = entries.some((entry) => entry.isIntersecting);
     syncActivity();
-  }, { rootMargin: '45% 0px' });
+  }, { rootMargin: '45% 0px' }) : null;
 
-  const resizeObserver = new ResizeObserver(() => {
+  const resizeObserver = 'ResizeObserver' in window ? new ResizeObserver(() => {
     measure();
     scheduleRender();
-  });
+  }) : null;
 
   const onVisibilityChange = () => syncActivity();
   const onPageShow = () => {
+    suspended = false;
     measure();
     syncActivity();
   };
+  const onPageHide = event => {
+    suspended = true;
+    syncActivity();
+    if (event.persisted) return;
+    lifecycle.abort();
+    intersectionObserver?.disconnect();
+    resizeObserver?.disconnect();
+  };
 
   applyMotionPreference();
-  intersectionObserver.observe(rows);
-  resizeObserver.observe(rows);
-  document.addEventListener('visibilitychange', onVisibilityChange);
-  window.addEventListener('pageshow', onPageShow);
-  reducedMotion.addEventListener('change', applyMotionPreference);
+  intersectionObserver?.observe(rows);
+  resizeObserver?.observe(rows);
+  document.addEventListener('visibilitychange', onVisibilityChange, { signal: lifecycle.signal });
+  window.addEventListener('pageshow', onPageShow, { signal: lifecycle.signal });
+  window.addEventListener('pagehide', onPageHide, { signal: lifecycle.signal });
+  window.addEventListener('resize', onPageShow, { signal: lifecycle.signal, passive: true });
+  reducedMotion.addEventListener('change', applyMotionPreference, { signal: lifecycle.signal });
+  root.dataset.testimonialReady = 'prepared';
 }
 
 function initializeTestimonialWall() {

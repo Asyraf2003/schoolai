@@ -5,11 +5,11 @@ import { mountValuesLifecycle } from './lifecycle.js';
 import { FRAME_MS, createScrollMotion, resetScrollMotion, updateScrollMotion } from './motion.js';
 import { createValuesSpatialBridge } from './spatial-controller.js';
 import { readValuesFrameTarget, supportsStoryMotion } from './frame-target.js';
-
 const VALUES_SPATIAL_ENABLED = false;
 export function createValuesStory(root) {
     const cards = Array.from(root.querySelectorAll('[data-values-card]'));
     if (cards.length !== 4) return () => {};
+    let resolveReady; const ready = new Promise(resolve => { resolveReady = resolve; });
     let nodes;
     try {
         nodes = collectValuesNodes(root);
@@ -53,13 +53,11 @@ export function createValuesStory(root) {
         frame = 0;
         if (!enabled || destroyed || document.hidden) return;
         if (geometryDirty || !geometry) measure();
-
         const target = readValuesFrameTarget(root, nodes, geometry);
         const delta = lastTime ? time - lastTime : FRAME_MS;
         lastTime = time;
         const directScroll = geometry.mode < 4 || !active;
         let snapshot;
-
         if (directScroll) {
             resetScrollMotion(motion, target.story);
             snapshot = {
@@ -103,7 +101,8 @@ export function createValuesStory(root) {
             momentum: snapshot.momentum,
         });
         snapNext = false;
-
+        root.dataset.valuesReady = 'prepared';
+        resolveReady({ state: 'prepared' });
         if (active && (!snapshot.settled || !headingSnapshot.settled)) {
             requestRender();
         } else {
@@ -114,7 +113,6 @@ export function createValuesStory(root) {
         geometryDirty = true;
         requestRender();
     }
-
     function onVisibility() {
         if (document.hidden) {
             cancelFrame();
@@ -124,17 +122,15 @@ export function createValuesStory(root) {
             invalidateGeometry();
         }
     }
-
-    function onPageHide() {
+    function onPageHide(event) {
+        if (!event.persisted) { destroy(); return; }
         cancelFrame();
         spatial.suspend();
     }
-
     function onPageShow() {
         spatial.resume();
         invalidateGeometry();
     }
-
     function onIntersection(entries) {
         active = entries.some((entry) => entry.isIntersecting);
         spatial.setActive(active);
@@ -144,7 +140,6 @@ export function createValuesStory(root) {
         snapNext = true;
         requestRender();
     }
-
     function disable() {
         enabled = false;
         cancelFrame();
@@ -155,12 +150,14 @@ export function createValuesStory(root) {
         clearValuesStory(root, cards, nodes);
         geometry = null;
     }
-
     function syncPreference() {
         const shouldEnable = capable && !reduced.matches;
+        if (!shouldEnable) {
+            root.dataset.valuesReady = 'static-fallback';
+            resolveReady({ state: 'static-fallback' });
+        }
         if (shouldEnable === enabled) return;
         if (!shouldEnable) return disable();
-
         enabled = true;
         heading = createHeadingState(0);
         root.classList.add('is-values-ready');
@@ -173,7 +170,6 @@ export function createValuesStory(root) {
         spatial.setEnabled(VALUES_SPATIAL_ENABLED);
         requestRender();
     }
-
     const cleanupLifecycle = mountValuesLifecycle(root, nodes, {
         onIntersection,
         onPageHide,
@@ -184,16 +180,21 @@ export function createValuesStory(root) {
         onVisibility,
         reduced,
     });
-
     syncPreference();
-
-    return function destroy() {
+    function destroy() {
+        if (destroyed) return;
         destroyed = true;
+        resolveReady({ state: 'disposed' });
         disable();
         spatial.destroy();
         cleanupLifecycle();
-    };
+    }
+    destroy.ready = ready; return destroy;
 }
-
-const valuesStory = document.querySelector('[data-values-story]');
-if (valuesStory) createValuesStory(valuesStory);
+let preparation = null;
+export function prepareHomepageValues() {
+    if (preparation) return preparation;
+    const root = document.querySelector('[data-values-story]');
+    preparation = root ? createValuesStory(root).ready : Promise.resolve({ state: 'absent' });
+    return preparation;
+}

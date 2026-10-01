@@ -10,11 +10,17 @@ export function prepareHomepageProgram() {
   const root = document.querySelector('[data-program-kinetic]');
   if (!root) return Promise.resolve(null);
 
-  mountProgramFormation(root);
+  const formationCleanup = mountProgramFormation(root);
+  const onPageHide = event => {
+    if (event.persisted) return;
+    formationCleanup();
+    window.removeEventListener('pagehide', onPageHide);
+  };
+  window.addEventListener('pagehide', onPageHide);
   const journeyCleanup = mountProgramJourney(root);
 
   preparationPromise = Promise.resolve(journeyCleanup.ready)
-    .then(() => root);
+    .then(result => result);
 
   return preparationPromise;
 }

@@ -60,7 +60,7 @@ it('renders eight localized featured Program cards and a full Islamic word field
 });
 
 it('uses Codrops GSAP timing and detail media reveal', function (): void {
-    $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $controller = readOwnedSource(resource_path('js/surfaces/home/program-journey/controller.js'), ['resources/js/surfaces/home/program-journey/reduced-controller.js']);
     $gsapController = file_get_contents(resource_path('js/surfaces/home/program-journey/gsap-controller.js'));
     $geometry = file_get_contents(resource_path('js/surfaces/home/program-journey/geometry.js'));
     $motion = file_get_contents(resource_path('js/surfaces/home/program-journey/motion.js'));
@@ -90,7 +90,7 @@ it('uses Codrops GSAP timing and detail media reveal', function (): void {
 });
 
 it('keeps Program controls functional while GSAP loads, fails, or is opening', function (): void {
-    $controller = file_get_contents(resource_path('js/surfaces/home/program-journey/controller.js'));
+    $controller = readOwnedSource(resource_path('js/surfaces/home/program-journey/controller.js'), ['resources/js/surfaces/home/program-journey/reduced-controller.js']);
     $gsapController = file_get_contents(resource_path('js/surfaces/home/program-journey/gsap-controller.js'));
     $rail = file_get_contents(resource_path('css/pages/welcome/program-journey/rail.css'));
 

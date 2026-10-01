@@ -110,7 +110,7 @@ export function mountGsap(dom, integration, gsap) {
   dom.triggers.forEach((trigger) => trigger.addEventListener('click', openItem));
   dom.backs.forEach((back) => back.addEventListener('click', closeItem));
   document.addEventListener('keydown', keydown);
-  return () => {
+  const destroy = () => {
     activeTimeline?.kill();
     cleanHover();
     dom.triggers.forEach((trigger) => trigger.removeEventListener('click', openItem));
@@ -118,4 +118,7 @@ export function mountGsap(dom, integration, gsap) {
     document.removeEventListener('keydown', keydown);
     if (currentItem >= 0) integration.unlock();
   };
+  destroy.suspend = () => activeTimeline?.pause();
+  destroy.resume = () => activeTimeline?.resume();
+  return destroy;
 }

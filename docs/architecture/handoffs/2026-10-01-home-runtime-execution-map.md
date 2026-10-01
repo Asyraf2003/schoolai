@@ -173,7 +173,7 @@ Chromium traces show actual Vision prepared/frame-ready before unlock and zero
 first-scroll network requests. FCP median/worst 612/1,008ms; renderer-main
 Layout 117.004/383.435ms; FunctionCall 83.255/151.836ms. Local variable evidence,
 not field CWV or attributed decode/GPU. Raw-trace hashes/results in proof JSON.
-STATUS: CLOSED (verified; publish only after green CI).
+STATUS: CLOSED (merged #53 after CI PASS; main `c9f93c0d`).
 
 ### MAP-04 — Progressive Program, Values, Gallery and wall preparation
 GOAL: remove remaining proximity-triggered initialization bursts with bounded work.
@@ -183,9 +183,19 @@ FILES: section-owned readiness/lifecycle code, coordinator, focused contracts.
 RISKS: unnecessary distant downloads, changed choreography or offscreen RAF/video.
 TESTS: real GSAP/fallback ready, bounded ahead-window, fast/reverse scroll,
 Values deterministic clock, Gallery media, wall, hidden/BFCache/reduced motion.
-DoD: one persistent sequential coordinator, no invisible continuous work.
-PROOF: pending.
-STATUS: PLANNED.
+DoD: one persistent sequential coordinator; inactive media suspended. Redundant
+handoff frame polling is separately measured and owned by MAP-05.
+PROOF: Issue #54 / PR #55, source `4022eba0`. Node 25 PASS; focused PHP
+16/508, full 305/3,500, structure 595, build 145, Pint/diff PASS.
+86 browser cases PASS: 72 tier/locale/motion cells, GSAP error/deadline/abort,
+Gallery actual-media preparation/playback, lifecycle, reduced interruption and
+real pointer controls in Chromium/WebKit. Matrix source `6c52cc0c`; the subsequent
+Program class reset is covered by final-build pointer cases and executed tests.
+Three isolated cold Chromium traces show all required surfaces prepared before
+input and zero first-scroll requests/errors. FCP median/worst 752/816ms;
+renderer-main Layout 147.143/428.690ms, FunctionCall 96.929/186.237ms.
+Local variable samples, not field/decode/GPU evidence. Durable proof JSON.
+STATUS: CLOSED (verified; merge #55 only after final CI PASS).
 
 ### MAP-05 — Measured scheduler and dead-code audit
 GOAL: consolidate only demonstrated redundant work while preserving motion clocks.
@@ -214,7 +224,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 verified; merge #53 before MAP-04.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 merged (#53). MAP-04 is the sole active implementation.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
@@ -271,3 +281,49 @@ second static deadline. Await only the computed heading/body font descriptors
 and actual locale glyphs used by Vision (check/load); preserve Inter/Cairo,
 weights, font-display and all typography owners. Executed regression keeps the
 global promise pending while proving local glyph readiness settles. No UA fork.
+
+## MAP-04 bounded packet — FACT / GAP / DECISION
+
+Main: `c9f93c0d91de862c6351d259996707ad65d00597`. Channel: Terminal Codex.
+FACT: Program returns armed before GSAP mount; its 100% observer initiates script
+work. Values already prepares geometry in its initial RAF but discards cleanup.
+Gallery loads and plays videos together at 180px, including reduced motion;
+image fit registers duplicate once-listeners on resize before media loads.
+Wall already imports 150% ahead and samples only on scroll, so keep that path.
+GAP: coordinator cannot distinguish initialized/fallback outcomes; invisible
+media plays, permanent exit retains Values/wall ownership.
+DECISION: Program begins background GSAP loading after Vision unlock, awaits
+installed controls or real static fallback, with a bounded cancellation deadline.
+Values awaits its first computed/painted frame or existing static mode. Gallery
+media prepares one item at a time in a 100% ahead window, pauses after its first
+frame and plays only in the actual viewport; reduced motion keeps media static.
+Keep all easing, geometry, fitting, DOM, locale and CSS. Missing capabilities
+select usable semantic/static behavior. Dispose permanent exit, suspend BFCache.
+Editable: Program readiness/lifecycle, Values controller/lifecycle/preparation,
+Gallery media/fit/lifecycle, wall lifecycle, coordinator, tests and proof/docs.
+Read-only: all CSS/Blade/type/content/media URLs; forbidden: dependencies,
+renderer activation, business data, unrelated cleanup and motion redesign.
+Tests: executed deferred GSAP/error/deadline/disposal, sequential ahead-media,
+reduced/hidden/restore, actual first paint; existing motion/DOM PHP regressions,
+full canonical gates, six-tier ID/EN/AR Chromium/WebKit browser proof.
+DoD: coordinator awaits actual outcomes, scrolling never initiates Program
+mount, no invisible continuous playback and no late mount after cancellation.
+
+MAP-04 media owner audit: Gallery SSR already receives thumbnail_url for direct
+video items but does not attach it as poster. Add only that existing optional
+poster attribute (no new asset/copy/data). This narrowly extends editable Blade
+for reduced/error fallback. No CSS rule is deleted or changed.
+
+MAP-04 final runtime proof: computed opacity must be sampled after media-query
+rendering settles, not immediately after emulation acknowledges the query.
+WebKit transient sampling was invalidated; final real-pointer cases assert
+settled opacity 1, pointer auto, no stale dialog classes, Escape and re-enhancement.
+
+MAP-05 read-only baseline: twenty synchronous scroll events caused 160 card
+geometry reads before any RAF. Formation/world/Gallery each scheduled a frame.
+Gallery made 18 geometry reads after its own writes during the burst interval.
+At a settled Values/Gallery handoff (exit 1, Gallery top ~1000px), Gallery
+scheduled 37 further RAFs in 600ms with no user input. These are work counts;
+no decoder/GPU attribution or measured frame-drop claim. Current source/history
+shows polling follows Values handoff; retain its clock, notify consumers when
+paint changes, and consolidate proven samplers with explicit read/write phases.

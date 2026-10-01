@@ -1,7 +1,7 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
 Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`
-Updated: 2026-10-01
+Updated: 2026-10-02
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
 Historical runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
@@ -10,6 +10,20 @@ Durable references:
 
 - current execution map: `handoffs/2026-10-01-home-runtime-execution-map.md`;
 - current accepted runtime blueprint: `blueprints/2026-10-01-home-runtime-preparation.md`.
+
+## Active publication checkpoint
+
+MAP-03 is merged after green CI (#53): main
+`c9f93c0d91de862c6351d259996707ad65d00597`. Its 86 browser cases and
+18 Node contracts remain durable proof, not production certification.
+MAP-04 source `4022eba0` is verified in PR #55 / Issue #54.
+PASS: 25 Node contracts; PHP 305/3,500; structure 595; build 145; Pint/diff.
+86 functional Chromium/WebKit cases PASS, including final real-pointer motion
+interruption. Three cold traces: all surfaces ready before input, zero first-
+scroll requests; FCP median/worst 752/816ms. Local proof only.
+Exactly one NEXT: Terminal Codex publishes proof, waits for final green CI and
+merges MAP-04. MAP-05 remains read-only; measured burst 160 card reads and
+37 idle Gallery handoff RAFs justify its bounded scheduler packet.
 
 ## Current execution authority — 2026-10-01
 

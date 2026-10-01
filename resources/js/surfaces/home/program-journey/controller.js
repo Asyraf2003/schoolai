@@ -1,49 +1,14 @@
-import { collectProgramDom, detailParts, hideDetails, showDetail } from './geometry.js';
+import { collectProgramDom, detailParts } from './geometry.js';
 import { mountGsap } from './gsap-controller.js';
 import { mountProgramHeading } from './heading.js';
 import { createProgramDialogIntegration } from './integration.js';
 import { loadGsap } from './motion.js';
 
-const PROGRAM_ENHANCEMENT_ROOT_MARGIN = '100% 0px 100% 0px';
+import { mountReduced } from './reduced-controller.js';
 
 function withReady(cleanup, ready = Promise.resolve()) {
   cleanup.ready = ready;
   return cleanup;
-}
-
-function mountReduced(dom, integration) {
-  let activeIndex = -1;
-  const open = (event) => {
-    activeIndex = Number(event.currentTarget.dataset.programIndex);
-    integration.lock(event.currentTarget);
-    dom.layer.hidden = false;
-    const detail = showDetail(dom, activeIndex);
-    dom.root.classList.add('is-detail-open');
-    detailParts(detail).back?.focus({ preventScroll: true });
-  };
-  const close = () => {
-    if (activeIndex < 0) return;
-    dom.layer.hidden = true;
-    hideDetails(dom);
-    dom.root.classList.remove('is-detail-open');
-    activeIndex = -1;
-    integration.unlock();
-  };
-  const keydown = (event) => {
-    if (activeIndex < 0) return;
-    if (event.key === 'Escape') { event.preventDefault(); close(); }
-    else if (event.key === 'Tab') integration.trapTab(event);
-  };
-
-  dom.triggers.forEach((trigger) => trigger.addEventListener('click', open));
-  dom.backs.forEach((back) => back.addEventListener('click', close));
-  document.addEventListener('keydown', keydown);
-  return () => {
-    dom.triggers.forEach((trigger) => trigger.removeEventListener('click', open));
-    dom.backs.forEach((back) => back.removeEventListener('click', close));
-    document.removeEventListener('keydown', keydown);
-    if (activeIndex >= 0) integration.unlock();
-  };
 }
 
 export function mountProgramJourney(root) {
@@ -56,20 +21,18 @@ export function mountProgramJourney(root) {
   const cleanHeading = mountProgramHeading(root);
   const integration = createProgramDialogIntegration(dom);
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const cleanReduced = mountReduced(dom, integration);
-    return withReady(() => {
-      cleanReduced();
-      cleanHeading();
-      root.classList.remove('is-enhanced', 'is-program-heading-revealed', 'is-detail-open');
-    });
-  }
-
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const lifecycle = new AbortController();
   let cleanup = () => {};
-  let observer = null;
   let disposed = false;
   let started = false;
   let pendingTrigger = null;
+  let resolveReady;
+  const ready = new Promise(resolve => { resolveReady = resolve; });
+  const settled = state => {
+    root.dataset.programReady = state;
+    resolveReady({ state });
+  };
 
   const clearPending = () => {
     dom.triggers.forEach((trigger) => trigger.removeEventListener('click', pendingOpen));
@@ -87,23 +50,31 @@ export function mountProgramJourney(root) {
   const startEnhanced = () => {
     if (started || disposed) return;
     started = true;
-    observer?.disconnect();
-    observer = null;
 
-    loadGsap().then((gsap) => {
+    loadGsap({ signal: lifecycle.signal }).then((gsap) => {
       if (disposed) return;
+      if (reduced.matches) { installStatic(); return; }
       clearPending();
       root.classList.add('has-gsap');
       cleanup = mountGsap(dom, integration, gsap);
+      settled('gsap');
       replayPending();
     }).catch(() => {
       if (disposed) return;
-      clearPending();
       root.classList.add('gsap-failed');
-      cleanup = mountReduced(dom, integration);
-      replayPending();
+      installStatic();
     });
   };
+
+  function installStatic() {
+    clearPending();
+    cleanup();
+    dom.layer.hidden = true;
+    root.classList.remove('has-gsap', 'is-transitioning', 'is-detail-open');
+    cleanup = mountReduced(dom, integration);
+    settled('static-fallback');
+    replayPending();
+  }
 
   function pendingOpen(event) {
     event.preventDefault();
@@ -113,22 +84,14 @@ export function mountProgramJourney(root) {
 
   dom.triggers.forEach((trigger) => trigger.addEventListener('click', pendingOpen));
 
-  if ('IntersectionObserver' in window) {
-    observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) startEnhanced();
-    }, {
-      rootMargin: PROGRAM_ENHANCEMENT_ROOT_MARGIN,
-      threshold: 0,
-    });
-    observer.observe(root);
-  } else {
-    window.setTimeout(startEnhanced, 0);
-  }
+  if (reduced.matches) installStatic();
+  else startEnhanced();
 
   const destroy = () => {
+    if (disposed) return;
     disposed = true;
-    observer?.disconnect();
-    observer = null;
+    lifecycle.abort();
+    resolveReady({ state: 'disposed' });
     clearPending();
     cleanup();
     cleanHeading();
@@ -138,5 +101,23 @@ export function mountProgramJourney(root) {
     );
   };
 
-  return withReady(destroy, Promise.resolve('armed'));
+  const suspend = () => cleanup.suspend?.();
+  const resume = () => { if (!document.hidden) cleanup.resume?.(); };
+  window.addEventListener('pagehide', event => event.persisted ? suspend() : destroy(), { signal: lifecycle.signal });
+  window.addEventListener('pageshow', resume, { signal: lifecycle.signal });
+  document.addEventListener('visibilitychange', () => document.hidden ? suspend() : resume(), { signal: lifecycle.signal });
+  reduced.addEventListener('change', () => {
+    if (!reduced.matches) {
+      cleanup(); dom.layer.hidden = true;
+      root.classList.remove('is-detail-open', 'is-transitioning');
+      started = false; startEnhanced(); return;
+    }
+    installStatic();
+    const details = dom.details.flatMap(detail => {
+      const parts = detailParts(detail);
+      return [...parts.copy, parts.imageWrap, parts.image];
+    });
+    window.gsap?.set([...dom.cards, dom.header, dom.type, ...dom.typeLines, ...details].filter(Boolean), { clearProps: 'transform,opacity,pointerEvents' });
+  }, { signal: lifecycle.signal });
+  return withReady(destroy, ready);
 }
