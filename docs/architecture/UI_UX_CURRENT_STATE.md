@@ -4,7 +4,7 @@ Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`
 Updated: 2026-10-01
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
+Historical runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
 
 Durable references:
 
@@ -49,8 +49,9 @@ real fullscreen/modal/error/native-pointer/zoom/resize/disposal PASS. Native
 Chromium BFCache restored one cursor; WebKit history recreated one. Persisted
 handler tests cover both. Emotion/shake and asset refs 3/4/5 retired; remote
 objects untouched. Evidence: `handoffs/2026-10-01-home-runtime-proof.json`.
-ACTIVE: publish MAP-01 (#48 / #49). NEXT CHANNEL: Terminal Codex.
-NEXT after verified merge/sync: MAP-02 Hero shell/media startup.
+MAP-01 merged after CI PASS (#49).
+ACTIVE: MAP-02 Hero shell/media startup. NEXT CHANNEL: Terminal Codex.
+NEXT: decouple shell signal from playable media; warm active video before input.
 
 - hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
 - pre-Codex readiness: `handoffs/2026-08-23-pre-codex-readiness.md`

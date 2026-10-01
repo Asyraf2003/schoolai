@@ -112,7 +112,7 @@ RISKS: invisible native pointer, dialog/fullscreen layer and BFCache accumulatio
 TESTS: pointer burst coalescing, both characters, coarse pointer, failure,
 hover/disabled, hidden/pagehide/BFCache and modal/fullscreen behavior.
 DoD: emotion/shake/timers removed, only required assets requested, low priority.
-PROOF: Issue #48 / PR #49, source `46b9ccb7`. Executed Node contracts 5 PASS;
+PROOF: Issue #48 / PR #49, source `46b9ccb7`, merged after CI PASS. Executed Node contracts 5 PASS;
 focused PHP 15/256 and full 304/3,487 PASS; structure 591 sources, build 141,
 Pint/diff PASS. Final build: 72 Chromium 153.0.8010.12 / Linux WebKit 26.6
 cases (six tiers × ID/EN/AR × normal/reduced), zero exceptions. Coarse requests
@@ -137,7 +137,7 @@ autoplay, audio intent, hidden/restore, Opening and promoted carousel regression
 DoD: first-scroll performs no media startup; native range fetch remains bounded
 by metadata/active playback; poster remains usable on failure.
 PROOF: pending.
-STATUS: PLANNED.
+STATUS: IN_PROGRESS.
 
 ### MAP-03 — First journey readiness and access-safe scroll gate
 GOAL: prepare Vision truthfully before meaningful scroll; progressive next owners.
@@ -192,7 +192,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). Publish closed MAP-01 before starting MAP-02.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). Execute MAP-02 Hero only.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 

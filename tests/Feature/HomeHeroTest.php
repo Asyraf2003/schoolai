@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders the fixed R2 video as an interaction-gated Opening slide when no Article is promoted', function (): void {
+it('renders the fixed R2 video as a poster-first Opening slide when no Article is promoted', function (): void {
     $heroUrl = (string) config('media.homepage_hero_video_url');
     $posterUrl = (string) config('media.static.hero_school');
 
@@ -49,16 +49,16 @@ it('renders the fixed R2 video as an interaction-gated Opening slide when no Art
     expect($opening)
         ->toContain('source[data-src]')
         ->toContain("video.setAttribute('data-hydrated', 'true')")
-        ->toContain("root.addEventListener('pointermove', startInteractiveVideo")
-        ->toContain("window.addEventListener('scroll', startInteractiveVideo")
+        ->not->toContain("addEventListener('pointermove'")
+        ->not->toContain("addEventListener('scroll'")
         ->not->toContain("window.matchMedia('(max-width: 767px)')")
         ->not->toContain("addEventListener('keydown'")
         ->not->toContain("'requestIdleCallback' in window")
         ->not->toContain('startDeferredVideo')
         ->and($carousel)
         ->toContain('videoHydrationReady: false')
-        ->toContain("'requestIdleCallback' in window")
-        ->toContain('window.requestIdleCallback(startDeferredVideo, { timeout: 900 })')
+        ->toContain('HERO_READY_EVENT, startDeferredVideo')
+        ->toContain("root.dataset.heroReady === 'true'")
         ->and($media)
         ->toContain('state.videoHydrationReady !== true')
         ->toContain('source[data-src]');

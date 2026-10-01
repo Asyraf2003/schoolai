@@ -1,5 +1,6 @@
 import '../../../css/pages/welcome-hero-carousel.css';
 import { onMediaQueryChange } from './mega-menu.js';
+import { HERO_READY_EVENT } from './readiness.js';
 import { createSliderMediaActions } from './slider-media.js';
 import { createSliderPlaybackActions } from './slider-playback.js';
 
@@ -9,7 +10,13 @@ export function initHeroCarousel(root, slides) {
     var audioButtons = Array.from(document.querySelectorAll('[data-hero-audio]'));
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var duration = parseInt(root.getAttribute('data-autoplay-interval'), 10);
+    var lifecycle = new AbortController();
+    var options = { signal: lifecycle.signal };
+    var observer = null;
     var state = {
+        reducedMotion,
+        suspended: false,
+        inViewport: true,
         currentIndex: Math.max(0, slides.findIndex(function (slide) {
             return slide.classList.contains('is-active');
         })),
@@ -27,6 +34,7 @@ export function initHeroCarousel(root, slides) {
     root.setAttribute('data-enhanced', 'true');
 
     var mediaActions = createSliderMediaActions({
+        root,
         slides,
         state,
         statusTemplate: root.getAttribute('data-slide-label') || 'Slide :current of :total'
@@ -75,25 +83,38 @@ export function initHeroCarousel(root, slides) {
         video.addEventListener('ended', function () {
             if (index !== state.currentIndex || !mediaActions.canAutoplay()) return;
             playbackActions.showSlide(state.currentIndex + 1, false);
-        });
+        }, options);
         video.addEventListener('loadeddata', function () {
             slide.classList.remove('has-video-playback-fallback');
-        });
+            if (index === state.currentIndex) {
+                root.dataset.heroMediaState = 'frame-ready';
+                if (!root.dataset.heroFirstFrame) {
+                    root.dataset.heroFirstFrame = 'true';
+                    performance.mark('schoolai:hero-first-frame');
+                }
+            }
+        }, options);
+        video.addEventListener('playing', () => {
+            if (index === state.currentIndex) root.dataset.heroMediaState = 'playing';
+        }, options);
+        video.addEventListener('error', () => {
+            if (index === state.currentIndex) root.dataset.heroMediaState = 'media-error';
+        }, options);
     });
 
     previousButton?.addEventListener('click', function () {
         playbackActions.showSlide(state.currentIndex - 1, true);
-    });
+    }, options);
     nextButton?.addEventListener('click', function () {
         playbackActions.showSlide(state.currentIndex + 1, true);
-    });
+    }, options);
     audioButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             state.audioEnabled = !state.audioEnabled;
             startDeferredVideo();
             mediaActions.syncVideos();
             updateAudioButtons();
-        });
+        }, options);
     });
 
     root.addEventListener('keydown', function (event) {
@@ -103,11 +124,11 @@ export function initHeroCarousel(root, slides) {
         playbackActions.showSlide(
             state.currentIndex + (event.key === 'ArrowRight' ? 1 : -1), true,
         );
-    });
+    }, options);
     root.addEventListener('pointerdown', function (event) {
         if (event.pointerType === 'mouse' || event.target.closest('a, button, form, [role="link"]')) return;
         state.pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
-    }, { passive: true });
+    }, { passive: true, signal: lifecycle.signal });
     root.addEventListener('pointerup', function (event) {
         if (!state.pointerStart || state.pointerStart.id !== event.pointerId) return;
         var deltaX = event.clientX - state.pointerStart.x;
@@ -115,37 +136,47 @@ export function initHeroCarousel(root, slides) {
         state.pointerStart = null;
         if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
         playbackActions.showSlide(state.currentIndex + (deltaX < 0 ? 1 : -1), true);
-    }, { passive: true });
+    }, { passive: true, signal: lifecycle.signal });
     root.addEventListener('pointercancel', function () {
         state.pointerStart = null;
-    }, { passive: true });
+    }, { passive: true, signal: lifecycle.signal });
 
     function handleVisibilityChange() {
         mediaActions.syncVideos();
         playbackActions.scheduleNext();
     }
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange, options);
     var removeMotionListener = onMediaQueryChange(reducedMotion, function () {
         mediaActions.syncVideos();
         playbackActions.scheduleNext();
     });
-    window.addEventListener('pagehide', function () {
+    window.addEventListener('pagehide', function (event) {
+        state.suspended = true;
         playbackActions.clearTimer();
         playbackActions.clearTransition();
-        removeMotionListener();
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-        slides.forEach(function (slide) {
-            slide.querySelector('[data-hero-video]')?.pause();
+        slides.forEach(slide => slide.querySelector('[data-hero-video]')?.pause());
+        if (!event.persisted) {
+            lifecycle.abort();
+            removeMotionListener();
+            observer?.disconnect();
+        }
+    }, options);
+    window.addEventListener('pageshow', function () {
+        state.suspended = false;
+        handleVisibilityChange();
+    }, options);
+    if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver(function (entries) {
+            state.inViewport = entries.some(entry => entry.isIntersecting);
+            handleVisibilityChange();
         });
-    }, { once: true });
+        observer.observe(root);
+    }
 
     updateAudioButtons();
     playbackActions.showSlide(state.currentIndex, false);
 
-    if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(startDeferredVideo, { timeout: 900 });
-    } else {
-        window.setTimeout(startDeferredVideo, 120);
-    }
+    if (root.dataset.heroReady === 'true') startDeferredVideo();
+    else window.addEventListener(HERO_READY_EVENT, startDeferredVideo, { once: true, signal: lifecycle.signal });
 }

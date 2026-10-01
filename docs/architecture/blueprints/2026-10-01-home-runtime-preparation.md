@@ -1,6 +1,6 @@
 # Homepage preparation runtime blueprint
 
-ID: HOME-RUNTIME-2026-10-01. State: OWNER_ACCEPTED for the current task's C+D
+ID: HOME-RUNTIME-2026-10-01. State: IMPLEMENTING under owner acceptance of the current task's C+D
 direction and cursor scope. Source main: `ebdc0db5df9ca18df719c0d80269cfe7a000096a`.
 Channel: Terminal Codex. Implementation advances one map at a time under
 `../handoffs/2026-10-01-home-runtime-execution-map.md`.
@@ -88,7 +88,7 @@ exact browser/profile/SHA/tool and unavailable gates truthfully.
 
 ## Ordered execution
 
-ACTIVE: MAP-00A owner-authorized baseline repair; MAP-00 audit is CLOSED.
+ACTIVE: MAP-02 Hero startup; MAP-00/00A/01 are CLOSED and published.
 PENDING: cursor → Hero → first journey → progressive
 sections → measured RAF audit → complete regression/handoff.
 Only the active map may mutate its source. State becomes PROVEN only after all
