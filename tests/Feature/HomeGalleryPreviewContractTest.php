@@ -2,8 +2,8 @@
 
 it('uses the Codrops GridLoadingEffects contract for the public gallery', function (): void {
     $galleryPage = file_get_contents(resource_path('views/pages/galeri.blade.php'));
-    $galleryRuntime = file_get_contents(resource_path('js/pages/welcome/gallery-wall.js'));
-    $galleryCss = file_get_contents(resource_path('css/pages/welcome/049-gallery-codrops-navigation.css'));
+    $galleryRuntime = readOwnedSource(resource_path('js/pages/welcome/gallery-wall.js'), ['resources/js/pages/welcome/gallery-grid-media.js', 'resources/js/pages/welcome/gallery-grid.js', 'resources/js/pages/welcome/gallery-modal.js']);
+    $galleryCss = readOwnedSource(resource_path('css/surfaces/public/gallery.css'), ['resources/css/surfaces/public/gallery-grid.css', 'resources/css/surfaces/public/gallery-effects.css', 'resources/css/surfaces/public/gallery-modal.css']);
 
     expect($galleryPage)
         ->toContain("@extends('layouts.public'")
@@ -64,7 +64,7 @@ it('keeps the homepage gallery section unchanged', function (): void {
 });
 
 it('builds the Gallery navbar from three random page sections plus the existing homepage gallery section', function (): void {
-    $presenter = file_get_contents(app_path('View/Presenters/SiteNavbarMenuPresenter.php'));
+    $presenter = readOwnedSource(app_path('View/Presenters/SiteNavbarMenuPresenter.php'), ['app/View/Presenters/Concerns/PreparesNavbarMediaMenus.php']);
 
     expect($presenter)
         ->toContain('prepareGalleryItem(')

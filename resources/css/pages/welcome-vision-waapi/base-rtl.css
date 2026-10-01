@@ -1,0 +1,35 @@
+html[dir="rtl"] .vision-arch__content {
+    direction: rtl;
+}
+
+html[dir="rtl"] .vision-arch__visual {
+    --vision-media-contact-x: clamp(-4px, -.25vw, -2px);
+    --vision-media-shadow-x: clamp(-20px, -1.25vw, -14px);
+}
+
+html[dir="rtl"] .vision-arch__kicker,
+html[dir="rtl"] .vision-arch__heading,
+html[dir="rtl"] .vision-arch__description,
+html[dir="rtl"] .vision-arch__mission-list {
+    font-family: "Cairo", Arial, sans-serif;
+    letter-spacing: normal;
+}
+
+html[dir="rtl"] .vision-arch__kicker {
+    text-transform: none;
+    line-height: 1.15;
+}
+
+html[dir="rtl"] .vision-arch__mission-list li {
+    grid-template-columns: minmax(0, 1fr) 2.5rem;
+}
+
+html[dir="rtl"] .vision-arch__mission-list li::before {
+    grid-column: 2;
+}
+
+html[dir="rtl"] .vision-arch__mission-list h4,
+html[dir="rtl"] .vision-arch__mission-list p {
+    grid-column: 1;
+    text-align: start;
+}

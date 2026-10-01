@@ -1,0 +1,64 @@
+.vision-video-modal {
+    width: min(92vw, 76rem);
+    max-width: none;
+    max-height: 92dvh;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    color: #fff;
+    background: transparent;
+}
+
+.vision-video-modal::backdrop {
+    background: rgb(0 0 0 / .82);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.vision-video-modal__surface {
+    position: relative;
+    overflow: hidden;
+    border-radius: clamp(.85rem, 1.6vw, 1.35rem);
+    background: #000;
+    box-shadow: 0 30px 90px rgb(0 0 0 / .48);
+}
+
+.vision-video-modal__player {
+    display: block;
+    width: 100%;
+    max-height: 88dvh;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #000;
+}
+
+.vision-video-modal__close {
+    position: absolute;
+    z-index: 4;
+    inset-block-start: .9rem;
+    inset-inline-end: .9rem;
+    display: grid;
+    place-items: center;
+    width: 2.8rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / .72);
+    border-radius: 50%;
+    color: #fff;
+    background: rgb(0 0 0 / .42);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    font: 300 2rem/1 Arial, sans-serif;
+    cursor: pointer;
+}
+
+.vision-video-modal__close:hover,
+.vision-video-modal__close:focus-visible {
+    background: rgb(0 0 0 / .7);
+}
+
+.vision-video-modal__close:focus-visible {
+    outline: 3px solid #ffd166;
+    outline-offset: 3px;
+}
+

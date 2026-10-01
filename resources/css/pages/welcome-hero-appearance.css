@@ -1,0 +1,72 @@
+/* Hero visual refinement. */
+
+.home-page .hero-cinema__media::after,
+html[dir="rtl"] .home-page .hero-cinema__media::after {
+    background: linear-gradient(
+        to bottom,
+        rgb(2 13 12 / 0.04) 0%,
+        transparent 48%,
+        rgb(2 13 12 / 0.08) 100%
+    );
+}
+
+.home-page .hero-cinema__media img,
+.home-page .hero-cinema__media video {
+    filter: none;
+    image-rendering: auto;
+}
+
+.home-page .hero-cinema__title {
+    text-shadow:
+        0 3px 18px rgb(0 0 0 / 0.34),
+        0 10px 42px rgb(0 0 0 / 0.2);
+}
+
+.home-page .hero-cinema__title-link,
+.home-page .hero-cinema__campaign-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.home-page .hero-cinema__campaign-link {
+    cursor: pointer;
+}
+
+.home-page .hero-cinema__eyebrow-link {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    font-size: clamp(0.82rem, 1vw, 0.94rem);
+    letter-spacing: 0.16em;
+}
+
+.home-page .hero-cinema__title-link {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+}
+
+.home-page .hero-cinema__cta--campaign {
+    margin-block-start: clamp(16px, 2.2vh, 22px);
+}
+
+.home-page .hero-cinema__eyebrow-link,
+.home-page .hero-cinema__description-link {
+    transition:
+        opacity 160ms ease,
+        text-decoration-color 160ms ease;
+}
+
+.home-page .hero-cinema__eyebrow-link:hover,
+.home-page .hero-cinema__description-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+}
+
+.home-page .hero-cinema__campaign-link:focus-visible {
+    outline: 3px solid #ffd166;
+    outline-offset: 6px;
+    border-radius: 4px;
+}
+

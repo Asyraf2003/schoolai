@@ -1,0 +1,122 @@
+.gallery-grid-modal[hidden] {
+    display: none !important;
+}
+
+.gallery-grid-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: grid;
+    place-items: center;
+    padding: clamp(12px, 2vw, 28px);
+}
+
+.gallery-grid-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgb(0 0 0 / .86);
+}
+
+.gallery-grid-modal__frame {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: min(94vw, 1500px);
+    height: min(90svh, 980px);
+    background: #111;
+}
+
+.gallery-grid-modal__media {
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-grid-modal__media img,
+.gallery-grid-modal__media video,
+.gallery-grid-modal__media iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+    background: #111;
+}
+
+.gallery-grid-modal__frame h2 {
+    position: absolute;
+    z-index: 3;
+    left: 18px;
+    top: 10px;
+    max-width: min(70vw, 52rem);
+    margin: 0;
+    padding: .55rem .75rem;
+    background: rgb(0 0 0 / .62);
+    color: #fff;
+    font-size: clamp(.9rem, 1.4vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.gallery-grid-modal__close {
+    position: absolute;
+    z-index: 4;
+    right: 12px;
+    top: 10px;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    background: rgb(0 0 0 / .62);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+}
+
+body.gallery-modal-open {
+    overflow: hidden !important;
+}
+
+@media screen and (max-width: 900px) {
+    .gallery-grid li {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .gallery-grid li {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .gallery-grid-demo__header {
+        padding: calc(78px + 1.5em) 1em 1em;
+    }
+
+    .gallery-grid-demo__demos {
+        gap: .6em;
+    }
+
+    .gallery-grid-demo__demos a {
+        padding: .55em .75em;
+        border-width: 2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-grid li,
+    .gallery-grid li.animate {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}

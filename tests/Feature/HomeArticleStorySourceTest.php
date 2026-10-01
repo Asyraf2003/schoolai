@@ -7,7 +7,11 @@ it('owns the database-backed four-card Lead Rail Article showcase without redund
     $presentation = file_get_contents(app_path('View/Composers/HomeArticlesComposer.php'));
     $welcome = file_get_contents(resource_path('views/welcome.blade.php'));
     $pageCss = file_get_contents(resource_path('css/pages/welcome-article-showcase.css'));
-    $baseCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/base.css'));
+    $baseCss = readOwnedSource(resource_path('css/surfaces/home/article-showcase/base.css'), [
+        'resources/css/surfaces/home/article-showcase/shell.css',
+        'resources/css/surfaces/home/article-showcase/cards.css',
+        'resources/css/surfaces/home/article-showcase/actions.css',
+    ]);
     $responsiveCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/responsive.css'));
     $typographyCss = file_get_contents(resource_path('css/surfaces/home/article-showcase/typography.css'));
     $sharedHeadingCss = file_get_contents(resource_path('css/surfaces/home/section-display-heading.css'));

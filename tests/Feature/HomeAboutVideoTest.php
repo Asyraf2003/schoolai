@@ -36,12 +36,12 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
     expect(substr_count($content, 'data-vision-video-preview'))->toBe(3)
         ->and(substr_count($content, 'data-vision-video-open'))->toBe(2);
 
-    $section = file_get_contents(resource_path('views/home/sections/vision-mission.blade.php'));
+    $section = readOwnedSource(resource_path('views/home/sections/vision-mission.blade.php'), ['resources/views/home/partials/vision-video-dialog.blade.php']);
     $composer = file_get_contents(app_path('View/Composers/HomeVisionMissionComposer.php'));
-    $modal = file_get_contents(resource_path('js/pages/welcome/about-video-modal.js'));
+    $modal = readOwnedSource(resource_path('js/pages/welcome/about-video-modal.js'), ['resources/js/pages/welcome/video-previews.js', 'resources/js/pages/welcome/video-fullscreen.js', 'resources/js/pages/welcome/video-utilities.js']);
     $timeline = file_get_contents(resource_path('js/surfaces/home/vision-story/timeline.js'));
-    $css = file_get_contents(resource_path('css/pages/welcome-vision-waapi/about-video.css'));
-    $baseCss = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
+    $css = readOwnedSource(resource_path('css/pages/welcome-vision-waapi/about-video.css'), ['resources/css/pages/welcome-vision-waapi/video-preview.css', 'resources/css/pages/welcome-vision-waapi/video-modal.css', 'resources/css/pages/welcome-vision-waapi/video-controls.css']);
+    $baseCss = readOwnedSource(resource_path('css/pages/welcome-vision-waapi/base.css'), ['resources/css/pages/welcome-vision-waapi/base-layout.css', 'resources/css/pages/welcome-vision-waapi/base-rtl.css']);
     $enhancedCss = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($section)
@@ -111,7 +111,7 @@ it('uses in-view About Vision and Mission video previews with shared modal only 
 it('opts only public site surfaces into the character cursor and follows fullscreen top layers', function (): void {
     $home = file_get_contents(resource_path('views/welcome.blade.php'));
     $publicLayout = file_get_contents(resource_path('views/layouts/public.blade.php'));
-    $cursor = file_get_contents(resource_path('js/pages/welcome/cursor.js'));
+    $cursor = readOwnedSource(resource_path('js/pages/welcome/cursor.js'), ['resources/js/pages/welcome/cursor-layer.js', 'resources/js/pages/welcome/cursor-gesture.js']);
     $cursorCss = file_get_contents(resource_path('css/pages/welcome/048-custom-cursor.css'));
 
     expect($home)

@@ -58,7 +58,7 @@ it('keeps shared reveal behavior owned by core instead of legacy footer CSS', fu
 it('keeps lazy media visibility owned by core instead of retired gallery wall CSS', function (): void {
     $entry = file_get_contents(resource_path('css/pages/welcome.css'));
     $lazyMedia = file_get_contents(resource_path('css/core/media/lazy-media.css'));
-    $visionView = file_get_contents(resource_path('views/home/sections/vision-mission.blade.php'));
+    $visionView = readOwnedSource(resource_path('views/home/sections/vision-mission.blade.php'), ['resources/views/home/partials/vision-video-dialog.blade.php']);
     $lazyMediaRuntime = file_get_contents(resource_path('js/pages/welcome/lazy-media.js'));
 
     expect($entry)

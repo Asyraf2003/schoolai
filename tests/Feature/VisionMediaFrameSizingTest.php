@@ -1,7 +1,7 @@
 <?php
 
 it('keeps Vision media frames at five sixths scale with a crisp directional cast shadow', function (): void {
-    $base = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
+    $base = readOwnedSource(resource_path('css/pages/welcome-vision-waapi/base.css'), ['resources/css/pages/welcome-vision-waapi/base-layout.css', 'resources/css/pages/welcome-vision-waapi/base-rtl.css']);
     $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
     $compact = file_get_contents(resource_path('css/pages/welcome-vision-waapi/compact.css'));
     $responsive = file_get_contents(resource_path('css/pages/welcome-vision-waapi/responsive.css'));

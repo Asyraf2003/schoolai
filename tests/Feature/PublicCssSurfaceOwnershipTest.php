@@ -3,7 +3,7 @@
 it('loads Article Detail styling only from its public surface adapter', function (): void {
     $sharedEntry = file_get_contents(resource_path('css/pages/welcome.css'));
     $sharedTail = file_get_contents(resource_path('css/pages/welcome/035-welcome-cascade-035.css'));
-    $surface = file_get_contents(resource_path('css/surfaces/public/article-detail.css'));
+    $surface = readOwnedSource(resource_path('css/surfaces/public/article-detail.css'), ['resources/css/surfaces/public/article-detail-hero.css', 'resources/css/surfaces/public/article-detail-content.css', 'resources/css/surfaces/public/article-detail-responsive.css']);
     $view = file_get_contents(resource_path('views/pages/artikel-detail.blade.php'));
     $vite = file_get_contents(base_path('vite.config.js'));
 
@@ -27,8 +27,8 @@ it('loads Article Detail styling only from its public surface adapter', function
 
 it('loads Gallery styling only from its public surface adapter', function (): void {
     $sharedEntry = file_get_contents(resource_path('css/pages/welcome.css'));
-    $legacyGallery = file_get_contents(resource_path('css/pages/welcome/049-gallery-codrops-navigation.css'));
-    $surface = file_get_contents(resource_path('css/surfaces/public/gallery.css'));
+    $legacyGalleryExists = file_exists(resource_path('css/pages/welcome/049-gallery-codrops-navigation.css'));
+    $surface = readOwnedSource(resource_path('css/surfaces/public/gallery.css'), ['resources/css/surfaces/public/gallery-grid.css', 'resources/css/surfaces/public/gallery-effects.css', 'resources/css/surfaces/public/gallery-modal.css']);
     $view = file_get_contents(resource_path('views/pages/galeri.blade.php'));
     $vite = file_get_contents(base_path('vite.config.js'));
 
@@ -39,8 +39,8 @@ it('loads Gallery styling only from its public surface adapter', function (): vo
         ->toContain('.gallery-grid.effect-8 li.animate')
         ->toContain('.gallery-grid-modal {')
         ->not->toContain('.home-gallery-links')
-        ->and($legacyGallery)
-        ->toContain('.home-gallery-links')
+        ->and($legacyGalleryExists)
+        ->toBeFalse()
         ->and($view)
         ->toContain("@vite('resources/css/surfaces/public/gallery.css')")
         ->toContain('data-gallery-grid')

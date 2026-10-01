@@ -62,7 +62,7 @@ it('renders localized About Vision and Mission before Program', function (): voi
 });
 
 it('keeps About Vision and Mission body copy readable without enlarging the headings', function (): void {
-    $base = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
+    $base = readOwnedSource(resource_path('css/pages/welcome-vision-waapi/base.css'), ['resources/css/pages/welcome-vision-waapi/base-layout.css', 'resources/css/pages/welcome-vision-waapi/base-rtl.css']);
     $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($base)
@@ -143,7 +143,7 @@ it('uses a native pinned mask reveal without owning document scroll', function (
 });
 
 it('pins Mission copy to the flexible grid track in both LTR and RTL', function (): void {
-    $base = file_get_contents(resource_path('css/pages/welcome-vision-waapi/base.css'));
+    $base = readOwnedSource(resource_path('css/pages/welcome-vision-waapi/base.css'), ['resources/css/pages/welcome-vision-waapi/base-layout.css', 'resources/css/pages/welcome-vision-waapi/base-rtl.css']);
     $enhanced = file_get_contents(resource_path('css/pages/welcome-vision-waapi/enhanced.css'));
 
     expect($base)

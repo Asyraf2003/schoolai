@@ -48,3 +48,12 @@ function something()
 {
     // ..
 }
+
+/** @param array<int, string> $leaves */
+function readOwnedSource(string $path, array $leaves = []): string
+{
+    return file_get_contents($path).implode("\n", array_map(
+        static fn (string $leaf): string => file_get_contents(base_path($leaf)),
+        $leaves,
+    ));
+}
