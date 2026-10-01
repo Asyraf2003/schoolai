@@ -222,7 +222,7 @@ pre-input media playback prevent claiming all timing differences as savings.
 Durable scheduler proof JSON includes raw trace hashes and every idle window.
 No CSS/assets deleted; UNKNOWN owners retained. World endpoints/reverse/dispose
 are covered by an additional executed contract; production build is unchanged.
-STATUS: CLOSED (all proof PASS; merge #57 before any MAP-06 implementation).
+STATUS: CLOSED (merged #57 after final-head CI PASS; main `efe558fe`).
 
 ### MAP-06 — Full proof and documentation closure
 GOAL: certify final main and close linked Issues/PRs with durable proof.
@@ -233,12 +233,14 @@ RISKS: calling headless/one-locale proof browser parity or field evidence.
 TESTS: full canonical gates, six tiers + boundaries/nav 1180/1181, ID/EN/AR,
 Chromium/WebKit, input/zoom/reduced/lifecycle/failure; ≥3 comparable trace samples.
 DoD: global task checklist satisfied; median/worst by workload and final main SHA.
-PROOF: pending.
-STATUS: PLANNED.
+PROOF: source `efe558fe`; 108 Chromium boundary/locale/motion/zoom/orientation
+cases plus eight early-access/fallback/history cases PASS. Keyboard focus FAIL:
+flag capture opener blocks canonical opener, leaving saved focus null.
+STATUS: BLOCKED (owned runtime failure; MAP-06A repairs it before final resume).
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 merged (#53). MAP-04 merged (#55); MAP-05 is the sole active implementation.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 merged (#53). MAP-04 merged (#55); MAP-05 merged (#57); MAP-06 awaits the sole active MAP-06A prerequisite.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
@@ -388,3 +390,87 @@ preparation/resize work; the browser counter counts new schedules, while the
 executed queue contract proves one outstanding frame. Initial settling work is
 recorded separately from three observed zero-work idle windows. No timer or
 animation personality was changed to produce those counts.
+
+## MAP-06 bounded packet — FACT / GAP / DECISION
+
+Fresh main `efe558fe1ccac7bf302f169e59526d6c4bd86e41`; Terminal Codex only.
+FACT: each prior runtime map has real imported-module contracts, green canonical
+verification, Chromium/WebKit tier/locale/motion proof and isolated cold traces.
+GAP: final combined source still needs expanded boundaries/zoom/orientation,
+early primary-action intent and combined lifecycle/failure/accessibility proof.
+GOAL: verify the complete runtime, document measured results and close publication.
+IMPACT/DECISION: no new visual/runtime architecture; reuse canonical gates and
+add actual browser cases for final source. Keep trace CPU/network/render categories
+separate, record unavailable physical/field evidence rather than inventing PASS.
+Editable: proof JSON, execution map, accepted blueprint/current-state and final
+handoff report. Read-only: all production owners/assets/content/CSS/dependencies.
+Tests: all 33 executed Node contracts; full PHP, structure, build and diff;
+Chromium/WebKit six-tier + 360/1440/1920/boundary/nav, ID/EN/AR, motion, touch/
+keyboard/pointer/200% zoom/short height, early PPDB/navigation, failures, hidden/
+BFCache/permanent cleanup; three cold traces and declared throttled lab evidence.
+DoD: prior maps remain CLOSED; final source evidence and limits are reviewable;
+all required automated gates green and final PR/main CI green; final report.
+No automated test changes are needed unless observed behavior changes; this map
+adds browser runtime verification and reuses the executed production contracts.
+
+### MAP-06A — Proven language-modal ownership/lifecycle prerequisite
+GOAL: early navigation language control keeps one opener and restores focus/lock.
+FACTS: `language-flag.blade.php` capture callback opens and focuses modal then
+stopImmediatePropagation prevents canonical `behavior.blade.php` opener. Native
+Enter/Escape leaves focus in the closed dialog; canonical saved origin is null.
+History 87bfb14c restored this fallback with visual flags; its load-order reason
+is legitimate, but independent state owners conflict. The defect predates task.
+DEPENDENCIES: MAP-05 green main `efe558fe`; observed MAP-06 keyboard failure.
+FILES: only language flag JS producer, canonical navbar behavior, Node/PHP tests,
+proof/current-state/execution map. All flag/modal CSS/media/DOM/copy are read-only.
+RISKS: losing early load-order reliability or saved mobile scroll state.
+TESTS: execute actual inline owner before DOMContentLoaded, pointer/keyboard
+open-close, mobile origin, previous body overflow, immediate Escape cancels queued
+focus, duplicate boot/disposal; SSR owner contract, canonical gates; Chromium/
+WebKit ID/EN/AR at 390/1180/1181/1440 plus held-journey access.
+DoD: one immediate delegated canonical opener; shared gate capture still runs;
+Escape restores actual origin/previous overflow; no stale focus callback; flag
+chooser appearance unchanged. Only redundant JS fallback is migrated/removed.
+PROOF: native keyboard failure at source `efe558fe` and rendered instrumentation
+recorded in `navigationDiscovery` of durable proof; no repository mutation during
+diagnosis. Native focus remains dialog after close; canonical open never executes.
+STATUS: CLOSED (proof PASS; publication #60 pending final-head CI/merge).
+
+MAP-06A bounded decision: turn the already rendered canonical behavior into an
+immediate guarded owner, delegate capture click after full navbar/modal markup,
+preserve mobile-close semantics and support early input independent of deferred
+homepage JS. Replace only the conflicting flag opener (ACTIVE_REDUNDANT after
+migration); all its style rules are USED_AND_EFFECTIVE, kept byte-for-byte.
+Track/cancel only its one queued focus frame on close/permanent exit. Keep Tab
+inside the existing dialog using visible controls; the hidden flag-only close
+control must not receive focus. Native keyboard verification covers both ends. No new
+framework, layout, typography, business or motion animation changes. Terminal
+Codex is the sole channel. Durable proof must pass before final map resumes.
+
+MAP-06A new browser evidence: Chromium ID reduced motion at 1180px recorded the
+first focus callback while dialog visibility was still hidden (then visible).
+The scheduled focus now follows two paint frames, preserving the exact CSS
+visibility transition. Both queued stages share cancellation on Escape/exit;
+unit proof checks no early focus, actual final focus and stale callback disposal.
+
+Follow-up proof: two RAFs alone also observed hidden visibility at 390px reduced
+motion. Frame count is not visibility readiness. The bounded owner will focus
+only after computed visibility is visible; its existing CSS visibility
+transition completion supplies the retry, cancelled/disposed with the owner.
+No duration/timeout/stronger selector is introduced.
+
+Final visibility root cause: the existing global reduced-motion rule gives every
+element a 0.01ms transition duration. Descendants with default transition-property
+all also transition inherited visibility. WebKit recorded visible dialog but
+hidden flag buttons during native Tab; Chromium reproduced the same focus miss.
+Keep that visual owner untouched. Canonical initial focus must wait for both
+dialog and actual flag controls to be visible; bubbling visibility completion
+reschedules the one cancellable frame. Tab considers only truly visible controls.
+
+MAP-06A closure proof: Issue #59 / PR #60, verified runtime source `fe0315eb`.
+54 Chromium/WebKit records (48 viewport/locale/motion cells each exercising
+pointer plus native keyboard, six held-experience/held-home-JS/lifecycle cases)
+and 60 rapid reduced-motion native keyboard cycles PASS. Node 40 (seven new),
+focused PHP 11/258, full 305/3,506, structure 597, build 147, Pint/diff PASS.
+Flag CSS SHA256 and byte-identical non-script markup retained in navigation
+proof. Publication is the only next step; final proof resumes after main sync.

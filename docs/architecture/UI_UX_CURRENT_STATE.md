@@ -25,8 +25,25 @@ MAP-05 verified production build `088acb7e`: 33 executed Node contracts,
 shared frame reads 8; three observed settled idle windows have zero shared work.
 Existing motion formulas and local efficient clocks remain. Proof is in the
 scheduler key of the durable JSON; timing variance is explicitly retained.
-Exactly one NEXT: Terminal Codex publishes proof and merges #57 after final CI.
-MAP-06 implementation begins only after main sync confirms that merge.
+MAP-05 merged after final-head CI PASS (#57): main
+`efe558fe1ccac7bf302f169e59526d6c4bd86e41` (fresh fetch + fast-forward).
+MAP-06 browser proof found a pre-existing conflicting language-modal opener:
+flag partial capture listener stopImmediatePropagation blocks canonical behavior,
+so close has no saved focus/overflow. Executed rendered-script diagnostics show
+canonical open never ran; only fallback dialog focus ran. Source is unchanged
+from baseline; history 87bfb14c restored that fallback with flag appearance.
+MAP-06A browser proof also recorded first-frame focus while dialog visibility
+was hidden (Chromium, ID reduced motion, 1180px). Computed visibility gates focus; the existing visibility transition supplies
+a retry, with cancellation on close/exit. Global reduced-motion duration also
+transitions descendants inherited visibility; focus waits for visible flag
+controls, and Tab excludes hidden controls (actual WebKit/Chromium proof). CSS visibility/motion stays unchanged.
+MAP-06A source `fe0315eb` proof PASS: 54 Chromium/WebKit records plus 60 rapid
+keyboard cycles; Node 40, PHP 305/3,506, structure 597, build 147, Pint/diff PASS.
+All flag CSS/non-script markup are byte-identical to the prior main.
+Exactly one NEXT: Terminal Codex publishes verified MAP-06A PR #60 after final-head CI.
+Final MAP-06 resumes only after this prerequisite is verified/merged.
+This map changes no production runtime/style/content unless new failure evidence
+requires reopening its proven owner; such evidence must be recorded first.
 
 ## Current execution authority — 2026-10-01
 

@@ -1,9 +1,11 @@
 <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-  document.addEventListener('DOMContentLoaded', function () {
+  (function () {
     var modal = document.querySelector('[data-language-modal]');
-    var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-language-modal-open]'));
-
-    if (!modal || !triggers.length) return;
+    if (!modal || modal.dataset.languageModalBooted === 'true') return;
+    modal.dataset.languageModalBooted = 'true';
+    var lifecycle = new AbortController();
+    var options = { signal: lifecycle.signal };
+    var focusFrame = 0;
 
     var dialog = modal.querySelector('.language-modal__dialog');
     var closeControls = Array.prototype.slice.call(modal.querySelectorAll('[data-language-modal-close]'));
@@ -12,6 +14,24 @@
     var header = document.getElementById('navbar');
     var lastFocused = null;
     var previousOverflow = '';
+
+    function cancelFocus() {
+      if (focusFrame) window.cancelAnimationFrame(focusFrame);
+      focusFrame = 0;
+    }
+
+    function focusDialog() {
+      cancelFocus();
+      focusFrame = window.requestAnimationFrame(function () {
+        focusFrame = 0;
+        if (!dialog || !modal.classList.contains('is-open')) return;
+        var choices = Array.prototype.slice.call(dialog.querySelectorAll('.language-modal__option'));
+        if (window.getComputedStyle(dialog).visibility === 'visible'
+            && choices.every(function (choice) { return window.getComputedStyle(choice).visibility === 'visible'; })) {
+          dialog.focus({ preventScroll: true });
+        }
+      });
+    }
 
     function closeMobileMenu() {
       if (!navLayer || !navLayer.classList.contains('active')) return;
@@ -39,6 +59,7 @@
     }
 
     function openLanguageModal(trigger) {
+      if (modal.classList.contains('is-open')) return;
       var openedFromMobileMenu = navLayer && navLayer.classList.contains('active');
       lastFocused = openedFromMobileMenu && hamburger
         ? hamburger
@@ -50,14 +71,12 @@
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
 
-      window.requestAnimationFrame(function () {
-        if (dialog) dialog.focus({ preventScroll: true });
-      });
+      focusDialog();
     }
 
     function closeLanguageModal() {
       if (!modal.classList.contains('is-open')) return;
-
+      cancelFocus();
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = previousOverflow;
@@ -67,16 +86,21 @@
       }
     }
 
-    triggers.forEach(function (trigger) {
-      trigger.addEventListener('click', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        openLanguageModal(trigger);
-      });
-    });
+    document.addEventListener('click', function (event) {
+      var trigger = event.target.closest('[data-language-modal-open]');
+      if (!trigger) return;
+      event.preventDefault();
+      event.stopPropagation();
+      openLanguageModal(trigger);
+    }, { capture: true, signal: lifecycle.signal });
+
+    modal.addEventListener('transitionend', function (event) {
+      if (event.propertyName === 'visibility'
+          && modal.classList.contains('is-open') && !dialog.contains(document.activeElement)) focusDialog();
+    }, options);
 
     closeControls.forEach(function (control) {
-      control.addEventListener('click', closeLanguageModal);
+      control.addEventListener('click', closeLanguageModal, options);
     });
 
     document.addEventListener('keydown', function (event) {
@@ -84,6 +108,28 @@
         event.preventDefault();
         closeLanguageModal();
       }
-    });
-  });
+      if (event.key !== 'Tab' || !modal.classList.contains('is-open') || !dialog) return;
+      var controls = Array.prototype.slice.call(dialog.querySelectorAll(
+        'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      )).filter(function (control) { return control.getClientRects().length && window.getComputedStyle(control).visibility === 'visible'; });
+      if (!controls.length) { event.preventDefault(); return; }
+      var first = controls[0];
+      var last = controls[controls.length - 1];
+      if (!dialog.contains(document.activeElement) || document.activeElement === dialog
+          || (event.shiftKey && document.activeElement === first)
+          || (!event.shiftKey && document.activeElement === last)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      }
+    }, options);
+    window.addEventListener('pagehide', function (event) {
+      cancelFocus();
+      if (event.persisted) return;
+      closeLanguageModal();
+      lifecycle.abort();
+    }, options);
+    window.addEventListener('pageshow', function () {
+      if (dialog && modal.classList.contains('is-open') && !dialog.contains(document.activeElement)) focusDialog();
+    }, options);
+  })();
 </script>

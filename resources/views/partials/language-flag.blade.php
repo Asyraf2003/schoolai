@@ -65,56 +65,6 @@
     }
   </style>
 
-  <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
-    /* Delegated fallback keeps the language trigger reliable across load order. */
-    document.addEventListener('click', function (event) {
-      var trigger = event.target.closest('[data-language-modal-open]');
-      if (!trigger) return;
-
-      var modal = document.getElementById('languageModal');
-      if (!modal) return;
-
-      event.preventDefault();
-      event.stopImmediatePropagation();
-
-      var navLayer = document.getElementById('navMenu');
-      var hamburger = document.getElementById('hamburgerBtn');
-      var header = document.getElementById('navbar');
-
-      if (navLayer && navLayer.classList.contains('active')) {
-        document.dispatchEvent(new CustomEvent('mobile-navigation:request-close', {
-          detail: { immediate: true }
-        }));
-
-        if (navLayer.classList.contains('active')) {
-          navLayer.classList.remove('active', 'is-closing');
-          navLayer.setAttribute('aria-hidden', 'true');
-          navLayer.inert = true;
-          navLayer.hidden = true;
-          if (header) header.classList.remove('has-open-menu');
-        }
-      }
-
-      if (hamburger) {
-        hamburger.setAttribute('aria-expanded', 'false');
-        hamburger.setAttribute(
-          'aria-label',
-          hamburger.getAttribute('data-mobile-open-label') || 'Open menu'
-        );
-      }
-
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-
-      var dialog = modal.querySelector('.language-modal__dialog');
-      if (dialog) {
-        window.requestAnimationFrame(function () {
-          dialog.focus({ preventScroll: true });
-        });
-      }
-    }, true);
-  </script>
 @endonce
 
 <span class="nav-language__flag nav-language__flag--{{ $flagLocale }}" aria-hidden="true">
