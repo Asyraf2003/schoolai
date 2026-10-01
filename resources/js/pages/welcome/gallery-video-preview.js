@@ -1,72 +1,65 @@
-function safePlay(video) {
-    const attempt = video.play();
-    if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
-}
+import { prepareGalleryMedia } from './gallery-media-preparation.js';
 
 export function mountGalleryVideoPreviews(root) {
-    const previews = Array.from(root.querySelectorAll('[data-gallery-video-preview]'));
-    const activePreviews = new Set();
-    let observer = null;
+    const media = [...root.querySelectorAll('[data-gallery-story-visual]')];
+    const previews = media.filter(item => item instanceof HTMLVideoElement);
+    const nearby = new Set();
+    const visible = new Set();
+    const prepared = new WeakMap();
+    const lifecycle = new AbortController();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let aheadObserver = null;
+    let visibleObserver = null;
+    let preparing = false;
+    let suspended = false;
 
-    if (!previews.length) return () => {};
-
-    function hydrate(preview) {
-        if (preview.dataset.galleryVideoHydrated === 'true') return;
-        const source = preview.dataset.galleryVideoSrc || '';
-        if (!source) return;
-
-        preview.dataset.galleryVideoHydrated = 'true';
-        preview.muted = true;
-        preview.defaultMuted = true;
-        preview.loop = true;
-        preview.playsInline = true;
-        preview.src = source;
-        preview.load();
-    }
-
-    function play(preview) {
-        hydrate(preview);
-        if (!document.hidden) safePlay(preview);
-    }
-
-    previews.forEach((preview) => {
-        preview.addEventListener('loadeddata', () => {
-            preview.classList.add('is-ready');
-        }, { once: true });
-    });
-
-    if ('IntersectionObserver' in window) {
-        observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                const preview = entry.target;
-                if (entry.isIntersecting) {
-                    activePreviews.add(preview);
-                    play(preview);
-                } else {
-                    activePreviews.delete(preview);
-                    preview.pause();
-                }
-            });
-        }, { rootMargin: '180px 0px', threshold: 0.01 });
-        previews.forEach((preview) => observer.observe(preview));
-    } else {
-        previews.forEach((preview) => {
-            activePreviews.add(preview);
-            play(preview);
+    const inactive = () => suspended || lifecycle.signal.aborted || document.hidden || reduced.matches;
+    function syncPlayback() {
+        previews.forEach(preview => {
+            if (!inactive() && visible.has(preview) && preview.dataset.galleryVideoState === 'frame-ready') {
+                preview.play()?.catch(() => {});
+            } else preview.pause();
         });
     }
-
-    function onVisibilityChange() {
-        if (document.hidden) previews.forEach((preview) => preview.pause());
-        else activePreviews.forEach(play);
+    async function prepareNext() {
+        if (preparing || suspended || document.hidden || lifecycle.signal.aborted) return;
+        preparing = true;
+        for (const item of media) {
+            if (!nearby.has(item) || prepared.has(item)) continue;
+            const work = prepareGalleryMedia(item, lifecycle.signal);
+            prepared.set(item, work);
+            const state = await work;
+            if (lifecycle.signal.aborted) break;
+            item.dataset.galleryMediaReady = state;
+            if (state === 'poster-ready') prepared.delete(item);
+            syncPlayback();
+            if (suspended || document.hidden) break;
+        }
+        preparing = false;
     }
-
-    document.addEventListener('visibilitychange', onVisibilityChange);
-
-    return () => {
-        observer?.disconnect();
-        activePreviews.clear();
-        previews.forEach((preview) => preview.pause());
-        document.removeEventListener('visibilitychange', onVisibilityChange);
+    const resume = () => { suspended = false; syncPlayback(); prepareNext(); };
+    const suspend = () => { suspended = true; previews.forEach(preview => preview.pause()); };
+    const destroy = () => {
+        suspend();
+        lifecycle.abort();
+        aheadObserver?.disconnect();
+        visibleObserver?.disconnect();
     };
+    if ('IntersectionObserver' in window) {
+        aheadObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => entry.isIntersecting ? nearby.add(entry.target) : nearby.delete(entry.target));
+            prepareNext();
+        }, { rootMargin: '100% 0px', threshold: 0 });
+        visibleObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target));
+            syncPlayback();
+        }, { rootMargin: '0px', threshold: 0.01 });
+        media.forEach(item => aheadObserver.observe(item));
+        previews.forEach(preview => visibleObserver.observe(preview));
+    }
+    document.addEventListener('visibilitychange', () => document.hidden ? suspend() : resume(), { signal: lifecycle.signal });
+    window.addEventListener('pagehide', event => event.persisted ? suspend() : destroy(), { signal: lifecycle.signal });
+    window.addEventListener('pageshow', resume, { signal: lifecycle.signal });
+    reduced.addEventListener('change', () => { syncPlayback(); prepareNext(); }, { signal: lifecycle.signal });
+    return destroy;
 }

@@ -4,18 +4,15 @@ import {
 } from './welcome/gallery-story-visual.js';
 import { armGalleryPattern } from './welcome/gallery-pattern.js';
 import { mountGalleryVideoPreviews } from './welcome/gallery-video-preview.js';
-
 let mounted = false;
 const BLUE = [32, 56, 255];
 const GALLERY = [111, 155, 114];
 const clamp = (value) => Math.max(0, Math.min(1, value));
 const clampSigned = (value) => Math.max(-1, Math.min(1, value));
-
 function smoothstep(value) {
     const progress = clamp(value);
     return progress * progress * (3 - (2 * progress));
 }
-
 function mixColor(from, to, progress) {
     const value = smoothstep(progress);
     const channels = from.map((channel, index) => Math.round(
@@ -23,7 +20,6 @@ function mixColor(from, to, progress) {
     ));
     return `rgb(${channels.join(' ')})`;
 }
-
 function readValuesExitProgress(valuesWorld) {
     if (!valuesWorld) return 0;
     const raw = getComputedStyle(valuesWorld)
@@ -31,11 +27,9 @@ function readValuesExitProgress(valuesWorld) {
     const value = Number.parseFloat(raw);
     return Number.isFinite(value) ? clamp(value) : 0;
 }
-
 function mountGalleryStory(root) {
     if (mounted) return;
     mounted = true;
-
     const section = root.closest('.galeri-section') || root;
     const page = section.closest('.home-page');
     const items = Array.from(root.querySelectorAll('[data-gallery-story-item]'));
@@ -47,18 +41,16 @@ function mountGalleryStory(root) {
     let activeBackground = '';
     let frame = 0;
     let destroyed = false;
-
+    let suspended = false;
     if (page && finalBackground) {
         page.style.setProperty('--gallery-story-final-bg', finalBackground);
     }
-
     function paintHandoff() {
         const exitProgress = readValuesExitProgress(valuesWorld);
         const sectionTop = section.getBoundingClientRect().top;
         const desktop = window.innerWidth >= 1280;
         const active = desktop && !reducedMotion.matches
             && exitProgress > 0.0001 && sectionTop > 1;
-
         section.classList.toggle('is-gallery-handoff', active);
         root.style.setProperty(
             '--gallery-handoff-color', mixColor(BLUE, GALLERY, exitProgress),
@@ -70,17 +62,14 @@ function mountGalleryStory(root) {
         );
         return active;
     }
-
     function paintItems() {
         if (reducedMotion.matches) return;
-
         const viewportHeight = Math.max(window.innerHeight, 1);
         const viewportCenter = viewportHeight * 0.5;
         const revealStart = viewportHeight * 0.98;
         const revealDistance = viewportHeight * 0.62;
         let nearestDistance = Number.POSITIVE_INFINITY;
         let nearestBackground = '';
-
         items.forEach((item) => {
             const target = galleryStoryVisual(item);
             if (!target) return;
@@ -101,7 +90,6 @@ function mountGalleryStory(root) {
             const mediaY = (1 - entrance) * Math.min(190, viewportHeight * 0.22);
             const copyY = (1 - copyProgress) * Math.min(108, viewportHeight * 0.125);
             const distance = Math.abs(centerDelta);
-
             if (distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestBackground = item.dataset.galleryBackground || '';
@@ -113,25 +101,26 @@ function mountGalleryStory(root) {
             item.style.setProperty('--gallery-copy-y', `${copyY.toFixed(2)}px`);
             item.style.setProperty('--gallery-copy-opacity', copyProgress.toFixed(4));
         });
-
         if (nearestBackground && nearestBackground !== activeBackground) {
             activeBackground = nearestBackground;
             section.style.setProperty('--gallery-story-bg', nearestBackground);
         }
     }
-
     function render() {
         frame = 0;
-        if (destroyed || document.hidden) return;
+        if (destroyed || suspended || document.hidden) return;
         const handoffActive = paintHandoff();
         paintItems();
         if (handoffActive) frame = window.requestAnimationFrame(render);
     }
-
     function requestRender() {
-        if (!frame && !destroyed) frame = window.requestAnimationFrame(render);
+        if (!frame && !destroyed && !suspended && !document.hidden) frame = window.requestAnimationFrame(render);
     }
-
+    function resume() { suspended = false; requestRender(); }
+    function onVisibility() {
+        if (document.hidden) { if (frame) window.cancelAnimationFrame(frame); frame = 0; }
+        else requestRender();
+    }
     function paintStatic() {
         section.classList.remove('is-gallery-handoff');
         root.style.setProperty('--gallery-title-opacity', '1');
@@ -147,50 +136,48 @@ function mountGalleryStory(root) {
             item.style.setProperty('--gallery-copy-opacity', '1');
         });
     }
-
     function onMotionChange() {
         if (reducedMotion.matches) paintStatic();
         else requestRender();
     }
-
     function onResize() {
         fitGalleryStoryVisuals(items, requestRender);
         requestRender();
     }
-
     function destroy(event) {
-        if (event?.persisted) return;
+        if (event?.persisted) { suspended = true; if (frame) window.cancelAnimationFrame(frame); frame = 0; return; }
         destroyed = true;
         if (frame) window.cancelAnimationFrame(frame);
+        frame = 0;
         cleanPattern();
         cleanVideoPreviews();
         window.removeEventListener('scroll', requestRender);
         window.removeEventListener('resize', onResize);
-        window.removeEventListener('pageshow', requestRender);
+        window.removeEventListener('pageshow', resume);
+        document.removeEventListener('visibilitychange', onVisibility);
         window.removeEventListener('pagehide', destroy);
         reducedMotion.removeEventListener?.('change', onMotionChange);
     }
-
     window.addEventListener('scroll', requestRender, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
-    window.addEventListener('pageshow', requestRender);
+    window.addEventListener('pageshow', resume);
+    document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('pagehide', destroy);
     reducedMotion.addEventListener?.('change', onMotionChange);
     fitGalleryStoryVisuals(items, requestRender);
     cleanVideoPreviews = mountGalleryVideoPreviews(root);
-
     if (reducedMotion.matches) paintStatic();
     else {
         paintHandoff();
         paintItems();
     }
     section.classList.add('is-gallery-enhanced');
+    root.dataset.galleryReady = reducedMotion.matches ? 'static-fallback' : 'prepared';
     requestRender();
 }
-
 export function prepareHomepageDepthGallery() {
     const root = document.querySelector('[data-gallery-story]');
     if (!root) return Promise.resolve(null);
     mountGalleryStory(root);
-    return Promise.resolve(root);
+    return Promise.resolve({ state: root.dataset.galleryReady });
 }

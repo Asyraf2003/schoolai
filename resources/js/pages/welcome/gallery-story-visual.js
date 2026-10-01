@@ -54,14 +54,19 @@ function fitMedia(media, visual) {
     return fitImage(media, visual) || fitVideo(media, visual);
 }
 
+const awaiting = new WeakSet();
+
 export function fitGalleryStoryVisuals(items, onReady) {
     items.forEach((item) => {
         const target = galleryStoryVisual(item);
         if (!target) return;
         const { media, visual } = target;
 
+        if (awaiting.has(visual)) return;
         if (visual instanceof HTMLImageElement && !visual.complete) {
+            awaiting.add(visual);
             visual.addEventListener('load', () => {
+                awaiting.delete(visual);
                 fitMedia(media, visual);
                 onReady();
             }, { once: true });
@@ -69,7 +74,9 @@ export function fitGalleryStoryVisuals(items, onReady) {
         }
 
         if (visual instanceof HTMLVideoElement && visual.readyState < 1) {
+            awaiting.add(visual);
             visual.addEventListener('loadedmetadata', () => {
+                awaiting.delete(visual);
                 fitMedia(media, visual);
                 onReady();
             }, { once: true });

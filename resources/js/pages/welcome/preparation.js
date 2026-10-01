@@ -22,8 +22,9 @@ const preparationSteps = {
     import('../../surfaces/home/program-values-world.js'),
     import('./program-cards.js')
       .then(({ prepareHomepageProgram }) => prepareHomepageProgram()),
-  ]),
-  values: () => import('../../surfaces/home/values/controller.js'),
+  ]).then(([, result]) => result),
+  values: () => import('../../surfaces/home/values/controller.js')
+    .then(({ prepareHomepageValues }) => prepareHomepageValues()),
   gallery: () => import('../welcome-depth-gallery.js')
     .then(({ prepareHomepageDepthGallery }) => prepareHomepageDepthGallery()),
   footer: () => Promise.resolve(),
@@ -31,6 +32,12 @@ const preparationSteps = {
 
 let preparationPromise = null;
 let scheduled = false;
+let disposed = false;
+window.addEventListener('pagehide', event => {
+  if (event.persisted) return;
+  disposed = true;
+  firstJourney.abort();
+});
 
 function reportStep(section, status) {
   const root = document.documentElement;
@@ -50,11 +57,13 @@ async function runPreparation() {
   document.documentElement.dataset.homePreparationState = 'preparing';
 
   for (const section of HOME_PREPARATION_ORDER) {
+    if (disposed) { document.documentElement.dataset.homePreparationState = 'disposed'; return; }
     try {
       const work = preparationSteps[section]();
       const result = section === 'vision'
         ? await Promise.race([work, scrollGate?.fallbackReady || new Promise(() => {})])
         : await work;
+      if (disposed) { document.documentElement.dataset.homePreparationState = 'disposed'; return; }
       if (section === 'vision') scrollGate?.release(result?.state || 'prepared');
       reportStep(section, result?.state || 'prepared');
     } catch (error) {
@@ -77,7 +86,7 @@ async function runPreparation() {
 }
 
 export function startHomepagePreparation() {
-  if (!document.querySelector('[data-program-values-world]')) {
+  if (disposed || !document.querySelector('[data-program-values-world]')) {
     return Promise.resolve();
   }
   if (!preparationPromise) preparationPromise = runPreparation();

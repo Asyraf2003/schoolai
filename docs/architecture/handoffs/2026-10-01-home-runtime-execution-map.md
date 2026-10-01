@@ -173,7 +173,7 @@ Chromium traces show actual Vision prepared/frame-ready before unlock and zero
 first-scroll network requests. FCP median/worst 612/1,008ms; renderer-main
 Layout 117.004/383.435ms; FunctionCall 83.255/151.836ms. Local variable evidence,
 not field CWV or attributed decode/GPU. Raw-trace hashes/results in proof JSON.
-STATUS: CLOSED (verified; publish only after green CI).
+STATUS: CLOSED (merged #53 after CI PASS; main `c9f93c0d`).
 
 ### MAP-04 — Progressive Program, Values, Gallery and wall preparation
 GOAL: remove remaining proximity-triggered initialization bursts with bounded work.
@@ -185,7 +185,7 @@ TESTS: real GSAP/fallback ready, bounded ahead-window, fast/reverse scroll,
 Values deterministic clock, Gallery media, wall, hidden/BFCache/reduced motion.
 DoD: one persistent sequential coordinator, no invisible continuous work.
 PROOF: pending.
-STATUS: PLANNED.
+STATUS: IN_PROGRESS.
 
 ### MAP-05 — Measured scheduler and dead-code audit
 GOAL: consolidate only demonstrated redundant work while preserving motion clocks.
@@ -214,7 +214,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 verified; merge #53 before MAP-04.
+MAP-00/MAP-00A CLOSED and merged (#47). MAP-01 merged (#49). MAP-02 merged (#51). MAP-03 merged (#53). MAP-04 is the sole active implementation.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 
@@ -271,3 +271,35 @@ second static deadline. Await only the computed heading/body font descriptors
 and actual locale glyphs used by Vision (check/load); preserve Inter/Cairo,
 weights, font-display and all typography owners. Executed regression keeps the
 global promise pending while proving local glyph readiness settles. No UA fork.
+
+## MAP-04 bounded packet — FACT / GAP / DECISION
+
+Main: `c9f93c0d91de862c6351d259996707ad65d00597`. Channel: Terminal Codex.
+FACT: Program returns armed before GSAP mount; its 100% observer initiates script
+work. Values already prepares geometry in its initial RAF but discards cleanup.
+Gallery loads and plays videos together at 180px, including reduced motion;
+image fit registers duplicate once-listeners on resize before media loads.
+Wall already imports 150% ahead and samples only on scroll, so keep that path.
+GAP: coordinator cannot distinguish initialized/fallback outcomes; invisible
+media plays, permanent exit retains Values/wall ownership.
+DECISION: Program begins background GSAP loading after Vision unlock, awaits
+installed controls or real static fallback, with a bounded cancellation deadline.
+Values awaits its first computed/painted frame or existing static mode. Gallery
+media prepares one item at a time in a 100% ahead window, pauses after its first
+frame and plays only in the actual viewport; reduced motion keeps media static.
+Keep all easing, geometry, fitting, DOM, locale and CSS. Missing capabilities
+select usable semantic/static behavior. Dispose permanent exit, suspend BFCache.
+Editable: Program readiness/lifecycle, Values controller/lifecycle/preparation,
+Gallery media/fit/lifecycle, wall lifecycle, coordinator, tests and proof/docs.
+Read-only: all CSS/Blade/type/content/media URLs; forbidden: dependencies,
+renderer activation, business data, unrelated cleanup and motion redesign.
+Tests: executed deferred GSAP/error/deadline/disposal, sequential ahead-media,
+reduced/hidden/restore, actual first paint; existing motion/DOM PHP regressions,
+full canonical gates, six-tier ID/EN/AR Chromium/WebKit browser proof.
+DoD: coordinator awaits actual outcomes, scrolling never initiates Program
+mount, no invisible continuous playback and no late mount after cancellation.
+
+MAP-04 media owner audit: Gallery SSR already receives thumbnail_url for direct
+video items but does not attach it as poster. Add only that existing optional
+poster attribute (no new asset/copy/data). This narrowly extends editable Blade
+for reduced/error fallback. No CSS rule is deleted or changed.

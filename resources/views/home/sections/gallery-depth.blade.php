@@ -40,6 +40,9 @@
               playsinline
               webkit-playsinline
               preload="none"
+              @if ($item['thumbnail_url'] !== '')
+                poster="{{ $item['thumbnail_url'] }}"
+              @endif
               aria-hidden="true"
             ></video>
           @elseif ($item['thumbnail_url'] !== '')

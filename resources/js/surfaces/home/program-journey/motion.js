@@ -1,7 +1,7 @@
 const GSAP_SRC = 'https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js';
 let gsapRequest = null;
 
-export function loadGsap() {
+export function loadGsap({ signal } = {}) {
   if (window.gsap) return Promise.resolve(window.gsap);
   if (gsapRequest) return gsapRequest;
 
@@ -10,8 +10,23 @@ export function loadGsap() {
     script.src = GSAP_SRC;
     script.async = true;
     script.dataset.programGsap = 'true';
-    script.onload = () => window.gsap ? resolve(window.gsap) : reject(new Error('GSAP unavailable'));
-    script.onerror = () => reject(new Error('Failed to load GSAP'));
+    let settled = false;
+    const finish = (error) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(deadline);
+      signal?.removeEventListener('abort', abort);
+      script.onload = null;
+      script.onerror = null;
+      if (error) { script.remove(); reject(error); }
+      else resolve(window.gsap);
+    };
+    const deadline = window.setTimeout(() => finish(new Error('GSAP preparation deadline')), 5000);
+    const abort = () => finish(new Error('GSAP preparation aborted'));
+    signal?.addEventListener('abort', abort, { once: true });
+    if (signal?.aborted) { abort(); return; }
+    script.onload = () => finish(window.gsap ? null : new Error('GSAP unavailable'));
+    script.onerror = () => finish(new Error('Failed to load GSAP'));
     document.head.appendChild(script);
   });
 

@@ -11,6 +11,14 @@ Durable references:
 - current execution map: `handoffs/2026-10-01-home-runtime-execution-map.md`;
 - current accepted runtime blueprint: `blueprints/2026-10-01-home-runtime-preparation.md`.
 
+## Active publication checkpoint
+
+MAP-03 is merged after green CI (#53): main
+`c9f93c0d91de862c6351d259996707ad65d00597`. Its 86 browser cases and
+18 Node contracts remain durable proof, not production certification.
+Exactly one NEXT: Terminal Codex implements MAP-04 progressive section
+readiness/lifecycle under its bounded packet. No typography or visual redesign.
+
 ## Current execution authority — 2026-10-01
 
 The owner has authorized homepage runtime refactoring through verified Issue,

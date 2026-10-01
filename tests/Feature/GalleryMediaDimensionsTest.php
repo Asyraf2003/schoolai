@@ -90,3 +90,32 @@ it('renders homepage gallery photos from item dimensions instead of a shared har
         ->toContain('width="1920"')
         ->toContain('height="1200"');
 });
+
+it('renders the existing video thumbnail as a static homepage poster without eager video sources', function (): void {
+    foreach (['https://media.almustaqbal.sch.id/gallery/poster.webp', ''] as $poster) {
+        $html = View::make('home.sections.gallery-depth', [
+            'galleryHeading' => 'Gallery',
+            'gallerySection' => [
+                'items' => [[
+                    'title' => 'School activity',
+                    'caption' => '',
+                    'type' => 'video',
+                    'media_url' => 'https://media.almustaqbal.sch.id/gallery/activity.mp4',
+                    'thumbnail_url' => $poster,
+                    'is_direct_video' => true,
+                ]],
+                'cta' => [],
+            ],
+        ])->render();
+
+        expect($html)->toContain('preload="none"')
+            ->toContain('data-gallery-video-src=')
+            ->not->toMatch('/\s+src="https:\/\/media\.almustaqbal\.sch\.id\/gallery\/activity\.mp4"/');
+
+        if ($poster !== '') {
+            expect($html)->toContain('poster="'.$poster.'"');
+        } else {
+            expect($html)->not->toContain('poster=');
+        }
+    }
+});
