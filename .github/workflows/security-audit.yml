@@ -43,6 +43,12 @@ jobs:
       - name: Audit npm lock file
         run: npm audit --audit-level=high
 
+      - name: Check source structure
+        run: npm run check:structure
+
+      - name: Run frontend runtime contracts
+        run: node --test tests/Unit/*Runtime.test.mjs
+
       - name: Build frontend assets
         run: npm run build
 

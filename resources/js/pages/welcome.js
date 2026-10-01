@@ -17,7 +17,6 @@ import './welcome/public-content.js';
 import './welcome/gallery-wall.js';
 import './welcome/lazy-media.js';
 import './welcome/about-video-modal.js';
-import { initHomepageCursor } from './welcome/cursor.js';
 import { scheduleHomepagePreparation } from './welcome/preparation.js';
 
 function scheduleTestimonialWall() {
@@ -51,6 +50,18 @@ function scheduleTestimonialWall() {
     observer.observe(root);
 }
 
-initHomepageCursor();
+function scheduleCursor() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const start = () => import('./welcome/cursor.js')
+        .then(({ initHomepageCursor }) => initHomepageCursor())
+        .catch(error => console.warn('Cursor enhancement unavailable.', error));
+    const idle = () => {
+        if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2000 });
+        else window.setTimeout(start, 0);
+    };
+    window.requestAnimationFrame(() => window.requestAnimationFrame(idle));
+}
+
+scheduleCursor();
 scheduleHomepagePreparation();
 scheduleTestimonialWall();

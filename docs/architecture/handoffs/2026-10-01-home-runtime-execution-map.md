@@ -2,7 +2,8 @@
 
 Date: 2026-10-01. Repository: `Asyraf2003/schoolai`. Target: `main`.
 Source: `ebdc0db5df9ca18df719c0d80269cfe7a000096a`.
-Channel: Terminal Codex. Work status: `IMPLEMENTING`.
+Channel: Terminal Codex. Work status: `PASS` for closed prerequisites.
+Active map readiness is tracked separately below.
 Blueprint: `../blueprints/2026-10-01-home-runtime-preparation.md`.
 
 ## FACT → GAP → GOAL → IMPACT → DECISION
@@ -91,7 +92,7 @@ tests and governance. No runtime redesign in this map.
 RISKS: extraction scope/closure/import mistakes; deleting unproven fallback CSS.
 TESTS: owner feature regressions, semantic equivalence, full canonical gates.
 DoD: no guard suppression, every source ≤200 lines, consumers retained.
-PROOF: Issue #46; full PHP PASS 304 tests / 3,487 assertions; targeted
+PROOF: Issue #46 / PR #47, merged main `bcc6d387`; full PHP PASS 304 tests / 3,487 assertions; targeted
 Article 1/85 and media/Hero/Gallery 7/234; Node fullscreen behavior PASS 1 test
 (ID/EN/AR labels, WebKit API fallback, rejected exit). Structure PASS 592 files;
 build PASS 142 modules; Pint and diff PASS. All 29 emitted CSS entry SHA256s
@@ -106,13 +107,24 @@ STATUS: CLOSED.
 GOAL: random cwo/cwe + compositor tracking + useful hover/top-layer safety.
 FACTS: synchronous five-state preload and gesture analysis; shared public consumer.
 DEPENDENCIES: MAP-00A merged.
-FILES: cursor.js, cursor CSS, welcome entry, focused cursor lifecycle tests.
+FILES: cursor owners/CSS, welcome entry, focused runtime tests, existing CI gates.
 RISKS: invisible native pointer, dialog/fullscreen layer and BFCache accumulation.
 TESTS: pointer burst coalescing, both characters, coarse pointer, failure,
 hover/disabled, hidden/pagehide/BFCache and modal/fullscreen behavior.
 DoD: emotion/shake/timers removed, only required assets requested, low priority.
-PROOF: pending.
-STATUS: PLANNED.
+PROOF: Issue #48 / PR #49, source `46b9ccb7`. Executed Node contracts 5 PASS;
+focused PHP 15/256 and full 304/3,487 PASS; structure 591 sources, build 141,
+Pint/diff PASS. Final build: 72 Chromium 153.0.8010.12 / Linux WebKit 26.6
+cases (six tiers × ID/EN/AR × normal/reduced), zero exceptions. Coarse requests
+zero cursor assets; fine loads default + hover only. Real native fullscreen,
+modal, asset-failure/native-pointer, 200% zoom, resize and disposal PASS both.
+Native Chromium BFCache restores exactly one cursor; WebKit native back reloads
+one working cursor. Persisted events/hidden are additionally executed in both
+browser/unit contracts. Proof JSON: `2026-10-01-home-runtime-proof.json`.
+Remote emotion objects retained as external usage UNKNOWN; all repository
+emotion/shake producers, CSS and asset references removed. CI gates expanded
+to execute source structure and frontend runtime tests. No FPS/CWV claim.
+STATUS: CLOSED.
 
 ### MAP-02 — Hero shell and media startup
 GOAL: usable SSR shell, automatic active-video warm-up before first scroll.
@@ -180,6 +192,21 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00 and MAP-00A CLOSED. Publish verified MAP-00A before starting MAP-01.
+MAP-00/MAP-00A CLOSED and merged (#47). Publish closed MAP-01 before starting MAP-02.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
+
+## MAP-01 FACT / GAP / DECISION / removal ledger
+
+Issue #48. Active producer: cursor.js → cursor-gesture.js only. No dynamic import,
+other caller, injected state or test consumer requires gesture behavior. Owner
+explicitly retires it. Delete that module after removing its import/calls.
+`048-custom-cursor.css` emotion variables (cwo/cwe 3/4/5), emotion-state
+selectors and their centered hotspot rule have only that producer; all are
+DEAD_CONFIRMED under the accepted contract. Fine-pointer media query contains
+them; no reduced/mobile/modal/fullscreen fallback consumes these states. Keep
+all default/interactive/native-disabled/fine-pointer/transform rules. Remote
+objects 3/4/5 are UNKNOWN for external consumers: remove repository references,
+retain bucket objects. `cursor-layer.js` duplicate character constant is unused
+in all scopes and DEAD_CONFIRMED. Replace five-state preload helper with default
+load plus hover intent; preserve all interactive selectors/top-layer policy.

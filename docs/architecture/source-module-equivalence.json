@@ -185,7 +185,7 @@
       "originalSourceSha256": "cd273206685efc7db07abebe2f24a5fc65469ff8c431200949bdc86addcec0fa"
     },
     "resources/css/pages/welcome.css": {
-      "sourceSha256": "ddf394729d200f6103b5446a78aed951a1ab5d1558513852e156f97340bff7f4",
+      "sourceSha256": "ae0a8ca48328f0977506efac86cc68b0a995bc0467e407adfa0aaf3246ff2310",
       "orderedModules": [
         {
           "path": "./welcome/002-tombol.css",
@@ -259,8 +259,8 @@
         },
         {
           "path": "./welcome/048-custom-cursor.css",
-          "lines": 107,
-          "sha256": "b970c29cd0abfa5e0bb5ac0434c1dc7a45a45a038f1f6e1da624ba64f76ea5bd"
+          "lines": 80,
+          "sha256": "5703671923fc9360509174fd4755d0a609f362cf02721b035c11e74e01fb2175"
         }
       ],
       "originalSourceSha256": "dff73225f718b861c3c331303b1e97bf82796d444d88d2ab4323364cafbf54ed"
