@@ -73,13 +73,16 @@ test('autoplay rejection cannot block shell; hidden/offscreen/BFCache suspend an
         armHeroReadySignal(e.root);initOpeningHero(e.root,e.slide);e.flush();e.flush();await Promise.resolve();
         assert.equal(e.root.dataset.heroReady,'true');assert.equal(e.root.dataset.heroMediaState,'autoplay-blocked');
         e.fire(e.source,'error');e.fire(e.doc,'visibilitychange');await Promise.resolve();
-        assert.equal(e.root.dataset.heroMediaState,'media-error');e.video.error=null;
+        assert.equal(e.root.dataset.heroMediaState,'media-error');assert.equal(e.video.paused,true);
+        assert.equal(e.video.plays,1);
+        e.fire(e.button,'click');assert.equal(e.video.loads,2);
+        e.fire(e.video,'loadeddata');e.video.error=null;
         e.observers[0].callback([{isIntersecting:false}]);assert.equal(e.video.paused,true);
         e.observers[0].callback([{isIntersecting:true}]);
         e.doc.hidden=true;e.fire(e.doc,'visibilitychange');assert.equal(e.video.paused,true);
         e.fire(e.win,'pagehide',{persisted:true});const count=e.video.plays;
         e.doc.hidden=false;e.fire(e.doc,'visibilitychange');assert.equal(e.video.plays,count);
-        e.fire(e.win,'pageshow',{persisted:true});assert.equal(e.video.plays,count+1);assert.equal(e.video.loads,1);
+        e.fire(e.win,'pageshow',{persisted:true});assert.equal(e.video.plays,count+1);assert.equal(e.video.loads,2);
         e.fire(e.win,'pagehide',{persisted:false});const final=e.video.plays;
         e.fire(e.button,'click');e.fire(e.win,'pageshow');assert.equal(e.video.plays,final);
         assert.equal(e.observers[0].disconnected,true);await Promise.resolve();

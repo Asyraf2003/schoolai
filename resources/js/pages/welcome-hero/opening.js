@@ -45,7 +45,7 @@ export function initOpeningHero(root, slide) {
 
     function syncVideo() {
         video.muted = !audioEnabled;
-        if (document.hidden || suspended || !inViewport || (reducedMotion.matches && !audioEnabled)
+        if (root.dataset.heroMediaState === 'media-error' || document.hidden || suspended || !inViewport || (reducedMotion.matches && !audioEnabled)
             || video.getAttribute('data-hydrated') !== 'true') {
             video.pause();
             return;
