@@ -4,7 +4,7 @@ Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`
 Updated: 2026-10-01
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
-Inspected runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
+Historical runtime-source checkpoint: `1b79a2b3505f956ac9eccc0cce2f0fcf4bacae3b`
 
 Durable references:
 
@@ -25,11 +25,11 @@ spatial chunk warning retained. Diff PASS. Structure FAIL: 52 findings (19 line
 limits, 29 unreferenced CSS files, three checksums and one import-order finding).
 Historical G0 PASS is checkpoint evidence and does not certify current source.
 
-Current source/runtime confirms interaction-driven Opening video hydration,
+Original baseline source/runtime confirmed interaction-driven Opening video hydration,
 five-state cursor emotion/shake machinery, and coordinator promises that do not
 wait for Vision assets/timeline or Program GSAP readiness. Current rendered
 Testimonials/Articles and three Vision video previews supersede old disabled/
-static-cover descriptions. No source runtime has changed in this audit.
+static-cover descriptions. The read-only audit froze this baseline; closed maps below supersede it.
 
 Work follows the linked map; publication never substitutes for runtime proof.
 MAP-00 read-only audit is CLOSED: three local Chromium 1440×900 runs reproduce
@@ -49,8 +49,15 @@ real fullscreen/modal/error/native-pointer/zoom/resize/disposal PASS. Native
 Chromium BFCache restored one cursor; WebKit history recreated one. Persisted
 handler tests cover both. Emotion/shake and asset refs 3/4/5 retired; remote
 objects untouched. Evidence: `handoffs/2026-10-01-home-runtime-proof.json`.
-ACTIVE: publish MAP-01 (#48 / #49). NEXT CHANNEL: Terminal Codex.
-NEXT after verified merge/sync: MAP-02 Hero shell/media startup.
+MAP-01 merged after CI PASS (#49).
+MAP-02 CLOSED: shell-painted readiness independent of media; automatic active
+video startup after shell, real frame/error states, reduced/hidden/offscreen and
+BFCache safety. Node 10, focused PHP 9/228, full 304/3,488, structure/build/diff
+PASS. Final 76 Chromium/WebKit cases PASS; all three traces play before input,
+first scroll adds no Hero load. Local FCP 492ms median / 1,416ms worst; Layout
+157.75ms / 587.85ms. Proof JSON contains declared profile and raw-trace hashes.
+ACTIVE: publish verified MAP-02 (#51) after CI; no MAP-03 source mutation yet.
+NEXT CHANNEL: Terminal Codex. NEXT: merge/sync, then first-journey readiness.
 
 - hardening handoff: `handoffs/2026-08-23-homepage-hardening.md`
 - pre-Codex readiness: `handoffs/2026-08-23-pre-codex-readiness.md`

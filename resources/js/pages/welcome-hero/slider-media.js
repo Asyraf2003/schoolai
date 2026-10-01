@@ -29,7 +29,8 @@ export function createSliderMediaActions(options) {
             image.removeAttribute('data-src');
         });
 
-        if (!allowVideo || state.videoHydrationReady !== true) return;
+        if (!allowVideo || state.videoHydrationReady !== true
+            || ((state.reducedMotion?.matches || document.hidden || state.suspended) && !state.audioEnabled)) return;
 
         var video = slide.querySelector('[data-hero-video]');
         if (!video) return;
@@ -40,19 +41,26 @@ export function createSliderMediaActions(options) {
 
         var hydratedSource = false;
         video.querySelectorAll('source[data-src]').forEach(function (source) {
+            source.addEventListener('error', () => {
+                video.pause();
+                if (slide === slides[state.currentIndex]) options.root.dataset.heroMediaState = 'media-error';
+                slide.classList.add('has-video-playback-fallback');
+            }, { once: true, signal: state.lifecycleSignal });
             source.src = source.getAttribute('data-src');
             source.removeAttribute('data-src');
             hydratedSource = true;
         });
 
         if (hydratedSource) {
+            video.preload = 'metadata';
             video.setAttribute('data-hydrated', 'true');
             video.load();
         }
     }
 
     function canAutoplay() {
-        return slides.length > 1 && !state.userPaused && !document.hidden;
+        return slides.length > 1 && !state.userPaused && !document.hidden
+            && !state.suspended && state.inViewport !== false && !state.reducedMotion?.matches;
     }
 
     function syncVideos() {
@@ -74,6 +82,15 @@ export function createSliderMediaActions(options) {
                 return;
             }
 
+            if (state.reducedMotion?.matches && !state.audioEnabled) {
+                options.root.dataset.heroMediaState = 'static-reduced';
+                video.pause();
+                return;
+            }
+            if (state.suspended || state.inViewport === false || document.hidden) {
+                video.pause();
+                return;
+            }
             hydrateSlide(slide, true);
             video.muted = !state.audioEnabled;
 
@@ -85,6 +102,10 @@ export function createSliderMediaActions(options) {
             var playAttempt = video.play();
             if (playAttempt && typeof playAttempt.catch === 'function') {
                 playAttempt.catch(function () {
+                    if (index !== state.currentIndex || state.suspended || document.hidden || state.inViewport === false) return;
+                    if (options.root.dataset.heroMediaState !== 'media-error') {
+                        options.root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
+                    }
                     slide.classList.add('has-video-playback-fallback');
                 });
             }

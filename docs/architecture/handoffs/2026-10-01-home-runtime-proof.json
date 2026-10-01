@@ -1572,5 +1572,1652 @@
       }
     ],
     "limits": "Native BFCache restored in Chromium; WebKit native back recreated. Persisted handler behavior separately executed on both engines. Linux WebKit is not a physical Safari/iOS certification."
+  },
+  "hero": {
+    "map": "MAP-02",
+    "source": "68f6c19e6457d24de423c32e609f5500b990131e",
+    "profile": "Chromium 153.0.8010.47, Linux headless, 1440x900 DPR1, no CPU/network throttle, disabled browser cache, isolated testing SQLite, software graphics",
+    "browserCases": [
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "mode": "failure",
+        "status": "PASS",
+        "fixture": "actual media abort"
+      },
+      {
+        "engine": "chromium",
+        "mode": "carousel",
+        "status": "PASS",
+        "fixture": "test-only DOM two-slide fixture; actual production controller/helpers"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 1,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 1,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 1,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 1,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 1,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "noInputHydrated": true,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 1,
+        "overlappingMediaRequests": 0,
+        "mediaState": "playing",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "noInputHydrated": false,
+        "firstScrollAdditionalLoads": 0,
+        "heroLoadCalls": 0,
+        "overlappingMediaRequests": 0,
+        "mediaState": "static-reduced",
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "mode": "failure",
+        "status": "PASS",
+        "fixture": "actual media abort"
+      },
+      {
+        "engine": "webkit",
+        "mode": "carousel",
+        "status": "PASS",
+        "fixture": "test-only DOM two-slide fixture; actual production controller/helpers"
+      }
+    ],
+    "runs": [
+      {
+        "run": 1,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": false,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 1248
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 1416
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 361.20000000018626,
+              "dom": 2195.2000000001863
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 1248
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 1416
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 361.20000000018626,
+              "dom": 2195.2000000001863
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 7718.290021
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-B0mpIwFI.js",
+            "type": "Script",
+            "timestamp": 7718.31401
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-DfoTy7gp.js",
+            "type": "Script",
+            "timestamp": 7718.475393
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 7718.477452
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C82UOXd3.js",
+            "type": "Script",
+            "timestamp": 7718.584376
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 7722.592703
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 7722.594531
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 7722.596933
+          }
+        ],
+        "firstScrollRequests": [
+          {
+            "type": "Image",
+            "url": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4"
+          }
+        ],
+        "rendererThreads": [
+          [
+            38948,
+            38948
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 3253,
+            "totalMs": 3213.455,
+            "maxMs": 411.23
+          },
+          "FunctionCall": {
+            "count": 204,
+            "totalMs": 159.102,
+            "maxMs": 31.149
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 47.277,
+            "maxMs": 18.171
+          },
+          "Layout": {
+            "count": 25,
+            "totalMs": 587.846,
+            "maxMs": 290.751
+          },
+          "UpdateLayoutTree": {
+            "count": 87,
+            "totalMs": 322.528,
+            "maxMs": 93.882
+          },
+          "Paint": {
+            "count": 373,
+            "totalMs": 69.075,
+            "maxMs": 10.84
+          }
+        },
+        "rendererMainLongTasksMs": [
+          273.27,
+          330.58,
+          105.821,
+          277.297,
+          104.624,
+          75.062,
+          53.753,
+          411.23,
+          84.143,
+          126.909,
+          54.242
+        ],
+        "rawTrace": "/tmp/schoolai-home-hero-trace-1.json",
+        "rawTraceSHA256": "85a92642feaba2eab01ec65adbd024ce81c95585777089d083496eb3f3f7d8d7"
+      },
+      {
+        "run": 2,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": false,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 236
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 492
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 66.90000000037253,
+              "dom": 520.4000000003725
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 236
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 492
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 66.90000000037253,
+              "dom": 520.4000000003725
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 7725.486659
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 7726.080821
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-B0mpIwFI.js",
+            "type": "Script",
+            "timestamp": 7726.118483
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-DfoTy7gp.js",
+            "type": "Script",
+            "timestamp": 7726.128722
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 7726.129171
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C82UOXd3.js",
+            "type": "Script",
+            "timestamp": 7726.171057
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 7731.74954
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 7731.750972
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 7731.75224
+          }
+        ],
+        "firstScrollRequests": [
+          {
+            "type": "Image",
+            "url": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4"
+          }
+        ],
+        "rendererThreads": [
+          [
+            38948,
+            38948
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 1863,
+            "totalMs": 1008.36,
+            "maxMs": 157.06
+          },
+          "FunctionCall": {
+            "count": 245,
+            "totalMs": 89.291,
+            "maxMs": 9.243
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 5.032,
+            "maxMs": 1.649
+          },
+          "Layout": {
+            "count": 26,
+            "totalMs": 157.745,
+            "maxMs": 97.306
+          },
+          "UpdateLayoutTree": {
+            "count": 86,
+            "totalMs": 160.533,
+            "maxMs": 46.771
+          },
+          "Paint": {
+            "count": 401,
+            "totalMs": 36.746,
+            "maxMs": 2.509
+          }
+        },
+        "rendererMainLongTasksMs": [
+          83.533,
+          157.06
+        ],
+        "rawTrace": "/tmp/schoolai-home-hero-trace-2.json",
+        "rawTraceSHA256": "4ea28b5870bfa39c18e16a226fe0ff56b1de92a0be58a7728d6770312e73ff8d"
+      },
+      {
+        "run": 3,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": false,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 372
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 372
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 61.40000000037253,
+              "dom": 409.79999999981374
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "heroShellReady": "true",
+          "heroMediaState": "playing",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 372
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 372
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 61.40000000037253,
+              "dom": 409.79999999981374
+            }
+          ]
+        },
+        "errors": [],
+        "requests": [
+          {
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+            "type": "Media",
+            "timestamp": 7733.647881
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-B0mpIwFI.js",
+            "type": "Script",
+            "timestamp": 7733.732117
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-DfoTy7gp.js",
+            "type": "Script",
+            "timestamp": 7733.745928
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css",
+            "type": "Stylesheet",
+            "timestamp": 7733.746582
+          },
+          {
+            "url": "http://127.0.0.1:8016/build/assets/controller-C82UOXd3.js",
+            "type": "Script",
+            "timestamp": 7733.781602
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+            "type": "Media",
+            "timestamp": 7739.412644
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 7739.414806
+          },
+          {
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+            "type": "Media",
+            "timestamp": 7739.416497
+          }
+        ],
+        "firstScrollRequests": [
+          {
+            "type": "Image",
+            "url": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4"
+          }
+        ],
+        "rendererThreads": [
+          [
+            38948,
+            38948
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 4624,
+            "totalMs": 1284.597,
+            "maxMs": 90.257
+          },
+          "FunctionCall": {
+            "count": 265,
+            "totalMs": 88.112,
+            "maxMs": 11.682
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 5.182,
+            "maxMs": 1.995
+          },
+          "Layout": {
+            "count": 28,
+            "totalMs": 128.276,
+            "maxMs": 31.01
+          },
+          "UpdateLayoutTree": {
+            "count": 105,
+            "totalMs": 171.418,
+            "maxMs": 42.858
+          },
+          "Paint": {
+            "count": 417,
+            "totalMs": 41.086,
+            "maxMs": 2.981
+          }
+        },
+        "rendererMainLongTasksMs": [
+          90.257,
+          67.075
+        ],
+        "rawTrace": "/tmp/schoolai-home-hero-trace-3.json",
+        "rawTraceSHA256": "be4a7df9df61bcc37d6b563cad6c3371112717ebef2e0623dfd4acbec0cfb2be"
+      }
+    ],
+    "summary": {
+      "fcpMs": {
+        "median": 492,
+        "worst": 1416
+      },
+      "RunTaskTotalMs": {
+        "median": 1284.597,
+        "worst": 3213.455
+      },
+      "FunctionCallTotalMs": {
+        "median": 89.291,
+        "worst": 159.102
+      },
+      "EvaluateScriptTotalMs": {
+        "median": 5.182,
+        "worst": 47.277
+      },
+      "LayoutTotalMs": {
+        "median": 157.745,
+        "worst": 587.846
+      },
+      "UpdateLayoutTreeTotalMs": {
+        "median": 171.418,
+        "worst": 322.528
+      },
+      "PaintTotalMs": {
+        "median": 41.086,
+        "worst": 69.075
+      }
+    },
+    "rangeProbe": {
+      "status": 206,
+      "contentRange": "bytes 0-1023/94907995",
+      "responseBytes": 1024,
+      "file": "/tmp/schoolai-hero-range-headers.txt"
+    },
+    "tests": {
+      "node": 10,
+      "phpTests": 304,
+      "phpAssertions": 3488,
+      "targetedTests": 9,
+      "targetedAssertions": 228,
+      "structureSources": 591,
+      "buildModules": 141
+    },
+    "unmeasured": [
+      "GPU hardware/compositing cost",
+      "attributed media decode duration",
+      "field CWV",
+      "physical Safari/iOS"
+    ],
+    "toolEnvironment": "Linux WebKit required matching GStreamer 1.28.2 core/scanner/libav extracted only in /tmp; isolated raw-video playback passes after fixing test environment; initial unsupported error invalidated playback runs."
   }
 }
