@@ -112,8 +112,19 @@ RISKS: invisible native pointer, dialog/fullscreen layer and BFCache accumulatio
 TESTS: pointer burst coalescing, both characters, coarse pointer, failure,
 hover/disabled, hidden/pagehide/BFCache and modal/fullscreen behavior.
 DoD: emotion/shake/timers removed, only required assets requested, low priority.
-PROOF: pending.
-STATUS: IN_PROGRESS.
+PROOF: Issue #48 / PR #49, source `46b9ccb7`. Executed Node contracts 5 PASS;
+focused PHP 15/256 and full 304/3,487 PASS; structure 591 sources, build 141,
+Pint/diff PASS. Final build: 72 Chromium 153.0.8010.12 / Linux WebKit 26.6
+cases (six tiers × ID/EN/AR × normal/reduced), zero exceptions. Coarse requests
+zero cursor assets; fine loads default + hover only. Real native fullscreen,
+modal, asset-failure/native-pointer, 200% zoom, resize and disposal PASS both.
+Native Chromium BFCache restores exactly one cursor; WebKit native back reloads
+one working cursor. Persisted events/hidden are additionally executed in both
+browser/unit contracts. Proof JSON: `2026-10-01-home-runtime-proof.json`.
+Remote emotion objects retained as external usage UNKNOWN; all repository
+emotion/shake producers, CSS and asset references removed. CI gates expanded
+to execute source structure and frontend runtime tests. No FPS/CWV claim.
+STATUS: CLOSED.
 
 ### MAP-02 — Hero shell and media startup
 GOAL: usable SSR shell, automatic active-video warm-up before first scroll.
@@ -181,7 +192,7 @@ STATUS: PLANNED.
 
 ## ACTIVE STEP / NEXT
 
-MAP-00/MAP-00A CLOSED and merged (#47). Execute MAP-01 cursor only.
+MAP-00/MAP-00A CLOSED and merged (#47). Publish closed MAP-01 before starting MAP-02.
 Exactly one execution channel: Terminal Codex.
 Rollback point: source baseline SHA above. Do not merge a failing gate.
 

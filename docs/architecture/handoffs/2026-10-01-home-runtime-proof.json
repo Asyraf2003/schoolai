@@ -1,0 +1,1576 @@
+{
+  "date": "2026-10-01",
+  "baseline": {
+    "source": "ebdc0db5df9ca18df719c0d80269cfe7a000096a",
+    "profile": "Chromium 153.0.8010.47, Linux headless, 1440x900 DPR1, no CPU/network throttle, disabled browser cache, isolated testing SQLite, software graphics",
+    "runs": [
+      {
+        "run": 1,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "preparation": "waiting-hero",
+          "readyState": 0,
+          "paused": true,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": false,
+          "programReady": false,
+          "valuesReady": false,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 2388
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 2388
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 1699,
+              "dom": 3773.4000000003725
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "preparation": "preparing",
+          "through": "vision",
+          "hydrated": "true",
+          "readyState": 1,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": false,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 2388
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 2388
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 1699,
+              "dom": 3773.4000000003725
+            }
+          ]
+        },
+        "firstScrollRequests": [
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4"
+          },
+          {
+            "type": "Script",
+            "url": "http://127.0.0.1:8016/build/assets/welcome-vision-story-Cjn62V1a.js"
+          },
+          {
+            "type": "Script",
+            "url": "http://127.0.0.1:8016/build/assets/controller-B0mpIwFI.js"
+          },
+          {
+            "type": "Script",
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-DfoTy7gp.js"
+          },
+          {
+            "type": "Stylesheet",
+            "url": "http://127.0.0.1:8016/build/assets/program-cards-FpTl-_Ta.css"
+          },
+          {
+            "type": "Script",
+            "url": "http://127.0.0.1:8016/build/assets/program-values-world-B3wng09t.js"
+          },
+          {
+            "type": "Image",
+            "url": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4"
+          },
+          {
+            "type": "Script",
+            "url": "http://127.0.0.1:8016/build/assets/controller-BJqu_19a.js"
+          },
+          {
+            "type": "Script",
+            "url": "http://127.0.0.1:8016/build/assets/welcome-depth-gallery-Crp5WyUp.js"
+          }
+        ],
+        "rendererThreads": [
+          [
+            8805,
+            1
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 1476,
+            "totalMs": 3132.81,
+            "maxMs": 702.109
+          },
+          "FunctionCall": {
+            "count": 55,
+            "totalMs": 180.229,
+            "maxMs": 78.363
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 92.432,
+            "maxMs": 66.227
+          },
+          "Layout": {
+            "count": 16,
+            "totalMs": 823.76,
+            "maxMs": 498.223
+          },
+          "UpdateLayoutTree": {
+            "count": 45,
+            "totalMs": 425.999,
+            "maxMs": 167.415
+          },
+          "Paint": {
+            "count": 323,
+            "totalMs": 81.82,
+            "maxMs": 7.923
+          }
+        },
+        "rawTrace": "/tmp/schoolai-home-baseline-trace-1.json",
+        "rawSha256": "a1cf8e792598d78918b83472f0924cca8312e6465b7abc24ef66765413cf38da",
+        "exceptions": []
+      },
+      {
+        "run": 2,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "preparation": "complete",
+          "through": "footer",
+          "readyState": 0,
+          "paused": true,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": false,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 692
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 692
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 194.39999999990687,
+              "dom": 1002.3999999999069
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 4,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 692
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 692
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 194.39999999990687,
+              "dom": 1002.3999999999069
+            }
+          ]
+        },
+        "firstScrollRequests": [
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4"
+          },
+          {
+            "type": "Image",
+            "url": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4"
+          }
+        ],
+        "rendererThreads": [
+          [
+            8805,
+            1
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 1619,
+            "totalMs": 1740.222,
+            "maxMs": 156.632
+          },
+          "FunctionCall": {
+            "count": 160,
+            "totalMs": 143.299,
+            "maxMs": 20.836
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 15.216,
+            "maxMs": 5.622
+          },
+          "Layout": {
+            "count": 16,
+            "totalMs": 168.152,
+            "maxMs": 61.586
+          },
+          "UpdateLayoutTree": {
+            "count": 64,
+            "totalMs": 244.77,
+            "maxMs": 41.209
+          },
+          "Paint": {
+            "count": 351,
+            "totalMs": 93.243,
+            "maxMs": 7.48
+          }
+        },
+        "rawTrace": "/tmp/schoolai-home-baseline-trace-2.json",
+        "rawSha256": "053f7b18ad45202b1b3f84e2b1318f57fabe299f0a62d90490de12c6baa17f43",
+        "exceptions": []
+      },
+      {
+        "run": 3,
+        "idle": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "preparation": "complete",
+          "through": "footer",
+          "readyState": 0,
+          "paused": true,
+          "scroll": 0,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": false,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 816
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 816
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 142.10000000009313,
+              "dom": 768.1000000000931
+            }
+          ]
+        },
+        "scroll": {
+          "title": "Al Mustaqbal School",
+          "heading": "Langkah Awal Menuju Pendidikan yang Bermakna",
+          "mode": "opening",
+          "heroReady": "true",
+          "preparation": "complete",
+          "through": "footer",
+          "hydrated": "true",
+          "readyState": 0,
+          "paused": false,
+          "scroll": 400,
+          "sections": [
+            "beranda",
+            "visi-misi",
+            "program",
+            "nilai",
+            "galeri",
+            "testimoni",
+            "artikel"
+          ],
+          "headingStyle": {
+            "opacity": "1",
+            "visibility": "visible",
+            "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+          },
+          "visionPrepared": true,
+          "programReady": false,
+          "valuesReady": true,
+          "cursorStates": [],
+          "paint": [
+            {
+              "name": "first-paint",
+              "start": 816
+            },
+            {
+              "name": "first-contentful-paint",
+              "start": 816
+            }
+          ],
+          "timings": [
+            {
+              "ttfb": 142.10000000009313,
+              "dom": 768.1000000000931
+            }
+          ]
+        },
+        "firstScrollRequests": [
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4"
+          },
+          {
+            "type": "Image",
+            "url": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/vision-video-v1.mp4"
+          },
+          {
+            "type": "Media",
+            "url": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4"
+          }
+        ],
+        "rendererThreads": [
+          [
+            8805,
+            1
+          ]
+        ],
+        "rendererMain": {
+          "RunTask": {
+            "count": 1471,
+            "totalMs": 1922.641,
+            "maxMs": 204.995
+          },
+          "FunctionCall": {
+            "count": 154,
+            "totalMs": 194.883,
+            "maxMs": 75.561
+          },
+          "EvaluateScript": {
+            "count": 8,
+            "totalMs": 13.177,
+            "maxMs": 3.704
+          },
+          "Layout": {
+            "count": 16,
+            "totalMs": 162.378,
+            "maxMs": 55.657
+          },
+          "UpdateLayoutTree": {
+            "count": 83,
+            "totalMs": 304.494,
+            "maxMs": 42.638
+          },
+          "Paint": {
+            "count": 368,
+            "totalMs": 62.156,
+            "maxMs": 7.972
+          }
+        },
+        "rawTrace": "/tmp/schoolai-home-baseline-trace-3.json",
+        "rawSha256": "2c33fe1c1c4dca572098068ab9d287e0af65ba634e198e92a93523ffd6d3a9c4",
+        "exceptions": []
+      }
+    ],
+    "unmeasured": [
+      "media decode attribution",
+      "GPU/composite cost",
+      "field INP/CWV",
+      "production PSI"
+    ]
+  },
+  "baselinePrerequisite": {
+    "issue": 46,
+    "pr": 47,
+    "main": "bcc6d3876acb8c2dec904425d85fdcf0c0d776c7",
+    "cssHashes": {
+      "resources/css/app.css": {
+        "file": "assets/app-DnThFKB6.css",
+        "sha256": "9967e8e86ee2b2caf7c54bd28fd594d5e706ec294dd9145ce74040dfc618b906"
+      },
+      "resources/css/arabic-typography.css": {
+        "file": "assets/arabic-typography-CkbZEiUe.css",
+        "sha256": "f0d50e81776b270e33981c03af26fd2df4fb7ebd20e54cedd3f1d7110df918bb"
+      },
+      "resources/css/pages/account-locked.css": {
+        "file": "assets/account-locked-Pmv4wpyc.css",
+        "sha256": "49422a72afc4e31e9ac6ea494132ef80c8f3262da66c14ac0ed4dac8b56cdfd8"
+      },
+      "resources/css/pages/admin-accounts.css": {
+        "file": "assets/admin-accounts-DKV8W_6v.css",
+        "sha256": "2113fd8b0bd8e52f3bcd29773d60c37285e9adb69d54621d6b50235cba7ba377"
+      },
+      "resources/css/pages/article-canvas.css": {
+        "file": "assets/article-canvas-Bd26QZGp.css",
+        "sha256": "08e59292d329b7eec7916998dfcb8cd82d7e490474f25f933ad04cb6ecea8e67"
+      },
+      "resources/css/pages/article-reader.css": {
+        "file": "assets/article-reader-DsQ-oju0.css",
+        "sha256": "6dc81fcdfd3aaa964736b961c9ccb8389f64559037468476a50240661428c30d"
+      },
+      "resources/css/pages/ppdb-journey.css": {
+        "file": "assets/ppdb-journey-B9gGrq3T.css",
+        "sha256": "3bda2728f2181f7a511b0c9cc94cee2b6090386fda6fdc8c83bc1f5bc2f2d491"
+      },
+      "resources/css/pages/public-auth-perspective.css": {
+        "file": "assets/public-auth-perspective-BBMjEH8a.css",
+        "sha256": "a26225cc9a25388c0d8a74e4d1cb81ebe82f75fe6b3a602bb8d1903a2d1c4ad8"
+      },
+      "resources/css/pages/public-auth.css": {
+        "file": "assets/public-auth-CtK-V0v-.css",
+        "sha256": "d2639318c9edf07e8da43646f8710b030ea35aa3bafe491939b0426fb7c04809"
+      },
+      "resources/css/pages/student-dashboard.css": {
+        "file": "assets/student-dashboard-DG9-SeBg.css",
+        "sha256": "497cc34a670edb41c3ca024702b60b2e14608ff122a87a82c759eb0e1c46a521"
+      },
+      "resources/css/pages/welcome-article-showcase.css": {
+        "file": "assets/welcome-article-showcase-DyMoF3S8.css",
+        "sha256": "91d52684ed58d626f368b67439131d2bf3e4d250f304362f4ff722969989c7b4"
+      },
+      "resources/css/pages/welcome-critical.css": {
+        "file": "assets/welcome-critical-BeEMrH4O.css",
+        "sha256": "1558887eb8cacfb82a8da73ae08b2dc695bdd355c6d94ea47be45c6424dd515a"
+      },
+      "resources/css/pages/welcome-depth-gallery.css": {
+        "file": "assets/welcome-depth-gallery-BpakIKrt.css",
+        "sha256": "edd5ad3df95a4cef0b194e0be74be9bbbbecef8ba774e257606704477be19029"
+      },
+      "resources/css/pages/welcome-editorial-description-desktop.css": {
+        "file": "assets/welcome-editorial-description-desktop-YTZOECTC.css",
+        "sha256": "f2865b0ed6074df1e3ca4e446913c6d789529fffd4db3b3dd915cde0443d1e3d"
+      },
+      "resources/css/pages/welcome-editorial-headings.css": {
+        "file": "assets/welcome-editorial-headings-DrHSU2IB.css",
+        "sha256": "9bf3b48e27f23ff8619dacf0f74d8adb3043e4868ba5df0f6bd597a7af0ca75e"
+      },
+      "resources/css/pages/welcome-hero.css": {
+        "file": "assets/welcome-hero-D7RyYiFf.css",
+        "sha256": "283827ed90af01b4449a8d0a18cd5b85de31c33f88eef427282e003a4823a846"
+      },
+      "resources/css/pages/welcome-home-hero.css": {
+        "file": "assets/welcome-home-hero-UGN2tqjA.css",
+        "sha256": "604813471e624c4501fb1fd19a42343052538e83ca13f337a483ad3e7da56158"
+      },
+      "resources/css/pages/welcome-home-type-arabic.css": {
+        "file": "assets/welcome-home-type-arabic-Cxzlgh25.css",
+        "sha256": "54a25c45d253094b75d9887dc505151095564562b117ced0b849c831f2fe7906"
+      },
+      "resources/css/pages/welcome-home-type-latin.css": {
+        "file": "assets/welcome-home-type-latin-DaQZGYl2.css",
+        "sha256": "3c2a120ea3d66c550670a65eb875443e841ebfc00ba1e50e58383c6935f4e1cb"
+      },
+      "resources/css/pages/welcome-login-perspective.css": {
+        "file": "assets/welcome-login-perspective-CYElf0ND.css",
+        "sha256": "5429735dabc6d4e9abff714f205226bfbcf0cc0bc373061e40401d1e1e2aff98"
+      },
+      "resources/css/pages/welcome-mega-menu.css": {
+        "file": "assets/welcome-mega-menu-D0EDSQhZ.css",
+        "sha256": "497a0ff0d711294d8efd1ce1cdd467432aac8371983c4407aaad9d490c17ab54"
+      },
+      "resources/css/pages/welcome-scroll-reveal.css": {
+        "file": "assets/welcome-scroll-reveal-Fm2qzDO5.css",
+        "sha256": "5c81de265e78de303f1060e22905bb56434113e5bf2eab671442e11039caf4ad"
+      },
+      "resources/css/pages/welcome-values-story.css": {
+        "file": "assets/welcome-values-story-D0SAIkWn.css",
+        "sha256": "896dab46e876e79bd0fa94d9cb77032a4dee1d914e11e5fb7df9283b277c0fc3"
+      },
+      "resources/css/pages/welcome-vision-waapi.css": {
+        "file": "assets/welcome-vision-waapi-Cj-atx2v.css",
+        "sha256": "9785a11552125f63fb74f26290dec1e1ff4e53b524513fe5bc02568b7e210572"
+      },
+      "resources/css/pages/welcome.css": {
+        "file": "assets/welcome-DMvVP_j1.css",
+        "sha256": "116dca59c49b0113fdfe70bb66bf3529a74f2d8bf71c71c5f5cc4b27d2984d97"
+      },
+      "resources/css/public-latin-inter.css": {
+        "file": "assets/public-latin-inter-DwIxwYjh.css",
+        "sha256": "9418cd9150bddd44458a18438220d975bbfff6755a2d18752febdb2b70aa2cb7"
+      },
+      "resources/css/surfaces/public/article-detail.css": {
+        "file": "assets/article-detail-BufOpMgm.css",
+        "sha256": "3cc121a71c7d2ec54216be35df3e74d0af4c829d7cf53c0199947b5726f01bd7"
+      },
+      "resources/css/surfaces/public/gallery.css": {
+        "file": "assets/gallery-Dxako5ek.css",
+        "sha256": "be78f6c2685385f42bdb113db8100dc8146d1b521ac8136f07378b37251cf9b3"
+      },
+      "resources/css/text-system.css": {
+        "file": "assets/text-system-COSzPnPQ.css",
+        "sha256": "7bfd8cbbd29f998c931c8785b35be2662193fd89c296d5a2ff7e430dcb7c835b"
+      },
+      "resources/js/app.js": {
+        "file": "assets/app-COLqd4m9.js",
+        "sha256": "1292b21d79961b6613c5ed2a95119fb6c8f3be61de79ee9c99bef19c88429446"
+      },
+      "resources/js/pages/admin-accounts.js": {
+        "file": "assets/admin-accounts-CFHpUtAA.js",
+        "sha256": "1a32de910d8bc43ba30c38f6b0939cc4a89c3120f2d18f393a1942ef05f4dd87"
+      },
+      "resources/js/pages/article-canvas-arabic.js": {
+        "file": "assets/article-canvas-arabic-GSzA-rdg.js",
+        "sha256": "5012ea87dd006234a37acd0ac328ef1f0eb6374ceb68ffb3d97a4554f6447eff"
+      },
+      "resources/js/pages/article-canvas-context-ui.js": {
+        "file": "assets/article-canvas-context-ui-D-i9FS0U.js",
+        "sha256": "3fde030019676db759642dcdeb3336ec33c788e4e9929724ddfcae38f1982484"
+      },
+      "resources/js/pages/article-canvas.js": {
+        "file": "assets/article-canvas-DMzg8WQI.js",
+        "sha256": "f83e28268e7fc99fcd544f06cd409543230e4b882b51573a6b105170233c6d9c"
+      },
+      "resources/js/pages/ppdb-journey.js": {
+        "file": "assets/ppdb-journey-BGgBJlif.js",
+        "sha256": "cee1bff21d576b07ac1d8e595555431260af92bcfdf5b8a17d76cbc91899a2f8"
+      },
+      "resources/js/pages/public-auth-perspective.js": {
+        "file": "assets/public-auth-perspective-CEYpew72.js",
+        "sha256": "6a946605463cdd2ad921700e2f5ed0b9cbe6c4b18f015b199179eb247ca95261"
+      },
+      "resources/js/pages/public-login.js": {
+        "file": "assets/public-login-C-rWCcp4.js",
+        "sha256": "8f4856863977fa1b68f38618d19e8dd8c573e8e4e9aeb8bfb823883c19c387cf"
+      },
+      "resources/js/pages/student-account.js": {
+        "file": "assets/student-account-BI5vuxIs.js",
+        "sha256": "d2b52de2e6bb23b8603746cfbbffbc5bc33f27a4fc34d76b80ff04589325aa25"
+      },
+      "resources/js/pages/welcome-editorial-headings.js": {
+        "file": "assets/welcome-editorial-headings-ol_xd_P8.js",
+        "sha256": "0d10070063264fe67595f76fae483f063f0807d1457ff88fb74ced3eee5a2b18"
+      },
+      "resources/js/pages/welcome-hero.js": {
+        "file": "assets/welcome-hero-DdKB9grb.js",
+        "sha256": "5f4f7d4bf18a2a97c7f7ce944c36e7d9d88c7243d6e0737e9b697c42145e88bd"
+      },
+      "resources/js/pages/welcome-login-perspective.js": {
+        "file": "assets/welcome-login-perspective-CSFro44Z.js",
+        "sha256": "e2d40dd96ef9034128acf4e4cf8d528bf9d2c4d729f8cef168f461232e0bfa5f"
+      },
+      "resources/js/pages/welcome-scroll-reveal.js": {
+        "file": "assets/welcome-scroll-reveal-CVUZ8s9u.js",
+        "sha256": "7440367ef0c87e84c4093f01d9a590f070b5d7b4fe30f4b49982bf81e0f96eb9"
+      },
+      "resources/js/pages/welcome.js": {
+        "file": "assets/welcome-zPZ5ocIj.js",
+        "sha256": "c0dd6cc1e637c65c6ab3fc7208d7614392b96b961a119fde77ace83bb5e50ba7"
+      }
+    },
+    "emittedCssMatches": 29
+  },
+  "cursor": {
+    "source": "46b9ccb7",
+    "issue": 48,
+    "pr": 49,
+    "tool": "Playwright 1.63.0; isolated /tmp tools and libraries; no project/system dependency changes",
+    "matrix": [
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 390,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 640,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 768,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1024,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1280,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "id",
+        "width": 1536,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 390,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 640,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 768,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1024,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1280,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "en",
+        "width": 1536,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 390,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 640,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "no-preference",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 768,
+        "motion": "reduce",
+        "touch": true,
+        "cursorRequests": [],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1024,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1280,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "no-preference",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "locale": "ar",
+        "width": 1536,
+        "motion": "reduce",
+        "touch": false,
+        "cursorRequests": [
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+        ],
+        "status": "PASS"
+      }
+    ],
+    "lifecycle": [
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "failedAssetNativePointer": true,
+        "fullscreen": true,
+        "modal": true,
+        "zoom200": true,
+        "resize": true,
+        "permanentDispose": true,
+        "errors": []
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "failedAssetNativePointer": true,
+        "fullscreen": true,
+        "modal": true,
+        "zoom200": true,
+        "resize": true,
+        "permanentDispose": true,
+        "errors": []
+      }
+    ],
+    "history": [
+      {
+        "engine": "chromium",
+        "restored": "true",
+        "cursors": 1,
+        "char": "cwo"
+      },
+      {
+        "engine": "webkit",
+        "restored": "false",
+        "cursors": 1,
+        "char": "cwe"
+      }
+    ],
+    "limits": "Native BFCache restored in Chromium; WebKit native back recreated. Persisted handler behavior separately executed on both engines. Linux WebKit is not a physical Safari/iOS certification."
+  }
+}
