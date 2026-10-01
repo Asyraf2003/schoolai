@@ -41,6 +41,10 @@ export function createSliderMediaActions(options) {
 
         var hydratedSource = false;
         video.querySelectorAll('source[data-src]').forEach(function (source) {
+            source.addEventListener('error', () => {
+                if (slide === slides[state.currentIndex]) options.root.dataset.heroMediaState = 'media-error';
+                slide.classList.add('has-video-playback-fallback');
+            }, { once: true, signal: state.lifecycleSignal });
             source.src = source.getAttribute('data-src');
             source.removeAttribute('data-src');
             hydratedSource = true;
@@ -98,7 +102,9 @@ export function createSliderMediaActions(options) {
             if (playAttempt && typeof playAttempt.catch === 'function') {
                 playAttempt.catch(function () {
                     if (index !== state.currentIndex || state.suspended || document.hidden || state.inViewport === false) return;
-                    options.root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
+                    if (options.root.dataset.heroMediaState !== 'media-error') {
+                        options.root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
+                    }
                     slide.classList.add('has-video-playback-fallback');
                 });
             }

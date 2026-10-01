@@ -15,6 +15,7 @@ export function initHeroCarousel(root, slides) {
     var observer = null;
     var state = {
         reducedMotion,
+        lifecycleSignal: lifecycle.signal,
         suspended: false,
         inViewport: true,
         currentIndex: Math.max(0, slides.findIndex(function (slide) {

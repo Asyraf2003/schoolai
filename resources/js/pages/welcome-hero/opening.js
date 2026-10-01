@@ -21,6 +21,7 @@ export function initOpeningHero(root, slide) {
         if (video.getAttribute('data-hydrated') === 'true') return true;
         var hydratedSource = false;
         video.querySelectorAll('source[data-src]').forEach(function (source) {
+            source.addEventListener('error', mediaError, options);
             source.src = source.getAttribute('data-src');
             source.removeAttribute('data-src');
             hydratedSource = true;
@@ -53,7 +54,9 @@ export function initOpeningHero(root, slide) {
         if (playAttempt && typeof playAttempt.catch === 'function') {
             playAttempt.catch(function () {
                 if (lifecycle.signal.aborted || document.hidden || suspended || !inViewport) return;
-                root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
+                if (root.dataset.heroMediaState !== 'media-error') {
+                    root.dataset.heroMediaState = video.error ? 'media-error' : 'autoplay-blocked';
+                }
                 slide.classList.add('has-video-playback-fallback');
             });
         }
@@ -88,10 +91,11 @@ export function initOpeningHero(root, slide) {
         slide.classList.remove('has-video-playback-fallback');
     }, options);
     video.addEventListener('playing', function () { root.dataset.heroMediaState = 'playing'; }, options);
-    video.addEventListener('error', function () {
+    function mediaError() {
         root.dataset.heroMediaState = 'media-error';
         slide.classList.add('has-video-playback-fallback');
-    }, options);
+    }
+    video.addEventListener('error', mediaError, options);
     document.addEventListener('visibilitychange', function () {
         if (document.hidden) video.pause();
         else if (root.dataset.heroReady === 'true') warmVideo();

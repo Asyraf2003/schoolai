@@ -72,7 +72,7 @@ test('autoplay rejection cannot block shell; hidden/offscreen/BFCache suspend an
     try {
         armHeroReadySignal(e.root);initOpeningHero(e.root,e.slide);e.flush();e.flush();await Promise.resolve();
         assert.equal(e.root.dataset.heroReady,'true');assert.equal(e.root.dataset.heroMediaState,'autoplay-blocked');
-        e.video.error={code:4};e.fire(e.doc,'visibilitychange');await Promise.resolve();
+        e.fire(e.source,'error');e.fire(e.doc,'visibilitychange');await Promise.resolve();
         assert.equal(e.root.dataset.heroMediaState,'media-error');e.video.error=null;
         e.observers[0].callback([{isIntersecting:false}]);assert.equal(e.video.paused,true);
         e.observers[0].callback([{isIntersecting:true}]);
