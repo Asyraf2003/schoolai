@@ -89,7 +89,10 @@ uses intrinsic bounded width and reserved bottom inset, without changing Hero
 content/crop. All boundary pairs and interior widths; navigation1180/1181.
 Short-height/orientation/200% zoom retain primary access and focus. Because
 existing Hero min-height places its CTA below a short viewport, the loader
-reuses the same PPDB destination/label at heights≤560px; normal Hero copy/layout
+reuses the same PPDB destination/label at heights≤560px or when actual CTA
+geometry is outside the viewport (including text/CSS zoom). The existing progress
+owner observes geometry and disposes that observer with its lifecycle; no new
+gate owner or type/layout rule. Actual AR200% proof found this access gap. Normal Hero copy/layout
 is unchanged. The mobile menu has no PPDB item in current source, so prove
 its actual Program navigation and the independent Hero/short-height PPDB paths.
 ID/EN use existing Inter/LTR; AR existing Cairo/RTL. Logical positioning, shared

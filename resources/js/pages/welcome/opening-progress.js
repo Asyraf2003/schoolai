@@ -50,6 +50,19 @@ export function createOpeningProgress(gate, ledger) {
         if (!event.persisted) { animation?.cancel(); lifecycle.abort(); }
     }, { signal: lifecycle.signal });
     window.addEventListener('pageshow', () => { if (!document.hidden) animation?.play(); }, { signal: lifecycle.signal });
+    const primary = document.querySelector('.hero-cinema__cta');
+    function syncPrimaryAccess() {
+        if (!primary || !loader) return;
+        const bounds = primary.getBoundingClientRect();
+        loader.toggleAttribute('data-primary-outside', bounds.top < 0 || bounds.bottom > window.innerHeight);
+    }
+    const geometry = window.ResizeObserver ? new window.ResizeObserver(syncPrimaryAccess) : null;
+    if (primary) geometry?.observe(primary);
+    const hero = document.querySelector('[data-hero-slider]');
+    if (hero) geometry?.observe(hero);
+    window.addEventListener('resize', syncPrimaryAccess, { signal: lifecycle.signal });
+    lifecycle.signal.addEventListener('abort', () => geometry?.disconnect(), { once: true });
+    syncPrimaryAccess();
     update();
     return { update, complete() { return completion ||= finish(); } };
 }

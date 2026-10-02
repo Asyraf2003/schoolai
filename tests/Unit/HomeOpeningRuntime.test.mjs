@@ -16,7 +16,8 @@ function environment() {
         constructor() { super(); this.dataset = {}; this.textContent = 'Usable semantic content'; this.height = 900; }
         closest() { return null; }
         removeAttribute() {}
-        getBoundingClientRect() { return { top: 0, height: this.height, width: 200 }; }
+        toggleAttribute(name, enabled) { this.attributes ||= {}; this.attributes[name] = enabled; }
+        getBoundingClientRect() { return { top: 0, bottom: this.height, height: this.height, width: 200 }; }
     }
     const root = new Element(), loader = new Element(), progress = new Element(), percent = new Element();
     const hero = new Element(), video = new Element(); video.readyState = 0;
@@ -28,6 +29,7 @@ function environment() {
         querySelector: selector => selector === '[data-home-opening]' ? loader : hero,
     });
     const win = Object.assign(new EventTarget(), {
+        innerHeight: 844,
         matchMedia: () => Object.assign(new EventTarget(), { matches: false }),
         getComputedStyle: () => ({ display: 'block', visibility: 'visible' }),
         requestAnimationFrame: callback => { frames.set(++sequence, callback); return sequence; },
@@ -153,5 +155,19 @@ test('missing visible progress cannot satisfy the painted handoff proof', async 
         const completion = controller.complete();
         for (let i = 0; i < 5; i++) { await turn(); e.flush(); }
         await completion; assert.equal(e.root.dataset.homeScrollGate, 'locked'); assert.equal(e.marks.length, 0);
+    } finally { e.restore(); }
+});
+
+
+test('opening keeps direct primary access when CTA geometry is outside the viewport', () => {
+    const e = environment();
+    try {
+        const ledger = createOpeningLedger();
+        createOpeningProgress(e.win.schoolaiHomeOpening, ledger);
+        assert.equal(e.loader.attributes['data-primary-outside'], true);
+        assert.equal(ledger.progress, 0);
+        e.hero.height = 500; e.fire(e.win, 'resize');
+        assert.equal(e.loader.attributes['data-primary-outside'], false);
+        assert.equal(e.root.dataset.homeScrollGate, 'locked');
     } finally { e.restore(); }
 });

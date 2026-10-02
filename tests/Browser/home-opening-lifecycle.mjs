@@ -13,6 +13,17 @@ export async function proveOpeningLifecycle(browser,engine,base,save) {
         assert.equal(state.events.filter(e=>e.name==='schoolai:opening-adopted').length,1);
         save({engine,key:`locale-loading-${from}-${to}`,state});await context.close();
     }
+    for(const locale of ['id','en','ar']) {
+        const context=await localeContext(browser,base,locale,'reduce',390);await instrument(context,true);const page=await context.newPage();
+        let release;const held=new Promise(resolve=>release=resolve);
+        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
+        await page.setViewportSize({width:390,height:844});await page.goto(base,{waitUntil:'domcontentloaded'});
+        await page.waitForFunction(()=>document.querySelector('progress').value===40);await page.evaluate(()=>document.documentElement.style.zoom='2');
+        await page.locator('[data-home-opening-direct]').waitFor({state:'visible'});
+        assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'locked');
+        await page.locator('[data-home-opening-direct]').click();await page.waitForURL('**/ppdb');assert.ok(await page.locator('h1').first().isVisible());
+        release();save({engine,key:`zoom-direct-ppdb-loading-${locale}`,url:page.url(),profile:'CSS200% proxy with actual native click while required Program remains pending; native browser UI zoom is a separate certification.'});await context.close();
+    }
     {
         const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
         let release;const held=new Promise(resolve=>release=resolve);

@@ -31,7 +31,7 @@ for(const [engine,type] of Object.entries({chromium,webkit})) {
             }
             await page.setViewportSize({width:780,height:390});await delay(100);const short=await snapshot(page);assert.ok(short.loaderVisible&&short.navbar);save({engine,key:`${locale}-${motion}-landscape`,state:short});
             await page.setViewportSize({width:390,height:844});await page.evaluate(()=>document.documentElement.style.zoom='2');await delay(100);
-            const zoom=await snapshot(page);writeFileSync(dir+'/debug-zoom.json',JSON.stringify(zoom,null,2));assert.ok(zoom.loaderVisible&&zoom.hero&&zoom.navbar);save({engine,key:`${locale}-${motion}-zoom`,state:zoom});
+            const zoom=await snapshot(page);writeFileSync(dir+'/debug-zoom.json',JSON.stringify(zoom,null,2));assert.ok(zoom.loaderVisible&&zoom.navbar);if(!zoom.ppdb)await page.locator('[data-home-opening-direct]').waitFor({state:'visible'});save({engine,key:`${locale}-${motion}-zoom`,state:zoom});
             await page.evaluate(()=>document.documentElement.style.zoom='');await page.setViewportSize({width:1440,height:900});
             releaseProgram();
             if(motion!=='reduce') {

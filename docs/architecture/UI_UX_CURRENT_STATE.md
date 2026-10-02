@@ -1,6 +1,6 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HOME_RUNTIME_REFACTOR_ACTIVE / MAP_06B_IMPLEMENTING`
+Status: `HOME_RUNTIME_REFACTOR_ACTIVE / MAP_06B_VALIDATING`
 Updated: 2026-10-02
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
@@ -17,14 +17,24 @@ Owner accepted `blueprints/2026-10-02-opening-experience-readiness.md`, includin
 mandatory pre-gate closure and startup media budget. This supersedes every
 historical accessibility/final-certification NEXT below. Issue #61, branch
 `fix/home-opening-readiness`, source main `8c399a280b8cc5df1ae70c39aee8be72803f371c`.
-One map, one Terminal Codex execution channel. Status FAIL; blueprint IMPLEMENTING.
+One map, one Terminal Codex execution channel. Status FAIL pending the full
+correction proof; blueprint IMPLEMENTING. Five real units, visible native
+progress, a critical single-owner gate and bounded handoff are implemented.
+Code/runtime checkpoint: `fb5abc97` (production source unchanged since `cdc75580`).
+Automated gates PASS: Node48, PHP308/3,543, structure605, build152, Pint/diff.
+Chromium137 records PASS, including early native wheel/touch, real PPDB/nav,
+no-JS/hash/restored access, six tiers/locales/motion and zero required-runtime
+requests at first unlock. Two regular-Chromium native BFCache cases retain the
+same owner and complete a suspended handoff exactly once. WebKit final rerun
+and final cold performance measurements are pending. Its asynchronous native
+wheel moved after the harness's original120ms sample; observation now waits
+for that same input to move, without issuing another wheel or changing runtime.
 Read-only audit proved early input0→900 before deferred gate, Vision-only unlock,
-zero visible progress consumers and required post-unlock work. Immediate native
-first scroll saw3/4/8 requests. Fresh LH mobile69/50 desktop86/85 median/worst,
-transfer33.56/28.57MB; original baseline83/82 and97/97. Audit raw evidence is
-retained in the MAP-06B proof packet when corrected proof is captured.
-NEXT: implement/test/browser-prove this accepted map, then performance comparison,
-PR/CI/verified merge. Accessibility-label and global final certification deferred.
+zero visible progress consumers and required post-unlock work. Fresh pre-fix LH
+mobile69/50 desktop86/85 median/worst, transfer33.56/28.57MB; original baseline
+83/82 and97/97. All samples, including preliminary corrected runs, are retained.
+NEXT: finish WebKit/browser and controlled performance proof, then PR/CI/verified
+merge. Accessibility-label and global final certification remain deferred.
 
 ## Active publication checkpoint
 
