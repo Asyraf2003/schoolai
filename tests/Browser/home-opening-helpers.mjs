@@ -59,16 +59,16 @@ export async function snapshot(page) {
     });
 }
 export async function waitComplete(page) {
-    await page.waitForFunction(()=>document.documentElement.dataset.homePreparationState==='complete',null,{timeout:20000});
+    await page.waitForFunction(()=>document.documentElement.dataset.homePreparationState==='complete',null,{timeout:120000});
 }
 export function checkEvents(state,motion) {
     assert.equal(state.events.filter(e=>e.name==='schoolai:opening-adopted').length,1);
     const releases=state.events.filter(e=>e.name==='schoolai:first-journey-ready'); assert.equal(releases.length,1);
     assert.equal(releases[0].detail.state,'prepared');
-    const steps=state.events.filter(e=>e.name==='schoolai:home-preparation'); assert.equal(steps.length,5);
+    const steps=state.events.filter(e=>e.name==='schoolai:home-preparation'); assert.equal(steps.length,15);
     for(const event of state.events.filter(e=>e.name==='schoolai:opening-progress')) {
         const settled=Object.values(event.detail.units).filter(s=>['PREPARED','STATIC_FALLBACK'].includes(s)).length;
-        assert.equal(event.detail.value,20*settled); assert.equal(event.gate,'locked');
+        assert.equal(event.detail.value,Math.floor(100*settled/15)); assert.equal(event.gate,'locked');
     }
     const hundred=state.events.find(e=>e.name==='schoolai:opening-progress'&&e.value===100),handoff=state.events.find(e=>e.name==='schoolai:opening-handoff');
     assert.ok(hundred&&handoff);assert.equal(handoff.gate,'locked');assert.ok(handoff.time>=hundred.time);

@@ -10,7 +10,7 @@ return [
         'skip_to_content' => 'Langsung ke konten utama',
     ],
 
-    'opening' => ['continue' => 'Lanjutkan ke halaman', 'preparing' => 'Menyiapkan pengalaman'],
+    'opening' => ['continue' => 'Muat ulang persiapan', 'preparing' => 'Menyiapkan pengalaman'],
 
     'hero' => [
         'section_label' => 'Sorotan Al Mustaqbal School',

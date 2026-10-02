@@ -1,6 +1,6 @@
 <?php
 
-it('keeps five real opening units and a critical gate with a DOM owned gallery', function (): void {
+it('keeps complete homepage opening units and a critical gate with a DOM owned gallery', function (): void {
     $preparation = file_get_contents(resource_path(
         'js/pages/welcome/preparation.js',
     ));
@@ -29,7 +29,7 @@ it('keeps five real opening units and a critical gate with a DOM owned gallery',
     expect($preparation)
         ->toContain('HOME_PREPARATION_ORDER = REQUIRED_OPENING_UNITS')
         ->toContain('createOpeningLedger')
-        ->toContain('prepareHeroActiveMedia')
+        ->toContain('prepareHeroShell')
         ->toContain('await progress.complete()')
         ->toContain("const HERO_READY_EVENT = 'schoolai:hero-ready'")
         ->toContain('waiting-hero')

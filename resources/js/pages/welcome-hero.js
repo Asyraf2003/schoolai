@@ -10,11 +10,15 @@ function initHero(root) {
     if (root.getAttribute('data-hero-mode') === 'carousel' && slides.length > 1) {
         import('./welcome-hero/carousel.js').then(function (module) {
             module.initHeroCarousel(root, slides);
+            root.dataset.heroControllerReady = 'true';
+            root.dispatchEvent(new CustomEvent('schoolai:hero-controller-ready'));
         });
         return;
     }
 
     initOpeningHero(root, slides[0]);
+    root.dataset.heroControllerReady = 'true';
+    root.dispatchEvent(new CustomEvent('schoolai:hero-controller-ready'));
 }
 
 function bootHomepageHero() {

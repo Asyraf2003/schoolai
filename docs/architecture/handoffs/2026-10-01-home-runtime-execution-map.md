@@ -553,11 +553,18 @@ read-only. Expected proof: visible labels included in accessible names, audio
 state consistency, ID/EN/AR at 390/1180/1181/1440 in Chromium/WebKit, no visual
 change, focused contracts and canonical gates. Performance is a separate step.
 
-## MAP-06B — accepted opening correction (2026-10-02)
+## MAP-06B — complete homepage correction (2026-10-02)
 
-ACTIVE/IMPLEMENTING; status FAIL until correction gates pass. Owner accepted
-`../blueprints/2026-10-02-opening-experience-readiness.md` with mandatory earliest
-critical gate and bounded media warm-up. Issue#61, branch fix/home-opening-readiness.
-This entry supersedes all earlier final-certification/accessibility NEXT values.
-NEXT CHANNEL: Terminal Codex. ONE NEXT: implement/test/prove MAP-06B, then
-performance comparison→PR→CI→verified merge; keep global certification open.
+Owner explicitly rejects first-journey/shell readiness with deeper preparation
+after unlock. Accepted blueprint now inventories every homepage dependency.
+Hero/navbar/PPDB stay fast/usable; normal page stays at Hero until all required
+styles/fonts/images/preview sources/controllers/data/initial geometry are ready,
+real100 is painted and handoff finishes. Only transparent ongoing video ranges
+and ordinary playback/animation may continue. Navbar/Escape/focus never bypass;
+internal anchors queue until readiness. No redesign or arbitrary CSS deletion.
+Issue#61; branch fix/homepage-complete-readiness; fresh main8c399a280b8cc5df1ae70c39aee8be72803f371c.
+Source/runtime audit found69 images, three Vision previews, lazy Testimonials
+import and scroll-driven Vision/Gallery hydration; old proof is insufficient.
+ACTIVE/OWNER_ACCEPTED; work FAIL until full-journey proof passes.
+NEXT CHANNEL: Terminal Codex. ONE NEXT: corrected Issue→branch→implementation
+→tests→browser Hero/footer/Hero/footer proof→PR→CI→verified main merge.

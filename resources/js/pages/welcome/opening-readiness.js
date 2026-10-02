@@ -25,35 +25,17 @@ export function installOpeningFallback(unit) {
     }
     return usableOpeningUnit(unit);
 }
-export function prepareHeroActiveMedia({ signal } = {}) {
+export async function prepareHeroShell({ signal } = {}) {
     const root = document.querySelector(SELECTORS.hero);
-    const slide = root?.querySelector('[data-hero-slide].is-active');
-    const video = slide?.querySelector('[data-hero-video]');
-    const image = slide?.querySelector('img');
-    if (!video) {
-        return Promise.resolve(image?.decode?.()).then(() => ({
-            state: image?.complete && image.naturalWidth > 0 ? 'prepared' : 'static-fallback',
-        }));
+    if (root?.dataset.heroMode && root.dataset.heroControllerReady !== 'true') {
+        await new Promise(resolve => root.addEventListener('schoolai:hero-controller-ready', resolve, { once: true, signal }));
     }
-    return new Promise(resolve => {
-        const listeners = new AbortController();
-        const options = { signal: listeners.signal };
-        function finish(state) {
-            listeners.abort();
-            signal?.removeEventListener('abort', fallback);
-            resolve({ state });
-        }
-        const fallback = () => finish('static-fallback');
-        const check = () => {
-            if (video.readyState >= 2 || root.dataset.heroFirstFrame === 'true') finish('prepared');
-            else if (['static-reduced', 'autoplay-blocked', 'media-error'].includes(root.dataset.heroMediaState)) fallback();
-        };
-        video.addEventListener('loadeddata', check, options);
-        video.addEventListener('error', fallback, options);
-        video.addEventListener('schoolai:hero-media-state', check, options);
-        window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', check, options);
-        signal?.addEventListener('abort', fallback, { once: true });
-        if (signal?.aborted) fallback();
-        else check();
-    });
+    const slide = root?.querySelector('[data-hero-slide].is-active');
+    let image = slide?.querySelector('img');
+    const poster = slide?.querySelector('[data-hero-video]')?.poster;
+    if (!image && poster) { image = new Image(); image.src = poster; }
+    if (!image) throw new Error('Required Hero visual unavailable');
+    await image.decode?.();
+    if (!image.complete || !image.naturalWidth) throw new Error('Required Hero visual unavailable');
+    return { state: 'prepared' };
 }

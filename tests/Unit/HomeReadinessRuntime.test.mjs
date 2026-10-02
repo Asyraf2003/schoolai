@@ -25,7 +25,7 @@ function environment({ hash = '', scrollY = 0 } = {}) {
         querySelectorAll: () => [],
     });
     const win = Object.assign(new EventTarget(), { scrollY, location: { hash },
-        setTimeout(callback) { timers.set(callback, callback); return callback; }, clearTimeout(id) { timers.delete(id); },
+        setTimeout(callback) { timers.set(callback, callback); return callback; }, scrollTo() {}, clearTimeout(id) { timers.delete(id); },
     });
     Object.assign(globalThis, { window: win, document: doc, innerHeight: 900 });
     const source = readFileSync(new URL('../../resources/views/home/partials/opening-bootstrap.blade.php', import.meta.url), 'utf8').match(/<script[^>]*>([\s\S]*?)<\/script>/)[1];
@@ -40,54 +40,55 @@ function environment({ hash = '', scrollY = 0 } = {}) {
     };
 }
 
-test('critical gate is adopted once and release requires five units, paint, handoff and an active lifecycle', () => {
+test('critical gate is adopted once and release requires complete readiness, paint, handoff and an active lifecycle', () => {
     const e = environment();
     try {
         const instance = e.win.schoolaiHomeOpening;
         assert.equal(e.html.dataset.homeScrollGate, 'locked');
         const gate = createHomepageScrollGate(() => {});
         assert.equal(gate, instance); assert.equal(gate.adopt(() => {}), false);
-        for (const proof of [{}, { settled: 4, painted: true, handoff: true }, { settled: 5, handoff: true }, { settled: 5, painted: true }]) {
+        for (const proof of [{}, { complete: false, painted: true, handoff: true }, { complete: true, handoff: true }, { complete: true, painted: true }]) {
             assert.equal(gate.release(proof), false); assert.equal(e.html.dataset.homeScrollGate, 'locked');
         }
-        e.doc.hidden = true; assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), false);
-        e.doc.hidden = false; assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), true);
-        assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), false);
+        e.doc.hidden = true; assert.equal(gate.release({ complete: true, painted: true, handoff: true }), false);
+        e.doc.hidden = false; assert.equal(gate.release({ complete: true, painted: true, handoff: true }), true);
+        assert.equal(gate.release({ complete: true, painted: true, handoff: true }), false);
         assert.equal(e.html.dataset.homeScrollGate, 'unlocked'); assert.equal(e.timers.size, 0);
     } finally { e.restore(); }
 });
 
-test('deadline requests real fallback without unlocking; explicit access bypasses without claiming preparation', () => {
+test('deadline, navbar intent, focus and Escape cannot unlock an incomplete homepage', () => {
     for (const reason of ['deadline', 'link', 'focus', 'escape']) {
         const e = environment();
         try {
-            let count = 0; const gate = createHomepageScrollGate(() => { count++; });
-            const action = new e.Element(); action.closest = selector => reason === 'link' && selector.startsWith('a,') ? action : null;
+            const gate = createHomepageScrollGate(() => {});
+            const action = new e.Element();
             if (reason === 'deadline') [...e.timers.values()][0]();
             if (reason === 'link') e.event(e.doc, 'click', { target: action });
             if (reason === 'focus') e.event(e.doc, 'focusin', { target: action });
             if (reason === 'escape') e.event(e.doc, 'keydown', { key: 'Escape' });
-            assert.equal(count, 1);
-            assert.equal(e.html.dataset.homeScrollGate, reason === 'deadline' ? 'locked' : 'unlocked');
+            assert.equal(e.html.dataset.homeScrollGate, 'locked');
             assert.notEqual(e.html.dataset.homeExperienceState, 'prepared');
-            if (reason !== 'deadline') assert.equal(gate.release({ settled: 5, painted: true, handoff: true }), false);
+            assert.equal(gate.release({ complete: false, painted: true, handoff: true }), false);
         } finally { e.restore(); }
     }
 });
 
-test('hash and restored position never acquire an initial scroll lock', () => {
+test('hash and restored positions wait for the complete readiness barrier', () => {
     for (const options of [{ hash: '#program' }, { scrollY: 1200 }]) {
         const e = environment(options);
-        try { assert.equal(e.html.dataset.homeScrollGate, 'unlocked'); assert.equal(e.timers.size, 0); }
+        try { assert.equal(e.html.dataset.homeScrollGate, 'locked'); }
         finally { e.restore(); }
     }
 });
 
 function preview(e, posterWork = Promise.resolve()) {
     const element = new e.Element(); element.dataset.visionVideoSrc = 'https://media.example/vision.mp4';
-    const poster = { decode: () => posterWork };
+    const poster = { naturalWidth: 1920, src: 'poster.webp', decode: () => posterWork };
     element.closest = () => ({ querySelector: () => poster }); element.loads = 0; element.plays = 0; element.paused = true;
-    element.load = () => { element.loads++; }; element.pause = () => { element.paused = true; };
+    element.readyState = 0; element.videoWidth = 1920; element.currentTime = 0; element.duration = 10;
+    element.buffered = { length: 1, start: () => 0, end: () => 1 };
+    element.load = () => { element.loads++; };  element.pause = () => { element.paused = true; };
     element.play = () => { element.plays++; element.paused = false; return Promise.resolve(); };
     return element;
 }
@@ -98,8 +99,8 @@ test('first preview waits for decoded poster and real loadeddata, then pauses in
         const poster = deferred(); const v = preview(e, poster.promise); let ready = false;
         const result = prepareVisionPreview(v).then(state => { ready = true; return state; });
         await Promise.resolve(); assert.equal(v.loads, 0); poster.resolve(); await Promise.resolve(); await Promise.resolve();
-        assert.equal(v.loads, 1); assert.equal(v.preload, 'metadata'); assert.equal(ready, false);
-        e.event(v, 'loadeddata'); assert.equal(await result, 'frame-ready'); assert.equal(v.paused, true);
+        assert.equal(v.loads, 1); assert.equal(v.preload, 'auto'); assert.equal(ready, false);
+        v.readyState = 3; e.event(v, 'canplay'); assert.equal(await result, 'frame-ready'); assert.equal(v.paused, true);
         assert.equal(await prepareVisionPreview(v), 'frame-ready'); assert.equal(v.loads, 1);
     } finally { e.restore(); }
 });
@@ -111,7 +112,7 @@ test('reduced preview, media failure and cancellation settle a real poster/seman
         const failed = preview(e); const work = prepareVisionPreview(failed); await Promise.resolve(); await Promise.resolve(); e.event(failed, 'error');
         assert.equal(await work, 'poster-ready'); assert.equal(failed.paused, true);
         const poster = deferred(); const aborted = preview(e, poster.promise); const signal = new AbortController();
-        const abortWork = prepareVisionPreview(aborted, { signal: signal.signal }); signal.abort(); assert.equal(await abortWork, 'semantic-fallback');
+        const abortWork = prepareVisionPreview(aborted, { signal: signal.signal }); signal.abort(); await assert.rejects(abortWork, { name: 'AbortError' });
         const count = aborted.loads; poster.resolve(); await Promise.resolve(); await Promise.resolve(); assert.equal(aborted.loads, count); assert.equal(aborted.plays, 0);
     } finally { e.restore(); }
 });
@@ -121,7 +122,7 @@ test('Vision assets await actual font readiness as well as first playable frame'
     try {
         const fonts = deferred(); e.doc.fonts = { ready: fonts.promise }; const v = preview(e); e.vision.querySelector = s => s.includes('preview') ? v : null;
         let ready = false; const work = prepareVisionAssets(e.vision, undefined, false).then(state => { ready = true; return state; });
-        await Promise.resolve(); await Promise.resolve(); e.event(v, 'loadeddata'); await Promise.resolve(); assert.equal(ready, false);
+        await Promise.resolve(); await Promise.resolve(); v.readyState = 3; e.event(v, 'canplay'); await Promise.resolve(); assert.equal(ready, false);
         fonts.resolve(); assert.equal(await work, 'poster-ready');
     } finally { e.restore(); }
 });
@@ -133,14 +134,18 @@ test('stacked Vision plays only the visible transition range and pauses hidden/d
         e.html.dataset.homeScrollGate = 'unlocked'; e.html.dataset.homeExperienceState = 'prepared';
         e.vision.classList.contains = () => true; e.vision.dataset.visionMediaRange = '0,0';
         const videos = [0, 1, 2].map(index => {
-            const v = preview(e); const visual = { dataset: { visionVisual: String(index) }, querySelector: () => ({ decode: () => Promise.resolve() }) };
+            const v = preview(e); const visual = { dataset: { visionVisual: String(index) }, querySelector: () => ({ naturalWidth: 1920, src: 'poster.webp', decode: () => Promise.resolve() }) };
             v.closest = selector => selector === '[data-vision-story]' ? e.vision : visual; return v;
         });
-        for (const v of videos) { const work = prepareVisionPreview(v); await Promise.resolve(); await Promise.resolve(); e.event(v, 'loadeddata'); await work; }
         const observers = []; e.win.IntersectionObserver = true;
         globalThis.IntersectionObserver = class { constructor(callback) { this.callback = callback; observers.push(this); } observe() {} disconnect() { this.disconnected = true; } };
         e.doc.querySelectorAll = () => videos; e.win.matchMedia = () => Object.assign(new EventTarget(), { matches: false });
-        initVisionVideoPreviews(); observers[0].callback(videos.map(target => ({ target, isIntersecting: true })));
+        videos.forEach(v => { v.paused = false; });
+        initVisionVideoPreviews(); observers[0].callback(videos.map(target => ({ target, isIntersecting: false })));
+        assert.deepEqual(videos.map(v => v.paused), [false, false, false]);
+        assert.deepEqual(videos.map(v => v.loads), [0, 0, 0]);
+        for (const v of videos) { const work = prepareVisionPreview(v); await Promise.resolve(); await Promise.resolve(); v.readyState = 3; e.event(v, 'canplay'); await work; }
+        observers[0].callback(videos.map(target => ({ target, isIntersecting: true })));
         await Promise.resolve(); await Promise.resolve(); assert.deepEqual(videos.map(v => v.paused), [false, true, true]);
         e.vision.dataset.visionMediaRange = '0,1'; e.event(e.doc, 'schoolai:vision-media-range'); await Promise.resolve(); await Promise.resolve();
         assert.deepEqual(videos.map(v => v.paused), [false, false, true]);
@@ -159,7 +164,7 @@ test('Vision scopes font readiness to its actual text when global font readiness
         e.doc.fonts = { ready: globalFonts.promise, check: () => false, load(font, text) { loads++; assert.ok(font.includes('Inter')); assert.equal(text, 'Vision'); return localFonts.promise; } };
         e.win.getComputedStyle = () => ({ fontStyle: 'normal', fontWeight: '700', fontSize: '32px', fontFamily: 'Inter' });
         const v = preview(e); e.vision.querySelector = s => s.includes('preview') ? v : null; e.vision.querySelectorAll = () => [{ textContent: 'Vision' }];
-        const work = prepareVisionAssets(e.vision, undefined, false); await new Promise(setImmediate); e.event(v, 'loadeddata');
+        const work = prepareVisionAssets(e.vision, undefined, false); await new Promise(setImmediate); v.readyState = 3; e.event(v, 'canplay');
         assert.equal(loads, 1); localFonts.resolve(); assert.equal(await work, 'poster-ready');
         assert.equal(e.vision.dataset.visionFontsReady, 'true');
     } finally { e.restore(); }

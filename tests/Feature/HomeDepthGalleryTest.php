@@ -102,7 +102,7 @@ it('locks the homepage editorial gallery story contract', function (): void {
         ->not->toContain('DepthGalleryEngine')
         ->not->toContain('WebGLRenderer')
         ->and($pattern)
-        ->toContain("rootMargin: '75% 0px 75% 0px'")
+        ->not->toContain('IntersectionObserver')
         ->toContain("section.classList.add('is-gallery-pattern-ready')")
         ->and($visual)
         ->toContain('media.clientWidth / visual.naturalWidth')

@@ -79,9 +79,13 @@ export function mountVisionStory({ signal } = {}) {
     }
     function syncMode() {
         if (!wide.matches || reduced.matches) disableEnhanced();
-        prepare().catch(fallback);
+        prepare().catch(fallback).finally(() => {
+            root.dataset.visionGeometryPending = 'false';
+            root.dispatchEvent(new CustomEvent('schoolai:vision-geometry-ready'));
+        });
     }
     function onResize() {
+        root.dataset.visionGeometryPending = 'true';
         window.clearTimeout(resizeTimer);
         resizeTimer = window.setTimeout(syncMode, 140);
     }

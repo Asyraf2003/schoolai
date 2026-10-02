@@ -1,4 +1,5 @@
 import '../../../css/pages/welcome-testimonial-wall.css';
+let preparation = null;
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
@@ -49,7 +50,11 @@ function mountTestimonialWall(root) {
     frame = null;
 
     if (!active) return;
+    paint();
+  };
 
+  const paint = () => {
+    if (reducedMotion.matches) return;
     const progress = clamp(
       (window.scrollY - rangeStart) / Math.max(rangeEnd - rangeStart, 1),
       0,
@@ -87,7 +92,6 @@ function mountTestimonialWall(root) {
     root.classList.toggle('is-testimonial-active', active);
 
     if (active) {
-      measure();
       window.addEventListener('scroll', onScroll, { passive: true });
       scheduleRender();
     } else {
@@ -104,6 +108,7 @@ function mountTestimonialWall(root) {
     }
 
     measure();
+    paint();
     syncActivity();
   };
 
@@ -121,6 +126,7 @@ function mountTestimonialWall(root) {
   const onPageShow = () => {
     suspended = false;
     measure();
+    paint();
     syncActivity();
   };
   const onPageHide = event => {
@@ -141,15 +147,12 @@ function mountTestimonialWall(root) {
   window.addEventListener('resize', onPageShow, { signal: lifecycle.signal, passive: true });
   reducedMotion.addEventListener('change', applyMotionPreference, { signal: lifecycle.signal });
   root.dataset.testimonialReady = 'prepared';
+  document.addEventListener('schoolai:homepage-geometry', () => { measure(); paint(); scheduleRender(); }, { signal: lifecycle.signal });
 }
 
-function initializeTestimonialWall() {
+export function prepareHomepageTestimonials() {
+  if (preparation) return preparation;
   const root = document.querySelector('[data-testimonial-wall]');
   if (root) mountTestimonialWall(root);
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeTestimonialWall, { once: true });
-} else {
-  initializeTestimonialWall();
+  return preparation = Promise.resolve({ state: root?.dataset.testimonialReady === 'prepared' ? 'prepared' : 'failed' });
 }

@@ -1,6 +1,6 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-Status: `HOME_RUNTIME_REFACTOR_ACTIVE / MAP_06B_VALIDATING`
+Status: `HOME_RUNTIME_REFACTOR_ACTIVE / MAP_06B_COMPLETE_READINESS`
 Updated: 2026-10-02
 Repository: `Asyraf2003/schoolai`
 Target branch: `main`
@@ -11,30 +11,74 @@ Durable references:
 - current execution map: `handoffs/2026-10-01-home-runtime-execution-map.md`;
 - current accepted runtime blueprint: `blueprints/2026-10-01-home-runtime-preparation.md`.
 
-## Active owner correction — MAP-06B (2026-10-02)
+## Active owner correction — complete MAP-06B (2026-10-02)
 
-Owner accepted `blueprints/2026-10-02-opening-experience-readiness.md`, including
-mandatory pre-gate closure and startup media budget. This supersedes every
-historical accessibility/final-certification NEXT below. Issue #61, branch
-`fix/home-opening-readiness`, source main `8c399a280b8cc5df1ae70c39aee8be72803f371c`.
-One map, one Terminal Codex execution channel. Status FAIL pending the full
-correction proof; blueprint IMPLEMENTING. Five real units, visible native
-progress, a critical single-owner gate and bounded handoff are implemented.
-Code/runtime checkpoint: `fb5abc97` (production source unchanged since `cdc75580`).
-Automated gates PASS: Node48, PHP308/3,543, structure605, build152, Pint/diff.
-Chromium137 records PASS, including early native wheel/touch, real PPDB/nav,
-no-JS/hash/restored access, six tiers/locales/motion and zero required-runtime
-requests at first unlock. Two regular-Chromium native BFCache cases retain the
-same owner and complete a suspended handoff exactly once. WebKit final rerun
-and final cold performance measurements are pending. Its asynchronous native
-wheel moved after the harness's original120ms sample; observation now waits
-for that same input to move, without issuing another wheel or changing runtime.
-Read-only audit proved early input0→900 before deferred gate, Vision-only unlock,
-zero visible progress consumers and required post-unlock work. Fresh pre-fix LH
-mobile69/50 desktop86/85 median/worst, transfer33.56/28.57MB; original baseline
-83/82 and97/97. All samples, including preliminary corrected runs, are retained.
-NEXT: finish WebKit/browser and controlled performance proof, then PR/CI/verified
-merge. Accessibility-label and global final certification remain deferred.
+Explicit owner correction supersedes the old five-unit/shell/deep-media goal.
+Blueprint `blueprints/2026-10-02-opening-experience-readiness.md` OWNER_ACCEPTED.
+Fresh main `8c399a280b8cc5df1ae70c39aee8be72803f371c`; Issue#61, corrected branch
+`fix/homepage-complete-readiness`. Terminal Codex only; authorized through PR/CI
+and verified merge to Asyraf2003/schoolai main.
+FACT: source and local production1440×900 audit renders all seven sections plus
+footer,69 image elements and three Vision previews. Testimonial imports by
+proximity; Vision/Gallery hydrate on scroll; native lazy images and fitting are
+still pending at the old shell barrier. Navbar/access clicks can bypass lock.
+GAP FULL-READY-001: old immediate-first-scroll proof does not prove the three
+full journeys. Old MAP-06B samples remain historical; acceptance is reset.
+GOAL: fast visible Hero/usable navbar+PPDB →locked →background complete homepage
+preparation →real100 →paint+handoff →unlock →smooth full journey.
+DECISION: all required styles/fonts/images/media sources/controllers/data and
+initial geometry block100. Only already prepared video streaming and ordinary
+animation/playback updates continue after unlock. Menu/Escape/focus do not unlock;
+internal navigation anchors queue until readiness. Missing visuals do not count.
+PROGRESS: complete barrier implemented;308 PHP tests pass. Chromium1440 three
+journeys record zero required requests/source hydration/media load after unlock.
+Cold diagnostic FCP568ms; no EvaluateScript during journeys, Layout max4.177ms.
+Software rendering still has large repeated Vision frame gaps; smoothness FAIL,
+not explained away as readiness PASS. Inactive carousel videos, source-error
+notification, WebKit canplaythrough/suspend and non-home bundle guard are fixed.
+Native Windows Chrome154/AMD840M confirms zero requests and long tasks after
+unlock but first downward pass has a323ms frame gap; repeat pass max67ms.
+GAP FULL-READY-002: loaded/buffered video was counted before compositor delivery.
+Actual callback preparation removes the native1440 burst in one diagnostic:
+three passes max66.6/66.5/68ms, no waiting/requests/long tasks. This is one warm
+profile, not final cold certification. Live WebKit then stalls offscreen at40%
+despite decoded/buffered video: compositor callback requires visibility.
+DECISION: prepare an actual decoded frame through one reusable temporary2D
+canvas for offscreen media; visible media still awaits its compositor callback.
+No DOM canvas/render loop, source mutation on scroll or new engine/dependency.
+Release ImageBitmaps and the shared frame context before media readiness settles.
+Preparation still requires future buffered playback; no timer counts readiness.
+Environment restart lost temporary raw artifacts; durable proof is being rerun
+under /home/asus/.cache/schoolai-proof, including native AMD840M Chrome and WebKit.
+Cold native snapshot diagnostic still records a242ms first desktop gap versus
+96ms return and135ms second downward pass. No new required dependency requests.
+NEXT bounded correction: allow the copied decoded frame to submit across two
+render frames before pausing; a delivered compositor callback may finish sooner.
+Keep both real future-buffer and decoded-frame checks. Then repeat cold proof.
+WebKit retry exposes an event-notification gap: Hero remains at0% with
+readyState4 and51.87s buffered. The awaited condition is true but no later media
+event rechecks it. A cancellable preparation-only frame observer will sample the
+same actual condition; no elapsed duration advances progress or unlocks scroll.
+GAP FULL-READY-003: initial Vision IntersectionObserver sync pauses pending
+previews while the preparation owner is starting playback. Source inspection
+confirms competing owners; isolated frame-staging diagnostic also exposes it.
+DECISION: viewport playback owner waits for a settled media readiness state.
+Preparation exclusively owns pending previews; existing abort handles disposal.
+No DOM relocation/staging is being shipped. Repeat cold and engine proof.
+NEXT readiness check also awaits the actual play promise before pausing prepared
+media. A buffered frame alone does not prove playback startup completed. Include
+the visible Opening video in media warmup; its existing controller yields only
+during this bounded preparation. Autoplay rejection permanently selects the
+decoded poster. Reuse already hydrated sources; do not reload a ready source.
+WebKit source audit narrows another deadlock: paused Opening metadata may never
+advance to a future buffered frame before playback starts. Correct the ledger
+boundary: Hero unit proves visible decoded shell/controller; the existing media
+unit separately warms every Hero/Vision/Gallery video before100. No unit can
+release scroll; all15 blockers remain mandatory. Rename the Hero shell helper
+and update its contracts; source playback remains one complete media owner.
+STATUS: FAIL until full-journey correction is proved. No Lighthouse/CWV100 claim.
+NEXT: update Issue#61 and implement/test/prove complete barrier on corrected branch,
+then PR→CI→verified merge. Global certification/accessibility repair stay deferred.
 
 ## Active publication checkpoint
 

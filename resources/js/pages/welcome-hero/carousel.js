@@ -148,6 +148,7 @@ export function initHeroCarousel(root, slides) {
     }
 
     document.addEventListener('visibilitychange', handleVisibilityChange, options);
+    document.addEventListener('schoolai:first-journey-ready', handleVisibilityChange, options);
     var removeMotionListener = onMediaQueryChange(reducedMotion, function () {
         mediaActions.syncVideos();
         playbackActions.scheduleNext();

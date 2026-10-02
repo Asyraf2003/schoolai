@@ -3,7 +3,8 @@ import {writeFileSync} from 'node:fs';
 import {instrument,snapshot,waitComplete,nativeScroll,delay} from './home-opening-helpers.mjs';
 const {chromium}=await import(process.env.SCHOOLAI_BROWSER_MODULE || '/tmp/schoolai-performance-tools/node_modules/playwright/index.mjs');
 const base=process.env.SCHOOLAI_PROOF_URL || 'http://127.0.0.1:8018';
-const browser=await chromium.launch({headless:true,executablePath:process.env.SCHOOLAI_CHROME_PATH || '/home/asus/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome',ignoreDefaultArgs:['--disable-back-forward-cache'],args:['--disable-gpu']});
+const browser=await (process.env.SCHOOLAI_CHROME_CDP ? chromium.connectOverCDP(process.env.SCHOOLAI_CHROME_CDP)
+    : chromium.launch({headless:true,executablePath:process.env.SCHOOLAI_CHROME_PATH || '/home/asus/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome',ignoreDefaultArgs:['--disable-back-forward-cache'],args:['--disable-gpu']}));
 const rows=[];
 try {
     for(const motion of ['reduce','no-preference']) {

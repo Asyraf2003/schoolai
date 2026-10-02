@@ -42,7 +42,7 @@ test('shell is ready after paint independently of media; no-input warm-up hydrat
         armHeroReadySignal(e.root);initOpeningHero(e.root,e.slide);
         assert.equal(e.video.loads,0);e.flush();assert.equal(e.root.dataset.heroReady,undefined);
         e.flush();assert.equal(e.root.dataset.heroShellReady,'true');assert.equal(e.video.loads,1);
-        assert.equal(e.video.preload,'metadata');assert.equal(e.source.src,'https://media.example/opening.mp4');
+        assert.equal(e.video.preload,'auto');assert.equal(e.source.src,'https://media.example/opening.mp4');
         assert.equal(e.root.dataset.heroMediaState,'preparing');assert.equal(e.video.muted,true);
         e.fire(e.win,'scroll');e.fire(e.root,'pointermove');assert.equal(e.video.loads,1);
         e.fire(e.video,'loadeddata');assert.equal(e.root.dataset.heroMediaState,'frame-ready');
@@ -99,6 +99,18 @@ test('hidden startup paints shell contract without attaching media until visible
     } finally {e.restore();}
 });
 
+test('a source error notifies the media barrier even without a video error event', async () => {
+    const e=environment();
+    try {
+        e.root.querySelector=()=>e.slide; e.doc.querySelector=()=>e.root;
+        e.video.readyState=0; e.video.videoWidth=0;
+        armHeroReadySignal(e.root);initOpeningHero(e.root,e.slide);e.flush();e.flush();
+        let notified = false; e.video.addEventListener('schoolai:hero-media-state', () => { notified = true; });
+        e.fire(e.source,'error');assert.equal(notified, true);assert.equal(e.root.dataset.heroMediaState,'media-error');
+        assert.equal(e.video.paused,true);e.fire(e.win,'pagehide',{persisted:false});
+    } finally {e.restore();}
+});
+
 test('carousel media prepares only active video and respects reduced, hidden, suspended and inactive states', () => {
     const e=environment();
     try {
@@ -112,5 +124,16 @@ test('carousel media prepares only active video and respects reduced, hidden, su
         state.suspended=false;state.inViewport=false;media.syncVideos();assert.equal(media.canAutoplay(),false);
         state.inViewport=true;e.doc.hidden=true;media.syncVideos();assert.equal(e.video.paused,true);
         e.doc.hidden=false;media.syncVideos();assert.equal(e.video.loads,1);assert.equal(e.video.muted,true);
+    } finally {e.restore();}
+});
+
+test('permanent carousel poster cannot hydrate on scroll but explicit audio intent remains usable', () => {
+    const e=environment({reduced:true});
+    try {
+        e.video.dataset.heroVideoState='poster-ready';
+        const state={currentIndex:0,videoHydrationReady:true,audioEnabled:false,reducedMotion:e.motion};
+        const media=createSliderMediaActions({root:e.root,slides:[e.slide],state,statusTemplate:':current'});
+        media.syncVideos();assert.equal(e.video.loads,0);assert.equal(e.video.paused,true);
+        state.audioEnabled=true;media.syncVideos();assert.equal(e.video.loads,1);assert.equal(e.video.muted,false);
     } finally {e.restore();}
 });

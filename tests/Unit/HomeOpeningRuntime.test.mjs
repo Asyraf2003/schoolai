@@ -4,8 +4,8 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import { createOpeningLedger, REQUIRED_OPENING_UNITS } from '../../resources/js/pages/welcome/opening-ledger.js';
 import { createOpeningProgress } from '../../resources/js/pages/welcome/opening-progress.js';
-import { usableOpeningUnit, prepareHeroActiveMedia } from '../../resources/js/pages/welcome/opening-readiness.js';
-
+import { preparePreview } from '../../resources/js/pages/welcome/preview-readiness.js';
+import { usableOpeningUnit, prepareHeroShell } from '../../resources/js/pages/welcome/opening-readiness.js';
 const bootstrap = readFileSync(new URL('../../resources/views/home/partials/opening-bootstrap.blade.php', import.meta.url), 'utf8').match(/<script[^>]*>([\s\S]*?)<\/script>/)[1];
 const turn = () => new Promise(setImmediate);
 function deferred() { let resolve; const promise = new Promise(done => { resolve = done; }); return { promise, resolve }; }
@@ -20,13 +20,16 @@ function environment() {
         getBoundingClientRect() { return { top: 0, bottom: this.height, height: this.height, width: 200 }; }
     }
     const root = new Element(), loader = new Element(), progress = new Element(), percent = new Element();
-    const hero = new Element(), video = new Element(); video.readyState = 0;
-    hero.querySelector = () => ({ querySelector: () => video });
+    const hero = new Element(), video = new Element(); video.readyState = 0; video.videoWidth = 1920; video.currentTime = 0; video.duration = 10;
+    video.buffered = { length: 1, start: () => 0, end: () => 1 };
+    const image = { complete: true, naturalWidth: 1920, decode: () => Promise.resolve() };
+    hero.querySelector = () => ({ querySelector: selector => selector === 'img' ? image : video });
+    video.classList = { add() {} }; video.play = () => Promise.resolve(); video.pause = () => {}; video.load = () => {};
     loader.querySelector = selector => selector.includes('percent') ? percent : progress;
     const animation = deferred(); let pauses = 0, plays = 0;
     loader.animate = () => ({ finished: animation.promise, pause() { pauses++; }, play() { plays++; }, cancel() { animation.resolve(); } });
     const doc = Object.assign(new EventTarget(), { hidden: false, documentElement: root,
-        querySelector: selector => selector === '[data-home-opening]' ? loader : hero,
+        querySelector: selector => selector === '[data-home-opening]' ? loader : hero, querySelectorAll: () => [],
     });
     const win = Object.assign(new EventTarget(), {
         innerHeight: 844,
@@ -47,22 +50,21 @@ function environment() {
         target.dispatchEvent(event); return event;
     };
     const flush = () => { const work = [...frames.values()]; frames.clear(); work.forEach(callback => callback()); };
-    return { root, doc, win, hero, video, loader, progress, percent, frames, timers, marks, animation, fire, flush, execute,
+    return { root, doc, win, hero, image, video, loader, progress, percent, frames, timers, marks, animation, fire, flush, execute,
         get pauses() { return pauses; }, get plays() { return plays; }, restore() { Object.assign(globalThis, previous); } };
 }
-
-test('five real units settle out of order; failure/abort/invalid fallback never advances progress', () => {
+test('every homepage blocker settles out of order; failure/abort/invalid fallback never advances progress', () => {
     const ledger = createOpeningLedger();
     assert.equal(ledger.progress, 0);
-    assert.equal(ledger.settle('footer', 'PREPARED', true), false);
+    assert.equal(ledger.settle('unknown', 'PREPARED', true), false);
     assert.equal(ledger.settle('hero', 'ABORTED', false), false);
     assert.equal(ledger.settle('hero', 'STATIC_FALLBACK', false), false);
-    for (const unit of ['gallery', 'values', 'program', 'vision']) {
+    for (const unit of REQUIRED_OPENING_UNITS.filter(unit => unit !== 'hero').reverse()) {
         assert.equal(ledger.settle(unit, 'PREPARED', true), true);
         assert.equal(ledger.settle(unit, 'PREPARED', true), false);
         assert.ok(ledger.progress < 100); assert.equal(ledger.complete, false);
     }
-    assert.equal(ledger.progress, 80);
+    assert.ok(ledger.progress > 90 && ledger.progress < 100);
     assert.equal(ledger.settle('hero', 'STATIC_FALLBACK', true), true);
     assert.equal(ledger.progress, 100); assert.equal(ledger.complete, true);
 });
@@ -118,16 +120,29 @@ test('hidden/BFCache suspends opening and restores the same owner without early 
     } finally { e.restore(); }
 });
 
-test('fallback usability checks actual semantic geometry, and Hero waits for a usable frame', async () => {
+test('Hero shell requires decoded visible pixels while the media unit remains pending', async () => {
     const e = environment();
     try {
         assert.equal(usableOpeningUnit('hero'), true);
         e.hero.height = 0; assert.equal(usableOpeningUnit('hero'), false); e.hero.height = 900;
         e.hero.textContent = ''; assert.equal(usableOpeningUnit('hero'), false); e.hero.textContent = 'Hero';
-        let settled = false;
-        const work = prepareHeroActiveMedia().then(result => { settled = true; return result; });
+        const decoded = deferred(); e.image.decode = () => decoded.promise; let settled = false;
+        const work = prepareHeroShell().then(result => { settled = true; return result; });
         await turn(); assert.equal(settled, false);
-        e.video.readyState = 2; e.fire(e.video, 'loadeddata'); assert.equal((await work).state, 'prepared');
+        decoded.resolve(); assert.equal((await work).state, 'prepared');
+        assert.equal(e.video.readyState, 0); assert.equal(createOpeningLedger().complete, false);
+    } finally { e.restore(); }
+});
+
+test('media readiness observes real buffer changes even when the engine omits an event', async () => {
+    const e = environment();
+    try {
+        let settled = false;
+        const work = preparePreview(e.video, { source: 'school.mp4' }).then(result => { settled = true; return result; });
+        await turn(); e.flush(); await turn(); assert.equal(settled, false);
+        e.video.readyState = 3; e.flush();
+        assert.equal(await work, 'frame-ready');
+        e.flush(); assert.equal(e.frames.size, 0);
     } finally { e.restore(); }
 });
 
@@ -158,7 +173,6 @@ test('missing visible progress cannot satisfy the painted handoff proof', async 
     } finally { e.restore(); }
 });
 
-
 test('opening keeps direct primary access when CTA geometry is outside the viewport', () => {
     const e = environment();
     try {
@@ -172,16 +186,15 @@ test('opening keeps direct primary access when CTA geometry is outside the viewp
     } finally { e.restore(); }
 });
 
-
-test('Hero without usable media cannot report a prepared first frame', async () => {
+test('Hero without usable initial pixels cannot report a prepared shell', async () => {
     const e = environment();
     try {
         const image = { complete: false, naturalWidth: 0 };
         e.hero.querySelector = () => ({ querySelector: selector => selector === 'img' ? image : null });
-        assert.equal((await prepareHeroActiveMedia()).state, 'static-fallback');
+        await assert.rejects(prepareHeroShell(), /visual unavailable/);
         image.complete = true; image.naturalWidth = 400;
-        assert.equal((await prepareHeroActiveMedia()).state, 'prepared');
+        assert.equal((await prepareHeroShell()).state, 'prepared');
         e.hero.querySelector = () => ({ querySelector: () => null });
-        assert.equal((await prepareHeroActiveMedia()).state, 'static-fallback');
+        await assert.rejects(prepareHeroShell(), /visual unavailable/);
     } finally { e.restore(); }
 });

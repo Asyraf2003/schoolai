@@ -136,7 +136,6 @@ export function createValuesStory(root) {
         spatial.setActive(active);
         root.classList.toggle('is-values-active', active && enabled);
         cancelFrame();
-        geometryDirty = true;
         snapNext = true;
         requestRender();
     }

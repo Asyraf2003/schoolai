@@ -44,15 +44,16 @@ it('keeps testimonial sample content complete in every public locale', function 
     }
 });
 
-it('keeps testimonial JS and CSS off the initial homepage graph', function (): void {
+it('prepares testimonial JS and CSS before the complete homepage unlock', function (): void {
     $entry = file_get_contents(resource_path('js/pages/welcome.js'));
+    $preparation = file_get_contents(resource_path('js/pages/welcome/preparation.js'));
+    $wall = file_get_contents(resource_path('js/pages/welcome/testimonial-wall.js'));
 
-    expect($entry)
-        ->not->toContain("import './welcome/testimonial-wall.js';")
-        ->toContain("import('./welcome/testimonial-wall.js')")
-        ->toContain("document.querySelector('[data-testimonial-wall]')")
-        ->toContain("rootMargin: '150% 0px'")
-        ->toContain("'IntersectionObserver' in window");
+    expect($entry)->not->toContain('scheduleTestimonialWall');
+    expect($preparation)->toContain("import('./testimonial-wall.js')")
+        ->toContain('prepareHomepageTestimonials()');
+    expect($wall)->toContain('export function prepareHomepageTestimonials()')
+        ->toContain("import '../../../css/pages/welcome-testimonial-wall.css'");
 });
 
 it('mirrors Testimonial travel physically in RTL without reversing row phase', function (): void {

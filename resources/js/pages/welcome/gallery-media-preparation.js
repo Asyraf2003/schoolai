@@ -1,46 +1,19 @@
-export function prepareGalleryMedia(media, signal) {
+import { decodeHomepageImage } from './homepage-assets.js';
+import { preparePreview } from './preview-readiness.js';
+
+export async function prepareGalleryMedia(media, signal) {
     if (media instanceof HTMLImageElement) {
-        media.loading = 'eager';
-        return Promise.resolve(media.decode?.()).then(() => 'image-ready', () => 'semantic-fallback');
+        await decodeHomepageImage(media);
+        return 'image-ready';
     }
-    if (!(media instanceof HTMLVideoElement)) return Promise.resolve('static-ready');
-    if (media.dataset.galleryVideoState) return Promise.resolve(media.dataset.galleryVideoState);
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.hidden) {
-        return Promise.resolve('poster-ready');
-    }
-    return new Promise(resolve => {
-        const listeners = new AbortController();
-        let settled = false;
-        const deadline = window.setTimeout(() => finish('semantic-fallback'), 5000);
-        function finish(state) {
-            if (settled) return;
-            settled = true;
-            listeners.abort();
-            window.clearTimeout(deadline);
-            signal.removeEventListener('abort', abort);
-            media.pause();
-            if (state === 'semantic-fallback') { media.removeAttribute('src'); media.load(); }
-            media.dataset.galleryVideoState = state;
-            resolve(state);
-        }
-        function abort() { finish('semantic-fallback'); }
-        signal.addEventListener('abort', abort, { once: true });
-        if (signal.aborted) { abort(); return; }
-        media.addEventListener('loadeddata', () => {
-            media.classList.add('is-ready');
-            finish('frame-ready');
-        }, { signal: listeners.signal });
-        media.addEventListener('error', abort, { signal: listeners.signal });
-        const source = media.dataset.galleryVideoSrc;
-        if (!source) { abort(); return; }
-        media.dataset.galleryVideoHydrated = 'true';
-        media.muted = true;
-        media.defaultMuted = true;
-        media.loop = true;
-        media.playsInline = true;
-        media.preload = 'metadata';
-        media.src = source;
-        media.load();
-        media.play()?.catch(abort);
+    if (!(media instanceof HTMLVideoElement)) return 'static-ready';
+    const poster = media.poster ? new Image() : null;
+    if (poster) poster.src = media.poster;
+    const state = await preparePreview(media, {
+        source: media.dataset.galleryVideoSrc, poster, signal,
+        staticOnly: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
     });
+    media.dataset.galleryVideoState = state;
+    media.dataset.galleryVideoHydrated = state === 'frame-ready' ? 'true' : 'false';
+    return state;
 }

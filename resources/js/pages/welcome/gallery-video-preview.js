@@ -1,65 +1,30 @@
-import { prepareGalleryMedia } from './gallery-media-preparation.js';
-
 export function mountGalleryVideoPreviews(root) {
-    const media = [...root.querySelectorAll('[data-gallery-story-visual]')];
-    const previews = media.filter(item => item instanceof HTMLVideoElement);
-    const nearby = new Set();
+    const previews = [...root.querySelectorAll('[data-gallery-video-preview]')];
     const visible = new Set();
-    const prepared = new WeakMap();
     const lifecycle = new AbortController();
+    const options = { signal: lifecycle.signal };
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let aheadObserver = null;
-    let visibleObserver = null;
-    let preparing = false;
     let suspended = false;
-
-    const inactive = () => suspended || lifecycle.signal.aborted || document.hidden || reduced.matches;
-    function syncPlayback() {
+    function sync() {
         previews.forEach(preview => {
-            if (!inactive() && visible.has(preview) && preview.dataset.galleryVideoState === 'frame-ready') {
-                preview.play()?.catch(() => {});
-            } else preview.pause();
+            if (visible.has(preview) && !suspended && !document.hidden && !reduced.matches
+                && preview.dataset.galleryVideoState === 'frame-ready'
+                && document.documentElement.dataset.homeScrollGate === 'unlocked') {
+                if (preview.paused) preview.play()?.catch(() => {});
+            }
+            else preview.pause();
         });
     }
-    async function prepareNext() {
-        if (preparing || suspended || document.hidden || lifecycle.signal.aborted) return;
-        preparing = true;
-        for (const item of media) {
-            if (!nearby.has(item) || prepared.has(item)) continue;
-            const work = prepareGalleryMedia(item, lifecycle.signal);
-            prepared.set(item, work);
-            const state = await work;
-            if (lifecycle.signal.aborted) break;
-            item.dataset.galleryMediaReady = state;
-            if (state === 'poster-ready') prepared.delete(item);
-            syncPlayback();
-            if (suspended || document.hidden) break;
-        }
-        preparing = false;
-    }
-    const resume = () => { suspended = false; syncPlayback(); prepareNext(); };
-    const suspend = () => { suspended = true; previews.forEach(preview => preview.pause()); };
-    const destroy = () => {
-        suspend();
-        lifecycle.abort();
-        aheadObserver?.disconnect();
-        visibleObserver?.disconnect();
-    };
-    if ('IntersectionObserver' in window) {
-        aheadObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => entry.isIntersecting ? nearby.add(entry.target) : nearby.delete(entry.target));
-            prepareNext();
-        }, { rootMargin: '100% 0px', threshold: 0 });
-        visibleObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target));
-            syncPlayback();
-        }, { rootMargin: '0px', threshold: 0.01 });
-        media.forEach(item => aheadObserver.observe(item));
-        previews.forEach(preview => visibleObserver.observe(preview));
-    }
-    document.addEventListener('visibilitychange', () => document.hidden ? suspend() : resume(), { signal: lifecycle.signal });
-    window.addEventListener('pagehide', event => event.persisted ? suspend() : destroy(), { signal: lifecycle.signal });
-    window.addEventListener('pageshow', resume, { signal: lifecycle.signal });
-    reduced.addEventListener('change', () => { syncPlayback(); prepareNext(); }, { signal: lifecycle.signal });
+    const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+        entries.forEach(({ target, isIntersecting }) => isIntersecting ? visible.add(target) : visible.delete(target));
+        sync();
+    }, { threshold: .01 }) : null;
+    previews.forEach(preview => observer ? observer.observe(preview) : visible.add(preview));
+    document.addEventListener('schoolai:first-journey-ready', sync, options);
+    document.addEventListener('visibilitychange', sync, options);
+    reduced.addEventListener('change', sync, options);
+    const destroy = () => { suspended = true; sync(); lifecycle.abort(); observer?.disconnect(); };
+    window.addEventListener('pagehide', event => { suspended = true; sync(); if (!event.persisted) destroy(); }, options);
+    window.addEventListener('pageshow', () => { suspended = false; sync(); }, options);
     return destroy;
 }

@@ -1,3 +1,6 @@
+let navigationReady = Promise.resolve();
+export function prepareNavigationMenus() { return navigationReady; }
+
 export function initializeNavigationMenus() {
   /* ---------- 1. TAHUN BERJALAN DI FOOTER ---------- */
   var yearEl = document.getElementById('currentYear');
@@ -51,10 +54,6 @@ export function initializeNavigationMenus() {
     }
 
     function loadMobileNavigation() {
-      if (!window.matchMedia('(max-width: 1180px)').matches) {
-        return Promise.resolve(null);
-      }
-
       if (!controllerPromise) {
         controllerPromise = import('../mobile-navigation-cinematic.js')
           .then(function (module) {
@@ -68,6 +67,8 @@ export function initializeNavigationMenus() {
 
       return controllerPromise;
     }
+
+    navigationReady = loadMobileNavigation();
 
     function warmMobileNavigation() {
       loadMobileNavigation();

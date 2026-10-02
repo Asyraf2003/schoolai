@@ -37,7 +37,7 @@ it('guards the editorial gallery bootstrap without the legacy canvas owner', fun
         ->not->toContain('loadThreeRuntime')
         ->not->toContain('DepthGalleryEngine')
         ->and($pattern)
-        ->toContain("rootMargin: '75% 0px 75% 0px'")
+        ->not->toContain('IntersectionObserver')
         ->toContain("section.classList.add('is-gallery-pattern-ready')")
         ->and($sectionBlade)
         ->toContain("config('media.static.ornaments.geometry_33')")

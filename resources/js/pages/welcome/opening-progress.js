@@ -13,7 +13,7 @@ export function createOpeningProgress(gate, ledger) {
     });
     const paint = () => new Promise(resolve => window.requestAnimationFrame(() => window.requestAnimationFrame(resolve)));
     function update() {
-        const value = ledger.progress;
+        const value = Math.floor(ledger.progress);
         if (progress) progress.value = value;
         if (percent) percent.textContent = `${value}%`;
         root.dataset.homeOpeningProgress = String(value);
@@ -41,7 +41,7 @@ export function createOpeningProgress(gate, ledger) {
             await animation.finished.catch(() => {});
         }
         await active();
-        gate.release({ settled: ledger.complete ? 5 : 0, painted: true, handoff: true });
+        gate.release({ complete: ledger.complete, painted: true, handoff: true });
     }
     document.addEventListener('schoolai:home-preparation', update, { signal: lifecycle.signal });
     document.addEventListener('visibilitychange', () => document.hidden ? animation?.pause() : animation?.play(), { signal: lifecycle.signal });

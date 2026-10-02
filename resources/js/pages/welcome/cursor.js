@@ -1,6 +1,6 @@
 import { INTERACTIVE_SELECTOR, DISABLED_SELECTOR, closestMatch, activeCursorLayerHost, loadCursorAsset } from './cursor-layer.js';
 
-export function initHomepageCursor() {
+export function initHomepageCursor({ prepareAll = false } = {}) {
     const body = document.body;
     const capability = window.matchMedia('(hover: hover) and (pointer: fine)');
     if (!body?.classList.contains('site-cursor-page') || !capability.matches) return;
@@ -55,8 +55,12 @@ export function initHomepageCursor() {
         }
     };
 
+    let defaultDone, hoverDone;
+    const defaultReady = new Promise(resolve => { defaultDone = resolve; });
+    const hoverAssetReady = new Promise(resolve => { hoverDone = resolve; });
     const cancelDefault = loadCursorAsset(character, '1', (loaded) => {
         if (disposed) return;
+        defaultDone();
         ready = loaded;
         if (ready) schedulePaint();
         else hide();
@@ -69,16 +73,20 @@ export function initHomepageCursor() {
         schedulePaint();
     };
 
+    function warmHover() {
+        if (cancelHover) return;
+        cancelHover = loadCursorAsset(character, '2', loaded => {
+            hoverDone();
+            if (disposed) return;
+            hoverReady = loaded;
+            schedulePaint();
+        });
+    }
+    if (prepareAll) warmHover();
     const handlePointerOver = (event) => {
         state = closestMatch(event.target, DISABLED_SELECTOR) ? 'disabled'
             : closestMatch(event.target, INTERACTIVE_SELECTOR) ? 'interactive' : 'default';
-        if (state === 'interactive' && !cancelHover) {
-            cancelHover = loadCursorAsset(character, '2', (loaded) => {
-                if (disposed) return;
-                hoverReady = loaded;
-                schedulePaint();
-            });
-        }
+        if (state === 'interactive') warmHover();
         schedulePaint();
     };
 
@@ -114,5 +122,6 @@ export function initHomepageCursor() {
         syncCursorLayer();
     }, options);
     syncCursorLayer();
+    destroy.ready = prepareAll ? Promise.all([defaultReady, hoverAssetReady]) : defaultReady;
     return destroy;
 }

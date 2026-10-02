@@ -1,4 +1,7 @@
-export const REQUIRED_OPENING_UNITS = Object.freeze(['hero', 'vision', 'program', 'values', 'gallery']);
+export const REQUIRED_OPENING_UNITS = Object.freeze([
+    'hero', 'navigation', 'runtimes', 'styles', 'fonts', 'images', 'media',
+    'vision', 'program', 'values', 'gallery', 'testimonials', 'articles', 'footer', 'geometry',
+]);
 const SETTLED = new Set(['PREPARED', 'STATIC_FALLBACK']);
 
 export function createOpeningLedger() {

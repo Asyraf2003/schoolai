@@ -1,137 +1,145 @@
-# MAP-06B — Opening Experience & Readiness Contract Correction
+# MAP-06B — Complete homepage readiness before scroll
 
-State: IMPLEMENTING
-Work status: FAIL until all correction proof gates pass
-Owner acceptance: 2026-10-02, including pre-gate and media-budget corrections
+State: IMPLEMENTING (owner goal/inventory OWNER_ACCEPTED)
+Work status: FAIL until corrected full-journey proof passes
+Owner correction: 2026-10-02 (explicit current request supersedes old five-unit goal)
 Repository: Asyraf2003/schoolai
 Source main: 8c399a280b8cc5df1ae70c39aee8be72803f371c
 Execution channel: Terminal Codex
-Issue: #61; branch: fix/home-opening-readiness
+Issue: #61; branch: fix/homepage-complete-readiness
 
 ## FACT → GAP → GOAL → IMPACT → DECISION
 
-Current gate starts in deferred welcome runtime and unlocks after Vision.
-Hero readiness is a no-op; Program, Values and Gallery prepare after unlock.
-There is one home-preparation producer and no visible production consumer.
-Native early input reproduced 0→900 before module execution. Immediate input
-at current unlock observed 3/4/8 new requests; required runtimes settled later.
-Opening UX FAIL despite existing Node/PHP/build/structure gates passing.
-Fresh three-run local Lighthouse medians/worst: mobile69/50, desktop86/85;
-original baseline83/82 and97/97. Current transfer33.56MB mobile/28.57MB desktop.
+FACT: inspected current main and MAP-06B branch. SSR renders Hero, Vision,
+Program, Values, Gallery, Testimonials, Articles and footer. Local production
+DOM at 1440×900 has 69 images, three Vision previews and an intent-only dialog
+video. Source retains testimonial proximity import, Vision/Gallery proximity
+source hydration, native lazy images and geometry fitted after media loads.
+Five-unit shell readiness and access bypass therefore violate the owner goal.
+GAP FULL-READY-001: old proof checks one immediate scroll, not the entire journey.
+GOAL: Hero and primary actions appear quickly; hold the journey at Hero while
+background work prepares every required homepage dependency. Real progress reaches
+100 only when the entire rendered experience is ready. Paint 100, finish the
+existing opacity handoff, then unlock once. Do not shift work to first scroll.
+IMPACT: longer honest preparation may be necessary; measure it separately from
+Hero paint. Preserve composition, school copy, CSS cascade, media and motion.
+DECISION: complete readiness barrier; no Vision-only release, shell-only media
+success, timer-produced progress, or access-intent unlock. Navigation menus,
+locale and PPDB remain interactive. Internal anchors queue until readiness.
 
-Goal: Hero/primary actions visible immediately, truthful visible progress,
-normal scroll blocked until five usable units and handoff finish. Keep deep
-media progressive; reduce proven warm-up cost without shifting required work
-to first scroll or removing the opening experience.
+## Dependency inventory: every row blocks 100
 
-## Scope packet
-
-Editable: critical opening bootstrap and its gate CSS, bounded Hero progress
-partial/treatment, preparation/gate/progress/ledger, existing readiness and
-cancellation interfaces, per-preview media scheduling, functional loading
-locale strings, targeted contracts/browser proof, current state/map/proof.
-Read-only: existing Hero composition, type owners, section copy/choreography,
-media assets/URLs, package graph, business/DB/content owners.
-Forbidden: redesign, unrelated cleanup, activation/deactivation, new engine,
-dependency changes, CSS deletion without DEAD_CONFIRMED, final certification
-and accessibility-label correction before this map is green.
-
-## Ownership and graph
-
-Critical nonce script in head owns one gate instance before stylesheet/deferred
-runtime waiting. Runtime adopts it exactly once; no second gate/listener owner.
-No server-rendered permanent overflow lock: without JS no lock is installed.
-Blade owns localized progress semantics; existing type owners supply families
-and tokens. Named opening CSS owns reserved overlay geometry; JS owns progress.
-
-Before: SSR Hero → deferred gate → shell → Hero no-op → Vision → unlock
-→ Program → Values → Gallery → footer no-op → complete.
-After target: SSR Hero/actions → critical gate/visible progress → five units
-settled → 100% painted while locked → bounded handoff → one unlock → deep media.
-
-| Required unit | PREPARED evidence | STATIC_FALLBACK evidence |
+| Owner | Required dependency / evidence | Streaming after unlock |
 |---|---|---|
-| HERO ACTIVE MEDIA | first usable active frame | usable semantic/poster Hero |
-| VISION | first visual, owned timeline and applicable fonts/styles | usable static first composition |
-| PROGRAM RUNTIME | installed functional controls | canonical static controls installed |
-| VALUES RUNTIME | valid geometry and first paint | enhancement reset and usable content |
-| GALLERY SHELL | shell/reserved geometry and first paint | usable semantic shell/actions |
+| Hero | Existing Opening/carousel controller; visible shell; all rendered slide images/posters; active video first frame/future data or validated permanent poster mode | Remaining video bytes |
+| Navigation | Current mega/language/mobile/login handlers, applicable CSS, logos/flags; cursor runtime/assets for fine pointer | Intent-only authentication network |
+| Styles | SSR/deferred styles plus Program, mobile navigation, carousel when rendered, Testimonials CSS loaded/applied | None required |
+| Fonts | Actual Inter/Cairo text/weight subsets across all rendered and hidden controls; readiness before final geometry | No required font |
+| Images | All rendered Hero/Program/Gallery/Testimonial/Article/footer images including hidden Program details; decoded natural dimensions | None required |
+| Backgrounds | Owned ornaments, cursor and CSS visual URLs decoded, including future Vision states | None required |
+| Video previews | All three Vision and every rendered direct Gallery video; source, first frame, future buffered data, paused/offscreen controller | Subsequent ranges, transparent buffering |
+| Vision | Styles/fonts/visuals complete; timeline and initial geometry/state painted | Playback and animation updates |
+| Program | GSAP or installed canonical reduced controller, formation/heading/dialog controls and first state | User-triggered interaction timelines |
+| Values | Existing geometry/state/first paint or stable reduced/capability mode; disabled spatial graph stays disabled | Existing scroll animation |
+| Gallery | Existing CSS controller, all media fitting and initial frame; pattern enabled before barrier | Playback and scroll animation |
+| Testimonials | Import JS/CSS before barrier; controller mounted, tracks measured/initial transforms painted; every card image decoded | Existing track animation |
+| Articles | Existing heading/reveal owner initialized; rendered article data/images or SSR empty state, reserved cards | CSS hover/replay |
+| Footer | SSR data/links/year/logo/social/partner assets and final layout | External link navigation |
+| Final geometry | Fonts/images/styles applied; existing owners refresh/paint at Hero; stable reserved section geometry and state | Position reads and animation updates; resize may recompute geometry |
 
-States PENDING/PREPARED/STATIC_FALLBACK/FAILED/ABORTED. Only validated PREPARED
-or STATIC_FALLBACK settles. Failure/abort/deadline alone never increments.
-Progress =100×validated settled/5; idempotent, no fake timer. Any interpolation
-must stay at/below latest settled percentage; native immediate values suffice.
-Footer/shell no-ops, remaining Vision/Gallery media, Testimonials and Articles
-are nonblocking. Never wait for full video downloads.
+Data comes from existing Home controller and exact-view composers: bounded
+Hero promotions/Gallery, static localized Program/Values/Testimonials, bounded
+Articles query and shared footer/nav models. There is no homepage scroll fetch.
+The active homepage Gallery uses DOM/CSS; no Three runtime is required. No engine
+selection or graphics redesign is authorized. Intent-only fullscreen video may
+use the already prepared preview URL when explicitly opened; no scroll hydration.
 
-Normal release:5/5 validated-settled AND visible100% painted AND bounded
-handoff completed AND lifecycle active AND never previously unlocked.
-Explicit PPDB/navigation/keyboard access bypass is separate and never fabricates
-100%. Hash/restored history bypass is preserved. Modal/fullscreen owns its own
-body lock; opening gate must not clear it.
+## Scope packet and ownership
 
-## States, motion and lifecycle
+Editable: existing critical gate/bootstrap/progress, readiness ledger/coordinator,
+new bounded readiness owners under the existing welcome directory, existing
+Vision/Gallery preview preparation/playback owners, testimonial mounting,
+navigation preparation, proven geometry refresh paths, targeted tests and
+browser proof, this blueprint/current-state/map/proof.
+Read-only: Blade section composition, type scales/cascade/import order, content,
+media URLs/config/assets, PHP business/query owners, dependencies and lab graph.
+Forbidden: visual redesign, CSS mass deletion, activation/deactivation, new
+engine, dependency changes, unrelated cleanup and accessibility-label repair.
+One bootstrap gate is adopted once. One existing controller per surface remains.
+Loader semantics/treatment stay in current Blade/CSS. Preparation yields between
+bounded units after Hero paint; native lazy content is promoted only then.
 
-Critical preparing → adopted/preparing → five settled → 100% paint → handoff
-→ complete. Access intent → bypassed; permanent exit → disposed.
-Loader sits at the reserved viewport bottom within the Hero opening with no primary-action interception.
-Handoff uses160ms opacity only; reduced motion has no animated handoff.
-Hidden/persisted pagehide pauses handoff; resume uses the same ledger/gate.
-Resize/orientation changes geometry, not ownership. Late cancelled enhancement
-cannot reinstall an owner. No-JS keeps semantic Hero/navigation and page scroll. Total runtime failure
-exposes a native explicit recovery link; it does not fabricate100% readiness.
+## Progress, state and fallback
 
-## Six tiers and locales
+Real ledger units include navigation/styles/fonts/images/media, every rendered
+surface and final geometry. Each unit settles once only on its inspected promise
+and runtime/asset evidence. Progress is completed units / required units, rounded
+down for display. Image/media checks within a unit all finish before it settles.
+Hero's unit proves its decoded visible shell and mounted controller. The media
+unit independently awaits actual startup/frame/future buffer for every rendered
+Hero/Vision/Gallery video. This avoids depending on paused metadata to advance
+before playback; neither partial unit permits unlock.
+100 requires every blocker; failed/aborted/pending work cannot count as ready.
+Media errors/reduced motion may settle only a decoded, permanently selected
+poster/static mode with controller and reserved geometry ready. No automatic
+later source re-hydration on scroll. Missing required visuals stay below100.
+A delayed/failed dependency shows native retry access; timer only reveals recovery,
+never readiness. Retry reloads; PPDB/other routes remain usable. No hidden unlock.
+No-JS retains native semantic content/navigation and ordinary page access.
 
-XS360–639 (prove360/390), SM640–767, MD768–1023, LG1024–1279,
-XL1280–1535, 2XL≥1536: same DOM, ledger, critical gate and controls. Progress
-uses intrinsic bounded width and reserved bottom inset, without changing Hero
-content/crop. All boundary pairs and interior widths; navigation1180/1181.
-Short-height/orientation/200% zoom retain primary access and focus. Because
-existing Hero min-height places its CTA below a short viewport, the loader
-reuses the same PPDB destination/label at heights≤560px or when actual CTA
-geometry is outside the viewport (including text/CSS zoom). The existing progress
-owner observes geometry and disposes that observer with its lifecycle; no new
-gate owner or type/layout rule. Actual AR200% proof found this access gap. Normal Hero copy/layout
-is unchanged. The mobile menu has no PPDB item in current source, so prove
-its actual Program navigation and the independent Hero/short-height PPDB paths.
-ID/EN use existing Inter/LTR; AR existing Cairo/RTL. Logical positioning, shared
-vertical readiness/time. Only functional loading copy changes. Server locale
-switch during preparation bypasses, disposes outgoing work and creates one new
-opening lifecycle; no mixed DOM or locale-specific controller.
-Chromium/WebKit use capabilities, no UA forks; genuine static downgrade for
-media/motion failure. Native wheel/touch/keyboard cannot enter normal journey
-before completion, while navbar/PPDB/modal/explicit intent remain usable.
+Lifecycle: shell-visible/locked → preparing → all-ready/100-painted/locked
+→ existing160ms opacity handoff (no animation under reduced motion) → unlocked.
+Hidden/persisted history pauses handoff; restore reuses the same owner. Permanent
+page exit aborts listeners/work. Opening owns root overflow only; modal/mobile
+body overflow stays with its current owner. Pending anchors/history positions
+are restored only after readiness; Escape/focus/menu clicks cannot bypass.
+Normal wheel/touch/keyboard/focus/programmatic hash cannot enter the lower journey
+while locked. Lower sections are temporarily inert, preserving accessible Hero,
+navbar, locale and PPDB. No server permanent lock without JavaScript.
 
-## Media and scheduler budget
+## Six tiers, locales and capability
 
-Prioritize shell/critical paint; required runtime work yields between bounded
-units. Hero hydration seeks metadata/first frame; do not play/bulk-warm while
-gate locked. Vision first poster can supply real first visual with timeline;
-video playback/deeper videos remain per-unit proximity. Gallery shell never
-waits for distant media. No first-input activation of required runtime.
-Compare same delivery/browser/profile≥3 cold samples, median/worst, network,
-JS evaluation, media decode, layout, style, paint/composite separately. Reject
-unexplained cost/UX regression; source-proven bulk warm-up must reduce transfer
-and current mobile69 median materially.100 is product target, not permission
-to remove UX. Deployed PSI/CWV/physical Safari claims require separate evidence.
+XS360–639 (360/390), SM640–767, MD768–1023, LG1024–1279,
+XL1280–1535, 2XL≥1536 share the same semantic DOM/barrier/controller graph.
+Existing layout, media crop, type, touch/keyboard and motion remain. Test all
+representatives/interiors and boundary pairs, including navigation1180/1181.
+Short height/orientation/200% retains existing direct loader PPDB access.
+ID/EN Inter/LTR and AR Cairo/RTL use actual locale text for font readiness.
+Vertical loading/progress/time is shared; directional existing choreography
+remains. Server locale switch aborts outgoing work and starts one new barrier.
+Chromium/WebKit use capability tests, stable decoded poster under reduced motion
+or failed playback, no UA forks. Offscreen videos pause; all sources necessary
+for normal playback are ready before unlock. No new WebGL/renderer.
+Actual decoded frames are prepared before media settles. Visible media waits
+for its compositor callback; offscreen media copies its decoded frame through
+one reusable temporary2D canvas because engines may suppress offscreen callbacks.
+No canvas is mounted or animated. ImageBitmaps are closed immediately and the
+context is released before100; buffered future playback remains a blocker.
 
-## Automated and real proof
+## Budget and proof
 
-Ledger barriers/out-of-order/failure/usability/count-once; exactly-one adoption
-and unlock;100 remains locked through paint/handoff; reduced/hidden/BFCache.
-Native earliest wheel/touch with deferred entry held; no-JS/hash/restored paths.
-Real visible pending/100/handoff/unlocked screenshots; PPDB/navbar/modal/focus.
-Immediate first scroll: zero required-runtime requests/init, deep media reported
-separately. All six tiers+boundaries, ID/EN/AR, normal/reduced, both engines.
-Abort/media errors, repeat resize/orientation/hidden/persisted+native history,
-locale transitions,200% zoom; no duplicate loader/gate/listeners/stuck lock.
-Diff/structure/build/Node/full PHP;≥3 cold LH/profile median/worst and transfer.
+Hero/nav/PPDB remain outside lower-page preparation blocking. No full-video
+completion wait. Yield controller/asset work; pause hidden/offscreen playback.
+Measure cold Hero FCP/LCP, total readiness duration, bytes, long tasks, layout,
+scroll frame time and CLS separately. Three comparable cold mobile/desktop lab
+runs: median/worst; Lighthouse100 remains target, not permission to defer work.
+Physical Safari/deployed PSI/field CWV stay separately declared missing evidence.
+
+Required browser acceptance after visible100+handoff+unlock:
+Hero→footer →footer→Hero →Hero→footer again. Every crossing must show zero new
+required JS/CSS/font/image requests, source hydrations, controller mounts,
+first-entry geometry init or user-visible loading. Continued video byte ranges
+are listed separately. Capture states/media signatures before/after each pass,
+real native input, screenshots, errors, tasks and frames. Test six tiers/locales,
+normal/reduced and Chromium/WebKit, held dependencies, early navbar/PPDB, anchors,
+media errors, pending required images, hidden/BFCache, locale, zoom/orientation.
+Run git diff --check, npm run check:structure, npm run build, executed Node
+contracts, focused and full php artisan test; Pint for PHP changes.
 
 ## ACTIVE STEP → EXECUTION → PROOF → PROGRESS → STATUS → NEXT
 
-ACTIVE: implement the accepted correction on Issue#61 branch.
-PROOF: not yet run on corrected source; no implementation PASS is claimed.
-STATUS: FAIL until correction and browser/performance gates are green.
-NEXT channel: Terminal Codex; implement/test/prove this map, then PR→CI→merge.
-Global task closure and accessibility correction remain deferred.
+ACTIVE: audited inventory and owner correction; implement the single complete
+homepage readiness capability on Issue#61 branch, then test/browser proof.
+PROOF: prior five-unit samples retained as historical evidence, not acceptance.
+STATUS: FAIL. Blueprint OWNER_ACCEPTED from explicit owner goal.
+NEXT channel: Terminal Codex; Issue→branch→implementation→tests→browser→PR→CI→merge.

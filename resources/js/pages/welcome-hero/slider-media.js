@@ -45,6 +45,7 @@ export function createSliderMediaActions(options) {
                 video.pause();
                 if (slide === slides[state.currentIndex]) options.root.dataset.heroMediaState = 'media-error';
                 slide.classList.add('has-video-playback-fallback');
+                video.dispatchEvent(new Event('schoolai:hero-media-state'));
             }, { once: true, signal: state.lifecycleSignal });
             source.src = source.getAttribute('data-src');
             source.removeAttribute('data-src');
@@ -52,7 +53,7 @@ export function createSliderMediaActions(options) {
         });
 
         if (hydratedSource) {
-            video.preload = 'metadata';
+            video.preload = 'auto';
             video.setAttribute('data-hydrated', 'true');
             video.load();
         }
@@ -60,13 +61,15 @@ export function createSliderMediaActions(options) {
 
     function canAutoplay() {
         return slides.length > 1 && !state.userPaused && !document.hidden
-            && !state.suspended && state.inViewport !== false && !state.reducedMotion?.matches;
+            && !state.suspended && state.inViewport !== false && !state.reducedMotion?.matches
+            && document.documentElement.dataset.homeScrollGate !== 'locked';
     }
 
     function syncVideos() {
         slides.forEach(function (slide, index) {
             var video = slide.querySelector('[data-hero-video]');
             if (!video) return;
+            if (video.dataset?.homeMediaPreparing === 'true') return;
 
             syncLoop(video);
 
@@ -82,6 +85,11 @@ export function createSliderMediaActions(options) {
                 return;
             }
 
+            if (video.dataset.heroVideoState === 'poster-ready') {
+                if (!state.audioEnabled) { video.pause(); return; }
+                delete video.dataset.heroVideoState;
+            }
+
             if (state.reducedMotion?.matches && !state.audioEnabled) {
                 options.root.dataset.heroMediaState = 'static-reduced';
                 video.pause();
@@ -94,7 +102,8 @@ export function createSliderMediaActions(options) {
             hydrateSlide(slide, true);
             video.muted = !state.audioEnabled;
 
-            if (state.userPaused || document.hidden) {
+            if (state.userPaused || document.hidden
+                || (document.documentElement.dataset.homeScrollGate === 'locked' && !state.audioEnabled)) {
                 video.pause();
                 return;
             }

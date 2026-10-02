@@ -1,105 +1,83 @@
 import assert from 'node:assert/strict';
-import {localeContext,instrument,snapshot,waitComplete,nativeScroll,delay} from './home-opening-helpers.mjs';
-export async function proveOpeningLifecycle(browser,engine,base,save) {
-    for(const [from,to] of [['id','en'],['en','id'],['id','ar'],['en','ar'],['ar','id'],['ar','en']]) {
-        const context=await localeContext(browser,base,from);await instrument(context);const page=await context.newPage();
-        let release;const held=new Promise(resolve=>release=resolve);
-        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
-        await page.goto(base,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('progress').value===40);
-        await page.locator('#navbar [data-language-modal-open]').click();
-        await page.locator(`[data-language-modal] button.language-modal__option[lang="${to}"]`).click();
-        release();await waitComplete(page);const state=await snapshot(page);
-        assert.equal(state.lang,to);assert.equal(state.dir,to==='ar'?'rtl':'ltr');assert.equal(state.duplicates,1);
-        assert.equal(state.events.filter(e=>e.name==='schoolai:opening-adopted').length,1);
-        save({engine,key:`locale-loading-${from}-${to}`,state});await context.close();
-    }
-    for(const locale of ['id','en','ar']) {
-        const context=await localeContext(browser,base,locale,'reduce',390);await instrument(context,true);const page=await context.newPage();
-        let release;const held=new Promise(resolve=>release=resolve);
-        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
-        await page.setViewportSize({width:390,height:844});await page.goto(base,{waitUntil:'domcontentloaded'});
-        await page.waitForFunction(()=>document.querySelector('progress').value===40);await page.evaluate(()=>document.documentElement.style.zoom='2');
-        await page.locator('[data-home-opening-direct]').waitFor({state:'visible'});
-        assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'locked');
-        await page.locator('[data-home-opening-direct]').click();await page.waitForURL('**/ppdb');assert.ok(await page.locator('h1').first().isVisible());
-        release();save({engine,key:`zoom-direct-ppdb-loading-${locale}`,url:page.url(),profile:'CSS200% proxy with actual native click while required Program remains pending; native browser UI zoom is a separate certification.'});await context.close();
-    }
-    {
-        const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
-        let release;const held=new Promise(resolve=>release=resolve);
-        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
-        await page.goto(base,{waitUntil:'domcontentloaded'});await waitComplete(page);const state=await snapshot(page);
-        assert.equal(state.value,100);assert.equal(state.program,'static-fallback');assert.equal(state.root.homeScrollGate,'unlocked');
-        const trigger=page.locator('[data-program-open]').first();await trigger.scrollIntoViewIfNeeded();await trigger.click();
-        assert.equal(await page.locator('[data-program-detail-layer]').isVisible(),true);
-        await page.keyboard.press('Escape');assert.equal(await page.locator('[data-program-detail-layer]').isVisible(),false);
-        release();await delay(250);assert.equal(await page.locator('[data-program-kinetic]').getAttribute('data-program-ready'),'static-fallback');
-        save({engine,key:'real-deadline-usable-fallback',state,dialogOpenClose:true});await context.close();
-    }
-    {
-        const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
-        await page.addInitScript(()=>window.holdOpeningHandoff=true);
-        await page.goto(base,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.documentElement.dataset.homeOpeningPhase==='handoff');
-        await delay(60);await page.evaluate(()=>{
-            window.originalGate=window.schoolaiHomeOpening;window.originalHidden=Object.getOwnPropertyDescriptor(document,'hidden');
-            Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});
-            document.dispatchEvent(new Event('visibilitychange'));
-            window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true}));
+import { localeContext, instrument, snapshot, waitComplete, nativeScroll, delay } from './home-opening-helpers.mjs';
+import { instrumentCompleteJourney, traverseCompleteHomepage, completeSnapshot } from './home-complete-journey.mjs';
+export async function proveOpeningLifecycle(browser, engine, base, save) {
+    for (const mode of ['held-media','held-images','failed-image','media-error','play-denied','language','ppdb','anchor','hash','no-js','lifecycle','zoom','short']) {
+        const context = await localeContext(browser,base,'id','no-preference',1440,mode==='no-js');
+        if (mode !== 'no-js') { await instrument(context); await instrumentCompleteJourney(context); }
+        if (mode === 'play-denied') await context.addInitScript(() => {
+            HTMLMediaElement.prototype.play = () => Promise.reject(new DOMException('Autoplay denied', 'NotAllowedError'));
         });
-        const before=await snapshot(page);await delay(150);const pending=await snapshot(page);
-        assert.equal(before.root.homeScrollGate,'locked');assert.equal(pending.root.homeScrollGate,'locked');
-        await page.evaluate(()=>{
-            delete document.hidden;window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true}));
-            document.dispatchEvent(new Event('visibilitychange'));
-        });
-        await waitComplete(page);const after=await snapshot(page);
-        assert.equal(await page.evaluate(()=>window.originalGate===window.schoolaiHomeOpening),true);
-        assert.equal(after.events.filter(e=>e.name==='schoolai:first-journey-ready').length,1);
-        save({engine,key:'handoff-hidden-persisted-handlers',before,pending,after,profile:'Actual DOM/WAAPI with injected hidden and persisted lifecycle events; complements native history case.'});await context.close();
-    }
-    {
-        const context=await localeContext(browser,base,'id','no-preference',390);await instrument(context);const page=await context.newPage();
-        let release;const held=new Promise(resolve=>release=resolve);
-        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
-        await page.goto(base,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('progress').value===40);
-        await page.locator('#hamburgerBtn').click();await page.locator('#navMenu [data-nav-mega-toggle]').first().click();
-        await page.locator('#navMenu a[href="#program"]').first().click();
-        assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'unlocked');
-        await page.locator('.hero-cinema__cta[href$="/ppdb"]').click();
-        await page.waitForURL('**/ppdb');assert.ok(await page.locator('h1').first().isVisible());release();
-        save({engine,key:'mobile-navigation-loading-and-ppdb',url:page.url()});await context.close();
-    }
-    {
-        const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
-        let release;const held=new Promise(resolve=>release=resolve);
-        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
-        await page.goto(base,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('progress').value===40);
-        await page.locator('[data-vision-video-open]').first().click();await page.locator('[data-about-video-modal]').waitFor({state:'visible'});
-        assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'unlocked');
-        await page.locator('[data-about-video-fullscreen]').click();await delay(150);
-        const fullscreen=await page.evaluate(()=>({native:!!document.fullscreenElement,fallback:document.querySelector('[data-about-video-modal]').className,body:document.body.style.overflow}));
-        await page.keyboard.press('Escape');await delay(150);
-        if(await page.locator('[data-about-video-modal]').isVisible())await page.locator('[data-about-video-close]').click();
-        assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'unlocked');release();
-        save({engine,key:'loading-video-modal-fullscreen',fullscreen,profile:engine==='webkit'?'WebKit fullscreen native/capability fallback recorded':'Chromium native fullscreen intent'});await context.close();
-    }
-    {
-        const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
-        await page.setViewportSize({width:780,height:390});
-        let release;const held=new Promise(resolve=>release=resolve);
-        await page.route('**/program-cards-*.js',async route=>{await held;await route.continue().catch(()=>{});});
-        await page.goto(base,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>document.querySelector('progress').value===40);
-        await page.locator('[data-home-opening-direct]').click();await page.waitForURL('**/ppdb');
-        assert.ok(await page.locator('h1').first().isVisible());release();save({engine,key:'short-viewport-direct-ppdb-loading',url:page.url()});await context.close();
-    }
-    {
-        const context=await localeContext(browser,base,'id');await instrument(context);const page=await context.newPage();
-        await page.route('**/build/assets/*.js',route=>route.abort('failed'));
-        await page.goto(base,{waitUntil:'domcontentloaded'});await page.locator('[data-home-opening-exit]').waitFor({state:'visible',timeout:15000});
-        assert.equal(await page.locator('progress').getAttribute('value'),'0');
-        const locked=await nativeScroll(page,engine);assert.equal(locked.after,0);
-        await page.locator('[data-home-opening-exit]').click();assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'unlocked');
-        const input=await nativeScroll(page,engine);assert.ok(input.after>0);
-        save({engine,key:'failed-runtime-explicit-recovery',locked,input,profile:'No fabricated 100%; usable native recovery/navigation exits opening explicitly.'});await context.close();
+        const page = await context.newPage(), requests = [], errors = [];
+        page.on('request', request => requests.push({url:request.url(),type:request.resourceType()}));
+        page.on('pageerror', error => errors.push(error.message));
+        let release;
+        const held = new Promise(resolve => { release = resolve; });
+        if (mode === 'held-media') await page.route('**/homepage-opening-v2.mp4',async route => { await held; await route.continue().catch(()=>{}); });
+        if (['held-images','language','ppdb','anchor','zoom','short'].includes(mode)) await page.route('**/testi-21-v1.webp',async route => { await held; await route.continue().catch(()=>{}); });
+        if (mode === 'failed-image') await page.route('**/testi-21-v1.webp',route => route.abort('failed'));
+        if (mode === 'media-error') await page.route('**/*.mp4',route => route.abort('failed'));
+        if (mode === 'short') await page.setViewportSize({width:780,height:390});
+        await page.goto(base+(mode==='hash'?'#program':''),{waitUntil:'domcontentloaded'});
+        let detail;
+        if (mode === 'held-media') {
+            await page.waitForFunction(()=>document.documentElement.dataset.heroReady==='true');
+            const pending = await snapshot(page);
+            assert.equal(pending.value, 0); assert.equal(pending.root.homeScrollGate, 'locked');
+            assert.equal(pending.hero, true); assert.equal(pending.navbar, true);
+            await page.locator('#navbar [data-language-modal-open]').click();
+            await page.waitForFunction(()=>document.activeElement.classList.contains('language-modal__dialog'));
+            await page.keyboard.press('Escape');
+            await page.locator('.hero-cinema__cta[href$="/ppdb"]').click(); await page.waitForURL('**/ppdb');
+            detail = { pending, url: page.url() }; release();
+        } else if (mode === 'no-js') {
+            const input=await nativeScroll(page,engine); assert.ok(input.after>0);
+            assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),null); detail={input};
+        } else if (mode === 'failed-image') {
+            await page.waitForFunction(()=>document.documentElement.dataset.homePreparationState==='failed');
+            detail=await completeSnapshot(page); assert.equal(detail.root.homeFailedDependency,'images');
+            assert.equal(detail.root.homeScrollGate,'locked'); assert.ok(Number(detail.root.homeOpeningProgress)<100);
+            assert.equal((await nativeScroll(page,engine)).after,0);
+            assert.ok(await page.locator('[data-home-opening-exit]').isVisible());
+            assert.equal(new URL(await page.locator('[data-home-opening-exit]').getAttribute('href')).href,new URL(base).href);
+        } else if (['held-images','language','ppdb','anchor','zoom','short'].includes(mode)) {
+            await page.waitForFunction(()=>document.documentElement.dataset.homePreparedThrough==='fonts'); await delay(150);
+            const pending=await snapshot(page); assert.equal(pending.root.homeScrollGate,'locked'); assert.ok(pending.value<100);
+            assert.equal((await nativeScroll(page,engine)).after,0); await page.keyboard.press('PageDown'); assert.equal(await page.evaluate(()=>scrollY),0);
+            if (mode==='ppdb') {
+                await page.locator('.hero-cinema__cta[href$="/ppdb"]').click(); await page.waitForURL('**/ppdb'); detail={url:page.url(),pending};
+            } else if (mode==='zoom'||mode==='short') {
+                if(mode==='zoom') await page.evaluate(()=>document.documentElement.style.zoom='2');
+                await page.locator('[data-home-opening-direct]').click(); await page.waitForURL('**/ppdb'); detail={url:page.url(),pending};
+            } else {
+                await page.locator('#navbar [data-language-modal-open]').focus(); await page.keyboard.press('Enter');
+                await page.waitForFunction(()=>document.activeElement.classList.contains('language-modal__dialog'));
+                await page.keyboard.press('Escape'); assert.equal(await page.evaluate(()=>document.activeElement.matches('#navbar [data-language-modal-open]')),true);
+                assert.equal(await page.locator('html').getAttribute('data-home-scroll-gate'),'locked');
+                if(mode==='language') {
+                    await page.locator('#navbar [data-language-modal-open]').click();
+                    await page.locator('[data-language-modal] .language-modal__option[lang="ar"]').click();
+                    release(); await page.waitForFunction(()=>document.documentElement.lang==='ar'); await waitComplete(page);
+                    detail=await completeSnapshot(page);
+                } else {
+                    if(mode==='anchor') { await page.locator('#navbar [data-nav-mega-toggle]').first().click(); await page.locator('#navbar a[href="#program"]').first().click(); assert.equal(await page.evaluate(()=>scrollY),0); }
+                    release(); await waitComplete(page); detail={pending,ready:await completeSnapshot(page)};
+                    if(mode==='anchor') { await page.waitForFunction(()=>scrollY>900); detail.ready=await completeSnapshot(page); }
+                    else detail.journey=await traverseCompleteHomepage(page,requests);
+                }
+            }
+            release();
+        } else {
+            await waitComplete(page);
+            if(mode==='hash') { await page.waitForFunction(()=>scrollY>900); detail=await completeSnapshot(page); }
+            else if(mode==='lifecycle') {
+                await page.evaluate(()=>{window.savedOwner=window.schoolaiHomeOpening;window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true}));window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true}));});
+                assert.equal(await page.evaluate(()=>window.savedOwner===window.schoolaiHomeOpening),true); detail=await completeSnapshot(page);
+            } else {
+                detail=await traverseCompleteHomepage(page,requests);
+                if (mode === 'play-denied') assert.ok(detail.start.previews.every(video => video.state === 'poster-ready'));
+            }
+        }
+        assert.deepEqual(errors,[]); save({engine,key:mode,detail,errors}); await context.close();
     }
 }

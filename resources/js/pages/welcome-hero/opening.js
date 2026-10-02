@@ -28,7 +28,7 @@ export function initOpeningHero(root, slide) {
             hydratedSource = true;
         });
         if (!hydratedSource) return false;
-        video.preload = 'metadata';
+        video.preload = 'auto';
         video.setAttribute('data-hydrated', 'true');
         root.dataset.heroMediaState = 'preparing';
         video.load();
@@ -46,6 +46,7 @@ export function initOpeningHero(root, slide) {
 
     function syncVideo() {
         video.muted = !audioEnabled;
+        if (video.dataset.homeMediaPreparing === 'true') return;
         if ((document.documentElement.dataset.homeScrollGate === 'locked' && !audioEnabled) || openingFallback || root.dataset.heroMediaState === 'media-error' || document.hidden || suspended || !inViewport || (reducedMotion.matches && !audioEnabled)
             || video.getAttribute('data-hydrated') !== 'true') {
             video.pause();
@@ -96,13 +97,14 @@ export function initOpeningHero(root, slide) {
             performance.mark('schoolai:hero-first-frame');
         }
         slide.classList.remove('has-video-playback-fallback');
-        if (document.documentElement.dataset.homeScrollGate === 'locked' && !audioEnabled) video.pause();
+        if (document.documentElement.dataset.homeScrollGate === 'locked' && !audioEnabled && video.dataset.homeMediaPreparing !== 'true') video.pause();
     }, options);
     video.addEventListener('playing', function () { root.dataset.heroMediaState = 'playing'; }, options);
     function mediaError() {
         video.pause();
         root.dataset.heroMediaState = 'media-error';
         slide.classList.add('has-video-playback-fallback');
+        video.dispatchEvent(new Event('schoolai:hero-media-state'));
     }
     video.addEventListener('error', mediaError, options);
     document.addEventListener('visibilitychange', function () {
