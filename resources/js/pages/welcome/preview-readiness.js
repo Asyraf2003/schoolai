@@ -1,4 +1,5 @@
 const preparation = new WeakMap();
+const preparationOptions = new WeakMap();
 let frameCanvas = null;
 
 function snapshotDecodedFrame(video) {
@@ -49,8 +50,16 @@ export function previewHasFutureFrame(video) {
     return false;
 }
 
-export function preparePreview(video, { source, poster, signal, staticOnly = false, loop = true, muted = true } = {}) {
+export async function rewarmPreview(video, signal) {
+    if (await preparation.get(video) !== 'frame-ready') return 'poster-ready';
+    preparation.delete(video);
+    return preparePreview(video, { ...preparationOptions.get(video), source: video.currentSrc, signal,
+        loop: video.loop, muted: video.muted, pauseOnReady: false });
+}
+
+export function preparePreview(video, { source, poster, signal, staticOnly = false, loop = true, muted = true, pauseOnReady = true } = {}) {
     if (preparation.has(video)) return preparation.get(video);
+    preparationOptions.set(video, { source, poster, staticOnly, loop, muted });
     const work = (async () => {
         if (poster) {
             video.poster = poster.src;
@@ -81,7 +90,8 @@ export function preparePreview(video, { source, poster, signal, staticOnly = fal
                 if (frameRequest !== null) video.cancelVideoFrameCallback?.(frameRequest);
                 if (copyPaint !== null) window.cancelAnimationFrame(copyPaint);
                 signal?.removeEventListener('abort', abort);
-                video.pause();
+                if (error || state !== 'frame-ready' || pauseOnReady) video.pause();
+                video.preload = 'metadata';
                 if (error) reject(error);
                 else {
                     video.classList.add('is-ready');
@@ -110,6 +120,7 @@ export function preparePreview(video, { source, poster, signal, staticOnly = fal
                 if (presented && future && playbackStarted) finish('frame-ready');
             };
             const fallback = () => {
+                if (settled) return;
                 if (!poster) { finish(null, new Error('Required video has no usable fallback')); return; }
                 video.querySelectorAll?.('source[src]').forEach(sourceElement => {
                     sourceElement.dataset.src = sourceElement.src;

@@ -16,7 +16,7 @@ export function initVisionVideoPreviews() {
     }
     function sync() {
         previews.forEach(preview => {
-            if (!preview.dataset.visionVideoState) return;
+            if (!preview.dataset.visionVideoState || preview.dataset.homeMediaPreparing === 'true') return;
             const canPlay = visible.has(preview) && visibleLayer(preview) && !paused && !suspended
                 && !document.hidden && !reduced.matches && preview.dataset.visionVideoState === 'frame-ready'
                 && document.documentElement.dataset.homeScrollGate === 'unlocked';

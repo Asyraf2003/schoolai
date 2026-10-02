@@ -13,72 +13,66 @@ Durable references:
 
 ## Active owner correction — complete MAP-06B (2026-10-02)
 
-Explicit owner correction supersedes the old five-unit/shell/deep-media goal.
-Blueprint `blueprints/2026-10-02-opening-experience-readiness.md` OWNER_ACCEPTED.
-Fresh main `8c399a280b8cc5df1ae70c39aee8be72803f371c`; Issue#61, corrected branch
-`fix/homepage-complete-readiness`. Terminal Codex only; authorized through PR/CI
-and verified merge to Asyraf2003/schoolai main.
-FACT: source and local production1440×900 audit renders all seven sections plus
-footer,69 image elements and three Vision previews. Testimonial imports by
-proximity; Vision/Gallery hydrate on scroll; native lazy images and fitting are
-still pending at the old shell barrier. Navbar/access clicks can bypass lock.
-GAP FULL-READY-001: old immediate-first-scroll proof does not prove the three
-full journeys. Old MAP-06B samples remain historical; acceptance is reset.
-GOAL: fast visible Hero/usable navbar+PPDB →locked →background complete homepage
-preparation →real100 →paint+handoff →unlock →smooth full journey.
-DECISION: all required styles/fonts/images/media sources/controllers/data and
-initial geometry block100. Only already prepared video streaming and ordinary
-animation/playback updates continue after unlock. Menu/Escape/focus do not unlock;
-internal navigation anchors queue until readiness. Missing visuals do not count.
-PROGRESS: complete barrier implemented;308 PHP tests pass. Chromium1440 three
-journeys record zero required requests/source hydration/media load after unlock.
-Cold diagnostic FCP568ms; no EvaluateScript during journeys, Layout max4.177ms.
-Software rendering still has large repeated Vision frame gaps; smoothness FAIL,
-not explained away as readiness PASS. Inactive carousel videos, source-error
-notification, WebKit canplaythrough/suspend and non-home bundle guard are fixed.
-Native Windows Chrome154/AMD840M confirms zero requests and long tasks after
-unlock but first downward pass has a323ms frame gap; repeat pass max67ms.
-GAP FULL-READY-002: loaded/buffered video was counted before compositor delivery.
-Actual callback preparation removes the native1440 burst in one diagnostic:
-three passes max66.6/66.5/68ms, no waiting/requests/long tasks. This is one warm
-profile, not final cold certification. Live WebKit then stalls offscreen at40%
-despite decoded/buffered video: compositor callback requires visibility.
-DECISION: prepare an actual decoded frame through one reusable temporary2D
-canvas for offscreen media; visible media still awaits its compositor callback.
-No DOM canvas/render loop, source mutation on scroll or new engine/dependency.
-Release ImageBitmaps and the shared frame context before media readiness settles.
-Preparation still requires future buffered playback; no timer counts readiness.
-Environment restart lost temporary raw artifacts; durable proof is being rerun
-under /home/asus/.cache/schoolai-proof, including native AMD840M Chrome and WebKit.
-Cold native snapshot diagnostic still records a242ms first desktop gap versus
-96ms return and135ms second downward pass. No new required dependency requests.
-NEXT bounded correction: allow the copied decoded frame to submit across two
-render frames before pausing; a delivered compositor callback may finish sooner.
-Keep both real future-buffer and decoded-frame checks. Then repeat cold proof.
-WebKit retry exposes an event-notification gap: Hero remains at0% with
-readyState4 and51.87s buffered. The awaited condition is true but no later media
-event rechecks it. A cancellable preparation-only frame observer will sample the
-same actual condition; no elapsed duration advances progress or unlocks scroll.
-GAP FULL-READY-003: initial Vision IntersectionObserver sync pauses pending
-previews while the preparation owner is starting playback. Source inspection
-confirms competing owners; isolated frame-staging diagnostic also exposes it.
-DECISION: viewport playback owner waits for a settled media readiness state.
-Preparation exclusively owns pending previews; existing abort handles disposal.
-No DOM relocation/staging is being shipped. Repeat cold and engine proof.
-NEXT readiness check also awaits the actual play promise before pausing prepared
-media. A buffered frame alone does not prove playback startup completed. Include
-the visible Opening video in media warmup; its existing controller yields only
-during this bounded preparation. Autoplay rejection permanently selects the
-decoded poster. Reuse already hydrated sources; do not reload a ready source.
-WebKit source audit narrows another deadlock: paused Opening metadata may never
-advance to a future buffered frame before playback starts. Correct the ledger
-boundary: Hero unit proves visible decoded shell/controller; the existing media
-unit separately warms every Hero/Vision/Gallery video before100. No unit can
-release scroll; all15 blockers remain mandatory. Rename the Hero shell helper
-and update its contracts; source playback remains one complete media owner.
-STATUS: FAIL until full-journey correction is proved. No Lighthouse/CWV100 claim.
-NEXT: update Issue#61 and implement/test/prove complete barrier on corrected branch,
-then PR→CI→verified merge. Global certification/accessibility repair stay deferred.
+FACT: fresh main8c399a280b8cc5df1ae70c39aee8be72803f371c; Issue#61,
+branch fix/homepage-complete-readiness, implementation3d856a74. Owner-authorized
+Terminal Codex channel through PR/CI/verified merge to Asyraf2003/schoolai main.
+Inventory and accepted goal: blueprints/2026-10-02-opening-experience-readiness.md.
+Source/SSR renders Hero, Vision, Program, Values, Gallery, Testimonials, Articles
+and footer. Initial audit69 images; isolated Article-fixture proof73. Business
+DB/content/assets/CSS composition remain unchanged by the correction.
+GAP FULL-READY-001: old five-unit shell/Vision-first release leaves testimonial
+imports, lazy images, geometry and Vision/Gallery sources pending after unlock.
+Old first-scroll samples are historical, not corrected acceptance.
+GOAL: fast Hero/usable navbar+PPDB →locked →complete background preparation
+→real100 →paint+transition →unlock →smooth entire homepage in both directions.
+IMPACT: honest preparation may take longer; distinguish Hero paint from readiness.
+DECISION: all15 inspected dependency units block100; no access/Escape/timer bypass.
+Hero unit proves decoded visible shell/controller. Media separately prepares all
+Hero/Vision/Gallery sources, decoded poster/frame and real future playback.
+100 requires every section controller, styles/fonts/images/data and final geometry.
+Only prepared video ranges and ordinary animation/playback continue after unlock.
+Failure cannot count; a decoded permanent poster is a valid media capability mode.
+PROGRESS: dependency smoke at native Chrome154/AMD840M and live WebKit2.55
+360/390/1440 completes three full trips without new required JS/CSS/font/image
+requests, media.load/source hydration, controller mount markers or geometry changes.
+Tests now69 Node contracts,308 PHP/3543 assertions, structure610, build/Pint/diff PASS.
+Environment restart lost temporary artifacts; current raw proof persists under
+/home/asus/.cache/schoolai-proof and the dedicated Windows SchoolAICompleteTools.
+GAP FULL-READY-002: offscreen compositor callbacks may never arrive. Preparation
+copies a real decoded frame through one temporary2D canvas, awaiting real play
+startup/future buffer; bitmap/context resources release before media settles.
+GAP FULL-READY-003: viewport owner paused pending preparation. It now waits for
+settled media readiness and yields while the preparation owner controls playback.
+GAP FULL-READY-004: native cold fast-first traversal still has a232ms burst despite
+zero new required requests. GPU trace proves D3DVideoDecoder initialization35.63ms
+at149.9ms after unlock and overlay processor costs. Thus smoothness remains FAIL.
+DECISION: final geometry rewarms prepared sources/buffers concurrently, awaits
+actual playback/frame/buffer again and pauses all together before100. No new load.
+Executed final-check diagnostic removes ALL post-unlock D3DVideoDecoder::Initialize
+in its three journeys, but first pass remains228.9ms; return82.6, second down48.6.
+A remaining native trace contains DCLayerTree::InitializeVideoProcessor99.6ms
+and SwapChainPresenter::VideoProcessorBlt105.94ms. This is one contributing cost,
+not the sole cause: isolated poster-only comparison still produces227.4ms first
+down,520.9ms return,35.6ms second down with no application long tasks.
+Premature attribution to video alone is corrected. Required image raster/layer
+presentation and the proof environment need separate attribution.
+Persistent Vision promotion lab308.6/96.3/96.0 also fails; none of its CSS ships.
+Paused prepared media uses metadata preload to bound unnecessary offscreen fetch;
+readiness retains decoded frame/future buffer. Continued ranges remain allowed.
+Native final-source390 smoke completes all three trips; a transient CDN image
+failure in an earlier retry correctly remains locked at33 with recovery visible.
+Proof now records failed responses/requests and stops immediately on failed state.
+The comparison profiles so far used Windows native headless Chrome. Large RAF
+waits without equally long app/GPU work may include scheduling/occlusion effects;
+headed foreground comparison is executing, not evidence of PASS yet.
+Continuous50px/frame diagnostic before final check: native390 maxima88.3/38.7/33.7,
+1440 maxima77.0/118.3/33.6. This does not erase failed fast-first proof.
+STATUS: FAIL until remaining GPU first-entry initialization and the full final-head
+engine/locale/tier/lifecycle/three-trip matrix pass. No Lighthouse/CWV100 claim.
+NEXT VALID STEP: Terminal Codex compares actual foreground presentation with the
+recorded headless failures, attributes raster/layer costs and repeats acceptance
+before PR/CI/merge. Source correction waits for a proven owner.
+No temporary staging is shipped; global certification/accessibility repair deferred.
 
 ## Active publication checkpoint
 

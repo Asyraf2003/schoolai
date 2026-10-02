@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { decodeHomepageImage } from '../../resources/js/pages/welcome/homepage-assets.js';
-import { preparePreview, releasePreviewFrames } from '../../resources/js/pages/welcome/preview-readiness.js';
+import { preparePreview, releasePreviewFrames, rewarmPreview } from '../../resources/js/pages/welcome/preview-readiness.js';
 import { prepareHeroCarouselMedia } from '../../resources/js/pages/welcome/hero-media-preparation.js';
 import { scheduleHomepagePreparation } from '../../resources/js/pages/welcome/preparation.js';
 
@@ -42,6 +42,7 @@ test('a first video frame alone does not satisfy future playback readiness', asy
     element.dispatchEvent(new Event('canplay')); await Promise.resolve(); assert.equal(ready, false);
     element.buffered.end = () => 2; element.dispatchEvent(new Event('progress'));
     assert.equal(await work, 'frame-ready'); assert.equal(element.paused, true);
+    assert.equal(element.preload, 'metadata');
     assert.equal(await preparePreview(element, { source: 'school.mp4' }), 'frame-ready');
     assert.equal(element.loads, 1);
 });
@@ -167,4 +168,23 @@ test('autoplay rejection permanently selects decoded poster even when future dat
     await new Promise(setImmediate); playback.reject(new DOMException('Autoplay denied', 'NotAllowedError'));
     assert.equal(await work, 'poster-ready'); assert.equal(element.paused, true);
     assert.equal(await preparePreview(element, { source: 'school.mp4' }), 'poster-ready');
+});
+
+test('final playback check reuses source and buffer, then leaves playback running until the shared barrier pauses it', async () => {
+    const element = video(); element.dataset = {}; element.readyState = 3; element.currentSrc = 'school.mp4';
+    assert.equal(await preparePreview(element, { source: 'school.mp4' }), 'frame-ready');
+    element.readyState = 2; let ready = false;
+    const work = rewarmPreview(element).then(state => { ready = true; return state; });
+    await new Promise(setImmediate); assert.equal(ready, false);
+    element.readyState = 3; element.dispatchEvent(new Event('progress'));
+    assert.equal(await work, 'frame-ready'); assert.equal(element.paused, false); assert.equal(element.loads, 0);
+    element.pause();
+});
+
+test('late autoplay rejection after cancellation cannot mutate media source', async () => {
+    const element = video(), signal = new AbortController(), play = deferred();
+    element.play = () => play.promise; element.removeAttribute = () => { throw new Error('late source removal'); };
+    const work = preparePreview(element, { source: 'school.mp4', signal: signal.signal });
+    signal.abort(); await assert.rejects(work, { name: 'AbortError' });
+    play.reject(new Error('late rejection')); await new Promise(setImmediate); assert.equal(element.loads, 1);
 });

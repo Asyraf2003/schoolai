@@ -29,9 +29,11 @@ try {
         page.on('pageerror', error => errors.push(error.message));
         const client = await context.newCDPSession(page), resources = new Map();
         await client.send('Network.enable'); await client.send('Network.clearBrowserCache');
-        client.on('Network.responseReceived', event => resources.set(event.requestId, { type: event.type, url: event.response.url }));
-        client.on('Network.loadingFinished', event => transfers.push({ ...resources.get(event.requestId), bytes: event.encodedDataLength }));
-        await client.send('Tracing.start', { categories: 'devtools.timeline,blink.user_timing', transferMode: 'ReturnAsStream' });
+        client.on('Network.responseReceived', event => resources.set(event.requestId, { type: event.type, url: event.response.url, bytes: 0 }));
+        client.on('Network.dataReceived', event => { const row = resources.get(event.requestId); if (row) row.bytes += event.encodedDataLength; });
+        client.on('Network.loadingFinished', event => { const row = resources.get(event.requestId); if (row) { row.bytes = event.encodedDataLength; row.finished = true; } });
+        await client.send('Tracing.start', { categories: process.env.SCHOOLAI_TRACE_CATEGORIES || 'devtools.timeline,blink.user_timing', transferMode: 'ReturnAsStream' });
+        await page.bringToFront();
         await page.goto(base, { waitUntil: 'domcontentloaded' });
         await page.waitForFunction(() => document.documentElement.dataset.homePreparationState === 'complete', null, { timeout: 120000 });
         const firstInputIndex = requests.length;
@@ -41,6 +43,7 @@ try {
             paints: performance.getEntriesByType('paint').map(entry => ({ name: entry.name, time: entry.startTime })),
             marks: performance.getEntriesByType('mark').map(entry => ({ name: entry.name, time: entry.startTime })),
         }));
+        transfers.push(...resources.values());
         const traceDone = new Promise(resolve => client.once('Tracing.tracingComplete', resolve));
         await client.send('Tracing.end'); const { stream } = await traceDone;
         let raw = '';

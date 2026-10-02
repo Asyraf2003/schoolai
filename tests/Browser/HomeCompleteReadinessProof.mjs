@@ -20,13 +20,20 @@ for (const engine of engines) {
             const context = await localeContext(browser, base, locale, motion); await instrumentCompleteJourney(context);
             for (const width of widths) {
                 const page = await context.newPage(); await page.setViewportSize({ width, height: 900 });
-                const requests = [], errors = [];
+                const requests = [], errors = [], resourceFailures = [], warnings = [];
                 page.on('request', request => requests.push({ url: request.url(), type: request.resourceType() }));
                 page.on('pageerror', error => errors.push(error.message));
+                page.on('requestfailed', request => resourceFailures.push({ url: request.url(), error: request.failure() }));
+                page.on('response', response => { if (response.status() >= 400) resourceFailures.push({ url: response.url(), status: response.status() }); });
+                page.on('console', message => { if (message.type() === 'warning') warnings.push(message.text()); });
+                await page.bringToFront();
                 await page.goto(base, { waitUntil: 'domcontentloaded' });
-                await page.waitForFunction(() => document.documentElement.dataset.homePreparationState === 'complete', null, { timeout: 120000 }).catch(async error => {
-                    writeFileSync(directory+'/failure.json', JSON.stringify(await completeSnapshot(page), null, 2)); throw error;
-                });
+                try {
+                    await page.waitForFunction(() => ['complete','failed'].includes(document.documentElement.dataset.homePreparationState), null, { timeout: 120000 });
+                    assert.equal(await page.evaluate(() => document.documentElement.dataset.homePreparationState), 'complete');
+                } catch (error) {
+                    writeFileSync(directory+'/failure.json', JSON.stringify({ snapshot: await completeSnapshot(page), resourceFailures, warnings }, null, 2)); throw error;
+                }
                 // Native input immediately after unlock must use already prepared runtime.
                 const firstInputIndex = requests.length;
                 await page.mouse.move(width / 2, 500); await page.mouse.wheel(0, 400); await delay(120);

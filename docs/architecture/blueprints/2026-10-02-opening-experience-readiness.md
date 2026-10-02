@@ -79,6 +79,9 @@ Hero's unit proves its decoded visible shell and mounted controller. The media
 unit independently awaits actual startup/frame/future buffer for every rendered
 Hero/Vision/Gallery video. This avoids depending on paused metadata to advance
 before playback; neither partial unit permits unlock.
+Final geometry also rechecks prepared playback from existing sources/buffers
+after all controllers/layout are ready. Await actual startup/frame/future buffer
+and pause all previews together before100, preserving offscreen pause at release.
 100 requires every blocker; failed/aborted/pending work cannot count as ready.
 Media errors/reduced motion may settle only a decoded, permanently selected
 poster/static mode with controller and reserved geometry ready. No automatic

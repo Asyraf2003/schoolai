@@ -1,3 +1,5 @@
+import { finalizeHomepageMedia } from './homepage-media-finalization.js';
+
 export function yieldHomepageWork() {
     if (window.scheduler?.yield) return window.scheduler.yield();
     return new Promise(resolve => window.setTimeout(resolve, 0));
@@ -91,6 +93,7 @@ export async function prepareHomepageGeometry() {
         await new Promise(resolve => vision.addEventListener('schoolai:vision-geometry-ready', resolve, { once: true }));
     }
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await finalizeHomepageMedia();
     document.documentElement.dataset.homeGeometryReady = 'true';
     return { state: 'prepared' };
 }

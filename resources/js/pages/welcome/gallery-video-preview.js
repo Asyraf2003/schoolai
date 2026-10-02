@@ -7,6 +7,7 @@ export function mountGalleryVideoPreviews(root) {
     let suspended = false;
     function sync() {
         previews.forEach(preview => {
+            if (preview.dataset.homeMediaPreparing === 'true') return;
             if (visible.has(preview) && !suspended && !document.hidden && !reduced.matches
                 && preview.dataset.galleryVideoState === 'frame-ready'
                 && document.documentElement.dataset.homeScrollGate === 'unlocked') {

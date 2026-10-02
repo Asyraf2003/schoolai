@@ -40,6 +40,8 @@ export async function instrumentCompleteJourney(context) {
 export async function completeSnapshot(page) {
     return page.evaluate(() => ({
         root: { ...document.documentElement.dataset }, y: scrollY,
+        environment: { dpr: devicePixelRatio, visibility: document.visibilityState, width: innerWidth, height: innerHeight,
+            finePointer: matchMedia('(pointer: fine)').matches, reduced: matchMedia('(prefers-reduced-motion: reduce)').matches },
         images: [...document.images].map(image => ({ source: image.currentSrc || image.src, ready: image.complete && image.naturalWidth > 0 })),
         previews: [...document.querySelectorAll('[data-vision-video-preview],[data-gallery-video-preview],[data-hero-video]')].map(video => ({
             source: video.currentSrc, state: video.dataset.visionVideoState || video.dataset.galleryVideoState || video.dataset.heroVideoState
@@ -92,7 +94,7 @@ export async function traverseCompleteHomepage(page, requestLog, requestIndex = 
     for (const direction of ['down', 'up', 'down']) {
         const frames = await page.evaluate(async direction => {
             const end = Math.max(0, document.documentElement.scrollHeight - innerHeight);
-            const step = Math.max(180, innerHeight * .65), gaps = [];
+            const step = Math.max(180, innerHeight * .65), gaps = [], positions = [];
             const target = direction === 'down' ? end : 0;
             let position = scrollY, last = performance.now();
             while (Math.abs(target - position) > 1) {
@@ -100,9 +102,10 @@ export async function traverseCompleteHomepage(page, requestLog, requestIndex = 
                 scrollTo({ top: position, behavior: 'instant' });
                 await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
                 const now = performance.now(); gaps.push(now - last); last = now;
+                positions.push(position);
             }
             await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-            return { gaps, y: scrollY, end, target };
+            return { gaps, positions, y: scrollY, end, target };
         }, direction);
         assert.ok(Math.abs(frames.y - frames.target) <= 2);
         const state = await completeSnapshot(page);
