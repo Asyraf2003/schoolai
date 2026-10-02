@@ -11,6 +11,27 @@ Durable references:
 - current execution map: `handoffs/2026-10-01-home-runtime-execution-map.md`;
 - current accepted runtime blueprint: `blueprints/2026-10-01-home-runtime-preparation.md`.
 
+## Active owner sequence — MAP-HOME-01
+
+Latest owner scope: one section/seam at a time, starting About/Vision/Mission.
+Fresh main:`8c399a280b8cc5df1ae70c39aee8be72803f371c`.
+Issue:#62; branch:`fix/map-home-01-vision-runtime`; map status:IMPLEMENTING.
+Active handoff:`handoffs/2026-10-02-home-sequential-optimization.md`.
+Blueprint:`blueprints/2026-10-02-vision-runtime.md` (IMPLEMENTING).
+FACT: static background state repeats every frame; two filtered full-section
+layers; only preview0 blocks Vision readiness. Root cause needs runtime proof.
+Baseline3 runs: videos1/2 lack source at unlock; late play can be cancelled by
+visibility observers, caching poster fallback. First-pass maxima216.6/99.9/66.7ms.
+No-filter experiment still has media failures; no CSS removal justified.
+Additional proven blocker: existing8s gate aborts all3 corrected cold runs,
+removes pending sources and selects static layout. Include minimum gate dependency
+fix: deadline records delay, never reports readiness/aborts valid preparation.
+Decision: all Vision media ready before its promise; buffer/play proof, prevent
+observer cancellation of preparing media, cache unchanged styles, responsive
+palette refresh. Old MAP-06B remains separate/unmerged FAIL.
+NEXT: implement bounded Vision readiness/runtime correction and prove it;
+no Program/seam mutation until this map is merged and CLOSED.
+
 ## Active publication checkpoint
 
 MAP-03 is merged after green CI (#53): main

@@ -11,10 +11,6 @@ export function initVisionVideoPreviews() {
     let paused = false;
     let suspended = false;
     let observer = null;
-    let ahead = null;
-    let nearby = !('IntersectionObserver' in window);
-    let next = 1;
-    let preparingNext = false;
 
     function visibleLayer(preview) {
         const root = preview.closest('[data-vision-story]');
@@ -32,48 +28,26 @@ export function initVisionVideoPreviews() {
         });
     }
 
-    async function prepareNext() {
-        if (document.documentElement.dataset.homeExperienceState === 'static-fallback'
-            || paused || !nearby || preparingNext || suspended || document.hidden || reduced.matches
-            || document.documentElement.dataset.homeScrollGate !== 'unlocked') return;
-        preparingNext = true;
-        // Await the first journey rather than racing three decoders at startup.
-        await prepareVisionPreview(previews[0], { staticOnly: reduced.matches });
-        while (!paused && nearby && next < previews.length && !lifecycle.signal.aborted && !suspended && !document.hidden && !reduced.matches) {
-            await prepareVisionPreview(previews[next++], { signal: lifecycle.signal });
-            await new Promise(resolve => window.setTimeout(resolve, 0));
-        }
-        preparingNext = false;
-    }
-
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(entries => {
             entries.forEach(({ target, isIntersecting }) => {
                 if (isIntersecting) { activePreviews.add(target); play(target); }
-                else { activePreviews.delete(target); target.pause(); }
+                else { activePreviews.delete(target); if (target.dataset.visionVideoState !== 'preparing') target.pause(); }
             });
         }, { rootMargin: '0px 0px', threshold: 0.01 });
         previews.forEach(preview => observer.observe(preview));
-        ahead = new IntersectionObserver(entries => {
-            nearby = entries.some(entry => entry.isIntersecting);
-            if (nearby) prepareNext();
-        }, { rootMargin: '100% 0px', threshold: 0 });
-        ahead.observe(previews[0].closest('[data-vision-story]'));
-    } else {
-        prepareNext();
-    }
+    } else { previews.forEach(preview => activePreviews.add(preview)); }
     document.addEventListener('schoolai:vision-media-range', () => {
-        activePreviews.forEach(preview => { if (visibleLayer(preview)) play(preview); else preview.pause(); });
+        activePreviews.forEach(preview => { if (visibleLayer(preview)) play(preview); else if (preview.dataset.visionVideoState !== 'preparing') preview.pause(); });
     }, options);
-    document.addEventListener('schoolai:first-journey-ready', () => { activePreviews.forEach(play); prepareNext(); }, options);
+    document.addEventListener('schoolai:first-journey-ready', () => { activePreviews.forEach(play); }, options);
     function resume() {
         paused = false;
         activePreviews.forEach(play);
-        prepareNext();
     }
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) previews.forEach(preview => preview.pause());
-        else { activePreviews.forEach(play); prepareNext(); }
+        else { activePreviews.forEach(play); }
     }, options);
     reduced.addEventListener('change', () => {
         previews.forEach(preview => preview.pause());
@@ -82,7 +56,7 @@ export function initVisionVideoPreviews() {
     window.addEventListener('pagehide', event => {
         suspended = true;
         previews.forEach(preview => preview.pause());
-        if (!event.persisted) { lifecycle.abort(); observer?.disconnect(); ahead?.disconnect(); }
+        if (!event.persisted) { lifecycle.abort(); observer?.disconnect(); }
     }, options);
     window.addEventListener('pageshow', () => { suspended = false; resume(); }, options);
     return {

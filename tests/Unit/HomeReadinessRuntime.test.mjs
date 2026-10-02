@@ -48,13 +48,12 @@ test('gate stays pending until actual readiness; release retains semantic action
     } finally { e.restore(); }
 });
 
-test('deadline and access intent select actual static fallback exactly once without preventing the action', async () => {
-    for (const reason of ['deadline', 'link', 'focus', 'escape', 'pagehide']) {
+test('access intent selects actual static fallback exactly once without preventing the action', async () => {
+    for (const reason of ['link', 'focus', 'escape', 'pagehide']) {
         const e = environment();
         try {
             let count = 0; const gate = createHomepageScrollGate(() => { count++; });
             const action = new e.Element(); action.closest = selector => reason === 'link' && selector.startsWith('a,') ? action : null;
-            if (reason === 'deadline') [...e.timers.values()][0]();
             if (reason === 'link') e.event(e.doc, 'click', { target: action });
             if (reason === 'focus') e.event(e.doc, 'focusin', { target: action });
             if (reason === 'escape') e.event(e.doc, 'keydown', { key: 'Escape' });
@@ -78,6 +77,8 @@ function preview(e, posterWork = Promise.resolve()) {
     const element = new e.Element(); element.dataset.visionVideoSrc = 'https://media.example/vision.mp4';
     const poster = { decode: () => posterWork };
     element.closest = () => ({ querySelector: () => poster }); element.loads = 0; element.plays = 0; element.paused = true;
+    element.readyState = 3; element.videoWidth = 1920; element.currentTime = 0; element.duration = 10;
+    element.buffered = { length: 1, start: () => 0, end: () => 2 };
     element.load = () => { element.loads++; }; element.pause = () => { element.paused = true; };
     element.play = () => { element.plays++; element.paused = false; return Promise.resolve(); };
     return element;
@@ -86,11 +87,12 @@ function preview(e, posterWork = Promise.resolve()) {
 test('first preview waits for decoded poster and real loadeddata, then pauses instead of running offscreen', async () => {
     const e = environment();
     try {
-        const poster = deferred(); const v = preview(e, poster.promise); let ready = false;
+        const poster = deferred(); const v = preview(e, poster.promise); v.readyState = 2; let ready = false;
         const result = prepareVisionPreview(v).then(state => { ready = true; return state; });
         await Promise.resolve(); assert.equal(v.loads, 0); poster.resolve(); await Promise.resolve(); await Promise.resolve();
-        assert.equal(v.loads, 1); assert.equal(v.preload, 'metadata'); assert.equal(ready, false);
-        e.event(v, 'loadeddata'); assert.equal(await result, 'frame-ready'); assert.equal(v.paused, true);
+        assert.equal(v.loads, 1); assert.equal(v.preload, 'auto'); assert.equal(ready, false);
+        e.event(v, 'loadeddata'); await Promise.resolve(); assert.equal(ready, false);
+        v.readyState = 3; e.event(v, 'canplay'); assert.equal(await result, 'frame-ready'); assert.equal(v.paused, true);
         assert.equal(await prepareVisionPreview(v), 'frame-ready'); assert.equal(v.loads, 1);
     } finally { e.restore(); }
 });
@@ -99,7 +101,7 @@ test('reduced preview, media failure and cancellation settle a real poster/seman
     const e = environment();
     try {
         const reduced = preview(e); assert.equal(await prepareVisionPreview(reduced, { staticOnly: true }), 'poster-ready'); assert.equal(reduced.loads, 0);
-        const failed = preview(e); const work = prepareVisionPreview(failed); await Promise.resolve(); await Promise.resolve(); e.event(failed, 'error');
+        const failed = preview(e); failed.readyState = 0; const work = prepareVisionPreview(failed); await Promise.resolve(); await Promise.resolve(); e.event(failed, 'error');
         assert.equal(await work, 'poster-ready'); assert.equal(failed.paused, true);
         const poster = deferred(); const aborted = preview(e, poster.promise); const signal = new AbortController();
         const abortWork = prepareVisionPreview(aborted, { signal: signal.signal }); signal.abort(); assert.equal(await abortWork, 'semantic-fallback');
@@ -107,10 +109,10 @@ test('reduced preview, media failure and cancellation settle a real poster/seman
     } finally { e.restore(); }
 });
 
-test('Vision assets await actual font readiness as well as first playable frame', async () => {
+test('Vision assets await actual font readiness as well as playable media', async () => {
     const e = environment();
     try {
-        const fonts = deferred(); e.doc.fonts = { ready: fonts.promise }; const v = preview(e); e.vision.querySelector = s => s.includes('preview') ? v : null;
+        const fonts = deferred(); e.doc.fonts = { ready: fonts.promise }; const v = preview(e); e.vision.querySelector = () => null; e.vision.querySelectorAll = s => s.includes('video-preview') ? [v] : [];
         let ready = false; const work = prepareVisionAssets(e.vision, undefined, false).then(state => { ready = true; return state; });
         await Promise.resolve(); await Promise.resolve(); e.event(v, 'loadeddata'); await Promise.resolve(); assert.equal(ready, false);
         fonts.resolve(); assert.equal(await work, 'frame-ready');
@@ -149,9 +151,41 @@ test('Vision scopes font readiness to its actual text when global font readiness
         const globalFonts = deferred(); const localFonts = deferred(); let loads = 0;
         e.doc.fonts = { ready: globalFonts.promise, check: () => false, load(font, text) { loads++; assert.ok(font.includes('Inter')); assert.equal(text, 'Vision'); return localFonts.promise; } };
         e.win.getComputedStyle = () => ({ fontStyle: 'normal', fontWeight: '700', fontSize: '32px', fontFamily: 'Inter' });
-        const v = preview(e); e.vision.querySelector = s => s.includes('preview') ? v : null; e.vision.querySelectorAll = () => [{ textContent: 'Vision' }];
+        const v = preview(e); e.vision.querySelector = () => null; e.vision.querySelectorAll = s => s.includes('video-preview') ? [v] : []; e.vision.querySelectorAll = s => s.includes('video-preview') ? [v] : [{ textContent: 'Vision' }];
         const work = prepareVisionAssets(e.vision, undefined, false); await new Promise(setImmediate); e.event(v, 'loadeddata');
         assert.equal(loads, 1); localFonts.resolve(); assert.equal(await work, 'frame-ready');
         assert.equal(e.vision.dataset.visionFontsReady, 'true');
+    } finally { e.restore(); }
+});
+
+
+test('Vision waits for all three previews and does not hydrate again on traversal', async () => {
+    const e = environment();
+    try {
+        const videos = [preview(e), preview(e), preview(e)]; videos[2].readyState = 2;
+        e.vision.querySelector = () => null;
+        e.vision.querySelectorAll = selector => selector.includes('video-preview') ? videos : [];
+        let ready = false;
+        const work = prepareVisionAssets(e.vision).then(state => { ready = true; return state; });
+        await new Promise(setImmediate);
+        assert.equal(ready, false); assert.ok(videos.every(v => v.loads === 1));
+        videos[2].readyState = 3; e.event(videos[2], 'canplay');
+        assert.equal(await work, 'frame-ready'); assert.ok(videos.every(v => v.paused));
+        await prepareVisionAssets(e.vision);
+        assert.ok(videos.every(v => v.loads === 1));
+    } finally { e.restore(); }
+});
+
+
+test('slow preparation keeps the gate locked until readiness rather than treating elapsed time as failure', () => {
+    const e = environment();
+    try {
+        let aborted = false; const gate = createHomepageScrollGate(() => { aborted = true; });
+        [...e.timers.values()][0]();
+        assert.equal(e.html.dataset.homeScrollGate, 'locked'); assert.equal(aborted, false);
+        assert.equal(e.html.dataset.homePreparationDelayed, 'true');
+        gate.release('prepared');
+        assert.equal(e.html.dataset.homeScrollGate, 'unlocked');
+        assert.equal(e.html.dataset.homePreparationDelayed, undefined);
     } finally { e.restore(); }
 });

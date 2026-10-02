@@ -20,4 +20,5 @@ Create one only when a trigger in `../UI_UX_SESSION_PROTOCOL.md` occurs.
 
 ## Active handoffs
 
-None. `../UI_UX_CURRENT_STATE.md` owns the current continuation point.
+- `2026-10-02-home-sequential-optimization.md`: MAP-HOME-01 active; one map at a time.
+  `../UI_UX_CURRENT_STATE.md` remains the authoritative progress ledger.

@@ -9,6 +9,8 @@ export function createVisionTimeline(root) {
     const transitionCount = Math.max(1, visuals.length - 1);
     let activeIndex = -1;
     let mediaRange = '';
+    const clips = [];
+    const transforms = [];
 
     function setActive(index) {
         if (activeIndex === index) return;
@@ -30,19 +32,21 @@ export function createVisionTimeline(root) {
         setActive(Math.min(panels.length - 1, Math.floor(scaled + .5)));
 
         visuals.forEach((visual, index) => {
-            if (index >= visuals.length - 1) {
-                visual.style.clipPath = 'inset(0 0 0% 0)';
-                return;
-            }
-
             const transition = clamp(scaled - index);
-            visual.style.clipPath = `inset(0 0 ${(transition * 100).toFixed(3)}% 0)`;
+            const clip = index >= visuals.length - 1 ? 'inset(0 0 0% 0)'
+                : `inset(0 0 ${(transition * 100).toFixed(3)}% 0)`;
+            if (clips[index] === clip) return;
+            clips[index] = clip;
+            visual.style.clipPath = clip;
         });
 
         media.forEach((element, index) => {
             if (!element) return;
             const y = Math.max(-8, Math.min(8, (scaled - index) * 8));
-            element.style.transform = `translate3d(0, ${y.toFixed(3)}%, 0) scale(1.08)`;
+            const transform = `translate3d(0, ${y.toFixed(3)}%, 0) scale(1.08)`;
+            if (transforms[index] === transform) return;
+            transforms[index] = transform;
+            element.style.transform = transform;
         });
     }
 

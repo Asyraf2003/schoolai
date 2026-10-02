@@ -53,32 +53,46 @@ export function createVisionBackgroundCompositor(root, panels) {
         return { setProgress() {}, destroy() {} };
     }
 
-    const desktop = window.matchMedia('(min-width: 1280px)').matches;
-    const states = panels.map((panel, index) => (
-        stateFor(panel, index, desktop)
-    ));
-    const transitionCount = Math.max(1, states.length - 1);
+    const desktop = window.matchMedia('(min-width: 1280px)');
+    let desktopMode;
+    let states = [];
+    const assigned = [];
+    const values = layers.map(() => new Map());
+    function write(index, name, value) {
+        if (values[index].get(name) === value) return;
+        values[index].set(name, value);
+        layers[index].style.setProperty(name, value);
+    }
+    const transitionCount = Math.max(1, panels.length - 1);
 
     function setProgress(progress) {
+        if (desktopMode !== desktop.matches) {
+            desktopMode = desktop.matches;
+            states = panels.map((panel, index) => stateFor(panel, index, desktopMode));
+            assigned.length = 0;
+        }
         const scaled = clamp(progress) * transitionCount;
         const currentIndex = Math.min(states.length - 1, Math.floor(scaled));
         const nextIndex = Math.min(states.length - 1, currentIndex + 1);
         const blend = smooth(scaled - currentIndex);
 
-        applyState(layers[0], states[currentIndex]);
-        applyState(layers[1], states[nextIndex]);
-        layers[0].style.setProperty('--vision-state-opacity', '1');
-        layers[0].style.setProperty(
+        [currentIndex, nextIndex].forEach((stateIndex, index) => {
+            if (assigned[index] === stateIndex) return;
+            applyState(layers[index], states[stateIndex]);
+            assigned[index] = stateIndex;
+        });
+        write(0,'--vision-state-opacity', '1');
+        write(0,
             '--vision-state-diffusion',
             `${(blend * 3).toFixed(2)}px`,
         );
-        layers[1].style.setProperty('--vision-state-opacity', blend.toFixed(4));
-        layers[1].style.setProperty(
+        write(1,'--vision-state-opacity', blend.toFixed(4));
+        write(1,
             '--vision-state-diffusion',
             `${((1 - blend) * 12).toFixed(2)}px`,
         );
-        layers[0].style.setProperty('--vision-state-drift', `${(-blend * 1.5).toFixed(2)}%`);
-        layers[1].style.setProperty('--vision-state-drift', `${((1 - blend) * 1.5).toFixed(2)}%`);
+        write(0,'--vision-state-drift', `${(-blend * 1.5).toFixed(2)}%`);
+        write(1,'--vision-state-drift', `${((1 - blend) * 1.5).toFixed(2)}%`);
     }
 
     function destroy() {

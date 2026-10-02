@@ -21,6 +21,7 @@ export function mountVisionStory({ signal } = {}) {
     let current = 0;
     let lastFrameTime = performance.now();
     let assets = null;
+    let assetMode = null;
 
     function render() { timeline?.setProgress(current); }
     function cancelFrame() {
@@ -34,14 +35,14 @@ export function mountVisionStory({ signal } = {}) {
         const alpha = 1 - Math.exp(-elapsed / 88);
         current += (target - current) * alpha;
         lastFrameTime = now;
-        render();
         if (Math.abs(target - current) > .00015) frame = requestAnimationFrame(tick);
-        else { current = target; render(); }
+        else current = target;
+        render();
     }
     function updateTarget() {
         if (!timeline || destroyed || suspended || document.hidden || !wide.matches) return;
         target = geometry.readProgress();
-        if (near && frame === null) {
+        if (near && frame === null && target !== current) {
             lastFrameTime = performance.now();
             frame = requestAnimationFrame(tick);
         }
@@ -54,7 +55,8 @@ export function mountVisionStory({ signal } = {}) {
     }
     async function prepare() {
         if (destroyed || signal?.aborted) return { state: 'static-fallback' };
-        assets ||= prepareVisionAssets(root, signal, reduced.matches);
+        if (assetMode !== reduced.matches) { assets = null; assetMode = reduced.matches; }
+        assets ||= prepareVisionAssets(root, lifecycle.signal, reduced.matches);
         const media = await assets;
         if (destroyed || signal?.aborted) return { state: 'static-fallback' };
         if (!wide.matches || reduced.matches || media === 'semantic-fallback') {

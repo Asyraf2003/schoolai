@@ -24,7 +24,7 @@ function waitForStyle(signal) {
 function waitForVisionFonts(root) {
     if (!document.fonts?.load || !document.fonts?.check) return document.fonts?.ready;
     const requests = new Map();
-    root.querySelectorAll('.vision-arch__heading, .vision-arch__description').forEach(element => {
+    root.querySelectorAll('.vision-arch__kicker, .vision-arch__heading, .vision-arch__description, .vision-arch__mission-list h4, .vision-arch__mission-list p').forEach(element => {
         const style = window.getComputedStyle(element);
         const font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
         requests.set(font, (requests.get(font) || '') + element.textContent);
@@ -36,7 +36,7 @@ function waitForVisionFonts(root) {
 
 export async function prepareVisionAssets(root, signal, staticOnly) {
     root.classList.add('is-preparing');
-    const preview = root.querySelector('[data-vision-video-preview]');
+    const previews = Array.from(root.querySelectorAll('[data-vision-video-preview]'));
     const image = root.querySelector('[data-vision-art][data-lazy-src]');
     if (image?.dataset.lazySrc) {
         image.dataset.lazyHydrated = '1';
@@ -51,9 +51,11 @@ export async function prepareVisionAssets(root, signal, staticOnly) {
         if (!signal?.aborted) root.dataset.visionFontsReady = 'true';
     });
     const [media] = await Promise.all([
-        preview ? prepareVisionPreview(preview, { signal, staticOnly }) : image?.decode?.(),
+        previews.length ? Promise.all(previews.map(preview => prepareVisionPreview(preview, { signal, staticOnly }))) : image?.decode?.(),
         fonts,
         styles,
     ]);
-    return media || 'semantic-ready';
+    if (!Array.isArray(media)) return 'semantic-ready';
+    if (media.includes('semantic-fallback')) return 'semantic-fallback';
+    return media.every(state => state === 'frame-ready') ? 'frame-ready' : 'poster-ready';
 }

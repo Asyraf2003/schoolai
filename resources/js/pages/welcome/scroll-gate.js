@@ -12,6 +12,7 @@ export function createHomepageScrollGate(onFallback, deadlineMs = 8000) {
         settled = true;
         window.clearTimeout(deadline);
         listeners.abort();
+        delete root.dataset.homePreparationDelayed;
         root.dataset.homeScrollGate = 'unlocked';
         root.dataset.homeExperienceState = state;
         document.querySelector('[data-vision-story]')?.removeAttribute('aria-busy');
@@ -49,6 +50,6 @@ export function createHomepageScrollGate(onFallback, deadlineMs = 8000) {
     }, options);
     window.addEventListener('hashchange', () => fallback('anchor'), options);
     window.addEventListener('pagehide', () => fallback('pagehide'), options);
-    deadline = window.setTimeout(() => fallback('deadline'), deadlineMs);
+    deadline = window.setTimeout(() => { root.dataset.homePreparationDelayed = 'true'; }, deadlineMs);
     return { release, fallbackReady };
 }
