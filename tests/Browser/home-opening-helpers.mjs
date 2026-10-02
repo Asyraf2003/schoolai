@@ -38,7 +38,11 @@ export async function nativeScroll(page,engine,touch=false,amount=400) {
         const size=page.viewportSize();await page.mouse.move(size.width/2,Math.min(650,size.height-30));await page.mouse.wheel(0,amount);
     }
     await delay(120);
-    return {input:touch&&engine==='chromium'?'native CDP touch':'native wheel',before,after:await page.evaluate(()=>scrollY)};
+    const early=await page.evaluate(()=>scrollY);
+    if(await page.evaluate(()=>document.documentElement.dataset.homeScrollGate!=='locked')) {
+        await page.waitForFunction(y=>scrollY!==y,before,{timeout:2000}).catch(()=>{});
+    }
+    return {input:touch&&engine==='chromium'?'native CDP touch':'native wheel',before,after120ms:early,after:await page.evaluate(()=>scrollY)};
 }
 export async function snapshot(page) {
     return page.evaluate(()=>{

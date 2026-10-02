@@ -7,6 +7,7 @@ const base=process.env.SCHOOLAI_PROOF_URL || 'http://127.0.0.1:8018';
 const dir=process.env.SCHOOLAI_PROOF_DIR || '/tmp/schoolai-map06b-corrected';mkdirSync(dir,{recursive:true});
 const rows=[];const save=row=>{rows.push(row);writeFileSync(dir+'/proof.json',JSON.stringify({date:new Date().toISOString(),base,fixture:'Held-module tier matrix extends the 8s fallback deadline to60s solely for deterministic screenshots; readiness/progress remains real. Other cases retain production deadline.',rows},null,2));console.log(row.engine,row.key,'PASS');};
 for(const [engine,type] of Object.entries({chromium,webkit})) {
+    if(process.env.SCHOOLAI_ENGINES&&!process.env.SCHOOLAI_ENGINES.split(',').includes(engine))continue;
     const browser=await type.launch({headless:true,ignoreDefaultArgs:['--disable-back-forward-cache'],...(engine==='webkit'?{executablePath:process.env.SCHOOLAI_WEBKIT_WRAPPER || '/tmp/schoolai-webkit.sh'}:{args:['--disable-gpu']})});
     try {
         for(const locale of ['id','en','ar'])for(const motion of ['no-preference','reduce']) {
