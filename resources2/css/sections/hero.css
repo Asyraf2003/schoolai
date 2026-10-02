@@ -1,0 +1,22 @@
+.hero {
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    position: relative;
+    overflow: clip;
+    padding: var(--v2-space-page);
+}
+
+.hero__media {
+    position: absolute;
+    inset: 0;
+    background: #ececec;
+}
+
+.hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 48rem;
+}
+
+.hero__title { margin: 0; }
