@@ -171,3 +171,17 @@ test('opening keeps direct primary access when CTA geometry is outside the viewp
         assert.equal(e.root.dataset.homeScrollGate, 'locked');
     } finally { e.restore(); }
 });
+
+
+test('Hero without usable media cannot report a prepared first frame', async () => {
+    const e = environment();
+    try {
+        const image = { complete: false, naturalWidth: 0 };
+        e.hero.querySelector = () => ({ querySelector: selector => selector === 'img' ? image : null });
+        assert.equal((await prepareHeroActiveMedia()).state, 'static-fallback');
+        image.complete = true; image.naturalWidth = 400;
+        assert.equal((await prepareHeroActiveMedia()).state, 'prepared');
+        e.hero.querySelector = () => ({ querySelector: () => null });
+        assert.equal((await prepareHeroActiveMedia()).state, 'static-fallback');
+    } finally { e.restore(); }
+});

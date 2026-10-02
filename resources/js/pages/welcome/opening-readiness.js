@@ -30,7 +30,11 @@ export function prepareHeroActiveMedia({ signal } = {}) {
     const slide = root?.querySelector('[data-hero-slide].is-active');
     const video = slide?.querySelector('[data-hero-video]');
     const image = slide?.querySelector('img');
-    if (!video) return Promise.resolve(image?.decode?.()).then(() => ({ state: 'prepared' }));
+    if (!video) {
+        return Promise.resolve(image?.decode?.()).then(() => ({
+            state: image?.complete && image.naturalWidth > 0 ? 'prepared' : 'static-fallback',
+        }));
+    }
     return new Promise(resolve => {
         const listeners = new AbortController();
         const options = { signal: listeners.signal };
