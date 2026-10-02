@@ -35,7 +35,7 @@ for(const [engine,type] of Object.entries({chromium,webkit})) {
             await page.evaluate(()=>document.documentElement.style.zoom='');await page.setViewportSize({width:1440,height:900});
             releaseProgram();
             if(motion!=='reduce') {
-                await page.waitForFunction(()=>document.documentElement.dataset.homeOpeningPhase==='handoff');await delay(60);
+                await page.waitForFunction(()=>document.documentElement.dataset.homeOpeningPhase==='handoff').catch(async error=>{writeFileSync(dir+'/handoff-failure.json',JSON.stringify(await snapshot(page),null,2));throw error;});await delay(60);
                 const hundred=await snapshot(page);assert.equal(hundred.value,100);assert.equal(hundred.root.homeScrollGate,'locked');
                 assert.equal((await nativeScroll(page,engine)).after,0);
                 await page.screenshot({path:`${dir}/${engine}-${locale}-${motion}-100-locked.png`});

@@ -19,11 +19,12 @@ export async function instrument(context, extendedDeadline=false) {
         for(const name of ['schoolai:opening-adopted','schoolai:home-preparation','schoolai:opening-progress','schoolai:opening-handoff','schoolai:first-journey-ready']) {
             document.addEventListener(name,event=>window.openingProof.events.push({name,detail:event.detail,...snapshot()}));
         }
-        document.addEventListener('schoolai:opening-handoff',()=>{
-            if(window.holdOpeningHandoff) {
-                requestAnimationFrame(()=>document.querySelector('[data-home-opening]').getAnimations().forEach(animation=>animation.pause()));
-            }
-        });
+        const animate=Element.prototype.animate;
+        Element.prototype.animate=function(...args) {
+            const animation=animate.apply(this,args);
+            if(window.holdOpeningHandoff&&this.matches('[data-home-opening]'))animation.pause();
+            return animation;
+        };
         window.addEventListener('pageshow',event=>window.openingProof.events.push({name:'pageshow',persisted:event.persisted,...snapshot()}));
     });
 }
