@@ -1,12 +1,12 @@
 # Homepage sequential optimization — active handoff
 
-Updated: 2026-10-02. Execution channel: Terminal Codex only.
+Updated: 2026-10-03. Execution channel: Terminal Codex only.
 Repository: Asyraf2003/schoolai. Owner authorizes scoped PR/CI/merge to main.
 
 ## Active target
 
 - MAP-HOME-01 — About / Vision / Mission runtime.
-- Status: VERIFYING. Proof status: BLOCKED_BY_MISSING_EVIDENCE.
+- Status: VERIFYING. Proof status: FAIL (smoothness); remaining matrix evidence pending.
 - SOURCE MAIN SHA: `8c399a280b8cc5df1ae70c39aee8be72803f371c` (fresh fetched).
 - Branch: `fix/map-home-01-vision-runtime`.
 - Worktree: `/home/asus/projects/schoolai-home-01`.
@@ -71,12 +71,21 @@ Windows owned Chrome CDP9226 / native mouse1200px/s /1440x900/DPR1:
 three cold baseline runs captured; raw output outside repo in
 `C:/Users/ASUS/AppData/Local/Temp/SchoolAICompleteTools/vision-main-baseline`.
 Driver `/home/asus/.cache/schoolai-proof/vision-baseline.mjs`.
-44 Node runtime contracts PASS. FullPHP305 tests/3506 assertions PASS.
+47 Node runtime contracts PASS. FullPHP305 tests/3506 assertions PASS.
 Structure597/build/diff PASS; Pint PASS. No browser/CI/completion PASS.
 Corrected-media run confirms all3 frame-ready at unlock; first/reverse/second
 still saw233.2/100.2/34.3ms in one run. A traced run66.8/83.1/50.1ms is diagnostic,
 not sufficient to erase worst case. Native RAF now cancels callback per pass.
-Background opacity-only comparison is ongoing. Raw variants:vision-buffer-held,
+Background opacity-only3 runs: first149.5/117.2/50.1ms; retains hitches, no CSS
+change justified. Native matrix18 cases (390/1024/1440 × ID/EN/AR × normal/reduced)
+passes3-trip readiness/geometry/no-source-mutation assertions. Smoothness still
+FAIL: EN1440 first250.1ms,AR1024 first183.7ms,ID390 third133.3ms.
+Durable driver:tests/Browser/VisionRuntimeProof.mjs (new, not yet committed).
+Touch synthesizeScrollGesture gave0 movement even on independent control;
+dispatchTouchEvent gives real scroll and now owns mobile proof. Do not substitute
+programmatic scroll. Three cold EN1440 traces executing in `vision-en-trace`.
+Current implementation checkpoint:860597f646f1145adcacae81aeba90d8b853989d pushed.
+New tests:VisionMediaLifecycleRuntime covers hidden/reduced/cancelled preparation. Raw variants:vision-buffer-held,
 vision-trace-ready,vision-opacity-only beside baseline in Windows proof folder.
 
 ## NEXT MAP (read-only findings)
@@ -89,9 +98,10 @@ vision-trace-ready,vision-opacity-only beside baseline in Windows proof folder.
 
 ## Exact NEXT VALID STEP
 
-Inspect opacity-only comparison against corrected-media baseline; attribute
-remaining first-pass hitches, retaining all CSS until visual/cost proof supports
-change. Add durable browser driver and complete lifecycle/locale/tier proof.
+Inspect3 EN1440 trace runs from `vision-en-trace`; correlate RAF gaps with
+GPU/media/main-thread events. Preserve failed evidence; do not call readiness
+assertions a smoothness PASS. Finish six-tier/boundary/WebKit/lifecycle proof.
+Use dedicated proof browser CDP9226, port8021 and private fixture DB as above.
 Then update blueprint decision/current-state, implement only MAP-HOME-01,
 run tests and before/after browser matrix, PR/CI/merge only when scoped PASS.
 Do not enter MAP-HOME-02 until MAP-HOME-01 is merged and CLOSED.

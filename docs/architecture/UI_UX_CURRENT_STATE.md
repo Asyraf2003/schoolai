@@ -15,7 +15,7 @@ Durable references:
 
 Latest owner scope: one section/seam at a time, starting About/Vision/Mission.
 Fresh main:`8c399a280b8cc5df1ae70c39aee8be72803f371c`.
-Issue:#62; branch:`fix/map-home-01-vision-runtime`; map status:IMPLEMENTING.
+Issue:#62; branch:`fix/map-home-01-vision-runtime`; map status:VERIFYING.
 Active handoff:`handoffs/2026-10-02-home-sequential-optimization.md`.
 Blueprint:`blueprints/2026-10-02-vision-runtime.md` (IMPLEMENTING).
 FACT: static background state repeats every frame; two filtered full-section
@@ -29,7 +29,13 @@ fix: deadline records delay, never reports readiness/aborts valid preparation.
 Decision: all Vision media ready before its promise; buffer/play proof, prevent
 observer cancellation of preparing media, cache unchanged styles, responsive
 palette refresh. Old MAP-06B remains separate/unmerged FAIL.
-NEXT: implement bounded Vision readiness/runtime correction and prove it;
+Proof2026-10-03: 47 Node contracts PASS; PHP305/3506 PASS. Native browser18
+cases at390/1024/1440 × ID/EN/AR × normal/reduced pass readiness, geometry and
+source stability through3 traversals. Smoothness FAIL: EN1440 first250.1ms,
+AR1024 first183.7ms; ID390 third133.3ms. Trace3 cold EN1440 runs next.
+Touch synthesizeScrollGesture failed even on an independent control; actual
+CDP touchStart/Move/End works and is now the mobile proof input.
+NEXT: attribute remaining hitches, complete engine/tier/lifecycle matrix;
 no Program/seam mutation until this map is merged and CLOSED.
 
 ## Active publication checkpoint
