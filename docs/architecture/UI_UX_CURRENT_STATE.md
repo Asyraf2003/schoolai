@@ -11,6 +11,16 @@ Durable references:
 - current execution map: `handoffs/2026-10-01-home-runtime-execution-map.md`;
 - current accepted runtime blueprint: `blueprints/2026-10-01-home-runtime-preparation.md`.
 
+## Owner sequencing override — MAP-HOME-01 (2026-10-02)
+
+The owner now requires one section/seam map at a time, beginning with
+About / Vision / Mission. MAP-06B remains unmerged and FAIL; preserve its
+implementation and diagnostic evidence on `fix/homepage-complete-readiness`.
+Start MAP-HOME-01 from freshly fetched main, with a separate issue/branch/PR.
+Do not carry the whole-homepage branch into this focused map. The active
+sequential handoff will live on that branch. No section beyond Vision may be
+mutated before this map is merged and CLOSED.
+
 ## Active owner correction — complete MAP-06B (2026-10-02)
 
 FACT: fresh main8c399a280b8cc5df1ae70c39aee8be72803f371c; Issue#61,
@@ -67,12 +77,22 @@ waits without equally long app/GPU work may include scheduling/occlusion effects
 headed foreground comparison is executing, not evidence of PASS yet.
 Continuous50px/frame diagnostic before final check: native390 maxima88.3/38.7/33.7,
 1440 maxima77.0/118.3/33.6. This does not erase failed fast-first proof.
-STATUS: FAIL until remaining GPU first-entry initialization and the full final-head
+GAP FULL-READY-005: the existing traversal deliberately jumps65% viewport and
+awaits TWO RAF callbacks. Its samples are stress-step wall durations, not single
+native-scroll frame intervals. GPU costs remain real diagnostic evidence, but
+these samples do not alone establish native smoothness. Corrected proof adds
+native compositor mouse/touch gestures at1800px/s for all three full journeys
+and samples each individual RAF interval. No production visuals/CSS change.
+Native headed comparison requested tab foreground, CSS DPR1 on OS scale200%;
+472.3/67.7/497.1 stress-step maxima retain the failure, not a smoothness PASS.
+Viewport-sweep lab486.4/101.5/171.5 does not help; its temporary Hero placement,
+opacity and scroll-gate interception are discarded. No sweep ships.
+STATUS: FAIL until corrected native smoothness and the full final-head
 engine/locale/tier/lifecycle/three-trip matrix pass. No Lighthouse/CWV100 claim.
-NEXT VALID STEP: Terminal Codex compares actual foreground presentation with the
-recorded headless failures, attributes raster/layer costs and repeats acceptance
-before PR/CI/merge. Source correction waits for a proven owner.
-No temporary staging is shipped; global certification/accessibility repair deferred.
+NEXT VALID STEP: Terminal Codex executes native full-journey frame proof beside
+the retained instant-scroll dependency stress proof, attributes any remaining
+first-entry costs and completes browser gates before PR/CI/merge.
+Source correction waits for a proven owner; global certification stays separate.
 
 ## Active publication checkpoint
 

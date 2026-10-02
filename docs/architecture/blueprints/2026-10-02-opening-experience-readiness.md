@@ -133,7 +133,9 @@ Hero→footer →footer→Hero →Hero→footer again. Every crossing must show 
 required JS/CSS/font/image requests, source hydrations, controller mounts,
 first-entry geometry init or user-visible loading. Continued video byte ranges
 are listed separately. Capture states/media signatures before/after each pass,
-real native input, screenshots, errors, tasks and frames. Test six tiers/locales,
+real native full-distance mouse/touch gestures, screenshots, errors, tasks and
+individual RAF intervals. Keep instant viewport-jump stress samples separately;
+a two-RAF step duration is not a native frame-time measurement. Test six tiers/locales,
 normal/reduced and Chromium/WebKit, held dependencies, early navbar/PPDB, anchors,
 media errors, pending required images, hidden/BFCache, locale, zoom/orientation.
 Run git diff --check, npm run check:structure, npm run build, executed Node

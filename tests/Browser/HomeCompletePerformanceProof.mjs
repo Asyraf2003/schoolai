@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { localeContext } from './home-opening-helpers.mjs';
 import { instrumentCompleteJourney, traverseCompleteHomepage } from './home-complete-journey.mjs';
+import { traverseNativeHomepage } from './home-native-journey.mjs';
 
 const { chromium } = await import(process.env.SCHOOLAI_BROWSER_MODULE);
 const browser = await chromium.connectOverCDP(process.env.SCHOOLAI_CHROME_CDP);
@@ -37,8 +38,9 @@ try {
         await page.goto(base, { waitUntil: 'domcontentloaded' });
         await page.waitForFunction(() => document.documentElement.dataset.homePreparationState === 'complete', null, { timeout: 120000 });
         const firstInputIndex = requests.length;
-        await page.mouse.move(width / 2, 500); await page.mouse.wheel(0, 400);
-        const journey = await traverseCompleteHomepage(page, requests, firstInputIndex);
+        const journey = process.env.SCHOOLAI_PROOF_GESTURE === 'instant'
+            ? await traverseCompleteHomepage(page, requests, firstInputIndex)
+            : await traverseNativeHomepage(page, client, requests, firstInputIndex);
         const timing = await page.evaluate(() => ({ ...window.homeTiming,
             paints: performance.getEntriesByType('paint').map(entry => ({ name: entry.name, time: entry.startTime })),
             marks: performance.getEntriesByType('mark').map(entry => ({ name: entry.name, time: entry.startTime })),
