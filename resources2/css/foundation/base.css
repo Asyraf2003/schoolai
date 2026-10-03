@@ -1,4 +1,0 @@
-*, *::before, *::after { box-sizing: border-box; }
-html { color-scheme: light; }
-body { margin: 0; background: var(--v2-surface); color: var(--v2-text); }
-img, video { display: block; max-width: 100%; }

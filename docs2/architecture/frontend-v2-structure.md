@@ -1,6 +1,6 @@
 # Frontend V2 resource structure
 
-Status: **SCAFFOLD IMPLEMENTED — Hero only**
+Status: **PHYSICAL SOURCE SWITCHED — blank foundation**
 
 ## OWNER_RAW
 
@@ -10,32 +10,35 @@ Status: **SCAFFOLD IMPLEMENTED — Hero only**
 
 > "saya belum liat resources 2 nya, buat dlu untuk html css js mentahnya cukup sekedar ada dlu aja"
 
+> "sekarang bagaimana inii? saya harus lakuin apa? kita pindah dlu rename keduanya 1 nya resources 1 nya resources old, kemudian buat html kosongan, baru pasang 1 1 fungsinya dan ui nya atau 1 1 sectionnya"
+
 ## OWNER_CONFIRMED
 
-- Physical build area baru: `/resources2`.
-- `/resources` dicatat sebagai OLD/LEGACY source dan belum dihapus/di-rename.
-- Untuk sekarang cukup sediakan HTML/CSS/JS mentah.
-- Fokus implementasi pertama hanya Hero.
+- `/resources` adalah area frontend baru Homepage V2.
+- `/resources_old` adalah source frontend lama/legacy.
+- `resources/index.html` dimulai sebagai shell HTML kosong.
+- Pembangunan dilakukan satu fungsi/UI atau satu section pada satu waktu.
+- Fokus implementasi pertama tetap Hero.
 
 ## AI_TRANSLATION
 
 - setiap concern punya file/folder yang mudah ditebak;
 - font, locale, direction, responsive, style, section, dan JS dipisah sejak awal;
-- section punya owner CSS/JS sendiri;
-- JS tidak boleh punya banyak owner untuk behavior yang sama;
-- shared abstraction baru diisi ketika reuse nyata muncul.
+- HTML tidak langsung diisi seluruh homepage;
+- Hero dibangun dan ditutup dulu sebelum seam/section berikutnya;
+- legacy hanya referensi, bukan dependency otomatis.
 
 ## AI_ASSUMPTIONS
 
-1. Raw scaffold menggunakan `#hero` sebagai satu placeholder destination agar tidak menghasilkan broken link. Ini bukan routing final.
-2. Breakpoint mobile/tablet/desktop belum diputuskan; file tersedia sebagai ownership bucket, bukan angka breakpoint final.
-3. Locale file boleh tetap kosong/comment-only jika tidak ada adjustment visual locale-specific.
-4. Laravel route, Vite production entry, dan switch homepage belum diputuskan.
+1. Nilai breakpoint mobile/tablet/desktop belum diputuskan.
+2. Locale file boleh tetap comment-only jika tidak ada adjustment visual locale-specific.
+3. `resources/index.html` saat ini hanya shell lokal/build foundation, bukan keputusan final tentang route Laravel production.
+4. Source lama di `resources_old/` dipertahankan utuh sebagai referensi dan tidak dihapus pada tahap ini.
 
 ## PHYSICAL STRUCTURE
 
 ```text
-resources2/
+resources/
 ├── README.md
 ├── index.html
 ├── css/
@@ -49,14 +52,17 @@ resources2/
 └── js/
     ├── index.js
     └── sections/hero.js
+
+resources_old/
+└── legacy frontend source utuh
 ```
 
 ## OWNERSHIP RULES
 
 - `foundation/fonts.css`: font declaration/fallback only.
 - `direction/`: difference caused by LTR/RTL only.
-- `locale/`: visual difference truly specific to ID/EN/AR only; content stays in existing lang source.
-- `responsive/`: device/layout adjustment only; breakpoint final remains pending.
+- `locale/`: visual difference truly specific to ID/EN/AR only; content tetap dari language source existing.
+- `responsive/`: device/layout adjustment only; breakpoint final masih pending.
 - `style/`: shared primitives only after reuse is proven.
 - `sections/hero.css`: Hero-only presentation.
 - `js/sections/hero.js`: Hero-only behavior.
@@ -65,18 +71,20 @@ resources2/
 
 1. raw semantic HTML;
 2. static CSS layout;
-3. direction/locale/responsive adjustment actually required;
+3. direction/locale/responsive adjustment yang benar-benar dibutuhkan;
 4. visual style;
 5. motion;
-6. JS only for behavior that needs JS;
-7. media lifecycle if Hero requires it;
+6. JS hanya jika behavior membutuhkan JS;
+7. media lifecycle jika Hero membutuhkan media;
 8. browser/performance proof;
-9. only after Hero CLOSED, build Hero → About transition.
+9. Hero CLOSED;
+10. baru Hero → About seam;
+11. baru About.
 
 ## LEGACY BOUNDARY
 
-Legacy `/resources` may be read only as `BEHAVIOR_REFERENCE`, `VISUAL_REFERENCE`, `DATA_SOURCE`, or `MEDIA_SOURCE` when the active map needs it. It is not an automatic CSS/JS dependency for V2.
+`resources_old/` hanya boleh dibaca sebagai `BEHAVIOR_REFERENCE`, `VISUAL_REFERENCE`, `DATA_SOURCE`, atau `MEDIA_SOURCE` ketika map aktif memang memerlukannya.
 
 ## STATUS
 
-Physical `resources2` scaffold exists. No production route/build integration yet. Hero is the only active section.
+Physical source switch selesai. `resources/index.html` masih shell kosong. Hero belum diimplementasikan.

@@ -1,0 +1,22 @@
+/* Global design tokens: warna, radius, shadow, spacing, dan font dasar seluruh aplikasi. */
+:root {
+    --font-app: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    --color-cream-50: #fff7ed;
+    --color-blue-50: #eff6ff;
+    --color-pink-50: #fdf2f8;
+    --color-blue-700: #1d4ed8;
+    --color-blue-800: #1e40af;
+    --color-slate-600: #475569;
+    --color-slate-900: #0f172a;
+    --color-white-soft: rgba(255, 255, 255, 0.72);
+
+    --radius-sm: 12px;
+    --radius-md: 18px;
+    --radius-lg: 32px;
+    --radius-full: 999px;
+
+    --shadow-soft: 0 28px 90px rgba(15, 23, 42, 0.16);
+    --container-sm: 420px;
+    --container-md: 620px;
+}

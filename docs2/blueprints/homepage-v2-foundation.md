@@ -1,7 +1,7 @@
 # Homepage V2 foundation blueprint
 
-Status: **FOUNDATION ACTIVE — Hero scaffold started**  
-Tanggal: 2026-10-03
+Status: **FOUNDATION ACTIVE — source switch complete, Hero not started**  
+Tanggal: 2026-10-04
 
 ## OWNER_RAW
 
@@ -13,51 +13,53 @@ Tanggal: 2026-10-03
 
 > "jangan tambah\" asumsi anda, fokus ke masalah kita, klo ada asumsi tulsi asumsi"
 
-> "saya belum liat resources 2 nya, buat dlu untuk html css js mentahnya cukup sekedar ada dlu aja"
-
-> "resources saat ini dicatatat reosurces old"
+> "sekarang bagaimana inii? saya harus lakuin apa? kita pindah dlu rename keduanya 1 nya resources 1 nya resources old, kemudian buat html kosongan, baru pasang 1 1 fungsinya dan ui nya atau 1 1 sectionnya"
 
 ## AI_TRANSLATION
 
-1. Homepage V2 dibangun sebagai frontend baru yang bersih di `/resources2`.
-2. Existing `/resources` tetap menjadi legacy source sampai tahap switch/retirement dibahas terpisah.
-3. Existing language source tetap digunakan; V2 tidak membuat sistem translation baru.
-4. Urutan pembangunan: Hero → seam setelah Hero → About → seam berikutnya → section berikutnya.
-5. Setiap section dimulai dari HTML mentah, kemudian CSS dan baru JS bila diperlukan.
-6. Resource ownership dipisah jelas sejak awal.
+1. Homepage V2 sekarang memakai `/resources` sebagai source aktif baru.
+2. Frontend lama dipindahkan utuh ke `/resources_old` sebagai legacy reference.
+3. `resources/index.html` dikosongkan menjadi shell dasar sebelum Hero dibangun.
+4. Existing language source tetap digunakan; V2 tidak membuat sistem translation baru.
+5. Urutan pembangunan: Hero → seam setelah Hero → About → seam berikutnya → section berikutnya.
+6. Setiap section dimulai dari HTML mentah, kemudian CSS dan baru JS bila diperlukan.
+7. Resource ownership dipisah jelas sejak awal.
 
 ## OWNER_CONFIRMED
 
-- `/resources2` adalah build area baru.
-- `/resources` dicatat sebagai OLD/LEGACY source.
-- Skeleton awal cukup HTML/CSS/JS mentah.
+- `/resources` = NEW Homepage V2 source.
+- `/resources_old` = OLD/LEGACY source.
+- HTML awal dibuat kosong.
+- Implementasi dipasang satu fungsi/UI atau satu section pada satu waktu.
 - Hero adalah target pertama.
 - Existing language source tetap dipakai nanti.
 - Dokumentasi harus membedakan arahan owner, terjemahan AI, dan asumsi AI.
 
 ## AI_ASSUMPTIONS
 
-1. `#hero` dipakai sebagai placeholder link tunggal pada raw scaffold agar tidak broken. Ini bukan URL/routing final.
-2. Nilai breakpoint final belum ditetapkan.
-3. Belum diputuskan apakah raw `index.html` nanti tetap menjadi preview surface atau diganti Blade ketika integration dimulai.
-4. Belum ada keputusan tentang Vite entry, Laravel route preview, feature flag, atau waktu switch production.
-5. Belum ada izin menghapus legacy.
+1. Nilai breakpoint final belum ditetapkan.
+2. Belum diputuskan bentuk final route Laravel untuk V2.
+3. Legacy di `resources_old/` dipertahankan untuk referensi dan tidak dihapus pada tahap ini.
+4. Vite entry aktif sementara diarahkan hanya ke CSS/JS V2 agar source baru dapat dibangun tanpa mengandalkan legacy.
 
 ## SCOPE
 
-Foundation + physical `resources2` scaffold + Hero-only raw entry.
+- physical rename/source switch;
+- blank HTML shell;
+- clean CSS/JS ownership skeleton;
+- V2 build entry;
+- Hero tetap target pertama tetapi belum diimplementasikan.
 
 ## OUT_OF_SCOPE
 
 - final Hero design;
 - final Hero content/media;
 - Hero motion implementation;
-- route/Vite integration;
 - About implementation;
-- production switch;
-- legacy retirement;
+- production route switch;
+- legacy deletion;
 - global loader/readiness.
 
 ## NEXT VALID STEP
 
-Audit target visual/behavior Hero yang harus dipertahankan atau dibangun, lalu implement Hero di `resources2` tanpa masuk ke About atau seam sebelum Hero dinyatakan CLOSED.
+Buka MAP-V2-01 khusus Hero. Audit Hero lama hanya sebagai visual/behavior/data/media reference, lalu bangun Hero baru di `resources/` dari HTML mentah sampai CLOSED sebelum menyentuh seam atau About.

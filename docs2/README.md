@@ -1,7 +1,7 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Homepage V2 foundation + Hero scaffold**.
+Scope saat ini: **physical source switch + blank Homepage V2 foundation**.
 
 `docs2/` adalah sumber arahan baru yang bersih agar pekerjaan Homepage V2 tidak tercampur dengan histori dan keputusan legacy.
 
@@ -15,10 +15,11 @@ Scope saat ini: **Homepage V2 foundation + Hero scaffold**.
 
 ## Physical source boundary — OWNER_CONFIRMED
 
-- `/resources` = **OLD / LEGACY frontend source** untuk aplikasi/homepage lama.
-- `/resources2` = **NEW / Homepage V2 build area**.
+- `/resources` = **NEW / ACTIVE Homepage V2 build area**.
+- `/resources_old` = **OLD / LEGACY frontend source**.
+- `/resources2` sudah tidak dipakai setelah source switch ini.
 
-`/resources` tidak di-rename atau dihapus sekarang karena masih dipakai aplikasi lama. V2 tidak boleh otomatis mengimpor CSS/JS legacy.
+Legacy disimpan utuh untuk referensi. V2 tidak boleh otomatis mengimpor CSS/JS dari `resources_old/`.
 
 ## Format wajib setiap blueprint/map
 
@@ -47,10 +48,12 @@ Jangan membaca seluruh `docs/` legacy sebagai prasyarat default.
 
 ## Active implementation source
 
-`resources2/` sekarang sudah ada sebagai scaffold HTML/CSS/JS mentah. Target aktif pertama hanya **Hero**. Belum ada Laravel route/Vite production entry untuk V2.
+`resources/index.html` sengaja hanya berisi shell HTML kosong. Belum ada Hero final, About, seam, atau runtime logic.
+
+Target implementasi pertama hanya **Hero**.
 
 ## Prinsip utama
 
-Homepage V2 dibangun sebagai frontend baru yang bersih. Data, bahasa, dan media existing dapat digunakan sebagai source yang sama, tetapi frontend legacy tidak otomatis dipindahkan.
+Homepage V2 dibangun dari nol secara bertahap. Data, bahasa, dan media existing boleh dipakai sebagai source saat dibutuhkan, tetapi implementasi frontend legacy tidak otomatis dipindahkan.
 
 Yang dipindahkan dari legacy adalah behavior/data/reference yang memang dibutuhkan, bukan seluruh sejarah implementasinya.
