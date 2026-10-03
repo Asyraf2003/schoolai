@@ -1,4 +1,3 @@
-import { mountHero } from './sections/hero.js';
+import { initHeroV2 } from './sections/hero.js';
 
-const hero = document.querySelector('[data-v2-section="hero"]');
-if (hero) mountHero(hero);
+initHeroV2(document.querySelector('.hero-v2'));

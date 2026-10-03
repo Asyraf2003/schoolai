@@ -1,3 +1,4 @@
-export function mountHero(root) {
-    root.dataset.v2HeroJs = 'mounted';
+export function initHeroV2(root) {
+    if (!root) return;
+    root.dataset.heroV2State = 'ready';
 }
