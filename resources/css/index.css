@@ -9,6 +9,7 @@
 @import './style/surfaces.css';
 @import './style/media.css';
 @import './style/motion.css';
+@import './sections/header.css';
 @import './sections/hero.css';
 @import './responsive/mobile.css';
 @import './responsive/tablet.css';

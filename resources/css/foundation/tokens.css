@@ -1,5 +1,8 @@
 :root {
-    --v2-surface: #ffffff;
-    --v2-text: #111111;
-    --v2-space-page: clamp(1rem, 3vw, 3rem);
+    --v2-font: Inter, "Helvetica Neue", Arial, sans-serif;
+    --v2-surface: #fffcf6;
+    --v2-text: #17362f;
+    --v2-accent: #ffb20b;
+    --v2-space-page: clamp(1.25rem, 4vw, 5rem);
+    --v2-focus: #005fcc;
 }

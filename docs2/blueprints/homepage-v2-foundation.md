@@ -1,6 +1,9 @@
 # Homepage V2 foundation blueprint
 
-Status: **FOUNDATION ACTIVE — source switch complete, Hero not started**  
+Status: **HISTORICAL — physical source switch selesai**
+
+Arahan implementasi digantikan [MAP-V2-01](landing-shell-menu-hero.md).
+Dokumen ini merekam keputusan pada tahap source switch, bukan status implementasi terbaru.
 Tanggal: 2026-10-04
 
 ## OWNER_RAW

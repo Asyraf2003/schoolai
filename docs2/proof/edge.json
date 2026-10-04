@@ -1,0 +1,99 @@
+[
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 360,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 390,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 640,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 768,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 1024,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 1180,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 1181,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 1280,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "width": 1536,
+    "open": true,
+    "errors": [],
+    "overflow": false,
+    "closed": true,
+    "hero": "paused"
+  },
+  {
+    "engine": "Edge",
+    "case": "media",
+    "playing": true,
+    "paused": true,
+    "audio": "true"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "scenario": "no-js",
+    "details": true,
+    "title": true
+  },
+  {
+    "scenario": "no-js",
+    "errors": []
+  },
+  {
+    "scenario": "blocked-media",
+    "media": "fallback",
+    "title": true
+  },
+  {
+    "scenario": "blocked-media",
+    "errors": []
+  },
+  {
+    "scenario": "normal",
+    "video": {
+      "paused": false,
+      "ready": 0,
+      "muted": true
+    },
+    "hero": "active"
+  },
+  {
+    "scenario": "pause",
+    "paused": true
+  },
+  {
+    "scenario": "normal",
+    "errors": []
+  },
+  {
+    "scenario": "zoom",
+    "overflow": false,
+    "title": true
+  },
+  {
+    "scenario": "zoom",
+    "errors": []
+  },
+  {
+    "scenario": "focus-loop",
+    "inHeader": true
+  },
+  {
+    "scenario": "resize",
+    "locked": false,
+    "mode": "desktop"
+  },
+  {
+    "scenario": "resize",
+    "errors": []
+  }
+]

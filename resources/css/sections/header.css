@@ -1,0 +1,112 @@
+/* Header owns its geometry, panels, and responsive state. */
+.site-header {
+    --header-color: #fff;
+    --header-fill: linear-gradient(#020d0cb8, #020d0c3d 68%, transparent);
+    --v2-focus: #ffb20b;
+    position: relative;
+    z-index: 3;
+    color: var(--header-color);
+    background: #071b18;
+}
+.site-header[data-enhanced] {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    background: var(--header-fill);
+}
+.site-header[data-scrolled="true"], .site-header[data-open="true"] {
+    --header-color: #17362f;
+    --header-fill: #fffcf6;
+    --v2-focus: #005fcc;
+}
+.site-header[data-concealed="true"] { transform: translateY(-100%); }
+.site-header__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(.75rem, 1.5vw, 1.75rem);
+    min-block-size: clamp(5rem, 8vw, 7rem);
+    padding: .75rem var(--v2-space-page);
+}
+.site-header a { text-decoration: none; }
+.site-header__brand { display: flex; align-items: center; gap: .85rem; margin-inline-end: auto; }
+.site-header__brand img { inline-size: clamp(3rem, 4.5vw, 4rem); block-size: auto; border-radius: 50%; }
+.site-header__brand span { font-weight: 750; line-height: 1.1; }
+.site-header__brand small { display: block; font-size: .7em; letter-spacing: .16em; margin-block-start: .4em; }
+.site-header button { color: inherit; }
+.site-header__audio { min-block-size: 2.75rem; padding: .5rem; border: 0; background: none; font-size: .8rem; }
+.site-header__toggle { display: grid; place-content: center; gap: 5px; inline-size: 2.875rem; block-size: 2.875rem; border: 1px solid currentColor; border-radius: 50%; background: transparent; }
+.site-header__toggle span { display: block; inline-size: 20px; block-size: 2px; background: currentColor; }
+.site-header__toggle[aria-expanded="true"] span:first-child { transform: translateY(7px) rotate(45deg); }
+.site-header__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.site-header__toggle[aria-expanded="true"] span:last-child { transform: translateY(-7px) rotate(-45deg); }
+.site-header__navigation { flex-basis: 100%; }
+.site-header__items { display: flex; flex-direction: column; gap: .5rem; list-style: none; margin: 0; padding: 0; }
+.site-header__items > li > a, .site-header summary, .site-header__language {
+    display: flex; align-items: center; justify-content: space-between; gap: .65rem;
+    min-block-size: 3rem; padding-block: .5rem; font-size: clamp(1rem, 2vw, 1.5rem);
+}
+.site-header [aria-current] { color: #c36120; }
+.site-header summary { cursor: pointer; list-style: none; }
+.site-header summary::-webkit-details-marker { display: none; }
+.site-header__panel { padding-block: 1rem; }
+.site-header__panel > img { display: none; object-fit: cover; inline-size: 100%; block-size: 100%; }
+.site-header__links { display: grid; gap: .25rem; }
+.site-header__links a { display: grid; gap: .3rem; padding: .8rem; border-block-end: 1px solid #17362f24; }
+.site-header__links small { max-inline-size: 48ch; font-size: .8rem; font-weight: 400; }
+.site-header__language { justify-content: flex-start; }
+.site-header__flag { inline-size: 1.75rem; block-size: 1.75rem; object-fit: cover; border-radius: 50%; }
+.site-header__audio-glyph { display: none; inline-size: 2.75rem; fill: none; stroke: currentColor; stroke-width: 2; }
+.site-header__audio-wave { display: none; }
+.site-header__audio[aria-pressed="true"] .site-header__audio-wave { display: block; }
+.site-header__audio[aria-pressed="true"] .site-header__audio-line { display: none; }
+@media (max-width: 1180px) {
+    .site-header__audio-glyph { display: block; }
+    .site-header__audio [data-audio-label] { display: none; }
+}
+.site-header[data-enhanced][data-mode="compact"] .site-header__navigation {
+    display: none;
+    min-block-size: 0;
+    grid-column: 1 / -1;
+    align-self: stretch;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-block: clamp(1rem, 4vh, 3rem);
+}
+.site-header[data-mode="compact"][data-mobile-open="true"] { min-block-size: 100vh; min-block-size: 100dvh; }
+.site-header[data-mode="compact"][data-mobile-open="true"] .site-header__bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-rows: auto minmax(0, 1fr);
+    block-size: 100vh;
+    block-size: 100dvh;
+}
+.site-header[data-mode="compact"][data-mobile-open="true"] .site-header__navigation { display: block; }
+html[data-landing-menu-open] { overflow: hidden; }
+@media (max-width: 440px) { .site-header__brand span { display: none; } }
+@media (min-width: 1181px) {
+    .site-header__bar { flex-wrap: nowrap; }
+    .site-header__toggle { display: none; }
+    .site-header__navigation { flex-basis: auto; }
+    .site-header__items { flex-direction: row; align-items: center; gap: clamp(.8rem, 1.4vw, 1.8rem); }
+    .site-header__items > li > a, .site-header summary, .site-header__language { font-size: clamp(.875rem, .8rem + .2vw, 1.1rem); }
+    .site-header__panel {
+        position: absolute; inset-inline: 0; inset-block-start: 100%;
+        display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+        gap: clamp(2rem, 5vw, 6rem); padding: 2rem var(--v2-space-page);
+        color: #17362f; background: #fffcf6;
+        max-block-size: calc(100vh - 7rem); overflow-y: auto;
+    }
+    .site-header__panel > img { display: block; max-block-size: 23rem; border-radius: 1rem; }
+    .site-header__links { align-content: center; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(1rem, 3vw, 3rem); }
+    .site-header__links strong { font-size: clamp(1rem, .84rem + .2vw, 1.1rem); }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .site-header[data-enhanced] { transition: transform 220ms ease, color 220ms ease, background-color 220ms ease; }
+    .site-header__toggle span { transition: transform 180ms ease, opacity 180ms ease; }
+    .site-header__group[open] .site-header__panel { animation: menu-reveal 280ms ease both; }
+    .site-header[data-mobile-open="true"] .site-header__items { animation: menu-reveal 360ms ease both; }
+    @keyframes menu-reveal { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }
+}
+.menu-roll { display: inline-block; perspective: 25rem; }
+.menu-roll > span { display: inline-block; }

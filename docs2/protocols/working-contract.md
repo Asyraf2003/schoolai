@@ -173,6 +173,6 @@ Jangan memakai `CLOSED` jika acceptance target masih gagal.
 
 ## CURRENT STATE
 
-Docs2 foundation sedang dibuat. Belum ada MAP-V2 implementasi yang aktif dari dokumen ini.
-
-Map implementasi pertama nanti harus dimulai dari Hero sesuai blueprint foundation.
+Map aktif: `docs2/blueprints/landing-shell-menu-hero.md`.
+Arahan owner terbaru: foundation → shell → Menu → Hero → proof; EN-only.
+Status/bukti: `docs2/proof/landing-v2-status.md`; target belum CLOSED.

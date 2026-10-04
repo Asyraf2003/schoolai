@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Concerns\BuildsHomeArticlesAndGallery;
-use App\Http\Controllers\Concerns\BuildsHomeHero;
-use App\Http\Controllers\Concerns\BuildsHomePage;
-use App\Http\Controllers\Concerns\BuildsHomeSections;
-use App\Http\Controllers\Concerns\NormalizesHomeGallery;
-use App\Http\Controllers\Concerns\NormalizesHomeMedia;
+use App\View\Presenters\LandingHeroPresenter;
+use App\View\Presenters\SiteNavbarPresenter;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\App;
 
 final class HomeController extends Controller
 {
-    use BuildsHomeArticlesAndGallery;
-    use BuildsHomeHero;
-    use BuildsHomePage;
-    use BuildsHomeSections;
-    use NormalizesHomeGallery;
-    use NormalizesHomeMedia;
+    public function __invoke(LandingHeroPresenter $hero, SiteNavbarPresenter $navbar): View
+    {
+        App::setLocale('en');
+
+        return view('landing.index', [
+            'hero' => $hero->present(),
+            'navigation' => $navbar->present(['siteNavMode' => 'home']),
+        ]);
+    }
 }

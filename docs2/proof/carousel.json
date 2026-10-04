@@ -1,0 +1,35 @@
+[
+  {
+    "engine": "chromium",
+    "fixture": "isolated two-slide document; real DB unchanged",
+    "next": "Browser fixture story",
+    "previous": "Begin a Meaningful Learning Journey",
+    "wrap": "Browser fixture story",
+    "focusRestored": true,
+    "hiddenUnfocusable": true,
+    "noOverflow": true,
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "fixture": "isolated two-slide document; real DB unchanged",
+    "next": "Browser fixture story",
+    "previous": "Begin a Meaningful Learning Journey",
+    "wrap": "Browser fixture story",
+    "focusRestored": true,
+    "hiddenUnfocusable": true,
+    "noOverflow": true,
+    "errors": []
+  },
+  {
+    "engine": "firefox",
+    "fixture": "isolated two-slide document; real DB unchanged",
+    "next": "Browser fixture story",
+    "previous": "Begin a Meaningful Learning Journey",
+    "wrap": "Browser fixture story",
+    "focusRestored": true,
+    "hiddenUnfocusable": true,
+    "noOverflow": true,
+    "errors": []
+  }
+]

@@ -1,7 +1,13 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **physical source switch + blank Homepage V2 foundation**.
+Scope saat ini: **Landing Page V2 — Shell + Menu + Hero, EN-only**.
+
+Map aktif: [MAP-V2-01](blueprints/landing-shell-menu-hero.md).
+Laporan owner: [audit](reports/landing-v2-owner-report.md).
+Peta teknis: [ownership](architecture/landing-v2-technical-map.md).
+Bukti/status terbaru: [proof](proof/landing-v2-status.md).
+Blueprint foundation lama adalah histori; urutan terbaru pada map aktif berlaku.
 
 `docs2/` adalah sumber arahan baru yang bersih agar pekerjaan Homepage V2 tidak tercampur dengan histori dan keputusan legacy.
 
@@ -48,9 +54,10 @@ Jangan membaca seluruh `docs/` legacy sebagai prasyarat default.
 
 ## Active implementation source
 
-`resources/index.html` sengaja hanya berisi shell HTML kosong. Belum ada Hero final, About, seam, atau runtime logic.
+Delivery aktif: `resources/views/landing/index.blade.php` melalui route home.
+`resources/index.html` hanya artefak shell awal; bukan frontend production paralel.
 
-Target implementasi pertama hanya **Hero**.
+Urutan aktif: **foundation → shell → Menu → Hero → proof**, tanpa section lain.
 
 ## Prinsip utama
 

@@ -1,6 +1,9 @@
 # Frontend V2 resource structure
 
-Status: **PHYSICAL SOURCE SWITCHED — blank foundation**
+Status: **HISTORICAL STRUCTURE — source switch checkpoint**
+
+Struktur runtime terbaru dan ownership berada pada [technical map](landing-v2-technical-map.md).
+Pernyataan Hero-first/route-pending di bawah adalah histori sebelum arahan Shell + Menu + Hero.
 
 ## OWNER_RAW
 
