@@ -3,6 +3,7 @@
 Date: 2026-10-05. Branch `feat/home-v2-hero`, draft PR #64, Issue #63.
 STATUS: BLOCKED_BY_MISSING_EVIDENCE for final closure: owner UI review pending.
 Hero CLOSED = NO. Merge = NO, explicitly prohibited by owner.
+Implementation commit: `227693a7`, pushed to origin; main remains `a44d484f`.
 Active blueprint: [MAP-V2-02](../blueprints/menu-hero-correction.md).
 
 ## Implemented
