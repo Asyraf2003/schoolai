@@ -95,7 +95,9 @@ Browser scoped proof tersedia; visual parity penuh dan seluruh gate belum lengka
 ## GIT
 
 Repository: `Asyraf2003/schoolai`; base main: `a44d484`.
-Satu target issue/PR: Landing Page V2 — Shell + Menu + Hero.
+Satu target: [Issue #63](https://github.com/Asyraf2003/schoolai/issues/63),
+[draft PR #64](https://github.com/Asyraf2003/schoolai/pull/64).
+Implementation checkpoint `0edd5aa6`; main belum dimutasi.
 Perubahan lokal AGENTS.md, CLAUDE.md, composer.lock bukan bagian checkpoint ini.
 
 ## NEXT VALID STEP

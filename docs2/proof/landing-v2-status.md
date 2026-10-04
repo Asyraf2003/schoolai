@@ -2,6 +2,8 @@
 
 Date: 2026-10-04. Base main: `a44d484f4cd8bc532514f0152e4423a2fcdb9781`.
 Issue: [#63](https://github.com/Asyraf2003/schoolai/issues/63). Branch: `feat/home-v2-hero`.
+Draft PR: [#64](https://github.com/Asyraf2003/schoolai/pull/64).
+Implementation checkpoint: `0edd5aa6c4aaeab4ba39ed030263a1666dd96f53`.
 STATUS: BLOCKED_BY_MISSING_EVIDENCE for final closure. Hero is NOT CLOSED.
 Implementation: Shell + Menu + Hero EN, available for review; no additional sections.
 
@@ -58,6 +60,8 @@ submenu open, Escape close, reduced-motion paused media, no pageerror.
 - Microsoft Edge 154.0.4258.53 (Windows native executable via CDP): PASS for all nine widths.
 
 See [matrix](browser.json) and [Edge](edge.json).
+The three-engine width matrix preceded the final compact-menu grid refinement;
+that refinement was rechecked with the short-menu cases below. Edge matrix was rerun after it.
 Playwright 1.63.0 used from the existing external proof-tool cache; no npm dependency change.
 Firefox was downloaded into the browser cache for the requested Firefox checks.
 Chromium/Firefox use existing cached Linux shared libraries; WebKit uses existing WPE wrapper.
@@ -113,3 +117,10 @@ Source fingerprints: [hashes](source-hashes.json).
 Review draft PR and visual artifacts; close bounded remaining proof gaps for Menu + Hero.
 Do not merge while required gates fail; do not add another section or rebuild admin/auth
 just to make legacy tests green. Main remains unchanged by this implementation checkpoint.
+
+## GIT handoff
+
+Implementation checkpoint pushed and draft PR created. Main remains `a44d484`.
+Only pre-existing local AGENTS.md, CLAUDE.md and composer.lock edits remain outside the commit.
+At PR creation: GitGuardian SUCCESS; dependency-and-regression-audit running.
+CI status is live on PR #64; do not infer it passed from local scoped checks.
