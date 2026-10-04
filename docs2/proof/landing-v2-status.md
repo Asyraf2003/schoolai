@@ -122,5 +122,8 @@ just to make legacy tests green. Main remains unchanged by this implementation c
 
 Implementation checkpoint pushed and draft PR created. Main remains `a44d484`.
 Only pre-existing local AGENTS.md, CLAUDE.md and composer.lock edits remain outside the commit.
-At PR creation: GitGuardian SUCCESS; dependency-and-regression-audit running.
-CI status is live on PR #64; do not infer it passed from local scoped checks.
+CI run [37205933857](https://github.com/Asyraf2003/schoolai/actions/runs/37205933857)
+on checkpoint `a7f22cb48d9355f5b9d7eca8062d774827934486`: FAIL at frontend runtime contracts.
+Three V2 tests PASS; seven legacy test files FAIL due to archived implementation paths.
+GitGuardian SUCCESS. Build/PHP steps after that failure were not executed in this run.
+No CI pass or merge claim. Later documentation-only commits do not resolve this blocker.
