@@ -2,6 +2,7 @@
 export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) {
     const removers = [];
     const failed = new Set();
+    const deadlines = new Map();
     let version = 0;
     let disposed = false;
     const videos = slides.map(slide => slide.querySelector('video'));
@@ -13,12 +14,27 @@ export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) 
         if (!video) return;
         const fail = () => {
             if (!video.dataset.hydrated) return;
+            clearTimeout(deadlines.get(index));
+            deadlines.delete(index);
             failed.add(index);
             video.pause();
             slides[index].dataset.playing = 'false';
             onFailure(index);
         };
-        listen(video, 'playing', () => { slides[index].dataset.playing = 'true'; });
+        listen(video, 'playing', () => {
+            clearTimeout(deadlines.get(index)); deadlines.delete(index);
+            slides[index].dataset.playing = 'true';
+        });
+        const waiting = () => {
+            if (video.paused || video.readyState >= 3) return;
+            slides[index].dataset.playing = 'false';
+            if (!deadlines.has(index)) deadlines.set(index, setTimeout(() => {
+                deadlines.delete(index);
+                if (!video.paused && video.readyState < 3) fail();
+            }, 8000));
+        };
+        listen(video, 'waiting', waiting);
+        listen(video, 'stalled', waiting);
         listen(video, 'error', fail);
         video.querySelectorAll('source').forEach(source => listen(source, 'error', fail));
         listen(video, 'ended', () => onEnded(index));
@@ -31,6 +47,7 @@ export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) 
             video.muted = !state.audio || !active;
             video.loop = slides.length === 1;
             if (!active || !state.canPlay || failed.has(index)) {
+                clearTimeout(deadlines.get(index)); deadlines.delete(index);
                 video.pause();
                 if (!active) {
                     slides[index].dataset.playing = 'false';
@@ -43,6 +60,13 @@ export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) 
                 video.dataset.hydrated = 'true';
                 video.preload = 'metadata';
                 video.load();
+                deadlines.set(index, setTimeout(() => {
+                    deadlines.delete(index);
+                    if (video.readyState < 3) {
+                        failed.add(index); video.pause();
+                        slides[index].dataset.playing = 'false'; onFailure(index);
+                    }
+                }, 8000));
             }
             const attempt = video.play();
             attempt?.catch(() => {
@@ -59,6 +83,6 @@ export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) 
         isVideo: index => Boolean(videos[index]),
         failed: index => failed.has(index),
         retry(index) { failed.delete(index); },
-        dispose() { disposed = true; version++; videos.forEach(video => video?.pause()); removers.forEach(remove => remove()); },
+        dispose() { disposed = true; version++; deadlines.forEach(clearTimeout); deadlines.clear(); videos.forEach(video => video?.pause()); removers.forEach(remove => remove()); },
     };
 }

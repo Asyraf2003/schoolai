@@ -55,3 +55,14 @@ test('Hero stops for focus, offscreen and page suspension without losing user pa
     hero.send({ type: 'environment', values: { visible: true } });
     assert.equal(rendered.canPlay, false);
 });
+
+
+test('Header keeps white text while Hero remains behind it', () => {
+    const header = createHeaderState(() => {});
+    header.send({ type: 'scroll', y: 700, outsideHero: false });
+    assert.equal(header.snapshot().scrolled, false);
+    header.send({ type: 'scroll', y: 900, outsideHero: true });
+    assert.equal(header.snapshot().scrolled, true);
+    header.send({ type: 'scroll', y: 850, outsideHero: false });
+    assert.equal(header.snapshot().scrolled, false);
+});

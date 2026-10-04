@@ -1,12 +1,12 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Landing Page V2 — Shell + Menu + Hero, EN-only**.
+Scope saat ini: **Landing Page V2 — Shell + Menu + Hero, koreksi Menu/media + bahasa EN/ID/AR**.
 
-Map aktif: [MAP-V2-01](blueprints/landing-shell-menu-hero.md).
-Laporan owner: [audit](reports/landing-v2-owner-report.md).
-Peta teknis: [ownership](architecture/landing-v2-technical-map.md).
-Bukti/status terbaru: [proof](proof/landing-v2-status.md).
+Map aktif: [MAP-V2-02](blueprints/menu-hero-correction.md).
+Laporan owner: [koreksi](reports/menu-hero-correction-owner.md).
+Peta teknis: [ownership](architecture/menu-hero-correction-map.md).
+Bukti/status terbaru: [proof](proof/menu-hero-correction-status.md).
 Blueprint foundation lama adalah histori; urutan terbaru pada map aktif berlaku.
 
 `docs2/` adalah sumber arahan baru yang bersih agar pekerjaan Homepage V2 tidak tercampur dengan histori dan keputusan legacy.

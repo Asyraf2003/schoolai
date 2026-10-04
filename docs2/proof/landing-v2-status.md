@@ -1,5 +1,10 @@
 # Landing V2 — proof/status
 
+> HISTORICAL CHECKPOINT 2026-10-04. Arahan terbaru:
+> [MAP-V2-02](../blueprints/menu-hero-correction.md). EN-only sudah diganti
+> dengan bahasa aktif EN/ID/AR. Dilarang merge sampai owner UI review.
+
+
 Date: 2026-10-04. Base main: `a44d484f4cd8bc532514f0152e4423a2fcdb9781`.
 Issue: [#63](https://github.com/Asyraf2003/schoolai/issues/63). Branch: `feat/home-v2-hero`.
 Draft PR: [#64](https://github.com/Asyraf2003/schoolai/pull/64).

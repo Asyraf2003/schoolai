@@ -173,6 +173,6 @@ Jangan memakai `CLOSED` jika acceptance target masih gagal.
 
 ## CURRENT STATE
 
-Map aktif: `docs2/blueprints/landing-shell-menu-hero.md`.
-Arahan owner terbaru: foundation → shell → Menu → Hero → proof; EN-only.
-Status/bukti: `docs2/proof/landing-v2-status.md`; target belum CLOSED.
+Map aktif: `docs2/blueprints/menu-hero-correction.md`.
+Arahan owner terbaru: koreksi Menu/Hero, EN/ID/AR aktif; HP dropdown menu saja.
+Status/bukti: `docs2/proof/menu-hero-correction-status.md`; target belum CLOSED.

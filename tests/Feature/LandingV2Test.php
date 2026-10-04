@@ -7,12 +7,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('delivers an English landing shell without changing the saved locale', function (): void {
+it('delivers the saved Arabic locale with direction foundation', function (): void {
     $this->withSession(['locale' => 'ar'])
         ->get(route('home'))
         ->assertOk()
         ->assertViewIs('landing.index')
-        ->assertSee('<html lang="en" dir="ltr">', false)
+        ->assertSee('<html lang="ar" dir="rtl">', false)
         ->assertSessionHas('locale', 'ar')
         ->assertDontSee('resources_old', false);
 });
@@ -72,3 +72,16 @@ it('shows only published promoted stories after the opening hero', function (): 
         ->assertDontSee('Our school story')
         ->assertDontSee('data-next', false);
 });
+
+it('switches the landing language through the existing route', function (string $locale, string $direction): void {
+    $this->from(route('home'))->post(route('language.switch', $locale))
+        ->assertRedirect(route('home'))
+        ->assertSessionHas('locale', $locale);
+
+    $this->get(route('home'))
+        ->assertSee('<html lang="'.$locale.'" dir="'.$direction.'">', false)
+        ->assertSee('action="'.route('language.switch', 'en').'"', false)
+        ->assertSee('action="'.route('language.switch', 'id').'"', false)
+        ->assertSee('action="'.route('language.switch', 'ar').'"', false)
+        ->assertDontSee('data-playback', false);
+})->with([['en', 'ltr'], ['id', 'ltr'], ['ar', 'rtl']]);

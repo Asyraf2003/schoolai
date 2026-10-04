@@ -2,7 +2,6 @@
     <div class="site-header__bar">
         <a class="site-header__brand" href="{{ $logoHref }}" aria-label="{{ $logoLabel }}">
             <img src="{{ $logoImageUrl }}" alt="{{ $logo['image_alt'] ?? $logoLabel }}" width="64" height="64">
-            <span>{{ $logo['line_1'] }}<small>{{ $logo['line_2'] }}</small></span>
         </a>
         <button class="site-header__audio" type="button" data-audio hidden aria-pressed="false"
             aria-label="{{ __('shared.navbar.audio.enable_label') }}"
@@ -27,13 +26,29 @@
                 @foreach ($menuItems as $item)
                     <li>
                         @if ($item['is_language'])
-                            <span class="site-header__language" lang="en">{{ $item['label'] }} <img class="site-header__flag" src="{{ config('media.static.language_flags.en') }}" width="28" height="28" alt="English"></span>
+                            <details class="site-header__language" data-panel="language">
+                                <summary>{{ $item['label'] }}</summary>
+                                <div class="site-header__languages">
+                                    @foreach ($item['options'] as $option)
+                                        <form method="POST" action="{{ route('language.switch', $option['locale']) }}">
+                                            @csrf
+                                            <button type="submit" data-locale="{{ $option['locale'] }}" @if (app()->getLocale() === $option['locale']) aria-current="true" @endif>
+                                                <img class="site-header__flag" src="{{ config('media.static.language_flags.'.$option['locale']) }}" width="28" height="28" alt="">
+                                                {{ $option['label'] }}
+                                            </button>
+                                        </form>
+                                    @endforeach
+                                </div>
+                            </details>
                         @elseif ($item['has_mega_menu'])
                             <details class="site-header__group" data-panel="{{ $loop->index }}">
                                 <summary><span data-menu-label>{{ $item['label'] }}</span><span aria-hidden="true">⌄</span></summary>
                                 <div class="site-header__panel">
-                                    <img src="{{ $item['mega_media_url'] }}" alt="{{ $item['mega_media_alt'] }}"
-                                        width="720" height="540" loading="lazy" decoding="async">
+                                    <figure class="site-header__media" data-media-fallback>
+                                        <figcaption>{{ $item['mega']['title'] ?? $item['mega_media_alt'] }}</figcaption>
+                                        <img src="{{ $item['mega_media_url'] }}" alt="{{ $item['mega_media_alt'] }}"
+                                            width="720" height="1080" loading="lazy" decoding="async">
+                                    </figure>
                                     <div class="site-header__links">
                                         @foreach ($item['mega']['links'] as $link)
                                             <a href="{{ $link['href'] }}">

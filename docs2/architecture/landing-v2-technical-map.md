@@ -1,5 +1,10 @@
 # Landing V2 technical map
 
+> HISTORICAL CHECKPOINT 2026-10-04. Arahan terbaru:
+> [MAP-V2-02](../blueprints/menu-hero-correction.md). EN-only sudah diganti
+> dengan bahasa aktif EN/ID/AR. Dilarang merge sampai owner UI review.
+
+
 STATUS: VERIFYING / BLOCKED_BY_MISSING_EVIDENCE untuk penutupan final.
 OWNER_RAW: [verbatim source](../owner/landing-v2-raw.md).
 OWNER_CONFIRMED / SCOPE / OUT_OF_SCOPE: [active blueprint](../blueprints/landing-shell-menu-hero.md).

@@ -1,5 +1,10 @@
 # MAP-V2-01 — Landing Page V2 — Shell + Menu + Hero
 
+> HISTORICAL CHECKPOINT 2026-10-04. Arahan terbaru:
+> [MAP-V2-02](../blueprints/menu-hero-correction.md). EN-only sudah diganti
+> dengan bahasa aktif EN/ID/AR. Dilarang merge sampai owner UI review.
+
+
 STATUS: BLOCKED_BY_MISSING_EVIDENCE untuk final closure; implementation tersedia.
 BLUEPRINT: IMPLEMENTING sesuai scope owner; keputusan navigasi sudah OWNER_CONFIRMED.
 

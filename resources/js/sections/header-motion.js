@@ -1,7 +1,7 @@
 // Optional browser animation adapter. Semantic labels remain the source of truth.
 export function mountHeaderMotion(root) {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const capability = window.matchMedia('(min-width: 768px) and (hover: hover)');
+    const capability = window.matchMedia('(min-width: 768px)');
     const labels = [...root.querySelectorAll('[data-menu-label]')];
     const animations = new Set();
     const restores = [];
@@ -25,6 +25,7 @@ export function mountHeaderMotion(root) {
     });
     function play(event) {
         if (preference.matches || !capability.matches) return;
+        if (event.type === 'pointerover' && !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
         const control = event.target.closest('a, summary');
         if (!control || (event.relatedTarget instanceof Node && control.contains(event.relatedTarget))) return;
         control.querySelectorAll('.menu-roll > span').forEach((character, index) => {
@@ -39,11 +40,15 @@ export function mountHeaderMotion(root) {
             animation.finished.catch(() => {}).finally(() => animations.delete(animation));
         });
     }
+    const opening = () => root.querySelectorAll('.site-header__items > li > a, .site-header__group > summary').forEach(control => play({ target: control }));
+    opening();
+    root.addEventListener('menu:open', opening);
     function cancel() { animations.forEach(animation => animation.cancel()); animations.clear(); }
     root.addEventListener('pointerover', play);
     root.addEventListener('focusin', play);
     preference.addEventListener?.('change', cancel);
     return () => {
+        root.removeEventListener('menu:open', opening);
         cancel(); restores.forEach(restore => restore());
         root.removeEventListener('pointerover', play);
         root.removeEventListener('focusin', play);

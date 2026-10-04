@@ -1,5 +1,10 @@
 # Laporan owner — Shell + Menu + Hero
 
+> HISTORICAL CHECKPOINT 2026-10-04. Arahan terbaru:
+> [MAP-V2-02](../blueprints/menu-hero-correction.md). EN-only sudah diganti
+> dengan bahasa aktif EN/ID/AR. Dilarang merge sampai owner UI review.
+
+
 Tanggal audit: 2026-10-04. Status target: BLOCKED_BY_MISSING_EVIDENCE.
 Ini laporan source dan database lokal, bukan klaim tampilan browser sudah sama.
 

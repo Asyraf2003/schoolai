@@ -1,3 +1,5 @@
+import { mountMediaFallback } from './media-fallback.js';
+import { mountHeroTitles } from './hero-title.js';
 import { createHeroState } from './hero-state.js';
 import { createHeroMedia } from './hero-media.js';
 
@@ -5,10 +7,9 @@ export function mountHero(root, { audioChanged }) {
     if (!root) return { toggleAudio() {}, boundary: () => null, suspend() {}, resume() {}, dispose() {} };
     const slides = [...root.querySelectorAll('[data-slide]')];
     const controls = root.querySelector('[data-hero-controls]');
-    const playback = root.querySelector('[data-playback]');
     const live = root.querySelector('[data-hero-live]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const cleanups = [];
+    const cleanups = [mountHeroTitles(root), mountMediaFallback(root)];
     let timer;
     let observer;
     let pointer;
@@ -42,10 +43,8 @@ export function mountHero(root, { audioChanged }) {
         }
         const failed = media.failed(value.index);
         root.dataset.mediaState = failed ? 'fallback' : (value.canPlay ? 'active' : 'paused');
-        playback.textContent = value.paused || failed ? playback.dataset.playLabel : playback.dataset.pauseLabel;
-        playback.setAttribute('aria-pressed', String(value.paused));
         media.sync(value);
-        audioChanged({ enabled: value.audio && !failed, available: media.isVideo(value.index) });
+        audioChanged({ enabled: value.audio && !failed, available: media.isVideo(value.index) && !failed });
         if (event.type === 'step') {
             const label = root.dataset.slideLabel.replace(':current', String(value.index + 1)).replace(':total', String(slides.length));
             live.textContent = `${label}: ${slides[value.index].dataset.title}`;
@@ -59,13 +58,6 @@ export function mountHero(root, { audioChanged }) {
     };
     listen(root.querySelector('[data-previous]'), 'click', () => step(-1));
     listen(root.querySelector('[data-next]'), 'click', () => step(1));
-    listen(playback, 'click', () => {
-        const value = state.snapshot();
-        if (media.failed(value.index)) {
-            media.retry(value.index);
-            state.send({ type: 'environment', values: { paused: false } });
-        } else state.send({ type: 'pause' });
-    });
     listen(root, 'keydown', event => {
         if (event.altKey || event.ctrlKey || event.metaKey || !['ArrowLeft', 'ArrowRight'].includes(event.key) || slides.length < 2) return;
         event.preventDefault();
@@ -97,7 +89,7 @@ export function mountHero(root, { audioChanged }) {
         observer.observe(root);
     }
     root.dataset.enhanced = 'true';
-    controls.hidden = !(slides.length > 1 || slides.some(slide => slide.querySelector('video')));
+    controls.hidden = !(slides.length > 1);
     state.send({ type: 'environment', values: { visible: !document.hidden } });
     return {
         toggleAudio() { media.retry(state.snapshot().index); state.send({ type: 'audio' }); },

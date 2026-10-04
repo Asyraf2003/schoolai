@@ -5,7 +5,7 @@
         @foreach ($hero['slides'] as $slide)
             <article class="hero__slide" data-slide data-kind="{{ $slide['render_type'] }}"
                 data-title="{{ $slide['title'] }}">
-                <div class="hero__media">
+                <div class="hero__media" data-media-fallback>
                     <img src="{{ $slide['render_type'] === 'video' ? $slide['poster_url'] : $slide['media_url'] }}"
                         alt="{{ $slide['media_alt'] }}" width="1920" height="1080" decoding="async"
                         @if ($loop->first) fetchpriority="high" loading="eager" @else loading="lazy" @endif>
@@ -31,8 +31,7 @@
                 <svg viewBox="0 0 128 72" aria-hidden="true"><path d="m14 4 32 32-32 32L0 54l18-18L0 18Z"/><path d="m50 4 32 32-32 32-14-14 18-18-18-18Z"/><path d="m86 4 32 32-32 32-14-14 18-18-18-18Z"/></svg>
             </button>
         @endif
-        <button class="hero__playback" type="button" data-playback aria-pressed="false"
-            data-pause-label="{{ $hero['pause_label'] }}" data-play-label="{{ $hero['play_label'] }}">{{ $hero['pause_label'] }}</button>
+
     </div>
     <p class="sr-only" data-hero-live aria-live="polite" aria-atomic="true"></p>
 </section>
