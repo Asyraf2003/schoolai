@@ -212,4 +212,5 @@ NEXT CHANNEL: Terminal Codex. NEXT: implement and prove this bounded patch.
 nine slow-motion cases, Edge smoke and playback/Cursor/Sound regressions PASS.
 Diff/structure255/build/Pint/Node10/PHP7/46 PASS. Full PHP71fail/75errors legacy.
 Evidence ../proof/header-nav-frame.json. Blueprint IMPLEMENTING; Hero NOT CLOSED.
-One NEXT: authorized branch publish, PR64 draft update, then owner UI review.
+Published source `06bba10c1d539dda9cf0770f3222bf1fe2c403fc`, PR64 draft/unmerged verified,
+main a44d484f unchanged. One NEXT: owner UI review; Hero NOT CLOSED.

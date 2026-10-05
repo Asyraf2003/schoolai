@@ -19,8 +19,10 @@ Diff/structure255/build/Pint,Node10,PHP7/46 PASS. Full PHP FAIL:312 total/166 pa
 71 failures/75 errors legacy. Evidence ../../docs2/proof/header-nav-frame.json.
 STATUS: scoped proof PASS; certification BLOCKED_BY_MISSING_EVIDENCE (physical
 Safari/manual/PSI/field). Hero NOT CLOSED. Main unchanged, PR64 draft/no merge.
-AGENTS/CLAUDE/composer.lock user work excluded. NEXT CHANNEL: Terminal Codex.
-One NEXT: commit/push this branch and update PR64, then owner UI review.
+Publication verified: source `06bba10c1d539dda9cf0770f3222bf1fe2c403fc` pushed to
+feat/home-v2-hero; PR64 updated/draft/unmerged, remote main a44d484f unchanged.
+AGENTS/CLAUDE/composer.lock user work excluded. NEXT CHANNEL: owner/local terminal.
+One NEXT: owner reviews nav height, Hero group, tablet type and slow motion.
 Historical ledger below is not active scope.
 
 Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`

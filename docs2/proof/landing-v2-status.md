@@ -15,8 +15,9 @@ PHP7/46 PASS. Full PHP remains FAIL:312 total,166 pass,71 failures,75 errors.
 Evidence: [nav frame](header-nav-frame.json), [menu](nav-frame-menu.png),
 [Language](nav-frame-language.png). Physical Safari/manual/PSI/field gates remain
 BLOCKED_BY_MISSING_EVIDENCE. Hero NOT CLOSED; same branch/PR64 draft, no merge.
-One NEXT: authorized branch publication then owner UI review. Historical sections
-below are checkpoint evidence.
+Published source `06bba10c1d539dda9cf0770f3222bf1fe2c403fc`; PR64 draft/unmerged verified,
+main a44d484f unchanged. One NEXT: owner UI review. Historical sections below
+are checkpoint evidence.
 
 
 ## Latest OWNER_RAW correction — desktop slots / playback isolation
