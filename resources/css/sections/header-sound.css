@@ -1,0 +1,11 @@
+.site-header__audio { min-block-size: 2.75rem; padding: .5rem; border: 0; background: none; font-size: inherit; }
+.site-header__audio-wave { display: none; }
+@media (max-width: 1023px), (max-width: 1180px) and (orientation: portrait) {
+    .site-header__audio[data-wave-ready] {
+        display: grid; place-items: center; padding: 0;
+        inline-size: var(--header-control-size); block-size: var(--header-control-size);
+        border: 1px solid currentColor; border-radius: 50%;
+    }
+    .site-header__audio[data-wave-ready] [data-audio-label] { display: none; }
+    .site-header__audio[data-wave-ready] .site-header__audio-wave { display: block; inline-size: 100%; block-size: 100%; }
+}

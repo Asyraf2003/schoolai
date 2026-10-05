@@ -1,3 +1,5 @@
+import { mountHeaderSound } from './header-sound.js';
+import { mountHeaderLanguage } from './header-language.js';
 import { createHeaderState } from './header-state.js';
 import { mountMediaFallback } from './media-fallback.js';
 import { mountHeaderMotion } from './header-motion.js';
@@ -10,6 +12,10 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     const groups = [...root.querySelectorAll('[data-panel]')];
     const media = window.matchMedia('(min-width: 1181px), (min-width: 1024px) and (orientation: landscape)');
     const cleanups = [mountHeaderMotion(root), mountMediaFallback(root)];
+    const sound = mountHeaderSound(audio);
+    let audioStatus = { enabled: false, available: false };
+    const language = mountHeaderLanguage(root, () => state.send({ type: 'panel', id: 'language', open: false }));
+    cleanups.push(() => sound.dispose(), () => language.dispose());
     let closing;
     let frame = 0;
     function listen(target, type, handler, options) {
@@ -25,10 +31,14 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
         root.dataset.concealed = String(value.concealed);
         toggle.setAttribute('aria-expanded', String(value.mobileOpen));
         toggle.setAttribute('aria-label', value.mobileOpen ? toggle.dataset.closeLabel : toggle.dataset.openLabel);
-        document.documentElement.toggleAttribute('data-landing-menu-open', value.mobileOpen);
-        modalChanged?.(value.mobileOpen);
+        document.documentElement.toggleAttribute('data-landing-menu-open', value.mobileOpen || value.panel === 'language');
+        modalChanged?.(value.mobileOpen || value.panel === 'language');
         if (opening) root.dispatchEvent(new Event('menu:open'));
-        groups.forEach((group) => { group.open = group.dataset.panel === value.panel; });
+        groups.filter(group => group.dataset.panel !== value.panel).forEach(group => { group.open = false; });
+        const active = groups.find(group => group.dataset.panel === value.panel);
+        if (active) active.open = true;
+        language.sync(value.panel === 'language');
+        sound.update(audioStatus, value);
     });
     function dismiss(restore = false) {
         const current = state.snapshot();
@@ -63,6 +73,11 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
         state.send({ type: 'mobile' });
         if (state.snapshot().mobileOpen) nav.querySelector('a, summary')?.focus();
     });
+    groups.forEach(group => listen(group.querySelector('summary'), 'click', event => {
+        event.preventDefault();
+        closing?.cancel();
+        state.send({ type: 'panel', id: group.dataset.panel, open: state.snapshot().panel !== group.dataset.panel });
+    }));
     groups.forEach(group => listen(group, 'toggle', () => {
         const active = state.snapshot().panel === group.dataset.panel;
         if (active !== group.open) state.send({ type: 'panel', id: group.dataset.panel, open: group.open });
@@ -74,6 +89,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     listen(document, 'click', (event) => { if (!root.contains(event.target)) dismiss(); });
     listen(document, 'keydown', (event) => {
         const value = state.snapshot();
+        if (value.panel === 'language') return;
         if (event.key === 'Escape' && (value.mobileOpen || value.panel !== null)) {
             event.preventDefault();
             dismiss(true);
@@ -99,10 +115,12 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     updateViewport();
     return {
         setAudio({ enabled, available }) {
+            audioStatus = { enabled, available };
             audio.hidden = !available;
             audio.setAttribute('aria-pressed', String(enabled));
             audio.querySelector('[data-audio-label]').textContent = enabled ? audio.dataset.labelOn : audio.dataset.labelOff;
             audio.setAttribute('aria-label', enabled ? audio.dataset.actionOn : audio.dataset.actionOff);
+            sound.update(audioStatus, state.snapshot());
         },
         dispose() {
             closing?.cancel();

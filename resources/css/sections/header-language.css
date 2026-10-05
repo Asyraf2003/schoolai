@@ -1,0 +1,37 @@
+.site-header__languages {
+    position: static; margin: 0; padding: 1rem; border: 0;
+    color: inherit; background: transparent; overflow: visible;
+}
+.site-header__languages:modal {
+    position: fixed; inset: 0; margin: 0;
+    inline-size: 100%; block-size: 100%; max-inline-size: none; max-block-size: none;
+    padding: clamp(20px, 4vw, 48px);
+    display: grid; place-items: center;
+}
+.site-header__languages::backdrop {
+    background: rgb(2 16 14 / .76);
+    -webkit-backdrop-filter: blur(14px) saturate(115%);
+    backdrop-filter: blur(14px) saturate(115%);
+}
+.site-header__language-options { display: flex; align-items: center; justify-content: center; gap: clamp(28px, 6vw, 84px); inline-size: fit-content; margin-inline: auto; }
+.site-header__languages form { margin: 0; }
+.site-header__language-options button { display: block; padding: 0; border: 0; background: transparent; }
+.site-header__flag {
+    display: block; inline-size: clamp(96px, 10vw, 142px); block-size: clamp(96px, 10vw, 142px);
+    object-fit: cover; border: 5px solid rgb(255 255 255 / .96); border-radius: 50%; background: #fff;
+    box-shadow: 0 16px 38px rgb(20 45 39 / .2), 0 0 0 1px rgb(23 54 47 / .08);
+}
+.site-header__language-options [aria-current] .site-header__flag { border-color: #f7b24b; box-shadow: 0 0 0 7px rgb(247 178 75 / .2), 0 20px 42px rgb(20 45 39 / .22); }
+.site-header__language-options button:focus-visible .site-header__flag { border-color: #f7c66f; }
+@media (hover: hover) and (pointer: fine) {
+    .site-header__language-options button:hover .site-header__flag { border-color: #f7c66f; transform: translateY(-5px) scale(1.03); }
+}
+@media (max-width: 640px) {
+    .site-header__language-options { gap: clamp(16px, 5vw, 26px); }
+    .site-header__flag { inline-size: clamp(76px, 23vw, 104px); block-size: clamp(76px, 23vw, 104px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .site-header__flag { transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+    .site-header__languages:modal .site-header__language-options { animation: language-reveal 220ms ease both; }
+    @keyframes language-reveal { from { opacity: 0; transform: translateY(18px) scale(.94); } to { opacity: 1; transform: none; } }
+}

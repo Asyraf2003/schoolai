@@ -57,12 +57,16 @@ test('Hero stops for focus, offscreen and page suspension without losing user pa
 });
 
 
-test('Header keeps white text while Hero remains behind it', () => {
+test('Header uses scroll hysteresis without hiding over the Hero', () => {
     const header = createHeaderState(() => {});
-    header.send({ type: 'scroll', y: 700, outsideHero: false });
+    header.send({ type: 'viewport', desktop: true });
+    header.send({ type: 'scroll', y: 48, outsideHero: false });
     assert.equal(header.snapshot().scrolled, false);
-    header.send({ type: 'scroll', y: 900, outsideHero: true });
+    header.send({ type: 'scroll', y: 49, outsideHero: false });
     assert.equal(header.snapshot().scrolled, true);
-    header.send({ type: 'scroll', y: 850, outsideHero: false });
+    assert.equal(header.snapshot().concealed, false);
+    header.send({ type: 'scroll', y: 30, outsideHero: false });
+    assert.equal(header.snapshot().scrolled, true);
+    header.send({ type: 'scroll', y: 24, outsideHero: false });
     assert.equal(header.snapshot().scrolled, false);
 });

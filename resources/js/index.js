@@ -1,7 +1,9 @@
+import { mountCursor } from './sections/cursor.js';
 import { mountHeader } from './sections/header.js';
 import { mountHero } from './sections/hero.js';
 
 // Composition root wires ports; each component owns its state and DOM.
+const cursor = mountCursor();
 let hero;
 const main = document.querySelector('main');
 const header = mountHeader(document.querySelector('[data-header]'), {
@@ -18,6 +20,6 @@ hero = mountHero(document.querySelector('[data-hero]'), {
 });
 window.addEventListener('pagehide', event => {
     hero.suspend();
-    if (!event.persisted) { header.dispose(); hero.dispose(); }
+    if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); }
 });
 window.addEventListener('pageshow', () => hero.resume());

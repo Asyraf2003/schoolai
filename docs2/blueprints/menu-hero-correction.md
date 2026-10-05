@@ -1,60 +1,124 @@
-# MAP-V2-02 — Koreksi Menu + Hero
+# MAP-V2-02 — Koreksi Header V2
 
-STATUS: IMPLEMENTING. Blueprint: OWNER_ACCEPTED melalui instruksi owner 2026-10-05.
+Latest OWNER_RAW update at the end supersedes earlier geometry/Language decisions.
 
-## OWNER_RAW
-Lihat [teks mentah lengkap](../owner/menu-hero-correction-raw.md). Arahan 2026-10-05: media “2 : 3 saja”,
-“tetep ambil 1/4 selalu”, “3 bahasa hidup”, dan “Jangan merge ke main”.
-Ini supersedes EN-only dan batas navigasi lama bila kapasitas tidak cocok.
+Blueprint: OWNER_ACCEPTED → IMPLEMENTING, arahan owner 2026-10-05.
+Main fetched: `a44d484f4cd8bc532514f0152e4423a2fcdb9781`.
+Local branch: `feat/home-v2-hero`; channel: Terminal Codex. No publication.
 
-## OWNER_CONFIRMED
-Empat slot tetap per kolom; media dan nav satu frame; logo saja; tanpa pause;
-putih polos saat open; aksen kuning; bahasa EN/ID/AR aktif; RTL foundation saja.
-URL section yang belum ada tetap aktif. PR #64 tidak di-merge.
+## FACT → GAP → GOAL → IMPACT
+Runtime baseline Chromium 1440×900: all labels have a yellow 2px border;
+media is 288×432 (2:3). Source forces four rows and mobile minimum 24rem.
+Language summary has no current flag, options are an anchored dropdown.
+SVG wave scales/skews; touch capability incorrectly enables it on desktop layout.
+Legacy header uses 48px/24px scroll hysteresis, SVG chevron, centered flags.
+Goal: correct only Header navigation, language chooser, sound visual.
+GAP: final cross-engine/locale/lifecycle/performance proof remains pending.
+Typography paths named by historical docs now live in resources_old; active
+V2 font/base/locale sources and index import order were inspected.
 
-## AI_TRANSLATION / BLUEPRINT
-Header memiliki geometri, warna, modal, motion dan panel. Language memakai
-native details/form POST route existing, masuk dismissal Header. Hero tetap
-memiliki playback. Media mempertahankan poster dan copy semantic saat gagal.
-Geometri desktop: inset 7.5vw, media 20vw, tinggi 30vw, empat track nav.
-Batas tinggi viewport membatasi frame; pada viewport pendek konten dapat scroll.
-Compact tetap satu DOM; tablet landscape full menu mulai 1024px bila landscape,
-desktop 1181px ke atas. Mobile <768 tanpa wave; hover hanya fine pointer.
+## DECISION / superseding owner corrections
+- Desktop underline only hovered, focused, pressed, current or open menu.
+- Compact navigation has no yellow underline, including active items.
+- Desktop menu media width:height 3:2; compact rows follow actual link count.
+- Whole summary row opens one group; opening another closes the previous first.
+- Chevron uses centered SVG geometry with open rotation.
+- Current flag visible; chooser centered with existing locale POST forms.
+- Sound is text On/Off whenever desktop navigation is active, including landscape
+  tablet. Compact navigation alone uses one decorative line↔wave canvas.
+- No directional hover morph. CSS owns colors, size and circular surface.
+- Retain accepted 1024px landscape / 1181px desktop mode boundary, test both,
+  including portrait 1180/1181. Burger diameter must not exceed logo diameter.
+- Text stays white at top; dark in white open/scrolled header only. Legacy
+  48/24 scroll hysteresis is restored independently of Hero concealment policy.
 
-## AI_ASSUMPTIONS
-1024px landscape adalah breakpoint kandidat, harus diuji kapasitas tiga bahasa.
-Posisi language popup mengikuti kontrol, tuning final tidak diminta.
+## Scope / owners
+Editable: resources/views/landing/header.blade.php; Header CSS/JS and owned
+Sound/Language modules; focused Header tests; this blueprint and current ledger.
+Read-only: resources_old, locale/config/media data, Hero, Vite composition.
+Forbidden: other surfaces, admin/auth, dependencies, existing unrelated edits,
+main/PR mutations. Existing section URLs and real Hero audio port stay unchanged.
+One DOM and content source across ID/EN/AR, logical spacing and neutral wave.
 
-## OWNER_CONFIRMED — keputusan HP
-Jawaban awal "HP tanpa media visual; tetap tampilkan penjelasan teks."
-digantikan koreksi OWNER_RAW terbaru: "no, hp  hanya menu saja, media g ada".
-Berlaku dropdown <768px, bukan video Hero. HP hanya menu + deskripsi menu;
-figure, gambar dan caption media disembunyikan. Desktop/tablet shared frame.
-Tidak ada keputusan pending.
+## Six tiers / semantics / lifecycle
+XS 360–639: compact, no menu media; SM 640–767: same, fluid spacing.
+MD 768–1023: compact intrinsic submenu, media beside links follows their intrinsic height.
+LG 1024–1279: landscape desktop; portrait compact through 1180.
+XL 1280–1535 and 2XL >=1536: desktop bounded media and four-row columns.
+Short compact menus scroll; content never reserves missing rows.
+ID/EN/AR retain existing strings and POST+redirect. Active flag matches locale.
+Native details/forms work without JS. Enhanced chooser uses native modal dialog,
+Escape/backdrop/close restore trigger focus and nested compact scroll lock.
+Wave: off line → amplitude ramp → organic wave → ramp down → idle no RAF.
+Reduced motion draws static state. Desktop/hidden/concealed/unload pauses;
+BFCache resumes; dispose cancels RAF/listeners/observers. Canvas failure keeps
+accessible On/Off label. Resize reads CSS geometry; backing DPR capped at 2.
+No graphics engine/assets/dependencies. Canvas is aria-hidden; button label and
+aria-pressed remain the semantic state. No media loading owned by Sound.
 
-## SCOPE / OUT_OF_SCOPE
-Shell, Header, Hero, Language, Sound, tests dan docs2. Tidak ada section lain,
-admin/auth, CI legacy, dependency baru atau full RTL tuning.
+## Reference audit
+https://lusion.co/_astro/hoisted.CUO_IjfL.js, fetched 2026-10-05.
+Read only Header.updateSoundWave, canvas resize, pointer angle and Audios.volume
+transition. Visual model: 32 segments, width .4D, amplitude .28D × volume,
+half-amplitude sine with eased edge envelope; phase advances .6 × delta.
+Volume reference ramps linearly at 1/second; V2 uses visual amplitude only.
+Pointer angle/morph audited but excluded by latest owner request.
 
-## CURRENT BEHAVIOR / EXPECTED / ROOT CAUSE / OWNER / PATCH LOCATION
-| Current | Expected | Root cause | Owner / location |
-|---|---|---|---|
-| Media hampir separuh | 20% viewport, 2:3 | Dua kolom 1fr | Header / header.css |
-| Link auto rows | Empat slot tetap | Grid auto tanpa frame | Header / header.css |
-| Logo + tulisan | Logo saja | Span brand tambahan | Header / header.blade.php |
-| Pause control | Auto slideshow | Kontrol tambahan | Hero / hero.js, hero.blade.php |
-| Tanpa garis menu | Kuning seluruh state | Hanya border link panel | Header / header.css |
-| Scroll cepat dark | Batas Hero lewat | Threshold 24/48 | Header / header-state.js |
-| Cream/gradient | Open putih polos | Token fill lama | Header / header.css |
-| Hover wave saja | Opening tablet, no mobile | Capability hover tunggal | Header / header-motion.js |
-| Language mati | POST locale existing | Span, force EN controller | Language / Blade, HomeController |
-| Media rusak kosong | Poster lalu copy | Tanpa image readiness | Media / media-fallback.js |
-| Close langsung | Exit ke bawah | Dismiss langsung | Header / header.js |
-| Sound statis | Flowing motion | Path statis | Sound / header.css |
-| Title panjang | Sekitar dua baris | Hanya clamp viewport | Hero / hero-title.js |
+## ACTIVE STEP / PROOF
+Implement this bounded Header correction and verify rendered behavior.
+Run diff, structure, build, focused Node/PHP and full PHP gates. Browser:
+Chromium/WebKit, six tiers/boundaries, three locales, normal/reduced motion,
+whole-row accordion, chooser focus/POST, sound resize/lifecycle, keyboard,
+short height and text expansion. Compare three local performance samples;
+missing Safari/field/PageSpeed evidence stays explicit, never inferred.
+Reject overflow, inaccessible controls, duplicate owners, active hidden loops.
 
-## PROOF
-Pending patch verification; historical proof tidak membuktikan patch ini.
+## STATUS / NEXT
+Local implementation complete. Diff/structure/build/Pint PASS; focused Node 6
+and PHP 7/46 PASS. Header 108 Chromium/WebKit locale/viewport cases PASS;
+Sound lifecycle and one-link/text-expansion/orientation/scroll checks PASS.
+Evidence: ../proof/header-correction-browser.json.
+Full PHP FAIL: 71 failures / 75 errors from legacy source/view references.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE for final certification; native Safari,
+manual accessibility/zoom and comparative performance/PageSpeed remain absent.
+One NEXT: Terminal Codex reviews owner feedback and closes remaining proof gaps.
+No publication; blueprint remains IMPLEMENTING.
 
-## NEXT VALID STEP
-Implement atomic Header geometry + language, lalu Hero/media dan browser proof.
+## OWNER_ACCEPTED update — shared rhythm / Language / cursor
+Latest OWNER_RAW supersedes earlier flag-only entry and four desktop slots.
+One ACTIVE bounded patch: Header geometry + direct Language/Cursor dependencies.
+Editable: existing Header owners, new V2 cursor owner, composition imports,
+focused tests and docs2 proof/report/current ledger. Legacy, Hero internals,
+other surfaces and unrelated AGENTS/CLAUDE/composer.lock changes are read-only.
+Main remains a44d484f. Publish only feat/home-v2-hero, update draft PR #64;
+no merge, Hero NOT CLOSED pending owner UI review.
+Geometry: existing page spacing token becomes Header S; desktop bar padding S,
+panel starts after bar bottom padding S, panel sides/bottom S. Landscape media
+3:2 and submenu intrinsic rows share available capacity. XS/SM compact without
+media, MD portrait compact intrinsic rows, LG landscape full navigation as
+previously accepted, XL/2XL bounded media. ID/EN/AR share semantic DOM/logical CSS.
+Language entry text; three flags only, no X/card/heading. Native modal dialog
+full viewport with transparent surface and legacy dark blur backdrop, 14px
+blur/saturation enhancement plus usable tinted fallback. Old 96–142px desktop
+and 76–104px mobile sizing, old gaps and active border/ring. Escape/background
+close, flag POST closes, focus restored, duplicate submission blocked.
+Cursor: random cwo/cwe once during initialization; only default/interactive.
+Semantic actionable detection, fine+hover gating, two assets only for selected
+character. Native pointer remains during load/failure. Event-driven RAF stops
+idle/hidden/pagehide, BFCache resumes identity. Cursor observes modal top layer
+without coupling Language/Header to its internals. No legacy runtime import.
+Proof: shared S geometry at multiple desktop/landscape widths, dynamic one-item
+submenu, locale POST/Escape/backdrop/focus/blur/fallback/no-X, cursor identity and
+two states plus touch exclusion. Chromium/WebKit required; Firefox/Edge where
+available. Build/structure/diff/V2 tests/full PHP with frozen legacy failures.
+
+
+## Latest execution proof / publication readiness
+Shared rhythm + Language + two-state Cursor implemented. 99 three-engine
+geometry/locale cases PASS; Edge Language smoke PASS; Cursor two assets/identity,
+modal host and touch gating PASS; Sound regression PASS. Node8/PHP7/46,
+structure253/build/diff/Pint PASS. Full PHP retains 71 failures/75 errors.
+Evidence: ../proof/header-rhythm-language-cursor.json. Native Safari/full manual
+accessibility/PageSpeed/CWV absent; blueprint remains IMPLEMENTING, Hero NOT CLOSED.
+Owner-authorized NEXT: commit/push feat/home-v2-hero and update PR64 draft, then
+owner UI review. No main mutation or merge.

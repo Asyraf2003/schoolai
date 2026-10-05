@@ -9,10 +9,7 @@
             data-action-on="{{ __('shared.navbar.audio.disable_label') }}"
             data-action-off="{{ __('shared.navbar.audio.enable_label') }}">
             <span data-audio-label>{{ __('shared.navbar.audio.off') }}</span>
-            <svg class="site-header__audio-glyph" viewBox="0 0 44 20" aria-hidden="true">
-                <path class="site-header__audio-line" d="M8 10H36"/>
-                <path class="site-header__audio-wave" d="M6 10C10 3 18 3 22 10C26 17 34 17 38 10"/>
-            </svg>
+            <canvas class="site-header__audio-wave" data-audio-wave aria-hidden="true"></canvas>
         </button>
         <button class="site-header__toggle" type="button" data-menu-toggle hidden
             aria-controls="landing-navigation" aria-expanded="false"
@@ -27,27 +24,29 @@
                     <li>
                         @if ($item['is_language'])
                             <details class="site-header__language" data-panel="language">
-                                <summary>{{ $item['label'] }}</summary>
-                                <div class="site-header__languages">
+                                <summary aria-controls="header-language-dialog" aria-expanded="false"><span data-menu-label>{{ $item['label'] }}</span></summary>
+                                <dialog id="header-language-dialog" class="site-header__languages" open aria-label="{{ __('shared.navbar.language_modal.title') }}">
+                                    <div class="site-header__language-options">
                                     @foreach ($item['options'] as $option)
                                         <form method="POST" action="{{ route('language.switch', $option['locale']) }}">
                                             @csrf
                                             <button type="submit" data-locale="{{ $option['locale'] }}" @if (app()->getLocale() === $option['locale']) aria-current="true" @endif>
                                                 <img class="site-header__flag" src="{{ config('media.static.language_flags.'.$option['locale']) }}" width="28" height="28" alt="">
-                                                {{ $option['label'] }}
+                                                <span class="sr-only">{{ $option['label'] }}</span>
                                             </button>
                                         </form>
                                     @endforeach
-                                </div>
+                                    </div>
+                                </dialog>
                             </details>
                         @elseif ($item['has_mega_menu'])
                             <details class="site-header__group" data-panel="{{ $loop->index }}">
-                                <summary><span data-menu-label>{{ $item['label'] }}</span><span aria-hidden="true">⌄</span></summary>
+                                <summary><span data-menu-label>{{ $item['label'] }}</span><svg class="site-header__chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
                                 <div class="site-header__panel">
                                     <figure class="site-header__media" data-media-fallback>
                                         <figcaption>{{ $item['mega']['title'] ?? $item['mega_media_alt'] }}</figcaption>
                                         <img src="{{ $item['mega_media_url'] }}" alt="{{ $item['mega_media_alt'] }}"
-                                            width="720" height="1080" loading="lazy" decoding="async">
+                                            width="1080" height="720" loading="lazy" decoding="async">
                                     </figure>
                                     <div class="site-header__links">
                                         @foreach ($item['mega']['links'] as $link)

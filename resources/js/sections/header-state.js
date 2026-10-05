@@ -23,7 +23,7 @@ export function createHeaderState(render) {
             direction = nextDirection;
             distance += Math.abs(delta);
             lastY = event.y;
-            state = { ...state, scrolled: event.outsideHero === true };
+            state = { ...state, scrolled: event.y > (state.scrolled ? 24 : 48) };
             if (!state.desktop || !event.outsideHero || state.panel !== null || state.mobileOpen || event.focused) {
                 state.concealed = false;
                 distance = 0;

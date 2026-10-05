@@ -1,5 +1,32 @@
 # Landing V2 — proof/status
 
+## Latest owner-review patch — 2026-10-05
+
+Header uses one shared spacing rhythm, landscape 3:2 media and intrinsic
+submenu rows. Language is a text entry (localized via existing source), opening
+only three flags over the legacy blur/tint; no X/card, Escape/background close,
+POST locale switching. Cursor randomly chooses one cwo/cwe identity once, uses
+only default/interactive, and mounts visually only for hover+fine pointer.
+Sound, conditional desktop underline and compact no-underline remain preserved.
+
+VERIFIED: 99 geometry/Language cells (11 viewport/orientation cases × ID/EN/AR
+× Chromium/WebKit/Firefox); Edge desktop/mobile viewport Language smoke.
+Cursor identity through 10 hover cycles, link/button/modal state, selected two
+asset URLs only and touch exclusion PASS in all three Linux engines. Sound
+idle/desktop/pagehide/pageshow/reduced-motion and DPR cap PASS in Chromium/WebKit.
+Tinted no-blur fallback and keyboard/locale POST PASS in Chromium390.
+Diff/structure253/build/Pint PASS; Node8 and focused PHP7/46 PASS.
+Full PHP FAIL: 312 total, 166 passed, 71 failures, 75 errors (legacy references).
+Source hashes and exact case results: [evidence](header-rhythm-language-cursor.json).
+Visual review: [menu](rhythm-menu.png), [language](rhythm-language.png).
+Native Safari, exhaustive manual accessibility/zoom, PageSpeed and field CWV
+remain BLOCKED_BY_MISSING_EVIDENCE. No claim those gates passed.
+
+Owner authorizes commit/push only feat/home-v2-hero and draft PR #64 update.
+Hero NOT CLOSED. One NEXT: owner reviews spacing, flag scale/blur and cursor UI
+in the draft PR. Historical sections below are checkpoint evidence only.
+
+
 > HISTORICAL CHECKPOINT 2026-10-04. Arahan terbaru:
 > [MAP-V2-02](../blueprints/menu-hero-correction.md). EN-only sudah diganti
 > dengan bahasa aktif EN/ID/AR. Dilarang merge sampai owner UI review.
