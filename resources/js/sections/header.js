@@ -16,16 +16,26 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     const cleanups = [mountHeaderMotion(root), mountMediaFallback(root)];
     const sound = mountHeaderSound(audio);
     let audioStatus = { enabled: false, available: false };
-    const accordion = mountHeaderAccordion(groups);
+    let renderedPanel = null;
+    const accordion = mountHeaderAccordion(groups, id => {
+        renderedPanel = id;
+        presentation(state.snapshot());
+    });
     const highlight = mountHeaderHighlight(root);
     const language = mountHeaderLanguage(root, () => {
         syncAccess(state.snapshot());
-        highlight.update(state.snapshot().panel);
+        highlight.update(state.snapshot().panel ?? renderedPanel);
     });
     cleanups.push(() => sound.dispose(), () => language.dispose(), () => accordion.dispose(), () => highlight.dispose());
     function syncAccess(value) {
         document.documentElement.toggleAttribute('data-landing-menu-open', value.mobileOpen || root.dataset.languageOpen === 'true');
         modalChanged?.(value.mobileOpen);
+    }
+    function presentation(value) {
+        const navigationOpen = value.mobileOpen || value.panel !== null || renderedPanel !== null;
+        root.dataset.open = String(navigationOpen);
+        highlight.update(value.panel ?? renderedPanel);
+        sound.update(audioStatus, { ...value, navigationOpen });
     }
     let closing;
     let frame = 0;
@@ -37,7 +47,6 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
         const opening = value.mobileOpen && root.dataset.mobileOpen !== 'true';
         root.dataset.mode = value.desktop ? 'desktop' : 'compact';
         root.dataset.mobileOpen = String(value.mobileOpen);
-        root.dataset.open = String(value.mobileOpen || value.panel !== null);
         root.dataset.scrolled = String(value.scrolled);
         root.dataset.concealed = String(value.concealed);
         toggle.setAttribute('aria-expanded', String(value.mobileOpen));
@@ -45,8 +54,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
         syncAccess(value);
         if (opening) root.dispatchEvent(new Event('menu:open'));
         accordion.sync(value.panel, value.desktop, value.desktop || value.mobileOpen);
-        highlight.update(value.panel);
-        sound.update(audioStatus, value);
+        presentation(value);
     });
     function dismiss(restore = false) {
         const current = state.snapshot();
@@ -74,7 +82,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
             const bottom = heroBoundary();
             state.send({ type: 'scroll', y: window.scrollY,
                 outsideHero: bottom !== null && bottom <= 0,
-                focused: root.contains(document.activeElement) });
+                focused: renderedPanel !== null || root.contains(document.activeElement) });
         });
     }
     listen(toggle, 'click', () => {
@@ -125,7 +133,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
             audio.setAttribute('aria-pressed', String(enabled));
             audio.querySelector('[data-audio-label]').textContent = enabled ? audio.dataset.labelOn : audio.dataset.labelOff;
             audio.setAttribute('aria-label', enabled ? audio.dataset.actionOn : audio.dataset.actionOff);
-            sound.update(audioStatus, state.snapshot());
+            presentation(state.snapshot());
         },
         dispose() {
             closing?.cancel();

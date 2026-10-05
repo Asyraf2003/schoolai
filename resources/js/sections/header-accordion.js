@@ -1,19 +1,26 @@
-// This adapter alone owns enhanced details open/height during compact transitions.
-export function mountHeaderAccordion(groups) {
+// One details adapter owns compact flow and desktop reveal, with shared phases.
+export function mountHeaderAccordion(groups, changed = () => {}) {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const duration = 1440;
+    const easing = 'cubic-bezier(.45,0,.2,1)';
     let desired = null;
     let desktop = false;
     let visible = false;
     let generation = 0;
     const animations = new Map();
-    function accessibility(group, open) {
-        const panel = group.querySelector('.site-header__panel');
-        if (panel) panel.inert = !open;
+    const panel = group => group.querySelector('.site-header__panel');
+    const notify = () => changed(groups.find(group => group.open)?.dataset.panel ?? null);
+    function accessibility(group, open) { if (panel(group)) panel(group).inert = !open; }
+    function clean(group) {
+        group.style.removeProperty('height');
+        group.style.removeProperty('overflow');
+        panel(group)?.style.removeProperty('clip-path');
     }
     function cancel() {
         generation++;
-        animations.forEach((animation, group) => {
-            group.style.height = `${group.getBoundingClientRect().height}px`;
+        animations.forEach(({ animation, element, full }) => {
+            if (full) element.style.clipPath = getComputedStyle(element).clipPath;
+            else element.style.height = `${element.getBoundingClientRect().height}px`;
             animation.cancel();
         });
         animations.clear();
@@ -22,30 +29,38 @@ export function mountHeaderAccordion(groups) {
         cancel();
         groups.forEach(group => {
             group.open = group.dataset.panel === desired;
+            group.dataset.motion = group.open ? 'open' : 'closed';
             accessibility(group, group.open);
-            group.style.removeProperty('height');
-            group.style.removeProperty('overflow');
+            clean(group);
         });
+        notify();
     }
     async function transition(group, open, token) {
-        const summaryHeight = group.querySelector('summary').getBoundingClientRect().height;
-        const start = group.getBoundingClientRect().height;
+        const full = desktop;
+        const element = full ? panel(group) : group;
+        const wasOpen = group.open;
+        const startHeight = group.getBoundingClientRect().height;
+        const startClip = wasOpen ? element.style.clipPath || 'inset(0 0 0 0)' : 'inset(0 0 100% 0)';
         group.open = true;
+        group.dataset.motion = open ? 'opening' : 'closing';
         accessibility(group, open);
+        notify();
         group.style.removeProperty('height');
-        const end = open ? group.getBoundingClientRect().height : summaryHeight;
-        group.style.overflow = 'hidden';
-        const animation = group.animate([{ height: `${start}px` }, { height: `${end}px` }], {
-            duration: 320, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both',
-        });
-        animations.set(group, animation);
+        const endHeight = open ? group.getBoundingClientRect().height : group.querySelector('summary').getBoundingClientRect().height;
+        if (!full) group.style.overflow = 'hidden';
+        const frames = full
+            ? [{ clipPath: startClip }, { clipPath: open ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)' }]
+            : [{ height: `${startHeight}px` }, { height: `${endHeight}px` }];
+        const animation = element.animate(frames, { duration, easing, fill: 'both' });
+        animations.set(group, { animation, element, full });
         try { await animation.finished; } catch { return false; }
         if (generation !== token) return false;
         animations.delete(group);
         group.open = open;
+        group.dataset.motion = open ? 'open' : 'closed';
         animation.cancel();
-        group.style.removeProperty('height');
-        group.style.removeProperty('overflow');
+        clean(group);
+        notify();
         return true;
     }
     async function run(token) {
@@ -61,7 +76,7 @@ export function mountHeaderAccordion(groups) {
         desired = id;
         desktop = full;
         visible = shown;
-        if (!visible || desktop || preference.matches || !Element.prototype.animate) { settle(); return; }
+        if (!visible || preference.matches || !Element.prototype.animate) { settle(); return; }
         cancel();
         run(generation);
     }
@@ -72,7 +87,7 @@ export function mountHeaderAccordion(groups) {
         dispose() {
             desired = null;
             settle();
-            groups.forEach(group => accessibility(group, true));
+            groups.forEach(group => { accessibility(group, true); delete group.dataset.motion; });
             preference.removeEventListener('change', settle);
             window.removeEventListener('resize', settle);
         },

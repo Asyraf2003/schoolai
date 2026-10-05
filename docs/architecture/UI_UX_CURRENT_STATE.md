@@ -1,33 +1,27 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-## Active Header / Hero lifecycle correction — 2026-10-05
+## Active nav-frame / Hero-action / slow-motion patch — 2026-10-05
 
-Fresh main a44d484f; parent branch63e46521 on feat/home-v2-hero, PR64 draft.
-Latest OWNER_RAW supersedes intrinsic desktop rows and coupled Language panel.
-Blueprint: ../../docs2/blueprints/menu-hero-correction.md, OWNER_ACCEPTED /
-IMPLEMENTING. Scope Header/Menu + direct Hero playback dependencies only.
-FACT/GAP: frame height, blanket underline, Language.panel theme coupling and
-focus-driven video pause were proven owners. GOAL: geometry/state/lifecycle fix.
-EXECUTION: Header spacing token2/3, media3:2 and radius height/15, equal desktop
-frame with four fixed quarter slots; bold white/dark state; red submenu roll;
-one projected main underline; independent Language; sequential320ms compact
-accordion with cancellation/resize/reduced cleanup. Hero focus retains playback
-but holds carousel advance. Media applies only actual policy/property changes.
-Observer threshold0 pauses only completely outside viewport; hidden/pagehide
-still pause, re-entry resumes without removing source.
-PROOF: 99 Chromium/Firefox/WebKit geometry/locale/state cells, six compact normal
-motion cases, three-engine established real-video click/overlay/offscreen/resume,
-Edge smoke, Cursor/Sound regressions PASS. Node10, PHP7/46, diff/structure255/
-build/Pint PASS. Full PHP FAIL:312 total,166 passed,71 failed,75 errors (legacy).
-Evidence: ../../docs2/proof/header-slots-lifecycle.json and updated owner report.
-STATUS: bounded cases PASS; final certification BLOCKED_BY_MISSING_EVIDENCE
-(native Safari/manual accessibility/PageSpeed/field). Hero NOT CLOSED.
-Publication verified: source `aaca6e1bcb7f9c9d0f6c8a5a6239b8373bb6a8c7` pushed to
-feat/home-v2-hero; PR64 description updated, draft=true and merged=false verified.
-Remote main remains a44d484f.
-AGENTS/CLAUDE/composer.lock local work excluded. NEXT CHANNEL: owner/local terminal.
-One NEXT: review quarter-slot typography, spacing and compact motion in PR64.
-Historical ledger below does not define active scope.
+Main fetched a44d484f; parent e8e27d1a on feat/home-v2-hero, PR64 draft.
+Latest OWNER_RAW supersedes bar padding and portrait intrinsic rows.
+Blueprint ../../docs2/blueprints/menu-hero-correction.md OWNER_ACCEPTED/IMPLEMENTING.
+FACT/GAP: shared vertical S oversized bar, separate copy underlines, portrait row
+reset and instant/320ms reveal. GOAL: cap nav and correct shared group/slots/motion.
+EXECUTION: nav token10vh, centered capped bar, preserved side/media S and logo gap;
+Hero H1/description/CTA one hover (PPDB one anchor), no underline; portrait four
+quarter slots with unchanged media width, phone no-media/intrinsic unchanged.
+1440ms shared state-driven motion, soft easing, compact height/desktop clip,
+reversal and lifecycle cleanup; rendered panel projection holds Header theme
+until actual close. Language/playback/Cursor/Sound behavior preserved.
+PROOF:99 three-engine geometry/locale cases, nine centers,24extra heights, nine
+Hero hover and nine normal motion cases, Edge smoke and regressions PASS.
+Diff/structure255/build/Pint,Node10,PHP7/46 PASS. Full PHP FAIL:312 total/166 pass/
+71 failures/75 errors legacy. Evidence ../../docs2/proof/header-nav-frame.json.
+STATUS: scoped proof PASS; certification BLOCKED_BY_MISSING_EVIDENCE (physical
+Safari/manual/PSI/field). Hero NOT CLOSED. Main unchanged, PR64 draft/no merge.
+AGENTS/CLAUDE/composer.lock user work excluded. NEXT CHANNEL: Terminal Codex.
+One NEXT: commit/push this branch and update PR64, then owner UI review.
+Historical ledger below is not active scope.
 
 Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`
 Updated: 2026-10-02

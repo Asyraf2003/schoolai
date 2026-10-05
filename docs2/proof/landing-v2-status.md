@@ -1,5 +1,24 @@
 # Landing V2 — proof/status
 
+## Latest OWNER_RAW — nav cap / one Hero action / slow motion
+
+VERIFIED: desktop nav<=10vh, logo/control center, preserved side and logo/media
+spacing; nine centering cases and 24 additional height/width cases. Media layouts
+including tablet portrait use four fixed quarter slots, phone remains intrinsic
+with no media. 99 three-engine width/locale/state cells PASS. Hero shared tone
+and no underline/one PPDB action PASS for H1, description and CTA (nine cases).
+Nine normal-motion cases PASS:1440ms (4.5×320), cubic-bezier(.45,0,.2,1), sequential
+collapse/expand and reversal. Desktop panel reveal does not expand nav height;
+Header theme remains until physical close. Edge154 smoke PASS. Playback,
+Language, Cursor/Sound regressions PASS. Diff/structure255/build/Pint,Node10 and
+PHP7/46 PASS. Full PHP remains FAIL:312 total,166 pass,71 failures,75 errors.
+Evidence: [nav frame](header-nav-frame.json), [menu](nav-frame-menu.png),
+[Language](nav-frame-language.png). Physical Safari/manual/PSI/field gates remain
+BLOCKED_BY_MISSING_EVIDENCE. Hero NOT CLOSED; same branch/PR64 draft, no merge.
+One NEXT: authorized branch publication then owner UI review. Historical sections
+below are checkpoint evidence.
+
+
 ## Latest OWNER_RAW correction — desktop slots / playback isolation
 
 Latest source supersedes intrinsic desktop rows and Language-in-panel state.

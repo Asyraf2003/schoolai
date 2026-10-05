@@ -80,7 +80,7 @@ export function mountHeaderSound(button) {
     return {
         update(status, header) {
             const nextActive = status.available && !header.desktop && !header.concealed && header.panel !== 'language';
-            const nextTreatment = `${header.scrolled}:${header.mobileOpen || header.panel !== null}`;
+            const nextTreatment = `${header.scrolled}:${header.navigationOpen ?? (header.mobileOpen || header.panel !== null)}`;
             if (enabled === status.enabled && active === nextActive && treatment === nextTreatment) return;
             enabled = status.enabled;
             active = nextActive;

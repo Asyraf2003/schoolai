@@ -9,3 +9,7 @@
     .site-header__audio[data-wave-ready] [data-audio-label] { display: none; }
     .site-header__audio[data-wave-ready] .site-header__audio-wave { display: block; inline-size: 100%; block-size: 100%; }
 }
+
+@media (min-width: 1181px), (min-width: 1024px) and (orientation: landscape) {
+    .site-header__audio { min-block-size: min(2.75rem, var(--header-bar-size)); padding-block: 0; }
+}

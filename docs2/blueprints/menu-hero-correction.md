@@ -172,3 +172,44 @@ Evidence ../proof/header-slots-lifecycle.json. Physical Safari/manual/PSI/field
 remain absent; blueprint IMPLEMENTING, Hero NOT CLOSED. One NEXT: authorized
 owner UI review. Source `aaca6e1bcb7f9c9d0f6c8a5a6239b8373bb6a8c7` is pushed;
 PR64 updated/draft/unmerged verified, main a44d484f unchanged.
+
+## OWNER_ACCEPTED — nav cap / shared Hero action / slow dropdown
+Parent e8e27d1a, main a44d484f fetched. Same branch/PR64, no merge, Hero NOT CLOSED.
+One ACTIVE bounded patch: nav geometry → Hero action DOM → tablet frame → motion.
+FACT: desktop bar height=logo+2S; portrait resets rows/height; copy children have
+individual underline; compact motion320ms, desktop immediate.
+GOAL: nav<=10vh centered, preserve S horizontally and logo→media gap; fixed
+quarter-slot tablet frame; one Hero hover; slow directional reveal/collapse.
+Editable: foundation/header/Hero layout, hero-copy Blade, accordion adapter and
+focused proof/docs. Header/Language/playback/Cursor/Sound state, legacy/media/DB/
+other surfaces and AGENTS/CLAUDE/composer.lock local work are read-only.
+Nav cap is a distinct token. Bar=min(10vh,logo+2S), vertical padding0; panel top
+padding=S-(bar-logo)/2 preserves gap. Logo retains current size whenever it fits;
+short-height cap scales it only enough to stay within10vh. Side/bottom/media S
+remain unchanged. CSS owns sizing and type; JS owns intent/motion only.
+Hero H1/description/CTA share one wrapper and tone. PPDB common destination is
+one semantic anchor; eyebrow stays separate. Other source destinations remain
+as authored, within the same visual hover wrapper. No underline/yellow line.
+XS/SM retain no media/intrinsic links; MD portrait and compact LG with media
+use 3:2 frame and four quarter slots; full LG/XL/2XL retain desktop slots.
+Tablet columns may rebalance locally for readable type and frame capacity;
+no width/locale/component forks. ID/EN/AR one source/DOM, RTL logical layout.
+Accordion states closed/opening/open/closing, duration1440ms (4.5×320), easing
+cubic-bezier(.45,0,.2,1). Compact height drives downward/upward flow; desktop
+panel clip reveal shares same orchestration without changing nav geometry.
+A closes before B opens; interruption continues from rendered height/clip;
+resize/reduced/hidden menu/dispose settle. No timer cascade or CSS override owner.
+Proof: nav cap/centers/S/gap at multiple desktop heights, shared hover/no-line/
+common link, tablet slots1–4 and type fit, mobile no-media unchanged, phase
+samples/easing/reversal/sequential switching across three engines plus Edge;
+regressions for Language/theme/media/Cursor/Sound. Required gates retain legacy
+full-suite FAIL and missing physicalSafari/performance/manual certification.
+NEXT CHANNEL: Terminal Codex. NEXT: implement and prove this bounded patch.
+
+
+## Nav-frame proof checkpoint
+99 locale/width cells, nine centering and nine Hero action cases, 24 extra heights,
+nine slow-motion cases, Edge smoke and playback/Cursor/Sound regressions PASS.
+Diff/structure255/build/Pint/Node10/PHP7/46 PASS. Full PHP71fail/75errors legacy.
+Evidence ../proof/header-nav-frame.json. Blueprint IMPLEMENTING; Hero NOT CLOSED.
+One NEXT: authorized branch publish, PR64 draft update, then owner UI review.
