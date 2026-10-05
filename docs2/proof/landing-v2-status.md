@@ -18,8 +18,9 @@ Cursor/Sound regressions PASS. Node10, PHP7/46, diff/structure255/build/Pint PAS
 Full PHP retains 71 failures/75 errors on legacy references. Overall certification
 remains BLOCKED_BY_MISSING_EVIDENCE (physical Safari/manual a11y/PageSpeed/field).
 [Proof](header-slots-lifecycle.json), [menu](slots-menu.png), [language](slots-language.png).
-Hero NOT CLOSED. Authorized publication: feat/home-v2-hero and draft PR64 only;
-no main write/merge. One NEXT: owner review of desktop slot type and accordion.
+Published source: `aaca6e1bcb7f9c9d0f6c8a5a6239b8373bb6a8c7` on feat/home-v2-hero.
+PR64 description updated and draft/unmerged verified; remote main a44d484f unchanged.
+Hero NOT CLOSED. One NEXT: owner review of desktop slot type and accordion.
 Older sections below are historical checkpoint evidence.
 
 

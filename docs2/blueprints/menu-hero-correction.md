@@ -170,4 +170,5 @@ Edge smoke PASS. Node10/PHP7/46, diff/structure255/build/Pint PASS. Full PHP kee
 focus never pauses video, but still holds automatic carousel advance.
 Evidence ../proof/header-slots-lifecycle.json. Physical Safari/manual/PSI/field
 remain absent; blueprint IMPLEMENTING, Hero NOT CLOSED. One NEXT: authorized
-commit/push feat/home-v2-hero and update PR64 draft, followed by owner UI review.
+owner UI review. Source `aaca6e1bcb7f9c9d0f6c8a5a6239b8373bb6a8c7` is pushed;
+PR64 updated/draft/unmerged verified, main a44d484f unchanged.

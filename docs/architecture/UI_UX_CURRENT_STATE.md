@@ -22,7 +22,9 @@ build/Pint PASS. Full PHP FAIL:312 total,166 passed,71 failed,75 errors (legacy)
 Evidence: ../../docs2/proof/header-slots-lifecycle.json and updated owner report.
 STATUS: bounded cases PASS; final certification BLOCKED_BY_MISSING_EVIDENCE
 (native Safari/manual accessibility/PageSpeed/field). Hero NOT CLOSED.
-Publication authorized only feat/home-v2-hero and draft PR64 update. Main untouched.
+Publication verified: source `aaca6e1bcb7f9c9d0f6c8a5a6239b8373bb6a8c7` pushed to
+feat/home-v2-hero; PR64 description updated, draft=true and merged=false verified.
+Remote main remains a44d484f.
 AGENTS/CLAUDE/composer.lock local work excluded. NEXT CHANNEL: owner/local terminal.
 One NEXT: review quarter-slot typography, spacing and compact motion in PR64.
 Historical ledger below does not define active scope.
