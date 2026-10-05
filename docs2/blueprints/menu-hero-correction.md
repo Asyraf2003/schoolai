@@ -120,5 +120,6 @@ modal host and touch gating PASS; Sound regression PASS. Node8/PHP7/46,
 structure253/build/diff/Pint PASS. Full PHP retains 71 failures/75 errors.
 Evidence: ../proof/header-rhythm-language-cursor.json. Native Safari/full manual
 accessibility/PageSpeed/CWV absent; blueprint remains IMPLEMENTING, Hero NOT CLOSED.
-Owner-authorized NEXT: commit/push feat/home-v2-hero and update PR64 draft, then
-owner UI review. No main mutation or merge.
+Publication verified: `65cc3de2d5279ec6b7a79b2cf4b82619185fb4d4` pushed to feat/home-v2-hero;
+PR64 description updated and draft status verified. Main remains a44d484f.
+One NEXT: owner UI review. No main mutation or merge; Hero NOT CLOSED.

@@ -22,7 +22,9 @@ Full PHP FAIL: 312 total, 166 passed, 71 failed, 75 errors; legacy source/views.
 STATUS: bounded patch PASS for declared automated cases; final certification
 BLOCKED_BY_MISSING_EVIDENCE (native Safari, manual accessibility/zoom, PageSpeed,
 field CWV). Hero NOT CLOSED until owner UI review. No main write/merge authorized.
-Publication authorized only feat/home-v2-hero and draft PR #64 update.
+Publication verified: source `65cc3de2d5279ec6b7a79b2cf4b82619185fb4d4` pushed to
+feat/home-v2-hero; PR #64 description updated and OPEN/DRAFT verified.
+Remote main remains a44d484f; no merge performed.
 Unrelated AGENTS.md, CLAUDE.md and composer.lock local work remains excluded.
 NEXT CHANNEL: owner UI review. One NEXT: review rhythm, Language and cursor on
 PR #64; report corrections before declaring Hero CLOSED.

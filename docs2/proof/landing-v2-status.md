@@ -22,7 +22,9 @@ Visual review: [menu](rhythm-menu.png), [language](rhythm-language.png).
 Native Safari, exhaustive manual accessibility/zoom, PageSpeed and field CWV
 remain BLOCKED_BY_MISSING_EVIDENCE. No claim those gates passed.
 
-Owner authorizes commit/push only feat/home-v2-hero and draft PR #64 update.
+Published source checkpoint: `65cc3de2d5279ec6b7a79b2cf4b82619185fb4d4` on
+feat/home-v2-hero. PR #64 updated via REST; OPEN/DRAFT and remote head verified.
+Remote main remains a44d484f; no merge performed.
 Hero NOT CLOSED. One NEXT: owner reviews spacing, flag scale/blur and cursor UI
 in the draft PR. Historical sections below are checkpoint evidence only.
 
