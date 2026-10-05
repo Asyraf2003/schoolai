@@ -1,34 +1,31 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-## Active owner-review Header V2 patch — 2026-10-05
+## Active Header / Hero lifecycle correction — 2026-10-05
 
-Main fetched `a44d484f4cd8bc532514f0152e4423a2fcdb9781`; local branch
-`feat/home-v2-hero`. Latest OWNER_RAW supersedes previous header decisions.
-Blueprint: `../../docs2/blueprints/menu-hero-correction.md` OWNER_ACCEPTED /
-IMPLEMENTING. Scope only Header/Menu + direct Language/Cursor/Sound dependencies.
-FACT/GAP/GOAL: separate spacing units, desktop empty rows, non-legacy Language
-and no V2 cursor were corrected using inspected legacy visuals and owner intent.
-EXECUTION: one Header spacing S, 3:2 media, intrinsic submenu, text Language,
-three old-scale flags/active ring, full-screen blur/tint, no X, Escape/backdrop
-close and locale POST. Cursor chooses once, two states, semantic actionable
-adapter, fine-pointer gating, load-failure/native fallback and modal-layer owner.
-Prior Sound/underline/accordion corrections retained; no legacy runtime import.
-PROOF: diff/structure253/build/Pint PASS; Node8, focused PHP7/46 PASS. Geometry
-and Language 99 cases across Chromium/WebKit/Firefox PASS; Edge desktop/mobile
-Language smoke PASS. Cursor 10-cycle identity/actionable/modal/touch cases PASS.
-Chromium/WebKit Sound lifecycle and Chromium no-blur keyboard/POST fallback PASS.
-Evidence: `../../docs2/proof/header-rhythm-language-cursor.json`.
-Full PHP FAIL: 312 total, 166 passed, 71 failed, 75 errors; legacy source/views.
-STATUS: bounded patch PASS for declared automated cases; final certification
-BLOCKED_BY_MISSING_EVIDENCE (native Safari, manual accessibility/zoom, PageSpeed,
-field CWV). Hero NOT CLOSED until owner UI review. No main write/merge authorized.
-Publication verified: source `65cc3de2d5279ec6b7a79b2cf4b82619185fb4d4` pushed to
-feat/home-v2-hero; PR #64 description updated and OPEN/DRAFT verified.
-Remote main remains a44d484f; no merge performed.
-Unrelated AGENTS.md, CLAUDE.md and composer.lock local work remains excluded.
-NEXT CHANNEL: owner UI review. One NEXT: review rhythm, Language and cursor on
-PR #64; report corrections before declaring Hero CLOSED.
-Historical ledger below does not define the active scope.
+Fresh main a44d484f; parent branch63e46521 on feat/home-v2-hero, PR64 draft.
+Latest OWNER_RAW supersedes intrinsic desktop rows and coupled Language panel.
+Blueprint: ../../docs2/blueprints/menu-hero-correction.md, OWNER_ACCEPTED /
+IMPLEMENTING. Scope Header/Menu + direct Hero playback dependencies only.
+FACT/GAP: frame height, blanket underline, Language.panel theme coupling and
+focus-driven video pause were proven owners. GOAL: geometry/state/lifecycle fix.
+EXECUTION: Header spacing token2/3, media3:2 and radius height/15, equal desktop
+frame with four fixed quarter slots; bold white/dark state; red submenu roll;
+one projected main underline; independent Language; sequential320ms compact
+accordion with cancellation/resize/reduced cleanup. Hero focus retains playback
+but holds carousel advance. Media applies only actual policy/property changes.
+Observer threshold0 pauses only completely outside viewport; hidden/pagehide
+still pause, re-entry resumes without removing source.
+PROOF: 99 Chromium/Firefox/WebKit geometry/locale/state cells, six compact normal
+motion cases, three-engine established real-video click/overlay/offscreen/resume,
+Edge smoke, Cursor/Sound regressions PASS. Node10, PHP7/46, diff/structure255/
+build/Pint PASS. Full PHP FAIL:312 total,166 passed,71 failed,75 errors (legacy).
+Evidence: ../../docs2/proof/header-slots-lifecycle.json and updated owner report.
+STATUS: bounded cases PASS; final certification BLOCKED_BY_MISSING_EVIDENCE
+(native Safari/manual accessibility/PageSpeed/field). Hero NOT CLOSED.
+Publication authorized only feat/home-v2-hero and draft PR64 update. Main untouched.
+AGENTS/CLAUDE/composer.lock local work excluded. NEXT CHANNEL: owner/local terminal.
+One NEXT: review quarter-slot typography, spacing and compact motion in PR64.
+Historical ledger below does not define active scope.
 
 Status: `HOME_RUNTIME_REFACTOR_ACTIVE / BASELINE_VERIFIED`
 Updated: 2026-10-02

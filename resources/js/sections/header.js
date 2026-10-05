@@ -1,3 +1,5 @@
+import { mountHeaderAccordion } from './header-accordion.js';
+import { mountHeaderHighlight } from './header-highlight.js';
 import { mountHeaderSound } from './header-sound.js';
 import { mountHeaderLanguage } from './header-language.js';
 import { createHeaderState } from './header-state.js';
@@ -14,8 +16,17 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     const cleanups = [mountHeaderMotion(root), mountMediaFallback(root)];
     const sound = mountHeaderSound(audio);
     let audioStatus = { enabled: false, available: false };
-    const language = mountHeaderLanguage(root, () => state.send({ type: 'panel', id: 'language', open: false }));
-    cleanups.push(() => sound.dispose(), () => language.dispose());
+    const accordion = mountHeaderAccordion(groups);
+    const highlight = mountHeaderHighlight(root);
+    const language = mountHeaderLanguage(root, () => {
+        syncAccess(state.snapshot());
+        highlight.update(state.snapshot().panel);
+    });
+    cleanups.push(() => sound.dispose(), () => language.dispose(), () => accordion.dispose(), () => highlight.dispose());
+    function syncAccess(value) {
+        document.documentElement.toggleAttribute('data-landing-menu-open', value.mobileOpen || root.dataset.languageOpen === 'true');
+        modalChanged?.(value.mobileOpen);
+    }
     let closing;
     let frame = 0;
     function listen(target, type, handler, options) {
@@ -31,13 +42,10 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
         root.dataset.concealed = String(value.concealed);
         toggle.setAttribute('aria-expanded', String(value.mobileOpen));
         toggle.setAttribute('aria-label', value.mobileOpen ? toggle.dataset.closeLabel : toggle.dataset.openLabel);
-        document.documentElement.toggleAttribute('data-landing-menu-open', value.mobileOpen || value.panel === 'language');
-        modalChanged?.(value.mobileOpen || value.panel === 'language');
+        syncAccess(value);
         if (opening) root.dispatchEvent(new Event('menu:open'));
-        groups.filter(group => group.dataset.panel !== value.panel).forEach(group => { group.open = false; });
-        const active = groups.find(group => group.dataset.panel === value.panel);
-        if (active) active.open = true;
-        language.sync(value.panel === 'language');
+        accordion.sync(value.panel, value.desktop, value.desktop || value.mobileOpen);
+        highlight.update(value.panel);
         sound.update(audioStatus, value);
     });
     function dismiss(restore = false) {
@@ -54,6 +62,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     function updateViewport() {
         closing?.cancel();
         const focusWasInside = nav.contains(document.activeElement);
+        language.close();
         state.send({ type: 'viewport', desktop: media.matches });
         if (!media.matches && focusWasInside) toggle.focus();
         updateScroll();
@@ -78,10 +87,6 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
         closing?.cancel();
         state.send({ type: 'panel', id: group.dataset.panel, open: state.snapshot().panel !== group.dataset.panel });
     }));
-    groups.forEach(group => listen(group, 'toggle', () => {
-        const active = state.snapshot().panel === group.dataset.panel;
-        if (active !== group.open) state.send({ type: 'panel', id: group.dataset.panel, open: group.open });
-    }));
     listen(root, 'focusin', () => state.send({ type: 'focus' }));
     listen(root, 'click', (event) => {
         if (event.target.closest('a[href]')) dismiss(true);
@@ -89,7 +94,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     listen(document, 'click', (event) => { if (!root.contains(event.target)) dismiss(); });
     listen(document, 'keydown', (event) => {
         const value = state.snapshot();
-        if (value.panel === 'language') return;
+        if (language.isOpen()) return;
         if (event.key === 'Escape' && (value.mobileOpen || value.panel !== null)) {
             event.preventDefault();
             dismiss(true);

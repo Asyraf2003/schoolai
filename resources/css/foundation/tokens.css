@@ -4,5 +4,6 @@
     --v2-text: #17362f;
     --v2-accent: #ffb20b;
     --v2-space-page: clamp(1.25rem, 4vw, 5rem);
+    --v2-header-space: calc(var(--v2-space-page) * 2 / 3);
     --v2-focus: #005fcc;
 }

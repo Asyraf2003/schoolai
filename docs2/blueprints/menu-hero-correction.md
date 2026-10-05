@@ -123,3 +123,51 @@ accessibility/PageSpeed/CWV absent; blueprint remains IMPLEMENTING, Hero NOT CLO
 Publication verified: `65cc3de2d5279ec6b7a79b2cf4b82619185fb4d4` pushed to feat/home-v2-hero;
 PR64 description updated and draft status verified. Main remains a44d484f.
 One NEXT: owner UI review. No main mutation or merge; Hero NOT CLOSED.
+
+## OWNER_ACCEPTED — desktop slots / state separation / accordion
+Latest OWNER_RAW supersedes intrinsic desktop rows: frame equals media height;
+each real item keeps one quarter slot, blank remaining slots preserved. Active
+surface: Header/Menu + direct Hero playback dependencies; branch feat/home-v2-hero,
+main a44d484f read-only, draft PR64 update permitted, no merge, Hero NOT CLOSED.
+FACT: Language participates in Header.panel; all labels match underline CSS;
+Hero canPlay depends on focused; compact details toggle before height motion.
+GOAL/IMPACT: correct geometry and isolated state/lifecycle without replacing
+Cursor/Sound/Language visuals or tablet media composition.
+Editable: Header foundation/layout/state/motion adapters, independent Language,
+Hero state/media controller, focused Node contracts, docs2 proof/report/ledger.
+Read-only: legacy, locale/DB/media, Cursor/Sound internals, other surfaces and
+unrelated AGENTS/CLAUDE/composer.lock work. Single channel: Terminal Codex.
+One ACTIVE patch: foundation S × 2/3 → desktop frame/slots → Header/Language
+state split → unique main highlight → sequential compact accordion → playback.
+Six tiers: XS/SM compact no media, MD portrait existing media; LG landscape full
+navigation as already accepted, portrait compact through1180; XL/2XL desktop.
+Desktop font/slot hierarchy fits actual ID/EN/AR; four slots never redistributed.
+Menu radius is height/15 via circular percentage radius at fixed3:2 aspect.
+Language own open state only; preserves panel, highlight and Header theme.
+Compact navigation still owns inert/scroll lock, Language native dialog owns
+modal inertness. No overlay state pauses video. Focus pauses carousel advance
+for keyboard access only; it does not pause video. IntersectionObserver uses
+zero threshold: pause only when completely outside viewport (conservative,
+no source unload), plus hidden/pagehide and existing reduced-motion preference.
+Accordion adapter keeps closing details open until collapse finishes, then
+opens next and expands. 320ms easing, actual-height endpoints; interruption
+cancels old work and proceeds from rendered height; resize/mode/reduced/dispose
+settle state. No timers or duplicate details toggle controller.
+Proof: geometry S ratio / 3:2 / equal frame / one-quarter slots1–4 / radius,
+normal white and only navigation-open or legacy scroll dark triggers, exactly
+one main underline (hover/open/return), red submenu roll, language independent,
+real video time advances through clicks/overlay/menu and pauses offscreen,
+sequential compact height samples/reverse/resize/reduced. Chromium/Firefox/
+WebKit plus Edge smoke, diff/structure/build/Node/V2 PHP/full PHP. Missing
+nativeSafari/manual/accessibility/performance evidence remains explicit.
+
+
+## Latest proof checkpoint — quarter slots / independent state
+Execution complete for declared cases; 99 UI cells, six compact motion cases,
+real canonical video established-playback/offscreen/resume in three engines and
+Edge smoke PASS. Node10/PHP7/46, diff/structure255/build/Pint PASS. Full PHP keeps
+71 failures/75 errors legacy. Source/property idempotence is owned by HeroMedia;
+focus never pauses video, but still holds automatic carousel advance.
+Evidence ../proof/header-slots-lifecycle.json. Physical Safari/manual/PSI/field
+remain absent; blueprint IMPLEMENTING, Hero NOT CLOSED. One NEXT: authorized
+commit/push feat/home-v2-hero and update PR64 draft, followed by owner UI review.

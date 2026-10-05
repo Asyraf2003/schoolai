@@ -1,5 +1,28 @@
 # Landing V2 — proof/status
 
+## Latest OWNER_RAW correction — desktop slots / playback isolation
+
+Latest source supersedes intrinsic desktop rows and Language-in-panel state.
+VERIFIED: 99 Chromium/Firefox/WebKit UI cells; 1–4 items each keep 1/4 of the
+frame equal to media height, desktop S=oldS×2/3, bold main text, red/no-underline
+submenu, one main highlight, Language preserves theme and open navigation.
+Six normal-motion mobile/tablet cases verify collapse-before-expand, sampled
+heights, rapid reversal and resize. Three-engine canonical MP4 checks verify
+click/focus/Language/backdrop/menu playback, partial visibility, full offscreen
+pause and visible resume with retained currentSrc. Playback checks sample an
+established decode (>5 seconds), not startup/decode performance certification.
+Media policy and muted/loop application are idempotent. WPE early timestamp
+variance is not claimed as Safari behavior. Edge154 smoke PASS for quarter frame,
+Language theme independence, real playback, one highlight and compact motion.
+Cursor/Sound regressions PASS. Node10, PHP7/46, diff/structure255/build/Pint PASS.
+Full PHP retains 71 failures/75 errors on legacy references. Overall certification
+remains BLOCKED_BY_MISSING_EVIDENCE (physical Safari/manual a11y/PageSpeed/field).
+[Proof](header-slots-lifecycle.json), [menu](slots-menu.png), [language](slots-language.png).
+Hero NOT CLOSED. Authorized publication: feat/home-v2-hero and draft PR64 only;
+no main write/merge. One NEXT: owner review of desktop slot type and accordion.
+Older sections below are historical checkpoint evidence.
+
+
 ## Latest owner-review patch — 2026-10-05
 
 Header uses one shared spacing rhythm, landscape 3:2 media and intrinsic

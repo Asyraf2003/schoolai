@@ -23,7 +23,7 @@
                 @foreach ($menuItems as $item)
                     <li>
                         @if ($item['is_language'])
-                            <details class="site-header__language" data-panel="language">
+                            <details class="site-header__language" data-language>
                                 <summary aria-controls="header-language-dialog" aria-expanded="false"><span data-menu-label>{{ $item['label'] }}</span></summary>
                                 <dialog id="header-language-dialog" class="site-header__languages" open aria-label="{{ __('shared.navbar.language_modal.title') }}">
                                     <div class="site-header__language-options">

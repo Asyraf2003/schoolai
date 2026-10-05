@@ -5,6 +5,7 @@ export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) 
     const deadlines = new Map();
     let version = 0;
     let disposed = false;
+    let appliedPolicy = null;
     const videos = slides.map(slide => slide.querySelector('video'));
     const listen = (target, event, callback) => {
         target.addEventListener(event, callback);
@@ -40,12 +41,18 @@ export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) 
         listen(video, 'ended', () => onEnded(index));
     });
     function sync(state) {
+        const policy = `${state.index}:${state.audio}:${state.canPlay}`;
+        const needsResume = state.canPlay && videos[state.index]?.paused && !failed.has(state.index);
+        if (disposed || (policy === appliedPolicy && !needsResume)) return;
+        appliedPolicy = policy;
         const token = ++version;
         videos.forEach((video, index) => {
             if (!video) return;
             const active = state.index === index;
-            video.muted = !state.audio || !active;
-            video.loop = slides.length === 1;
+            const muted = !state.audio || !active;
+            const loop = slides.length === 1;
+            if (video.muted !== muted) video.muted = muted;
+            if (video.loop !== loop) video.loop = loop;
             if (!active || !state.canPlay || failed.has(index)) {
                 clearTimeout(deadlines.get(index)); deadlines.delete(index);
                 video.pause();
@@ -82,7 +89,7 @@ export function createHeroMedia(slides, { onEnded, onAudioBlocked, onFailure }) 
         sync,
         isVideo: index => Boolean(videos[index]),
         failed: index => failed.has(index),
-        retry(index) { failed.delete(index); },
+        retry(index) { failed.delete(index); appliedPolicy = null; },
         dispose() { disposed = true; version++; deadlines.forEach(clearTimeout); deadlines.clear(); videos.forEach(video => video?.pause()); removers.forEach(remove => remove()); },
     };
 }

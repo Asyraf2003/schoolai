@@ -85,6 +85,7 @@ export function mountHero(root, { audioChanged }) {
     if (reduced.addEventListener) listen(reduced, 'change', motionChange);
     else { reduced.addListener(motionChange); cleanups.push(() => reduced.removeListener(motionChange)); }
     if ('IntersectionObserver' in window) {
+        // Zero threshold pauses only after the entire Hero leaves the viewport.
         observer = new IntersectionObserver(entries => state.send({ type: 'environment', values: { inViewport: entries.some(entry => entry.isIntersecting) } }));
         observer.observe(root);
     }

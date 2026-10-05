@@ -39,10 +39,14 @@ test('Hero wraps manual navigation but never auto-advances in reduced motion', (
     assert.equal(rendered.audio, false);
 });
 
-test('Hero stops for focus, offscreen and page suspension without losing user pause', () => {
+test('Hero keeps playing for focus but stops offscreen and suspended without losing user pause', () => {
     let rendered;
     const hero = createHeroState({ count: 2, render: value => { rendered = value; } });
-    for (const values of [{ focused: true }, { focused: false, inViewport: false }, { inViewport: true, suspended: true }]) {
+    hero.send({ type: 'environment', values: { focused: true } });
+    assert.equal(rendered.canPlay, true);
+    assert.equal(rendered.canAdvance, false);
+    hero.send({ type: 'environment', values: { focused: false } });
+    for (const values of [{ inViewport: false }, { inViewport: true, suspended: true }]) {
         hero.send({ type: 'environment', values });
         hero.send({ type: 'advance' });
         assert.equal(rendered.index, 0);
