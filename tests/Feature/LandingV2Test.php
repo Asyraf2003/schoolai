@@ -31,7 +31,7 @@ it('preserves database copy and active legacy section destinations', function ()
         ->assertSee('href="#program"', false)
         ->assertSee('href="#visi-misi"', false)
         ->assertSee('href="#kontak"', false)
-        ->assertDontSee('id="program"', false)
+        ->assertSee('id="program"', false)
         ->assertDontSee('<footer', false)
         ->assertSee(config('media.homepage_hero_video_url'), false)
         ->assertSee(config('media.static.hero_school'), false);

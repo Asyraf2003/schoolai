@@ -5,6 +5,7 @@ return [
         'image_alt' => 'Al Mustaqbal School campus and learning environment',
     ],
     'navbar' => [
+        'labels' => ['gallery' => 'Gallery', 'facilities' => 'Facilities', 'articles' => 'Articles'],
         'audio' => [
             'off' => 'Sound : Off',
             'on' => 'Sound : On',

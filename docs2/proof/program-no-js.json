@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-07T04:02:17.623Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "disclosures": 8,
+  "descriptions": 8,
+  "requests": [
+    "http://127.0.0.1:8000/",
+    "http://127.0.0.1:8000/build/assets/index-BXtRgr-J.css",
+    "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+    "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+    "http://127.0.0.1:8000/build/assets/index-B6Iyaeqa.js",
+    "https://media.almustaqbal.sch.id/site/navigation/teaching.webp",
+    "https://media.almustaqbal.sch.id/site/navigation/activity.webp",
+    "https://media.almustaqbal.sch.id/site/navigation/library.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/vision-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/mission-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/tahfiz-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/pidato-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/solatjamaah-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+    "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+    "http://127.0.0.1:8000/build/assets/inter-latin-variable-Dx4kXJAl.woff2"
+  ]
+}

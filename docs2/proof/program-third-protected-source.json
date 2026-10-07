@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-07",
+  "baseline_files": 769,
+  "unchanged": 754,
+  "authorized_changed": [
+    "resources/css/locale/ar.css",
+    "resources/css/locale/en.css",
+    "resources/css/locale/id.css",
+    "resources/css/sections/header.css",
+    "resources/css/sections/program-field.css",
+    "resources/css/sections/program-reveal.css",
+    "resources/js/sections/header-state.js",
+    "resources/js/sections/header.js",
+    "tests/Unit/NavigationLifecycleBrowser.test.mjs",
+    "tests/Unit/NavigationMobileBrowser.test.mjs",
+    "tests/Unit/NavigationPolishBrowser.test.mjs",
+    "tests/Unit/ProgramAccessBrowser.test.mjs",
+    "tests/Unit/ProgramHeadingSequenceBrowser.test.mjs",
+    "tests/Unit/ProgramKineticBrowser.test.mjs",
+    "tests/Unit/ProgramReviewBrowser.test.mjs"
+  ],
+  "new_source_files": [
+    "tests/Unit/HeaderSurfaceRuntime.test.mjs",
+    "tests/Unit/ProgramTypeBudgetBrowser.test.mjs",
+    "tests/Unit/ProgramTypeLifecycleBrowser.test.mjs"
+  ],
+  "missing": [],
+  "legacy_unchanged": 386,
+  "note": "Compared with task-start source hashes, including pre-existing dirty work. Does not compare proof artifacts or assert remote/device state."
+}

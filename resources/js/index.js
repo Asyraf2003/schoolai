@@ -1,6 +1,8 @@
 import { mountCursor } from './sections/cursor.js';
 import { mountHeader } from './sections/header.js';
 import { mountHero } from './sections/hero.js';
+import { mountAbout } from './sections/about.js';
+import { mountProgram } from './sections/program.js';
 
 // Composition root wires ports; each component owns its state and DOM.
 const cursor = mountCursor();
@@ -18,8 +20,14 @@ const header = mountHeader(document.querySelector('[data-header]'), {
 hero = mountHero(document.querySelector('[data-hero]'), {
     audioChanged: status => header.setAudio(status),
 });
+const about = mountAbout(document.querySelector('[data-about]'));
+const program = mountProgram(document.querySelector('[data-program]'));
 window.addEventListener('pagehide', event => {
     hero.suspend();
+    about.suspend();
+    program.suspend();
+    if (!event.persisted) about.dispose();
+    if (!event.persisted) program.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); }
 });
-window.addEventListener('pageshow', () => hero.resume());
+window.addEventListener('pageshow', () => { hero.resume(); about.resume(); program.resume(); });

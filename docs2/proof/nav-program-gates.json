@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-07T05:41:50.426163+00:00",
+  "branch": "feat/home-v2-about",
+  "head": "08039bbad2f59ba37cac996bc15730fbee7d52e9",
+  "main_inspected": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "scope_status": "PASS",
+  "repository_status": "FAIL",
+  "physical_device_status": "BLOCKED_BY_MISSING_EVIDENCE",
+  "commands": {
+    "git diff --check": "PASS",
+    "npm run check:structure": "PASS:277 sources,max200 lines",
+    "npm run build": "PASS:Vite8.1.3,28 modules",
+    "vendor/bin/pint --dirty --format agent": "PASS",
+    "focused_php": "PASS:27 tests,369 assertions",
+    "gallery_label_contract": "PASS:1 test,11 assertions",
+    "php artisan test": "FAIL:332 tests,186 pass,71 fail,75 errors;no new names"
+  },
+  "checks": {
+    "heading": {
+      "status": "PASS",
+      "passed": 7,
+      "failed": 0,
+      "log": "/tmp/nav-program-heading-final.log"
+    },
+    "navigation": {
+      "status": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "log": "/tmp/nav-program-navigation-fixed.log"
+    },
+    "lifecycle": {
+      "status": "PASS",
+      "passed": 5,
+      "failed": 0,
+      "log": "/tmp/nav-program-lifecycle-final.log"
+    },
+    "mobile_and_program": {
+      "status": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "log": "/tmp/nav-program-mobile-program-final.log"
+    },
+    "pure_js": {
+      "status": "PASS",
+      "passed": 16,
+      "failed": 0,
+      "log": "/tmp/nav-program-pure-js.log"
+    }
+  },
+  "distinct_browser_tests": 20,
+  "heading_normal_cases": 36,
+  "heading_reduced_cases": 180,
+  "heading_no_js_cases": 18,
+  "heading_reentry_cases": 3,
+  "header_boundary_cases": 216,
+  "header_tone_media_cases": 36,
+  "mobile_touch_locale_profiles": 6,
+  "mobile_details": 6,
+  "assembled_tablet_desktop_cases": 6,
+  "physical_device": false,
+  "production_mutation": false,
+  "push_merge_commit": false,
+  "assets": [
+    {
+      "source": "node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2",
+      "file": "assets/cairo-arabic-400-normal-DN15VWMM.woff2",
+      "bytes": 13292,
+      "sha256": "1b36945f5f6a3d1fed3783999b887d0c56cfd66a41a04212a28aa79abbdff0e1"
+    },
+    {
+      "source": "node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2",
+      "file": "assets/cairo-arabic-700-normal-D3nDedWX.woff2",
+      "bytes": 13952,
+      "sha256": "673212b4908a9a6366ad6beb8a8a58c91bc3cb7e6cc4802b315a240c2dd80eb9"
+    },
+    {
+      "source": "resources/css/index.css",
+      "file": "assets/index-DvEmYYG4.css",
+      "bytes": 32324,
+      "sha256": "1c7a172742f8b97330b399ee76e6f850cd0bf228aecb57031619a9eb0568f97e"
+    },
+    {
+      "source": "resources/fonts/inter/inter-latin-variable.woff2",
+      "file": "assets/inter-latin-variable-Dx4kXJAl.woff2",
+      "bytes": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "source": "resources/js/index.js",
+      "file": "assets/index-CJyFsvQv.js",
+      "bytes": 37332,
+      "sha256": "4de55c56246f4585f0c7db074499fae37a690e4f65b2e22ef2edf056ee51d5e2"
+    },
+    {
+      "source": "resources/js/sections/program-gsap.js",
+      "file": "assets/program-gsap-CUA1Rqpk.js",
+      "bytes": 705,
+      "sha256": "45ba1ccf58167c093eaa17fd91db9b74986723d6513846b44a04e7c4d30a7f57"
+    },
+    {
+      "source": "resources/js/sections/program-kinetic.js",
+      "file": "assets/program-kinetic-DadgDMlT.js",
+      "bytes": 3445,
+      "sha256": "3452cf9ebd3e692ac3e65fa51b5a13307c2b844d676daf207257ceb414743393"
+    }
+  ],
+  "runtime_env": {
+    "PROGRAM_PLAYWRIGHT_MODULE": "/home/asyraf/.npm/_npx/e41f203b7505f1fb/node_modules/playwright/index.mjs",
+    "PROGRAM_BROWSER_URL": "http://127.0.0.1:8000",
+    "PROGRAM_ENGINES": "chromium,firefox,webkit,edge",
+    "PROGRAM_WEBKIT_PATH": "/tmp/program-v2-webkit.sh",
+    "PROGRAM_EDGE_PATH": "/tmp/program-v2-edge-current/opt/microsoft/msedge/msedge",
+    "PHP_INI_SCAN_DIR": "/etc/php/conf.d:/tmp/program-v2-php"
+  }
+}

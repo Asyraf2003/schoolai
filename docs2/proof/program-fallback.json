@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-07T04:02:16.702Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "state": {
+    "locale": "ar",
+    "direction": "rtl",
+    "viewport": [
+      390,
+      844
+    ],
+    "overflow": false,
+    "programOverflow": false,
+    "columns": 2,
+    "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "cards": [
+      {
+        "x": 201,
+        "y": 283.640625,
+        "width": 169,
+        "height": 254.296875,
+        "bottom": 537.9375,
+        "right": 370
+      },
+      {
+        "x": 20,
+        "y": 283.640625,
+        "width": 169,
+        "height": 275.890625,
+        "bottom": 559.53125,
+        "right": 189
+      },
+      {
+        "x": 201,
+        "y": 591.53125,
+        "width": 169,
+        "height": 233.296875,
+        "bottom": 824.828125,
+        "right": 370
+      },
+      {
+        "x": 20,
+        "y": 591.53125,
+        "width": 169,
+        "height": 233.296875,
+        "bottom": 824.828125,
+        "right": 189
+      },
+      {
+        "x": 201,
+        "y": 856.828125,
+        "width": 169,
+        "height": 254.296875,
+        "bottom": 1111.125,
+        "right": 370
+      },
+      {
+        "x": 20,
+        "y": 856.828125,
+        "width": 169,
+        "height": 254.296875,
+        "bottom": 1111.125,
+        "right": 189
+      },
+      {
+        "x": 201,
+        "y": 1143.125,
+        "width": 169,
+        "height": 233.296875,
+        "bottom": 1376.421875,
+        "right": 370
+      },
+      {
+        "x": 20,
+        "y": 1143.125,
+        "width": 169,
+        "height": 254.890625,
+        "bottom": 1398.015625,
+        "right": 189
+      }
+    ],
+    "heading": {
+      "x": 20,
+      "y": 163.328125,
+      "width": 350,
+      "height": 88.3125,
+      "bottom": 251.640625,
+      "right": 370
+    },
+    "anchors": [
+      {
+        "x": 0,
+        "y": -13.890625,
+        "width": 390,
+        "height": 151.90625,
+        "bottom": 138.015625,
+        "right": 390
+      },
+      {
+        "x": 0,
+        "y": 1398.015625,
+        "width": 390,
+        "height": 67.515625,
+        "bottom": 1465.53125,
+        "right": 390
+      },
+      {
+        "x": 0,
+        "y": 1465.53125,
+        "width": 390,
+        "height": 1,
+        "bottom": 1466.53125,
+        "right": 390
+      },
+      {
+        "x": 0,
+        "y": 1465.53125,
+        "width": 390,
+        "height": 1,
+        "bottom": 1466.53125,
+        "right": 390
+      }
+    ],
+    "detail": null
+  },
+  "errors": []
+}

@@ -173,6 +173,25 @@ Jangan memakai `CLOSED` jika acceptance target masih gagal.
 
 ## CURRENT STATE
 
-Map aktif: `docs2/blueprints/menu-hero-correction.md`.
-Arahan owner terbaru: koreksi Menu/Hero, EN/ID/AR aktif; HP dropdown menu saja.
-Status/bukti: `docs2/proof/menu-hero-correction-status.md`; target belum CLOSED.
+Map aktif: `docs2/blueprints/menu-heading-visual-correction.md`.
+Arahan terbaru: migrasikan identitas Program dengan posisi mengikuti skala/layout,
+IO/CSS untuk masuk, detail kinetik tersendiri; About dilindungi, Values/garis ditunda.
+Arahan koreksi terbaru: teks latar, warna, radius acuan Codrops, hover ringan
+tanpa underline, heading sedikit masuk, reveal/fade yang dapat berbalik.
+Arahan terakhir: baris bawah heading bergerak sedikit ke tengah setelah reveal;
+nav putih di Hero transparan dan gelap pada bidang putih, Inter/Cairo, chevron
+sejajar, submenu720ms dan foto siap lebih awal. Produksi lama hanya data antisipasi.
+Status/bukti: `docs2/proof/nav-program-status.md`; tidak ada push atau merge.
+Arahan terbaru: ID jarak/durasi4×; EN jarak2×; AR tanpa geser horizontal.
+Audit nav old untuk bug PC; rapatkan latar AR dan ukur biaya PC/tablet/HP.
+Owner menegaskan warna mengikuti bidang dasar nav yang aktif. Map09 telah
+mengeksekusi kontrak bidang tunggal/layer dasar, faktor heading dan density AR.
+Hasil: `docs2/proof/program-third-status.md`; kontrak lokal PASS, full suite FAIL
+dengan nama failure/error lama yang sama. Tidak ada code step aktif atau publish.
+
+Arahan terbaru Map10 mengganti Hero-open transparan/durasi ID5800ms: menu
+Header+panel satu bidang terang saat open; heading visible gap≈sepertiga dan
+seluruh section entrance760ms. Source detail/cards/dimensi Header dilindungi.
+Bukti `docs2/proof/menu-heading-status.md`: scoped PASS, full PHP FAIL baseline
+yang sama; native Safari dan decorative-paint setelah resize masih GAP.
+Tidak ada code step aktif, push/merge, Values, atau scroll line.

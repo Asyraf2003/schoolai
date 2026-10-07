@@ -45,7 +45,7 @@
                                 <div class="site-header__panel">
                                     <figure class="site-header__media" data-media-fallback>
                                         <figcaption>{{ $item['mega']['title'] ?? $item['mega_media_alt'] }}</figcaption>
-                                        <img src="{{ $item['mega_media_url'] }}" alt="{{ $item['mega_media_alt'] }}"
+                                        <img data-menu-media src="{{ $item['mega_media_url'] }}" alt="{{ $item['mega_media_alt'] }}"
                                             width="1080" height="720" loading="lazy" decoding="async">
                                     </figure>
                                     <div class="site-header__links">

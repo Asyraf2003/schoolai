@@ -2,8 +2,8 @@ import { mountHeaderAccordion } from './header-accordion.js';
 import { mountHeaderHighlight } from './header-highlight.js';
 import { mountHeaderSound } from './header-sound.js';
 import { mountHeaderLanguage } from './header-language.js';
-import { createHeaderState } from './header-state.js';
-import { mountMediaFallback } from './media-fallback.js';
+import { createHeaderState, headerSurface } from './header-state.js';
+import { mountHeaderMedia } from './header-media.js';
 import { mountHeaderMotion } from './header-motion.js';
 
 export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) {
@@ -13,7 +13,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     const nav = root.querySelector('nav');
     const groups = [...root.querySelectorAll('[data-panel]')];
     const media = window.matchMedia('(min-width: 1181px), (min-width: 1024px) and (orientation: landscape)');
-    const cleanups = [mountHeaderMotion(root), mountMediaFallback(root)];
+    const cleanups = [mountHeaderMotion(root), mountHeaderMedia(root)];
     const sound = mountHeaderSound(audio);
     let audioStatus = { enabled: false, available: false };
     let renderedPanel = null;
@@ -34,6 +34,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
     function presentation(value) {
         const navigationOpen = value.mobileOpen || value.panel !== null || renderedPanel !== null;
         root.dataset.open = String(navigationOpen);
+        root.dataset.surface = headerSurface(value, navigationOpen);
         highlight.update(value.panel ?? renderedPanel);
         sound.update(audioStatus, { ...value, navigationOpen });
     }
@@ -142,6 +143,7 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
             cleanups.forEach(cleanup => cleanup());
             delete root.dataset.enhanced;
             delete root.dataset.mode;
+            delete root.dataset.surface;
             toggle.hidden = true;
             audio.hidden = true;
         },

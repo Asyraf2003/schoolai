@@ -1,0 +1,101 @@
+{
+  "date": "2026-10-07T05:41:50.426163+00:00",
+  "baseline_files": 762,
+  "unchanged_files": 749,
+  "changed_files": 13,
+  "missing": [],
+  "unexpected_changes": [],
+  "changed": [
+    {
+      "file": "resources/views/landing/header.blade.php",
+      "before": "c13cb123739e0857acd81f7b2139af3e28ac826ed40844c89b2f74bedaf7243f",
+      "after": "c4cf97dc271ed85fa97c5ebaa416a484d6842913220b81ef7992789e731b4707",
+      "authorized": true
+    },
+    {
+      "file": "resources/js/sections/header-accordion.js",
+      "before": "a73dd443850614d81e02514f38010860894f503b4d2f95fd17f4b9eeff6ca8a3",
+      "after": "1db3c191826680b10ba8697780c49a3d54b94594fa44486c578cccbfd66dacb7",
+      "authorized": true
+    },
+    {
+      "file": "resources/js/sections/header.js",
+      "before": "62754b15ac213b0a81cf2775205691cc685ee4cac5d88bbd42c2d8f5d8401c43",
+      "after": "d6cf6ed5f6842aeb3ec020c96b565c654a4ba91ca51400eb6764e863a696dd8c",
+      "authorized": true
+    },
+    {
+      "file": "resources/css/direction/rtl.css",
+      "before": "9b6c22e7191bcab7b66fb534629a8b814ff02336ae9ce3445a04f0446ac2b1fb",
+      "after": "b8c43f2d0d1d37d86a912af704a65e11312e0452bae9809e6387ce19f711ba46",
+      "authorized": true
+    },
+    {
+      "file": "resources/css/sections/program-field.css",
+      "before": "4d605a91c4d9f40cd18529b6af008f8b03284cc8e7201a6d9c38f653b83d4f0c",
+      "after": "86b6958b0101f22a86d43b7895fa4823ef12979c7dae0a220e0df41216a43691",
+      "authorized": true
+    },
+    {
+      "file": "resources/css/sections/header.css",
+      "before": "7c2926d6528d9b7d8143b72f5ced06267a5efa63582947fa397260b7960417a2",
+      "after": "e944b825c4704544ab10d05d50c6331f791c6e3db6cfc8aaaa775d49a7936433",
+      "authorized": true
+    },
+    {
+      "file": "resources/css/sections/program-reveal.css",
+      "before": "f1a49940f1726e6e9831c29996e87cd3c31a527fc6e71fe48537b0bcf47be944",
+      "after": "3aec1a58d3d9470d8a8516aae6b0276343c61c766c26aed2db5376d1c16789a4",
+      "authorized": true
+    },
+    {
+      "file": "resources/css/locale/ar.css",
+      "before": "482e485c3537862984e3ead2b2563d5ed17e59e65a08bc7ce1d57d372376a829",
+      "after": "43f33151d738b89ec511609a7e106093839c91f4d2a39b3b113e4c6456b79120",
+      "authorized": true
+    },
+    {
+      "file": "lang/id/shared.php",
+      "before": "e96cec32b385cdea66a5b11bcfc5e1f13b8e49068b9aa40c517bee539bc576c7",
+      "after": "c7342620c50c6b5e179e665b94b31b10675f3a0332e5a24c47580a11779da997",
+      "authorized": true
+    },
+    {
+      "file": "lang/ar/shared.php",
+      "before": "b7a45cf3297c22f6b976df256dc9818247dedbfc40ebd3a827319246f5b73f61",
+      "after": "736dbf0a0968fc449cb3b4d45d2e0b2babf9ebee2d6019ead25fd59c13e54d19",
+      "authorized": true
+    },
+    {
+      "file": "lang/en/shared.php",
+      "before": "d7df5fbea5df0c12d8bb4c7802bf39659966d4a201b2a0c5f6237f0093a7bfa3",
+      "after": "b87f17fc95c56df1d9ecabf38477e0f99de4d2cffea63117666b5a8920c402c5",
+      "authorized": true
+    },
+    {
+      "file": "app/View/Presenters/Concerns/PreparesNavbarMediaMenus.php",
+      "before": "0c318ca9a66e3db7f540892229b99ff2fb735634de978b4e4267dd60c366c9f2",
+      "after": "500c6d7ff98c300e7c24af66ee4bf54bbf3275705760bce4f0cd1b7af69dd224",
+      "authorized": true
+    },
+    {
+      "file": "tests/Feature/HomeGalleryPreviewContractTest.php",
+      "before": "eb7090821158c51553b338c53e212547897d54d3e7e8fafc5f963e78409cf3ff",
+      "after": "34f610aed7b5cbca712b6e445f8566f36263074e2c9df278db3e118c1a41be23",
+      "authorized": true
+    }
+  ],
+  "protected_counts": {
+    "resources_old/": 386,
+    "resources/css/sections/about": 1,
+    "resources/js/sections/about": 4,
+    "resources/views/landing/about": 1,
+    "resources/css/sections/hero": 1,
+    "resources/js/sections/hero": 4,
+    "resources/js/sections/cursor": 1,
+    "resources/js/sections/header-sound": 1,
+    "resources/js/sections/header-language": 1,
+    "lang/": 39
+  },
+  "unchanged_baseline_digest": "99cd5aafbc7e513cea869853183a737f0400c59ca7e3dbec7d117e2c033319b4"
+}

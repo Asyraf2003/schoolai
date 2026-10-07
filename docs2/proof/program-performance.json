@@ -1,0 +1,958 @@
+{
+  "date": "2026-10-07T02:56:49.314Z",
+  "browser": "153.0.8010.52",
+  "os": "7.2.8-arch1-2",
+  "cpu": "AMD Ryzen AI 7 445 w/ Radeon 840M",
+  "memoryGiB": 14.768341064453125,
+  "profile": "Headless Linux; localhost; fresh context per sample; normal motion; no network/CPU throttling; ordinary native wheel; not Lighthouse, PSI or field CWV",
+  "url": "http://127.0.0.1:8000",
+  "samples": [
+    {
+      "width": 390,
+      "run": 1,
+      "taskDurationMs": 118.118,
+      "kineticLoaded": false,
+      "lab": {
+        "lcp": {
+          "start": 156,
+          "resource": "",
+          "tag": "P",
+          "class": "hero__description"
+        },
+        "cls": 0.5545023696682464,
+        "long": []
+      },
+      "programLongTasks": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-CSSIZXnH.css",
+          "transfer": 30198,
+          "encoded": 29898,
+          "duration": 4.099999999627471
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-DXMxVri4.js",
+          "transfer": 35628,
+          "encoded": 35328,
+          "duration": 5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 943.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1102.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 942.7999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1101.7999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1102.1000000000931
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "transfer": 48556,
+          "encoded": 48256,
+          "duration": 46.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1039.6999999997206
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/vision-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1216.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 934
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1065.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/mission-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1256.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1634.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/tahfiz-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 860.7999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/pidato-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 824.3000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 924
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/solatjamaah-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 924.2000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1216.8000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1234.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1354.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1448.2000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1459.7000000001863
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "run": 2,
+      "taskDurationMs": 108.654,
+      "kineticLoaded": false,
+      "lab": {
+        "lcp": {
+          "start": 208,
+          "resource": "",
+          "tag": "P",
+          "class": "hero__description"
+        },
+        "cls": 0.5545023696682464,
+        "long": []
+      },
+      "programLongTasks": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-CSSIZXnH.css",
+          "transfer": 30198,
+          "encoded": 29898,
+          "duration": 8.100000000093132
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-DXMxVri4.js",
+          "transfer": 35628,
+          "encoded": 35328,
+          "duration": 10.300000000279397
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 976.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1115.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1115.8000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 975.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1115.8999999999069
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "transfer": 48556,
+          "encoded": 48256,
+          "duration": 54.10000000009313
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1038.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/vision-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1173.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 886.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1155.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/mission-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1245.1999999997206
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1851.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/tahfiz-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 813.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/pidato-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 774
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/solatjamaah-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 812.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 855.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1145.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1184
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1307.7999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1658.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1665.7000000001863
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "run": 3,
+      "taskDurationMs": 97.968,
+      "kineticLoaded": false,
+      "lab": {
+        "lcp": {
+          "start": 212,
+          "resource": "",
+          "tag": "P",
+          "class": "hero__description"
+        },
+        "cls": 0.5545023696682464,
+        "long": []
+      },
+      "programLongTasks": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-CSSIZXnH.css",
+          "transfer": 30198,
+          "encoded": 29898,
+          "duration": 8.199999999720603
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-DXMxVri4.js",
+          "transfer": 35628,
+          "encoded": 35328,
+          "duration": 8.700000000186265
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 807.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1153.5999999996275
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1153
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1153.3000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 807.2000000001863
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "transfer": 48556,
+          "encoded": 48256,
+          "duration": 52.700000000186265
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1076
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/vision-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1155.1999999997206
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 717.3000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1136.2000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/mission-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1206.3000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1744.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/tahfiz-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 899
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/pidato-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 706.4000000003725
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/solatjamaah-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 765.2000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 851.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1123.2000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1155.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1274.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1566.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1576.2000000001863
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "run": 1,
+      "taskDurationMs": 104.422,
+      "kineticLoaded": false,
+      "lab": {
+        "lcp": {
+          "start": 244,
+          "resource": "",
+          "tag": "H1",
+          "class": "hero__title"
+        },
+        "cls": 0.000250488683127572,
+        "long": [
+          {
+            "start": 109.89999999990687,
+            "duration": 88
+          }
+        ]
+      },
+      "programLongTasks": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-CSSIZXnH.css",
+          "transfer": 30198,
+          "encoded": 29898,
+          "duration": 13.900000000372529
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-DXMxVri4.js",
+          "transfer": 35628,
+          "encoded": 35328,
+          "duration": 18.799999999813735
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 975.1000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1246.1000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1246.3000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 587.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 974.3999999999069
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "transfer": 48556,
+          "encoded": 48256,
+          "duration": 80.10000000009313
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 928.9000000003725
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1136.1000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1134.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1792
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/tahfiz-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1011.6999999997206
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/pidato-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 732.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/solatjamaah-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 770.8000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 979.1000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1092.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1105.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1244.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1334.7999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1741.6999999997206
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 937
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "run": 2,
+      "taskDurationMs": 130.001,
+      "kineticLoaded": false,
+      "lab": {
+        "lcp": {
+          "start": 244,
+          "resource": "",
+          "tag": "H1",
+          "class": "hero__title"
+        },
+        "cls": 0.05,
+        "long": []
+      },
+      "programLongTasks": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-CSSIZXnH.css",
+          "transfer": 30198,
+          "encoded": 29898,
+          "duration": 9.299999999813735
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-DXMxVri4.js",
+          "transfer": 35628,
+          "encoded": 35328,
+          "duration": 10.199999999720603
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1017
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1277.3000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1277.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1277.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 885.7000000001863
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "transfer": 48556,
+          "encoded": 48256,
+          "duration": 61.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1196.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 926.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1176.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1779.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/tahfiz-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1050.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/pidato-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1018.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/solatjamaah-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 817.3000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 817.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1120
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1150.2000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1274.8999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1366.7000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1731.1000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 971.2999999998137
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "run": 3,
+      "taskDurationMs": 84.685,
+      "kineticLoaded": false,
+      "lab": {
+        "lcp": {
+          "start": 284,
+          "resource": "",
+          "tag": "H1",
+          "class": "hero__title"
+        },
+        "cls": 0.05,
+        "long": []
+      },
+      "programLongTasks": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-CSSIZXnH.css",
+          "transfer": 30198,
+          "encoded": 29898,
+          "duration": 9.199999999720603
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/index-DXMxVri4.js",
+          "transfer": 35628,
+          "encoded": 35328,
+          "duration": 11
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 968.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 968
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1230.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1230.7999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1231.1000000000931
+        },
+        {
+          "name": "http://127.0.0.1:8000/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "transfer": 48556,
+          "encoded": 48256,
+          "duration": 55.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 513.3999999999069
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 878.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1128.1000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1758.5
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/tahfiz-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1013.8000000002794
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/pidato-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 924
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/solatjamaah-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 924.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 960.6000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1071.1000000000931
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1088.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1214.7999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1307.2999999998137
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 1736.2000000001863
+        },
+        {
+          "name": "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+          "transfer": 0,
+          "encoded": 0,
+          "duration": 875.3999999999069
+        }
+      ],
+      "overflow": false
+    }
+  ],
+  "summary": [
+    {
+      "width": 390,
+      "medianTaskDurationMs": 108.654,
+      "worstTaskDurationMs": 118.118
+    },
+    {
+      "width": 1440,
+      "medianTaskDurationMs": 104.422,
+      "worstTaskDurationMs": 130.001
+    }
+  ]
+}

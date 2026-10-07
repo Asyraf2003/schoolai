@@ -4,7 +4,11 @@
     --v2-text: #17362f;
     --v2-accent: #ffb20b;
     --v2-space-page: clamp(1.25rem, 4vw, 5rem);
-    --v2-header-nav-max: 10vh;
+    --v2-header-nav-max: min(4.5rem, 10svh);
+    --v2-header-block-size: clamp(5rem, 8vw, 7rem);
     --v2-header-space: calc(var(--v2-space-page) * 2 / 3);
     --v2-focus: #005fcc;
+}
+@media (min-width: 1181px), (min-width: 1024px) and (orientation: landscape) {
+    :root { --v2-header-block-size: var(--v2-header-nav-max); }
 }

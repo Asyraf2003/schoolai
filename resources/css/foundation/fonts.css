@@ -5,3 +5,17 @@
     font-display: swap;
     src: url('../../fonts/inter/inter-latin-variable.woff2') format('woff2');
 }
+@font-face {
+    font-family: Cairo;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../../../node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: Cairo;
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../../../node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2') format('woff2');
+}

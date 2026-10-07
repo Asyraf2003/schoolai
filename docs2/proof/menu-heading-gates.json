@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-07T09:29:28.411763+00:00",
+  "branch": "feat/home-v2-about",
+  "head": "08039bbad2f59ba37cac996bc15730fbee7d52e9",
+  "main": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "scope_status": "PASS",
+  "repository_status": "FAIL",
+  "published": false,
+  "menu_root_cause": "Desktop open was deliberately excluded from light surface; Header gradient/white labels diverged from already full-width white panel. Geometric join was already exact.",
+  "menu_changed_files": [
+    "resources/js/sections/header-state.js",
+    "resources/css/sections/header.css"
+  ],
+  "heading_1440_chromium": {
+    "font_px": 172.8,
+    "en_gap_before_px": 73.875,
+    "en_gap_after_px": 24.640625,
+    "id_gap_before_px": 74.875,
+    "id_gap_after_px": 25.640625,
+    "vertical_before_ms": 900,
+    "horizontal_id_before_ms": 5800,
+    "horizontal_en_before_ms": 1450,
+    "horizontal_delay_before_ms": 900,
+    "all_section_transform_after_ms": 760,
+    "after_delay_ms": 0,
+    "detail_unchanged": true
+  },
+  "commands": {
+    "diff_check": "PASS",
+    "structure": "PASS277 max200 lines",
+    "build": "PASS",
+    "pint": "PASS",
+    "focused_php": "PASS27 tests369 assertions",
+    "focused_js": "PASS12 tests",
+    "full_php": "FAIL332 tests:186PASS71failure75error1644assertion; unchanged baseline failure/error names"
+  },
+  "browser": {
+    "versions": {
+      "chromium": "153.0.8010.52",
+      "edge": "154.0.4258.62",
+      "firefox": "155",
+      "webkit": "26.6"
+    },
+    "profile": "Linux localhost,1440x900 desktop menu;390/768/1440/1920 heading;3locales; native interaction and captured screenshot pixels",
+    "menu_states": 84,
+    "menu_open_join_captures": 36,
+    "menu_frames": 1225,
+    "heading_ink_mask_cells": 48,
+    "existing_heading_normal": 36,
+    "existing_heading_reduced": 180,
+    "existing_heading_no_js": 18,
+    "existing_heading_reentry": 3,
+    "existing_nav_tier_locale": 216,
+    "existing_nav_no_js": 18,
+    "existing_menu_tone_media": 36,
+    "focused_tests": 21
+  },
+  "source_protection": "menu-heading-protected-source.json",
+  "report": "menu-heading-status.md",
+  "remaining_gaps": [
+    "Full repo failures/errors unchanged",
+    "Native Safari/physical-device verification absent",
+    "Decorative paint white patch in fast-resize baseline and current captures, absent isolated stable viewport; root cause unproven, protected scope not modified"
+  ],
+  "git": "No commit/push/merge; HEAD unchanged",
+  "confirmation": "menu-heading-confirmation.json"
+}

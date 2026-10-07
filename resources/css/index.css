@@ -12,6 +12,8 @@
 @import './sections/header.css';
 @import './sections/cursor.css';
 @import './sections/hero.css';
+@import './sections/about.css';
+@import './sections/program.css';
 @import './responsive/mobile.css';
 @import './responsive/tablet.css';
 @import './responsive/desktop.css';

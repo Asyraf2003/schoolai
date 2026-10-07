@@ -1,0 +1,23 @@
+{
+  "motion": false,
+  "phase": "idle",
+  "typeInsideDialog": true,
+  "headerWidth": "1324.8px",
+  "cardWidth": "1324.8px",
+  "radius": "3.2px",
+  "detailRadius": "6.4px 6.4px 0px 0px",
+  "seen": [
+    "true",
+    "true",
+    "true",
+    "true",
+    "true",
+    "true",
+    "true",
+    "true"
+  ],
+  "hover": {
+    "decoration": "underline",
+    "transform": "none"
+  }
+}

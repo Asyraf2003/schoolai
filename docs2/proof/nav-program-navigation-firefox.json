@@ -1,0 +1,221 @@
+{
+  "date": "2026-10-07T05:17:47.682Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "155.0",
+  "cases": [
+    {
+      "language": "en",
+      "width": 390,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "en",
+      "width": 768,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.17500305175781,
+        "arrowCenter": 33.16667175292969
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(255, 255, 255)",
+        "background": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))"
+      },
+      "section": {
+        "scrolled": "true",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "id",
+      "width": 390,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "id",
+      "width": 768,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.17500305175781,
+        "arrowCenter": 33.16667175292969
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(255, 255, 255)",
+        "background": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))"
+      },
+      "section": {
+        "scrolled": "true",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 768,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.17500305175781,
+        "arrowCenter": 33.16667175292969
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(255, 255, 255)",
+        "background": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))"
+      },
+      "section": {
+        "scrolled": "true",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    }
+  ]
+}

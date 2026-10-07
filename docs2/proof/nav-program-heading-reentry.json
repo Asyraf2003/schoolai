@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-07T05:38:53.388Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "cases": [
+    {
+      "language": "en",
+      "shift": 46.8
+    },
+    {
+      "language": "id",
+      "shift": 46.8
+    },
+    {
+      "language": "ar",
+      "shift": -46.8
+    }
+  ]
+}

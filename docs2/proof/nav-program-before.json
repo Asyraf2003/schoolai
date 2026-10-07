@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-07T05:06:15.430Z",
+  "cases": [
+    {
+      "language": "en",
+      "before": 0,
+      "after": 1,
+      "fonts": {
+        "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "arrowCenter": 36,
+        "textCenter": 33.1796875,
+        "labelBox": {
+          "x": 903.53125,
+          "y": 22.234375,
+          "width": 70.609375,
+          "height": 27.53125,
+          "top": 22.234375,
+          "right": 974.140625,
+          "bottom": 49.765625,
+          "left": 903.53125
+        },
+        "textBox": {
+          "x": 903.53125,
+          "y": 22.234375,
+          "width": 70.609375,
+          "height": 21.890625,
+          "top": 22.234375,
+          "right": 974.140625,
+          "bottom": 44.125,
+          "left": 903.53125
+        }
+      },
+      "duration": 1440
+    },
+    {
+      "language": "id",
+      "before": 2,
+      "after": 2,
+      "fonts": {
+        "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "arrowCenter": 36,
+        "textCenter": 33.1796875,
+        "labelBox": {
+          "x": 936.390625,
+          "y": 22.234375,
+          "width": 78.515625,
+          "height": 27.53125,
+          "top": 22.234375,
+          "right": 1014.90625,
+          "bottom": 49.765625,
+          "left": 936.390625
+        },
+        "textBox": {
+          "x": 936.390625,
+          "y": 22.234375,
+          "width": 78.515625,
+          "height": 21.890625,
+          "top": 22.234375,
+          "right": 1014.90625,
+          "bottom": 44.125,
+          "left": 936.390625
+        }
+      },
+      "duration": 1440
+    },
+    {
+      "language": "ar",
+      "before": 3,
+      "after": 3,
+      "fonts": {
+        "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "arrowCenter": 36,
+        "textCenter": 33.1796875,
+        "labelBox": {
+          "x": 480.890625,
+          "y": 22.234375,
+          "width": 38.90625,
+          "height": 27.53125,
+          "top": 22.234375,
+          "right": 519.796875,
+          "bottom": 49.765625,
+          "left": 480.890625
+        },
+        "textBox": {
+          "x": 480.890625,
+          "y": 22.234375,
+          "width": 38.90625,
+          "height": 21.890625,
+          "top": 22.234375,
+          "right": 519.796875,
+          "bottom": 44.125,
+          "left": 480.890625
+        }
+      },
+      "duration": 1440
+    }
+  ]
+}

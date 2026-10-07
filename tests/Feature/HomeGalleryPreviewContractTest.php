@@ -73,8 +73,12 @@ it('builds the Gallery navbar from three random page sections plus the existing 
         ->toContain('->limit(3)')
         ->toContain("route('galeri').'#gallery-section-'.\$section->id")
         ->toContain("'href' => \$homeAnchor('#galeri')")
-        ->toContain("default => 'Galeri'")
-        ->toContain("'en' => 'Gallery'")
-        ->toContain("'ar' => 'المعرض'")
+        ->toContain("\$this->translator->get('shared.navbar.labels.gallery')")
         ->toContain("\$item['route_patterns'] = ['galeri']");
+
+    foreach (['id' => 'Galeri', 'en' => 'Gallery', 'ar' => 'المعرض'] as $locale => $label) {
+        $copy = require lang_path($locale.'/shared.php');
+
+        expect($copy['navbar']['labels']['gallery'])->toBe($label);
+    }
 });

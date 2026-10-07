@@ -1,0 +1,257 @@
+{
+  "date": "2026-10-07T09:21:27.847Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "26.6",
+  "cases": [
+    {
+      "language": "en",
+      "width": 390,
+      "font": "Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "en",
+      "width": 768,
+      "font": "Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "font": "Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.1796875,
+        "arrowCenter": 33.171875
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "section": {
+        "scrolled": "true",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "id",
+      "width": 390,
+      "font": "Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "language": "id",
+      "width": 768,
+      "font": "Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "font": "Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.1796875,
+        "arrowCenter": 33.171875
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "section": {
+        "scrolled": "true",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "font": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 768,
+      "font": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "font": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.1796875,
+        "arrowCenter": 33.171875
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "section": {
+        "scrolled": "true",
+        "surface": "light",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "layer": "-1",
+        "content": "\"\""
+      },
+      "counts": [
+        4,
+        4,
+        4
+      ]
+    }
+  ]
+}

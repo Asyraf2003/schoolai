@@ -1,0 +1,151 @@
+{
+  "date": "2026-10-07T05:38:21.311Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "cases": [
+    {
+      "engine": "chromium",
+      "locale": "en",
+      "width": 390,
+      "opacity": "1",
+      "shift": 9.75,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "en",
+      "width": 768,
+      "opacity": "1",
+      "shift": 19.2,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "en",
+      "width": 1440,
+      "opacity": "1",
+      "shift": 46.8,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "id",
+      "width": 390,
+      "opacity": "1",
+      "shift": 9.75,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "id",
+      "width": 768,
+      "opacity": "1",
+      "shift": 19.2,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "id",
+      "width": 1440,
+      "opacity": "1",
+      "shift": 46.8,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "ar",
+      "width": 390,
+      "opacity": "1",
+      "shift": -9.75,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "ar",
+      "width": 768,
+      "opacity": "1",
+      "shift": -19.2,
+      "overflow": false
+    },
+    {
+      "engine": "chromium",
+      "locale": "ar",
+      "width": 1440,
+      "opacity": "1",
+      "shift": -46.8,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "en",
+      "width": 390,
+      "opacity": "1",
+      "shift": 9.75,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "en",
+      "width": 768,
+      "opacity": "1",
+      "shift": 19.200001,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "en",
+      "width": 1440,
+      "opacity": "1",
+      "shift": 46.799999,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "id",
+      "width": 390,
+      "opacity": "1",
+      "shift": 9.75,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "id",
+      "width": 768,
+      "opacity": "1",
+      "shift": 19.200001,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "id",
+      "width": 1440,
+      "opacity": "1",
+      "shift": 46.799999,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "ar",
+      "width": 390,
+      "opacity": "1",
+      "shift": -9.75,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "ar",
+      "width": 768,
+      "opacity": "1",
+      "shift": -19.200001,
+      "overflow": false
+    },
+    {
+      "engine": "webkit",
+      "locale": "ar",
+      "width": 1440,
+      "opacity": "1",
+      "shift": -46.799999,
+      "overflow": false
+    }
+  ]
+}

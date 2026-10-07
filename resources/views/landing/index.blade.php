@@ -13,6 +13,8 @@
     @include('landing.header', $navigation)
     <main id="main-content" tabindex="-1">
         @include('landing.hero', ['hero' => $hero])
+        @include('landing.about', ['about' => $about])
+        @include('landing.program', ['program' => $program])
     </main>
 </body>
 </html>

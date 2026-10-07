@@ -1,0 +1,221 @@
+{
+  "date": "2026-10-07T05:19:02.286Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "154.0.4258.62",
+  "cases": [
+    {
+      "language": "en",
+      "width": 390,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "en",
+      "width": 768,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.1796875,
+        "arrowCenter": 33.171875
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "section": {
+        "scrolled": "true",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "language": "id",
+      "width": 390,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "language": "id",
+      "width": 768,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.1796875,
+        "arrowCenter": 33.171875
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "section": {
+        "scrolled": "true",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 185.75,
+        "arrowCenter": 185.75
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 768,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 188,
+        "arrowCenter": 188
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "alignment": {
+        "textCenter": 33.1796875,
+        "arrowCenter": 33.171875
+      },
+      "durations": [
+        720
+      ],
+      "opened": {
+        "scrolled": "false",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "section": {
+        "scrolled": "true",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      "counts": [
+        4,
+        4,
+        4
+      ]
+    }
+  ]
+}

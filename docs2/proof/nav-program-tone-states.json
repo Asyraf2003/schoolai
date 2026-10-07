@@ -1,0 +1,289 @@
+{
+  "date": "2026-10-07T05:34:37.346Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "153.0.8010.52",
+  "samples": [
+    {
+      "language": "en",
+      "frames": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "false"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        }
+      ]
+    },
+    {
+      "language": "id",
+      "frames": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "false"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        }
+      ]
+    },
+    {
+      "language": "ar",
+      "frames": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "false"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "true"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "scrolled": "false",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "true"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255, 255, 255)",
+          "image": "none",
+          "scrolled": "true",
+          "open": "false"
+        }
+      ]
+    }
+  ]
+}

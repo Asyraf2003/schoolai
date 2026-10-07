@@ -1,0 +1,14 @@
+{
+  "profile": "System Chromium/Linux, actual R2 media; viewport emulation",
+  "arabicDialogs": "Both full players advanced after CDP pointer gesture; preview pause, close/unload/focus/resume PASS",
+  "shortHeight": {
+    "top": 56,
+    "bottom": 383.984375,
+    "height": 327.984375,
+    "overflow": false
+  },
+  "fontExpansion200Percent": "No horizontal overflow",
+  "blockedPreviews": "All three posters available; no playing preview",
+  "noIntersectionObserver": "Semantic interleaved posters and copy remain accessible",
+  "noJavaScript": "Three localized stories/posters, hidden stage/triggers, no video src, no overflow"
+}

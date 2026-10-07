@@ -1,4 +1,8 @@
 // Pure Header policy. Browser observations arrive as values, never DOM nodes.
+export function headerSurface(state, navigationOpen) {
+    return state.scrolled || navigationOpen ? 'light' : 'hero';
+}
+
 export function createHeaderState(render) {
     let state = { desktop: false, mobileOpen: false, panel: null, scrolled: false, concealed: false };
     let lastY = 0;

@@ -24,11 +24,7 @@ trait PreparesNavbarMediaMenus
         $facilityLabel = trim((string) ($item['label'] ?? ''));
 
         if ($facilityLabel === '') {
-            $facilityLabel = match ($this->translator->getLocale()) {
-                'en' => 'Facilities',
-                'ar' => 'المرافق',
-                default => 'Fasilitas',
-            };
+            $facilityLabel = $this->translator->get('shared.navbar.labels.facilities');
         }
 
         $links = [[
@@ -59,11 +55,7 @@ trait PreparesNavbarMediaMenus
             }
         }
 
-        $item['label'] = match ($this->translator->getLocale()) {
-            'en' => 'Gallery',
-            'ar' => 'المعرض',
-            default => 'Galeri',
-        };
+        $item['label'] = $this->translator->get('shared.navbar.labels.gallery');
         $item['href'] = route('galeri');
         $item['route_patterns'] = ['galeri'];
         $item['mega'] = array_replace($copy, [
@@ -91,11 +83,7 @@ trait PreparesNavbarMediaMenus
         $articleLabel = trim((string) ($item['label'] ?? ''));
 
         if ($articleLabel === '') {
-            $articleLabel = match ($this->translator->getLocale()) {
-                'en' => 'Articles',
-                'ar' => 'المقالات',
-                default => 'Artikel',
-            };
+            $articleLabel = $this->translator->get('shared.navbar.labels.articles');
         }
 
         $links = [[

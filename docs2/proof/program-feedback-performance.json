@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-07T04:06:49.070Z",
+  "version": "153.0.8010.52",
+  "profile": "Linux headless localhost, no throttle; native wheel; new pages in same context; no Lighthouse/PSI/CWV certification",
+  "samples": [
+    {
+      "width": 390,
+      "run": 1,
+      "taskDurationMs": 46.214,
+      "long": []
+    },
+    {
+      "width": 390,
+      "run": 2,
+      "taskDurationMs": 30.857000000000003,
+      "long": []
+    },
+    {
+      "width": 390,
+      "run": 3,
+      "taskDurationMs": 29.093,
+      "long": []
+    },
+    {
+      "width": 1440,
+      "run": 1,
+      "taskDurationMs": 43.559,
+      "long": []
+    },
+    {
+      "width": 1440,
+      "run": 2,
+      "taskDurationMs": 43.163,
+      "long": []
+    },
+    {
+      "width": 1440,
+      "run": 3,
+      "taskDurationMs": 43.03000000000001,
+      "long": []
+    }
+  ],
+  "summary": [
+    {
+      "width": 390,
+      "median": 30.857000000000003,
+      "worst": 46.214
+    },
+    {
+      "width": 1440,
+      "median": 43.163,
+      "worst": 43.559
+    }
+  ]
+}

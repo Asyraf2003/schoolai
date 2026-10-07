@@ -1,5 +1,291 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## ID Program heading horizontal timing — 2026-10-07
+
+OWNER_ACCEPTED: one behavior only, ID horizontal760ms→1200ms; vertical760ms,
+gap/displacement/easing/EN/AR/cards/detail/Header/About/Values/line protected.
+The exact owner request is the bounded accepted blueprint; no architecture change.
+FACT/EXECUTION: horizontal duration now reads a narrow ID locale token with the
+existing760ms duration as fallback. Two CSS owners and the focused heading test
+changed; other product source hashes are identical to the task-start snapshot.
+PROOF: Chromium153/WebKit26.6 focused heading5tests PASS, normal ID/EN/AR at
+390/768/1440, reduced tiers, no-JS and reverse/reentry. ID1440×900 native CSS
+sequence13frames: horizontal1200ms, vertical/opacity760ms, same editorial easing,
+final187.2px. Settled ink gap25.640625px equals the prior measured gap exactly.
+Detail source/GSAP hashes unchanged; actual kinetic open3.905s/close3.642s,
+Back/focus restoration PASS. No detail timing setting changed.
+Diff/structure277/build PASS; JS3tests PASS; PHP Program9tests/163assertions PASS.
+Full PHP332:186PASS/71failure/75error,1644assertions; failure/error name sets
+identical to Map10 baseline, no new failures. Full repository remains FAIL.
+Local proof: /tmp/program-id-heading1200/{frames,heading-tests.log,detail-and-gap.json,
+protected-source.json,php-summary.json}. No native Safari/device certification.
+GAP: rapid-resize white patch remains BLOCKED_BY_MISSING_EVIDENCE; no patch.
+GIT: fetched main a44d484f; local branch feat/home-v2-about HEAD08039bba.
+Owner requested issue/PR/main push, but main lacks the uncommitted About/Program
+V2 baseline and GitHub CLI is not authenticated. Publication scope clarification
+is pending; no unrelated baseline staged and no commit/push/merge performed.
+STATUS: PASS scoped duration correction; FAIL full repo;
+BLOCKED_BY_MISSING_EVIDENCE publication baseline scope and resize-paint cause.
+NEXT channel owner/local terminal: resolve publication baseline scope and GitHub
+authentication; do not infer permission to publish all pre-existing local changes.
+
+## Bounded menu / heading correction — 2026-10-07
+
+OWNER: exactly3 targets; desktop open menu one light field/dark text, Latin
+heading visible gap≈one third, section entrance760ms. Supersedes Map09's Hero
+open transparent contract and ID5800ms travel. Main fetched a44d484f; branch
+feat/home-v2-about HEAD08039bba unchanged. No commit/push/merge.
+FACT/ROOT: headerSurface excluded desktop open; old shared token lights Header/
+panel. Panel already starts at Header bottom72px; Hero-open strip4320/8640white
+before, all8640after. Current responsive logo38 at1440,48 at1920 preserved.
+EXECUTION:5product files only; state/open-rendered closing and one surface token;
+Latin leading.9→.815,gap.12→.04em,mask padding.08→.02em; AR single line intact.
+Vertical900ms and delayed EN1450/ID5800ms→one760ms editorial entrance. Cards/detail/
+GSAP/architecture protected. No new plane/controller/geometry/scroll engine.
+BLUEPRINT: ../../docs2/blueprints/menu-heading-visual-correction.md OWNER_ACCEPTED/
+IMPLEMENTING, no active code step; not full-DOD PROVEN because gates/gaps remain.
+PROOF:4engines84menu states,48heading ink/mask cells,1225opening/closing frames
+PASS;36join captures full-white, hover/top/close/scrolled/rapid/visible-open.
+Heading gap1440 EN73.875→24.641,ID74.875→25.641px,font172.8px unchanged; Firefox
+subpixel serialization accounted. Existing heading36normal/180reduced/18no-JS/
+3reentry,nav216tier/locale/keyboard/resize +18no-JS,menu36tone/media PASS.
+21focused browser tests +2baseline/menu-only PASS; pure JS12 PASS; PHP27/369 PASS.
+Diff/structure277/build/Pint PASS. Full PHP332:186PASS,71failure,75error,1644
+assertions; all failure/error names identical Map09 baseline. Repository FAIL.
+PROTECTED:772task-start sources,763unchanged,9authorized source/test changes,
+2new test/helper;386legacy identical. About/Hero/cards/detail/media/content/
+anchors/cursor/Header dimensions/controller/media/accordion/AR EN adapters intact.
+GAP: native Safari/device certification absent. Decorative paint white patch
+appears in fast-resize captures before and after; isolated stable captures clean.
+Cause unproven; no speculative hide/selector patch. Closed native details may
+retain layout rects; CSSOM browser-only hide control did not change isolated paint.
+PROOF: ../../docs2/proof/menu-heading-status.md and menu-heading-gates.json.
+STATUS: PASS three scoped contracts; FAIL full repo; BLOCKED_BY_MISSING_EVIDENCE
+native Safari/decorative paint cause. No Values/line or unrelated remediation.
+RECHECK: same owner request received again; source already matches accepted gap/
+760ms/menu contracts. Fresh4engine84menu/48heading cells PASS, JS12/PHP27/gates
+PASS; full PHP same failures/errors.774source hashes identical, no additional
+code edits and no second gap reduction. Proof menu-heading-confirmation.json.
+NEXT channel owner/local terminal: review three corrections; paint-after-resize
+needs a separate accepted scope if pursued. No active implementation step.
+
+## Nav timing / Program locale correction — 2026-10-07
+
+FACT/OWNER: nav text follows its actual active base field; ID heading distance/
+duration4×, EN distance2×, AR displacement0. Main freshly fetched a44d484f;
+branch feat/home-v2-about HEAD08039bba unchanged. No commit/push/merge.
+BLUEPRINT: ../../docs2/blueprints/nav-type-final-polish.md OWNER_ACCEPTED/IMPLEMENTING;
+not full-DOD PROVEN because repository/native-device gates remain.
+EXECUTION: Header isolated base layer and one data-surface owner for fill/color;
+existing48/24/Hero-open policy retained. Exact earlier PC symptom not reproduced;
+source/lab prove the owner-confirmed field/color contract, not a device diagnosis.
+AR decorative leading1.35→.75 from old; semantic1.35 retained. No copy/font/media/
+card/detail engine changes. ID5800ms/EN1450ms after900ms reveal; AR no horizontal.
+PROOF: heading4 engines36 normal,180 reduced,18 no-JS,3 reentry PASS. Type baseline/
+after6 profiles each,36 wheel trials per phase: AR visible4/4/5→8/8/8,20 total,
+no long tasks, page JS heap~2.33–2.35MB unchanged; not physical/GPU RAM. Kinetic AR
+12 normal/4 reduced-resize PASS: same DOM, cleanup/focus/Back/Escape/anchors/scroll.
+Nav216 tier/locale cells,36 tone/media,18 no-JS,6 mobile touch profiles PASS;
+58 sampled frames align field/labels/glyphs/chevrons. Rapid/keyboard/reverse/media
+failure/reuse,36 Program text-expansion cases,Header language/Sound PASS. WebKit
+normal environment restored in isolated /tmp media libs; no product workaround.
+GATES: diff/structure277/build/Pint PASS; PHP focus27/369 and pure JS18 PASS.
+Full PHP332:186 PASS,71 failure,75 error,1644 assertions; no changed failure/error
+names against prior baseline. Full repository gate remains FAIL.
+PROTECTED:769 task-start sources:754 unchanged,15 authorized source/test changes,
+3 new tests;386 legacy files unchanged. About/Hero/cursor/Sound/Language/assets/
+lang/DB/presenters remain. Current artifact list and report are durable.
+PROOF: ../../docs2/proof/program-third-status.md and program-third-gates.json.
+STATUS: PASS scoped local corrections; FAIL full repo; BLOCKED_BY_MISSING_EVIDENCE
+physical Redmi12/Safari/total RAM/native zoom/screen reader/100 scores/field CWV.
+NEXT channel owner/local terminal: review local result; no active code step.
+Values/blue Values transition/future line remain deferred and require new scope.
+
+## Program heading + navigation correction — active 2026-10-07
+
+FACT/OWNER: lower Program line moves inward after reveal, not by scroll. Blue
+transition belongs to deferred Values. Desktop transparent Hero nav stays white
+when submenu opens; white bar owns dark main labels. Center Latin chevron,
+Inter/Cairo sources,2× submenu speed and prepared/reused media requested.
+Main fetched a44d484f; feat/home-v2-about HEAD08039bba; no publication.
+ROOT: open+scrolled share tone selector;220ms color lag; underline reservation
+offsets chevron;1440ms accordion; lazy closed-details media; AR Header lacks Cairo.
+BLUEPRINT: ../../docs2/blueprints/nav-program-polish.md OWNER_ACCEPTED/IMPLEMENTING.
+PROGRESS:20 browser tests PASS:36 normal heading cases,180 reduced tier/locale
+cases,18 no-JS heading cases,3 reentry cases;216 Header tier/locale cases,
+36 tone/media cases;6 touch/mobile locale profiles with Program detail/Back,
+orientation/reduced, slow/failed media and keyboard/reversal checks.
+Reduced heading transition conflict removed at owner; final pose follows width
+without animation. Native repeat-opening image node/src/request counts stable.
+Inter/Cairo Header and localized dictionary labels proven. Program/Values blue
+transition explicitly deferred; no Values/line/GSAP heading/controller coupling.
+GATES: diff/structure277/build/Pint PASS; focused PHP27/369 + Gallery1/11 PASS;
+pure JS16 PASS. Full PHP332:186 PASS,71 failures,75 errors,1644 assertions;
+no new failing/error names against program-feedback baseline. Exact copy/query/
+route Gallery checks retained while moving literal labels to language ownership.
+PROTECTED:762 baseline source files checked;13 authorized existing files changed,
+749 unchanged. About/Hero/cursor/Sound/Language/media/legacy retained.
+PROOF: ../../docs2/proof/nav-program-status.md and nav-program-gates.json.
+GAP: owner supplied production URL/Redmi12; read-only old production audit had
+CSS200/no reproduced overflow. It does not explain the physical-device failure.
+STATUS: PASS local surface contracts; FAIL full repository gate;
+BLOCKED_BY_MISSING_EVIDENCE for physical Redmi12/iOS/real zoom/screen reader.
+NEXT: no active code step; local result ready for owner review. No publication.
+
+## Program visual correction — active 2026-10-07
+
+FACT: owner rejects missing background type/color, tiny corners, hover underline,
+heading position and absent reverse fade. Main freshly fetched a44d484f; branch
+feat/home-v2-about HEAD08039bba. Type is inside closed dialog; IO was once-only.
+GOAL/DECISION: one shared type DOM with Program-only home and modal lifecycle,
+Codrops-based fluid radius, CSS slight hover enlargement, reversible IO/CSS.
+BLUEPRINT: MAP-V2-07 correction OWNER_ACCEPTED/IMPLEMENTING; additional owner
+meaning remains unresolved. EXECUTION: shared type viewport returns to Program
+home after dialog; fluid8–12/12–17 corners, small CSS hover scales, header90%,
+reversible IO formation and discrete scrollend reconciliation for proven fast-jump
+gap. Detail white/light-blue fades700ms; background entry/exit masks fade spatially.
+PROOF:28 browser tests PASS:228 layout/480 reduced details/36 normal kinetic/
+36 visual/36 expanded-text cases;16 pure Node,PHP focus23/291,build/structure276/
+Pint/diff PASS. Full PHP328/182 PASS/71 FAIL/75 errors; same baseline names.
+521/531 pre-correction sources identical; ten authorized sources/tests changed,
+one new visual browser test. About/Header/Hero/locale/media/legacy protected.
+STATUS: declared correction behaviors PASS; full repo FAIL; additional color
+stage/horizontal heading meaning BLOCKED_BY_MISSING_EVIDENCE awaiting owner text.
+Evidence ../../docs2/proof/program-feedback-status.md and program-feedback-gates.json.
+NEXT channel owner/local terminal: explain desired color stage/heading motion
+if different from the proven detail fade and source-based final heading inset.
+
+## Program V2 migration — 2026-10-07
+
+FACT: freshly fetched main a44d484f; local feat/home-v2-about HEAD08039bba.
+Owner authorizes Program only; existing dirty About/Header work protected.
+GAP: historical six-card docs differ from actual eight-card source; source wins.
+Arabic heading has one line and is preserved. No content rewrite authorized.
+GOAL/IMPACT/DECISION: independent fluid Program, IO/CSS heading/formation,
+intent-loaded kinetic detail; no legacy shared scroll/Values ownership.
+BLUEPRINT: ../../docs2/blueprints/homepage-v2-program.md OWNER_ACCEPTED/PROVEN
+for declared Program profiles. EXECUTION: eight localized cards, fluid two/four
+column staircase, Center Split and once-seen IO formation, native dialog with
+intent-loaded kinetic adapter, semantic fallback and four stable future markers.
+Seam masks About texture final12svh and resolves mint to white over18svh.
+No About source changes, shared scroll owner, Values content or future line.
+PROOF:228 layout cells/480 reduced details/36 kinetic cases on Chromium153,
+Edge154,Firefox155,WebKit26.6;23 browser tests,Node16,PHP focus23/285 PASS.
+Diff/structure276/build/Pint PASS. Temporary CLI SQLite/GD enables proper tests.
+Full PHP328/182 passed/71 failures/75 errors; same failing names as baseline.
+471/476 baseline sources identical; remaining five are authorized integration.
+GAP: About ID label396px wide at390/200% text; Hero cold CLS~.55 occurs also
+without Program in a browser-only counterfactual. Both owners remain protected.
+STATUS: scoped Program PASS; repository suite FAIL; release certification
+BLOCKED_BY_MISSING_EVIDENCE for native Safari/devices/screen reader/real zoom/
+BFCache/PSI/field CWV. No whole-site performance or complete DOD claim.
+Evidence ../../docs2/proof/program-status.md and program-gates.json.
+NEXT: owner reviews local Program/screenshots; no new implementation channel.
+No push/merge/main write; historical entries below do not define active scope.
+
+## Desktop Sound alignment + water tap — 2026-10-06
+
+Latest owner opens only Sound desktop visual/interaction scope. Main fetched
+a44d484f; local feat/home-v2-about/HEAD08039bba; no push or merge.
+Blueprint ../../docs2/blueprints/header-sound-feedback.md PROVEN for declared cases.
+FACT: Sound font same size as nav but weight400 vs600 and different label baseline.
+EXECUTION: share desktop control/label CSS metrics, remove Sound side padding;
+transparent baseline reservation, no yellow underline. One temporary aria-hidden
+CSS ripple on native click, pointer position/keyboard center, two faint concentric
+rings; transform/opacity only, no new animation loop. Existing audio handler and
+compact wave preserved. Hidden/resize/compact/reduced/pagehide/dispose clear it.
+PROOF:33 locale/viewport cells, three Sound browser tests andnine regressions PASS;
+Sound/menu15.2/600/y21.703/h28.594 at1920. Actual audio toggle, native Enter,
+single/repeated node cleanup and canvas fallback PASS. Node14,PHP15/142,build/
+structure262/diff PASS. Full PHP319/173 passed/71 failures/75 errors, no new names.
+68 protected sources unchanged; compact wave implementation and audio port intact.
+STATUS: scoped PASS; repository suite FAIL from pre-existing legacy debt.
+Evidence ../../docs2/proof/header-sound-status.md. NEXT: owner reviews local result.
+
+## About label / sharper media shadow — 2026-10-06
+
+Latest owner asks only sharper shadow and slightly larger labels with a line.
+Local feat/home-v2-about; main freshly fetched a44d484f; no push or merge.
+Accepted bounded refinement appended to MAP-V2-05; only About CSS changed.
+EXECUTION: reduced shadow blur/increased contrast, same physical right/down cast.
+Label fluid15.2–17px; equal intrinsic CSS grid tracks match line to localized
+text width, with native RTL direction. No content, layout or JS controller edits.
+PROOF:54 wide story/18 menu/30 tier-locale cases; matching line/text widths,
+stable centers, no overflow, native modal/network/lifecycle PASS. Nine browser
+tests,Node14,PHP15/142,build/structure262/diff PASS. Native scroll-test target was
+centered to avoid a fractional top clip selecting a different fully visible
+preview; production observer remains unchanged. Full PHP319/173 passed/71 failures/
+75 errors, no new names. Protected source hashes unchanged.
+STATUS: scoped PASS; repository suite FAIL from pre-existing legacy debt.
+Evidence ../../docs2/proof/about-label-status.md. NEXT: owner reviews local result.
+
+## Fluid About typography / cursor-only mascot / directional shadow — 2026-10-06
+
+Latest owner correction supersedes decorative mascot and previous type scale.
+Blueprint ../../docs2/blueprints/homepage-v2-about-type.md PROVEN for declared cases.
+Main fetched a44d484f; local feat/home-v2-about/HEAD08039bba; no push or merge.
+FACT: former heading76/body18, wide gap24; decorative image independent of cursor.
+EXECUTION: slightly lower fluid headline curve/weight680, body slightly larger/
+darker with1.55 leading, fluid tighter gap and measure; no manual content breaks.
+Remove side mascot DOM/CSS/data/config; keep global cursor unchanged. Two positive
+physical X/Y shadow layers cast down/right from upper-left light; scale with screen.
+PROOF: four composition andfive lifecycle/fallback browser tests PASS;54 wide
+story/18 menu/30 tier-locale cases, fluid size progression, no mascot, alignment/
+overflow/RTL/modal/lazy loading intact.68 protected behavioral/Header/Hero/locale/
+cursor sources unchanged; JS bundle unchanged. PHP15/142,Node14,build/structure262/
+Pint/diff PASS. Full PHP319/173 passed/71 failures/75 errors, no new failure names.
+Evidence ../../docs2/proof/about-type-status.md. STATUS: scoped PASS; repository
+suite FAIL from pre-existing legacy debt. Other-engine/physical/manual/PSI/field
+remain unproven. NEXT VALID STEP: owner reviews local same-viewport result.
+
+## About visual composition / Header scale — 2026-10-06
+
+Latest owner prompt accepts engineering and opens CSS composition scope, including
+Header geometry and per-story base colors. Read-only lifecycle/locale/observer/
+Hero owners remain protected. Main freshly fetched a44d484f; local feat/home-v2-about.
+Blueprint ../../docs2/blueprints/homepage-v2-about-polish.md PROVEN for declared cases.
+FACT:1920x1080 Header108/logo64/media761.609x428.391; center mismatch93.617px.
+EXECUTION: shared Header72px cap; desktop logo38–48; dropdown cap352; shared usable
+story/sticky stage height; larger square16:9 display; 76px headline at1920; quiet
+12% geometry33 texture. Cream/sky/mint base colors transition700ms with CSS.
+Owner clarified decorative mascot: existing cwo2 anchored outside media at gutter
+center, mirrored by RTL CSS; global pointer cursor behavior unchanged.
+PROOF:1920 composition PASS, frame873.094x491.109; copy/media same center (<.02px).
+54 localized wide story cells,18 menu geometry cells,30 tier/locale cells PASS.
+Nine browser tests total: four composition/Header/color plus five existing
+lifecycle/fallback cases. CSS color interpolation700ms, reduced0s, static texture;
+mascot anchor/RTL, native menu/language/sound, modal/reset and lazy network PASS.
+PHP15/142,Node14,build/structure262/Pint/diff PASS. Full PHP319/173 passed/
+71 failures/75 errors exactly match prior baseline; no new failures/errors.
+65 protected lifecycle/Hero/locale/Header-DOM sources unchanged; JS bundle unchanged.
+Evidence ../../docs2/proof/about-polish-before.json and about-polish-after.json.
+STATUS: scoped PASS; repository suite FAIL from existing legacy references.
+NEXT VALID STEP: owner reviews local same-viewport before/after. Other-engine/
+physical-device/manual/PSI/field results remain BLOCKED_BY_MISSING_EVIDENCE.
+No push/merge/publication authorized or performed.
+
+## Homepage V2 About — 2026-10-06
+
+Owner execution prompt opens About scope and supersedes the historical Hero-first
+gate. Main fetched via HTTPS: a44d484f; established V2 source: 08039bba on
+feat/home-v2-hero. Local execution branch: feat/home-v2-about; no publication.
+Blueprint: ../../docs2/blueprints/homepage-v2-about.md, OWNER_ACCEPTED/IMPLEMENTING.
+FACT: About absent; five intended missions belong to home_parity.
+EXECUTION: dedicated localized adapter/presenter, configured derivatives,
+geometry33 static repeat, natural stories/IO, stable CSS sticky two-layer stage,
+narrow media→copy, single preview playback, native About/Mission dialog unloading.
+PROOF: focused PHP15/140 and Node14 PASS; Chromium30 width/locale cells and
+desktop/mobile playback, opacity readiness, network, Escape/focus/unload,
+hidden-document pause/resume PASS. Five browser tests also cover Arabic narrow
+real pointer gestures, short height, text expansion and degraded/no-JS fallback.
+Build/structure/Pint/diff PASS. About blueprint PROVEN for declared scope.
+Full PHP:319 tests/173 pass/71 failures/75 errors; identical failure/error names
+to correction-php.json. No new failures. Evidence: ../../docs2/proof/about-*.json.
+STATUS: scoped checks PASS; repository suite FAIL from existing legacy migration.
+Cross-engine/nativeSafari/manual/PSI/field certification BLOCKED_BY_MISSING_EVIDENCE.
+NEXT VALID STEP: owner reviews local About delivery; no publication requested.
+Hero/Header/Menu/Cursor owners remain read-only; no main/remote mutation.
+
 ## Active nav-frame / Hero-action / slow-motion patch — 2026-10-05
 
 Main fetched a44d484f; parent e8e27d1a on feat/home-v2-hero, PR64 draft.

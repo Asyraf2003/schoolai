@@ -1,0 +1,267 @@
+{
+  "date": "2026-10-07",
+  "profile": "Linux headless localhost, reduced motion, fonts/media ready, no throttle; visible/hidden type control,3 repeats,8 native wheel steps",
+  "browser": "153.0.8010.52",
+  "host": {
+    "os": "Linux-7.2.9-arch1-1-x86_64-with-glibc2.44",
+    "cpu": "AMD Ryzen AI 7 445 w/ Radeon 840M",
+    "ram_gib": 15
+  },
+  "samples_each_phase": 36,
+  "rows": [
+    {
+      "locale": "en",
+      "width": 390,
+      "visible_lines_before": 8,
+      "visible_lines_after": 8,
+      "before_visible": {
+        "median_task_ms": 22.395,
+        "worst_task_ms": 23.828,
+        "median_layout_ms": 0,
+        "median_script_ms": 3.24,
+        "median_heap_used_bytes": 2366012,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "after_visible": {
+        "median_task_ms": 22.541,
+        "worst_task_ms": 25.162,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.855,
+        "median_heap_used_bytes": 2365940,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "before_hidden": {
+        "median_task_ms": 19.764,
+        "worst_task_ms": 20.872,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.685,
+        "median_heap_used_bytes": 2365736,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "after_hidden": {
+        "median_task_ms": 21.111,
+        "worst_task_ms": 21.369,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.962,
+        "median_heap_used_bytes": 2365728,
+        "node_count": 2387,
+        "long_tasks": 0
+      }
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "visible_lines_before": 8,
+      "visible_lines_after": 8,
+      "before_visible": {
+        "median_task_ms": 20.228,
+        "worst_task_ms": 20.908,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.494,
+        "median_heap_used_bytes": 2372828,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "after_visible": {
+        "median_task_ms": 21.487,
+        "worst_task_ms": 22.769,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.964,
+        "median_heap_used_bytes": 2372744,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "before_hidden": {
+        "median_task_ms": 19.458,
+        "worst_task_ms": 20.135,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.673,
+        "median_heap_used_bytes": 2372820,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "after_hidden": {
+        "median_task_ms": 20.704,
+        "worst_task_ms": 20.837,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.75,
+        "median_heap_used_bytes": 2372796,
+        "node_count": 2387,
+        "long_tasks": 0
+      }
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "visible_lines_before": 8,
+      "visible_lines_after": 8,
+      "before_visible": {
+        "median_task_ms": 21.276,
+        "worst_task_ms": 21.626,
+        "median_layout_ms": 0.7,
+        "median_script_ms": 2.543,
+        "median_heap_used_bytes": 2380980,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "after_visible": {
+        "median_task_ms": 21.091,
+        "worst_task_ms": 23.193,
+        "median_layout_ms": 0.587,
+        "median_script_ms": 2.228,
+        "median_heap_used_bytes": 2380980,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "before_hidden": {
+        "median_task_ms": 21.477,
+        "worst_task_ms": 22.562,
+        "median_layout_ms": 0.54,
+        "median_script_ms": 2.403,
+        "median_heap_used_bytes": 2380760,
+        "node_count": 2387,
+        "long_tasks": 0
+      },
+      "after_hidden": {
+        "median_task_ms": 23.795,
+        "worst_task_ms": 25.178,
+        "median_layout_ms": 0.627,
+        "median_script_ms": 3.021,
+        "median_heap_used_bytes": 2380760,
+        "node_count": 2387,
+        "long_tasks": 0
+      }
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "visible_lines_before": 4,
+      "visible_lines_after": 8,
+      "before_visible": {
+        "median_task_ms": 22.392,
+        "worst_task_ms": 23.096,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.309,
+        "median_heap_used_bytes": 2328912,
+        "node_count": 2193,
+        "long_tasks": 0
+      },
+      "after_visible": {
+        "median_task_ms": 24.711,
+        "worst_task_ms": 26.736,
+        "median_layout_ms": 0,
+        "median_script_ms": 3.094,
+        "median_heap_used_bytes": 2328468,
+        "node_count": 2193,
+        "long_tasks": 0
+      },
+      "before_hidden": {
+        "median_task_ms": 19.137,
+        "worst_task_ms": 19.143,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.523,
+        "median_heap_used_bytes": 2328876,
+        "node_count": 2193,
+        "long_tasks": 0
+      },
+      "after_hidden": {
+        "median_task_ms": 21.548,
+        "worst_task_ms": 21.707,
+        "median_layout_ms": 0,
+        "median_script_ms": 3.164,
+        "median_heap_used_bytes": 2328456,
+        "node_count": 2193,
+        "long_tasks": 0
+      }
+    },
+    {
+      "locale": "ar",
+      "width": 768,
+      "visible_lines_before": 4,
+      "visible_lines_after": 8,
+      "before_visible": {
+        "median_task_ms": 21.652,
+        "worst_task_ms": 23.185,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.351,
+        "median_heap_used_bytes": 2339460,
+        "node_count": 2193,
+        "long_tasks": 0
+      },
+      "after_visible": {
+        "median_task_ms": 24.639,
+        "worst_task_ms": 25.773,
+        "median_layout_ms": 0,
+        "median_script_ms": 3.016,
+        "median_heap_used_bytes": 2335720,
+        "node_count": 2193,
+        "long_tasks": 0
+      },
+      "before_hidden": {
+        "median_task_ms": 19.025,
+        "worst_task_ms": 19.078,
+        "median_layout_ms": 0,
+        "median_script_ms": 2.498,
+        "median_heap_used_bytes": 2339284,
+        "node_count": 2193,
+        "long_tasks": 0
+      },
+      "after_hidden": {
+        "median_task_ms": 21.723,
+        "worst_task_ms": 21.796,
+        "median_layout_ms": 0,
+        "median_script_ms": 3.164,
+        "median_heap_used_bytes": 2335520,
+        "node_count": 2193,
+        "long_tasks": 0
+      }
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "visible_lines_before": 5,
+      "visible_lines_after": 8,
+      "before_visible": {
+        "median_task_ms": 24.238,
+        "worst_task_ms": 25.584,
+        "median_layout_ms": 0.677,
+        "median_script_ms": 4.266,
+        "median_heap_used_bytes": 2346752,
+        "node_count": 2233,
+        "long_tasks": 0
+      },
+      "after_visible": {
+        "median_task_ms": 24.44,
+        "worst_task_ms": 26.55,
+        "median_layout_ms": 0.692,
+        "median_script_ms": 3.866,
+        "median_heap_used_bytes": 2342880,
+        "node_count": 2233,
+        "long_tasks": 0
+      },
+      "before_hidden": {
+        "median_task_ms": 23.366,
+        "worst_task_ms": 24.179,
+        "median_layout_ms": 0.587,
+        "median_script_ms": 3.762,
+        "median_heap_used_bytes": 2346728,
+        "node_count": 2233,
+        "long_tasks": 0
+      },
+      "after_hidden": {
+        "median_task_ms": 26.178,
+        "worst_task_ms": 26.335,
+        "median_layout_ms": 0.681,
+        "median_script_ms": 4.476,
+        "median_heap_used_bytes": 2342848,
+        "node_count": 2233,
+        "long_tasks": 0
+      }
+    }
+  ],
+  "limitations": "Task/JS heap include the page. JS heap is not total browser/GPU/Android/iOS RAM; timing is lab data, not field CWV.",
+  "interpretation": "Density doubles in AR with the same20 text nodes and unchanged font/media/chunk sources. No substantial page JS heap increase or >50ms long task observed in these wheel trials. Visible-hidden timing differences are variable; measurements do not establish GPU/physical RAM or a device/field score."
+}

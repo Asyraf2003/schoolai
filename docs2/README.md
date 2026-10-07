@@ -1,12 +1,20 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Landing Page V2 — Shell + Menu + Hero, koreksi Menu/media + bahasa EN/ID/AR**.
+Scope saat ini: **Tiga koreksi terbatas: menu menyatu, jarak judul, reveal760ms**.
 
-Map aktif: [MAP-V2-02](blueprints/menu-hero-correction.md).
-Laporan owner: [koreksi](reports/menu-hero-correction-owner.md).
-Peta teknis: [ownership](architecture/menu-hero-correction-map.md).
-Bukti/status terbaru: [proof](proof/menu-hero-correction-status.md).
+Map aktif: [MAP-V2-10](blueprints/menu-heading-visual-correction.md).
+Bukti terbaru: [Tiga koreksi visual dan screenshot](proof/menu-heading-status.md).
+Bukti putaran sebelumnya: [Nav dan latar AR](proof/program-third-status.md).
+Bukti sebelumnya: [Judul Program dan navigasi](proof/nav-program-status.md).
+Koreksi Program sebelumnya: [Program visual correction](proof/program-feedback-status.md).
+Migrasi awal: [Program proof](proof/program-status.md).
+Sound yang tetap diterima: [MAP-V2-06](blueprints/header-sound-feedback.md).
+About terakhir: [MAP-V2-05](blueprints/homepage-v2-about-type.md).
+Komposisi/Header yang tetap diterima: [MAP-V2-04](blueprints/homepage-v2-about-polish.md).
+Arsitektur About yang diterima: [MAP-V2-03](blueprints/homepage-v2-about.md).
+Header/Hero terdahulu: [MAP-V2-02](blueprints/menu-hero-correction.md);
+ownership dan bukti historisnya tetap berlaku untuk owner yang tidak berubah.
 Blueprint foundation lama adalah histori; urutan terbaru pada map aktif berlaku.
 
 `docs2/` adalah sumber arahan baru yang bersih agar pekerjaan Homepage V2 tidak tercampur dengan histori dan keputusan legacy.
@@ -57,7 +65,8 @@ Jangan membaca seluruh `docs/` legacy sebagai prasyarat default.
 Delivery aktif: `resources/views/landing/index.blade.php` melalui route home.
 `resources/index.html` hanya artefak shell awal; bukan frontend production paralel.
 
-Urutan aktif: **foundation → shell → Menu → Hero → proof**, tanpa section lain.
+Urutan aktif: **foundation → shell → Menu → Hero → About → Program → proof**.
+Values dan garis Program→Values belum diimplementasikan.
 
 ## Prinsip utama
 

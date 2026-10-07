@@ -1,7 +1,7 @@
 // One details adapter owns compact flow and desktop reveal, with shared phases.
 export function mountHeaderAccordion(groups, changed = () => {}) {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const duration = 1440;
+    const duration = 720;
     const easing = 'cubic-bezier(.45,0,.2,1)';
     let desired = null;
     let desktop = false;

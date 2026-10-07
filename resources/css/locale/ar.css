@@ -1,1 +1,15 @@
 /* Homepage V2 ownership bucket. Isi hanya jika concern ini benar-benar dibutuhkan. */
+[lang="ar"] .site-header { font-family: Cairo, var(--v2-font); letter-spacing: normal; }
+[lang="ar"] .about { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .about__headline, [lang="ar"] .about__label { letter-spacing: normal; line-height: 1.5; }
+[lang="ar"] .program {
+    font-family: Cairo, var(--v2-font);
+    --program-heading-factor: 0;
+    --program-heading-leading: 1.35;
+    --program-detail-leading: 1.35;
+    --program-card-leading: 1.35;
+}
+[lang="ar"] .program__heading, [lang="ar"] .program__detail-title, [lang="ar"] .program__eyebrow {
+    letter-spacing: normal; text-transform: none; line-height: 1.35;
+}
+[lang="ar"] .program__type-line { letter-spacing: normal; text-transform: none; }

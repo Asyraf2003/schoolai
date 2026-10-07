@@ -1,0 +1,16 @@
+{
+  "baseline_count": 476,
+  "unchanged_count": 471,
+  "changed_authorized": [
+    "resources/css/index.css",
+    "resources/js/index.js",
+    "resources/views/landing/index.blade.php",
+    "resources/css/direction/rtl.css",
+    "resources/css/locale/ar.css"
+  ],
+  "missing": [],
+  "all_resources_old_unchanged": true,
+  "all_lang_unchanged": true,
+  "about_header_hero_cursor_sources_unchanged": true,
+  "baseline": "Local working tree before Program implementation, including existing uncommitted About/Header work"
+}

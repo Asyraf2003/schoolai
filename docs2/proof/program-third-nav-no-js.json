@@ -1,0 +1,169 @@
+{
+  "date": "2026-10-07T08:27:50.651Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "cases": [
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 390,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 768,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1440,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 390,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 768,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1440,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 390,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 768,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1440,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 390,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 768,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1440,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 390,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 768,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1440,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 390,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 768,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1440,
+      "enhanced": false,
+      "background": "rgb(7, 27, 24)",
+      "color": "rgb(255, 255, 255)",
+      "field": "none"
+    }
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "date": "2026-10-07T05:16:48.422Z",
+  "url": "https://almustaqbal.sch.id/",
+  "readOnly": true,
+  "records": [
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "emulated": true,
+      "device": "393x873 DPR2.75 approximate Redmi12 CSS viewport; no physical device",
+      "state": {
+        "lang": "en",
+        "body": "home-page site-cursor-page nav-shell",
+        "viewport": 393,
+        "docWidth": 393,
+        "v2": false,
+        "legacy": true,
+        "font": "Inter, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "styles": [
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-scroll-reveal-Fm2qzDO5.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-DMvVP_j1.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-login-perspective-CYElf0ND.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-vision-waapi-Cj-atx2v.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-values-story-D0SAIkWn.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-depth-gallery-BpakIKrt.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-article-showcase-DyMoF3S8.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-editorial-headings-DrHSU2IB.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-editorial-description-desktop-YTZOECTC.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-mega-menu-D0EDSQhZ.css",
+          null,
+          null
+        ],
+        "header": [
+          {
+            "class": "navbar navbar--hero",
+            "display": "flex",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "program-kinetic__header home-section-display__header",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "values-story__headline",
+            "display": "grid",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "testimonial-wall__intro",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "article-showcase__header home-section-display__header welcome-editorial-heading--ready",
+            "display": "grid",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "ready": "complete"
+      },
+      "assets": [
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-scroll-reveal-Fm2qzDO5.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-scroll-reveal-CVUZ8s9u.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-login-perspective-CYElf0ND.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-DMvVP_j1.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-vision-waapi-Cj-atx2v.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-values-story-D0SAIkWn.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-depth-gallery-BpakIKrt.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-editorial-description-desktop-YTZOECTC.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-editorial-headings-DrHSU2IB.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-article-showcase-DyMoF3S8.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-zPZ5ocIj.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/public-login-C-rWCcp4.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-editorial-headings-ol_xd_P8.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-hero-DdKB9grb.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-login-perspective-CSFro44Z.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/preload-helper-DBKfEBcf.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-mega-menu-D0EDSQhZ.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+          "status": 200,
+          "mime": "application/javascript"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "emulated": true,
+      "device": "393x873 DPR2.75 approximate Redmi12 CSS viewport; no physical device",
+      "state": {
+        "lang": "en",
+        "body": "home-page site-cursor-page nav-shell",
+        "viewport": 393,
+        "docWidth": 393,
+        "v2": false,
+        "legacy": true,
+        "font": "Inter, Helvetica Neue, Helvetica, Arial, sans-serif",
+        "styles": [
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-scroll-reveal-Fm2qzDO5.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-DMvVP_j1.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-login-perspective-CYElf0ND.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-vision-waapi-Cj-atx2v.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-values-story-D0SAIkWn.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-depth-gallery-BpakIKrt.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-article-showcase-DyMoF3S8.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-editorial-headings-DrHSU2IB.css",
+          "https://almustaqbal.sch.id/build/assets/welcome-editorial-description-desktop-YTZOECTC.css",
+          null,
+          "https://almustaqbal.sch.id/build/assets/welcome-mega-menu-D0EDSQhZ.css",
+          null,
+          null
+        ],
+        "header": [
+          {
+            "class": "navbar navbar--hero",
+            "display": "flex",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "program-kinetic__header home-section-display__header",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "values-story__headline",
+            "display": "grid",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "testimonial-wall__intro",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "article-showcase__header home-section-display__header welcome-editorial-heading--ready",
+            "display": "grid",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "ready": "complete"
+      },
+      "assets": [
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-scroll-reveal-Fm2qzDO5.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-scroll-reveal-CVUZ8s9u.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-DMvVP_j1.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-login-perspective-CYElf0ND.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-depth-gallery-BpakIKrt.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-values-story-D0SAIkWn.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-vision-waapi-Cj-atx2v.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-article-showcase-DyMoF3S8.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-editorial-headings-DrHSU2IB.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-login-perspective-CSFro44Z.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-zPZ5ocIj.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-editorial-description-desktop-YTZOECTC.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/preload-helper-DBKfEBcf.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-editorial-headings-ol_xd_P8.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-hero-DdKB9grb.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/public-login-C-rWCcp4.js",
+          "status": 200,
+          "mime": "text/javascript"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/build/assets/welcome-mega-menu-D0EDSQhZ.css",
+          "status": 200,
+          "mime": "text/css"
+        },
+        {
+          "url": "https://almustaqbal.sch.id/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+          "status": 200,
+          "mime": "application/javascript"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    }
+  ]
+}

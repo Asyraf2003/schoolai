@@ -1,0 +1,46 @@
+{
+  "profile": "System Chromium153/Linux, actual pointer and Enter clicks/real Hero audio",
+  "after": {
+    "locale": "en",
+    "mode": "desktop",
+    "sound": {
+      "y": 21.703125,
+      "height": 28.59375,
+      "font": "15.2px",
+      "weight": "600",
+      "line": "22.8px",
+      "borderColor": "rgba(0, 0, 0, 0)"
+    },
+    "menu": {
+      "y": 21.703125,
+      "height": 28.59375,
+      "font": "15.2px",
+      "weight": "600",
+      "line": "22.8px",
+      "borderColor": "rgba(0, 0, 0, 0)"
+    },
+    "soundButton": {
+      "y": 14,
+      "height": 44,
+      "font": "15.2px",
+      "weight": "600",
+      "line": "22.8px",
+      "borderColor": "rgb(170, 170, 170)"
+    },
+    "waveDisplay": "none",
+    "overflow": false
+  },
+  "ripple": {
+    "opacity": "0.000667638",
+    "transform": "matrix(1.99599, 0, 0, 1.99599, -17.0938, -17.0938)",
+    "duration": "0.68s",
+    "iterations": "1",
+    "pointer": "none",
+    "originX": "20.375px"
+  },
+  "keyboard": true,
+  "repeatedTapSingleNode": true,
+  "hiddenCleanup": true,
+  "reducedMotionKeepsAudio": true,
+  "compactWaveUnchanged": true
+}

@@ -1,0 +1,19 @@
+{
+  "tool": "pest",
+  "result": "failed",
+  "tests": 11,
+  "passed": 0,
+  "assertions": 14,
+  "duration_ms": 329,
+  "failed": 1,
+  "errors": 10,
+  "unavailable_sources": [
+    "file_get_contents(/home/asyraf/projects/schoolai/resources/css/pages/welcome/program-journey/compact.css): ",
+    "file_get_contents(/home/asyraf/projects/schoolai/resources/css/pages/welcome/program-journey/handoff.css): ",
+    "file_get_contents(/home/asyraf/projects/schoolai/resources/css/pages/welcome/program-journey/heading.css): ",
+    "file_get_contents(/home/asyraf/projects/schoolai/resources/css/pages/welcome/program-journey/wide.css): ",
+    "file_get_contents(/home/asyraf/projects/schoolai/resources/js/pages/welcome/program-cards.js): ",
+    "file_get_contents(/home/asyraf/projects/schoolai/resources/js/surfaces/home/program-journey/controller.js): ",
+    "file_get_contents(/home/asyraf/projects/schoolai/resources/views/home/sections/featured-programs.blade.php): "
+  ]
+}

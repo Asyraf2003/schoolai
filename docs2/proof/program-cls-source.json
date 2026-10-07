@@ -1,0 +1,311 @@
+{
+  "date": "2026-10-07T03:00:25.195Z",
+  "browser": "153.0.8010.52",
+  "note": "Cold page startup, no scroll. Test-only removal is a counterfactual, not a replacement for a historic built-page baseline. Hero source is protected and byte-identical.",
+  "cases": [
+    {
+      "programRemovedInTest": true,
+      "shifts": [
+        {
+          "time": 680.8999999999069,
+          "value": 0.5545023696682464,
+          "scroll": 0,
+          "sources": [
+            {
+              "tag": "DIV",
+              "cl": "hero__content",
+              "previous": {
+                "x": 0,
+                "y": 468,
+                "width": 390,
+                "height": 376,
+                "top": 468,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "tag": "SPAN",
+              "cl": "hero__cta",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 656,
+                "width": 313.078125,
+                "height": 106,
+                "top": 656,
+                "right": 313.078125,
+                "bottom": 762,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "programRemovedInTest": false,
+      "shifts": [
+        {
+          "time": 177.60000000009313,
+          "value": 0.5545023696682464,
+          "scroll": 0,
+          "sources": [
+            {
+              "tag": "DIV",
+              "cl": "hero__content",
+              "previous": {
+                "x": 0,
+                "y": 468,
+                "width": 390,
+                "height": 376,
+                "top": 468,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "tag": "SPAN",
+              "cl": "hero__cta",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 656,
+                "width": 313.078125,
+                "height": 106,
+                "top": 656,
+                "right": 313.078125,
+                "bottom": 762,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "programRemovedInTest": true,
+      "shifts": [
+        {
+          "time": 165.20000000018626,
+          "value": 0.5545023696682464,
+          "scroll": 0,
+          "sources": [
+            {
+              "tag": "DIV",
+              "cl": "hero__content",
+              "previous": {
+                "x": 0,
+                "y": 468,
+                "width": 390,
+                "height": 376,
+                "top": 468,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "tag": "SPAN",
+              "cl": "hero__cta",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 656,
+                "width": 313.078125,
+                "height": 106,
+                "top": 656,
+                "right": 313.078125,
+                "bottom": 762,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "programRemovedInTest": false,
+      "shifts": [
+        {
+          "time": 198.39999999990687,
+          "value": 0.5545023696682464,
+          "scroll": 0,
+          "sources": [
+            {
+              "tag": "DIV",
+              "cl": "hero__content",
+              "previous": {
+                "x": 0,
+                "y": 468,
+                "width": 390,
+                "height": 376,
+                "top": 468,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "tag": "SPAN",
+              "cl": "hero__cta",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 656,
+                "width": 313.078125,
+                "height": 106,
+                "top": 656,
+                "right": 313.078125,
+                "bottom": 762,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "programRemovedInTest": true,
+      "shifts": []
+    },
+    {
+      "programRemovedInTest": false,
+      "shifts": [
+        {
+          "time": 162.20000000018626,
+          "value": 0.5545023696682464,
+          "scroll": 0,
+          "sources": [
+            {
+              "tag": "DIV",
+              "cl": "hero__content",
+              "previous": {
+                "x": 0,
+                "y": 468,
+                "width": 390,
+                "height": 376,
+                "top": 468,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "tag": "SPAN",
+              "cl": "hero__cta",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 656,
+                "width": 313.078125,
+                "height": 106,
+                "top": 656,
+                "right": 313.078125,
+                "bottom": 762,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

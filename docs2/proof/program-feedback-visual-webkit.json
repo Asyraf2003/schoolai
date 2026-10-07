@@ -1,0 +1,350 @@
+{
+  "date": "2026-10-07T04:08:38.445Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "26.6",
+  "records": [
+    {
+      "language": "en",
+      "width": 390,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 151.919998px, rgb(0, 0, 0) calc(100% - 67.52px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": -388.546875,
+          "width": 390,
+          "height": 1650.75,
+          "top": -388.546875,
+          "right": 390,
+          "bottom": 1262.203125,
+          "left": 0
+        },
+        "corner": 8,
+        "headerInset": 0,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.022348,
+        "imageScale": 1.013409
+      }
+    },
+    {
+      "language": "en",
+      "width": 768,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 900,
+          "top": 0,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 162px, rgb(0, 0, 0) calc(100% - 72px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": -8.484375,
+          "width": 768,
+          "height": 1360.515625,
+          "top": -8.484375,
+          "right": 768,
+          "bottom": 1352.03125,
+          "left": 0
+        },
+        "corner": 8,
+        "headerInset": 7.6875,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.020465,
+        "imageScale": 1.012279
+      }
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900,
+          "top": 0,
+          "right": 1440,
+          "bottom": 900,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 162px, rgb(0, 0, 0) calc(100% - 72px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": -125,
+          "width": 1440,
+          "height": 1938.921875,
+          "top": -125,
+          "right": 1440,
+          "bottom": 1813.921875,
+          "left": 0
+        },
+        "corner": 12,
+        "headerInset": 14.40625,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.020465,
+        "imageScale": 1.012279
+      }
+    },
+    {
+      "language": "id",
+      "width": 390,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 151.919998px, rgb(0, 0, 0) calc(100% - 67.52px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": -375.859375,
+          "width": 390,
+          "height": 1608.75,
+          "top": -375.859375,
+          "right": 390,
+          "bottom": 1232.890625,
+          "left": 0
+        },
+        "corner": 8,
+        "headerInset": 0,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.021044,
+        "imageScale": 1.012627
+      }
+    },
+    {
+      "language": "id",
+      "width": 768,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 47.8125,
+          "width": 768,
+          "height": 900,
+          "top": 47.8125,
+          "right": 768,
+          "bottom": 947.8125,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 162px, rgb(0, 0, 0) calc(100% - 72px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": 47.8125,
+          "width": 768,
+          "height": 1360.515625,
+          "top": 47.8125,
+          "right": 768,
+          "bottom": 1408.328125,
+          "left": 0
+        },
+        "corner": 8,
+        "headerInset": 7.6875,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.020465,
+        "imageScale": 1.012279
+      }
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900,
+          "top": 0,
+          "right": 1440,
+          "bottom": 900,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 162px, rgb(0, 0, 0) calc(100% - 72px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": -101,
+          "width": 1440,
+          "height": 1914.921875,
+          "top": -101,
+          "right": 1440,
+          "bottom": 1813.921875,
+          "left": 0
+        },
+        "corner": 12,
+        "headerInset": 14.40625,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.020805,
+        "imageScale": 1.012483
+      }
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 151.919998px, rgb(0, 0, 0) calc(100% - 67.52px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": -300.625,
+          "width": 390,
+          "height": 1480.296875,
+          "top": -300.625,
+          "right": 390,
+          "bottom": 1179.671875,
+          "left": 0
+        },
+        "corner": 8,
+        "headerInset": 0,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.020552,
+        "imageScale": 1.012331
+      }
+    },
+    {
+      "language": "ar",
+      "width": 768,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 154.140625,
+          "width": 768,
+          "height": 900,
+          "top": 154.140625,
+          "right": 768,
+          "bottom": 1054.140625,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 162px, rgb(0, 0, 0) calc(100% - 72px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": 154.140625,
+          "width": 768,
+          "height": 1203.3125,
+          "top": 154.140625,
+          "right": 768,
+          "bottom": 1357.453125,
+          "left": 0
+        },
+        "corner": 8,
+        "headerInset": 7.6875,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.020552,
+        "imageScale": 1.012331
+      }
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "idle": {
+        "dialogOpen": false,
+        "homeOwnsType": true,
+        "opacity": 0.16,
+        "viewport": {
+          "x": 0,
+          "y": 21,
+          "width": 1440,
+          "height": 900,
+          "top": 21,
+          "right": 1440,
+          "bottom": 921,
+          "left": 0
+        },
+        "mask": "linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 162px, rgb(0, 0, 0) calc(100% - 72px), rgba(0, 0, 0, 0))",
+        "root": {
+          "x": 0,
+          "y": 21,
+          "width": 1440,
+          "height": 1797.109375,
+          "top": 21,
+          "right": 1440,
+          "bottom": 1818.109375,
+          "left": 0
+        },
+        "corner": 12,
+        "headerInset": 14.40625,
+        "hasScrollEnd": true
+      },
+      "hover": {
+        "decoration": "none",
+        "textScale": 1.020376,
+        "imageScale": 1.012225
+      }
+    }
+  ]
+}

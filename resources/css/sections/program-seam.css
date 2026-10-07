@@ -1,0 +1,25 @@
+.program__entry {
+    position: relative;
+    block-size: 18vh;
+    block-size: 18svh;
+    background: linear-gradient(#d4eed5, var(--program-surface));
+}
+.program__entry::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: var(--program-entry-texture, none);
+    background-repeat: repeat; background-position: center;
+    background-size: clamp(14rem, 28vw, 22rem);
+    opacity: .12;
+    -webkit-mask-image: linear-gradient(#000, transparent);
+    mask-image: linear-gradient(#000, transparent);
+}
+@supports selector(.about:has(+ .program)) {
+    .about:has(+ .program)::before {
+        -webkit-mask-image: linear-gradient(#000 calc(100% - 12svh), transparent);
+        mask-image: linear-gradient(#000 calc(100% - 12svh), transparent);
+    }
+    .program__entry::before { content: none; }
+}
+@supports not (mask-image: linear-gradient(#000, transparent)) {
+    .program__entry::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent, var(--program-surface)); }
+}

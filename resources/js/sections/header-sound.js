@@ -14,9 +14,10 @@ export function wavePoints(size, amplitude, phase) {
 }
 
 export function mountHeaderSound(button) {
+    const ripple = mountSoundRipple(button);
     const canvas = button.querySelector('[data-audio-wave]');
     const context = canvas?.getContext('2d');
-    if (!context) return { update() {}, dispose() {} };
+    if (!context) return ripple;
     button.dataset.waveReady = 'true';
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     let enabled = false;
@@ -79,6 +80,7 @@ export function mountHeaderSound(button) {
     preference.addEventListener('change', refresh);
     return {
         update(status, header) {
+            ripple.update(status, header);
             const nextActive = status.available && !header.desktop && !header.concealed && header.panel !== 'language';
             const nextTreatment = `${header.scrolled}:${header.navigationOpen ?? (header.mobileOpen || header.panel !== null)}`;
             if (enabled === status.enabled && active === nextActive && treatment === nextTreatment) return;
@@ -88,6 +90,7 @@ export function mountHeaderSound(button) {
             refresh();
         },
         dispose() {
+            ripple.dispose();
             disposed = true;
             cancelAnimationFrame(frame);
             observer.disconnect();
@@ -98,5 +101,37 @@ export function mountHeaderSound(button) {
             preference.removeEventListener('change', refresh);
             delete button.dataset.waveReady;
         },
+    };
+}
+
+function mountSoundRipple(button) {
+    const lifecycle = new AbortController();
+    const { signal } = lifecycle;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let ring;
+    const clear = () => { ring?.remove(); ring = null; };
+    button.addEventListener('click', event => {
+        clear();
+        if (motion.matches || document.hidden || button.hidden || button.disabled
+            || getComputedStyle(button).getPropertyValue('--sound-ripple-enabled').trim() !== '1') return;
+        const bounds = button.getBoundingClientRect();
+        ring = document.createElement('span');
+        ring.className = 'site-header__audio-ripple';
+        ring.setAttribute('aria-hidden', 'true');
+        ring.style.setProperty('--sound-ripple-x', `${event.detail ? event.clientX - bounds.left : bounds.width / 2}px`);
+        ring.style.setProperty('--sound-ripple-y', `${event.detail ? event.clientY - bounds.top : bounds.height / 2}px`);
+        const current = ring;
+        ring.addEventListener('animationend', () => { if (ring === current) clear(); }, { once: true });
+        button.append(ring);
+    }, { signal });
+    motion.addEventListener('change', clear, { signal });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) clear(); }, { signal });
+    window.addEventListener('resize', clear, { signal });
+    window.addEventListener('pagehide', clear, { signal });
+    return {
+        update(status, header) {
+            if (!status.available || !header.desktop || header.concealed) clear();
+        },
+        dispose() { clear(); lifecycle.abort(); },
     };
 }
