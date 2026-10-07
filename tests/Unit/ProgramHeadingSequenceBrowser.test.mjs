@@ -31,8 +31,8 @@ for (const engine of engines) {
                         firstX: new DOMMatrix(getComputedStyle(document.querySelector('.program__heading-clip')).transform).m41,
                         scroll: scrollY,
                     }));
-                    const expected = { 390: 9.75, 768: 19.2, 1440: 46.8 }[width] * ({ id: 4, en: 2, ar: 0 }[language]);
-                    assert.ok(Math.abs(after.x - expected) < .01, 'owner distance factors ID4/EN2/AR0');
+                    const expected = { 390: 9.75, 768: 19.2, 1440: 46.8 }[width] * ({ id: 4, en: 0, ar: 0 }[language]);
+                    assert.ok(Math.abs(after.x - expected) < .01, 'only Indonesian has a horizontal Program heading slide');
                     if (language !== 'ar') assert.ok(Math.abs(after.x) >= Math.abs(before.x), 'inward pose forms during the section entrance');
                     else assert.equal(middle, 0, 'Arabic has no horizontal animation');
                     const duration = await page.locator('.program__heading-clip').last().evaluate(clip => getComputedStyle(clip).transitionDuration);
@@ -85,7 +85,7 @@ test('Program heading keeps a readable final pose without page JavaScript', { sk
                     assert.equal(state.locale, language);
                     assert.equal(state.opacity, '1');
                     assert.equal(state.overflow, false);
-                    assert.ok(language === 'ar' ? state.shift === 0 : state.shift > 0);
+                    assert.ok(language === 'id' ? state.shift > 0 : state.shift === 0);
                     cases.push({ engine, ...state });
                 }
             }
@@ -116,12 +116,12 @@ test('Reduced-motion heading updates its final geometry across all tier boundari
                     assert.equal(state.width, width);
                     assert.equal(state.animations, 0);
                     assert.equal(state.duration, '0s');
-                    assert.ok(language === 'ar' ? state.shift === 0 : state.shift > 0);
+                    assert.ok(language === 'id' ? state.shift > 0 : state.shift === 0);
                     fits(await page.evaluate(geometry));
                     shifts.push(Math.abs(state.shift));
                     cases.push({ engine, language, ...state });
                 }
-                if (language !== 'ar') assert.ok(shifts.at(-1) > shifts[0], 'responsive final pose is not frozen at the prior viewport');
+                if (language === 'id') assert.ok(shifts.at(-1) > shifts[0], 'responsive final pose is not frozen at the prior viewport');
                 else assert.ok(shifts.every(shift => shift === 0));
             }
             assert.deepEqual(runtime.errors, []);
@@ -147,7 +147,7 @@ test('Leaving during the heading entrance cancels the delayed shift and permits 
             await page.waitForFunction(() => document.querySelector('[data-program-heading]').dataset.revealed === 'true');
             await page.waitForFunction(() => document.querySelector('.program__heading-clip:last-child').getAnimations().length === 0);
             const shift = await page.locator('.program__heading-clip').last().evaluate(clip => new DOMMatrix(getComputedStyle(clip).transform).m41);
-            assert.ok(language === 'ar' ? shift === 0 : shift > 0);
+            assert.ok(language === 'id' ? shift > 0 : shift === 0);
             cases.push({ language, shift });
         }
         assert.deepEqual(runtime.errors, []);

@@ -1,10 +1,11 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Issue #65: drift latar Program dan reveal ID760ms → slide berbobot1200ms**.
+Scope saat ini: **Issue #67: Program EN tanpa slide; transisi latar biru dan judul Values**.
 
-Map aktif: [MAP-V2-10](blueprints/menu-heading-visual-correction.md).
-Bukti terbaru: [Status Program motion #65](proof/menu-heading-status.md), [data terukur](proof/program-motion-65.json).
+Map aktif: [MAP-V2-11](blueprints/values-intro.md).
+Bukti terbaru: [Values intro](proof/values-intro-status.md), [data terukur](proof/values-intro-67.json).
+Program sebelumnya: [Motion #65](proof/menu-heading-status.md), [data](proof/program-motion-65.json).
 Bukti putaran sebelumnya: [Nav dan latar AR](proof/program-third-status.md).
 Bukti sebelumnya: [Judul Program dan navigasi](proof/nav-program-status.md).
 Koreksi Program sebelumnya: [Program visual correction](proof/program-feedback-status.md).
@@ -66,7 +67,7 @@ Delivery aktif: `resources/views/landing/index.blade.php` melalui route home.
 `resources/index.html` hanya artefak shell awal; bukan frontend production paralel.
 
 Urutan aktif: **foundation → shell → Menu → Hero → About → Program → proof**.
-Values dan garis Program→Values belum diimplementasikan.
+Values saat ini hanya judul dan transisi latar dari Program; kartu dan section berikutnya belum diimplementasikan.
 
 ## Prinsip utama
 

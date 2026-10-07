@@ -13,3 +13,5 @@
     letter-spacing: normal; text-transform: none; line-height: 1.35;
 }
 [lang="ar"] .program__type-line { letter-spacing: normal; text-transform: none; }
+[lang="ar"] .values { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .values__heading { letter-spacing: normal; line-height: 1.35; }

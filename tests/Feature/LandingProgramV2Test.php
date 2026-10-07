@@ -35,7 +35,8 @@ it('renders the eight featured programs after Mission in the saved language', fu
         ->assertSee(__('home_program.section_label'))
         ->assertSee(__('home_program.back'))
         ->assertDontSee('data-program-handoff', false)
-        ->assertDontSee('data-values-story', false)
+        ->assertSee('data-values-heading', false)
+        ->assertDontSee('data-values-card', false)
         ->assertDontSee('resources_old', false);
 })->with(['id', 'en', 'ar']);
 

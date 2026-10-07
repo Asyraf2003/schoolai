@@ -1,0 +1,662 @@
+{
+  "source_main": "9b9501b5593cb468808c602733885df5e3b90da9",
+  "date": "2026-10-08 Asia/Makassar",
+  "issue": 67,
+  "browser": "Chromium 153.0.8010.0 / Linux",
+  "status": "scoped PASS; full suites FAIL baseline",
+  "layout_cases": [
+    {
+      "lang": "id",
+      "width": 360,
+      "shift": 0,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        139.09375,
+        186.671875
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "id",
+      "width": 640,
+      "shift": 0,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        176.28125,
+        260.265625
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "id",
+      "width": 768,
+      "shift": 38.4,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        95.671875,
+        193.65625
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "id",
+      "width": 1024,
+      "shift": 61.44,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        87.96875,
+        185.953125
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "id",
+      "width": 1280,
+      "shift": 89.6,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        157.71875,
+        292.109375
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "id",
+      "width": 1536,
+      "shift": 122.88,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        155.578125,
+        316.828125
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "id",
+      "width": 1920,
+      "shift": 153.6,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        152.546875,
+        354.140625
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "en",
+      "width": 360,
+      "shift": 0,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        139.390625,
+        186.96875
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "en",
+      "width": 640,
+      "shift": 0,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        176.28125,
+        260.265625
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "en",
+      "width": 768,
+      "shift": 38.4,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        95.328125,
+        193.3125
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "en",
+      "width": 1024,
+      "shift": 61.44,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        88.21875,
+        186.203125
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "en",
+      "width": 1280,
+      "shift": 89.6,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        157.1875,
+        291.578125
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "en",
+      "width": 1536,
+      "shift": 122.88,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        155.859375,
+        317.109375
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "en",
+      "width": 1920,
+      "shift": 153.6,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        152.546875,
+        354.140625
+      ],
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "ar",
+      "width": 360,
+      "shift": 0,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        139.3125,
+        214.640625
+      ],
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "ar",
+      "width": 640,
+      "shift": 0,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        177.03125,
+        309.984375
+      ],
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "ar",
+      "width": 768,
+      "shift": -38.4,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 80,
+      "line_mask_tops": [
+        95.859375,
+        250.953125
+      ],
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "ar",
+      "width": 1024,
+      "shift": -61.44,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        88.234375,
+        243.328125
+      ],
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "ar",
+      "width": 1280,
+      "shift": -89.6,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        156.828125,
+        369.546875
+      ],
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "ar",
+      "width": 1536,
+      "shift": -122.88,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        155.90625,
+        411.15625
+      ],
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    {
+      "lang": "ar",
+      "width": 1920,
+      "shift": -153.6,
+      "overflow": false,
+      "planes": 1,
+      "header_bottom": 0,
+      "line_mask_tops": [
+        152.765625,
+        471.875
+      ],
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif"
+    }
+  ],
+  "colors": [
+    {
+      "pct": "0.00%",
+      "color": "color(srgb 1 1 1)"
+    },
+    {
+      "pct": "49.96%",
+      "color": "color(srgb 0.563095 0.610116 1)"
+    },
+    {
+      "pct": "100.00%",
+      "color": "color(srgb 0.12549 0.219608 1)"
+    },
+    {
+      "pct": "49.96%",
+      "color": "color(srgb 0.563095 0.610116 1)"
+    },
+    {
+      "pct": "0.00%",
+      "color": "color(srgb 1 1 1)"
+    }
+  ],
+  "sequence": [
+    {
+      "language": "en",
+      "frames": [
+        {
+          "time": 0,
+          "x": 0,
+          "lines": [
+            {
+              "y": 156.752,
+              "opacity": 0
+            },
+            {
+              "y": -156.752,
+              "opacity": 0
+            }
+          ]
+        },
+        {
+          "time": 450,
+          "x": 0,
+          "lines": [
+            {
+              "y": 20.0326,
+              "opacity": 0.872202
+            },
+            {
+              "y": -20.0326,
+              "opacity": 0.872202
+            }
+          ]
+        },
+        {
+          "time": 900,
+          "x": 0,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        },
+        {
+          "time": 1340,
+          "x": 96.9074,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        },
+        {
+          "time": 1780,
+          "x": 100.8,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        }
+      ],
+      "detailRestored": true,
+      "detailMode": "gsap-3.7.1-fixture"
+    },
+    {
+      "language": "id",
+      "frames": [
+        {
+          "time": 0,
+          "x": 0,
+          "lines": [
+            {
+              "y": 156.752,
+              "opacity": 0
+            },
+            {
+              "y": -156.752,
+              "opacity": 0
+            }
+          ]
+        },
+        {
+          "time": 450,
+          "x": 0,
+          "lines": [
+            {
+              "y": 20.0326,
+              "opacity": 0.872202
+            },
+            {
+              "y": -20.0326,
+              "opacity": 0.872202
+            }
+          ]
+        },
+        {
+          "time": 900,
+          "x": 0,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        },
+        {
+          "time": 1340,
+          "x": 96.9074,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        },
+        {
+          "time": 1780,
+          "x": 100.8,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        }
+      ],
+      "detailRestored": true,
+      "detailMode": "gsap-3.7.1-fixture"
+    },
+    {
+      "language": "ar",
+      "frames": [
+        {
+          "time": 0,
+          "x": 0,
+          "lines": [
+            {
+              "y": 251.927,
+              "opacity": 0
+            },
+            {
+              "y": -251.927,
+              "opacity": 0
+            }
+          ]
+        },
+        {
+          "time": 450,
+          "x": 0,
+          "lines": [
+            {
+              "y": 32.1958,
+              "opacity": 0.872202
+            },
+            {
+              "y": -32.1958,
+              "opacity": 0.872202
+            }
+          ]
+        },
+        {
+          "time": 900,
+          "x": 0,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        },
+        {
+          "time": 1340,
+          "x": -96.9074,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        },
+        {
+          "time": 1780,
+          "x": -100.8,
+          "lines": [
+            {
+              "y": 0,
+              "opacity": 1
+            },
+            {
+              "y": 0,
+              "opacity": 1
+            }
+          ]
+        }
+      ],
+      "detailRestored": true,
+      "detailMode": "gsap-3.7.1-fixture"
+    }
+  ],
+  "fallback_cases": 27,
+  "fallback_modes": [
+    "no-JS",
+    "reduced motion",
+    "missing IntersectionObserver"
+  ],
+  "program_heading_cases": [
+    {
+      "language": "en",
+      "width": 390,
+      "final_x": 0
+    },
+    {
+      "language": "en",
+      "width": 768,
+      "final_x": 0
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "final_x": 0
+    },
+    {
+      "language": "id",
+      "width": 390,
+      "final_x": 39
+    },
+    {
+      "language": "id",
+      "width": 768,
+      "final_x": 76.8
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "final_x": 187.2
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "final_x": 0
+    },
+    {
+      "language": "ar",
+      "width": 768,
+      "final_x": 0
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "final_x": 0
+    }
+  ],
+  "checks": {
+    "browser_tests_passed": 9,
+    "php_v2_tests": 27,
+    "php_v2_assertions": 333,
+    "focused_js_tests": 7,
+    "php_full_baseline": {
+      "tests": 332,
+      "pass": 186,
+      "fail": 71,
+      "error": 75,
+      "assertions": 1644
+    },
+    "php_full_final": {
+      "tests": 336,
+      "pass": 190,
+      "fail": 71,
+      "error": 75,
+      "assertions": 1687
+    },
+    "same_php_failure_error_names": true,
+    "node_full_baseline_and_final": {
+      "tests": 38,
+      "pass": 19,
+      "fail": 7,
+      "skip": 12,
+      "same_failure_names": true
+    },
+    "protected_paths": 460,
+    "source_structure_files": 282,
+    "build": true,
+    "pint": true,
+    "diff_check": true,
+    "bfcache_suspend_resume": true
+  },
+  "fixtures": {
+    "logo": {
+      "source": "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "b9db040bb228c81398f90eb3c1ee923975ab81f9ee9f6aa01bf5e14aa1d40841",
+      "usage": "layout/heading placement proof uses exact canonical image as local browser response"
+    },
+    "gsap": {
+      "version": "3.7.1",
+      "sha256": "f6d6ecb1737ecfa9ec03e37591b8feca3b47676e69348c2e586a983a94ea109b",
+      "usage": "full open/close and type plane restoration using exact library fixture"
+    }
+  },
+  "sha256": {
+    "app/Http/Controllers/HomeController.php": "6defe22778290538d7d0dc8767af6417b7090ae7838ad18e1d53d4a756a99d3b",
+    "resources/css/direction/rtl.css": "afcdc9ce6c442aeed733f4387541c23e263fddf9574701fd015de17546bc43ef",
+    "resources/css/index.css": "481a80c8f912497cfce7773afdd690608421d38bae1e28c3ca46b598dbe800d7",
+    "resources/css/locale/ar.css": "23ee4e807b9a17c1b884953f38a9c62c49bb290c6c40a0f8d636b92ef2aa127d",
+    "resources/css/locale/en.css": "831d1822429a40451576817023f0edd0d872db01e173b6fab0e9041952d5a29f",
+    "resources/css/sections/program-seam.css": "466e0846c8f578a8af3f00444f2580b3ded5573f4214d05aacd56efbea223752",
+    "resources/js/index.js": "384988ec060a4ed5628825378b864d2813fee6855de6f7ff6ee5697d17684134",
+    "resources/js/sections/program-reveal.js": "63d5a353bdfa568dd88e99752524e5983929ae61234e368d246d8fbec1189c1c",
+    "resources/views/landing/index.blade.php": "8b4f933aee6b5b0c81b6e4c077b7d4b85ed28ba02f908f2b85000b372f2c89a3",
+    "app/View/Presenters/LandingValuesPresenter.php": "c5ee8fb3330f8f93416dc353e6734ab5021e30c4815c521dfcc963352d453cb6",
+    "resources/css/sections/program-values.css": "0c3d9437485219e2b2a646e228012f95a09c67f207decf3700d714b3f257075b",
+    "resources/css/sections/values.css": "1ebfc13e999f33cb15e4e593b9bc62f8c15e3a4e0b8a6c87adb8a7a4d7128f53",
+    "resources/js/sections/values.js": "ef57a07615b1a50005edaf9211a0facba50c8119c544318349070a18e3f39291",
+    "resources/views/landing/values.blade.php": "7a18e2b3912369e2e055bd57bab117a4218dfce39f44580bfd09fa57bbc1b440"
+  },
+  "limitations": [
+    "Chromium only; WebKit/native device not tested",
+    "Browser external media/CDN unavailable; canonical logo and exact GSAP fixture used for the indicated tests",
+    "Other live media availability not certified",
+    "No whole-site/CWV claim; existing full-suite failures retained"
+  ]
+}
