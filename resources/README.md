@@ -1,11 +1,15 @@
 # Homepage V2 resources
 
-Status: **ACTIVE BUILD AREA**
+Status: ACTIVE — Shell + Menu + Hero, EN-only.
 
-- `resources/` = frontend baru Homepage V2.
-- `resources_old/` = source frontend lama/legacy untuk referensi.
-- `resources/index.html` sengaja kosong sebagai titik mulai.
-- Target implementasi pertama hanya **Hero**.
-- Jangan impor CSS/JS legacy ke V2 kecuali blueprint aktif menandainya sebagai kebutuhan eksplisit.
+- Laravel home route delivers `views/landing/index.blade.php`.
+- `index.html` is the historical empty shell, not a parallel running frontend.
+- `css/foundation/` owns baseline; `css/sections/{header,hero}.css` owns components.
+- `js/sections/*-state.js` contains pure policy; sibling modules adapt browser/DOM/media.
+- `js/index.js` connects component ports and lifecycle only.
+- Font assets include their existing OFL license. Business media keeps canonical CF URLs.
+- No runtime import from `resources_old/` is allowed.
+- Locale/direction/responsive skeleton files remain available; ID/AR are not activated.
 
-Urutan kerja: HTML mentah → CSS/layout → locale/direction/responsive → style/motion → JS bila perlu → proof → seam berikutnya.
+Source of truth: `docs2/README.md` → active MAP-V2-01 and proof status.
+No section beyond Menu + Hero may be added before Hero CLOSED and owner scope changes.

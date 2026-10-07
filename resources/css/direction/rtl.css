@@ -1,1 +1,3 @@
 /* Homepage V2 ownership bucket. Isi hanya jika concern ini benar-benar dibutuhkan. */
+[dir="rtl"] .program__back-mark { transform: scaleX(-1); }
+[dir="rtl"] .program { --program-hover-origin: 100%; --program-heading-sign: -1; }

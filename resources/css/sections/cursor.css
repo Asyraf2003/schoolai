@@ -1,0 +1,29 @@
+.site-cursor { display: none; }
+@media (hover: hover) and (pointer: fine) {
+    /* Native pointer is suppressed only while both assets are ready and visible. */
+    body[data-custom-cursor], body[data-custom-cursor] * { cursor: none !important; }
+    .site-cursor {
+        display: block; position: fixed; inset: 0 auto auto 0; z-index: 4;
+        inline-size: 96px; block-size: 96px; margin: 0; pointer-events: none;
+        background: var(--cursor-image) center / contain no-repeat; opacity: 0;
+        transform: translate3d(calc(var(--cursor-x) - var(--cursor-hotspot-x)), calc(var(--cursor-y) - var(--cursor-hotspot-y)), 0);
+        contain: layout paint style;
+    }
+    .site-cursor[data-visible] { opacity: 1; }
+    .site-cursor[data-character="cwo"] {
+        --cursor-image: url('https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp');
+        --cursor-hotspot-x: 15px; --cursor-hotspot-y: 48px;
+    }
+    .site-cursor[data-character="cwo"][data-state="interactive"] {
+        --cursor-image: url('https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp');
+        --cursor-hotspot-x: 81px; --cursor-hotspot-y: 44px;
+    }
+    .site-cursor[data-character="cwe"] {
+        --cursor-image: url('https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp');
+        --cursor-hotspot-x: 11px; --cursor-hotspot-y: 40px;
+    }
+    .site-cursor[data-character="cwe"][data-state="interactive"] {
+        --cursor-image: url('https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp');
+        --cursor-hotspot-x: 80px; --cursor-hotspot-y: 40px;
+    }
+}

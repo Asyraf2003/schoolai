@@ -1,0 +1,460 @@
+{
+  "date": "2026-10-07T08:12:45.021Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "153.0.8010.52",
+  "cases": [
+    {
+      "width": 390,
+      "height": 844,
+      "locale": "en",
+      "lines": 20,
+      "characters": 2449,
+      "leading": 0.750003159557662,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "opacity": "0.16",
+      "visibleLines": 8,
+      "idleAnimations": 0,
+      "canvas": 0,
+      "samples": [
+        {
+          "hidden": false,
+          "run": 0,
+          "taskMs": 23.828000000000017,
+          "layoutMs": 0,
+          "scriptMs": 3.369999999999998,
+          "heapUsedBytes": 2366740,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 1,
+          "taskMs": 22.036,
+          "layoutMs": 0,
+          "scriptMs": 3.2399999999999998,
+          "heapUsedBytes": 2365684,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 2,
+          "taskMs": 22.395,
+          "layoutMs": 0,
+          "scriptMs": 2.8850000000000056,
+          "heapUsedBytes": 2366012,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 0,
+          "taskMs": 19.764000000000003,
+          "layoutMs": 0,
+          "scriptMs": 2.685,
+          "heapUsedBytes": 2365752,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 1,
+          "taskMs": 20.872,
+          "layoutMs": 0,
+          "scriptMs": 3.1059999999999977,
+          "heapUsedBytes": 2365736,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 2,
+          "taskMs": 18.948999999999995,
+          "layoutMs": 0,
+          "scriptMs": 2.6409999999999973,
+          "heapUsedBytes": 2365736,
+          "nodeCount": 2387,
+          "longTasks": []
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "height": 900,
+      "locale": "en",
+      "lines": 20,
+      "characters": 2449,
+      "leading": 0.749997037037037,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "opacity": "0.16",
+      "visibleLines": 8,
+      "idleAnimations": 0,
+      "canvas": 0,
+      "samples": [
+        {
+          "hidden": false,
+          "run": 0,
+          "taskMs": 20.228000000000023,
+          "layoutMs": 0,
+          "scriptMs": 2.475999999999992,
+          "heapUsedBytes": 2373084,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 1,
+          "taskMs": 19.900999999999947,
+          "layoutMs": 0,
+          "scriptMs": 2.49400000000001,
+          "heapUsedBytes": 2372828,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 2,
+          "taskMs": 20.908000000000037,
+          "layoutMs": 0,
+          "scriptMs": 2.6689999999999907,
+          "heapUsedBytes": 2372768,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 0,
+          "taskMs": 18.793999999999976,
+          "layoutMs": 0,
+          "scriptMs": 2.673000000000009,
+          "heapUsedBytes": 2372836,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 1,
+          "taskMs": 19.457999999999977,
+          "layoutMs": 0,
+          "scriptMs": 2.6409999999999907,
+          "heapUsedBytes": 2372820,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 2,
+          "taskMs": 20.135000000000012,
+          "layoutMs": 0,
+          "scriptMs": 2.682000000000004,
+          "heapUsedBytes": 2372796,
+          "nodeCount": 2387,
+          "longTasks": []
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "locale": "en",
+      "lines": 20,
+      "characters": 2449,
+      "leading": 0.749997037037037,
+      "font": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "opacity": "0.16",
+      "visibleLines": 8,
+      "idleAnimations": 0,
+      "canvas": 0,
+      "samples": [
+        {
+          "hidden": false,
+          "run": 0,
+          "taskMs": 19.908999999999956,
+          "layoutMs": 0.6400000000000017,
+          "scriptMs": 2.384999999999998,
+          "heapUsedBytes": 2380980,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 1,
+          "taskMs": 21.626000000000147,
+          "layoutMs": 0.6999999999999993,
+          "scriptMs": 2.5470000000000077,
+          "heapUsedBytes": 2380916,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 2,
+          "taskMs": 21.276000000000074,
+          "layoutMs": 0.7469999999999977,
+          "scriptMs": 2.5429999999999895,
+          "heapUsedBytes": 2381100,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 0,
+          "taskMs": 22.56199999999997,
+          "layoutMs": 0.6359999999999977,
+          "scriptMs": 2.6460000000000097,
+          "heapUsedBytes": 2380800,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 1,
+          "taskMs": 21.47699999999997,
+          "layoutMs": 0.5399999999999988,
+          "scriptMs": 2.4030000000000022,
+          "heapUsedBytes": 2380760,
+          "nodeCount": 2387,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 2,
+          "taskMs": 21.438999999999986,
+          "layoutMs": 0.5390000000000048,
+          "scriptMs": 2.3779999999999912,
+          "heapUsedBytes": 2380712,
+          "nodeCount": 2387,
+          "longTasks": []
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "locale": "ar",
+      "lines": 20,
+      "characters": 2519,
+      "leading": 1.3499968404423381,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "opacity": "0.16",
+      "visibleLines": 4,
+      "idleAnimations": 0,
+      "canvas": 0,
+      "samples": [
+        {
+          "hidden": false,
+          "run": 0,
+          "taskMs": 22.392000000000024,
+          "layoutMs": 0,
+          "scriptMs": 3.2979999999999987,
+          "heapUsedBytes": 2329724,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 1,
+          "taskMs": 23.096000000000004,
+          "layoutMs": 0,
+          "scriptMs": 2.2990000000000026,
+          "heapUsedBytes": 2328912,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 2,
+          "taskMs": 21.24799999999999,
+          "layoutMs": 0,
+          "scriptMs": 2.3089999999999984,
+          "heapUsedBytes": 2328732,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 0,
+          "taskMs": 18.809999999999995,
+          "layoutMs": 0,
+          "scriptMs": 2.486000000000002,
+          "heapUsedBytes": 2328916,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 1,
+          "taskMs": 19.13700000000007,
+          "layoutMs": 0,
+          "scriptMs": 2.5229999999999975,
+          "heapUsedBytes": 2328876,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 2,
+          "taskMs": 19.143000000000022,
+          "layoutMs": 0,
+          "scriptMs": 2.5490000000000026,
+          "heapUsedBytes": 2328828,
+          "nodeCount": 2193,
+          "longTasks": []
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "height": 900,
+      "locale": "ar",
+      "lines": 20,
+      "characters": 2519,
+      "leading": 1.349997037037037,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "opacity": "0.16",
+      "visibleLines": 4,
+      "idleAnimations": 0,
+      "canvas": 0,
+      "samples": [
+        {
+          "hidden": false,
+          "run": 0,
+          "taskMs": 19.477999999999994,
+          "layoutMs": 0,
+          "scriptMs": 1.8579999999999985,
+          "heapUsedBytes": 2338716,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 1,
+          "taskMs": 21.652000000000005,
+          "layoutMs": 0,
+          "scriptMs": 2.350999999999999,
+          "heapUsedBytes": 2339460,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 2,
+          "taskMs": 23.18500000000001,
+          "layoutMs": 0,
+          "scriptMs": 2.358000000000006,
+          "heapUsedBytes": 2339460,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 0,
+          "taskMs": 19.02499999999996,
+          "layoutMs": 0,
+          "scriptMs": 2.4029999999999956,
+          "heapUsedBytes": 2339276,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 1,
+          "taskMs": 19.07799999999993,
+          "layoutMs": 0,
+          "scriptMs": 2.498,
+          "heapUsedBytes": 2339284,
+          "nodeCount": 2193,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 2,
+          "taskMs": 18.900000000000027,
+          "layoutMs": 0,
+          "scriptMs": 2.5669999999999997,
+          "heapUsedBytes": 2339284,
+          "nodeCount": 2193,
+          "longTasks": []
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "locale": "ar",
+      "lines": 20,
+      "characters": 2519,
+      "leading": 1.349997037037037,
+      "font": "Cairo, Inter, \"Helvetica Neue\", Arial, sans-serif",
+      "opacity": "0.16",
+      "visibleLines": 5,
+      "idleAnimations": 0,
+      "canvas": 0,
+      "samples": [
+        {
+          "hidden": false,
+          "run": 0,
+          "taskMs": 22.86699999999997,
+          "layoutMs": 0.676999999999997,
+          "scriptMs": 3.398999999999999,
+          "heapUsedBytes": 2346752,
+          "nodeCount": 2233,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 1,
+          "taskMs": 25.58399999999983,
+          "layoutMs": 0.5789999999999962,
+          "scriptMs": 4.385,
+          "heapUsedBytes": 2346896,
+          "nodeCount": 2233,
+          "longTasks": []
+        },
+        {
+          "hidden": false,
+          "run": 2,
+          "taskMs": 24.237999999999982,
+          "layoutMs": 0.7430000000000075,
+          "scriptMs": 4.266000000000006,
+          "heapUsedBytes": 2346668,
+          "nodeCount": 2233,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 0,
+          "taskMs": 24.178999999999952,
+          "layoutMs": 0.5799999999999972,
+          "scriptMs": 3.7620000000000013,
+          "heapUsedBytes": 2346744,
+          "nodeCount": 2233,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 1,
+          "taskMs": 23.149000000000086,
+          "layoutMs": 0.5890000000000062,
+          "scriptMs": 3.572999999999993,
+          "heapUsedBytes": 2346728,
+          "nodeCount": 2233,
+          "longTasks": []
+        },
+        {
+          "hidden": true,
+          "run": 2,
+          "taskMs": 23.366,
+          "layoutMs": 0.5869999999999903,
+          "scriptMs": 4.29800000000001,
+          "heapUsedBytes": 2346728,
+          "nodeCount": 2233,
+          "longTasks": []
+        }
+      ]
+    }
+  ],
+  "profile": "Linux headless localhost, reduced motion, fonts/media ready, no throttle; visible/hidden type control,3 repeats,8 native wheel steps",
+  "limitations": "Task/JS heap include the page. JS heap is not total browser/GPU/Android/iOS RAM; timing is lab data, not field CWV."
+}

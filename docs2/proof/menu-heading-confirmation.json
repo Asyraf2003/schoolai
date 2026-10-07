@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-07T10:47:23.907310+00:00",
+  "kind": "repeat of the same bounded request; verify existing accepted correction without applying gap reduction twice",
+  "branch": "feat/home-v2-about",
+  "head": "08039bbad2f59ba37cac996bc15730fbee7d52e9",
+  "fetched_main": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "source_files_unchanged": 774,
+  "source_files_changed": [],
+  "browser": {
+    "tests_passed": 4,
+    "menu_states": 84,
+    "heading_ink_mask_cases": 48,
+    "opening_closing_frames": 1225,
+    "versions": {
+      "chromium": "153.0.8010.52",
+      "firefox": "155.0",
+      "webkit": "26.6",
+      "edge": "154.0.4258.62"
+    },
+    "all_menu_join_samples_white": true
+  },
+  "heading_1440_chromium": {
+    "en": 24.640625,
+    "id": 25.640625
+  },
+  "timing_ms": 760,
+  "gates": {
+    "diff": "PASS",
+    "structure": "PASS277 sources/max200 lines",
+    "build": "PASS",
+    "pint": "PASS",
+    "focused_js": "PASS12 tests",
+    "focused_php": "PASS27 tests369 assertions"
+  },
+  "full_php": {
+    "tests": 332,
+    "passed": 186,
+    "failed": 71,
+    "errors": 75,
+    "assertions": 1644
+  },
+  "new_failure_names": [],
+  "new_error_names": [],
+  "remaining_gaps": [
+    "Full PHP repository gate still FAIL with same71 failures75 errors",
+    "Native Safari not verified",
+    "Decorative paint patch after fast viewport resize seen in both original baseline and existing correction; cause unproven and outside the three owner corrections"
+  ],
+  "published": false
+}

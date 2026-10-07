@@ -43,6 +43,23 @@ return [
     'homepage_vision_video_url' => $publicUrl.'/site/vision/vision-video-v1.mp4',
     'homepage_mission_video_url' => $publicUrl.'/site/vision/mission-video-v1.mp4',
 
+    'about_v2' => [
+        'about' => [
+            'poster' => $publicUrl.'/site/about-v2/about-poster-v1.webp',
+            'preview' => $publicUrl.'/site/about-v2/about-preview-v1.mp4',
+            'full' => $publicUrl.'/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4',
+        ],
+        'vision' => [
+            'poster' => $publicUrl.'/site/about-v2/vision-poster-v1.webp',
+            'preview' => $publicUrl.'/site/about-v2/vision-preview-v1.mp4',
+        ],
+        'mission' => [
+            'poster' => $publicUrl.'/site/about-v2/mission-poster-v1.webp',
+            'preview' => $publicUrl.'/site/about-v2/mission-preview-v1.mp4',
+            'full' => $publicUrl.'/site/vision/mission-video-v1.mp4',
+        ],
+    ],
+
     'static' => [
         'hero_school' => $publicUrl.'/site/hero/hero-school.webp',
         'school_life' => $schoolLife,

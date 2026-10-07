@@ -1,0 +1,102 @@
+{
+  "base": "08039bbad2f59ba37cac996bc15730fbee7d52e9",
+  "owners": {
+    "resources/views/landing/hero-copy.blade.php": {
+      "sha256": "62a40249e2bb397f63b5a40ccb8bb3da89e32613517294f7dd3bb33b464d30ef",
+      "unchanged": true
+    },
+    "resources/views/landing/hero.blade.php": {
+      "sha256": "50f59e64dd00e51547b4c1bdc2bdc1540e6fd698a42c2356c111a84d28ae3832",
+      "unchanged": true
+    },
+    "resources/views/landing/header.blade.php": {
+      "sha256": "c13cb123739e0857acd81f7b2139af3e28ac826ed40844c89b2f74bedaf7243f",
+      "unchanged": true
+    },
+    "resources/js/sections/hero-state.js": {
+      "sha256": "1dc15626866eb69e4185e35e3a61f2bff204ae556f87ae677af8715d9fbb8e73",
+      "unchanged": true
+    },
+    "resources/js/sections/header-state.js": {
+      "sha256": "5324eea6f6f39dda719e81300e2e57f2d34a4eb51ea2385193dea72fe4fc90cb",
+      "unchanged": true
+    },
+    "resources/js/sections/header-accordion.js": {
+      "sha256": "a73dd443850614d81e02514f38010860894f503b4d2f95fd17f4b9eeff6ca8a3",
+      "unchanged": true
+    },
+    "resources/js/sections/hero-media.js": {
+      "sha256": "056cf282d7e170840e55d415d58acec41bb80da3abbeaf427fb1a327bcba58e4",
+      "unchanged": true
+    },
+    "resources/js/sections/header-highlight.js": {
+      "sha256": "a2b57fa489ad069aad3343b7f20525548df4a43c2f5fc8be985bdbc5440efbfc",
+      "unchanged": true
+    },
+    "resources/js/sections/hero.js": {
+      "sha256": "b6a542f53071a03a466ed4a8341acf0c2afac82d614f4f9ad00ff572e018c274",
+      "unchanged": true
+    },
+    "resources/js/sections/cursor.js": {
+      "sha256": "7dd7973dcefafce39a68fc730d06c1c0d5d7b192d6aa40df84d7a66921398232",
+      "unchanged": true
+    },
+    "resources/js/sections/hero-title.js": {
+      "sha256": "615343991ff87878ee2a979a5d9a5af71e397b5e92cb5e61efb1afc103e63bb4",
+      "unchanged": true
+    },
+    "resources/js/sections/header-sound.js": {
+      "sha256": "e361c11f1d5f3c55f4564d1871704eb5c852fa6f9466dbec8b6603c324b1ab80",
+      "unchanged": true
+    },
+    "resources/js/sections/header.js": {
+      "sha256": "62754b15ac213b0a81cf2775205691cc685ee4cac5d88bbd42c2d8f5d8401c43",
+      "unchanged": true
+    },
+    "resources/js/sections/header-language.js": {
+      "sha256": "5d59d470d84c726e73114c333edd7e89f5eefccd16172608ed64031823ea9675",
+      "unchanged": true
+    },
+    "resources/js/sections/header-motion.js": {
+      "sha256": "66610998f837878b1dff80d2995490933c3842cb707137d6418b29ddb31ae386",
+      "unchanged": true
+    },
+    "resources/css/sections/header-language.css": {
+      "sha256": "92890acc39e57fe67c9e4532861c22a339e958f45741a7209bb37810966e92e6",
+      "unchanged": true
+    },
+    "resources/css/sections/hero.css": {
+      "sha256": "e581d494f6baaefec425f96db7e62a1bcc4df70dd174297950174d6db639e998",
+      "unchanged": true
+    },
+    "resources/css/sections/header-sound.css": {
+      "sha256": "7ecbafe2420f495d906147dd9a313fcb8c476be9289ac734ab70d038e2ecaf10",
+      "unchanged": true
+    },
+    "resources/css/sections/header.css": {
+      "sha256": "8a9483dfe1d618ed041afed6f617133bb7717284d4b707085e542e0447d44a67",
+      "unchanged": true
+    },
+    "resources/css/sections/cursor.css": {
+      "sha256": "e0a44e777a43a79a7fae4ebeb6616ab1a1a78b704f73339fe179edf5e461cfd6",
+      "unchanged": true
+    },
+    "app/View/Presenters/LandingHeroPresenter.php": {
+      "sha256": "95404f74b0202fbf65fce1a73989475dc362e1d1a17f3338b8367b9790c28cc6",
+      "unchanged": true
+    }
+  },
+  "aboutSource": {
+    "resources/views/landing/about.blade.php": "20384a98bf63b2a8abb90abb3c9caad284747fcdaeaa89c440371fb44efa744f",
+    "resources/js/sections/about.js": "5548e6c33d3b74300cffe44d2e798cc75868549650e26141b168d4cadf9768f4",
+    "resources/js/sections/about-media.js": "f7e6c08c982c2e6f4536cdadee7aa166f9a0bbf24ac95ef46267aec73bfda235",
+    "resources/js/sections/about-story.js": "cb4dda660f75972e2b9319117dd18b3b415ba66e7abb42d4c8dec495b254c80d",
+    "resources/js/sections/about-dialog.js": "ce387123a78ff7a54efdb362f8428a9236a9ede04c297d868f1ccab7b563006a",
+    "resources/css/sections/about.css": "f3b98af1c07059ef1dc728863c48f3091cc644d10ed4ce256b075630993b97f3",
+    "config/media.php": "a351091a0c3c7d5f5567bb18a21dd75627aefcba9469306d5669b5b730eec867",
+    "app/View/Presenters/LandingAboutPresenter.php": "2b52c4ce12b1f76f74d4119fb0803e3cc981aa1811c0b2ea2029911a076e22e1",
+    "resources/js/index.js": "01a9e9d7d9f6ebf7d30ad9dfd82a71bb27d6b231f40d591e167555fd9140b740",
+    "resources/css/index.css": "5ad829667f3a07f76aa8e4c0f7aeeb8f0980bcfe400eaa2b24515ef10e854947",
+    "resources/views/landing/index.blade.php": "3a3ddd88c1d62e58142cec1629f63dc2b8869e31c73e688842518cf7bd5218d1"
+  }
+}

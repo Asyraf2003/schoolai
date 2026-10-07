@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-07T02:56:09.012Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "26.6",
+  "records": [
+    {
+      "language": "en",
+      "initial": {
+        "lines": [
+          {
+            "opacity": "0",
+            "y": 177.287811
+          },
+          {
+            "opacity": "0",
+            "y": -177.287811
+          }
+        ],
+        "revealed": 0
+      },
+      "firstRow": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "reverseRetained": true,
+      "reducedVisible": true
+    },
+    {
+      "language": "id",
+      "initial": {
+        "lines": [
+          {
+            "opacity": "0",
+            "y": 177.287811
+          },
+          {
+            "opacity": "0",
+            "y": -177.287811
+          }
+        ],
+        "revealed": 0
+      },
+      "firstRow": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "reverseRetained": true,
+      "reducedVisible": true
+    },
+    {
+      "language": "ar",
+      "initial": {
+        "lines": [
+          {
+            "opacity": "0",
+            "y": 257.739227
+          }
+        ],
+        "revealed": 0
+      },
+      "firstRow": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "reverseRetained": true,
+      "reducedVisible": true
+    }
+  ]
+}

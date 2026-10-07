@@ -1,0 +1,17 @@
+{
+  "baseline": 531,
+  "unchanged": 521,
+  "changed": [
+    "resources/views/landing/program.blade.php",
+    "resources/js/sections/program-dialog.js",
+    "resources/js/sections/program-reveal.js",
+    "resources/css/direction/rtl.css",
+    "resources/css/sections/program-detail.css",
+    "resources/css/sections/program-field.css",
+    "resources/css/sections/program-reveal.css",
+    "tests/Unit/ProgramRevealBrowser.test.mjs",
+    "tests/Unit/ProgramKineticBrowser.test.mjs",
+    "tests/Feature/LandingProgramV2Test.php"
+  ],
+  "protected_about_header_hero_cursor_locale_media_legacy_unchanged": true
+}

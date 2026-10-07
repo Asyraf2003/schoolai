@@ -1,0 +1,6682 @@
+{
+  "date": "2026-10-05",
+  "parent": "e8e27d1a981f49dbeb4fe31ee6c3c4b88bfc8512",
+  "main": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "branch": "feat/home-v2-hero",
+  "profile": "Linux Playwright Chromium/Firefox/WPE WebKit, width/locale checks reduced motion; normal motion phases1440ms. Windows native Edge154 CDP smoke. These are viewport emulations, not physical Safari certification.",
+  "source": {
+    "resources/css/foundation/tokens.css": "66d354842e9b35da61b9caf64f65d46b3b6e71cff5b5c5a129163b18a68d1055",
+    "resources/css/sections/header.css": "8a9483dfe1d618ed041afed6f617133bb7717284d4b707085e542e0447d44a67",
+    "resources/css/sections/header-sound.css": "7ecbafe2420f495d906147dd9a313fcb8c476be9289ac734ab70d038e2ecaf10",
+    "resources/css/sections/hero.css": "e581d494f6baaefec425f96db7e62a1bcc4df70dd174297950174d6db639e998",
+    "resources/js/sections/header.js": "62754b15ac213b0a81cf2775205691cc685ee4cac5d88bbd42c2d8f5d8401c43",
+    "resources/js/sections/header-accordion.js": "a73dd443850614d81e02514f38010860894f503b4d2f95fd17f4b9eeff6ca8a3",
+    "resources/js/sections/header-sound.js": "e361c11f1d5f3c55f4564d1871704eb5c852fa6f9466dbec8b6603c324b1ab80",
+    "resources/views/landing/hero-copy.blade.php": "62a40249e2bb397f63b5a40ccb8bb3da89e32613517294f7dd3bb33b464d30ef"
+  },
+  "geometryLocale": [
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 441.484375,
+        "mediaHeight": 0,
+        "linksHeight": 201.484375,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 427.046875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 429.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.453125,
+          "slot": [
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375,
+            38.375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 16,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "ratio": 1.5000509113124936,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.828125,
+          "slot": [
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125,
+            40.96875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.796875,
+        "edgeLogo": 27.296875,
+        "edgeMedia": 27.296875,
+        "logoMedia": 27.3125,
+        "bottom": 27.296875,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "ratio": 1.5000476871721506,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.6875,
+          "slot": [
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "mediaHeight": 237.6875,
+        "linksHeight": 237.6875,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.953125,
+          "slot": [
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375,
+            47.25
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.125,
+        "edgeLogo": 31.484375,
+        "edgeMedia": 31.484375,
+        "logoMedia": 31.5,
+        "bottom": 31.484375,
+        "mediaHeight": 188.953125,
+        "linksHeight": 188.953125,
+        "ratio": 1.5000413462333582,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.796875,
+          "slot": [
+            51.1875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.125,
+        "edgeMedia": 34.125,
+        "logoMedia": 34.125,
+        "bottom": 34.140625,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "ratio": 1.5000763009308713,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.390625,
+          "slot": [
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375,
+            57.609375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.390625,
+        "edgeMedia": 38.390625,
+        "logoMedia": 38.390625,
+        "bottom": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "ratio": 1.5000339097999322,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.328125,
+          "slot": [
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125,
+            69.34375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "ratio": 1.5000281706011607,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 425.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 427.046875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 429.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.453125,
+          "slot": [
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375,
+            38.375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 16,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "ratio": 1.5000509113124936,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.828125,
+          "slot": [
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125,
+            40.96875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.796875,
+        "edgeLogo": 27.296875,
+        "edgeMedia": 27.296875,
+        "logoMedia": 27.3125,
+        "bottom": 27.296875,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "ratio": 1.5000476871721506,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.6875,
+          "slot": [
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "mediaHeight": 237.6875,
+        "linksHeight": 237.6875,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.953125,
+          "slot": [
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375,
+            47.25
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.125,
+        "edgeLogo": 31.484375,
+        "edgeMedia": 31.484375,
+        "logoMedia": 31.5,
+        "bottom": 31.484375,
+        "mediaHeight": 188.953125,
+        "linksHeight": 188.953125,
+        "ratio": 1.5000413462333582,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.796875,
+          "slot": [
+            51.1875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.125,
+        "edgeMedia": 34.125,
+        "logoMedia": 34.125,
+        "bottom": 34.140625,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "ratio": 1.5000763009308713,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.390625,
+          "slot": [
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375,
+            57.609375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.390625,
+        "edgeMedia": 38.390625,
+        "logoMedia": 38.390625,
+        "bottom": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "ratio": 1.5000339097999322,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.328125,
+          "slot": [
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125,
+            69.34375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "ratio": 1.5000281706011607,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 360,
+        "logoMedia": -60,
+        "bottom": 425.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 390,
+        "logoMedia": -60,
+        "bottom": 427.046875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.59375,
+        "edgeMedia": 640,
+        "logoMedia": -60,
+        "bottom": 429.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.453125,
+          "slot": [
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375,
+            38.375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 16,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "ratio": 1.5000509113124936,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.828125,
+          "slot": [
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125,
+            40.96875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.796875,
+        "edgeLogo": 27.296875,
+        "edgeMedia": 27.296875,
+        "logoMedia": 27.3125,
+        "bottom": 27.296875,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "ratio": 1.5000476871721506,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.6875,
+          "slot": [
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "mediaHeight": 237.6875,
+        "linksHeight": 237.6875,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.953125,
+          "slot": [
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375,
+            47.25
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.125,
+        "edgeLogo": 31.484375,
+        "edgeMedia": 31.484375,
+        "logoMedia": 31.5,
+        "bottom": 31.484375,
+        "mediaHeight": 188.953125,
+        "linksHeight": 188.953125,
+        "ratio": 1.5000413462333582,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.796875,
+          "slot": [
+            51.1875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.125,
+        "edgeMedia": 34.125,
+        "logoMedia": 34.125,
+        "bottom": 34.140625,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "ratio": 1.5000763009308713,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.390625,
+          "slot": [
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375,
+            57.609375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.390625,
+        "edgeMedia": 38.390625,
+        "logoMedia": 38.390625,
+        "bottom": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "ratio": 1.5000339097999322,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.328125,
+          "slot": [
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125,
+            69.34375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "ratio": 1.5000281706011607,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "chromium",
+      "pageErrors": []
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 441.484375,
+        "mediaHeight": 0,
+        "linksHeight": 201.484375,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 427.046875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 429.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.453125,
+          "slot": [
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375,
+            38.375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 16,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "ratio": 1.5000509113124936,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.828125,
+          "slot": [
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125,
+            40.96875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.796875,
+        "edgeLogo": 27.296875,
+        "edgeMedia": 27.296875,
+        "logoMedia": 27.3125,
+        "bottom": 27.296875,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "ratio": 1.5000476871721506,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.6875,
+          "slot": [
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "mediaHeight": 237.6875,
+        "linksHeight": 237.6875,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.953125,
+          "slot": [
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375,
+            47.25
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.125,
+        "edgeLogo": 31.484375,
+        "edgeMedia": 31.484375,
+        "logoMedia": 31.5,
+        "bottom": 31.484375,
+        "mediaHeight": 188.953125,
+        "linksHeight": 188.953125,
+        "ratio": 1.5000413462333582,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.796875,
+          "slot": [
+            51.1875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.125,
+        "edgeMedia": 34.125,
+        "logoMedia": 34.125,
+        "bottom": 34.140625,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "ratio": 1.5000763009308713,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.390625,
+          "slot": [
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375,
+            57.609375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.390625,
+        "edgeMedia": 38.390625,
+        "logoMedia": 38.390625,
+        "bottom": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "ratio": 1.5000339097999322,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.328125,
+          "slot": [
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125,
+            69.34375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "ratio": 1.5000281706011607,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 425.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 427.046875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 429.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.453125,
+          "slot": [
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375,
+            38.375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 16,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "ratio": 1.5000509113124936,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.828125,
+          "slot": [
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125,
+            40.96875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.796875,
+        "edgeLogo": 27.296875,
+        "edgeMedia": 27.296875,
+        "logoMedia": 27.3125,
+        "bottom": 27.296875,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "ratio": 1.5000476871721506,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.6875,
+          "slot": [
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "mediaHeight": 237.6875,
+        "linksHeight": 237.6875,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.953125,
+          "slot": [
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375,
+            47.25
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.125,
+        "edgeLogo": 31.484375,
+        "edgeMedia": 31.484375,
+        "logoMedia": 31.5,
+        "bottom": 31.484375,
+        "mediaHeight": 188.953125,
+        "linksHeight": 188.953125,
+        "ratio": 1.5000413462333582,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.796875,
+          "slot": [
+            51.1875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.125,
+        "edgeMedia": 34.125,
+        "logoMedia": 34.125,
+        "bottom": 34.140625,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "ratio": 1.5000763009308713,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.390625,
+          "slot": [
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375,
+            57.609375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.390625,
+        "edgeMedia": 38.390625,
+        "logoMedia": 38.390625,
+        "bottom": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "ratio": 1.5000339097999322,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.328125,
+          "slot": [
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125,
+            69.34375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "ratio": 1.5000281706011607,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 360,
+        "logoMedia": -60,
+        "bottom": 425.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 390,
+        "logoMedia": -60,
+        "bottom": 427.046875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.59375,
+        "edgeMedia": 640,
+        "logoMedia": -60,
+        "bottom": 429.296875,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.453125,
+          "slot": [
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.453125,
+          "slot": [
+            38.359375,
+            38.359375,
+            38.359375,
+            38.375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 16,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "ratio": 1.5000509113124936,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.828125,
+          "slot": [
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.828125,
+          "slot": [
+            40.953125,
+            40.953125,
+            40.953125,
+            40.96875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.796875,
+        "edgeLogo": 27.296875,
+        "edgeMedia": 27.296875,
+        "logoMedia": 27.3125,
+        "bottom": 27.296875,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "ratio": 1.5000476871721506,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.6875,
+          "slot": [
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.6875,
+          "slot": [
+            59.421875,
+            59.421875,
+            59.421875,
+            59.421875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "mediaHeight": 237.6875,
+        "linksHeight": 237.6875,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.953125,
+          "slot": [
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.953125,
+          "slot": [
+            47.234375,
+            47.234375,
+            47.234375,
+            47.25
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.125,
+        "edgeLogo": 31.484375,
+        "edgeMedia": 31.484375,
+        "logoMedia": 31.5,
+        "bottom": 31.484375,
+        "mediaHeight": 188.953125,
+        "linksHeight": 188.953125,
+        "ratio": 1.5000413462333582,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.796875,
+          "slot": [
+            51.1875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.796875,
+          "slot": [
+            51.1875,
+            51.203125,
+            51.203125,
+            51.203125
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.125,
+        "edgeMedia": 34.125,
+        "logoMedia": 34.125,
+        "bottom": 34.140625,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "ratio": 1.5000763009308713,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.390625,
+          "slot": [
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.390625,
+          "slot": [
+            57.59375,
+            57.59375,
+            57.59375,
+            57.609375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.390625,
+        "edgeMedia": 38.390625,
+        "logoMedia": 38.390625,
+        "bottom": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "ratio": 1.5000339097999322,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.4375,
+            61.4375,
+            61.4375,
+            61.4375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.328125,
+          "slot": [
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.328125,
+          "slot": [
+            69.328125,
+            69.328125,
+            69.328125,
+            69.34375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "ratio": 1.5000281706011607,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "webkit",
+      "pageErrors": []
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 441.6000061035156,
+        "mediaHeight": 0,
+        "linksHeight": 201.60000610351562,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 427.1499938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.600006103515625,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 429.3999938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.716659545898438,
+        "edgeMedia": 30.716659545898438,
+        "logoMedia": 172.9499969482422,
+        "bottom": 16.016677856445312,
+        "mediaHeight": 153.4499969482422,
+        "linksHeight": 153.4666748046875,
+        "ratio": 1.500054342967667,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844,
+            40.9666748046875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844,
+            40.9666748046875,
+            40.96665954589844
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.80000305175781,
+        "edgeLogo": 27.300003051757812,
+        "edgeMedia": 27.300003051757812,
+        "logoMedia": 27.300003051757812,
+        "bottom": 27.29998779296875,
+        "mediaHeight": 163.83334350585938,
+        "linksHeight": 163.83334350585938,
+        "ratio": 1.4999999068639587,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625,
+            59.41667175292969
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625,
+            59.41667175292969,
+            59.41667175292969
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.19999694824219,
+        "edgeMedia": 47.19999694824219,
+        "logoMedia": 192.46664428710938,
+        "bottom": 16.000030517578125,
+        "mediaHeight": 237.68333435058594,
+        "linksHeight": 237.68333435058594,
+        "ratio": 1.5000350199960646,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469,
+            47.23333740234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469,
+            47.23333740234375,
+            47.23333740234375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.11666870117188,
+        "edgeLogo": 31.48333740234375,
+        "edgeMedia": 31.48333740234375,
+        "logoMedia": 31.5,
+        "bottom": 31.48333740234375,
+        "mediaHeight": 188.9499969482422,
+        "linksHeight": 188.9499969482422,
+        "ratio": 1.5000442137451528,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219,
+            51.20001220703125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219,
+            51.20001220703125,
+            51.19999694824219
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.133331298828125,
+        "edgeMedia": 34.133331298828125,
+        "logoMedia": 34.133331298828125,
+        "bottom": 34.133331298828125,
+        "mediaHeight": 204.8000030517578,
+        "linksHeight": 204.8000030517578,
+        "ratio": 1.5000000372529025,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625,
+            57.59999084472656
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625,
+            57.59999084472656,
+            57.600006103515625
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.399993896484375,
+        "edgeMedia": 38.399993896484375,
+        "logoMedia": 38.399993896484375,
+        "bottom": 38.40000915527344,
+        "mediaHeight": 230.40000915527344,
+        "linksHeight": 230.40000915527344,
+        "ratio": 1.4999999668863098,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.94999694824219,
+        "edgeMedia": 40.94999694824219,
+        "logoMedia": 40.94999694824219,
+        "bottom": 40.94999694824219,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5000339015211723,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031,
+            69.33332824707031
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031,
+            69.33332824707031,
+            69.33334350585938
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.19999694824219,
+        "edgeMedia": 51.19999694824219,
+        "logoMedia": 51.19999694824219,
+        "bottom": 51.19999694824219,
+        "mediaHeight": 277.3333435058594,
+        "linksHeight": 277.3333435058594,
+        "ratio": 1.4999999449803298,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 425.3999938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 427.1499938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.600006103515625,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 429.3999938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.716659545898438,
+        "edgeMedia": 30.716659545898438,
+        "logoMedia": 172.9499969482422,
+        "bottom": 16.016677856445312,
+        "mediaHeight": 153.4499969482422,
+        "linksHeight": 153.4666748046875,
+        "ratio": 1.500054342967667,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844,
+            40.9666748046875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844,
+            40.9666748046875,
+            40.96665954589844
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.80000305175781,
+        "edgeLogo": 27.300003051757812,
+        "edgeMedia": 27.300003051757812,
+        "logoMedia": 27.300003051757812,
+        "bottom": 27.29998779296875,
+        "mediaHeight": 163.83334350585938,
+        "linksHeight": 163.83334350585938,
+        "ratio": 1.4999999068639587,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625,
+            59.41667175292969
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625,
+            59.41667175292969,
+            59.41667175292969
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.19999694824219,
+        "edgeMedia": 47.19999694824219,
+        "logoMedia": 192.46664428710938,
+        "bottom": 16.000030517578125,
+        "mediaHeight": 237.68333435058594,
+        "linksHeight": 237.68333435058594,
+        "ratio": 1.5000350199960646,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469,
+            47.23333740234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469,
+            47.23333740234375,
+            47.23333740234375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.11666870117188,
+        "edgeLogo": 31.48333740234375,
+        "edgeMedia": 31.48333740234375,
+        "logoMedia": 31.5,
+        "bottom": 31.48333740234375,
+        "mediaHeight": 188.9499969482422,
+        "linksHeight": 188.9499969482422,
+        "ratio": 1.5000442137451528,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219,
+            51.20001220703125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219,
+            51.20001220703125,
+            51.19999694824219
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.133331298828125,
+        "edgeMedia": 34.133331298828125,
+        "logoMedia": 34.133331298828125,
+        "bottom": 34.133331298828125,
+        "mediaHeight": 204.8000030517578,
+        "linksHeight": 204.8000030517578,
+        "ratio": 1.5000000372529025,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625,
+            57.59999084472656
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625,
+            57.59999084472656,
+            57.600006103515625
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.399993896484375,
+        "edgeMedia": 38.399993896484375,
+        "logoMedia": 38.399993896484375,
+        "bottom": 38.40000915527344,
+        "mediaHeight": 230.40000915527344,
+        "linksHeight": 230.40000915527344,
+        "ratio": 1.4999999668863098,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.94999694824219,
+        "edgeMedia": 40.94999694824219,
+        "logoMedia": 40.94999694824219,
+        "bottom": 40.94999694824219,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5000339015211723,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031,
+            69.33332824707031
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031,
+            69.33332824707031,
+            69.33334350585938
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.19999694824219,
+        "edgeMedia": 51.19999694824219,
+        "logoMedia": 51.19999694824219,
+        "bottom": 51.19999694824219,
+        "mediaHeight": 277.3333435058594,
+        "linksHeight": 277.3333435058594,
+        "ratio": 1.4999999449803298,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 800,
+        "edgeLogo": 20,
+        "edgeMedia": 360,
+        "logoMedia": -60,
+        "bottom": 425.3999938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 844,
+        "edgeLogo": 20,
+        "edgeMedia": 390,
+        "logoMedia": -60,
+        "bottom": 427.1499938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 900,
+        "edgeLogo": 25.5999755859375,
+        "edgeMedia": 640,
+        "logoMedia": -60,
+        "bottom": 429.3999938964844,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "ratio": 0,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 768,
+      "height": 1024,
+      "slots": [
+        {
+          "count": 1,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 153.4666748046875,
+          "slot": [
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875,
+            38.366668701171875
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1024,
+        "edgeLogo": 30.7166748046875,
+        "edgeMedia": 30.716659545898438,
+        "logoMedia": 172.9499969482422,
+        "bottom": 16.016677856445312,
+        "mediaHeight": 153.4499969482422,
+        "linksHeight": 153.4666748046875,
+        "ratio": 1.500054342967667,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1024,
+      "height": 768,
+      "slots": [
+        {
+          "count": 1,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844,
+            40.9666748046875
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 163.83334350585938,
+          "slot": [
+            40.9666748046875,
+            40.96665954589844,
+            40.9666748046875,
+            40.96665954589844
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 76.80000305175781,
+        "edgeLogo": 27.29998779296875,
+        "edgeMedia": 27.29998779296875,
+        "logoMedia": 27.300003051757812,
+        "bottom": 27.29998779296875,
+        "mediaHeight": 163.83334350585938,
+        "linksHeight": 163.83334350585938,
+        "ratio": 1.4999999068639587,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1180,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625,
+            59.41667175292969
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 237.68333435058594,
+          "slot": [
+            59.41667175292969,
+            59.416656494140625,
+            59.41667175292969,
+            59.41667175292969
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 1300,
+        "edgeLogo": 47.200042724609375,
+        "edgeMedia": 47.20001220703125,
+        "logoMedia": 192.46664428710938,
+        "bottom": 16.000030517578125,
+        "mediaHeight": 237.68333435058594,
+        "linksHeight": 237.68333435058594,
+        "ratio": 1.5000350199960646,
+        "overflow": false,
+        "weight": "400"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1181,
+      "height": 1300,
+      "slots": [
+        {
+          "count": 1,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469,
+            47.23333740234375
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 188.9499969482422,
+          "slot": [
+            47.23333740234375,
+            47.23332214355469,
+            47.23333740234375,
+            47.23333740234375
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 116.11666870117188,
+        "edgeLogo": 31.483367919921875,
+        "edgeMedia": 31.48333740234375,
+        "logoMedia": 31.5,
+        "bottom": 31.48333740234375,
+        "mediaHeight": 188.9499969482422,
+        "linksHeight": 188.9499969482422,
+        "ratio": 1.5000442137451528,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1280,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219,
+            51.20001220703125
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 204.8000030517578,
+          "slot": [
+            51.19999694824219,
+            51.19999694824219,
+            51.20001220703125,
+            51.19999694824219
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 34.133392333984375,
+        "edgeMedia": 34.13330078125,
+        "logoMedia": 34.133331298828125,
+        "bottom": 34.133331298828125,
+        "mediaHeight": 204.8000030517578,
+        "linksHeight": 204.8000030517578,
+        "ratio": 1.5000000372529025,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1440,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625,
+            57.59999084472656
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 230.40000915527344,
+          "slot": [
+            57.600006103515625,
+            57.600006103515625,
+            57.59999084472656,
+            57.600006103515625
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 38.4000244140625,
+        "edgeMedia": 38.399993896484375,
+        "logoMedia": 38.399993896484375,
+        "bottom": 38.40000915527344,
+        "mediaHeight": 230.40000915527344,
+        "linksHeight": 230.40000915527344,
+        "ratio": 1.4999999668863098,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1536,
+      "height": 900,
+      "slots": [
+        {
+          "count": 1,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 245.75,
+          "slot": [
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594,
+            61.43333435058594
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 90,
+        "edgeLogo": 40.949951171875,
+        "edgeMedia": 40.950042724609375,
+        "logoMedia": 40.94999694824219,
+        "bottom": 40.94999694824219,
+        "mediaHeight": 245.75,
+        "linksHeight": 245.75,
+        "ratio": 1.5000339015211723,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1920,
+      "height": 1080,
+      "slots": [
+        {
+          "count": 1,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938
+          ],
+          "fit": true
+        },
+        {
+          "count": 2,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031
+          ],
+          "fit": true
+        },
+        {
+          "count": 3,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031,
+            69.33332824707031
+          ],
+          "fit": true
+        },
+        {
+          "count": 4,
+          "h": 277.3333435058594,
+          "slot": [
+            69.33334350585938,
+            69.33332824707031,
+            69.33332824707031,
+            69.33334350585938
+          ],
+          "fit": true
+        }
+      ],
+      "status": "PASS",
+      "geometry": {
+        "barHeight": 108,
+        "edgeLogo": 51.199951171875,
+        "edgeMedia": 51.199951171875,
+        "logoMedia": 51.19999694824219,
+        "bottom": 51.19999694824219,
+        "mediaHeight": 277.3333435058594,
+        "linksHeight": 277.3333435058594,
+        "ratio": 1.4999999449803298,
+        "overflow": false,
+        "weight": "700"
+      }
+    },
+    {
+      "name": "firefox",
+      "pageErrors": []
+    }
+  ],
+  "extraHeights": [
+    {
+      "name": "chromium",
+      "w": 1024,
+      "h": 768,
+      "g": {
+        "bar": 76.796875,
+        "center": 38.3984375,
+        "logoCenter": 38.390625,
+        "logoTop": 14.390625,
+        "side": 27.296875,
+        "gap": 27.3125,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "slot": [
+          {
+            "h": 40.953125,
+            "fit": true
+          },
+          {
+            "h": 40.953125,
+            "fit": true
+          },
+          {
+            "h": 40.953125,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 1440,
+      "h": 900,
+      "g": {
+        "bar": 90,
+        "center": 45,
+        "logoCenter": 45,
+        "logoTop": 13,
+        "side": 38.390625,
+        "gap": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "slot": [
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 1920,
+      "h": 1080,
+      "g": {
+        "bar": 108,
+        "center": 54,
+        "logoCenter": 54,
+        "logoTop": 22,
+        "side": 51.1875,
+        "gap": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "slot": [
+          {
+            "h": 69.328125,
+            "fit": true
+          },
+          {
+            "h": 69.328125,
+            "fit": true
+          },
+          {
+            "h": 69.328125,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 1440,
+      "h": 600,
+      "g": {
+        "bar": 60,
+        "center": 30,
+        "logoCenter": 30,
+        "logoTop": 0,
+        "side": 38.390625,
+        "gap": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "slot": [
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 1280,
+      "h": 390,
+      "g": {
+        "bar": 39,
+        "center": 19.5,
+        "logoCenter": 19.5,
+        "logoTop": 0,
+        "side": 34.125,
+        "gap": 34.125,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "slot": [
+          {
+            "h": 51.1875,
+            "fit": true
+          },
+          {
+            "h": 51.203125,
+            "fit": true
+          },
+          {
+            "h": 51.203125,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 768,
+      "h": 1024,
+      "g": {
+        "bar": 1024,
+        "center": 512,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 30.71875,
+        "gap": 172.953125,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "slot": [
+          {
+            "h": 38.359375,
+            "fit": true
+          },
+          {
+            "h": 38.359375,
+            "fit": true
+          },
+          {
+            "h": 38.359375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 1024,
+      "h": 1366,
+      "g": {
+        "bar": 1366,
+        "center": 683,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 40.953125,
+        "gap": 183.359375,
+        "mediaHeight": 205.78125,
+        "linksHeight": 205.78125,
+        "slot": [
+          {
+            "h": 51.4375,
+            "fit": true
+          },
+          {
+            "h": 51.453125,
+            "fit": true
+          },
+          {
+            "h": 51.4375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 390,
+      "h": 844,
+      "g": {
+        "bar": 844,
+        "center": 422,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 20,
+        "gap": -60,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "slot": [
+          {
+            "h": 53.765625,
+            "fit": true
+          },
+          {
+            "h": 53.765625,
+            "fit": true
+          },
+          {
+            "h": 53.765625,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1024,
+      "h": 768,
+      "g": {
+        "bar": 76.796875,
+        "center": 38.3984375,
+        "logoCenter": 38.390625,
+        "logoTop": 14.390625,
+        "side": 27.296875,
+        "gap": 27.3125,
+        "mediaHeight": 163.828125,
+        "linksHeight": 163.828125,
+        "slot": [
+          {
+            "h": 40.953125,
+            "fit": true
+          },
+          {
+            "h": 40.953125,
+            "fit": true
+          },
+          {
+            "h": 40.953125,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1440,
+      "h": 900,
+      "g": {
+        "bar": 90,
+        "center": 45,
+        "logoCenter": 45,
+        "logoTop": 13,
+        "side": 38.390625,
+        "gap": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "slot": [
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1920,
+      "h": 1080,
+      "g": {
+        "bar": 108,
+        "center": 54,
+        "logoCenter": 54,
+        "logoTop": 22,
+        "side": 51.1875,
+        "gap": 51.1875,
+        "mediaHeight": 277.328125,
+        "linksHeight": 277.328125,
+        "slot": [
+          {
+            "h": 69.328125,
+            "fit": true
+          },
+          {
+            "h": 69.328125,
+            "fit": true
+          },
+          {
+            "h": 69.328125,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1440,
+      "h": 600,
+      "g": {
+        "bar": 60,
+        "center": 30,
+        "logoCenter": 30,
+        "logoTop": 0,
+        "side": 38.390625,
+        "gap": 38.390625,
+        "mediaHeight": 230.390625,
+        "linksHeight": 230.390625,
+        "slot": [
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          },
+          {
+            "h": 57.59375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1280,
+      "h": 390,
+      "g": {
+        "bar": 39,
+        "center": 19.5,
+        "logoCenter": 19.5,
+        "logoTop": 0,
+        "side": 34.125,
+        "gap": 34.125,
+        "mediaHeight": 204.78125,
+        "linksHeight": 204.796875,
+        "slot": [
+          {
+            "h": 51.1875,
+            "fit": true
+          },
+          {
+            "h": 51.203125,
+            "fit": true
+          },
+          {
+            "h": 51.203125,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 768,
+      "h": 1024,
+      "g": {
+        "bar": 1024,
+        "center": 512,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 30.71875,
+        "gap": 172.953125,
+        "mediaHeight": 153.453125,
+        "linksHeight": 153.453125,
+        "slot": [
+          {
+            "h": 38.359375,
+            "fit": true
+          },
+          {
+            "h": 38.359375,
+            "fit": true
+          },
+          {
+            "h": 38.359375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1024,
+      "h": 1366,
+      "g": {
+        "bar": 1366,
+        "center": 683,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 40.953125,
+        "gap": 183.359375,
+        "mediaHeight": 205.78125,
+        "linksHeight": 205.78125,
+        "slot": [
+          {
+            "h": 51.4375,
+            "fit": true
+          },
+          {
+            "h": 51.453125,
+            "fit": true
+          },
+          {
+            "h": 51.4375,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 390,
+      "h": 844,
+      "g": {
+        "bar": 844,
+        "center": 422,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 20,
+        "gap": -60,
+        "mediaHeight": 0,
+        "linksHeight": 185.296875,
+        "slot": [
+          {
+            "h": 53.765625,
+            "fit": true
+          },
+          {
+            "h": 53.765625,
+            "fit": true
+          },
+          {
+            "h": 53.765625,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1024,
+      "h": 768,
+      "g": {
+        "bar": 76.80000305175781,
+        "center": 38.400001525878906,
+        "logoCenter": 38.399993896484375,
+        "logoTop": 14.399993896484375,
+        "side": 27.300003051757812,
+        "gap": 27.300003051757812,
+        "mediaHeight": 163.83334350585938,
+        "linksHeight": 163.83334350585938,
+        "slot": [
+          {
+            "h": 40.9666748046875,
+            "fit": true
+          },
+          {
+            "h": 40.96665954589844,
+            "fit": true
+          },
+          {
+            "h": 40.9666748046875,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1440,
+      "h": 900,
+      "g": {
+        "bar": 90,
+        "center": 45,
+        "logoCenter": 45,
+        "logoTop": 13,
+        "side": 38.399993896484375,
+        "gap": 38.399993896484375,
+        "mediaHeight": 230.40000915527344,
+        "linksHeight": 230.40000915527344,
+        "slot": [
+          {
+            "h": 57.600006103515625,
+            "fit": true
+          },
+          {
+            "h": 57.600006103515625,
+            "fit": true
+          },
+          {
+            "h": 57.59999084472656,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1920,
+      "h": 1080,
+      "g": {
+        "bar": 108,
+        "center": 54,
+        "logoCenter": 54,
+        "logoTop": 22,
+        "side": 51.19999694824219,
+        "gap": 51.19999694824219,
+        "mediaHeight": 277.3333435058594,
+        "linksHeight": 277.3333435058594,
+        "slot": [
+          {
+            "h": 69.33334350585938,
+            "fit": true
+          },
+          {
+            "h": 69.33332824707031,
+            "fit": true
+          },
+          {
+            "h": 69.33332824707031,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1440,
+      "h": 600,
+      "g": {
+        "bar": 60,
+        "center": 30,
+        "logoCenter": 30,
+        "logoTop": 0,
+        "side": 38.399993896484375,
+        "gap": 38.399993896484375,
+        "mediaHeight": 230.40000915527344,
+        "linksHeight": 230.40000915527344,
+        "slot": [
+          {
+            "h": 57.600006103515625,
+            "fit": true
+          },
+          {
+            "h": 57.600006103515625,
+            "fit": true
+          },
+          {
+            "h": 57.59999084472656,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1280,
+      "h": 390,
+      "g": {
+        "bar": 39,
+        "center": 19.5,
+        "logoCenter": 19.5,
+        "logoTop": 0,
+        "side": 34.133331298828125,
+        "gap": 34.133331298828125,
+        "mediaHeight": 204.8000030517578,
+        "linksHeight": 204.8000030517578,
+        "slot": [
+          {
+            "h": 51.19999694824219,
+            "fit": true
+          },
+          {
+            "h": 51.20001220703125,
+            "fit": true
+          },
+          {
+            "h": 51.19999694824219,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 768,
+      "h": 1024,
+      "g": {
+        "bar": 1024,
+        "center": 512,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 30.716659545898438,
+        "gap": 172.9499969482422,
+        "mediaHeight": 153.4499969482422,
+        "linksHeight": 153.4666748046875,
+        "slot": [
+          {
+            "h": 38.366668701171875,
+            "fit": true
+          },
+          {
+            "h": 38.366668701171875,
+            "fit": true
+          },
+          {
+            "h": 38.366668701171875,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1024,
+      "h": 1366,
+      "g": {
+        "bar": 1366,
+        "center": 683,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 40.94999694824219,
+        "gap": 183.35000610351562,
+        "mediaHeight": 205.79998779296875,
+        "linksHeight": 205.79998779296875,
+        "slot": [
+          {
+            "h": 51.44999694824219,
+            "fit": true
+          },
+          {
+            "h": 51.44999694824219,
+            "fit": true
+          },
+          {
+            "h": 51.44999694824219,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 390,
+      "h": 844,
+      "g": {
+        "bar": 844,
+        "center": 422,
+        "logoCenter": 36,
+        "logoTop": 12,
+        "side": 20,
+        "gap": -60,
+        "mediaHeight": 0,
+        "linksHeight": 185.39999389648438,
+        "slot": [
+          {
+            "h": 53.80000305175781,
+            "fit": true
+          },
+          {
+            "h": 53.80000305175781,
+            "fit": true
+          },
+          {
+            "h": 53.79998779296875,
+            "fit": true
+          }
+        ],
+        "overflow": false
+      }
+    }
+  ],
+  "centering": [
+    {
+      "name": "chromium",
+      "w": 1440,
+      "h": 900,
+      "status": "PASS",
+      "row": {
+        "height": 90,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 1280,
+      "h": 390,
+      "status": "PASS",
+      "row": {
+        "height": 39,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "chromium",
+      "w": 1920,
+      "h": 1080,
+      "status": "PASS",
+      "row": {
+        "height": 108,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1440,
+      "h": 900,
+      "status": "PASS",
+      "row": {
+        "height": 90,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1280,
+      "h": 390,
+      "status": "PASS",
+      "row": {
+        "height": 39,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "webkit",
+      "w": 1920,
+      "h": 1080,
+      "status": "PASS",
+      "row": {
+        "height": 108,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1440,
+      "h": 900,
+      "status": "PASS",
+      "row": {
+        "height": 90,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1280,
+      "h": 390,
+      "status": "PASS",
+      "row": {
+        "height": 39,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "firefox",
+      "w": 1920,
+      "h": 1080,
+      "status": "PASS",
+      "row": {
+        "height": 108,
+        "centers": [
+          {
+            "node": "IMG",
+            "delta": 0
+          },
+          {
+            "node": "BUTTON",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "A",
+            "delta": 0
+          },
+          {
+            "node": "SUMMARY",
+            "delta": 0
+          }
+        ]
+      }
+    }
+  ],
+  "heroAction": [
+    {
+      "name": "chromium",
+      "hover": ".hero__title",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "chromium",
+      "hover": ".hero__description",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "chromium",
+      "hover": ".hero__cta",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "webkit",
+      "hover": ".hero__title",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "webkit",
+      "hover": ".hero__description",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "webkit",
+      "hover": ".hero__cta",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "firefox",
+      "hover": ".hero__title",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "firefox",
+      "hover": ".hero__description",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "firefox",
+      "hover": ".hero__cta",
+      "status": "PASS",
+      "styles": {
+        "tag": "A",
+        "href": "/ppdb",
+        "nestedAnchors": 0,
+        "parts": [
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "line": "none",
+            "border": "0px"
+          }
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "name": "chromium",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.11558049374924492,
+      "openingSamples": 85,
+      "switchSamples": 181,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "chromium",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.1330855480961622,
+      "openingSamples": 86,
+      "switchSamples": 178,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "chromium",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.13302022269171537,
+      "openingSamples": 87,
+      "switchSamples": 178,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "webkit",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.177922949450806,
+      "openingSamples": 43,
+      "switchSamples": 116,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "webkit",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.17252512948391055,
+      "openingSamples": 31,
+      "switchSamples": 60,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "webkit",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.12269784960495653,
+      "openingSamples": 80,
+      "switchSamples": 154,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "firefox",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.1325938279696722,
+      "openingSamples": 80,
+      "switchSamples": 185,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "firefox",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.115578134852145,
+      "openingSamples": 83,
+      "switchSamples": 177,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    },
+    {
+      "name": "firefox",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "duration": 1440,
+      "easing": "cubic-bezier(0.45, 0, 0.2, 1)",
+      "quarterProgress": 0.11596239930833571,
+      "openingSamples": 85,
+      "switchSamples": 180,
+      "sequential": true,
+      "interruption": true,
+      "themeHeldUntilClose": true
+    }
+  ],
+  "edge": {
+    "name": "Edge",
+    "version": "154.0.4258.53",
+    "status": "PASS",
+    "navCap": true,
+    "heroGroup": true,
+    "tabletFrame": true,
+    "slowSequentialMotion": true
+  },
+  "playbackRegression": [
+    {
+      "name": "chromium",
+      "label": "Hero click/focus",
+      "status": "PASS",
+      "delta": 0.12514000000000003,
+      "duration": 209.1
+    },
+    {
+      "name": "chromium",
+      "label": "Language overlay, no theme change",
+      "status": "PASS",
+      "delta": 0.12312100000000026,
+      "duration": 209.1
+    },
+    {
+      "name": "chromium",
+      "label": "Backdrop dismiss",
+      "status": "PASS",
+      "delta": 0.14350500000000022,
+      "duration": 209.1
+    },
+    {
+      "name": "chromium",
+      "label": "Navigation dropdown",
+      "status": "PASS",
+      "delta": 0.12250700000000059,
+      "duration": 209.1
+    },
+    {
+      "name": "chromium",
+      "label": "Language preserves open menu",
+      "status": "PASS",
+      "delta": 0.16588199999999986,
+      "duration": 209.1
+    },
+    {
+      "name": "chromium",
+      "label": "Partially visible Hero",
+      "status": "PASS",
+      "delta": 0.12776800000000055,
+      "duration": 209.1
+    },
+    {
+      "name": "chromium",
+      "label": "Fully offscreen pause, same source",
+      "status": "PASS"
+    },
+    {
+      "name": "chromium",
+      "label": "Visible resume",
+      "status": "PASS",
+      "delta": 0.12367699999999981,
+      "duration": 209.1
+    },
+    {
+      "name": "webkit",
+      "label": "Hero click/focus",
+      "status": "PASS",
+      "delta": 0.13631691299999993,
+      "duration": 209.1
+    },
+    {
+      "name": "webkit",
+      "label": "Language overlay, no theme change",
+      "status": "PASS",
+      "delta": 0.32821516599999967,
+      "duration": 209.1
+    },
+    {
+      "name": "webkit",
+      "label": "Backdrop dismiss",
+      "status": "PASS",
+      "delta": 0.29758461700000005,
+      "duration": 209.1
+    },
+    {
+      "name": "webkit",
+      "label": "Navigation dropdown",
+      "status": "PASS",
+      "delta": 0.15011037900000002,
+      "duration": 209.1
+    },
+    {
+      "name": "webkit",
+      "label": "Language preserves open menu",
+      "status": "PASS",
+      "delta": 0.37023346800000034,
+      "duration": 209.1
+    },
+    {
+      "name": "webkit",
+      "label": "Partially visible Hero",
+      "status": "PASS",
+      "delta": 0.2723128450000001,
+      "duration": 209.1
+    },
+    {
+      "name": "webkit",
+      "label": "Fully offscreen pause, same source",
+      "status": "PASS"
+    },
+    {
+      "name": "webkit",
+      "label": "Visible resume",
+      "status": "PASS",
+      "delta": 0.13144338499999986,
+      "duration": 209.1
+    },
+    {
+      "name": "firefox",
+      "label": "Hero click/focus",
+      "status": "PASS",
+      "delta": 0.1210640000000005,
+      "duration": 209.1
+    },
+    {
+      "name": "firefox",
+      "label": "Language overlay, no theme change",
+      "status": "PASS",
+      "delta": 0.16156999999999933,
+      "duration": 209.1
+    },
+    {
+      "name": "firefox",
+      "label": "Backdrop dismiss",
+      "status": "PASS",
+      "delta": 0.16149199999999997,
+      "duration": 209.1
+    },
+    {
+      "name": "firefox",
+      "label": "Navigation dropdown",
+      "status": "PASS",
+      "delta": 0.12080399999999969,
+      "duration": 209.1
+    },
+    {
+      "name": "firefox",
+      "label": "Language preserves open menu",
+      "status": "PASS",
+      "delta": 0.16134799999999938,
+      "duration": 209.1
+    },
+    {
+      "name": "firefox",
+      "label": "Partially visible Hero",
+      "status": "PASS",
+      "delta": 0.20200500000000066,
+      "duration": 209.1
+    },
+    {
+      "name": "firefox",
+      "label": "Fully offscreen pause, same source",
+      "status": "PASS"
+    },
+    {
+      "name": "firefox",
+      "label": "Visible resume",
+      "status": "PASS",
+      "delta": 0.12253199999999964,
+      "duration": 209.1
+    }
+  ],
+  "cursorRegression": [
+    {
+      "name": "chromium",
+      "status": "PASS",
+      "identity": "cwo",
+      "requests": [
+        "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+        "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+      ],
+      "randomOnce": true,
+      "hoverCycles": 10,
+      "modalLayer": true
+    },
+    {
+      "name": "chromium",
+      "touchOnly": true,
+      "status": "PASS"
+    },
+    {
+      "name": "webkit",
+      "status": "PASS",
+      "identity": "cwo",
+      "requests": [
+        "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+        "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+      ],
+      "randomOnce": true,
+      "hoverCycles": 10,
+      "modalLayer": true
+    },
+    {
+      "name": "webkit",
+      "touchOnly": true,
+      "status": "PASS"
+    },
+    {
+      "name": "firefox",
+      "status": "PASS",
+      "identity": "cwe",
+      "requests": [
+        "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+        "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+      ],
+      "randomOnce": true,
+      "hoverCycles": 10,
+      "modalLayer": true
+    },
+    {
+      "name": "firefox",
+      "touchOnly": true,
+      "status": "PASS"
+    }
+  ],
+  "soundRegression": [
+    {
+      "name": "chromium",
+      "result": "PASS",
+      "dprCap": 2,
+      "idle": true,
+      "desktopPaused": true,
+      "pagehidePaused": true,
+      "pageshowResumed": true,
+      "reducedStatic": true
+    },
+    {
+      "name": "webkit",
+      "result": "PASS",
+      "dprCap": 2,
+      "idle": true,
+      "desktopPaused": true,
+      "pagehidePaused": true,
+      "pageshowResumed": true,
+      "reducedStatic": true
+    }
+  ],
+  "gates": {
+    "diff": "PASS",
+    "structure": "PASS:255 files <=200 lines",
+    "build": "PASS:16 modules,Vite8.1.3",
+    "pint": "PASS",
+    "Node": "PASS:10 focused contracts",
+    "V2PHP": "PASS:7 tests/46 assertions",
+    "fullPHP": {
+      "tool": "pest",
+      "result": "failed",
+      "tests": 312,
+      "passed": 166,
+      "assertions": 1307,
+      "duration_ms": 19697,
+      "failed": 71,
+      "errors": 75
+    }
+  },
+  "limitations": [
+    "No physical Safari/manual screen-reader/zoom or PageSpeed/CWV certification.",
+    "Playback uses established decode and test-only body scroll space for offscreen cases; no production section or DB changes.",
+    "Canonical menu imagery may render the existing semantic fallback in local captures; URLs are unchanged."
+  ]
+}

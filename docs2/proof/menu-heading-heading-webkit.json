@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-07T09:20:14.352Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "26.6",
+  "cases": [
+    {
+      "language": "en",
+      "width": 390,
+      "before": {
+        "x": 0,
+        "scroll": 2859
+      },
+      "middle": 19.5,
+      "after": {
+        "x": 19.5,
+        "firstX": 0,
+        "scroll": 2859
+      }
+    },
+    {
+      "language": "en",
+      "width": 768,
+      "before": {
+        "x": 0,
+        "scroll": 3272
+      },
+      "middle": 38.399975,
+      "after": {
+        "x": 38.400002,
+        "firstX": 0,
+        "scroll": 3272
+      }
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "before": {
+        "x": 0,
+        "scroll": 3297
+      },
+      "middle": 93.599983,
+      "after": {
+        "x": 93.599998,
+        "firstX": 0,
+        "scroll": 3297
+      }
+    },
+    {
+      "language": "id",
+      "width": 390,
+      "before": {
+        "x": 0,
+        "scroll": 2831
+      },
+      "middle": 39,
+      "after": {
+        "x": 39,
+        "firstX": 0,
+        "scroll": 2831
+      }
+    },
+    {
+      "language": "id",
+      "width": 768,
+      "before": {
+        "x": 0,
+        "scroll": 3288
+      },
+      "middle": 76.800003,
+      "after": {
+        "x": 76.800003,
+        "firstX": 0,
+        "scroll": 3288
+      }
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "before": {
+        "x": 0,
+        "scroll": 3297
+      },
+      "middle": 187.199921,
+      "after": {
+        "x": 187.199997,
+        "firstX": 0,
+        "scroll": 3297
+      }
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "before": {
+        "x": 0,
+        "scroll": 2734
+      },
+      "middle": 0,
+      "after": {
+        "x": 0,
+        "firstX": 0,
+        "scroll": 2734
+      }
+    },
+    {
+      "language": "ar",
+      "width": 768,
+      "before": {
+        "x": 0,
+        "scroll": 3216
+      },
+      "middle": 0,
+      "after": {
+        "x": 0,
+        "firstX": 0,
+        "scroll": 3216
+      }
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "before": {
+        "x": 0,
+        "scroll": 3276
+      },
+      "middle": 0,
+      "after": {
+        "x": 0,
+        "firstX": 0,
+        "scroll": 3276
+      }
+    }
+  ]
+}

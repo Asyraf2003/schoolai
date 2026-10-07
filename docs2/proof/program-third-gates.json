@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-07T08:41:53.432349+00:00",
+  "branch": "feat/home-v2-about",
+  "head": "08039bbad2f59ba37cac996bc15730fbee7d52e9",
+  "fetched_main": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "scope_status": "PASS",
+  "repository_status": "FAIL",
+  "publish": false,
+  "profile": {
+    "url": "http://127.0.0.1:8000",
+    "host": "Linux AMD Ryzen AI7 445,15GiB,Node24.20.0",
+    "chromium": "153.0.8010.52",
+    "edge": "154.0.4258.62",
+    "firefox": "155.0",
+    "webkit": "26.6",
+    "mobile": "emulated393x873,DPR2.75,Android Chromium/WebKit iPhone UA; not physical devices"
+  },
+  "commands": {
+    "git diff --check": "PASS",
+    "npm run check:structure": "PASS277 sources max200 lines",
+    "npm run build": "PASS",
+    "vendor/bin/pint --dirty --format agent": "PASS",
+    "focused_php": "PASS27 tests369 assertions",
+    "pure_js": "PASS18 tests",
+    "php artisan test --compact --no-ansi": "FAIL332 tests:186 passed71 failures75 errors1644 assertions; no new baseline failure/error names"
+  },
+  "browser_cases": {
+    "normal_heading": 36,
+    "reduced_heading_tier_locale_engine": 180,
+    "heading_no_js": 18,
+    "heading_reentry": 3,
+    "density_profiles_before": 6,
+    "density_profiles_after": 6,
+    "wheel_trials_before": 36,
+    "wheel_trials_after": 36,
+    "kinetic_ar_normal": 12,
+    "kinetic_ar_reduced_resize": 4,
+    "nav_tier_locale_engine": 216,
+    "nav_tone_media": 36,
+    "nav_sampled_frames": 58,
+    "nav_no_js": 18,
+    "mobile_locale_profiles": 6,
+    "program_expanded_text": 36,
+    "field_overviews": 9,
+    "mission_seam": 1,
+    "header_language_sound_regression": 1
+  },
+  "sources": "program-third-protected-source.json",
+  "performance": "program-third-performance-summary.json",
+  "full_php": "program-third-full-php.json",
+  "report": "program-third-status.md",
+  "limitations": [
+    "No physical Redmi12/native Safari/total GPU or device RAM evidence",
+    "Prior PC device bug sequence was not reproduced; explicit base-field ownership is implemented and verified",
+    "Full repo failures/errors unchanged from baseline",
+    "Protected About ID390 expansion overflow remains",
+    "No Lighthouse100/field CWV/native zoom/screen-reader certification"
+  ],
+  "environment_notes": [
+    "SQLite/GD CLI enabled in temporary scan directory",
+    "WebKit audio media process initially aborted with missing host plugin; Ubuntu runtime extracted to /tmp and proof rerun",
+    "No repository dependency or package manifest changes"
+  ]
+}

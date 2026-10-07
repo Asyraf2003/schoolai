@@ -1,0 +1,12 @@
+{
+  "tool": "pest",
+  "result": "failed",
+  "tests": 319,
+  "passed": 173,
+  "assertions": 1390,
+  "duration_ms": 7397,
+  "failed": 71,
+  "errors": 75,
+  "newFailures": [],
+  "newErrors": []
+}

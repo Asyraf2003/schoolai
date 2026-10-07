@@ -1,0 +1,100 @@
+{
+  "browser": "153.0.8010.52",
+  "profile": "Chromium1440x900 ID, menu close then native Program scroll; browser-only CSSOM rule control, source unchanged",
+  "before": [
+    {
+      "open": false,
+      "mode": "closed",
+      "rects": 1,
+      "display": "grid",
+      "box": {
+        "x": 936.390625,
+        "y": 58,
+        "width": 104.90625,
+        "height": 290.171875,
+        "top": 58,
+        "right": 1041.296875,
+        "bottom": 348.171875,
+        "left": 936.390625
+      }
+    },
+    {
+      "open": false,
+      "rects": 1,
+      "display": "grid",
+      "box": {
+        "x": 1057.125,
+        "y": 58,
+        "width": 76.78125,
+        "height": 290.171875,
+        "top": 58,
+        "right": 1133.90625,
+        "bottom": 348.171875,
+        "left": 1057.125
+      }
+    },
+    {
+      "open": false,
+      "rects": 1,
+      "display": "grid",
+      "box": {
+        "x": 1140.765625,
+        "y": 58,
+        "width": 76.78125,
+        "height": 290.171875,
+        "top": 58,
+        "right": 1217.546875,
+        "bottom": 348.171875,
+        "left": 1140.765625
+      }
+    }
+  ],
+  "after": [
+    {
+      "open": false,
+      "mode": "closed",
+      "rects": 0,
+      "display": "none",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    {
+      "open": false,
+      "rects": 0,
+      "display": "none",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    {
+      "open": false,
+      "rects": 0,
+      "display": "none",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    }
+  ]
+}

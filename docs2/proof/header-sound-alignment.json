@@ -1,0 +1,1061 @@
+{
+  "profile": "System Chromium153/Linux, reduced motion, three locales/11 viewport cases",
+  "cases": [
+    {
+      "width": 360,
+      "height": 844,
+      "locale": "id",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "locale": "id",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 640,
+      "height": 900,
+      "locale": "id",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "locale": "id",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "id",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.6875,
+        "height": 26.625,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.6875,
+        "height": 26.625,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "id",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "20.48px",
+        "weight": "400",
+        "line": "30.72px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17.953125,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1180,
+      "height": 1366,
+      "locale": "id",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "23.6px",
+        "weight": "400",
+        "line": "35.4px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 24.1875,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 1366,
+      "locale": "id",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.5,
+        "height": 26.984375,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.5,
+        "height": 26.984375,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "id",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.390625,
+        "height": 27.203125,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.390625,
+        "height": 27.203125,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "id",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.125,
+        "height": 27.75,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.125,
+        "height": 27.75,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "id",
+      "mode": "desktop",
+      "sound": {
+        "y": 21.703125,
+        "height": 28.59375,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 21.703125,
+        "height": 28.59375,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "height": 844,
+      "locale": "en",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "locale": "en",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 640,
+      "height": 900,
+      "locale": "en",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "locale": "en",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "en",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.6875,
+        "height": 26.625,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.6875,
+        "height": 26.625,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "en",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "20.48px",
+        "weight": "400",
+        "line": "30.72px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17.953125,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1180,
+      "height": 1366,
+      "locale": "en",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "23.6px",
+        "weight": "400",
+        "line": "35.4px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 24.1875,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 1366,
+      "locale": "en",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.5,
+        "height": 26.984375,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.5,
+        "height": 26.984375,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "en",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.390625,
+        "height": 27.203125,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.390625,
+        "height": 27.203125,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "en",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.125,
+        "height": 27.75,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.125,
+        "height": 27.75,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "en",
+      "mode": "desktop",
+      "sound": {
+        "y": 21.703125,
+        "height": 28.59375,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 21.703125,
+        "height": 28.59375,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "height": 844,
+      "locale": "ar",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "locale": "ar",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 640,
+      "height": 900,
+      "locale": "ar",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "locale": "ar",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "ar",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.6875,
+        "height": 26.625,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.6875,
+        "height": 26.625,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.08px",
+        "weight": "600",
+        "line": "21.12px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "ar",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "20.48px",
+        "weight": "400",
+        "line": "30.72px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 17.953125,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1180,
+      "height": 1366,
+      "locale": "ar",
+      "mode": "compact",
+      "sound": {
+        "y": 0,
+        "height": 0,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "menu": {
+        "y": 0,
+        "height": 0,
+        "font": "23.6px",
+        "weight": "400",
+        "line": "35.4px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "soundButton": {
+        "y": 24.1875,
+        "height": 46,
+        "font": "16px",
+        "weight": "400",
+        "line": "24px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "block",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 1366,
+      "locale": "ar",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.5,
+        "height": 26.984375,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.5,
+        "height": 26.984375,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.2762px",
+        "weight": "600",
+        "line": "21.4144px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "ar",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.390625,
+        "height": 27.203125,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.390625,
+        "height": 27.203125,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.4px",
+        "weight": "600",
+        "line": "21.6px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "ar",
+      "mode": "desktop",
+      "sound": {
+        "y": 22.125,
+        "height": 27.75,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 22.125,
+        "height": 27.75,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "14.72px",
+        "weight": "600",
+        "line": "22.08px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "ar",
+      "mode": "desktop",
+      "sound": {
+        "y": 21.703125,
+        "height": 28.59375,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      "menu": {
+        "y": 21.703125,
+        "height": 28.59375,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgb(255, 178, 11)"
+      },
+      "soundButton": {
+        "y": 14,
+        "height": 44,
+        "font": "15.2px",
+        "weight": "600",
+        "line": "22.8px",
+        "borderColor": "rgb(255, 255, 255)"
+      },
+      "waveDisplay": "none",
+      "overflow": false
+    }
+  ]
+}

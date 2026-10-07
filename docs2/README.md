@@ -1,7 +1,21 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **physical source switch + blank Homepage V2 foundation**.
+Scope saat ini: **Issue #65: drift latar Program dan reveal ID760ms → slide berbobot1200ms**.
+
+Map aktif: [MAP-V2-10](blueprints/menu-heading-visual-correction.md).
+Bukti terbaru: [Status Program motion #65](proof/menu-heading-status.md), [data terukur](proof/program-motion-65.json).
+Bukti putaran sebelumnya: [Nav dan latar AR](proof/program-third-status.md).
+Bukti sebelumnya: [Judul Program dan navigasi](proof/nav-program-status.md).
+Koreksi Program sebelumnya: [Program visual correction](proof/program-feedback-status.md).
+Migrasi awal: [Program proof](proof/program-status.md).
+Sound yang tetap diterima: [MAP-V2-06](blueprints/header-sound-feedback.md).
+About terakhir: [MAP-V2-05](blueprints/homepage-v2-about-type.md).
+Komposisi/Header yang tetap diterima: [MAP-V2-04](blueprints/homepage-v2-about-polish.md).
+Arsitektur About yang diterima: [MAP-V2-03](blueprints/homepage-v2-about.md).
+Header/Hero terdahulu: [MAP-V2-02](blueprints/menu-hero-correction.md);
+ownership dan bukti historisnya tetap berlaku untuk owner yang tidak berubah.
+Blueprint foundation lama adalah histori; urutan terbaru pada map aktif berlaku.
 
 `docs2/` adalah sumber arahan baru yang bersih agar pekerjaan Homepage V2 tidak tercampur dengan histori dan keputusan legacy.
 
@@ -48,9 +62,11 @@ Jangan membaca seluruh `docs/` legacy sebagai prasyarat default.
 
 ## Active implementation source
 
-`resources/index.html` sengaja hanya berisi shell HTML kosong. Belum ada Hero final, About, seam, atau runtime logic.
+Delivery aktif: `resources/views/landing/index.blade.php` melalui route home.
+`resources/index.html` hanya artefak shell awal; bukan frontend production paralel.
 
-Target implementasi pertama hanya **Hero**.
+Urutan aktif: **foundation → shell → Menu → Hero → About → Program → proof**.
+Values dan garis Program→Values belum diimplementasikan.
 
 ## Prinsip utama
 

@@ -1,0 +1,100 @@
+{
+  "profile": "Chromium normal motion, actual scroll/IntersectionObserver activation",
+  "start": {
+    "locale": "ar",
+    "key": "about",
+    "scrollY": 1080,
+    "header": {
+      "x": 0,
+      "y": -72,
+      "width": 1905,
+      "height": 72,
+      "centerY": -36
+    },
+    "logo": {
+      "x": 1805.8125,
+      "y": -60,
+      "width": 48,
+      "height": 48,
+      "centerY": -36
+    },
+    "frame": {
+      "x": 76.8125,
+      "y": 330.4375,
+      "width": 873.09375,
+      "height": 491.109375,
+      "centerY": 575.9921875
+    },
+    "stage": {
+      "x": 76.8125,
+      "y": 72,
+      "width": 873.09375,
+      "height": 1008,
+      "centerY": 576
+    },
+    "story": {
+      "x": 1007.5,
+      "y": 0,
+      "width": 820.703125,
+      "height": 1008,
+      "centerY": 504
+    },
+    "copy": {
+      "x": 1300.671875,
+      "y": 301.03125,
+      "width": 527.53125,
+      "height": 405.9375,
+      "centerY": 504
+    },
+    "headlineFont": "76px",
+    "bodyFont": "18px",
+    "mascot": {
+      "x": 954.703125,
+      "y": 552,
+      "width": 48,
+      "height": 48,
+      "centerY": 576
+    },
+    "navFont": "15.2px",
+    "radius": "2px",
+    "background": "rgb(255, 240, 194)",
+    "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+    "motifOpacity": "0.12",
+    "overflow": false
+  },
+  "samples": [
+    {
+      "color": "rgb(253, 240, 197)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    },
+    {
+      "color": "rgb(240, 241, 221)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    },
+    {
+      "color": "rgb(225, 243, 248)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    },
+    {
+      "color": "rgb(223, 243, 252)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    }
+  ],
+  "reducedMotionDuration": "0s"
+}

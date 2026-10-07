@@ -1,0 +1,2521 @@
+{
+  "date": "2026-10-05",
+  "sourceMain": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "branch": "feat/home-v2-hero",
+  "route": "http://127.0.0.1:8123/",
+  "profiles": "Linux headless Chromium153/WebKit26.6/Firefox155; Windows native Edge154 via CDP. Reduced motion width matrix; normal pointer cursor tests. Viewport emulation is not physical device proof.",
+  "hashes": {
+    "resources/js/sections/hero-state.js": "5b82d002d4f3afb8bd756258832ce5e83ddbc9478d3316153e459418836c56bb",
+    "resources/js/sections/media-fallback.js": "ebcd4107b138ab4fbfe813ca9540e9cea5c93315971c828b37db2239811e03da",
+    "resources/js/sections/header-sound.js": "0ee2133110d35b7a1b842742a90c0839dd3cc8812de1127480628f775b02fbab",
+    "resources/js/sections/header-language.js": "35d113bc3535a99c34b196f36a20a6c9810f4c603737d92e15c70aac9a509b4a",
+    "resources/js/sections/header.js": "f05bbd8fb928c1df9bb8eab8e1f0577ff6df32b998c5452f940d7c0284924a9c",
+    "resources/js/sections/header-motion.js": "66610998f837878b1dff80d2995490933c3842cb707137d6418b29ddb31ae386",
+    "resources/js/sections/cursor.js": "7dd7973dcefafce39a68fc730d06c1c0d5d7b192d6aa40df84d7a66921398232",
+    "resources/js/sections/hero-media.js": "422af5c48739e81dbea5e4fcb5de1a9ac83cadda27dcb3ae2cfa2ddb874cfd79",
+    "resources/js/sections/header-state.js": "5324eea6f6f39dda719e81300e2e57f2d34a4eb51ea2385193dea72fe4fc90cb",
+    "resources/js/sections/hero.js": "12421f10d9375221b6400d1b1311946a084ee807e2d7e7aa727caf103bb63783",
+    "resources/js/sections/hero-title.js": "615343991ff87878ee2a979a5d9a5af71e397b5e92cb5e61efb1afc103e63bb4",
+    "resources/css/sections/header-language.css": "92890acc39e57fe67c9e4532861c22a339e958f45741a7209bb37810966e92e6",
+    "resources/css/sections/header.css": "2ad28f80cb7f99bd562934d3e89925ffffdb840e5678c126b118202b125616b9",
+    "resources/css/sections/cursor.css": "e0a44e777a43a79a7fae4ebeb6616ab1a1a78b704f73339fe179edf5e461cfd6",
+    "resources/css/sections/header-sound.css": "a11b56ed729cd1b74cd8c928942775b09ceb3b7b58346dcc10f79c790d4ce925",
+    "resources/css/sections/hero.css": "2c1f4b148a1946271d741d27d722391c2f622f4b8861efcd7581fe1247bb489a",
+    "resources/js/index.js": "aefd5c3076ce2bed2028b6d6dee47ca15d4fbc5c9f76cbbeb070c315ceb0c545",
+    "resources/css/index.css": "525525274e899b3a5bd2c04f40c560f9310f7bb6704ec382cc7f7de323b9ac7b",
+    "resources/views/landing/header.blade.php": "9dd8492f17df8991e8ff536d0736602ac5fcaebe327dd8f589dfb18430d5cec3"
+  },
+  "geometryLanguage": [
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 446.3125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.7969px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 431.875,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.6875px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 434.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 52.671875,
+        "ratio": 1.5000509113124936,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "ratio": 1.5000476871721506,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.391px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.234375,
+        "edgeMedia": 47.234375,
+        "logoMedia": 47.234375,
+        "bottom": 47.234375,
+        "ratio": 1.5000413462333582,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.094px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "ratio": 1.5000763009308713,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.59375,
+        "edgeMedia": 57.59375,
+        "logoMedia": 57.59375,
+        "bottom": 57.59375,
+        "ratio": 1.5000339097999322,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.4375,
+        "edgeMedia": 61.4375,
+        "logoMedia": 61.4375,
+        "bottom": 61.4375,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "en",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.796875,
+        "edgeMedia": 76.796875,
+        "logoMedia": 76.796875,
+        "bottom": 76.796875,
+        "ratio": 1.5000281706011607,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 430.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.7969px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 431.875,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.6875px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 434.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 52.671875,
+        "ratio": 1.5000509113124936,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "ratio": 1.5000476871721506,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.391px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.234375,
+        "edgeMedia": 47.234375,
+        "logoMedia": 47.234375,
+        "bottom": 47.234375,
+        "ratio": 1.5000413462333582,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.094px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "ratio": 1.5000763009308713,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.59375,
+        "edgeMedia": 57.59375,
+        "logoMedia": 57.59375,
+        "bottom": 57.59375,
+        "ratio": 1.5000339097999322,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.4375,
+        "edgeMedia": 61.4375,
+        "logoMedia": 61.4375,
+        "bottom": 61.4375,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "id",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.796875,
+        "edgeMedia": 76.796875,
+        "logoMedia": 76.796875,
+        "bottom": 76.796875,
+        "ratio": 1.5000281706011607,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 360,
+        "logoMedia": -60,
+        "bottom": 430.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.7969px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 390,
+        "logoMedia": -60,
+        "bottom": 431.875,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.6875px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.59375,
+        "edgeMedia": 640,
+        "logoMedia": -60,
+        "bottom": 434.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 52.671875,
+        "ratio": 1.5000509113124936,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "ratio": 1.5000476871721506,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.391px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.234375,
+        "edgeMedia": 47.234375,
+        "logoMedia": 47.234375,
+        "bottom": 47.234375,
+        "ratio": 1.5000413462333582,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.094px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "ratio": 1.5000763009308713,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.59375,
+        "edgeMedia": 57.59375,
+        "logoMedia": 57.59375,
+        "bottom": 57.59375,
+        "ratio": 1.5000339097999322,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.4375,
+        "edgeMedia": 61.4375,
+        "logoMedia": 61.4375,
+        "bottom": 61.4375,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "locale": "ar",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.796875,
+        "edgeMedia": 76.796875,
+        "logoMedia": 76.796875,
+        "bottom": 76.796875,
+        "ratio": 1.5000281706011607,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "chromium",
+      "pageErrors": []
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 446.3125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.796875px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 431.875,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.6875px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 434.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 52.671875,
+        "ratio": 1.5000509113124936,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "ratio": 1.5000476871721506,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.390625px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.234375,
+        "edgeMedia": 47.234375,
+        "logoMedia": 47.234375,
+        "bottom": 47.234375,
+        "ratio": 1.5000413462333582,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.09375px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "ratio": 1.5000763009308713,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.59375,
+        "edgeMedia": 57.59375,
+        "logoMedia": 57.59375,
+        "bottom": 57.59375,
+        "ratio": 1.5000339097999322,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.4375,
+        "edgeMedia": 61.4375,
+        "logoMedia": 61.4375,
+        "bottom": 61.4375,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "en",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.796875,
+        "edgeMedia": 76.796875,
+        "logoMedia": 76.796875,
+        "bottom": 76.796875,
+        "ratio": 1.5000281706011607,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 430.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.796875px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 431.875,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.6875px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.59375,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 434.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 52.671875,
+        "ratio": 1.5000509113124936,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "ratio": 1.5000476871721506,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.390625px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.234375,
+        "edgeMedia": 47.234375,
+        "logoMedia": 47.234375,
+        "bottom": 47.234375,
+        "ratio": 1.5000413462333582,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.09375px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "ratio": 1.5000763009308713,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.59375,
+        "edgeMedia": 57.59375,
+        "logoMedia": 57.59375,
+        "bottom": 57.59375,
+        "ratio": 1.5000339097999322,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.4375,
+        "edgeMedia": 61.4375,
+        "logoMedia": 61.4375,
+        "bottom": 61.4375,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "id",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.796875,
+        "edgeMedia": 76.796875,
+        "logoMedia": 76.796875,
+        "bottom": 76.796875,
+        "ratio": 1.5000281706011607,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 360,
+        "logoMedia": -60,
+        "bottom": 430.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.796875px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 390,
+        "logoMedia": -60,
+        "bottom": 431.875,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.6875px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.59375,
+        "edgeMedia": 640,
+        "logoMedia": -60,
+        "bottom": 434.125,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.71875,
+        "edgeMedia": 30.71875,
+        "logoMedia": 172.953125,
+        "bottom": 52.671875,
+        "ratio": 1.5000509113124936,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.953125,
+        "edgeMedia": 40.953125,
+        "logoMedia": 40.953125,
+        "bottom": 40.953125,
+        "ratio": 1.5000476871721506,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.390625px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.1875,
+        "edgeMedia": 47.1875,
+        "logoMedia": 192.46875,
+        "bottom": 16,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.234375,
+        "edgeMedia": 47.234375,
+        "logoMedia": 47.234375,
+        "bottom": 47.234375,
+        "ratio": 1.5000413462333582,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.09375px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.1875,
+        "edgeMedia": 51.1875,
+        "logoMedia": 51.1875,
+        "bottom": 51.1875,
+        "ratio": 1.5000763009308713,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.59375,
+        "edgeMedia": 57.59375,
+        "logoMedia": 57.59375,
+        "bottom": 57.59375,
+        "ratio": 1.5000339097999322,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.4375,
+        "edgeMedia": 61.4375,
+        "logoMedia": 61.4375,
+        "bottom": 61.4375,
+        "ratio": 1.5,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "version": "26.6",
+      "locale": "ar",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.796875,
+        "edgeMedia": 76.796875,
+        "logoMedia": 76.796875,
+        "bottom": 76.796875,
+        "ratio": 1.5000281706011607,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 198, 111)"
+      }
+    },
+    {
+      "name": "webkit",
+      "pageErrors": []
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 446.3999938964844,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.8px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 431.9499969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.7px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.600006103515625,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 434.1999969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.716659545898438,
+        "edgeMedia": 30.716659545898438,
+        "logoMedia": 172.9499969482422,
+        "bottom": 52.75,
+        "ratio": 1.500054342967667,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.94999694824219,
+        "edgeMedia": 40.94999694824219,
+        "logoMedia": 40.94999694824219,
+        "bottom": 40.94999694824219,
+        "ratio": 1.4999999068639587,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.4px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.19999694824219,
+        "edgeMedia": 47.19999694824219,
+        "logoMedia": 192.46664428710938,
+        "bottom": 16.000030517578125,
+        "ratio": 1.5000350199960646,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.23333740234375,
+        "edgeMedia": 47.23333740234375,
+        "logoMedia": 47.23333740234375,
+        "bottom": 47.23333740234375,
+        "ratio": 1.5000442137451528,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.1px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.19999694824219,
+        "edgeMedia": 51.19999694824219,
+        "logoMedia": 51.19999694824219,
+        "bottom": 51.19999694824219,
+        "ratio": 1.5000000372529025,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.600006103515625,
+        "edgeMedia": 57.600006103515625,
+        "logoMedia": 57.59999084472656,
+        "bottom": 57.59999084472656,
+        "ratio": 1.4999998344315488,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.43333435058594,
+        "edgeMedia": 61.43333435058594,
+        "logoMedia": 61.43333435058594,
+        "bottom": 61.433349609375,
+        "ratio": 1.5000339015211723,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "en",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.80000305175781,
+        "edgeMedia": 76.80000305175781,
+        "logoMedia": 76.80000305175781,
+        "bottom": 76.80001831054688,
+        "ratio": 1.5000001100393523,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 430.1999969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.8px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 431.9499969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.7px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.600006103515625,
+        "edgeMedia": 0,
+        "logoMedia": -60,
+        "bottom": 434.1999969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.716659545898438,
+        "edgeMedia": 30.716659545898438,
+        "logoMedia": 172.9499969482422,
+        "bottom": 52.75,
+        "ratio": 1.500054342967667,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.94999694824219,
+        "edgeMedia": 40.94999694824219,
+        "logoMedia": 40.94999694824219,
+        "bottom": 40.94999694824219,
+        "ratio": 1.4999999068639587,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.4px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.19999694824219,
+        "edgeMedia": 47.19999694824219,
+        "logoMedia": 192.46664428710938,
+        "bottom": 16.000030517578125,
+        "ratio": 1.5000350199960646,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.23333740234375,
+        "edgeMedia": 47.23333740234375,
+        "logoMedia": 47.23333740234375,
+        "bottom": 47.23333740234375,
+        "ratio": 1.5000442137451528,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.1px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.19999694824219,
+        "edgeMedia": 51.19999694824219,
+        "logoMedia": 51.19999694824219,
+        "bottom": 51.19999694824219,
+        "ratio": 1.5000000372529025,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.600006103515625,
+        "edgeMedia": 57.600006103515625,
+        "logoMedia": 57.59999084472656,
+        "bottom": 57.59999084472656,
+        "ratio": 1.4999998344315488,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.43333435058594,
+        "edgeMedia": 61.43333435058594,
+        "logoMedia": 61.43333435058594,
+        "bottom": 61.433349609375,
+        "ratio": 1.5000339015211723,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "id",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.80000305175781,
+        "edgeMedia": 76.80000305175781,
+        "logoMedia": 76.80000305175781,
+        "bottom": 76.80001831054688,
+        "ratio": 1.5000001100393523,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 360,
+        "logoMedia": -60,
+        "bottom": 430.1999969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 360,
+        "height": 800,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "82.8px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 20,
+        "edgeMedia": 390,
+        "logoMedia": -60,
+        "bottom": 431.9499969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 390,
+        "height": 844,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "89.7px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 640,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 25.5999755859375,
+        "edgeMedia": 640,
+        "logoMedia": -60,
+        "bottom": 434.1999969482422,
+        "ratio": 0,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 640,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "104px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 30.7166748046875,
+        "edgeMedia": 30.716659545898438,
+        "logoMedia": 172.9499969482422,
+        "bottom": 52.75,
+        "ratio": 1.500054342967667,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 768,
+        "height": 1024,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "96px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 40.95001220703125,
+        "edgeMedia": 40.95001220703125,
+        "logoMedia": 40.94999694824219,
+        "bottom": 40.94999694824219,
+        "ratio": 1.4999999068639587,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1024,
+        "height": 768,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "102.4px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1180,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.200042724609375,
+        "edgeMedia": 47.20001220703125,
+        "logoMedia": 192.46664428710938,
+        "bottom": 16.000030517578125,
+        "ratio": 1.5000350199960646,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1180,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1181,
+      "height": 1300,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 47.233367919921875,
+        "edgeMedia": 47.23333740234375,
+        "logoMedia": 47.23333740234375,
+        "bottom": 47.23333740234375,
+        "ratio": 1.5000442137451528,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1181,
+        "height": 1300,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "118.1px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 51.200042724609375,
+        "edgeMedia": 51.20001220703125,
+        "logoMedia": 51.19999694824219,
+        "bottom": 51.19999694824219,
+        "ratio": 1.5000000372529025,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1280,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "128px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 57.5999755859375,
+        "edgeMedia": 57.5999755859375,
+        "logoMedia": 57.59999084472656,
+        "bottom": 57.59999084472656,
+        "ratio": 1.4999998344315488,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1440,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1536,
+      "height": 900,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 61.433349609375,
+        "edgeMedia": 61.433319091796875,
+        "logoMedia": 61.43333435058594,
+        "bottom": 61.433349609375,
+        "ratio": 1.5000339015211723,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1536,
+        "height": 900,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "locale": "ar",
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "geometry": {
+        "edgeLogo": 76.800048828125,
+        "edgeMedia": 76.800048828125,
+        "logoMedia": 76.80000305175781,
+        "bottom": 76.80001831054688,
+        "ratio": 1.5000001100393523,
+        "overflow": false
+      },
+      "overlay": {
+        "modal": true,
+        "width": 1920,
+        "height": 1080,
+        "blur": "blur(14px) saturate(1.15)",
+        "flag": "142px",
+        "active": "rgb(247, 178, 75)"
+      }
+    },
+    {
+      "name": "firefox",
+      "pageErrors": []
+    }
+  ],
+  "cursor": [
+    {
+      "name": "chromium",
+      "status": "PASS",
+      "identity": "cwo",
+      "requests": [
+        "https://media.almustaqbal.sch.id/ui/cursor/cwo1.webp",
+        "https://media.almustaqbal.sch.id/ui/cursor/cwo2.webp"
+      ],
+      "randomOnce": true,
+      "hoverCycles": 10,
+      "modalLayer": true
+    },
+    {
+      "name": "chromium",
+      "touchOnly": true,
+      "status": "PASS"
+    },
+    {
+      "name": "webkit",
+      "status": "PASS",
+      "identity": "cwe",
+      "requests": [
+        "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+        "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+      ],
+      "randomOnce": true,
+      "hoverCycles": 10,
+      "modalLayer": true
+    },
+    {
+      "name": "webkit",
+      "touchOnly": true,
+      "status": "PASS"
+    },
+    {
+      "name": "firefox",
+      "status": "PASS",
+      "identity": "cwe",
+      "requests": [
+        "https://media.almustaqbal.sch.id/ui/cursor/cwe1.webp",
+        "https://media.almustaqbal.sch.id/ui/cursor/cwe2.webp"
+      ],
+      "randomOnce": true,
+      "hoverCycles": 10,
+      "modalLayer": true
+    },
+    {
+      "name": "firefox",
+      "touchOnly": true,
+      "status": "PASS"
+    }
+  ],
+  "sound": [
+    {
+      "name": "chromium",
+      "result": "PASS",
+      "dprCap": 2,
+      "idle": true,
+      "desktopPaused": true,
+      "pagehidePaused": true,
+      "pageshowResumed": true,
+      "reducedStatic": true
+    },
+    {
+      "name": "webkit",
+      "result": "PASS",
+      "dprCap": 2,
+      "idle": true,
+      "desktopPaused": true,
+      "pagehidePaused": true,
+      "pageshowResumed": true,
+      "reducedStatic": true
+    }
+  ],
+  "edge": {
+    "name": "Edge",
+    "version": "154.0.4258.53",
+    "status": "PASS",
+    "desktop": true,
+    "mobileViewport": true,
+    "blur": true,
+    "Escape": true,
+    "backdrop": true,
+    "localePost": true
+  },
+  "noBlur": {
+    "status": "PASS",
+    "profile": "Chromium390, blur declarations stripped",
+    "tintedBackdrop": true,
+    "keyboardNoUnderlyingControl": true,
+    "localePOST": true
+  },
+  "php": {
+    "tool": "pest",
+    "result": "failed",
+    "tests": 312,
+    "passed": 166,
+    "assertions": 1307,
+    "duration_ms": 18202,
+    "failed": 71,
+    "errors": 75
+  }
+}

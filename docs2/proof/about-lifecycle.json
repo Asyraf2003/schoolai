@@ -1,0 +1,301 @@
+{
+  "profile": "System Chromium, Linux, real R2 media",
+  "desktop": [
+    {
+      "key": "about",
+      "geometry": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625
+      },
+      "layers": [
+        {
+          "opacity": 1,
+          "posterReady": true,
+          "videoReady": true
+        },
+        {
+          "opacity": 0,
+          "posterReady": false,
+          "videoReady": false
+        }
+      ],
+      "active": "about",
+      "wide": "true",
+      "playing": [
+        "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4"
+      ],
+      "source": null,
+      "overflow": false,
+      "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "surface": "rgb(255, 240, 194)",
+      "position": "50% 50%",
+      "repeat": "repeat",
+      "direction": "ltr"
+    },
+    {
+      "key": "vision",
+      "geometry": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625
+      },
+      "layers": [
+        {
+          "opacity": 0.531456,
+          "posterReady": true,
+          "videoReady": true
+        },
+        {
+          "opacity": 0.468544,
+          "posterReady": true,
+          "videoReady": true
+        }
+      ],
+      "active": "vision",
+      "wide": "true",
+      "playing": [
+        "https://media.almustaqbal.sch.id/site/about-v2/vision-preview-v1.mp4"
+      ],
+      "source": null,
+      "overflow": false,
+      "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "surface": "rgb(255, 240, 194)",
+      "position": "50% 50%",
+      "repeat": "repeat",
+      "direction": "ltr"
+    },
+    {
+      "key": "mission",
+      "geometry": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625
+      },
+      "layers": [
+        {
+          "opacity": 0.883498,
+          "posterReady": true,
+          "videoReady": true
+        },
+        {
+          "opacity": 0.116502,
+          "posterReady": true,
+          "videoReady": true
+        }
+      ],
+      "active": "mission",
+      "wide": "true",
+      "playing": [
+        "https://media.almustaqbal.sch.id/site/about-v2/mission-preview-v1.mp4"
+      ],
+      "source": null,
+      "overflow": false,
+      "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "surface": "rgb(248, 241, 206)",
+      "position": "50% 50%",
+      "repeat": "repeat",
+      "direction": "ltr"
+    }
+  ],
+  "mobile": [
+    {
+      "key": "about",
+      "active": "about",
+      "wide": "false",
+      "playing": [
+        "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4"
+      ],
+      "source": null,
+      "overflow": false,
+      "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "surface": "rgb(223, 243, 252)",
+      "position": "50% 50%",
+      "repeat": "repeat",
+      "direction": "ltr"
+    },
+    {
+      "key": "vision",
+      "active": "vision",
+      "wide": "false",
+      "playing": [
+        "https://media.almustaqbal.sch.id/site/about-v2/vision-preview-v1.mp4"
+      ],
+      "source": null,
+      "overflow": false,
+      "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "surface": "rgb(223, 243, 252)",
+      "position": "50% 50%",
+      "repeat": "repeat",
+      "direction": "ltr"
+    },
+    {
+      "key": "mission",
+      "active": "mission",
+      "wide": "false",
+      "playing": [
+        "https://media.almustaqbal.sch.id/site/about-v2/mission-preview-v1.mp4"
+      ],
+      "source": null,
+      "overflow": false,
+      "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "surface": "rgb(223, 243, 252)",
+      "position": "50% 50%",
+      "repeat": "repeat",
+      "direction": "ltr"
+    }
+  ],
+  "dialogs": [
+    {
+      "key": "about",
+      "opened": {
+        "active": "about",
+        "wide": "true",
+        "playing": [],
+        "source": "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+        "overflow": false,
+        "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+        "surface": "rgb(239, 240, 207)",
+        "position": "50% 50%",
+        "repeat": "repeat",
+        "direction": "ltr"
+      },
+      "closed": {
+        "active": "about",
+        "wide": "true",
+        "playing": [
+          "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4"
+        ],
+        "source": null,
+        "overflow": false,
+        "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+        "surface": "rgb(240, 240, 207)",
+        "position": "50% 50%",
+        "repeat": "repeat",
+        "direction": "ltr"
+      }
+    },
+    {
+      "key": "mission",
+      "opened": {
+        "active": "mission",
+        "wide": "true",
+        "playing": [],
+        "source": "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+        "overflow": false,
+        "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+        "surface": "rgb(241, 240, 206)",
+        "position": "50% 50%",
+        "repeat": "repeat",
+        "direction": "ltr"
+      },
+      "closed": {
+        "active": "mission",
+        "wide": "true",
+        "playing": [
+          "https://media.almustaqbal.sch.id/site/about-v2/mission-preview-v1.mp4"
+        ],
+        "source": null,
+        "overflow": false,
+        "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+        "surface": "rgb(240, 240, 206)",
+        "position": "50% 50%",
+        "repeat": "repeat",
+        "direction": "ltr"
+      }
+    }
+  ],
+  "ordinaryRequests": [
+    "http://127.0.0.1:8123/",
+    "http://127.0.0.1:8123/build/assets/index-BZEdqaCh.css",
+    "http://127.0.0.1:8123/build/assets/index-dvXk6kHr.js",
+    "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+    "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+    "http://127.0.0.1:8123/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+    "http://127.0.0.1:8123/build/assets/cairo-arabic-400-normal-DN15VWMM.woff2",
+    "http://127.0.0.1:8123/build/assets/cairo-arabic-700-normal-D3nDedWX.woff2",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+    "http://127.0.0.1:8123/bahasa/en",
+    "http://127.0.0.1:8123/",
+    "http://127.0.0.1:8123/build/assets/index-BZEdqaCh.css",
+    "http://127.0.0.1:8123/build/assets/index-dvXk6kHr.js",
+    "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+    "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+    "http://127.0.0.1:8123/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+    "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+    "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4",
+    "https://media.almustaqbal.sch.id/site/about-v2/vision-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/vision-preview-v1.mp4",
+    "https://media.almustaqbal.sch.id/site/about-v2/mission-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/mission-preview-v1.mp4"
+  ],
+  "documentHidden": {
+    "active": "vision",
+    "wide": "true",
+    "playing": [],
+    "source": null,
+    "overflow": false,
+    "background": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+    "surface": "rgb(223, 243, 252)",
+    "position": "50% 50%",
+    "repeat": "repeat",
+    "direction": "ltr"
+  },
+  "requests": [
+    "http://127.0.0.1:8123/",
+    "http://127.0.0.1:8123/build/assets/index-BZEdqaCh.css",
+    "http://127.0.0.1:8123/build/assets/index-dvXk6kHr.js",
+    "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+    "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+    "http://127.0.0.1:8123/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+    "http://127.0.0.1:8123/build/assets/cairo-arabic-400-normal-DN15VWMM.woff2",
+    "http://127.0.0.1:8123/build/assets/cairo-arabic-700-normal-D3nDedWX.woff2",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+    "http://127.0.0.1:8123/bahasa/en",
+    "http://127.0.0.1:8123/",
+    "http://127.0.0.1:8123/build/assets/index-BZEdqaCh.css",
+    "http://127.0.0.1:8123/build/assets/index-dvXk6kHr.js",
+    "https://media.almustaqbal.sch.id/site/brand/logo-nav-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/id-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/en-v1.webp",
+    "https://media.almustaqbal.sch.id/site/language/ar-v1.webp",
+    "https://media.almustaqbal.sch.id/site/hero/hero-school.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-poster-v1.webp",
+    "http://127.0.0.1:8123/build/assets/inter-latin-variable-Dx4kXJAl.woff2",
+    "https://media.almustaqbal.sch.id/site/hero/homepage-opening-v2.mp4",
+    "https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4",
+    "https://media.almustaqbal.sch.id/site/about-v2/vision-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/vision-preview-v1.mp4",
+    "https://media.almustaqbal.sch.id/site/about-v2/mission-poster-v1.webp",
+    "https://media.almustaqbal.sch.id/site/about-v2/mission-preview-v1.mp4",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4",
+    "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjQgMjQiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDI1NSAyNTU7IiB4bWw6c3BhY2U9InByZXNlcnZlIiBmaWxsPSJXaW5kb3ciPgo8Zz4KCTxjaXJjbGUgY3g9IjEyIiBjeT0iNiIgcj0iMiIvPgoJPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMiIvPgoJPGNpcmNsZSBjeD0iMTIiIGN5PSIxOCIgcj0iMiIvPgo8L2c+Cjwvc3ZnPgo=",
+    "https://media.almustaqbal.sch.id/about/media/main/ad3344ec-86c3-42d6-98d0-4e35b3863888.mp4",
+    "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxOTYgMTk2IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxOTYgMTk2OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik05OCw0OXY0Yy0yNC45LDAtNDUsMjAuMS00NSw0NQoJYzAsMTgsMTAuNiwzMy42LDI1LjksNDAuOGwtMS43LDMuNmMwLjEsMCwwLjIsMC4xLDAuMywwLjFjLTAuMSwwLTAuMi0wLjEtMC4zLTAuMWwwLDBDNjAuNSwxMzQuNSw0OSwxMTcuNiw0OSw5OAoJQzQ5LDcwLjksNzAuOSw0OSw5OCw0OXoiLz4KPC9zdmc+Cg==",
+    "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxOTYgMTk2IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxOTYgMTk2OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNDcsOThjMCwxOS42LTExLjUsMzYuNS0yOC4yLDQ0LjRsMCwwYy0wLjEsMC0wLjIsMC4xLTAuMywwLjEKCWMwLjEsMCwwLjItMC4xLDAuMy0wLjFsLTEuNy0zLjZDMTMyLjQsMTMxLjYsMTQzLDExNiwxNDMsOThjMC0yNC45LTIwLjEtNDUtNDUtNDV2LTRDMTI1LjEsNDksMTQ3LDcwLjksMTQ3LDk4eiIvPgo8L3N2Zz4K",
+    "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJXaW5kb3ciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTggNXYxNGwxMS03eiIvPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K",
+    "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJXaW5kb3ciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTMgOXY2aDRsNSA1VjRMNyA5SDN6bTEzLjUgM2MwLTEuNzctMS4wMi0zLjI5LTIuNS00LjAzdjguMDVjMS40OC0uNzMgMi41LTIuMjUgMi41LTQuMDJ6TTE0IDMuMjN2Mi4wNmMyLjg5Ljg2IDUgMy41NCA1IDYuNzFzLTIuMTEgNS44NS01IDYuNzF2Mi4wNmM0LjAxLS45MSA3LTQuNDkgNy04Ljc3cy0yLjk5LTcuODYtNy04Ljc3eiIvPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K",
+    "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJXaW5kb3ciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgogICAgPHBhdGggZD0iTTcgMTRINXY1aDV2LTJIN3YtM3ptLTItNGgyVjdoM1Y1SDV2NXptMTIgN2gtM3YyaDV2LTVoLTJ2M3pNMTQgNXYyaDN2M2gyVjVoLTV6Ii8+Cjwvc3ZnPgo=",
+    "https://media.almustaqbal.sch.id/site/vision/mission-video-v1.mp4",
+    "https://media.almustaqbal.sch.id/site/about-v2/vision-preview-v1.mp4",
+    "https://media.almustaqbal.sch.id/site/about-v2/about-preview-v1.mp4"
+  ],
+  "errors": []
+}

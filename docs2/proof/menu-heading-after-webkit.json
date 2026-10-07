@@ -1,0 +1,3928 @@
+{
+  "date": "2026-10-07T10:44:58.790Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "26.6",
+  "menus": [
+    {
+      "language": "en",
+      "states": [
+        {
+          "name": "hero-closed",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "hero-hover",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "hero-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        },
+        {
+          "name": "hero-close",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "scrolled",
+          "state": {
+            "surface": "light",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "scrolled-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        },
+        {
+          "name": "rapid-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        }
+      ],
+      "motion": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        }
+      ]
+    },
+    {
+      "language": "id",
+      "states": [
+        {
+          "name": "hero-closed",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "hero-hover",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "hero-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        },
+        {
+          "name": "hero-close",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "scrolled",
+          "state": {
+            "surface": "light",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "scrolled-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        },
+        {
+          "name": "rapid-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        }
+      ],
+      "motion": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        }
+      ]
+    },
+    {
+      "language": "ar",
+      "states": [
+        {
+          "name": "hero-closed",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "hero-hover",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "hero-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        },
+        {
+          "name": "hero-close",
+          "state": {
+            "surface": "hero",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgba(0, 0, 0, 0)",
+            "headerImage": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)",
+              "rgb(255, 255, 255)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "scrolled",
+          "state": {
+            "surface": "light",
+            "open": "false",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": null,
+            "panelWidth": null,
+            "panelFill": null,
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": null,
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": null
+        },
+        {
+          "name": "scrolled-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        },
+        {
+          "name": "rapid-open",
+          "state": {
+            "surface": "light",
+            "open": "true",
+            "concealed": "false",
+            "top": 0,
+            "bottom": 72,
+            "height": 72,
+            "logo": 38,
+            "panelTop": 72,
+            "panelWidth": 1440,
+            "panelFill": "rgb(255, 255, 255)",
+            "headerFill": "rgb(255, 255, 255)",
+            "headerImage": "none",
+            "fieldTransform": "none",
+            "panelTransform": "none",
+            "colors": [
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)",
+              "rgb(17, 17, 17)"
+            ]
+          },
+          "pixels": {
+            "white": 8640,
+            "total": 8640,
+            "width": 1440,
+            "height": 6
+          }
+        }
+      ],
+      "motion": [
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(17, 17, 17)",
+          "fill": "rgb(255, 255, 255)",
+          "image": "none",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": 72,
+          "panelTransform": "none",
+          "fieldTransform": "none"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "fill": "rgba(0, 0, 0, 0)",
+          "image": "linear-gradient(rgba(2, 13, 12, 0.72), rgba(2, 13, 12, 0.24) 68%, rgba(0, 0, 0, 0))",
+          "bottom": 72,
+          "top": 0,
+          "panelTop": null,
+          "panelTransform": null,
+          "fieldTransform": "none"
+        }
+      ]
+    }
+  ],
+  "headings": [
+    {
+      "language": "en",
+      "width": 390,
+      "lines": [
+        {
+          "top": 3297.9375,
+          "bottom": 3341.9375,
+          "ascent": 43,
+          "descent": 1,
+          "maskTop": 3294.453125,
+          "maskBottom": 3344.4375,
+          "size": 58.5,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "47.677502px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 3350.25,
+          "bottom": 3394.25,
+          "ascent": 43,
+          "descent": 1,
+          "maskTop": 3346.765625,
+          "maskBottom": 3396.75,
+          "size": 58.5,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "47.677502px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 8.3125,
+      "gridGap": "2.34px",
+      "maskPadding": "1.17px",
+      "overflow": false
+    },
+    {
+      "language": "en",
+      "width": 768,
+      "lines": [
+        {
+          "top": 3624.375,
+          "bottom": 3708.375,
+          "ascent": 83,
+          "descent": 1,
+          "maskTop": 3618.515625,
+          "maskBottom": 3714.25,
+          "size": 112,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "91.279999px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 3724.578125,
+          "bottom": 3808.578125,
+          "ascent": 83,
+          "descent": 1,
+          "maskTop": 3718.71875,
+          "maskBottom": 3814.453125,
+          "size": 112,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "91.279999px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 16.203125,
+      "gridGap": "4.48px",
+      "maskPadding": "2.24px",
+      "overflow": false
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "lines": [
+        {
+          "top": 3581.359375,
+          "bottom": 3711.359375,
+          "ascent": 128,
+          "descent": 2,
+          "maskTop": 3573,
+          "maskBottom": 3720.734375,
+          "size": 172.800003,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "140.832001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 3736,
+          "bottom": 3866,
+          "ascent": 128,
+          "descent": 2,
+          "maskTop": 3727.640625,
+          "maskBottom": 3875.375,
+          "size": 172.800003,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "140.832001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 24.640625,
+      "gridGap": "6.912px",
+      "maskPadding": "3.456px",
+      "overflow": false
+    },
+    {
+      "language": "en",
+      "width": 1920,
+      "lines": [
+        {
+          "top": 3584.96875,
+          "bottom": 3757.96875,
+          "ascent": 170,
+          "descent": 3,
+          "maskTop": 3573,
+          "maskBottom": 3769.953125,
+          "size": 230.399994,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "187.776001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 3791.125,
+          "bottom": 3964.125,
+          "ascent": 170,
+          "descent": 3,
+          "maskTop": 3779.15625,
+          "maskBottom": 3976.109375,
+          "size": 230.399994,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "187.776001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 33.15625,
+      "gridGap": "9.216px",
+      "maskPadding": "4.608px",
+      "overflow": false
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "normalTiming": [
+        {
+          "duration": "0.76s, 0.76s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "duration": "0.76s, 0.76s",
+          "shiftDuration": "0.76s",
+          "shiftDelay": "0s"
+        }
+      ]
+    },
+    {
+      "language": "id",
+      "width": 390,
+      "lines": [
+        {
+          "top": 3269.625,
+          "bottom": 3313.625,
+          "ascent": 43,
+          "descent": 1,
+          "maskTop": 3266.140625,
+          "maskBottom": 3316.125,
+          "size": 58.5,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "47.677502px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 3322.9375,
+          "bottom": 3364.9375,
+          "ascent": 42,
+          "descent": 0,
+          "maskTop": 3318.453125,
+          "maskBottom": 3368.4375,
+          "size": 58.5,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "47.677502px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 9.3125,
+      "gridGap": "2.34px",
+      "maskPadding": "1.17px",
+      "overflow": false
+    },
+    {
+      "language": "id",
+      "width": 768,
+      "lines": [
+        {
+          "top": 3639.671875,
+          "bottom": 3723.671875,
+          "ascent": 83,
+          "descent": 1,
+          "maskTop": 3633.8125,
+          "maskBottom": 3729.546875,
+          "size": 112,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "91.279999px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 3740.875,
+          "bottom": 3823.875,
+          "ascent": 82,
+          "descent": 1,
+          "maskTop": 3734.015625,
+          "maskBottom": 3829.75,
+          "size": 112,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "91.279999px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 17.203125,
+      "gridGap": "4.48px",
+      "maskPadding": "2.24px",
+      "overflow": false
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "lines": [
+        {
+          "top": 4879.9375,
+          "bottom": 5009.9375,
+          "ascent": 128,
+          "descent": 2,
+          "maskTop": 4871.578125,
+          "maskBottom": 5019.3125,
+          "size": 172.800003,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "140.832001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 5035.578125,
+          "bottom": 5162.578125,
+          "ascent": 127,
+          "descent": 0,
+          "maskTop": 5026.21875,
+          "maskBottom": 5173.953125,
+          "size": 172.800003,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "140.832001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 25.640625,
+      "gridGap": "6.912px",
+      "maskPadding": "3.456px",
+      "overflow": false
+    },
+    {
+      "language": "id",
+      "width": 1920,
+      "lines": [
+        {
+          "top": 3584.96875,
+          "bottom": 3756.96875,
+          "ascent": 170,
+          "descent": 2,
+          "maskTop": 3573,
+          "maskBottom": 3769.953125,
+          "size": 230.399994,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "187.776001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "top": 3793.125,
+          "bottom": 3961.125,
+          "ascent": 168,
+          "descent": 0,
+          "maskTop": 3779.15625,
+          "maskBottom": 3976.109375,
+          "size": 230.399994,
+          "weight": "360",
+          "family": "Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "187.776001px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": 36.15625,
+      "gridGap": "9.216px",
+      "maskPadding": "4.608px",
+      "overflow": false
+    },
+    {
+      "language": "id",
+      "width": 1440,
+      "normalTiming": [
+        {
+          "duration": "0.76s, 0.76s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        },
+        {
+          "duration": "0.76s, 0.76s",
+          "shiftDuration": "0.76s",
+          "shiftDelay": "0s"
+        }
+      ]
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "lines": [
+        {
+          "top": 3200.03125,
+          "bottom": 3255.03125,
+          "ascent": 42,
+          "descent": 13,
+          "maskTop": 3176.375,
+          "maskBottom": 3264.6875,
+          "size": 58.5,
+          "weight": "360",
+          "family": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "78.974998px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": null,
+      "gridGap": "2.34px",
+      "maskPadding": "4.68px",
+      "overflow": false
+    },
+    {
+      "language": "ar",
+      "width": 768,
+      "lines": [
+        {
+          "top": 3620.6875,
+          "bottom": 3725.6875,
+          "ascent": 80,
+          "descent": 25,
+          "maskTop": 3575.140625,
+          "maskBottom": 3744.234375,
+          "size": 112,
+          "weight": "360",
+          "family": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "151.199997px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": null,
+      "gridGap": "4.48px",
+      "maskPadding": "8.96px",
+      "overflow": false
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "lines": [
+        {
+          "top": 5009.34375,
+          "bottom": 5172.34375,
+          "ascent": 124,
+          "descent": 39,
+          "maskTop": 4939.90625,
+          "maskBottom": 5200.796875,
+          "size": 172.800003,
+          "weight": "360",
+          "family": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "233.280014px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": null,
+      "gridGap": "6.912px",
+      "maskPadding": "13.824px",
+      "overflow": false
+    },
+    {
+      "language": "ar",
+      "width": 1920,
+      "lines": [
+        {
+          "top": 3665.921875,
+          "bottom": 3881.921875,
+          "ascent": 165,
+          "descent": 51,
+          "maskTop": 3573,
+          "maskBottom": 3920.859375,
+          "size": 230.399994,
+          "weight": "360",
+          "family": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+          "leading": "311.040009px",
+          "duration": "0s",
+          "shiftDuration": "0s",
+          "shiftDelay": "0s"
+        }
+      ],
+      "gap": null,
+      "gridGap": "9.216px",
+      "maskPadding": "18.431999px",
+      "overflow": false
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "normalTiming": [
+        {
+          "duration": "0.76s, 0.76s",
+          "shiftDuration": "0.76s",
+          "shiftDelay": "0s"
+        }
+      ]
+    }
+  ]
+}

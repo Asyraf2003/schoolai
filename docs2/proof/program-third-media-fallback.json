@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-07T08:28:03.710Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "pending": {
+    "phase": "preparing",
+    "captionOpacity": "0",
+    "loading": "eager"
+  },
+  "decodedBeforeUse": true,
+  "failedCaptionVisible": true
+}

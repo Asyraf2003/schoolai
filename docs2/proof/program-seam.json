@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-07T04:08:06.958Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "seam": {
+    "height": 162,
+    "viewport": 900,
+    "aboutMask": "linear-gradient(rgb(0, 0, 0) calc(100% - 108px), rgba(0, 0, 0, 0))",
+    "base": "rgb(212, 238, 213)",
+    "entry": "linear-gradient(rgb(212, 238, 213), rgb(255, 255, 255))",
+    "overflow": false
+  },
+  "version": "153.0.8010.52"
+}

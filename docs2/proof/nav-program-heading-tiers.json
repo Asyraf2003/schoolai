@@ -1,0 +1,1447 @@
+{
+  "date": "2026-10-07T05:38:43.930Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "cases": [
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 639,
+      "shift": 15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 767,
+      "shift": 19.175,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 768,
+      "shift": 19.2,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1023,
+      "shift": 25.575,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1024,
+      "shift": 33.28,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1180,
+      "shift": 38.35,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1181,
+      "shift": 38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1279,
+      "shift": 41.5675,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1280,
+      "shift": 41.6,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1535,
+      "shift": 49.8875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1536,
+      "shift": 49.92,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "en",
+      "width": 1920,
+      "shift": 62.4,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 639,
+      "shift": 15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 767,
+      "shift": 19.175,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 768,
+      "shift": 19.2,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1023,
+      "shift": 25.575,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1024,
+      "shift": 33.28,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1180,
+      "shift": 38.35,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1181,
+      "shift": 38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1279,
+      "shift": 41.5675,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1280,
+      "shift": 41.6,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1535,
+      "shift": 49.8875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1536,
+      "shift": 49.92,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "id",
+      "width": 1920,
+      "shift": 62.4,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 360,
+      "shift": -9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 390,
+      "shift": -9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 639,
+      "shift": -15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 640,
+      "shift": -16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 767,
+      "shift": -19.175,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 768,
+      "shift": -19.2,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1023,
+      "shift": -25.575,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1024,
+      "shift": -33.28,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1180,
+      "shift": -38.35,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1181,
+      "shift": -38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1279,
+      "shift": -41.5675,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1280,
+      "shift": -41.6,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1535,
+      "shift": -49.8875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1536,
+      "shift": -49.92,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "chromium",
+      "language": "ar",
+      "width": 1920,
+      "shift": -62.4,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 639,
+      "shift": 15.966699600219727,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 767,
+      "shift": 19.16670036315918,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 768,
+      "shift": 19.200000762939453,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1023,
+      "shift": 25.566699981689453,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1024,
+      "shift": 33.266700744628906,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1180,
+      "shift": 38.349998474121094,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1181,
+      "shift": 38.36669921875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1279,
+      "shift": 41.56669998168945,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1280,
+      "shift": 41.599998474121094,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1535,
+      "shift": 49.88330078125,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1536,
+      "shift": 49.91669845581055,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "en",
+      "width": 1920,
+      "shift": 62.400001525878906,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 639,
+      "shift": 15.966699600219727,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 767,
+      "shift": 19.16670036315918,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 768,
+      "shift": 19.200000762939453,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1023,
+      "shift": 25.566699981689453,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1024,
+      "shift": 33.266700744628906,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1180,
+      "shift": 38.349998474121094,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1181,
+      "shift": 38.36669921875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1279,
+      "shift": 41.56669998168945,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1280,
+      "shift": 41.599998474121094,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1535,
+      "shift": 49.88330078125,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1536,
+      "shift": 49.91669845581055,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "id",
+      "width": 1920,
+      "shift": 62.400001525878906,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 360,
+      "shift": -9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 390,
+      "shift": -9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 639,
+      "shift": -15.966699600219727,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 640,
+      "shift": -16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 767,
+      "shift": -19.16670036315918,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 768,
+      "shift": -19.200000762939453,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1023,
+      "shift": -25.566699981689453,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1024,
+      "shift": -33.266700744628906,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1180,
+      "shift": -38.349998474121094,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1181,
+      "shift": -38.36669921875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1279,
+      "shift": -41.56669998168945,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1280,
+      "shift": -41.599998474121094,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1535,
+      "shift": -49.88330078125,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1536,
+      "shift": -49.91669845581055,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "firefox",
+      "language": "ar",
+      "width": 1920,
+      "shift": -62.400001525878906,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 639,
+      "shift": 15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 767,
+      "shift": 19.174999,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 768,
+      "shift": 19.200001,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1023,
+      "shift": 25.575001,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1024,
+      "shift": 33.279999,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1180,
+      "shift": 38.349998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1181,
+      "shift": 38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1279,
+      "shift": 41.567501,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1280,
+      "shift": 41.599998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1535,
+      "shift": 49.887501,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1536,
+      "shift": 49.919998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "en",
+      "width": 1920,
+      "shift": 62.400002,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 639,
+      "shift": 15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 767,
+      "shift": 19.174999,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 768,
+      "shift": 19.200001,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1023,
+      "shift": 25.575001,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1024,
+      "shift": 33.279999,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1180,
+      "shift": 38.349998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1181,
+      "shift": 38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1279,
+      "shift": 41.567501,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1280,
+      "shift": 41.599998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1535,
+      "shift": 49.887501,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1536,
+      "shift": 49.919998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "id",
+      "width": 1920,
+      "shift": 62.400002,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 360,
+      "shift": -9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 390,
+      "shift": -9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 639,
+      "shift": -15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 640,
+      "shift": -16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 767,
+      "shift": -19.174999,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 768,
+      "shift": -19.200001,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1023,
+      "shift": -25.575001,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1024,
+      "shift": -33.279999,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1180,
+      "shift": -38.349998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1181,
+      "shift": -38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1279,
+      "shift": -41.567501,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1280,
+      "shift": -41.599998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1535,
+      "shift": -49.887501,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1536,
+      "shift": -49.919998,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "webkit",
+      "language": "ar",
+      "width": 1920,
+      "shift": -62.400002,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 639,
+      "shift": 15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 767,
+      "shift": 19.175,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 768,
+      "shift": 19.2,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1023,
+      "shift": 25.575,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1024,
+      "shift": 33.28,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1180,
+      "shift": 38.35,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1181,
+      "shift": 38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1279,
+      "shift": 41.5675,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1280,
+      "shift": 41.6,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1535,
+      "shift": 49.8875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1536,
+      "shift": 49.92,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "en",
+      "width": 1920,
+      "shift": 62.4,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 360,
+      "shift": 9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 390,
+      "shift": 9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 639,
+      "shift": 15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 640,
+      "shift": 16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 767,
+      "shift": 19.175,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 768,
+      "shift": 19.2,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1023,
+      "shift": 25.575,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1024,
+      "shift": 33.28,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1180,
+      "shift": 38.35,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1181,
+      "shift": 38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1279,
+      "shift": 41.5675,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1280,
+      "shift": 41.6,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1535,
+      "shift": 49.8875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1536,
+      "shift": 49.92,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "id",
+      "width": 1920,
+      "shift": 62.4,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 360,
+      "shift": -9,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 390,
+      "shift": -9.75,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 639,
+      "shift": -15.975,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 640,
+      "shift": -16,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 767,
+      "shift": -19.175,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 768,
+      "shift": -19.2,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1023,
+      "shift": -25.575,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1024,
+      "shift": -33.28,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1180,
+      "shift": -38.35,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1181,
+      "shift": -38.3825,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1279,
+      "shift": -41.5675,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1280,
+      "shift": -41.6,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1535,
+      "shift": -49.8875,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1536,
+      "shift": -49.92,
+      "animations": 0,
+      "duration": "0s"
+    },
+    {
+      "engine": "edge",
+      "language": "ar",
+      "width": 1920,
+      "shift": -62.4,
+      "animations": 0,
+      "duration": "0s"
+    }
+  ]
+}

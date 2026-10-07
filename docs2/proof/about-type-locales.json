@@ -1,0 +1,3535 @@
+{
+  "profile": "Chromium, reduced motion, all three stories; six wide width/height cases x three locales",
+  "cells": [
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "id",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 27.296875,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 349.84375,
+        "width": 433.703125,
+        "height": 272.296875,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "id",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1009,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 27.296875,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 349.84375,
+        "width": 433.703125,
+        "height": 272.296875,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "id",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1009,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 27.296875,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 117.1875,
+        "width": 433.703125,
+        "height": 737.609375,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "id",
+      "key": "about",
+      "scrollY": 1284,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 594.28125,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 724.0390625
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 82,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 724.0390625
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 82,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.0390625
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 587.890625,
+        "width": 433.703125,
+        "height": 272.296875,
+        "centerY": 724.0390625
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "id",
+      "key": "vision",
+      "scrollY": 2568,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 594.1875,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 723.9453125
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 81.90625,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 723.9453125
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 82.078125,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.1171875
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 587.96875,
+        "width": 433.703125,
+        "height": 272.296875,
+        "centerY": 724.1171875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "id",
+      "key": "mission",
+      "scrollY": 3852,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 594.1875,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 723.9453125
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 81.90625,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 723.9453125
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 82.15625,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.1953125
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 355.390625,
+        "width": 433.703125,
+        "height": 737.609375,
+        "centerY": 724.1953125
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "id",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1166,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 31.484375,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 584.6875,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 584.6875,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 47.234375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 47.234375,
+        "y": 344.546875,
+        "width": 502.03125,
+        "height": 282.890625,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "id",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1166,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 31.484375,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 584.6875,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 584.6875,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 47.234375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 47.234375,
+        "y": 344.546875,
+        "width": 502.03125,
+        "height": 282.890625,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "id",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1166,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 31.484375,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 584.6875,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 584.6875,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 47.234375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 47.234375,
+        "y": 160.796875,
+        "width": 502.03125,
+        "height": 650.40625,
+        "centerY": 486
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "id",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1265,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 34.125,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 634.296875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 634.296875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 51.1875,
+        "y": 341.015625,
+        "width": 544.71875,
+        "height": 289.96875,
+        "centerY": 486
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "id",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1265,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 34.125,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 634.296875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 634.296875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 51.1875,
+        "y": 354.515625,
+        "width": 544.71875,
+        "height": 262.953125,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "id",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1265,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 34.125,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 634.296875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 634.296875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 51.1875,
+        "y": 166.796875,
+        "width": 544.71875,
+        "height": 638.390625,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "id",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1521,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.796875,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": 35.9921875
+      },
+      "frame": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 762.625,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 61.4375,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 61.4375,
+        "y": 345.671875,
+        "width": 608,
+        "height": 280.65625,
+        "centerY": 486
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "id",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1521,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": -55.203125,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": -36.0078125
+      },
+      "frame": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 762.625,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 61.4375,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 61.4375,
+        "y": 345.671875,
+        "width": 655.109375,
+        "height": 280.65625,
+        "centerY": 486
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "id",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1521,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": -55.203125,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": -36.0078125
+      },
+      "frame": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 762.625,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 61.4375,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 61.4375,
+        "y": 154.15625,
+        "width": 655.109375,
+        "height": 663.671875,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "id",
+      "key": "about",
+      "scrollY": 1008,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1905,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 51.1875,
+        "y": 12,
+        "width": 48,
+        "height": 48,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 955.09375,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 955.09375,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 76.796875,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 76.796875,
+        "y": 422.40625,
+        "width": 639.859375,
+        "height": 307.171875,
+        "centerY": 575.9921875
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "id",
+      "key": "vision",
+      "scrollY": 2016,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1905,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 51.1875,
+        "y": -60,
+        "width": 48,
+        "height": 48,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 955.09375,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 955.09375,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 76.796875,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 76.796875,
+        "y": 422.40625,
+        "width": 672,
+        "height": 307.171875,
+        "centerY": 575.9921875
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "id",
+      "key": "mission",
+      "scrollY": 3024,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1905,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 51.1875,
+        "y": -60,
+        "width": 48,
+        "height": 48,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 955.09375,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 955.09375,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 76.796875,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 76.796875,
+        "y": 189.953125,
+        "width": 672,
+        "height": 772.09375,
+        "centerY": 576
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "en",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 27.296875,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 336.6875,
+        "width": 433.703125,
+        "height": 298.609375,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "en",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1009,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 27.296875,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 349.84375,
+        "width": 433.703125,
+        "height": 272.296875,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "en",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1009,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 27.296875,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 130.34375,
+        "width": 433.703125,
+        "height": 711.296875,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "en",
+      "key": "about",
+      "scrollY": 1284,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 594.28125,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 724.0390625
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 82,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 724.0390625
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 82,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.0390625
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 574.734375,
+        "width": 433.703125,
+        "height": 298.609375,
+        "centerY": 724.0390625
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "en",
+      "key": "vision",
+      "scrollY": 2568,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 594.1875,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 723.9453125
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 81.90625,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 723.9453125
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 82.078125,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.1171875
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 587.96875,
+        "width": 433.703125,
+        "height": 272.296875,
+        "centerY": 724.1171875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "en",
+      "key": "mission",
+      "scrollY": 3852,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 506.65625,
+        "y": 594.1875,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 723.9453125
+      },
+      "stage": {
+        "x": 506.65625,
+        "y": 81.90625,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 723.9453125
+      },
+      "story": {
+        "x": 40.953125,
+        "y": 82.15625,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.1953125
+      },
+      "copy": {
+        "x": 40.953125,
+        "y": 368.546875,
+        "width": 433.703125,
+        "height": 711.296875,
+        "centerY": 724.1953125
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "en",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1166,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 31.484375,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 584.6875,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 584.6875,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 47.234375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 47.234375,
+        "y": 344.546875,
+        "width": 502.03125,
+        "height": 282.890625,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "en",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1166,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 31.484375,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 584.6875,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 584.6875,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 47.234375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 47.234375,
+        "y": 357.921875,
+        "width": 502.03125,
+        "height": 256.140625,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "en",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1166,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 31.484375,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 584.6875,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 584.6875,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 47.234375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 47.234375,
+        "y": 149.265625,
+        "width": 502.03125,
+        "height": 673.453125,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "en",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1265,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 34.125,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 634.296875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 634.296875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 51.1875,
+        "y": 341.015625,
+        "width": 544.71875,
+        "height": 289.96875,
+        "centerY": 486
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "en",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1265,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 34.125,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 634.296875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 634.296875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 51.1875,
+        "y": 354.515625,
+        "width": 544.71875,
+        "height": 262.953125,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "en",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1265,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 34.125,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 634.296875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 634.296875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 51.1875,
+        "y": 140.515625,
+        "width": 544.71875,
+        "height": 690.96875,
+        "centerY": 486
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "en",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1521,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": 16.796875,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": 35.9921875
+      },
+      "frame": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 762.625,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 61.4375,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 61.4375,
+        "y": 345.671875,
+        "width": 608,
+        "height": 280.65625,
+        "centerY": 486
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "en",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1521,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": -55.203125,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": -36.0078125
+      },
+      "frame": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 762.625,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 61.4375,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 61.4375,
+        "y": 345.671875,
+        "width": 655.109375,
+        "height": 280.65625,
+        "centerY": 486
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "en",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1521,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 40.953125,
+        "y": -55.203125,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": -36.0078125
+      },
+      "frame": {
+        "x": 762.625,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 762.625,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 61.4375,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 61.4375,
+        "y": 124.28125,
+        "width": 655.109375,
+        "height": 723.4375,
+        "centerY": 486
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "en",
+      "key": "about",
+      "scrollY": 1008,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1905,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 51.1875,
+        "y": 12,
+        "width": 48,
+        "height": 48,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 955.09375,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 955.09375,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 76.796875,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 76.796875,
+        "y": 422.40625,
+        "width": 608,
+        "height": 307.171875,
+        "centerY": 575.9921875
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "en",
+      "key": "vision",
+      "scrollY": 2016,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1905,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 51.1875,
+        "y": -60,
+        "width": 48,
+        "height": 48,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 955.09375,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 955.09375,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 76.796875,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 76.796875,
+        "y": 422.40625,
+        "width": 672,
+        "height": 307.171875,
+        "centerY": 575.9921875
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "en",
+      "key": "mission",
+      "scrollY": 3024,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1905,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 51.1875,
+        "y": -60,
+        "width": 48,
+        "height": 48,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 955.09375,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 955.09375,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 76.796875,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 76.796875,
+        "y": 189.953125,
+        "width": 672,
+        "height": 772.09375,
+        "centerY": 576
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "ar",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 943.703125,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 40.96875,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 40.96875,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 534.34375,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 534.34375,
+        "y": 342.75,
+        "width": 433.703125,
+        "height": 286.484375,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "ar",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1009,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 943.703125,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 40.96875,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 40.96875,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 534.34375,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 534.34375,
+        "y": 342.75,
+        "width": 433.703125,
+        "height": 286.484375,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "locale": "ar",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1009,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 943.703125,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 40.96875,
+        "y": 356.234375,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 40.96875,
+        "y": 72,
+        "width": 461.375,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 534.34375,
+        "y": 72,
+        "width": 433.703125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 534.34375,
+        "y": 125.859375,
+        "width": 433.703125,
+        "height": 720.265625,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "14.08px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "ar",
+      "key": "about",
+      "scrollY": 1284,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 920.046875,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 40.96875,
+        "y": 594.28125,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 724.0390625
+      },
+      "stage": {
+        "x": 40.96875,
+        "y": 82,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 724.0390625
+      },
+      "story": {
+        "x": 534.34375,
+        "y": 82,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.0390625
+      },
+      "copy": {
+        "x": 534.34375,
+        "y": 580.796875,
+        "width": 433.703125,
+        "height": 286.484375,
+        "centerY": 724.0390625
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "ar",
+      "key": "vision",
+      "scrollY": 2568,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 920.046875,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 40.96875,
+        "y": 594.1875,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 723.9453125
+      },
+      "stage": {
+        "x": 40.96875,
+        "y": 81.90625,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 723.9453125
+      },
+      "story": {
+        "x": 534.34375,
+        "y": 82.078125,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.1171875
+      },
+      "copy": {
+        "x": 534.34375,
+        "y": 580.875,
+        "width": 433.703125,
+        "height": 286.484375,
+        "centerY": 724.1171875
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "locale": "ar",
+      "key": "mission",
+      "scrollY": 3852,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1009,
+        "height": 81.90625,
+        "centerY": 40.953125
+      },
+      "logo": {
+        "x": 920.046875,
+        "y": 16.953125,
+        "width": 48,
+        "height": 48,
+        "centerY": 40.953125
+      },
+      "frame": {
+        "x": 40.96875,
+        "y": 594.1875,
+        "width": 461.375,
+        "height": 259.515625,
+        "centerY": 723.9453125
+      },
+      "stage": {
+        "x": 40.96875,
+        "y": 81.90625,
+        "width": 461.375,
+        "height": 1284.078125,
+        "centerY": 723.9453125
+      },
+      "story": {
+        "x": 534.34375,
+        "y": 82.15625,
+        "width": 433.703125,
+        "height": 1284.078125,
+        "centerY": 724.1953125
+      },
+      "copy": {
+        "x": 534.34375,
+        "y": 364.0625,
+        "width": 433.703125,
+        "height": 720.265625,
+        "centerY": 724.1953125
+      },
+      "headlineFont": "44px",
+      "bodyFont": "16.992px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.3376px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.048px",
+      "shadow": "rgba(16, 45, 40, 0.25) 3.6864px 5.3248px 6.5536px -3.2768px, rgba(16, 45, 40, 0.18) 12.288px 14.7456px 16.384px -6.144px",
+      "navFont": "16px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "ar",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1166,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 1096.515625,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 47.25,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 47.25,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 616.734375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 616.734375,
+        "y": 335.890625,
+        "width": 502.03125,
+        "height": 300.203125,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "ar",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1166,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1096.515625,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 47.25,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 47.25,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 616.734375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 616.734375,
+        "y": 349.265625,
+        "width": 502.03125,
+        "height": 273.453125,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1181,
+      "height": 900,
+      "locale": "ar",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1166,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1096.515625,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 47.25,
+        "y": 335.796875,
+        "width": 534.0625,
+        "height": 300.40625,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 47.25,
+        "y": 72,
+        "width": 534.0625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 616.734375,
+        "y": 72,
+        "width": 502.03125,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 616.734375,
+        "y": 127.09375,
+        "width": 502.03125,
+        "height": 717.796875,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "47.887px",
+      "bodyFont": "17.2668px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "26.7635px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.362px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.2516px 6.1412px 7.5584px -3.7792px, rgba(16, 45, 40, 0.18) 14.172px 17.0064px 18.896px -7.086px",
+      "navFont": "14.2762px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "ar",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1265,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 1192.875,
+        "y": 17,
+        "width": 38,
+        "height": 38,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 51.1875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 669.09375,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 669.09375,
+        "y": 344.765625,
+        "width": 544.71875,
+        "height": 282.46875,
+        "centerY": 486
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "ar",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1265,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1192.875,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 51.1875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 669.09375,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 669.09375,
+        "y": 344.765625,
+        "width": 544.71875,
+        "height": 282.46875,
+        "centerY": 486
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "locale": "ar",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1265,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1192.875,
+        "y": -55,
+        "width": 38,
+        "height": 38,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 51.1875,
+        "y": 323.015625,
+        "width": 579.515625,
+        "height": 325.96875,
+        "centerY": 486
+      },
+      "stage": {
+        "x": 51.1875,
+        "y": 72,
+        "width": 579.515625,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 669.09375,
+        "y": 72,
+        "width": 544.71875,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 669.09375,
+        "y": 146.140625,
+        "width": 544.71875,
+        "height": 679.71875,
+        "centerY": 486
+      },
+      "headlineFont": "50.56px",
+      "bodyFont": "17.44px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.032px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "14.56px",
+      "shadow": "rgba(16, 45, 40, 0.25) 4.608px 6.656px 8.192px -4.096px, rgba(16, 45, 40, 0.18) 15.36px 18.432px 20.48px -7.68px",
+      "navFont": "14.4px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "ar",
+      "key": "about",
+      "scrollY": 828,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1521,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 1441.65625,
+        "y": 16.796875,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": 35.9921875
+      },
+      "frame": {
+        "x": 61.453125,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 61.453125,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 804.453125,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 851.5625,
+        "y": 333.09375,
+        "width": 608,
+        "height": 305.8125,
+        "centerY": 486
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "ar",
+      "key": "vision",
+      "scrollY": 1656,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1521,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1441.65625,
+        "y": -55.203125,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": -36.0078125
+      },
+      "frame": {
+        "x": 61.453125,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 61.453125,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 804.453125,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 804.453125,
+        "y": 333.09375,
+        "width": 655.109375,
+        "height": 305.8125,
+        "centerY": 486
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1536,
+      "height": 900,
+      "locale": "ar",
+      "key": "mission",
+      "scrollY": 2484,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1521,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1441.65625,
+        "y": -55.203125,
+        "width": 38.390625,
+        "height": 38.390625,
+        "centerY": -36.0078125
+      },
+      "frame": {
+        "x": 61.453125,
+        "y": 289.984375,
+        "width": 696.921875,
+        "height": 392.015625,
+        "centerY": 485.9921875
+      },
+      "stage": {
+        "x": 61.453125,
+        "y": 72,
+        "width": 696.921875,
+        "height": 828,
+        "centerY": 486
+      },
+      "story": {
+        "x": 804.453125,
+        "y": 72,
+        "width": 655.109375,
+        "height": 828,
+        "centerY": 486
+      },
+      "copy": {
+        "x": 804.453125,
+        "y": 197.015625,
+        "width": 655.109375,
+        "height": 577.953125,
+        "centerY": 485.9921875
+      },
+      "headlineFont": "57.472px",
+      "bodyFont": "17.888px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "27.7264px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.072px",
+      "shadow": "rgba(16, 45, 40, 0.25) 5.5296px 7.9872px 9.8304px -4.9152px, rgba(16, 45, 40, 0.18) 18.432px 22.1184px 24.576px -9.216px",
+      "navFont": "14.72px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "ar",
+      "key": "about",
+      "scrollY": 1008,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1905,
+        "height": 72,
+        "centerY": 36
+      },
+      "logo": {
+        "x": 1805.8125,
+        "y": 12,
+        "width": 48,
+        "height": 48,
+        "centerY": 36
+      },
+      "frame": {
+        "x": 76.8125,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 76.8125,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 1007.5,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 1220.203125,
+        "y": 405.578125,
+        "width": 608,
+        "height": 340.84375,
+        "centerY": 576
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(255, 240, 194)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "ar",
+      "key": "vision",
+      "scrollY": 2016,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1905,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1805.8125,
+        "y": -60,
+        "width": 48,
+        "height": 48,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 76.8125,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 76.8125,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 1007.5,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 1156.203125,
+        "y": 405.578125,
+        "width": 672,
+        "height": 340.84375,
+        "centerY": 576
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(223, 243, 252)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "locale": "ar",
+      "key": "mission",
+      "scrollY": 3024,
+      "header": {
+        "x": 0,
+        "y": -72,
+        "width": 1905,
+        "height": 72,
+        "centerY": -36
+      },
+      "logo": {
+        "x": 1805.8125,
+        "y": -60,
+        "width": 48,
+        "height": 48,
+        "centerY": -36
+      },
+      "frame": {
+        "x": 76.8125,
+        "y": 330.4375,
+        "width": 873.09375,
+        "height": 491.109375,
+        "centerY": 575.9921875
+      },
+      "stage": {
+        "x": 76.8125,
+        "y": 72,
+        "width": 873.09375,
+        "height": 1008,
+        "centerY": 576
+      },
+      "story": {
+        "x": 1007.5,
+        "y": 72,
+        "width": 820.703125,
+        "height": 1008,
+        "centerY": 576
+      },
+      "copy": {
+        "x": 1156.203125,
+        "y": 217.53125,
+        "width": 672,
+        "height": 716.921875,
+        "centerY": 575.9921875
+      },
+      "headlineFont": "67.84px",
+      "bodyFont": "18.56px",
+      "mascot": null,
+      "titleWeight": "680",
+      "bodyLeading": "28.768px",
+      "bodyColor": "rgb(43, 53, 50)",
+      "gap": "15.84px",
+      "shadow": "rgba(16, 45, 40, 0.25) 6.912px 9.984px 12.288px -6.144px, rgba(16, 45, 40, 0.18) 23.04px 27.648px 30.72px -11.52px",
+      "navFont": "15.2px",
+      "radius": "2px",
+      "background": "rgb(212, 238, 213)",
+      "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+      "motifOpacity": "0.12",
+      "overflow": false
+    }
+  ],
+  "menus": [
+    {
+      "locale": "id",
+      "width": 245.75,
+      "height": 163.828125,
+      "links": 163.828125,
+      "clipped": false
+    },
+    {
+      "locale": "id",
+      "width": 0,
+      "height": 0,
+      "links": 0,
+      "clipped": false
+    },
+    {
+      "locale": "id",
+      "width": 283.4375,
+      "height": 188.953125,
+      "links": 188.953125,
+      "clipped": false
+    },
+    {
+      "locale": "id",
+      "width": 307.1875,
+      "height": 204.78125,
+      "links": 204.796875,
+      "clipped": false
+    },
+    {
+      "locale": "id",
+      "width": 352,
+      "height": 234.65625,
+      "links": 234.65625,
+      "clipped": false
+    },
+    {
+      "locale": "id",
+      "width": 352,
+      "height": 234.65625,
+      "links": 234.65625,
+      "clipped": false
+    },
+    {
+      "locale": "en",
+      "width": 245.75,
+      "height": 163.828125,
+      "links": 163.828125,
+      "clipped": false
+    },
+    {
+      "locale": "en",
+      "width": 0,
+      "height": 0,
+      "links": 0,
+      "clipped": false
+    },
+    {
+      "locale": "en",
+      "width": 283.4375,
+      "height": 188.953125,
+      "links": 188.953125,
+      "clipped": false
+    },
+    {
+      "locale": "en",
+      "width": 307.1875,
+      "height": 204.78125,
+      "links": 204.796875,
+      "clipped": false
+    },
+    {
+      "locale": "en",
+      "width": 352,
+      "height": 234.65625,
+      "links": 234.65625,
+      "clipped": false
+    },
+    {
+      "locale": "en",
+      "width": 352,
+      "height": 234.65625,
+      "links": 234.65625,
+      "clipped": false
+    },
+    {
+      "locale": "ar",
+      "width": 245.75,
+      "height": 163.828125,
+      "links": 163.828125,
+      "clipped": false
+    },
+    {
+      "locale": "ar",
+      "width": 0,
+      "height": 0,
+      "links": 0,
+      "clipped": false
+    },
+    {
+      "locale": "ar",
+      "width": 283.4375,
+      "height": 188.953125,
+      "links": 188.953125,
+      "clipped": false
+    },
+    {
+      "locale": "ar",
+      "width": 307.1875,
+      "height": 204.78125,
+      "links": 204.796875,
+      "clipped": false
+    },
+    {
+      "locale": "ar",
+      "width": 352,
+      "height": 234.65625,
+      "links": 234.65625,
+      "clipped": false
+    },
+    {
+      "locale": "ar",
+      "width": 352,
+      "height": 234.65625,
+      "links": 234.65625,
+      "clipped": false
+    }
+  ]
+}

@@ -1,0 +1,815 @@
+{
+  "date": "2026-10-05",
+  "url": "http://127.0.0.1:8123/",
+  "profile": "Linux Playwright headless Chromium and WPE WebKit, reduced motion for width matrix; normal/reduced Sound fixture at DPR 3; no physical Safari certification",
+  "source": {
+    "resources/views/landing/header.blade.php": "61101aab9b09cae1159147ec65060997eeaa63e8849178b246d092d5de1abb32",
+    "resources/css/sections/header.css": "04be722879bac6152f9bd6f793fa78fbb96155061cc16e52c2db60fdbefa32d0",
+    "resources/css/sections/header-language.css": "88e2705f6a96ca9f3390a1fd4545d22e0588251f7a480d661f3bd4641f482764",
+    "resources/css/sections/header-sound.css": "a11b56ed729cd1b74cd8c928942775b09ceb3b7b58346dcc10f79c790d4ce925",
+    "resources/js/sections/header.js": "f05bbd8fb928c1df9bb8eab8e1f0577ff6df32b998c5452f940d7c0284924a9c",
+    "resources/js/sections/header-state.js": "5324eea6f6f39dda719e81300e2e57f2d34a4eb51ea2385193dea72fe4fc90cb",
+    "resources/js/sections/header-language.js": "b5e0c185499eac6d907eba89266c5206267d5c8b4eda60eef70afca205b81010",
+    "resources/js/sections/header-sound.js": "0ee2133110d35b7a1b842742a90c0839dd3cc8812de1127480628f775b02fbab"
+  },
+  "header": [
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 360,
+      "h": 800,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 390,
+      "h": 844,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 639,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 640,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 767,
+      "h": 1000,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 768,
+      "h": 1024,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1023,
+      "h": 1100,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1024,
+      "h": 1200,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1024,
+      "h": 768,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1180,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1181,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1279,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1280,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1440,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1535,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1536,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 1920,
+      "h": 1080,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "id",
+      "w": 844,
+      "h": 390,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 360,
+      "h": 800,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 390,
+      "h": 844,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 639,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 640,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 767,
+      "h": 1000,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 768,
+      "h": 1024,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1023,
+      "h": 1100,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1024,
+      "h": 1200,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1024,
+      "h": 768,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1180,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1181,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1279,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1280,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1440,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1535,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1536,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 1920,
+      "h": 1080,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "ar",
+      "w": 844,
+      "h": 390,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 360,
+      "h": 800,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 390,
+      "h": 844,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 639,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 640,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 767,
+      "h": 1000,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 768,
+      "h": 1024,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1023,
+      "h": 1100,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1024,
+      "h": 1200,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1024,
+      "h": 768,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1180,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1181,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1279,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1280,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1440,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1535,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1536,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 1920,
+      "h": 1080,
+      "result": "PASS"
+    },
+    {
+      "name": "chromium",
+      "lang": "en",
+      "w": 844,
+      "h": 390,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 360,
+      "h": 800,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 390,
+      "h": 844,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 639,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 640,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 767,
+      "h": 1000,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 768,
+      "h": 1024,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1023,
+      "h": 1100,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1024,
+      "h": 1200,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1024,
+      "h": 768,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1180,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1181,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1279,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1280,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1440,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1535,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1536,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 1920,
+      "h": 1080,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "id",
+      "w": 844,
+      "h": 390,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 360,
+      "h": 800,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 390,
+      "h": 844,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 639,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 640,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 767,
+      "h": 1000,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 768,
+      "h": 1024,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1023,
+      "h": 1100,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1024,
+      "h": 1200,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1024,
+      "h": 768,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1180,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1181,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1279,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1280,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1440,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1535,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1536,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 1920,
+      "h": 1080,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "ar",
+      "w": 844,
+      "h": 390,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 360,
+      "h": 800,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 390,
+      "h": 844,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 639,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 640,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 767,
+      "h": 1000,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 768,
+      "h": 1024,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1023,
+      "h": 1100,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1024,
+      "h": 1200,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1024,
+      "h": 768,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1180,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1181,
+      "h": 1300,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1279,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1280,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1440,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1535,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1536,
+      "h": 900,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 1920,
+      "h": 1080,
+      "result": "PASS"
+    },
+    {
+      "name": "webkit",
+      "lang": "en",
+      "w": 844,
+      "h": 390,
+      "result": "PASS"
+    }
+  ],
+  "sound": [
+    {
+      "name": "chromium",
+      "result": "PASS",
+      "dprCap": 2,
+      "idle": true,
+      "desktopPaused": true,
+      "pagehidePaused": true,
+      "pageshowResumed": true,
+      "reducedStatic": true
+    },
+    {
+      "name": "webkit",
+      "result": "PASS",
+      "dprCap": 2,
+      "idle": true,
+      "desktopPaused": true,
+      "pagehidePaused": true,
+      "pageshowResumed": true,
+      "reducedStatic": true
+    }
+  ],
+  "extra": [
+    {
+      "name": "chromium",
+      "result": "PASS",
+      "oneLinkHeight": 135.375,
+      "multiLinkHeight": 270.125,
+      "text200Percent": true,
+      "orientation": true,
+      "scrollState": true
+    },
+    {
+      "name": "webkit",
+      "result": "PASS",
+      "oneLinkHeight": 135.375,
+      "multiLinkHeight": 270.125,
+      "text200Percent": true,
+      "orientation": true,
+      "scrollState": true
+    }
+  ]
+}

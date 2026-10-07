@@ -1,0 +1,21 @@
+{
+  "baseline": 772,
+  "unchanged": 763,
+  "changed": [
+    "resources/css/locale/id.css",
+    "resources/css/sections/header.css",
+    "resources/css/sections/program-field.css",
+    "resources/css/sections/program-reveal.css",
+    "resources/js/sections/header-state.js",
+    "tests/Unit/HeaderSurfaceRuntime.test.mjs",
+    "tests/Unit/NavigationLifecycleBrowser.test.mjs",
+    "tests/Unit/NavigationPolishBrowser.test.mjs",
+    "tests/Unit/ProgramHeadingSequenceBrowser.test.mjs"
+  ],
+  "new": [
+    "tests/Unit/MenuHeadingVisualBrowser.test.mjs",
+    "tests/Unit/MenuHeadingVisualSupport.mjs"
+  ],
+  "legacy_unchanged": 386,
+  "protected": "About/Hero/Program cards/detail/media/content/anchors/GSAP/cursor/locale AR EN/Header dimensions/controller/media/accordion untouched"
+}

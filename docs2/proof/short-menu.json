@@ -1,0 +1,134 @@
+[
+  {
+    "engine": "chromium",
+    "width": 390,
+    "height": 844,
+    "zoom": 1,
+    "overflow": false,
+    "navBottom": 832,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "height": 844,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 820,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "chromium",
+    "width": 844,
+    "height": 390,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 366,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "chromium",
+    "width": 360,
+    "height": 640,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 616,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "zoom": 1,
+    "overflow": false,
+    "navBottom": 832,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 820,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "webkit",
+    "width": 844,
+    "height": 390,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 366,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "webkit",
+    "width": 360,
+    "height": 640,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 616,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "zoom": 1,
+    "overflow": false,
+    "navBottom": 832,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 820,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "firefox",
+    "width": 844,
+    "height": 390,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 366,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  },
+  {
+    "engine": "firefox",
+    "width": 360,
+    "height": 640,
+    "zoom": 2,
+    "overflow": false,
+    "navBottom": 616,
+    "lastVisible": true,
+    "mainHidden": "true",
+    "mainRestored": true
+  }
+]

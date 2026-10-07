@@ -1,0 +1,105 @@
+{
+  "profile": "Chromium normal motion, actual scroll/IntersectionObserver activation",
+  "start": {
+    "locale": "ar",
+    "key": "about",
+    "scrollY": 1080,
+    "header": {
+      "x": 0,
+      "y": -72,
+      "width": 1905,
+      "height": 72,
+      "centerY": -36
+    },
+    "logo": {
+      "x": 1805.8125,
+      "y": -60,
+      "width": 48,
+      "height": 48,
+      "centerY": -36
+    },
+    "frame": {
+      "x": 76.8125,
+      "y": 330.4375,
+      "width": 873.09375,
+      "height": 491.109375,
+      "centerY": 575.9921875
+    },
+    "stage": {
+      "x": 76.8125,
+      "y": 72,
+      "width": 873.09375,
+      "height": 1008,
+      "centerY": 576
+    },
+    "story": {
+      "x": 1007.5,
+      "y": 0,
+      "width": 820.703125,
+      "height": 1008,
+      "centerY": 504
+    },
+    "copy": {
+      "x": 1220.203125,
+      "y": 330.421875,
+      "width": 608,
+      "height": 347.15625,
+      "centerY": 504
+    },
+    "headlineFont": "67.84px",
+    "bodyFont": "18.56px",
+    "mascot": null,
+    "label": {
+      "font": "17px",
+      "textWidth": 89.421875,
+      "lineWidth": 89.4219,
+      "direction": "rtl"
+    },
+    "titleWeight": "680",
+    "bodyLeading": "28.768px",
+    "bodyColor": "rgb(43, 53, 50)",
+    "gap": "15.84px",
+    "shadow": "rgba(16, 45, 40, 0.4) 5.376px 7.68px 4.608px -2.304px, rgba(16, 45, 40, 0.3) 15.36px 19.968px 13.824px -5.376px",
+    "navFont": "15.2px",
+    "radius": "2px",
+    "background": "rgb(255, 240, 194)",
+    "motif": "url(\"https://media.almustaqbal.sch.id/site/ornaments/gallery-ornament-33-v1.webp\")",
+    "motifOpacity": "0.12",
+    "overflow": false
+  },
+  "samples": [
+    {
+      "color": "rgb(253, 240, 197)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    },
+    {
+      "color": "rgb(238, 242, 224)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    },
+    {
+      "color": "rgb(225, 243, 249)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    },
+    {
+      "color": "rgb(223, 243, 252)",
+      "duration": "0.7s",
+      "property": "background-color",
+      "position": "50% 50%",
+      "transform": "none",
+      "filter": "none"
+    }
+  ],
+  "reducedMotionDuration": "0s"
+}

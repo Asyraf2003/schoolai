@@ -1,0 +1,248 @@
+[
+  {
+    "engine": "chromium",
+    "version": "153.0.8010.12",
+    "width": 390,
+    "height": 844,
+    "geometry": {
+      "mediaWidth": 0,
+      "mediaHeight": 0,
+      "navHeight": 384,
+      "slotHeight": 96,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "chromium",
+    "version": "153.0.8010.12",
+    "width": 768,
+    "height": 1024,
+    "geometry": {
+      "mediaWidth": 230.1875,
+      "mediaHeight": 345.28125,
+      "navHeight": 345.28125,
+      "slotHeight": 86.3125,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "chromium",
+    "version": "153.0.8010.12",
+    "width": 1024,
+    "height": 768,
+    "geometry": {
+      "mediaWidth": 204.796875,
+      "mediaHeight": 307.1875,
+      "navHeight": 307.1875,
+      "slotHeight": 76.796875,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "chromium",
+    "version": "153.0.8010.12",
+    "width": 1536,
+    "height": 900,
+    "geometry": {
+      "mediaWidth": 307.1875,
+      "mediaHeight": 460.78125,
+      "navHeight": 460.78125,
+      "slotHeight": 115.1875,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "chromium",
+    "fixture": "two images, current HTML",
+    "autoplay": false,
+    "errors": []
+  },
+  {
+    "engine": "firefox",
+    "version": "155.0",
+    "width": 390,
+    "height": 844,
+    "geometry": {
+      "mediaWidth": 0,
+      "mediaHeight": 0,
+      "navHeight": 384,
+      "slotHeight": 96,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "firefox",
+    "version": "155.0",
+    "width": 768,
+    "height": 1024,
+    "geometry": {
+      "mediaWidth": 230.18333435058594,
+      "mediaHeight": 345.2833251953125,
+      "navHeight": 345.2833251953125,
+      "slotHeight": 86.31666564941406,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "firefox",
+    "version": "155.0",
+    "width": 1024,
+    "height": 768,
+    "geometry": {
+      "mediaWidth": 204.8000030517578,
+      "mediaHeight": 307.20001220703125,
+      "navHeight": 307.20001220703125,
+      "slotHeight": 76.79998779296875,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "firefox",
+    "version": "155.0",
+    "width": 1536,
+    "height": 900,
+    "geometry": {
+      "mediaWidth": 307.20001220703125,
+      "mediaHeight": 460.79998779296875,
+      "navHeight": 460.79998779296875,
+      "slotHeight": 115.19999694824219,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "firefox",
+    "fixture": "two images, current HTML",
+    "autoplay": true,
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "version": "26.6",
+    "width": 390,
+    "height": 844,
+    "geometry": {
+      "mediaWidth": 0,
+      "mediaHeight": 0,
+      "navHeight": 384,
+      "slotHeight": 96,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "version": "26.6",
+    "width": 768,
+    "height": 1024,
+    "geometry": {
+      "mediaWidth": 230.1875,
+      "mediaHeight": 345.28125,
+      "navHeight": 345.28125,
+      "slotHeight": 86.3125,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "version": "26.6",
+    "width": 1024,
+    "height": 768,
+    "geometry": {
+      "mediaWidth": 204.796875,
+      "mediaHeight": 307.1875,
+      "navHeight": 307.1875,
+      "slotHeight": 76.796875,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "version": "26.6",
+    "width": 1536,
+    "height": 900,
+    "geometry": {
+      "mediaWidth": 307.1875,
+      "mediaHeight": 460.78125,
+      "navHeight": 460.78125,
+      "slotHeight": 115.1875,
+      "overflow": false
+    },
+    "locales": [
+      "ar",
+      "id",
+      "en"
+    ],
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "fixture": "two images, current HTML",
+    "autoplay": true,
+    "errors": []
+  }
+]

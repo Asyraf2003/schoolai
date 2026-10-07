@@ -1,0 +1,46 @@
+{
+  "sound": {
+    "x": 1133.890625,
+    "y": 25.59375,
+    "width": 81.296875,
+    "height": 19,
+    "font": "15.2px",
+    "weight": "400",
+    "line": "22.8px",
+    "padding": "0px",
+    "border": "0px"
+  },
+  "soundButton": {
+    "x": 1125.890625,
+    "y": 14,
+    "width": 97.296875,
+    "height": 44,
+    "font": "15.2px",
+    "weight": "400",
+    "line": "22.8px",
+    "padding": "0px 8px",
+    "border": "0px"
+  },
+  "menu": {
+    "x": 1251.1875,
+    "y": 21.703125,
+    "width": 43.25,
+    "height": 28.59375,
+    "font": "15.2px",
+    "weight": "600",
+    "line": "22.8px",
+    "padding": "0px 0px 3.8px",
+    "border": "2px"
+  },
+  "menuButton": {
+    "x": 1251.1875,
+    "y": 14,
+    "width": 43.25,
+    "height": 44,
+    "font": "15.2px",
+    "weight": "600",
+    "line": "22.8px",
+    "padding": "0px",
+    "border": "0px"
+  }
+}

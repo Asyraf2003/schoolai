@@ -1,0 +1,215 @@
+{
+  "date": "2026-10-07T03:37:57.750380+00:00",
+  "branch": "feat/home-v2-about",
+  "head": "08039bbad2f59ba37cac996bc15730fbee7d52e9",
+  "main_inspected": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "publication": "none; no commit/push/merge",
+  "commands": {
+    "git diff --check": "PASS",
+    "npm run check:structure": "PASS:276 sources, max200 lines",
+    "npm run build": "PASS:Vite8.1.3,28 modules",
+    "vendor/bin/pint --dirty --format agent": "PASS",
+    "focused PHP": "PASS:23 tests,285 assertions",
+    "locale source test": "PASS:1 test,20 assertions",
+    "full PHP": "FAIL:328 tests,182 pass,71 failures,75 errors; no new names",
+    "legacy Program tests": "FAIL:11 tests,1 failure,10 errors; unchanged obsolete source paths/contracts"
+  },
+  "node_browser_runs": {
+    "responsive": {
+      "status": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "log": "/tmp/program-v2-responsive-final.log"
+    },
+    "kinetic": {
+      "status": "PASS",
+      "passed": 5,
+      "failed": 0,
+      "log": "/tmp/program-v2-kinetic-final.log"
+    },
+    "reveal": {
+      "status": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "log": "/tmp/program-v2-reveal-final.log"
+    },
+    "access": {
+      "status": "PASS",
+      "passed": 5,
+      "failed": 0,
+      "log": "/tmp/program-v2-access-protected-final.log"
+    },
+    "fallback_and_seam": {
+      "status": "PASS",
+      "passed": 6,
+      "failed": 0,
+      "log": "/tmp/program-v2-fallback-seam-final.log"
+    },
+    "pure_node": {
+      "status": "PASS",
+      "passed": 16,
+      "failed": 0,
+      "log": "/tmp/program-v2-js-final.log"
+    }
+  },
+  "distinct_browser_tests": 23,
+  "matrix": {
+    "layout_cells": 228,
+    "reduced_details": 480,
+    "normal_kinetic_cases": 36,
+    "expanded_text_cases": 36
+  },
+  "assets": [
+    {
+      "source": "node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2",
+      "file": "assets/cairo-arabic-400-normal-DN15VWMM.woff2",
+      "bytes": 13292,
+      "gzip_bytes": 13315,
+      "dynamic": false
+    },
+    {
+      "source": "node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2",
+      "file": "assets/cairo-arabic-700-normal-D3nDedWX.woff2",
+      "bytes": 13952,
+      "gzip_bytes": 13975,
+      "dynamic": false
+    },
+    {
+      "source": "resources/css/index.css",
+      "file": "assets/index-CSSIZXnH.css",
+      "bytes": 29898,
+      "gzip_bytes": 6972,
+      "dynamic": false
+    },
+    {
+      "source": "resources/fonts/inter/inter-latin-variable.woff2",
+      "file": "assets/inter-latin-variable-Dx4kXJAl.woff2",
+      "bytes": 48256,
+      "gzip_bytes": 48249,
+      "dynamic": false
+    },
+    {
+      "source": "resources/js/index.js",
+      "file": "assets/index-Df-D21nJ.js",
+      "bytes": 35328,
+      "gzip_bytes": 11034,
+      "dynamic": false
+    },
+    {
+      "source": "resources/js/sections/program-gsap.js",
+      "file": "assets/program-gsap-CUA1Rqpk.js",
+      "bytes": 705,
+      "gzip_bytes": 407,
+      "dynamic": true
+    },
+    {
+      "source": "resources/js/sections/program-kinetic.js",
+      "file": "assets/program-kinetic-DadgDMlT.js",
+      "bytes": 3445,
+      "gzip_bytes": 1565,
+      "dynamic": true
+    }
+  ],
+  "exact_task_files": {
+    "new_source": [
+      "app/View/Presenters/LandingProgramPresenter.php",
+      "resources/views/landing/program.blade.php",
+      "resources/css/sections/program-detail.css",
+      "resources/css/sections/program-field.css",
+      "resources/css/sections/program-reveal.css",
+      "resources/css/sections/program-seam.css",
+      "resources/css/sections/program.css",
+      "resources/js/sections/program-dialog.js",
+      "resources/js/sections/program-gsap.js",
+      "resources/js/sections/program-kinetic.js",
+      "resources/js/sections/program-reveal.js",
+      "resources/js/sections/program-state.js",
+      "resources/js/sections/program-type.js",
+      "resources/js/sections/program.js"
+    ],
+    "modified_integration": [
+      "app/Http/Controllers/HomeController.php",
+      "resources/views/landing/index.blade.php",
+      "resources/css/index.css",
+      "resources/js/index.js",
+      "resources/css/locale/ar.css",
+      "resources/css/direction/rtl.css",
+      "tests/Feature/LandingV2Test.php"
+    ],
+    "new_tests": [
+      "tests/Feature/LandingProgramV2Test.php",
+      "tests/Unit/ProgramAccessBrowser.test.mjs",
+      "tests/Unit/ProgramBrowserSupport.mjs",
+      "tests/Unit/ProgramFallbackBrowser.test.mjs",
+      "tests/Unit/ProgramKineticBrowser.test.mjs",
+      "tests/Unit/ProgramResponsiveBrowser.test.mjs",
+      "tests/Unit/ProgramRevealBrowser.test.mjs",
+      "tests/Unit/ProgramStateRuntime.test.mjs"
+    ],
+    "docs": [
+      "docs2/blueprints/homepage-v2-program.md",
+      "docs2/README.md",
+      "docs2/protocols/working-contract.md",
+      "docs/architecture/UI_UX_CURRENT_STATE.md",
+      "docs2/proof/program-status.md"
+    ],
+    "proofs": [
+      "docs2/proof/program-access-chromium.json",
+      "docs2/proof/program-access-edge.json",
+      "docs2/proof/program-access-firefox.json",
+      "docs2/proof/program-access-webkit.json",
+      "docs2/proof/program-ar-1440.png",
+      "docs2/proof/program-baseline-php.json",
+      "docs2/proof/program-build-attribution.json",
+      "docs2/proof/program-cancelled-load.json",
+      "docs2/proof/program-capabilities.json",
+      "docs2/proof/program-cls-source.json",
+      "docs2/proof/program-desktop-field.png",
+      "docs2/proof/program-detail-open.png",
+      "docs2/proof/program-en-1440.png",
+      "docs2/proof/program-en-390.png",
+      "docs2/proof/program-en-768.png",
+      "docs2/proof/program-fallback.json",
+      "docs2/proof/program-full-php.json",
+      "docs2/proof/program-gates.json",
+      "docs2/proof/program-heading.png",
+      "docs2/proof/program-kinetic-chromium.json",
+      "docs2/proof/program-kinetic-edge.json",
+      "docs2/proof/program-kinetic-firefox.json",
+      "docs2/proof/program-kinetic-open.png",
+      "docs2/proof/program-kinetic-webkit.json",
+      "docs2/proof/program-legacy-desktop.png",
+      "docs2/proof/program-legacy-heading.png",
+      "docs2/proof/program-legacy-tests.json",
+      "docs2/proof/program-media-failure.json",
+      "docs2/proof/program-mission-entry.png",
+      "docs2/proof/program-no-js.json",
+      "docs2/proof/program-performance.json",
+      "docs2/proof/program-protected-source.json",
+      "docs2/proof/program-responsive-chromium.json",
+      "docs2/proof/program-responsive-edge.json",
+      "docs2/proof/program-responsive-firefox.json",
+      "docs2/proof/program-responsive-webkit.json",
+      "docs2/proof/program-reveal-chromium.json",
+      "docs2/proof/program-reveal-edge.json",
+      "docs2/proof/program-reveal-firefox.json",
+      "docs2/proof/program-reveal-webkit.json",
+      "docs2/proof/program-seam.json",
+      "docs2/proof/program-status.md",
+      "docs2/proof/program-touch.json"
+    ]
+  },
+  "scope_status": "Program declared functional profiles PASS; full repository suite FAIL; release certification BLOCKED_BY_MISSING_EVIDENCE",
+  "remaining_gaps": [
+    "Protected About ID label overflow at390 with200% text",
+    "Protected Hero cold startup CLS; observed also without Program in test-only counterfactual",
+    "Native Safari and physical device, actual browser zoom/screen reader/BFCache certification unavailable",
+    "No Lighthouse/PSI or field CWV certification"
+  ],
+  "final_build_smoke": {
+    "status": "PASS",
+    "artifact": "docs2/proof/program-build-attribution.json",
+    "normal_detail_open_close": true,
+    "notice_retained_in_lazy_chunk": true
+  }
+}

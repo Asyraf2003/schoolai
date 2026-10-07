@@ -1,0 +1,166 @@
+{
+  "date": "2026-10-07T04:09:41.602206+00:00",
+  "branch": "feat/home-v2-about",
+  "head": "08039bbad2f59ba37cac996bc15730fbee7d52e9",
+  "main_inspected": "a44d484f4cd8bc532514f0152e4423a2fcdb9781",
+  "commands": {
+    "diff": "PASS",
+    "structure": "PASS:276 sources,max200 lines",
+    "build": "PASS:Vite8.1.3,28 modules",
+    "Pint": "PASS",
+    "focused_php": "PASS:23 tests,291 assertions",
+    "full_php": "FAIL:328 tests,182 pass,71 failures,75 errors;no new failing names"
+  },
+  "checks": {
+    "responsive_access": {
+      "status": "PASS",
+      "passed": 9,
+      "failed": 0,
+      "log": "/tmp/program-feedback-responsive-access.log"
+    },
+    "kinetic_visual": {
+      "status": "PASS",
+      "passed": 10,
+      "failed": 0,
+      "log": "/tmp/program-feedback-kinetic-visual.log"
+    },
+    "reverse_reveal": {
+      "status": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "log": "/tmp/program-feedback-reveal-fixed.log"
+    },
+    "fallback": {
+      "status": "PASS",
+      "passed": 5,
+      "failed": 0,
+      "log": "/tmp/program-feedback-fallback.log"
+    },
+    "pure_js": {
+      "status": "PASS",
+      "passed": 16,
+      "failed": 0,
+      "log": "/tmp/program-feedback-pure-js.log"
+    }
+  },
+  "distinct_browser_tests": 28,
+  "layout_cells": 228,
+  "reduced_details": 480,
+  "normal_details": 36,
+  "visual_cases": 36,
+  "expanded_text_cases": 36,
+  "assets": [
+    {
+      "source": "node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2",
+      "file": "assets/cairo-arabic-400-normal-DN15VWMM.woff2",
+      "bytes": 13292,
+      "gzip_bytes": 13315
+    },
+    {
+      "source": "node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2",
+      "file": "assets/cairo-arabic-700-normal-D3nDedWX.woff2",
+      "bytes": 13952,
+      "gzip_bytes": 13975
+    },
+    {
+      "source": "resources/css/index.css",
+      "file": "assets/index-BXtRgr-J.css",
+      "bytes": 31362,
+      "gzip_bytes": 7161
+    },
+    {
+      "source": "resources/fonts/inter/inter-latin-variable.woff2",
+      "file": "assets/inter-latin-variable-Dx4kXJAl.woff2",
+      "bytes": 48256,
+      "gzip_bytes": 48249
+    },
+    {
+      "source": "resources/js/index.js",
+      "file": "assets/index-B6Iyaeqa.js",
+      "bytes": 36345,
+      "gzip_bytes": 11304
+    },
+    {
+      "source": "resources/js/sections/program-gsap.js",
+      "file": "assets/program-gsap-CUA1Rqpk.js",
+      "bytes": 705,
+      "gzip_bytes": 407
+    },
+    {
+      "source": "resources/js/sections/program-kinetic.js",
+      "file": "assets/program-kinetic-DadgDMlT.js",
+      "bytes": 3445,
+      "gzip_bytes": 1565
+    }
+  ],
+  "notice_retained": true,
+  "changed_files": [
+    "resources/views/landing/program.blade.php",
+    "resources/js/sections/program-dialog.js",
+    "resources/js/sections/program-reveal.js",
+    "resources/css/direction/rtl.css",
+    "resources/css/sections/program-detail.css",
+    "resources/css/sections/program-field.css",
+    "resources/css/sections/program-reveal.css",
+    "tests/Unit/ProgramRevealBrowser.test.mjs",
+    "tests/Unit/ProgramKineticBrowser.test.mjs",
+    "tests/Feature/LandingProgramV2Test.php",
+    "tests/Unit/ProgramVisualBrowser.test.mjs",
+    "docs2/blueprints/homepage-v2-program.md",
+    "docs2/README.md",
+    "docs2/protocols/working-contract.md",
+    "docs2/proof/program-status.md",
+    "docs/architecture/UI_UX_CURRENT_STATE.md",
+    "docs2/proof/program-feedback-status.md"
+  ],
+  "artifacts": [
+    "docs2/proof/program-feedback-ar.png",
+    "docs2/proof/program-feedback-before.json",
+    "docs2/proof/program-feedback-before.png",
+    "docs2/proof/program-feedback-color.json",
+    "docs2/proof/program-feedback-desktop-complete.png",
+    "docs2/proof/program-feedback-detail.png",
+    "docs2/proof/program-feedback-field.png",
+    "docs2/proof/program-feedback-full-php.json",
+    "docs2/proof/program-feedback-gates.json",
+    "docs2/proof/program-feedback-heading-ar.png",
+    "docs2/proof/program-feedback-heading-en.png",
+    "docs2/proof/program-feedback-hover.png",
+    "docs2/proof/program-feedback-kinetic-chromium.json",
+    "docs2/proof/program-feedback-kinetic-edge.json",
+    "docs2/proof/program-feedback-kinetic-firefox.json",
+    "docs2/proof/program-feedback-kinetic-webkit.json",
+    "docs2/proof/program-feedback-performance.json",
+    "docs2/proof/program-feedback-phone.png",
+    "docs2/proof/program-feedback-protected-source.json",
+    "docs2/proof/program-feedback-reveal-chromium.json",
+    "docs2/proof/program-feedback-reveal-edge.json",
+    "docs2/proof/program-feedback-reveal-firefox.json",
+    "docs2/proof/program-feedback-reveal-webkit.json",
+    "docs2/proof/program-feedback-status.md",
+    "docs2/proof/program-feedback-visual-chromium.json",
+    "docs2/proof/program-feedback-visual-edge.json",
+    "docs2/proof/program-feedback-visual-firefox.json",
+    "docs2/proof/program-feedback-visual-webkit.json"
+  ],
+  "functional_status": "PASS on declared profiles",
+  "additional_owner_color_and_heading_motion_meaning": "BLOCKED_BY_MISSING_EVIDENCE;questions pending;existing detail color and legacy final heading inset implemented",
+  "protected_sources": {
+    "baseline": 531,
+    "unchanged": 521,
+    "changed": [
+      "resources/views/landing/program.blade.php",
+      "resources/js/sections/program-dialog.js",
+      "resources/js/sections/program-reveal.js",
+      "resources/css/direction/rtl.css",
+      "resources/css/sections/program-detail.css",
+      "resources/css/sections/program-field.css",
+      "resources/css/sections/program-reveal.css",
+      "tests/Unit/ProgramRevealBrowser.test.mjs",
+      "tests/Unit/ProgramKineticBrowser.test.mjs",
+      "tests/Feature/LandingProgramV2Test.php"
+    ],
+    "protected_about_header_hero_cursor_locale_media_legacy_unchanged": true
+  },
+  "publication": "none;no commit/push/merge"
+}

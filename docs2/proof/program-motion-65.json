@@ -1,0 +1,196 @@
+{
+  "source_checkpoint": "fb3eb7070c0a3b772362c74c8aca293277f4aee1",
+  "date": "2026-10-07",
+  "issue": 65,
+  "sequence": {
+    "date": "2026-10-07T15:48:55.079Z",
+    "platform": "linux",
+    "url": "http://127.0.0.1:8000",
+    "version": "153.0.8010.0",
+    "frames": [
+      {
+        "time": 0,
+        "x": 0,
+        "lines": [
+          {
+            "y": 160.544,
+            "opacity": 0
+          },
+          {
+            "y": -160.544,
+            "opacity": 0
+          }
+        ]
+      },
+      {
+        "time": 380,
+        "x": 0,
+        "lines": [
+          {
+            "y": 6.1998,
+            "opacity": 0.961383
+          },
+          {
+            "y": -6.1998,
+            "opacity": 0.961383
+          }
+        ]
+      },
+      {
+        "time": 760,
+        "x": 0,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1060,
+        "x": 7.35652,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1360,
+        "x": 42.2469,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1660,
+        "x": 150.741,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1960,
+        "x": 187.2,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      }
+    ]
+  },
+  "background": {
+    "date": "2026-10-07T15:49:37.194Z",
+    "platform": "linux",
+    "url": "http://127.0.0.1:8000",
+    "version": "153.0.8010.0",
+    "cases": [
+      {
+        "language": "id",
+        "drift": {
+          "count": 1,
+          "state": "running",
+          "first": "-21.3603px",
+          "last": "21.3603px",
+          "lines": 20
+        },
+        "offscreenPaused": true,
+        "syntheticHiddenPaused": true,
+        "detailStatic": true,
+        "reducedStatic": true
+      },
+      {
+        "language": "en",
+        "drift": {
+          "count": 1,
+          "state": "running",
+          "first": "-21.3603px",
+          "last": "21.3603px",
+          "lines": 20
+        },
+        "offscreenPaused": true,
+        "syntheticHiddenPaused": true,
+        "detailStatic": true,
+        "reducedStatic": true
+      },
+      {
+        "language": "ar",
+        "drift": {
+          "count": 1,
+          "state": "running",
+          "first": "-21.3603px",
+          "last": "21.3603px",
+          "lines": 20
+        },
+        "offscreenPaused": true,
+        "syntheticHiddenPaused": true,
+        "detailStatic": true,
+        "reducedStatic": true
+      }
+    ]
+  },
+  "checks": {
+    "chromium_browser_tests": 6,
+    "php_v2_tests": 27,
+    "php_v2_assertions": 369,
+    "focused_js_tests": 9,
+    "full_php": {
+      "tests": 332,
+      "pass": 186,
+      "failure": 71,
+      "error": 75,
+      "assertions": 1644,
+      "failure_names_unchanged": true,
+      "error_names_unchanged": true
+    },
+    "full_node_runtime": {
+      "tests": 38,
+      "pass": 19,
+      "fail": 7,
+      "skip": 12,
+      "same_baseline_failures": true
+    }
+  },
+  "sha256": {
+    "resources/css/locale/id.css": "195c47cf24d02ac837a9bef718f6a6e673e872cc4f1e0345e928503bae8a2b92",
+    "resources/css/sections/program-detail.css": "3b04635c3eabe3185e6a41b5435fbed7b36d5f880e8126804d19e8d7e6745d0f",
+    "resources/css/sections/program-reveal.css": "749bc3c94c9d8cd7829e6c16d7b09382b6f8374d9952bd090bcf0d45ca2173dd",
+    "resources/js/sections/program-reveal.js": "3f3ec25fb1d716aaa5e477deb8855f707fab828b41d4cba90d481c45be866840"
+  },
+  "limitations": [
+    "Chromium only; WebKit unavailable",
+    "External media/CDN inaccessible; detail fallback tested, live GSAP not certified",
+    "Hidden-tab policy tested with synthetic visibility event",
+    "Full suites retain baseline failures",
+    "Dependency audits blocked by network; lockfiles unchanged"
+  ]
+}

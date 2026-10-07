@@ -1,0 +1,133 @@
+[
+  {
+    "engine": "Edge",
+    "version": "154.0.4258.53",
+    "playing": true,
+    "sound": true,
+    "initial": "rgb(255, 255, 255)",
+    "hover": "rgb(255, 255, 255)",
+    "slots": [
+      {
+        "count": 1,
+        "height": 460.78125,
+        "items": [
+          {
+            "height": 115.1875,
+            "top": 0,
+            "left": 0
+          }
+        ],
+        "valid": true
+      },
+      {
+        "count": 2,
+        "height": 460.78125,
+        "items": [
+          {
+            "height": 115.1875,
+            "top": 0,
+            "left": 0
+          },
+          {
+            "height": 115.203125,
+            "top": 115.1875,
+            "left": 0
+          }
+        ],
+        "valid": true
+      },
+      {
+        "count": 3,
+        "height": 460.78125,
+        "items": [
+          {
+            "height": 115.1875,
+            "top": 0,
+            "left": 0
+          },
+          {
+            "height": 115.203125,
+            "top": 115.1875,
+            "left": 0
+          },
+          {
+            "height": 115.1875,
+            "top": 230.390625,
+            "left": 0
+          }
+        ],
+        "valid": true
+      },
+      {
+        "count": 4,
+        "height": 460.78125,
+        "items": [
+          {
+            "height": 115.1875,
+            "top": 0,
+            "left": 0
+          },
+          {
+            "height": 115.203125,
+            "top": 115.1875,
+            "left": 0
+          },
+          {
+            "height": 115.1875,
+            "top": 230.390625,
+            "left": 0
+          },
+          {
+            "height": 115.203125,
+            "top": 345.578125,
+            "left": 0
+          }
+        ],
+        "valid": true
+      },
+      {
+        "count": 5,
+        "height": 460.78125,
+        "items": [
+          {
+            "height": 115.1875,
+            "top": 0,
+            "left": 0
+          },
+          {
+            "height": 115.203125,
+            "top": 115.1875,
+            "left": 0
+          },
+          {
+            "height": 115.1875,
+            "top": 230.390625,
+            "left": 0
+          },
+          {
+            "height": 115.203125,
+            "top": 345.578125,
+            "left": 0
+          },
+          {
+            "height": 115.1875,
+            "top": 0,
+            "left": 483.859375
+          }
+        ],
+        "valid": true
+      }
+    ],
+    "line": "rgb(255, 178, 11)",
+    "early": "false",
+    "late": "true",
+    "mobileWave": false,
+    "exitMoving": true,
+    "exitClosed": true,
+    "fallback": true,
+    "mobileMediaHidden": true,
+    "caption": true,
+    "imageHidden": true,
+    "errors": []
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-07T08:27:54.971Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8000",
+  "version": "26.6",
+  "emulated": true,
+  "profile": "393x873 DPR2.75 touch/mobile; approximate Redmi12; WebKit mobile, not physical Android/iOS",
+  "cases": [
+    {
+      "locale": "en",
+      "dpr": 2.75,
+      "width": 393,
+      "overflow": false,
+      "color": "rgb(17, 17, 17)",
+      "family": "Inter, Helvetica Neue, Arial, sans-serif",
+      "font": "16px",
+      "mediaDisplay": "none",
+      "touch": 0,
+      "touchEvents": 2,
+      "mode": "compact",
+      "coldPhoneRequests": 0
+    },
+    {
+      "locale": "id",
+      "dpr": 2.75,
+      "width": 393,
+      "overflow": false,
+      "color": "rgb(17, 17, 17)",
+      "family": "Inter, Helvetica Neue, Arial, sans-serif",
+      "font": "16px",
+      "mediaDisplay": "none",
+      "touch": 0,
+      "touchEvents": 2,
+      "mode": "compact",
+      "coldPhoneRequests": 0
+    },
+    {
+      "locale": "ar",
+      "dpr": 2.75,
+      "width": 393,
+      "overflow": false,
+      "color": "rgb(17, 17, 17)",
+      "family": "Cairo, Inter, Helvetica Neue, Arial, sans-serif",
+      "font": "16px",
+      "mediaDisplay": "none",
+      "touch": 0,
+      "touchEvents": 2,
+      "mode": "compact",
+      "coldPhoneRequests": 0
+    }
+  ]
+}

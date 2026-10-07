@@ -1,0 +1,20 @@
+[
+  {
+    "engine": "chromium",
+    "fixture": "two images, current HTML",
+    "autoplay": true,
+    "errors": []
+  },
+  {
+    "engine": "firefox",
+    "fixture": "two images, current HTML",
+    "autoplay": true,
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "fixture": "two images, current HTML",
+    "autoplay": true,
+    "errors": []
+  }
+]

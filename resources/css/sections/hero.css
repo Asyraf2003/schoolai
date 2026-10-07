@@ -1,1 +1,46 @@
-/* Hero V2 belum diimplementasikan. File ini sengaja kosong sampai MAP-V2-01 dimulai. */
+/* Hero geometry is intrinsic: text growth expands its row instead of clipping. */
+.hero { --v2-focus: #ffd166; position: relative; isolation: isolate; color: #fff; background: #071b18; }
+.hero__slide { position: relative; min-inline-size: 0; }
+.hero__media { position: absolute; inset: 0; overflow: hidden; background: #071b18; }
+.hero__media img, .hero__media[data-ready="false"] img { opacity: 0; }
+.hero__media[data-ready="true"] img { opacity: 1; }
+.hero__media video { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: center; }
+.hero__media video { position: absolute; inset: 0; opacity: 0; }
+.hero__slide[data-playing="true"] video { opacity: 1; }
+.hero__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 35%, #020d0c44); }
+.hero__content {
+    position: relative; display: flex; align-items: flex-end;
+    min-block-size: 100vh; min-block-size: 100svh;
+    padding: clamp(8rem, 18vh, 12rem) var(--v2-space-page) clamp(7rem, 13vh, 10rem);
+}
+.hero__copy { inline-size: min(100%, 38rem); overflow-wrap: break-word; text-shadow: 0 2px 3px #000, 0 0 12px #000d, 0 0 30px #000a; }
+.hero__copy a { text-decoration: none; }
+.hero__copy-action { --hero-copy-tone: #fff; display: block; color: var(--hero-copy-tone); }
+.hero__copy-action:focus-within { --hero-copy-tone: #e5e5e5; }
+@media (hover: hover) and (pointer: fine) {
+    .hero__copy-action:hover { --hero-copy-tone: #e5e5e5; }
+}
+.hero__eyebrow { margin: 0 0 1rem; color: #f8c56d; font-size: clamp(.75rem, .7rem + .2vw, .94rem); font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+.hero__title { margin: 0; max-inline-size: 100%; font-size: clamp(2rem, 1.4rem + 2.5vw, 4.75rem); line-height: 1.04; font-weight: 750; letter-spacing: -.035em; }
+@supports (text-wrap: balance) { .hero__title { text-wrap: balance; } }
+.hero__description { margin-block: 1.25rem 0; max-inline-size: 58ch; font-size: clamp(.95rem, .85rem + .25vw, 1.15rem); line-height: 1.6; }
+.hero__cta { display: inline-flex; align-items: center; gap: 1rem; min-block-size: 3rem; margin-block-start: 1.25rem; font-weight: 650; }
+.hero__controls { position: absolute; inset-inline-end: var(--v2-space-page); inset-block-end: 1.5rem; display: grid; grid-template-columns: repeat(2, auto); align-items: center; gap: .5rem 1rem; }
+.hero__arrow { inline-size: clamp(4.25rem, 7vw, 8rem); min-block-size: 2.75rem; border: 0; padding: 0; color: var(--v2-accent); background: none; filter: drop-shadow(0 4px 6px #0009); }
+.hero__arrow svg { display: block; inline-size: 100%; fill: currentColor; }
+.hero__arrow path:nth-child(2) { opacity: .82; }
+.hero__arrow path:nth-child(3) { opacity: .64; }
+.hero[data-enhanced] .hero__slides { display: grid; }
+.hero[data-enhanced] .hero__slide { grid-area: 1 / 1; }
+.hero[data-enhanced] .hero__slide[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+[dir="rtl"] .hero__arrow svg, [dir="rtl"] .hero__cta span { transform: scaleX(-1); }
+@media (min-width: 768px) { .hero__copy { inline-size: min(58vw, 38rem); } }
+@media (min-width: 1181px) { .hero__copy { inline-size: min(45vw, 38.75rem); } }
+@media (prefers-reduced-motion: no-preference) {
+    .hero[data-changing="true"] .hero__slide[aria-hidden="false"] .hero__copy { animation: hero-copy-in 480ms ease both; }
+    @keyframes hero-copy-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .hero[data-changing="true"] .hero__slide[aria-hidden="false"] .hero__media { animation: hero-media-in 980ms cubic-bezier(.22, 1, .36, 1) both; }
+    @keyframes hero-media-in { from { opacity: .4; transform: scale(1.12); filter: blur(12px); } to { opacity: 1; transform: none; filter: none; } }
+}
