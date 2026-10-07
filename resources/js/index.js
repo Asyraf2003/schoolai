@@ -3,6 +3,7 @@ import { mountHeader } from './sections/header.js';
 import { mountHero } from './sections/hero.js';
 import { mountAbout } from './sections/about.js';
 import { mountProgram } from './sections/program.js';
+import { mountValues } from './sections/values.js';
 
 // Composition root wires ports; each component owns its state and DOM.
 const cursor = mountCursor();
@@ -22,12 +23,15 @@ hero = mountHero(document.querySelector('[data-hero]'), {
 });
 const about = mountAbout(document.querySelector('[data-about]'));
 const program = mountProgram(document.querySelector('[data-program]'));
+const values = mountValues(document.querySelector('[data-program-values]'));
 window.addEventListener('pagehide', event => {
     hero.suspend();
     about.suspend();
     program.suspend();
+    values.suspend();
     if (!event.persisted) about.dispose();
     if (!event.persisted) program.dispose();
+    if (!event.persisted) values.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); }
 });
-window.addEventListener('pageshow', () => { hero.resume(); about.resume(); program.resume(); });
+window.addEventListener('pageshow', () => { hero.resume(); about.resume(); program.resume(); values.resume(); });

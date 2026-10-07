@@ -1,0 +1,23 @@
+.program-values {
+    --values-blue: #2038ff;
+    --program-values-morph-pct: 100%;
+    position: relative;
+    isolation: isolate;
+    background: var(--values-blue);
+}
+/* Keep the dialog's type plane in Program's DOM; its home spans both sections. */
+.program-values > .program {
+    position: static;
+    isolation: auto;
+    background: linear-gradient(#fff calc(100% - 18svh), var(--values-blue));
+}
+.program-values .program__type-home .program__type-line {
+    color: color-mix(in srgb, #397aa6 calc(100% - var(--program-values-morph-pct)), #8fcfff var(--program-values-morph-pct));
+    opacity: var(--program-values-type-opacity, .11);
+}
+@supports (background: color-mix(in srgb, #fff, #2038ff)) {
+    .program-values[data-values-enhanced] {
+        background: color-mix(in srgb, #fff calc(100% - var(--program-values-morph-pct)), var(--values-blue) var(--program-values-morph-pct));
+    }
+    .program-values[data-values-enhanced] > .program { background: transparent; }
+}

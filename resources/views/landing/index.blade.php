@@ -14,7 +14,10 @@
     <main id="main-content" tabindex="-1">
         @include('landing.hero', ['hero' => $hero])
         @include('landing.about', ['about' => $about])
-        @include('landing.program', ['program' => $program])
+        <div class="program-values" data-program-values>
+            @include('landing.program', ['program' => $program])
+            @include('landing.values', ['values' => $values])
+        </div>
     </main>
 </body>
 </html>

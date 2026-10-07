@@ -195,3 +195,13 @@ seluruh section entrance760ms. Source detail/cards/dimensi Header dilindungi.
 Bukti `docs2/proof/menu-heading-status.md`: scoped PASS, full PHP FAIL baseline
 yang sama; native Safari dan decorative-paint setelah resize masih GAP.
 Tidak ada code step aktif, push/merge, Values, atau scroll line.
+
+## CURRENT FOLLOW-UP — MAP-V2-11 / #67
+
+Latest owner request supersedes prior Values deferral for background/title only.
+Program EN has zero horizontal travel; ID retains760ms reveal then1200ms slide.
+Values reuses the same decorative plane, white→#2038ff scroll color morph and
+old-style900ms reveal then880ms lower-line shift from768px, mirrored RTL.
+Canonical map: blueprints/values-intro.md; proof: proof/values-intro-status.md.
+Issue/PR/main publication authorized in the current owner session.
+Values cards/cartoon, subtitle and following sections remain out of scope.

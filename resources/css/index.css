@@ -14,6 +14,8 @@
 @import './sections/hero.css';
 @import './sections/about.css';
 @import './sections/program.css';
+@import './sections/program-values.css';
+@import './sections/values.css';
 @import './responsive/mobile.css';
 @import './responsive/tablet.css';
 @import './responsive/desktop.css';

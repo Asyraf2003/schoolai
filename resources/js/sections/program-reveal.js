@@ -33,7 +33,7 @@ export function observeProgram(root, signal) {
             visible = entries.some(entry => entry.isIntersecting);
             paintBackground();
         });
-        background.observe(root);
+        background.observe(root.closest('[data-program-values]') ?? root);
         const reached = new Set();
         const paintCards = () => {
             const frontier = Math.max(-1, ...reached);

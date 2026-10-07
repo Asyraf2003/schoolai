@@ -13,8 +13,8 @@
     -webkit-mask-image: linear-gradient(#000, transparent);
     mask-image: linear-gradient(#000, transparent);
 }
-@supports selector(.about:has(+ .program)) {
-    .about:has(+ .program)::before {
+@supports selector(.about:has(+ .program-values)) {
+    .about:has(+ .program-values)::before {
         -webkit-mask-image: linear-gradient(#000 calc(100% - 12svh), transparent);
         mask-image: linear-gradient(#000 calc(100% - 12svh), transparent);
     }

@@ -19,6 +19,9 @@ export async function session(engine, options = {}) {
     const requests = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('request', request => requests.push(request.url()));
+    if (process.env.PROGRAM_LOGO_FIXTURE) await page.route('**/site/brand/logo-nav-v1.webp', route => route.fulfill({
+        path: process.env.PROGRAM_LOGO_FIXTURE, contentType: 'image/webp',
+    }));
     await page.goto(url, { waitUntil: 'domcontentloaded' });
     if (options.javaScriptEnabled !== false) await page.waitForFunction(() => !!document.querySelector('[data-program]')?.dataset.programState);
     return { browser, context, page, errors, requests, version: browser.version(), close: () => browser.close() };
