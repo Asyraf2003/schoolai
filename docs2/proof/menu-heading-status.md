@@ -1,3 +1,32 @@
+# Program motion #65 — 2026-10-07
+
+Checkpoint owner fb3eb7070c0a3b772362c74c8aca293277f4aee1 sudah tersedia remote.
+Owner mengizinkan issue/PR/merge main; bukti sesi ini terpisah dari histori berikut.
+
+ID: dua baris selesai pada760ms dengan x0; slide1200ms kemudian mencapai187,2px.
+Pada1060/1360/1660ms:7,35652/42,2469/150,741px; easing(.82,0,.55,1).
+Reentry menghapus sisa pergeseran saat hidden. Gap/font dan EN/AR tetap.
+Latar: satu bidang20baris, drift9s alternate; sampel1440px -21,36→21,36px.
+Berhenti offscreen, saat hidden-tab (event sintetis), dan saat membuka detail.
+Reduced/no-JS statis. Selector type-home tidak ikut bidang dialog/transform GSAP.
+Detail fallback diuji; kode detail kinetics asli tidak berubah.
+
+PASS: 6 tes browser Chromium153.0.8010.0 (heading normal/reduced/no-JS/reentry
+serta sequence/drift), PHP V2 27tes/369assertion (Program9/163 termasuk),
+JS fokus9tes, build, struktur277source<200baris, diff check.
+Full PHP baseline/final:332tes,186pass,71failure,75error,1644assertion.
+Full Node Runtime baseline/final:38tes,19pass,7fail,12skip.
+Daftar nama failure/error identik; gate full suite tetap FAIL.
+Audit dependency terhalang akses jaringan; dependency files tidak berubah.
+WebKit tidak tersedia di runtime ini. Media remote/CDN tidak dapat diakses;
+ini bukti geometri/state lokal dan fallback, bukan sertifikasi seluruh media,
+GSAP detail live, Safari native, physical device, CWV atau whole-site DOD.
+
+Data terukur dan hash: [program-motion-65.json](program-motion-65.json).
+Publikasi dilakukan melalui Issue #65 dan PR terhadap main sesuai arahan owner.
+
+---
+
 # MAP-V2-10 — Hasil tiga koreksi visual, 2026-10-07
 
 Branch lokal `feat/home-v2-about`, HEAD `08039bbad2f59ba37cac996bc15730fbee7d52e9`.

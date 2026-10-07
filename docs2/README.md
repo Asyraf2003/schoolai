@@ -1,10 +1,10 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Tiga koreksi terbatas: menu menyatu, jarak judul, reveal760ms**.
+Scope saat ini: **Issue #65: drift latar Program dan reveal ID760ms → slide berbobot1200ms**.
 
 Map aktif: [MAP-V2-10](blueprints/menu-heading-visual-correction.md).
-Bukti terbaru: [Tiga koreksi visual dan screenshot](proof/menu-heading-status.md).
+Bukti terbaru: [Status Program motion #65](proof/menu-heading-status.md), [data terukur](proof/program-motion-65.json).
 Bukti putaran sebelumnya: [Nav dan latar AR](proof/program-third-status.md).
 Bukti sebelumnya: [Judul Program dan navigasi](proof/nav-program-status.md).
 Koreksi Program sebelumnya: [Program visual correction](proof/program-feedback-status.md).

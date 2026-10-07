@@ -1,8 +1,36 @@
 # MAP-V2-10 — Menu continuity and Program heading correction
 
-Blueprint: OWNER_ACCEPTED / IMPLEMENTING, 2026-10-07.
-Branch feat/home-v2-about HEAD08039bba; freshly fetched main a44d484f.
-Channel Terminal Codex; local only, no commit/push/merge/dependency changes.
+Blueprint: OWNER_ACCEPTED / READY_TO_PUBLISH, 2026-10-07.
+Source checkpoint owner: feat/home-v2-about fb3eb7070c0a3b772362c74c8aca293277f4aee1.
+Branch follow-up: fix/program-motion-65. Issue: #65.
+Owner terbaru meminta issue, PR dan merge/push main agar dapat pull.
+Arahan publikasi terbaru menggantikan batas local-only historis di bawah.
+
+## OWNER_RAW — follow-up Program
+
+Latar Program perlu gerak halus yang lebih terlihat. Judul ID harus selesai
+menjadi dua baris utuh sebelum baris bawah bergeser: awal terasa berat, kemudian
+melepas rem dan mempercepat. Owner mengirim source V2 lewat branch di atas.
+
+## AI_TRANSLATION / SCOPE — #65
+
+Pertahankan vertical760ms, horizontal ID1200ms dan jarak/gap yang diterima.
+ID menunggu760ms lalu cubic-bezier(.82,0,.55,1); reset horizontal saat hidden.
+Gerakkan satu bidang type-home ±clamp(.75rem,2vw,2rem),9s ease-in-out alternate.
+Observer visibility/hidden-tab hanya mengendalikan pause; detail tidak memakai
+animasi ambient. Reduced/no-JS tetap statis. EN/AR heading dan GSAP detail tetap.
+Codrops asli menyediakan transisi detail finite; drift idle adalah adaptasi owner.
+Empat file produk: locale/id.css, program-reveal.css, program-detail.css,
+program-reveal.js. Patch putih, Header/About/Hero/cards/media/content terlindungi.
+Dependency tidak berubah. Bukti: docs2/proof/program-motion-65.json.
+
+## STATUS / NEXT VALID STEP — #65
+
+Enam browser tests Chromium, PHP V2 27/369, build/structure/diff PASS.
+Full PHP dan Node Runtime tetap FAIL baseline; tidak ada nama failure/error baru.
+WebKit, native device dan external media/CDN tidak tersertifikasi sesi ini.
+Terbitkan PR terhadap main dengan checkpoint owner dan patch terbatas, lalu merge
+sesuai instruksi owner. Bagian berikut adalah histori MAP-V2-10.
 
 ## OWNER_CONFIRMED / GOAL
 

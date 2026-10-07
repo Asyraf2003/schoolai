@@ -4,10 +4,18 @@ export function observeProgram(root, signal) {
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let observer;
     let proximity;
+    let background;
+    let visible = false;
+    const paintBackground = () => {
+        root.dataset.programBackgroundActive = String(visible && !document.hidden && !motion.matches);
+    };
     let refresh = () => {};
     const clear = () => {
         observer?.disconnect();
         proximity?.disconnect();
+        background?.disconnect();
+        visible = false;
+        delete root.dataset.programBackgroundActive;
         delete root.dataset.revealEnabled;
         refresh = () => {};
     };
@@ -21,6 +29,11 @@ export function observeProgram(root, signal) {
         }, { rootMargin: '25% 0px' });
         proximity.observe(root);
         if (motion.matches) return;
+        background = new IntersectionObserver(entries => {
+            visible = entries.some(entry => entry.isIntersecting);
+            paintBackground();
+        });
+        background.observe(root);
         const reached = new Set();
         const paintCards = () => {
             const frontier = Math.max(-1, ...reached);
@@ -57,6 +70,7 @@ export function observeProgram(root, signal) {
         root.dataset.revealEnabled = 'true';
     };
     motion.addEventListener('change', configure, { signal });
+    document.addEventListener('visibilitychange', paintBackground, { signal });
     // IO cannot report an above→below jump when both positions are non-intersecting.
     // Reconcile visibility once after native scroll ends; never calculate layout.
     document.addEventListener('scrollend', event => { if (event.target === document) refresh(); }, { signal });

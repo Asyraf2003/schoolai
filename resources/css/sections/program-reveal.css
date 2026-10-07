@@ -7,10 +7,14 @@
 .program__card-reveal { transition-delay: var(--program-reveal-delay, 0ms); }
 @media (prefers-reduced-motion: no-preference) {
     .program[data-reveal-enabled] .program__heading-clip:is(:nth-child(2), :only-child) {
-        transition: transform var(--program-heading-horizontal-duration, var(--program-heading-duration)) cubic-bezier(.22, 1, .36, 1);
+        transition: transform var(--program-heading-horizontal-duration, var(--program-heading-duration)) var(--program-heading-horizontal-ease, cubic-bezier(.22, 1, .36, 1));
+    }
+    .program[data-reveal-enabled] [data-program-heading][data-revealed="true"] .program__heading-clip:is(:nth-child(2), :only-child) {
+        transition-delay: var(--program-heading-horizontal-delay, 0ms);
     }
     .program[data-reveal-enabled] [data-program-heading]:not([data-revealed="true"]) .program__heading-clip:is(:nth-child(2), :only-child) {
         transform: translateX(0);
+        transition-duration: var(--program-heading-horizontal-reset-duration, var(--program-heading-horizontal-duration, var(--program-heading-duration)));
     }
 }
 .program[data-reveal-enabled] [data-program-heading]:not([data-revealed="true"]) .program__heading-clip > span { transform: translateY(114%); opacity: 0; }

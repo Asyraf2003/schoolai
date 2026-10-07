@@ -28,6 +28,19 @@
     position: absolute; inset: 0; display: flex; flex-direction: column;
     justify-content: center; align-items: center; transform-origin: center;
 }
+@media (prefers-reduced-motion: no-preference) {
+    .program[data-reveal-enabled] .program__type-home .program__type {
+        animation: program-type-drift 9s ease-in-out infinite alternate;
+        animation-play-state: paused;
+    }
+    .program[data-program-background-active="true"][data-program-state="idle"] .program__type-home .program__type {
+        animation-play-state: running;
+    }
+}
+@keyframes program-type-drift {
+    from { translate: calc(-1 * clamp(.75rem, 2vw, 2rem)) 0; }
+    to { translate: clamp(.75rem, 2vw, 2rem) 0; }
+}
 .program__type-line {
     flex: none; inline-size: max-content; white-space: nowrap; text-align: center;
     font-size: clamp(5rem, 18.75vh, 15rem); font-size: clamp(5rem, 18.75svh, 15rem);

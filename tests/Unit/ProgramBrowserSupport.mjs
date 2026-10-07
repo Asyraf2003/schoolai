@@ -4,12 +4,12 @@ import assert from 'node:assert/strict';
 export const url = process.env.PROGRAM_BROWSER_URL;
 export const enabled = !!url && !!process.env.PROGRAM_PLAYWRIGHT_MODULE;
 export const engines = (process.env.PROGRAM_ENGINES ?? 'chromium,firefox,webkit').split(',');
-export const directory = 'docs2/proof';
+export const directory = process.env.PROGRAM_PROOF_DIRECTORY ?? 'docs2/proof';
 
 export async function session(engine, options = {}) {
     const playwright = await import(process.env.PROGRAM_PLAYWRIGHT_MODULE);
     const launch = { headless: true };
-    if (engine === 'chromium') launch.executablePath = '/usr/bin/chromium';
+    if (engine === 'chromium') launch.executablePath = process.env.PROGRAM_CHROMIUM_PATH ?? '/usr/bin/chromium';
     if (engine === 'edge') launch.executablePath = process.env.PROGRAM_EDGE_PATH;
     if (engine === 'webkit' && process.env.PROGRAM_WEBKIT_PATH) launch.executablePath = process.env.PROGRAM_WEBKIT_PATH;
     const browser = await playwright[engine === 'edge' ? 'chromium' : engine].launch(launch);

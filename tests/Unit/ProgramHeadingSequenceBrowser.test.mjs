@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, geometry, fits, evidence, directory } from './ProgramBrowserSupport.mjs';
 
 for (const engine of engines) {
-    test(`Program split heading keeps760ms vertical and1200ms ID horizontal motion with scroll held in ${engine}`, { skip: !enabled }, async () => {
+    test(`Program ID reveals both lines before its weighted1200ms slide in ${engine}`, { skip: !enabled }, async () => {
         const runtime = await session(engine);
         const { page } = runtime;
         const cases = [];
@@ -24,6 +24,7 @@ for (const engine of engines) {
                     await page.waitForFunction(() => [...document.querySelectorAll('[data-program-heading-line]')]
                         .every(line => Math.abs(new DOMMatrix(getComputedStyle(line).transform).m42) < .1 && getComputedStyle(line).opacity === '1'));
                     const middle = await page.locator('.program__heading-clip').last().evaluate(clip => new DOMMatrix(getComputedStyle(clip).transform).m41);
+                    if (language === 'id') assert.ok(Math.abs(middle) < .5, 'both lines finish revealing before horizontal travel');
                     await page.waitForFunction(() => document.querySelector('.program__heading-clip:last-child').getAnimations().length === 0);
                     const after = await page.evaluate(() => ({
                         x: new DOMMatrix(getComputedStyle(document.querySelector('.program__heading-clip:last-child')).transform).m41,
@@ -42,8 +43,9 @@ for (const engine of engines) {
                     })));
                     assert.ok(vertical.every(line => line.duration === '0.76s, 0.76s'));
                     assert.ok(vertical.every(line => line.easing === 'cubic-bezier(0.22, 1, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1)'));
-                    assert.equal(await page.locator('.program__heading-clip').last().evaluate(clip => getComputedStyle(clip).transitionTimingFunction), 'cubic-bezier(0.22, 1, 0.36, 1)');
-                    assert.equal(await page.locator('.program__heading-clip').last().evaluate(clip => getComputedStyle(clip).transitionDelay), '0s');
+                    assert.equal(await page.locator('.program__heading-clip').last().evaluate(clip => getComputedStyle(clip).transitionTimingFunction),
+                        language === 'id' ? 'cubic-bezier(0.82, 0, 0.55, 1)' : 'cubic-bezier(0.22, 1, 0.36, 1)');
+                    assert.equal(await page.locator('.program__heading-clip').last().evaluate(clip => getComputedStyle(clip).transitionDelay), language === 'id' ? '0.76s' : '0s');
                     if (language !== 'ar') assert.equal(after.firstX, 0);
                     assert.equal(after.scroll, before.scroll, 'autonomous CSS motion does not own scroll');
                     fits(await page.evaluate(geometry));
@@ -62,7 +64,7 @@ for (const engine of engines) {
 
 test('Program heading keeps a readable final pose without page JavaScript', { skip: !enabled }, async () => {
     const cases = [];
-    for (const engine of ['chromium', 'webkit']) {
+    for (const engine of engines.filter(engine => ['chromium', 'webkit'].includes(engine))) {
         const runtime = await session(engine, { javaScriptEnabled: false });
         const { page } = runtime;
         try {
