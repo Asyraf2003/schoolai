@@ -50,7 +50,7 @@ for (const engine of engines) {
                 });
                 assert.equal(reset.count, 20);
                 assert.ok(Math.abs(reset.leading - .75) < .001);
-                assert.equal(reset.animations, 1, 'only the idle CSS drift returns after detail');
+                assert.equal(reset.animations, 20, 'idle CSS row drift returns after detail');
                 assert.equal(reset.transform, '');
                 assert.equal(reset.inlineLines, false);
                 await page.mouse.move(width / 2, 450);

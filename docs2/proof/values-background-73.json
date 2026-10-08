@@ -1,0 +1,1134 @@
+{
+  "source_main": "2663b32e5b7a9caf72b9ccfb534c25fe4b957864",
+  "issue": 73,
+  "production_files_changed": [
+    "resources/css/sections/program-detail.css"
+  ],
+  "old_leg_ms": 9000,
+  "new_leg_ms": 4500,
+  "old_parent_animations": 1,
+  "new_row_animations": 20,
+  "shared_planes": 1,
+  "browser": {
+    "version": "153.0.8010.0",
+    "date": "2026-10-08T02:39:42.071Z",
+    "tier_cases": [
+      {
+        "language": "id",
+        "width": 360,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002
+        ],
+        "overflow": false
+      },
+      {
+        "language": "id",
+        "width": 640,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869
+        ],
+        "overflow": false
+      },
+      {
+        "language": "id",
+        "width": 768,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842
+        ],
+        "overflow": false
+      },
+      {
+        "language": "id",
+        "width": 1024,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379
+        ],
+        "overflow": false
+      },
+      {
+        "language": "id",
+        "width": 1280,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738
+        ],
+        "overflow": false
+      },
+      {
+        "language": "id",
+        "width": 1440,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206
+        ],
+        "overflow": false
+      },
+      {
+        "language": "id",
+        "width": 1536,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686
+        ],
+        "overflow": false
+      },
+      {
+        "language": "en",
+        "width": 360,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002
+        ],
+        "overflow": false
+      },
+      {
+        "language": "en",
+        "width": 640,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869
+        ],
+        "overflow": false
+      },
+      {
+        "language": "en",
+        "width": 768,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842
+        ],
+        "overflow": false
+      },
+      {
+        "language": "en",
+        "width": 1024,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379
+        ],
+        "overflow": false
+      },
+      {
+        "language": "en",
+        "width": 1280,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738
+        ],
+        "overflow": false
+      },
+      {
+        "language": "en",
+        "width": 1440,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206
+        ],
+        "overflow": false
+      },
+      {
+        "language": "en",
+        "width": 1536,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686
+        ],
+        "overflow": false
+      },
+      {
+        "language": "ar",
+        "width": 360,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002,
+          17.8002,
+          -17.8002
+        ],
+        "overflow": false
+      },
+      {
+        "language": "ar",
+        "width": 640,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869,
+          18.9869,
+          -18.9869
+        ],
+        "overflow": false
+      },
+      {
+        "language": "ar",
+        "width": 768,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842,
+          22.7842,
+          -22.7842
+        ],
+        "overflow": false
+      },
+      {
+        "language": "ar",
+        "width": 1024,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379,
+          30.379,
+          -30.379
+        ],
+        "overflow": false
+      },
+      {
+        "language": "ar",
+        "width": 1280,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738,
+          37.9738,
+          -37.9738
+        ],
+        "overflow": false
+      },
+      {
+        "language": "ar",
+        "width": 1440,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206,
+          42.7206,
+          -42.7206
+        ],
+        "overflow": false
+      },
+      {
+        "language": "ar",
+        "width": 1536,
+        "planes": 1,
+        "row_count": 20,
+        "durations_ms": [
+          4500
+        ],
+        "play_states": [
+          "running"
+        ],
+        "row_travel_px": [
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686,
+          45.5686,
+          -45.5686
+        ],
+        "overflow": false
+      }
+    ],
+    "lifecycle_cases": [
+      {
+        "language": "id",
+        "offscreenPaused": true,
+        "syntheticHiddenPaused": true,
+        "detailStatic": true,
+        "reducedStatic": true
+      },
+      {
+        "language": "en",
+        "offscreenPaused": true,
+        "syntheticHiddenPaused": true,
+        "detailStatic": true,
+        "reducedStatic": true
+      },
+      {
+        "language": "ar",
+        "offscreenPaused": true,
+        "syntheticHiddenPaused": true,
+        "detailStatic": true,
+        "reducedStatic": true
+      }
+    ]
+  },
+  "heading": {
+    "date": "2026-10-08T02:38:58.212Z",
+    "platform": "linux",
+    "url": "http://127.0.0.1:8000",
+    "version": "153.0.8010.0",
+    "frames": [
+      {
+        "time": 0,
+        "x": 0,
+        "lines": [
+          {
+            "y": 160.544,
+            "opacity": 0
+          },
+          {
+            "y": -160.544,
+            "opacity": 0
+          }
+        ]
+      },
+      {
+        "time": 380,
+        "x": 0,
+        "lines": [
+          {
+            "y": 6.1998,
+            "opacity": 0.961383
+          },
+          {
+            "y": -6.1998,
+            "opacity": 0.961383
+          }
+        ]
+      },
+      {
+        "time": 760,
+        "x": 0,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1060,
+        "x": 7.35652,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1360,
+        "x": 42.2469,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1660,
+        "x": 150.741,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      },
+      {
+        "time": 1960,
+        "x": 187.2,
+        "lines": [
+          {
+            "y": 0,
+            "opacity": 1
+          },
+          {
+            "y": 0,
+            "opacity": 1
+          }
+        ]
+      }
+    ]
+  },
+  "values_full_gsap_lifecycle": {
+    "date": "2026-10-08T02:38:55.231Z",
+    "platform": "linux",
+    "url": "http://127.0.0.1:8000",
+    "before": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "lang": "en",
+      "scene": {
+        "width": 1440,
+        "height": 4500,
+        "top": -1198.71875
+      },
+      "paths": 1,
+      "stroke": "rgb(255, 255, 255)",
+      "fill": "none",
+      "offset": 8575.8,
+      "length": 15874.27734375,
+      "progress": 0.44994272623138604,
+      "scrub": true,
+      "tip": {
+        "x": 464.11614990234375,
+        "y": 732.8291015625
+      },
+      "caps": [
+        {
+          "x": 1659.999755859375,
+          "y": 30.55579948425293
+        },
+        {
+          "x": 1515,
+          "y": 4369.4443359375
+        }
+      ],
+      "overflow": false,
+      "ready": true,
+      "triggers": 1,
+      "gsapScripts": 1
+    },
+    "reduced": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "lang": "en",
+      "scene": {
+        "width": 0,
+        "height": 0,
+        "top": 0
+      },
+      "paths": 1,
+      "stroke": "rgb(255, 255, 255)",
+      "fill": "none",
+      "offset": 0,
+      "length": 20816.31640625,
+      "tip": {
+        "x": 0,
+        "y": 0
+      },
+      "caps": [
+        {
+          "x": 2213.3330078125,
+          "y": 36.66699981689453
+        },
+        {
+          "x": 2020,
+          "y": 5243.3330078125
+        }
+      ],
+      "overflow": false,
+      "ready": false,
+      "triggers": 0,
+      "gsapScripts": 1
+    },
+    "disposed": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "lang": "en",
+      "scene": {
+        "width": 0,
+        "height": 0,
+        "top": 0
+      },
+      "paths": 1,
+      "stroke": "rgb(255, 255, 255)",
+      "fill": "none",
+      "offset": 0,
+      "length": 20816.31640625,
+      "tip": {
+        "x": 0,
+        "y": 0
+      },
+      "caps": [
+        {
+          "x": 2213.3330078125,
+          "y": 36.66699981689453
+        },
+        {
+          "x": 2020,
+          "y": 5243.3330078125
+        }
+      ],
+      "overflow": false,
+      "ready": false,
+      "triggers": 0,
+      "gsapScripts": 1
+    }
+  },
+  "php_scoped": {
+    "tests": 13,
+    "passed": 13,
+    "assertions": 214
+  },
+  "php_base": {
+    "tests": 336,
+    "passed": 190,
+    "failed": 71,
+    "errors": 75,
+    "assertions": 1696
+  },
+  "php_final": {
+    "tests": 336,
+    "passed": 190,
+    "failed": 71,
+    "errors": 75,
+    "assertions": 1696
+  },
+  "new_php_failures": [],
+  "new_php_errors": [],
+  "old_arabic_lifecycle": {
+    "base": "FAIL scroll2950 !=2925",
+    "final": "FAIL scroll2950 !=2925",
+    "assertion": "native scroll restore, before idle row-count check",
+    "source_scroll_owners_unchanged": true
+  },
+  "card_content": {
+    "id": [
+      {
+        "code": "Q",
+        "title": "Qur'ani",
+        "accent": "#22c55e",
+        "summary_chars": 34,
+        "body_chars": 148
+      },
+      {
+        "code": "I",
+        "title": "Inovatif",
+        "accent": "#f97316",
+        "summary_chars": 40,
+        "body_chars": 81
+      },
+      {
+        "code": "G",
+        "title": "Integratif",
+        "accent": "#0ea5e9",
+        "summary_chars": 48,
+        "body_chars": 95
+      },
+      {
+        "code": "N",
+        "title": "Inspiratif",
+        "accent": "#a855f7",
+        "summary_chars": 44,
+        "body_chars": 90
+      }
+    ],
+    "en": [
+      {
+        "code": "Q",
+        "title": "Qur'anic",
+        "accent": "#22c55e",
+        "summary_chars": 32,
+        "body_chars": 169
+      },
+      {
+        "code": "I",
+        "title": "Innovative",
+        "accent": "#f97316",
+        "summary_chars": 51,
+        "body_chars": 107
+      },
+      {
+        "code": "G",
+        "title": "Integrative",
+        "accent": "#0ea5e9",
+        "summary_chars": 68,
+        "body_chars": 104
+      },
+      {
+        "code": "N",
+        "title": "Inspirational",
+        "accent": "#a855f7",
+        "summary_chars": 51,
+        "body_chars": 104
+      }
+    ],
+    "ar": [
+      {
+        "code": "Q",
+        "title": "قرآنية",
+        "accent": "#22c55e",
+        "summary_chars": 23,
+        "body_chars": 149
+      },
+      {
+        "code": "I",
+        "title": "ابتكارية",
+        "accent": "#f97316",
+        "summary_chars": 37,
+        "body_chars": 80
+      },
+      {
+        "code": "G",
+        "title": "تكاملية",
+        "accent": "#0ea5e9",
+        "summary_chars": 48,
+        "body_chars": 76
+      },
+      {
+        "code": "N",
+        "title": "ملهمة",
+        "accent": "#a855f7",
+        "summary_chars": 37,
+        "body_chars": 61
+      }
+    ]
+  },
+  "gates": {
+    "targeted_browser": "3 PASS; older Arabic lifecycle baseline FAIL",
+    "build": "PASS",
+    "source_structure": "PASS (288 sources <=200lines)",
+    "diff": "PASS",
+    "full_php": "baseline FAIL"
+  },
+  "fixture_sha256": {
+    "gsap.min.js": "f6d6ecb1737ecfa9ec03e37591b8feca3b47676e69348c2e586a983a94ea109b",
+    "fullday-v1.webp": "8abc356cfad7ebeab496f7c0876229455f13d44c7fadd3998401b45f4addb324",
+    "pidato-v1.webp": "8a09b76d9ed97f84178275a4c24ff6aeac70e2a9dfa95980c22962da345e82b3",
+    "labit-v1.webp": "8273fe38aaaa735d39e065323d0c5877ab645c43e47c24685f59b14c9a8eed66",
+    "perpustakaan-v1.webp": "40ab53951534077d9efcd9c48d53c1ccf5d79311e6dd66067e78cc9c7e4639f9",
+    "aula-v1.webp": "a98ce6e90778ae7c4ae367ba50fb11492f5ed080b63a15266a6dc6e2ad5e468f",
+    "taekwondo-v1.webp": "ab1a7c9d6a1c90742ba9b0019b1914b748cffae75e6502aeff75e232f2281cff",
+    "ScrollTrigger.min.js": "1e8cf34b75f894561f5d2ec7f57c689f4b5f0800e6975df514e40152bb1868a4",
+    "tahfiz-v1.webp": "61691a761c284a79fce2525be8030387df36308d75620bce27fa3dd38fc4d949",
+    "solatjamaah-v1.webp": "6b7684fd2244bacb222b2490045a4264c350456cf4820f0a06c2dcd6ef26cef1"
+  },
+  "limits": "Chromium only; exact GSAP3.7.1 and canonical eight Program images fulfilled locally. Other engine/device/live delivery/performance unproven. Cards audit is source-only.",
+  "svg_geometry_tests": "4 PASS (accepted geometry unchanged)"
+}

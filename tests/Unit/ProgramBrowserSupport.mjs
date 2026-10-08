@@ -22,6 +22,12 @@ export async function session(engine, options = {}) {
     if (process.env.PROGRAM_LOGO_FIXTURE) await page.route('**/site/brand/logo-nav-v1.webp', route => route.fulfill({
         path: process.env.PROGRAM_LOGO_FIXTURE, contentType: 'image/webp',
     }));
+    if (process.env.PROGRAM_SCHOOL_LIFE_FIXTURES) await page.route('**/site/school-life/*-v1.webp', async route => {
+        const name = new URL(route.request().url()).pathname.split('/').at(-1);
+        const path = `${process.env.PROGRAM_SCHOOL_LIFE_FIXTURES}/${name}`;
+        try { await fs.access(path); } catch { return route.continue(); }
+        return route.fulfill({ path, contentType: 'image/webp' });
+    });
     if (process.env.PROGRAM_SCROLLTRIGGER_FIXTURE) {
         await page.route('**/gsap@3.7.1/dist/gsap.min.js', route => route.fulfill({
             path: process.env.PROGRAM_GSAP_FIXTURE, contentType: 'application/javascript',
