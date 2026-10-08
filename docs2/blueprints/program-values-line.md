@@ -1,8 +1,8 @@
 # MAP-V2-12 — Program → Values white scroll line
 
-STATUS: PROVEN (scoped PASS; full repository gates retain baseline FAIL).
-Issue #69, branch feat/program-values-line.
-Source main: d069d029db6556d2657ec3512bd045cbb128e251.
+STATUS: PROVEN wall-endpoint follow-up (scoped PASS; full PHP baseline FAIL).
+Issue #71, branch fix/values-line-wall-ends; previous issue #69 / merged PR #70.
+Source main: d408da28a3f9531ae954b249997497b2737e6e75.
 
 ## OWNER_RAW
 
@@ -11,17 +11,25 @@ White, smoother and seamless; future route must remain invisible. Each
 composition fills100vw×100vh and may leave the viewport. GSAP ScrollTrigger
 scrub:true; down draws, up reverses. Start at Program → Values; issue, PR, main.
 
+Latest: "startnya harus dari dinding atau pinggir layar dan finisnya juga
+berakhir di pinggir layar ... bebas kanan atau kiri ... bisa 2 tapi g boleh
+saling memotong ... boleh balik ke dinding yg sama boleh berlawanan ...
+sisanya beres".
+
 ## AI_TRANSLATION
 
 One continuous white path across five viewport compositions. No guide stroke,
 marker, repeated restart, scroll lock or automatic playback. Native scroll
 scrubs the visible length. Existing Values heading and blue morph stay intact.
+Follow-up: move only entry/exit to a side wall and guard against intersections.
 
 ## AI_ASSUMPTIONS
 
 Canva raster centerlines are redrawn as smooth vectors, with mirrored/stretched
 curves and connecting bends where needed. One five-viewport Values runway is
 used while cards remain deferred. Stroke thickness adapts with CSS.
+Follow-up implementation choice: retain one path, entering and leaving the
+right wall. The owner allows one/two paths and same/opposite walls.
 
 ## OWNER_CONFIRMED
 
@@ -66,6 +74,10 @@ All six width tiers and ID/EN/AR share the same decorative path/semantic tree.
 No-JS/reduced/missing IO/load failure keep the existing title-only fallback.
 Hidden/bfcache states suspend and restore only this owned trigger. Offscreen
 progress is clamped by ScrollTrigger; no autoplay or extra scroll layout loop.
+Wall follow-up: change the first/last B-spline controls so both caps are outside
+the right boundary, with y inside the five-screen canvas. Keep all central
+curves, C2 joins and animation owners. Test side clipping and curve crossings
+in addition to existing forward/reverse and rendered stroke proof.
 
 ## PROOF
 
@@ -77,10 +89,22 @@ PHP V2:27/342assertions PASS. Build/structure/Pint/diff PASS. Full PHP/Node reta
 the same baseline failures. Proof: ../proof/program-values-line-status.md.
 Other engines/native hardware/performance scores remain unproven.
 
+Follow-up #71: four geometry/speed tests PASS, including side-wall clipping and
+non-intersection checks with <0.1px chord error. Seven Chromium tests PASS:
+21drawing cells, native forward/reverse, lifecycle/fallback, existing Values
+intro/background and three rendered pixel cases. Entry/exit wall pixels alpha255;
+future stroke alpha0. End snapshot captured in the final pixel test rerun PASS.
+PHP Values4/48 PASS; full PHP base/final336:190pass,71fail,75error,1696assertions,
+with identical exact failure/error names. Build/structure/Pint/diff PASS.
+Only production change: five coordinate commands in the existing SVG path.
+Data: ../proof/values-line-wall-71.json.
+
 ## GIT
 
-Issue #69; feat/program-values-line; PR/main pending bounded proof.
+Original: issue #69 / PR #70 merged at d408da28.
+Follow-up: issue #71 / fix/values-line-wall-ends; PR/main pending bounded proof.
 
 ## NEXT VALID STEP
 
-Publish verified PR/main under owner authorization; owner pulls and builds.
+Publish the verified follow-up PR/main under existing owner authorization;
+the issue records the final remote SHAs and CLOSED handoff.

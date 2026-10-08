@@ -32,12 +32,14 @@ const state = () => {
     const length = path.getTotalLength();
     const offset = parseFloat(style.strokeDashoffset);
     const point = path.getPointAtLength(Math.max(0, length - offset));
+    const start = path.getPointAtLength(0); const end = path.getPointAtLength(length);
     const view = scene.querySelector('svg').viewBox.baseVal;
     return { viewport: [innerWidth, innerHeight], lang: document.documentElement.lang,
         scene: { width: box.width, height: box.height, top: box.top },
         paths: scene.querySelectorAll('path').length, stroke: style.stroke, fill: style.fill,
         offset, length, progress: trigger?.progress, scrub: trigger?.vars.scrub,
         tip: { x: point.x / view.width * box.width, y: box.top + point.y / view.height * box.height },
+        caps: [start, end].map(p => ({ x: p.x, y: p.y })),
         overflow: document.documentElement.scrollWidth > innerWidth, ready: root.hasAttribute('data-line-ready'),
         triggers: window.ScrollTrigger?.getAll().length ?? 0,
         gsapScripts: document.querySelectorAll('script[data-program-gsap]').length };
@@ -62,6 +64,8 @@ for (const engine of engines) {
                     assert.ok(initial.offset >= initial.length, `future path completely hidden: ${JSON.stringify(initial)}`);
                     assert.equal(initial.scene.width, width); assert.equal(initial.scene.height, 4500);
                     assert.equal(initial.overflow, false);
+                    assert.ok(initial.caps.every(p => p.x > width && p.y > 0 && p.y < initial.scene.height),
+                        'both caps are beyond the right wall at every viewport/locale');
                     const forward = [];
                     for (const p of [.1, .2, .3, .4, .5, .6, .7, .8, .9, 1]) {
                         await position(page, p); forward.push(await page.evaluate(state));

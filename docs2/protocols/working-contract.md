@@ -213,3 +213,8 @@ starting at Program → Values. One continuous path, no visible future guide,
 GSAP ScrollTrigger scrub:true; native down/up draws/reverses. Five viewport
 compositions are the accepted translation. Cards/cartoon remain deferred.
 Map: blueprints/program-values-line.md. Issue/PR/main publication is authorized.
+
+Latest follow-up #71: owner accepts the rest and requires line start/finish at
+screen side walls, with no crossings. One/two paths, same/opposite wall allowed.
+Retain one continuous path; change only right-wall entry/exit geometry and prove
+clipping/intersections. Existing motion, title/background and cards deferral stay.

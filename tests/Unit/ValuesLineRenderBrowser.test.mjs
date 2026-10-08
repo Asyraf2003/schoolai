@@ -42,14 +42,36 @@ for (const engine of engines) {
                         }
                         return points;
                     };
+                    const behind = sample(drawn * .65, drawn * .95);
+                    const ahead = sample(length * .85, length * .97);
+                    clone.querySelector('path').style.strokeDashoffset = '0';
+                    const fullUrl = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml' }));
+                    image.src = fullUrl; await image.decode();
+                    context.clearRect(0, 0, box.width, box.height); context.drawImage(image, 0, 0); URL.revokeObjectURL(fullUrl);
+                    const walls = [];
+                    for (const exit of [false, true]) {
+                        let low = exit ? length * .9 : 0; let high = exit ? length : length * .1;
+                        for (let pass = 0; pass < 30; pass++) {
+                            const middle = (low + high) / 2;
+                            if ((path.getPointAtLength(middle).x > box.width - 1) === exit) high = middle;
+                            else low = middle;
+                        }
+                        const point = path.getPointAtLength((low + high) / 2);
+                        const pixels = context.getImageData(box.width - 1, Math.round(point.y) - 1, 1, 3).data;
+                        walls.push({ y: point.y, alpha: Math.max(...Array.from(pixels).filter((_, i) => i % 4 === 3)) });
+                    }
                     return { width: box.width, length, drawn,
-                        behind: sample(drawn * .65, drawn * .95), ahead: sample(length * .85, length * .97) };
+                        behind, ahead, walls };
                 });
                 assert.ok(painted.behind.length > 0 && painted.ahead.length > 0);
                 assert.ok(painted.behind.every(point => point.alpha > 250), 'drawn path is visibly white');
                 assert.ok(painted.ahead.every(point => point.alpha === 0), 'future path has no painted pixels');
+                assert.ok(painted.walls.every(point => point.alpha > 250), 'entry and exit strokes reach the screen wall');
                 cases.push(painted);
             }
+            await page.evaluate(() => scrollTo(0, Math.ceil(window.ScrollTrigger.getById('values-line').end)));
+            await page.waitForTimeout(80);
+            await page.screenshot({ path: `${process.env.PROGRAM_PROOF_DIRECTORY ?? 'docs2/proof'}/values-line-wall-end.png` });
             assert.deepEqual(runtime.errors, []);
             await evidence(`values-line-render-${engine}`, { cases });
         } finally { await runtime.close(); }
