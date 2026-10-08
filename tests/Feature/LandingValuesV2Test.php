@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders only the localized Values heading after Program in a shared background', function (string $locale): void {
+it('renders the localized Values heading and one decorative line after Program', function (string $locale): void {
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
     $response->assertViewIs('landing.index')
@@ -23,6 +23,9 @@ it('renders only the localized Values heading after Program in a shared backgrou
         ->and($dom->query('//*[@data-program-type-line]')->length)->toBe(20)
         ->and($dom->query('//section[@id="nilai"]//h2[@id="values-title"]')->length)->toBe(1)
         ->and($dom->query('//*[@data-values-heading-line][@aria-hidden="true"]')->length)->toBe(2)
+        ->and($dom->query('//section[@id="nilai"]//*[@data-values-line][@aria-hidden="true"]')->length)->toBe(1)
+        ->and($dom->query('//*[@data-values-line]//*[local-name()="svg"][@viewbox="0 0 1920 5400"][@focusable="false"]')->length)->toBe(1)
+        ->and($dom->query('//*[@data-values-line]//*[local-name()="path"][@fill="none"][@stroke="#fff"]')->length)->toBe(1)
         ->and($dom->query('//section[@id="nilai"]//img | //section[@id="nilai"]//canvas')->length)->toBe(0);
 })->with(['id', 'en', 'ar']);
 

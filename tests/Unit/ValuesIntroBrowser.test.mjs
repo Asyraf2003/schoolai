@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
 
 const widths = [360, 640, 768, 1024, 1280, 1536, 1920];
+const enterValues = page => page.evaluate(() => scrollTo(0, document.querySelector('[data-values]').getBoundingClientRect().top + scrollY));
 const valueState = () => {
     const world = document.querySelector('[data-program-values]');
     const root = document.querySelector('[data-values]');
@@ -40,7 +41,7 @@ for (const engine of engines) {
                 await locale(page, language);
                 for (const width of widths) {
                     await page.setViewportSize({ width, height: 900 });
-                    await page.locator('[data-values]').scrollIntoViewIfNeeded();
+                    await enterValues(page);
                     await page.waitForFunction(() => document.querySelector('[data-program-values]').style.getPropertyValue('--program-values-morph-pct') === '100.00%');
                     await page.waitForFunction(() => document.querySelector('[data-values]').getAnimations({ subtree: true }).length === 0);
                     const state = await page.evaluate(valueState);
@@ -76,7 +77,7 @@ for (const engine of engines) {
             assert.equal(colors[3].color, colors[1].color, 'reverse scroll restores the same color');
             assert.equal(colors[4].color, colors[0].color);
             await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
-            await page.locator('[data-values]').scrollIntoViewIfNeeded();
+            await enterValues(page);
             assert.equal((await page.evaluate(valueState)).pct, colors[4].pct, 'suspended pages do not paint scroll changes');
             await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
             await page.waitForFunction(() => document.querySelector('[data-program-values]').style.getPropertyValue('--program-values-morph-pct') === '100.00%');
@@ -92,14 +93,14 @@ for (const engine of engines) {
         try {
             const fixture = process.env.PROGRAM_GSAP_FIXTURE;
             const script = fixture ? await fs.readFile(fixture, 'utf8') : null;
-            await page.route('**/gsap@3.7.1/**', route => script
+            await page.route('**/gsap@3.7.1/dist/gsap.min.js', route => script
                 ? route.fulfill({ contentType: 'application/javascript', body: script }) : route.abort());
             for (const language of ['en', 'id', 'ar']) {
                 await locale(page, language);
                 await page.locator('[data-program-header]').scrollIntoViewIfNeeded();
                 await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.revealed === 'false');
                 await page.waitForFunction(() => [...document.querySelectorAll('[data-values-heading-line]')].every(line => getComputedStyle(line).opacity === '0'));
-                await page.locator('[data-values]').scrollIntoViewIfNeeded();
+                await enterValues(page);
                 await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.revealed === 'true');
                 const frames = await page.locator('[data-values-heading]').evaluate(heading => {
                     const animations = heading.getAnimations({ subtree: true });
@@ -151,7 +152,7 @@ for (const engine of engines) {
                     await page.evaluate(() => document.fonts.ready);
                     for (const width of [360, 768, 1536]) {
                         await page.setViewportSize({ width, height: 900 });
-                        await page.locator('[data-values]').scrollIntoViewIfNeeded();
+                        await enterValues(page);
                         const state = await page.evaluate(valueState);
                         assert.equal(state.overflow, false);
                         assert.ok(state.clips.every(clip => clip.opacity === '1' && clip.shift === 0));

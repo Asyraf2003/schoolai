@@ -22,6 +22,14 @@ export async function session(engine, options = {}) {
     if (process.env.PROGRAM_LOGO_FIXTURE) await page.route('**/site/brand/logo-nav-v1.webp', route => route.fulfill({
         path: process.env.PROGRAM_LOGO_FIXTURE, contentType: 'image/webp',
     }));
+    if (process.env.PROGRAM_SCROLLTRIGGER_FIXTURE) {
+        await page.route('**/gsap@3.7.1/dist/gsap.min.js', route => route.fulfill({
+            path: process.env.PROGRAM_GSAP_FIXTURE, contentType: 'application/javascript',
+        }));
+        await page.route('**/gsap@3.7.1/dist/ScrollTrigger.min.js', route => route.fulfill({
+            path: process.env.PROGRAM_SCROLLTRIGGER_FIXTURE, contentType: 'application/javascript',
+        }));
+    }
     await page.goto(url, { waitUntil: 'domcontentloaded' });
     if (options.javaScriptEnabled !== false) await page.waitForFunction(() => !!document.querySelector('[data-program]')?.dataset.programState);
     return { browser, context, page, errors, requests, version: browser.version(), close: () => browser.close() };

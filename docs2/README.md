@@ -1,10 +1,12 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Issue #67: Program EN tanpa slide; transisi latar biru dan judul Values**.
+Scope saat ini: **Issue #69: garis putih SVG scroll dari Program → Values**.
 
-Map aktif: [MAP-V2-11](blueprints/values-intro.md).
-Bukti terbaru: [Values intro](proof/values-intro-status.md), [data terukur](proof/values-intro-67.json).
+Map aktif: [MAP-V2-12](blueprints/program-values-line.md).
+Bukti terbaru: [Garis Program → Values](proof/program-values-line-status.md),
+[data terukur](proof/program-values-line-69.json).
+Bukti sebelumnya: [Values intro](proof/values-intro-status.md), [data terukur](proof/values-intro-67.json).
 Program sebelumnya: [Motion #65](proof/menu-heading-status.md), [data](proof/program-motion-65.json).
 Bukti putaran sebelumnya: [Nav dan latar AR](proof/program-third-status.md).
 Bukti sebelumnya: [Judul Program dan navigasi](proof/nav-program-status.md).
@@ -67,7 +69,8 @@ Delivery aktif: `resources/views/landing/index.blade.php` melalui route home.
 `resources/index.html` hanya artefak shell awal; bukan frontend production paralel.
 
 Urutan aktif: **foundation → shell → Menu → Hero → About → Program → proof**.
-Values saat ini hanya judul dan transisi latar dari Program; kartu dan section berikutnya belum diimplementasikan.
+Values memiliki judul, transisi latar dari Program dan lima komposisi garis scroll;
+kartu dan section berikutnya belum diimplementasikan.
 
 ## Prinsip utama
 

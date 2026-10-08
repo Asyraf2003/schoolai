@@ -1,0 +1,21 @@
+.values[data-line-ready] { min-block-size: 500vh; min-block-size: 500svh; }
+.values__line {
+    display: none;
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: -20vh;
+    inset-block-start: -20svh;
+    block-size: 500vh;
+    block-size: 500svh;
+    overflow: hidden;
+    pointer-events: none;
+    direction: ltr;
+}
+.values[data-line-ready] .values__line { display: block; }
+.values__line svg { display: block; inline-size: 100%; block-size: 100%; }
+.values__line path { stroke-width: clamp(7px, 1.4vw, 24px); }
+.values__header { position: relative; }
+@media (prefers-reduced-motion: reduce) {
+    .values[data-line-ready] { min-block-size: 100vh; min-block-size: 100svh; }
+    .values[data-line-ready] .values__line { display: none; }
+}
