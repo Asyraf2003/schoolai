@@ -1,9 +1,9 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Issue #73: baris latar kanan/kiri 2×, audit kartu Values**.
+Scope saat ini: **MAP-V2-14: integrasi empat kartu Values Students V2**.
 
-Map aktif: [MAP-V2-13](blueprints/values-background-card-audit.md).
+Map aktif: [MAP-V2-14](blueprints/values-cards-v2.md).
 Bukti terbaru: [Latar selang-seling](proof/values-background-73-status.md).
 Laporan kartu: [audit source dan matriks berikutnya](reports/values-card-audit.md).
 Bukti garis sebelumnya: [Garis Program → Values](proof/program-values-line-status.md),

@@ -1,0 +1,77 @@
+name: V2 Values cards scoped verification
+
+on:
+  pull_request:
+    paths:
+      - 'resources/views/landing/values.blade.php'
+      - 'resources/css/**'
+      - 'resources/js/**'
+      - 'app/View/Presenters/LandingValuesPresenter.php'
+      - 'tests/Feature/LandingValuesV2Test.php'
+      - 'tests/Feature/LandingProgramV2Test.php'
+      - 'tests/Unit/ValuesCardsBrowser.test.mjs'
+      - '.github/workflows/v2-values-cards.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cards:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci
+      - run: npm run check:structure
+      - run: npm run build
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+      - name: Run scoped PHP feature tests
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: php artisan test tests/Feature/LandingValuesV2Test.php tests/Feature/LandingProgramV2Test.php
+      - name: Prepare browser fixtures
+        run: |
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install --with-deps chromium
+          curl -fL https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js -o /tmp/gsap.min.js
+          curl -fL https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/ScrollTrigger.min.js -o /tmp/ScrollTrigger.min.js
+          CHROME="$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*/chrome-linux*/*' -print -quit)"
+          test -n "$CHROME"
+          echo "PROGRAM_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+      - name: Start server with seed data
+        run: |
+          php artisan migrate:fresh --seed --force
+          php artisan serve --host=127.0.0.1 --port=8000 > /tmp/values-serve.log 2>&1 &
+          for n in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/values-serve.log
+          exit 1
+      - name: Verify cards in Chromium
+        env:
+          PROGRAM_BROWSER_URL: http://127.0.0.1:8000
+          PROGRAM_PLAYWRIGHT_MODULE: playwright
+          PROGRAM_ENGINES: chromium
+          PROGRAM_GSAP_FIXTURE: /tmp/gsap.min.js
+          PROGRAM_SCROLLTRIGGER_FIXTURE: /tmp/ScrollTrigger.min.js
+          PROGRAM_PROOF_DIRECTORY: /tmp
+        run: node --test tests/Unit/ValuesCardsBrowser.test.mjs

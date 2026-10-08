@@ -16,6 +16,7 @@
 @import './sections/program.css';
 @import './sections/program-values.css';
 @import './sections/values.css';
+@import './sections/values-cards.css';
 @import './sections/values-line.css';
 @import './responsive/mobile.css';
 @import './responsive/tablet.css';
