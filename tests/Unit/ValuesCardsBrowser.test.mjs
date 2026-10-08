@@ -18,6 +18,11 @@ const inspect = () => {
         overflow: document.documentElement.scrollWidth > innerWidth,
         transforms: cards.map(card => getComputedStyle(card.querySelector('[data-values-card-inner]')).transform),
         font: getComputedStyle(cards[0]).fontFamily,
+        cardFit: cards.map(card => {
+            const front = card.querySelector('.values__card-front');
+            return { cardHeight: card.offsetHeight, frontHeight: front.scrollHeight,
+                fits: front.scrollHeight <= card.offsetHeight + 2 };
+        }),
     };
 };
 
@@ -42,6 +47,7 @@ for (const engine of engines) {
                     assert.equal(state.backs, 4);
                     assert.equal(state.titles.every(Boolean), true);
                     assert.equal(state.overflow, false, `${lang}/${width} horizontal overflow`);
+                    assert.ok(state.cardFit.every(fit => fit.fits), `${lang}/${width} card content exceeds card bounds: ${JSON.stringify(state.cardFit)}`);
                     if (lang === 'ar') assert.match(state.font, /Cairo/);
                     if (state.line) {
                         assert.equal(state.track, 'absolute');
