@@ -1,0 +1,75 @@
+.values__card-back {
+    display: grid;
+    place-items: center;
+    border: clamp(.16rem, .3vw, .28rem) solid rgba(255,255,255,.94);
+    background-color: #172cd6;
+    background-image:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,.11),
+            transparent 58%
+        ),
+        linear-gradient(145deg, #1327c8, var(--values-blue));
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% 100%, 100% 100%;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.28),
+        inset 0 0 5rem rgba(4,12,94,.34);
+    transform: rotateY(180deg) translateZ(.1px);
+}
+
+.values__card-back::before {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: var(--values-pattern, none);
+    background-position: center;
+    background-repeat: repeat;
+    background-size: clamp(5rem, 26cqi, 7rem) clamp(5rem, 26cqi, 7rem);
+    content: "";
+    mix-blend-mode: multiply;
+    opacity: .58;
+    pointer-events: none;
+}
+
+.values__card-back::after {
+    position: absolute;
+    inset: 7%;
+    z-index: 2;
+    border: 1px solid rgba(255,255,255,.42);
+    border-radius: .8rem;
+    content: "";
+    box-shadow: inset 0 0 2.5rem rgba(255,255,255,.08);
+    pointer-events: none;
+}
+
+.values__card-brand {
+    position: relative;
+    z-index: 3;
+    display: inline-grid;
+    min-width: 58%;
+    min-height: clamp(3.25rem, 17cqi, 5rem);
+    place-items: center;
+    padding: clamp(.7rem, 4cqi, 1rem) clamp(.85rem, 5cqi, 1.25rem);
+    border: 1px solid rgba(255,255,255,.66);
+    border-radius: 999px;
+    background: rgba(8,20,132,.7);
+    box-shadow:
+        0 .8rem 2.4rem rgba(4,10,80,.25),
+        inset 0 0 0 1px rgba(255,255,255,.08);
+    color: #fff;
+    font-family: Inter, sans-serif;
+    font-size: clamp(.72rem, 4.8cqi, 1.05rem);
+    font-weight: 700;
+    letter-spacing: .18em;
+    line-height: 1.1;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 1px 12px rgba(255,255,255,.2);
+}
+
+html[lang="ar"] .values__card-brand {
+    font-family: Cairo, sans-serif;
+    letter-spacing: .06em;
+}

@@ -1,5 +1,20 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values OLD fidelity / autonomous heading — 2026-10-08
+
+Active owner request supersedes historical Values deferrals. Main2b879e94;
+branch fix/values-old-fidelity-heading. Blueprint:
+../../docs2/blueprints/values-old-fidelity-heading.md OWNER_ACCEPTED/IMPLEMENTING.
+FACT: OLD pure card choreography, style and typography owners audited. V2 ports
+shared perspective, native compact rows, spring/flip/fan/exit/float and original
+localized copy. Heading uses both reveal promises before its fixed880ms slide.
+PROOF: build/structure/diff, scoped PHP13/264 and pure JS11 PASS. Full PHP exact
+baseline parity:190pass/71fail/75error; no added failing/error test names.
+WebKit resize overflow isolated to card3D overflow and bounded at OLD clip owner;
+200% text and failure fallbacks tested. Current cross-engine fidelity run pending.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE for final runtime/PR gates; no merge yet.
+NEXT channel Terminal Codex: finish Values proof, publish PR, merge on scoped PASS.
+
 ## ID Program heading horizontal timing — 2026-10-07
 
 OWNER_ACCEPTED: one behavior only, ID horizontal760ms→1200ms; vertical760ms,

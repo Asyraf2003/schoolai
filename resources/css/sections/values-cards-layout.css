@@ -1,0 +1,49 @@
+.values__cards-track {
+    position: relative; z-index: 2; padding-block: clamp(3.25rem, 7vw, 6rem);
+    /* OLD's clip boundary contains 3D overflow, including WebKit's cached
+       desktop overflow after a compact resize. Vertical float stays visible. */
+    overflow-x: clip;
+}
+.values__cards-stage {
+    display: grid; direction: ltr; inline-size: 84vw; margin-inline: auto;
+    grid-template-columns: minmax(0, 1fr); gap: clamp(1rem, 4vw, 2rem);
+    transform-style: preserve-3d;
+}
+.values__cards-perspective { transform-style: preserve-3d; }
+@media (min-width: 768px) {
+    .values__cards-stage {
+        inline-size: 91.6667vw; grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4.1667vw;
+    }
+}
+@media (min-width: 1280px) {
+    .values__cards-stage {
+        inline-size: 90vw; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2vw;
+    }
+}
+/* Compact tiers preserve OLD natural rows/gaps; the SVG keeps its 500svh field. */
+@media (min-width: 1280px) {
+    .values[data-line-ready]:not([data-cards-flow]) .values__cards-track {
+        position: absolute; inset-inline: 0; padding: 0;
+        inset-block-start: var(--values-cards-start, 100svh);
+        block-size: calc(490svh - var(--values-cards-start, 100svh));
+    }
+    .values[data-line-ready]:not([data-cards-flow]) .values__cards-viewport {
+        position: sticky; inset-block-start: var(--v2-header-block-size);
+        block-size: calc(100svh - var(--v2-header-block-size));
+        overflow: clip;
+    }
+    .values[data-line-ready]:not([data-cards-flow]) .values__cards-perspective {
+        display: grid; place-items: center; block-size: 100%;
+        perspective: max(38rem, 100svh); perspective-origin: 50% 50%;
+    }
+    .values[data-line-ready]:not([data-cards-flow]) .values__cards-stage { block-size: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .values[data-line-ready] .values__cards-track {
+        position: relative; inset: auto; block-size: auto; padding-block: 2rem 5rem;
+    }
+    .values[data-line-ready] .values__cards-viewport,
+    .values[data-line-ready] .values__cards-perspective,
+    .values[data-line-ready] .values__cards-stage { position: static; block-size: auto; }
+}

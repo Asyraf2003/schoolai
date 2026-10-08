@@ -1,0 +1,74 @@
+.values__card-front {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.1rem, 6cqi, 2rem);
+    justify-content: flex-start;
+    padding: clamp(1.25rem, 7cqi, 2rem);
+    background:
+        radial-gradient(
+            circle at 88% 10%,
+            color-mix(in srgb, var(--values-card-accent) 14%, transparent),
+            transparent 32%
+        ),
+        #f7f6f0;
+    color: #11131b;
+    transform: rotateY(0deg) translateZ(.1px);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+}
+
+.values__card-index {
+    color: rgba(17,19,27,.5);
+    font-size: clamp(.86rem, 4.2cqi, 1.05rem);
+    font-weight: 700;
+    letter-spacing: .14em;
+    line-height: 1.45;
+}
+
+.values__card-copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(.8rem, 4.2cqi, 1.25rem);
+    margin-block: auto;
+}
+
+.values__card-summary {
+    margin: 0;
+    color: color-mix(in srgb, var(--values-card-accent) 72%, #11131b);
+    font-size: clamp(.94rem, 4.7cqi, 1.18rem);
+    font-weight: 700;
+    line-height: 1.38;
+    text-transform: uppercase;
+}
+
+.values__card-title {
+    margin: 0;
+    color: #11131b;
+    font-size: clamp(1.9rem, 9.2cqi, 2.85rem);
+    font-weight: 640;
+    letter-spacing: -.045em;
+    line-height: 1;
+}
+
+.values__card-body {
+    margin: 0;
+    color: rgba(17,19,27,.78);
+    font-size: clamp(.98rem, 4.55cqi, 1.15rem);
+    line-height: 1.55;
+}
+
+.values__card-body strong {
+    color: color-mix(in srgb, var(--values-card-accent) 78%, #11131b);
+    font-weight: 720;
+}
+
+html[lang="ar"] .values__card-title {
+    letter-spacing: normal;
+    line-height: 1.12;
+}
+
+html[lang="ar"] .values__card-summary {
+    line-height: 1.5;
+    text-transform: none;
+}

@@ -43,9 +43,9 @@ for (const engine of engines) {
                     await page.setViewportSize({ width, height: 900 });
                     await enterValues(page);
                     await page.waitForFunction(() => document.querySelector('[data-program-values]').style.getPropertyValue('--program-values-morph-pct') === '100.00%');
-                    await page.waitForFunction(() => document.querySelector('[data-values]').getAnimations({ subtree: true }).length === 0);
+                    await page.waitForFunction(() => document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).length === 0);
                     const state = await page.evaluate(valueState);
-                    assert.equal(state.overflow, false);
+                    assert.equal(state.overflow, false, JSON.stringify(state));
                     assert.equal(state.planes, 1);
                     assert.ok(Math.abs(state.planeBottom - state.valuesBottom) < 1, 'same background plane spans Values');
                     assert.ok(state.clips.every(clip => clip.opacity === '1'));
@@ -68,7 +68,7 @@ for (const engine of engines) {
                     const bottom = document.querySelector('[data-program]').getBoundingClientRect().bottom + scrollY;
                     scrollTo(0, bottom - innerHeight * ratio);
                 }, ratio);
-                await page.waitForTimeout(80);
+                await page.waitForTimeout(350);
                 colors.push(await page.evaluate(valueState));
             }
             assert.equal(colors[0].pct, '0.00%');
@@ -102,21 +102,33 @@ for (const engine of engines) {
                 await page.waitForFunction(() => [...document.querySelectorAll('[data-values-heading-line]')].every(line => getComputedStyle(line).opacity === '0'));
                 await enterValues(page);
                 await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.revealed === 'true');
-                const frames = await page.locator('[data-values-heading]').evaluate(heading => {
-                    const animations = heading.getAnimations({ subtree: true });
-                    animations.forEach(animation => animation.pause());
-                    return [0, 450, 900, 1340, 1780].map(time => {
-                        animations.forEach(animation => { animation.currentTime = time; });
-                        return { time, x: new DOMMatrix(getComputedStyle(heading.lastElementChild).transform).m41,
-                            lines: [...heading.querySelectorAll('[data-values-heading-line]')].map(line => ({
-                                y: new DOMMatrix(getComputedStyle(line).transform).m42, opacity: Number(getComputedStyle(line).opacity),
-                            })) };
-                    });
+                const frames = await page.locator('[data-values-heading]').evaluate(async heading => {
+                    const reveals = heading.getAnimations({ subtree: true });
+                    reveals.forEach(animation => animation.pause());
+                    const snapshot = () => ({ state: heading.dataset.headingState,
+                        x: new DOMMatrix(getComputedStyle(heading.lastElementChild).transform).m41,
+                        lines: [...heading.querySelectorAll('[data-values-heading-line]')].map(line => ({
+                            y: new DOMMatrix(getComputedStyle(line).transform).m42, opacity: Number(getComputedStyle(line).opacity),
+                        })) });
+                    reveals[0].finish();
+                    reveals[1].currentTime = 450;
+                    await new Promise(requestAnimationFrame);
+                    const incomplete = snapshot();
+                    reveals[1].finish();
+                    await new Promise(requestAnimationFrame);
+                    const shifts = heading.lastElementChild.getAnimations();
+                    shifts.forEach(animation => { animation.pause(); animation.currentTime = 0; });
+                    const revealed = snapshot();
+                    shifts.forEach(animation => animation.finish());
+                    await new Promise(requestAnimationFrame);
+                    return [incomplete, revealed, snapshot()];
                 });
+                assert.equal(frames[0].state, 'revealing');
+                assert.equal(frames[0].x, 0, 'one completed line cannot start horizontal motion');
                 assert.equal(frames[1].x, 0);
-                assert.equal(frames[2].x, 0);
-                assert.ok(frames[2].lines.every(line => Math.abs(line.y) < .01 && line.opacity === 1));
-                assert.ok(Math.abs(frames.at(-1).x - (language === 'ar' ? -100.8 : 100.8)) < .02);
+                assert.ok(frames[1].lines.every(line => Math.abs(line.y) < .01 && line.opacity === 1));
+                assert.equal(frames[2].state, 'complete');
+                assert.ok(Math.abs(frames[2].x - (language === 'ar' ? -100.8 : 100.8)) < .02);
                 await page.locator('[data-program-header]').scrollIntoViewIfNeeded();
                 await page.locator('[data-program-open]').first().click();
                 await page.waitForFunction(() => document.querySelector('[data-program-dialog]').open);
@@ -154,7 +166,7 @@ for (const engine of engines) {
                         await page.setViewportSize({ width, height: 900 });
                         await enterValues(page);
                         const state = await page.evaluate(valueState);
-                        assert.equal(state.overflow, false);
+                        assert.equal(state.overflow, false, JSON.stringify(state));
                         assert.ok(state.clips.every(clip => clip.opacity === '1' && clip.shift === 0));
                         assert.equal(state.animations, 0);
                         assert.equal(await page.locator('[data-program-values][data-values-enhanced]').count(), 0);
