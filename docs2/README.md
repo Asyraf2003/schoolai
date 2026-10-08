@@ -1,11 +1,12 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Issue #69: garis putih SVG scroll dari Program → Values**.
+Scope saat ini: **Issue #71: awal/akhir garis di dinding layar, tanpa perpotongan**.
 
 Map aktif: [MAP-V2-12](blueprints/program-values-line.md).
 Bukti terbaru: [Garis Program → Values](proof/program-values-line-status.md),
-[data terukur](proof/program-values-line-69.json).
+[endpoint dinding #71](proof/values-line-wall-71.json).
+Bukti garis sebelumnya: [data #69](proof/program-values-line-69.json).
 Bukti sebelumnya: [Values intro](proof/values-intro-status.md), [data terukur](proof/values-intro-67.json).
 Program sebelumnya: [Motion #65](proof/menu-heading-status.md), [data](proof/program-motion-65.json).
 Bukti putaran sebelumnya: [Nav dan latar AR](proof/program-third-status.md).

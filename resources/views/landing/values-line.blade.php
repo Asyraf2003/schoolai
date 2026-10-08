@@ -1,8 +1,8 @@
 <div class="values__line" data-values-line aria-hidden="true">
     <svg viewBox="0 0 1920 5400" preserveAspectRatio="none" focusable="false">
-        <path data-values-line-path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" d="M 1736.667 -213.333
-            C 1713.333 -160 1686.667 -120 1650 -53.333
-            C 1613.333 13.333 1566.667 106.667 1501.667 175.833
+        <path data-values-line-path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" d="M 2213.333 36.667
+            C 2180 53.333 2140 76.667 2023.333 105
+            C 1906.667 133.333 1713.333 166.667 1575 205.833
             C 1436.667 245 1353.333 290 1268.333 295.833
             C 1183.333 301.667 1096.667 268.333 1016.667 264.167
             C 936.667 260 863.333 285 805 345.833
@@ -54,7 +54,7 @@
             C -40 4743.333 -100 4816.667 -100 4891.667
             C -100 4966.667 -40 5043.333 60 5091.667
             C 160 5140 300 5160 433.333 5175
-            C 566.667 5190 693.333 5200 818.333 5245
-            C 943.333 5290 1066.667 5370 1150 5443.333" />
+            C 566.667 5190 693.333 5200 988.333 5211.667
+            C 1283.333 5223.333 1746.667 5236.667 2020 5243.333" />
     </svg>
 </div>
