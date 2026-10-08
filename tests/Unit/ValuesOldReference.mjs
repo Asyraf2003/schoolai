@@ -35,13 +35,17 @@ export async function oldValuesReference(context, page) {
                 <link rel="stylesheet" href="resources_old/css/pages/welcome-values-story.css">
                 <style>*{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif;background:#2038ff;--program-values-final-color:#2038ff;--nav-h:72px}
                 html[lang=ar] body{font-family:Cairo,sans-serif} .values-story{margin:0} .values-story__entry,.values-story__exit{display:none}
-                </style></head><body class="home-page"><div style="height:900px"></div>
+                </style></head><body class="home-page"><template id="reference-content"><div style="height:900px"></div>
                 <section class="values-story" data-values-story style="--values-card-pattern-image:${markup.pattern}">
                 <header data-values-heading></header><div class="values-story__timeline" data-values-timeline>
                 <div class="values-story__clip" data-values-stage><div data-values-spatial class="values-story__spatial"></div>
                 <div class="values-story__perspective" data-values-perspective><div class="values-story__grid" data-values-cards>${markup.cards}</div></div>
-                </div></div></section><div style="height:900px"></div>
+                </div></div></section><div style="height:900px"></div></template>
                 <script type="module">import {createValuesStory} from './resources_old/js/surfaces/home/values/controller.js';
+                // OLD uses optional Inter: load before inserting text so the
+                // reference captures its intended font, not the cold-load fallback.
+                await Promise.all(['400 16px Inter','500 16px Cairo','600 16px Cairo','700 16px Cairo'].map(font=>document.fonts.load(font)));
+                const template=document.querySelector('#reference-content');template.replaceWith(template.content);
                 window.referenceDispose=createValuesStory(document.querySelector('[data-values-story]'));</script></body></html>` });
         }
         const safe = path.resolve(name);
@@ -55,6 +59,6 @@ export async function oldValuesReference(context, page) {
     });
     await reference.goto(`${origin}/__values_reference__/index.html`);
     await reference.evaluate(() => document.fonts.ready);
-    await reference.waitForFunction(() => document.querySelector('[data-values-story]').dataset.valuesReady === 'prepared');
+    await reference.waitForFunction(() => document.querySelector('[data-values-story]')?.dataset.valuesReady === 'prepared');
     return reference;
 }
