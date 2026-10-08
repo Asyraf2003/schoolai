@@ -29,11 +29,14 @@
     justify-content: center; align-items: center; transform-origin: center;
 }
 @media (prefers-reduced-motion: no-preference) {
-    .program[data-reveal-enabled] .program__type-home .program__type {
-        animation: program-type-drift 9s ease-in-out infinite alternate;
+    .program[data-reveal-enabled] .program__type-home .program__type-line {
+        animation: program-type-drift 4.5s ease-in-out infinite alternate;
         animation-play-state: paused;
     }
-    .program[data-program-background-active="true"][data-program-state="idle"] .program__type-home .program__type {
+    .program[data-reveal-enabled] .program__type-home .program__type-line:nth-child(even) {
+        animation-direction: alternate-reverse;
+    }
+    .program[data-program-background-active="true"][data-program-state="idle"] .program__type-home .program__type-line {
         animation-play-state: running;
     }
 }

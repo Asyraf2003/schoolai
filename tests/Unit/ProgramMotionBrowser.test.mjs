@@ -42,10 +42,11 @@ for (const engine of engines) {
         } finally { await runtime.close(); }
     });
 
-    test(`Program background drifts only in the visible idle section in ${engine}`, { skip: !enabled }, async () => {
+    test(`Program background alternates rows at twice the speed with its idle lifecycle in ${engine}`, { skip: !enabled }, async () => {
         const runtime = await session(engine);
         const { page } = runtime;
         const cases = [];
+        const tiers = [];
         try {
             // Exercise the existing usable detail fallback without requiring a CDN.
             await page.route('**/gsap@3.7.1/**', route => route.abort());
@@ -53,23 +54,35 @@ for (const engine of engines) {
                 await locale(page, language);
                 await page.locator('[data-program-header]').scrollIntoViewIfNeeded();
                 await page.waitForFunction(() => document.querySelector('[data-program]').dataset.programBackgroundActive === 'true');
-                const drift = await page.locator('[data-program-type]').evaluate(type => {
-                    const animations = type.getAnimations();
-                    const animation = animations[0];
-                    const state = animation.playState;
-                    animation.currentTime = 2250;
-                    const first = getComputedStyle(type).translate;
-                    animation.currentTime = 6750;
-                    const last = getComputedStyle(type).translate;
-                    return { count: animations.length, state, first, last, lines: type.children.length };
-                });
-                assert.equal(drift.count, 1, 'one existing type plane, not a loop per line');
-                assert.equal(drift.lines, 20);
-                assert.equal(drift.state, 'running');
-                assert.ok(parseFloat(drift.last) - parseFloat(drift.first) > 30, 'subtle drift has visible travel');
+                let drift;
+                for (const width of [360, 640, 768, 1024, 1280, 1440, 1536]) {
+                    await page.setViewportSize({ width, height: 900 });
+                    await page.waitForTimeout(60);
+                    drift = await page.locator('[data-program-type]').evaluate(type => {
+                        const animations = type.getAnimations({ subtree: true });
+                        const states = animations.map(animation => animation.playState);
+                        const durations = animations.map(animation => animation.effect.getTiming().duration);
+                        animations.forEach(animation => { animation.currentTime = 1125; });
+                        const first = [...type.children].map(line => parseFloat(getComputedStyle(line).translate));
+                        animations.forEach(animation => { animation.currentTime = 3375; });
+                        const last = [...type.children].map(line => parseFloat(getComputedStyle(line).translate));
+                        return { count: animations.length, states, durations, first, last, lines: type.children.length,
+                            planes: document.querySelectorAll('[data-program-type]').length,
+                            overflow: document.documentElement.scrollWidth > innerWidth };
+                    });
+                    assert.equal(drift.planes, 1, 'one shared Program/Values background plane');
+                    assert.equal(drift.count, 20, 'CSS drives the existing rows');
+                    assert.equal(drift.lines, 20);
+                    assert.ok(drift.states.every(state => state === 'running'));
+                    assert.ok(drift.durations.every(duration => duration === 4500), 'same travel in half the baseline time');
+                    assert.ok(drift.first.every((first, i) => (drift.last[i] - first) * (i % 2 ? -1 : 1) > Math.min(30, width * .02)),
+                        'neighboring rows travel in opposite physical directions');
+                    assert.equal(drift.overflow, false);
+                    tiers.push({ language, width, drift });
+                }
                 await page.locator('[data-hero]').scrollIntoViewIfNeeded();
                 await page.waitForFunction(() => document.querySelector('[data-program]').dataset.programBackgroundActive === 'false');
-                assert.equal(await page.locator('[data-program-type]').evaluate(type => type.getAnimations()[0].playState), 'paused');
+                assert.ok(await page.locator('[data-program-type]').evaluate(type => type.getAnimations({ subtree: true }).every(a => a.playState === 'paused')));
                 await page.locator('[data-program-header]').scrollIntoViewIfNeeded();
                 await page.waitForFunction(() => document.querySelector('[data-program]').dataset.programBackgroundActive === 'true');
                 // A synthetic visibility event isolates this adapter's hidden-tab policy.
@@ -77,23 +90,24 @@ for (const engine of engines) {
                     Object.defineProperty(document, 'hidden', { configurable: true, value: true });
                     document.dispatchEvent(new Event('visibilitychange'));
                 });
-                assert.equal(await page.locator('[data-program-type]').evaluate(type => type.getAnimations()[0].playState), 'paused');
+                assert.ok(await page.locator('[data-program-type]').evaluate(type => type.getAnimations({ subtree: true }).every(a => a.playState === 'paused')));
                 await page.evaluate(() => { delete document.hidden; document.dispatchEvent(new Event('visibilitychange')); });
                 await page.locator('[data-program-open]').first().click();
                 await page.waitForFunction(() => document.querySelector('[data-program-dialog]').open);
                 assert.equal(await page.locator('[data-program-type]').evaluate(type => ({
-                    animations: type.getAnimations().length, translate: getComputedStyle(type).translate,
-                })).then(state => state.animations === 0 && state.translate === 'none'), true, 'ambient drift cannot alter detail choreography');
+                    animations: type.getAnimations({ subtree: true }).length,
+                    staticRows: [...type.children].every(line => getComputedStyle(line).translate === 'none'),
+                })).then(state => state.animations === 0 && state.staticRows), true, 'ambient drift cannot alter detail choreography');
                 await page.keyboard.press('Escape');
                 await page.waitForFunction(() => document.querySelector('[data-program]').dataset.programState === 'idle');
                 await page.emulateMedia({ reducedMotion: 'reduce' });
-                assert.equal(await page.locator('[data-program-type]').evaluate(type => type.getAnimations().length), 0);
+                assert.equal(await page.locator('[data-program-type]').evaluate(type => type.getAnimations({ subtree: true }).length), 0);
                 await page.emulateMedia({ reducedMotion: 'no-preference' });
                 cases.push({ language, drift, offscreenPaused: true, syntheticHiddenPaused: true, detailStatic: true, reducedStatic: true });
             }
             assert.equal(runtime.requests.some(url => /program-(kinetic|gsap)|gsap@/.test(url)), true, 'detail uses its existing intent-only adapter');
             assert.deepEqual(runtime.errors, []);
-            await evidence(`program-motion-background-${engine}`, { version: runtime.version, cases });
+            await evidence(`program-motion-background-${engine}`, { version: runtime.version, cases, tiers });
         } finally { await runtime.close(); }
     });
 }

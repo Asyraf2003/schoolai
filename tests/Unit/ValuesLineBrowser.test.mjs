@@ -98,6 +98,10 @@ for (const engine of engines) {
         try {
             await approach(page); await ready(page); await position(page, .45);
             const before = await page.evaluate(state);
+            assert.ok(await page.locator('[data-program-type]').evaluate(type => {
+                const rows = type.getAnimations({ subtree: true });
+                return rows.length === 20 && rows.every(row => row.effect.getTiming().duration === 4500);
+            }), 'Values uses the same faster ambient rows');
             await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
             await position(page, .65);
             assert.equal((await page.evaluate(state)).offset, before.offset);
@@ -107,8 +111,11 @@ for (const engine of engines) {
             await page.locator('[data-program-header]').scrollIntoViewIfNeeded();
             await page.locator('[data-program-open]').first().click();
             await page.waitForFunction(() => document.querySelector('[data-program]').dataset.programState === 'detail');
+            assert.equal(await page.locator('[data-program-type]').evaluate(type => type.getAnimations({ subtree: true }).length), 0,
+                'ambient rows stop during the full GSAP detail choreography');
             await page.keyboard.press('Escape');
             await page.waitForFunction(() => document.querySelector('[data-program]').dataset.programState === 'idle');
+            assert.equal(await page.locator('[data-program-type]').evaluate(type => type.getAnimations({ subtree: true }).length), 20);
             await approach(page); await position(page, .45);
             assert.equal((await page.evaluate(state)).gsapScripts, 1);
             assert.equal((await page.evaluate(state)).triggers, 1);

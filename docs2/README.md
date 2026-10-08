@@ -1,10 +1,12 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **Issue #71: awal/akhir garis di dinding layar, tanpa perpotongan**.
+Scope saat ini: **Issue #73: baris latar kanan/kiri 2×, audit kartu Values**.
 
-Map aktif: [MAP-V2-12](blueprints/program-values-line.md).
-Bukti terbaru: [Garis Program → Values](proof/program-values-line-status.md),
+Map aktif: [MAP-V2-13](blueprints/values-background-card-audit.md).
+Bukti terbaru: [Latar selang-seling](proof/values-background-73-status.md).
+Laporan kartu: [audit source dan matriks berikutnya](reports/values-card-audit.md).
+Bukti garis sebelumnya: [Garis Program → Values](proof/program-values-line-status.md),
 [endpoint dinding #71](proof/values-line-wall-71.json).
 Bukti garis sebelumnya: [data #69](proof/program-values-line-69.json).
 Bukti sebelumnya: [Values intro](proof/values-intro-status.md), [data terukur](proof/values-intro-67.json).

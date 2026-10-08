@@ -218,3 +218,11 @@ Latest follow-up #71: owner accepts the rest and requires line start/finish at
 screen side walls, with no crossings. One/two paths, same/opposite wall allowed.
 Retain one continuous path; change only right-wall entry/exit geometry and prove
 clipping/intersections. Existing motion, title/background and cards deferral stay.
+
+## CURRENT FOLLOW-UP — MAP-V2-13 / #73
+
+Owner requests physical right/left alternating background rows at2× speed,
+plus Values card audit for future tier/locale/browser mapping. One production
+CSS owner changes:20existing rows,4.5s per leg, same travel/ease and pause policy.
+Canonical report: reports/values-card-audit.md; card implementation stays deferred.
+Publication uses the existing schoolai issue/PR/main authorization.
