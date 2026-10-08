@@ -83,6 +83,8 @@ for (const engine of engines) {
     test(`V2 Values cards remain readable without JavaScript in ${engine}`, { skip: !enabled }, async () => {
         const runtime = await session(engine, { javaScriptEnabled: false });
         try {
+            await runtime.page.waitForLoadState('load');
+            await runtime.page.waitForFunction(() => getComputedStyle(document.querySelector('[data-values-cards-track]')).position === 'relative');
             const state = await runtime.page.evaluate(inspect);
             assert.equal(state.cards, 4);
             assert.equal(state.track, 'relative');
