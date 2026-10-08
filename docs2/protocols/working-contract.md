@@ -205,3 +205,11 @@ old-style900ms reveal then880ms lower-line shift from768px, mirrored RTL.
 Canonical map: blueprints/values-intro.md; proof: proof/values-intro-status.md.
 Issue/PR/main publication authorized in the current owner session.
 Values cards/cartoon, subtitle and following sections remain out of scope.
+
+## CURRENT FOLLOW-UP — MAP-V2-12 / #69
+
+Owner requests the Canva34–38 organic shapes as a white full-screen SVG drawing,
+starting at Program → Values. One continuous path, no visible future guide,
+GSAP ScrollTrigger scrub:true; native down/up draws/reverses. Five viewport
+compositions are the accepted translation. Cards/cartoon remain deferred.
+Map: blueprints/program-values-line.md. Issue/PR/main publication is authorized.

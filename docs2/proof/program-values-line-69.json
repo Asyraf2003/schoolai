@@ -1,0 +1,1733 @@
+{
+  "source_main": "d069d029db6556d2657ec3512bd045cbb128e251",
+  "issue": 69,
+  "date": "2026-10-08",
+  "status": "scoped PASS; full repository suites retain baseline FAIL",
+  "browser": "153.0.8010.0",
+  "reference": "owner attachment Ashraf website.zip, 34\u201338.png (1920x1080)",
+  "composition": "one C2-continuous cubic SVG path across five screen heights, native ScrollTrigger scrub:true",
+  "drawing_cells": [
+    {
+      "locale": "id",
+      "width": 360,
+      "scene_height": 4500,
+      "empty_offset": 6869.69,
+      "length": 6868.69482421875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        6280.88,
+        5648.36,
+        4818.19,
+        4004.27,
+        3417.9,
+        2866.8,
+        2247.99,
+        1578.03,
+        807.991,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 149.33126831054688,
+          "y": 623.7917175292969
+        },
+        {
+          "x": -20.61417007446289,
+          "y": 791.1622314453125
+        },
+        {
+          "x": 165.28738403320312,
+          "y": 789.306884765625
+        },
+        {
+          "x": -10.923100471496582,
+          "y": 818.5169677734375
+        },
+        {
+          "x": 326.54449462890625,
+          "y": 777.2119140625
+        },
+        {
+          "x": 227.61152648925784,
+          "y": 845.6259765625
+        },
+        {
+          "x": 98.25574493408202,
+          "y": 734.1171875
+        },
+        {
+          "x": 384.89599609375,
+          "y": 872.62939453125
+        },
+        {
+          "x": 74.07054138183594,
+          "y": 753.32470703125
+        },
+        {
+          "x": 215.625,
+          "y": 935.95458984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "id",
+      "width": 640,
+      "scene_height": 4500,
+      "empty_offset": 8766.77,
+      "length": 8765.767578125,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        8132.14,
+        7409.16,
+        6249.53,
+        5074.46,
+        4319.36,
+        3622.21,
+        2802.69,
+        1925.42,
+        976.78,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 279.09112548828125,
+          "y": 591.624267578125
+        },
+        {
+          "x": -36.815635681152344,
+          "y": 790.9893798828125
+        },
+        {
+          "x": 258.5083312988281,
+          "y": 797.13916015625
+        },
+        {
+          "x": -19.731420516967773,
+          "y": 818.3228759765627
+        },
+        {
+          "x": 534.1524047851562,
+          "y": 725.527587890625
+        },
+        {
+          "x": 404.4115905761719,
+          "y": 845.393798828125
+        },
+        {
+          "x": 160.20498657226562,
+          "y": 673.615966796875
+        },
+        {
+          "x": 684.281005859375,
+          "y": 872.34814453125
+        },
+        {
+          "x": 131.3993377685547,
+          "y": 752.61474609375
+        },
+        {
+          "x": 383.33331298828125,
+          "y": 935.64208984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "id",
+      "width": 768,
+      "scene_height": 4500,
+      "empty_offset": 9715.5,
+      "length": 9714.498046875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        9053,
+        8283.95,
+        6965.5,
+        5613.88,
+        4773.53,
+        4001.69,
+        3083.44,
+        2104.32,
+        1064.54,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 342.0001220703125,
+          "y": 581.6389770507812
+        },
+        {
+          "x": -44.25666427612305,
+          "y": 791.4026489257812
+        },
+        {
+          "x": 299.4964904785156,
+          "y": 799.406982421875
+        },
+        {
+          "x": -23.77280616760254,
+          "y": 818.7125244140625
+        },
+        {
+          "x": 619.6825561523438,
+          "y": 709.566162109375
+        },
+        {
+          "x": 485.2165222167969,
+          "y": 845.774169921875
+        },
+        {
+          "x": 183.3118438720703,
+          "y": 650.6904296875
+        },
+        {
+          "x": 821.14794921875,
+          "y": 872.7209472656245
+        },
+        {
+          "x": 157.75779724121094,
+          "y": 753.066162109375
+        },
+        {
+          "x": 460,
+          "y": 936.00146484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "id",
+      "width": 1024,
+      "scene_height": 4500,
+      "empty_offset": 11707,
+      "length": 11705.9638671875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        10979.6,
+        10111.7,
+        8466.83,
+        6750.4,
+        5730.86,
+        4801.15,
+        3677.5,
+        2486.25,
+        1252.78,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 471.32855224609375,
+          "y": 568.7035217285156
+        },
+        {
+          "x": -59.21271896362305,
+          "y": 791.8052368164062
+        },
+        {
+          "x": 380.6033020019531,
+          "y": 802.0997314453125
+        },
+        {
+          "x": -31.871074676513672,
+          "y": 819.0513916015625
+        },
+        {
+          "x": 784.480712890625,
+          "y": 687.892822265625
+        },
+        {
+          "x": 646.8212280273438,
+          "y": 846.100341796875
+        },
+        {
+          "x": 219.8144989013672,
+          "y": 612.709228515625
+        },
+        {
+          "x": 1094.8939208984375,
+          "y": 873.045166015625
+        },
+        {
+          "x": 211.03421020507812,
+          "y": 753.96875
+        },
+        {
+          "x": 613.3333129882812,
+          "y": 936.29833984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "id",
+      "width": 1280,
+      "scene_height": 4500,
+      "empty_offset": 13784.3,
+      "length": 13783.3173828125,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        12983,
+        12009.3,
+        10030.1,
+        7939.24,
+        6733.03,
+        5638.09,
+        4301.86,
+        2890.67,
+        1452.85,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 601.3208618164062,
+          "y": 562.5040435791016
+        },
+        {
+          "x": -74.16453552246094,
+          "y": 792.101318359375
+        },
+        {
+          "x": 461.5091857910156,
+          "y": 803.729248046875
+        },
+        {
+          "x": -39.979488372802734,
+          "y": 819.3128662109375
+        },
+        {
+          "x": 946.83984375,
+          "y": 674.902587890625
+        },
+        {
+          "x": 808.4281616210938,
+          "y": 846.35205078125
+        },
+        {
+          "x": 246.8919677734375,
+          "y": 585.81005859375
+        },
+        {
+          "x": 1368.63818359375,
+          "y": 873.294921875
+        },
+        {
+          "x": 265.10028076171875,
+          "y": 755.13134765625
+        },
+        {
+          "x": 766.6666870117188,
+          "y": 936.53271484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "id",
+      "width": 1536,
+      "scene_height": 4500,
+      "empty_offset": 15919.2,
+      "length": 15918.23046875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        15037.6,
+        13952.5,
+        11633.7,
+        9162.8,
+        7765.18,
+        6500.33,
+        4946.77,
+        3310.28,
+        1660.89,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 730.2581176757812,
+          "y": 559.0256500244141
+        },
+        {
+          "x": -89.13734436035156,
+          "y": 791.852783203125
+        },
+        {
+          "x": 542.7257080078125,
+          "y": 804.3104248046875
+        },
+        {
+          "x": -48.08626937866211,
+          "y": 819.0339355468752
+        },
+        {
+          "x": 1109.1956787109375,
+          "y": 666.133544921875
+        },
+        {
+          "x": 970.0414428710938,
+          "y": 846.065673828125
+        },
+        {
+          "x": 269.3581237792969,
+          "y": 567.633544921875
+        },
+        {
+          "x": 1642.3970947265625,
+          "y": 873.01708984375
+        },
+        {
+          "x": 319.8316955566406,
+          "y": 755.8583984375
+        },
+        {
+          "x": 920,
+          "y": 936.23583984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "id",
+      "width": 1920,
+      "scene_height": 4500,
+      "empty_offset": 19194.3,
+      "length": 19193.3359375,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        18183.5,
+        16923.6,
+        14088.8,
+        11041.5,
+        9351.06,
+        7825.65,
+        5940.12,
+        3958.88,
+        1982.99,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 921.2691650390625,
+          "y": 556.5914154052734
+        },
+        {
+          "x": -111.56126403808594,
+          "y": 791.6257934570312
+        },
+        {
+          "x": 665.2427978515625,
+          "y": 804.858642578125
+        },
+        {
+          "x": -60.26228713989258,
+          "y": 818.7880859375
+        },
+        {
+          "x": 1353.9022216796875,
+          "y": 657.916259765625
+        },
+        {
+          "x": 1212.4530029296875,
+          "y": 845.8115234375
+        },
+        {
+          "x": 300.9762268066406,
+          "y": 551.714111328125
+        },
+        {
+          "x": 2053.034912109375,
+          "y": 872.7705078125
+        },
+        {
+          "x": 402.8599548339844,
+          "y": 757.084716796875
+        },
+        {
+          "x": 1150,
+          "y": 935.97021484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "en",
+      "width": 360,
+      "scene_height": 4500,
+      "empty_offset": 6869.69,
+      "length": 6868.69482421875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        6280.88,
+        5648.36,
+        4818.19,
+        4004.27,
+        3417.9,
+        2866.8,
+        2247.99,
+        1578.03,
+        807.991,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 149.33126831054688,
+          "y": 624.0885925292969
+        },
+        {
+          "x": -20.61417007446289,
+          "y": 791.4591064453125
+        },
+        {
+          "x": 165.28738403320312,
+          "y": 789.603759765625
+        },
+        {
+          "x": -10.923100471496582,
+          "y": 818.8138427734375
+        },
+        {
+          "x": 326.54449462890625,
+          "y": 777.5087890625
+        },
+        {
+          "x": 227.61152648925784,
+          "y": 845.9228515625
+        },
+        {
+          "x": 98.25574493408202,
+          "y": 734.4140625
+        },
+        {
+          "x": 384.89599609375,
+          "y": 872.92626953125
+        },
+        {
+          "x": 74.07054138183594,
+          "y": 753.62158203125
+        },
+        {
+          "x": 215.625,
+          "y": 936.25146484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "en",
+      "width": 640,
+      "scene_height": 4500,
+      "empty_offset": 8766.77,
+      "length": 8765.767578125,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        8132.14,
+        7409.16,
+        6249.53,
+        5074.46,
+        4319.36,
+        3622.21,
+        2802.69,
+        1925.42,
+        976.78,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 279.09112548828125,
+          "y": 591.624267578125
+        },
+        {
+          "x": -36.815635681152344,
+          "y": 790.9893798828125
+        },
+        {
+          "x": 258.5083312988281,
+          "y": 797.13916015625
+        },
+        {
+          "x": -19.731420516967773,
+          "y": 818.3228759765627
+        },
+        {
+          "x": 534.1524047851562,
+          "y": 725.527587890625
+        },
+        {
+          "x": 404.4115905761719,
+          "y": 845.393798828125
+        },
+        {
+          "x": 160.20498657226562,
+          "y": 673.615966796875
+        },
+        {
+          "x": 684.281005859375,
+          "y": 872.34814453125
+        },
+        {
+          "x": 131.3993377685547,
+          "y": 752.61474609375
+        },
+        {
+          "x": 383.33331298828125,
+          "y": 935.64208984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "scene_height": 4500,
+      "empty_offset": 9715.5,
+      "length": 9714.498046875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        9053,
+        8283.95,
+        6965.5,
+        5613.88,
+        4773.53,
+        4001.69,
+        3083.44,
+        2104.32,
+        1064.54,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 342.0001220703125,
+          "y": 581.2952270507812
+        },
+        {
+          "x": -44.25666427612305,
+          "y": 791.0588989257812
+        },
+        {
+          "x": 299.4964904785156,
+          "y": 799.063232421875
+        },
+        {
+          "x": -23.77280616760254,
+          "y": 818.3687744140625
+        },
+        {
+          "x": 619.6825561523438,
+          "y": 709.222412109375
+        },
+        {
+          "x": 485.2165222167969,
+          "y": 845.430419921875
+        },
+        {
+          "x": 183.3118438720703,
+          "y": 650.3466796875
+        },
+        {
+          "x": 821.14794921875,
+          "y": 872.3771972656245
+        },
+        {
+          "x": 157.75779724121094,
+          "y": 752.722412109375
+        },
+        {
+          "x": 460,
+          "y": 935.65771484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "en",
+      "width": 1024,
+      "scene_height": 4500,
+      "empty_offset": 11707,
+      "length": 11705.9638671875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        10979.6,
+        10111.7,
+        8466.83,
+        6750.4,
+        5730.86,
+        4801.15,
+        3677.5,
+        2486.25,
+        1252.78,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 471.32855224609375,
+          "y": 568.9535217285156
+        },
+        {
+          "x": -59.21271896362305,
+          "y": 792.0552368164062
+        },
+        {
+          "x": 380.6033020019531,
+          "y": 802.3497314453125
+        },
+        {
+          "x": -31.871074676513672,
+          "y": 819.3013916015625
+        },
+        {
+          "x": 784.480712890625,
+          "y": 688.142822265625
+        },
+        {
+          "x": 646.8212280273438,
+          "y": 846.350341796875
+        },
+        {
+          "x": 219.8144989013672,
+          "y": 612.959228515625
+        },
+        {
+          "x": 1094.8939208984375,
+          "y": 873.295166015625
+        },
+        {
+          "x": 211.03421020507812,
+          "y": 754.21875
+        },
+        {
+          "x": 613.3333129882812,
+          "y": 936.54833984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "en",
+      "width": 1280,
+      "scene_height": 4500,
+      "empty_offset": 13784.3,
+      "length": 13783.3173828125,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        12983,
+        12009.3,
+        10030.1,
+        7939.24,
+        6733.03,
+        5638.09,
+        4301.86,
+        2890.67,
+        1452.85,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 601.3208618164062,
+          "y": 561.9727935791016
+        },
+        {
+          "x": -74.16453552246094,
+          "y": 791.570068359375
+        },
+        {
+          "x": 461.5091857910156,
+          "y": 803.197998046875
+        },
+        {
+          "x": -39.979488372802734,
+          "y": 818.7816162109375
+        },
+        {
+          "x": 946.83984375,
+          "y": 674.371337890625
+        },
+        {
+          "x": 808.4281616210938,
+          "y": 845.82080078125
+        },
+        {
+          "x": 246.8919677734375,
+          "y": 585.27880859375
+        },
+        {
+          "x": 1368.63818359375,
+          "y": 872.763671875
+        },
+        {
+          "x": 265.10028076171875,
+          "y": 754.60009765625
+        },
+        {
+          "x": 766.6666870117188,
+          "y": 936.00146484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "en",
+      "width": 1536,
+      "scene_height": 4500,
+      "empty_offset": 15919.2,
+      "length": 15918.23046875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        15037.6,
+        13952.5,
+        11633.7,
+        9162.8,
+        7765.18,
+        6500.33,
+        4946.77,
+        3310.28,
+        1660.89,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 730.2581176757812,
+          "y": 559.3069000244141
+        },
+        {
+          "x": -89.13734436035156,
+          "y": 792.134033203125
+        },
+        {
+          "x": 542.7257080078125,
+          "y": 804.5916748046875
+        },
+        {
+          "x": -48.08626937866211,
+          "y": 819.3151855468752
+        },
+        {
+          "x": 1109.1956787109375,
+          "y": 666.414794921875
+        },
+        {
+          "x": 970.0414428710938,
+          "y": 846.346923828125
+        },
+        {
+          "x": 269.3581237792969,
+          "y": 567.914794921875
+        },
+        {
+          "x": 1642.3970947265625,
+          "y": 873.29833984375
+        },
+        {
+          "x": 319.8316955566406,
+          "y": 756.1396484375
+        },
+        {
+          "x": 920,
+          "y": 936.51708984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "en",
+      "width": 1920,
+      "scene_height": 4500,
+      "empty_offset": 19194.3,
+      "length": 19193.3359375,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        18183.5,
+        16923.6,
+        14088.8,
+        11041.5,
+        9351.06,
+        7825.65,
+        5940.12,
+        3958.88,
+        1982.99,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 921.2691650390625,
+          "y": 556.5914154052734
+        },
+        {
+          "x": -111.56126403808594,
+          "y": 791.6257934570312
+        },
+        {
+          "x": 665.2427978515625,
+          "y": 804.858642578125
+        },
+        {
+          "x": -60.26228713989258,
+          "y": 818.7880859375
+        },
+        {
+          "x": 1353.9022216796875,
+          "y": 657.916259765625
+        },
+        {
+          "x": 1212.4530029296875,
+          "y": 845.8115234375
+        },
+        {
+          "x": 300.9762268066406,
+          "y": 551.714111328125
+        },
+        {
+          "x": 2053.034912109375,
+          "y": 872.7705078125
+        },
+        {
+          "x": 402.8599548339844,
+          "y": 757.084716796875
+        },
+        {
+          "x": 1150,
+          "y": 935.97021484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "ar",
+      "width": 360,
+      "scene_height": 4500,
+      "empty_offset": 6869.69,
+      "length": 6868.69482421875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        6280.88,
+        5648.36,
+        4818.19,
+        4004.27,
+        3417.9,
+        2866.8,
+        2247.99,
+        1578.03,
+        807.991,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 149.33126831054688,
+          "y": 624.0104675292969
+        },
+        {
+          "x": -20.61417007446289,
+          "y": 791.3809814453125
+        },
+        {
+          "x": 165.28738403320312,
+          "y": 789.525634765625
+        },
+        {
+          "x": -10.923100471496582,
+          "y": 818.7357177734375
+        },
+        {
+          "x": 326.54449462890625,
+          "y": 777.4306640625
+        },
+        {
+          "x": 227.61152648925784,
+          "y": 845.8447265625
+        },
+        {
+          "x": 98.25574493408202,
+          "y": 734.3359375
+        },
+        {
+          "x": 384.89599609375,
+          "y": 872.84814453125
+        },
+        {
+          "x": 74.07054138183594,
+          "y": 753.54345703125
+        },
+        {
+          "x": 215.625,
+          "y": 936.17333984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "ar",
+      "width": 640,
+      "scene_height": 4500,
+      "empty_offset": 8766.77,
+      "length": 8765.767578125,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        8132.14,
+        7409.16,
+        6249.53,
+        5074.46,
+        4319.36,
+        3622.21,
+        2802.69,
+        1925.42,
+        976.78,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 279.09112548828125,
+          "y": 592.374267578125
+        },
+        {
+          "x": -36.815635681152344,
+          "y": 791.7393798828125
+        },
+        {
+          "x": 258.5083312988281,
+          "y": 797.88916015625
+        },
+        {
+          "x": -19.731420516967773,
+          "y": 819.0728759765627
+        },
+        {
+          "x": 534.1524047851562,
+          "y": 726.277587890625
+        },
+        {
+          "x": 404.4115905761719,
+          "y": 846.143798828125
+        },
+        {
+          "x": 160.20498657226562,
+          "y": 674.365966796875
+        },
+        {
+          "x": 684.281005859375,
+          "y": 873.09814453125
+        },
+        {
+          "x": 131.3993377685547,
+          "y": 753.36474609375
+        },
+        {
+          "x": 383.33331298828125,
+          "y": 936.39208984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "ar",
+      "width": 768,
+      "scene_height": 4500,
+      "empty_offset": 9715.5,
+      "length": 9714.498046875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        9053,
+        8283.95,
+        6965.5,
+        5613.88,
+        4773.53,
+        4001.69,
+        3083.44,
+        2104.32,
+        1064.54,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 342.0001220703125,
+          "y": 581.8264770507812
+        },
+        {
+          "x": -44.25666427612305,
+          "y": 791.5901489257812
+        },
+        {
+          "x": 299.4964904785156,
+          "y": 799.594482421875
+        },
+        {
+          "x": -23.77280616760254,
+          "y": 818.9000244140625
+        },
+        {
+          "x": 619.6825561523438,
+          "y": 709.753662109375
+        },
+        {
+          "x": 485.2165222167969,
+          "y": 845.961669921875
+        },
+        {
+          "x": 183.3118438720703,
+          "y": 650.8779296875
+        },
+        {
+          "x": 821.14794921875,
+          "y": 872.9084472656245
+        },
+        {
+          "x": 157.75779724121094,
+          "y": 753.253662109375
+        },
+        {
+          "x": 460,
+          "y": 936.18896484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "ar",
+      "width": 1024,
+      "scene_height": 4500,
+      "empty_offset": 11707,
+      "length": 11705.9638671875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        10979.6,
+        10111.7,
+        8466.83,
+        6750.4,
+        5730.86,
+        4801.15,
+        3677.5,
+        2486.25,
+        1252.78,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 471.32855224609375,
+          "y": 568.9691467285156
+        },
+        {
+          "x": -59.21271896362305,
+          "y": 792.0708618164062
+        },
+        {
+          "x": 380.6033020019531,
+          "y": 802.3653564453125
+        },
+        {
+          "x": -31.871074676513672,
+          "y": 819.3170166015625
+        },
+        {
+          "x": 784.480712890625,
+          "y": 688.158447265625
+        },
+        {
+          "x": 646.8212280273438,
+          "y": 846.365966796875
+        },
+        {
+          "x": 219.8144989013672,
+          "y": 612.974853515625
+        },
+        {
+          "x": 1094.8939208984375,
+          "y": 873.310791015625
+        },
+        {
+          "x": 211.03421020507812,
+          "y": 754.234375
+        },
+        {
+          "x": 613.3333129882812,
+          "y": 936.56396484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "ar",
+      "width": 1280,
+      "scene_height": 4500,
+      "empty_offset": 13784.3,
+      "length": 13783.3173828125,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        12983,
+        12009.3,
+        10030.1,
+        7939.24,
+        6733.03,
+        5638.09,
+        4301.86,
+        2890.67,
+        1452.85,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 601.3208618164062,
+          "y": 561.6134185791016
+        },
+        {
+          "x": -74.16453552246094,
+          "y": 791.210693359375
+        },
+        {
+          "x": 461.5091857910156,
+          "y": 802.838623046875
+        },
+        {
+          "x": -39.979488372802734,
+          "y": 818.4222412109375
+        },
+        {
+          "x": 946.83984375,
+          "y": 674.011962890625
+        },
+        {
+          "x": 808.4281616210938,
+          "y": 845.46142578125
+        },
+        {
+          "x": 246.8919677734375,
+          "y": 584.91943359375
+        },
+        {
+          "x": 1368.63818359375,
+          "y": 872.404296875
+        },
+        {
+          "x": 265.10028076171875,
+          "y": 754.24072265625
+        },
+        {
+          "x": 766.6666870117188,
+          "y": 935.64208984375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "ar",
+      "width": 1536,
+      "scene_height": 4500,
+      "empty_offset": 15919.2,
+      "length": 15918.23046875,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        15037.6,
+        13952.5,
+        11633.7,
+        9162.8,
+        7765.18,
+        6500.33,
+        4946.77,
+        3310.28,
+        1660.89,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 730.2581176757812,
+          "y": 559.3537750244141
+        },
+        {
+          "x": -89.13734436035156,
+          "y": 792.180908203125
+        },
+        {
+          "x": 542.7257080078125,
+          "y": 804.6385498046875
+        },
+        {
+          "x": -48.08626937866211,
+          "y": 819.3620605468752
+        },
+        {
+          "x": 1109.1956787109375,
+          "y": 666.461669921875
+        },
+        {
+          "x": 970.0414428710938,
+          "y": 846.393798828125
+        },
+        {
+          "x": 269.3581237792969,
+          "y": 567.961669921875
+        },
+        {
+          "x": 1642.3970947265625,
+          "y": 873.34521484375
+        },
+        {
+          "x": 319.8316955566406,
+          "y": 756.1865234375
+        },
+        {
+          "x": 920,
+          "y": 936.56396484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    },
+    {
+      "locale": "ar",
+      "width": 1920,
+      "scene_height": 4500,
+      "empty_offset": 19194.3,
+      "length": 19193.3359375,
+      "scrub": true,
+      "overflow": false,
+      "offsets_down": [
+        18183.5,
+        16923.6,
+        14088.8,
+        11041.5,
+        9351.06,
+        7825.65,
+        5940.12,
+        3958.88,
+        1982.99,
+        0
+      ],
+      "tips_down": [
+        {
+          "x": 921.2691650390625,
+          "y": 556.8101654052734
+        },
+        {
+          "x": -111.56126403808594,
+          "y": 791.8445434570312
+        },
+        {
+          "x": 665.2427978515625,
+          "y": 805.077392578125
+        },
+        {
+          "x": -60.26228713989258,
+          "y": 819.0068359375
+        },
+        {
+          "x": 1353.9022216796875,
+          "y": 658.135009765625
+        },
+        {
+          "x": 1212.4530029296875,
+          "y": 846.0302734375
+        },
+        {
+          "x": 300.9762268066406,
+          "y": 551.932861328125
+        },
+        {
+          "x": 2053.034912109375,
+          "y": 872.9892578125
+        },
+        {
+          "x": 402.8599548339844,
+          "y": 757.303466796875
+        },
+        {
+          "x": 1150,
+          "y": 936.18896484375
+        }
+      ],
+      "reverse": "same exact offset at five repeated native positions; tolerance0.02px",
+      "native_scroll": "no displacement beyond1px rounding"
+    }
+  ],
+  "pixel_proof": [
+    {
+      "width": 360,
+      "behind_samples": 14,
+      "behind_alpha": [
+        255
+      ],
+      "future_samples": 8,
+      "future_alpha": [
+        0
+      ]
+    },
+    {
+      "width": 768,
+      "behind_samples": 14,
+      "behind_alpha": [
+        255
+      ],
+      "future_samples": 8,
+      "future_alpha": [
+        0
+      ]
+    },
+    {
+      "width": 1440,
+      "behind_samples": 14,
+      "behind_alpha": [
+        255
+      ],
+      "future_samples": 10,
+      "future_alpha": [
+        0
+      ]
+    }
+  ],
+  "lifecycle": {
+    "date": "2026-10-08T00:38:45.985Z",
+    "platform": "linux",
+    "url": "http://127.0.0.1:8000",
+    "before": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "lang": "en",
+      "scene": {
+        "width": 1440,
+        "height": 4500,
+        "top": -1198.71875
+      },
+      "paths": 1,
+      "stroke": "rgb(255, 255, 255)",
+      "fill": "none",
+      "offset": 7980.01,
+      "length": 15112.138671875,
+      "progress": 0.44994272623138604,
+      "scrub": true,
+      "tip": {
+        "x": 464.12957763671875,
+        "y": 732.8316650390625
+      },
+      "overflow": false,
+      "ready": true,
+      "triggers": 1,
+      "gsapScripts": 1
+    },
+    "reduced": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "lang": "en",
+      "scene": {
+        "width": 0,
+        "height": 0,
+        "top": 0
+      },
+      "paths": 1,
+      "stroke": "rgb(255, 255, 255)",
+      "fill": "none",
+      "offset": 0,
+      "length": 19750.576171875,
+      "tip": {
+        "x": 0,
+        "y": 0
+      },
+      "overflow": false,
+      "ready": false,
+      "triggers": 0,
+      "gsapScripts": 1
+    },
+    "disposed": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "lang": "en",
+      "scene": {
+        "width": 0,
+        "height": 0,
+        "top": 0
+      },
+      "paths": 1,
+      "stroke": "rgb(255, 255, 255)",
+      "fill": "none",
+      "offset": 0,
+      "length": 19750.576171875,
+      "tip": {
+        "x": 0,
+        "y": 0
+      },
+      "overflow": false,
+      "ready": false,
+      "triggers": 0,
+      "gsapScripts": 1
+    }
+  },
+  "network_fallback": {
+    "date": "2026-10-08T00:39:06.745Z",
+    "platform": "linux",
+    "url": "http://127.0.0.1:8000",
+    "fallback": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "lang": "en",
+      "scene": {
+        "width": 0,
+        "height": 0,
+        "top": 0
+      },
+      "paths": 1,
+      "stroke": "rgb(255, 255, 255)",
+      "fill": "none",
+      "offset": 0,
+      "length": 19750.576171875,
+      "tip": {
+        "x": 0,
+        "y": 0
+      },
+      "overflow": false,
+      "ready": false,
+      "triggers": 0,
+      "gsapScripts": 1
+    }
+  },
+  "regression": {
+    "program_heading_browser_tests": 4,
+    "values_intro_browser_tests": 3,
+    "values_layout_cells": 21,
+    "values_sequence_cells": 3,
+    "values_fallback_cells": 27,
+    "total_browser_tests_passed_across_final_runs": 11,
+    "geometry_and_speed_tests": 2,
+    "php_v2_tests": 27,
+    "php_v2_assertions": 342,
+    "build": "PASS",
+    "structure": "288 active sources under200lines",
+    "pint": "PASS",
+    "diff": "PASS",
+    "protected_sources_unchanged": 619,
+    "node_runtime": {
+      "base_and_final": {
+        "tests": 38,
+        "passed": 19,
+        "failed": 7,
+        "skipped": 12
+      },
+      "new_failures": []
+    },
+    "php_base": {
+      "tests": 336,
+      "passed": 190,
+      "failed": 71,
+      "errors": 75,
+      "assertions": 1687
+    },
+    "php_final": {
+      "tests": 336,
+      "passed": 190,
+      "failed": 71,
+      "errors": 75,
+      "assertions": 1696
+    },
+    "new_php_failure_names": [],
+    "new_php_error_names": [],
+    "baseline_failure_names": [
+      "__pest_evaluable_it_adds_nonce_based_security_headers_to_public_pages",
+      "__pest_evaluable_it_adds_the_same_security_policy_to_authenticated_admin_pages",
+      "__pest_evaluable_it_archives_a_PPDB_showcase_item_without_deleting_its_file_and_hides_it_publicly",
+      "__pest_evaluable_it_archives_and_restores_a_section_while_preserving_its_canonical_placements",
+      "__pest_evaluable_it_atomically_restores_an_archived_gallery_item_and_archives_its_identical_active_replacement",
+      "__pest_evaluable_it_defers_shared_welcome_styles_only_on_the_homepage",
+      "__pest_evaluable_it_does_not_query_retired_tables_from_the_homepage_or_admin_dashboard",
+      "__pest_evaluable_it_edits_only_Opening_copy_while_Article_Spotlight_management_lives_on_the_Article_index",
+      "__pest_evaluable_it_enforces_strict_role_isolation with data set \"dataset \"admin\"\"",
+      "__pest_evaluable_it_enforces_strict_role_isolation with data set \"dataset \"guru\"\"",
+      "__pest_evaluable_it_enforces_strict_role_isolation with data set \"dataset \"murid\"\"",
+      "__pest_evaluable_it_escapes_database_content_rendered_on_public_article_cards",
+      "__pest_evaluable_it_falls_back_from_Arabic_to_available_native_article_content",
+      "__pest_evaluable_it_filters_clickable_categories_and_shows_related_native_articles",
+      "__pest_evaluable_it_hides_deleted_articles_publicly_but_keeps_them_muted_in_the_admin_list",
+      "__pest_evaluable_it_keeps_Opening_as_the_sole_h1_and_links_a_promoted_Article_as_a_later_slide",
+      "__pest_evaluable_it_keeps_a_scheduled_article_private_until_its_publication_time",
+      "__pest_evaluable_it_keeps_the_unified_education_gallery_and_article_mega_menu_contract_on_every_public_page",
+      "__pest_evaluable_it_locks_on_the_fifth_failure_for_sixty_seconds_and_refresh_cannot_clear_it",
+      "__pest_evaluable_it_makes_every_open_PPDB_campaign_copy_affordance_lead_to_localized_PPDB_information with data set \"dataset \"Arabic\"\"",
+      "__pest_evaluable_it_makes_every_open_PPDB_campaign_copy_affordance_lead_to_localized_PPDB_information with data set \"dataset \"English\"\"",
+      "__pest_evaluable_it_makes_every_open_PPDB_campaign_copy_affordance_lead_to_localized_PPDB_information with data set \"dataset \"Indonesia\"\"",
+      "__pest_evaluable_it_matches_replacement_candidates_only_when_type_and_normalized_media_are_identical",
+      "__pest_evaluable_it_mounts_the_mobile_navigation_layer_after_the_fixed_header",
+      "__pest_evaluable_it_offers_restore_and_replace_only_for_an_active_article_with_an_identical_normalized_link",
+      "__pest_evaluable_it_places_one_canonical_media_item_in_multiple_sections_without_duplicate_media_rows",
+      "__pest_evaluable_it_preserves_localized_PPDB_audiences_initial_selection_and_restarted_numbering",
+      "__pest_evaluable_it_preserves_retained_rows_and_testimonial_objects_without_exposing_a_mutation_path",
+      "__pest_evaluable_it_preserves_shared_public_chrome_semantics_for_every_locale",
+      "__pest_evaluable_it_preserves_the_active_admin_navigation_contract",
+      "__pest_evaluable_it_prioritizes_homepage_pins_and_fills_remaining_slots_with_latest_published_Articles",
+      "__pest_evaluable_it_publishes_a_native_article_and_renders_the_same_semantic_content_internally",
+      "__pest_evaluable_it_renders_a_localized_Login_link_without_direct_role_or_public_PPDB_menu_links with data set \"dataset \"Arabic\"\"",
+      "__pest_evaluable_it_renders_a_localized_Login_link_without_direct_role_or_public_PPDB_menu_links with data set \"dataset \"English\"\"",
+      "__pest_evaluable_it_renders_a_localized_Login_link_without_direct_role_or_public_PPDB_menu_links with data set \"dataset \"Indonesia\"\"",
+      "__pest_evaluable_it_renders_eight_localized_featured_Program_cards_and_a_full_Islamic_word_field",
+      "__pest_evaluable_it_renders_four_latest_published_Articles_in_one_Head_plus_three_Rail_order_after_Testimonial",
+      "__pest_evaluable_it_renders_localized_About_Vision_and_Mission_before_Program",
+      "__pest_evaluable_it_renders_localized_Home_facilities_presentation_and_final_Arabic_mission_text",
+      "__pest_evaluable_it_renders_localized_admin__teacher__and_student_login_pages_in_the_correct_direction with data set \"('ar', 'rtl', '\u062a\u0633\u062c\u064a\u0644 \u062f\u062e\u0648\u0644 \u0627\u0644\u0645\u0639\u0644\u0645', \u2026)\"",
+      "__pest_evaluable_it_renders_localized_admin__teacher__and_student_login_pages_in_the_correct_direction with data set \"('en', 'ltr', 'Teacher Login', \u2026)\"",
+      "__pest_evaluable_it_renders_localized_admin__teacher__and_student_login_pages_in_the_correct_direction with data set \"('id', 'ltr', 'Login Guru', \u2026)\"",
+      "__pest_evaluable_it_renders_localized_role_choices_before_the_teacher_and_student_forms with data set \"('ar', 'rtl', '\u0627\u062e\u062a\u0631 \u0646\u0648\u0639 \u0627\u0644\u062d\u0633\u0627\u0628', \u2026)\"",
+      "__pest_evaluable_it_renders_localized_role_choices_before_the_teacher_and_student_forms with data set \"('en', 'ltr', 'Choose your account type', \u2026)\"",
+      "__pest_evaluable_it_renders_localized_role_choices_before_the_teacher_and_student_forms with data set \"('id', 'ltr', 'Pilih jenis akun', \u2026)\"",
+      "__pest_evaluable_it_renders_only_the_agreed_carousel_arrows_when_a_published_Article_is_promoted",
+      "__pest_evaluable_it_renders_the_Indonesian_account_manager_without_credential_values",
+      "__pest_evaluable_it_renders_the_fixed_R2_video_as_a_poster_first_Opening_slide_when_no_Article_is_promoted",
+      "__pest_evaluable_it_renders_the_homepage_login_state_template_without_replacing_the_landing_page",
+      "__pest_evaluable_it_renders_the_real_data_dashboard_for_an_active_admin",
+      "__pest_evaluable_it_renders_the_rebuilt_localized_semantic_values_story",
+      "__pest_evaluable_it_renders_the_testimonial_wall_after_gallery_with_three_seven_card_tracks",
+      "__pest_evaluable_it_renders_versioned_static_public_media_from_R2_on_every_homepage_locale",
+      "__pest_evaluable_it_restores_an_archived_article_and_archives_the_identical_active_replacement_atomically",
+      "__pest_evaluable_it_restores_an_archived_article_and_makes_it_public_again",
+      "__pest_evaluable_it_restores_an_archived_gallery_item_into_the_next_active_sort_position",
+      "__pest_evaluable_it_returns_a_failed_popup_bridge_without_authenticating_an_unavailable_account",
+      "__pest_evaluable_it_returns_a_localized_informational_404_when_PPDB_is_closed with data set \"('ar', '\u0627\u0644\u062a\u0633\u062c\u064a\u0644 \u0645\u063a\u0644\u0642 \u062d\u0627\u0644\u064a\u064b\u0627')\"",
+      "__pest_evaluable_it_returns_a_localized_informational_404_when_PPDB_is_closed with data set \"('en', 'Admissions are currently closed')\"",
+      "__pest_evaluable_it_returns_a_localized_informational_404_when_PPDB_is_closed with data set \"('id', 'Pendaftaran saat ini sedang ditutup')\"",
+      "__pest_evaluable_it_returns_a_successful_popup_bridge_after_authenticating_an_allowed_admin",
+      "__pest_evaluable_it_serves_every_direct_public_login_role_through_the_fallback_perspective_shell with data set \"dataset \"admin\"\"",
+      "__pest_evaluable_it_serves_every_direct_public_login_role_through_the_fallback_perspective_shell with data set \"dataset \"guru\"\"",
+      "__pest_evaluable_it_serves_every_direct_public_login_role_through_the_fallback_perspective_shell with data set \"dataset \"murid\"\"",
+      "__pest_evaluable_it_serves_every_direct_public_login_role_through_the_fallback_perspective_shell with data set \"dataset \"portal\"\"",
+      "__pest_evaluable_it_shows_Homepage_and_Hero_placement_management_on_the_Article_index",
+      "__pest_evaluable_it_soft_deletes_a_gallery_item_without_deleting_its_media_and_hides_it_publicly",
+      "__pest_evaluable_it_starts_a_native_draft_without_changing_the_external_article_flow",
+      "__pest_evaluable_it_uses_PPDB_settings_to_control_its_dedicated_route_and_homepage_campaign_ownership",
+      "__pest_evaluable_it_uses_a_lean_pinned_first_Article_query_for_the_homepage_showcase",
+      "__pest_evaluable_it_uses_in_view_About_Vision_and_Mission_video_previews_with_shared_modal_only_where_interactive"
+    ],
+    "baseline_error_names": [
+      "__pest_evaluable_it_autosaves_sanitizes_and_renders_Arabic_native_article_content",
+      "__pest_evaluable_it_avoids_known_synchronous_layout_restart_patterns_on_the_homepage",
+      "__pest_evaluable_it_binds_popup_OAuth_results_to_the_active_browser_attempt_instead_of_relying_on_opener_alone",
+      "__pest_evaluable_it_bounds_localized_Program_detail_titles_on_tablet_and_mobile_using_the_existing_title_scale",
+      "__pest_evaluable_it_does_not_restore_the_deleted_import_based_homepage_perspective_implementation",
+      "__pest_evaluable_it_forms_Program_cards_before_the_white_to_blue_Character_handoff",
+      "__pest_evaluable_it_gives_mega_menu_content_one_canonical_stylesheet_owner_instead_of_hero_fallbacks",
+      "__pest_evaluable_it_guards_the_editorial_gallery_bootstrap_without_the_legacy_canvas_owner",
+      "__pest_evaluable_it_hands_testimonials_off_from_the_actual_final_gallery_background",
+      "__pest_evaluable_it_inlines_asset_safe_homepage_critical_and_locale_typography_styles_without_changing_cascade_order",
+      "__pest_evaluable_it_keeps_About_Vision_and_Mission_body_copy_readable_without_enlarging_the_headings",
+      "__pest_evaluable_it_keeps_Article_heading_reveal_clipping_separate_from_its_horizontal_shift",
+      "__pest_evaluable_it_keeps_Codrops_geometry_while_adapting_long_localized_detail_titles",
+      "__pest_evaluable_it_keeps_Program_controls_functional_while_GSAP_loads__fails__or_is_opening",
+      "__pest_evaluable_it_keeps_Q_III_card_typography_larger_while_preserving_Arabic_shaping",
+      "__pest_evaluable_it_keeps_Values_from_intercepting_Program_controls_during_shared_world_overlap",
+      "__pest_evaluable_it_keeps_Vision_media_frames_at_five_sixths_scale_with_a_crisp_directional_cast_shadow",
+      "__pest_evaluable_it_keeps_a_hero_gated_sequential_homepage_preparation_graph_with_a_DOM_owned_gallery",
+      "__pest_evaluable_it_keeps_all_H5_group_four_Blade_owners_free_of_PHP_shaping",
+      "__pest_evaluable_it_keeps_all_H5_group_three_Blade_owners_free_of_PHP_shaping",
+      "__pest_evaluable_it_keeps_all_H5_group_two_Blade_owners_free_of_PHP_shaping",
+      "__pest_evaluable_it_keeps_audio_user_gesture_ownership_and_no_hero_glow_runtime",
+      "__pest_evaluable_it_keeps_direct_login_URLs_on_the_existing_fallback_auth_shell",
+      "__pest_evaluable_it_keeps_eight_card_responsive_geometry_bounded_across_desktop_tablet_and_mobile",
+      "__pest_evaluable_it_keeps_gallery_body_copy_contrast_hardened_across_rotating_backgrounds",
+      "__pest_evaluable_it_keeps_group_one_Blade_owners_free_of_view_owned_PHP",
+      "__pest_evaluable_it_keeps_homepage_gallery_readable_until_enhancement_is_ready",
+      "__pest_evaluable_it_keeps_homepage_interaction_styles_out_of_the_first_paint_path",
+      "__pest_evaluable_it_keeps_lazy_media_visibility_owned_by_core_instead_of_retired_gallery_wall_CSS",
+      "__pest_evaluable_it_keeps_main_menu_color_owned_by_header_state_across_public_routes",
+      "__pest_evaluable_it_keeps_mega_menu_final_cascade_owned_by_the_navbar_through_the_proven_Vite_stylesheet_path",
+      "__pest_evaluable_it_keeps_rebuilt_home_surfaces_owned_by_their_dedicated_adapters",
+      "__pest_evaluable_it_keeps_rebuilt_public_PPDB_and_Gallery_routes_off_their_retired_CSS_generations",
+      "__pest_evaluable_it_keeps_responsive_values_motion_scroll_deterministic_and_tilt_bounded",
+      "__pest_evaluable_it_keeps_retired_homepage_visual_families_out_of_the_active_legacy_entry",
+      "__pest_evaluable_it_keeps_shared_reveal_behavior_owned_by_core_instead_of_legacy_footer_CSS",
+      "__pest_evaluable_it_keeps_static_statistic_localization_and_removes_testimonial_build_entries",
+      "__pest_evaluable_it_keeps_testimonial_JS_and_CSS_off_the_initial_homepage_graph",
+      "__pest_evaluable_it_keeps_the_custom_cursor_in_viewport_coordinates_outside_the_transformed_Codrops_wrapper",
+      "__pest_evaluable_it_keeps_the_desktop_hero_audio_label_on_the_shared_navigation_typography_contract",
+      "__pest_evaluable_it_keeps_the_exact_eleven_step_Vision_to_Program_handoff",
+      "__pest_evaluable_it_keeps_the_gallery_lightbox_free_from_HTML_string_injection_sinks",
+      "__pest_evaluable_it_keeps_the_homepage_gallery_controller_small_and_scroll_owned",
+      "__pest_evaluable_it_keeps_the_homepage_gallery_section_unchanged",
+      "__pest_evaluable_it_keeps_the_initial_login_perspective_state_limited_to_the_three_role_choices",
+      "__pest_evaluable_it_keeps_the_landing_page_as_the_persistent_Codrops_perspective_surface",
+      "__pest_evaluable_it_keeps_the_shared_public_foundation_single_owned_by_the_critical_entry",
+      "__pest_evaluable_it_loads_Article_Detail_styling_only_from_its_public_surface_adapter",
+      "__pest_evaluable_it_loads_Gallery_styling_only_from_its_public_surface_adapter",
+      "__pest_evaluable_it_locks_the_homepage_editorial_gallery_story_contract",
+      "__pest_evaluable_it_mirrors_Program_detail_with_logical_RTL_grid_flow_instead_of_physical_column_overrides",
+      "__pest_evaluable_it_mirrors_Testimonial_travel_physically_in_RTL_without_reversing_row_phase",
+      "__pest_evaluable_it_opts_only_public_site_surfaces_into_the_character_cursor_and_follows_fullscreen_top_layers",
+      "__pest_evaluable_it_owns_one_lazy_deterministic_Three_js_spatial_scene",
+      "__pest_evaluable_it_owns_the_database_backed_four_card_Lead_Rail_Article_showcase_without_redundant_read_cues",
+      "__pest_evaluable_it_pins_Mission_copy_to_the_flexible_grid_track_in_both_LTR_and_RTL",
+      "__pest_evaluable_it_prepares_localized_Article_aliases_and_fallback_numbering",
+      "__pest_evaluable_it_preserves_Gallery_database_precedence_and_deterministic_fallback_cards",
+      "__pest_evaluable_it_preserves_Gallery_preset_shaping_while_rendering_the_alternating_editorial_stream",
+      "__pest_evaluable_it_preserves_Gallery_video_provider_fallback_presentation",
+      "__pest_evaluable_it_preserves_accessible_latent_editorial_descriptions_in_every_locale",
+      "__pest_evaluable_it_preserves_the_latent_editorial_heading_split_contract",
+      "__pest_evaluable_it_protects_Arabic_desktop_glyph_tails_and_smooths_the_hero_header_state",
+      "__pest_evaluable_it_provides_one_configurable_gradual_Vision_background_compositor",
+      "__pest_evaluable_it_renders_homepage_gallery_photos_from_item_dimensions_instead_of_a_shared_hardcoded_ratio",
+      "__pest_evaluable_it_renders_the_existing_video_thumbnail_as_a_static_homepage_poster_without_eager_video_sources",
+      "__pest_evaluable_it_replays_the_Program_center_split_with_breathing_room_and_no_horizontal_heading_shift",
+      "__pest_evaluable_it_routes_the_active_footer_cascade_through_one_chrome_adapter",
+      "__pest_evaluable_it_self_hosts_the_public_Latin_font_without_a_Google_Fonts_dependency",
+      "__pest_evaluable_it_shapes_the_final_hero_collection_at_the_included_section_boundary",
+      "__pest_evaluable_it_uses_Codrops_GSAP_timing_and_detail_media_reveal",
+      "__pest_evaluable_it_uses_a_native_pinned_mask_reveal_without_owning_document_scroll",
+      "__pest_evaluable_it_uses_bounded_desktop_geometry_for_the_closer_Program_and_Values_composition",
+      "__pest_evaluable_it_uses_safe_DOM_updates_and_visibility_aware_lightweight_polling",
+      "__pest_evaluable_it_uses_the_Codrops_GridLoadingEffects_contract_for_the_public_gallery"
+    ]
+  },
+  "fixtures": [
+    {
+      "path": "logo.webp",
+      "sha256": "b9db040bb228c81398f90eb3c1ee923975ab81f9ee9f6aa01bf5e14aa1d40841"
+    },
+    {
+      "path": "browser/node_modules/gsap/dist/gsap.min.js",
+      "sha256": "f6d6ecb1737ecfa9ec03e37591b8feca3b47676e69348c2e586a983a94ea109b"
+    },
+    {
+      "path": "browser/node_modules/gsap/dist/ScrollTrigger.min.js",
+      "sha256": "1e8cf34b75f894561f5d2ec7f57c689f4b5f0800e6975df514e40152bb1868a4"
+    }
+  ],
+  "limitations": [
+    "Exact GSAP/ScrollTrigger3.7.1 and canonical logo fixtures used because browser external CDN/media unavailable.",
+    "Live CDN/media delivery, Firefox/WebKit/native Safari and CWV scores are unproven."
+  ],
+  "verification_note": "First drawing run read geometry before the resize handler; harness now waits for pixel-rounded ScrollTrigger geometry. The corrected final21-cell drawing test PASS; ten other browser tests PASS on the same build."
+}
