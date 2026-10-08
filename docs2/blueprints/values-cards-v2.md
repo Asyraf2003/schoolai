@@ -1,6 +1,13 @@
 # MAP-V2-14 — Values cards integration
 
-Status: implementation submitted for review; runtime/browser proof not yet independently certified.
+Status: CLOSED for scoped V2 Values cards; merged main 34b017969bf0ca0afcfebef675f17d3782e8d9d9 via PR #77.
+
+## VERIFIED — 2026-10-08
+
+- [V2 cards scoped workflow](https://github.com/Asyraf2003/schoolai/actions/runs/37739051161) PASS: composer install, npm ci, structure check, Vite build, focused Laravel tests, Chromium cards test.
+- Chromium covered ID/EN/AR × widths 360/768/1024/1280/1440/1536, four semantic cards, non-overflowing local cards, scroll-reversible CSS3D, physical grid counts, and text fitting card bounds. No-JS fallback PASS after stylesheet load; reduced-motion static PASS.
+- Legacy [Security audit](https://github.com/Asyraf2003/schoolai/actions/runs/37739051097) retains npm dependency advisories (three total: one high/two critical); no package/lock changes occurred in this scope. Do not label full CI green.
+- Firefox/WebKit native devices, 200% zoom and short-height physical performance were not executed; retain as cross-browser follow-up, not false PASS.
 
 ## FACT
 
