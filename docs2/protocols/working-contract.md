@@ -226,3 +226,12 @@ plus Values card audit for future tier/locale/browser mapping. One production
 CSS owner changes:20existing rows,4.5s per leg, same travel/ease and pause policy.
 Canonical report: reports/values-card-audit.md; card implementation stays deferred.
 Publication uses the existing schoolai issue/PR/main authorization.
+
+## CURRENT FOLLOW-UP — MAP-V2-14 / V2 Values cards
+
+Owner explicitly requested completion of the previously deferred four Values Students
+cards in V2. Four existing localized Q/I/G/N data records and the legacy front/back
+identity are reused; legacy 670svh controller and Three.js remain isolated. The new
+responsive, reversible scroll adapter operates inside the accepted 500svh line runway.
+Source/proof plan: blueprints/values-cards-v2.md. Do not alter accepted Program/Values
+background directions (4.5s), the white SVG geometry, or Program dialog choreography.

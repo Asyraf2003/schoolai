@@ -9,7 +9,7 @@
     inline-size: min(90%, 112rem); margin-inline: auto;
     padding-block: 2rem clamp(4rem, 8svh, 8rem);
 }
-.values__cards-stage { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 4vw, 4rem); }
+.values__cards-stage { display: grid; direction: ltr; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 4vw, 4rem); }
 .values__card {
     position: relative; inline-size: 100%; max-inline-size: 22rem; min-inline-size: 0;
     aspect-ratio: .717; margin-inline: auto; container-type: inline-size;
@@ -66,6 +66,7 @@
     font-weight: 750; letter-spacing: .14em; text-align: center;
 }
 [lang="ar"] .values__card { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .values__card-face { direction: rtl; }
 [lang="ar"] .values__card-title { line-height: 1.45; letter-spacing: normal; }
 [lang="ar"] .values__card-summary { line-height: 1.55; text-transform: none; }
 [lang="ar"] .values__card-body { line-height: 1.72; }
@@ -102,6 +103,9 @@
         gap: clamp(.5rem, 1.8vw, 2rem);
     }
     .values[data-line-ready] .values__card { max-inline-size: 100%; }
+}
+@media (max-width: 767px) and (max-height: 620px) {
+    .values[data-line-ready] .values__card { max-inline-size: min(72vw, 16rem); }
 }
 @media (prefers-reduced-motion: reduce) {
     .values[data-line-ready] .values__cards-track {
