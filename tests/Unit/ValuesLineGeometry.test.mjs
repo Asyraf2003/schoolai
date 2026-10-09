@@ -1,80 +1,63 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import { createLineProgress } from '../../resources/js/sections/values-line-progress.js';
 
 const source = await fs.readFile(new URL('../../resources/views/landing/values-line.blade.php', import.meta.url), 'utf8');
-const numbers = source.match(/ d="([^"]+)"/s)[1].match(/-?\d+(?:\.\d+)?/g).map(Number);
-const curves = [];
-let start = numbers.slice(0, 2);
-for (let i = 2; i < numbers.length; i += 6) {
-    const curve = [start, numbers.slice(i, i + 2), numbers.slice(i + 2, i + 4), numbers.slice(i + 4, i + 6)];
-    curves.push(curve); start = curve[3];
-}
-
-test('one organic SVG curve has continuous tangent and curvature at every join', async () => {
-    assert.equal((source.match(/<path /g) ?? []).length, 1);
-    let previous;
-    for (const current of curves) {
-        if (previous) for (const axis of [0, 1]) {
-            const before = previous[3][axis] - previous[2][axis];
-            const after = current[1][axis] - current[0][axis];
-            assert.ok(Math.abs(before - after) < .003, 'tangent does not jump');
-            const beforeCurve = previous[3][axis] - 2 * previous[2][axis] + previous[1][axis];
-            const afterCurve = current[2][axis] - 2 * current[1][axis] + current[0][axis];
-            assert.ok(Math.abs(beforeCurve - afterCurve) < .005, 'curvature does not jump');
+const tags = [...source.matchAll(/<path[^>]*\sd="([^"]+)"[^>]*\/>/gs)];
+const paths = tags.map(match => {
+    const nums = match[1].match(/-?\d+(?:\.\d+)?/g).map(Number);
+    const curves = [];
+    let last = nums.slice(0, 2);
+    for (let i = 2; i < nums.length; i += 6) {
+        const next = [last, nums.slice(i, i + 2), nums.slice(i + 2, i + 4), nums.slice(i + 4, i + 6)];
+        assert.ok(next.every(point => point.length === 2));
+        curves.push(next); last = next[3];
+    }
+    const coords = [curves[0][0]];
+    for (const c of curves) for (let i = 1; i <= 240; i++) {
+        const t = i / 240, u = 1 - t;
+        coords.push([0, 1].map(a => u ** 3 * c[0][a] + 3 * u ** 2 * t * c[1][a]
+            + 3 * u * t ** 2 * c[2][a] + t ** 3 * c[3][a]));
+    }
+    return { curves, coords };
+});
+const width = 1920, height = 5400;
+const intersections = (first, second) => {
+    const left = Math.max(first.coords[0][1], second.coords[0][1]);
+    const right = Math.min(first.coords.at(-1)[1], second.coords.at(-1)[1]);
+    if (right <= left) return [];
+    const xAtY = (points, y) => {
+        let low = 0, high = points.length - 1;
+        while (high - low > 1) {
+            const mid = (low + high) >> 1;
+            if (points[mid][1] < y) low = mid; else high = mid;
         }
-        previous = current;
+        const a = points[low], b = points[high];
+        return a[0] + (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]);
+    };
+    const found = [];
+    let previous = xAtY(first.coords, left) - xAtY(second.coords, left);
+    for (let i = 1; i <= 3600; i++) {
+        const y = left + (right - left) * i / 3600;
+        const next = xAtY(first.coords, y) - xAtY(second.coords, y);
+        if (previous * next < 0) found.push(y);
+        previous = next;
+    }
+    return found;
+};
+test('three independent zigzag paths start and finish at side walls', () => {
+    assert.equal(paths.length, 3);
+    for (const { curves, coords } of paths) {
+        assert.ok(curves.length >= 3 && curves.length <= 5, 'each line has several directional bends');
+        assert.ok([coords[0], coords.at(-1)].every(p => p[0] < -12 || p[0] > width + 12));
+        assert.ok(curves.flat().every(p => p[1] > 0 && p[1] < height));
+        assert.ok(coords.every((p, i) => i === 0 || p[1] >= coords[i - 1][1]), 'progress moves vertically forward');
     }
 });
-
-test('both line caps stay beyond a side wall and never use the top or bottom edge', () => {
-    const [width, height] = source.match(/viewBox="0 0 (\d+) (\d+)"/).slice(1).map(Number);
-    for (const point of [curves[0][0], curves.at(-1)[3]]) {
-        assert.ok(point[0] < -12 || point[0] > width + 12, 'cap is clipped beyond a side wall');
-    }
-    assert.ok(curves.flat().every(point => point[1] > 0 && point[1] < height),
-        'the entire Bezier convex hull stays away from top/bottom clipping');
-});
-
-test('the organic line has no crossing or touching non-adjacent segments', () => {
-    const points = [curves[0][0]];
-    for (const curve of curves) {
-        // At 64 steps the second-derivative bound limits chord error to <0.1 SVG px.
-        const acceleration = [0, 1].map(index => Math.hypot(...[0, 1].map(axis =>
-            6 * (curve[index + 2][axis] - 2 * curve[index + 1][axis] + curve[index][axis]))));
-        assert.ok(Math.max(...acceleration) / (8 * 64 ** 2) < .1);
-        for (let step = 1; step <= 64; step++) {
-            const t = step / 64; const u = 1 - t;
-            points.push([0, 1].map(axis => u ** 3 * curve[0][axis] + 3 * u ** 2 * t * curve[1][axis]
-                + 3 * u * t ** 2 * curve[2][axis] + t ** 3 * curve[3][axis]));
-        }
-    }
-    const cross = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
-    for (let i = 0; i < points.length - 1; i++) for (let j = i + 2; j < points.length - 1; j++) {
-        const [a, b, c, d] = [points[i], points[i + 1], points[j], points[j + 1]];
-        if ([0, 1].some(axis => Math.max(a[axis], b[axis]) < Math.min(c[axis], d[axis])
-            || Math.max(c[axis], d[axis]) < Math.min(a[axis], b[axis]))) continue;
-        assert.ok(cross(a, b, c) * cross(a, b, d) > 0 || cross(c, d, a) * cross(c, d, b) > 0,
-            `line segments ${i}/${j} do not intersect`);
-    }
-});
-
-test('scroll mapping is monotonic, exact at seams and has continuous speed', () => {
-    const stops = [0, 2000, 6500, 9900, 13500, 16000];
-    const progress = createLineProgress(stops);
-    let previous = 0;
-    for (let index = 0; index <= 1000; index++) {
-        const value = progress(index / 1000);
-        assert.ok(value >= previous && value <= 1);
-        previous = value;
-    }
-    for (let index = 1; index < 5; index++) {
-        const p = index / 5;
-        assert.ok(Math.abs(progress(p) - stops[index] / stops.at(-1)) < 1e-12);
-        const left = (progress(p) - progress(p - 1e-6)) / 1e-6;
-        const right = (progress(p + 1e-6) - progress(p)) / 1e-6;
-        assert.ok(Math.abs(left - right) < .0001);
-    }
-    assert.equal(progress(0), 0); assert.equal(progress(1), 1);
+test('exactly one pair of paths crosses once; other pairs never cross', () => {
+    assert.equal(intersections(paths[0], paths[1]).length, 1);
+    assert.equal(intersections(paths[0], paths[2]).length, 0);
+    assert.equal(intersections(paths[1], paths[2]).length, 0);
+    const y = intersections(paths[0], paths[1])[0];
+    assert.ok(y > 1900 && y < 2300);
 });
