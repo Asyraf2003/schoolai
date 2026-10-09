@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('keeps Opening first and derives only explicitly promoted published Articles', function (): void {
+it('keeps V2 Hero video-only without reading promoted Articles', function (): void {
     PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
 
     HeroSetting::query()->firstOrFail()->update([
@@ -31,7 +31,6 @@ it('keeps Opening first and derives only explicitly promoted published Articles'
         'link_id' => url('/artikel/artikel-lama-test'),
         'published_at' => now()->subDay(),
     ]);
-
     $latest = Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
         'article_status' => Article::STATUS_PUBLISHED,
@@ -45,13 +44,6 @@ it('keeps Opening first and derives only explicitly promoted published Articles'
         'published_at' => now(),
     ]);
 
-    $this->withSession(['locale' => 'en'])
-        ->get(route('home'))
-        ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
-            && ($hero['slides'][0]['title'] ?? null) === 'School Opening'
-            && ! isset($hero['slides'][0]['article_id']));
-
     $latest->update(['hero_position' => 1]);
     $older->update(['hero_position' => 2]);
     $queries = collect();
@@ -62,33 +54,23 @@ it('keeps Opening first and derives only explicitly promoted published Articles'
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
         ->assertOk()
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 3
+        ->assertDontSee('Latest Article')
+        ->assertDontSee('Older Article')
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
             && ($hero['slides'][0]['title'] ?? null) === 'School Opening'
-            && ($hero['slides'][1]['title'] ?? null) === 'Latest Article'
-            && ($hero['slides'][1]['description'] ?? null) === 'Latest excerpt.'
-            && ($hero['slides'][2]['title'] ?? null) === 'Older Article');
+            && ! isset($hero['slides'][0]['article_id']));
 
-    $heroQuery = $queries->first(
+    $promotedRead = $queries->first(
         fn (string $sql): bool => str_contains($sql, 'hero_position')
             && str_contains($sql, 'is not null'),
     );
+    expect($promotedRead)->toBeNull();
 
-    expect($heroQuery)
-        ->toBeString()
-        ->not->toContain('content_id')
-        ->not->toContain('content_en')
-        ->not->toContain('content_ar')
-        ->not->toContain('select *');
-
-    $latest->update([
-        'title_en' => 'Updated Article Title',
-        'description_en' => 'Updated excerpt.',
-    ]);
-
+    $latest->update(['title_en' => 'Updated Article Title']);
     $this->withSession(['locale' => 'en'])
         ->get(route('home'))
-        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][1]['title'] ?? null) === 'Updated Article Title'
-            && ($hero['slides'][1]['description'] ?? null) === 'Updated excerpt.');
+        ->assertDontSee('Updated Article Title')
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1);
 
     $latest->update(['article_status' => Article::STATUS_DRAFT]);
     $older->delete();

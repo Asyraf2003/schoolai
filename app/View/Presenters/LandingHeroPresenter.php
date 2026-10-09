@@ -18,9 +18,10 @@ final class LandingHeroPresenter
     {
         $hero = array_replace_recursive(__('home.hero'), __('home_parity.hero'));
         $hero['fallback_image_url'] = config('media.static.hero_school');
+        // Homepage V2 shows the opening video only. Existing article placements
+        // remain stored for the legacy surface and admin; they are not V2 slides.
         $hero['slides'] = HomeHeroPresentation::decorate(array_values(array_filter([
             $this->openingHeroSlide($hero, app()->getLocale()),
-            ...$this->promotedArticleHeroSlides(app()->getLocale()),
         ])));
 
         return $hero;
