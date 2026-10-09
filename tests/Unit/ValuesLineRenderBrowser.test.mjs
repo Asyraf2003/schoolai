@@ -1,3 +1,4 @@
+import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, evidence } from './ProgramBrowserSupport.mjs';
@@ -11,7 +12,8 @@ for (const engine of engines) {
             await page.waitForFunction(() => !!window.ScrollTrigger?.getById('values-line'));
             for (const width of [360, 768, 1440]) {
                 await page.setViewportSize({ width, height: 900 });
-                await page.waitForTimeout(250);
+                    await settledValuesLayout(page);
+
                 await page.evaluate(() => {
                     const trigger = window.ScrollTrigger.getById('values-line');
                     scrollTo(0, Math.round((trigger.start + trigger.end) / 2));

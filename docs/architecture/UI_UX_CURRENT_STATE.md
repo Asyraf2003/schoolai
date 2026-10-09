@@ -10,10 +10,13 @@ shared perspective, native compact rows, spring/flip/fan/exit/float and original
 localized copy. Heading uses both reveal promises before its fixed880ms slide.
 PROOF: build/structure/diff, scoped PHP13/264 and pure JS11 PASS. Full PHP exact
 baseline parity:190pass/71fail/75error; no added failing/error test names.
-WebKit resize overflow isolated to card3D overflow and bounded at OLD clip owner;
-200% text and failure fallbacks tested. Current cross-engine fidelity run pending.
-STATUS: BLOCKED_BY_MISSING_EVIDENCE for final runtime/PR gates; no merge yet.
-NEXT channel Terminal Codex: finish Values proof, publish PR, merge on scoped PASS.
+WebKit resize overflow is bounded at OLD clip owner; explicit facing fixes its
+mirrored backface paint. Local final24runtime tests and4OLD comparison tests PASS.
+PR79 CI37922580027: Chromium PASS; WebKit14/18 PASS,4scroll/resize sampling failures.
+STATUS: FAIL CI WebKit; no merge. Independent frame sampling finds desktop p95
+50.1ms versus33.4ms baseline on headless Linux; hardware certification remains open.
+NEXT channel Terminal Codex: synchronize native browser actions, rerun CI and
+investigate measured frame cost before the scoped merge decision.
 
 ## ID Program heading horizontal timing — 2026-10-07
 

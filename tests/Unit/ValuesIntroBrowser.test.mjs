@@ -1,3 +1,4 @@
+import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -41,6 +42,7 @@ for (const engine of engines) {
                 await locale(page, language);
                 for (const width of widths) {
                     await page.setViewportSize({ width, height: 900 });
+                    await settledValuesLayout(page);
                     await enterValues(page);
                     await page.waitForFunction(() => document.querySelector('[data-program-values]').style.getPropertyValue('--program-values-morph-pct') === '100.00%');
                     await page.waitForFunction(() => document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).length === 0);
@@ -166,6 +168,7 @@ for (const engine of engines) {
                     await page.evaluate(() => document.fonts.ready);
                     for (const width of [360, 768, 1536]) {
                         await page.setViewportSize({ width, height: 900 });
+                    await settledValuesLayout(page);
                         await enterValues(page);
                         const state = await page.evaluate(valueState);
                         assert.equal(state.overflow, false, JSON.stringify(state));

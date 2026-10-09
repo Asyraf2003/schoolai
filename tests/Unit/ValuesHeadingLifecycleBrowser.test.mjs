@@ -29,8 +29,13 @@ for (const engine of engines) {
                         };
                         requestAnimationFrame(sample);
                         scrollTo(0, top);
-                        if (pattern === 'fast') setTimeout(() => scrollTo(0, top + 3600), 180);
-                        if (pattern === 'reverse') setTimeout(() => scrollTo(0, 0), 180);
+                    }, pattern);
+                    // The scroll scenario begins only after native scrolling has
+                    // actually triggered the sequence, including on a busy runner.
+                    await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.headingState === 'revealing');
+                    await page.evaluate(pattern => {
+                        if (pattern === 'fast') scrollBy(0, 3600);
+                        if (pattern === 'reverse') scrollTo(0, 0);
                         if (pattern === 'slow') {
                             let count = 0;
                             const move = () => { scrollBy(0, 2); if (++count < 120) requestAnimationFrame(move); };

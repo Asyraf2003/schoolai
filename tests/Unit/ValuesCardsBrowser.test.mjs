@@ -1,3 +1,4 @@
+import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence } from './ProgramBrowserSupport.mjs';
@@ -43,6 +44,7 @@ for (const engine of engines) {
                 await page.waitForFunction(() => document.querySelector('[data-values]').hasAttribute('data-line-ready'));
                 for (const width of [360, 390, 639, 640, 767, 768, 1023, 1024, 1279, 1280, 1440, 1535, 1536, 1920]) {
                     await page.setViewportSize({ width, height: 900 });
+                    await settledValuesLayout(page);
                     await page.evaluate(() => {
                         const track = document.querySelector('[data-values-cards-track]');
                         scrollTo(0, track.getBoundingClientRect().top + scrollY + (innerWidth >= 1280 ? 600 : 0));
@@ -75,7 +77,8 @@ for (const engine of engines) {
                             await page.evaluate(progress => {
                                 const track = document.querySelector('[data-values-cards-track]');
                                 const viewport = document.querySelector('[data-values-cards-viewport]');
-                                scrollTo(0, track.getBoundingClientRect().top + scrollY - 72
+                                scrollTo(0, track.getBoundingClientRect().top + scrollY
+                                    - parseFloat(getComputedStyle(document.querySelector('[data-values]')).scrollMarginBlockStart)
                                     + progress * (track.offsetHeight - viewport.offsetHeight));
                             }, progress);
                             await page.waitForFunction(progress => {
