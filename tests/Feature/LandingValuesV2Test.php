@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders four localized Values cards in V2 after Program with one line and one text plane', function (string $locale): void {
+it('renders four localized Values cards in V2 after Program with three independent lines and one text plane', function (string $locale): void {
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
     $response->assertViewIs('landing.index')
@@ -25,7 +25,7 @@ it('renders four localized Values cards in V2 after Program with one line and on
         ->and($dom->query('//*[@data-values-heading-line][@aria-hidden="true"]')->length)->toBe(2)
         ->and($dom->query('//section[@id="nilai"]//*[@data-values-line][@aria-hidden="true"]')->length)->toBe(1)
         ->and($dom->query('//*[@data-values-line]//*[local-name()="svg"][@viewbox="0 0 1920 5400"][@focusable="false"]')->length)->toBe(1)
-        ->and($dom->query('//*[@data-values-line]//*[local-name()="path"][@fill="none"][@stroke="#fff"]')->length)->toBe(1)
+        ->and($dom->query('//*[@data-values-line]//*[local-name()="path"][@fill="none"][@stroke="#fff"]')->length)->toBe(3)
         ->and($dom->query('//section[@id="nilai"]//*[@data-values-card]')->length)->toBe(4)
         ->and($dom->query('//section[@id="nilai"]//*[@data-values-card-inner]')->length)->toBe(4)
         ->and($dom->query('//section[@id="nilai"]//h3')->length)->toBe(4)

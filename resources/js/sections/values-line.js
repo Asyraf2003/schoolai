@@ -4,8 +4,8 @@ import { createValuesLineTimeline } from './values-line-timeline.js';
 export function mountValuesLine(root) {
     if (!root) return { suspend() {}, resume() {}, dispose() {} };
     const scene = root.querySelector('[data-values-line]');
-    const path = scene.querySelector('[data-values-line-path]');
-    const original = path.getAttribute('d');
+    const paths = [...scene.querySelectorAll('[data-values-line-path]')];
+    const originals = paths.map(path => path.getAttribute('d'));
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const lifecycle = new AbortController();
     let loading;
@@ -29,8 +29,10 @@ export function mountValuesLine(root) {
         loading?.abort(); loading = null;
         timeline?.scrollTrigger.kill(); timeline?.kill(); timeline = null;
         observer?.disconnect(); observer = null;
-        path.removeAttribute('style');
-        path.setAttribute('d', original);
+        paths.forEach((path, index) => {
+            path.removeAttribute('style');
+            path.setAttribute('d', originals[index]);
+        });
         scene.querySelector('svg').setAttribute('viewBox', '0 0 1920 5400');
         root.removeAttribute('data-line-ready');
         near = false; running = false;
@@ -44,13 +46,14 @@ export function mountValuesLine(root) {
             const ScrollTrigger = await loadGsapLibrary('ScrollTrigger', attempt.signal);
             if (attempt.signal.aborted || disposed || motion.matches) return;
             root.setAttribute('data-line-ready', '');
-            timeline = createValuesLineTimeline(gsap, ScrollTrigger, scene, path, original);
+            timeline = createValuesLineTimeline(gsap, ScrollTrigger, scene, paths, originals);
             running = true;
             synchronize();
         } catch {
             // The existing title/color surface remains usable without decoration.
             if (timeline) return;
-            root.removeAttribute('data-line-ready'); path.removeAttribute('style');
+            root.removeAttribute('data-line-ready');
+            paths.forEach(path => path.removeAttribute('style'));
         } finally {
             if (loading === attempt) {
                 loading = null;
@@ -60,7 +63,7 @@ export function mountValuesLine(root) {
     };
     const configure = () => {
         clear();
-        if (disposed || motion.matches || !('IntersectionObserver' in window) || !path.getTotalLength) return;
+        if (disposed || motion.matches || !('IntersectionObserver' in window) || !paths.every(path => path.getTotalLength)) return;
         observer = new IntersectionObserver(entries => {
             near = entries.some(entry => entry.isIntersecting);
             prepare(); synchronize();
@@ -77,7 +80,7 @@ export function mountValuesLine(root) {
     window.addEventListener('resize', () => {
         if (!timeline) return;
         timeline.scrollTrigger.kill(); timeline.kill();
-        timeline = createValuesLineTimeline(window.gsap, window.ScrollTrigger, scene, path, original);
+        timeline = createValuesLineTimeline(window.gsap, window.ScrollTrigger, scene, paths, originals);
         running = true; synchronize();
     }, { signal: lifecycle.signal });
     configure();
