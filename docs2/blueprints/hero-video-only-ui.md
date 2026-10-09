@@ -1,7 +1,8 @@
 # MAP-V2-16 — Hero V2 video-only UI
 
-STATUS: VERIFYING
-SOURCE MAIN: ef62c3023ca27da15fd02cab994e6b9572315ffc
+STATUS: CLOSED (scoped CI PASS; existing repository security baseline FAIL)
+SOURCE BASE MAIN: ef62c3023ca27da15fd02cab994e6b9572315ffc
+MERGE MAIN: 3b9e269798be58315c54d403186790ec2db465d0
 ISSUE: https://github.com/Asyraf2003/schoolai/issues/80
 BRANCH: fix/hero-v2-video-only-ui
 
@@ -50,14 +51,14 @@ Produce one opening slide via the existing V2 presenter. Keep the shared old/adm
 
 ## PROOF
 
-Run focused V2 PHP feature tests (LandingV2, HeroArticlePlacement, HeroDatabaseFallback), structural check, Vite build and browser DOM test in Chromium and WebKit. CI link and final commit are recorded in issue/PR.
+PROVEN: [Hero video-only CI](https://github.com/Asyraf2003/schoolai/actions/runs/37997336131) completed SUCCESS: Chromium/WebKit, ID/EN/AR, 390px and 1440px, one video/slide, controls hidden, looping/poster and RTL. Scoped PHP feature tests (LandingV2, HeroArticlePlacement, HeroDatabaseFallback), source structure, Vite build and media runtime unit tests PASS. Screenshots are available as workflow artifacts.
 
 The first CI attempt also included the unchanged PublicAuthAndPpdbAccessTest.php, which failed 13 existing legacy-view / navigation expectations (missing auth.login-perspective and pages.ppdb views; login-link count mismatch). All 10 other selected tests passed. The unrelated legacy suite is explicitly excluded from this V2 Hero UI acceptance gate, not silently reported green.
 
 ## GIT
 
-Issue #80; branch fix/hero-v2-video-only-ui; PR pending.
+Issue #80 CLOSED; branch fix/hero-v2-video-only-ui; PR #81 MERGED to main at 3b9e269798be58315c54d403186790ec2db465d0. Repository-wide security audit still FAILs on the pre-existing dependency findings; no dependencies changed.
 
 ## NEXT VALID STEP
 
-Merge after scoped CI passes. Then close the issue and leave the PPDB policy for a separately authorized request.
+No further Hero UI action in this scope. PPDB heading/link contract and admin Article Spotlight cleanup are separate, owner-gated follow-ups.
