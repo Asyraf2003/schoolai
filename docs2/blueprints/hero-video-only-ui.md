@@ -50,7 +50,9 @@ Produce one opening slide via the existing V2 presenter. Keep the shared old/adm
 
 ## PROOF
 
-Run focused PHP feature tests, structural check, Vite build and browser DOM test in Chromium and WebKit. CI link and final commit are recorded in issue/PR.
+Run focused V2 PHP feature tests (LandingV2, HeroArticlePlacement, HeroDatabaseFallback), structural check, Vite build and browser DOM test in Chromium and WebKit. CI link and final commit are recorded in issue/PR.
+
+The first CI attempt also included the unchanged PublicAuthAndPpdbAccessTest.php, which failed 13 existing legacy-view / navigation expectations (missing auth.login-perspective and pages.ppdb views; login-link count mismatch). All 10 other selected tests passed. The unrelated legacy suite is explicitly excluded from this V2 Hero UI acceptance gate, not silently reported green.
 
 ## GIT
 
