@@ -21,11 +21,11 @@ CPU1×; worst p9516.8ms. Headless software desktop50.1ms versusbaseline33.4ms;
 software60fps budget FAIL, not hidden by the hardware result. No device/CWV claim.
 STATUS: PASS scoped local behavior/fidelity; FAIL repository baseline/software
 frame budget; BLOCKED_BY_MISSING_EVIDENCE native Safari/device/field certification.
-CI80b78606: Chromium PASS, WebKit17/18 PASS; one compact AR sample read a
-previous pose after page activation. Test now awaits native position/paint and
-samples each reference in the foreground. Final browser rerun required.
-NEXT channel Terminal Codex: require both PR browser checks PASS before merge;
-PR79 is the authoritative publication/merge-SHA record. No new surface authorized.
+CI c95f6542 / run37993186545: Chromium PASS and WebKit PASS (18tests each).
+Compact fidelity samples await native scroll and foreground paint; both engines
+also passed the final isolated compact rerun after environment restoration.
+NEXT channel Terminal Codex: merge PR79 after the documentation-only head check;
+PR79 records the merged SHA. No new surface authorized.
 
 ## ID Program heading horizontal timing — 2026-10-07
 

@@ -1,7 +1,8 @@
 # Values OLD fidelity / heading sequence — issue #78
 
 Status: PASS scoped local implementation/runtime; repository baseline remains FAIL.
-Publication gate: both browser CI jobs must PASS on the PR head before merge.
+CI PASS: [run37993186545](https://github.com/Asyraf2003/schoolai/actions/runs/37993186545), source/test commit c95f6542.
+Chromium18/18 and WebKit18/18. Final documentation-only head retains identical code.
 [PR #79](https://github.com/Asyraf2003/schoolai/pull/79) records CI and the merged SHA.
 Baseline main:2b879e944c93b19244829287ab42d51936f4a04d.
 Branch:fix/values-old-fidelity-heading. Blueprint:MAP-V2-15.

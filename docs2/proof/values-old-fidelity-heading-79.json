@@ -116,7 +116,7 @@
     "field p75 CWV",
     "Lighthouse/PSI scores"
   ],
-  "testRevision": "ab73c286f1bf103ba18a1694baf4f595506faf63",
+  "testRevision": "c95f6542966833df0987e1adc034b9a835b1e315",
   "performance": {
     "gpu": {
       "final": {
@@ -810,12 +810,11 @@
   },
   "ci": {
     "publicationRecord": "https://github.com/Asyraf2003/schoolai/pull/79",
-    "requiredForMerge": [
-      "cards (chromium)",
-      "cards (webkit)"
-    ],
-    "atCapture": "Final CI in progress; merge is gated on both passing",
-    "sourceRun": "https://github.com/Asyraf2003/schoolai/actions/runs/37931418744"
+    "sourceRun": "https://github.com/Asyraf2003/schoolai/actions/runs/37993186545",
+    "sourceRevision": "c95f6542966833df0987e1adc034b9a835b1e315",
+    "chromium": "PASS 18/18",
+    "webkit": "PASS 18/18",
+    "publicationGate": "Both browser jobs pass; subsequent documentation-only changes do not alter tested source"
   },
   "localGates": {
     "valuesRuntime": "24/24 PASS",
