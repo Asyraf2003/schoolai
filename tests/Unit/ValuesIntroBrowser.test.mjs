@@ -66,13 +66,16 @@ for (const engine of engines) {
                 }
             }
             await page.setViewportSize({ width: 1440, height: 900 });
+            await settledValuesLayout(page);
             const colors = [];
             for (const ratio of [1.2, .94, .68, .94, 1.2]) {
                 await page.evaluate(ratio => {
                     const bottom = document.querySelector('[data-program]').getBoundingClientRect().bottom + scrollY;
                     scrollTo(0, bottom - innerHeight * ratio);
                 }, ratio);
-                await page.waitForTimeout(350);
+                await page.waitForFunction(ratio => Math.abs(document.querySelector('[data-program]').getBoundingClientRect().bottom
+                    - innerHeight * ratio) <= 1, ratio);
+                await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
                 colors.push(await page.evaluate(valueState));
             }
             assert.equal(colors[0].pct, '0.00%');
@@ -118,12 +121,22 @@ for (const engine of engines) {
                     reveals[1].currentTime = 450;
                     await new Promise(requestAnimationFrame);
                     const incomplete = snapshot();
+                    // Observe the completion transition in the same task, before
+                    // the compositor can advance the new animation on a busy CI VM.
+                    const shifting = new Promise(resolve => {
+                        const observer = new MutationObserver(() => {
+                            if (heading.dataset.headingState !== 'shifting') return;
+                            observer.disconnect();
+                            const shift = heading.lastElementChild.getAnimations()[0];
+                            shift.pause(); shift.currentTime = 0; resolve(shift);
+                        });
+                        observer.observe(heading, { attributes: true, attributeFilter: ['data-heading-state'] });
+                    });
                     reveals[1].finish();
-                    await new Promise(requestAnimationFrame);
-                    const shifts = heading.lastElementChild.getAnimations();
-                    shifts.forEach(animation => { animation.pause(); animation.currentTime = 0; });
+                    const shift = await shifting;
+                    await shift.ready;
                     const revealed = snapshot();
-                    shifts.forEach(animation => animation.finish());
+                    shift.finish();
                     await new Promise(requestAnimationFrame);
                     return [incomplete, revealed, snapshot()];
                 });
