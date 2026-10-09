@@ -46,7 +46,7 @@ it('preserves the admissions campaign while registration is open', function (): 
         ->assertViewHas('hero', fn (array $hero): bool => $hero['slides'][0]['is_ppdb_campaign'] === true);
 });
 
-it('shows only published promoted stories after the opening hero', function (): void {
+it('renders a single opening video without carousel controls even when an article is promoted', function (): void {
     $story = Article::query()->create([
         'article_source' => Article::SOURCE_NATIVE,
         'article_status' => Article::STATUS_PUBLISHED,
@@ -60,17 +60,27 @@ it('shows only published promoted stories after the opening hero', function (): 
         'hero_position' => 1,
     ]);
 
-    $this->get(route('home'))
-        ->assertSee('Our school story')
-        ->assertSee('data-next', false)
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides']) === 2
-            && $hero['slides'][1]['article_id'] === $story->id);
+    foreach (['id', 'en', 'ar'] as $locale) {
+        $response = $this->withSession(['locale' => $locale])->get(route('home'));
+        $response
+            ->assertOk()
+            ->assertSee(config('media.homepage_hero_video_url'), false)
+            ->assertDontSee('data-next', false)
+            ->assertDontSee('data-previous', false)
+            ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
+                && ($hero['slides'][0]['is_opening'] ?? false) === true
+                && ($hero['slides'][0]['render_type'] ?? null) === 'video'
+                && ! isset($hero['slides'][0]['article_id']));
+
+        $html = $response->getContent();
+        expect(substr_count($html, ' data-slide '))->toBe(1)
+            ->and(substr_count($html, '<video data-video'))->toBe(1);
+    }
 
     $story->update(['article_status' => Article::STATUS_DRAFT]);
 
     $this->get(route('home'))
-        ->assertDontSee('Our school story')
-        ->assertDontSee('data-next', false);
+        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1);
 });
 
 it('switches the landing language through the existing route', function (string $locale, string $direction): void {

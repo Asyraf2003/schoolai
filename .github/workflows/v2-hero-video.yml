@@ -1,0 +1,92 @@
+name: V2 Hero video-only UI verification
+
+on:
+  pull_request:
+    paths:
+      - 'app/View/Presenters/LandingHeroPresenter.php'
+      - 'tests/Feature/LandingV2Test.php'
+      - 'tests/Feature/HeroArticlePlacementTest.php'
+      - 'tests/Unit/HeroVideoOnlyBrowser.test.mjs'
+      - '.github/workflows/v2-hero-video.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  video-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci
+      - run: npm run check:structure
+      - run: npm run build
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+      - name: Run scoped Hero and PPDB PHP tests
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: >-
+          php artisan test
+          tests/Feature/LandingV2Test.php
+          tests/Feature/HeroArticlePlacementTest.php
+          tests/Feature/HeroDatabaseFallbackTest.php
+          tests/Feature/PublicAuthAndPpdbAccessTest.php
+      - name: Test existing single-video playback policy
+        run: node --test tests/Unit/HeroMediaPolicyRuntime.test.mjs
+      - name: Prepare browsers
+        run: |
+          npm install --no-save --no-package-lock playwright@1.58.2
+          npx playwright install --with-deps chromium webkit
+          curl -fL https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js -o /tmp/gsap.min.js
+          curl -fL https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/ScrollTrigger.min.js -o /tmp/ScrollTrigger.min.js
+          CHROME="$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*/chrome-linux*/*' -print -quit)"
+          test -n "$CHROME"
+          echo "PROGRAM_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+      - name: Start seeded homepage
+        run: |
+          php artisan migrate:fresh --seed --force
+          php artisan serve --host=127.0.0.1 --port=8000 > /tmp/hero-video-serve.log 2>&1 &
+          for n in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/hero-video-serve.log
+          exit 1
+      - name: Verify Hero DOM in browser
+        env:
+          PROGRAM_BROWSER_URL: http://127.0.0.1:8000
+          PROGRAM_PLAYWRIGHT_MODULE: playwright
+          PROGRAM_ENGINES: ${{ matrix.engine }}
+          PROGRAM_GSAP_FIXTURE: /tmp/gsap.min.js
+          PROGRAM_SCROLLTRIGGER_FIXTURE: /tmp/ScrollTrigger.min.js
+        run: node --test --test-timeout=420000 tests/Unit/HeroVideoOnlyBrowser.test.mjs
+      - name: Upload screenshots on CI
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-video-only-${{ matrix.engine }}
+          path: |
+            /tmp/hero-video-only-*.png
+            /tmp/hero-video-serve.log
