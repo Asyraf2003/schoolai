@@ -12,6 +12,8 @@ for (const engine of engines) {
                     for (const width of [390, 1440]) {
                         const page = runtime.page;
                         await page.setViewportSize({ width, height: 900 });
+                        // This heading is intentionally one-shot: reload for every viewport.
+                        await page.reload({ waitUntil: 'domcontentloaded' });
                         await page.evaluate(() => scrollTo(0, 0));
                         await page.waitForFunction(() => document.querySelector('[data-program-heading]').dataset.headingState === 'idle');
                         const amount = await page.evaluate(() => {
