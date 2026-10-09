@@ -42,7 +42,7 @@ jobs:
           cp .env.example .env
           php artisan key:generate
           touch database/database.sqlite
-      - name: Run scoped Hero and PPDB PHP tests
+      - name: Run scoped V2 Hero PHP tests
         env:
           APP_ENV: testing
           DB_CONNECTION: sqlite
@@ -52,7 +52,6 @@ jobs:
           tests/Feature/LandingV2Test.php
           tests/Feature/HeroArticlePlacementTest.php
           tests/Feature/HeroDatabaseFallbackTest.php
-          tests/Feature/PublicAuthAndPpdbAccessTest.php
       - name: Test existing single-video playback policy
         run: node --test tests/Unit/HeroMediaPolicyRuntime.test.mjs
       - name: Prepare browsers
