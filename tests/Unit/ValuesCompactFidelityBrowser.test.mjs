@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
+import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import { oldValuesReference } from './ValuesOldReference.mjs';
 
 const inspect = () => [...document.querySelectorAll('[data-values-card]')].map(card => ({
@@ -14,7 +15,11 @@ const position = async (page, visible) => {
         const card = document.querySelector('[data-values-card]');
         scrollTo(0, card.getBoundingClientRect().top + scrollY - innerHeight + card.offsetHeight * visible);
     }, visible);
-    await page.waitForTimeout(500);
+    await page.waitForFunction(visible => {
+        const card = document.querySelector('[data-values-card]');
+        return !document.hidden && Math.abs(innerHeight - card.getBoundingClientRect().top - card.offsetHeight * visible) <= 1;
+    }, visible);
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 };
 for (const engine of engines) {
     test(`Values matches OLD natural rows and visibility flips on compact tiers in ${engine}`, { skip: !enabled }, async () => {
@@ -26,6 +31,7 @@ for (const engine of engines) {
                 await locale(runtime.page, lang);
                 for (const width of [390, 768, 1024]) {
                     await runtime.page.setViewportSize({ width, height: 900 });
+                    await settledValuesLayout(runtime.page);
                     await runtime.page.evaluate(() => scrollTo(0, document.querySelector('[data-values]').getBoundingClientRect().top + scrollY));
                     await runtime.page.waitForFunction(() => document.querySelector('[data-values]').hasAttribute('data-line-ready'));
                     const old = await oldValuesReference(runtime.context, runtime.page);
@@ -33,9 +39,9 @@ for (const engine of engines) {
                     try {
                         for (const visible of [.62, .9, 1]) {
                             await position(runtime.page, visible);
+                            const after = await runtime.page.evaluate(inspect);
                             await position(old, visible);
                             const before = await old.evaluate(inspect);
-                            const after = await runtime.page.evaluate(inspect);
                             for (let index = 0; index < 4; index++) {
                                 assert.ok(Math.abs(before[index].width - after[index].width) <= 1);
                                 assert.ok(Math.abs(before[index].height - after[index].height) <= 2);
