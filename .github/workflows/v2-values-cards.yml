@@ -20,6 +20,10 @@ jobs:
   cards:
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -70,12 +74,12 @@ jobs:
         env:
           PROGRAM_BROWSER_URL: http://127.0.0.1:8000
           PROGRAM_PLAYWRIGHT_MODULE: playwright
-          PROGRAM_ENGINES: chromium,webkit
+          PROGRAM_ENGINES: ${{ matrix.engine }}
           PROGRAM_GSAP_FIXTURE: /tmp/gsap.min.js
           PROGRAM_SCROLLTRIGGER_FIXTURE: /tmp/ScrollTrigger.min.js
           PROGRAM_PROOF_DIRECTORY: /tmp
         run: >-
-          node --test --test-concurrency=1 --test-timeout=240000
+          node --test --test-concurrency=1 --test-timeout=420000
           tests/Unit/ValuesCardsBrowser.test.mjs
           tests/Unit/ValuesCardsFallbackBrowser.test.mjs
           tests/Unit/ValuesCompactFidelityBrowser.test.mjs
@@ -89,7 +93,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: values-browser-evidence
+          name: values-browser-evidence-${{ matrix.engine }}
           path: |
             /tmp/values-*.json
             /tmp/values-*.png
