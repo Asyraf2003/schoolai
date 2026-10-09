@@ -168,7 +168,6 @@ for (const engine of engines) {
                     await page.evaluate(() => document.fonts.ready);
                     for (const width of [360, 768, 1536]) {
                         await page.setViewportSize({ width, height: 900 });
-                    await settledValuesLayout(page);
                         await enterValues(page);
                         const state = await page.evaluate(valueState);
                         assert.equal(state.overflow, false, JSON.stringify(state));
