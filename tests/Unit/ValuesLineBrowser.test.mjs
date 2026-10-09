@@ -125,7 +125,7 @@ for (const engine of engines) {
             assert.equal((await page.evaluate(state)).gsapScripts, 1);
             assert.equal((await page.evaluate(state)).triggers, 1);
             await page.emulateMedia({ reducedMotion: 'reduce' });
-            await page.waitForTimeout(60);
+            await page.waitForFunction(() => !document.querySelector('[data-values]').hasAttribute('data-line-ready'));
             const reduced = await page.evaluate(state);
             assert.equal(reduced.ready, false); assert.equal(reduced.triggers, 0);
             await page.emulateMedia({ reducedMotion: 'no-preference' });

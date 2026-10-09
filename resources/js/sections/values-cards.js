@@ -64,8 +64,9 @@ export function mountValuesCards(root) {
     };
     const paint = time => {
         frame = 0;
-        if (suspended || document.hidden || !near) return;
+        if (suspended || document.hidden) return;
         if (dirty) measure();
+        if (!near) { reset(); return; }
         if (!capable || motion.matches || geometry.flow || !root.hasAttribute('data-line-ready')) { reset(); return; }
         root.dataset.cardsMotion = 'true'; running();
         const desktop = geometry.mode === 4;
@@ -94,18 +95,17 @@ export function mountValuesCards(root) {
         if (desktop && !sample.settled) schedule(); else last = 0;
     };
     const schedule = () => {
-        if (!frame && near && !suspended && !document.hidden) frame = requestAnimationFrame(paint);
+        if (!frame && (near || dirty) && !suspended && !document.hidden) frame = requestAnimationFrame(paint);
     };
     const invalidate = () => {
         dirty = true;
-        // Offscreen slots still reflow on resize; old desktop offsets must not
-        // remain attached to a newly compact grid while its RAF is suspended.
-        if (!near) { measure(); reset(); }
+        // Defer writes outside ResizeObserver delivery, including offscreen
+        // geometry cleanup. Synchronous remeasurement can feed its own resize.
         schedule();
     };
     const observer = capable ? new IntersectionObserver(entries => {
         near = entries.some(entry => entry.isIntersecting);
-        if (near) { dirty = true; schedule(); } else cancel();
+        if (near) { dirty = true; schedule(); } else { cancel(); if (dirty) schedule(); }
         running();
     }) : null;
     observer?.observe(track);

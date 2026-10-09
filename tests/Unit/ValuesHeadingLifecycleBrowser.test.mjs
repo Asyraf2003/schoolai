@@ -37,7 +37,12 @@ for (const engine of engines) {
                             requestAnimationFrame(move);
                         }
                     }, pattern);
-                    await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.headingState === 'complete');
+                    await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.headingState === 'complete').catch(async error => {
+                        const state = await page.evaluate(() => ({ hidden: document.hidden, scroll: scrollY,
+                            heading: document.querySelector('[data-values-heading]').dataset.headingState,
+                            frames: window.valuesFrames?.slice(-3) }));
+                        throw new Error(`${lang}/${pattern}: ${error.message}; ${JSON.stringify(state)}`);
+                    });
                     const frames = await page.evaluate(() => window.valuesFrames);
                     const shifted = frames.find(f => Math.abs(f.x) > .01);
                     const reveal = frames.find(f => f.state === 'revealing');
