@@ -1,0 +1,832 @@
+{
+  "issue": 78,
+  "pr": 79,
+  "source": "7ff1985143153e95e3a9a775f34124c423b87b93 (last production change)",
+  "status": "PASS scoped local implementation/runtime; baseline failures and software frame limitation recorded",
+  "engines": {
+    "chromium": "153.0.8010.52",
+    "webkit": "26.6 WPE Linux"
+  },
+  "matrix": {
+    "widths": [
+      360,
+      390,
+      639,
+      640,
+      767,
+      768,
+      1023,
+      1024,
+      1279,
+      1280,
+      1440,
+      1535,
+      1536,
+      1920
+    ],
+    "locales": [
+      "id",
+      "en",
+      "ar"
+    ],
+    "desktopPhases": [
+      0,
+      0.025,
+      0.065,
+      0.118,
+      0.16,
+      0.237,
+      0.31,
+      0.65,
+      0.92,
+      0.98
+    ],
+    "compactWidths": [
+      390,
+      768,
+      1024
+    ],
+    "compactVisible": [
+      0.62,
+      0.9,
+      1
+    ]
+  },
+  "php": {
+    "baseline": {
+      "tool": "pest",
+      "result": "failed",
+      "tests": 336,
+      "passed": 190,
+      "assertions": 1746,
+      "duration_ms": 9612,
+      "failed": 71,
+      "errors": 75
+    },
+    "final": {
+      "tool": "pest",
+      "result": "failed",
+      "tests": 336,
+      "passed": 190,
+      "assertions": 1746,
+      "duration_ms": 16271,
+      "failed": 71,
+      "errors": 75
+    },
+    "failures": {
+      "added": [],
+      "removed": []
+    },
+    "error_details": {
+      "added": [],
+      "removed": []
+    }
+  },
+  "screenshots": [
+    {
+      "file": "values-fidelity-chromium-old-0.118.png",
+      "sha256": "83d5937b42398e9fd34322afe5a463370680d5148727ef96ec951c8f1c987cda"
+    },
+    {
+      "file": "values-fidelity-chromium-v2-0.118.png",
+      "sha256": "d075d0c8ea279aac8a403c4ec76410e2bff1f8f0bab6189538a43b8c070eda49"
+    },
+    {
+      "file": "values-fidelity-chromium-old-0.65.png",
+      "sha256": "3c582496a2a9a0761739ca22c4dc84684e8a97f42c4eb10aaf6adba6c0692703"
+    },
+    {
+      "file": "values-fidelity-chromium-v2-0.65.png",
+      "sha256": "80daebc241259d90c3a54e6ef995e46877023ec4fa1a8f9b8239718789eaa2fc"
+    },
+    {
+      "file": "values-compact-chromium-ar-390-old.png",
+      "sha256": "60e09be46013f42374c07c1944b99565653efe93857691d81f485a05722c1f83"
+    },
+    {
+      "file": "values-compact-chromium-ar-390-v2.png",
+      "sha256": "912dc6b7a01936ce0b6eb81a17b9400ce90262cba6869647ac4b340a16db9964"
+    }
+  ],
+  "unverified": [
+    "native Safari/iOS",
+    "physical devices",
+    "native zoom (CSS text expansion tested)",
+    "screen-reader walkthrough (semantic DOM tested)",
+    "field p75 CWV",
+    "Lighthouse/PSI scores"
+  ],
+  "testRevision": "ab73c286f1bf103ba18a1694baf4f595506faf63",
+  "performance": {
+    "gpu": {
+      "final": {
+        "date": "2026-10-09T12:38:47.888Z",
+        "profile": "Linux headed Chromium AMD Radeon 840M; warm local assets; 900px height; 3s native scroll; no network throttling",
+        "gpu": {
+          "devices": [
+            {
+              "vendorId": 4098,
+              "deviceId": 6402,
+              "vendorString": "Google Inc. (AMD)",
+              "deviceString": "ANGLE (AMD, AMD Radeon 840M Graphics (radeonsi gfx1153 ACO), OpenGL 4.6 (Core Profile) Mesa 26.2.4-arch1.1)",
+              "driverVendor": "Mesa",
+              "driverVersion": "26.2.4"
+            }
+          ],
+          "features": {
+            "2d_canvas": "enabled",
+            "direct_rendering_display_compositor": "disabled_off_ok",
+            "gpu_compositing": "enabled",
+            "multiple_raster_threads": "enabled_on",
+            "opengl": "enabled_on",
+            "rasterization": "enabled",
+            "raw_draw": "disabled_off_ok",
+            "skia_graphite": "disabled_off",
+            "trees_in_viz": "disabled_off",
+            "video_decode": "enabled",
+            "video_encode": "disabled_software",
+            "vulkan": "disabled_off",
+            "webgl": "enabled",
+            "webgpu": "enabled",
+            "webgpu_on_vk_via_gl_interop": "disabled_off",
+            "webnn": "disabled_off"
+          }
+        },
+        "samples": [
+          {
+            "width": 390,
+            "run": 0,
+            "cpu": 4,
+            "p95": 16.700000000000728,
+            "max": 33.30000000000018,
+            "frames": 180,
+            "delta": {
+              "TaskDuration": 2.559014,
+              "ScriptDuration": 0.528393,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.68874
+            }
+          },
+          {
+            "width": 390,
+            "run": 1,
+            "cpu": 4,
+            "p95": 16.700000000000728,
+            "max": 33.399999999999636,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 2.573546,
+              "ScriptDuration": 0.520464,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.706313
+            }
+          },
+          {
+            "width": 390,
+            "run": 2,
+            "cpu": 4,
+            "p95": 16.800000000000182,
+            "max": 33.40000000000009,
+            "frames": 178,
+            "delta": {
+              "TaskDuration": 2.555508,
+              "ScriptDuration": 0.512304,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.692711
+            }
+          },
+          {
+            "width": 1440,
+            "run": 0,
+            "cpu": 1,
+            "p95": 16.800000000000182,
+            "max": 33.30000000000018,
+            "frames": 178,
+            "delta": {
+              "TaskDuration": 1.015421,
+              "ScriptDuration": 0.193421,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.292958
+            }
+          },
+          {
+            "width": 1440,
+            "run": 1,
+            "cpu": 1,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 0.888971,
+              "ScriptDuration": 0.165851,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.244313
+            }
+          },
+          {
+            "width": 1440,
+            "run": 2,
+            "cpu": 1,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 182,
+            "delta": {
+              "TaskDuration": 0.877891,
+              "ScriptDuration": 0.165941,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.250173
+            }
+          }
+        ],
+        "summary": {
+          "390": {
+            "p95MedianMs": 16.7,
+            "p95WorstMs": 16.8,
+            "worstFrameMs": 33.4
+          },
+          "1440": {
+            "p95MedianMs": 16.7,
+            "p95WorstMs": 16.8,
+            "worstFrameMs": 33.3
+          }
+        }
+      },
+      "baseline": {
+        "date": "2026-10-09T12:39:31.338Z",
+        "profile": "Linux headed Chromium AMD Radeon 840M; warm local assets; 900px height; 3s native scroll; no network throttling",
+        "gpu": {
+          "devices": [
+            {
+              "vendorId": 4098,
+              "deviceId": 6402,
+              "vendorString": "Google Inc. (AMD)",
+              "deviceString": "ANGLE (AMD, AMD Radeon 840M Graphics (radeonsi gfx1153 ACO), OpenGL 4.6 (Core Profile) Mesa 26.2.4-arch1.1)",
+              "driverVendor": "Mesa",
+              "driverVersion": "26.2.4"
+            }
+          ],
+          "features": {
+            "2d_canvas": "enabled",
+            "direct_rendering_display_compositor": "disabled_off_ok",
+            "gpu_compositing": "enabled",
+            "multiple_raster_threads": "enabled_on",
+            "opengl": "enabled_on",
+            "rasterization": "enabled",
+            "raw_draw": "disabled_off_ok",
+            "skia_graphite": "disabled_off",
+            "trees_in_viz": "disabled_off",
+            "video_decode": "enabled",
+            "video_encode": "disabled_software",
+            "vulkan": "disabled_off",
+            "webgl": "enabled",
+            "webgpu": "enabled",
+            "webgpu_on_vk_via_gl_interop": "disabled_off",
+            "webnn": "disabled_off"
+          }
+        },
+        "samples": [
+          {
+            "width": 390,
+            "run": 0,
+            "cpu": 4,
+            "p95": 16.799999999999272,
+            "max": 16.800000000000182,
+            "frames": 182,
+            "delta": {
+              "TaskDuration": 2.509788,
+              "ScriptDuration": 0.511092,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.69027
+            }
+          },
+          {
+            "width": 390,
+            "run": 1,
+            "cpu": 4,
+            "p95": 16.799999999999272,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 2.555687,
+              "ScriptDuration": 0.51631,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.713963
+            }
+          },
+          {
+            "width": 390,
+            "run": 2,
+            "cpu": 4,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 2.5218439999999998,
+              "ScriptDuration": 0.51894,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.702377
+            }
+          },
+          {
+            "width": 1440,
+            "run": 0,
+            "cpu": 1,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 0.916167,
+              "ScriptDuration": 0.167281,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.253992
+            }
+          },
+          {
+            "width": 1440,
+            "run": 1,
+            "cpu": 1,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 0.896419,
+              "ScriptDuration": 0.164485,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.249073
+            }
+          },
+          {
+            "width": 1440,
+            "run": 2,
+            "cpu": 1,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 0.902665,
+              "ScriptDuration": 0.164675,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.249343
+            }
+          }
+        ],
+        "summary": {
+          "390": {
+            "p95MedianMs": 16.8,
+            "p95WorstMs": 16.8,
+            "worstFrameMs": 16.8
+          },
+          "1440": {
+            "p95MedianMs": 16.7,
+            "p95WorstMs": 16.7,
+            "worstFrameMs": 16.8
+          }
+        }
+      }
+    },
+    "software": {
+      "final": {
+        "date": "2026-10-09T11:23:50.832Z",
+        "profile": "Linux headless Chromium; warm local assets; 900px height; 3s native scroll; no network throttling",
+        "gpu": {
+          "compositing": "disabled_software",
+          "renderer": "SwiftShader; verified with CDP SystemInfo"
+        },
+        "samples": [
+          {
+            "width": 390,
+            "run": 0,
+            "cpu": 4,
+            "p95": 16.800000000000182,
+            "max": 33.40000000000009,
+            "frames": 176,
+            "delta": {
+              "TaskDuration": 2.6470360000000004,
+              "ScriptDuration": 0.560451,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.708941
+            }
+          },
+          {
+            "width": 390,
+            "run": 1,
+            "cpu": 4,
+            "p95": 16.800000000000182,
+            "max": 33.30000000000018,
+            "frames": 175,
+            "delta": {
+              "TaskDuration": 2.648826,
+              "ScriptDuration": 0.558,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.712694
+            }
+          },
+          {
+            "width": 390,
+            "run": 2,
+            "cpu": 4,
+            "p95": 16.800000000000182,
+            "max": 33.40000000000009,
+            "frames": 176,
+            "delta": {
+              "TaskDuration": 2.670342,
+              "ScriptDuration": 0.565133,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.720234
+            }
+          },
+          {
+            "width": 1440,
+            "run": 0,
+            "cpu": 1,
+            "p95": 50.100000000000364,
+            "max": 83.30000000000018,
+            "frames": 79,
+            "delta": {
+              "TaskDuration": 0.383403,
+              "ScriptDuration": 0.076244,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.109538
+            }
+          },
+          {
+            "width": 1440,
+            "run": 1,
+            "cpu": 1,
+            "p95": 50.099999999999454,
+            "max": 66.69999999999982,
+            "frames": 79,
+            "delta": {
+              "TaskDuration": 0.37615600000000005,
+              "ScriptDuration": 0.075718,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.107246
+            }
+          },
+          {
+            "width": 1440,
+            "run": 2,
+            "cpu": 1,
+            "p95": 50.100000000000364,
+            "max": 66.80000000000018,
+            "frames": 76,
+            "delta": {
+              "TaskDuration": 0.37087899999999996,
+              "ScriptDuration": 0.07503,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.109489
+            }
+          }
+        ],
+        "summary": {
+          "390": {
+            "p95MedianMs": 16.8,
+            "p95WorstMs": 16.8,
+            "worstFrameMs": 33.4
+          },
+          "1440": {
+            "p95MedianMs": 50.1,
+            "p95WorstMs": 50.1,
+            "worstFrameMs": 83.3
+          }
+        }
+      },
+      "baseline": {
+        "date": "2026-10-09T11:24:33.778Z",
+        "profile": "Linux headless Chromium; warm local assets; 900px height; 3s native scroll; no network throttling",
+        "gpu": {
+          "compositing": "disabled_software",
+          "renderer": "SwiftShader; verified with CDP SystemInfo"
+        },
+        "samples": [
+          {
+            "width": 390,
+            "run": 0,
+            "cpu": 4,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 2.616361,
+              "ScriptDuration": 0.552357,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.739572
+            }
+          },
+          {
+            "width": 390,
+            "run": 1,
+            "cpu": 4,
+            "p95": 16.700000000000728,
+            "max": 33.29999999999973,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 2.554035,
+              "ScriptDuration": 0.546936,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.713348
+            }
+          },
+          {
+            "width": 390,
+            "run": 2,
+            "cpu": 4,
+            "p95": 16.700000000000728,
+            "max": 16.800000000000182,
+            "frames": 181,
+            "delta": {
+              "TaskDuration": 2.559784,
+              "ScriptDuration": 0.544919,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.723381
+            }
+          },
+          {
+            "width": 1440,
+            "run": 0,
+            "cpu": 1,
+            "p95": 33.400000000000546,
+            "max": 50,
+            "frames": 94,
+            "delta": {
+              "TaskDuration": 0.452707,
+              "ScriptDuration": 0.093639,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.137014
+            }
+          },
+          {
+            "width": 1440,
+            "run": 1,
+            "cpu": 1,
+            "p95": 33.400000000000546,
+            "max": 50.099999999999454,
+            "frames": 96,
+            "delta": {
+              "TaskDuration": 0.466651,
+              "ScriptDuration": 0.095318,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.141606
+            }
+          },
+          {
+            "width": 1440,
+            "run": 2,
+            "cpu": 1,
+            "p95": 33.5,
+            "max": 66.59999999999945,
+            "frames": 97,
+            "delta": {
+              "TaskDuration": 0.481152,
+              "ScriptDuration": 0.099948,
+              "LayoutDuration": 0,
+              "RecalcStyleDuration": 0.144931
+            }
+          }
+        ],
+        "summary": {
+          "390": {
+            "p95MedianMs": 16.7,
+            "p95WorstMs": 16.7,
+            "worstFrameMs": 33.3
+          },
+          "1440": {
+            "p95MedianMs": 33.4,
+            "p95WorstMs": 33.5,
+            "worstFrameMs": 66.6
+          }
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "method": "Chromium accessibility tree, all four semantic articles and h3 headings preserved during front/back rotation",
+    "snapshot": "- region \"VALUES STUDENTS\":\n  - heading \"VALUES STUDENTS\" [level=2]\n  - paragraph: \"Four core values shape the learning culture at Al-Mustaqbal: closeness to the Qur\u2019an, courage to think, unity of character, and the ability to inspire others.\"\n  - article \"Qur'anic\":\n    - text: \"01\"\n    - paragraph: Rooted in the Qur\u2019an and Sunnah.\n    - heading \"Qur'anic\" [level=3]\n    - paragraph:\n      - text: Building student character based on the\n      - strong: Qur\u2019an and the Sunnah of the Messenger of Allah, peace and blessings be upon him\n      - text: through everyday learning habits and daily life.\n  - article \"Innovative\":\n    - text: \"02\"\n    - paragraph: Courageous in thinking and exploring new solutions.\n    - heading \"Innovative\" [level=3]\n    - paragraph:\n      - text: Encouraging students to think\n      - strong: critically, creatively, and openly\n      - text: when approaching new learning experiences.\n  - article \"Integrative\":\n    - text: \"03\"\n    - paragraph: Knowledge, character, languages, and social awareness grow together.\n    - heading \"Integrative\" [level=3]\n    - paragraph:\n      - text: Connecting\n      - strong: knowledge, character, languages, and social awareness\n      - text: through a holistic learning experience.\n  - article \"Inspirational\":\n    - text: \"04\"\n    - paragraph: Growing into a person who brings benefit to others.\n    - heading \"Inspirational\" [level=3]\n    - paragraph:\n      - text: Nurturing the aspiration to become someone who is\n      - strong: beneficial and inspiring\n      - text: to the surrounding community.",
+    "limitation": "No physical assistive-technology walkthrough"
+  },
+  "headingSamples": {
+    "chromium": {
+      "date": "2026-10-09T11:18:20.583Z",
+      "cases": [
+        {
+          "locale": "id",
+          "scroll": "stopped",
+          "firstHorizontalAfterRevealStartMs": 1033.4,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "id",
+          "scroll": "fast",
+          "firstHorizontalAfterRevealStartMs": 950.0,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "id",
+          "scroll": "reverse",
+          "firstHorizontalAfterRevealStartMs": 966.7,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "id",
+          "scroll": "slow",
+          "firstHorizontalAfterRevealStartMs": 999.9,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "stopped",
+          "firstHorizontalAfterRevealStartMs": 1016.6,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "fast",
+          "firstHorizontalAfterRevealStartMs": 983.4,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "reverse",
+          "firstHorizontalAfterRevealStartMs": 966.7,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "slow",
+          "firstHorizontalAfterRevealStartMs": 1049.9,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "stopped",
+          "firstHorizontalAfterRevealStartMs": 1049.9,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "fast",
+          "firstHorizontalAfterRevealStartMs": 1016.6,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "reverse",
+          "firstHorizontalAfterRevealStartMs": 1016.6,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "slow",
+          "firstHorizontalAfterRevealStartMs": 1049.9,
+          "horizontalDurationMs": [
+            880
+          ]
+        }
+      ]
+    },
+    "webkit": {
+      "date": "2026-10-09T11:40:27.168Z",
+      "cases": [
+        {
+          "locale": "id",
+          "scroll": "stopped",
+          "firstHorizontalAfterRevealStartMs": 950,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "id",
+          "scroll": "fast",
+          "firstHorizontalAfterRevealStartMs": 967,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "id",
+          "scroll": "reverse",
+          "firstHorizontalAfterRevealStartMs": 923,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "id",
+          "scroll": "slow",
+          "firstHorizontalAfterRevealStartMs": 969,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "stopped",
+          "firstHorizontalAfterRevealStartMs": 939,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "fast",
+          "firstHorizontalAfterRevealStartMs": 957,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "reverse",
+          "firstHorizontalAfterRevealStartMs": 924,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "en",
+          "scroll": "slow",
+          "firstHorizontalAfterRevealStartMs": 971,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "stopped",
+          "firstHorizontalAfterRevealStartMs": 955,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "fast",
+          "firstHorizontalAfterRevealStartMs": 934,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "reverse",
+          "firstHorizontalAfterRevealStartMs": 924,
+          "horizontalDurationMs": [
+            880
+          ]
+        },
+        {
+          "locale": "ar",
+          "scroll": "slow",
+          "firstHorizontalAfterRevealStartMs": 967,
+          "horizontalDurationMs": [
+            880
+          ]
+        }
+      ]
+    }
+  },
+  "ci": {
+    "publicationRecord": "https://github.com/Asyraf2003/schoolai/pull/79",
+    "requiredForMerge": [
+      "cards (chromium)",
+      "cards (webkit)"
+    ],
+    "atCapture": "Final CI in progress; merge is gated on both passing",
+    "sourceRun": "https://github.com/Asyraf2003/schoolai/actions/runs/37931418744"
+  },
+  "localGates": {
+    "valuesRuntime": "24/24 PASS",
+    "oldComparisons": "4/4 PASS",
+    "finalIntroCompletionFallback": "6/6 PASS",
+    "pureJS": "11/11 PASS",
+    "scopedPHP": "13 tests, 264 assertions PASS",
+    "build": "PASS",
+    "structure": "298 source files <=200 lines PASS",
+    "diff": "PASS",
+    "fullPHP": "FAIL with exact baseline parity; no added/removed failing or error test names",
+    "npmAudit": "FAIL unchanged lockfile; 1 high, 2 critical"
+  }
+}

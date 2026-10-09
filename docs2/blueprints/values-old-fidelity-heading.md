@@ -1,6 +1,6 @@
 # MAP-V2-15 — Faithful OLD Values cards and autonomous heading
 
-STATUS: IMPLEMENTING. Blueprint OWNER_ACCEPTED by the explicit 2026-10-08 request.
+STATUS: PROVEN for the scoped local matrix; full-repository and device limitations remain in the proof record. Blueprint OWNER_ACCEPTED by the explicit 2026-10-08 request.
 Source main: 2b879e944c93b19244829287ab42d51936f4a04d.
 Branch: fix/values-old-fidelity-heading. Channel: Terminal Codex.
 
@@ -35,7 +35,7 @@ existing SVG/background/Program protected; separate branch, PR and gated merge.
 ## SCOPE
 
 Editable: landing/values Blade, values CSS/card modules, values heading/card JS,
-focused browser tests and docs2 proof/map/current-state. Existing values.js may
+card-only locale font adapter, focused browser tests and docs2 proof/map/current-state. Existing values.js may
 delegate heading lifecycle; its color calculation stays unchanged.
 Read-only: OLD Values sources, translations and presenter. Focused existing
 browser assertions may be adapted to actual completion and visibility.
@@ -85,7 +85,7 @@ GAP: browser equivalence and all changed lifecycle behavior need fresh proof.
 
 ## ACTIVE STEP / EXECUTION
 
-Implement the bounded Values capability, then compare equivalent OLD/V2 phases.
+Implemented and compared equivalent OLD/V2 phases. See the linked proof record.
 
 ## PROOF
 
@@ -104,4 +104,6 @@ PASS. SSH fetch and authenticated CLI work; issue #78 tracks this scope.
 
 ## NEXT VALID STEP
 
-Terminal Codex: implement and prove this Values capability; no other surface.
+Terminal Codex: publish the measured record and gate PR #79 merge on both browser
+CI jobs. Preserve unrelated baseline failures and protected owners.
+Proof: ../proof/values-old-fidelity-heading-status.md.

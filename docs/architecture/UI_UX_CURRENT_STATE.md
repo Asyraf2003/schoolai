@@ -1,22 +1,28 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-## Values OLD fidelity / autonomous heading — 2026-10-08
+## Values OLD fidelity / autonomous heading — 2026-10-09
 
 Active owner request supersedes historical Values deferrals. Main2b879e94;
-branch fix/values-old-fidelity-heading. Blueprint:
-../../docs2/blueprints/values-old-fidelity-heading.md OWNER_ACCEPTED/IMPLEMENTING.
-FACT: OLD pure card choreography, style and typography owners audited. V2 ports
-shared perspective, native compact rows, spring/flip/fan/exit/float and original
-localized copy. Heading uses both reveal promises before its fixed880ms slide.
-PROOF: build/structure/diff, scoped PHP13/264 and pure JS11 PASS. Full PHP exact
-baseline parity:190pass/71fail/75error; no added failing/error test names.
-WebKit resize overflow is bounded at OLD clip owner; explicit facing fixes its
-mirrored backface paint. Local final24runtime tests and4OLD comparison tests PASS.
-PR79 CI37922580027: Chromium PASS; WebKit14/18 PASS,4scroll/resize sampling failures.
-STATUS: FAIL CI WebKit; no merge. Independent frame sampling finds desktop p95
-50.1ms versus33.4ms baseline on headless Linux; hardware certification remains open.
-NEXT channel Terminal Codex: synchronize native browser actions, rerun CI and
-investigate measured frame cost before the scoped merge decision.
+branch fix/values-old-fidelity-heading; publication record PR79.
+Blueprint ../../docs2/blueprints/values-old-fidelity-heading.md OWNER_ACCEPTED /
+PROVEN for scoped local checks. Evidence, screenshots and explicit limitations:
+../../docs2/proof/values-old-fidelity-heading-status.md.
+FACT: audited OLD and V2 owners; ported OLD geometry/type/front/back and pure
+spring/deck/fan/flip/exit/float into V2's existing runway. Original ID/EN/AR copy.
+Heading waits for both900ms reveal promises before its fixed880ms one-shot slide.
+PROOF: local Values24runtime tests and4OLD comparisons PASS; build/structure298/
+diff, PHP13tests264assertions, JS11 PASS. CI merge gate requires both engines.
+Full PHP exact baseline parity:190pass/71fail/75error; zero new failing names.
+Unchanged npm audit3 findings remains FAIL. Protected production owners unchanged.
+WebKit overflow and mirrored backfaces corrected within card ownership. Short
+heights,200% text, missing capabilities, reduced motion and lifecycle covered.
+Headed Radeon840M profiles (3samples): p95 median16.7ms at390px CPU4× and1440px
+CPU1×; worst p9516.8ms. Headless software desktop50.1ms versusbaseline33.4ms;
+software60fps budget FAIL, not hidden by the hardware result. No device/CWV claim.
+STATUS: PASS scoped local behavior/fidelity; FAIL repository baseline/software
+frame budget; BLOCKED_BY_MISSING_EVIDENCE native Safari/device/field certification.
+NEXT channel Terminal Codex: require both PR browser checks PASS before merge;
+PR79 is the authoritative publication/merge-SHA record. No new surface authorized.
 
 ## ID Program heading horizontal timing — 2026-10-07
 
