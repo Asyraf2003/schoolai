@@ -1,0 +1,19 @@
+/* OLD supplied Cairo 500/600/700. A card-only family preserves that rendering
+   without changing the accepted V2 heading, Header or Program font matching. */
+@font-face {
+    font-family: 'Values Cairo'; font-style: normal; font-weight: 500;
+    font-display: swap;
+    src: url('../../../node_modules/@fontsource/cairo/files/cairo-arabic-500-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Values Cairo'; font-style: normal; font-weight: 600;
+    font-display: swap;
+    src: url('../../../node_modules/@fontsource/cairo/files/cairo-arabic-600-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Values Cairo'; font-style: normal; font-weight: 700;
+    font-display: swap;
+    src: url('../../../node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2') format('woff2');
+}
+[lang="ar"] .values__card { font-family: 'Values Cairo', Cairo, sans-serif; }
+[lang="ar"] .values__card-index { letter-spacing: normal; }

@@ -1,3 +1,4 @@
+import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, evidence } from './ProgramBrowserSupport.mjs';
@@ -11,12 +12,14 @@ for (const engine of engines) {
             await page.waitForFunction(() => !!window.ScrollTrigger?.getById('values-line'));
             for (const width of [360, 768, 1440]) {
                 await page.setViewportSize({ width, height: 900 });
-                await page.waitForTimeout(250);
+                    await settledValuesLayout(page);
+
                 await page.evaluate(() => {
                     const trigger = window.ScrollTrigger.getById('values-line');
                     scrollTo(0, Math.round((trigger.start + trigger.end) / 2));
                 });
-                await page.waitForTimeout(80);
+                await page.waitForFunction(() => Math.abs(window.ScrollTrigger.getById('values-line').progress - .5) < .001);
+                await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
                 const painted = await page.locator('[data-values-line] svg').evaluate(async svg => {
                     const box = svg.getBoundingClientRect();
                     const path = svg.querySelector('path');

@@ -1,5 +1,32 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values OLD fidelity / autonomous heading — 2026-10-09
+
+Active owner request supersedes historical Values deferrals. Main2b879e94;
+branch fix/values-old-fidelity-heading; publication record PR79.
+Blueprint ../../docs2/blueprints/values-old-fidelity-heading.md OWNER_ACCEPTED /
+PROVEN for scoped local checks. Evidence, screenshots and explicit limitations:
+../../docs2/proof/values-old-fidelity-heading-status.md.
+FACT: audited OLD and V2 owners; ported OLD geometry/type/front/back and pure
+spring/deck/fan/flip/exit/float into V2's existing runway. Original ID/EN/AR copy.
+Heading waits for both900ms reveal promises before its fixed880ms one-shot slide.
+PROOF: local Values24runtime tests and4OLD comparisons PASS; build/structure298/
+diff, PHP13tests264assertions, JS11 PASS. CI merge gate requires both engines.
+Full PHP exact baseline parity:190pass/71fail/75error; zero new failing names.
+Unchanged npm audit3 findings remains FAIL. Protected production owners unchanged.
+WebKit overflow and mirrored backfaces corrected within card ownership. Short
+heights,200% text, missing capabilities, reduced motion and lifecycle covered.
+Headed Radeon840M profiles (3samples): p95 median16.7ms at390px CPU4× and1440px
+CPU1×; worst p9516.8ms. Headless software desktop50.1ms versusbaseline33.4ms;
+software60fps budget FAIL, not hidden by the hardware result. No device/CWV claim.
+STATUS: PASS scoped local behavior/fidelity; FAIL repository baseline/software
+frame budget; BLOCKED_BY_MISSING_EVIDENCE native Safari/device/field certification.
+CI c95f6542 / run37993186545: Chromium PASS and WebKit PASS (18tests each).
+Compact fidelity samples await native scroll and foreground paint; both engines
+also passed the final isolated compact rerun after environment restoration.
+NEXT channel Terminal Codex: merge PR79 after the documentation-only head check;
+PR79 records the merged SHA. No new surface authorized.
+
 ## ID Program heading horizontal timing — 2026-10-07
 
 OWNER_ACCEPTED: one behavior only, ID horizontal760ms→1200ms; vertical760ms,

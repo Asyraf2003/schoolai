@@ -21,9 +21,12 @@ for (const engine of engines) {
                         const clip = document.querySelector('.program__heading-clip:last-child');
                         return { x: new DOMMatrix(getComputedStyle(clip).transform).m41, scroll: scrollY };
                     });
-                    await page.waitForFunction(() => [...document.querySelectorAll('[data-program-heading-line]')]
-                        .every(line => Math.abs(new DOMMatrix(getComputedStyle(line).transform).m42) < .1 && getComputedStyle(line).opacity === '1'));
-                    const middle = await page.locator('.program__heading-clip').last().evaluate(clip => new DOMMatrix(getComputedStyle(clip).transform).m41);
+                    const completedReveal = await page.waitForFunction(() => {
+                        const lines = [...document.querySelectorAll('[data-program-heading-line]')];
+                        if (!lines.every(line => Math.abs(new DOMMatrix(getComputedStyle(line).transform).m42) < .1 && getComputedStyle(line).opacity === '1')) return false;
+                        return { x: new DOMMatrix(getComputedStyle(document.querySelector('.program__heading-clip:last-child')).transform).m41 };
+                    });
+                    const middle = (await completedReveal.jsonValue()).x;
                     if (language === 'id') assert.ok(Math.abs(middle) < .5, 'both lines finish revealing before horizontal travel');
                     await page.waitForFunction(() => document.querySelector('.program__heading-clip:last-child').getAnimations().length === 0);
                     const after = await page.evaluate(() => ({

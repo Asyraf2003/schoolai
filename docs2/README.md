@@ -1,10 +1,11 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **MAP-V2-14: integrasi empat kartu Values Students V2**.
+Scope saat ini: **MAP-V2-15: fidelity kartu OLD dan heading Values otomatis**.
 
-Map aktif: [MAP-V2-14](blueprints/values-cards-v2.md).
-Bukti terbaru: [Latar selang-seling](proof/values-background-73-status.md).
+Map aktif: [MAP-V2-15](blueprints/values-old-fidelity-heading.md).
+Bukti terbaru: [Values OLD / heading](proof/values-old-fidelity-heading-status.md).
+Latar yang dilindungi: [Latar selang-seling](proof/values-background-73-status.md).
 Laporan kartu: [audit source dan matriks berikutnya](reports/values-card-audit.md).
 Bukti garis sebelumnya: [Garis Program → Values](proof/program-values-line-status.md),
 [endpoint dinding #71](proof/values-line-wall-71.json).
@@ -72,8 +73,8 @@ Delivery aktif: `resources/views/landing/index.blade.php` melalui route home.
 `resources/index.html` hanya artefak shell awal; bukan frontend production paralel.
 
 Urutan aktif: **foundation → shell → Menu → Hero → About → Program → proof**.
-Values memiliki judul, transisi latar dari Program dan lima komposisi garis scroll;
-kartu dan section berikutnya belum diimplementasikan.
+Values memiliki judul, transisi latar dari Program, lima komposisi garis scroll,
+dan kartu OLD yang diadaptasi melalui MAP-V2-15. Section berikutnya belum diimplementasikan.
 
 ## Prinsip utama
 

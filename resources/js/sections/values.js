@@ -1,7 +1,9 @@
+import { mountValuesHeading } from './values-heading.js';
+
 export function mountValues(world) {
     if (!world) return { suspend() {}, resume() {}, dispose() {} };
     const root = world.querySelector('[data-values]');
-    const heading = root.querySelector('[data-values-heading]');
+    const heading = mountValuesHeading(root);
     const program = world.querySelector('[data-program]');
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const lifecycle = new AbortController();
@@ -20,10 +22,6 @@ export function mountValues(world) {
         const eased = progress * progress * (3 - 2 * progress);
         world.style.setProperty('--program-values-morph-pct', `${(eased * 100).toFixed(2)}%`);
         world.style.setProperty('--program-values-type-opacity', (.16 - eased * .05).toFixed(4));
-        const top = heading.getBoundingClientRect().top;
-        const revealed = top <= height * 1.08;
-        root.toggleAttribute('data-heading-instant', top < 0);
-        heading.dataset.revealed = String(revealed);
     };
     const schedule = () => {
         if (active && !frame && !suspended && !document.hidden) frame = requestAnimationFrame(paint);
@@ -33,15 +31,11 @@ export function mountValues(world) {
         world.removeAttribute('data-values-enhanced');
         world.style.removeProperty('--program-values-morph-pct');
         world.style.removeProperty('--program-values-type-opacity');
-        root.removeAttribute('data-reveal-enabled');
-        root.removeAttribute('data-heading-instant');
-        delete heading.dataset.revealed;
     };
     const configure = () => {
         clear();
         if (motion.matches || !('IntersectionObserver' in window)) return;
         world.setAttribute('data-values-enhanced', '');
-        root.setAttribute('data-reveal-enabled', '');
         paint();
         observer = new IntersectionObserver(entries => {
             active = entries.some(entry => entry.isIntersecting);
@@ -57,8 +51,8 @@ export function mountValues(world) {
     motion.addEventListener('change', configure, { signal });
     configure();
     return {
-        suspend() { suspended = true; cancel(); },
-        resume() { suspended = false; paint(); },
-        dispose() { clear(); lifecycle.abort(); },
+        suspend() { suspended = true; cancel(); heading.suspend(); },
+        resume() { suspended = false; paint(); heading.resume(); },
+        dispose() { clear(); heading.dispose(); lifecycle.abort(); },
     };
 }

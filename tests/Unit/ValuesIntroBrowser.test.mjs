@@ -1,3 +1,4 @@
+import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -41,11 +42,14 @@ for (const engine of engines) {
                 await locale(page, language);
                 for (const width of widths) {
                     await page.setViewportSize({ width, height: 900 });
+                    await settledValuesLayout(page);
                     await enterValues(page);
                     await page.waitForFunction(() => document.querySelector('[data-program-values]').style.getPropertyValue('--program-values-morph-pct') === '100.00%');
-                    await page.waitForFunction(() => document.querySelector('[data-values]').getAnimations({ subtree: true }).length === 0);
+                    await page.waitForFunction(() => document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).length === 0);
+                    await enterValues(page);
+                    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
                     const state = await page.evaluate(valueState);
-                    assert.equal(state.overflow, false);
+                    assert.equal(state.overflow, false, JSON.stringify(state));
                     assert.equal(state.planes, 1);
                     assert.ok(Math.abs(state.planeBottom - state.valuesBottom) < 1, 'same background plane spans Values');
                     assert.ok(state.clips.every(clip => clip.opacity === '1'));
@@ -62,13 +66,16 @@ for (const engine of engines) {
                 }
             }
             await page.setViewportSize({ width: 1440, height: 900 });
+            await settledValuesLayout(page);
             const colors = [];
             for (const ratio of [1.2, .94, .68, .94, 1.2]) {
                 await page.evaluate(ratio => {
                     const bottom = document.querySelector('[data-program]').getBoundingClientRect().bottom + scrollY;
                     scrollTo(0, bottom - innerHeight * ratio);
                 }, ratio);
-                await page.waitForTimeout(80);
+                await page.waitForFunction(ratio => Math.abs(document.querySelector('[data-program]').getBoundingClientRect().bottom
+                    - innerHeight * ratio) <= 1, ratio);
+                await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
                 colors.push(await page.evaluate(valueState));
             }
             assert.equal(colors[0].pct, '0.00%');
@@ -102,21 +109,43 @@ for (const engine of engines) {
                 await page.waitForFunction(() => [...document.querySelectorAll('[data-values-heading-line]')].every(line => getComputedStyle(line).opacity === '0'));
                 await enterValues(page);
                 await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.revealed === 'true');
-                const frames = await page.locator('[data-values-heading]').evaluate(heading => {
-                    const animations = heading.getAnimations({ subtree: true });
-                    animations.forEach(animation => animation.pause());
-                    return [0, 450, 900, 1340, 1780].map(time => {
-                        animations.forEach(animation => { animation.currentTime = time; });
-                        return { time, x: new DOMMatrix(getComputedStyle(heading.lastElementChild).transform).m41,
-                            lines: [...heading.querySelectorAll('[data-values-heading-line]')].map(line => ({
-                                y: new DOMMatrix(getComputedStyle(line).transform).m42, opacity: Number(getComputedStyle(line).opacity),
-                            })) };
+                const frames = await page.locator('[data-values-heading]').evaluate(async heading => {
+                    const reveals = heading.getAnimations({ subtree: true });
+                    reveals.forEach(animation => animation.pause());
+                    const snapshot = () => ({ state: heading.dataset.headingState,
+                        x: new DOMMatrix(getComputedStyle(heading.lastElementChild).transform).m41,
+                        lines: [...heading.querySelectorAll('[data-values-heading-line]')].map(line => ({
+                            y: new DOMMatrix(getComputedStyle(line).transform).m42, opacity: Number(getComputedStyle(line).opacity),
+                        })) });
+                    reveals[0].finish();
+                    reveals[1].currentTime = 450;
+                    await new Promise(requestAnimationFrame);
+                    const incomplete = snapshot();
+                    // Observe the completion transition in the same task, before
+                    // the compositor can advance the new animation on a busy CI VM.
+                    const shifting = new Promise(resolve => {
+                        const observer = new MutationObserver(() => {
+                            if (heading.dataset.headingState !== 'shifting') return;
+                            observer.disconnect();
+                            const shift = heading.lastElementChild.getAnimations()[0];
+                            shift.pause(); shift.currentTime = 0; resolve(shift);
+                        });
+                        observer.observe(heading, { attributes: true, attributeFilter: ['data-heading-state'] });
                     });
+                    reveals[1].finish();
+                    const shift = await shifting;
+                    await shift.ready;
+                    const revealed = snapshot();
+                    shift.finish();
+                    await new Promise(requestAnimationFrame);
+                    return [incomplete, revealed, snapshot()];
                 });
+                assert.equal(frames[0].state, 'revealing');
+                assert.equal(frames[0].x, 0, 'one completed line cannot start horizontal motion');
                 assert.equal(frames[1].x, 0);
-                assert.equal(frames[2].x, 0);
-                assert.ok(frames[2].lines.every(line => Math.abs(line.y) < .01 && line.opacity === 1));
-                assert.ok(Math.abs(frames.at(-1).x - (language === 'ar' ? -100.8 : 100.8)) < .02);
+                assert.ok(frames[1].lines.every(line => Math.abs(line.y) < .01 && line.opacity === 1));
+                assert.equal(frames[2].state, 'complete');
+                assert.ok(Math.abs(frames[2].x - (language === 'ar' ? -100.8 : 100.8)) < .02);
                 await page.locator('[data-program-header]').scrollIntoViewIfNeeded();
                 await page.locator('[data-program-open]').first().click();
                 await page.waitForFunction(() => document.querySelector('[data-program-dialog]').open);
@@ -154,7 +183,7 @@ for (const engine of engines) {
                         await page.setViewportSize({ width, height: 900 });
                         await enterValues(page);
                         const state = await page.evaluate(valueState);
-                        assert.equal(state.overflow, false);
+                        assert.equal(state.overflow, false, JSON.stringify(state));
                         assert.ok(state.clips.every(clip => clip.opacity === '1' && clip.shift === 0));
                         assert.equal(state.animations, 0);
                         assert.equal(await page.locator('[data-program-values][data-values-enhanced]').count(), 0);

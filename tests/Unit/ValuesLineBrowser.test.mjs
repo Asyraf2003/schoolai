@@ -19,7 +19,12 @@ const position = async (page, fraction) => {
         const rounded = p === 0 ? Math.floor(target) : p === 1 ? Math.ceil(target) : Math.round(target);
         scrollTo(0, rounded); return rounded;
     }, fraction);
-    await page.waitForTimeout(60);
+    await page.waitForFunction(() => {
+        const trigger = window.ScrollTrigger.getById('values-line');
+        const expected = Math.max(0, Math.min(1, (scrollY - trigger.start) / (trigger.end - trigger.start)));
+        return !trigger.enabled || Math.abs(trigger.progress - expected) < .000001;
+    });
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     assert.ok(Math.abs(await page.evaluate(() => scrollY) - target) <= 1, 'drawing never moves native scroll');
 };
 const state = () => {
@@ -120,7 +125,7 @@ for (const engine of engines) {
             assert.equal((await page.evaluate(state)).gsapScripts, 1);
             assert.equal((await page.evaluate(state)).triggers, 1);
             await page.emulateMedia({ reducedMotion: 'reduce' });
-            await page.waitForTimeout(60);
+            await page.waitForFunction(() => !document.querySelector('[data-values]').hasAttribute('data-line-ready'));
             const reduced = await page.evaluate(state);
             assert.equal(reduced.ready, false); assert.equal(reduced.triggers, 0);
             await page.emulateMedia({ reducedMotion: 'no-preference' });

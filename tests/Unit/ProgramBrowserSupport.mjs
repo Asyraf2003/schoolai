@@ -48,6 +48,9 @@ export async function locale(page, value) {
     ]);
     await page.waitForFunction(value => document.documentElement.lang === value && !!document.querySelector('[data-program]')?.dataset.programState, value);
     await page.evaluate(() => document.fonts.ready);
+    // A late initial pageshow would otherwise resume a synthetic BFCache pause
+    // or restore scroll while a test is already sampling section geometry.
+    await page.waitForLoadState('load');
 }
 
 export async function phase(page, value) {
