@@ -40,6 +40,8 @@ jobs:
       - run: npm ci
       - run: npm run check:structure
       - run: npm run build
+      - name: Verify three-path geometry
+        run: node --test tests/Unit/ValuesLineGeometry.test.mjs
       - name: Prepare Laravel
         run: |
           cp .env.example .env
