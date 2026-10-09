@@ -33,6 +33,7 @@ export function mountValuesCards(root) {
         delete root.dataset.cardsProgress;
         poses.forEach(pose => pose.style.removeProperty('transform'));
         flips.forEach(flip => flip.style.removeProperty('transform'));
+        cards.forEach(card => card.removeAttribute('data-card-face'));
         snap = true; running();
     };
     const measure = () => {
@@ -88,6 +89,7 @@ export function mountValuesCards(root) {
             }
             poses[index].style.transform = `translate3d(${state.x.toFixed(2)}px, ${state.y.toFixed(2)}px, ${state.z.toFixed(2)}px) skewY(${(state.sy || 0).toFixed(2)}deg) rotateZ(${state.rz.toFixed(2)}deg) scale(${state.scale})`;
             flips[index].style.transform = `rotateY(${state.ry.toFixed(2)}deg)`;
+            card.dataset.cardFace = Math.cos(state.ry * Math.PI / 180) < 0 ? 'back' : 'front';
         });
         if (desktop && !sample.settled) schedule(); else last = 0;
     };

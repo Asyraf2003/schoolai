@@ -16,3 +16,4 @@
     src: url('../../../node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2') format('woff2');
 }
 [lang="ar"] .values__card { font-family: 'Values Cairo', Cairo, sans-serif; }
+[lang="ar"] .values__card-index { letter-spacing: normal; }

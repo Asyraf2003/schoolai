@@ -22,7 +22,8 @@ export async function oldValuesReference(context, page) {
         return { cards: cards.map(card => card.outerHTML).join(''), lang: document.documentElement.lang,
             dir: document.documentElement.dir, pattern: document.querySelector('[data-values-cards-track]').style.getPropertyValue('--values-pattern') };
     });
-    const reference = await context.newPage();
+    const referenceContext = await context.browser().newContext({ viewport: page.viewportSize() });
+    const reference = await referenceContext.newPage();
     reference.setDefaultTimeout(15000);
     const origin = new URL(page.url()).origin;
     await reference.route('**/__values_reference__/**', async route => {
@@ -36,7 +37,7 @@ export async function oldValuesReference(context, page) {
                 <style>*{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif;background:#2038ff;--program-values-final-color:#2038ff;--nav-h:72px}
                 html[lang=ar] body{font-family:Cairo,sans-serif} .values-story{margin:0} .values-story__entry,.values-story__exit{display:none}
                 </style></head><body class="home-page"><template id="reference-content"><div style="height:900px"></div>
-                <section class="values-story" data-values-story style="--values-card-pattern-image:${markup.pattern}">
+                <section class="values-story" data-values-story style="--values-card-pattern-image:${markup.pattern.replaceAll('"', '&quot;')}">
                 <header data-values-heading></header><div class="values-story__timeline" data-values-timeline>
                 <div class="values-story__clip" data-values-stage><div data-values-spatial class="values-story__spatial"></div>
                 <div class="values-story__perspective" data-values-perspective><div class="values-story__grid" data-values-cards>${markup.cards}</div></div>

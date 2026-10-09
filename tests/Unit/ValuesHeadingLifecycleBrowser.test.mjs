@@ -54,10 +54,11 @@ for (const engine of engines) {
             await locale(page, 'id');
             await page.evaluate(() => scrollTo(0, document.querySelector('[data-values]').getBoundingClientRect().top + scrollY));
             await page.waitForFunction(() => document.querySelector('[data-values-heading]').dataset.headingState === 'revealing');
-            const paused = await page.evaluate(() => {
+            await page.evaluate(() => {
                 window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }));
-                return document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).map(a => a.currentTime);
             });
+            await page.evaluate(() => Promise.all(document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).map(a => a.ready)));
+            const paused = await page.evaluate(() => document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).map(a => a.currentTime));
             await page.waitForTimeout(250);
             assert.deepEqual(await page.evaluate(() => document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).map(a => a.currentTime)), paused);
             await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));

@@ -30,6 +30,11 @@
 }
 .values__card-front { grid-area: 1 / 1; }
 .values__card-back { position: absolute; inset: 0; overflow: hidden; }
+/* Explicit facing also covers engines that paint a mirrored back despite
+   backface-visibility (reproduced in WPE). Rotation still owns the motion. */
+.values__card-back { opacity: 0; }
+.values__card[data-card-face="back"] .values__card-front { opacity: 0; }
+.values__card[data-card-face="back"] .values__card-back { opacity: 1; }
 [dir="rtl"] .values__card-face { direction: rtl; }
 [lang="ar"] .values__card :is(p, h3) { letter-spacing: normal; }
 .values[data-cards-motion] .values__card-float {

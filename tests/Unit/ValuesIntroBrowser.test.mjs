@@ -44,6 +44,8 @@ for (const engine of engines) {
                     await enterValues(page);
                     await page.waitForFunction(() => document.querySelector('[data-program-values]').style.getPropertyValue('--program-values-morph-pct') === '100.00%');
                     await page.waitForFunction(() => document.querySelector('[data-values-heading]').getAnimations({ subtree: true }).length === 0);
+                    await enterValues(page);
+                    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
                     const state = await page.evaluate(valueState);
                     assert.equal(state.overflow, false, JSON.stringify(state));
                     assert.equal(state.planes, 1);

@@ -21,6 +21,7 @@ const inspect = legacy => {
     }));
 };
 async function desktopPosition(page, progress, legacy) {
+    await page.bringToFront();
     await page.evaluate(({ progress, legacy }) => {
         const track = document.querySelector(legacy ? '[data-values-timeline]' : '[data-values-cards-track]');
         const viewport = document.querySelector(legacy ? '[data-values-stage]' : '[data-values-cards-viewport]');
@@ -33,12 +34,13 @@ async function desktopPosition(page, progress, legacy) {
         }
         scrollTo(0, track.getBoundingClientRect().top + scrollY - 72 + distance);
     }, { progress, legacy });
-    if (!legacy) await page.waitForFunction(() => {
+    if (!legacy) await page.waitForFunction(progress => {
         const track = document.querySelector('[data-values-cards-track]');
         const viewport = document.querySelector('[data-values-cards-viewport]');
         const target = Math.max(0, Math.min(1, (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight)));
-        return Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
-    }).catch(async error => { throw new Error(`${error.message}: ${JSON.stringify(await page.evaluate(() => ({ hidden: document.hidden, data: { ...document.querySelector('[data-values]').dataset }, scroll: scrollY, track: document.querySelector('[data-values-cards-track]').getBoundingClientRect().toJSON(), height: document.querySelector('[data-values-cards-viewport]').offsetHeight })))}`); });
+        return Math.abs(target - progress) < .0004
+            && Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
+    }, progress);
     await page.waitForTimeout(1500);
 }
 for (const engine of engines) {
@@ -78,7 +80,7 @@ for (const engine of engines) {
                         }
                         cases.push({ lang, progress, before, after });
                     }
-                } finally { await old.close(); }
+                } finally { await old.evaluate(() => window.referenceDispose()); await old.context().close(); }
             }
             assert.deepEqual(runtime.errors, []);
             await evidence(`values-fidelity-${engine}`, { version: runtime.version, reference: 'isolated archived component with unchanged OLD CSS/controller and shared localized content', cases });

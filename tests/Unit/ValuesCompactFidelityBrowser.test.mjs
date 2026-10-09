@@ -9,6 +9,7 @@ const inspect = () => [...document.querySelectorAll('[data-values-card]')].map(c
     flip: [...new DOMMatrix(getComputedStyle(card.querySelector('[data-values-card-inner]')).transform).toFloat64Array()],
 }));
 const position = async (page, visible) => {
+    await page.bringToFront();
     await page.evaluate(visible => {
         const card = document.querySelector('[data-values-card]');
         scrollTo(0, card.getBoundingClientRect().top + scrollY - innerHeight + card.offsetHeight * visible);
@@ -49,7 +50,7 @@ for (const engine of engines) {
                                 }
                             }
                         }
-                    } finally { await old.close(); }
+                    } finally { await old.evaluate(() => window.referenceDispose()); await old.context().close(); }
                 }
             }
             assert.deepEqual(runtime.errors, []);

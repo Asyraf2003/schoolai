@@ -18,6 +18,9 @@ const inspect = () => {
         track: getComputedStyle(root.querySelector('[data-values-cards-track]')).position,
         overflow: document.documentElement.scrollWidth > innerWidth,
         transforms: cards.map(card => getComputedStyle(card.querySelector('[data-values-card-inner]')).transform),
+        faces: cards.map(card => ({ facing: card.dataset.cardFace,
+            front: getComputedStyle(card.querySelector('.values__card-front')).opacity,
+            back: getComputedStyle(card.querySelector('.values__card-back')).opacity })),
         font: getComputedStyle(cards[0]).fontFamily,
         cardFit: cards.map(card => {
             const front = card.querySelector('.values__card-front');
@@ -53,6 +56,9 @@ for (const engine of engines) {
                     assert.equal(state.cards, 4);
                     assert.deepEqual(state.numbers, ['01', '02', '03', '04']);
                     assert.equal(state.backs, 4);
+                    assert.ok(state.faces.every(face => face.facing === 'back'
+                        ? face.front === '0' && face.back === '1'
+                        : face.front === '1' && face.back === '0'), 'only the facing side paints');
                     assert.equal(state.titles.every(Boolean), true);
                     assert.equal(state.overflow, false, `${lang}/${width} horizontal overflow`);
                     assert.ok(state.cardFit.every(fit => fit.fits), `${lang}/${width} card content exceeds card bounds: ${JSON.stringify(state.cardFit)}`);
@@ -72,14 +78,15 @@ for (const engine of engines) {
                                 scrollTo(0, track.getBoundingClientRect().top + scrollY - 72
                                     + progress * (track.offsetHeight - viewport.offsetHeight));
                             }, progress);
-                            await page.waitForFunction(() => {
+                            await page.waitForFunction(progress => {
                                 const root = document.querySelector('[data-values]');
                                 const track = root.querySelector('[data-values-cards-track]');
                                 const viewport = root.querySelector('[data-values-cards-viewport]');
                                 const target = Math.max(0, Math.min(1, (parseFloat(getComputedStyle(root).scrollMarginBlockStart) - track.getBoundingClientRect().top)
                                     / (track.offsetHeight - viewport.offsetHeight)));
-                                return Math.abs(Number(root.dataset.cardsProgress) - target) < .00001;
-                            });
+                                return Math.abs(target - progress) < .0004
+                                    && Math.abs(Number(root.dataset.cardsProgress) - target) < .00001;
+                            }, progress);
                             return page.evaluate(inspect);
                         };
                         const early = await move(.08);

@@ -16,7 +16,8 @@ for (const engine of engines) {
                     const trigger = window.ScrollTrigger.getById('values-line');
                     scrollTo(0, Math.round((trigger.start + trigger.end) / 2));
                 });
-                await page.waitForTimeout(80);
+                await page.waitForFunction(() => Math.abs(window.ScrollTrigger.getById('values-line').progress - .5) < .001);
+                await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
                 const painted = await page.locator('[data-values-line] svg').evaluate(async svg => {
                     const box = svg.getBoundingClientRect();
                     const path = svg.querySelector('path');
