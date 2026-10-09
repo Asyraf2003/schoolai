@@ -54,7 +54,7 @@ for (const engine of engines) {
                     assert.ok(shifted && reveal);
                     assert.ok(shifted.time - reveal.time >= 850, 'no horizontal movement during the 900ms reveal');
                     assert.ok(frames.filter(f => Math.abs(f.x) > .01).every(f => f.lines.every(l => Math.abs(l.y) < .01 && l.opacity === 1)));
-                    assert.ok(frames.filter(f => f.state === 'shifting').every(f => f.animations.every(a => a.duration === 880)));
+                    assert.ok(frames.filter(f => f.state === 'shifting').every(f => f.animations.every(a => a.duration === 900)));
                     assert.ok(Math.abs(frames.at(-1).x - (lang === 'ar' ? -100.8 : 100.8)) < .1);
                     await page.evaluate(() => scrollTo(0, 0));
                     assert.equal(await page.locator('[data-values-heading]').getAttribute('data-heading-state'), 'complete');

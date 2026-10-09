@@ -1,5 +1,5 @@
 .values {
-    --values-heading-shift: 0px;
+    --values-heading-shift: clamp(.65rem, 3vw, 1.5rem);
     --values-heading-sign: 1;
     position: relative;
     z-index: 1;
@@ -40,9 +40,12 @@
 [data-values-heading][data-heading-state="idle"] [data-values-heading-line] {
     transform: translateY(108%); opacity: 0;
 }
+[data-values-heading][data-heading-state="idle"] .values__heading-clip:nth-child(2),
+[data-values-heading][data-heading-state="revealing"] .values__heading-clip:nth-child(2) { transform: translateX(0); }
 [data-values-heading][data-heading-state="idle"] .values__heading-clip:nth-child(2) > span {
     transform: translateY(-108%);
 }
+[data-values-heading][data-heading-state="shifting"] .values__heading-clip:nth-child(2),
 [data-values-heading][data-heading-state="complete"] .values__heading-clip:nth-child(2) {
     transform: translateX(calc(var(--values-heading-sign) * var(--values-heading-shift)));
 }

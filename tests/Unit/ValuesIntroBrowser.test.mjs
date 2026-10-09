@@ -58,7 +58,8 @@ for (const engine of engines) {
                         assert.ok(clip.box.x >= -1 && clip.box.right <= width + 1, 'shifted title fits the viewport');
                         assert.ok(clip.box.top >= state.headerBottom - 1, `${language}/${width}: visible line mask remains below Header`);
                     }
-                    const expected = width < 768 ? 0 : ({ 768: 38.4, 1024: 61.44, 1280: 89.6, 1536: 122.88, 1920: 153.6 }[width]);
+                    const expected = width < 768 ? Math.min(24, Math.max(10.4, width * .03))
+                        : ({ 768: 38.4, 1024: 61.44, 1280: 89.6, 1536: 122.88, 1920: 153.6 }[width]);
                     assert.ok(Math.abs(state.clips[1].shift - expected * (language === 'ar' ? -1 : 1)) < .02);
                     if (language === 'ar') assert.match(state.font, /Cairo/);
                     cases.push(state);
