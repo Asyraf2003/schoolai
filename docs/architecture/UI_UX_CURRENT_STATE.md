@@ -15,9 +15,14 @@ owner rejected the initial vertical version before merge; latest third tip exits
 right, first/second left, as explicitly requested.
 Diff/structure299/build PASS. PHP39PASS/297errors: SQLite/GD/legacy-path prerequisites
 unavailable. WebKit local launch missing libicu74/libxml2/libflite1.
-STATUS: PASS geometry/isolated Chromium; BLOCKED_BY_MISSING_EVIDENCE full page
-WebKit/PHP and performance proof. No claim of full runtime acceptance.
-NEXT channel Terminal Codex: verify focused browser CI for corrected PR85 / issue84 before merge.
+Scoped browser CI38046001188 PASS in Chromium/WebKit on6ec40a2d, latest floor-like
+geometry including the right-hand third tip. PR85 MERGED aa21cfeb; issue84 CLOSED.
+Full historical cards suite38046001202 still pending at publication; dependency
+baseline remains FAIL. No native Safari, performance or full PHP acceptance claim.
+STATUS: PASS scoped geometry/browser; FAIL dependency baseline;
+BLOCKED_BY_MISSING_EVIDENCE full PHP/native Safari/performance certification.
+NEXT channel owner/local terminal: inspect the merged floor-like curves visually;
+no further product source change is active.
 
 ## Program/Values headings and three lines — 2026-10-10
 

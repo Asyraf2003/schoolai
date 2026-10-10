@@ -81,3 +81,8 @@ Previous vertical preview is superseded and must not be used as acceptance proof
 Latest explicit owner correction: ends must not all exit left; third strand exits
 right, first/second left. This supersedes the initial floor preview. Geometry proof
 now includes both ending directions and still exactly one crossing.
+
+Correction publication: PR85 MERGED at aa21cfeb6ce73a99535dedcc294af5ec03a9327e;
+issue84 CLOSED. Focused Chromium/WebKit CI38046001188 PASS at6ec40a2d with the
+final floor-like geometry/right tip. Full cards suite pending at publication;
+dependency baseline FAIL. Owner visual review is the next valid step.
