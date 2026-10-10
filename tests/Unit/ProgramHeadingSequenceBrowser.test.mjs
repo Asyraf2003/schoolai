@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { enabled, engines, session, locale } from './ProgramBrowserSupport.mjs';
 
 for (const engine of engines) {
-    test('Program heading finishes reveal before its independent same-speed inward slide in ' + engine,
+    test('Program heading reveals fully then independently shifts at the same speed in ' + engine,
         { skip: !enabled }, async () => {
             const runtime = await session(engine);
             try {
@@ -12,48 +12,80 @@ for (const engine of engines) {
                     for (const width of [390, 1440]) {
                         const page = runtime.page;
                         await page.setViewportSize({ width, height: 900 });
-                        // This heading is intentionally one-shot: reload for every viewport.
+                        // One-shot heading animation: each viewport needs a fresh page.
                         await page.reload({ waitUntil: 'domcontentloaded' });
                         await page.evaluate(() => scrollTo(0, 0));
                         await page.waitForFunction(() => document.querySelector('[data-program-heading]').dataset.headingState === 'idle');
-                        const amount = await page.evaluate(() => {
-                            const root = document.querySelector('[data-program-heading]');
-                            const last = root.lastElementChild;
-                            const sign = parseFloat(getComputedStyle(document.querySelector('[data-program]')).getPropertyValue('--program-heading-sign'));
-                            const shift = parseFloat(getComputedStyle(document.querySelector('[data-program]')).getPropertyValue('--program-heading-nudge'));
-                            return { two: root.children.length === 2, sign, shift };
-                        });
+                        const hasTwoLines = await page.locator('[data-program-heading]').evaluate(h => h.children.length === 2);
+
+                        // Record every state transition before the browser receives
+                        // the trigger. Polling an ephemeral 760ms phase is racy on
+                        // busy WebKit CI runners and cannot prove ordering.
                         await page.evaluate(() => {
                             const heading = document.querySelector('[data-program-heading]');
+                            window.programHeadingEvents = [];
+                            const capture = () => {
+                                const lines = [...heading.querySelectorAll('[data-program-heading-line]')];
+                                window.programHeadingEvents.push({
+                                    state: heading.dataset.headingState,
+                                    at: performance.now(),
+                                    x: new DOMMatrix(getComputedStyle(heading.lastElementChild).transform).m41,
+                                    lines: lines.map(el => ({
+                                        opacity: +getComputedStyle(el).opacity,
+                                        y: new DOMMatrix(getComputedStyle(el).transform).m42,
+                                    })),
+                                    durations: heading.getAnimations({ subtree: true })
+                                        .map(animation => animation.effect.getTiming().duration),
+                                });
+                            };
+                            new MutationObserver(capture).observe(heading, {
+                                attributes: true, attributeFilter: ['data-heading-state'],
+                            });
                             scrollTo(0, heading.getBoundingClientRect().top + scrollY - innerHeight * .35);
+                            // Dispatch after native scrolling to cover WebKit's
+                            // async scroll-event delivery without changing runtime code.
+                            dispatchEvent(new Event('scroll'));
                         });
-                        await page.waitForFunction(() => document.querySelector('[data-program-heading]').dataset.headingState === 'revealing');
-                        const reveal = await page.locator('[data-program-heading]').evaluate(heading => {
-                            const times = heading.getAnimations({ subtree: true }).map(a => a.effect.getTiming().duration);
-                            return { times, x: new DOMMatrix(getComputedStyle(heading.lastElementChild).transform).m41 };
-                        });
-                        assert.ok(reveal.times.every(t => t === 760));
-                        if (amount.two) assert.ok(Math.abs(reveal.x) < .1);
-                        await page.evaluate(() => scrollTo(0, 0)); // reverse must not reset sequence
+                        await page.evaluate(() => scrollTo(0, 0));
                         await page.waitForFunction(() => document.querySelector('[data-program-heading]').dataset.headingState === 'complete');
+
                         const result = await page.locator('[data-program-heading]').evaluate(heading => ({
-                            state: heading.dataset.headingState,
                             x: new DOMMatrix(getComputedStyle(heading.lastElementChild).transform).m41,
                             firstX: new DOMMatrix(getComputedStyle(heading.firstElementChild).transform).m41,
                             lines: [...heading.querySelectorAll('[data-program-heading-line]')].map(el => ({
-                                opacity: getComputedStyle(el).opacity,
+                                opacity: +getComputedStyle(el).opacity,
                                 y: new DOMMatrix(getComputedStyle(el).transform).m42,
                             })),
+                            events: window.programHeadingEvents,
                         }));
-                        assert.ok(result.lines.every(line => line.opacity === '1' && Math.abs(line.y) < .01));
+                        const states = result.events.map(event => event.state);
+                        assert.deepEqual(states, hasTwoLines
+                            ? ['revealing', 'shifting', 'complete']
+                            : ['revealing', 'complete'], lang + '/' + width + ' phase sequence');
+                        assert.ok(result.events[0].durations.every(value => value === 760),
+                            'reveal duration is 760ms');
+                        if (hasTwoLines) {
+                            const shift = result.events[1];
+                            assert.ok(shift.lines.every(line => line.opacity === 1 && Math.abs(line.y) < .1),
+                                'both lines fully revealed before movement');
+                            assert.ok(shift.durations.every(value => value === 760),
+                                'shift duration equals reveal');
+                            assert.ok(shift.at - result.events[0].at >= 720,
+                                'horizontal motion never starts before reveal completion');
+                            assert.ok(Math.abs(result.events[0].x) < .1,
+                                'second line remains unshifted during reveal');
+                            assert.ok(result.x * (lang === 'ar' ? -1 : 1) > 1,
+                                lang + ': second line travels inward');
+                        } else {
+                            assert.equal(result.x, 0, 'single Arabic line never shifts');
+                        }
                         assert.equal(result.firstX, 0);
-                        if (amount.two) {
-                            assert.ok(result.x * (lang === 'ar' ? -1 : 1) > 1, lang + ': lower line moves inward');
-                        } else assert.equal(result.x, 0, 'single Arabic line never shifts');
-                        assert.equal(result.state, 'complete');
+                        assert.ok(result.lines.every(line => line.opacity === 1 && Math.abs(line.y) < .1));
                     }
                 }
                 assert.deepEqual(runtime.errors, []);
-            } finally { await runtime.close(); }
+            } finally {
+                await runtime.close();
+            }
         });
 }
