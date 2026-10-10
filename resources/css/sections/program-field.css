@@ -13,7 +13,7 @@
     --program-detail-radius: clamp(.75rem, 1.2vw, 1.0625rem);
     --program-heading-nudge: clamp(.4rem, 2.5vw, 1.75rem);
     --program-heading-sign: 1;
-    --program-heading-factor: 1;
+    --program-heading-factor: 4;
     --program-heading-shift: calc(var(--program-heading-nudge) * var(--program-heading-factor));
     position: relative;
     isolation: isolate;
@@ -40,7 +40,7 @@
 .program__heading-clip { inline-size: fit-content; max-inline-size: 100%; overflow: hidden; padding-block: .08em; }
 .program__heading-clip:not(:only-child) { padding-block: .02em; }
 .program__heading-clip > span { display: block; overflow-wrap: anywhere; }
-.program__heading-clip:is(:nth-child(2), :only-child) {
+.program__heading-clip:nth-child(2) {
     max-inline-size: calc(100% - var(--program-heading-shift));
     transform: translateX(calc(var(--program-heading-sign) * var(--program-heading-shift)));
 }

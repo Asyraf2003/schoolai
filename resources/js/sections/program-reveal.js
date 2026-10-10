@@ -1,5 +1,4 @@
 export function observeProgram(root, signal) {
-    const heading = root.querySelector('[data-program-heading]');
     const cards = [...root.querySelectorAll('[data-program-card]')];
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let observer;
@@ -47,8 +46,6 @@ export function observeProgram(root, signal) {
                 const box = card.getBoundingClientRect();
                 if (box.top < 0 || Math.max(0, Math.min(box.bottom, boundary) - Math.max(box.top, 0)) >= box.height * .08) reached.add(index);
             });
-            const box = heading.getBoundingClientRect();
-            heading.dataset.revealed = String(Math.max(0, Math.min(box.bottom, boundary) - Math.max(box.top, 0)) >= box.height * .08);
             paintCards();
         };
         observer = new IntersectionObserver(entries => {
@@ -56,16 +53,13 @@ export function observeProgram(root, signal) {
             for (const entry of entries) {
                 const inView = entry.isIntersecting && entry.intersectionRatio >= .08;
                 const passed = entry.boundingClientRect.top < entry.rootBounds.top;
-                if (entry.target === heading) heading.dataset.revealed = String(inView);
-                else {
-                    const index = cards.indexOf(entry.target);
-                    if (inView || passed) reached.add(index);
-                    else reached.delete(index);
-                }
+                const index = cards.indexOf(entry.target);
+                if (inView || passed) reached.add(index);
+                else reached.delete(index);
             }
             paintCards();
         }, { rootMargin: '0px 0px -12% 0px', threshold: [0, .08] });
-        [heading, ...cards].forEach(element => observer.observe(element));
+        cards.forEach(card => observer.observe(card));
         cards.forEach((card, index) => card.style.setProperty('--program-reveal-delay', `${index % 4 * 60}ms`));
         root.dataset.revealEnabled = 'true';
     };

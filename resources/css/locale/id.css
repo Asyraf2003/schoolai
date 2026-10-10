@@ -1,8 +1,1 @@
-/* Homepage V2 ownership bucket. Isi hanya jika concern ini benar-benar dibutuhkan. */
-[lang="id"] .program {
-    --program-heading-factor: 4;
-    --program-heading-horizontal-duration: 1200ms;
-    --program-heading-horizontal-delay: var(--program-heading-duration);
-    --program-heading-horizontal-ease: cubic-bezier(.82, 0, .55, 1);
-    --program-heading-horizontal-reset-duration: 0ms;
-}
+/* Homepage V2: Program heading inherits shared two-line movement. */

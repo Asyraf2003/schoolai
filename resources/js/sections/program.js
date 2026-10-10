@@ -1,4 +1,5 @@
 import { observeProgram } from './program-reveal.js';
+import { mountProgramHeading } from './program-heading.js';
 import { mountProgramDialog } from './program-dialog.js';
 
 export function mountProgram(root, { loadKinetic } = {}) {
@@ -29,11 +30,12 @@ export function mountProgram(root, { loadKinetic } = {}) {
         return prepared;
     };
     const stopReveal = observeProgram(root, signal);
+    const heading = mountProgramHeading(root);
     const dialog = mountProgramDialog(root, prepare, signal);
     document.addEventListener('visibilitychange', () => { if (document.hidden) dialog.suspend(); }, { signal });
     return {
-        suspend: dialog.suspend,
-        resume: dialog.resume,
-        dispose() { disposed = true; dialog.dispose(); stopReveal(); lifecycle.abort(); },
+        suspend() { dialog.suspend(); heading.suspend(); },
+        resume() { dialog.resume(); heading.resume(); },
+        dispose() { disposed = true; dialog.dispose(); heading.dispose(); stopReveal(); lifecycle.abort(); },
     };
 }

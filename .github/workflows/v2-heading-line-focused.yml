@@ -1,25 +1,28 @@
-name: V2 Values cards scoped verification
+name: V2 heading and three Values strokes focus
 
 on:
   pull_request:
     paths:
-      - 'resources/views/landing/values.blade.php'
-      - 'resources/css/**'
-      - 'resources/js/**'
-      - 'app/View/Presenters/LandingValuesPresenter.php'
-      - 'tests/Feature/LandingValuesV2Test.php'
-      - 'tests/Feature/LandingProgramV2Test.php'
-      - 'tests/Unit/Values*.mjs'
-      - '.github/workflows/v2-values-cards.yml'
+      - 'resources/js/sections/section-heading.js'
+      - 'resources/js/sections/program-heading.js'
+      - 'resources/js/sections/values-heading.js'
+      - 'resources/js/sections/values-line*.js'
+      - 'resources/css/sections/program-reveal.css'
+      - 'resources/css/sections/values.css'
+      - 'resources/views/landing/values-line.blade.php'
+      - 'tests/Unit/ProgramHeadingSequenceBrowser.test.mjs'
+      - 'tests/Unit/ValuesHeadingLifecycleBrowser.test.mjs'
+      - 'tests/Unit/ValuesLine*.mjs'
+      - '.github/workflows/v2-heading-line-focused.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  cards:
+  scoped-motion:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -40,39 +43,27 @@ jobs:
       - run: npm ci
       - run: npm run check:structure
       - run: npm run build
-      - name: Verify three-path geometry
-        run: node --test tests/Unit/ValuesLineGeometry.test.mjs
-      - name: Prepare Laravel
+      - run: node --test tests/Unit/ValuesLineGeometry.test.mjs
+      - name: Prepare Laravel and browser
         run: |
           cp .env.example .env
           php artisan key:generate
           touch database/database.sqlite
-      - name: Run scoped PHP feature tests
-        env:
-          APP_ENV: testing
-          DB_CONNECTION: sqlite
-          DB_DATABASE: ':memory:'
-        run: php artisan test tests/Feature/LandingValuesV2Test.php tests/Feature/LandingProgramV2Test.php
-      - name: Prepare browser fixtures
-        run: |
+          php artisan migrate:fresh --seed --force
           npm install --no-save --no-package-lock playwright@1.58.2
-          npx playwright install --with-deps chromium webkit
+          npx playwright install --with-deps ${{ matrix.engine }}
           curl -fL https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js -o /tmp/gsap.min.js
           curl -fL https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/ScrollTrigger.min.js -o /tmp/ScrollTrigger.min.js
           CHROME="$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*/chrome-linux*/*' -print -quit)"
-          test -n "$CHROME"
-          echo "PROGRAM_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
-      - name: Start server with seed data
-        run: |
-          php artisan migrate:fresh --seed --force
-          php artisan serve --host=127.0.0.1 --port=8000 > /tmp/values-serve.log 2>&1 &
+          if [ -n "$CHROME" ]; then echo "PROGRAM_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"; fi
+          php artisan serve --host=127.0.0.1 --port=8000 > /tmp/heading-line-server.log 2>&1 &
           for n in $(seq 1 40); do
             if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
             sleep 1
           done
-          cat /tmp/values-serve.log
+          cat /tmp/heading-line-server.log
           exit 1
-      - name: Verify Values and protected heading in Chromium and WebKit
+      - name: Verify heading and three strokes
         env:
           PROGRAM_BROWSER_URL: http://127.0.0.1:8000
           PROGRAM_PLAYWRIGHT_MODULE: playwright
@@ -82,21 +73,15 @@ jobs:
           PROGRAM_PROOF_DIRECTORY: /tmp
         run: >-
           node --test --test-concurrency=1 --test-timeout=420000
-          tests/Unit/ValuesCardsBrowser.test.mjs
-          tests/Unit/ValuesCardsFallbackBrowser.test.mjs
-          tests/Unit/ValuesCompactFidelityBrowser.test.mjs
-          tests/Unit/ValuesFidelityBrowser.test.mjs
+          tests/Unit/ProgramHeadingSequenceBrowser.test.mjs
           tests/Unit/ValuesHeadingLifecycleBrowser.test.mjs
-          tests/Unit/ValuesIntroBrowser.test.mjs
           tests/Unit/ValuesLineBrowser.test.mjs
           tests/Unit/ValuesLineRenderBrowser.test.mjs
-          tests/Unit/ProgramHeadingSequenceBrowser.test.mjs
-      - name: Upload browser evidence
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: values-browser-evidence-${{ matrix.engine }}
+          name: heading-lines-${{ matrix.engine }}
           path: |
-            /tmp/values-*.json
-            /tmp/values-*.png
-            /tmp/values-serve.log
+            /tmp/values-three-line-*.json
+            /tmp/values-three-line-*.png
+            /tmp/heading-line-server.log

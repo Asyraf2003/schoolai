@@ -1,10 +1,11 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **MAP-V2-16: Hero V2 hanya opening video**.
+Scope saat ini: **MAP-V2-17: heading berurutan dan tiga garis Values**.
 
-Map aktif: [MAP-V2-16](blueprints/hero-video-only-ui.md).
-Map sebelumnya: [MAP-V2-15](blueprints/values-old-fidelity-heading.md).
+Map aktif: [MAP-V2-17](blueprints/heading-three-lines-v2.md).
+Map sebelumnya: [MAP-V2-16](blueprints/hero-video-only-ui.md).
+Values cards fidelity: [MAP-V2-15](blueprints/values-old-fidelity-heading.md).
 Bukti terbaru: [Values OLD / heading](proof/values-old-fidelity-heading-status.md).
 Latar yang dilindungi: [Latar selang-seling](proof/values-background-73-status.md).
 Laporan kartu: [audit source dan matriks berikutnya](reports/values-card-audit.md).
