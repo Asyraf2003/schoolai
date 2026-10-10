@@ -67,3 +67,13 @@ hidden/BFCache/dispose and one scrubbed trigger remain. No new assets/dependenci
 ACTIVE STEP: change curves; prove tangent continuity, downward progress and exactly
 one crossing, inspect rendered SVG; diff/structure/build/PHP gates. Chromium/WebKit
 page proof and performance claims require actual runtime evidence.
+
+## Latest owner refinement — hair lying on the floor
+
+The owner rejects the vertically falling version before merge. ACTIVE/OWNER_ACCEPTED:
+three loosely arranged strands with wide sideways sweeps and soft S bends, one
+crossing only. Replace the vertical geometry; keep tangent continuity and rounded
+turns. Side-wall tips and staggered draw intervals suit the floor-like composition.
+Geometry3tests PASS: continuous tangents, exactly one pair crossing, no self-crossing.
+Chromium-rendered preview inspected: /tmp/schoolai-floor-hair-curves.png.
+Previous vertical preview is superseded and must not be used as acceptance proof.

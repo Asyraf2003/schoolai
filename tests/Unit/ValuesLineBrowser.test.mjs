@@ -75,7 +75,7 @@ for (const engine of engines) {
                         assert.ok(initial.paths.every(p => p.offset >= p.length - 1
                             && p.stroke === 'rgb(255, 255, 255)' && p.fill === 'none'),
                             JSON.stringify({ lang, width, progress: initial.progress, paths: initial.paths }));
-                        assert.ok(initial.paths.every(p => p.caps[1].x > 0 && p.caps[1].x < width), 'soft strands have natural lower tips');
+                        assert.ok(initial.paths.every(p => p.caps.every(c => c.x < 0 || c.x > width)), 'strand tips extend naturally beyond side walls');
                         await at(runtime.page, .4);
                         const first = await runtime.page.evaluate(inspect);
                         await at(runtime.page, .8);
