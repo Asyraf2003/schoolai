@@ -1,5 +1,21 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values soft hair curves — 2026-10-10
+
+OWNER_ACCEPTED: replace rejected zigzag with three softly descending hair-like
+curves and exactly one crossing. Geometry-only correction; heading/cards protected.
+FACT: previous cubic joins reverse tangents. Replaced by three tangent-continuous
+paths with rounded lower tips and simultaneous independent scroll drawing.
+Blueprint: ../../docs2/blueprints/heading-three-lines-v2.md owner correction.
+PROOF: geometry2tests PASS (continuous tangents, monotonic descent, one crossing);
+isolated Chromium SVG renders PASS at360/390/640/768/1024/1280/1440/1536/1920.
+Rendered640×1800 preview inspected: /tmp/schoolai-soft-lines-chromium.png.
+Diff/structure299/build PASS. PHP39PASS/297errors: SQLite/GD/legacy-path prerequisites
+unavailable. WebKit local launch missing libicu74/libxml2/libflite1.
+STATUS: PASS geometry/isolated Chromium; BLOCKED_BY_MISSING_EVIDENCE full page
+WebKit/PHP and performance proof. No claim of full runtime acceptance.
+NEXT channel Terminal Codex: publish correction PR and verify focused browser CI.
+
 ## Program/Values headings and three lines — 2026-10-10
 
 FACT: current main b85790f2 includes merged PR83 (f4d4a636); issue82 CLOSED.

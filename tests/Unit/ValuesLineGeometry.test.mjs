@@ -45,11 +45,16 @@ const intersections = (first, second) => {
     }
     return found;
 };
-test('three independent zigzag paths start and finish at side walls', () => {
+test('three flowing strands descend with natural lower tips and continuous tangents', () => {
     assert.equal(paths.length, 3);
     for (const { curves, coords } of paths) {
         assert.ok(curves.length >= 3 && curves.length <= 5, 'each line has several directional bends');
-        assert.ok([coords[0], coords.at(-1)].every(p => p[0] < -12 || p[0] > width + 12));
+        assert.ok(coords.at(-1)[0] > 0 && coords.at(-1)[0] < width, 'natural rounded lower tip');
+        for (let i = 1; i < curves.length; i++) {
+            const before = curves[i - 1], after = curves[i];
+            for (const axis of [0, 1]) assert.equal(before[3][axis] - before[2][axis],
+                after[1][axis] - after[0][axis], 'tangent continues without a sharp reversal');
+        }
         assert.ok(curves.flat().every(p => p[1] > 0 && p[1] < height));
         assert.ok(coords.every((p, i) => i === 0 || p[1] >= coords[i - 1][1]), 'progress moves vertically forward');
     }
@@ -59,5 +64,5 @@ test('exactly one pair of paths crosses once; other pairs never cross', () => {
     assert.equal(intersections(paths[0], paths[2]).length, 0);
     assert.equal(intersections(paths[1], paths[2]).length, 0);
     const y = intersections(paths[0], paths[1])[0];
-    assert.ok(y > 1900 && y < 2300);
+    assert.ok(y > 2700 && y < 3500);
 });

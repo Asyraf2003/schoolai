@@ -75,13 +75,13 @@ for (const engine of engines) {
                         assert.ok(initial.paths.every(p => p.offset >= p.length - 1
                             && p.stroke === 'rgb(255, 255, 255)' && p.fill === 'none'),
                             JSON.stringify({ lang, width, progress: initial.progress, paths: initial.paths }));
-                        assert.ok(initial.paths.every(p => p.caps.every(c => c.x < 0 || c.x > width)), 'every line ends at a side wall');
+                        assert.ok(initial.paths.every(p => p.caps[1].x > 0 && p.caps[1].x < width), 'soft strands have natural lower tips');
                         await at(runtime.page, .4);
                         const first = await runtime.page.evaluate(inspect);
                         await at(runtime.page, .8);
                         const later = await runtime.page.evaluate(inspect);
                         assert.ok(later.paths.every((p, i) => p.offset <= first.paths[i].offset + .1));
-                        assert.ok(later.paths[0].offset < 1 && first.paths[2].offset >= first.paths[2].length,
+                        assert.ok(later.paths.every((p, i) => p.offset < first.paths[i].offset),
                             JSON.stringify({ lang, width, first: first.paths.map(p => [p.length, p.offset]),
                                 later: later.paths.map(p => [p.length, p.offset]),
                                 firstProgress: first.progress, laterProgress: later.progress }));
