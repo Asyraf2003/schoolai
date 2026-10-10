@@ -51,3 +51,33 @@ Issue #82 CLOSED; branch fix/v2-headings-three-values-lines; [PR #83](https://gi
 ## NEXT VALID STEP
 
 Terminal Codex: reconcile the full WebKit900ms heading lifecycle assertion failure with the passing focused CI before overall acceptance PASS. Implementation and publication are complete; full regression proof remains FAIL.
+
+## Owner correction — 2026-10-10 / OWNER_ACCEPTED
+
+FACT: current cubic joins reverse their horizontal tangent abruptly, producing
+zigzags despite round stroke joins. Owner rejects this visual result.
+GOAL: three flowing hair-like strands, gentle downward bends, one crossing.
+DECISION/BLUEPRINT: replace only Values SVG geometry and draw intervals. Three
+long descending curves with continuous tangent at every join; first/second cross
+once, third remains separate. Natural rounded lower tips replace side-wall exits;
+this supersedes the previous side-wall assumption. No heading/card/controller change.
+Six tiers360/640/768/1024/1280/1536 share the scaled SVG; ID/EN/AR share decorative
+geometry (no directional meaning). Existing static/reduced-motion fallback,
+hidden/BFCache/dispose and one scrubbed trigger remain. No new assets/dependencies.
+ACTIVE STEP: change curves; prove tangent continuity, downward progress and exactly
+one crossing, inspect rendered SVG; diff/structure/build/PHP gates. Chromium/WebKit
+page proof and performance claims require actual runtime evidence.
+
+## Latest owner refinement — hair lying on the floor
+
+The owner rejects the vertically falling version before merge. ACTIVE/OWNER_ACCEPTED:
+three loosely arranged strands with wide sideways sweeps and soft S bends, one
+crossing only. Replace the vertical geometry; keep tangent continuity and rounded
+turns. Side-wall tips and staggered draw intervals suit the floor-like composition.
+Geometry3tests PASS: continuous tangents, exactly one pair crossing, no self-crossing.
+Chromium-rendered preview inspected: /tmp/schoolai-floor-hair-curves.png.
+Previous vertical preview is superseded and must not be used as acceptance proof.
+
+Latest explicit owner correction: ends must not all exit left; third strand exits
+right, first/second left. This supersedes the initial floor preview. Geometry proof
+now includes both ending directions and still exactly one crossing.

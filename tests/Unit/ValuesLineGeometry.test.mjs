@@ -45,13 +45,18 @@ const intersections = (first, second) => {
     }
     return found;
 };
-test('three independent zigzag paths start and finish at side walls', () => {
+test('three floor-like strands sweep sideways with continuous tangents', () => {
     assert.equal(paths.length, 3);
     for (const { curves, coords } of paths) {
-        assert.ok(curves.length >= 3 && curves.length <= 5, 'each line has several directional bends');
-        assert.ok([coords[0], coords.at(-1)].every(p => p[0] < -12 || p[0] > width + 12));
-        assert.ok(curves.flat().every(p => p[1] > 0 && p[1] < height));
-        assert.ok(coords.every((p, i) => i === 0 || p[1] >= coords[i - 1][1]), 'progress moves vertically forward');
+        assert.ok(curves.length >= 2 && curves.length <= 5, 'each line has several directional bends');
+        assert.ok(coords.some(p => p[0] > width * .7) && coords.some(p => p[0] < width * .3), 'wide sideways sweep');
+        for (let i = 1; i < curves.length; i++) {
+            const before = curves[i - 1], after = curves[i];
+            for (const axis of [0, 1]) assert.equal(before[3][axis] - before[2][axis],
+                after[1][axis] - after[0][axis], 'tangent continues without a sharp reversal');
+        }
+        assert.ok(curves.flat().every(p => p[1] > 0 && p[1] <= height));
+        assert.ok(coords.at(-1)[1] > coords[0][1], 'strand spans its scroll interval');
     }
 });
 test('exactly one pair of paths crosses once; other pairs never cross', () => {
@@ -59,5 +64,22 @@ test('exactly one pair of paths crosses once; other pairs never cross', () => {
     assert.equal(intersections(paths[0], paths[2]).length, 0);
     assert.equal(intersections(paths[1], paths[2]).length, 0);
     const y = intersections(paths[0], paths[1])[0];
-    assert.ok(y > 1900 && y < 2300);
+    assert.ok(y > 1700 && y < 2700);
+});
+
+test('soft S bends never cross their own strand', () => {
+    const cross = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+    for (const { coords } of paths) for (let i = 0; i < coords.length - 1; i++) {
+        for (let j = i + 2; j < coords.length - 1; j++) {
+            const [a, b, c, d] = [coords[i], coords[i + 1], coords[j], coords[j + 1]];
+            assert.ok(!(cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0),
+                'no self-crossing adds an unintended intersection');
+        }
+    }
+});
+
+test('strand endings include both the left and right sides', () => {
+    const tips = paths.map(path => path.coords.at(-1)[0]);
+    assert.ok(tips.some(x => x < 0), 'at least one left ending');
+    assert.ok(tips.some(x => x > width), 'at least one right ending');
 });

@@ -1,24 +1,22 @@
 <div class="values__line" data-values-line aria-hidden="true">
     <svg viewBox="0 0 1920 5400" preserveAspectRatio="none" focusable="false">
-        <path data-values-line-path data-start="80" data-end="2450" fill="none" stroke="#fff"
+        <path data-values-line-path data-start="80" data-end="3300" fill="none" stroke="#fff"
             stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"
             d="M -160 80
-                C 250 180 1460 300 2070 740
-                C 1720 920 780 1190 -160 1480
-                C 260 1710 1450 1880 2050 2020
-                C 1620 2140 530 2250 -170 2450"/>
-        <path data-values-line-path data-start="1700" data-end="3670" fill="none" stroke="#fff"
+                C 500 80 1500 300 1500 900
+                C 1500 1500 200 900 200 1500
+                C 200 2100 1500 1700 1500 2300
+                C 1500 2900 700 3300 -160 3300"/>
+        <path data-values-line-path data-start="1300" data-end="3000" fill="none" stroke="#fff"
             stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"
-            d="M -170 1700
-                C 380 1840 1480 1990 2080 2250
-                C 1660 2440 650 2750 -160 2970
-                C 330 3190 1470 3500 2080 3670"/>
-        <path data-values-line-path data-start="3570" data-end="5340" fill="none" stroke="#fff"
+            d="M 2080 1300
+                C 1600 1300 1750 1700 1150 2000
+                C 550 2300 300 2700 -160 3000"/>
+        <path data-values-line-path data-start="3500" data-end="5340" fill="none" stroke="#fff"
             stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"
-            d="M 2450 3570
-                C 2470 3710 2300 3780 2060 3910
-                C 1540 4100 510 4370 -160 4490
-                C 300 4650 1450 4910 2070 5000
-                C 1680 5170 430 5230 -170 5340"/>
+            d="M 2080 3500
+                C 1250 3500 350 3600 350 4200
+                C 350 4800 1650 4200 1650 4800
+                C 1650 5400 1950 5340 2080 5340"/>
     </svg>
 </div>
