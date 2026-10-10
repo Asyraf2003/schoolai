@@ -77,3 +77,7 @@ turns. Side-wall tips and staggered draw intervals suit the floor-like compositi
 Geometry3tests PASS: continuous tangents, exactly one pair crossing, no self-crossing.
 Chromium-rendered preview inspected: /tmp/schoolai-floor-hair-curves.png.
 Previous vertical preview is superseded and must not be used as acceptance proof.
+
+Latest explicit owner correction: ends must not all exit left; third strand exits
+right, first/second left. This supersedes the initial floor preview. Geometry proof
+now includes both ending directions and still exactly one crossing.

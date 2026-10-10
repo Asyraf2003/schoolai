@@ -77,3 +77,9 @@ test('soft S bends never cross their own strand', () => {
         }
     }
 });
+
+test('strand endings include both the left and right sides', () => {
+    const tips = paths.map(path => path.coords.at(-1)[0]);
+    assert.ok(tips.some(x => x < 0), 'at least one left ending');
+    assert.ok(tips.some(x => x > width), 'at least one right ending');
+});
