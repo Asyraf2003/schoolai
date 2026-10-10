@@ -1,6 +1,6 @@
 # MAP-V2-17 — Program/Values autonomous headings and three white Values strokes
 
-STATUS: VERIFYING
+STATUS: CLOSED — focused Chromium/WebKit motion CI PASS
 
 ## OWNER_RAW
 
@@ -42,12 +42,12 @@ Share a small one-shot Web Animations state machine between Program and Values. 
 
 ## PROOF
 
-Source geometry sample: path1/path2 cross once at approximately x1658/y2103 in 1920×5400 coordinates; other pairs cross zero times. Browser Chromium/WebKit, localized heading completion, mobile/desktop, SVG count/reverse, reduced motion and protected Program/Values behaviors covered by scoped CI. Final run link and caveats recorded after CI.
+Source geometry sample: path1/path2 cross once at approximately x1658/y2103 in 1920×5400 coordinates; other pairs cross zero times. [Focused Chromium/WebKit CI](https://github.com/Asyraf2003/schoolai/actions/runs/38009783546) SUCCESS on merged source head c761d14c: heading lifecycle and 760ms/900ms sequence, three-stroke draw/reverse, reduced-motion, responsive locale cases. Source structure, Vite build and three-path geometry PASS. A separate full historical Values regression suite was still running when PR #83 merged. Earlier full Chromium passed; WebKit exposed a flaky short-phase polling assertion, replaced by a MutationObserver-based proof that passed in the focused CI. Existing repository-wide dependency security-audit baseline still FAIL and was not changed.
 
 ## GIT
 
-Issue #82; branch fix/v2-headings-three-values-lines; PR pending.
+Issue #82 CLOSED; branch fix/v2-headings-three-values-lines; [PR #83](https://github.com/Asyraf2003/schoolai/pull/83) MERGED to main at f4d4a636f19d111dabb36dc98e0f0d5fa81e746e.
 
 ## NEXT VALID STEP
 
-Run scoped CI, correct newly detected failures only, then merge PR and mark map CLOSED.
+No remaining source work in this map. Any future visual polish needs a new owner-scoped request and visual proof.
