@@ -1,5 +1,24 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Program/Values headings and three lines — 2026-10-10
+
+FACT: current main b85790f2 includes merged PR83 (f4d4a636); issue82 CLOSED.
+Accepted blueprint: ../../docs2/blueprints/heading-three-lines-v2.md.
+Program waits for both760ms reveals, then shifts the lower line for760ms;
+Values uses900ms for each stage. Two-line RTL mirrors; one-line AR only reveals.
+Three SVG paths have one geometric crossing and one shared scrubbed controller.
+PROOF: focused Chromium/WebKit CI run38009783546 PASS; full Values Chromium
+PASS. Full Values WebKit run38009783595 finished13PASS/1FAIL: heading lifecycle
+assertion "no horizontal movement during the900ms reveal". Root cause unresolved;
+focused success does not waive this regression. Dependency audit remains FAIL.
+Local verification at b85790f2: diff/structure299/build PASS; php artisan test
+39PASS/297errors,336tests/171assertions. Missing SQLite/GD and legacy source paths
+block full PHP proof in this environment; no source changed during verification.
+STATUS: PASS focused motion/geometry; FAIL full WebKit/dependency gates;
+BLOCKED_BY_MISSING_EVIDENCE full PHP runtime prerequisites and native Safari.
+NEXT channel Terminal Codex: reconcile the full WebKit heading lifecycle failure
+with the passing focused run before declaring overall acceptance PASS.
+
 ## Values OLD fidelity / autonomous heading — 2026-10-09
 
 Active owner request supersedes historical Values deferrals. Main2b879e94;

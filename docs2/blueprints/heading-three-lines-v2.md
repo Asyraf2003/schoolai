@@ -1,6 +1,6 @@
 # MAP-V2-17 — Program/Values autonomous headings and three white Values strokes
 
-STATUS: CLOSED — focused Chromium/WebKit motion CI PASS
+STATUS: FAIL full WebKit regression; implementation MERGED; focused Chromium/WebKit motion CI PASS
 
 ## OWNER_RAW
 
@@ -42,7 +42,7 @@ Share a small one-shot Web Animations state machine between Program and Values. 
 
 ## PROOF
 
-Source geometry sample: path1/path2 cross once at approximately x1658/y2103 in 1920×5400 coordinates; other pairs cross zero times. [Focused Chromium/WebKit CI](https://github.com/Asyraf2003/schoolai/actions/runs/38009783546) SUCCESS on merged source head c761d14c: heading lifecycle and 760ms/900ms sequence, three-stroke draw/reverse, reduced-motion, responsive locale cases. Source structure, Vite build and three-path geometry PASS. A separate full historical Values regression suite was still running when PR #83 merged. Earlier full Chromium passed; WebKit exposed a flaky short-phase polling assertion, replaced by a MutationObserver-based proof that passed in the focused CI. Existing repository-wide dependency security-audit baseline still FAIL and was not changed.
+Source geometry sample: path1/path2 cross once at approximately x1658/y2103 in 1920×5400 coordinates; other pairs cross zero times. [Focused Chromium/WebKit CI](https://github.com/Asyraf2003/schoolai/actions/runs/38009783546) SUCCESS on merged source head c761d14c: heading lifecycle and 760ms/900ms sequence, three-stroke draw/reverse, reduced-motion, responsive locale cases. Source structure, Vite build and three-path geometry PASS. The full Values regression run38009783595 subsequently finished: Chromium PASS; WebKit13PASS/1FAIL in the900ms heading lifecycle assertion. Its root cause remains unresolved; full regression status is FAIL. Earlier full Chromium passed; WebKit exposed a flaky short-phase polling assertion, replaced by a MutationObserver-based proof that passed in the focused CI. Existing repository-wide dependency security-audit baseline still FAIL and was not changed.
 
 ## GIT
 
@@ -50,4 +50,4 @@ Issue #82 CLOSED; branch fix/v2-headings-three-values-lines; [PR #83](https://gi
 
 ## NEXT VALID STEP
 
-No remaining source work in this map. Any future visual polish needs a new owner-scoped request and visual proof.
+Terminal Codex: reconcile the full WebKit900ms heading lifecycle assertion failure with the passing focused CI before overall acceptance PASS. Implementation and publication are complete; full regression proof remains FAIL.
