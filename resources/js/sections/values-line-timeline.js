@@ -25,11 +25,13 @@ export function createValuesLineTimeline(gsap, ScrollTrigger, scene, paths, orig
     paint(0);
     const timeline = gsap.timeline({
         scrollTrigger: { id: 'values-line', trigger: scene, start: 'top 85%', end: 'bottom bottom',
-            scrub: true, invalidateOnRefresh: true },
+            scrub: true, invalidateOnRefresh: true,
+            onUpdate: trigger => paint(trigger.progress) },
     });
-    timeline.to(progress, { value: 1, duration: 1, ease: 'none',
-        onUpdate: () => paint(progress.value) }, 0);
+    // The tween only establishes a normalized scroll span. Draw using the
+    // ScrollTrigger's observed progress, never an engine-lagging tween value.
+    timeline.to(progress, { value: 1, duration: 1, ease: 'none' }, 0);
     ScrollTrigger.refresh(); timeline.scrollTrigger.update();
-    paint(timeline.progress());
+    paint(timeline.scrollTrigger.progress);
     return timeline;
 }
