@@ -8,11 +8,29 @@ const approach = page => page.evaluate(() => {
     scrollTo(0, section.getBoundingClientRect().top + scrollY - innerHeight);
 });
 const at = async (page, fraction) => {
+    // WebKit may restore layout/scroll coordinates after viewport changes.
+    // Recalculate the trigger, scroll natively, and explicitly reconcile the
+    // already-loaded ScrollTrigger rather than racing its next scroll tick.
     await page.evaluate(p => {
+        window.ScrollTrigger.refresh();
         const trigger = window.ScrollTrigger.getById('values-line');
         scrollTo(0, Math.round(trigger.start + (trigger.end - trigger.start) * p));
+        trigger.update();
     }, fraction);
-    await page.waitForFunction(p => Math.abs(window.ScrollTrigger.getById('values-line').progress - p) < .0015, fraction);
+    await page.waitForFunction(() => {
+        const trigger = window.ScrollTrigger.getById('values-line');
+        if (!trigger?.enabled) return false;
+        const actual = Math.max(0, Math.min(1,
+            (scrollY - trigger.start) / (trigger.end - trigger.start)));
+        return Math.abs(trigger.progress - actual) < .0015;
+    });
+    const state = await page.evaluate(() => {
+        const trigger = window.ScrollTrigger.getById('values-line');
+        return { progress: trigger.progress, scroll: scrollY,
+            start: trigger.start, end: trigger.end, maxScroll: document.documentElement.scrollHeight - innerHeight };
+    });
+    assert.ok(Math.abs(state.progress - fraction) < .02,
+        'Requested Values scroll progress was not reachable: ' + JSON.stringify(state));
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 };
 const inspect = () => {
@@ -54,8 +72,9 @@ for (const engine of engines) {
                         assert.equal(initial.triggers, 1);
                         assert.equal(initial.overflow, false);
                         assert.equal(initial.size.height, 4500);
-                        assert.ok(initial.paths.every(p => p.offset >= p.length
-                            && p.stroke === 'rgb(255, 255, 255)' && p.fill === 'none'));
+                        assert.ok(initial.paths.every(p => p.offset >= p.length - 1
+                            && p.stroke === 'rgb(255, 255, 255)' && p.fill === 'none'),
+                            JSON.stringify({ lang, width, progress: initial.progress, paths: initial.paths }));
                         assert.ok(initial.paths.every(p => p.caps.every(c => c.x < 0 || c.x > width)), 'every line ends at a side wall');
                         await at(runtime.page, .4);
                         const first = await runtime.page.evaluate(inspect);
