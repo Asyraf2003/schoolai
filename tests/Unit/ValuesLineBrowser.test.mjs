@@ -62,7 +62,10 @@ for (const engine of engines) {
                         await at(runtime.page, .8);
                         const later = await runtime.page.evaluate(inspect);
                         assert.ok(later.paths.every((p, i) => p.offset <= first.paths[i].offset + .1));
-                        assert.ok(later.paths[0].offset < 1 && first.paths[2].offset >= first.paths[2].length);
+                        assert.ok(later.paths[0].offset < 1 && first.paths[2].offset >= first.paths[2].length,
+                            JSON.stringify({ lang, width, first: first.paths.map(p => [p.length, p.offset]),
+                                later: later.paths.map(p => [p.length, p.offset]),
+                                firstProgress: first.progress, laterProgress: later.progress }));
                         await at(runtime.page, 1);
                         const full = await runtime.page.evaluate(inspect);
                         assert.ok(full.paths.every(p => Math.abs(p.offset) < .1));
