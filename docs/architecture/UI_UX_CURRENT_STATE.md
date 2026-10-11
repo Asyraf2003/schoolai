@@ -1,5 +1,27 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## First Stories video visual parity correction — 2026-10-12
+
+OWNER_ACCEPTED: Fantasy-like treatment of first dummy media; Latin copy in
+RIGHT visual half, Arabic copy in LEFT half (newest owner correction).
+FACT: owner screenshots showed default large Inter title (~72px), copy on
+wrong edge, bright footage and exposed trailing white after video. Reference
+shows a small 01 marker, bold condensed editorial title (~44px), short quieter
+description and darkened media.
+DECISION: keep single 100svh stage and dummy video; shift copy toward physical
+right/left via logical margin-inline-start:auto. Mirror 25% side gradient
+to right for LTR / left for RTL; darken backdrop video/poster; condensed Latin
+display stack with ~44px sizing, restrained description and 01 eyebrow.
+Phone: copy stays at bottom and aligns toward physical right/left respectively.
+Remove Stories trailing bottom padding so scrolling to the page end does not
+expose a white band. Preserve previous 25svh Testimonial-to-header gap.
+No JS, lifecycle, data, scroll, heading or next-story changes.
+PROOF: owner screenshots and changed scoped code; build/viewport/RTL
+browser proof still need local execution.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE rendered proof.
+NEXT: local pull/build, visually confirm stage in ID/AR on desktop/mobile.
+
+
 ## Stories & Insights first dummy video — 2026-10-12
 
 OWNER_ACCEPTED: one first article video only; dummy local content, no DB/admin

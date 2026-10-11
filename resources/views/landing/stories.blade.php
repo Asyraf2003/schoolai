@@ -17,6 +17,7 @@
                 preload="none" autoplay muted loop playsinline aria-hidden="true"></video>
         </div>
         <div class="stories__feature-copy">
+            <span class="stories__feature-index" aria-hidden="true">01</span>
             <h3 id="stories-feature-title">{{ __('stories.feature.title') }}</h3>
             <p>{{ __('stories.feature.description') }}</p>
         </div>
