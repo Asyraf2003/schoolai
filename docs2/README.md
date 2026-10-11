@@ -1,9 +1,10 @@
 # docs2 — Homepage V2 source of truth
 
 Status: **ACTIVE**  
-Scope saat ini: **MAP-V2-17: heading berurutan dan tiga garis Values**.
+Scope saat ini: **MAP-V2-18: Scroll Gallery dan handoff Testimoni**.
 
-Map aktif: [MAP-V2-17](blueprints/heading-three-lines-v2.md).
+Map aktif: [MAP-V2-18](blueprints/scroll-gallery-v2.md).
+Map Values terlindungi: [MAP-V2-17](blueprints/heading-three-lines-v2.md).
 Map sebelumnya: [MAP-V2-16](blueprints/hero-video-only-ui.md).
 Values cards fidelity: [MAP-V2-15](blueprints/values-old-fidelity-heading.md).
 Bukti terbaru: [Values OLD / heading](proof/values-old-fidelity-heading-status.md).
@@ -76,7 +77,7 @@ Delivery aktif: `resources/views/landing/index.blade.php` melalui route home.
 
 Urutan aktif: **foundation → shell → Menu → Hero → About → Program → proof**.
 Values memiliki judul, transisi latar dari Program, lima komposisi garis scroll,
-dan kartu OLD yang diadaptasi melalui MAP-V2-15. Section berikutnya belum diimplementasikan.
+dan kartu OLD yang diadaptasi melalui MAP-V2-15. Gallery dan Testimoni diintegrasikan melalui MAP-V2-18; sertifikasi tercatat pada proof Gallery.
 
 ## Prinsip utama
 

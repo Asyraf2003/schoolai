@@ -1,5 +1,22 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Gallery V2 — 2026-10-11
+
+OWNER_ACCEPTED: MAP-V2-18, Gallery after Values, ten real media with one scrub
+timeline, then populated existing sample Testimonials. Issue86; branch
+feat/v2-scroll-gallery; main baseline445fbf92. Protected section owners unchanged.
+FACT: Chromium/WebKit phase matrix and media lifecycle initial runs PASS;
+resize regression traced to prior global refresh updating progress before Gallery
+handler. Fixed by preserving progress from the last viewport measurement.
+PROOF: docs2/proof/gallery-v2; PHP six focused tests PASS; full suite failure/error
+test identities identical to isolated main (71FAIL/75ERROR), six additional PASS.
+STATUS: PASS initial scoped proof; FAIL historical full PHP baseline;
+BLOCKED_BY_MISSING_EVIDENCE final CI and broader performance/native
+Safari certification. Blueprint IMPLEMENTING.
+PROGRESS: five browser tests per engine PASS, including short-height/resize.
+NEXT channel Terminal Codex: publish PR, verify CI, merge scoped PASS.
+
+
 ## Values soft hair curves — 2026-10-10
 
 OWNER_ACCEPTED: replace rejected zigzag with three floor-like strands with sideways sweeps and soft S

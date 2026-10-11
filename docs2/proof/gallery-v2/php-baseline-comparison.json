@@ -1,0 +1,25 @@
+{
+  "baselineSha": "445fbf92fa60160af92dc40c5195a925e83b2a4d",
+  "baseline": {
+    "tool": "pest",
+    "result": "failed",
+    "tests": 336,
+    "passed": 190,
+    "assertions": 1760,
+    "duration_ms": 14496,
+    "failed": 71,
+    "errors": 75
+  },
+  "gallery": {
+    "tool": "pest",
+    "result": "failed",
+    "tests": 342,
+    "passed": 196,
+    "assertions": 1807,
+    "duration_ms": 14175,
+    "failed": 71,
+    "errors": 75
+  },
+  "sameFailingAndErrorTestNames": true,
+  "status": "PASS regression comparison; FAIL full legacy suite"
+}

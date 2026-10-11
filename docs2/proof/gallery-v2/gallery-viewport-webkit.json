@@ -1,0 +1,1762 @@
+{
+  "date": "2026-10-11T02:48:31.393Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8020",
+  "version": "26.6",
+  "cases": [
+    {
+      "width": 360,
+      "opening": {
+        "width": 360,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 36,
+            "y": 169,
+            "width": 288,
+            "height": 162,
+            "bottom": 331,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 546,
+            "y": 500,
+            "width": 210.6143798828125,
+            "height": 163.3427734375,
+            "bottom": 663.3427734375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -342,
+            "y": 539,
+            "width": 210.61439514160156,
+            "height": 163.3427734375,
+            "bottom": 702.3427734375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 546,
+            "y": 539,
+            "width": 210.6143798828125,
+            "height": 163.3427734375,
+            "bottom": 702.3427734375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -342,
+            "y": 578,
+            "width": 210.61439514160156,
+            "height": 118.46240234375,
+            "bottom": 696.46240234375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 546,
+            "y": 578,
+            "width": 210.6143798828125,
+            "height": 118.46240234375,
+            "bottom": 696.46240234375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -342,
+            "y": 617,
+            "width": 210.61439514160156,
+            "height": 118.46240234375,
+            "bottom": 735.46240234375,
+            "opacity": 0,
+            "column": "center",
+            "image": 0
+          },
+          {
+            "x": 546,
+            "y": 617,
+            "width": 210.6143798828125,
+            "height": 163.3427734375,
+            "bottom": 780.3427734375,
+            "opacity": 0,
+            "column": "right",
+            "image": 0
+          },
+          {
+            "x": -342,
+            "y": 656,
+            "width": 210.61439514160156,
+            "height": 163.3427734375,
+            "bottom": 819.3427734375,
+            "opacity": 0,
+            "column": "right",
+            "image": 0
+          },
+          {
+            "x": 546,
+            "y": 656,
+            "width": 210.6143798828125,
+            "height": 163.3427734375,
+            "bottom": 819.3427734375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 4475.28125,
+          "width": 360,
+          "height": 1161.59375,
+          "bottom": 5636.875
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 639,
+      "opening": {
+        "width": 639,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 63.900001525878906,
+            "y": 110,
+            "width": 511.1875305175781,
+            "height": 287.53125,
+            "bottom": 397.53125,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 965.5289916992188,
+            "y": 500,
+            "width": 378.68768310546875,
+            "height": 290.3408203125,
+            "bottom": 790.3408203125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -607.0499877929688,
+            "y": 570.1298828125,
+            "width": 378.68768310546875,
+            "height": 290.3408203125,
+            "bottom": 860.470703125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 965.5289916992188,
+            "y": 570.1298828125,
+            "width": 378.68768310546875,
+            "height": 290.3408203125,
+            "bottom": 860.470703125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -607.0499877929688,
+            "y": 640.2607421875,
+            "width": 378.68768310546875,
+            "height": 213.0068359375,
+            "bottom": 853.267578125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 965.5289916992188,
+            "y": 640.2607421875,
+            "width": 378.68768310546875,
+            "height": 213.0068359375,
+            "bottom": 853.267578125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -607.0499877929688,
+            "y": 710.390625,
+            "width": 378.68768310546875,
+            "height": 213.0068359375,
+            "bottom": 923.3974609375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 965.5289916992188,
+            "y": 710.390625,
+            "width": 378.68768310546875,
+            "height": 290.3408203125,
+            "bottom": 1000.7314453125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": -607.0499877929688,
+            "y": 780.521484375,
+            "width": 378.68768310546875,
+            "height": 290.33984375,
+            "bottom": 1070.861328125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 965.5289916992188,
+            "y": 780.521484375,
+            "width": 378.68768310546875,
+            "height": 290.33984375,
+            "bottom": 1070.861328125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 4474.515625,
+          "width": 639,
+          "height": 1137.59375,
+          "bottom": 5612.109375
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 640,
+      "opening": {
+        "width": 640,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 64,
+            "y": 110,
+            "width": 512,
+            "height": 288,
+            "bottom": 398,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 967.0399780273438,
+            "y": 500,
+            "width": 379.28961181640625,
+            "height": 290.8037109375,
+            "bottom": 790.8037109375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -608,
+            "y": 570.240234375,
+            "width": 379.28961181640625,
+            "height": 290.8037109375,
+            "bottom": 861.0439453125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 967.0399780273438,
+            "y": 570.240234375,
+            "width": 379.28961181640625,
+            "height": 290.8037109375,
+            "bottom": 861.0439453125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -608,
+            "y": 640.48046875,
+            "width": 379.28961181640625,
+            "height": 213.353515625,
+            "bottom": 853.833984375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 967.0399780273438,
+            "y": 640.48046875,
+            "width": 379.28961181640625,
+            "height": 213.353515625,
+            "bottom": 853.833984375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -608,
+            "y": 710.7197265625,
+            "width": 379.28961181640625,
+            "height": 213.3544921875,
+            "bottom": 924.07421875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 967.0399780273438,
+            "y": 710.7197265625,
+            "width": 379.28961181640625,
+            "height": 290.8037109375,
+            "bottom": 1001.5234375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": -608,
+            "y": 780.9599609375,
+            "width": 379.28961181640625,
+            "height": 290.8037109375,
+            "bottom": 1071.763671875,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 967.0399780273438,
+            "y": 780.9599609375,
+            "width": 379.28961181640625,
+            "height": 290.8037109375,
+            "bottom": 1071.763671875,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 4474.8125,
+          "width": 640,
+          "height": 1137.59375,
+          "bottom": 5612.40625
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 767,
+      "opening": {
+        "width": 767,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 76.69999694824219,
+            "y": 110,
+            "width": 613.59375,
+            "height": 345.140625,
+            "bottom": 455.140625,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1158.93701171875,
+            "y": 500,
+            "width": 454.55029296875,
+            "height": 348.505859375,
+            "bottom": 848.505859375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -728.6500244140625,
+            "y": 584.1787109375,
+            "width": 454.5502624511719,
+            "height": 348.505859375,
+            "bottom": 932.6845703125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 1158.93701171875,
+            "y": 584.1787109375,
+            "width": 454.55029296875,
+            "height": 348.505859375,
+            "bottom": 932.6845703125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -728.6500244140625,
+            "y": 668.3564453125,
+            "width": 454.5502624511719,
+            "height": 255.6845703125,
+            "bottom": 924.041015625,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1158.93701171875,
+            "y": 668.3564453125,
+            "width": 454.55029296875,
+            "height": 255.6845703125,
+            "bottom": 924.041015625,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -728.6500244140625,
+            "y": 752.53515625,
+            "width": 454.5502624511719,
+            "height": 255.6845703125,
+            "bottom": 1008.2197265625,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1158.93701171875,
+            "y": 752.53515625,
+            "width": 454.55029296875,
+            "height": 348.505859375,
+            "bottom": 1101.041015625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": -728.6500244140625,
+            "y": 836.712890625,
+            "width": 454.5502624511719,
+            "height": 348.505859375,
+            "bottom": 1185.21875,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 1158.93701171875,
+            "y": 836.712890625,
+            "width": 454.55029296875,
+            "height": 348.505859375,
+            "bottom": 1185.21875,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 4474.9375,
+          "width": 767,
+          "height": 1162.21875,
+          "bottom": 5637.15625
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 768,
+      "opening": {
+        "width": 768,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 76.80000305175781,
+            "y": 110,
+            "width": 614.390625,
+            "height": 345.59375,
+            "bottom": 455.59375,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -717.6959838867188,
+            "y": 500,
+            "width": 285.1387023925781,
+            "height": 221.43798828125,
+            "bottom": 721.43798828125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -717.6959838867188,
+            "y": 552.7998046875,
+            "width": 285.1387023925781,
+            "height": 221.43798828125,
+            "bottom": 774.23779296875,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -717.6959838867188,
+            "y": 605.60009765625,
+            "width": 285.1387023925781,
+            "height": 221.4375,
+            "bottom": 827.03759765625,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 278.3999938964844,
+            "y": 552.7998046875,
+            "width": 285.1387023925781,
+            "height": 160.37744140625,
+            "bottom": 713.17724609375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 278.3999938964844,
+            "y": 605.60009765625,
+            "width": 285.1387023925781,
+            "height": 160.376953125,
+            "bottom": 765.97705078125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 278.3999938964844,
+            "y": 658.39990234375,
+            "width": 285.1387023925781,
+            "height": 160.37744140625,
+            "bottom": 818.77734375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1274.4959716796875,
+            "y": 500,
+            "width": 285.138671875,
+            "height": 221.43798828125,
+            "bottom": 721.43798828125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 1274.4959716796875,
+            "y": 552.7998046875,
+            "width": 285.138671875,
+            "height": 221.43798828125,
+            "bottom": 774.23779296875,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 1274.4959716796875,
+            "y": 605.60009765625,
+            "width": 285.138671875,
+            "height": 221.4375,
+            "bottom": 827.03759765625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 3050.125,
+          "width": 768,
+          "height": 1162.5,
+          "bottom": 4212.625
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 1023,
+      "opening": {
+        "width": 1023,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 191.5,
+            "y": 110,
+            "width": 639.9814453125,
+            "height": 359.9951171875,
+            "bottom": 469.9951171875,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -955.9935302734375,
+            "y": 500,
+            "width": 379.8150634765625,
+            "height": 294.962890625,
+            "bottom": 794.962890625,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -955.9935302734375,
+            "y": 570.3310546875,
+            "width": 379.8150634765625,
+            "height": 294.962890625,
+            "bottom": 865.2939453125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -955.9935302734375,
+            "y": 640.66259765625,
+            "width": 379.8150634765625,
+            "height": 294.96240234375,
+            "bottom": 935.625,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 370.8374938964844,
+            "y": 570.3310546875,
+            "width": 379.8150939941406,
+            "height": 213.62890625,
+            "bottom": 783.9599609375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 370.8374938964844,
+            "y": 640.66259765625,
+            "width": 379.8150939941406,
+            "height": 213.62841796875,
+            "bottom": 854.291015625,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 370.8374938964844,
+            "y": 710.99365234375,
+            "width": 379.8150939941406,
+            "height": 213.62841796875,
+            "bottom": 924.6220703125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1697.66845703125,
+            "y": 500,
+            "width": 379.815185546875,
+            "height": 294.962890625,
+            "bottom": 794.962890625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 1697.66845703125,
+            "y": 570.3310546875,
+            "width": 379.815185546875,
+            "height": 294.962890625,
+            "bottom": 865.2939453125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 1697.66845703125,
+            "y": 640.66259765625,
+            "width": 379.815185546875,
+            "height": 294.96240234375,
+            "bottom": 935.625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 3050.1875,
+          "width": 1023,
+          "height": 1227.09375,
+          "bottom": 4277.28125
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 1024,
+      "opening": {
+        "width": 1024,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 192,
+            "y": 110,
+            "width": 640.0311889648438,
+            "height": 359.9853515625,
+            "bottom": 469.9853515625,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -956.927978515625,
+            "y": 500,
+            "width": 380.1849365234375,
+            "height": 295.2529296875,
+            "bottom": 795.2529296875,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -956.927978515625,
+            "y": 570.39990234375,
+            "width": 380.1849365234375,
+            "height": 295.2529296875,
+            "bottom": 865.65283203125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -956.927978515625,
+            "y": 640.7998046875,
+            "width": 380.1849365234375,
+            "height": 295.2529296875,
+            "bottom": 936.052734375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 371.20001220703125,
+            "y": 570.39990234375,
+            "width": 380.1849365234375,
+            "height": 213.83154296875,
+            "bottom": 784.2314453125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 371.20001220703125,
+            "y": 640.7998046875,
+            "width": 380.1849365234375,
+            "height": 213.83154296875,
+            "bottom": 854.63134765625,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 371.20001220703125,
+            "y": 711.2001953125,
+            "width": 380.1849365234375,
+            "height": 213.83154296875,
+            "bottom": 925.03173828125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1699.3280029296875,
+            "y": 500,
+            "width": 380.1849365234375,
+            "height": 295.2529296875,
+            "bottom": 795.2529296875,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 1699.3280029296875,
+            "y": 570.39990234375,
+            "width": 380.1849365234375,
+            "height": 295.2529296875,
+            "bottom": 865.65283203125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 1699.3280029296875,
+            "y": 640.7998046875,
+            "width": 380.1849365234375,
+            "height": 295.2529296875,
+            "bottom": 936.052734375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 3050.4375,
+          "width": 1024,
+          "height": 1227.46875,
+          "bottom": 4277.90625
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 1279,
+      "opening": {
+        "width": 1279,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 319.5,
+            "y": 110,
+            "width": 640.0037841796875,
+            "height": 359.98828125,
+            "bottom": 469.98828125,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -1195.2254638671875,
+            "y": 500,
+            "width": 474.861328125,
+            "height": 368.77783203125,
+            "bottom": 868.77783203125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1195.2254638671875,
+            "y": 587.93115234375,
+            "width": 474.861328125,
+            "height": 368.77783203125,
+            "bottom": 956.708984375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1195.2254638671875,
+            "y": 675.8623046875,
+            "width": 474.861328125,
+            "height": 368.77783203125,
+            "bottom": 1044.64013671875,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 463.63751220703125,
+            "y": 587.93115234375,
+            "width": 474.861328125,
+            "height": 267.0830078125,
+            "bottom": 855.01416015625,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 463.63751220703125,
+            "y": 675.8623046875,
+            "width": 474.861328125,
+            "height": 267.0830078125,
+            "bottom": 942.9453125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 463.63751220703125,
+            "y": 763.7939453125,
+            "width": 474.861328125,
+            "height": 267.08251953125,
+            "bottom": 1030.87646484375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 2122.50048828125,
+            "y": 500,
+            "width": 474.861328125,
+            "height": 368.77783203125,
+            "bottom": 868.77783203125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2122.50048828125,
+            "y": 587.93115234375,
+            "width": 474.861328125,
+            "height": 368.77783203125,
+            "bottom": 956.708984375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2122.50048828125,
+            "y": 675.8623046875,
+            "width": 474.861328125,
+            "height": 368.77783203125,
+            "bottom": 1044.64013671875,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 3049.625,
+          "width": 1279,
+          "height": 1317.984375,
+          "bottom": 4367.609375
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 1280,
+      "opening": {
+        "width": 1280,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 320,
+            "y": 110,
+            "width": 640,
+            "height": 360,
+            "bottom": 470,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -1196.1600341796875,
+            "y": 500,
+            "width": 475.2384033203125,
+            "height": 369.06787109375,
+            "bottom": 869.06787109375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1196.1600341796875,
+            "y": 588,
+            "width": 475.2384033203125,
+            "height": 369.06787109375,
+            "bottom": 957.06787109375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1196.1600341796875,
+            "y": 676,
+            "width": 475.2384033203125,
+            "height": 369.06787109375,
+            "bottom": 1045.06787109375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 464,
+            "y": 588,
+            "width": 475.2384033203125,
+            "height": 267.30029296875,
+            "bottom": 855.30029296875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 464,
+            "y": 676,
+            "width": 475.2384033203125,
+            "height": 267.30029296875,
+            "bottom": 943.30029296875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 464,
+            "y": 764,
+            "width": 475.2384033203125,
+            "height": 267.30029296875,
+            "bottom": 1031.30029296875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 2124.159912109375,
+            "y": 500,
+            "width": 475.23828125,
+            "height": 369.06787109375,
+            "bottom": 869.06787109375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2124.159912109375,
+            "y": 588,
+            "width": 475.23828125,
+            "height": 369.06787109375,
+            "bottom": 957.06787109375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2124.159912109375,
+            "y": 676,
+            "width": 475.23828125,
+            "height": 369.06787109375,
+            "bottom": 1045.06787109375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 3050.40625,
+          "width": 1280,
+          "height": 1318.359375,
+          "bottom": 4368.765625
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 1535,
+      "opening": {
+        "width": 1535,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 447.5,
+            "y": 110,
+            "width": 640.0335693359375,
+            "height": 360.00048828125,
+            "bottom": 470.00048828125,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -1432.6875,
+            "y": 500,
+            "width": 569.914794921875,
+            "height": 441.79541015625,
+            "bottom": 941.79541015625,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1432.6875,
+            "y": 605.53125,
+            "width": 569.914794921875,
+            "height": 441.79541015625,
+            "bottom": 1047.32666015625,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1432.6875,
+            "y": 711.0625,
+            "width": 569.914794921875,
+            "height": 441.79541015625,
+            "bottom": 1152.85791015625,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 556.4375,
+            "y": 605.53125,
+            "width": 569.914794921875,
+            "height": 320.5517578125,
+            "bottom": 926.0830078125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 556.4375,
+            "y": 711.0625,
+            "width": 569.914794921875,
+            "height": 320.5517578125,
+            "bottom": 1031.6142578125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 556.4375,
+            "y": 816.59375,
+            "width": 569.914794921875,
+            "height": 320.5517578125,
+            "bottom": 1137.1455078125,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 2545.5625,
+            "y": 500,
+            "width": 569.914794921875,
+            "height": 441.79541015625,
+            "bottom": 941.79541015625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2545.5625,
+            "y": 605.53125,
+            "width": 569.914794921875,
+            "height": 441.79541015625,
+            "bottom": 1047.32666015625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2545.5625,
+            "y": 711.0625,
+            "width": 569.914794921875,
+            "height": 441.79541015625,
+            "bottom": 1152.85791015625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 3050.40625,
+          "width": 1535,
+          "height": 1408.875,
+          "bottom": 4459.28125
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 1536,
+      "opening": {
+        "width": 1536,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 448,
+            "y": 110,
+            "width": 639.9573974609375,
+            "height": 359.9931640625,
+            "bottom": 469.9931640625,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -1433.5999755859375,
+            "y": 500,
+            "width": 570.2846069335938,
+            "height": 442.078125,
+            "bottom": 942.078125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1433.5999755859375,
+            "y": 605.60009765625,
+            "width": 570.2846069335938,
+            "height": 442.078125,
+            "bottom": 1047.67822265625,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -1433.5999755859375,
+            "y": 711.2001953125,
+            "width": 570.2846069335938,
+            "height": 442.07763671875,
+            "bottom": 1153.27783203125,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 556.7999877929688,
+            "y": 605.60009765625,
+            "width": 570.2846069335938,
+            "height": 320.75439453125,
+            "bottom": 926.3544921875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 556.7999877929688,
+            "y": 711.2001953125,
+            "width": 570.2846069335938,
+            "height": 320.75439453125,
+            "bottom": 1031.95458984375,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 556.7999877929688,
+            "y": 816.7998046875,
+            "width": 570.2846069335938,
+            "height": 320.7548828125,
+            "bottom": 1137.5546875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 2547.199951171875,
+            "y": 500,
+            "width": 570.28466796875,
+            "height": 442.078125,
+            "bottom": 942.078125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2547.199951171875,
+            "y": 605.60009765625,
+            "width": 570.28466796875,
+            "height": 442.078125,
+            "bottom": 1047.67822265625,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 2547.199951171875,
+            "y": 711.2001953125,
+            "width": 570.28466796875,
+            "height": 442.07763671875,
+            "bottom": 1153.27783203125,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 3050.1875,
+          "width": 1536,
+          "height": 1409.25,
+          "bottom": 4459.4375
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    },
+    {
+      "width": 2560,
+      "opening": {
+        "width": 2560,
+        "height": 500,
+        "overflow": false,
+        "items": [
+          {
+            "x": 960,
+            "y": 110,
+            "width": 640,
+            "height": 360,
+            "bottom": 470,
+            "opacity": 1,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": -2032,
+            "y": 500,
+            "width": 647.9871826171875,
+            "height": 500.39599609375,
+            "bottom": 1000.39599609375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -2032,
+            "y": 620,
+            "width": 647.9871826171875,
+            "height": 500.39599609375,
+            "bottom": 1120.39599609375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": -2032,
+            "y": 740,
+            "width": 647.9871826171875,
+            "height": 500.39599609375,
+            "bottom": 1240.39599609375,
+            "opacity": 0,
+            "column": "left",
+            "image": 1920
+          },
+          {
+            "x": 1040,
+            "y": 620,
+            "width": 647.9871826171875,
+            "height": 364.49951171875,
+            "bottom": 984.49951171875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1040,
+            "y": 740,
+            "width": 647.9871826171875,
+            "height": 364.49951171875,
+            "bottom": 1104.49951171875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 1040,
+            "y": 860,
+            "width": 647.9871826171875,
+            "height": 364.49951171875,
+            "bottom": 1224.49951171875,
+            "opacity": 0,
+            "column": "center",
+            "image": 1920
+          },
+          {
+            "x": 4112,
+            "y": 500,
+            "width": 647.9873046875,
+            "height": 500.39599609375,
+            "bottom": 1000.39599609375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 4112,
+            "y": 620,
+            "width": 647.9873046875,
+            "height": 500.39599609375,
+            "bottom": 1120.39599609375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          },
+          {
+            "x": 4112,
+            "y": 740,
+            "width": 647.9873046875,
+            "height": 500.39599609375,
+            "bottom": 1240.39599609375,
+            "opacity": 0,
+            "column": "right",
+            "image": 1920
+          }
+        ],
+        "videos": [
+          {
+            "playing": true,
+            "hydrated": true,
+            "time": 0.093524839
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          },
+          {
+            "playing": false,
+            "hydrated": false,
+            "time": 0
+          }
+        ],
+        "testimonial": {
+          "x": 0,
+          "y": 2958.6875,
+          "width": 2560,
+          "height": 1450.375,
+          "bottom": 4409.0625
+        },
+        "triggers": 1
+      },
+      "progress": "0.4600"
+    }
+  ],
+  "keyboard": "PASS",
+  "hiddenPolicy": "synthetic visibility event PASS"
+}

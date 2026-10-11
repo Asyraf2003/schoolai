@@ -1,0 +1,12 @@
+.testimonials { position: relative; padding-block: clamp(4rem, 9vw, 9rem); color: #151515; background: linear-gradient(#fff, #f4f3ef 12rem); }
+.testimonials__header { inline-size: min(88%, 68rem); margin: 0 auto clamp(3rem, 6vw, 6rem); text-align: center; }
+.testimonials h2 { max-inline-size: 18ch; margin: auto; font-size: clamp(2rem, 5vw, 5.5rem); line-height: 1.15; font-weight: 450; text-wrap: balance; }
+.testimonials__header p { max-inline-size: 48rem; margin: 1.5rem auto 0; color: #57534e; }
+.testimonials__row { display: flex; gap: clamp(1rem, 2vw, 2rem); padding: 1rem 4vw; overflow-x: auto; overscroll-behavior-inline: contain; }
+.testimonials__card { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: space-between; flex: 0 0 clamp(18rem, 32vw, 32rem); min-block-size: 15rem; padding: clamp(1.25rem, 2vw, 2rem); overflow: hidden; border-radius: 1rem; background: #192824; color: #fff; }
+.testimonials__card img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; z-index: -2; }
+.testimonials__card::before { content: ''; position: absolute; inset: 0; background: #071711b8; z-index: -1; }
+.testimonials blockquote { margin: 0; font-size: clamp(1rem, 1.35vw, 1.35rem); }
+.testimonials blockquote p { margin: 0; }
+.testimonials cite { margin-block-start: 2rem; align-self: end; font-style: normal; font-size: .9rem; }
+[lang="ar"] .testimonials h2 { line-height: 1.4; }

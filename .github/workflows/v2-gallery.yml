@@ -1,0 +1,77 @@
+name: V2 scroll Gallery
+on:
+  pull_request:
+    paths:
+      - 'app/View/Presenters/LandingGalleryPresenter.php'
+      - 'app/View/Presenters/LandingTestimonialsPresenter.php'
+      - 'app/Http/Controllers/HomeController.php'
+      - 'resources/**'
+      - 'lang/*/gallery_v2.php'
+      - 'tests/**/Gallery*'
+      - 'tests/Feature/LandingGalleryV2Test.php'
+      - '.github/workflows/v2-gallery.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gallery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: mbstring, fileinfo, pdo_sqlite, gd
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci
+      - run: npm run check:structure
+      - run: npm run build
+      - run: node --test tests/Unit/GalleryGeometry.test.mjs
+      - name: Prepare Laravel and browser
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate:fresh --seed --force
+          php artisan test --compact tests/Feature/LandingGalleryV2Test.php
+          npm install --no-save --no-package-lock playwright@1.63.0
+          npx playwright install --with-deps ${{ matrix.engine }}
+          GALLERY_CHROME="$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*/chrome-linux*/*' -print -quit)"
+          if [ -n "$GALLERY_CHROME" ]; then echo "PROGRAM_CHROMIUM_PATH=$GALLERY_CHROME" >> "$GITHUB_ENV"; fi
+          php artisan serve --host=127.0.0.1 --port=8000 > /tmp/gallery-server.log 2>&1 &
+          for n in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/gallery-server.log
+          exit 1
+      - name: Verify choreography, media and fallback
+        env:
+          PROGRAM_BROWSER_URL: http://127.0.0.1:8000
+          PROGRAM_PLAYWRIGHT_MODULE: playwright
+          PROGRAM_ENGINES: ${{ matrix.engine }}
+          PROGRAM_PROOF_DIRECTORY: /tmp
+        run: >-
+          node --test --test-concurrency=1 --test-timeout=420000
+          tests/Unit/GalleryScrollBrowser.test.mjs
+          tests/Unit/GalleryFallbackBrowser.test.mjs
+          tests/Unit/GalleryViewportBrowser.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gallery-${{ matrix.engine }}
+          path: |
+            /tmp/gallery-*.json
+            /tmp/gallery-*.png
+            /tmp/gallery-server.log

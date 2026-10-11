@@ -1,3 +1,4 @@
+import { mountGallery } from './sections/gallery.js';
 import { mountCursor } from './sections/cursor.js';
 import { mountHeader } from './sections/header.js';
 import { mountHero } from './sections/hero.js';
@@ -28,7 +29,10 @@ const program = mountProgram(document.querySelector('[data-program]'));
 const values = mountValues(document.querySelector('[data-program-values]'));
 const valuesLine = mountValuesLine(document.querySelector('[data-values]'));
 const valuesCards = mountValuesCards(document.querySelector('[data-values]'));
+const gallery = mountGallery(document.querySelector('[data-gallery]'));
 window.addEventListener('pagehide', event => {
+    gallery.suspend();
+    if (!event.persisted) gallery.dispose();
     hero.suspend();
     about.suspend();
     program.suspend();
@@ -42,4 +46,4 @@ window.addEventListener('pagehide', event => {
     if (!event.persisted) valuesCards.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); }
 });
-window.addEventListener('pageshow', () => { hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
+window.addEventListener('pageshow', () => { gallery.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
