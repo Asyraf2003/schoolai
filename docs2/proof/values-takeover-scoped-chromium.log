@@ -1,0 +1,15 @@
+✔ V2 Values cards remain localized and scroll-reversible in chromium (43038.78352ms)
+✔ V2 Values cards remain readable without JavaScript in chromium (2206.353073ms)
+✔ Values cards preserve content through short heights, text expansion and lifecycle in chromium (29283.55446ms)
+✔ Values cards fall back without IO, CSS3D, GSAP or decorative media in chromium (38394.809498ms)
+✔ Values matches OLD natural rows and visibility flips on compact tiers in chromium (13930.742156ms)
+✔ Values preserves OLD card composition and native scroll choreography in chromium (105804.393122ms)
+✔ Values heading completes autonomously after slow, fast, stopped and reverse scroll in chromium (67990.752226ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 300964.909725

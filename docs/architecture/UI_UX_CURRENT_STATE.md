@@ -1,5 +1,218 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values–Gallery continuous native handoff — 2026-10-11
+
+OWNER_ACCEPTED: screenshot #4 is the expected shared viewport. With constant
+native scroll, Values four-card entrance/flip must respond immediately, and
+upward exit must move at exactly 1 CSS pixel per 1 scroll pixel. The Gallery
+title and opening video rise natively a measured responsive gap below actual
+card bodies; blue/white decoration transitions gradually toward black.
+Screenshots #1–3 (isolated Gallery/carts) are regressions, not the target.
+FACT: PR #87 5e44eb4 owns Gallery geometry/ten media; PR #93 f39c7abd
+replaces the spring and uses an inner sticky release that moves card bodies
+natively. The Gallery parent-element geometry now resolves to that release
+boundary. Isolated PR93 Chromium/WebKit cards/scoped-motion CI PASS.
+DECISION: combine both historical branches without overwriting Gallery, keep
+40% hold, three SVG path geometry, RTL/responsive/fallback and existing media.
+Add an integrated card-body/title spacing and 1:1 travel/reverse browser gate.
+Issue #94; integrated PR pending.
+PROOF: no combined-runner/browser proof until fresh CI. Historic isolated
+green checks cannot substitute for combined proof. Baseline npm audit FAIL.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE combined Gallery/Values/browser gates.
+NEXT: run combined Chromium/WebKit CI, fix only reproduced integration bugs,
+then publish to main with verified commit SHA.
+
+## Gallery native spacing and gradual dark seam — 2026-10-11
+
+OWNER_RAW: “judul galeri dan kartu ...jaraknya tetep ...bukan model muncul”; rough
+70% screen height, dynamic across screens. Owner confirms Values card bottom to
+Gallery title top. Remove white line in Gallery and gradually darken blue/type.
+FACT: current heading visibility gate/reveal and90svh overlap create independent
+appearance; data-gallery-dark instantly switches background and hides type.
+GOAL: one native rise with measured gap; gradual reversible paint into black.
+DECISION: replace Gallery heading gate with entry geometry measured from native
+Values row release and available viewport/card height. Keep CSS typography and
+close title/main gap; timeline alone owns darkening and decoration opacity.
+IMPACT: Gallery files, integration browser assertions and blueprint only; Values
+motion/geometry/source stays protected until authorized next PR93 correction.
+BLUEPRINT: MAP-V2-18 latest owner correction, OWNER_ACCEPTED / IMPLEMENTING.
+PROOF: prior9d2fa0bf CI Gallery/Values/headings PASS both engines certifies prior
+storyboard only. Local native resize/scroll interruption remains under diagnosis;
+pristine main passes identical Values lifecycle, Gallery source fails. No merge.
+FACT new native-heading Chromium18 locale/tier cases PASS. Resize1535 fails
+because responsive card-flow and entry-margin remeasure in separate frames.
+DECISION: resize captures intent only, defers rebuild until Values measurements,
+then compares two consecutive geometry samples before releasing the snapshot.
+New native scroll cancels restoration. Event-driven settling, no timing timeout.
+PROOF corrected resize: Chromium12 boundaries PASS; WebKit12 PASS on prior
+settling source. Native scroll diagnostic: browser jumps6738→8969 before any
+Gallery write or GSAP initialization; the first Gallery refresh captures8969.
+Test-only native history restoration manual makes identical WebKit lifecycle
+PASS80.85s. Earlier attribution to Gallery restoration was incorrect; a longer
+page exposed the locale navigation restoration race in test setup.
+DECISION: browser support waits for the actual native pageshow plus two paint
+frames before selecting a new locale scroll target. Keep production history
+behavior unchanged; repeat original lifecycle assertion without manual history.
+STATUS: FAIL resize integration; new visual/browser proof renewing.
+FACT native-title screenshot exposes a body-color strip when measured Gallery
+margin is positive. This is the physical card/title breathing space outside both
+section backgrounds, not a white SVG line. DECISION: Gallery-owned background
+pseudo-element fills only that measured positive gap with its current seam color;
+no spacer DOM, z-index override or preceding Values layout change.
+PROOF pageshow-ready WebKit Values lifecycle PASS47.97s with native history
+unchanged. Gallery Chromium composition27/27, heading18/18 and resize12 PASS;
+media lifecycle fails after reduced→normal while preceding Values enhancement
+is still rebuilding. A paired global refresh listener did not resolve it and was
+removed. DECISION: Gallery readiness proof awaits restored Values line and actual
+settled Gallery bounds before selecting a progress target; no product timing wait
+or global refresh override. Synthetic preference paths still exercise real fallback.
+PROOF latest composition: WebKit6/6 PASS, Chromium composition/heading/viewport
+5/6 PASS; media preference assertion raced preceding enhancement. Awaiting
+measured readiness fixes focused Chromium media lifecycle1/1 PASS2.73s.
+Native pageshow readiness fixes Values lifecycle1/1 PASS47.97s without manual
+history. White gap paint visually reviewed. Final exact-source matrix/CI pending.
+GAP: current Values transformed exit displaces visible card bodies from their
+native slots. Gallery native spacing is implemented; physical body/title distance
+requires the already-authorized PR93 card-response correction. Do not certify
+that seam or merge Gallery until actual bodies satisfy the new owner gap.
+PROOF combined source7e0827ea: actual card-body/title gap PASS36 locale/tier
+profiles Chromium/WebKit; native base gap525–712.5px, <=11.02px existing float.
+Visual review still shows a white curve above the incoming title at early entry.
+DECISION: fade the SVG during the measured title header inset, completing before
+title enters the viewport. Blue and type retain their longer gradual darkening.
+No SVG geometry/draw/controller changes. Exact combined white-free captures renewing.
+NEXT channel Terminal Codex: publish Gallery checkpoint, take over existing PR93
+for native card response, then certify the combined physical seam and gated merge.
+
+
+
+## Gallery title after Values exit — 2026-10-11
+
+OWNER_RAW: title currently appears before cards rise; begin title only when cards
+have nearly left, with15–20% of body remaining. Accepted as latest scope.
+FACT: shared heading currently starts solely at heading top<88vh, independently
+of Values spring; prior settled captures still show most card bodies at entry.
+GAP: this viewport-only reveal permits collision on slow and fast scroll.
+DECISION: Gallery-owned gate reads actual card bounds at their clip boundary,
+allows reveal at<=20% remaining, hides it again on reverse. Keep layout, native
+title/main gap, dark paint timing, all media choreography and Values owners.
+Blueprint MAP-V2-18 amended OWNER_ACCEPTED / IMPLEMENTING.
+PROOF on pre-integration source: Chromium6/6 and WebKit6/6 PASS; actual
+reveal witness<=20% remaining. New main integrated by owner/AI Web without
+reverting: merge d3108694, HEAD ac22aeef, stash backup retained. Base now
+main dae40c14 (scroll indicator + Values hold40%); PR93 exit-speed work separate.
+FACT integrated CI38129531132: all27 Chromium composition profiles and heading
+PASS, resize FAIL at1535x500→600: progress.52→.7065. Local trace proves Values
+flow height3000→2250 after Gallery resize measured its scroll boundaries; later
+refresh shifts Gallery start750px. Gallery media/Values source owners unchanged.
+DECISION: Gallery observes preceding-world height, preserves its last progress
+only while measured geometry matches, performs the supported global refresh
+after reflow before restoring Gallery progress. Individual refresh in GSAP3.7.1
+retains shared scroll.rec and later restores old scroll; global refresh clears it.
+PROOF focused integrated resize: Chromium/WebKit PASS12 boundary/short profiles;
+no errors or Values source edits. Full final integrated matrix renewing.
+PROOF final integrated local: Chromium6/6 (104.11s), WebKit6/6 (213.14s) PASS
+on corrected source, raw integrated logs and SHA256 ledger in proof/gallery-v2.
+Full PHP latest-main comparison336→342: same71FAIL/75ERROR identities,
+6 additionalPASS/46assertions; full baseline FAIL. Structure312/build/Pint/diff
+PASS. Protected Values/main scroll indicator source unchanged; stash retained.
+CI38130228969 on2b0bf545: Gallery PASS both engines (8 tests per engine);
+heading38130229009 PASS. Values38130228955 Chromium PASS; WebKit12PASS/
+2FAIL due ResizeObserver loop warnings on card and fallback resize. Previous
+ac22aeef Values CI38129531135 PASS both engines, proving introduced reflow
+refresh writes inside observer delivery conflict with Values measurement.
+DECISION: coalesce refresh into one event-driven animation frame after observer
+delivery; cancel on suspend/dispose. No continuous loop or Values source edit.
+Owner next task accepted: take over PR93 after Gallery completes, unify Values
+entry/flip/exit response without spring; existing PR93 work preserved.
+Onad67aa9f, Chromium local10/10 PASS (Gallery6+Values4); WebKit ongoing.
+CI38131051220 Chromium PASS; WebKit stops on stale last-strand80% assertion
+at1440 after six width profiles. Owner explicitly superseded line-based title
+entry with actual card-body15–20% gate; new heading witness already certifies it.
+DECISION: replace obsolete assertion with actual visible-body/held-heading check
+across all27 profiles; require visible completed heading after actual exit.
+Local ad67aa9f: Chromium10/10 PASS; WebKit9/10, no observer-loop warnings,
+but fallback lifecycle times out waiting for active Values after locale/resize.
+Initial interpretation: generic reflow restoration could also move scroll during
+initial Values enhancement. Later diagnostic proves the actual remaining timeout
+was an explicit viewport resize followed immediately by a new scroll target.
+Viewport1440x900, desired Values+1500px; observed Values top-3730px and
+Gallery progress.2978: resize restoration reclaimed old Gallery position.
+DECISION: preserve progress only for an explicitly captured viewport resize;
+ordinary preceding-content reflow refreshes bounds without moving scroll.
+Resize/observer reconciliation exposes pending state for measured browser proof;
+replace fixed350ms resize wait with actual settled boundaries after two frames.
+FACT published9d2fa0bf CI: Gallery, Values and heading PASS both engines.
+Local WebKit26.6 reproduces Values lifecycle native-scroll interruption on9d;
+pristine latest main dae40c14 on port8021 passes identical test58.50s. Therefore
+this is a Gallery integration defect despite scoped CI passing. The capture-phase
+experimental rebuild regressed1535 resize and did not solve interruption; discarded.
+DECISION: capture only native resize intent before other handlers, rebuild in
+normal resize delivery after Values handlers, restore captured progress only if
+native scroll has not been interrupted. Preserve native position around global
+refresh and cancel deferred resize restoration when a new scroll target arrives.
+No Values product changes, private GSAP writes, timer delay or continuous loop.
+STATUS: FAIL native-scroll interruption; source and browser proof renewing.
+NEXT channel Terminal Codex: prove bounded Gallery resize-intent correction.
+
+## Gallery V2 final owner correction — 2026-10-11
+
+OWNER_ACCEPTED: MAP-V2-18 current storyboard; commit49742cdc, PR87 OPEN.
+Main445fbf92 fetched before publication. Large white title, early black handoff,
+linked title/main native rise; centered shrink at stage-top boundary, secondary
+media approach from far below, first clear word at assembly, sequential reveal.
+All blur/fade over last bottom edge100vh→50vh, then black hold. No pause UI;
+automatic looping with at most2 visible decoders and hidden/reduced lifecycle.
+Values product source remains unchanged; latest explicit background request
+permits Gallery-owned preceding-world black/type-visibility seam state only.
+PROOF: Chromium5/5 and WebKit5/5 browser tests PASS on latest product source,
+ID/EN/AR ×9 representative widths;12 short-screen/boundary cases; reverse,
+resize, native wheel, real playback/fallback, noJS/reduced and disposal.
+Geometry56 cases, structure309, build, diff and Pint PASS. PHP6tests/46assertions
+PASS; full342196PASS/71FAIL/75ERROR matches main336190PASS/71FAIL/75ERROR
+identities exactly. Full PHP and dependency baseline FAIL, no lock changes.
+Historical captures certify older storyboards only; latest proof is being replaced.
+CI38117850566 on49742cdc: Chromium PASS; WebKit4PASS/1cancelled at420s
+file limit. Artifacts show EN/ID and AR390 completed; no assertion failure.
+Heading38117850572 PASS both engines; Values38117850614 still pending.
+DECISION: run each locale in a fresh bounded process, preserve all27 profiles
+and phase captures; record per-locale JSON and viewport timing.
+FACT accessibility-tree inspection: animated statement paragraph exposes no text
+because all visual words are aria-hidden and paragraph aria-label is ignored.
+DECISION: add one semantic sr-only sentence; retain visual word choreography.
+Values38117850614 now PASS14/14 per engine. CI on8b97c7e6 pending.
+PROOF correction: Chromium5/5 (69.10s), WebKit5/5 (145.13s) PASS; statement
+asserted in all3 locales. Accessibility tree/expanded geometry/keyboard focus/
+touch18 cases PASS; equivalent200% geometry, not native menu zoom or speech.
+No visible/layout/motion changes. Source SHA256 inventory in verified-source.json.
+STATUS: PASS latest local scoped; BLOCKED_BY_MISSING_EVIDENCE final scoped CI.
+Native Safari/physical devices/native BFCache/reader speech/Lighthouse100/field
+CWV certification is not claimed. Blueprint IMPLEMENTING until final proof.
+NEXT channel Terminal Codex: finish durable visual proof and scoped CI; gated merge.
+
+
+## Gallery V2 — 2026-10-11
+
+OWNER_ACCEPTED: MAP-V2-18, Gallery after Values, ten real media with one scrub
+timeline, then populated existing sample Testimonials. Issue86; branch
+feat/v2-scroll-gallery; main baseline445fbf92. Protected section owners unchanged.
+FACT: Chromium/WebKit phase matrix and media lifecycle initial runs PASS;
+resize regression traced to prior global refresh updating progress before Gallery
+handler. Fixed by preserving progress from the last viewport measurement.
+PROOF: docs2/proof/gallery-v2; PHP six focused tests PASS; full suite failure/error
+test identities identical to isolated main (71FAIL/75ERROR), six additional PASS.
+STATUS: PASS initial scoped proof; FAIL historical full PHP baseline;
+BLOCKED_BY_MISSING_EVIDENCE final CI and broader performance/native
+Safari certification. Blueprint IMPLEMENTING.
+PROGRESS: five browser tests per engine PASS, including short-height/resize.
+PR87 OPEN. First CI38106375552: Gallery Chromium PASS, WebKit FAIL scroll
+progress timeout after resize; Values suite counted all page triggers (2) instead
+of its own trigger (1). Test assertions now scope Values id; scroll sampling
+refreshes geometry and reconciles native scroll, matching existing Values helper.
+No Values product source changed. Commit4b0024c3; integrated rerun pending.
+NEXT channel Terminal Codex: verify corrected CI; merge only scoped PASS.
+
+
 ## Values desktop card hold pacing — 2026-10-11
 
 OWNER_ACCEPTED: desktop four-card completed hold is ~40% of its prior

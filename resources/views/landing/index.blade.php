@@ -21,6 +21,8 @@
             @include('landing.program', ['program' => $program])
             @include('landing.values', ['values' => $values])
         </div>
+        @include('landing.gallery', ['gallery' => $gallery])
+        @include('landing.testimonials', ['testimonials' => $testimonials])
     </main>
 </body>
 </html>

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: Gallery media policy, failures, preferences and lifecycle in webkit
+ok 1 - Gallery media policy, failures, preferences and lifecycle in webkit
+  ---
+  duration_ms: 6459.089296
+  type: 'test'
+  ...
+# Subtest: Gallery static content and sample testimonial disclosure without JavaScript in webkit
+ok 2 - Gallery static content and sample testimonial disclosure without JavaScript in webkit
+  ---
+  duration_ms: 4322.665405
+  type: 'test'
+  ...
+# Subtest: Gallery fails open when GSAP cannot load in webkit
+ok 3 - Gallery fails open when GSAP cannot load in webkit
+  ---
+  duration_ms: 3048.123594
+  type: 'test'
+  ...
+# Subtest: Gallery opening, formation, travel and testimonial handoff in webkit
+ok 4 - Gallery opening, formation, travel and testimonial handoff in webkit
+  ---
+  duration_ms: 105569.446374
+  type: 'test'
+  ...
+# Subtest: Gallery short screens, resize, native wheel and hidden-page policy in webkit
+ok 5 - Gallery short screens, resize, native wheel and hidden-page policy in webkit
+  ---
+  duration_ms: 21819.88688
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 141384.699055

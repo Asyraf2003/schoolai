@@ -1,0 +1,29 @@
+✔ V2 Values cards remain localized and scroll-reversible in webkit (72541.633975ms)
+✔ V2 Values cards remain readable without JavaScript in webkit (7221.707355ms)
+✖ Values cards preserve content through short heights, text expansion and lifecycle in webkit (49799.812194ms)
+✔ Values cards fall back without IO, CSS3D, GSAP or decorative media in webkit (109442.72798ms)
+✔ Values matches OLD natural rows and visibility flips on compact tiers in webkit (45538.032729ms)
+✔ Values preserves OLD card composition and native scroll choreography in webkit (119741.29051ms)
+✔ Values heading completes autonomously after slow, fast, stopped and reverse scroll in webkit (136773.615356ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 541376.876414
+
+✖ failing tests:
+
+test at tests/Unit/ValuesCardsFallbackBrowser.test.mjs:13:5
+✖ Values cards preserve content through short heights, text expansion and lifecycle in webkit (49799.812194ms)
+  page.waitForNavigation: Timeout 15000ms exceeded.
+  =========================== logs ===========================
+  waiting for navigation until "domcontentloaded"
+  ============================================================
+      at locale (/tmp/schoolai-values-takeover/tests/Unit/ProgramBrowserSupport.mjs:50:14)
+      at TestContext.<anonymous> (/tmp/schoolai-values-takeover/tests/Unit/ValuesCardsFallbackBrowser.test.mjs:37:19) {
+    name: 'TimeoutError',
+    log: []
+  }

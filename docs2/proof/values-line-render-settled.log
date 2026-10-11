@@ -1,0 +1,10 @@
+✔ The three Values SVG lines paint drawn segments but hide future segments in chromium (2242.70301ms)
+✔ The three Values SVG lines paint drawn segments but hide future segments in webkit (4494.666353ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6787.068231

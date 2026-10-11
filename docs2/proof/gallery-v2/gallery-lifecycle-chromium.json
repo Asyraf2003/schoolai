@@ -1,0 +1,203 @@
+{
+  "date": "2026-10-11T09:53:11.788Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8020",
+  "live": {
+    "width": 1440,
+    "height": 900,
+    "overflow": false,
+    "heading": {
+      "x": 72,
+      "y": -172.71875,
+      "width": 1296,
+      "height": 172.765625,
+      "bottom": 0.046875,
+      "color": "rgb(255, 255, 255)",
+      "size": "172.8px",
+      "visibility": "visible",
+      "valuesSize": "172.8px"
+    },
+    "header": {
+      "x": 72,
+      "y": -253.71875,
+      "width": 1296,
+      "height": 253.765625,
+      "bottom": 0.046875
+    },
+    "background": "rgb(8, 9, 11)",
+    "backgroundRGB": [
+      8,
+      9,
+      11
+    ],
+    "typeVisible": "hidden",
+    "lastDraw": 1,
+    "blur": 0,
+    "items": [
+      {
+        "x": 96,
+        "y": 15.88687515258789,
+        "width": 1248,
+        "height": 702,
+        "bottom": 717.8868751525879,
+        "opacity": 1,
+        "column": "center",
+        "image": 1920
+      },
+      {
+        "x": -360,
+        "y": 1572.8868408203125,
+        "width": 469.4975891113281,
+        "height": 357.3580322265625,
+        "bottom": 1930.244873046875,
+        "opacity": 1,
+        "column": "left",
+        "image": 1920
+      },
+      {
+        "x": -360,
+        "y": 1946.0869140625,
+        "width": 469.4975891113281,
+        "height": 357.358154296875,
+        "bottom": 2303.445068359375,
+        "opacity": 1,
+        "column": "left",
+        "image": 1920
+      },
+      {
+        "x": -360,
+        "y": 2319.286865234375,
+        "width": 469.4975891113281,
+        "height": 357.358154296875,
+        "bottom": 2676.64501953125,
+        "opacity": 1,
+        "column": "left",
+        "image": 1920
+      },
+      {
+        "x": 485.2799987792969,
+        "y": 1707.8868408203125,
+        "width": 469.4975891113281,
+        "height": 264.0601806640625,
+        "bottom": 1971.947021484375,
+        "opacity": 1,
+        "column": "center",
+        "image": 1920
+      },
+      {
+        "x": 485.2799987792969,
+        "y": 1987.786865234375,
+        "width": 469.4975891113281,
+        "height": 264.06005859375,
+        "bottom": 2251.846923828125,
+        "opacity": 1,
+        "column": "center",
+        "image": 1920
+      },
+      {
+        "x": 485.2799987792969,
+        "y": 2267.686767578125,
+        "width": 469.4975891113281,
+        "height": 264.06005859375,
+        "bottom": 2531.746826171875,
+        "opacity": 1,
+        "column": "center",
+        "image": 1920
+      },
+      {
+        "x": 1330.56005859375,
+        "y": 1572.8868408203125,
+        "width": 469.49755859375,
+        "height": 357.3580322265625,
+        "bottom": 1930.244873046875,
+        "opacity": 1,
+        "column": "right",
+        "image": 1920
+      },
+      {
+        "x": 1330.56005859375,
+        "y": 1946.0869140625,
+        "width": 469.49755859375,
+        "height": 357.358154296875,
+        "bottom": 2303.445068359375,
+        "opacity": 1,
+        "column": "right",
+        "image": 1920
+      },
+      {
+        "x": 1330.56005859375,
+        "y": 2319.286865234375,
+        "width": 469.49755859375,
+        "height": 357.358154296875,
+        "bottom": 2676.64501953125,
+        "opacity": 1,
+        "column": "right",
+        "image": 1920
+      }
+    ],
+    "words": [
+      {
+        "opacity": 0,
+        "blur": 16
+      },
+      {
+        "opacity": 0,
+        "blur": 16
+      },
+      {
+        "opacity": 0,
+        "blur": 16
+      },
+      {
+        "opacity": 0,
+        "blur": 16
+      },
+      {
+        "opacity": 0,
+        "blur": 16
+      },
+      {
+        "opacity": 0,
+        "blur": 16
+      }
+    ],
+    "videos": [
+      {
+        "playing": true,
+        "hydrated": true,
+        "time": 0.138185
+      },
+      {
+        "playing": false,
+        "hydrated": false,
+        "time": 0
+      },
+      {
+        "playing": false,
+        "hydrated": false,
+        "time": 0
+      },
+      {
+        "playing": false,
+        "hydrated": false,
+        "time": 0
+      },
+      {
+        "playing": false,
+        "hydrated": false,
+        "time": 0
+      }
+    ],
+    "testimonial": {
+      "x": 0,
+      "y": 6046.28125,
+      "width": 1440,
+      "height": 1375.171875,
+      "bottom": 7421.453125
+    },
+    "triggers": 1
+  },
+  "mediaFailure": "poster retained",
+  "bfcache": "synthetic events",
+  "dispose": "PASS"
+}

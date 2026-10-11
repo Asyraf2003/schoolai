@@ -87,7 +87,9 @@ for (const engine of engines) {
                             assert.deepEqual(after[index].fields, before[index].fields, `${lang}/${progress}/${index} content/type fidelity`);
                             // Rounded native scroll coordinates have subpixel differences in normalized progress.
                             const matrix = value => value.replace(/^matrix3?d?\(/, '').replace(')', '').split(',').map(Number);
-                            for (const key of ['pose', 'flip']) {
+                            // The exit now follows native scroll pixels rather than
+                            // legacy eased translation; all pre-exit poses remain exact.
+                            for (const key of (progress <= .895 ? ['pose', 'flip'] : ['flip'])) {
                                 const a = matrix(after[index][key]); const b = matrix(before[index][key]);
                                 assert.equal(a.length, b.length);
                                 assert.ok(a.every((value, i) => Math.abs(value - b[i]) <= (i >= (a.length === 6 ? 4 : 12) ? 8 : .025)), `${lang}/${progress}/${key}: new=${a} old=${b}`);

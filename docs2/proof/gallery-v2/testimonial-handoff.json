@@ -1,0 +1,151 @@
+{
+  "date": "2026-10-11T09:59:09.393Z",
+  "base": "2b0bf545",
+  "method": "Native wheel after black hold; actual populated Testimonials; latest integrated source",
+  "cases": [
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "id",
+      "width": 390,
+      "state": {
+        "y": 314.609375,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "id",
+      "width": 1440,
+      "state": {
+        "y": 315.28125,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "en",
+      "width": 390,
+      "state": {
+        "y": 314.921875,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "en",
+      "width": 1440,
+      "state": {
+        "y": 315.28125,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "ar",
+      "width": 390,
+      "state": {
+        "y": 314.796875,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "ar",
+      "width": 1440,
+      "state": {
+        "y": 315.109375,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "id",
+      "width": 390,
+      "state": {
+        "y": 497.46875,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "id",
+      "width": 1440,
+      "state": {
+        "y": 475.28125,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "en",
+      "width": 390,
+      "state": {
+        "y": 482.78125,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "en",
+      "width": 1440,
+      "state": {
+        "y": 509.28125,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "ar",
+      "width": 390,
+      "state": {
+        "y": 492.9375,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "ar",
+      "width": 1440,
+      "state": {
+        "y": 514.109375,
+        "quotes": 21,
+        "overflow": false,
+        "mediaVisible": false
+      }
+    }
+  ]
+}

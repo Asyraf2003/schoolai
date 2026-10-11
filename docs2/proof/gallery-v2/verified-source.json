@@ -1,0 +1,13 @@
+{
+  "base": "ac22aeef, includes d3108694 merge of main dae40c14",
+  "profile": "Integrated final owner choreography, delayed heading and preceding reflow reconciliation; local Chromium/WebKit6/6 PASS",
+  "files": {
+    "resources/js/sections/gallery-geometry.js": "c12490ff001ff7f7f90fadcffd6ce2054e306d94567301fb78f8e490563f8517",
+    "resources/js/sections/gallery.js": "62ff6cda9b04c3fea9418b4d8a225efeaaea8a1b2839ce25c09dcfea1c8502f1",
+    "resources/js/sections/gallery-heading.js": "e2d1809d7fc2c218f96fd9cb6c51b69645f95e0314205565eb1f9cb61c8bae4d",
+    "resources/js/sections/gallery-media.js": "69af8aa6c9ff312824bc88d5d52458e25ded734d246774c309708da301ae3c55",
+    "resources/js/sections/gallery-timeline.js": "547e7965e8ffba00b845377e491ee4860526d6b04b43c1d1d35549735eb278e0",
+    "resources/css/sections/gallery.css": "83b85e501934bc712700bd772933aca268b641d7250143baa43d070425af5edc",
+    "resources/views/landing/gallery.blade.php": "b34445df2281556dc1df374a038cce2c41733db26e125d8131b95300c3fac014"
+  }
+}

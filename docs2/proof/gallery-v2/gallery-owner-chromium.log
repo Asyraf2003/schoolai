@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: Gallery media policy, failures, preferences and lifecycle in chromium
+ok 1 - Gallery media policy, failures, preferences and lifecycle in chromium
+  ---
+  duration_ms: 3412.941507
+  type: 'test'
+  ...
+# Subtest: Gallery static content and sample testimonial disclosure without JavaScript in chromium
+ok 2 - Gallery static content and sample testimonial disclosure without JavaScript in chromium
+  ---
+  duration_ms: 805.975886
+  type: 'test'
+  ...
+# Subtest: Gallery fails open when GSAP cannot load in chromium
+ok 3 - Gallery fails open when GSAP cannot load in chromium
+  ---
+  duration_ms: 2377.271663
+  type: 'test'
+  ...
+# Subtest: Gallery opening, formation, travel and testimonial handoff in chromium
+ok 4 - Gallery opening, formation, travel and testimonial handoff in chromium
+  ---
+  duration_ms: 34613.108344
+  type: 'test'
+  ...
+# Subtest: Gallery short screens, resize, native wheel and hidden-page policy in chromium
+ok 5 - Gallery short screens, resize, native wheel and hidden-page policy in chromium
+  ---
+  duration_ms: 12737.222025
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 54142.889167

@@ -15,6 +15,10 @@ export async function session(engine, options = {}) {
     const browser = await playwright[engine === 'edge' ? 'chromium' : engine].launch(launch);
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...options });
     const page = await context.newPage();
+    await page.addInitScript(() => {
+        window.programBrowserPageShown = false;
+        window.addEventListener('pageshow', () => { window.programBrowserPageShown = true; }, { once: true });
+    });
     const errors = [];
     const requests = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -51,6 +55,8 @@ export async function locale(page, value) {
     // A late initial pageshow would otherwise resume a synthetic BFCache pause
     // or restore scroll while a test is already sampling section geometry.
     await page.waitForLoadState('load');
+    await page.waitForFunction(() => window.programBrowserPageShown);
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 }
 
 export async function phase(page, value) {

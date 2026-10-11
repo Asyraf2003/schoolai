@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-11T02:47:28.933Z",
+  "inventory": [
+    {
+      "type": "video",
+      "url": "https://media.almustaqbal.sch.id/gallery/media/it-v1.mp4",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp",
+      "title": "Multimedia Facilities & IT Lab",
+      "status": 206,
+      "contentType": "video/mp4",
+      "posterStatus": 200
+    },
+    {
+      "type": "video",
+      "url": "https://media.almustaqbal.sch.id/gallery/media/musola-v1.mp4",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/mushalla-v1.webp",
+      "title": "Mushallah",
+      "status": 206,
+      "contentType": "video/mp4",
+      "posterStatus": 200
+    },
+    {
+      "type": "video",
+      "url": "https://media.almustaqbal.sch.id/gallery/media/aula-v1.mp4",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/aula-v1.webp",
+      "title": "Multifunction Hall",
+      "status": 206,
+      "contentType": "video/mp4",
+      "posterStatus": 200
+    },
+    {
+      "type": "video",
+      "url": "https://media.almustaqbal.sch.id/gallery/media/renang-v1.mp4",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/renang-v1.webp",
+      "title": "Swimming Pool",
+      "status": 206,
+      "contentType": "video/mp4",
+      "posterStatus": 200
+    },
+    {
+      "type": "video",
+      "url": "https://media.almustaqbal.sch.id/gallery/media/tekwondo-v1.mp4",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/taekwondo-v1.webp",
+      "title": "Taekwondo",
+      "status": 206,
+      "contentType": "video/mp4",
+      "posterStatus": 200
+    },
+    {
+      "type": "photo",
+      "url": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/perpustakaan-v1.webp",
+      "title": "Library & Laboratory",
+      "status": 206,
+      "contentType": "image/webp",
+      "posterStatus": 200
+    },
+    {
+      "type": "photo",
+      "url": "https://media.almustaqbal.sch.id/site/school-life/psikolog-v1.webp",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/psikolog-v1.webp",
+      "title": "Psychological Counseling",
+      "status": 206,
+      "contentType": "image/webp",
+      "posterStatus": 200
+    },
+    {
+      "type": "photo",
+      "url": "https://media.almustaqbal.sch.id/site/school-life/parenting-v1.webp",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/parenting-v1.webp",
+      "title": "Parents Class",
+      "status": 206,
+      "contentType": "image/webp",
+      "posterStatus": 200
+    },
+    {
+      "type": "photo",
+      "url": "https://media.almustaqbal.sch.id/site/school-life/gigianak-v1.webp",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/gigianak-v1.webp",
+      "title": "Dental Health Care",
+      "status": 206,
+      "contentType": "image/webp",
+      "posterStatus": 200
+    },
+    {
+      "type": "photo",
+      "url": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+      "poster": "https://media.almustaqbal.sch.id/site/school-life/fullday-v1.webp",
+      "title": "Full Day School Service",
+      "status": 206,
+      "contentType": "image/webp",
+      "posterStatus": 200
+    }
+  ]
+}

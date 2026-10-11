@@ -32,6 +32,13 @@ export function valuesSourceProgress(compactedProgress) {
     return EXIT_START + traveled - COMPRESSED_EXIT;
 }
 
+// Travel exactly one physical scroll pixel for each pixel of upward exit.
+// The sticky viewport supplies the continuation when the track releases.
+export function valuesExitScrollOffset(compactedProgress, scrollSpanPx) {
+    return Math.max(0, clamp(compactedProgress)
+        - valuesCompactedProgress(EXIT_START)) * Math.max(0, scrollSpanPx);
+}
+
 // Inverse for matching exact OLD choreography phases in browser regression.
 export function valuesCompactedProgress(sourceProgress) {
     const progress = clamp(sourceProgress);

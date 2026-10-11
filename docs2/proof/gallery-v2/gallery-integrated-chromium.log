@@ -1,0 +1,41 @@
+✔ Gallery media policy, failures, preferences and lifecycle in chromium (12422.934404ms)
+✔ Gallery static content and sample testimonial disclosure without JavaScript in chromium (1021.387604ms)
+✔ Gallery fails open when GSAP cannot load in chromium (7149.656055ms)
+✔ Gallery title waits for the actual Values card exit in chromium (21948.69839ms)
+Gallery chromium/en/360 PASS 1716ms
+Gallery chromium/en/390 PASS 1353ms
+Gallery chromium/en/640 PASS 847ms
+Gallery chromium/en/768 PASS 849ms
+Gallery chromium/en/1024 PASS 901ms
+Gallery chromium/en/1280 PASS 940ms
+Gallery chromium/en/1440 PASS 1620ms
+Gallery chromium/en/1536 PASS 926ms
+Gallery chromium/en/1920 PASS 966ms
+Gallery chromium/id/360 PASS 1693ms
+Gallery chromium/id/390 PASS 1356ms
+Gallery chromium/id/640 PASS 875ms
+Gallery chromium/id/768 PASS 851ms
+Gallery chromium/id/1024 PASS 978ms
+Gallery chromium/id/1280 PASS 922ms
+Gallery chromium/id/1440 PASS 1706ms
+Gallery chromium/id/1536 PASS 896ms
+Gallery chromium/id/1920 PASS 1060ms
+Gallery chromium/ar/360 PASS 1710ms
+Gallery chromium/ar/390 PASS 1360ms
+Gallery chromium/ar/640 PASS 873ms
+Gallery chromium/ar/768 PASS 900ms
+Gallery chromium/ar/1024 PASS 891ms
+Gallery chromium/ar/1280 PASS 931ms
+Gallery chromium/ar/1440 PASS 1826ms
+Gallery chromium/ar/1536 PASS 980ms
+Gallery chromium/ar/1920 PASS 980ms
+✔ Gallery opening, formation, travel and testimonial handoff in chromium (45128.304367ms)
+✔ Gallery short screens, resize, native wheel and hidden-page policy in chromium (16249.469093ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 104114.698706

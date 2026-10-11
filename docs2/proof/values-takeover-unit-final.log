@@ -1,0 +1,13 @@
+✔ pre-exit card flip and hold retain their original pure choreography (6.522225ms)
+✔ desktop fully visible hold retains 40% of old distance (0.333153ms)
+✔ card exit travels exactly one pixel per physical scroll pixel, including reversal (0.330258ms)
+✔ only enhanced desktop runway and SVG field shrink in CSS (3.941479ms)
+✔ entry flip and reverse respond directly without a spring tail (0.275054ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66.658818

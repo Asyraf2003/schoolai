@@ -22,3 +22,6 @@
 @import './responsive/mobile.css';
 @import './responsive/tablet.css';
 @import './responsive/desktop.css';
+
+@import './sections/gallery.css';
+@import './sections/testimonials.css';
