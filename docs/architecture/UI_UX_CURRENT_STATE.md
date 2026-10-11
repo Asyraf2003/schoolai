@@ -1,5 +1,31 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Footer canvas horizontal thirds and Gallery scroll handoff — 2026-10-12
+
+OWNER_CORRECTION: white footer is divided into THREE HORIZONTAL HEIGHT BANDS,
+not into a desktop grid with an empty FIRST COLUMN. Top ONE-THIRD of white
+viewport intentionally blank; BOTTOM TWO-THIRDS holds three SIDE-BY-SIDE
+groups: left large school description, middle large text list of all FIVE
+channels (WhatsApp, Maps, Instagram, Gmail, Facebook), right text-and-logo
+partner list. No newsletter, giant black footer or extra content panels.
+Blue bottom NEXT PAGE strip is only ONE-THIRD viewport height, full width;
+not another 100svh page. Use Lusion-style "keep scrolling", huge GALLERY
+primary link, NEXT PAGE arrow, ARTIKEL smaller alternate destination.
+A native-scroll runway (no global wheel controller or preventDefault)
+arms Gallery navigation when user continues scrolling through the blue
+strip; direct link always remains clickable, reduced-motion disables
+automatic navigation. White contact-image hover and partner scale retained.
+Desktop has three lower columns, tablet two, mobile one; RTL mirrored.
+FACT: prior implementation incorrectly positioned empty space in COLUMN 1
+and allocated 100svh to the blue panel. Canonical home.footer locale contracts
+already provide all contact URLs, labels, and 5 partner assets.
+DECISION: no Stories/video/controller change, no new DB/remote images,
+only footer markup/CSS, local next-page trigger and scoped test.
+PROOF: authored GitHub source patch, local build/Pest/visual pending.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local browser proof.
+NEXT: pull feature; verify 1/3 vertical whitespace and 1/3 blue strip.
+
+
 ## Footer white/blue after final Story — 2026-10-12
 
 OWNER_ACCEPTED: once article 04 h3 reaches the viewport center, unpin the

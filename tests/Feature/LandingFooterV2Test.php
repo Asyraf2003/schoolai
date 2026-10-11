@@ -17,15 +17,20 @@ it('renders the two-stage localized footer after all four articles', function (s
     @$document->loadHTML($response->getContent());
     $xpath = new DOMXPath($document);
     expect($xpath->query('//*[@id="kontak"]')->length)->toBe(1)
-        ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__blank"]')->length)->toBe(1)
+        ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__top-space"]')->length)->toBe(1)
         ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-preview]')->length)->toBe(5)
         ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__partner-grid"]//a')->length)->toBe(5)
         ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-visual-image]')->length)->toBe(1)
-        ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-link]')->length)->toBe(2);
+        ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__content"]')->length)->toBe(1)
+        ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__social"]//a')->length)->toBe(5)
+        ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-shell]')->length)->toBe(1)
+        ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-main]')->length)->toBe(1)
+        ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-alternate]')->length)->toBe(1);
 
-    $links = $xpath->query('//*[@id="kontak"]//*[@data-footer-next-link]');
-    expect($links->item(0)->getAttribute('href'))->toBe(route('artikel'))
-        ->and($links->item(1)->getAttribute('href'))->toBe(route('galeri'));
+    $main = $xpath->query('//*[@id="kontak"]//*[@data-footer-next-main]')->item(0);
+    $alternative = $xpath->query('//*[@id="kontak"]//*[@data-footer-next-alternate]')->item(0);
+    expect($main->getAttribute('href'))->toBe(route('galeri'))
+        ->and($alternative->getAttribute('href'))->toBe(route('artikel'));
 })->with(['id', 'en', 'ar']);
 
 it('uses the configured real footer contact and partner destinations', function (): void {
