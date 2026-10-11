@@ -36,13 +36,30 @@ async function desktopPosition(page, progress, legacy) {
         }
         scrollTo(0, track.getBoundingClientRect().top + scrollY - 72 + distance);
     }, { progress, legacy, mappedProgress });
-    if (!legacy) await page.waitForFunction(mappedProgress => {
-        const track = document.querySelector('[data-values-cards-track]');
-        const viewport = document.querySelector('[data-values-cards-viewport]');
-        const target = Math.max(0, Math.min(1, (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight)));
-        return Math.abs(target - mappedProgress) < .0004
-            && Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
-    }, mappedProgress);
+    if (!legacy) {
+        try {
+            await page.waitForFunction(mappedProgress => {
+                const track = document.querySelector('[data-values-cards-track]');
+                const viewport = document.querySelector('[data-values-cards-viewport]');
+                const target = Math.max(0, Math.min(1, (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight)));
+                return Math.abs(target - mappedProgress) < .0004
+                    && Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
+            }, mappedProgress);
+        } catch (error) {
+            const state = await page.evaluate(() => {
+                const root = document.querySelector('[data-values]');
+                const track = root.querySelector('[data-values-cards-track]');
+                const viewport = root.querySelector('[data-values-cards-viewport]');
+                return { scrollY, scrollHeight: document.documentElement.scrollHeight,
+                    innerHeight, trackTop: track.getBoundingClientRect().top,
+                    trackHeight: track.offsetHeight, viewportHeight: viewport.offsetHeight,
+                    scrollTarget: (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight),
+                    cardsProgress: root.dataset.cardsProgress, lineReady: root.hasAttribute('data-line-ready'),
+                    flow: root.hasAttribute('data-cards-flow'), running: root.hasAttribute('data-cards-running') };
+            });
+            throw new Error(`Values fidelity scroll target ${mappedProgress} did not settle: ${JSON.stringify(state)}; ${error.message}`);
+        }
+    }
     await page.waitForTimeout(1500);
 }
 for (const engine of engines) {
