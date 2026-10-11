@@ -13,6 +13,35 @@ const ALL_FRONT_PROGRESS = FLIP_START
     + FLIP_DURATION;
 
 const EXIT_START = 0.895;
+export const VALUES_HOLD_RETENTION = 0.4;
+export const VALUES_FULL_FRONT = ALL_FRONT_PROGRESS;
+export const VALUES_OLD_EXIT = EXIT_START;
+const COMPRESSED_EXIT = ALL_FRONT_PROGRESS
+    + VALUES_HOLD_RETENTION * (EXIT_START - ALL_FRONT_PROGRESS);
+const COMPRESSED_DISTANCE = COMPRESSED_EXIT + (1 - EXIT_START);
+
+// Shorten only the fully readable desktop hold. Flip and exit use the
+// original pose curves and retain nearly the same real scroll travel.
+export function valuesSourceProgress(compactedProgress) {
+    const traveled = clamp(compactedProgress) * COMPRESSED_DISTANCE;
+    if (traveled <= ALL_FRONT_PROGRESS) return traveled;
+    if (traveled <= COMPRESSED_EXIT) {
+        return ALL_FRONT_PROGRESS
+            + (traveled - ALL_FRONT_PROGRESS) / VALUES_HOLD_RETENTION;
+    }
+    return EXIT_START + traveled - COMPRESSED_EXIT;
+}
+
+// Inverse for matching exact OLD choreography phases in browser regression.
+export function valuesCompactedProgress(sourceProgress) {
+    const progress = clamp(sourceProgress);
+    if (progress <= ALL_FRONT_PROGRESS) return progress / COMPRESSED_DISTANCE;
+    if (progress <= EXIT_START) {
+        return (ALL_FRONT_PROGRESS
+            + (progress - ALL_FRONT_PROGRESS) * VALUES_HOLD_RETENTION) / COMPRESSED_DISTANCE;
+    }
+    return (COMPRESSED_EXIT + progress - EXIT_START) / COMPRESSED_DISTANCE;
+}
 
 function smootherStep(value) {
     const progress = clamp(value);

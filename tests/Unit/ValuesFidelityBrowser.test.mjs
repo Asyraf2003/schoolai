@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
 import { oldValuesReference } from './ValuesOldReference.mjs';
+import { valuesCompactedProgress } from '../../resources/js/sections/values-card-keyframes.js';
 
 const phases = [0, .025, .065, .118, .16, .237, .31, .65, .92, .98];
 const inspect = legacy => {
@@ -22,25 +23,26 @@ const inspect = legacy => {
 };
 async function desktopPosition(page, progress, legacy) {
     await page.bringToFront();
-    await page.evaluate(({ progress, legacy }) => {
+    const mappedProgress = legacy ? progress : valuesCompactedProgress(progress);
+    await page.evaluate(({ progress, legacy, mappedProgress }) => {
         const track = document.querySelector(legacy ? '[data-values-timeline]' : '[data-values-cards-track]');
         const viewport = document.querySelector(legacy ? '[data-values-stage]' : '[data-values-cards-viewport]');
         let travel = track.offsetHeight - viewport.offsetHeight;
-        let distance = progress * travel;
+        let distance = mappedProgress * travel;
         if (legacy) {
             const base = travel - innerHeight;
             distance = progress <= .895 ? progress * base
                 : .895 * base + (progress - .895) / .105 * (.105 * base + innerHeight * .5);
         }
         scrollTo(0, track.getBoundingClientRect().top + scrollY - 72 + distance);
-    }, { progress, legacy });
-    if (!legacy) await page.waitForFunction(progress => {
+    }, { progress, legacy, mappedProgress });
+    if (!legacy) await page.waitForFunction(mappedProgress => {
         const track = document.querySelector('[data-values-cards-track]');
         const viewport = document.querySelector('[data-values-cards-viewport]');
         const target = Math.max(0, Math.min(1, (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight)));
-        return Math.abs(target - progress) < .0004
+        return Math.abs(target - mappedProgress) < .0004
             && Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
-    }, progress);
+    }, mappedProgress);
     await page.waitForTimeout(1500);
 }
 for (const engine of engines) {

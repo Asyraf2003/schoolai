@@ -12,6 +12,12 @@
     direction: ltr;
 }
 .values[data-line-ready] .values__line { display: block; }
+/* Match the shortened desktop card travel without a blank section tail.
+   Three original SVG paths still scale over their entire shared scroll field. */
+@media (min-width: 1280px) {
+    .values[data-line-ready]:not([data-cards-flow]) { min-block-size: 375svh; }
+    .values[data-line-ready]:not([data-cards-flow]) .values__line { block-size: 375svh; }
+}
 .values__line svg { display: block; inline-size: 100%; block-size: 100%; }
 .values__line path { stroke-width: clamp(7px, 1.4vw, 24px); }
 .values__header { position: relative; }
