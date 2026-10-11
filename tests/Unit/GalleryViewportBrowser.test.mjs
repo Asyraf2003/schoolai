@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, evidence } from './ProgramBrowserSupport.mjs';
-import { galleryReady, galleryAt, galleryFits, galleryResize, galleryOpening } from './GalleryBrowserSupport.mjs';
+import { galleryReady, galleryAt, galleryFits, galleryResize, galleryOpening, galleryState } from './GalleryBrowserSupport.mjs';
 
 for (const engine of engines) {
     test(`Gallery short screens, resize, native wheel and hidden-page policy in ${engine}`, { skip: !enabled }, async () => {
@@ -18,7 +18,10 @@ for (const engine of engines) {
                 await galleryResize(r.page, width, 600);
                 const progress = await r.page.locator('[data-gallery]').getAttribute('data-gallery-progress');
                 assert.ok(Math.abs(+progress - .52) < .01, `resize preserves scroll progress at ${width}: ${progress}`);
-                cases.push({ width, opening, progress });
+                const resized = await r.page.evaluate(galleryState);
+                galleryFits(resized);
+                assert.ok(Math.abs(resized.items[0].y + resized.items[0].height / 2 - 300) < 3, 'centered assembly survives delayed preceding reflow');
+                cases.push({ width, opening, progress, resized });
             }
             await galleryResize(r.page, 1440, 900);
             await galleryAt(r.page, .52);

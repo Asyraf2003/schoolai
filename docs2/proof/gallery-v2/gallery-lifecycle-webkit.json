@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-11T06:37:47.240Z",
+  "date": "2026-10-11T09:53:15.937Z",
   "platform": "linux",
   "url": "http://127.0.0.1:8020",
   "live": {
@@ -14,6 +14,7 @@
       "bottom": 0.046875,
       "color": "rgb(255, 255, 255)",
       "size": "172.800003px",
+      "visibility": "visible",
       "valuesSize": "172.800003px"
     },
     "header": {
@@ -164,7 +165,7 @@
       {
         "playing": true,
         "hydrated": true,
-        "time": 0.146672966
+        "time": 0.131393936
       },
       {
         "playing": false,

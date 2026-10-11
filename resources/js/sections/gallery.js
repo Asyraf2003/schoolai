@@ -16,9 +16,11 @@ export function mountGallery(root) {
     let near = false;
     let version = 0;
     let width = innerWidth, height = innerHeight;
+    const preceding = root.previousElementSibling;
+    let precedingHeight = preceding?.offsetHeight;
     let lastProgress = 0;
     const update = progress => {
-        if (width === innerWidth && height === innerHeight) lastProgress = progress;
+        if (width === innerWidth && height === innerHeight && precedingHeight === preceding?.offsetHeight) lastProgress = progress;
         media.sync();
     };
     const clear = (keepStage = false) => {
@@ -66,9 +68,19 @@ export function mountGallery(root) {
         if (active) scrollTo(0, timeline.scrollTrigger.start + progress * (timeline.scrollTrigger.end - timeline.scrollTrigger.start));
         timeline.scrollTrigger.update();
     }, { signal: lifecycle.signal });
+    const reflow = typeof ResizeObserver === 'function' ? new ResizeObserver(() => {
+        if (precedingHeight === preceding?.offsetHeight) return;
+        precedingHeight = preceding?.offsetHeight;
+        if (!timeline || suspended) return;
+        const progress = lastProgress;
+        window.ScrollTrigger.refresh();
+        if (progress > 0 && progress < 1) scrollTo(0, timeline.scrollTrigger.start + progress * (timeline.scrollTrigger.end - timeline.scrollTrigger.start));
+        timeline.scrollTrigger.update();
+    }) : null;
+    if (preceding) reflow?.observe(preceding);
     return {
         suspend() { suspended = true; timeline?.scrollTrigger.disable(false); media.suspend(); heading.suspend(); },
         resume() { suspended = false; timeline?.scrollTrigger.enable(false, false); prepare(); media.resume(); heading.resume(); },
-        dispose() { disposed = true; clear(); observer?.disconnect(); lifecycle.abort(); media.dispose(); heading.dispose(); },
+        dispose() { disposed = true; clear(); observer?.disconnect(); reflow?.disconnect(); lifecycle.abort(); media.dispose(); heading.dispose(); },
     };
 }

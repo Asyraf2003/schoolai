@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-11T06:38:36.986Z",
+  "date": "2026-10-11T09:54:27.136Z",
   "platform": "linux",
   "url": "http://127.0.0.1:8020",
   "version": "153.0.8010.52",
@@ -19,6 +19,7 @@
           "bottom": 729.3125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -213,6 +214,7 @@
           "bottom": 0.3125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -363,7 +365,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.276031
+            "time": 0.324754
           },
           {
             "playing": false,
@@ -407,6 +409,7 @@
           "bottom": -3766.6875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -601,6 +604,7 @@
           "bottom": -4988.6875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -795,6 +799,7 @@
           "bottom": -5861.6875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -989,6 +994,7 @@
           "bottom": -6472.6875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -1183,6 +1189,7 @@
           "bottom": -7083.6875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -1377,6 +1384,7 @@
           "bottom": -7956.6875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -1575,6 +1583,7 @@
           "bottom": 733.390625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -1769,6 +1778,7 @@
           "bottom": 0.390625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -1963,6 +1973,7 @@
           "bottom": -3762.609375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -2157,6 +2168,7 @@
           "bottom": -4984.609375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -2351,6 +2363,7 @@
           "bottom": -5857.609375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -2545,6 +2558,7 @@
           "bottom": -6468.609375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -2739,6 +2753,7 @@
           "bottom": -7079.609375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -2933,6 +2948,7 @@
           "bottom": -7952.609375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -3131,6 +3147,7 @@
           "bottom": 770.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "hidden",
           "valuesSize": "96px"
         },
         "header": {
@@ -3325,6 +3342,7 @@
           "bottom": -0.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -3519,6 +3537,7 @@
           "bottom": -3725.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -3713,6 +3732,7 @@
           "bottom": -4947.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -3907,6 +3927,7 @@
           "bottom": -5820.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -4101,6 +4122,7 @@
           "bottom": -6431.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -4295,6 +4317,7 @@
           "bottom": -7042.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -4489,6 +4512,7 @@
           "bottom": -7915.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -4687,6 +4711,7 @@
           "bottom": 800.53125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -4881,6 +4906,7 @@
           "bottom": -0.46875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -5075,6 +5101,7 @@
           "bottom": -2305.46875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -5269,6 +5296,7 @@
           "bottom": -3149.46875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -5463,6 +5491,7 @@
           "bottom": -3752.46875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -5657,6 +5686,7 @@
           "bottom": -4174.46875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -5851,6 +5881,7 @@
           "bottom": -4596.46875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -6045,6 +6076,7 @@
           "bottom": -5199.46875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -6243,6 +6275,7 @@
           "bottom": 793.421875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -6437,6 +6470,7 @@
           "bottom": 0.421875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -6631,6 +6665,7 @@
           "bottom": -2312.578125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -6825,6 +6860,7 @@
           "bottom": -3156.578125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -7019,6 +7055,7 @@
           "bottom": -3759.578125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -7213,6 +7250,7 @@
           "bottom": -4181.578125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -7407,6 +7445,7 @@
           "bottom": -4603.578125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -7601,6 +7640,7 @@
           "bottom": -5206.578125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -7799,6 +7839,7 @@
           "bottom": 834.46875,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -7815,7 +7856,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106763993967582,
+        "lastDraw": 0.7336047463753252,
         "blur": 0,
         "items": [
           {
@@ -7949,7 +7990,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0
+            "time": 0.111371
           },
           {
             "playing": false,
@@ -7993,6 +8034,7 @@
           "bottom": -0.53125,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -8143,7 +8185,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0
+            "time": 0.270881
           },
           {
             "playing": false,
@@ -8187,6 +8229,7 @@
           "bottom": -2271.53125,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -8337,7 +8380,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.005603
+            "time": 0.364944
           },
           {
             "playing": true,
@@ -8381,6 +8424,7 @@
           "bottom": -3115.53125,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -8575,6 +8619,7 @@
           "bottom": -3718.53125,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -8769,6 +8814,7 @@
           "bottom": -4140.53125,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -8963,6 +9009,7 @@
           "bottom": -4562.53125,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -9157,6 +9204,7 @@
           "bottom": -5165.53125,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -9355,6 +9403,7 @@
           "bottom": 854.046875,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -9371,7 +9420,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106806149642,
+        "lastDraw": 0.7336123589087908,
         "blur": 0,
         "items": [
           {
@@ -9505,7 +9554,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0
+            "time": 0.256274
           },
           {
             "playing": false,
@@ -9549,6 +9598,7 @@
           "bottom": 0.046875,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -9743,6 +9793,7 @@
           "bottom": -2251.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -9937,6 +9988,7 @@
           "bottom": -3095.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -10131,6 +10183,7 @@
           "bottom": -3698.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -10325,6 +10378,7 @@
           "bottom": -4120.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -10519,6 +10573,7 @@
           "bottom": -4542.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -10713,6 +10768,7 @@
           "bottom": -5145.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -10911,6 +10967,7 @@
           "bottom": 865.6875,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -10927,7 +10984,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106829826049733,
+        "lastDraw": 0.7336164367399984,
         "blur": 0,
         "items": [
           {
@@ -11105,6 +11162,7 @@
           "bottom": 0.6875,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -11299,6 +11357,7 @@
           "bottom": -2240.3125,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -11493,6 +11552,7 @@
           "bottom": -3084.3125,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -11687,6 +11747,7 @@
           "bottom": -3687.3125,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -11881,6 +11942,7 @@
           "bottom": -4109.3125,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -12075,6 +12137,7 @@
           "bottom": -4531.3125,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -12269,6 +12332,7 @@
           "bottom": -5134.3125,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -12467,6 +12531,7 @@
           "bottom": 911.234375,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -12483,7 +12548,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106907275418354,
+        "lastDraw": 0.7336284337856075,
         "blur": 0,
         "items": [
           {
@@ -12661,6 +12726,7 @@
           "bottom": 0.234375,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -12855,6 +12921,7 @@
           "bottom": -2194.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -13049,6 +13116,7 @@
           "bottom": -3038.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -13243,6 +13311,7 @@
           "bottom": -3641.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -13437,6 +13506,7 @@
           "bottom": -4063.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -13631,6 +13701,7 @@
           "bottom": -4485.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -13825,6 +13896,7 @@
           "bottom": -5088.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -14023,6 +14095,7 @@
           "bottom": 729.21875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -14120,7 +14193,7 @@
             "bottom": 2307.71728515625,
             "opacity": 1,
             "column": "right",
-            "image": 1920
+            "image": 0
           },
           {
             "x": 18,
@@ -14130,7 +14203,7 @@
             "bottom": 2307.71728515625,
             "opacity": 1,
             "column": "right",
-            "image": 1920
+            "image": 0
           },
           {
             "x": 183,
@@ -14213,6 +14286,7 @@
           "bottom": 0.21875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -14359,7 +14433,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.42671
+            "time": 0.346647
           },
           {
             "playing": false,
@@ -14403,6 +14477,7 @@
           "bottom": -3766.78125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -14593,6 +14668,7 @@
           "bottom": -4988.78125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -14783,6 +14859,7 @@
           "bottom": -5861.78125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -14973,6 +15050,7 @@
           "bottom": -6472.78125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -15163,6 +15241,7 @@
           "bottom": -7083.78125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -15353,6 +15432,7 @@
           "bottom": -7956.78125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -15547,6 +15627,7 @@
           "bottom": 733.078125,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -15737,6 +15818,7 @@
           "bottom": 0.078125,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -15927,6 +16009,7 @@
           "bottom": -3762.921875,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -16117,6 +16200,7 @@
           "bottom": -4984.921875,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -16307,6 +16391,7 @@
           "bottom": -5857.921875,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -16497,6 +16582,7 @@
           "bottom": -6468.921875,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -16687,6 +16773,7 @@
           "bottom": -7079.921875,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -16877,6 +16964,7 @@
           "bottom": -7952.921875,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -17071,6 +17159,7 @@
           "bottom": 770.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "hidden",
           "valuesSize": "96px"
         },
         "header": {
@@ -17261,6 +17350,7 @@
           "bottom": -0.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -17451,6 +17541,7 @@
           "bottom": -3725.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -17641,6 +17732,7 @@
           "bottom": -4947.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -17831,6 +17923,7 @@
           "bottom": -5820.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -18021,6 +18114,7 @@
           "bottom": -6431.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -18211,6 +18305,7 @@
           "bottom": -7042.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -18401,6 +18496,7 @@
           "bottom": -7915.5,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -18595,6 +18691,7 @@
           "bottom": 800.875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -18785,6 +18882,7 @@
           "bottom": -0.125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -18975,6 +19073,7 @@
           "bottom": -2305.125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -19165,6 +19264,7 @@
           "bottom": -3149.125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -19355,6 +19455,7 @@
           "bottom": -3752.125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -19545,6 +19646,7 @@
           "bottom": -4174.125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -19735,6 +19837,7 @@
           "bottom": -4596.125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -19925,6 +20028,7 @@
           "bottom": -5199.125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -20119,6 +20223,7 @@
           "bottom": 793.171875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -20309,6 +20414,7 @@
           "bottom": 0.171875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -20499,6 +20605,7 @@
           "bottom": -2312.828125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -20689,6 +20796,7 @@
           "bottom": -3156.828125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -20879,6 +20987,7 @@
           "bottom": -3759.828125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -21069,6 +21178,7 @@
           "bottom": -4181.828125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -21259,6 +21369,7 @@
           "bottom": -4603.828125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -21449,6 +21560,7 @@
           "bottom": -5206.828125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -21643,6 +21755,7 @@
           "bottom": 835,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -21659,7 +21772,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106763993967582,
+        "lastDraw": 0.7336047463753252,
         "blur": 0,
         "items": [
           {
@@ -21789,7 +21902,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.062209
+            "time": 0.082738
           },
           {
             "playing": false,
@@ -21833,6 +21946,7 @@
           "bottom": 0,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -21979,7 +22093,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.162405
+            "time": 0.240216
           },
           {
             "playing": false,
@@ -22023,6 +22137,7 @@
           "bottom": -2271,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -22169,7 +22284,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.223356
+            "time": 0.322442
           },
           {
             "playing": true,
@@ -22213,6 +22328,7 @@
           "bottom": -3115,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -22403,6 +22519,7 @@
           "bottom": -3718,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -22593,6 +22710,7 @@
           "bottom": -4140,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -22783,6 +22901,7 @@
           "bottom": -4562,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -22973,6 +23092,7 @@
           "bottom": -5165,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -23167,6 +23287,7 @@
           "bottom": 854.046875,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -23183,7 +23304,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106806149642,
+        "lastDraw": 0.7336123589087908,
         "blur": 0,
         "items": [
           {
@@ -23313,7 +23434,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.218179
+            "time": 0
           },
           {
             "playing": false,
@@ -23357,6 +23478,7 @@
           "bottom": 0.046875,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "visible",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -23547,6 +23669,7 @@
           "bottom": -2251.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "visible",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -23737,6 +23860,7 @@
           "bottom": -3095.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "visible",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -23927,6 +24051,7 @@
           "bottom": -3698.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "visible",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -24117,6 +24242,7 @@
           "bottom": -4120.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "visible",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -24307,6 +24433,7 @@
           "bottom": -4542.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "visible",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -24497,6 +24624,7 @@
           "bottom": -5145.953125,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "visible",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -24691,6 +24819,7 @@
           "bottom": 865.40625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -24707,7 +24836,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106829826049733,
+        "lastDraw": 0.7336164367399984,
         "blur": 0,
         "items": [
           {
@@ -24881,6 +25010,7 @@
           "bottom": 0.40625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -25071,6 +25201,7 @@
           "bottom": -2240.59375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -25261,6 +25392,7 @@
           "bottom": -3084.59375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -25451,6 +25583,7 @@
           "bottom": -3687.59375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -25641,6 +25774,7 @@
           "bottom": -4109.59375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -25831,6 +25965,7 @@
           "bottom": -4531.59375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -26021,6 +26156,7 @@
           "bottom": -5134.59375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -26215,6 +26351,7 @@
           "bottom": 911.234375,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -26231,7 +26368,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106907275418354,
+        "lastDraw": 0.7336284337856075,
         "blur": 0,
         "items": [
           {
@@ -26405,6 +26542,7 @@
           "bottom": 0.234375,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -26595,6 +26733,7 @@
           "bottom": -2194.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -26785,6 +26924,7 @@
           "bottom": -3038.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -26975,6 +27115,7 @@
           "bottom": -3641.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -27165,6 +27306,7 @@
           "bottom": -4063.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -27355,6 +27497,7 @@
           "bottom": -4485.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -27545,6 +27688,7 @@
           "bottom": -5088.765625,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "visible",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -27739,6 +27883,7 @@
           "bottom": 757.1875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -27836,7 +27981,7 @@
             "bottom": 2335.68603515625,
             "opacity": 1,
             "column": "right",
-            "image": 1920
+            "image": 0
           },
           {
             "x": 183,
@@ -27846,7 +27991,7 @@
             "bottom": 2335.68603515625,
             "opacity": 1,
             "column": "right",
-            "image": 1920
+            "image": 0
           },
           {
             "x": 18,
@@ -27925,6 +28070,7 @@
           "bottom": 0.1875,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -28067,7 +28213,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.235207
+            "time": 0
           },
           {
             "playing": false,
@@ -28111,6 +28257,7 @@
           "bottom": -3738.8125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -28297,6 +28444,7 @@
           "bottom": -4960.8125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -28483,6 +28631,7 @@
           "bottom": -5833.8125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -28669,6 +28818,7 @@
           "bottom": -6444.8125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -28855,6 +29005,7 @@
           "bottom": -7055.8125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -29041,6 +29192,7 @@
           "bottom": -7928.8125,
           "color": "rgb(255, 255, 255)",
           "size": "54.4px",
+          "visibility": "visible",
           "valuesSize": "54.4px"
         },
         "header": {
@@ -29231,6 +29383,7 @@
           "bottom": 763.109375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -29417,6 +29570,7 @@
           "bottom": 0.109375,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -29603,6 +29757,7 @@
           "bottom": -3732.890625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -29789,6 +29944,7 @@
           "bottom": -4954.890625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -29975,6 +30131,7 @@
           "bottom": -5827.890625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -30161,6 +30318,7 @@
           "bottom": -6438.890625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -30347,6 +30505,7 @@
           "bottom": -7049.890625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -30533,6 +30692,7 @@
           "bottom": -7922.890625,
           "color": "rgb(255, 255, 255)",
           "size": "58.5px",
+          "visibility": "visible",
           "valuesSize": "58.5px"
         },
         "header": {
@@ -30723,6 +30883,7 @@
           "bottom": 820.21875,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "hidden",
           "valuesSize": "96px"
         },
         "header": {
@@ -30909,6 +31070,7 @@
           "bottom": 0.21875,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -31095,6 +31257,7 @@
           "bottom": -3675.78125,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -31281,6 +31444,7 @@
           "bottom": -4897.78125,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -31467,6 +31631,7 @@
           "bottom": -5770.78125,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -31653,6 +31818,7 @@
           "bottom": -6381.78125,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -31839,6 +32005,7 @@
           "bottom": -6992.78125,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -32025,6 +32192,7 @@
           "bottom": -7865.78125,
           "color": "rgb(255, 255, 255)",
           "size": "96px",
+          "visibility": "visible",
           "valuesSize": "96px"
         },
         "header": {
@@ -32215,6 +32383,7 @@
           "bottom": 857.6875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -32401,6 +32570,7 @@
           "bottom": -0.3125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -32587,6 +32757,7 @@
           "bottom": -2248.3125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -32773,6 +32944,7 @@
           "bottom": -3092.3125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -32959,6 +33131,7 @@
           "bottom": -3695.3125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -33145,6 +33318,7 @@
           "bottom": -4117.3125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -33331,6 +33505,7 @@
           "bottom": -4539.3125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -33517,6 +33692,7 @@
           "bottom": -5142.3125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -33707,6 +33883,7 @@
           "bottom": 850.546875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -33893,6 +34070,7 @@
           "bottom": 0.546875,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -34079,6 +34257,7 @@
           "bottom": -2255.453125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -34265,6 +34444,7 @@
           "bottom": -3099.453125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -34451,6 +34631,7 @@
           "bottom": -3702.453125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -34637,6 +34818,7 @@
           "bottom": -4124.453125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -34823,6 +35005,7 @@
           "bottom": -4546.453125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -35009,6 +35192,7 @@
           "bottom": -5149.453125,
           "color": "rgb(255, 255, 255)",
           "size": "112px",
+          "visibility": "visible",
           "valuesSize": "112px"
         },
         "header": {
@@ -35199,6 +35383,7 @@
           "bottom": 912.4375,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -35215,7 +35400,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106763993967582,
+        "lastDraw": 0.7336047463753252,
         "blur": 0,
         "items": [
           {
@@ -35385,6 +35570,7 @@
           "bottom": -0.5625,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -35571,6 +35757,7 @@
           "bottom": -2193.5625,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -35757,6 +35944,7 @@
           "bottom": -3037.5625,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -35943,6 +36131,7 @@
           "bottom": -3640.5625,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -36129,6 +36318,7 @@
           "bottom": -4062.5625,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -36315,6 +36505,7 @@
           "bottom": -4484.5625,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -36501,6 +36692,7 @@
           "bottom": -5087.5625,
           "color": "rgb(255, 255, 255)",
           "size": "153.6px",
+          "visibility": "hidden",
           "valuesSize": "153.6px"
         },
         "header": {
@@ -36691,6 +36883,7 @@
           "bottom": 942,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -36707,7 +36900,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106806149642,
+        "lastDraw": 0.7336123589087908,
         "blur": 0,
         "items": [
           {
@@ -36877,6 +37070,7 @@
           "bottom": 0,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -37063,6 +37257,7 @@
           "bottom": -2164,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -37249,6 +37444,7 @@
           "bottom": -3008,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -37435,6 +37631,7 @@
           "bottom": -3611,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -37621,6 +37818,7 @@
           "bottom": -4033,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -37807,6 +38005,7 @@
           "bottom": -4455,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -37993,6 +38192,7 @@
           "bottom": -5058,
           "color": "rgb(255, 255, 255)",
           "size": "172.8px",
+          "visibility": "hidden",
           "valuesSize": "172.8px"
         },
         "header": {
@@ -38183,6 +38383,7 @@
           "bottom": 959.734375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "hidden",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -38199,7 +38400,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106829826049733,
+        "lastDraw": 0.7336164367399984,
         "blur": 0,
         "items": [
           {
@@ -38369,6 +38570,7 @@
           "bottom": 0.734375,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "visible",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -38555,6 +38757,7 @@
           "bottom": -2146.265625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "visible",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -38741,6 +38944,7 @@
           "bottom": -2990.265625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "visible",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -38927,6 +39131,7 @@
           "bottom": -3593.265625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "visible",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -39113,6 +39318,7 @@
           "bottom": -4015.265625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "visible",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -39299,6 +39505,7 @@
           "bottom": -4437.265625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "visible",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -39485,6 +39692,7 @@
           "bottom": -5040.265625,
           "color": "rgb(255, 255, 255)",
           "size": "184.32px",
+          "visibility": "visible",
           "valuesSize": "184.32px"
         },
         "header": {
@@ -39675,6 +39883,7 @@
           "bottom": 1028.96875,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -39691,7 +39900,7 @@
           11
         ],
         "typeVisible": "hidden",
-        "lastDraw": 0.8106907275418354,
+        "lastDraw": 0.7336284337856075,
         "blur": 0,
         "items": [
           {
@@ -39861,6 +40070,7 @@
           "bottom": -0.03125,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -40047,6 +40257,7 @@
           "bottom": -2077.03125,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -40233,6 +40444,7 @@
           "bottom": -2921.03125,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -40419,6 +40631,7 @@
           "bottom": -3524.03125,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -40605,6 +40818,7 @@
           "bottom": -3946.03125,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -40791,6 +41005,7 @@
           "bottom": -4368.03125,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {
@@ -40977,6 +41192,7 @@
           "bottom": -4971.03125,
           "color": "rgb(255, 255, 255)",
           "size": "230.4px",
+          "visibility": "hidden",
           "valuesSize": "230.4px"
         },
         "header": {

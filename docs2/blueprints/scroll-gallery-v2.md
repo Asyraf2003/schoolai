@@ -1,7 +1,7 @@
 # MAP-V2-18 — Gallery V2 and Testimonials handoff
 
 STATUS: OWNER_ACCEPTED / IMPLEMENTING
-Repository Asyraf2003/schoolai; main445fbf92; Terminal Codex.
+Repository Asyraf2003/schoolai; latest main dae40c14; owner-integrated d3108694/ac22aeef; Terminal Codex.
 Issue86 / branch feat/v2-scroll-gallery / PR87.
 
 ## OWNER_RAW / OWNER_CONFIRMED
@@ -110,6 +110,10 @@ XS360/390 and SM640:2 columns, longer1000svh runway; MD768/LG1024/XL1280/
 ID/EN Inter/LTR; AR Cairo/RTL, mirror physical side entrances without mirroring
 photos or vertical time. Server locale reload rebuilds geometry/lifecycle.
 Resize preserves last measured progress before other section refresh handlers.
+Owner integrated main dae40c14 via d3108694/ac22aeef; Values hold40% and
+passive scroll indicator remain read-only. PR93 Values exit work remains separate.
+Gallery-only preceding-world ResizeObserver reconciles the proven asynchronous
+375svh↔500svh Values flow remeasurement without changing Values owners.
 Reduced/static paths show all10 items without overlap or inaccessible controls.
 
 ## SCOPE / file ownership / OUT_OF_SCOPE
@@ -144,7 +148,11 @@ changes. Current-storyboard local Chromium5/5 and WebKit5/5 PASS; twelve
 real Testimonial handoffs and Values line integration3/3 PASS. CI38117850566
 Chromium PASS; WebKit4PASS/1cancelled at420s aggregate file limit without an
 assertion failure. Same27 profiles now partitioned per locale into fresh bounded
-processes with per-viewport duration proof; final CI pending in proof/gallery-v2.
+processes with per-viewport duration proof. Final integrated local after Gallery
+reflow correction: Chromium6/6, WebKit6/6 PASS, including actual card-exit
+heading gate and centered assembly after asynchronous Values reflow. Latest
+main dae40c14 PHP comparison same71FAIL/75ERROR, six additional PASS.
+Corrected integrated CI pending in proof/gallery-v2.
 Accessibility tree and18 DPR2 expanded-geometry cases PASS: full localized
 sentence,10 named media, keyboard/focus and touch tap. An sr-only full sentence
 fixes the inaccessible animated paragraph without changing visible copy.

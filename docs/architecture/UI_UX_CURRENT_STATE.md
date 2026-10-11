@@ -11,8 +11,27 @@ DECISION: Gallery-owned gate reads actual card bounds at their clip boundary,
 allows reveal at<=20% remaining, hides it again on reverse. Keep layout, native
 title/main gap, dark paint timing, all media choreography and Values owners.
 Blueprint MAP-V2-18 amended OWNER_ACCEPTED / IMPLEMENTING.
-STATUS: FAIL previous entry timing; latest bounded correction pending proof.
-NEXT channel Terminal Codex: implement Gallery gate and browser entry proof.
+PROOF on pre-integration source: Chromium6/6 and WebKit6/6 PASS; actual
+reveal witness<=20% remaining. New main integrated by owner/AI Web without
+reverting: merge d3108694, HEAD ac22aeef, stash backup retained. Base now
+main dae40c14 (scroll indicator + Values hold40%); PR93 exit-speed work separate.
+FACT integrated CI38129531132: all27 Chromium composition profiles and heading
+PASS, resize FAIL at1535x500→600: progress.52→.7065. Local trace proves Values
+flow height3000→2250 after Gallery resize measured its scroll boundaries; later
+refresh shifts Gallery start750px. Gallery media/Values source owners unchanged.
+DECISION: Gallery observes preceding-world height, preserves its last progress
+only while measured geometry matches, performs the supported global refresh
+after reflow before restoring Gallery progress. Individual refresh in GSAP3.7.1
+retains shared scroll.rec and later restores old scroll; global refresh clears it.
+PROOF focused integrated resize: Chromium/WebKit PASS12 boundary/short profiles;
+no errors or Values source edits. Full final integrated matrix renewing.
+PROOF final integrated local: Chromium6/6 (104.11s), WebKit6/6 (213.14s) PASS
+on corrected source, raw integrated logs and SHA256 ledger in proof/gallery-v2.
+Full PHP latest-main comparison336→342: same71FAIL/75ERROR identities,
+6 additionalPASS/46assertions; full baseline FAIL. Structure312/build/Pint/diff
+PASS. Protected Values/main scroll indicator source unchanged; stash retained.
+STATUS: PASS integrated local scoped; BLOCKED_BY_MISSING_EVIDENCE corrected CI.
+NEXT channel Terminal Codex: fix Gallery resize reconciliation, renew proof.
 
 ## Gallery V2 final owner correction — 2026-10-11
 

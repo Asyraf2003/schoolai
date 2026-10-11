@@ -1,0 +1,41 @@
+✔ Gallery media policy, failures, preferences and lifecycle in webkit (16569.839551ms)
+✔ Gallery static content and sample testimonial disclosure without JavaScript in webkit (5550.750541ms)
+✔ Gallery fails open when GSAP cannot load in webkit (3955.350468ms)
+✔ Gallery title waits for the actual Values card exit in webkit (60357.532374ms)
+Gallery webkit/en/360 PASS 2267ms
+Gallery webkit/en/390 PASS 2610ms
+Gallery webkit/en/640 PASS 1601ms
+Gallery webkit/en/768 PASS 1710ms
+Gallery webkit/en/1024 PASS 1926ms
+Gallery webkit/en/1280 PASS 2483ms
+Gallery webkit/en/1440 PASS 4276ms
+Gallery webkit/en/1536 PASS 2935ms
+Gallery webkit/en/1920 PASS 3168ms
+Gallery webkit/id/360 PASS 2281ms
+Gallery webkit/id/390 PASS 2133ms
+Gallery webkit/id/640 PASS 1563ms
+Gallery webkit/id/768 PASS 1638ms
+Gallery webkit/id/1024 PASS 1860ms
+Gallery webkit/id/1280 PASS 2255ms
+Gallery webkit/id/1440 PASS 3836ms
+Gallery webkit/id/1536 PASS 2434ms
+Gallery webkit/id/1920 PASS 3395ms
+Gallery webkit/ar/360 PASS 2406ms
+Gallery webkit/ar/390 PASS 2190ms
+Gallery webkit/ar/640 PASS 1545ms
+Gallery webkit/ar/768 PASS 1754ms
+Gallery webkit/ar/1024 PASS 2086ms
+Gallery webkit/ar/1280 PASS 2405ms
+Gallery webkit/ar/1440 PASS 4193ms
+Gallery webkit/ar/1536 PASS 2844ms
+Gallery webkit/ar/1920 PASS 3656ms
+✔ Gallery opening, formation, travel and testimonial handoff in webkit (95194.365385ms)
+✔ Gallery short screens, resize, native wheel and hidden-page policy in webkit (31314.075726ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 213143.185187
