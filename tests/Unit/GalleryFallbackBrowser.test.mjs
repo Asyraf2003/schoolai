@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence } from './ProgramBrowserSupport.mjs';
-import { galleryReady, galleryAt, galleryState } from './GalleryBrowserSupport.mjs';
+import { galleryReady, galleryAt, galleryState, galleryOpening } from './GalleryBrowserSupport.mjs';
 
 for (const engine of engines) {
     test(`Gallery media policy, failures, preferences and lifecycle in ${engine}`, { skip: !enabled }, async () => {
@@ -9,19 +9,18 @@ for (const engine of engines) {
         const p = r.page;
         try {
             await galleryReady(p);
-            await galleryAt(p, .05);
+            await galleryOpening(p);
             await p.waitForFunction(() => [...document.querySelectorAll('[data-gallery-video]')].some(v => !v.paused && v.currentTime > .1));
             const live = await p.evaluate(galleryState);
-            assert.equal(live.videos.filter(v => v.playing).length, 1);
-            await p.locator('[data-gallery-pause]').click();
-            assert.equal(await p.locator('[data-gallery-video][src]').count(), 0);
-            await p.locator('[data-gallery-pause]').click();
+            assert.ok(live.videos.filter(v => v.playing).length <= 2);
+            assert.equal(await p.locator('[data-gallery] button').count(), 0);
+            assert.ok(await p.locator('[data-gallery-video]').evaluateAll(videos => videos.every(v => v.loop)));
             await galleryAt(p, .55);
             assert.ok((await p.evaluate(galleryState)).videos.filter(v => v.playing).length <= 2);
             await p.evaluate(() => dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
             assert.equal(await p.locator('[data-gallery-video][src]').count(), 0);
             await p.evaluate(() => dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
-            await galleryAt(p, .05);
+            await galleryOpening(p);
             await p.locator('[data-gallery-video]').first().evaluate(v => v.dispatchEvent(new Event('error')));
             assert.equal(await p.locator('[data-gallery-video]').first().getAttribute('data-ready'), null);
             assert.ok(await p.locator('[data-gallery-poster]').first().evaluate(i => i.complete && i.naturalWidth > 0));
@@ -31,7 +30,7 @@ for (const engine of engines) {
             assert.equal(await p.locator('[data-gallery-item]').count(), 10);
             await p.emulateMedia({ reducedMotion: 'no-preference' });
             await galleryReady(p);
-            await galleryAt(p, .46);
+            await galleryAt(p, .52);
             await p.evaluate(() => dispatchEvent(new PageTransitionEvent('pagehide', { persisted: false })));
             assert.equal((await p.evaluate(galleryState)).triggers, 0);
             assert.equal(await p.locator('[data-gallery-video][src]').count(), 0);
@@ -42,13 +41,15 @@ for (const engine of engines) {
     test(`Gallery static content and sample testimonial disclosure without JavaScript in ${engine}`, { skip: !enabled }, async () => {
         const r = await session(engine, { javaScriptEnabled: false });
         try {
+            await r.page.waitForFunction(() => getComputedStyle(document.querySelector('[data-gallery]')).backgroundColor === 'rgb(8, 9, 11)');
+            await r.page.evaluate(() => document.fonts.ready);
             for (const width of [390, 768, 1440]) {
                 await r.page.setViewportSize({ width, height: 900 });
                 assert.equal(await r.page.locator('[data-gallery-item]').count(), 10);
                 assert.equal(await r.page.locator('[data-gallery-video][src]').count(), 0);
                 assert.ok(await r.page.locator('[data-testimonials] blockquote').count() > 0);
-                assert.equal(await r.page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-                assert.equal(await r.page.locator('[data-gallery-pause]').isVisible(), false);
+                assert.equal(await r.page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `static overflow at ${width}`);
+                assert.equal(await r.page.locator('[data-gallery] button').count(), 0);
             }
         } finally { await r.close(); }
     });

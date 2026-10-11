@@ -1,11 +1,9 @@
 export function mountGalleryMedia(root) {
     const videos = [...root.querySelectorAll('[data-gallery-video]')];
-    const button = root.querySelector('[data-gallery-pause]');
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const lifecycle = new AbortController();
     const { signal } = lifecycle;
     let suspended = false;
-    let paused = false;
     let disposed = false;
     const pending = new Set();
     const release = video => {
@@ -14,7 +12,8 @@ export function mountGalleryMedia(root) {
         delete video.dataset.ready;
     };
     const sync = () => {
-        const inactive = suspended || disposed || paused || document.hidden || motion.matches;
+        const finished = root.hasAttribute('data-gallery-enabled') && +root.dataset.galleryProgress >= .90;
+        const inactive = suspended || disposed || document.hidden || motion.matches || finished;
         const visible = inactive ? [] : videos.map(video => {
             const item = video.parentElement;
             const r = item.getBoundingClientRect();
@@ -37,15 +36,22 @@ export function mountGalleryMedia(root) {
         video.addEventListener('error', () => { if (video.hasAttribute('src')) video.dataset.failed = 'true'; release(video); }, { signal });
     }
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver(sync, { threshold: [0, .1, .5] }) : null;
+    const posters = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+        for (const entry of entries) {
+            if (entry.isIntersecting && entry.target.matches('[data-gallery-poster]')) {
+                entry.target.loading = 'eager';
+                posters.unobserve(entry.target);
+            }
+        }
+    }, { rootMargin: '100% 0px' }) : null;
     videos.forEach(video => observer?.observe(video));
-    button.hidden = false;
-    button.addEventListener('click', () => { paused = !paused; button.setAttribute('aria-pressed', String(paused)); sync(); }, { signal });
+    root.querySelectorAll('[data-gallery-poster]').forEach(poster => posters?.observe(poster));
     document.addEventListener('visibilitychange', sync, { signal });
     motion.addEventListener('change', sync, { signal });
     return {
         sync,
         suspend() { suspended = true; sync(); },
         resume() { suspended = false; sync(); },
-        dispose() { disposed = true; sync(); observer?.disconnect(); lifecycle.abort(); button.hidden = true; },
+        dispose() { disposed = true; sync(); observer?.disconnect(); posters?.disconnect(); lifecycle.abort(); },
     };
 }

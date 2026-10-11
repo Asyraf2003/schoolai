@@ -3,5 +3,5 @@
 return [
     'title' => 'Gallery',
     'taekwondo' => 'Taekwondo',
-    'pause' => 'Pause videos',
+    'statement_lines' => ['Exceptional spaces.', 'For an extraordinary generation.'],
 ];

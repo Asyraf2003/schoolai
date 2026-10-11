@@ -47,6 +47,12 @@ jobs:
           php artisan test --compact tests/Feature/LandingGalleryV2Test.php
           npm install --no-save --no-package-lock playwright@1.63.0
           npx playwright install --with-deps ${{ matrix.engine }}
+          mkdir -p /tmp/gallery-posters
+          for name in labit mushalla aula renang taekwondo perpustakaan psikolog parenting gigianak fullday; do
+            curl -fL --retry 2 "https://media.almustaqbal.sch.id/site/school-life/$name-v1.webp" -o "/tmp/gallery-posters/$name-v1.webp"
+          done
+          curl -fL --retry 2 https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js -o /tmp/gallery-gsap.min.js
+          curl -fL --retry 2 https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/ScrollTrigger.min.js -o /tmp/gallery-ScrollTrigger.min.js
           GALLERY_CHROME="$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*/chrome-linux*/*' -print -quit)"
           if [ -n "$GALLERY_CHROME" ]; then echo "PROGRAM_CHROMIUM_PATH=$GALLERY_CHROME" >> "$GITHUB_ENV"; fi
           php artisan serve --host=127.0.0.1 --port=8000 > /tmp/gallery-server.log 2>&1 &
@@ -62,6 +68,9 @@ jobs:
           PROGRAM_PLAYWRIGHT_MODULE: playwright
           PROGRAM_ENGINES: ${{ matrix.engine }}
           PROGRAM_PROOF_DIRECTORY: /tmp
+          PROGRAM_SCHOOL_LIFE_FIXTURES: /tmp/gallery-posters
+          PROGRAM_GSAP_FIXTURE: /tmp/gallery-gsap.min.js
+          PROGRAM_SCROLLTRIGGER_FIXTURE: /tmp/gallery-ScrollTrigger.min.js
         run: >-
           node --test --test-concurrency=1 --test-timeout=420000
           tests/Unit/GalleryScrollBrowser.test.mjs
@@ -74,4 +83,5 @@ jobs:
           path: |
             /tmp/gallery-*.json
             /tmp/gallery-*.png
+            /tmp/gallery-*.jpg
             /tmp/gallery-server.log

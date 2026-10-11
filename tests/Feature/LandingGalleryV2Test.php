@@ -16,7 +16,7 @@ it('retains testimonial quotes when optional background photographs are unavaila
 it('renders ten distinct real media after Values and a populated testimonial wall', function (string $locale): void {
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
     $response->assertOk()->assertSeeHtmlInOrder(['id="nilai"', 'id="galeri"', 'id="testimoni"'])
-        ->assertSee(__('gallery_v2.title'))->assertSee(__('testimonials.description'));
+        ->assertSee(__('gallery_v2.title'))->assertSee(implode(' ', __('gallery_v2.statement_lines')), false)->assertSee(__('testimonials.description'));
     $items = $response->viewData('gallery')['items'];
     expect($items)->toHaveCount(10)
         ->and(array_unique(array_column($items, 'url')))->toHaveCount(10)

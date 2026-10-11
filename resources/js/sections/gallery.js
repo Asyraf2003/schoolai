@@ -1,10 +1,12 @@
 import { loadGsapLibrary } from './gsap-loader.js';
 import { createGalleryTimeline } from './gallery-timeline.js';
 import { mountGalleryMedia } from './gallery-media.js';
+import { mountSectionHeading } from './section-heading.js';
 
 export function mountGallery(root) {
     if (!root) return { suspend() {}, resume() {}, dispose() {} };
     const lifecycle = new AbortController();
+    const heading = mountSectionHeading(root, 'gallery', 900, 108);
     const media = mountGalleryMedia(root);
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let timeline;
@@ -22,8 +24,13 @@ export function mountGallery(root) {
     const clear = (keepStage = false) => {
         version++;
         timeline?.scrollTrigger.kill(); timeline?.kill(); timeline = null;
-        if (!keepStage) root.removeAttribute('data-gallery-enabled');
-        root.querySelectorAll('[data-gallery-item], [data-gallery-composition], .gallery__header h2').forEach(node => node.removeAttribute('style'));
+        if (!keepStage) root.previousElementSibling?.removeAttribute('data-gallery-dark');
+        if (!keepStage) {
+            root.removeAttribute('data-gallery-enabled');
+            delete root.dataset.galleryWidth; delete root.dataset.galleryHeight;
+            delete root.dataset.galleryShrinkStart;
+        }
+        root.querySelectorAll('[data-gallery-item], [data-gallery-composition], [data-gallery-word]').forEach(node => node.removeAttribute('style'));
     };
     const prepare = async () => {
         if (!near || disposed || suspended || motion.matches || timeline || loading
@@ -60,8 +67,8 @@ export function mountGallery(root) {
         timeline.scrollTrigger.update();
     }, { signal: lifecycle.signal });
     return {
-        suspend() { suspended = true; timeline?.scrollTrigger.disable(false); media.suspend(); },
-        resume() { suspended = false; timeline?.scrollTrigger.enable(false, false); prepare(); media.resume(); },
-        dispose() { disposed = true; clear(); observer?.disconnect(); lifecycle.abort(); media.dispose(); },
+        suspend() { suspended = true; timeline?.scrollTrigger.disable(false); media.suspend(); heading.suspend(); },
+        resume() { suspended = false; timeline?.scrollTrigger.enable(false, false); prepare(); media.resume(); heading.resume(); },
+        dispose() { disposed = true; clear(); observer?.disconnect(); lifecycle.abort(); media.dispose(); heading.dispose(); },
     };
 }

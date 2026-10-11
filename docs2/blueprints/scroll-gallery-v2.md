@@ -1,43 +1,76 @@
-# MAP-V2-18 — Scroll Gallery and Testimonials handoff
+# MAP-V2-18 — Gallery V2 and Testimonials handoff
 
 STATUS: OWNER_ACCEPTED / IMPLEMENTING
-Source main445fbf92; channel Terminal Codex.
+Repository Asyraf2003/schoolai; main445fbf92; Terminal Codex.
+Issue86 / branch feat/v2-scroll-gallery / PR87.
 
-## OWNER_RAW
+## OWNER_RAW / OWNER_CONFIRMED
 
-Implement Gallery after Values and before Testimonials: ten real media, 3 left /
-4 center / 3 right. Opening video01 at80vw shrinks/rises into center top; nine
-media enter from sides/below with scale changes. Coordinated scrubbed movement,
-continuous upward travel and progressive fade exit. White, slight radius/inset
-edge shading. Reverse/fast scroll, resize, reduced motion and media lifecycle.
-Issue → branch → PR → merge only after relevant visual/browser checks PASS.
+Exactly10 real media after Values before populated Testimonials:3 left,4 center,
+3 right. Media01 is the opening video and becomes the center column top.
+Latest corrections supersede the initial white-background/top-aligned storyboard:
+“judul galerinya ...line terakhir sudah80% ...kartu nilai siswa naik”; background
+blue and lettering become black, large white Gallery title. Main media comes
+from below under the heading with the same close media gap. Heading and media
+rise together until media reaches viewport top; then main shrinks toward center
+while heading continues upward. “hapus ...pause video ...videonnya selalu loop”.
+Secondary media begin far below and approach only during shrink, reaching final
+close gaps together when main finishes shrinking. This supersedes the earlier
+request for secondary media attached from the beginning.
+At60% of shrink, foreground words begin blurred; first word is clear at assembly,
+later words progressively resolve while media keep rising. Owner delegates the
+sentence about excellent facilities for the next generation and confirms text
+in front of moving media. Final fade: “100vh sampe ke50vh ...semua sudah hilang
+...gelap”; all media/text start blur/fade when the last bottom edge is at viewport
+bottom and disappear fully when that edge reaches viewport middle.
+Issue → branch → PR → merge main only after relevant checks PASS.
 
 ## FACT / LEGACY_REFERENCE
 
-V2 ends after Values; no Gallery or Testimonials. OLD gallery Blade/depth and
-video-preview/preparation modules inspected; no runtime imports permitted.
-GalleryItem MAX_HOMEPAGE_ITEMS9 and legacy query limit9 are protected. Seed has
-five direct R2 videos and12photos. Local DB published Gallery inventory is empty.
-Testimonial OLD is a localized photo-backed quote wall, explicitly sample copy;
-retain that disclosure and quotes. Existing R2 testimonial photographs reused.
-Fantasy homepage inspected in Chromium1440×900: large centered opening media,
-side columns initially outside viewport, differing item heights and staged rise.
-Reference observed directly; temporary reference captures were lost on runtime reset.
-No reference assets/code copied. Durable implementation captures: ../proof/gallery-v2/.
+Original active V2 ends after Values. OLD gallery/depth templates, video-preview
+and media preparation modules audited read-only. No legacy CSS/JS imports.
+GalleryItem MAX_HOMEPAGE_ITEMS9 and legacy query limit9 remain protected.
+Seed defines5 direct R2 videos and12photos; local working DB has no published
+Gallery rows. Testimonial OLD has localized quotes/photo rows with explicit
+sample-copy disclosure, preserved here without inventing new testimonial claims.
+Fantasy homepage inspected directly in Chromium1440×900: centered large media,
+side entrances, differing media heights, coordinated rise. No assets/code copied.
+Temporary reference captures lost on runtime reset; implementation proof is durable.
+Current source/runtime typography is Inter/Cairo; historical text-system paths
+are absent from active resources after the source switch.
 
-## AI_ASSUMPTIONS / DECISION
+## AI_TRANSLATION / DECISION
 
-New V2 presenter takes up to10 eligible published unique DB media, preferring
-homepage placement, then fills from known seed media only when no DB record for
-that URL exists. Never resurrect unpublished/deleted records. Known video mapping
-supplies a real corresponding facility photograph as poster; unknown videos
-without verified poster are excluded. No DB/admin/schema mutation.
-Testimonial presentation reuses OLD quote/photo rows in a responsive wall with
-native horizontal row access; no new testimonial claims or blank placeholder.
+One GSAP ScrollTrigger scrub timeline drives all10 media in one stable sticky
+stage. Normal-flow heading and main rise natively with one media gap until stage
+hits top; measured boundary starts centered shrink. Desktop fills viewport with
+three columns and gap clamp6px→16px (half previous); fixed secondary widths.
+Four center media are shorter than side media, equalizing visual column heights.
+Mobile retains readable2-column adaptation from the accepted original brief.
+Gallery owns the handoff paint state on the preceding world: data-gallery-dark
+changes only its background to black and hides the decorative type plane.
+The overlap is transparent so incoming Gallery never masks Values cards.
+Existing Values animation/card/line/marquee controllers and geometry are unchanged.
 
-## Media inventory / empty-DB fallback
+Copy: ID “Fasilitas terbaik. Untuk generasi hebat.”;
+EN “Exceptional spaces. For an extraordinary generation.”;
+AR “مرافق متميزة. لجيل واعد.” Shared semantic DOM, two localized lines.
+Automatic muted looping video, no visible pause UI; at most2 visible decoders.
+Offscreen/hidden/reduced/suspended/failed media release video and retain poster.
+No-JS/reduced/missing GSAP gives complete static responsive media and copy.
 
-R2 base: https://media.almustaqbal.sch.id
+## AI_ASSUMPTIONS
+
+26/30 opening example means86.7vw; short/wide viewports cap opening height84vh.
+“Near80% of last strand” maps to Gallery beginning with its root at70% viewport
+and90svh overlap against the existing500svh Values field. Compact flow content
+may extend that field; complete cards take precedence over masking their end.
+Poster photographs are existing facility catalog assets, not extracted frames.
+Native Safari/physical-device/field performance certification is not inferred.
+
+## Media inventory
+
+R2 base https://media.almustaqbal.sch.id, unique and verified inventory URLs.
 01 IT lab: gallery/media/it-v1.mp4; poster site/school-life/labit-v1.webp
 02 Mushallah: gallery/media/musola-v1.mp4; poster mushalla-v1.webp
 03 Hall: gallery/media/aula-v1.mp4; poster aula-v1.webp
@@ -48,62 +81,61 @@ R2 base: https://media.almustaqbal.sch.id
 08 Parents class: site/school-life/parenting-v1.webp (photo)
 09 Dental care: site/school-life/gigianak-v1.webp (photo)
 10 Full day: site/school-life/fullday-v1.webp (photo)
-Poster paths02–05 use site/school-life/. All URL availability is a proof gate.
+Posters02–05 are under site/school-life/. Actual DB items take precedence.
+Presenter selects up to10 safe unique published R2 items and fills known seeds
+only if their URL has no DB record; never resurrect withheld/deleted media.
+Unknown videos without a verified poster are excluded. No DB/schema/CRUD change.
 
-## Storyboard and six tiers
+## Storyboard / responsive / locale
 
-Desktop/tablet768+: one sticky stage; progress0–.12 opening80vw centered;
-.12–.46 shrink/rise and staggered entries; .46–.70 balanced3–4–3 composition
-continues rising; .70–1 upward travel/progressive opacity exit into Testimonials.
-XS360/390 and SM640: opening80vw, then two spacious columns within the same DOM;
-continuous traveling composition, increased vertical runway. MD768/LG1024/
-XL1280/2XL1536: full three columns, bounded width/gaps, balanced total heights.
-ID/EN use Inter, AR Cairo/RTL; center remains center, side entrances mirror RTL.
-Short heights cap opening height at72vh (80vw otherwise); resize recomputes
-geometry and preserves the last progress before other section refresh handlers.
-No-JS/reduced/missing GSAP: all10 media in semantic static responsive layout.
-Media: poster always present, video src only when actually visible; max2 playing,
-pause offscreen/hidden/reduced/suspended; rejected play/error retains poster.
+Progress0: dark entry/large shared section heading; native rise preserves the
+heading/main gap. Before measured stage-top boundary, main remains large and
+secondary media remain at least one viewport below it. Boundary→.52: centered
+shrink plus secondary approach. Words start at60% of that measured interval.
+At.52 main center is viewport center,10 media form3–4–3 and first word is clear.
+.52–.76: whole composition rises, later words clear by.74. Last bottom edge
+reaches100vh at.76. .76–.90: rise another50vh, all blur/fade together to zero.
+.90–1: black hold; populated Testimonials enters on continued native scroll.
+XS360/390 and SM640:2 columns, longer1000svh runway; MD768/LG1024/XL1280/
+2XL1536:3 columns,700svh. Same DOM/controller; CSS owns typography and layout.
+ID/EN Inter/LTR; AR Cairo/RTL, mirror physical side entrances without mirroring
+photos or vertical time. Server locale reload rebuilds geometry/lifecycle.
+Resize preserves last measured progress before other section refresh handlers.
+Reduced/static paths show all10 items without overlap or inaccessible controls.
 
-## Ownership / boundaries
+## SCOPE / file ownership / OUT_OF_SCOPE
 
-Editable: new LandingGallery/Testimonials presenters; HomeController data wiring;
-landing index/new partials; CSS/JS new section modules; entry imports/lifecycle;
-new localized labels, focused tests/workflow, docs2 and canonical progress ledger.
-Forbidden: Hero/Header/About/Program/Values owners; legacy Gallery/model/admin;
-/galeri, articles, schemas and dependencies. One timeline, no per-item listeners.
+Editable: LandingGallery/Testimonials presenters, HomeController wiring, landing
+index/new partials, new Gallery/Testimonial CSS/JS, entry imports/lifecycle,
+localized Gallery copy, related PHP/geometry/browser tests/workflows and proof.
+Latest explicit background request permits only Gallery-owned seam paint of the
+preceding world; its existing motion ownership remains protected.
+Forbidden: Hero/video system, Header/navigation, About, Program/card/detail,
+Values/card/headings/SVG paths/marquee motion, articles, /galeri, legacy model/
+admin/CRUD, schema and dependencies. No added renderer/RAF/per-item scroll loop.
+ValuesLineBrowser/Render tests scope trigger counts to Values id and reconcile
+native scroll after refresh. No Values product source changes.
 
 ## Acceptance / PROOF
 
-Four phase screenshots in Chromium/WebKit, nine widths plus boundaries, locales,
-no overflow/overlap; first80vw→center top; all10; balanced heights; continuous rise;
-reverse/fast scroll; exit; real media/video failures; at most2 videos; reduced,
-noJS/missingGSAP; resize, hidden tab, BFCache/disposal. Keyboard/zoom/RTL checks.
-Run geometry tests, focused PHP, full PHP with baseline comparison, Pint,
-diff/structure/build. No native Safari/field CWV/100-point claim without evidence.
-Initial budget: no video URLs hydrated before proximity/visibility, max2decoders;
-no added continuous RAF, no reserved-layout shift on activation. Compare traces.
+Chromium/WebKit: ID/EN/AR ×9 representative widths and12 short-height/boundaries;
+large title/early seam, heading/main gap, native rise→centered shrink, distant
+secondary approach→3–4–3, balanced heights, ordered blur reveal, continuous rise,
+last edge100vh→50vh blur/fade/black hold, populated Testimonials and reverse.
+Real visible video playback, max2 decoders, poster/error fallback, hidden-page,
+reduced/static/missing GSAP, resize/locale lifecycle and real disposal.
+Record phase captures and browser proof separately from geometry/PHP/source checks.
+Budgets: no video source before visible relevance, max2 video decoders, no added
+continuous RAF, lazy poster proximity, stable reserved media geometry.
+Run diff, structure<=200 lines, production build, Pint, focused PHP/full baseline.
+Focused PHP6tests/46assertions PASS. Full342:196PASS/71FAIL/75ERROR; isolated
+main336:190PASS/71FAIL/75ERROR, identical failing/error names. Full status FAIL;
+scoped regression comparison PASS. Dependency audit known baseline FAIL; no lock
+changes. Renewed current storyboard browser/CI proof pending in proof/gallery-v2.
+No native Safari, native BFCache restoration, screen-reader speech, Lighthouse100
+or field CWV certification claim. Synthetic lifecycle checks prove handlers only.
 
-## NEXT VALID STEP
+## GIT / NEXT VALID STEP
 
-Terminal Codex: complete browser gates, publish PR and merge only scoped PASS.
-
-## AI_TRANSLATION / GAP / IMPACT
-
-A single GSAP scrub timeline controls the ten existing media in one stable sticky
-stage. Gap addressed: missing V2 Gallery/Testimonial surfaces and legacy nine-item
-cap. V2 presenters read existing data without changing old model/CRUD rules.
-Header overlays the stage at one explicit layer so the pause control remains
-visible and operable; this resolves measured media interception, not a global
-z-index override. No navigation source changed.
-
-## PROGRESS
-
-Issue86; branch feat/v2-scroll-gallery. Six focused PHP tests PASS. Full suite
-342 tests:196PASS/71FAIL/75ERROR; isolated main336:190PASS/71FAIL/75ERROR.
-Failing/error test identities match exactly; historical legacy failures remain.
-Chromium/WebKit opening→formation→travel→exit and media lifecycle passed initial
-matrix; final resize/short-height runs and publication gates are in progress.
-Native Safari, physical devices, real BFCache restoration, screen-reader speech,
-field CWV and Lighthouse100 certification are not claimed. Synthetic page and
-visibility events prove handlers, not native browser navigation restoration.
+PR87 remains OPEN until latest visual/browser and scoped CI PASS.
+Terminal Codex: finish latest owner-correction proof, update PR and gated merge.

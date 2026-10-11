@@ -1,0 +1,14 @@
+{
+  "commit": "4b0024c3",
+  "engine": "WebKit26.6",
+  "result": "PASS",
+  "tests": 5,
+  "coverage": [
+    "Gallery phases and locale/width matrix",
+    "Gallery viewport boundaries/resize/keyboard/hidden policy",
+    "Values one scoped trigger and reverse draw",
+    "Values reduced motion and lifecycle",
+    "Values SVG rendered strokes"
+  ],
+  "log": "\u2714 Gallery opening, formation, travel and testimonial handoff in webkit (93383.211156ms)\n\u2714 Gallery short screens, resize, keyboard and hidden-page policy in webkit (21374.150357ms)\n\u2714 Three independent Values strokes draw/reverse with one scrubbed trigger in webkit (35453.683605ms)\n\u2714 Values line falls back with reduced motion and resumes after restore in webkit (1862.563701ms)\n\u2714 The three Values SVG lines paint drawn segments but hide future segments in webkit (5181.12549ms)\n\u2139 tests 5\n\u2139 suites 0\n\u2139 pass 5\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 157532.174788\n"
+}

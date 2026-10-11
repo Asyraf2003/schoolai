@@ -3,5 +3,5 @@
 return [
     'title' => 'Galeri',
     'taekwondo' => 'Taekwondo',
-    'pause' => 'Jeda video',
+    'statement_lines' => ['Fasilitas terbaik.', 'Untuk generasi hebat.'],
 ];

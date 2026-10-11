@@ -1,9 +1,10 @@
 <section class="gallery" id="galeri" data-gallery aria-labelledby="gallery-title">
+    <header class="gallery__header">
+        <h2 id="gallery-title" data-gallery-heading aria-label="{{ $gallery['title'] }}">
+            <span class="gallery__heading-clip"><span data-gallery-heading-line aria-hidden="true">{{ $gallery['title'] }}</span></span>
+        </h2>
+    </header>
     <div class="gallery__stage" data-gallery-stage>
-        <header class="gallery__header">
-            <h2 id="gallery-title">{{ $gallery['title'] }}</h2>
-            <button class="gallery__pause" type="button" data-gallery-pause aria-pressed="false" hidden>{{ __('gallery_v2.pause') }}</button>
-        </header>
         <div class="gallery__composition" data-gallery-composition>
             @foreach ($gallery['items'] as $item)
                 <figure class="gallery__item" data-gallery-item data-media-type="{{ $item['type'] }}">
@@ -15,5 +16,10 @@
                 </figure>
             @endforeach
         </div>
+        <p class="gallery__statement" data-gallery-statement aria-label="{{ implode(' ', __('gallery_v2.statement_lines')) }}">
+            @foreach (__('gallery_v2.statement_lines') as $line)
+                <span class="gallery__statement-line" aria-hidden="true">@foreach (explode(' ', $line) as $word)<span data-gallery-word>{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</span>
+            @endforeach
+        </p>
     </div>
 </section>
