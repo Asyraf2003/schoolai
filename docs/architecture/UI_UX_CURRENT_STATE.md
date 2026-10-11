@@ -1,5 +1,21 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Homepage cinematic wheel velocity cap — 2026-10-11
+
+OWNER_ACCEPTED: rapid wheel/trackpad input must not leap across About,
+Program, Values flip/hold/native exit, or Gallery's opening/shrink/media phases.
+Not an autoplay snap gate or timer per section: actual page-scroll velocity is
+bounded, while original controllers and GSAP ScrollTrigger read native scrollY.
+DECISION: one homepage-only (Landing V2 composition root) wheel pacer with
+840 CSS px/s frame budget, max 112 px outstanding and 145ms idle cutoff,
+direction reversal discards stale debt. Respect scrollbar/programmatic jumps,
+keyboard access, nested scroll, dialogs, browser zoom, lifecycle and reduced
+motion. Touch is intentionally native pending independent mobile safety proof;
+no external package or alternate scroll DOM. Issue #98, PR pending.
+PROOF: unit normalization/burst/bounds/reverse/stop plus Chromium/WebKit
+physical wheel browser evidence and existing Gallery/Values scoped regression.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE until CI, not a Lusion implementation claim.
+
 ## Values–Gallery continuous native handoff — 2026-10-11
 
 OWNER_ACCEPTED: screenshot #4 is the expected shared viewport. With constant

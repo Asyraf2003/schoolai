@@ -1,0 +1,67 @@
+name: Homepage cinematic scroll pacing
+on:
+  pull_request:
+    paths:
+      - 'resources/js/index.js'
+      - 'resources/js/sections/scroll-pacing*.js'
+      - 'tests/Unit/ScrollPacing*.mjs'
+      - '.github/workflows/v2-scroll-pacing.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pacing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: mbstring, fileinfo, pdo_sqlite, gd
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci
+      - run: npm run check:structure
+      - run: npm run build
+      - run: node --test tests/Unit/ScrollPacingRuntime.test.mjs tests/Unit/ScrollIndicatorRuntime.test.mjs
+      - name: Start Laravel browser fixture
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate:fresh --seed --force
+          npm install --no-save --no-package-lock playwright@1.63.0
+          npx playwright install --with-deps ${{ matrix.engine }}
+          CHROME="$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*/chrome-linux*/*' -print -quit)"
+          if [ -n "$CHROME" ]; then echo "PROGRAM_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"; fi
+          php artisan serve --host=127.0.0.1 --port=8000 > /tmp/scroll-pacing-server.log 2>&1 &
+          for n in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/scroll-pacing-server.log
+          exit 1
+      - name: Verify wheel pacing across homepage, reduced and nested input
+        env:
+          PROGRAM_BROWSER_URL: http://127.0.0.1:8000
+          PROGRAM_PLAYWRIGHT_MODULE: playwright
+          PROGRAM_ENGINES: ${{ matrix.engine }}
+          PROGRAM_PROOF_DIRECTORY: /tmp
+        run: node --test --test-timeout=420000 tests/Unit/ScrollPacingBrowser.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scroll-pacing-${{ matrix.engine }}
+          path: |
+            /tmp/scroll-pacing-*.json
+            /tmp/scroll-pacing-server.log
