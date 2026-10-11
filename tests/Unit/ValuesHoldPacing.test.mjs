@@ -5,6 +5,7 @@ import {
     VALUES_FULL_FRONT, VALUES_HOLD_RETENTION, VALUES_OLD_EXIT,
     valuesSourceProgress, valuesCompactedProgress, valuesExitScrollOffset,
 } from '../../resources/js/sections/values-card-keyframes.js';
+import { createScrollMotion, updateScrollMotion } from '../../resources/js/sections/values-card-motion.js';
 import { desktopCardFrame } from '../../resources/js/sections/values-card-desktop.js';
 
 const oldHold = VALUES_OLD_EXIT - VALUES_FULL_FRONT;
@@ -75,4 +76,15 @@ test('only enhanced desktop runway and SVG field shrink in CSS', async () => {
     assert.match(line, /\.values\[data-line-ready\]:not\(\[data-cards-flow\]\) \{ min-block-size: 375svh; \}/);
     assert.match(line, /\.values\[data-line-ready\]:not\(\[data-cards-flow\]\) \.values__line \{ block-size: 375svh; \}/);
     assert.match(line, /\.values\[data-line-ready\] \{ min-block-size: 500vh; min-block-size: 500svh; \}/);
+});
+
+test('entry flip and reverse respond directly without a spring tail', () => {
+    const state = createScrollMotion();
+    for (const target of [.04, .18, .38, .95, .95, .22, .02]) {
+        const sample = updateScrollMotion(state, target);
+        assert.equal(sample.visual, target);
+        assert.equal(sample.momentum, 0);
+        assert.equal(sample.settled, true);
+        assert.equal(state.velocity, 0);
+    }
 });

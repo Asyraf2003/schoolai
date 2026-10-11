@@ -1,5 +1,34 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values direct response / native departure takeover — 2026-10-11
+
+OWNER_ACCEPTED: entry/flip/exit same response without spring; Terminal Codex takes
+over existing PR93 after Gallery implementation checkpoint00cd02e1. Gallery merge
+holds until the actual body/title seam is certified. Owner-local merge safety is
+confirmed by d3108694/ac22aeef and clean Gallery worktree; stash retained.
+FACT: base PR93 690f3f22 has 1px exit math but retains the desktop spring.
+Its endpoint proof compares clamped reported1 to an unclamped rounded>1 sample;
+original CI times out there in both engines. No card-body/slot contract yet.
+DECISION: outer timing/hold unchanged; inner sticky boundary releases at the same
+exit start. Browser supplies1px/1px translation, with neutral card pose. Direct
+scroll follower removes time tail; preserve flip curves and semantic/readable
+fallback. Blueprint MAP-V2-14 follow-up OWNER_ACCEPTED / IMPLEMENTING.
+Editable: Values wrapper/card layout/controller/math plus related tests/docs.
+Protected: all headings, SVG geometry/draw, marquee, other product sections.
+PROOF unit5/5, native exit18 locale/width cases Chromium/WebKit PASS; departure
+and reversal match physical scroll within2px and continue1:1 through release.
+Focused PHP/Program/Values and Pint PASS. Immediate entry/flip/stopped pose assertions PASS in all18 native profiles:
+Chromium31.71s and WebKit129.47s. No pose/flip tail after scroll stops. Actual
+combined Gallery seam and remaining fallback/fidelity/CI proof are renewing.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE for combined physical seam/CI.
+FACT Gallery focused CI38134786150 WebKit heading test undercounts reveal time
+from its first sampled RAF; it ignores already-elapsed WAAPI time. Source still
+sequences900ms reveal then900ms shift, and full-line-before-shift assertion stays.
+DECISION: add actual first-sample animation elapsed time to that timing proof;
+no heading product changes or relaxed900ms ownership requirement.
+NEXT channel Terminal Codex: implement native sticky release and direct follower,
+run Chromium/WebKit physical speed and Gallery-body gap proofs before merge.
+
 ## Values desktop native-speed vertical exit — 2026-10-11
 
 OWNER_ACCEPTED: constant-speed document scroll should produce matching

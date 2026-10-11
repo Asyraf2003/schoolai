@@ -39,3 +39,40 @@ Program/Values morph, heading introduction and exact SVG path/draw owner.
 - Check mobile 360,390,640; tablet 768,1024; desktop 1280,1440,1536; ID EN AR.
 - Verify 200% zoom, short landscape, RTL font clipping, no horizontal overflow, pagehide/bfcache, reduced motion, missing GSAP, line reversibility, browser engines.
 - Current branch contains implementation; no green/browser performance claim is implied without executing these gates.
+
+## OWNER_ACCEPTED follow-up #92 / PR93 — 2026-10-11
+
+OWNER_RAW: entry from below, flip and upward departure must respond at the same
+speed; completed cards currently spring/rush upward. Owner explicitly assigns
+Terminal Codex takeover after Gallery implementation, preserving AI Web work.
+Latest Gallery title must follow actual Values bodies with a constant dynamic gap.
+FACT: PR93 adds native pixel exit but still has a time-based spring follower.
+Its exact endpoint browser test compares clamped data to unclamped rounded input,
+causing CI timeout at1.0; source/lifecycle audit complete before edits.
+GOAL: one direct scroll response for entry/fan/flip; native1px/1px upward exit
+without a time tail or a transformed-body/native-slot mismatch.
+DECISION: preserve all pre-exit pose curves and40% hold. Retain PR93 physical
+scroll offset function to place a shorter inner sticky boundary at exit start;
+browser supplies the entire native departure, outer365svh timing remains fixed.
+One neutral wrapper; no translated exit body. Replace spring follower with direct
+progress, retaining existing math API and zero momentum. Same DOM/typography.
+SCOPE: Values card wrapper/layout, scroll response/controller, related tests,
+existing blueprint/current-state and PR93 workflow. No SVG path/draw, heading,
+marquee, Hero/Header/Program/Gallery product edits or dependency/schema changes.
+XS360/390, SM640 retain natural1-column; MD768/LG1024 keep2x2. XL1280 and
+2XL1536 use the same shorter native sticky boundary. Flow, short height, noJS,
+reduced and missing capability keep all four readable cards. ID/EN/AR share the
+same physical timing; current Inter/Cairo and RTL text stay unchanged.
+PROOF gates: direct stopped/fast/reverse progress; entry/flip response; physical
+1px/1px exit before/through release; actual Gallery-body gap in combined runtime;
+Chromium/WebKit, all tiers/locales, reduced/short/lifecycle, protected pre-exit
+fidelity, hold pacing, diff/structure/build/focused and baseline PHP/Pint.
+STATUS: OWNER_ACCEPTED / IMPLEMENTING. Work status BLOCKED_BY_MISSING_EVIDENCE.
+NEXT: implement bounded native boundary and renew original PR93 plus combined
+Gallery seam proof; merge only relevant PASS, preserve owner merge/stash.
+
+PROOF checkpoint: structure301/build/diff/Pint PASS; pure timing/direct response
+5/5 PASS; focused PHP13/264assertions PASS. Native18 locale/width profiles PASS
+Chromium/WebKit, including immediate entry/flip, stopped-pose no tail, physical
+1px/1px exit/reversal and release. Remaining fallback/fidelity and combined
+Gallery body/title seam plus scoped CI pending; no merge claim.
