@@ -34,7 +34,8 @@ export function mountScrollPacing(root) {
         const step = takePacingStep(state, now);
         if (!step) return;
         const before = scrollY;
-        scrollBy({ top: step, behavior: 'instant' });
+        // Numeric signature is supported consistently in Chromium and WebKit.
+        scrollBy(0, step);
         if (Math.abs(scrollY - before) < .01) { reset(); return; }
         if (state.pending) frame = requestAnimationFrame(tick);
     }
