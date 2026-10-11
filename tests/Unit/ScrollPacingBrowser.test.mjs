@@ -15,12 +15,26 @@ for (const engine of engines) {
                         const root = document.querySelector('[data-values]');
                         scrollTo(0, root.getBoundingClientRect().top + scrollY + 350);
                     });
-                    const before = await page.evaluate(() => scrollY);
+                    const before = await page.evaluate(() => {
+                        window.wheelDiagnostics = [];
+                        window.addEventListener('wheel', event => {
+                            window.wheelDiagnostics.push({ delta: event.deltaY, cancelable: event.cancelable,
+                                prevented: event.defaultPrevented, target: event.target?.tagName });
+                        }, { capture: true, passive: true, once: true });
+                        return scrollY;
+                    });
                     await page.mouse.wheel(0, 5000);
                     await page.waitForTimeout(180);
                     const after = await page.evaluate(() => scrollY);
+                    const diagnostics = await page.evaluate(() => ({
+                        events: window.wheelDiagnostics,
+                        scroll: scrollY,
+                        max: document.scrollingElement.scrollHeight - innerHeight,
+                        visible: document.visibilityState,
+                        reduce: matchMedia('(prefers-reduced-motion: reduce)').matches,
+                    }));
                     assert.ok(after > before && after - before < 160,
-                        `huge wheel jump should not skip Values: ${lang}/${engine} ${after - before}`);
+                        `wheel cap ${lang}/${engine}: ${JSON.stringify({ before, after, diagnostics, errors: runtime.errors })}`);
                     await page.waitForTimeout(190);
                     assert.ok(Math.abs(await page.evaluate(() => scrollY) - after) < 2,
                         'no long queued inertial tail after input stops');
