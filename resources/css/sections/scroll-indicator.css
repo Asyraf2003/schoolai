@@ -1,0 +1,36 @@
+/* This display-only rail replaces the native page scrollbar only after JS is ready. */
+html[data-scroll-indicator-ready] { scrollbar-width: none; }
+html[data-scroll-indicator-ready]::-webkit-scrollbar,
+html[data-scroll-indicator-ready] body::-webkit-scrollbar { display: none; }
+
+.scroll-indicator {
+    position: fixed;
+    inset-block-start: 50%;
+    right: max(8px, env(safe-area-inset-right));
+    z-index: 2;
+    inline-size: 3px;
+    block-size: clamp(7.5rem, 20svh, 12rem);
+    border-radius: 999px;
+    background: rgb(175 185 200 / 45%);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 2s ease-out;
+}
+.scroll-indicator__thumb {
+    position: absolute;
+    inset-block-start: 0;
+    right: -1px;
+    inline-size: 5px;
+    block-size: clamp(1.25rem, 4svh, 2.125rem);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgb(17 24 39 / 40%);
+}
+.scroll-indicator[data-scrolling] { opacity: 1; transition-duration: 100ms; }
+html[data-landing-menu-open] .scroll-indicator,
+html[data-program-detail-open] .scroll-indicator { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-indicator { transition: none; }
+}
