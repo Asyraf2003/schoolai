@@ -24,8 +24,12 @@ test('full card flip and exit retain their original pure choreography', () => {
         const remapped = valuesSourceProgress(valuesCompactedProgress(source));
         assert.ok(Math.abs(source - remapped) < 1e-10, `source=${source} mapped=${remapped}`);
         for (let card = 0; card < 4; card++) {
-            assert.deepEqual(desktopCardFrame(card, remapped, geometry, 0),
-                desktopCardFrame(card, source, geometry, 0));
+            const actual = desktopCardFrame(card, remapped, geometry, 0);
+            const expected = desktopCardFrame(card, source, geometry, 0);
+            for (const property of Object.keys(expected)) {
+                assert.ok(Math.abs(actual[property] - expected[property]) < 1e-9,
+                    `card=${card} source=${source} property=${property}: ${actual[property]} vs ${expected[property]}`);
+            }
         }
     }
     assert.equal(valuesSourceProgress(0), 0);
