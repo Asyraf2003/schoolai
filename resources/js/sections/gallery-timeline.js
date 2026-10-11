@@ -8,6 +8,10 @@ export function createGalleryTimeline(gsap, ScrollTrigger, root, update) {
     const items = [...root.querySelectorAll('[data-gallery-item]')];
     const words = [...root.querySelectorAll('[data-gallery-word]')];
     const geometry = galleryGeometry(stage.clientWidth, stage.clientHeight, document.documentElement.dir === 'rtl');
+    // Arrival only: title-to-video gap equals the opening video's side inset.
+    // Media opening Y, shrink poses and ten-item timeline stay unchanged.
+    root.style.setProperty('--gallery-opening-gap-extra',
+        `${Math.max(0, geometry[0].fromX - geometry[0].fromY).toFixed(3)}px`);
     root.dataset.galleryWidth = String(stage.clientWidth);
     root.dataset.galleryHeight = String(stage.clientHeight);
     const shrinkStart = (root.querySelector('.gallery__header').offsetHeight + stage.clientHeight)

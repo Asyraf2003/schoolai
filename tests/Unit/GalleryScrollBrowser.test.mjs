@@ -25,6 +25,8 @@ for (const engine of engines) {
                     assert.equal(title.heading.color, 'rgb(255, 255, 255)');
                     assert.ok(title.backgroundRGB[2] < 255 && title.backgroundRGB[2] > 11, 'entry darkens continuously');
                     assert.equal(title.heading.visibility, 'visible');
+                    assert.ok(Math.abs(title.items[0].y - title.heading.bottom - title.items[0].x) < 2,
+                        `arrival-only title/video gap equals opening side gutter: ${lang}/${width}`);
                     assert.ok(title.heading.y > 0 && title.heading.y < 900, 'large title precedes opening media');
                     const before = await galleryAt(page, 0);
                     assert.deepEqual(before.backgroundRGB, [32, 56, 255], 'reverse restores Values blue');
@@ -42,7 +44,11 @@ for (const engine of engines) {
                     assert.ok(opening.words.every(w => w.opacity === 0));
                     assert.ok(Math.abs(opening.items[0].y - gap) < 1, 'shrink starts only at viewport top');
                     assert.ok(opening.items.slice(1).every(i => i.y > 900), 'secondary media are still far below at shrink start');
-                    const entering = await galleryAt(page, .40);
+                    // The opening's equal-gutter spacing can move shrinkStart
+                    // later on wide screens. Sample AFTER the actual word
+                    // reveal threshold, without changing product choreography.
+                    const revealStart = entryStart + (.52 - entryStart) * .6;
+                    const entering = await galleryAt(page, Math.max(.40, revealStart + .012));
                     assert.ok(entering.items[0].width < opening.items[0].width);
                     assert.ok(entering.words[0].opacity > 0 && entering.words[0].blur > 0);
                     assert.ok(entering.words[0].opacity > entering.words.at(-1).opacity, 'word entrances overlap in order');

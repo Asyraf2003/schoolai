@@ -37,6 +37,7 @@ export function mountGallery(root) {
             root.previousElementSibling?.style.removeProperty('--gallery-decoration-opacity');
             root.previousElementSibling?.style.removeProperty('--gallery-line-opacity');
             root.style.removeProperty('--gallery-dark-pct');
+            root.style.removeProperty('--gallery-opening-gap-extra');
         }
         if (!keepStage) {
             cancelAnimationFrame(reflowFrame); reflowFrame = 0; resizeState = null; resizeIntent = null;

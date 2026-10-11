@@ -30,6 +30,13 @@ for (const engine of engines) {
                                 animations: line.getAnimations().length };
                         });
                         assert.equal(state.heading.visibility, 'visible');
+                        const left = state.items[0].x;
+                        const right = state.width - (state.items[0].x + state.items[0].width);
+                        const vertical = state.items[0].y - state.heading.bottom;
+                        assert.ok(Math.abs(left - right) < 2,
+                            `opening horizontal symmetry ${lang}/${width}: ${JSON.stringify({ left, right })}`);
+                        assert.ok(Math.abs(vertical - left) < 2,
+                            `opening title/media distance matches side inset ${lang}/${width}: ${JSON.stringify({ vertical, left, amount })}`);
                         assert.equal(state.lineOpacity, 0, 'white SVG is absent when the native title arrives');
                         assert.equal(spacing.opacity, '1');
                         assert.equal(spacing.transform, 'none');
