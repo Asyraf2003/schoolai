@@ -1,5 +1,6 @@
 import { mountTestimonials } from './sections/testimonials.js';
 import { mountStoriesMedia } from './sections/stories-media.js';
+import { mountFooterHover } from './sections/footer-hover.js';
 import { mountGallery } from './sections/gallery.js';
 import { mountScrollPacing } from './sections/scroll-pacing.js';
 import { mountScrollIndicator } from './sections/scroll-indicator.js';
@@ -39,15 +40,17 @@ const gallery = mountGallery(document.querySelector('[data-gallery]'));
 const testimonials = mountTestimonials(document.querySelector('[data-testimonials]'));
 const storiesHeading = mountSectionHeading(document.querySelector('[data-stories]'), 'stories', 900, 116);
 const storiesMedia = mountStoriesMedia(document.querySelector('[data-stories]'));
+const footerHover = mountFooterHover(document.querySelector('[data-footer-v2]'));
 const scrollPacing = mountScrollPacing(main, { scrollChanged: () => testimonials.synchronize() });
 window.addEventListener('pagehide', event => {
     gallery.suspend();
     testimonials.suspend();
     storiesHeading.suspend();
     storiesMedia.suspend();
+    footerHover.suspend();
     scrollIndicator.suspend();
     scrollPacing.suspend();
-    if (!event.persisted) { gallery.dispose(); testimonials.dispose(); storiesHeading.dispose(); storiesMedia.dispose(); }
+    if (!event.persisted) { gallery.dispose(); testimonials.dispose(); storiesHeading.dispose(); storiesMedia.dispose(); footerHover.dispose(); }
     hero.suspend();
     about.suspend();
     program.suspend();
@@ -61,4 +64,4 @@ window.addEventListener('pagehide', event => {
     if (!event.persisted) valuesCards.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); scrollIndicator.dispose(); scrollPacing.dispose(); }
 });
-window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); storiesHeading.resume(); storiesMedia.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
+window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); storiesHeading.resume(); storiesMedia.resume(); footerHover.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });

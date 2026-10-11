@@ -25,5 +25,6 @@
         @include('landing.testimonials', ['testimonials' => $testimonials])
         @include('landing.stories')
     </main>
+    @include('landing.footer')
 </body>
 </html>

@@ -11,7 +11,8 @@ export function storiesCheckpoints(heights, stageHeight, mobile = false, titleOf
         centers.push(centers[i - 1] + anchors[i - 1] + heights[i - 1] / 2);
     }
     const last = heights.length - 1;
-    return { anchors, centers, travel: centers[last] + anchors[last] + heights[last] / 2 };
+    // Release sticky as the final heading reaches center; media and title then rise together.
+    return { anchors, centers, travel: centers[last] };
 }
 
 export function storiesCopyPose(scroll, centerAt, anchor, copyHeight, stageHeight, titleOffset = 0) {
@@ -33,8 +34,9 @@ export function storiesMediaPose(scroll, centers, stageHeight, mobile) {
         current,
         layers: centers.map((at, i) => ({
             opacity: i === current ? 1 : 0,
+            // Incoming media finishes its upward cover at the heading-center checkpoint.
             y: mobile && i > 0
-                ? 100 * (1 - smooth((scroll - at) / (stageHeight * .28))) : 0,
+                ? 100 * (1 - smooth((scroll - at + stageHeight * .28) / (stageHeight * .28))) : 0,
         })),
     };
 }

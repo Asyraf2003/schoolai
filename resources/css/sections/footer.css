@@ -1,0 +1,126 @@
+.site-footer-v2 {
+    position: relative;
+    color: #111;
+    background: #fff;
+    font-family: var(--v2-font);
+}
+.site-footer-v2__white {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100svh;
+    overflow: hidden;
+    padding: clamp(5rem, 8vw, 8rem) var(--v2-space-page) clamp(1.5rem, 3vw, 3rem);
+}
+.site-footer-v2__grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 4rem);
+    inline-size: 100%;
+    flex: 1;
+    align-content: center;
+}
+.site-footer-v2__about, .site-footer-v2__social { min-inline-size: 0; }
+.site-footer-v2__description {
+    max-inline-size: 24ch;
+    margin: 0 0 clamp(3rem, 9svh, 7rem);
+    font-size: clamp(1.45rem, 2.3vw, 2.6rem);
+    line-height: 1.16;
+    font-weight: 420;
+    letter-spacing: -.04em;
+}
+.site-footer-v2__contact, .site-footer-v2__social nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+}
+.site-footer-v2__contact a, .site-footer-v2__social nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: .6rem;
+    min-block-size: 2.25rem;
+    padding-block: .2rem;
+    color: inherit;
+    text-decoration: none;
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+    transition: transform 240ms ease;
+}
+.site-footer-v2__contact a:is(:hover,:focus-visible),
+.site-footer-v2__social nav a:is(:hover,:focus-visible) {
+    transform: translateX(7px);
+}
+[dir="rtl"] .site-footer-v2__contact a:is(:hover,:focus-visible),
+[dir="rtl"] .site-footer-v2__social nav a:is(:hover,:focus-visible) { transform: translateX(-7px); }
+.site-footer-v2__partners { margin-block-start: clamp(3rem, 10svh, 8rem); }
+.site-footer-v2__partners h2 { margin: 0 0 1.25rem; font-size: clamp(1.1rem, 1.4vw, 1.5rem); font-weight: 500; }
+.site-footer-v2__partner-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 1.15rem; }
+.site-footer-v2__partner-grid a { display: block; flex: 0 0 auto; }
+.site-footer-v2__partner-grid img {
+    display: block;
+    inline-size: clamp(3.5rem, 5vw, 5.5rem);
+    block-size: clamp(2.75rem, 4vw, 4.5rem);
+    object-fit: contain;
+    transition: transform 260ms ease;
+}
+.site-footer-v2__partner-grid a:is(:hover,:focus-visible) img { transform: scale(1.12); }
+.site-footer-v2__copyright {
+    position: relative;
+    z-index: 2;
+    margin-block-start: clamp(4rem, 8svh, 8rem);
+    font-size: .8rem;
+}
+.site-footer-v2__visual {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.site-footer-v2__visual img {
+    position: absolute;
+    inset-inline-start: var(--footer-art-x, 20%);
+    inset-block-start: var(--footer-art-y, 15%);
+    inline-size: min(45vw, 46rem);
+    block-size: min(65svh, 44rem);
+    object-fit: contain;
+    opacity: 0;
+    filter: blur(4px);
+    transform: rotate(var(--footer-art-rotate, 0deg)) scale(.92);
+    transition: transform 320ms ease, opacity 320ms ease;
+}
+.site-footer-v2[data-footer-preview-active] .site-footer-v2__visual img {
+    opacity: .22;
+    transform: rotate(var(--footer-art-rotate, 0deg)) scale(1);
+}
+.site-footer-v2[data-footer-preview-active="maps"] .site-footer-v2__visual img {
+    inline-size: 50vw;
+    block-size: 75svh;
+    object-fit: cover;
+    filter: blur(12px);
+    opacity: .36;
+    transform: rotate(0deg) scale(1);
+}
+[lang="ar"] .site-footer-v2 { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .site-footer-v2__description { letter-spacing: normal; line-height: 1.5; }
+@media (max-width: 1023px) {
+    .site-footer-v2__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .site-footer-v2__blank { display: none; }
+}
+@media (max-width: 639px) {
+    .site-footer-v2__white { min-block-size: 100svh; padding-block: 5rem 2rem; }
+    .site-footer-v2__grid { grid-template-columns: 1fr; gap: 3rem; align-content: start; }
+    .site-footer-v2__description { max-inline-size: 28ch; }
+    .site-footer-v2__visual img { inline-size: 75vw; block-size: 48svh; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .site-footer-v2__visual img { transition: none; }
+    .site-footer-v2__partner-grid img, .site-footer-v2__contact a, .site-footer-v2__social nav a { transition: none; }
+    .site-footer-v2__contact a:is(:hover,:focus-visible),
+    .site-footer-v2__social nav a:is(:hover,:focus-visible),
+    .site-footer-v2__partner-grid a:is(:hover,:focus-visible) img { transform: none; }
+}

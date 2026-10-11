@@ -1,5 +1,30 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Footer white/blue after final Story — 2026-10-12
+
+OWNER_ACCEPTED: once article 04 h3 reaches the viewport center, unpin the
+final 100svh video and caption together. A full white footer rises into view
+from below, then a single bright-blue next-pages navigation stage.
+Desktop white stage splits into 3 columns; first intentionally blank, columns
+2–3 contain existing localized school description, Maps/WhatsApp, textual
+Instagram/Gmail/Facebook, five real partner logos. Contact hover/focus reveals
+blurred Maps half-screen or varying rotated social-media assets (max 45deg)
+behind foreground links. Partners scale slightly. Blue stage links to real
+/article and /galeri routes with photographic hover previews.
+FACT: all contact/partner labels and links already exist in home.footer
+locale contracts, and all media in config('media.static.footer').
+DECISION: reuse old canonical contact data without DB or invented links.
+Only Stories' sticky end checkpoint changes, from last caption clearing top
+to caption 04 reaching center; no global wheel-owner edits.
+Styling/hover local to footer; no-JS readable, keyboard-focus preview and
+reduced-motion transitions disabled. Phone stacks cols 2–3 naturally.
+PROOF: source, targeted test and geometry test prepared, local build/browser
+proof pending.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE full runtime visual proof.
+NEXT: pull feature; run build, scoped Pest and JS test; inspect 3 locales and
+responsive footer/handoff.
+
+
 ## Stories title queue / word entrance / title-driven media — 2026-10-12
 
 OWNER_ACCEPTED: captions A→B→C→D form a vertical scroll queue, not timed

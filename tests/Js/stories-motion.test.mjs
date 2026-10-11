@@ -6,7 +6,8 @@ import { storiesCheckpoints, storiesCopyPose, storiesWordPose, storiesMediaPose 
 test('next title centers exactly as the previous copy exits the upper edge', () => {
     const stageHeight = 900, heights = [164, 136, 183, 155], offsets = [-14, -10, -25, -8];
     const { centers, anchors, travel } = storiesCheckpoints(heights, stageHeight, false, offsets);
-    assert.ok(travel > centers[3]);
+    assert.equal(travel, centers[3]);
+    assert.ok(travel > 0);
     for (let i = 1; i < centers.length; i++) {
         const previousCopyCenter = anchors[i - 1] + centers[i - 1] - centers[i];
         const arrivingCopyCenter = anchors[i];
@@ -41,8 +42,18 @@ test('phone first title starts low and media rises after next heading center', (
     const after = storiesMediaPose(centers[1] + stageHeight * .28, centers, stageHeight, true);
     assert.equal(before.current, 0);
     assert.equal(at.current, 1);
-    assert.equal(before.layers[1].y, 100);
-    assert.equal(at.layers[1].y, 100);
+    assert.ok(before.layers[1].y > 0);
+    assert.ok(before.layers[1].y < 1);
+    assert.equal(at.layers[1].y, 0);
     assert.equal(after.layers[1].y, 0);
     assert.equal(after.layers[0].y, 0);
+});
+
+test('last media is fully visible when the white footer can begin rising', () => {
+    const stageHeight = 780, heights = [164, 136, 183, 155];
+    const { centers, travel } = storiesCheckpoints(heights, stageHeight, true, [-10, -24, -12, -18]);
+    assert.equal(travel, centers[3]);
+    const final = storiesMediaPose(travel, centers, stageHeight, true);
+    assert.equal(final.current, 3);
+    assert.equal(final.layers[3].y, 0);
 });
