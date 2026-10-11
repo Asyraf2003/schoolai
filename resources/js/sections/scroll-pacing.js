@@ -3,7 +3,7 @@ import {
 } from './scroll-pacing-core.js';
 import { measurePacingRanges } from './scroll-pacing-policy.js';
 
-export function mountScrollPacing(root) {
+export function mountScrollPacing(root, ports = {}) {
     if (!root) return { suspend() {}, resume() {}, dispose() {} };
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const controller = new AbortController();
@@ -19,7 +19,7 @@ export function mountScrollPacing(root) {
         if (frame) cancelAnimationFrame(frame);
         frame = 0;
         state.pending = 0;
-        state.lastFrame = null; state.velocity = 0; state.deliveredInput = null;
+        state.lastFrame = null; state.velocity = 0; state.deliveredInput = null; state.coasting = false;
         remainder = 0; expectedScroll = null;
     }
     function targetOwnsScroll(target) {
@@ -47,13 +47,18 @@ export function mountScrollPacing(root) {
         scrollBy(0, step + remainder);
         remainder += step - (scrollY - before);
         expectedScroll = scrollY;
+        // ScrollTrigger otherwise observes this native write on a later tick.
+        // Render the existing scrubbed timeline at the delivered position.
+        const gallery = window.ScrollTrigger?.getById('gallery-v2');
+        if (gallery?.enabled && scrollY >= gallery.start && scrollY <= gallery.end) gallery.update();
+        ports.scrollChanged?.();
         const max = (document.scrollingElement ?? document.documentElement).scrollHeight - innerHeight;
         if ((step < 0 && scrollY <= 0) || (step > 0 && scrollY >= max - 1)) { reset(); return; }
         if (state.pending) frame = requestAnimationFrame(tick);
     }
     function wheel(event) {
         if (suspended || document.hidden || reduced.matches || disposed
-            || !event.cancelable || event.defaultPrevented || event.ctrlKey || event.metaKey
+            || !event.cancelable || event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey
             || Math.abs(event.deltaX) > Math.abs(event.deltaY) || targetOwnsScroll(event.target)
             || document.querySelector('dialog[open], [aria-modal="true"], main[inert]')) { reset(); return; }
         const delta = wheelPixels(event, innerHeight);

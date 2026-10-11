@@ -29,7 +29,7 @@ for (const engine of engines) {
                     // overlay rather than the scrolling document.
                     await page.mouse.move(420, 470);
                     await page.mouse.wheel(0, 5000);
-                    await page.waitForTimeout(180);
+                    await page.waitForTimeout(280);
                     const after = await page.evaluate(() => scrollY);
                     console.info(`Pacing ${engine}/${lang}: moved ${after - before}`);
                     const diagnostics = await page.evaluate(() => ({
@@ -45,7 +45,7 @@ for (const engine of engines) {
                     assert.ok(Math.abs(await page.evaluate(() => scrollY) - after) < 2,
                         'no long queued inertial tail after input stops');
                     await page.mouse.wheel(0, -5000);
-                    await page.waitForTimeout(180);
+                    await page.waitForTimeout(280);
                     assert.ok(await page.evaluate(() => scrollY) < after, 'reverse changes direction');
                     const direct = await page.evaluate(() => {
                         const target = scrollY + 1300;
@@ -89,10 +89,11 @@ for (const engine of engines) {
                     requestAnimationFrame(sample);
                 }));
                 assert.ok(glideFrames.at(-1) > impulseEnd, 'released input still glides across subsequent real paints');
-                assert.ok(glideFrames.at(-1) - glideStart <= 225, 'ordinary impulse has a short bounded glide');
-                await page.waitForTimeout(220);
+                assert.ok(glideFrames.at(-1) - glideStart <= 450, 'ordinary impulse has a short bounded glide');
+                assert.ok(glideFrames.at(-1) - impulseEnd >= 40, 'coast is visibly present after ordinary released input');
+                await page.waitForTimeout(280);
                 const glideStopped = await page.evaluate(() => scrollY);
-                await page.waitForTimeout(180);
+                await page.waitForTimeout(280);
                 assert.ok(Math.abs(await page.evaluate(() => scrollY) - glideStopped) <= 1);
                 const freeInertia = { glideStart, impulseEnd, glideFrames, glideStopped };
                 await page.evaluate(() => {

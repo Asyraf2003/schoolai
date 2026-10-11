@@ -1,5 +1,84 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Owner correction: equal corner gutters / equal reading hold — 2026-10-12
+
+PROOF: 84 Testimonials locale-width cells and fallback/lifecycle PASS both engines;
+aggressive native/word agreement PASS after settling initial direct navigation.
+Old Gallery handoff assertions require adaptation to the accepted black-hold
+overlap; original animation/geometry owners remain unchanged.
+OWNER_ACCEPTED: physical bottom gutter equals the logical side gutter, including
+centered wide content. Sharp reading hold equals the full blur-to-sharp scroll
+distance, then rise/fade/white departure. Preserve the existing title/media gap.
+ACTIVE STEP: bounded Testimonials geometry/timing correction only, then repeat
+affected motion/matrix/real-wheel proof and publish continuation PR.
+STATUS: PASS previous scoped proof; BLOCKED_BY_MISSING_EVIDENCE latest correction.
+NEXT execution channel: Terminal Codex, affected proof then continuation PR.
+
+## White question checkpoint / shared native delivery — 2026-10-12
+
+PROOF: new white/lower-corner exact-font matrix84 cells and no-JS PASS locally;
+revised lifecycle/reduced reentry PASS both engines after awaiting actual Gallery
+reinitialization before direct position assertions. Constant title/media gap PASS.
+Physical Testimonials samples expose up to.937 first-word opacity difference
+from current native progress: its event-driven RAF can lag the pacer, like GSAP.
+DECISION / ACTIVE STEP: composition passes a scrollChanged port from the existing
+pacer to the existing Testimonials owner. Synchronize only while nearby, cancel
+its redundant pending RAF, render same native delivery; no duplicate controller.
+Prove native/word agreement plus reverse into Gallery without premature field.
+STATUS: PASS current scoped layout; BLOCKED_BY_MISSING_EVIDENCE final synchronized
+journey, regression and CI pending. Existing full PHP remains FAIL.
+NEXT execution channel: Terminal Codex, combined proof then continuation PR.
+
+## Scroll proof / revised white question storyboard — 2026-10-12
+
+PROOF: corrected desktop angular pacing and same-turn Gallery/native agreement
+PASS Chromium/WebKit; compact390/768 aggressive wheel PASS both engines.
+Compact test first sampled stale pre-resize observer state; waiting for actual
+layout refresh and cards-motion readiness removes that initialization conflict,
+without changing or relaxing flip assertions. Pose budget uses last rendered
+angles; original Values/Gallery owners remain unchanged.
+OWNER_ACCEPTED latest correction supersedes black-on-light intro: question white
+on Gallery black, logical lower-start corner, exactly Gallery statement font
+size/weight/tracking/leading. Begin after the Gallery sentence/media disappear;
+fully sharp white text first, then upward fade/blur and gradual white field.
+Maintain the title-to-first-media gap during their shared native upward travel.
+ACTIVE STEP: render question over Gallery's existing empty final hold, without
+covering any still-visible Gallery media/words; reserved Testimonials-only native
+flow overlap, transparent before blackout. Then prove new journey/matrix/fallback.
+STATUS: PASS scoped scroll checkpoints; BLOCKED_BY_MISSING_EVIDENCE revised
+white intro and final combined proof. Existing full PHP71FAIL/75ERROR unchanged.
+NEXT execution channel: Terminal Codex, revised Testimonials surface then PR.
+
+## Pacing / GSAP observation checkpoint — 2026-10-12
+
+FACT: revised title/OLD rows matrix84 locale-width cells PASS locally.
+Updated physical coast proved315/296px ordinary impulse travel; prior candidate
+213/209px. Aggressive phase travel is faster, but Gallery/native samples can
+separate by .04048 progress (255px) because ScrollTrigger observes the pacer's
+native write on a later tick. A first WebKit aggressive attempt FAIL remains
+in logs; repeat passes do not explain or erase it. Local fixture server also
+expired mid-suite; no-JS/lifecycle failures from that run are not product PASS.
+DECISION / ACTIVE STEP: after each bounded native pacing write inside Gallery,
+call the existing gallery trigger.update(), preserving its timeline and curves.
+Require scene/native agreement on the same turn in aggressive tests; then rerun
+all affected proof. No extra controller, cloned timeline or weakened assertion.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE final synchronized runtime gates pending.
+NEXT execution channel: Terminal Codex, proof then continuation PR; no merge.
+
+## Owner correction in progress — 2026-10-11
+
+FACT: first candidate44b75206 pushed to feat/natural-scroll-testimonials;
+owner reports scroll too slow/no perceptible inertia, late static question,
+unwanted description and horizontal scroll chrome. Prior local PASS is
+candidate-specific and does not certify the corrected experience.
+OWNER_ACCEPTED: revised storyboard in the same bounded blueprint and issue100.
+ACTIVE STEP: replace conservative per-word/universal frame limits with visual
+phase budgets; explicit short velocity coast; Gallery-style word reveal then
+upward blur with simultaneous white/media arrival; remove row scroll chrome.
+Gallery/Values owners, original data, main and PR97/99 heads remain protected.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE corrected runtime/proof pending.
+NEXT execution channel: Terminal Codex, implement owner correction and prove it.
+
 ## Natural scroll / Gallery–Testimonials — 2026-10-11
 
 FACT: main cdfd30980516bbe2022fd0f8c12e64e4a613c8c3 freshly fetched;

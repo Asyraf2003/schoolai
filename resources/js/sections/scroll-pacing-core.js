@@ -1,6 +1,7 @@
 export const SCROLL_DEBT_REFERENCE_PX = 224;
-export const SCROLL_IDLE_CUTOFF_MS = 180;
-const RESPONSE_MS = 60;
+export const SCROLL_IDLE_CUTOFF_MS = 260;
+const RESPONSE_MS = 45;
+const COAST_MS = 90;
 
 export const clampScroll = (value, lower, upper) => Math.max(lower, Math.min(upper, value));
 
@@ -11,18 +12,18 @@ export function wheelPixels(event, viewportHeight) {
 }
 
 export function createPacingState() {
-    return { pending: 0, lastInput: 0, lastFrame: null, velocity: 0, deliveredInput: null };
+    return { pending: 0, lastInput: 0, lastFrame: null, velocity: 0, deliveredInput: null, coasting: false };
 }
 
 export function queuePacingInput(state, delta, now) {
     if (!Number.isFinite(delta) || !delta) return false;
     const reverse = state.pending * delta < 0;
-    if (reverse) { state.pending = 0; state.lastFrame = null; }
+    if (reverse) { state.pending = 0; state.lastFrame = null; state.velocity = 0; }
     // Larger intentional input remains faster in free space. Bound debt by
     // this impulse, never by one velocity ceiling for the entire document.
     const debtLimit = SCROLL_DEBT_REFERENCE_PX * Math.max(1, Math.sqrt(Math.abs(delta) / 112));
     state.pending = clampScroll(state.pending + delta * 2, -debtLimit, debtLimit);
-    state.lastInput = now;
+    state.lastInput = now; state.coasting = false;
     return reverse;
 }
 
@@ -32,10 +33,12 @@ export function limitPacingTravel(step, elapsed, ranges, position) {
     let distance = Math.abs(step);
     for (const range of ranges) {
         const approach = sign > 0 ? range.start - position : position - range.end;
-        const inside = position >= range.start && position <= range.end;
+        const inside = sign > 0 ? position >= range.start && position < range.end
+            : position > range.start && position <= range.end;
         if (!inside && (approach < 0 || approach >= distance)) continue;
         const timed = Number.isFinite(range.speed) ? range.speed * elapsed / 1000 : Infinity;
-        const available = Math.min(timed, (range.end - range.start) / 14);
+        const geometry = range.travel?.(inside ? position : (sign > 0 ? range.start : range.end), sign) ?? (range.end - range.start) / (range.segments ?? 8);
+        const available = Math.min(timed, geometry);
         distance = Math.min(distance, Math.max(0, approach) + available);
     }
     return sign * distance;
@@ -46,16 +49,26 @@ export function takePacingStep(state, now, ranges = [], position = 0) {
         state.pending = 0; state.lastFrame = null;
         return 0;
     }
+    if (state.lastFrame !== null && now - state.lastFrame > 100 && now - state.lastInput > 34) {
+        state.pending = 0; state.lastFrame = null; state.velocity = 0;
+        return 0;
+    }
     const elapsed = state.lastFrame === null ? 1000 / 60
         : clampScroll(now - state.lastFrame, 0, 34);
     state.lastFrame = now;
-    if (now - state.lastInput > 34) {
-        const coast = Math.min(SCROLL_DEBT_REFERENCE_PX, Math.abs(state.velocity) * RESPONSE_MS / 1000);
-        state.pending = Math.sign(state.pending) * Math.min(Math.abs(state.pending), coast);
+    const released = now - state.lastInput > 34;
+    if (released && !state.coasting) {
+        // Replace unspent input with a short coast from movement delivered.
+        state.pending = Math.sign(state.pending) * Math.min(SCROLL_DEBT_REFERENCE_PX, Math.abs(state.velocity) * COAST_MS / 1000);
+        state.coasting = true;
     }
-    let requested = state.pending * (1 - Math.exp(-elapsed / RESPONSE_MS));
-    if (state.deliveredInput === state.lastInput) {
-        // Old debt cannot accelerate the page when a protected phase ends.
+    let requested = state.coasting
+        ? Math.sign(state.pending) * Math.min(Math.abs(state.pending), Math.abs(state.velocity) * elapsed / 1000 * Math.exp(-elapsed / COAST_MS))
+        : state.pending * (1 - Math.exp(-elapsed / RESPONSE_MS));
+    if (state.coasting) {
+        const tail = clampScroll((SCROLL_IDLE_CUTOFF_MS - (now - state.lastInput)) / 80, 0, 1);
+        requested *= tail;
+    } else if (state.deliveredInput === state.lastInput) {
         requested = Math.sign(requested) * Math.min(Math.abs(requested), Math.abs(state.velocity) * elapsed / 1000);
     }
     const step = limitPacingTravel(requested, elapsed, ranges, position);

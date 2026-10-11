@@ -14,7 +14,6 @@ import { mountValuesCards } from './sections/values-cards.js';
 // Composition root wires ports; each component owns its state and DOM.
 const cursor = mountCursor();
 const scrollIndicator = mountScrollIndicator(document.querySelector('[data-scroll-indicator]'));
-const scrollPacing = mountScrollPacing(document.querySelector('main'));
 let hero;
 const main = document.querySelector('main');
 const header = mountHeader(document.querySelector('[data-header]'), {
@@ -36,6 +35,7 @@ const valuesLine = mountValuesLine(document.querySelector('[data-values]'));
 const valuesCards = mountValuesCards(document.querySelector('[data-values]'));
 const gallery = mountGallery(document.querySelector('[data-gallery]'));
 const testimonials = mountTestimonials(document.querySelector('[data-testimonials]'));
+const scrollPacing = mountScrollPacing(main, { scrollChanged: () => testimonials.synchronize() });
 window.addEventListener('pagehide', event => {
     gallery.suspend();
     testimonials.suspend();

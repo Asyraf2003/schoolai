@@ -11,7 +11,10 @@ it('renders the localized question and every existing disclosed sample in one te
     $document = new DOMDocument;
     @$document->loadHTML($response->getContent());
     $dom = new DOMXPath($document);
-    expect($dom->query('//*[@id="testimonials-title"]')->length)->toBe(1);
+    expect($dom->query('//*[@id="testimonials-title"][@aria-label]')->length)->toBe(1);
+    expect($dom->query('//*[@data-testimonials-copy]/p')->length)->toBe(0);
+    expect($dom->query('//*[@data-testimonials-word][@aria-hidden="true"]')->length)->toBe(count(explode(' ', __('testimonials.title'))));
+    expect($dom->query('//*[@data-testimonials-row]//button')->length)->toBe(0);
     expect($dom->query('//*[@data-testimonials-row]')->length)->toBe(3);
     expect($dom->query('//*[@data-testimonials-row][@tabindex="0"][@aria-describedby="testimonials-browse"]')->length)->toBe(3);
     expect($dom->query('//*[@data-testimonials-track]/article')->length)->toBe(21);

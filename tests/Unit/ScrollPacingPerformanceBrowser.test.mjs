@@ -29,7 +29,7 @@ test('three comparable Chromium scroll samples expose frame cost and idle work',
                 for (let index = 0; index < 24; index++) {
                     await page.mouse.wheel(0, 112); await page.waitForTimeout(24);
                 }
-                await page.waitForTimeout(250);
+                await page.waitForTimeout(320);
                 await page.evaluate(() => {
                     scrollProfile.running = false;
                     profileObserver.disconnect();

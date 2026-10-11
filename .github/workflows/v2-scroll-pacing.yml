@@ -82,7 +82,9 @@ jobs:
           node --test --test-concurrency=1 --test-timeout=420000 \
             tests/Unit/ScrollPacingBrowser.test.mjs \
             tests/Unit/ScrollPacingChoreographyBrowser.test.mjs \
-            tests/Unit/TestimonialsBrowser.test.mjs
+            tests/Unit/ScrollPacingCompactBrowser.test.mjs \
+            tests/Unit/TestimonialsBrowser.test.mjs \
+            tests/Unit/TestimonialsScrollBrowser.test.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
