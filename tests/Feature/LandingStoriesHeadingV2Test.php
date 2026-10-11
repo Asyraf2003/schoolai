@@ -21,7 +21,21 @@ it('renders the OLD-inspired two-line Stories heading in the V2 section order', 
         ->and($heading->item(0)->getAttribute('aria-label'))->toBe($title)
         ->and($xpath->query('//*[@data-stories-heading]/*[contains(@class,"stories__heading-clip")]')->length)->toBe(2)
         ->and($xpath->query('//*[@data-stories-heading-line][@aria-hidden="true"]')->length)->toBe(2)
-        ->and($xpath->query('//*[@id="artikel"]//img | //*[@id="artikel"]//video')->length)->toBe(0);
+        ->and($xpath->query('//*[@data-stories-feature]//img[@data-stories-poster]')->length)->toBe(1)
+        ->and($xpath->query('//*[@data-stories-feature]//video[@data-stories-video]')->length)->toBe(1)
+        ->and($xpath->query('//*[@data-stories-feature]//h3[@id="stories-feature-title"]')->length)->toBe(1);
+
+    $video = $xpath->query('//*[@data-stories-feature]//video')->item(0);
+    expect($video->hasAttribute('muted'))->toBeTrue()
+        ->and($video->hasAttribute('autoplay'))->toBeTrue()
+        ->and($video->hasAttribute('loop'))->toBeTrue()
+        ->and($video->hasAttribute('playsinline'))->toBeTrue()
+        ->and($video->hasAttribute('controls'))->toBeFalse()
+        ->and($video->hasAttribute('src'))->toBeFalse()
+        ->and($video->getAttribute('data-src'))->toContain('/gallery/media/it-v1.mp4');
+
+    $response->assertSee(__('stories.feature.title'))
+        ->assertSee(__('stories.feature.description'));
 
     foreach (__('stories.lines') as $line) {
         $response->assertSee($line);

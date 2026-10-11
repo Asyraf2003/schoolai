@@ -1,4 +1,5 @@
 import { mountTestimonials } from './sections/testimonials.js';
+import { mountStoriesMedia } from './sections/stories-media.js';
 import { mountGallery } from './sections/gallery.js';
 import { mountScrollPacing } from './sections/scroll-pacing.js';
 import { mountScrollIndicator } from './sections/scroll-indicator.js';
@@ -37,14 +38,16 @@ const valuesCards = mountValuesCards(document.querySelector('[data-values]'));
 const gallery = mountGallery(document.querySelector('[data-gallery]'));
 const testimonials = mountTestimonials(document.querySelector('[data-testimonials]'));
 const storiesHeading = mountSectionHeading(document.querySelector('[data-stories]'), 'stories', 900, 116);
+const storiesMedia = mountStoriesMedia(document.querySelector('[data-stories]'));
 const scrollPacing = mountScrollPacing(main, { scrollChanged: () => testimonials.synchronize() });
 window.addEventListener('pagehide', event => {
     gallery.suspend();
     testimonials.suspend();
     storiesHeading.suspend();
+    storiesMedia.suspend();
     scrollIndicator.suspend();
     scrollPacing.suspend();
-    if (!event.persisted) { gallery.dispose(); testimonials.dispose(); storiesHeading.dispose(); }
+    if (!event.persisted) { gallery.dispose(); testimonials.dispose(); storiesHeading.dispose(); storiesMedia.dispose(); }
     hero.suspend();
     about.suspend();
     program.suspend();
@@ -58,4 +61,4 @@ window.addEventListener('pagehide', event => {
     if (!event.persisted) valuesCards.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); scrollIndicator.dispose(); scrollPacing.dispose(); }
 });
-window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); storiesHeading.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
+window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); storiesHeading.resume(); storiesMedia.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });

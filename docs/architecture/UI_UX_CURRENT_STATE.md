@@ -1,5 +1,24 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Stories & Insights first dummy video — 2026-10-12
+
+OWNER_ACCEPTED: one first article video only; dummy local content, no DB/admin
+or source-of-truth coupling until subsequent explicit stage.
+FACT: Gallery catalog already references IT video /gallery/media/it-v1.mp4
+and school-life labit poster from existing R2 config.
+DECISION: full-bleed 100svh single video and accessible overlaid localized title
+and description; desktop copy occupies logical inline-start half with a
+25%-wide edge dark-to-transparent gradient (RTL mirrored), phone copy sits
+logical bottom-start with bottom gradient. No controls or audio.
+Video hydrates near viewport, pauses away/hidden/BFCache, reduced motion keeps
+the existing poster. No timeline, gallery/testimonials controller or DB changes.
+PROOF: source and scoped updated test authored; owner/local build, PHP and
+browser rendition remain to be verified.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser proof.
+NEXT execution channel: owner/local terminal; pull, run scoped test/build,
+inspect first video before starting video 2.
+
+
 ## Stories & Insights OLD heading parity correction — 2026-10-12
 
 OWNER_ACCEPTED: proceed one visible capability at a time; correct heading before
