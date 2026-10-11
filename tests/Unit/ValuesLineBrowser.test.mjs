@@ -47,7 +47,7 @@ const inspect = () => {
         size: { width: scene.getBoundingClientRect().width, height: scene.getBoundingClientRect().height },
         ready: document.querySelector('[data-values]').hasAttribute('data-line-ready'),
         scrub: trigger?.vars.scrub, progress: trigger?.progress,
-        triggers: window.ScrollTrigger?.getAll().length ?? 0,
+        triggers: window.ScrollTrigger?.getAll().filter(trigger => trigger.vars.id === 'values-line').length ?? 0,
         overflow: document.documentElement.scrollWidth > innerWidth,
     };
 };

@@ -10,10 +10,20 @@ export async function galleryReady(page) {
 }
 export async function galleryAt(page, progress) {
     await page.evaluate(p => {
+        window.ScrollTrigger.refresh();
         const t = window.ScrollTrigger.getById('gallery-v2');
         scrollTo(0, Math.round(t.start + (t.end - t.start) * p));
+        t.update();
     }, progress);
-    await page.waitForFunction(p => Math.abs(window.ScrollTrigger.getById('gallery-v2').progress - p) < .002, progress);
+    try {
+        await page.waitForFunction(p => Math.abs(window.ScrollTrigger.getById('gallery-v2').progress - p) < .002, progress);
+    } catch (error) {
+        const state = await page.evaluate(() => {
+            const t = window.ScrollTrigger.getById('gallery-v2');
+            return { scroll: scrollY, start: t?.start, end: t?.end, progress: t?.progress, viewport: [innerWidth, innerHeight] };
+        });
+        throw new Error(`Gallery requested ${progress}: ${JSON.stringify(state)}`, { cause: error });
+    }
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     return page.evaluate(galleryState);
 }

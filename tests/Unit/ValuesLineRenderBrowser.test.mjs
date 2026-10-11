@@ -18,8 +18,10 @@ for (const engine of engines) {
                     await page.waitForFunction(w => document.querySelector('[data-values-line] svg').viewBox.baseVal.width === w, width);
                     for (const progress of [.2, .45, .72]) {
                         await page.evaluate(p => {
+                            window.ScrollTrigger.refresh();
                             const trigger = window.ScrollTrigger.getById('values-line');
                             scrollTo(0, Math.round(trigger.start + (trigger.end - trigger.start) * p));
+                            trigger.update();
                         }, progress);
                         await page.waitForFunction(p => Math.abs(window.ScrollTrigger.getById('values-line').progress - p) < .0015, progress);
                         const result = await page.locator('[data-values-line] svg').evaluate(svg => {
