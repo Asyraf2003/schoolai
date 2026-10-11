@@ -23,6 +23,9 @@ for (const engine of engines) {
                         }, { capture: true, passive: true, once: true });
                         return scrollY;
                     });
+                    // WebKit's initial pointer at (0,0) may hit a fixed
+                    // overlay rather than the scrolling document.
+                    await page.mouse.move(420, 470);
                     await page.mouse.wheel(0, 5000);
                     await page.waitForTimeout(180);
                     const after = await page.evaluate(() => scrollY);
