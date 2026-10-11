@@ -24,7 +24,10 @@ it('renders the OLD-inspired two-line Stories heading in the V2 section order', 
         ->and($xpath->query('//*[@data-stories-feature]')->length)->toBe(4)
         ->and($xpath->query('//*[@data-stories-feature]//img[@data-stories-poster]')->length)->toBe(4)
         ->and($xpath->query('//*[@data-stories-feature]//video[@data-stories-video]')->length)->toBe(4)
-        ->and($xpath->query('//*[@data-stories-feature]//h3')->length)->toBe(4);
+        ->and($xpath->query('//*[@data-stories-feature]//h3')->length)->toBe(4)
+        ->and($xpath->query('//*[@data-stories-feature]//h3[@aria-label]')->length)->toBe(4)
+        ->and($xpath->query('//*[@data-stories-feature]//p[@aria-label]')->length)->toBe(4)
+        ->and($xpath->query('//*[@data-stories-feature]//*[@data-stories-word][@aria-hidden="true"]')->length)->toBeGreaterThan(20);
 
     $videos = $xpath->query('//*[@data-stories-feature]//video');
     foreach (['it', 'musola', 'renang', 'tekwondo'] as $index => $name) {

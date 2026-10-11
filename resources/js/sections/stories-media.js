@@ -1,26 +1,12 @@
-const clamp = value => Math.max(0, Math.min(1, value));
-const smooth = value => { const p = clamp(value); return p * p * (3 - 2 * p); };
-
-export function storiesDesktopPose(progress, index, count, viewportHeight) {
-    const transition = index === 0 ? 1 : smooth((progress - (index - .25)) / .5);
-    const enter = index === 0 ? 1 : smooth((progress - (index - .12)) / .32);
-    const exit = index === count - 1 ? 1 : 1 - smooth((progress - (index + .7)) / .25);
-    return {
-        media: transition,
-        copy: enter * exit,
-        y: Math.round(viewportHeight * (.12 * (1 - enter) - .26 * clamp(progress - index))),
-    };
-}
-
-export function storiesMobilePose(progress, index) {
-    return index === 0 ? 0 : 100 * (1 - smooth(progress - (index - .5)));
-}
+import { storiesCheckpoints, storiesCopyPose, storiesWordPose, storiesMediaPose } from './stories-motion.js';
 
 export function mountStoriesMedia(root) {
     const sequence = root?.querySelector('[data-stories-sequence]');
     const viewport = sequence?.querySelector('[data-stories-viewport]');
     const chapters = [...(sequence?.querySelectorAll('[data-stories-feature]') ?? [])];
     if (!viewport || chapters.length < 2) return { suspend() {}, resume() {}, dispose() {} };
+    const copies = chapters.map(chapter => chapter.querySelector('[data-stories-copy]'));
+    const words = copies.map(copy => [...copy.querySelectorAll('[data-stories-word]')]);
     const videos = chapters.map(chapter => chapter.querySelector('[data-stories-video]'));
     const mobile = matchMedia('(max-width: 767px)');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -28,8 +14,7 @@ export function mountStoriesMedia(root) {
     const lifecycle = new AbortController();
     const { signal } = lifecycle;
     const pending = new Set();
-    let near = false, suspended = false, disposed = false, frame = 0;
-    let enabled = false;
+    let layout, near = false, enabled = false, suspended = false, disposed = false, frame = 0;
 
     const release = video => {
         video.pause();
@@ -39,14 +24,15 @@ export function mountStoriesMedia(root) {
         }
         delete video.dataset.ready;
     };
+    const load = video => {
+        if (video.dataset.failed || video.hasAttribute('src')) return;
+        video.src = video.dataset.src;
+        video.preload = 'metadata';
+        video.load();
+    };
     const play = video => {
-        if (video.dataset.failed) return;
-        if (!video.hasAttribute('src')) {
-            video.src = video.dataset.src;
-            video.preload = 'metadata';
-            video.load();
-        }
-        if (!video.paused || pending.has(video)) return;
+        load(video);
+        if (video.dataset.failed || !video.paused || pending.has(video)) return;
         pending.add(video);
         Promise.resolve(video.play()).catch(() => {
             delete video.dataset.ready;
@@ -55,95 +41,120 @@ export function mountStoriesMedia(root) {
             if (disposed || suspended || document.hidden || reduced.matches || !near) video.pause();
         });
     };
-    const render = () => {
-        frame = 0;
-        if (!enabled || disposed) return;
-        const rect = sequence.getBoundingClientRect();
-        const travel = Math.max(1, sequence.offsetHeight - viewport.offsetHeight);
-        const progress = clamp(-rect.top / travel) * chapters.length;
-        const small = mobile.matches;
-        sequence.dataset.storiesProgress = progress.toFixed(4);
-        chapters.forEach((chapter, index) => {
-            chapter.style.setProperty('--stories-layer', String(index));
-            if (small) {
-                chapter.style.setProperty('--stories-layer-y', storiesMobilePose(progress, index).toFixed(3) + '%');
-            } else {
-                const pose = storiesDesktopPose(progress, index, chapters.length, viewport.clientHeight);
-                chapter.style.setProperty('--stories-media-opacity', pose.media.toFixed(4));
-                chapter.style.setProperty('--stories-copy-opacity', pose.copy.toFixed(4));
-                chapter.style.setProperty('--stories-copy-y', pose.y + 'px');
-            }
-        });
-        const base = Math.min(chapters.length - 1, Math.floor(progress));
-        const primary = small ? Math.min(chapters.length - 1, Math.floor(progress + .5)) : base;
-        const active = new Set([primary]);
-        if (small && primary > 0 && progress < primary + .5) active.add(primary - 1);
-        if (!small && base < chapters.length - 1 && progress > base + .65) active.add(base + 1);
+    const syncMedia = (position, frameState) => {
+        const { current } = frameState;
+        const allowed = near && !suspended && !disposed && !document.hidden && !reduced.matches;
         videos.forEach((video, index) => {
-            if (!near || suspended || document.hidden || reduced.matches || video.dataset.failed) {
-                if (!near || reduced.matches) release(video); else video.pause();
-            } else if (active.has(index)) {
+            if (!allowed) {
+                if (!near || reduced.matches || disposed) release(video);
+                else video.pause();
+            } else if (index === current) {
                 play(video);
             } else {
                 video.pause();
-                if (Math.abs(index - primary) > 1) release(video);
+                const distance = index > current ? layout.centers[index] - position : Infinity;
+                if (index === current + 1 && distance < layout.stageHeight * .8) load(video);
+                else if (Math.abs(index - current) > 1) release(video);
             }
         });
     };
+    const render = () => {
+        frame = 0;
+        if (!enabled || !layout || disposed) return;
+        const position = Math.max(0, Math.min(layout.travel,
+            -sequence.getBoundingClientRect().top));
+        const stageHeight = layout.stageHeight;
+        const state = storiesMediaPose(position, layout.centers, stageHeight, mobile.matches);
+        sequence.dataset.storiesProgress = (position / Math.max(1, layout.travel)).toFixed(5);
+        sequence.dataset.storiesActive = String(state.current + 1);
+        chapters.forEach((chapter, index) => {
+            const pose = storiesCopyPose(position, layout.centers[index],
+                layout.anchors[index], layout.heights[index], stageHeight,
+                layout.titleOffsets[index]);
+            chapter.style.setProperty('--stories-layer', String(index * 2));
+            chapter.style.setProperty('--stories-media-opacity', String(state.layers[index].opacity));
+            chapter.style.setProperty('--stories-media-y', state.layers[index].y.toFixed(3) + '%');
+            copies[index].style.setProperty('--stories-copy-y', pose.y.toFixed(2) + 'px');
+            words[index].forEach((word, wordIndex) => {
+                const reveal = storiesWordPose(pose.enters, wordIndex, words[index].length);
+                word.style.setProperty('--stories-word-opacity', reveal.opacity.toFixed(3));
+                word.style.setProperty('--stories-word-blur', reveal.blur.toFixed(2) + 'px');
+            });
+        });
+        syncMedia(position, state);
+    };
     const schedule = () => {
-        if (!frame && enabled && !disposed && !suspended && (near || !('IntersectionObserver' in window))) {
-            frame = requestAnimationFrame(render);
-        }
+        if (enabled && !disposed && !suspended && near && !frame) frame = requestAnimationFrame(render);
+    };
+    const measure = () => {
+        if (!enabled || disposed) return;
+        const stageHeight = viewport.clientHeight;
+        const heights = copies.map(copy => copy.offsetHeight);
+        const titleOffsets = copies.map(copy => {
+            const title = copy.querySelector('h3').getBoundingClientRect();
+            const frame = copy.getBoundingClientRect();
+            return title.top + title.height / 2 - frame.top - frame.height / 2;
+        });
+        layout = { ...storiesCheckpoints(heights, stageHeight, mobile.matches, titleOffsets),
+            heights, titleOffsets, stageHeight };
+        sequence.style.setProperty('--stories-travel', Math.ceil(layout.travel) + 'px');
+        render();
     };
     const configure = () => {
         enabled = capable && !reduced.matches;
         sequence.toggleAttribute('data-stories-sequence-enabled', enabled);
-        chapters.forEach(chapter => {
-            chapter.style.removeProperty('--stories-media-opacity');
-            chapter.style.removeProperty('--stories-copy-opacity');
-            chapter.style.removeProperty('--stories-copy-y');
-            chapter.style.removeProperty('--stories-layer-y');
-        });
-        if (enabled) render();
+        if (enabled) measure();
         else {
-            cancelAnimationFrame(frame); frame = 0;
+            cancelAnimationFrame(frame); frame = 0; layout = null;
             videos.forEach(release);
+            sequence.style.removeProperty('--stories-travel');
             delete sequence.dataset.storiesProgress;
+            delete sequence.dataset.storiesActive;
+            chapters.forEach(chapter => {
+                chapter.style.removeProperty('--stories-layer');
+                chapter.style.removeProperty('--stories-media-opacity');
+                chapter.style.removeProperty('--stories-media-y');
+            });
+            copies.forEach(copy => copy.style.removeProperty('--stories-copy-y'));
+            words.flat().forEach(word => {
+                word.style.removeProperty('--stories-word-opacity');
+                word.style.removeProperty('--stories-word-blur');
+            });
         }
     };
-    for (const video of videos) {
+    videos.forEach(video => {
         video.addEventListener('playing', () => { video.dataset.ready = 'true'; }, { signal });
         video.addEventListener('error', () => {
             video.dataset.failed = 'true';
             release(video);
         }, { signal });
-    }
+    });
     const observer = capable ? new IntersectionObserver(entries => {
         near = entries.some(entry => entry.isIntersecting);
         if (!near) videos.forEach(release);
         else schedule();
     }, { rootMargin: '75% 0px' }) : null;
     observer?.observe(sequence);
+    const size = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    size?.observe(viewport);
+    copies.forEach(copy => size?.observe(copy));
     window.addEventListener('scroll', schedule, { passive: true, signal });
-    window.addEventListener('resize', schedule, { signal });
-    document.addEventListener('visibilitychange', schedule, { signal });
-    mobile.addEventListener('change', schedule, { signal });
+    window.addEventListener('resize', measure, { signal });
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) videos.forEach(video => video.pause());
+        else render();
+    }, { signal });
+    mobile.addEventListener('change', measure, { signal });
     reduced.addEventListener('change', configure, { signal });
+    document.fonts?.ready.then(() => { if (!disposed) measure(); });
     configure();
     return {
-        suspend() {
-            suspended = true;
-            cancelAnimationFrame(frame); frame = 0;
-            videos.forEach(video => video.pause());
-        },
-        resume() { suspended = false; render(); schedule(); },
+        suspend() { suspended = true; cancelAnimationFrame(frame); frame = 0; videos.forEach(video => video.pause()); },
+        resume() { suspended = false; measure(); schedule(); },
         dispose() {
-            disposed = true;
-            cancelAnimationFrame(frame);
+            disposed = true; cancelAnimationFrame(frame);
             videos.forEach(release);
-            observer?.disconnect();
-            lifecycle.abort();
-            sequence.removeAttribute('data-stories-sequence-enabled');
+            observer?.disconnect(); size?.disconnect(); lifecycle.abort();
         },
     };
 }

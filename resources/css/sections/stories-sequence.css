@@ -1,7 +1,7 @@
-/* Four scroll-driven stories share one sticky, viewport-sized stage. */
+/* Scroll owns positions, not opacity exits: captions move vertically as one queue. */
 .stories__sequence[data-stories-sequence-enabled] {
     position: relative;
-    block-size: 500svh;
+    block-size: calc(100svh + var(--stories-travel, 400svh));
     overflow-anchor: none;
 }
 .stories__sequence[data-stories-sequence-enabled] .stories__viewport {
@@ -15,24 +15,47 @@
 .stories__sequence[data-stories-sequence-enabled] .stories__feature {
     position: absolute;
     inset: 0;
-    z-index: var(--stories-layer, 0);
+    z-index: auto;
+    isolation: auto;
     block-size: 100%;
     min-block-size: 0;
     background: transparent;
+}
+.stories__sequence[data-stories-sequence-enabled] .stories__feature-media {
+    z-index: var(--stories-layer, 0);
+}
+.stories__sequence[data-stories-sequence-enabled] .stories__feature::after {
+    z-index: calc(var(--stories-layer, 0) + 1);
+}
+.stories__sequence[data-stories-sequence-enabled] .stories__feature-copy {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: 0;
+    z-index: 20;
+    block-size: auto;
+    margin: 0;
+    transform: translate3d(0, calc(-50% + var(--stories-copy-y, 0px)), 0);
+}
+.stories__sequence[data-stories-sequence-enabled] [data-stories-word] {
+    display: inline-block;
+    opacity: var(--stories-word-opacity, 1);
+    filter: blur(var(--stories-word-blur, 0px));
 }
 @media (min-width: 768px) {
     .stories__sequence[data-stories-sequence-enabled] .stories__feature-media,
     .stories__sequence[data-stories-sequence-enabled] .stories__feature::after {
         opacity: var(--stories-media-opacity, 0);
-    }
-    .stories__sequence[data-stories-sequence-enabled] .stories__feature-copy {
-        opacity: var(--stories-copy-opacity, 0);
-        transform: translate3d(0, var(--stories-copy-y, 0px), 0);
+        transition: opacity 350ms ease;
     }
 }
 @media (max-width: 767px) {
-    .stories__sequence[data-stories-sequence-enabled] .stories__feature {
-        transform: translate3d(0, var(--stories-layer-y, 100%), 0);
+    .stories__sequence[data-stories-sequence-enabled] .stories__feature-copy {
+        inline-size: 100%;
+        padding-block: 0;
+    }
+    .stories__sequence[data-stories-sequence-enabled] .stories__feature-media,
+    .stories__sequence[data-stories-sequence-enabled] .stories__feature::after {
+        transform: translate3d(0, var(--stories-media-y, 100%), 0);
     }
 }
 @media (prefers-reduced-motion: reduce) {

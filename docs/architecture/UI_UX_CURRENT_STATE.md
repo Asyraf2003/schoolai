@@ -1,5 +1,29 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Stories title queue / word entrance / title-driven media — 2026-10-12
+
+OWNER_ACCEPTED: captions A→B→C→D form a vertical scroll queue, not timed
+opacity slides. Previous caption scrolls naturally OFF TOP, next comes from
+below; when previous copy bottom clears the viewport, next title/copy is
+centered and its video switches. Only ENTRY is word-blurred/revealed like
+Gallery/Testimonial titles. No blur or fade when leaving above.
+FACT: old desktop Stories animation faded copy out by a fixed timing phase,
+and changed background before the next title center. Mobile previously
+slid the whole background panel with its caption tied to the same motion.
+DECISION: measure real caption heights; derive viewport-centered checkpoints
+where next caption arrives at the exact previous top-exit boundary.
+A single native-scroll read drives all caption translations, enter-only word
+opacity/blur, and media cutover. Desktop crossfades media only AFTER the
+center checkpoint. Phone retains upward-covering VIDEO planes; caption
+translation remains independent and first caption begins near phone bottom.
+Reduced motion/no JS are static stacked posters with readable text.
+Preserve all 4 dummy localized features, RTL direction, 25svh section gap,
+media loading policy and global scroll controller ownership.
+PROOF: source patch and test assertions; local/browser runtime pending.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/build/browser.
+NEXT: pull and inspect exact title-center ↔ video-switch alignment.
+
+
 ## Stories & Insights 4-video dummy scroll sequence — 2026-10-12
 
 OWNER_ACCEPTED: extend existing approved article 01 with three dummy videos:
