@@ -1,4 +1,5 @@
 import { mountCursor } from './sections/cursor.js';
+import { mountScrollIndicator } from './sections/scroll-indicator.js';
 import { mountHeader } from './sections/header.js';
 import { mountHero } from './sections/hero.js';
 import { mountAbout } from './sections/about.js';
@@ -9,6 +10,7 @@ import { mountValuesCards } from './sections/values-cards.js';
 
 // Composition root wires ports; each component owns its state and DOM.
 const cursor = mountCursor();
+const scrollIndicator = mountScrollIndicator(document.querySelector('[data-scroll-indicator]'));
 let hero;
 const main = document.querySelector('main');
 const header = mountHeader(document.querySelector('[data-header]'), {
@@ -29,6 +31,7 @@ const values = mountValues(document.querySelector('[data-program-values]'));
 const valuesLine = mountValuesLine(document.querySelector('[data-values]'));
 const valuesCards = mountValuesCards(document.querySelector('[data-values]'));
 window.addEventListener('pagehide', event => {
+    scrollIndicator.suspend();
     hero.suspend();
     about.suspend();
     program.suspend();
@@ -40,6 +43,6 @@ window.addEventListener('pagehide', event => {
     if (!event.persisted) values.dispose();
     if (!event.persisted) valuesLine.dispose();
     if (!event.persisted) valuesCards.dispose();
-    if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); }
+    if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); scrollIndicator.dispose(); }
 });
-window.addEventListener('pageshow', () => { hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
+window.addEventListener('pageshow', () => { scrollIndicator.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });

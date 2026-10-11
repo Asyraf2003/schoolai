@@ -1,5 +1,23 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Homepage V2 passive scroll indicator — 2026-10-11
+
+OWNER_ACCEPTED: Lusion-inspired slim right-side scroll rail, display-only, no
+click/drag jump; visible while scrolling and fades over 2 seconds after idle.
+Blueprint/scope and acceptance: GitHub issue #88. Scope is Homepage V2 only.
+FACT: V2 uses landing.index Blade, css/index.css and js/index.js; no existing
+scroll indicator owner. Original main at audit: `445fbf92fa60160af92dc40c5195a925e83b2a4d`.
+DECISION: dedicated small CSS/JS owners, native scrollbar suppressed only
+after enhancement mounts; no-JS preserves native scroll. Native input, anchors
+and keyboard unaffected. Idle threshold 150ms followed by CSS fade of 2s.
+PROOF: source publication and focused checks pending review; complete
+Chromium/WebKit, PHP suite, performance and six-tier verification not yet run.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE full DOD. The feature must not be called
+fully PROVEN solely from a GitHub commit/merge.
+NEXT channel owner/local terminal: run the prescribed repository and browser
+matrix proof against the merged main, then update this ledger with evidence.
+
+
 ## Values soft hair curves — 2026-10-10
 
 OWNER_ACCEPTED: replace rejected zigzag with three floor-like strands with sideways sweeps and soft S
