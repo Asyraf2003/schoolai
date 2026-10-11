@@ -35,6 +35,7 @@ export function mountGallery(root) {
             root.previousElementSibling?.removeAttribute('data-gallery-dark');
             root.previousElementSibling?.style.removeProperty('--gallery-dark-pct');
             root.previousElementSibling?.style.removeProperty('--gallery-decoration-opacity');
+            root.previousElementSibling?.style.removeProperty('--gallery-line-opacity');
             root.style.removeProperty('--gallery-dark-pct');
         }
         if (!keepStage) {

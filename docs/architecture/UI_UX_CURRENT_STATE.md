@@ -53,6 +53,12 @@ GAP: current Values transformed exit displaces visible card bodies from their
 native slots. Gallery native spacing is implemented; physical body/title distance
 requires the already-authorized PR93 card-response correction. Do not certify
 that seam or merge Gallery until actual bodies satisfy the new owner gap.
+PROOF combined source7e0827ea: actual card-body/title gap PASS36 locale/tier
+profiles Chromium/WebKit; native base gap525–712.5px, <=11.02px existing float.
+Visual review still shows a white curve above the incoming title at early entry.
+DECISION: fade the SVG during the measured title header inset, completing before
+title enters the viewport. Blue and type retain their longer gradual darkening.
+No SVG geometry/draw/controller changes. Exact combined white-free captures renewing.
 NEXT channel Terminal Codex: publish Gallery checkpoint, take over existing PR93
 for native card response, then certify the combined physical seam and gated merge.
 

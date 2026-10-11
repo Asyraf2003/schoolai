@@ -11,8 +11,8 @@
 .program-values[data-gallery-dark] {
     background: color-mix(in srgb, var(--values-blue) calc(100% - var(--gallery-dark-pct, 0%)), #08090b var(--gallery-dark-pct, 0%));
 }
-.program-values[data-gallery-dark] .program__type-home,
-.program-values[data-gallery-dark] .values__line { opacity: var(--gallery-decoration-opacity, 1); }
+.program-values[data-gallery-dark] .program__type-home { opacity: var(--gallery-decoration-opacity, 1); }
+.program-values[data-gallery-dark] .values__line { opacity: var(--gallery-line-opacity, 1); }
 .gallery__stage { position: relative; padding-block: clamp(3rem, 6vw, 7rem); }
 .gallery__header { inline-size: 84%; margin-inline: auto; padding-block: calc(var(--v2-header-block-size) + 1svh) 0; }
 .gallery__header h2 { margin: 0; font-size: clamp(3.4rem, 15vw, 7rem); font-weight: 360; line-height: .84; letter-spacing: -.055em; text-transform: uppercase; }

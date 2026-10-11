@@ -13,6 +13,7 @@ export function createGalleryTimeline(gsap, ScrollTrigger, root, update) {
     const shrinkStart = (root.querySelector('.gallery__header').offsetHeight + stage.clientHeight)
         / root.offsetHeight;
     const revealStart = shrinkStart + (.52 - shrinkStart) * .6;
+    const lineFadeEnd = Math.max(1, root.querySelector('[data-gallery-heading]').offsetTop) / root.offsetHeight;
     root.dataset.galleryShrinkStart = String(shrinkStart);
     const timeline = gsap.timeline({ scrollTrigger: {
         id: 'gallery-v2', trigger: root,
@@ -24,6 +25,8 @@ export function createGalleryTimeline(gsap, ScrollTrigger, root, update) {
             preceding?.toggleAttribute('data-gallery-dark', trigger.progress > 0);
             preceding?.style.setProperty('--gallery-dark-pct', `${(dark * 100).toFixed(3)}%`);
             preceding?.style.setProperty('--gallery-decoration-opacity', (1 - dark).toFixed(5));
+            const line = Math.min(1, trigger.progress / lineFadeEnd);
+            preceding?.style.setProperty('--gallery-line-opacity', (1 - line * line * (3 - 2 * line)).toFixed(5));
             root.style.setProperty('--gallery-dark-pct', `${(dark * 100).toFixed(3)}%`);
             root.dataset.galleryProgress = trigger.progress.toFixed(4); update(trigger.progress);
         },

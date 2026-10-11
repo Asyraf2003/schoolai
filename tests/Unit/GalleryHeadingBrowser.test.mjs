@@ -30,6 +30,7 @@ for (const engine of engines) {
                                 animations: line.getAnimations().length };
                         });
                         assert.equal(state.heading.visibility, 'visible');
+                        assert.equal(state.lineOpacity, 0, 'white SVG is absent when the native title arrives');
                         assert.equal(spacing.opacity, '1');
                         assert.equal(spacing.transform, 'none');
                         assert.equal(spacing.animations, 0, 'title rises natively without an appearance animation');
