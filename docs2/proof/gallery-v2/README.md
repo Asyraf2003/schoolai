@@ -38,16 +38,14 @@ Three Values line/render integration tests PASS in WebKit (66.63s), raw log.
 Testimonial-handoff.json separately proves12 native handoffs (both engines,
 three locales,390/1440): populated quotes enter after the black hold, Gallery
 media remain fully hidden, and no horizontal overflow. Matching JPEGs reviewed.
-CI38117850566: Chromium PASS; WebKit4PASS/1cancelled by420s file timeout,
-without an assertion failure. Phase artifacts reached EN/ID and AR390.
-Heading38117850572 and Values38117850614 PASS both engines (Values14/14
-per engine). Gallery partition run38118576424 on8b97c7e6 pending WebKit;
-Chromium PASS. Final semantic-correction publication CI pending.
-Gallery CI now partitions the unchanged27-profile matrix per locale into fresh
-bounded browser processes and records per-viewport duration/per-locale JSON.
-Integrated CI38129531132 onac22aeef: Chromium27-profile composition and
-heading PASS, viewport regression FAIL before the Gallery resize fix.
-Final scoped CI on the corrected source must PASS before merge.
+Historical CI38117850566: Chromium PASS; WebKit timed out at aggregate420s
+without assertion failure. The same27-profile matrix now runs per locale in
+fresh bounded processes, recording viewport duration and per-locale JSON.
+Integrated CI38129531132 onac22aeef: WebKit8/8 PASS including all27 profiles;
+Chromium27-profile composition and heading PASS, viewport regression FAIL
+before the Gallery resize fix. Final corrected CI38130228969 on2b0bf545 is
+pending; scoped gates must PASS before merge. Heading38129531160 PASS;
+Values integration final run38130228955 pending.
 video-loop-boundary.json proves native real-video loop restart in both engines
 with playback advancing past100ms after restart.
 

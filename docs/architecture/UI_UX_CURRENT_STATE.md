@@ -30,7 +30,16 @@ on corrected source, raw integrated logs and SHA256 ledger in proof/gallery-v2.
 Full PHP latest-main comparison336→342: same71FAIL/75ERROR identities,
 6 additionalPASS/46assertions; full baseline FAIL. Structure312/build/Pint/diff
 PASS. Protected Values/main scroll indicator source unchanged; stash retained.
-STATUS: PASS integrated local scoped; BLOCKED_BY_MISSING_EVIDENCE corrected CI.
+CI38130228969 on2b0bf545: Gallery PASS both engines (8 tests per engine);
+heading38130229009 PASS. Values38130228955 Chromium PASS; WebKit12PASS/
+2FAIL due ResizeObserver loop warnings on card and fallback resize. Previous
+ac22aeef Values CI38129531135 PASS both engines, proving introduced reflow
+refresh writes inside observer delivery conflict with Values measurement.
+DECISION: coalesce refresh into one event-driven animation frame after observer
+delivery; cancel on suspend/dispose. No continuous loop or Values source edit.
+Owner next task accepted: take over PR93 after Gallery completes, unify Values
+entry/flip/exit response without spring; existing PR93 work preserved.
+STATUS: PASS scoped Gallery; FAIL integration before scheduling correction.
 NEXT channel Terminal Codex: fix Gallery resize reconciliation, renew proof.
 
 ## Gallery V2 final owner correction — 2026-10-11

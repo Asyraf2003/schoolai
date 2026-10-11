@@ -71,8 +71,10 @@ No-JS/reduced/missing GSAP gives complete static responsive media and copy.
 ## AI_ASSUMPTIONS
 
 26/30 opening example means86.7vw; short/wide viewports cap opening height84vh.
-“Near80% of last strand” maps to Gallery beginning with its root at70% viewport
-and90svh overlap against the existing500svh Values field. Compact flow content
+Original last-strand80% entry maps to Gallery root at70% viewport with90svh
+overlap; latest owner card-body15–20% correction gates the heading independently.
+Main integration shortens enhanced desktop Values from500svh to375svh; compact
+flow stays500svh. Gallery reads current bounds without taking Values ownership. Compact flow content
 may extend that field; complete cards take precedence over masking their end.
 Poster photographs are existing facility catalog assets, not extracted frames.
 Native Safari/physical-device/field performance certification is not inferred.
@@ -97,8 +99,8 @@ Unknown videos without a verified poster are excluded. No DB/schema/CRUD change.
 
 ## Storyboard / responsive / locale
 
-Progress0: dark entry/large shared section heading; native rise preserves the
-heading/main gap. Before measured stage-top boundary, main remains large and
+Progress0: dark entry; shared section heading is held until Values card bodies
+have at most20% remaining (18% gate). Native rise preserves heading/main gap. Before measured stage-top boundary, main remains large and
 secondary media remain at least one viewport below it. Boundary→.52: centered
 shrink plus secondary approach. Words start at60% of that measured interval.
 At.52 main center is viewport center,10 media form3–4–3 and first word is clear.
@@ -114,6 +116,9 @@ Owner integrated main dae40c14 via d3108694/ac22aeef; Values hold40% and
 passive scroll indicator remain read-only. PR93 Values exit work remains separate.
 Gallery-only preceding-world ResizeObserver reconciles the proven asynchronous
 375svh↔500svh Values flow remeasurement without changing Values owners.
+Writes coalesce into one event-driven frame after observer delivery, canceled
+on suspend/dispose; direct refresh inside observer delivery reproduced WebKit
+ResizeObserver loop warnings in integrated card/fallback tests.
 Reduced/static paths show all10 items without overlap or inaccessible controls.
 
 ## SCOPE / file ownership / OUT_OF_SCOPE
@@ -125,7 +130,7 @@ Latest explicit background request permits only Gallery-owned seam paint of the
 preceding world; its existing motion ownership remains protected.
 Forbidden: Hero/video system, Header/navigation, About, Program/card/detail,
 Values/card/headings/SVG paths/marquee motion, articles, /galeri, legacy model/
-admin/CRUD, schema and dependencies. No added renderer/RAF/per-item scroll loop.
+admin/CRUD, schema and dependencies. No added renderer/continuous RAF/per-item scroll loop.
 ValuesLineBrowser/Render tests scope trigger counts to Values id and reconcile
 native scroll after refresh. No Values product source changes.
 
