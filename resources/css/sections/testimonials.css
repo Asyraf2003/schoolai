@@ -52,10 +52,11 @@
     border-radius: clamp(.65rem, 1.6vw, 1.45rem); background: #20201d;
 }
 .testimonials__card img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; z-index: -2; }
-.testimonials__card::before { content: ''; position: absolute; inset: 0; background: #000b; z-index: -1; }
+.testimonials__card::before { content: ''; position: absolute; inset: 0; background: #0000001a; z-index: -1; }
 .testimonials__content {
     display: flex; flex-direction: column; justify-content: space-between;
     padding: clamp(.6rem, 1.35vw, 1.65rem); color: #fff;
+    text-shadow: 0 1px 3px #000, 0 2px 12px #000b;
 }
 .testimonials blockquote { margin: 0; font-size: clamp(.875rem, 1.22vw, 1.15rem); font-weight: 700; line-height: 1.2; text-align: start; }
 .testimonials blockquote p { margin: 0; }

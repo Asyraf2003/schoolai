@@ -32,8 +32,9 @@ test('release glides with diminishing steps and stops without a long queue', () 
     const steps = Array.from({ length: 16 }, (_, index) => takePacingStep(state, 100 + index * 1000 / 60));
     assert.ok(steps.every(step => step > 0));
     assert.ok(steps.every((step, index) => !index || step < steps[index - 1]));
-    assert.ok(steps.reduce((sum, step) => sum + step, 0) <= 350);
-    assert.equal(takePacingStep(state, 400), 0);
+    const travel = steps.reduce((sum, step) => sum + step, 0);
+    assert.ok(travel > 400 && travel < 550, `Glide distance ${travel}`);
+    assert.equal(takePacingStep(state, 1700), 0);
     assert.equal(state.pending, 0);
 });
 

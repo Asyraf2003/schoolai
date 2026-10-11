@@ -1,7 +1,8 @@
 export const SCROLL_DEBT_REFERENCE_PX = 224;
-export const SCROLL_IDLE_CUTOFF_MS = 260;
+export const SCROLL_IDLE_CUTOFF_MS = 1500;
 const RESPONSE_MS = 45;
-const COAST_MS = 90;
+const COAST_MS = 600;
+const MAX_COAST_PX = 1400;
 
 export const clampScroll = (value, lower, upper) => Math.max(lower, Math.min(upper, value));
 
@@ -59,7 +60,7 @@ export function takePacingStep(state, now, ranges = [], position = 0) {
     const released = now - state.lastInput > 34;
     if (released && !state.coasting) {
         // Replace unspent input with a short coast from movement delivered.
-        state.pending = Math.sign(state.pending) * Math.min(SCROLL_DEBT_REFERENCE_PX, Math.abs(state.velocity) * COAST_MS / 1000);
+        state.pending = Math.sign(state.pending) * Math.min(MAX_COAST_PX, Math.abs(state.velocity) * COAST_MS / 1000);
         state.coasting = true;
     }
     let requested = state.coasting
