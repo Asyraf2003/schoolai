@@ -48,13 +48,19 @@ export async function galleryAt(page, progress) {
 export function galleryState() {
     const rect = e => { const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height, bottom: r.bottom }; };
     const heading = document.querySelector('[data-gallery-heading]');
+    const cardViewport = document.querySelector('[data-values-cards-viewport]');
+    const cardClipTop = getComputedStyle(cardViewport).position === 'sticky' ? Math.max(0, cardViewport.getBoundingClientRect().top) : 0;
+    const valuesRemaining = Math.max(...[...document.querySelectorAll('[data-values-card-inner]')].map(card => {
+        const r = card.getBoundingClientRect();
+        return Math.max(0, r.bottom - cardClipTop) / Math.max(1, r.height);
+    }));
     const lastStrand = [...document.querySelectorAll('[data-values-line-path]')].at(-1);
     const filterBlur = e => parseFloat(getComputedStyle(e).filter.match(/[\d.]+/)?.[0] ?? 0);
     const pixel = document.createElement('canvas').getContext('2d');
     pixel.fillStyle = getComputedStyle(document.querySelector('[data-program-values]')).backgroundColor;
     pixel.fillRect(0, 0, 1, 1);
     return {
-        width: innerWidth, height: innerHeight, overflow: document.documentElement.scrollWidth > innerWidth,
+        valuesRemaining, width: innerWidth, height: innerHeight, overflow: document.documentElement.scrollWidth > innerWidth,
         heading: { ...rect(heading), color: getComputedStyle(heading).color, size: getComputedStyle(heading).fontSize,
             visibility: getComputedStyle(heading).visibility,
             valuesSize: getComputedStyle(document.querySelector('[data-values-heading]')).fontSize },

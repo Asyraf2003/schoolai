@@ -39,7 +39,13 @@ DECISION: coalesce refresh into one event-driven animation frame after observer
 delivery; cancel on suspend/dispose. No continuous loop or Values source edit.
 Owner next task accepted: take over PR93 after Gallery completes, unify Values
 entry/flip/exit response without spring; existing PR93 work preserved.
-STATUS: PASS scoped Gallery; FAIL integration before scheduling correction.
+Onad67aa9f, Chromium local10/10 PASS (Gallery6+Values4); WebKit ongoing.
+CI38131051220 Chromium PASS; WebKit stops on stale last-strand80% assertion
+at1440 after six width profiles. Owner explicitly superseded line-based title
+entry with actual card-body15–20% gate; new heading witness already certifies it.
+DECISION: replace obsolete assertion with actual visible-body/held-heading check
+across all27 profiles; require visible completed heading after actual exit.
+STATUS: PASS scoped local Chromium; BLOCKED_BY_MISSING_EVIDENCE final CI.
 NEXT channel Terminal Codex: fix Gallery resize reconciliation, renew proof.
 
 ## Gallery V2 final owner correction — 2026-10-11

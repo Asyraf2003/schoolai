@@ -24,7 +24,7 @@ for (const engine of engines) {
                     assert.equal(title.heading.color, 'rgb(255, 255, 255)');
                     assert.deepEqual(title.backgroundRGB, [8, 9, 11]);
                     assert.equal(title.typeVisible, 'hidden');
-                    assert.ok(title.lastDraw > .65 && title.lastDraw < .95, 'heading enters near final strand80%');
+                    if (title.valuesRemaining > .205) assert.equal(title.heading.visibility, 'hidden', 'heading waits while more than20% of cards remain');
                     assert.ok(title.heading.y > 0 && title.heading.y < 900, 'large title precedes opening media');
                     const before = await galleryAt(page, 0);
                     assert.deepEqual(before.backgroundRGB, [32, 56, 255], 'reverse restores Values blue');
@@ -32,7 +32,8 @@ for (const engine of engines) {
                     const gap = Math.max(6, Math.min(width * .011, 16));
                     assert.ok(Math.abs(title.items[0].y - title.header.bottom - gap) < 1, 'title and main media rise with a close fixed gap');
                     await galleryAt(page, .075);
-                    await page.waitForFunction(() => document.querySelector('[data-gallery-heading]').dataset.headingState === 'complete');
+                    await page.waitForFunction(() => document.querySelector('[data-gallery-heading]').dataset.headingState === 'complete'
+                        && getComputedStyle(document.querySelector('[data-gallery-heading]')).visibility === 'visible');
                     const opening = await galleryOpening(page);
                     assert.ok(Math.abs(opening.items[0].width - Math.min(width * 26 / 30, 900 * .84 / .5625)) < 1);
                     assert.equal(opening.items[0].opacity, 1);
