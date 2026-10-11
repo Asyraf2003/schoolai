@@ -1,18 +1,21 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-## Stories & Insights heading only — 2026-10-12
+## Stories & Insights OLD heading parity correction — 2026-10-12
 
-OWNER_ACCEPTED: implement progressively after Testimonials; first heading alone,
-then first video, then further videos after owner feedback.
-FACT: V2 homepage currently ends after Testimonials; Artikel navigation points
-to #artikel without a target. Active branch is feat/natural-scroll-testimonials.
-GOAL: accessible heading on a standalone white section after Testimonials,
-ID/EN “Stories & Insights”, AR “قصص ورؤى”, responsive and RTL aligned.
-DECISION: title-only markup, CSS and locale; no media, JS or scroll owner changes.
-PROOF: source placement and test added; build, PHP/Chromium/WebKit and owner
-visual confirmation require local execution.
-STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser validation.
-NEXT execution channel: owner/local terminal; pull feature and verify heading.
+OWNER_ACCEPTED: proceed one visible capability at a time; correct heading before
+the first video. Initial heading was incorrectly a heavy one-line text block.
+FACT: OLD article showcase uses two display lines, 360 weight, .84 leading,
+-.055em tracking, opposite vertical reveal and later horizontal lower-line
+shift; Program/Values V2 use the same shared section-heading engine.
+DECISION: Stories adopts two semantic/visual lines, display scales and V2
+responsive gutters; its lower line moves toward the physical center and RTL
+mirrors movement. Reuse shared heading controller with 900ms reveal then shift.
+Existing Program/Values behavior remains unchanged; no media/scroll/Testimonials
+changes. No-JS remains visible, reduced motion renders static.
+PROOF: authored source and focused DOM test; local structure, build, PHP,
+Chromium/WebKit and owner visual feedback remain unverified in this channel.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser proof.
+NEXT execution channel: owner/local terminal; pull feature and inspect heading.
 
 
 ## Owner correction: equal corner gutters / equal reading hold — 2026-10-12

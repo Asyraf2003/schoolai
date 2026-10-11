@@ -1,22 +1,80 @@
 .stories {
+    --stories-heading-sign: 1;
+    --stories-heading-shift: clamp(2.75rem, 7vw, 9rem);
+    position: relative;
+    padding-block: clamp(5rem, 9vw, 9rem);
     background: #fff;
-    color: #151515;
-    padding-block: clamp(4rem, 8vw, 8rem) clamp(5rem, 10vw, 10rem);
+    color: #152018;
+    scroll-margin-block-start: var(--v2-header-block-size);
 }
 .stories__header {
-    inline-size: min(100% - 2 * var(--v2-space-page), 100rem);
+    inline-size: 84%;
     margin-inline: auto;
+    padding-block: clamp(1rem, 2.6vw, 2.5rem) clamp(2.5rem, 6vw, 5rem);
 }
-.stories h2 {
-    max-inline-size: 14ch;
+.stories__heading {
+    display: grid;
+    gap: .04em;
     margin: 0;
-    font-size: clamp(3rem, 8vw, 8.5rem);
-    font-weight: 650;
-    line-height: .95;
+    font-size: clamp(3.4rem, 15vw, 7rem);
+    font-weight: 360;
+    font-variation-settings: "wght" 360;
+    font-synthesis: none;
+    line-height: .84;
     letter-spacing: -.055em;
     text-align: start;
     text-transform: uppercase;
-    text-wrap: balance;
 }
-[lang="ar"] .stories { font-family: Cairo, var(--v2-font); }
-[lang="ar"] .stories h2 { letter-spacing: normal; line-height: 1.35; text-transform: none; }
+.stories__heading-clip {
+    display: block;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    overflow: hidden;
+    padding-block: .08em;
+}
+.stories__heading-clip > span { display: block; overflow-wrap: anywhere; }
+[data-stories-heading][data-heading-state="idle"] [data-stories-heading-line] {
+    transform: translateY(116%);
+    opacity: 0;
+}
+[data-stories-heading][data-heading-state="idle"] .stories__heading-clip:nth-child(2) > span {
+    transform: translateY(-116%);
+}
+[data-stories-heading][data-heading-state="idle"] .stories__heading-clip:nth-child(2),
+[data-stories-heading][data-heading-state="revealing"] .stories__heading-clip:nth-child(2) {
+    transform: translateX(0);
+}
+[data-stories-heading][data-heading-state="shifting"] .stories__heading-clip:nth-child(2),
+[data-stories-heading][data-heading-state="complete"] .stories__heading-clip:nth-child(2),
+[data-stories-heading][data-heading-state="static"] .stories__heading-clip:nth-child(2) {
+    transform: translateX(calc(var(--stories-heading-sign) * var(--stories-heading-shift)));
+}
+[lang="ar"] .stories {
+    --stories-heading-sign: -1;
+    font-family: Cairo, var(--v2-font);
+}
+[lang="ar"] .stories__heading {
+    font-weight: 500;
+    font-variation-settings: normal;
+    line-height: 1.35;
+    letter-spacing: normal;
+    text-transform: none;
+}
+@media (max-width: 639px) {
+    .stories { --stories-heading-shift: 0rem; }
+    .stories__header { inline-size: 92%; }
+    .stories__heading { font-size: clamp(3.25rem, 16vw, 5rem); }
+}
+@media (min-width: 768px) { .stories__header { inline-size: 91.6667%; } }
+@media (min-width: 1024px) { .stories__heading { font-size: clamp(7rem, 12vw, 16rem); } }
+@media (min-width: 1280px) { .stories__header { inline-size: 90%; } }
+@media (min-width: 1280px) and (max-height: 620px) {
+    .stories__heading { font-size: clamp(5rem, 10vw, 7rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .stories { --stories-heading-shift: 0rem; }
+    .stories__heading-clip, .stories__heading-clip > span {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+}

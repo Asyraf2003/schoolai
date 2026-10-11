@@ -10,6 +10,7 @@ import { mountProgram } from './sections/program.js';
 import { mountValues } from './sections/values.js';
 import { mountValuesLine } from './sections/values-line.js';
 import { mountValuesCards } from './sections/values-cards.js';
+import { mountSectionHeading } from './sections/section-heading.js';
 
 // Composition root wires ports; each component owns its state and DOM.
 const cursor = mountCursor();
@@ -35,13 +36,15 @@ const valuesLine = mountValuesLine(document.querySelector('[data-values]'));
 const valuesCards = mountValuesCards(document.querySelector('[data-values]'));
 const gallery = mountGallery(document.querySelector('[data-gallery]'));
 const testimonials = mountTestimonials(document.querySelector('[data-testimonials]'));
+const storiesHeading = mountSectionHeading(document.querySelector('[data-stories]'), 'stories', 900, 116);
 const scrollPacing = mountScrollPacing(main, { scrollChanged: () => testimonials.synchronize() });
 window.addEventListener('pagehide', event => {
     gallery.suspend();
     testimonials.suspend();
+    storiesHeading.suspend();
     scrollIndicator.suspend();
     scrollPacing.suspend();
-    if (!event.persisted) { gallery.dispose(); testimonials.dispose(); }
+    if (!event.persisted) { gallery.dispose(); testimonials.dispose(); storiesHeading.dispose(); }
     hero.suspend();
     about.suspend();
     program.suspend();
@@ -55,4 +58,4 @@ window.addEventListener('pagehide', event => {
     if (!event.persisted) valuesCards.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); scrollIndicator.dispose(); scrollPacing.dispose(); }
 });
-window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
+window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); storiesHeading.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
