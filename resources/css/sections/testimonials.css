@@ -5,7 +5,8 @@
 .testimonials__row { display: flex; gap: clamp(1rem, 2vw, 2rem); padding: 1rem 4vw; overflow-x: auto; overscroll-behavior-inline: contain; }
 .testimonials__card { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: space-between; flex: 0 0 clamp(18rem, 32vw, 32rem); min-block-size: 15rem; padding: clamp(1.25rem, 2vw, 2rem); overflow: hidden; border-radius: 1rem; background: #192824; color: #fff; }
 .testimonials__card img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; z-index: -2; }
-.testimonials__card::before { content: ''; position: absolute; inset: 0; background: #071711b8; z-index: -1; }
+.testimonials__card::before { content: ''; position: absolute; inset: 0; background: #0717111a; z-index: -1; }
+.testimonials__card blockquote, .testimonials__card cite { text-shadow: 0 1px 3px #000, 0 2px 12px #000b; }
 .testimonials blockquote { margin: 0; font-size: clamp(1rem, 1.35vw, 1.35rem); }
 .testimonials blockquote p { margin: 0; }
 .testimonials cite { margin-block-start: 2rem; align-self: end; font-style: normal; font-size: .9rem; }
