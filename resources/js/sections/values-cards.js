@@ -1,5 +1,5 @@
 import { desktopCardFrame } from './values-card-desktop.js';
-import { responsiveFlipAngle, valuesSourceProgress } from './values-card-keyframes.js';
+import { responsiveFlipAngle, valuesSourceProgress, valuesExitScrollOffset } from './values-card-keyframes.js';
 import { clamp, createScrollMotion, updateScrollMotion } from './values-card-motion.js';
 
 export function mountValuesCards(root) {
@@ -70,8 +70,8 @@ export function mountValuesCards(root) {
         if (!capable || motion.matches || geometry.flow || !root.hasAttribute('data-line-ready')) { reset(); return; }
         root.dataset.cardsMotion = 'true'; running();
         const desktop = geometry.mode === 4;
-        const target = clamp((geometry.stickyTop - track.getBoundingClientRect().top)
-            / Math.max(1, track.offsetHeight - viewport.offsetHeight));
+        const scrollSpanPx = Math.max(1, track.offsetHeight - viewport.offsetHeight);
+        const target = clamp((geometry.stickyTop - track.getBoundingClientRect().top) / scrollSpanPx);
         const sample = updateScrollMotion(spring, target, last ? time - last : 1000 / 60, snap || !desktop);
         last = time; snap = false;
         root.dataset.cardsProgress = sample.visual.toFixed(5);
@@ -79,7 +79,8 @@ export function mountValuesCards(root) {
         const rects = desktop ? [] : cards.map(card => card.getBoundingClientRect());
         cards.forEach((card, index) => {
             let state;
-            if (desktop) state = desktopCardFrame(index, valuesSourceProgress(sample.visual), geometry, sample.momentum);
+            if (desktop) state = desktopCardFrame(index, valuesSourceProgress(sample.visual),
+                geometry, sample.momentum, valuesExitScrollOffset(target, scrollSpanPx));
             else {
                 const visible = clamp((innerHeight - rects[index].top) / rects[index].height);
                 const local = clamp((visible - (geometry.mode === 3 ? .16 : .5)) / (geometry.mode === 3 ? .62 : .5));

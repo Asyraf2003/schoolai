@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {
     VALUES_FULL_FRONT, VALUES_HOLD_RETENTION, VALUES_OLD_EXIT,
-    valuesSourceProgress, valuesCompactedProgress,
+    valuesSourceProgress, valuesCompactedProgress, valuesExitScrollOffset,
 } from '../../resources/js/sections/values-card-keyframes.js';
 import { desktopCardFrame } from '../../resources/js/sections/values-card-desktop.js';
 
@@ -13,14 +13,14 @@ const originalScale = VALUES_FULL_FRONT
 const frontEnd = VALUES_FULL_FRONT / originalScale;
 const exitStart = (VALUES_FULL_FRONT + oldHold * VALUES_HOLD_RETENTION) / originalScale;
 
-test('full card flip and exit retain their original pure choreography', () => {
+test('pre-exit card flip and hold retain their original pure choreography', () => {
     const geometry = {
         slots: [0, 1, 2, 3].map(i => ({ centerX: 100 + i * 300, centerY: 400 })),
         stageCenterX: 550, stageCenterY: 400,
         stageHeight: 800, cardWidth: 280, cardHeight: 400,
     };
     for (const source of [0, .006, .04, .052, .118, .2, .237,
-        VALUES_FULL_FRONT, .4, .65, VALUES_OLD_EXIT, .92, .98, 1]) {
+        VALUES_FULL_FRONT, .4, .65, VALUES_OLD_EXIT]) {
         const remapped = valuesSourceProgress(valuesCompactedProgress(source));
         assert.ok(Math.abs(source - remapped) < 1e-10, `source=${source} mapped=${remapped}`);
         for (let card = 0; card < 4; card++) {
@@ -48,6 +48,20 @@ test('desktop fully visible hold retains 40% of old distance', () => {
             assert.ok(retained >= .35 && retained <= .45,
                 `header=${headerTopVh} viewport=${viewportVh} retained=${retained}`);
         }
+    }
+});
+
+test('card exit travels exactly one pixel per physical scroll pixel, including reversal', () => {
+    const start = valuesCompactedProgress(VALUES_OLD_EXIT);
+    for (const span of [430, 1000, 1887, 2400]) {
+        assert.equal(valuesExitScrollOffset(start, span), 0);
+        assert.equal(valuesExitScrollOffset(start - .02, span), 0);
+        const [a, b] = [start + .02, start + .05];
+        const traveled = valuesExitScrollOffset(b, span) - valuesExitScrollOffset(a, span);
+        assert.ok(Math.abs(traveled - (b - a) * span) < 1e-10);
+        assert.equal(valuesExitScrollOffset(a, span), valuesExitScrollOffset(a, span));
+        assert.ok(valuesExitScrollOffset(1, span) <= span);
+        assert.ok(valuesExitScrollOffset(start, span) < valuesExitScrollOffset(b, span));
     }
 });
 

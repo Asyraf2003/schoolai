@@ -1,5 +1,24 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values desktop native-speed vertical exit — 2026-10-11
+
+OWNER_ACCEPTED: constant-speed document scroll should produce matching
+vertical card travel entering and leaving Values; remove abrupt accelerated
+desktop upward exit while retaining fully revealed/flip and hold40%.
+Issue #92. FACT: prior eased exit moves >one screen in ~0.16 compressed
+track progress, causing 3–4× physical scroll speed; sticky release already
+carries the card upward natively at 1 CSS pixel per scroll pixel.
+DECISION: retain stack/fan/flip and approved 40% hold, but replace
+eased exit Y with physical scroll delta since exit begins, using existing
+track geometry; let normal sticky release finish the leave at 1:1.
+No changes to runway/SVG dimensions, other sections, compact flows,
+reduced-motion, content, or dependencies.
+PROOF: PR CI must cover pixel-velocity and reverse browser regression,
+original pre-exit fidelity, Valores heading/SVG, build and PHP.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE until scoped CI and local visual check.
+NEXT: after owner finishes local Gallery merge safety, merge separately
+into main on verified Chromium/WebKit results.
+
 ## Values desktop card hold pacing — 2026-10-11
 
 OWNER_ACCEPTED: desktop four-card completed hold is ~40% of its prior
