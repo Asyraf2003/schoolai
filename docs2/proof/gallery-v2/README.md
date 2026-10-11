@@ -6,8 +6,10 @@ all initial white-background proof. Initial PNG captures have been replaced.
 
 ## Browser proof
 
-Chromium5/5 PASS (54.14s), WebKit5/5 PASS (141.38s).
-Raw logs gallery-owner-{engine}.log and gallery-scroll/lifecycle/viewport JSON.
+Latest semantic-correction rerun: Chromium5/5 PASS (69.10s), WebKit5/5 PASS
+(145.13s), raw gallery-final-{engine}.log, current scroll/lifecycle/viewport JSON
+and verified-source.json. Prior geometry-identical visual proof on49742cdc:
+Chromium5/5 (54.14s), WebKit5/5 (141.38s), gallery-owner-{engine}.log.
 ID/EN/AR ×360/390/640/768/1024/1280/1440/1536/1920 at900px height.
 Twelve boundary/short-height profiles through2560,500→600px resize and native
 wheel; hidden/reduced/static/error/missingGSAP/dispose and synthetic BFCache.
@@ -31,7 +33,9 @@ three locales,390/1440): populated quotes enter after the black hold, Gallery
 media remain fully hidden, and no horizontal overflow. Matching JPEGs reviewed.
 CI38117850566: Chromium PASS; WebKit4PASS/1cancelled by420s file timeout,
 without an assertion failure. Phase artifacts reached EN/ID and AR390.
-Heading38117850572 PASS both engines; Values38117850614 pending.
+Heading38117850572 and Values38117850614 PASS both engines (Values14/14
+per engine). Gallery partition run38118576424 on8b97c7e6 pending WebKit;
+Chromium PASS. Final semantic-correction publication CI pending.
 Gallery CI now partitions the unchanged27-profile matrix per locale into fresh
 bounded browser processes and records per-viewport duration/per-locale JSON.
 Final scoped CI status will be recorded before merge.
@@ -72,7 +76,15 @@ Build/serve seeded Laravel. Set PROGRAM_BROWSER_URL, PROGRAM_PLAYWRIGHT_MODULE,
 PROGRAM_ENGINES and existing PROGRAM_PROOF_DIRECTORY. Run the three Gallery
 browser test files in tests/Unit with node --test --test-concurrency=1.
 v2-gallery.yml repeats the same scope; v2-values-cards.yml proves integration.
-No native Safari/physical devices/native BFCache/reader speech/browser200% zoom/
+Accessibility-tree inspection found the paragraph aria-label was ignored while
+all animated words were hidden from assistive technology. One semantic sr-only
+sentence now exposes the complete localized copy, with visual words unchanged.
+accessibility-geometry.json proves18 cases in Chromium/WebKit ×ID/EN/AR ×
+390/720/960 CSS pixels at DPR2: equivalent200% physical780/1440/1920 layout,
+complete named media/copy, native keyboard panning/visible focus and touch tap.
+This is geometry/semantic-tree evidence, not native browser-menu zoom or reader
+speech. The latest full browser rerun separately asserts the sentence in all
+three locales. Native Safari/physical devices/native BFCache/reader speech/browser-menu zoom/
 Lighthouse100/field LCP-INP-CLS certification. Synthetic lifecycle proves handlers.
 Stage clipping during intentional entrance/exit remains part of choreography;
 final media geometry has no accidental overlap or horizontal overflow.

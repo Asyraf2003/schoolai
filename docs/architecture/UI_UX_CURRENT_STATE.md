@@ -22,7 +22,15 @@ file limit. Artifacts show EN/ID and AR390 completed; no assertion failure.
 Heading38117850572 PASS both engines; Values38117850614 still pending.
 DECISION: run each locale in a fresh bounded process, preserve all27 profiles
 and phase captures; record per-locale JSON and viewport timing.
-STATUS: PASS local scoped; BLOCKED_BY_MISSING_EVIDENCE final scoped CI.
+FACT accessibility-tree inspection: animated statement paragraph exposes no text
+because all visual words are aria-hidden and paragraph aria-label is ignored.
+DECISION: add one semantic sr-only sentence; retain visual word choreography.
+Values38117850614 now PASS14/14 per engine. CI on8b97c7e6 pending.
+PROOF correction: Chromium5/5 (69.10s), WebKit5/5 (145.13s) PASS; statement
+asserted in all3 locales. Accessibility tree/expanded geometry/keyboard focus/
+touch18 cases PASS; equivalent200% geometry, not native menu zoom or speech.
+No visible/layout/motion changes. Source SHA256 inventory in verified-source.json.
+STATUS: PASS latest local scoped; BLOCKED_BY_MISSING_EVIDENCE final scoped CI.
 Native Safari/physical devices/native BFCache/reader speech/Lighthouse100/field
 CWV certification is not claimed. Blueprint IMPLEMENTING until final proof.
 NEXT channel Terminal Codex: finish durable visual proof and scoped CI; gated merge.

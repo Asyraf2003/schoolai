@@ -14,6 +14,8 @@ for (const engine of engines) {
                 await locale(page, lang);
                 assert.equal(await page.locator('[data-gallery-video][src]').count(), 0, 'no video transfer before gallery proximity');
                 await galleryReady(page);
+                const statement = await page.locator('[data-gallery-statement] > .sr-only').textContent();
+                assert.ok((await page.locator('[data-gallery]').ariaSnapshot()).includes(statement), 'complete localized sentence in accessibility tree');
                 for (const width of [360, 390, 640, 768, 1024, 1280, 1440, 1536, 1920]) {
                     const started = performance.now();
                     await galleryResize(page, width, 900);

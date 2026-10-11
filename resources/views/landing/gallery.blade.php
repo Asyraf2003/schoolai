@@ -16,7 +16,8 @@
                 </figure>
             @endforeach
         </div>
-        <p class="gallery__statement" data-gallery-statement aria-label="{{ implode(' ', __('gallery_v2.statement_lines')) }}">
+        <p class="gallery__statement" data-gallery-statement>
+            <span class="sr-only">{{ implode(' ', __('gallery_v2.statement_lines')) }}</span>
             @foreach (__('gallery_v2.statement_lines') as $line)
                 <span class="gallery__statement-line" aria-hidden="true">@foreach (explode(' ', $line) as $word)<span data-gallery-word>{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</span>
             @endforeach

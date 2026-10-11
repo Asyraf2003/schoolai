@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-11T06:20:34.865Z",
+  "date": "2026-10-11T06:38:36.986Z",
   "platform": "linux",
   "url": "http://127.0.0.1:8020",
   "version": "153.0.8010.52",
@@ -363,7 +363,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.326708
+            "time": 0.276031
           },
           {
             "playing": false,
@@ -7949,7 +7949,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.116109
+            "time": 0
           },
           {
             "playing": false,
@@ -8143,7 +8143,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.18879
+            "time": 0
           },
           {
             "playing": false,
@@ -8337,7 +8337,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.259258
+            "time": 0.005603
           },
           {
             "playing": true,
@@ -9505,7 +9505,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.239397
+            "time": 0
           },
           {
             "playing": false,
@@ -14120,7 +14120,7 @@
             "bottom": 2307.71728515625,
             "opacity": 1,
             "column": "right",
-            "image": 0
+            "image": 1920
           },
           {
             "x": 18,
@@ -14130,7 +14130,7 @@
             "bottom": 2307.71728515625,
             "opacity": 1,
             "column": "right",
-            "image": 0
+            "image": 1920
           },
           {
             "x": 183,
@@ -14359,7 +14359,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.699096
+            "time": 0.42671
           },
           {
             "playing": false,
@@ -21789,7 +21789,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0
+            "time": 0.062209
           },
           {
             "playing": false,
@@ -21979,7 +21979,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0
+            "time": 0.162405
           },
           {
             "playing": false,
@@ -22169,7 +22169,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0
+            "time": 0.223356
           },
           {
             "playing": true,
@@ -23313,7 +23313,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.249279
+            "time": 0.218179
           },
           {
             "playing": false,
@@ -27836,7 +27836,7 @@
             "bottom": 2335.68603515625,
             "opacity": 1,
             "column": "right",
-            "image": 0
+            "image": 1920
           },
           {
             "x": 183,
@@ -27846,7 +27846,7 @@
             "bottom": 2335.68603515625,
             "opacity": 1,
             "column": "right",
-            "image": 0
+            "image": 1920
           },
           {
             "x": 18,
@@ -28067,7 +28067,7 @@
           {
             "playing": true,
             "hydrated": true,
-            "time": 0.684044
+            "time": 0.235207
           },
           {
             "playing": false,

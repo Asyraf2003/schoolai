@@ -1,0 +1,654 @@
+{
+  "date": "2026-10-11T06:38:23.369Z",
+  "profile": "Reduced motion, touch-enabled viewport, DPR2: equivalent 200% geometry at physical780/1440/1920; not native browser menu zoom or screen-reader speech",
+  "cases": [
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "id",
+      "geometry": {
+        "width": 390,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 31.203125,
+            "right": 215.203125,
+            "width": 184
+          },
+          {
+            "x": 78.40625,
+            "right": 311.578125,
+            "width": 233.171875
+          },
+          {
+            "x": 36.125,
+            "right": 353.84375,
+            "width": 317.71875
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 1
+      },
+      "semanticSentence": "Fasilitas terbaik. Untuk generasi hebat.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "id",
+      "geometry": {
+        "width": 720,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 57.59375,
+            "right": 397.265625,
+            "width": 339.671875
+          },
+          {
+            "x": 241.984375,
+            "right": 478,
+            "width": 236.015625
+          },
+          {
+            "x": 199.1875,
+            "right": 520.78125,
+            "width": 321.59375
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 23
+      },
+      "semanticSentence": "Fasilitas terbaik. Untuk generasi hebat.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "id",
+      "geometry": {
+        "width": 960,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 40,
+            "right": 392.265625,
+            "width": 352.265625
+          },
+          {
+            "x": 322.65625,
+            "right": 637.328125,
+            "width": 314.671875
+          },
+          {
+            "x": 265.609375,
+            "right": 694.390625,
+            "width": 428.78125
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 42
+      },
+      "semanticSentence": "Fasilitas terbaik. Untuk generasi hebat.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "en",
+      "geometry": {
+        "width": 390,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 31.203125,
+            "right": 267.484375,
+            "width": 236.28125
+          },
+          {
+            "x": 50.828125,
+            "right": 339.140625,
+            "width": 288.3125
+          },
+          {
+            "x": 49.71875,
+            "right": 340.265625,
+            "width": 290.546875
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 2
+      },
+      "semanticSentence": "Exceptional spaces. For an extraordinary generation.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "en",
+      "geometry": {
+        "width": 720,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 57.59375,
+            "right": 493.796875,
+            "width": 436.203125
+          },
+          {
+            "x": 214.078125,
+            "right": 505.890625,
+            "width": 291.8125
+          },
+          {
+            "x": 126,
+            "right": 593.984375,
+            "width": 467.984375
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 18
+      },
+      "semanticSentence": "Exceptional spaces. For an extraordinary generation.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "en",
+      "geometry": {
+        "width": 960,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 40,
+            "right": 492.359375,
+            "width": 452.359375
+          },
+          {
+            "x": 285.453125,
+            "right": 674.53125,
+            "width": 389.078125
+          },
+          {
+            "x": 168.03125,
+            "right": 791.96875,
+            "width": 623.9375
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 31
+      },
+      "semanticSentence": "Exceptional spaces. For an extraordinary generation.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "ar",
+      "geometry": {
+        "width": 390,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 163.046875,
+            "right": 358.796875,
+            "width": 195.75
+          },
+          {
+            "x": 90.421875,
+            "right": 299.59375,
+            "width": 209.171875
+          },
+          {
+            "x": 121.171875,
+            "right": 268.84375,
+            "width": 147.671875
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": -2
+      },
+      "semanticSentence": "مرافق متميزة. لجيل واعد.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "ar",
+      "geometry": {
+        "width": 720,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 301.03125,
+            "right": 662.40625,
+            "width": 361.375
+          },
+          {
+            "x": 254.140625,
+            "right": 465.859375,
+            "width": 211.71875
+          },
+          {
+            "x": 285.28125,
+            "right": 434.734375,
+            "width": 149.453125
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": -19
+      },
+      "semanticSentence": "مرافق متميزة. لجيل واعد.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "ar",
+      "geometry": {
+        "width": 960,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 545.234375,
+            "right": 920,
+            "width": 374.765625
+          },
+          {
+            "x": 338.859375,
+            "right": 621.140625,
+            "width": 282.28125
+          },
+          {
+            "x": 380.34375,
+            "right": 579.640625,
+            "width": 199.296875
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": -30
+      },
+      "semanticSentence": "مرافق متميزة. لجيل واعد.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "id",
+      "geometry": {
+        "width": 390,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 31.203125,
+            "right": 215.19134521484375,
+            "width": 183.98822021484375
+          },
+          {
+            "x": 78.40625,
+            "right": 311.5625,
+            "width": 233.15625
+          },
+          {
+            "x": 36.140625,
+            "right": 353.828125,
+            "width": 317.6875
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 52
+      },
+      "semanticSentence": "Fasilitas terbaik. Untuk generasi hebat.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "id",
+      "geometry": {
+        "width": 720,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 57.59375,
+            "right": 397.2642822265625,
+            "width": 339.6705322265625
+          },
+          {
+            "x": 241.984375,
+            "right": 477.984375,
+            "width": 236
+          },
+          {
+            "x": 199.1875,
+            "right": 520.78125,
+            "width": 321.59375
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 53
+      },
+      "semanticSentence": "Fasilitas terbaik. Untuk generasi hebat.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "id",
+      "geometry": {
+        "width": 960,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 40,
+            "right": 392.25091552734375,
+            "width": 352.25091552734375
+          },
+          {
+            "x": 322.65625,
+            "right": 637.328125,
+            "width": 314.671875
+          },
+          {
+            "x": 265.609375,
+            "right": 694.375,
+            "width": 428.765625
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 133
+      },
+      "semanticSentence": "Fasilitas terbaik. Untuk generasi hebat.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "en",
+      "geometry": {
+        "width": 390,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 31.203125,
+            "right": 267.4745788574219,
+            "width": 236.27145385742188
+          },
+          {
+            "x": 50.828125,
+            "right": 339.140625,
+            "width": 288.3125
+          },
+          {
+            "x": 49.71875,
+            "right": 340.25,
+            "width": 290.53125
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 8
+      },
+      "semanticSentence": "Exceptional spaces. For an extraordinary generation.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "en",
+      "geometry": {
+        "width": 720,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 57.59375,
+            "right": 493.78717041015625,
+            "width": 436.19342041015625
+          },
+          {
+            "x": 214.078125,
+            "right": 505.890625,
+            "width": 291.8125
+          },
+          {
+            "x": 126,
+            "right": 593.96875,
+            "width": 467.96875
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 53
+      },
+      "semanticSentence": "Exceptional spaces. For an extraordinary generation.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "en",
+      "geometry": {
+        "width": 960,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 40,
+            "right": 492.3487243652344,
+            "width": 452.3487243652344
+          },
+          {
+            "x": 285.453125,
+            "right": 674.53125,
+            "width": 389.078125
+          },
+          {
+            "x": 168.03125,
+            "right": 791.953125,
+            "width": 623.921875
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": 133
+      },
+      "semanticSentence": "Exceptional spaces. For an extraordinary generation.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "ar",
+      "geometry": {
+        "width": 390,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 163.05569458007812,
+            "right": 358.796875,
+            "width": 195.74118041992188
+          },
+          {
+            "x": 88.78125,
+            "right": 301.21875,
+            "width": 212.4375
+          },
+          {
+            "x": 119.53125,
+            "right": 270.46875,
+            "width": 150.9375
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": -3
+      },
+      "semanticSentence": "مرافق متميزة. لجيل واعد.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "ar",
+      "geometry": {
+        "width": 720,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 301.03814697265625,
+            "right": 662.40625,
+            "width": 361.36810302734375
+          },
+          {
+            "x": 252.5,
+            "right": 467.5,
+            "width": 215
+          },
+          {
+            "x": 283.625,
+            "right": 436.375,
+            "width": 152.75
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": -53
+      },
+      "semanticSentence": "مرافق متميزة. لجيل واعد.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "ar",
+      "geometry": {
+        "width": 960,
+        "dpr": 2,
+        "overflow": false,
+        "ink": [
+          {
+            "x": 545.248046875,
+            "right": 920,
+            "width": 374.751953125
+          },
+          {
+            "x": 336.640625,
+            "right": 623.34375,
+            "width": 286.703125
+          },
+          {
+            "x": 378.140625,
+            "right": 581.84375,
+            "width": 203.703125
+          }
+        ]
+      },
+      "focus": {
+        "active": true,
+        "outline": "solid",
+        "outlineWidth": "3px",
+        "scroll": -133
+      },
+      "semanticSentence": "مرافق متميزة. لجيل واعد.",
+      "touchTap": "PASS",
+      "keyboardPan": "PASS"
+    }
+  ]
+}

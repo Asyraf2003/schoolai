@@ -136,6 +136,9 @@ real Testimonial handoffs and Values line integration3/3 PASS. CI38117850566
 Chromium PASS; WebKit4PASS/1cancelled at420s aggregate file limit without an
 assertion failure. Same27 profiles now partitioned per locale into fresh bounded
 processes with per-viewport duration proof; final CI pending in proof/gallery-v2.
+Accessibility tree and18 DPR2 expanded-geometry cases PASS: full localized
+sentence,10 named media, keyboard/focus and touch tap. An sr-only full sentence
+fixes the inaccessible animated paragraph without changing visible copy.
 No native Safari, native BFCache restoration, screen-reader speech, Lighthouse100
 or field CWV certification claim. Synthetic lifecycle checks prove handlers only.
 

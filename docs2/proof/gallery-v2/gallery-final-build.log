@@ -1,0 +1,20 @@
+
+> build
+> vite build
+
+vite v8.1.3 building client environment for production...
+[2Ktransforming...✓ 44 modules transformed.
+rendering chunks...
+computing gzip size...
+public/build/manifest.json                                   2.30 kB │ gzip:  0.47 kB
+public/build/assets/cairo-arabic-400-normal-DN15VWMM.woff2  13.29 kB
+public/build/assets/cairo-arabic-500-normal-DDl0i4Xv.woff2  13.89 kB
+public/build/assets/cairo-arabic-600-normal-rkrvveqO.woff2  13.89 kB
+public/build/assets/cairo-arabic-700-normal-D3nDedWX.woff2  13.95 kB
+public/build/assets/inter-latin-variable-Dx4kXJAl.woff2     48.25 kB
+public/build/assets/index-CoFkMFfh.css                      48.01 kB │ gzip: 10.42 kB
+public/build/assets/program-gsap-CJPR31eD.js                 0.10 kB │ gzip:  0.11 kB
+public/build/assets/program-kinetic-DadgDMlT.js              3.44 kB │ gzip:  1.58 kB
+public/build/assets/index-Djyh2iC5.js                       57.39 kB │ gzip: 17.92 kB
+
+✓ built in 124ms
