@@ -23,6 +23,10 @@ sentence about excellent facilities for the next generation and confirms text
 in front of moving media. Final fade: “100vh sampe ke50vh ...semua sudah hilang
 ...gelap”; all media/text start blur/fade when the last bottom edge is at viewport
 bottom and disappear fully when that edge reaches viewport middle.
+Latest entry correction: “ketika kartu sudah naik hampir sempurna sisa15–20%
+badannya ...judul mulai nongol”; early title must remain hidden until at most20%
+of each exiting Values card remains at its actual clip boundary. This overrides
+the earlier line80% title trigger; the already-approved black paint timing remains.
 Issue → branch → PR → merge main only after relevant checks PASS.
 
 ## FACT / LEGACY_REFERENCE
@@ -51,6 +55,11 @@ Gallery owns the handoff paint state on the preceding world: data-gallery-dark
 changes only its background to black and hides the decorative type plane.
 The overlap is transparent so incoming Gallery never masks Values cards.
 Existing Values animation/card/line/marquee controllers and geometry are unchanged.
+Gallery-only heading gate reads actual exiting card bounds, including spring
+settling, before mounting the shared900ms heading reveal. Reverse closes the gate
+again while cards remain. No layout shift or separate animation loop; reduced/
+static paths retain the complete heading. One bounded observer reads existing
+Values progress without changing it.
 
 Copy: ID “Fasilitas terbaik. Untuk generasi hebat.”;
 EN “Exceptional spaces. For an extraordinary generation.”;

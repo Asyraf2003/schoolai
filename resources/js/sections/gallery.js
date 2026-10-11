@@ -1,12 +1,12 @@
 import { loadGsapLibrary } from './gsap-loader.js';
 import { createGalleryTimeline } from './gallery-timeline.js';
 import { mountGalleryMedia } from './gallery-media.js';
-import { mountSectionHeading } from './section-heading.js';
+import { mountGalleryHeading } from './gallery-heading.js';
 
 export function mountGallery(root) {
     if (!root) return { suspend() {}, resume() {}, dispose() {} };
     const lifecycle = new AbortController();
-    const heading = mountSectionHeading(root, 'gallery', 900, 108);
+    const heading = mountGalleryHeading(root);
     const media = mountGalleryMedia(root);
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let timeline;

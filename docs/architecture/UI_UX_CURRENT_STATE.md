@@ -1,5 +1,19 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Gallery title after Values exit — 2026-10-11
+
+OWNER_RAW: title currently appears before cards rise; begin title only when cards
+have nearly left, with15–20% of body remaining. Accepted as latest scope.
+FACT: shared heading currently starts solely at heading top<88vh, independently
+of Values spring; prior settled captures still show most card bodies at entry.
+GAP: this viewport-only reveal permits collision on slow and fast scroll.
+DECISION: Gallery-owned gate reads actual card bounds at their clip boundary,
+allows reveal at<=20% remaining, hides it again on reverse. Keep layout, native
+title/main gap, dark paint timing, all media choreography and Values owners.
+Blueprint MAP-V2-18 amended OWNER_ACCEPTED / IMPLEMENTING.
+STATUS: FAIL previous entry timing; latest bounded correction pending proof.
+NEXT channel Terminal Codex: implement Gallery gate and browser entry proof.
+
 ## Gallery V2 final owner correction — 2026-10-11
 
 OWNER_ACCEPTED: MAP-V2-18 current storyboard; commit49742cdc, PR87 OPEN.

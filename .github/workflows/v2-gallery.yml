@@ -76,6 +76,7 @@ jobs:
             PROGRAM_GALLERY_LOCALES=$lang node --test --test-timeout=420000 tests/Unit/GalleryScrollBrowser.test.mjs
           done
           node --test --test-concurrency=1 --test-timeout=420000 \
+            tests/Unit/GalleryHeadingBrowser.test.mjs \
             tests/Unit/GalleryFallbackBrowser.test.mjs \
             tests/Unit/GalleryViewportBrowser.test.mjs
       - uses: actions/upload-artifact@v4

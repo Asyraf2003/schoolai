@@ -20,7 +20,6 @@ for (const engine of engines) {
                     const started = performance.now();
                     await galleryResize(page, width, 900);
                     const title = await galleryAt(page, .005);
-                    await page.waitForFunction(() => document.querySelector('[data-gallery-heading]').dataset.headingState === 'complete');
                     assert.equal(title.heading.size, title.heading.valuesSize);
                     assert.equal(title.heading.color, 'rgb(255, 255, 255)');
                     assert.deepEqual(title.backgroundRGB, [8, 9, 11]);
@@ -32,6 +31,8 @@ for (const engine of engines) {
                     assert.equal(before.typeVisible, 'visible');
                     const gap = Math.max(6, Math.min(width * .011, 16));
                     assert.ok(Math.abs(title.items[0].y - title.header.bottom - gap) < 1, 'title and main media rise with a close fixed gap');
+                    await galleryAt(page, .075);
+                    await page.waitForFunction(() => document.querySelector('[data-gallery-heading]').dataset.headingState === 'complete');
                     const opening = await galleryOpening(page);
                     assert.ok(Math.abs(opening.items[0].width - Math.min(width * 26 / 30, 900 * .84 / .5625)) < 1);
                     assert.equal(opening.items[0].opacity, 1);

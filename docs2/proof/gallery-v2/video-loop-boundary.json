@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-11T06:48:46.114Z",
+  "method": "Real R2 opening video playing; seek to duration minus300ms, observe native loop back to below2s and resumed advancement past100ms. Not an unseeked whole-duration soak.",
+  "cases": [
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "before": {
+        "url": "https://media.almustaqbal.sch.id/gallery/media/it-v1.mp4",
+        "time": 0.122762,
+        "duration": 3.866016,
+        "loop": true,
+        "paused": false
+      },
+      "after": {
+        "time": 0.109713,
+        "paused": false,
+        "ready": 4,
+        "loop": true
+      },
+      "proof": "Native playback loops at end boundary and advances past100ms after restart without UI"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "before": {
+        "url": "https://media.almustaqbal.sch.id/gallery/media/it-v1.mp4",
+        "time": 0.129683777,
+        "duration": 3.867,
+        "loop": true,
+        "paused": false
+      },
+      "after": {
+        "time": 0.125369112,
+        "paused": false,
+        "ready": 4,
+        "loop": true
+      },
+      "proof": "Native playback loops at end boundary and advances past100ms after restart without UI"
+    }
+  ]
+}

@@ -11,6 +11,7 @@
 .gallery__header h2 { margin: 0; font-size: clamp(3.4rem, 15vw, 7rem); font-weight: 360; line-height: .84; letter-spacing: -.055em; text-transform: uppercase; }
 .gallery__heading-clip { display: block; overflow: hidden; padding-block: .08em; }
 .gallery__heading-clip > span { display: block; }
+.gallery[data-gallery-heading-waiting] [data-gallery-heading] { visibility: hidden; }
 [data-gallery-heading][data-heading-state="idle"] [data-gallery-heading-line] { transform: translateY(108%); opacity: 0; }
 .gallery__composition { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 2rem); inline-size: 88%; margin-inline: auto; }
 .gallery__item { position: relative; min-inline-size: 0; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: clamp(.4rem, .8vw, .8rem); background: #e8edf0; }

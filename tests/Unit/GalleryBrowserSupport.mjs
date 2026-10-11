@@ -56,6 +56,7 @@ export function galleryState() {
     return {
         width: innerWidth, height: innerHeight, overflow: document.documentElement.scrollWidth > innerWidth,
         heading: { ...rect(heading), color: getComputedStyle(heading).color, size: getComputedStyle(heading).fontSize,
+            visibility: getComputedStyle(heading).visibility,
             valuesSize: getComputedStyle(document.querySelector('[data-values-heading]')).fontSize },
         header: rect(document.querySelector('.gallery__header')),
         background: getComputedStyle(document.querySelector('[data-program-values]')).backgroundColor,
