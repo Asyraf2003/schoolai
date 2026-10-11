@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
 it('renders the OLD-inspired two-line Stories heading in the V2 section order', function (string $locale, string $title): void {
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
