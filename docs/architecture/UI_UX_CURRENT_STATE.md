@@ -1,5 +1,25 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values desktop card hold pacing — 2026-10-11
+
+OWNER_ACCEPTED: desktop four-card completed hold is ~40% of its prior
+native-scroll distance; no timed autoplay, skip, or interaction change.
+Issue #90; branch fix/values-desktop-hold-40pct; base main 3e082555ac7c1474eb3972d135659194e3e54450.
+FACT: all card fronts settle at 0.308, old exit begins 0.895,
+old hold interval 0.587; desktop original card track end 490svh while
+Values/SVG field is 500svh. Compact flow uses a separate visibility path.
+DECISION: remap desktop progress through the 0.4 hold interval while
+preserving existing source card pose/flip/exit curves; shorten enhanced
+non-flow desktop card track to 365svh and SVG/section field to 375svh.
+SVG path coordinates, topology and GSAP scrub controller are unchanged;
+no-JS, reduced, compact, and fallback fields remain at baseline.
+PROOF: publication is not runtime proof. Run focused unit, legacy
+card-fidelity and line/browser CI, source check, build, PHP regression;
+npm audit baseline may fail from unchanged dependency advisories.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE until scoped proof and CI reports.
+NEXT channel GitHub CI / owner-local visual verification of scroll pacing
+after scoped browser gates, then record measured differences.
+
 ## Homepage V2 passive scroll indicator — 2026-10-11
 
 OWNER_ACCEPTED: Lusion-inspired slim right-side scroll rail, display-only, no

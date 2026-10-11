@@ -21,12 +21,12 @@
         inline-size: 90vw; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2vw;
     }
 }
-/* Compact tiers preserve OLD natural rows/gaps; the SVG keeps its 500svh field. */
+/* Compact tiers keep the 500svh field; desktop pacing compresses only the hold. */
 @media (min-width: 1280px) {
     .values[data-line-ready]:not([data-cards-flow]) .values__cards-track {
         position: absolute; inset-inline: 0; padding: 0;
         inset-block-start: var(--values-cards-start, 100svh);
-        block-size: calc(490svh - var(--values-cards-start, 100svh));
+        block-size: calc(365svh - var(--values-cards-start, 100svh));
     }
     .values[data-line-ready]:not([data-cards-flow]) .values__cards-viewport {
         position: sticky; inset-block-start: var(--v2-header-block-size);
