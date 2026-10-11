@@ -76,3 +76,14 @@ PROOF checkpoint: structure301/build/diff/Pint PASS; pure timing/direct response
 Chromium/WebKit, including immediate entry/flip, stopped-pose no tail, physical
 1px/1px exit/reversal and release. Remaining fallback/fidelity and combined
 Gallery body/title seam plus scoped CI pending; no merge claim.
+
+PROOF renewed: combined Gallery88d80e9f/Values871c2194 Chromium6/6 and
+WebKit6/6 PASS, including36 actual card-body/title gap cases and white-free
+native title entry. Values broader Chromium7/7 PASS; WebKit6/7 initially had
+one locale navigation timeout, unchanged focused lifecycle/line rerun2/2 PASS.
+CI871 heading both PASS and Values Chromium PASS; WebKit14/15 failed the
+line-render resize race. Existing settledValuesLayout helper plus latest trigger
+refresh fixes proof ordering, retains strict native progress/paint assertions;
+local2/2 PASS. No product SVG change. Full PHP336/190pass/71fail/75error has
+identical failure/error names to main dae40c14. Scoped CI renewal pending.
+Raw logs and measured native response: docs2/proof/values-native-response-proof.json.

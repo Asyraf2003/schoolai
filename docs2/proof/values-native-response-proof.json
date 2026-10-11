@@ -1,0 +1,531 @@
+{
+  "date": "2026-10-11T11:40:14.523236+00:00",
+  "base": "dae40c14c0f3cb1de4ca9b29d8979720f0e4b20b",
+  "product": "871c21948579849bba38f73b306300f12d332255",
+  "scope": "Direct entry/flip response and native sticky departure; protected pre-exit/heading/SVG checked separately",
+  "files": {
+    "resources/views/landing/values.blade.php": "40b2630ce085070b3349b3ecee0f3ccbd6e45f74d281e9a32eb98b1ef47f3111",
+    "resources/css/sections/values-cards-layout.css": "b499f6ac475bd41b90e1345f79440c96745a2ad1736f81a06bfab77f5c7a3c28",
+    "resources/js/sections/values-cards.js": "113d719a929ef64759d2b4a9d6459597984f044e5195afae76e324374966bf31",
+    "resources/js/sections/values-card-motion.js": "081421655bfd7422c85c0dc2178b52cbcff379c5b1376b939488c8fbbf4c2a0b",
+    "resources/js/sections/values-card-desktop.js": "9e4ba3b8fd20b39abf570fc254a1c84400b60f45c061c87fccf86d44627dfaa3",
+    "resources/js/sections/values-card-keyframes.js": "07a958c466c6c7cd6055b297824c3efcd0b67b0d5163010fc659557a03ee152a"
+  },
+  "nativeBrowser": {
+    "chromium": [
+      {
+        "lang": "id",
+        "width": 1280,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 6.757402101209564e-07,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 1.6977077363922177e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 3.813276026776169e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "id",
+        "width": 1440,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 3.5451018428611647e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 3.4481086323978616e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.4684772065852734e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "id",
+        "width": 1536,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 2.859244727815291e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 1.9028935752674059e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 9.808729772853297e-09,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 1280,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 3.0253104107008655e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 2.0033428844157264e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.485673352425888e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 1440,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 3.5451018428611647e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 3.4481086323978616e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.4684772065852734e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 1536,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 4.639529180963664e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 4.4041196665123294e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.0549288867188764e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "ar",
+        "width": 1280,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 2.7089783281725177e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 4.901960784231552e-07,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 8.926728586322596e-07,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "ar",
+        "width": 1440,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 1.5251989389786225e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 3.222811671088621e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 3.222811671088621e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "ar",
+        "width": 1536,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 7.536466774676898e-07,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 4.778498109148099e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.828200972471162e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      }
+    ],
+    "webkit": [
+      {
+        "lang": "id",
+        "width": 1280,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 1.2870105062096071e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 2.3089780324669906e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 3.2020057306736405e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "id",
+        "width": 1440,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 3.5451018428611647e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 3.4481086323978616e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.4684772065852734e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "id",
+        "width": 1536,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 1.8146150073533596e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 2.770966159887367e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 4.6836684648998705e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 1280,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 6.446991404618352e-08,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 3.531518624644292e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 1.9794651384685835e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 1440,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 3.5451018428611647e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 3.4481086323978616e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.4684772065852734e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 1536,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 6.866110838638084e-07,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 2.697400686424434e-07,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.618930848463652e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "ar",
+        "width": 1280,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 4.0402476780138086e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 1.2435500515994846e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 2.358101135191415e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "ar",
+        "width": 1440,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 1.5251989389786225e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 3.222811671088621e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 3.222811671088621e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      },
+      {
+        "lang": "ar",
+        "width": 1536,
+        "forwardErrorPx": 0.0,
+        "reverseErrorPx": 0.0,
+        "releaseErrorPx": 0.0,
+        "directPhases": [
+          {
+            "progress": 0.06,
+            "reportedError": 4.11939492166169e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.16,
+            "reportedError": 2.1042679632654604e-06,
+            "poseTail": false,
+            "flipTail": false
+          },
+          {
+            "progress": 0.36,
+            "reportedError": 4.054565099942398e-06,
+            "poseTail": false,
+            "flipTail": false
+          }
+        ]
+      }
+    ]
+  },
+  "broaderBrowser": {
+    "chromium": "7/7 PASS",
+    "webkit": "6/7 initially; native locale navigation timeout; unchanged focused lifecycle/line rerun2/2 PASS; CI card lifecycle PASS",
+    "lineRender": "strict resized progress/paint2/2 PASS after settled layout helper; SVG product unchanged"
+  },
+  "combinedGallery": "88d80e9f +871c2194; Chromium6/6 and WebKit6/6 PASS;36 actual card-body/title spacing cases",
+  "fullPHP": {
+    "tests": 336,
+    "passed": 190,
+    "failed": 71,
+    "errors": 75,
+    "assertions": 1760,
+    "duration_ms": 16964
+  },
+  "identicalBaselineFailureNames": true,
+  "identicalBaselineErrorNames": true,
+  "fullPHPStatus": "FAIL existing baseline; no added failures",
+  "CI": "renewing after strict line-render resize race fix",
+  "uncertified": [
+    "native Safari and physical device",
+    "native BFCache restoration; only synthetic lifecycle tested",
+    "browser menu zoom; CSS text expansion only",
+    "screen-reader speech",
+    "Lighthouse100 or field CWV"
+  ]
+}

@@ -101,3 +101,20 @@ Desktop front hold: [OLD](values-fidelity-chromium-old-0.65.png) /
 Arabic phone: [OLD](values-compact-chromium-ar-390-old.png) /
 [V2](values-compact-chromium-ar-390-v2.png).
 Matrix and hashes: [measured record](values-old-fidelity-heading-79.json).
+
+## Native response follow-up — issue92 / PR93, 2026-10-11
+
+Owner replaces time-based spring response and transformed desktop exit with
+direct scroll entry/flip response and an earlier native sticky boundary. Outer
+track,40% hold, protected pre-exit curves, heading and SVG remain unchanged.
+Compact/short/reduced/noJS semantic cards remain readable. Existing OLD fidelity
+comparison retains protected pre-exit phases; departure intentionally follows
+native1px/1px document scroll. Proof and baseline limits are separately recorded
+in [native response](values-native-response-proof.json) and raw takeover logs.
+Local unit5/5 and PHP13/264assertions PASS; direct stopped/forward/reverse/release
+18 profiles per engine PASS. Chromium broader7/7 PASS; WebKit6/7 first run had
+one native locale navigation timeout, unchanged focused lifecycle/render2/2 PASS.
+Combined Gallery6/6 per engine PASS with36 actual card-body/title gap cases.
+Strict line-render proof2/2 PASS after waiting settled resized geometry; initial
+CI WebKit14/15 race recorded, final scoped CI renewing. Full PHP baseline FAIL
+with identical71fail/75error identities. Publication remains pending scoped CI.

@@ -20,14 +20,25 @@ and reversal match physical scroll within2px and continue1:1 through release.
 Focused PHP/Program/Values and Pint PASS. Immediate entry/flip/stopped pose assertions PASS in all18 native profiles:
 Chromium31.71s and WebKit129.47s. No pose/flip tail after scroll stops. Actual
 combined Gallery seam and remaining fallback/fidelity/CI proof are renewing.
-STATUS: BLOCKED_BY_MISSING_EVIDENCE for combined physical seam/CI.
+PROOF combined Gallery88d80e9f + Values871c2194: Chromium6/6 and WebKit6/6
+PASS, including36 actual card-body/title gap profiles. Maximum difference from
+measured gap11.02px/10.88px is the existing tiny float; white strand opacity0
+before native title entry. Values broader Chromium7/7 PASS; WebKit6/7 initially
+with one native locale-navigation timeout, focused unchanged rerun2/2 PASS.
+CI871 heading both engines PASS, Values Chromium PASS; WebKit14/15 with
+line-render resize race. Diagnostic reproduces:390px viewBox ready, but later
+layout/GSAP refresh restores scroll5960 at progress.495 instead of requested.
+DECISION: line-render proof waits the existing settledValuesLayout helper and
+refreshes latest trigger bounds before native scroll; retain strict progress and
+stroke assertions. Product SVG/draw/controller untouched.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE for renewed scoped Values CI only.
 FACT Gallery focused CI38134786150 WebKit heading test undercounts reveal time
 from its first sampled RAF; it ignores already-elapsed WAAPI time. Source still
 sequences900ms reveal then900ms shift, and full-line-before-shift assertion stays.
 DECISION: add actual first-sample animation elapsed time to that timing proof;
 no heading product changes or relaxed900ms ownership requirement.
-NEXT channel Terminal Codex: implement native sticky release and direct follower,
-run Chromium/WebKit physical speed and Gallery-body gap proofs before merge.
+NEXT channel Terminal Codex: renew strict line-render proof and scoped CI, publish
+the certified native Values boundary, then integrate it into Gallery final proof.
 
 ## Values desktop native-speed vertical exit — 2026-10-11
 
