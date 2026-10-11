@@ -1,5 +1,24 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Gallery opening title–video equal gutters — 2026-10-11
+
+OWNER_ACCEPTED: ONLY while the Gallery title and main video first rise
+together, title-bottom→media-top vertical gap must equal the opening video's
+left and right viewport insets (1:1:1), rather than the previous tiny stage
+opening gap. Preserve all ten media and shrinking, GSAP pose/time curves,
+main video width, title typography, Values→Gallery native 1:1 handoff,
+background transition, reduced/static fallback and page-end handoff.
+FACT: Gallery geometry sets openingX=(viewport-openingWidth)/2 but openingY
+is only clamp(1.1vw, 6px, 16px); current h2/media distance is openingY.
+DECISION: for enhanced Gallery, add ONLY openingX-openingY as measured
+native-flow bottom padding of the Gallery header, before ScrollTrigger
+calculates shrinkStart. Maintain opening media Y and all GSAP media tween
+positions; on resize recalculate from current responsive media geometry.
+Add direct ID/EN/AR Chromium/WebKit geometric assertions in existing Gallery
+heading/scroll browser matrix, including several pre-shrink scroll positions.
+Issue #96. Scope only Gallery CSS, timeline, lifecycle cleanup and tests.
+STATUS: PR CI PENDING. No device or production visual proof claimed.
+
 ## Values–Gallery continuous native handoff — 2026-10-11
 
 OWNER_ACCEPTED: screenshot #4 is the expected shared viewport. With constant

@@ -16,6 +16,7 @@
 .gallery__stage { position: relative; padding-block: clamp(3rem, 6vw, 7rem); }
 .gallery__header { inline-size: 84%; margin-inline: auto; padding-block: calc(var(--v2-header-block-size) + 1svh) 0; }
 .gallery__header h2 { margin: 0; font-size: clamp(3.4rem, 15vw, 7rem); font-weight: 360; line-height: .84; letter-spacing: -.055em; text-transform: uppercase; }
+.gallery[data-gallery-enabled] .gallery__header { padding-block-end: var(--gallery-opening-gap-extra, 0px); }
 .gallery__heading-clip { display: block; overflow: hidden; padding-block: .08em; }
 .gallery__heading-clip > span { display: block; }
 .gallery__composition { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 2rem); inline-size: 88%; margin-inline: auto; }

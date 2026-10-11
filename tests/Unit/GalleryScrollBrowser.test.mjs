@@ -25,6 +25,8 @@ for (const engine of engines) {
                     assert.equal(title.heading.color, 'rgb(255, 255, 255)');
                     assert.ok(title.backgroundRGB[2] < 255 && title.backgroundRGB[2] > 11, 'entry darkens continuously');
                     assert.equal(title.heading.visibility, 'visible');
+                    assert.ok(Math.abs(title.items[0].y - title.heading.bottom - title.items[0].x) < 2,
+                        `arrival-only title/video gap equals opening side gutter: ${lang}/${width}`);
                     assert.ok(title.heading.y > 0 && title.heading.y < 900, 'large title precedes opening media');
                     const before = await galleryAt(page, 0);
                     assert.deepEqual(before.backgroundRGB, [32, 56, 255], 'reverse restores Values blue');
