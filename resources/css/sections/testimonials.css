@@ -3,7 +3,7 @@
     --testimonial-card-width: calc((100vw - 2 * var(--testimonial-gap)) / 2.3333);
     --testimonials-copy-gutter: max(var(--v2-space-page), calc((100vw - 100rem) / 2));
     --testimonials-title-media-gap: calc(clamp(2rem, 4vw, 4rem) + clamp(4rem, 7vw, 7rem));
-    position: relative; padding-block-end: max(70svh, 12rem);
+    position: relative; padding-block-end: 0;
     color: #000; background: #fff; overflow-anchor: none;
 }
 .testimonials__intro { padding-block: clamp(4rem, 9vw, 9rem); }
@@ -32,7 +32,7 @@
 .testimonials[data-testimonials-enabled] .testimonials__intro-copy {
     inline-size: 100%; transform: translateY(var(--testimonials-title-y, 0px));
 }
-.testimonials__rows { display: grid; gap: clamp(.65rem, 1vw, 1rem); padding-block: clamp(4rem, 7vw, 7rem); background: transparent; }
+.testimonials__rows { display: grid; gap: clamp(.65rem, 1vw, 1rem); padding-block: clamp(4rem, 7vw, 7rem) 0; background: transparent; }
 .testimonials[data-testimonials-enabled] .testimonials__rows {
     position: relative; margin-block-start: var(--testimonials-row-overlap, -63svh); opacity: var(--testimonials-rows-opacity, 0);
     padding-block-start: max(0px, calc(var(--testimonials-title-media-gap) - var(--testimonials-copy-gutter)));

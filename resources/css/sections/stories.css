@@ -2,7 +2,7 @@
     --stories-heading-sign: 1;
     --stories-heading-shift: clamp(2.75rem, 7vw, 9rem);
     position: relative;
-    padding-block: clamp(5rem, 9vw, 9rem);
+    padding-block: 25svh clamp(5rem, 9vw, 9rem);
     background: #fff;
     color: #152018;
     scroll-margin-block-start: var(--v2-header-block-size);
@@ -10,7 +10,7 @@
 .stories__header {
     inline-size: 84%;
     margin-inline: auto;
-    padding-block: clamp(1rem, 2.6vw, 2.5rem) clamp(2.5rem, 6vw, 5rem);
+    padding-block: 0 clamp(2.5rem, 6vw, 5rem);
 }
 .stories__heading {
     display: grid;
