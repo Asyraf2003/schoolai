@@ -88,7 +88,9 @@ for (const engine of engines) {
                                     const viewport = root.querySelector('[data-values-cards-viewport]');
                                     const target = Math.max(0, Math.min(1, (parseFloat(getComputedStyle(root).scrollMarginBlockStart) - track.getBoundingClientRect().top)
                                         / (track.offsetHeight - viewport.offsetHeight)));
-                                    return Math.abs(target - progress) < .0004
+                                    // WebKit rounds native scroll positions to device pixels.
+                                    // With a shorter track, normalized .0004 can be <1px.
+                                    return Math.abs(target - progress) * (track.offsetHeight - viewport.offsetHeight) <= 1
                                         && Math.abs(Number(root.dataset.cardsProgress) - target) < .00001;
                                 }, progress);
                             } catch (error) {
