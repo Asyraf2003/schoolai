@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-11T06:29:03.002Z",
+  "commit": "49742cdc",
+  "result": "PASS",
+  "cases": [
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "id",
+      "width": 390,
+      "y": 314.609375,
+      "heading": "Apa Kata Mereka Tentang Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "id",
+      "width": 1440,
+      "y": 315.28125,
+      "heading": "Apa Kata Mereka Tentang Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "en",
+      "width": 390,
+      "y": 314.921875,
+      "heading": "What Do They Say About Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "en",
+      "width": 1440,
+      "y": 315.28125,
+      "heading": "What Do They Say About Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "ar",
+      "width": 390,
+      "y": 314.796875,
+      "heading": "ماذا يقولون عن مدرسة المستقبل؟",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.52",
+      "lang": "ar",
+      "width": 1440,
+      "y": 315.109375,
+      "heading": "ماذا يقولون عن مدرسة المستقبل؟",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "id",
+      "width": 390,
+      "y": 315.46875,
+      "heading": "Apa Kata Mereka Tentang Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "id",
+      "width": 1440,
+      "y": 315.28125,
+      "heading": "Apa Kata Mereka Tentang Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "en",
+      "width": 390,
+      "y": 314.78125,
+      "heading": "What Do They Say About Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "en",
+      "width": 1440,
+      "y": 315.28125,
+      "heading": "What Do They Say About Al Mustaqbal?",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "ar",
+      "width": 390,
+      "y": 314.9375,
+      "heading": "ماذا يقولون عن مدرسة المستقبل؟",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "lang": "ar",
+      "width": 1440,
+      "y": 315.109375,
+      "heading": "ماذا يقولون عن مدرسة المستقبل؟",
+      "quotes": 21,
+      "overflow": false,
+      "visibleMedia": 0
+    }
+  ]
+}

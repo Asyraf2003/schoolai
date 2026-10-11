@@ -1,51 +1,78 @@
-# Gallery V2 proof — 2026-10-11
+# Gallery V2 final owner-correction proof — 2026-10-11
 
-Scope: MAP-V2-18 / issue86 / feat/v2-scroll-gallery.
+MAP-V2-18 / issue86 / feat/v2-scroll-gallery / PR87 / product49742cdc.
+Latest black entry/centered shrink/distant approach/100vh→50vh exit supersedes
+all initial white-background proof. Initial PNG captures have been replaced.
 
-## Browser evidence
+## Browser proof
 
-`gallery-scroll-{engine}.json` records ID/EN/AR ×360/390/640/768/1024/
-1280/1440/1536/1920 at900px height, opening, formation, travel, exit and handoff.
-PNG captures compare opening→entering→formation→exit→handoff at390 and1440.
-`gallery-viewport-{engine}.json` adds twelve boundary/short-screen widths through
-2560px,500→600px resize progress, keyboard pause and synthetic hidden-page policy.
-`gallery-lifecycle-{engine}.json` records real video playback, max two hydrated/
-playing videos, poster on failure, reduced motion, synthetic BFCache events and
-real disposal. No-JS and blocked GSAP run in the same browser suite.
+Chromium5/5 PASS (54.14s), WebKit5/5 PASS (141.38s).
+Raw logs gallery-owner-{engine}.log and gallery-scroll/lifecycle/viewport JSON.
+ID/EN/AR ×360/390/640/768/1024/1280/1440/1536/1920 at900px height.
+Twelve boundary/short-height profiles through2560,500→600px resize and native
+wheel; hidden/reduced/static/error/missingGSAP/dispose and synthetic BFCache.
+Real visible video currentTime advances, max2 hydrated/playing decoders, loop
+property enabled, no Gallery button. Poster always survives rejected/error video.
+Heading uses identical computed size to Values; title/main retain a fixed close
+gap during native rise. Shrink starts at stage top and finishes main center at
+viewport center. Nine secondary media begin far below and resolve their gaps
+at assembly. First word clear at assembly, later words blurred then resolve.
+Last bottom edge900px→450px coincides with all media/text blur/fade to zero.
+Black hold retains no media/text/pause UI; real populated Testimonials follows.
+Reverse returns geometry and restores blue/type plane before Gallery entry.
 
-Chromium and WebKit local five tests each PASS, including viewport/resize.
-CI will repeat all five tests per engine on the final committed source.
-Real R2 media used; no mocked images/videos. `media-inventory.json` proves ten
-unique URLs plus posters return200/206 and correct content types. Five videos,
-five photographs. Facility poster photographs are catalog assets, not necessarily
-frames extracted from the corresponding videos. Testimonial copy retains its
-explicit temporary-sample disclosure.
+96 JPEGs compare title→rise→opening→approach→assembly→clear text→blur→blackout
+at390/1440 in both engines and three locales. ID1440 supplemental settled entry
+captures allow Values' protected spring to settle after a large test scroll jump;
+the normal-flow Gallery heading and media maintain the same close gap.
+Three Values line/render integration tests PASS in WebKit (66.63s), raw log.
+Testimonial-handoff.json separately proves12 native handoffs (both engines,
+three locales,390/1440): populated quotes enter after the black hold, Gallery
+media remain fully hidden, and no horizontal overflow. Matching JPEGs reviewed.
+CI38117850566: Chromium PASS; WebKit4PASS/1cancelled by420s file timeout,
+without an assertion failure. Phase artifacts reached EN/ID and AR390.
+Heading38117850572 PASS both engines; Values38117850614 pending.
+Gallery CI now partitions the unchanged27-profile matrix per locale into fresh
+bounded browser processes and records per-viewport duration/per-locale JSON.
+Final scoped CI status will be recorded before merge.
 
-## Source and PHP evidence
+## Assets and profile
 
-Geometry tests:56 viewport/direction combinations PASS. Structure309 files <=200
-lines PASS. Production build, Pint and diff check PASS. Six focused Pest tests /
-43 assertions PASS. `php-baseline-comparison.json`: full suite342,196PASS/71FAIL/
-75ERROR; isolated main336,190PASS/71FAIL/75ERROR, identical failing/error test
-identities. Historical failures reference missing legacy view/source paths and
-admin contracts. Full-suite status remains FAIL; scoped regression comparison PASS.
-Protected Hero/Header/About/Program/Values/legacy Gallery/model source has no diff.
+Real R2 video URLs, five videos/five catalog photographs, no invented URLs.
+media-inventory.json separately proves10 unique URLs/posters200/206/types.
+Local and CI normal-motion proof serve cached copies of those actual R2 poster
+files and exact existing GSAP3.7.1 CDN modules; video requests remain live R2.
+This isolates geometry/timing from repeated external poster-network delays.
+Posters are facility photographs, not necessarily extracted video frames.
+Testimonials preserve the existing explicit temporary-sample disclosure.
+Chromium version and WebKit26.6/Playwright1.63.0 in JSON; local Linux/Arch,
+127.0.0.1:8020 isolated seeded SQLite, no production/working DB writes.
+Local WebKit uses isolated ICU74/XML2/Flite and GStreamer good/libav plugins.
+No project dependencies or system package installation changed.
 
-## Reproduce
+## Source, PHP and scheduling
 
-Build and serve the seeded application. Set PROGRAM_BROWSER_URL,
-PROGRAM_PLAYWRIGHT_MODULE, PROGRAM_ENGINES=chromium,webkit and an existing
-PROGRAM_PROOF_DIRECTORY. Run node --test --test-concurrency=1 on
-GalleryScrollBrowser.test.mjs, GalleryFallbackBrowser.test.mjs and
-GalleryViewportBrowser.test.mjs in tests/Unit. CI workflow v2-gallery.yml installs
-browser dependencies. Local Arch WebKit needed isolated ICU74/XML2/Flite and
-GStreamer good/libav plugins; no project dependency changes were made.
+Structure309 source files<=200 lines, build, Pint, geometry56 profiles and diff
+PASS. Six focused Pest tests/46assertions PASS. Full342:196PASS/71FAIL/75ERROR;
+isolated main336:190PASS/71FAIL/75ERROR with identical failing/error test names.
+Full suite remains FAIL; scoped regression comparison PASS. Dependency audit
+FAIL on the unchanged npm lock baseline. No lock/schema/legacy CRUD changes.
+Hero/Header/About/Program/Values product-source owners have no diff; Gallery's
+explicitly authorized seam CSS/data state alone paints the preceding world black
+and hides its type plane. Their motion/geometry is unchanged.
 
-## Certification limits
+gallery-scroll-scheduling.json:3 comparable warm samples each at390/1440 in
+headless Chromium, Gallery travel/blur/exit only. RAF intervals, long tasks and
+animation layout shifts are recorded as measurements. RAF scheduling is not
+GPU render-frame timing, Lighthouse or initial loading/CWV certification.
 
-No native Safari, physical device, native BFCache restoration, screen-reader
-speech, browser200% zoom, Lighthouse100, INP/LCP/CLS field or performance trace
-certification. Synthetic visibility/page events certify application handlers only.
-Visual inspection covered opening, entries, staggered columns, progressive exit
-and real populated testimonial handoff. Expected stage clipping while media enter
-or leave is intentional; final column geometry has no accidental overlaps.
+## Reproduce / limits
+
+Build/serve seeded Laravel. Set PROGRAM_BROWSER_URL, PROGRAM_PLAYWRIGHT_MODULE,
+PROGRAM_ENGINES and existing PROGRAM_PROOF_DIRECTORY. Run the three Gallery
+browser test files in tests/Unit with node --test --test-concurrency=1.
+v2-gallery.yml repeats the same scope; v2-values-cards.yml proves integration.
+No native Safari/physical devices/native BFCache/reader speech/browser200% zoom/
+Lighthouse100/field LCP-INP-CLS certification. Synthetic lifecycle proves handlers.
+Stage clipping during intentional entrance/exit remains part of choreography;
+final media geometry has no accidental overlap or horizontal overflow.

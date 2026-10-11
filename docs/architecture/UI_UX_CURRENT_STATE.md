@@ -1,33 +1,32 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
-## Gallery V2 owner correction — 2026-10-11
+## Gallery V2 final owner correction — 2026-10-11
 
-LATEST OWNER: early entry near last strand80% / cards leaving; black Gallery,
-white heading, centered shrink, first word clear at assembly and later words
-blurred. Exit is last bottom edge100vh→50vh, simultaneous blur/fade to black.
-DECISION: Gallery-owned overlap/black plane; protect all Values product owners.
-Blueprint MAP-V2-18 latest entry supersedes white seam/top-aligned target/1.2H exit.
-ACTIVE STEP: implement early entry and centered composition with that exit.
-STATUS: BLOCKED_BY_MISSING_EVIDENCE new choreography runtime proof.
-NEXT channel Terminal Codex: prove the latest geometry/word/exit boundaries.
+OWNER_ACCEPTED: MAP-V2-18 current storyboard; commit49742cdc, PR87 OPEN.
+Main445fbf92 fetched before publication. Large white title, early black handoff,
+linked title/main native rise; centered shrink at stage-top boundary, secondary
+media approach from far below, first clear word at assembly, sequential reveal.
+All blur/fade over last bottom edge100vh→50vh, then black hold. No pause UI;
+automatic looping with at most2 visible decoders and hidden/reduced lifecycle.
+Values product source remains unchanged; latest explicit background request
+permits Gallery-owned preceding-world black/type-visibility seam state only.
+PROOF: Chromium5/5 and WebKit5/5 browser tests PASS on latest product source,
+ID/EN/AR ×9 representative widths;12 short-screen/boundary cases; reverse,
+resize, native wheel, real playback/fallback, noJS/reduced and disposal.
+Geometry56 cases, structure309, build, diff and Pint PASS. PHP6tests/46assertions
+PASS; full342196PASS/71FAIL/75ERROR matches main336190PASS/71FAIL/75ERROR
+identities exactly. Full PHP and dependency baseline FAIL, no lock changes.
+Historical captures certify older storyboards only; latest proof is being replaced.
+CI38117850566 on49742cdc: Chromium PASS; WebKit4PASS/1cancelled at420s
+file limit. Artifacts show EN/ID and AR390 completed; no assertion failure.
+Heading38117850572 PASS both engines; Values38117850614 still pending.
+DECISION: run each locale in a fresh bounded process, preserve all27 profiles
+and phase captures; record per-locale JSON and viewport timing.
+STATUS: PASS local scoped; BLOCKED_BY_MISSING_EVIDENCE final scoped CI.
+Native Safari/physical devices/native BFCache/reader speech/Lighthouse100/field
+CWV certification is not claimed. Blueprint IMPLEMENTING until final proof.
+NEXT channel Terminal Codex: finish durable visual proof and scoped CI; gated merge.
 
-LATEST FOLLOW-UP: remove visible pause; automatic looping. Heading/main rise
-with the final close media gap until main hits viewport top; then centered
-shrink. Other media start far below and approach only during shrink, closing
-their gaps at assembly. Earlier initially attached-entry proof is superseded.
-One Gallery timeline measures the native stage boundary. ACTIVE: prove this
-final owner correction; no merge while its new browser gates are pending.
-
-FACT: PR87 OPEN, main445fbf92. Latest owner rejects small title, narrow total
-composition and distant side entries. New accepted storyboard in MAP-V2-18.
-GOAL: large flow heading immediately after Values; white seam; tightly linked
-three columns filling the desktop viewport; central words with chained blur
-reveal/exit. Gap is half the prior gap; secondary center media keep final width.
-OWNER_CONFIRMED: central sentence delegated; text in front of moving media.
-Chosen localized statement: “Fasilitas terbaik. Untuk generasi hebat.”
-STATUS: BLOCKED_BY_MISSING_EVIDENCE renewed visual/browser proof.
-NEXT channel Terminal Codex: correct independent heading/media geometry; keep
-central word staging and renewed proof, then gated merge.
 
 ## Gallery V2 — 2026-10-11
 

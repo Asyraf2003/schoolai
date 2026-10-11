@@ -71,11 +71,13 @@ jobs:
           PROGRAM_SCHOOL_LIFE_FIXTURES: /tmp/gallery-posters
           PROGRAM_GSAP_FIXTURE: /tmp/gallery-gsap.min.js
           PROGRAM_SCROLLTRIGGER_FIXTURE: /tmp/gallery-ScrollTrigger.min.js
-        run: >-
-          node --test --test-concurrency=1 --test-timeout=420000
-          tests/Unit/GalleryScrollBrowser.test.mjs
-          tests/Unit/GalleryFallbackBrowser.test.mjs
-          tests/Unit/GalleryViewportBrowser.test.mjs
+        run: |
+          for lang in en id ar; do
+            PROGRAM_GALLERY_LOCALES=$lang node --test --test-timeout=420000 tests/Unit/GalleryScrollBrowser.test.mjs
+          done
+          node --test --test-concurrency=1 --test-timeout=420000 \
+            tests/Unit/GalleryFallbackBrowser.test.mjs \
+            tests/Unit/GalleryViewportBrowser.test.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

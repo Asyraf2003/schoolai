@@ -131,7 +131,11 @@ Run diff, structure<=200 lines, production build, Pint, focused PHP/full baselin
 Focused PHP6tests/46assertions PASS. Full342:196PASS/71FAIL/75ERROR; isolated
 main336:190PASS/71FAIL/75ERROR, identical failing/error names. Full status FAIL;
 scoped regression comparison PASS. Dependency audit known baseline FAIL; no lock
-changes. Renewed current storyboard browser/CI proof pending in proof/gallery-v2.
+changes. Current-storyboard local Chromium5/5 and WebKit5/5 PASS; twelve
+real Testimonial handoffs and Values line integration3/3 PASS. CI38117850566
+Chromium PASS; WebKit4PASS/1cancelled at420s aggregate file limit without an
+assertion failure. Same27 profiles now partitioned per locale into fresh bounded
+processes with per-viewport duration proof; final CI pending in proof/gallery-v2.
 No native Safari, native BFCache restoration, screen-reader speech, Lighthouse100
 or field CWV certification claim. Synthetic lifecycle checks prove handlers only.
 

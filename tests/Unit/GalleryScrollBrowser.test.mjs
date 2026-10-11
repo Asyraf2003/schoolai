@@ -8,12 +8,14 @@ for (const engine of engines) {
         const runtime = await session(engine);
         const { page } = runtime;
         const cases = [];
+        const locales = (process.env.PROGRAM_GALLERY_LOCALES ?? 'en,id,ar').split(',');
         try {
-            for (const lang of ['en', 'id', 'ar']) {
+            for (const lang of locales) {
                 await locale(page, lang);
                 assert.equal(await page.locator('[data-gallery-video][src]').count(), 0, 'no video transfer before gallery proximity');
                 await galleryReady(page);
                 for (const width of [360, 390, 640, 768, 1024, 1280, 1440, 1536, 1920]) {
+                    const started = performance.now();
                     await galleryResize(page, width, 900);
                     const title = await galleryAt(page, .005);
                     await page.waitForFunction(() => document.querySelector('[data-gallery-heading]').dataset.headingState === 'complete');
@@ -83,10 +85,11 @@ for (const engine of engines) {
                         await page.screenshot({ path: `${directory}/gallery-${engine}-${lang}-${width}-${name}.jpg`, type: 'jpeg', quality: 85 });
                     }
                     cases.push({ lang, width, title, opening, full, traveling, edge, exit, blackout, end });
+                    console.info(`Gallery ${engine}/${lang}/${width} PASS ${Math.round(performance.now() - started)}ms`);
                 }
             }
             assert.deepEqual(runtime.errors, []);
-            await evidence(`gallery-scroll-${engine}`, { version: runtime.version, cases });
+            await evidence(`gallery-scroll-${engine}${process.env.PROGRAM_GALLERY_LOCALES ? `-${locales.join('-')}` : ''}`, { version: runtime.version, cases });
         } finally { await runtime.close(); }
     });
 }
