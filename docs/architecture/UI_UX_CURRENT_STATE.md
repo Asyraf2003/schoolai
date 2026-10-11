@@ -1,5 +1,20 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Stories & Insights heading only — 2026-10-12
+
+OWNER_ACCEPTED: implement progressively after Testimonials; first heading alone,
+then first video, then further videos after owner feedback.
+FACT: V2 homepage currently ends after Testimonials; Artikel navigation points
+to #artikel without a target. Active branch is feat/natural-scroll-testimonials.
+GOAL: accessible heading on a standalone white section after Testimonials,
+ID/EN “Stories & Insights”, AR “قصص ورؤى”, responsive and RTL aligned.
+DECISION: title-only markup, CSS and locale; no media, JS or scroll owner changes.
+PROOF: source placement and test added; build, PHP/Chromium/WebKit and owner
+visual confirmation require local execution.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser validation.
+NEXT execution channel: owner/local terminal; pull feature and verify heading.
+
+
 ## Owner correction: equal corner gutters / equal reading hold — 2026-10-12
 
 PROOF: 84 Testimonials locale-width cells and fallback/lifecycle PASS both engines;

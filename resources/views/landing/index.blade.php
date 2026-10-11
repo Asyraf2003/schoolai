@@ -23,6 +23,7 @@
         </div>
         @include('landing.gallery', ['gallery' => $gallery])
         @include('landing.testimonials', ['testimonials' => $testimonials])
+        @include('landing.stories')
     </main>
 </body>
 </html>

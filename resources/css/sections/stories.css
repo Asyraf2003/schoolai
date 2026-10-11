@@ -1,0 +1,22 @@
+.stories {
+    background: #fff;
+    color: #151515;
+    padding-block: clamp(4rem, 8vw, 8rem) clamp(5rem, 10vw, 10rem);
+}
+.stories__header {
+    inline-size: min(100% - 2 * var(--v2-space-page), 100rem);
+    margin-inline: auto;
+}
+.stories h2 {
+    max-inline-size: 14ch;
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 8.5rem);
+    font-weight: 650;
+    line-height: .95;
+    letter-spacing: -.055em;
+    text-align: start;
+    text-transform: uppercase;
+    text-wrap: balance;
+}
+[lang="ar"] .stories { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .stories h2 { letter-spacing: normal; line-height: 1.35; text-transform: none; }
