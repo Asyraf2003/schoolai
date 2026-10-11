@@ -1,5 +1,28 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Stories & Insights 4-video dummy scroll sequence — 2026-10-12
+
+OWNER_ACCEPTED: extend existing approved article 01 with three dummy videos:
+02 musala, 03 renang, 04 taekwondo, no database/admin binding.
+FACT: videos and poster keys already exist in the Gallery catalog/media config;
+current section only displayed one 100svh video and localized overlaid copy.
+DECISION: ID/EN/AR localized content in lang/*/stories.php, sources in Blade
+local media array. Four full-width 100svh layers within a 500svh sequence.
+Enhanced desktop: one sticky stage, crossfade sequential media as text gently
+rises (all driven by native scroll progress, no additional wheel controller).
+Enhanced phone: incoming FULL article layer rises from viewport bottom and
+covers previous stationary layer; no horizontal carousel.
+No-JS or reduced motion: four articles as normal stacked poster sections.
+Videos muted/loop/playsinline, hydrated only near their active scroll range,
+paused outside the viewport and during BFCache suspension.
+Preserve title-only heading, 25svh Testimonials gap, approved editorial
+copy positioning and end-of-page treatment. No admin/DB/gallery/Testimonials
+or global scroll-state owner changes.
+PROOF: source patch and focused four-card locale assertions prepared.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local build, PHPUnit and browser proof.
+NEXT: local pull, build, tests, inspect desktop/mobile/RTL scrolling.
+
+
 ## First Stories video visual parity correction — 2026-10-12
 
 OWNER_ACCEPTED: Fantasy-like treatment of first dummy media; Latin copy in

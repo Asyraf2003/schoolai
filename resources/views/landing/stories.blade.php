@@ -6,20 +6,36 @@
             @endforeach
         </h2>
     </header>
-    <article class="stories__feature" data-stories-feature data-stories-demo aria-labelledby="stories-feature-title">
-        <div class="stories__feature-media" aria-hidden="true">
-            <img class="stories__feature-poster" data-stories-poster
-                src="{{ config('media.static.school_life.labit') }}"
-                alt="" loading="lazy" decoding="async" width="1600" height="900">
-            <video class="stories__feature-video" data-stories-video
-                data-src="{{ rtrim(config('media.public_url'), '/') }}/gallery/media/it-v1.mp4"
-                poster="{{ config('media.static.school_life.labit') }}"
-                preload="none" autoplay muted loop playsinline aria-hidden="true"></video>
+    @php
+        $demoMedia = [
+            ['poster' => 'labit', 'video' => 'it'],
+            ['poster' => 'mushalla', 'video' => 'musola'],
+            ['poster' => 'renang', 'video' => 'renang'],
+            ['poster' => 'taekwondo', 'video' => 'tekwondo'],
+        ];
+    @endphp
+    <div class="stories__sequence" data-stories-sequence>
+        <div class="stories__viewport" data-stories-viewport>
+            @foreach ($demoMedia as $media)
+                <article class="stories__feature" data-stories-feature data-stories-demo
+                         data-stories-number="{{ $loop->iteration }}"
+                         aria-labelledby="stories-feature-title-{{ $loop->iteration }}">
+                    <div class="stories__feature-media" aria-hidden="true">
+                        <img class="stories__feature-poster" data-stories-poster
+                             src="{{ config('media.static.school_life.'.$media['poster']) }}"
+                             alt="" loading="lazy" decoding="async" width="1600" height="900">
+                        <video class="stories__feature-video" data-stories-video
+                               data-src="{{ rtrim(config('media.public_url'), '/') }}/gallery/media/{{ $media['video'] }}-v1.mp4"
+                               poster="{{ config('media.static.school_life.'.$media['poster']) }}"
+                               preload="none" autoplay muted loop playsinline aria-hidden="true"></video>
+                    </div>
+                    <div class="stories__feature-copy">
+                        <span class="stories__feature-index" aria-hidden="true">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                        <h3 id="stories-feature-title-{{ $loop->iteration }}">{{ __('stories.features.'.$loop->index.'.title') }}</h3>
+                        <p>{{ __('stories.features.'.$loop->index.'.description') }}</p>
+                    </div>
+                </article>
+            @endforeach
         </div>
-        <div class="stories__feature-copy">
-            <span class="stories__feature-index" aria-hidden="true">01</span>
-            <h3 id="stories-feature-title">{{ __('stories.feature.title') }}</h3>
-            <p>{{ __('stories.feature.description') }}</p>
-        </div>
-    </article>
+    </div>
 </section>
