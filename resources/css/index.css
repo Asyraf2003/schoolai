@@ -11,6 +11,7 @@
 @import './style/motion.css';
 @import './sections/header.css';
 @import './sections/cursor.css';
+@import './sections/scroll-indicator.css';
 @import './sections/hero.css';
 @import './sections/about.css';
 @import './sections/program.css';

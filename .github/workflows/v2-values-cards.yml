@@ -42,6 +42,8 @@ jobs:
       - run: npm run build
       - name: Verify three-path geometry
         run: node --test tests/Unit/ValuesLineGeometry.test.mjs
+      - name: Verify Values desktop hold pacing
+        run: node --test tests/Unit/ValuesHoldPacing.test.mjs
       - name: Prepare Laravel
         run: |
           cp .env.example .env

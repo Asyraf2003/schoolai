@@ -10,6 +10,9 @@
 </head>
 <body class="landing">
     <a class="skip-link" href="#main-content">{{ __('home.accessibility.skip_to_content') }}</a>
+    <div class="scroll-indicator" data-scroll-indicator aria-hidden="true">
+        <span class="scroll-indicator__thumb" data-scroll-indicator-thumb></span>
+    </div>
     @include('landing.header', $navigation)
     <main id="main-content" tabindex="-1">
         @include('landing.hero', ['hero' => $hero])

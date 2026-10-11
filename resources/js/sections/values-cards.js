@@ -1,5 +1,5 @@
 import { desktopCardFrame } from './values-card-desktop.js';
-import { responsiveFlipAngle } from './values-card-keyframes.js';
+import { responsiveFlipAngle, valuesSourceProgress } from './values-card-keyframes.js';
 import { clamp, createScrollMotion, updateScrollMotion } from './values-card-motion.js';
 
 export function mountValuesCards(root) {
@@ -79,7 +79,7 @@ export function mountValuesCards(root) {
         const rects = desktop ? [] : cards.map(card => card.getBoundingClientRect());
         cards.forEach((card, index) => {
             let state;
-            if (desktop) state = desktopCardFrame(index, sample.visual, geometry, sample.momentum);
+            if (desktop) state = desktopCardFrame(index, valuesSourceProgress(sample.visual), geometry, sample.momentum);
             else {
                 const visible = clamp((innerHeight - rects[index].top) / rects[index].height);
                 const local = clamp((visible - (geometry.mode === 3 ? .16 : .5)) / (geometry.mode === 3 ? .62 : .5));

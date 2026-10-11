@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
 import { oldValuesReference } from './ValuesOldReference.mjs';
+import { valuesCompactedProgress } from '../../resources/js/sections/values-card-keyframes.js';
 
 const phases = [0, .025, .065, .118, .16, .237, .31, .65, .92, .98];
 const inspect = legacy => {
@@ -22,25 +23,45 @@ const inspect = legacy => {
 };
 async function desktopPosition(page, progress, legacy) {
     await page.bringToFront();
-    await page.evaluate(({ progress, legacy }) => {
+    const mappedProgress = legacy ? progress : valuesCompactedProgress(progress);
+    await page.evaluate(({ progress, legacy, mappedProgress }) => {
         const track = document.querySelector(legacy ? '[data-values-timeline]' : '[data-values-cards-track]');
         const viewport = document.querySelector(legacy ? '[data-values-stage]' : '[data-values-cards-viewport]');
         let travel = track.offsetHeight - viewport.offsetHeight;
-        let distance = progress * travel;
+        let distance = mappedProgress * travel;
         if (legacy) {
             const base = travel - innerHeight;
             distance = progress <= .895 ? progress * base
                 : .895 * base + (progress - .895) / .105 * (.105 * base + innerHeight * .5);
         }
         scrollTo(0, track.getBoundingClientRect().top + scrollY - 72 + distance);
-    }, { progress, legacy });
-    if (!legacy) await page.waitForFunction(progress => {
-        const track = document.querySelector('[data-values-cards-track]');
-        const viewport = document.querySelector('[data-values-cards-viewport]');
-        const target = Math.max(0, Math.min(1, (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight)));
-        return Math.abs(target - progress) < .0004
-            && Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
-    }, progress);
+    }, { progress, legacy, mappedProgress });
+    if (!legacy) {
+        try {
+            await page.waitForFunction(mappedProgress => {
+                const track = document.querySelector('[data-values-cards-track]');
+                const viewport = document.querySelector('[data-values-cards-viewport]');
+                const target = Math.max(0, Math.min(1, (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight)));
+                // Allow one native scroll pixel; keep the card timeline
+                // tightly synced to the actual measured scroll target.
+                return Math.abs(target - mappedProgress) * (track.offsetHeight - viewport.offsetHeight) <= 1
+                    && Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
+            }, mappedProgress);
+        } catch (error) {
+            const state = await page.evaluate(() => {
+                const root = document.querySelector('[data-values]');
+                const track = root.querySelector('[data-values-cards-track]');
+                const viewport = root.querySelector('[data-values-cards-viewport]');
+                return { scrollY, scrollHeight: document.documentElement.scrollHeight,
+                    innerHeight, trackTop: track.getBoundingClientRect().top,
+                    trackHeight: track.offsetHeight, viewportHeight: viewport.offsetHeight,
+                    scrollTarget: (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight),
+                    cardsProgress: root.dataset.cardsProgress, lineReady: root.hasAttribute('data-line-ready'),
+                    flow: root.hasAttribute('data-cards-flow'), running: root.hasAttribute('data-cards-running') };
+            });
+            throw new Error(`Values fidelity scroll target ${mappedProgress} did not settle: ${JSON.stringify(state)}; ${error.message}`);
+        }
+    }
     await page.waitForTimeout(1500);
 }
 for (const engine of engines) {

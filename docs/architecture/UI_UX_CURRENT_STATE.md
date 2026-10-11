@@ -58,6 +58,44 @@ No Values product source changed. Commit4b0024c3; integrated rerun pending.
 NEXT channel Terminal Codex: verify corrected CI; merge only scoped PASS.
 
 
+## Values desktop card hold pacing — 2026-10-11
+
+OWNER_ACCEPTED: desktop four-card completed hold is ~40% of its prior
+native-scroll distance; no timed autoplay, skip, or interaction change.
+Issue #90; branch fix/values-desktop-hold-40pct; base main 3e082555ac7c1474eb3972d135659194e3e54450.
+FACT: all card fronts settle at 0.308, old exit begins 0.895,
+old hold interval 0.587; desktop original card track end 490svh while
+Values/SVG field is 500svh. Compact flow uses a separate visibility path.
+DECISION: remap desktop progress through the 0.4 hold interval while
+preserving existing source card pose/flip/exit curves; shorten enhanced
+non-flow desktop card track to 365svh and SVG/section field to 375svh.
+SVG path coordinates, topology and GSAP scrub controller are unchanged;
+no-JS, reduced, compact, and fallback fields remain at baseline.
+PROOF: publication is not runtime proof. Run focused unit, legacy
+card-fidelity and line/browser CI, source check, build, PHP regression;
+npm audit baseline may fail from unchanged dependency advisories.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE until scoped proof and CI reports.
+NEXT channel GitHub CI / owner-local visual verification of scroll pacing
+after scoped browser gates, then record measured differences.
+
+## Homepage V2 passive scroll indicator — 2026-10-11
+
+OWNER_ACCEPTED: Lusion-inspired slim right-side scroll rail, display-only, no
+click/drag jump; visible while scrolling and fades over 2 seconds after idle.
+Blueprint/scope and acceptance: GitHub issue #88. Scope is Homepage V2 only.
+FACT: V2 uses landing.index Blade, css/index.css and js/index.js; no existing
+scroll indicator owner. Original main at audit: `445fbf92fa60160af92dc40c5195a925e83b2a4d`.
+DECISION: dedicated small CSS/JS owners, native scrollbar suppressed only
+after enhancement mounts; no-JS preserves native scroll. Native input, anchors
+and keyboard unaffected. Idle threshold 150ms followed by CSS fade of 2s.
+PROOF: source publication and focused checks pending review; complete
+Chromium/WebKit, PHP suite, performance and six-tier verification not yet run.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE full DOD. The feature must not be called
+fully PROVEN solely from a GitHub commit/merge.
+NEXT channel owner/local terminal: run the prescribed repository and browser
+matrix proof against the merged main, then update this ledger with evidence.
+
+
 ## Values soft hair curves — 2026-10-10
 
 OWNER_ACCEPTED: replace rejected zigzag with three floor-like strands with sideways sweeps and soft S
