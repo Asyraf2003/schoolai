@@ -1,5 +1,27 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Values–Gallery continuous native handoff — 2026-10-11
+
+OWNER_ACCEPTED: screenshot #4 is the expected shared viewport. With constant
+native scroll, Values four-card entrance/flip must respond immediately, and
+upward exit must move at exactly 1 CSS pixel per 1 scroll pixel. The Gallery
+title and opening video rise natively a measured responsive gap below actual
+card bodies; blue/white decoration transitions gradually toward black.
+Screenshots #1–3 (isolated Gallery/carts) are regressions, not the target.
+FACT: PR #87 5e44eb4 owns Gallery geometry/ten media; PR #93 f39c7abd
+replaces the spring and uses an inner sticky release that moves card bodies
+natively. The Gallery parent-element geometry now resolves to that release
+boundary. Isolated PR93 Chromium/WebKit cards/scoped-motion CI PASS.
+DECISION: combine both historical branches without overwriting Gallery, keep
+40% hold, three SVG path geometry, RTL/responsive/fallback and existing media.
+Add an integrated card-body/title spacing and 1:1 travel/reverse browser gate.
+Issue #94; integrated PR pending.
+PROOF: no combined-runner/browser proof until fresh CI. Historic isolated
+green checks cannot substitute for combined proof. Baseline npm audit FAIL.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE combined Gallery/Values/browser gates.
+NEXT: run combined Chromium/WebKit CI, fix only reproduced integration bugs,
+then publish to main with verified commit SHA.
+
 ## Gallery native spacing and gradual dark seam — 2026-10-11
 
 OWNER_RAW: “judul galeri dan kartu ...jaraknya tetep ...bukan model muncul”; rough

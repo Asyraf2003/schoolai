@@ -28,6 +28,9 @@
         inset-block-start: var(--values-cards-start, 100svh);
         block-size: calc(365svh - var(--values-cards-start, 100svh));
     }
+    .values[data-line-ready]:not([data-cards-flow]) .values__cards-release {
+        block-size: var(--values-cards-release-height, 100%);
+    }
     .values[data-line-ready]:not([data-cards-flow]) .values__cards-viewport {
         position: sticky; inset-block-start: var(--v2-header-block-size);
         block-size: calc(100svh - var(--v2-header-block-size));

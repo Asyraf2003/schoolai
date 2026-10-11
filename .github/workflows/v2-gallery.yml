@@ -78,7 +78,8 @@ jobs:
           node --test --test-concurrency=1 --test-timeout=420000 \
             tests/Unit/GalleryHeadingBrowser.test.mjs \
             tests/Unit/GalleryFallbackBrowser.test.mjs \
-            tests/Unit/GalleryViewportBrowser.test.mjs
+            tests/Unit/GalleryViewportBrowser.test.mjs \
+            tests/Unit/GalleryNativeHandoffBrowser.test.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

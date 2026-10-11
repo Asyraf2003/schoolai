@@ -93,6 +93,7 @@ jobs:
           tests/Unit/ValuesCardsFallbackBrowser.test.mjs
           tests/Unit/ValuesCompactFidelityBrowser.test.mjs
           tests/Unit/ValuesFidelityBrowser.test.mjs
+          tests/Unit/ValuesExitScrollBrowser.test.mjs
           tests/Unit/ValuesHeadingLifecycleBrowser.test.mjs
           tests/Unit/ValuesIntroBrowser.test.mjs
           tests/Unit/ValuesLineBrowser.test.mjs

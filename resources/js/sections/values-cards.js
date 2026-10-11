@@ -1,5 +1,5 @@
 import { desktopCardFrame } from './values-card-desktop.js';
-import { responsiveFlipAngle, valuesSourceProgress } from './values-card-keyframes.js';
+import { responsiveFlipAngle, valuesSourceProgress, valuesExitScrollOffset } from './values-card-keyframes.js';
 import { clamp, createScrollMotion, updateScrollMotion } from './values-card-motion.js';
 
 export function mountValuesCards(root) {
@@ -7,34 +7,33 @@ export function mountValuesCards(root) {
     const stage = root.querySelector('[data-values-cards-stage]');
     const viewport = root.querySelector('[data-values-cards-viewport]');
     const track = root.querySelector('[data-values-cards-track]');
+    const release = root.querySelector('[data-values-cards-release]');
     const cards = [...root.querySelectorAll('[data-values-card]')];
     const poses = cards.map(card => card.querySelector('[data-values-card-pose]'));
     const flips = cards.map(card => card.querySelector('[data-values-card-inner]'));
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const lifecycle = new AbortController();
     const { signal } = lifecycle;
-    const spring = createScrollMotion();
+    const scrollMotion = createScrollMotion();
     const capable = 'IntersectionObserver' in window && CSS.supports('transform-style', 'preserve-3d')
         && CSS.supports('perspective', '800px') && CSS.supports('overflow', 'clip');
     let near = false;
     let suspended = false;
     let frame = 0;
-    let last = 0;
     let geometry;
     let dirty = true;
-    let snap = true;
     const running = () => {
         root.toggleAttribute('data-cards-running', near && !suspended && !document.hidden
             && root.hasAttribute('data-cards-motion'));
     };
-    const cancel = () => { cancelAnimationFrame(frame); frame = 0; last = 0; running(); };
+    const cancel = () => { cancelAnimationFrame(frame); frame = 0; running(); };
     const reset = () => {
         delete root.dataset.cardsMotion;
         delete root.dataset.cardsProgress;
         poses.forEach(pose => pose.style.removeProperty('transform'));
         flips.forEach(flip => flip.style.removeProperty('transform'));
         cards.forEach(card => card.removeAttribute('data-card-face'));
-        snap = true; running();
+        running();
     };
     const measure = () => {
         const desktop = innerWidth >= 1280;
@@ -47,10 +46,14 @@ export function mountValuesCards(root) {
         const tooTall = Math.max(...heights) + 48 > innerHeight - header;
         const flow = !capable || motion.matches || tooTall;
         root.toggleAttribute('data-cards-flow', flow);
+        if (desktop && !flow) {
+            const span = Math.max(0, track.offsetHeight - viewport.offsetHeight);
+            release.style.setProperty('--values-cards-release-height',
+                `${(track.offsetHeight - valuesExitScrollOffset(1, span)).toFixed(2)}px`);
+        } else release.style.removeProperty('--values-cards-release-height');
         const stageBox = viewport.getBoundingClientRect();
         const rects = cards.map(card => card.getBoundingClientRect());
         const mode = desktop ? 4 : innerWidth >= 768 ? 3 : 1;
-        if (geometry?.mode !== mode) snap = true;
         geometry = {
             mode, flow, stageHeight: stageBox.height,
             stageCenterX: stageBox.left + stageBox.width / 2,
@@ -62,7 +65,7 @@ export function mountValuesCards(root) {
         };
         dirty = false;
     };
-    const paint = time => {
+    const paint = () => {
         frame = 0;
         if (suspended || document.hidden) return;
         if (dirty) measure();
@@ -70,16 +73,16 @@ export function mountValuesCards(root) {
         if (!capable || motion.matches || geometry.flow || !root.hasAttribute('data-line-ready')) { reset(); return; }
         root.dataset.cardsMotion = 'true'; running();
         const desktop = geometry.mode === 4;
-        const target = clamp((geometry.stickyTop - track.getBoundingClientRect().top)
-            / Math.max(1, track.offsetHeight - viewport.offsetHeight));
-        const sample = updateScrollMotion(spring, target, last ? time - last : 1000 / 60, snap || !desktop);
-        last = time; snap = false;
+        const scrollSpanPx = Math.max(1, track.offsetHeight - viewport.offsetHeight);
+        const target = clamp((geometry.stickyTop - track.getBoundingClientRect().top) / scrollSpanPx);
+        const sample = updateScrollMotion(scrollMotion, target);
         root.dataset.cardsProgress = sample.visual.toFixed(5);
         // Read untransformed slots before writing any of their child poses.
         const rects = desktop ? [] : cards.map(card => card.getBoundingClientRect());
         cards.forEach((card, index) => {
             let state;
-            if (desktop) state = desktopCardFrame(index, valuesSourceProgress(sample.visual), geometry, sample.momentum);
+            if (desktop) state = desktopCardFrame(index, valuesSourceProgress(sample.visual),
+                geometry, sample.momentum);
             else {
                 const visible = clamp((innerHeight - rects[index].top) / rects[index].height);
                 const local = clamp((visible - (geometry.mode === 3 ? .16 : .5)) / (geometry.mode === 3 ? .62 : .5));
@@ -92,7 +95,6 @@ export function mountValuesCards(root) {
             flips[index].style.transform = `rotateY(${state.ry.toFixed(2)}deg)`;
             card.dataset.cardFace = Math.cos(state.ry * Math.PI / 180) < 0 ? 'back' : 'front';
         });
-        if (desktop && !sample.settled) schedule(); else last = 0;
     };
     const schedule = () => {
         if (!frame && (near || dirty) && !suspended && !document.hidden) frame = requestAnimationFrame(paint);
@@ -130,6 +132,7 @@ export function mountValuesCards(root) {
             suspended = true; cancel(); reset(); changes.disconnect(); resize?.disconnect(); observer?.disconnect(); visibility?.disconnect();
             lifecycle.abort(); delete root.dataset.cardsFlow; track.style.removeProperty('--values-cards-start');
             cards.forEach(card => card.removeAttribute('data-card-visible'));
+            release.style.removeProperty('--values-cards-release-height');
         },
     };
 }

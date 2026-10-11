@@ -1,6 +1,7 @@
 # MAP-V2-18 — Gallery V2 and Testimonials handoff
 
 STATUS: OWNER_ACCEPTED / IMPLEMENTING
+INTEGRATION: issue #94, Gallery PR #87 + Values PR #93; native card-body/title seam and 1:1 scroll proof required before main.
 Repository Asyraf2003/schoolai; latest main dae40c14; owner-integrated d3108694/ac22aeef; Terminal Codex.
 Issue86 / branch feat/v2-scroll-gallery / PR87.
 

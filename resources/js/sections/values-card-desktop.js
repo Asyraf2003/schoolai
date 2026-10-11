@@ -1,5 +1,4 @@
 import {
-    exitAmount,
     fanAngle,
     fanArc,
     flipAngle,
@@ -89,6 +88,7 @@ export function desktopCardFrame(
     progress,
     geometry,
     momentum,
+    exitScrollPx = 0,
 ) {
     const center = centeredOffsets(index, geometry);
     const hidden = hiddenPose(geometry, center);
@@ -125,12 +125,11 @@ export function desktopCardFrame(
 
     const localFlip = flipLocal(index, progress);
     const upright = uprightAmount(localFlip);
-    const leave = exitAmount(progress);
     current.ry = flipAngle(localFlip);
     current.rz = mix(current.rz, 0, upright);
     current.x = mix(current.x, 0, upright);
     current.y = mix(current.y, 0, upright)
-        - leave * (geometry.stageHeight + geometry.cardHeight * 0.72);
+        - exitScrollPx;
     current.z = mix(current.z, 0, upright);
     current.floatY = 0;
 
