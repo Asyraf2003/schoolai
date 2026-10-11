@@ -1,4 +1,4 @@
-export const SCROLL_SPEED_PX_PER_SECOND = 840;
+export const SCROLL_SPEED_PX_PER_SECOND = 1680;
 export const SCROLL_QUEUE_LIMIT_PX = 112;
 export const SCROLL_IDLE_CUTOFF_MS = 145;
 

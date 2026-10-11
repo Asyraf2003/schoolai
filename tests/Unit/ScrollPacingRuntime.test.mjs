@@ -22,7 +22,8 @@ test('extreme wheel bursts stay capped and do not accumulate scroll debt', () =>
         assert.ok(step <= SCROLL_SPEED_PX_PER_SECOND * .017 + .1);
         total += step;
     }
-    assert.ok(total < 45);
+    assert.equal(SCROLL_SPEED_PX_PER_SECOND, 1680, 'owner requested 2x the previous 840 px/s cap');
+    assert.ok(total > 80 && total < 90, 'three 60Hz frames advance at the doubled cap');
     assert.ok(state.pending <= SCROLL_QUEUE_LIMIT_PX);
     // A stop must not turn thousands of discarded wheel pixels into inertia.
     assert.equal(takePacingStep(state, 300), 0);

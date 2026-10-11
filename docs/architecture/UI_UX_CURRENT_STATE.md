@@ -7,7 +7,8 @@ Program, Values flip/hold/native exit, or Gallery's opening/shrink/media phases.
 Not an autoplay snap gate or timer per section: actual page-scroll velocity is
 bounded, while original controllers and GSAP ScrollTrigger read native scrollY.
 DECISION: one homepage-only (Landing V2 composition root) wheel pacer with
-840 CSS px/s frame budget, max 112 px outstanding and 145ms idle cutoff,
+1680 CSS px/s frame budget (owner doubled previous 840 on 2026-10-11),
+max 112 px outstanding and 145ms idle cutoff,
 direction reversal discards stale debt. Respect scrollbar/programmatic jumps,
 keyboard access, nested scroll, dialogs, browser zoom, lifecycle and reduced
 motion. Touch is intentionally native pending independent mobile safety proof;
