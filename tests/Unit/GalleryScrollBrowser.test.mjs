@@ -19,23 +19,24 @@ for (const engine of engines) {
                 for (const width of [360, 390, 640, 768, 1024, 1280, 1440, 1536, 1920]) {
                     const started = performance.now();
                     await galleryResize(page, width, 900);
-                    const title = await galleryAt(page, .005);
+                    const entryStart = +await page.locator('[data-gallery]').getAttribute('data-gallery-shrink-start');
+                    const title = await galleryAt(page, entryStart * .2);
                     assert.equal(title.heading.size, title.heading.valuesSize);
                     assert.equal(title.heading.color, 'rgb(255, 255, 255)');
-                    assert.deepEqual(title.backgroundRGB, [8, 9, 11]);
-                    assert.equal(title.typeVisible, 'hidden');
-                    if (title.valuesRemaining > .205) assert.equal(title.heading.visibility, 'hidden', 'heading waits while more than20% of cards remain');
+                    assert.ok(title.backgroundRGB[2] < 255 && title.backgroundRGB[2] > 11, 'entry darkens continuously');
+                    assert.equal(title.heading.visibility, 'visible');
                     assert.ok(title.heading.y > 0 && title.heading.y < 900, 'large title precedes opening media');
                     const before = await galleryAt(page, 0);
                     assert.deepEqual(before.backgroundRGB, [32, 56, 255], 'reverse restores Values blue');
                     assert.equal(before.typeVisible, 'visible');
                     const gap = Math.max(6, Math.min(width * .011, 16));
                     assert.ok(Math.abs(title.items[0].y - title.header.bottom - gap) < 1, 'title and main media rise with a close fixed gap');
-                    await galleryAt(page, .075);
-                    await page.waitForFunction(() => document.querySelector('[data-gallery-heading]').dataset.headingState === 'complete'
-                        && getComputedStyle(document.querySelector('[data-gallery-heading]')).visibility === 'visible');
+                    await galleryAt(page, entryStart * .65);
                     const opening = await galleryOpening(page);
                     assert.ok(Math.abs(opening.items[0].width - Math.min(width * 26 / 30, 900 * .84 / .5625)) < 1);
+                    assert.deepEqual(opening.backgroundRGB, [8, 9, 11]);
+                    assert.equal(opening.lineOpacity, 0);
+                    assert.equal(opening.typeOpacity, 0);
                     assert.equal(opening.items[0].opacity, 1);
                     assert.ok(opening.items.slice(1).every(i => i.opacity === 1));
                     assert.ok(opening.words.every(w => w.opacity === 0));

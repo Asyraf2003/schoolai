@@ -1,0 +1,85 @@
+{
+  "testedCommit": "9d2fa0bf41eb0a5376c6dd35cebe6ed2696ff151",
+  "runs": [
+    {
+      "conclusion": "success",
+      "headSha": "9d2fa0bf41eb0a5376c6dd35cebe6ed2696ff151",
+      "jobs": [
+        {
+          "name": "gallery (chromium)",
+          "conclusion": "success",
+          "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629150/job/114446978782",
+          "completedAt": "2026-10-11T10:23:01Z"
+        },
+        {
+          "name": "gallery (webkit)",
+          "conclusion": "success",
+          "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629150/job/114446978897",
+          "completedAt": "2026-10-11T10:33:00Z"
+        }
+      ],
+      "name": "V2 scroll Gallery",
+      "status": "completed",
+      "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629150"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "9d2fa0bf41eb0a5376c6dd35cebe6ed2696ff151",
+      "jobs": [
+        {
+          "name": "cards (webkit)",
+          "conclusion": "success",
+          "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629149/job/114446978671",
+          "completedAt": "2026-10-11T10:33:02Z"
+        },
+        {
+          "name": "cards (chromium)",
+          "conclusion": "success",
+          "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629149/job/114446978867",
+          "completedAt": "2026-10-11T10:27:48Z"
+        }
+      ],
+      "name": "V2 Values cards scoped verification",
+      "status": "completed",
+      "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629149"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "9d2fa0bf41eb0a5376c6dd35cebe6ed2696ff151",
+      "jobs": [
+        {
+          "name": "scoped-motion (chromium)",
+          "conclusion": "success",
+          "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629141/job/114446978660",
+          "completedAt": "2026-10-11T10:22:47Z"
+        },
+        {
+          "name": "scoped-motion (webkit)",
+          "conclusion": "success",
+          "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629141/job/114446978790",
+          "completedAt": "2026-10-11T10:24:07Z"
+        }
+      ],
+      "name": "V2 heading and three Values strokes focus",
+      "status": "completed",
+      "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629141"
+    },
+    {
+      "conclusion": "failure",
+      "headSha": "9d2fa0bf41eb0a5376c6dd35cebe6ed2696ff151",
+      "jobs": [
+        {
+          "name": "dependency-and-regression-audit",
+          "conclusion": "failure",
+          "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629153/job/114446978674",
+          "completedAt": "2026-10-11T10:21:31Z"
+        }
+      ],
+      "name": "Security audit",
+      "status": "completed",
+      "url": "https://github.com/Asyraf2003/schoolai/actions/runs/38131629153"
+    }
+  ],
+  "security": "FAIL unchanged dependency baseline; no lock changes",
+  "scope": "Gallery, preceding Values/heading integration Chromium and WebKit"
+}

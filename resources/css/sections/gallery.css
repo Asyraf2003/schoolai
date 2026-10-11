@@ -1,18 +1,23 @@
-.gallery { position: relative; background: #08090b; color: #fff; }
-.program-values:has([data-line-ready]) + .gallery[data-gallery-enabled] {
-    margin-block-start: -90vh; margin-block-start: -90svh;
-    background: linear-gradient(transparent 90vh, #08090b 90vh);
-    background: linear-gradient(transparent 90svh, #08090b 90svh);
+.gallery { overflow-anchor: none; position: relative; background: #08090b; color: #fff; }
+.gallery[data-gallery-enabled] {
+    margin-block-start: var(--gallery-entry-margin, 0px);
+    background: color-mix(in srgb, #2038ff calc(100% - var(--gallery-dark-pct, 0%)), #08090b var(--gallery-dark-pct, 0%));
 }
-.program-values[data-gallery-dark] { background: #08090b; }
-.program-values[data-gallery-dark] .program__type-home { visibility: hidden; }
+.gallery[data-gallery-enabled]::before {
+    content: ''; position: absolute; inset-inline: 0; inset-block-end: 100%;
+    block-size: max(0px, var(--gallery-entry-margin, 0px));
+    background: inherit; pointer-events: none;
+}
+.program-values[data-gallery-dark] {
+    background: color-mix(in srgb, var(--values-blue) calc(100% - var(--gallery-dark-pct, 0%)), #08090b var(--gallery-dark-pct, 0%));
+}
+.program-values[data-gallery-dark] .program__type-home,
+.program-values[data-gallery-dark] .values__line { opacity: var(--gallery-decoration-opacity, 1); }
 .gallery__stage { position: relative; padding-block: clamp(3rem, 6vw, 7rem); }
 .gallery__header { inline-size: 84%; margin-inline: auto; padding-block: calc(var(--v2-header-block-size) + 1svh) 0; }
 .gallery__header h2 { margin: 0; font-size: clamp(3.4rem, 15vw, 7rem); font-weight: 360; line-height: .84; letter-spacing: -.055em; text-transform: uppercase; }
 .gallery__heading-clip { display: block; overflow: hidden; padding-block: .08em; }
 .gallery__heading-clip > span { display: block; }
-.gallery[data-gallery-heading-waiting] [data-gallery-heading] { visibility: hidden; }
-[data-gallery-heading][data-heading-state="idle"] [data-gallery-heading-line] { transform: translateY(108%); opacity: 0; }
 .gallery__composition { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 2rem); inline-size: 88%; margin-inline: auto; }
 .gallery__item { position: relative; min-inline-size: 0; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: clamp(.4rem, .8vw, .8rem); background: #e8edf0; }
 .gallery__item::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 32px 4px #0000005c; }

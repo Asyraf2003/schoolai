@@ -11,7 +11,7 @@ export async function galleryResize(page, width, height) {
         const root = document.querySelector('[data-gallery]');
         const trigger = window.ScrollTrigger.getById('gallery-v2');
         const box = root.getBoundingClientRect();
-        return !root.hasAttribute('data-gallery-reflow-pending') && Math.abs(trigger.start - (box.top + scrollY - innerHeight * .7)) < 2
+        return !root.hasAttribute('data-gallery-reflow-pending') && Math.abs(trigger.start - (box.top + scrollY - innerHeight)) < 2
             && Math.abs(trigger.end - (box.bottom + scrollY - innerHeight)) < 2;
     });
 }
@@ -23,6 +23,16 @@ export async function galleryReady(page) {
     });
     await page.waitForFunction(() => !!window.ScrollTrigger?.getById('gallery-v2'));
     await page.evaluate(() => document.fonts.ready);
+    await page.waitForFunction(() => document.querySelector('[data-values]').hasAttribute('data-line-ready'));
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await page.waitForFunction(() => {
+        const root = document.querySelector('[data-gallery]');
+        const trigger = window.ScrollTrigger.getById('gallery-v2');
+        const box = root.getBoundingClientRect();
+        return !root.hasAttribute('data-gallery-reflow-pending')
+            && Math.abs(trigger.start - (box.top + scrollY - innerHeight)) < 2
+            && Math.abs(trigger.end - (box.bottom + scrollY - innerHeight)) < 2;
+    });
 }
 export async function galleryOpening(page) {
     return galleryAt(page, +(await page.locator('[data-gallery]').getAttribute('data-gallery-shrink-start')));
@@ -75,6 +85,8 @@ export function galleryState() {
         background: getComputedStyle(document.querySelector('[data-program-values]')).backgroundColor,
         backgroundRGB: [...pixel.getImageData(0, 0, 1, 1).data].slice(0, 3),
         typeVisible: getComputedStyle(document.querySelector('.program__type-home')).visibility,
+        lineOpacity: +getComputedStyle(document.querySelector('[data-values-line]')).opacity,
+        typeOpacity: +getComputedStyle(document.querySelector('.program__type-home')).opacity,
         lastDraw: 1 - parseFloat(getComputedStyle(lastStrand).strokeDashoffset) / lastStrand.getTotalLength(),
         blur: filterBlur(document.querySelector('[data-gallery-composition]')),
         items: [...document.querySelectorAll('[data-gallery-item]')].map(e => ({ ...rect(e), opacity: +getComputedStyle(e).opacity,

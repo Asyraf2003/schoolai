@@ -1,54 +1,53 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
-import { galleryReady, galleryAt } from './GalleryBrowserSupport.mjs';
+import { galleryReady, galleryAt, galleryOpening, galleryResize } from './GalleryBrowserSupport.mjs';
 
 for (const engine of engines) {
-    test(`Gallery title waits for the actual Values card exit in ${engine}`, { skip: !enabled }, async () => {
+    test(`Gallery native title spacing and gradual dark handoff in ${engine}`, { skip: !enabled }, async () => {
         const runtime = await session(engine);
         const { page } = runtime;
         const cases = [];
         try {
             for (const lang of ['id', 'en', 'ar']) {
                 await locale(page, lang);
-                await page.evaluate(() => {
-                    window.galleryEntryWitness = null;
-                    const heading = document.querySelector('[data-gallery-heading]');
-                    const observer = new MutationObserver(() => {
-                        if (heading.dataset.headingState !== 'revealing' || window.galleryEntryWitness) return;
-                        const viewport = document.querySelector('[data-values-cards-viewport]');
-                        const top = Math.max(0, viewport.getBoundingClientRect().top);
-                        const cards = [...document.querySelectorAll('[data-values-card-inner]')].map(card => {
-                            const r = card.getBoundingClientRect();
-                            return { top: r.top, bottom: r.bottom, height: r.height,
-                                visibleBody: Math.max(0, r.bottom - top) / r.height };
-                        });
-                        window.galleryEntryWitness = { cards, headingY: heading.getBoundingClientRect().top,
-                            progress: document.querySelector('[data-gallery]').dataset.galleryProgress };
-                        observer.disconnect();
-                    });
-                    observer.observe(heading, { attributes: true, attributeFilter: ['data-heading-state'] });
-                });
                 await galleryReady(page);
-                const early = await galleryAt(page, .005);
-                assert.equal(early.heading.visibility, 'hidden', 'no title while most card bodies remain');
-                await galleryAt(page, .042);
-                await page.waitForFunction(() => !!window.galleryEntryWitness);
-                const witness = await page.evaluate(() => window.galleryEntryWitness);
-                assert.ok(witness.cards.every(card => card.visibleBody <= .205), 'at most20% visible when reveal begins');
-                await page.waitForFunction(() => document.querySelector('[data-gallery-heading]').dataset.headingState === 'complete');
-                const shown = await galleryAt(page, .045);
-                assert.equal(shown.heading.visibility, 'visible');
-                await page.screenshot({ path: `${directory}/gallery-${engine}-${lang}-1440-delayed-title.jpg`, type: 'jpeg', quality: 85 });
-                await galleryAt(page, .005);
-                await page.waitForFunction(() => getComputedStyle(document.querySelector('[data-gallery-heading]')).visibility === 'hidden'
-                    && +document.querySelector('[data-gallery]').dataset.galleryHeadingRemaining > .2);
-                assert.ok(+await page.locator('[data-gallery]').getAttribute('data-gallery-heading-remaining') > .2, 'reverse closes gate as cards return');
-                await page.emulateMedia({ reducedMotion: 'reduce' });
-                await page.waitForFunction(() => !document.querySelector('[data-gallery]').hasAttribute('data-gallery-heading-waiting'));
-                assert.equal(await page.locator('[data-gallery-heading]').evaluate(e => getComputedStyle(e).visibility), 'visible');
-                await page.emulateMedia({ reducedMotion: 'no-preference' });
-                cases.push({ lang, early, witness, shown, reverse: 'PASS', reduced: 'PASS' });
+                for (const width of [390, 640, 768, 1024, 1280, 1536]) {
+                    await galleryResize(page, width, 900);
+                    const start = +await page.locator('[data-gallery]').getAttribute('data-gallery-shrink-start');
+                    const samples = [];
+                    for (const amount of [.2, .4, .6]) {
+                        const state = await galleryAt(page, start * amount);
+                        const spacing = await page.evaluate(() => {
+                            const root = document.querySelector('[data-gallery]');
+                            const heading = root.querySelector('[data-gallery-heading]');
+                            const line = root.querySelector('[data-gallery-heading-line]');
+                            const cards = [...document.querySelectorAll('[data-values-card]')];
+                            const bottom = Math.max(...cards.map(card => card.getBoundingClientRect().bottom));
+                            return { gap: heading.getBoundingClientRect().top - bottom,
+                                expected: +root.dataset.galleryEntryGap,
+                                opacity: getComputedStyle(line).opacity, transform: getComputedStyle(line).transform,
+                                animations: line.getAnimations().length };
+                        });
+                        assert.equal(state.heading.visibility, 'visible');
+                        assert.equal(spacing.opacity, '1');
+                        assert.equal(spacing.transform, 'none');
+                        assert.equal(spacing.animations, 0, 'title rises natively without an appearance animation');
+                        assert.ok(Math.abs(spacing.gap - spacing.expected) < 2, `native spacing ${lang}/${width}: ${JSON.stringify(spacing)}`);
+                        if (width === 1536 && amount === .4) await page.screenshot({ path: `${directory}/gallery-${engine}-${lang}-1536-native-title.jpg`, type: 'jpeg', quality: 85 });
+                        samples.push({ amount, state, spacing });
+                    }
+                    assert.ok(samples[0].state.heading.y > samples[2].state.heading.y, 'title keeps rising');
+                    assert.ok(samples[0].state.backgroundRGB[2] > samples[1].state.backgroundRGB[2]
+                        && samples[1].state.backgroundRGB[2] > samples[2].state.backgroundRGB[2], 'blue progressively darkens');
+                    const opening = await galleryOpening(page);
+                    assert.deepEqual(opening.backgroundRGB, [8, 9, 11]);
+                    assert.equal(opening.lineOpacity, 0, 'white decoration does not enter Gallery');
+                    assert.equal(opening.typeOpacity, 0);
+                    const reverse = await galleryAt(page, 0);
+                    assert.deepEqual(reverse.backgroundRGB, [32, 56, 255]);
+                    cases.push({ lang, width, samples, opening, reverse });
+                }
             }
             assert.deepEqual(runtime.errors, []);
             await evidence(`gallery-heading-${engine}`, { version: runtime.version, cases });

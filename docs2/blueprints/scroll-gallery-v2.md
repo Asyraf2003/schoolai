@@ -27,6 +27,11 @@ Latest entry correction: “ketika kartu sudah naik hampir sempurna sisa15–20%
 badannya ...judul mulai nongol”; early title must remain hidden until at most20%
 of each exiting Values card remains at its actual clip boundary. This overrides
 the earlier line80% title trigger; the already-approved black paint timing remains.
+Latest owner correction supersedes the appearance gate: title stays visible and
+rises natively with Values cards; owner confirms the gap is card bottom→Gallery
+title top, roughly70% screen height but must derive from actual viewport/card
+geometry rather than70vh. Remove white line from the Gallery handoff; blue
+background and decorative type darken continuously to black, not an instant switch.
 Issue → branch → PR → merge main only after relevant checks PASS.
 
 ## FACT / LEGACY_REFERENCE
@@ -55,11 +60,11 @@ Gallery owns the handoff paint state on the preceding world: data-gallery-dark
 changes only its background to black and hides the decorative type plane.
 The overlap is transparent so incoming Gallery never masks Values cards.
 Existing Values animation/card/line/marquee controllers and geometry are unchanged.
-Gallery-only heading gate reads actual exiting card bounds, including spring
-settling, before mounting the shared900ms heading reveal. Reverse closes the gate
-again while cards remain. No layout shift or separate animation loop; reduced/
-static paths retain the complete heading. One bounded observer reads existing
-Values progress without changing it.
+Gallery-owned entry measures the untransformed last Values row at native sticky
+release, then places its normal-flow title one available screen minus half the
+row height below it. No heading reveal/visibility gate. Same title/main close gap.
+A reversible timeline blends preceding blue and Gallery entry to black, while
+fading decorative type and white SVG at the seam only; path/source is untouched.
 
 Copy: ID “Fasilitas terbaik. Untuk generasi hebat.”;
 EN “Exceptional spaces. For an extraordinary generation.”;
@@ -71,8 +76,9 @@ No-JS/reduced/missing GSAP gives complete static responsive media and copy.
 ## AI_ASSUMPTIONS
 
 26/30 opening example means86.7vw; short/wide viewports cap opening height84vh.
-Original last-strand80% entry maps to Gallery root at70% viewport with90svh
-overlap; latest owner card-body15–20% correction gates the heading independently.
+Latest native gap uses one screen height minus half the measured Values row
+height. This is an optical interpretation of the rough70% example, not70vh.
+Earlier90svh overlap and card-body appearance gate are superseded.
 Main integration shortens enhanced desktop Values from500svh to375svh; compact
 flow stays500svh. Gallery reads current bounds without taking Values ownership. Compact flow content
 may extend that field; complete cards take precedence over masking their end.
@@ -99,8 +105,9 @@ Unknown videos without a verified poster are excluded. No DB/schema/CRUD change.
 
 ## Storyboard / responsive / locale
 
-Progress0: dark entry; shared section heading is held until Values card bodies
-have at most20% remaining (18% gate). Native rise preserves heading/main gap. Before measured stage-top boundary, main remains large and
+Progress0: entry begins at viewport bottom; native title follows the last Values
+row with measured responsive spacing. Entry→shrinkStart continuously darkens
+blue/type/line to black; no title appearance animation. Native rise preserves heading/main gap. Before measured stage-top boundary, main remains large and
 secondary media remain at least one viewport below it. Boundary→.52: centered
 shrink plus secondary approach. Words start at60% of that measured interval.
 At.52 main center is viewport center,10 media form3–4–3 and first word is clear.
@@ -111,10 +118,11 @@ XS360/390 and SM640:2 columns, longer1000svh runway; MD768/LG1024/XL1280/
 2XL1536:3 columns,700svh. Same DOM/controller; CSS owns typography and layout.
 ID/EN Inter/LTR; AR Cairo/RTL, mirror physical side entrances without mirroring
 photos or vertical time. Server locale reload rebuilds geometry/lifecycle.
-Resize preserves last measured progress before other section refresh handlers.
+Resize captures the current Gallery stage before other section handlers and
+rebuilds after their measurements, retaining progress through settled geometry.
 Owner integrated main dae40c14 via d3108694/ac22aeef; Values hold40% and
 passive scroll indicator remain read-only. PR93 Values exit work remains separate.
-Gallery-only preceding-world ResizeObserver reconciles the proven asynchronous
+Gallery entry card/viewport measurement and preceding-world ResizeObserver reconcile the proven asynchronous
 375svh↔500svh Values flow remeasurement without changing Values owners.
 Writes coalesce into one event-driven frame after observer delivery, canceled
 on suspend/dispose; direct refresh inside observer delivery reproduced WebKit
@@ -156,10 +164,11 @@ real Testimonial handoffs and Values line integration3/3 PASS. CI38117850566
 Chromium PASS; WebKit4PASS/1cancelled at420s aggregate file limit without an
 assertion failure. Same27 profiles now partitioned per locale into fresh bounded
 processes with per-viewport duration proof. Final integrated local after Gallery
-reflow correction: Chromium6/6, WebKit6/6 PASS, including actual card-exit
-heading gate and centered assembly after asynchronous Values reflow. Latest
+reflow correction: Chromium6/6, WebKit6/6 PASS, including the prior card-exit heading gate and centered assembly. Those captures
+certify the previous storyboard; native title/gradual seam proof is renewing. Latest
 main dae40c14 PHP comparison same71FAIL/75ERROR, six additional PASS.
-Corrected integrated CI pending in proof/gallery-v2.
+Prior9d2fa0bf CI Gallery/Values/heading PASS both engines. Current native title,
+gradual seam and responsive gap correction are not yet fully certified.
 Accessibility tree and18 DPR2 expanded-geometry cases PASS: full localized
 sentence,10 named media, keyboard/focus and touch tap. An sr-only full sentence
 fixes the inaccessible animated paragraph without changing visible copy.
@@ -169,4 +178,6 @@ or field CWV certification claim. Synthetic lifecycle checks prove handlers only
 ## GIT / NEXT VALID STEP
 
 PR87 remains OPEN until latest visual/browser and scoped CI PASS.
-Terminal Codex: finish latest owner-correction proof, update PR and gated merge.
+Terminal Codex: publish native-title/gradual-seam checkpoint. Actual card-body gap
+remains pending authorized PR93 uniform/native response; do not merge Gallery
+until combined physical seam and exact-source browser proof PASS.

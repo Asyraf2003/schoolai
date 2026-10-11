@@ -10,16 +10,21 @@ export function createGalleryTimeline(gsap, ScrollTrigger, root, update) {
     const geometry = galleryGeometry(stage.clientWidth, stage.clientHeight, document.documentElement.dir === 'rtl');
     root.dataset.galleryWidth = String(stage.clientWidth);
     root.dataset.galleryHeight = String(stage.clientHeight);
-    const shrinkStart = (root.querySelector('.gallery__header').offsetHeight + stage.clientHeight * .7)
-        / (root.offsetHeight - stage.clientHeight * .3);
+    const shrinkStart = (root.querySelector('.gallery__header').offsetHeight + stage.clientHeight)
+        / root.offsetHeight;
     const revealStart = shrinkStart + (.52 - shrinkStart) * .6;
     root.dataset.galleryShrinkStart = String(shrinkStart);
     const timeline = gsap.timeline({ scrollTrigger: {
         id: 'gallery-v2', trigger: root,
-        start: 'top 70%',
+        start: 'top bottom',
         end: 'bottom bottom', scrub: true,
         onUpdate: trigger => {
+            const entry = Math.min(1, trigger.progress / shrinkStart);
+            const dark = entry * entry * (3 - 2 * entry);
             preceding?.toggleAttribute('data-gallery-dark', trigger.progress > 0);
+            preceding?.style.setProperty('--gallery-dark-pct', `${(dark * 100).toFixed(3)}%`);
+            preceding?.style.setProperty('--gallery-decoration-opacity', (1 - dark).toFixed(5));
+            root.style.setProperty('--gallery-dark-pct', `${(dark * 100).toFixed(3)}%`);
             root.dataset.galleryProgress = trigger.progress.toFixed(4); update(trigger.progress);
         },
     } });

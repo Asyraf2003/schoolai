@@ -37,7 +37,20 @@ for (const engine of engines) {
             await locale(page, 'en');
             await page.setViewportSize({ width: 1440, height: 900 });
             await page.evaluate(() => scrollTo(0, document.querySelector('[data-values]').getBoundingClientRect().top + scrollY + 1500));
-            await page.waitForFunction(() => document.querySelector('[data-values]').hasAttribute('data-cards-running'));
+            try {
+                await page.waitForFunction(() => document.querySelector('[data-values]').hasAttribute('data-cards-running'));
+            } catch (error) {
+                const state = await page.evaluate(() => {
+                    const values = document.querySelector('[data-values]');
+                    const track = values.querySelector('[data-values-cards-track]');
+                    const gallery = document.querySelector('[data-gallery]');
+                    return { scrollY, viewport: [innerWidth, innerHeight], hidden: document.hidden,
+                        valuesTop: values.getBoundingClientRect().top, trackTop: track.getBoundingClientRect().top,
+                        trackBottom: track.getBoundingClientRect().bottom, valuesState: { ...values.dataset },
+                        galleryState: { ...gallery?.dataset } };
+                });
+                throw new Error(`Values lifecycle initial active state: ${JSON.stringify(state)}`, { cause: error });
+            }
             await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
             assert.equal(await page.locator('[data-values]').getAttribute('data-cards-running'), null);
             const paused = await page.evaluate(fit);

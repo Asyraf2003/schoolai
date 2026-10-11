@@ -1,4 +1,13 @@
-# Gallery V2 final owner-correction proof — 2026-10-11
+# Gallery V2 owner-correction proof — 2026-10-11
+
+LATEST STATUS: IMPLEMENTING; native title/gradual seam replaces the appearance
+gate below. Title rises normally, gap uses measured screen/card geometry, blue
+and type fade to black, white SVG ends before media focus. Old captures certify
+prior storyboard only. Latest exact-source browser/CI proof is renewing.
+Actual visible-card/title gap is pending the authorized PR93 native-response
+correction; current Values transform makes native slots differ from card bodies.
+No Gallery merge until this physical seam is proven. Prior9d2fa0bf scoped CI
+PASS both engines is recorded in ci-native-predecessor.json.
 
 MAP-V2-18 / issue86 / feat/v2-scroll-gallery / PR87 / product49742cdc.
 Latest black entry/centered shrink/distant approach/100vh→50vh exit supersedes
