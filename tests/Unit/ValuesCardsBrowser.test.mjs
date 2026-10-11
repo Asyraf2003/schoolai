@@ -81,15 +81,31 @@ for (const engine of engines) {
                                     - parseFloat(getComputedStyle(document.querySelector('[data-values]')).scrollMarginBlockStart)
                                     + progress * (track.offsetHeight - viewport.offsetHeight));
                             }, progress);
-                            await page.waitForFunction(progress => {
-                                const root = document.querySelector('[data-values]');
-                                const track = root.querySelector('[data-values-cards-track]');
-                                const viewport = root.querySelector('[data-values-cards-viewport]');
-                                const target = Math.max(0, Math.min(1, (parseFloat(getComputedStyle(root).scrollMarginBlockStart) - track.getBoundingClientRect().top)
-                                    / (track.offsetHeight - viewport.offsetHeight)));
-                                return Math.abs(target - progress) < .0004
-                                    && Math.abs(Number(root.dataset.cardsProgress) - target) < .00001;
-                            }, progress);
+                            try {
+                                await page.waitForFunction(progress => {
+                                    const root = document.querySelector('[data-values]');
+                                    const track = root.querySelector('[data-values-cards-track]');
+                                    const viewport = root.querySelector('[data-values-cards-viewport]');
+                                    const target = Math.max(0, Math.min(1, (parseFloat(getComputedStyle(root).scrollMarginBlockStart) - track.getBoundingClientRect().top)
+                                        / (track.offsetHeight - viewport.offsetHeight)));
+                                    return Math.abs(target - progress) < .0004
+                                        && Math.abs(Number(root.dataset.cardsProgress) - target) < .00001;
+                                }, progress);
+                            } catch (error) {
+                                const state = await page.evaluate(() => {
+                                    const root = document.querySelector('[data-values]');
+                                    const track = root.querySelector('[data-values-cards-track]');
+                                    const viewport = root.querySelector('[data-values-cards-viewport]');
+                                    const wantedTop = parseFloat(getComputedStyle(root).scrollMarginBlockStart);
+                                    return { scrollY, scrollHeight: document.documentElement.scrollHeight,
+                                        innerHeight, trackTop: track.getBoundingClientRect().top,
+                                        trackHeight: track.offsetHeight, viewportHeight: viewport.offsetHeight,
+                                        scrollTarget: (wantedTop - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight),
+                                        cardsProgress: root.dataset.cardsProgress, lineReady: root.hasAttribute('data-line-ready'),
+                                        flow: root.hasAttribute('data-cards-flow'), running: root.hasAttribute('data-cards-running') };
+                                });
+                                throw new Error(`Values card scroll target ${progress} did not settle: ${JSON.stringify(state)}; ${error.message}`);
+                            }
                             return page.evaluate(inspect);
                         };
                         const early = await move(.08);
