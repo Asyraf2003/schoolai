@@ -1,0 +1,4030 @@
+{
+  "date": "2026-10-11T15:29:38.913Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8030",
+  "version": "153.0.8010.52",
+  "cases": [
+    {
+      "phase": "values",
+      "frames": [
+        {
+          "now": 1871.7,
+          "y": 5537,
+          "gallery": 0,
+          "values": 0,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 1888.4,
+          "y": 5537,
+          "gallery": 0,
+          "values": 0,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 1921.7,
+          "y": 5549,
+          "gallery": 0,
+          "values": 0,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 1938.4,
+          "y": 5553,
+          "gallery": 0,
+          "values": 0.00762,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 1971.7,
+          "y": 5565,
+          "gallery": 0,
+          "values": 0.01344,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2005,
+          "y": 5577,
+          "gallery": 0,
+          "values": 0.01926,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2038.3,
+          "y": 5583,
+          "gallery": 0,
+          "values": 0.02217,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2088.3,
+          "y": 5595,
+          "gallery": 0,
+          "values": 0.02799,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2138.4,
+          "y": 5604,
+          "gallery": 0,
+          "values": 0.03236,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2171.7,
+          "y": 5609,
+          "gallery": 0,
+          "values": 0.03478,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2205.1,
+          "y": 5621,
+          "gallery": 0,
+          "values": 0.0406,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2221.7,
+          "y": 5630,
+          "gallery": 0,
+          "values": 0.04497,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2255,
+          "y": 5639,
+          "gallery": 0,
+          "values": 0.04933,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2288.3,
+          "y": 5644,
+          "gallery": 0,
+          "values": 0.05175,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2338.3,
+          "y": 5656,
+          "gallery": 0,
+          "values": 0.05757,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2355,
+          "y": 5666,
+          "gallery": 0,
+          "values": 0.06242,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2388.3,
+          "y": 5671,
+          "gallery": 0,
+          "values": 0.06485,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2438.4,
+          "y": 5683,
+          "gallery": 0,
+          "values": 0.07067,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2471.7,
+          "y": 5693,
+          "gallery": 0,
+          "values": 0.07552,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2521.7,
+          "y": 5698,
+          "gallery": 0,
+          "values": 0.07794,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2555,
+          "y": 5710,
+          "gallery": 0,
+          "values": 0.08376,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2588.3,
+          "y": 5719,
+          "gallery": 0,
+          "values": 0.08813,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2605,
+          "y": 5724,
+          "gallery": 0,
+          "values": 0.09055,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2638.3,
+          "y": 5783,
+          "gallery": 0,
+          "values": 0.11917,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2688.3,
+          "y": 5841,
+          "gallery": 0,
+          "values": 0.14729,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2721.6,
+          "y": 5885,
+          "gallery": 0,
+          "values": 0.16863,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2771.6,
+          "y": 5911,
+          "gallery": 0,
+          "values": 0.18124,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2821.7,
+          "y": 5969,
+          "gallery": 0,
+          "values": 0.20937,
+          "span": 2062,
+          "faces": [
+            "back",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2855,
+          "y": 6013,
+          "gallery": 0,
+          "values": 0.23071,
+          "span": 2062,
+          "faces": [
+            "front",
+            "back",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2938.3,
+          "y": 6035,
+          "gallery": 0,
+          "values": 0.24138,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 2971.7,
+          "y": 6051,
+          "gallery": 0,
+          "values": 0.24914,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "back",
+            "back"
+          ]
+        },
+        {
+          "now": 3021.7,
+          "y": 6109,
+          "gallery": 0,
+          "values": 0.27726,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3071.7,
+          "y": 6154,
+          "gallery": 0,
+          "values": 0.29909,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3138.4,
+          "y": 6179,
+          "gallery": 0,
+          "values": 0.31121,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3221.6,
+          "y": 6237,
+          "gallery": 0,
+          "values": 0.33934,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3238.4,
+          "y": 6281,
+          "gallery": 0,
+          "values": 0.36068,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3288.4,
+          "y": 6289,
+          "gallery": 0,
+          "values": 0.36456,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3338.3,
+          "y": 6347,
+          "gallery": 0,
+          "values": 0.39269,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3388.3,
+          "y": 6392,
+          "gallery": 0,
+          "values": 0.41451,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3455,
+          "y": 6417,
+          "gallery": 0,
+          "values": 0.42663,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3521.6,
+          "y": 6475,
+          "gallery": 0,
+          "values": 0.45476,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3588.3,
+          "y": 6520,
+          "gallery": 0,
+          "values": 0.47659,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3621.6,
+          "y": 6545,
+          "gallery": 0,
+          "values": 0.48871,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3655,
+          "y": 7460,
+          "gallery": 0,
+          "values": 0.93245,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3688.3,
+          "y": 7759,
+          "gallery": 0.014126984126984127,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3721.6,
+          "y": 7847,
+          "gallery": 0.028095238095238097,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3738.3,
+          "y": 7935,
+          "gallery": 0.04206349206349207,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3755,
+          "y": 7989,
+          "gallery": 0.05063492063492064,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3771.6,
+          "y": 8034,
+          "gallery": 0.057777777777777775,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3788.3,
+          "y": 8080,
+          "gallery": 0.06507936507936508,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3805,
+          "y": 8168,
+          "gallery": 0.07904761904761905,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3821.6,
+          "y": 8256,
+          "gallery": 0.09301587301587301,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3838.3,
+          "y": 8341,
+          "gallery": 0.10650793650793651,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3854.9,
+          "y": 8412,
+          "gallery": 0.11777777777777777,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3871.6,
+          "y": 8500,
+          "gallery": 0.13174603174603175,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3888.3,
+          "y": 8588,
+          "gallery": 0.1457142857142857,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3904.9,
+          "y": 8660,
+          "gallery": 0.15714285714285714,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3921.7,
+          "y": 8721,
+          "gallery": 0.16682539682539682,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3938.3,
+          "y": 8809,
+          "gallery": 0.18079365079365078,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3954.9,
+          "y": 8897,
+          "gallery": 0.19476190476190477,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3971.7,
+          "y": 8982,
+          "gallery": 0.20825396825396825,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 3988.3,
+          "y": 9037,
+          "gallery": 0.21698412698412697,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4005,
+          "y": 9183,
+          "gallery": 0.24015873015873015,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4021.6,
+          "y": 9305,
+          "gallery": 0.25952380952380955,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4038.2,
+          "y": 9437,
+          "gallery": 0.2804761904761905,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4054.9,
+          "y": 9490,
+          "gallery": 0.28888888888888886,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4071.6,
+          "y": 9636,
+          "gallery": 0.31206349206349204,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4088.3,
+          "y": 9726,
+          "gallery": 0.32634920634920633,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4105,
+          "y": 9833,
+          "gallery": 0.3433333333333333,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4121.6,
+          "y": 9886,
+          "gallery": 0.35174603174603175,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4138.2,
+          "y": 10032,
+          "gallery": 0.37492063492063493,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4155,
+          "y": 10153,
+          "gallery": 0.3941269841269841,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4171.7,
+          "y": 10198,
+          "gallery": 0.4012698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4188.3,
+          "y": 10235,
+          "gallery": 0.40714285714285714,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4205,
+          "y": 10280,
+          "gallery": 0.4142857142857143,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4221.6,
+          "y": 10317,
+          "gallery": 0.4201587301587302,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4238.3,
+          "y": 10361,
+          "gallery": 0.42714285714285716,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4254.9,
+          "y": 10397,
+          "gallery": 0.4328571428571429,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4271.6,
+          "y": 10442,
+          "gallery": 0.44,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4288.2,
+          "y": 10482,
+          "gallery": 0.44634920634920633,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4304.9,
+          "y": 10526,
+          "gallery": 0.4533333333333333,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4321.6,
+          "y": 10550,
+          "gallery": 0.45714285714285713,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4338.3,
+          "y": 10595,
+          "gallery": 0.4642857142857143,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4354.9,
+          "y": 10630,
+          "gallery": 0.46984126984126984,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4371.6,
+          "y": 10673,
+          "gallery": 0.4766666666666667,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4388.3,
+          "y": 10705,
+          "gallery": 0.48174603174603176,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4404.9,
+          "y": 10750,
+          "gallery": 0.4888888888888889,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4421.6,
+          "y": 10795,
+          "gallery": 0.49603174603174605,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4438.3,
+          "y": 10838,
+          "gallery": 0.5028571428571429,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4454.9,
+          "y": 10861,
+          "gallery": 0.5065079365079365,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4471.6,
+          "y": 11007,
+          "gallery": 0.5296825396825396,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4488.2,
+          "y": 11115,
+          "gallery": 0.5468253968253968,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4504.9,
+          "y": 11183,
+          "gallery": 0.5576190476190476,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4521.6,
+          "y": 11210,
+          "gallery": 0.5619047619047619,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4538.3,
+          "y": 11318,
+          "gallery": 0.579047619047619,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4554.9,
+          "y": 11411,
+          "gallery": 0.5938095238095238,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4571.6,
+          "y": 11470,
+          "gallery": 0.6031746031746031,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4588.3,
+          "y": 11506,
+          "gallery": 0.6088888888888889,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4605,
+          "y": 11614,
+          "gallery": 0.626031746031746,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4621.6,
+          "y": 11703,
+          "gallery": 0.6401587301587301,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4638.2,
+          "y": 11763,
+          "gallery": 0.6496825396825396,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4655,
+          "y": 11800,
+          "gallery": 0.6555555555555556,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4671.6,
+          "y": 11908,
+          "gallery": 0.6726984126984127,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4688.3,
+          "y": 12001,
+          "gallery": 0.6874603174603174,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4705,
+          "y": 12107,
+          "gallery": 0.7042857142857143,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4721.6,
+          "y": 12158,
+          "gallery": 0.7123809523809523,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4738.3,
+          "y": 12266,
+          "gallery": 0.7295238095238096,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4754.9,
+          "y": 12352,
+          "gallery": 0.7431746031746032,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4771.6,
+          "y": 12453,
+          "gallery": 0.7592063492063492,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4788.3,
+          "y": 12508,
+          "gallery": 0.7679365079365079,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4805,
+          "y": 12571,
+          "gallery": 0.7779365079365079,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4821.6,
+          "y": 12634,
+          "gallery": 0.7879365079365079,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4838.2,
+          "y": 12696,
+          "gallery": 0.7977777777777778,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4854.9,
+          "y": 12759,
+          "gallery": 0.8077777777777778,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4871.6,
+          "y": 12822,
+          "gallery": 0.8177777777777778,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4888.3,
+          "y": 12885,
+          "gallery": 0.8277777777777777,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4904.9,
+          "y": 12932,
+          "gallery": 0.8352380952380952,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4921.6,
+          "y": 12971,
+          "gallery": 0.8414285714285714,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4938.3,
+          "y": 13034,
+          "gallery": 0.8514285714285714,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4971.6,
+          "y": 13097,
+          "gallery": 0.8614285714285714,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 4988.3,
+          "y": 13159,
+          "gallery": 0.8712698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5004.9,
+          "y": 13199,
+          "gallery": 0.8776190476190476,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5021.6,
+          "y": 13262,
+          "gallery": 0.8876190476190476,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5038.2,
+          "y": 13312,
+          "gallery": 0.8955555555555555,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5054.9,
+          "y": 13363,
+          "gallery": 0.9036507936507937,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5071.6,
+          "y": 13414,
+          "gallery": 0.9117460317460317,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5088.3,
+          "y": 13934,
+          "gallery": 0.9942857142857143,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5104.9,
+          "y": 14330,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5121.6,
+          "y": 14613,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5138.2,
+          "y": 14666,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5154.9,
+          "y": 14898,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5171.6,
+          "y": 14925,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5188.3,
+          "y": 14950,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5204.9,
+          "y": 14967,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5221.6,
+          "y": 14995,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5238.2,
+          "y": 15022,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5254.9,
+          "y": 15049,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5271.6,
+          "y": 15074,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5288.2,
+          "y": 15101,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5304.9,
+          "y": 15128,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5321.5,
+          "y": 15156,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5338.3,
+          "y": 15180,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5354.9,
+          "y": 15208,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5371.5,
+          "y": 15235,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5388.2,
+          "y": 15259,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5404.9,
+          "y": 15274,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5421.6,
+          "y": 15290,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5438.3,
+          "y": 15304,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5454.9,
+          "y": 15317,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5471.6,
+          "y": 15327,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5488.3,
+          "y": 15343,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5504.9,
+          "y": 15357,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5521.5,
+          "y": 15372,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5538.3,
+          "y": 15386,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5554.9,
+          "y": 15401,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5571.5,
+          "y": 15415,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5588.2,
+          "y": 15430,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5604.9,
+          "y": 15443,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5621.5,
+          "y": 15458,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5638.2,
+          "y": 15472,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5654.9,
+          "y": 15486,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5671.5,
+          "y": 15500,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5688.2,
+          "y": 15527,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5704.9,
+          "y": 15552,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5721.6,
+          "y": 15577,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5738.2,
+          "y": 15600,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5754.8,
+          "y": 15628,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5771.5,
+          "y": 15656,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5788.3,
+          "y": 15680,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5804.8,
+          "y": 15699,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5821.6,
+          "y": 15727,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5838.2,
+          "y": 15754,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5854.9,
+          "y": 15779,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5871.5,
+          "y": 15797,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5888.2,
+          "y": 15811,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5904.9,
+          "y": 15822,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5921.5,
+          "y": 15830,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5938.2,
+          "y": 15836,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5954.9,
+          "y": 15841,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5971.5,
+          "y": 15844,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 5988.2,
+          "y": 15847,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6004.9,
+          "y": 15847,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6021.6,
+          "y": 15847,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6038.2,
+          "y": 15847,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6054.9,
+          "y": 15847,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6071.6,
+          "y": 15847,
+          "gallery": 1,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "assembly",
+      "frames": [
+        {
+          "now": 6188.2,
+          "y": 8904,
+          "gallery": 0.19587301587301587,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6204.9,
+          "y": 8992,
+          "gallery": 0.19587301587301587,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6221.6,
+          "y": 8999,
+          "gallery": 0.21095238095238095,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6238.2,
+          "y": 9097,
+          "gallery": 0.22650793650793652,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6254.8,
+          "y": 9158,
+          "gallery": 0.2361904761904762,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6271.5,
+          "y": 9204,
+          "gallery": 0.24349206349206348,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6288.2,
+          "y": 9350,
+          "gallery": 0.26666666666666666,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6304.8,
+          "y": 9496,
+          "gallery": 0.28984126984126984,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6321.5,
+          "y": 9641,
+          "gallery": 0.31285714285714283,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6338.2,
+          "y": 9696,
+          "gallery": 0.3215873015873016,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6354.8,
+          "y": 9841,
+          "gallery": 0.3446031746031746,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6371.5,
+          "y": 9970,
+          "gallery": 0.36507936507936506,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6388.2,
+          "y": 10115,
+          "gallery": 0.3880952380952381,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6404.9,
+          "y": 10170,
+          "gallery": 0.3968253968253968,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6421.5,
+          "y": 10215,
+          "gallery": 0.403968253968254,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6438.2,
+          "y": 10260,
+          "gallery": 0.4111111111111111,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6454.8,
+          "y": 10305,
+          "gallery": 0.41825396825396827,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6471.5,
+          "y": 10344,
+          "gallery": 0.42444444444444446,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6488.2,
+          "y": 10389,
+          "gallery": 0.4315873015873016,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6504.9,
+          "y": 10432,
+          "gallery": 0.4384126984126984,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6521.5,
+          "y": 10475,
+          "gallery": 0.4452380952380952,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6538.1,
+          "y": 10514,
+          "gallery": 0.4514285714285714,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6554.8,
+          "y": 10559,
+          "gallery": 0.4585714285714286,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6571.5,
+          "y": 10598,
+          "gallery": 0.46476190476190476,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6588.2,
+          "y": 10642,
+          "gallery": 0.47174603174603175,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6604.9,
+          "y": 10681,
+          "gallery": 0.47793650793650794,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6621.6,
+          "y": 10726,
+          "gallery": 0.48507936507936505,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6638.2,
+          "y": 10771,
+          "gallery": 0.4922222222222222,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6654.9,
+          "y": 10812,
+          "gallery": 0.49873015873015875,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6671.5,
+          "y": 10853,
+          "gallery": 0.5052380952380953,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6688.2,
+          "y": 10898,
+          "gallery": 0.5123809523809524,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6704.9,
+          "y": 10943,
+          "gallery": 0.5195238095238095,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6721.6,
+          "y": 10984,
+          "gallery": 0.5260317460317461,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6738.2,
+          "y": 11025,
+          "gallery": 0.5325396825396825,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6754.8,
+          "y": 11133,
+          "gallery": 0.5496825396825397,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6771.6,
+          "y": 11237,
+          "gallery": 0.5661904761904762,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6788.1,
+          "y": 11335,
+          "gallery": 0.5817460317460318,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6804.9,
+          "y": 11392,
+          "gallery": 0.5907936507936508,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6821.5,
+          "y": 11432,
+          "gallery": 0.5971428571428572,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6838.2,
+          "y": 11463,
+          "gallery": 0.6020634920634921,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6854.8,
+          "y": 11486,
+          "gallery": 0.6057142857142858,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6871.5,
+          "y": 11504,
+          "gallery": 0.6085714285714285,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6888.2,
+          "y": 11517,
+          "gallery": 0.6106349206349206,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6904.8,
+          "y": 11528,
+          "gallery": 0.6123809523809524,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6921.5,
+          "y": 11535,
+          "gallery": 0.6134920634920635,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6938.2,
+          "y": 11535,
+          "gallery": 0.6134920634920635,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6954.9,
+          "y": 11535,
+          "gallery": 0.6134920634920635,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6971.5,
+          "y": 11535,
+          "gallery": 0.6134920634920635,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 6988.1,
+          "y": 11535,
+          "gallery": 0.6134920634920635,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7004.8,
+          "y": 11535,
+          "gallery": 0.6134920634920635,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        }
+      ],
+      "beforeReverse": 11535,
+      "reverse": 11417,
+      "stopped": 11105
+    },
+    {
+      "phase": "rise",
+      "frames": [
+        {
+          "now": 7588.2,
+          "y": 10946,
+          "gallery": 0.52,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7604.8,
+          "y": 11054,
+          "gallery": 0.52,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7621.5,
+          "y": 11063,
+          "gallery": 0.5385714285714286,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7638.1,
+          "y": 11171,
+          "gallery": 0.5557142857142857,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7654.8,
+          "y": 11236,
+          "gallery": 0.566031746031746,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7671.4,
+          "y": 11344,
+          "gallery": 0.5831746031746031,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7688.2,
+          "y": 11394,
+          "gallery": 0.5911111111111111,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7704.9,
+          "y": 11470,
+          "gallery": 0.6031746031746031,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7721.5,
+          "y": 11523,
+          "gallery": 0.6115873015873016,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7738.2,
+          "y": 11568,
+          "gallery": 0.6187301587301587,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7754.8,
+          "y": 11676,
+          "gallery": 0.6358730158730159,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7771.4,
+          "y": 11784,
+          "gallery": 0.653015873015873,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7788.1,
+          "y": 11878,
+          "gallery": 0.6679365079365079,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7804.8,
+          "y": 11935,
+          "gallery": 0.676984126984127,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7821.5,
+          "y": 12043,
+          "gallery": 0.6941269841269841,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7838.2,
+          "y": 12151,
+          "gallery": 0.7112698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7854.8,
+          "y": 12203,
+          "gallery": 0.7195238095238096,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7871.4,
+          "y": 12244,
+          "gallery": 0.726031746031746,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7888.2,
+          "y": 12352,
+          "gallery": 0.7431746031746032,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7904.8,
+          "y": 12453,
+          "gallery": 0.7592063492063492,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7921.5,
+          "y": 12521,
+          "gallery": 0.77,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7938.1,
+          "y": 12578,
+          "gallery": 0.7790476190476191,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7954.8,
+          "y": 12641,
+          "gallery": 0.789047619047619,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7971.5,
+          "y": 12704,
+          "gallery": 0.799047619047619,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 7988.1,
+          "y": 12759,
+          "gallery": 0.8077777777777778,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8004.8,
+          "y": 12793,
+          "gallery": 0.8131746031746032,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8038.1,
+          "y": 12822,
+          "gallery": 0.8177777777777778,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8054.8,
+          "y": 12853,
+          "gallery": 0.8226984126984127,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8071.4,
+          "y": 12864,
+          "gallery": 0.8244444444444444,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8088.1,
+          "y": 12867,
+          "gallery": 0.8249206349206349,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8104.8,
+          "y": 12873,
+          "gallery": 0.8258730158730159,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8121.4,
+          "y": 12878,
+          "gallery": 0.8266666666666667,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8138.1,
+          "y": 12878,
+          "gallery": 0.8266666666666667,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8154.8,
+          "y": 12878,
+          "gallery": 0.8266666666666667,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8171.5,
+          "y": 12878,
+          "gallery": 0.8266666666666667,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8188.2,
+          "y": 12878,
+          "gallery": 0.8266666666666667,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8204.8,
+          "y": 12878,
+          "gallery": 0.8266666666666667,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        }
+      ],
+      "beforeReverse": 12878,
+      "reverse": 12812,
+      "stopped": 12634
+    },
+    {
+      "phase": "exit",
+      "frames": [
+        {
+          "now": 8804.7,
+          "y": 12458,
+          "gallery": 0.76,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8838.1,
+          "y": 12521,
+          "gallery": 0.76,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8871.5,
+          "y": 12527,
+          "gallery": 0.770952380952381,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8904.8,
+          "y": 12590,
+          "gallery": 0.780952380952381,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8921.4,
+          "y": 12632,
+          "gallery": 0.7876190476190477,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 8954.8,
+          "y": 12695,
+          "gallery": 0.7976190476190477,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9004.7,
+          "y": 12758,
+          "gallery": 0.8076190476190476,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9021.4,
+          "y": 12821,
+          "gallery": 0.8176190476190476,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9054.7,
+          "y": 12852,
+          "gallery": 0.8225396825396826,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9071.4,
+          "y": 12915,
+          "gallery": 0.8325396825396826,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9088.1,
+          "y": 12978,
+          "gallery": 0.8425396825396826,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9104.8,
+          "y": 13016,
+          "gallery": 0.8485714285714285,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9121.4,
+          "y": 13023,
+          "gallery": 0.8496825396825397,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9138.1,
+          "y": 13086,
+          "gallery": 0.8596825396825397,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9154.7,
+          "y": 13149,
+          "gallery": 0.8696825396825397,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9171.4,
+          "y": 13212,
+          "gallery": 0.8796825396825397,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9188,
+          "y": 13258,
+          "gallery": 0.886984126984127,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9204.8,
+          "y": 13321,
+          "gallery": 0.896984126984127,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9221.4,
+          "y": 13376,
+          "gallery": 0.9057142857142857,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9238.1,
+          "y": 13425,
+          "gallery": 0.9134920634920635,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9254.7,
+          "y": 13462,
+          "gallery": 0.9193650793650794,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9271.4,
+          "y": 13484,
+          "gallery": 0.9228571428571428,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9288.1,
+          "y": 13518,
+          "gallery": 0.9282539682539682,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9304.7,
+          "y": 13542,
+          "gallery": 0.932063492063492,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9321.4,
+          "y": 13562,
+          "gallery": 0.9352380952380952,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9338,
+          "y": 13576,
+          "gallery": 0.9374603174603174,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9354.8,
+          "y": 13586,
+          "gallery": 0.939047619047619,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9371.5,
+          "y": 13594,
+          "gallery": 0.9403174603174603,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9388.1,
+          "y": 13600,
+          "gallery": 0.9412698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9404.7,
+          "y": 13600,
+          "gallery": 0.9412698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9421.4,
+          "y": 13600,
+          "gallery": 0.9412698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9438.1,
+          "y": 13600,
+          "gallery": 0.9412698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9454.7,
+          "y": 13600,
+          "gallery": 0.9412698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        },
+        {
+          "now": 9471.4,
+          "y": 13600,
+          "gallery": 0.9412698412698413,
+          "values": 1,
+          "span": 2062,
+          "faces": [
+            "front",
+            "front",
+            "front",
+            "front"
+          ]
+        }
+      ],
+      "beforeReverse": 13600,
+      "reverse": 13254,
+      "stopped": 12983
+    }
+  ],
+  "stalledBefore": 12983,
+  "stalledAfter": 13046
+}

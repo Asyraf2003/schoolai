@@ -1,3 +1,4 @@
+import { mountTestimonials } from './sections/testimonials.js';
 import { mountGallery } from './sections/gallery.js';
 import { mountScrollPacing } from './sections/scroll-pacing.js';
 import { mountScrollIndicator } from './sections/scroll-indicator.js';
@@ -34,11 +35,13 @@ const values = mountValues(document.querySelector('[data-program-values]'));
 const valuesLine = mountValuesLine(document.querySelector('[data-values]'));
 const valuesCards = mountValuesCards(document.querySelector('[data-values]'));
 const gallery = mountGallery(document.querySelector('[data-gallery]'));
+const testimonials = mountTestimonials(document.querySelector('[data-testimonials]'));
 window.addEventListener('pagehide', event => {
     gallery.suspend();
+    testimonials.suspend();
     scrollIndicator.suspend();
     scrollPacing.suspend();
-    if (!event.persisted) gallery.dispose();
+    if (!event.persisted) { gallery.dispose(); testimonials.dispose(); }
     hero.suspend();
     about.suspend();
     program.suspend();
@@ -52,4 +55,4 @@ window.addEventListener('pagehide', event => {
     if (!event.persisted) valuesCards.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); scrollIndicator.dispose(); scrollPacing.dispose(); }
 });
-window.addEventListener('pageshow', () => { gallery.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
+window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });

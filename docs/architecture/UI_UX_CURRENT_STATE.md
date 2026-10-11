@@ -1,5 +1,49 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Natural scroll / Gallery–Testimonials — 2026-10-11
+
+FACT: main cdfd30980516bbe2022fd0f8c12e64e4a613c8c3 freshly fetched;
+PR99 7d020133 and PR97 5518756f still OPEN. Working tree began clean; retained
+stash backup/gallery-before-scrollbar-merge. Branch feat/natural-scroll-testimonials
+contains both original parents via merge e0b7931f; old branches/main untouched.
+OWNER_ACCEPTED: issue100; current detailed brief and matching blueprint
+blueprints/2026-10-11-natural-scroll-testimonials.md, IMPLEMENTING.
+DECISION: no universal velocity cap. Ordinary wheel input gains2×; stronger
+intent scales the bounded impulse. CSS/WAAPI uses actual remaining duration;
+scroll-linked Values/Gallery/intro phases reserve14 movement segments for12
+intermediate paints. Native scroll remains authoritative. Values1:1, original
+GSAP choreography, media and geometry stay byte-identical to combined PR97/99.
+Input release decays from actual delivered velocity, discards unused slow-phase
+debt, stops within180ms, reverses immediately and preserves fractional travel.
+WebKit root cause: delayed first RAF149–180ms crossed old145ms cutoff, dropping
+accepted input before scrollBy. Synchronous bounded first delivery fixes it.
+One performance.now clock also avoids a prior-frame RAF timestamp truncating
+glide. Paint-stall200ms and real post-input glide proved on both engines.
+Testimonials: Gallery black hold unchanged; enough light precedes black2–3-line
+question; ID/EN start-left, AR start-right/Cairo. Existing21 disclosed sample
+quotes/photos form OLD alternating2:1 tracks; keyboard/touch restores native row
+browsing. Reduced/no-JS remain complete. Final white area; Article unchanged.
+Release old Gallery-owned Testimonials font selector to the narrow AR adapter.
+PROOF: diff, structure317<=200, build and Pint PASS; Node17 PASS; PHP scoped
+16tests/259assertions PASS. Full345:199PASS/71FAIL/75ERROR, exactly the same
+failure/error names as combined baseline342:196PASS/71FAIL/75ERROR. Full FAIL.
+Chromium153/WebKit26.6: new pacing4 tests PASS; Testimonials6 tests PASS,
+42visual locale/width cells per engine plus six switches, short/orientation,
+200% text expansion, touch/keyboard, reduced/no-JS and synthetic lifecycle.
+Gallery/Values11 distinct regression cases per engine PASS after restoring
+missing local WebKit audio, MP4 demux and H264 plugins. Initial media error4
+and failed logs retained; production media code unchanged. No relaxed assertion.
+Three comparable headless1440x900 samples: baseline frame-p95 median33.2ms/
+worst33.3ms; continuation16.7/16.8ms, zero long tasks and idle section writes.
+These are local incremental measurements; GPU path/native-device/PSI/CWV unproven.
+Durable proof, source hashes, raw logs and selected captures:
+../../docs2/proof/natural-scroll-testimonials/proof.json.
+STATUS: PASS local scoped UI/input; FAIL existing full PHP baseline;
+BLOCKED_BY_MISSING_EVIDENCE final CI/native Safari/physical/speech/PSI/field CWV.
+NEXT channel Terminal Codex: publish the reviewed continuation PR and verify CI;
+keep main and original PR heads unchanged. No merge authorized.
+
+
 ## Homepage cinematic wheel velocity cap — 2026-10-11
 
 OWNER_ACCEPTED: rapid wheel/trackpad input must not leap across About,

@@ -35,7 +35,7 @@
 .gallery[data-gallery-enabled] .gallery__item { position: absolute; left: 0; top: 0; width: 86.666667%; aspect-ratio: 16 / 9; transform-origin: 0 0; }
 .gallery[data-gallery-enabled] .gallery__item[data-column="left"],
 .gallery[data-gallery-enabled] .gallery__item[data-column="right"] { aspect-ratio: 4 / 3; }
-[lang="ar"] .gallery, [lang="ar"] .testimonials { font-family: Cairo, sans-serif; }
+[lang="ar"] .gallery { font-family: Cairo, sans-serif; }
 [lang="ar"] .gallery__header h2 { letter-spacing: normal; line-height: 1.35; text-transform: none; }
 [lang="ar"] .gallery__statement { letter-spacing: normal; line-height: 1.45; }
 @media (max-width: 767px) {

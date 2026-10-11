@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-11T15:32:37.128Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8030",
+  "version": "153.0.8010.52",
+  "result": [
+    {
+      "lang": "id",
+      "intercepted": 49,
+      "direct": {
+        "target": 6866,
+        "actual": 6866
+      },
+      "reduced": 750
+    },
+    {
+      "lang": "en",
+      "intercepted": 46,
+      "direct": {
+        "target": 6886,
+        "actual": 6886
+      },
+      "reduced": 750
+    },
+    {
+      "lang": "ar",
+      "intercepted": 55,
+      "direct": {
+        "target": 6818,
+        "actual": 6818
+      },
+      "reduced": 750
+    }
+  ],
+  "nested": {
+    "inner": 520,
+    "outer": 350
+  },
+  "freeInertia": {
+    "glideStart": 350,
+    "impulseEnd": 411,
+    "glideFrames": [
+      452,
+      481,
+      500,
+      518,
+      532
+    ],
+    "glideStopped": 563
+  }
+}

@@ -2,52 +2,93 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
     createPacingState, queuePacingInput, takePacingStep, wheelPixels,
-    SCROLL_SPEED_PX_PER_SECOND, SCROLL_QUEUE_LIMIT_PX,
+    limitPacingTravel, SCROLL_DEBT_REFERENCE_PX,
 } from '../../resources/js/sections/scroll-pacing-core.js';
 
-test('normalizes pixel/line/page wheel without modifying horizontal input', () => {
+test('normalizes pixel, line and page wheel input', () => {
     assert.equal(wheelPixels({ deltaY: 35, deltaMode: 0 }, 900), 35);
     assert.equal(wheelPixels({ deltaY: -2, deltaMode: 1 }, 900), -36);
     assert.equal(wheelPixels({ deltaY: 1, deltaMode: 2 }, 900), 900);
     assert.equal(wheelPixels({ deltaY: Infinity, deltaMode: 0 }, 900), 0);
 });
 
-test('extreme wheel bursts stay capped and do not accumulate scroll debt', () => {
+test('free scroll is approximately twice the prior sustained 1680 baseline', () => {
     const state = createPacingState();
-    queuePacingInput(state, 30000, 100);
-    assert.equal(state.pending, SCROLL_QUEUE_LIMIT_PX);
-    let total = 0;
-    for (const time of [116.67, 133.34, 150.01]) {
-        const step = takePacingStep(state, time);
-        assert.ok(step <= SCROLL_SPEED_PX_PER_SECOND * .017 + .1);
-        total += step;
+    let travel = 0;
+    for (let index = 0; index < 120; index++) {
+        const time = 100 + index * 1000 / 60;
+        queuePacingInput(state, 112, time);
+        travel += takePacingStep(state, time);
+        assert.ok(state.pending <= SCROLL_DEBT_REFERENCE_PX);
     }
-    assert.equal(SCROLL_SPEED_PX_PER_SECOND, 1680, 'owner requested 2x the previous 840 px/s cap');
-    assert.ok(total > 80 && total < 90, 'three 60Hz frames advance at the doubled cap');
-    assert.ok(state.pending <= SCROLL_QUEUE_LIMIT_PX);
-    // A stop must not turn thousands of discarded wheel pixels into inertia.
+    assert.ok(travel > 6200 && travel < 6800, `2s free travel ${travel}`);
+});
+
+test('release glides with diminishing steps and stops without a long queue', () => {
+    const state = createPacingState();
+    queuePacingInput(state, 112, 100);
+    const steps = Array.from({ length: 10 }, (_, index) => takePacingStep(state, 100 + index * 1000 / 60));
+    assert.ok(steps.every(step => step > 0));
+    assert.ok(steps.every((step, index) => !index || step < steps[index - 1]));
+    assert.ok(steps.reduce((sum, step) => sum + step, 0) <= 224);
     assert.equal(takePacingStep(state, 300), 0);
     assert.equal(state.pending, 0);
 });
 
-test('reverse direction cancels pending travel instantly', () => {
+test('first synchronous delivery survives a delayed WebKit paint without replaying stale input', () => {
     const state = createPacingState();
     queuePacingInput(state, 5000, 100);
-    takePacingStep(state, 116.67);
-    queuePacingInput(state, -22, 120);
-    assert.equal(state.pending, -22);
-    const step = takePacingStep(state, 133.34);
-    assert.ok(step < 0);
+    assert.ok(takePacingStep(state, 100) > 0);
+    assert.equal(takePacingStep(state, 281), 0);
+    assert.equal(state.pending, 0);
 });
 
-test('sustained high-rate events cannot exceed real-time scroll velocity', () => {
+test('reversing input discards prior direction and responds immediately', () => {
     const state = createPacingState();
-    let travel = 0;
-    for (let i = 0; i < 120; i++) {
-        const time = 100 + (i + 1) * 1000 / 60;
-        queuePacingInput(state, 4000, time - 1);
-        travel += takePacingStep(state, time);
-    }
-    assert.ok(travel < SCROLL_SPEED_PX_PER_SECOND * 2.03);
-    assert.ok(travel > SCROLL_SPEED_PX_PER_SECOND * 1.9);
+    queuePacingInput(state, 5000, 100);
+    takePacingStep(state, 100);
+    assert.equal(queuePacingInput(state, -22, 120), true);
+    assert.equal(state.pending, -44);
+    assert.ok(takePacingStep(state, 120) < 0);
+});
+
+test('phase velocity follows each physical range and boundaries cannot be skipped', () => {
+    const ranges = [{ start: 100, end: 340, speed: 720 }, { start: 500, end: 1100, speed: 1800 }];
+    assert.equal(limitPacingTravel(100, 1000 / 60, ranges, 200), 12);
+    assert.ok(Math.abs(limitPacingTravel(100, 1000 / 60, ranges, 700) - 30) < 1e-9);
+    assert.equal(limitPacingTravel(100, 1000 / 60, ranges, 50), 62);
+    assert.equal(limitPacingTravel(-100, 1000 / 60, ranges, 390), -62);
+    assert.equal(limitPacingTravel(100, 1000 / 60, ranges, 350), 100);
+    assert.ok(Math.abs(limitPacingTravel(100, 200, ranges, 200) - 240 / 14) < 1e-9,
+        'fourteen movement segments reserve both boundary paints and twelve intermediate states');
+});
+
+test('larger free input has no universal speed ceiling but debt still expires', () => {
+    const normal = createPacingState();
+    const aggressive = createPacingState();
+    queuePacingInput(normal, 112, 100);
+    queuePacingInput(aggressive, 10000, 100);
+    assert.ok(takePacingStep(aggressive, 100) > takePacingStep(normal, 100) * 5);
+    assert.equal(takePacingStep(aggressive, 281), 0);
+    assert.equal(aggressive.pending, 0);
+});
+
+test('unused constrained input cannot accelerate itself on entering free space', () => {
+    const state = createPacingState();
+    queuePacingInput(state, 10000, 100);
+    takePacingStep(state, 100, [{ start: 0, end: 140, speed: 600 }], 130);
+    assert.ok(takePacingStep(state, 116.67, [], 141) <= 10.01);
+    let coast = 0;
+    for (let time = 150; time <= 300; time += 16.67) coast += takePacingStep(state, time);
+    assert.ok(coast < 224);
+});
+
+test('a frame with the same clock sample keeps accepted input available', () => {
+    const state = createPacingState();
+    queuePacingInput(state, 112, 100);
+    takePacingStep(state, 100);
+    const remaining = state.pending;
+    assert.equal(takePacingStep(state, 100), 0);
+    assert.equal(state.pending, remaining);
+    assert.ok(takePacingStep(state, 116.67) > 0);
 });

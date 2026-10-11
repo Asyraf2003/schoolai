@@ -40,7 +40,7 @@ export async function session(engine, options = {}) {
             path: process.env.PROGRAM_SCROLLTRIGGER_FIXTURE, contentType: 'application/javascript',
         }));
     }
-    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.goto(options.baseURL ?? url, { waitUntil: 'domcontentloaded' });
     if (options.javaScriptEnabled !== false) await page.waitForFunction(() => !!document.querySelector('[data-program]')?.dataset.programState);
     return { browser, context, page, errors, requests, version: browser.version(), close: () => browser.close() };
 }

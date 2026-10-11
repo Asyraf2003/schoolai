@@ -2,8 +2,9 @@
 
 return [
     'eyebrow' => 'Testimoni',
-    'title' => 'Apa Kata Mereka Tentang Al Mustaqbal?',
+    'title' => 'Apa kata mereka tentang sekolah kami?',
     'description' => 'Konten contoh sementara untuk menguji komposisi. Akan diganti dengan testimoni terverifikasi.',
+    'browse_instruction' => 'Fokuskan baris, lalu gunakan tombol panah untuk membaca semua testimoni.',
     'rows' => [
         [
             'cards' => [

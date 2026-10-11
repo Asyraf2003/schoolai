@@ -5,6 +5,12 @@ on:
       - 'resources/js/index.js'
       - 'resources/js/sections/scroll-pacing*.js'
       - 'tests/Unit/ScrollPacing*.mjs'
+      - 'resources/js/sections/testimonials*.js'
+      - 'resources/css/sections/testimonials.css'
+      - 'resources/views/landing/testimonials.blade.php'
+      - 'lang/*/testimonials.php'
+      - 'tests/Unit/Testimonials*.mjs'
+      - 'tests/Feature/LandingTestimonialsV2Test.php'
       - '.github/workflows/v2-scroll-pacing.yml'
   workflow_dispatch:
 permissions:
@@ -33,7 +39,7 @@ jobs:
       - run: npm ci
       - run: npm run check:structure
       - run: npm run build
-      - run: node --test tests/Unit/ScrollPacingRuntime.test.mjs tests/Unit/ScrollIndicatorRuntime.test.mjs
+      - run: node --test tests/Unit/ScrollPacingRuntime.test.mjs tests/Unit/ScrollIndicatorRuntime.test.mjs tests/Unit/TestimonialsMotion.test.mjs
       - name: Start Laravel browser fixture
         run: |
           cp .env.example .env
@@ -42,6 +48,17 @@ jobs:
           php artisan migrate:fresh --seed --force
           npm install --no-save --no-package-lock playwright@1.63.0
           npx playwright install --with-deps ${{ matrix.engine }}
+          php artisan test --compact tests/Feature/LandingTestimonialsV2Test.php
+          mkdir -p /tmp/scroll-posters /tmp/testimonial-photos
+          for name in labit mushalla aula renang taekwondo perpustakaan psikolog parenting gigianak fullday; do
+            curl -fL --retry 2 "https://media.almustaqbal.sch.id/site/school-life/$name-v1.webp" -o "/tmp/scroll-posters/$name-v1.webp"
+          done
+          for n in $(seq 1 21); do
+            name=$(printf 'testi-%02d-v1.webp' "$n")
+            curl -fL --retry 2 "https://media.almustaqbal.sch.id/site/testimonials/$name" -o "/tmp/testimonial-photos/$name"
+          done
+          curl -fL --retry 2 https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js -o /tmp/scroll-gsap.min.js
+          curl -fL --retry 2 https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/ScrollTrigger.min.js -o /tmp/scroll-ScrollTrigger.min.js
           CHROME="$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*/chrome-linux*/*' -print -quit)"
           if [ -n "$CHROME" ]; then echo "PROGRAM_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"; fi
           php artisan serve --host=127.0.0.1 --port=8000 > /tmp/scroll-pacing-server.log 2>&1 &
@@ -57,11 +74,21 @@ jobs:
           PROGRAM_PLAYWRIGHT_MODULE: playwright
           PROGRAM_ENGINES: ${{ matrix.engine }}
           PROGRAM_PROOF_DIRECTORY: /tmp
-        run: node --test --test-timeout=420000 tests/Unit/ScrollPacingBrowser.test.mjs
+          PROGRAM_SCHOOL_LIFE_FIXTURES: /tmp/scroll-posters
+          PROGRAM_GSAP_FIXTURE: /tmp/scroll-gsap.min.js
+          PROGRAM_SCROLLTRIGGER_FIXTURE: /tmp/scroll-ScrollTrigger.min.js
+          PROGRAM_TESTIMONIAL_FIXTURES: /tmp/testimonial-photos
+        run: |
+          node --test --test-concurrency=1 --test-timeout=420000 \
+            tests/Unit/ScrollPacingBrowser.test.mjs \
+            tests/Unit/ScrollPacingChoreographyBrowser.test.mjs \
+            tests/Unit/TestimonialsBrowser.test.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: scroll-pacing-${{ matrix.engine }}
           path: |
             /tmp/scroll-pacing-*.json
+            /tmp/testimonials-*.json
+            /tmp/testimonials-*.jpg
             /tmp/scroll-pacing-server.log

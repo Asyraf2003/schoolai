@@ -16,3 +16,7 @@
 [lang="ar"] .program__type-line { letter-spacing: normal; text-transform: none; }
 [lang="ar"] .values { font-family: Cairo, var(--v2-font); --values-heading-sign: -1; }
 [lang="ar"] .values__heading { letter-spacing: normal; line-height: 1.35; }
+
+[lang="ar"] .testimonials { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .testimonials h2 { max-inline-size: 15ch; letter-spacing: normal; line-height: 1.45; }
+[lang="ar"] .testimonials :is(blockquote, cite) { letter-spacing: normal; line-height: 1.45; }

@@ -1,6 +1,7 @@
 import {
     createPacingState, queuePacingInput, takePacingStep, wheelPixels,
 } from './scroll-pacing-core.js';
+import { measurePacingRanges } from './scroll-pacing-policy.js';
 
 export function mountScrollPacing(root) {
     if (!root) return { suspend() {}, resume() {}, dispose() {} };
@@ -11,39 +12,50 @@ export function mountScrollPacing(root) {
     let frame = 0;
     let suspended = document.hidden;
     let disposed = false;
+    let remainder = 0;
+    let expectedScroll = null;
 
     function reset() {
         if (frame) cancelAnimationFrame(frame);
         frame = 0;
         state.pending = 0;
-        state.lastFrame = null;
+        state.lastFrame = null; state.velocity = 0; state.deliveredInput = null;
+        remainder = 0; expectedScroll = null;
     }
     function targetOwnsScroll(target) {
         let node = target instanceof Element ? target : target?.parentElement;
         while (node && node !== document.body) {
-            if (node.matches('textarea, select, iframe, dialog, [role="dialog"], [contenteditable], [data-scroll-native]')) return true;
+            if (node.matches('input, textarea, select, iframe, dialog, [role="dialog"], [contenteditable], [data-scroll-native]')) return true;
             const overflow = getComputedStyle(node).overflowY;
             if (/^(auto|scroll)$/.test(overflow) && node.scrollHeight > node.clientHeight + 1) return true;
             node = node.parentElement;
         }
         return false;
     }
-    function tick(now) {
+    function tick() {
+        const now = performance.now();
         frame = 0;
         if (suspended || document.hidden || reduced.matches || disposed) { reset(); return; }
-        const step = takePacingStep(state, now);
-        if (!step) return;
+        if (expectedScroll !== null && Math.abs(scrollY - expectedScroll) > 2) { reset(); return; }
+        const step = takePacingStep(state, now, measurePacingRanges(root), scrollY);
+        if (!step) {
+            if (state.pending) frame = requestAnimationFrame(tick);
+            else reset();
+            return;
+        }
         const before = scrollY;
-        // Numeric signature is supported consistently in Chromium and WebKit.
-        scrollBy(0, step);
-        if (Math.abs(scrollY - before) < .01) { reset(); return; }
+        scrollBy(0, step + remainder);
+        remainder += step - (scrollY - before);
+        expectedScroll = scrollY;
+        const max = (document.scrollingElement ?? document.documentElement).scrollHeight - innerHeight;
+        if ((step < 0 && scrollY <= 0) || (step > 0 && scrollY >= max - 1)) { reset(); return; }
         if (state.pending) frame = requestAnimationFrame(tick);
     }
     function wheel(event) {
         if (suspended || document.hidden || reduced.matches || disposed
             || !event.cancelable || event.defaultPrevented || event.ctrlKey || event.metaKey
             || Math.abs(event.deltaX) > Math.abs(event.deltaY) || targetOwnsScroll(event.target)
-            || document.querySelector('dialog[open], [aria-modal="true"], main[inert]')) return;
+            || document.querySelector('dialog[open], [aria-modal="true"], main[inert]')) { reset(); return; }
         const delta = wheelPixels(event, innerHeight);
         if (!delta) return;
         const scroller = document.scrollingElement ?? document.documentElement;
@@ -51,9 +63,16 @@ export function mountScrollPacing(root) {
             || (delta > 0 && scrollY + innerHeight >= scroller.scrollHeight - 1)) {
             reset(); return;
         }
+        if (expectedScroll !== null && Math.abs(scrollY - expectedScroll) > 2) reset();
+        if (!frame) { state.lastFrame = null; expectedScroll = null; remainder = 0; }
         event.preventDefault();
-        queuePacingInput(state, delta, performance.now());
-        if (!frame) frame = requestAnimationFrame(tick);
+        const now = performance.now();
+        if (queuePacingInput(state, delta, now)) {
+            cancelAnimationFrame(frame); frame = 0; remainder = 0; expectedScroll = null;
+        }
+        // Deliver accepted input before a slow first paint can expire it.
+        // Later input coalesces in the already scheduled frame.
+        if (!frame) tick();
     }
     function change() { if (reduced.matches) reset(); }
     function suspend() { suspended = true; reset(); }
@@ -62,6 +81,8 @@ export function mountScrollPacing(root) {
     window.addEventListener('keydown', reset, { capture: true, signal });
     window.addEventListener('pointerdown', reset, { passive: true, signal });
     window.addEventListener('hashchange', reset, { signal });
+    window.addEventListener('resize', reset, { signal });
+    window.addEventListener('touchstart', reset, { passive: true, signal });
     reduced.addEventListener('change', change, { signal });
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) suspend();
