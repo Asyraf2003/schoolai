@@ -71,7 +71,9 @@ for (const engine of engines) {
                         assert.equal(initial.scrub, true);
                         assert.equal(initial.triggers, 1);
                         assert.equal(initial.overflow, false);
-                        assert.equal(initial.size.height, 4500);
+                        // Desktop shortens the scroll field with the card hold.
+                        // Compact tiers retain the original five-screen line.
+                        assert.equal(initial.size.height, width >= 1280 ? 3375 : 4500);
                         assert.ok(initial.paths.every(p => p.offset >= p.length - 1
                             && p.stroke === 'rgb(255, 255, 255)' && p.fill === 'none'),
                             JSON.stringify({ lang, width, progress: initial.progress, paths: initial.paths }));
