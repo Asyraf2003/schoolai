@@ -42,7 +42,9 @@ async function desktopPosition(page, progress, legacy) {
                 const track = document.querySelector('[data-values-cards-track]');
                 const viewport = document.querySelector('[data-values-cards-viewport]');
                 const target = Math.max(0, Math.min(1, (72 - track.getBoundingClientRect().top) / (track.offsetHeight - viewport.offsetHeight)));
-                return Math.abs(target - mappedProgress) < .0004
+                // Allow one native scroll pixel; keep the card timeline
+                // tightly synced to the actual measured scroll target.
+                return Math.abs(target - mappedProgress) * (track.offsetHeight - viewport.offsetHeight) <= 1
                     && Math.abs(Number(document.querySelector('[data-values]').dataset.cardsProgress) - target) < .00002;
             }, mappedProgress);
         } catch (error) {
