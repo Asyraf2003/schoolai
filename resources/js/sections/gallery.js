@@ -20,6 +20,7 @@ export function mountGallery(root) {
     let precedingHeight = preceding?.offsetHeight;
     let lastProgress = 0;
     let reflowFrame = 0;
+    let resizeProgress = null;
     const update = progress => {
         if (width === innerWidth && height === innerHeight && precedingHeight === preceding?.offsetHeight) lastProgress = progress;
         media.sync();
@@ -29,9 +30,11 @@ export function mountGallery(root) {
         timeline?.scrollTrigger.kill(); timeline?.kill(); timeline = null;
         if (!keepStage) root.previousElementSibling?.removeAttribute('data-gallery-dark');
         if (!keepStage) {
+            cancelAnimationFrame(reflowFrame); reflowFrame = 0; resizeProgress = null;
             root.removeAttribute('data-gallery-enabled');
             delete root.dataset.galleryWidth; delete root.dataset.galleryHeight;
             delete root.dataset.galleryShrinkStart;
+            root.removeAttribute('data-gallery-reflow-pending');
         }
         root.querySelectorAll('[data-gallery-item], [data-gallery-composition], [data-gallery-word]').forEach(node => node.removeAttribute('style'));
     };
@@ -63,25 +66,34 @@ export function mountGallery(root) {
         width = innerWidth; height = innerHeight;
         if (!timeline) return;
         const active = progress > 0 && progress < 1;
+        resizeProgress = active ? progress : null;
         clear(true);
         timeline = createGalleryTimeline(window.gsap, window.ScrollTrigger, root, update);
         window.ScrollTrigger.refresh();
         if (active) scrollTo(0, timeline.scrollTrigger.start + progress * (timeline.scrollTrigger.end - timeline.scrollTrigger.start));
         timeline.scrollTrigger.update();
+        scheduleReflow();
     }, { signal: lifecycle.signal });
     const reconcile = () => {
         reflowFrame = 0;
+        root.removeAttribute('data-gallery-reflow-pending');
         if (suspended || disposed) return;
-        if (precedingHeight === preceding?.offsetHeight) return;
+        const progress = resizeProgress;
+        resizeProgress = null;
+        if (precedingHeight === preceding?.offsetHeight && progress === null) return;
         precedingHeight = preceding?.offsetHeight;
         if (!timeline || suspended) return;
-        const progress = lastProgress;
         window.ScrollTrigger.refresh();
-        if (progress > 0 && progress < 1) scrollTo(0, timeline.scrollTrigger.start + progress * (timeline.scrollTrigger.end - timeline.scrollTrigger.start));
+        if (progress !== null) scrollTo(0, timeline.scrollTrigger.start + progress * (timeline.scrollTrigger.end - timeline.scrollTrigger.start));
         timeline.scrollTrigger.update();
     };
+    const scheduleReflow = () => {
+        if (reflowFrame || suspended || disposed) return;
+        root.setAttribute('data-gallery-reflow-pending', '');
+        reflowFrame = requestAnimationFrame(reconcile);
+    };
     const reflow = typeof ResizeObserver === 'function' ? new ResizeObserver(() => {
-        if (!reflowFrame && !suspended && precedingHeight !== preceding?.offsetHeight) reflowFrame = requestAnimationFrame(reconcile);
+        if (precedingHeight !== preceding?.offsetHeight) scheduleReflow();
     }) : null;
     if (preceding) reflow?.observe(preceding);
     return {

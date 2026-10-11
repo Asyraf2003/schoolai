@@ -6,7 +6,14 @@ export async function galleryResize(page, width, height) {
         const root = document.querySelector('[data-gallery]');
         return +root.dataset.galleryWidth === w && +root.dataset.galleryHeight === h;
     }, [width, height]);
-    await page.waitForTimeout(350);
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await page.waitForFunction(() => {
+        const root = document.querySelector('[data-gallery]');
+        const trigger = window.ScrollTrigger.getById('gallery-v2');
+        const box = root.getBoundingClientRect();
+        return !root.hasAttribute('data-gallery-reflow-pending') && Math.abs(trigger.start - (box.top + scrollY - innerHeight * .7)) < 2
+            && Math.abs(trigger.end - (box.bottom + scrollY - innerHeight)) < 2;
+    });
 }
 
 export async function galleryReady(page) {

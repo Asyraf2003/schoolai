@@ -45,7 +45,15 @@ at1440 after six width profiles. Owner explicitly superseded line-based title
 entry with actual card-body15–20% gate; new heading witness already certifies it.
 DECISION: replace obsolete assertion with actual visible-body/held-heading check
 across all27 profiles; require visible completed heading after actual exit.
-STATUS: PASS scoped local Chromium; BLOCKED_BY_MISSING_EVIDENCE final CI.
+Local ad67aa9f: Chromium10/10 PASS; WebKit9/10, no observer-loop warnings,
+but fallback lifecycle times out waiting for active Values after locale/resize.
+FACT: reflow restoration was also applied to initial Values enhancement after
+Gallery mounted against a shorter static field, moving native scroll out of Values.
+DECISION: preserve progress only for an explicitly captured viewport resize;
+ordinary preceding-content reflow refreshes bounds without moving scroll.
+Resize/observer reconciliation exposes pending state for measured browser proof;
+replace fixed350ms resize wait with actual settled boundaries after two frames.
+STATUS: FAIL latest initial-enhancement/resize reconciliation before correction.
 NEXT channel Terminal Codex: fix Gallery resize reconciliation, renew proof.
 
 ## Gallery V2 final owner correction — 2026-10-11

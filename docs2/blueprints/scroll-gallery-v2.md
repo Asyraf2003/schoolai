@@ -118,7 +118,9 @@ Gallery-only preceding-world ResizeObserver reconciles the proven asynchronous
 375svh↔500svh Values flow remeasurement without changing Values owners.
 Writes coalesce into one event-driven frame after observer delivery, canceled
 on suspend/dispose; direct refresh inside observer delivery reproduced WebKit
-ResizeObserver loop warnings in integrated card/fallback tests.
+ResizeObserver loop warnings in integrated card/fallback tests. Restore captured
+progress only for viewport resizing; initial content enhancement refreshes bounds
+without moving native scroll. Browser sampling waits for settled measured bounds.
 Reduced/static paths show all10 items without overlap or inaccessible controls.
 
 ## SCOPE / file ownership / OUT_OF_SCOPE
