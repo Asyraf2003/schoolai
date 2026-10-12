@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
+import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 
 export async function galleryResize(page, width, height) {
     await page.setViewportSize({ width, height });
+    await settledValuesLayout(page);
     await page.waitForFunction(([w, h]) => {
         const root = document.querySelector('[data-gallery]');
         return +root.dataset.galleryWidth === w && +root.dataset.galleryHeight === h;
@@ -73,9 +75,12 @@ export function galleryState() {
     }));
     const lastStrand = [...document.querySelectorAll('[data-values-line-path]')].at(-1);
     const filterBlur = e => parseFloat(getComputedStyle(e).filter.match(/[\d.]+/)?.[0] ?? 0);
-    const pixel = document.createElement('canvas').getContext('2d');
-    pixel.fillStyle = getComputedStyle(document.querySelector('[data-program-values]')).backgroundColor;
-    pixel.fillRect(0, 0, 1, 1);
+    const background = getComputedStyle(document.querySelector('[data-program-values]')).backgroundColor;
+    // A canvas readback can quantize color(srgb) by a channel in software
+    // compositors. Inspect the actual computed CSS color for this style gate.
+    const channels = background.match(/color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/);
+    const backgroundRGB = channels ? channels.slice(1).map(value => Math.round(Number(value) * 255))
+        : background.match(/[\d.]+/g).slice(0, 3).map(Number);
     return {
         valuesRemaining, width: innerWidth, height: innerHeight, overflow: document.documentElement.scrollWidth > innerWidth,
         heading: { ...rect(heading), color: getComputedStyle(heading).color, size: getComputedStyle(heading).fontSize,
@@ -83,7 +88,7 @@ export function galleryState() {
             valuesSize: getComputedStyle(document.querySelector('[data-values-heading]')).fontSize },
         header: rect(document.querySelector('.gallery__header')),
         background: getComputedStyle(document.querySelector('[data-program-values]')).backgroundColor,
-        backgroundRGB: [...pixel.getImageData(0, 0, 1, 1).data].slice(0, 3),
+        backgroundRGB,
         typeVisible: getComputedStyle(document.querySelector('.program__type-home')).visibility,
         lineOpacity: +getComputedStyle(document.querySelector('[data-values-line]')).opacity,
         typeOpacity: +getComputedStyle(document.querySelector('.program__type-home')).opacity,

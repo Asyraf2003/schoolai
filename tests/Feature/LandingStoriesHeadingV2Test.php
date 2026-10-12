@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Article;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -26,7 +27,8 @@ it('renders the OLD-inspired two-line Stories heading in the V2 section order', 
         ->and($xpath->query('//*[@data-stories-feature]//video[@data-stories-video]')->length)->toBe(4)
         ->and($xpath->query('//*[@data-stories-feature]//h3')->length)->toBe(4)
         ->and($xpath->query('//*[@data-stories-feature]//h3[@aria-label]')->length)->toBe(4)
-        ->and($xpath->query('//*[@data-stories-feature]//p[@aria-label]')->length)->toBe(4)
+        ->and($xpath->query('//*[@data-stories-feature]//p[@aria-label]')->length)->toBe(0)
+        ->and($xpath->query('//*[@data-stories-feature]//p/span[@class="sr-only"]')->length)->toBe(4)
         ->and($xpath->query('//*[@data-stories-feature]//*[@data-stories-word][@aria-hidden="true"]')->length)->toBeGreaterThan(20);
 
     $videos = $xpath->query('//*[@data-stories-feature]//video');
@@ -51,3 +53,34 @@ it('renders the OLD-inspired two-line Stories heading in the V2 section order', 
     ['en', 'Stories & Insights'],
     ['ar', 'قصص ورؤى'],
 ]);
+
+it('keeps the four dummy Stories independent of published database articles', function (string $locale): void {
+    $article = Article::query()->create([
+        'article_source' => Article::SOURCE_NATIVE,
+        'article_status' => Article::STATUS_PUBLISHED,
+        'slug' => 'unbound-homepage-story',
+        'title_id' => 'Database article must stay outside dummy Stories',
+        'title_en' => 'Database article must stay outside dummy Stories',
+        'title_ar' => 'Database article must stay outside dummy Stories',
+        'link_id' => '/artikel/unbound-homepage-story',
+        'thumbnail_url' => Article::PLACEHOLDER_THUMBNAIL,
+        'published_at' => now()->subDay(),
+        'homepage_position' => 1,
+    ]);
+
+    $response = $this->withSession(['locale' => $locale])->get(route('home'));
+
+    $response->assertDontSee('Database article must stay outside dummy Stories');
+    $document = new DOMDocument;
+    @$document->loadHTML($response->getContent());
+    $xpath = new DOMXPath($document);
+    expect($xpath->query('//*[@id="artikel"]//*[@data-stories-demo]')->length)->toBe(4);
+    $publishedMarkup = $document->saveHTML($xpath->query('//*[@id="artikel"]')->item(0));
+
+    $article->update(['article_status' => Article::STATUS_DRAFT]);
+    $response = $this->withSession(['locale' => $locale])->get(route('home'));
+    @$document->loadHTML($response->getContent());
+    $xpath = new DOMXPath($document);
+
+    expect($document->saveHTML($xpath->query('//*[@id="artikel"]')->item(0)))->toBe($publishedMarkup);
+})->with(['id', 'en', 'ar']);

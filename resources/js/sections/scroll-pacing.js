@@ -6,6 +6,7 @@ import { measurePacingRanges } from './scroll-pacing-policy.js';
 export function mountScrollPacing(root, ports = {}) {
     if (!root) return { suspend() {}, resume() {}, dispose() {} };
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const capability = matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
     const controller = new AbortController();
     const { signal } = controller;
     const state = createPacingState();
@@ -35,7 +36,7 @@ export function mountScrollPacing(root, ports = {}) {
     function tick() {
         const now = performance.now();
         frame = 0;
-        if (suspended || document.hidden || reduced.matches || disposed) { reset(); return; }
+        if (suspended || document.hidden || reduced.matches || !capability.matches || disposed) { reset(); return; }
         if (expectedScroll !== null && Math.abs(scrollY - expectedScroll) > 2) { reset(); return; }
         const step = takePacingStep(state, now, measurePacingRanges(root), scrollY);
         if (!step) {
@@ -65,7 +66,7 @@ export function mountScrollPacing(root, ports = {}) {
         if (state.pending) frame = requestAnimationFrame(tick);
     }
     function wheel(event) {
-        if (suspended || document.hidden || reduced.matches || disposed
+        if (suspended || document.hidden || reduced.matches || !capability.matches || disposed
             || !event.cancelable || event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey
             || Math.abs(event.deltaX) > Math.abs(event.deltaY) || targetOwnsScroll(event.target)
             || document.querySelector('dialog[open], [aria-modal="true"], main[inert]')) { reset(); return; }
@@ -92,7 +93,7 @@ export function mountScrollPacing(root, ports = {}) {
         // Later input coalesces in the already scheduled frame.
         if (!frame) tick();
     }
-    function change() { if (reduced.matches) reset(); }
+    function change() { if (reduced.matches || !capability.matches) reset(); }
     function suspend() { suspended = true; reset(); }
     function resume() { suspended = document.hidden; reset(); }
     window.addEventListener('wheel', wheel, { passive: false, signal });
@@ -102,6 +103,7 @@ export function mountScrollPacing(root, ports = {}) {
     window.addEventListener('resize', reset, { signal });
     window.addEventListener('touchstart', reset, { passive: true, signal });
     reduced.addEventListener('change', change, { signal });
+    capability.addEventListener('change', change, { signal });
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) suspend();
         else resume();

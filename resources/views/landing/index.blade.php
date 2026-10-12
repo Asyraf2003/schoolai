@@ -6,6 +6,18 @@
     <title>{{ __('home.meta.title') }}</title>
     <meta name="description" content="{{ __('home.meta.description') }}">
     <link rel="icon" href="{{ config('media.static.brand.favicon') }}">
+    <script nonce="{{ Vite::cspNonce() }}">
+        document.documentElement.setAttribute('data-landing-pending', '');
+        window.addEventListener('DOMContentLoaded', function () {
+            document.documentElement.removeAttribute('data-landing-pending');
+        }, { once: true });
+    </script>
+    @if (app()->getLocale() === 'ar')
+        <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ Vite::asset('node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2') }}">
+        <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ Vite::asset('node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2') }}">
+    @else
+        <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ Vite::asset('resources/fonts/inter/inter-latin-variable.woff2') }}">
+    @endif
     @vite(['resources/css/index.css', 'resources/js/index.js'])
 </head>
 <body class="landing">

@@ -15,7 +15,7 @@ test('ten media form balanced 3–4–3 columns, mirrored without overlap at eve
                 assert.ok(x.x + x.width <= y.x + .01 || y.x + y.width <= x.x + .01
                     || x.y + x.height <= y.y + .01 || y.y + y.height <= x.y + .01);
             }
-            if (width >= 768) {
+            {
                 const gap = Math.max(6, Math.min(width * .011, 16));
                 assert.ok(Math.abs(items[0].width * 3 + gap * 2 - width) < .01, 'three columns fill viewport');
                 const leadBottom = items[0].fromY + width * 26 / 30 * items[0].openingScale * .5625;
@@ -27,6 +27,7 @@ test('ten media form balanced 3–4–3 columns, mirrored without overlap at eve
                 });
                 assert.ok(Math.max(...heights) - Math.min(...heights) < .01);
                 assert.ok(Math.abs(items[0].x + items[0].width / 2 - width / 2) < .01);
+                assert.equal(new Set(items.map(item => item.x.toFixed(3))).size, 3, 'actual poses retain three columns at every width');
             }
         }
     }

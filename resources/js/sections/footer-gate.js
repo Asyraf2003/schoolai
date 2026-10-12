@@ -1,22 +1,24 @@
 // Existing scroll-pacing is the only wheel owner.
-// Each separate blue-stage gesture charges at most 55% of the progress bar.
+// Blue-stage fill follows raw input; release drains at half its measured rise speed.
 export const FOOTER_GESTURE_GAP_MS = 280;
 export const FOOTER_GESTURE_MIN_PX = 14;
-export const FOOTER_GESTURE_CHARGE_MAX = .55;
-export const FOOTER_IDLE_DELAY_MS = 450;
-export const FOOTER_IDLE_DECAY_PER_MS = .00032;
+export const FOOTER_PROGRESS_DISTANCE_PX = 840;
+export const FOOTER_IDLE_DELAY_MS = 120;
+export const FOOTER_MIN_RISE_MS = 100;
 const EPS = 1;
 const clamp = v => Math.max(0, Math.min(1, v));
 
 export function createFooterGate(bounds, navigate) {
     let phase = 'to-white', lastWheel = null, lastTick = null;
-    let charge = 0, gestureCharge = 0, blueUnlocked = false;
+    let charge = 0, blueUnlocked = false, completed = false;
+    let riseStart = null, riseAmount = 0, decayPerMs = 0;
     const limits = () => {
         const { white, blue } = bounds();
         return { white, blue: Math.max(white, blue) };
     };
     const clearCharge = () => {
-        charge = 0; gestureCharge = 0; blueUnlocked = false; lastTick = null;
+        charge = 0; blueUnlocked = false; completed = false; lastTick = null;
+        riseStart = null; riseAmount = 0; decayPerMs = 0;
     };
     const within = (position, stop) => position >= stop - EPS;
     const settle = now => {
@@ -24,7 +26,7 @@ export function createFooterGate(bounds, navigate) {
         const start = Math.max(lastTick ?? now, (lastWheel ?? now) + FOOTER_IDLE_DELAY_MS);
         const elapsed = Math.max(0, now - start);
         const before = charge;
-        charge = clamp(charge - elapsed * FOOTER_IDLE_DECAY_PER_MS);
+        charge = clamp(charge - elapsed * decayPerMs);
         lastTick = now;
         return before !== charge;
     };
@@ -34,8 +36,10 @@ export function createFooterGate(bounds, navigate) {
         else if (position < blue - 8 && phase === 'blue-held') phase = 'to-blue';
     };
     const wheel = (delta, position, now) => {
+        if (!Number.isFinite(delta) || !Number.isFinite(now) || delta === 0) return false;
         settle(now);
         const fresh = lastWheel === null || now - lastWheel >= FOOTER_GESTURE_GAP_MS;
+        const newRise = lastWheel === null || now - lastWheel >= FOOTER_IDLE_DELAY_MS;
         lastWheel = now;
         if (delta < 0) { clearCharge(); resetFromReverse(position); return false; }
         if (delta <= 0) return false;
@@ -49,16 +53,14 @@ export function createFooterGate(bounds, navigate) {
         }
         if (phase === 'blue-held') {
             // Tail packets of the gesture that entered blue cannot charge it.
-            if (!blueUnlocked && !intentional) return true;
+            if (!blueUnlocked && !fresh) return true;
             if (!blueUnlocked) blueUnlocked = true;
-            if (fresh) gestureCharge = 0;
-            if (delta >= FOOTER_GESTURE_MIN_PX) {
-                const remaining = Math.max(0, FOOTER_GESTURE_CHARGE_MAX - gestureCharge);
-                const added = Math.min(remaining, Math.max(.5, Math.min(.55, delta / 250)));
-                gestureCharge += added;
-                charge = clamp(charge + added);
-                if (charge >= 1) navigate();
-            }
+            if (newRise || riseStart === null || charge === 0) { riseStart = now; riseAmount = 0; }
+            const added = Math.min(1 - charge, delta / FOOTER_PROGRESS_DISTANCE_PX);
+            riseAmount += added;
+            charge = clamp(charge + added);
+            decayPerMs = riseAmount / (2 * Math.max(FOOTER_MIN_RISE_MS, now - riseStart));
+            if (charge >= 1 && !completed) { completed = true; navigate(); }
             return true;
         }
         return false;

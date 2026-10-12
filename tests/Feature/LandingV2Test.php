@@ -39,7 +39,7 @@ it('preserves database copy and active legacy section destinations', function ()
     $document = new DOMDocument;
     @$document->loadHTML($response->getContent());
     $dom = new DOMXPath($document);
-    expect($dom->query('//footer[not(ancestor::article)]')->length)->toBe(0);
+    expect($dom->query('//footer[@id="kontak"][@data-footer-v2]')->length)->toBe(1);
 });
 
 it('preserves the admissions campaign while registration is open', function (): void {

@@ -4,7 +4,7 @@ import { enabled, engines, session, locale, evidence } from './ProgramBrowserSup
 import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import { galleryReady, galleryResize } from './GalleryBrowserSupport.mjs';
 
-for (const engine of engines) test(`compact Values flips remain visible under aggressive wheel in ${engine}`, { skip: !enabled }, async () => {
+for (const engine of engines) test(`compact Values flips follow gradual native scrolling in ${engine}`, { skip: !enabled }, async () => {
     const runtime = await session(engine);
     const { page } = runtime;
     const profiles = [];
@@ -35,10 +35,17 @@ for (const engine of engines) test(`compact Values flips remain visible under ag
                 requestAnimationFrame(sample);
             });
             await page.mouse.move(width / 2, 450);
-            for (let index = 0; index < 45; index++) {
-                await page.mouse.wheel(0, 10000); await page.waitForTimeout(24);
-                if (await page.evaluate(() => compactFrames.at(-1)?.angles.every(angle => angle < .1))) break;
-            }
+            await page.evaluate(() => new Promise(resolve => {
+                const last = [...document.querySelectorAll('[data-values-card]')].at(-1).getBoundingClientRect();
+                const end = last.bottom + scrollY - innerHeight;
+                let steps = 0;
+                const move = () => {
+                    if (scrollY >= end || ++steps > 600) return resolve();
+                    scrollBy(0, Math.min(12, end - scrollY));
+                    requestAnimationFrame(move);
+                };
+                move();
+            }));
             await page.waitForTimeout(300);
             const frames = await page.evaluate(() => { window.compactRecording = false; return compactFrames; });
             await evidence(`scroll-pacing-compact-${engine}-${width}-diagnostic`, { width, frames });
@@ -50,8 +57,8 @@ for (const engine of engines) test(`compact Values flips remain visible under ag
                 assert.ok(frames[index].angles.every((angle, card) => Math.abs(angle - frames[index - 1].angles[card]) <= 48), JSON.stringify({ width, previous: frames[index - 1], current: frames[index] }));
             }
             const before = await page.evaluate(() => scrollY);
-            await page.mouse.wheel(0, -10000);
-            assert.ok(await page.evaluate(() => scrollY) < before);
+            await page.mouse.wheel(0, -240);
+            await page.waitForFunction(before => scrollY < before, before);
             await page.waitForTimeout(300);
             profiles.push({ width, frames, before, reverse: await page.evaluate(() => scrollY) });
         }

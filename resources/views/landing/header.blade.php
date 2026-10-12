@@ -4,7 +4,7 @@
             <img src="{{ $logoImageUrl }}" alt="{{ $logo['image_alt'] ?? $logoLabel }}" width="64" height="64">
         </a>
         <button class="site-header__audio" type="button" data-audio hidden aria-pressed="false"
-            aria-label="{{ __('shared.navbar.audio.enable_label') }}"
+            aria-label="{{ __('shared.navbar.audio.off') }}. {{ __('shared.navbar.audio.enable_label') }}"
             data-label-on="{{ __('shared.navbar.audio.on') }}" data-label-off="{{ __('shared.navbar.audio.off') }}"
             data-action-on="{{ __('shared.navbar.audio.disable_label') }}"
             data-action-off="{{ __('shared.navbar.audio.enable_label') }}">

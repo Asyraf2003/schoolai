@@ -60,7 +60,7 @@ for (const engine of engines) {
                     assert.ok(Math.abs(full.items[0].y + full.items[0].height / 2 - 450) < 2, 'shrink finishes at viewport center');
                     assert.ok(full.words[0].opacity > .999 && full.words[0].blur < .05, 'first word is clear at assembly');
                     assert.ok(full.words[1].blur > 0 && full.words.at(-1).blur > full.words[1].blur, 'later words are progressively blurred');
-                    if (width >= 768) {
+                    {
                         assert.deepEqual(['left', 'center', 'right'].map(c => full.items.filter(i => i.column === c).length), [3, 4, 3]);
                         assert.ok(Math.abs(full.items[0].x + full.items[0].width / 2 - width / 2) < 1);
                         assert.ok(Math.abs(full.items[0].width * 3 + gap * 2 - width) < 1);
@@ -69,19 +69,22 @@ for (const engine of engines) {
                     }
                     const traveling = await galleryAt(page, .66);
                     galleryFits(traveling);
-                    assert.ok(traveling.items.every((i, n) => i.y < full.items[n].y - 10));
+                    const assemblyBottom = Math.max(...full.items.map(i => i.bottom));
+                    assert.ok(traveling.items.every((i, n) => i.y <= full.items[n].y + 1), 'a fitting composition never drifts downward');
+                    if (assemblyBottom > 920) assert.ok(traveling.items.every((i, n) => i.y < full.items[n].y - 10));
                     const clear = await galleryAt(page, .74);
                     assert.ok(clear.words.every(w => w.opacity > .999 && w.blur < .02));
                     const edge = await galleryAt(page, .76);
-                    assert.ok(Math.abs(Math.max(...edge.items.map(i => i.bottom)) - 900) < 2, 'exit begins at viewport bottom');
+                    const exitBottom = Math.min(900, assemblyBottom);
+                    assert.ok(Math.abs(Math.max(...edge.items.map(i => i.bottom)) - exitBottom) < 2, 'exit begins after excess media have cleared the viewport');
                     assert.ok(edge.items.every(i => i.opacity > .999));
                     const exit = await galleryAt(page, .83);
                     assert.ok(exit.words.every(w => w.opacity < 1 && w.blur > 0));
                     assert.ok(exit.blur > 0, 'all media blur together');
                     assert.ok(exit.items.every(i => i.opacity < 1));
-                    assert.ok(Math.abs(Math.max(...exit.items.map(i => i.bottom)) - 675) < 2);
+                    assert.ok(Math.abs(Math.max(...exit.items.map(i => i.bottom)) - (exitBottom - 225)) < 2);
                     const blackout = await galleryAt(page, .90);
-                    assert.ok(Math.abs(Math.max(...blackout.items.map(i => i.bottom)) - 450) < 2, 'exit ends at viewport middle');
+                    assert.ok(Math.abs(Math.max(...blackout.items.map(i => i.bottom)) - (exitBottom - 450)) < 2, 'exit keeps the same half-viewport upward travel');
                     assert.ok(blackout.items.every(i => i.opacity < .01) && blackout.words.every(w => w.opacity < .01));
                     assert.ok(Math.abs(blackout.testimonial.y) <= 1, 'Testimonials begins in the finished Gallery black hold');
                     assert.equal(await page.locator('[data-gallery] button').count(), 0, 'automatic loop without pause UI');

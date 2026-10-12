@@ -44,7 +44,7 @@ export function createGalleryTimeline(gsap, ScrollTrigger, root, update) {
         timeline.to(item, { opacity: 0, duration: .14, ease: 'none' }, .76);
     });
     const bottom = Math.max(...geometry.map(g => g.y + g.height));
-    const settledRise = bottom - stage.clientHeight;
+    const settledRise = Math.max(0, bottom - stage.clientHeight);
     timeline.fromTo(composition, { y: 0, filter: 'blur(0px)' }, { y: -settledRise, duration: .24, ease: 'none' }, .52);
     timeline.to(composition, { y: -settledRise - stage.clientHeight * .5, filter: 'blur(14px)', duration: .14, ease: 'none' }, .76);
     words.forEach((word, index) => {

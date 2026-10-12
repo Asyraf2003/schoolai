@@ -6,6 +6,7 @@
 .hero__media[data-ready="true"] img { opacity: 1; }
 .hero__media video { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: center; }
 .hero__media video { position: absolute; inset: 0; opacity: 0; }
+.hero__media img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; }
 .hero__slide[data-playing="true"] video { opacity: 1; }
 .hero__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 35%, #020d0c44); }
 .hero__content {

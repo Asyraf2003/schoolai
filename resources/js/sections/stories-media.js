@@ -14,7 +14,7 @@ export function mountStoriesMedia(root) {
     const lifecycle = new AbortController();
     const { signal } = lifecycle;
     const pending = new Set();
-    let layout, near = false, enabled = false, suspended = false, disposed = false, frame = 0;
+    let layout, near = false, enabled = false, suspended = false, disposed = false, frame = 0, measureFrame = 0;
 
     const release = video => {
         video.pause();
@@ -100,6 +100,10 @@ export function mountStoriesMedia(root) {
         sequence.style.setProperty('--stories-travel', Math.ceil(layout.travel) + 'px');
         render();
     };
+    const scheduleMeasure = () => {
+        if (!enabled || disposed || suspended || measureFrame) return;
+        measureFrame = requestAnimationFrame(() => { measureFrame = 0; measure(); });
+    };
     const configure = () => {
         enabled = capable && !reduced.matches;
         sequence.toggleAttribute('data-stories-sequence-enabled', enabled);
@@ -135,11 +139,11 @@ export function mountStoriesMedia(root) {
         else schedule();
     }, { rootMargin: '75% 0px' }) : null;
     observer?.observe(sequence);
-    const size = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    const size = typeof ResizeObserver === 'function' ? new ResizeObserver(scheduleMeasure) : null;
     size?.observe(viewport);
     copies.forEach(copy => size?.observe(copy));
     window.addEventListener('scroll', schedule, { passive: true, signal });
-    window.addEventListener('resize', measure, { signal });
+    window.addEventListener('resize', scheduleMeasure, { signal });
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) videos.forEach(video => video.pause());
         else render();
@@ -149,10 +153,10 @@ export function mountStoriesMedia(root) {
     document.fonts?.ready.then(() => { if (!disposed) measure(); });
     configure();
     return {
-        suspend() { suspended = true; cancelAnimationFrame(frame); frame = 0; videos.forEach(video => video.pause()); },
+        suspend() { suspended = true; cancelAnimationFrame(frame); cancelAnimationFrame(measureFrame); frame = 0; measureFrame = 0; videos.forEach(video => video.pause()); },
         resume() { suspended = false; measure(); schedule(); },
         dispose() {
-            disposed = true; cancelAnimationFrame(frame);
+            disposed = true; cancelAnimationFrame(frame); cancelAnimationFrame(measureFrame);
             videos.forEach(release);
             observer?.disconnect(); size?.disconnect(); lifecycle.abort();
         },
