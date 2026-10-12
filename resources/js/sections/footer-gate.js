@@ -53,8 +53,10 @@ export function createFooterGate(bounds, navigate) {
             phase = 'blue-held';
             return true;
         }
-        if (phase === 'white-held' && position < white - 8) phase = 'to-white';
-        if (phase === 'blue-held' && position < blue - 8) phase = 'to-blue';
+        // Any reverse scroll below the white checkpoint must rearm white,
+        // including when the blue checkpoint is already in "to-blue".
+        if (position < white - 8) phase = 'to-white';
+        else if (phase === 'blue-held' && position < blue - 8) phase = 'to-blue';
         return false;
     };
     const reset = position => {
