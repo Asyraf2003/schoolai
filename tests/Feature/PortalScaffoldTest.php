@@ -4,8 +4,20 @@ use App\Enums\AccountRole;
 use App\Models\User;
 use App\Services\ActiveSessionManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 
 uses(RefreshDatabase::class);
+
+function portalAccount(AccountRole $role): User
+{
+    return User::query()->forceCreate([
+        'name' => $role->label(),
+        'email' => $role === AccountRole::Murid ? null : $role->value.'.portal@example.test',
+        'student_id' => $role === AccountRole::Murid ? 'STU001' : null,
+        'password' => Hash::make('password-aman'),
+        'role' => $role->value,
+    ]);
+}
 
 it('renders public placeholders in all three languages', function (string $locale, string $direction): void {
     foreach (['artikel' => 'article', 'galeri' => 'gallery'] as $route => $page) {
@@ -40,7 +52,7 @@ it('uses inert header navigation except for PPDB and login', function (): void {
 });
 
 it('redirects an authenticated visitor through the login entry to their dashboard', function (AccountRole $role, string $destination): void {
-    $account = User::factory()->create(['role' => $role->value, 'student_id' => $role === AccountRole::Murid ? 'STU001' : null]);
+    $account = portalAccount($role);
     $this->actingAs($account)
         ->withSession([ActiveSessionManager::SESSION_KEY => 0])
         ->get(route('portal.login'))
@@ -57,7 +69,7 @@ it('redirects an authenticated visitor through the login entry to their dashboar
 ]);
 
 it('enforces role isolation on placeholder dashboards', function (AccountRole $role, string $allowed, string $denied): void {
-    $account = User::factory()->create(['role' => $role->value, 'student_id' => $role === AccountRole::Murid ? 'STU002' : null]);
+    $account = portalAccount($role);
     $this->actingAs($account)
         ->withSession([ActiveSessionManager::SESSION_KEY => 0])
         ->get(route($allowed))
