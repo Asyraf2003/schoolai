@@ -21,8 +21,9 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr) auto;
-    column-gap: clamp(2rem, 3.6vw, 5rem);
-    row-gap: clamp(2rem, 4svh, 3.5rem);
+    column-gap: clamp(1.25rem, 2vw, 2rem);
+    row-gap: clamp(1.25rem, 2.5svh, 2.5rem);
+    inline-size: min(100%, 70rem);
     min-block-size: 0;
     padding-block: clamp(1.25rem, 2.7vw, 2.75rem) clamp(1.5rem, 3vw, 3rem);
     align-items: start;
@@ -56,23 +57,25 @@
     line-height: 1.18;
     transition: transform 260ms ease;
 }
-.site-footer-v2__social a { min-block-size: 2rem; padding-block: .15rem; }
+.site-footer-v2__social a { min-block-size: 2rem; padding-block: .15rem; inline-size: max-content; max-inline-size: 100%; }
 .site-footer-v2__social-arrow {
     position: absolute;
-    inset-inline-start: -1.45rem;
+    inset-inline-start: 0;
+    top: 50%;
     opacity: 0;
     font-size: .7em;
-    transform: translateX(-8px);
+    line-height: 1;
+    transform: translate3d(-6px, -50%, 0);
     transition: opacity 250ms ease, transform 250ms ease;
 }
 .site-footer-v2__social-label { display: block; transition: transform 250ms ease; }
 .site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-arrow {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, -50%, 0);
 }
-.site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-label { transform: translateX(8px); }
-[dir="rtl"] .site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-label { transform: translateX(-8px); }
-[dir="rtl"] .site-footer-v2__social-arrow { transform: translateX(8px); }
+.site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-label { transform: translateX(1.25rem); }
+[dir="rtl"] .site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-label { transform: translateX(-1.25rem); }
+[dir="rtl"] .site-footer-v2__social-arrow { transform: translate3d(6px, -50%, 0); }
 .site-footer-v2__partners h2 {
     margin: 0 0 clamp(1.4rem, 2.1vw, 2rem);
     font-size: clamp(1.15rem, 1.55vw, 1.7rem);

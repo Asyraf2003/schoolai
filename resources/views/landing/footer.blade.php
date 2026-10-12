@@ -58,9 +58,6 @@
                 </span>
                 <img src="{{ config('media.static.navigation.gallery') }}" alt="" loading="lazy" decoding="async">
             </a>
-            <a class="site-footer-v2__next-alternate" href="{{ route('artikel') }}" data-footer-next-alternate>
-                {{ __('footer_v2.articles') }} <span aria-hidden="true">↗</span>
-            </a>
         </nav>
     </div>
 </footer>

@@ -10,7 +10,6 @@ it('renders the two-stage localized footer after all four articles', function (s
         'id="artikel"', 'data-stories-number="4"', 'id="kontak"',
     ])->assertSee(__('home.footer.brand.description'))
         ->assertSee(__('footer_v2.keep_scrolling'))
-        ->assertSee(__('footer_v2.articles'))
         ->assertSee(__('footer_v2.gallery'));
 
     $document = new DOMDocument;
@@ -25,7 +24,7 @@ it('renders the two-stage localized footer after all four articles', function (s
         ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__social"]//a')->length)->toBe(5)
         ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-shell]')->length)->toBe(1)
         ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-main]')->length)->toBe(1)
-        ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-alternate]')->length)->toBe(1)
+        ->and($xpath->query('//*[@id="kontak"]//*[@data-footer-next-alternate]')->length)->toBe(0)
         ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__social-arrow"]')->length)->toBe(5)
         ->and($xpath->query('//*[@id="kontak"]//*[@class="site-footer-v2__next-line-fill"]')->length)->toBe(1);
 
@@ -34,9 +33,7 @@ it('renders the two-stage localized footer after all four articles', function (s
         ->and($maps->getAttribute('data-footer-preview-fallback'))->toContain('/site/footer/maps-v1.webp');
 
     $main = $xpath->query('//*[@id="kontak"]//*[@data-footer-next-main]')->item(0);
-    $alternative = $xpath->query('//*[@id="kontak"]//*[@data-footer-next-alternate]')->item(0);
-    expect($main->getAttribute('href'))->toBe(route('galeri'))
-        ->and($alternative->getAttribute('href'))->toBe(route('artikel'));
+    expect($main->getAttribute('href'))->toBe(route('galeri'));
 })->with(['id', 'en', 'ar']);
 
 it('uses the configured real footer contact and partner destinations', function (): void {

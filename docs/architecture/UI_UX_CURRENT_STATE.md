@@ -1,5 +1,33 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Footer spacing/hover and decaying scroll-to-Gallery progress — 2026-10-12
+
+OWNER_VISUAL_REFERENCE: local and Lusion screenshots show too-wide horizontal
+gaps among the footer three lower groups and a left arrow displaced outside
+its hover target. The blue section should have no auxiliary Artikel link.
+When user stops wheel scrolling over the blue next-page strip, the yellow
+progress line must slowly return toward zero instead of staying charged.
+Target: approximately two intentional scroll gestures to fill and then
+navigate to Galeri, not an immediate one-wheel redirect.
+DECISION: keep top 1/3 white void and bottom 2/3 three-column layout;
+constrain lower grid width to 70rem and reduce gaps. Put social hover arrow
+INSIDE each anchor at logical start, center vertically, shift label right
+(LTR)/left (RTL); no out-of-column arrow offset. Remove alternate Artikel
+from blue only; page navigation elsewhere remains unchanged.
+Footer gate keeps existing two stage stops and sole scroll-pacing wheel
+owner; on the blue-held state a fresh gesture is required before accepting
+charge. Each wheel gesture is capped at 55% progress. After 450ms without
+input the charge eases downward at 0.32 progress/sec via component-local RAF,
+not a second wheel listener. Direct Galeri link remains accessible.
+Tests cover white stop, blue rearm, per-gesture cap, idle decay, refill,
+reverse navigation and tiny tail packets.
+PROOF: source patch and tests authored; local build, node, PHP and browser
+visual proof still require execution.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE final runtime proof.
+NEXT: pull feature; run structural check/build/unit/feature tests;
+inspect spacing, arrows and decaying yellow line on desktop and mobile.
+
+
 ## Footer Lusion visual parity / scroll-fill / map preview — 2026-10-12
 
 OWNER_REFERENCE: 5 screenshots compare actual SchoolAI footer and Lusion.
