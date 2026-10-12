@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title') · Al Mustaqbal School</title>
     <link rel="icon" href="{{ config('media.static.brand.favicon') }}">
-    <style>
+    <style nonce="{{ Vite::cspNonce() }}">
         :root { color-scheme: light; font-family: Inter, system-ui, sans-serif; }
         html[dir="rtl"] { font-family: Cairo, Tahoma, sans-serif; }
         * { box-sizing: border-box; }

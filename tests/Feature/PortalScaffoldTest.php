@@ -40,7 +40,7 @@ it('uses inert header navigation except for PPDB and login', function (): void {
 });
 
 it('redirects an authenticated visitor through the login entry to their dashboard', function (AccountRole $role, string $destination): void {
-    $account = User::factory()->create(['role' => $role->value]);
+    $account = User::factory()->create(['role' => $role->value, 'student_id' => $role === AccountRole::Murid ? 'STU001' : null]);
     $this->actingAs($account)
         ->withSession([ActiveSessionManager::SESSION_KEY => 0])
         ->get(route('portal.login'))
@@ -57,7 +57,7 @@ it('redirects an authenticated visitor through the login entry to their dashboar
 ]);
 
 it('enforces role isolation on placeholder dashboards', function (AccountRole $role, string $allowed, string $denied): void {
-    $account = User::factory()->create(['role' => $role->value]);
+    $account = User::factory()->create(['role' => $role->value, 'student_id' => $role === AccountRole::Murid ? 'STU002' : null]);
     $this->actingAs($account)
         ->withSession([ActiveSessionManager::SESSION_KEY => 0])
         ->get(route($allowed))
