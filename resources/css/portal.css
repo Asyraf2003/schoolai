@@ -5,4 +5,4 @@
 .article-content pre { overflow-x: auto; }
 .article-content a { text-decoration: underline; color: #005fcc; }
 article > :is(img, video) { display: block; max-inline-size: 100%; block-size: auto; margin-block: 1rem; }
-[lang="ar"] .article-content { font-family: Cairo, Tahoma, sans-serif; }
+.article-content:lang(ar) { font-family: Cairo, Tahoma, sans-serif; }

@@ -10,7 +10,7 @@
                 <video controls playsinline preload="metadata" src="{{ $article->cover_url }}" aria-label="{{ $article->titleForLocale(app()->getLocale()) }}"></video>
             @else<img src="{{ $article->cover_url }}" alt="{{ $article->titleForLocale(app()->getLocale()) }}" width="1200" height="675">@endif
         @endif
-        <div class="article-content">{!! $article->contentForLocale(app()->getLocale()) !!}</div>
+        <div class="article-content" lang="{{ $article->contentLocale(app()->getLocale()) }}" dir="auto">{!! $article->contentForLocale(app()->getLocale()) !!}</div>
     </article>
     <div class="actions"><a class="action secondary" href="{{ route('artikel') }}">{{ __('pages.common.nav.artikel') }}</a></div>
 @endsection

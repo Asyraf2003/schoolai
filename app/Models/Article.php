@@ -47,17 +47,28 @@ final class Article extends Model
 
     public function titleForLocale(string $locale): string
     {
-        return $this->localizedValue($locale, $this->title_id, $this->title_en, $this->title_ar);
+        return $this->localizedValue($locale, $this->title_id, $this->title_en, $this->title_ar, (string) $this->title_ar);
     }
 
     public function descriptionForLocale(string $locale): string
     {
-        return $this->localizedValue($locale, $this->description_id, $this->description_en, $this->description_ar);
+        return $this->localizedValue($locale, $this->description_id, $this->description_en, $this->description_ar, (string) $this->description_ar);
     }
 
     public function contentForLocale(string $locale): string
     {
-        return $this->localizedValue($locale, $this->content_id, $this->content_en, $this->content_ar);
+        return $this->localizedValue($locale, $this->content_id, $this->content_en, $this->content_ar, (string) $this->content_ar);
+    }
+
+    public function contentLocale(string $locale): string
+    {
+        foreach (array_unique([$locale, 'id', 'en', 'ar']) as $candidate) {
+            if (trim((string) $this->{'content_'.$candidate}) !== '') {
+                return $candidate;
+            }
+        }
+
+        return $locale;
     }
 
     public function linkForLocale(string $locale): string

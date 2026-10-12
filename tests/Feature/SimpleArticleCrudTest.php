@@ -76,3 +76,13 @@ it('stores optional cover on R2 and retains files when deleting or restoring an 
     $this->put(route('admin.artikel.update', $article), ['content_id' => '<p>Isi baru</p>', 'remove_cover' => true])->assertSessionHasNoErrors();
     expect($article->fresh()->cover_url)->toBeNull();
 });
+
+it('keeps an Arabic-only article readable in every locale with the correct content language', function (): void {
+    $this->actingAs(User::factory()->create(['role' => User::ROLE_ADMIN]));
+    $this->post(route('admin.artikel.store'), ['content_ar' => '<p>محتوى عربي فقط</p>'])->assertSessionHasNoErrors();
+    $article = Article::sole();
+    foreach (['id', 'en', 'ar'] as $locale) {
+        $this->withSession(['locale' => $locale])->get($article->linkForLocale($locale))
+            ->assertOk()->assertSee('محتوى عربي فقط')->assertSee('class="article-content" lang="ar" dir="auto"', false);
+    }
+});
