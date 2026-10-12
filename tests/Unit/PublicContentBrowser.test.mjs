@@ -27,6 +27,10 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
             : (process.env.PROGRAM_WEBKIT_PATH ? {executablePath:process.env.PROGRAM_WEBKIT_PATH} : {}))});
     const context = await browser.newContext({viewport:{width:390,height:844}});
     const page = await context.newPage();
+    await page.route('**/portal-*.css', async route => {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        await route.continue();
+    });
     const errors = [];
     const cells = [];
     page.on('pageerror', e => errors.push(e.message));
@@ -34,9 +38,9 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
         for (const motion of ['reduce', 'no-preference']) {
             await page.emulateMedia({reducedMotion:motion});
             for (const route of ['/galeri', '/artikel', '/artikel/menjelajah-dunia-digital']) {
-                assert.equal((await page.goto(url + route, {waitUntil:'domcontentloaded'})).status(), 200);
+                assert.equal((await page.goto(url + route, {waitUntil:'load'})).status(), 200);
                 for (const locale of ['id', 'en', 'ar']) {
-                    await Promise.all([page.waitForNavigation({waitUntil:'domcontentloaded'}),
+                    await Promise.all([page.waitForNavigation({waitUntil:'load'}),
                         page.locator(`form[action$="/bahasa/${locale}"] button`).click()]);
                     assert.equal(new URL(page.url()).pathname, route);
                     await page.evaluate(() => document.fonts.ready);
@@ -89,8 +93,8 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
         const staticContext = await browser.newContext({javaScriptEnabled:false,viewport:{width:360,height:780},isMobile:true,hasTouch:true});
         const staticPage = await staticContext.newPage();
         for (const route of ['/galeri', '/artikel', '/artikel/menjelajah-dunia-digital']) {
-            await staticPage.goto(url + route, {waitUntil:'domcontentloaded'});
-            await Promise.all([staticPage.waitForNavigation({waitUntil:'domcontentloaded'}),
+            await staticPage.goto(url + route, {waitUntil:'load'});
+            await Promise.all([staticPage.waitForNavigation({waitUntil:'load'}),
                 staticPage.locator('form[action$="/bahasa/ar"] button').tap()]);
             assert.equal((await staticPage.evaluate(geometry)).overflow, false);
             assert.equal((await staticPage.evaluate(geometry)).dir, 'rtl');
@@ -99,5 +103,18 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
         await staticContext.close();
         assert.deepEqual(errors, []);
         await fs.writeFile(`${out}/public-content-${engine}.json`, JSON.stringify({engine,version:browser.version(),cells,errors}, null, 2));
+    } catch (error) {
+        console.error(error.stack);
+        const diagnostic = await page.evaluate(() => ({width:innerWidth,
+            scrollWidth:document.documentElement.scrollWidth, zoom:document.body.style.zoom,
+            stylesheets:[...document.styleSheets].map(sheet => sheet.href),
+            overflowing:[...document.querySelectorAll('main *')].map(node => {
+                const box = node.getBoundingClientRect();
+                return {tag:node.tagName,class:node.className,left:box.left,right:box.right};
+            }).filter(box => box.right > innerWidth + 1 || box.left < -1).slice(0, 12),
+        }));
+        console.error(JSON.stringify(diagnostic));
+        await page.screenshot({path:`${out}/public-content-${engine}-failure.png`,fullPage:true});
+        throw error;
     } finally { await browser.close(); }
 });
