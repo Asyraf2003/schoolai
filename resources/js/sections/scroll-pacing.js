@@ -43,15 +43,23 @@ export function mountScrollPacing(root, ports = {}) {
             else reset();
             return;
         }
+        // Footer checkpoints constrain the ONE existing wheel owner.
+        // Do not deliver residual kinetic debt across a gate.
+        const desired = step + remainder;
+        const limited = ports.footerGate?.limit(desired, scrollY) ?? desired;
+        if (!limited || Math.sign(limited) !== Math.sign(desired)) { reset(); return; }
         const before = scrollY;
-        scrollBy(0, step + remainder);
-        remainder += step - (scrollY - before);
+        const clipped = Math.abs(limited) + .01 < Math.abs(desired);
+        scrollBy(0, limited);
+        remainder = clipped ? 0 : desired - (scrollY - before);
         expectedScroll = scrollY;
+        const stoppedByGate = ports.footerGate?.advanced(scrollY) ?? false;
         // ScrollTrigger otherwise observes this native write on a later tick.
         // Render the existing scrubbed timeline at the delivered position.
         const gallery = window.ScrollTrigger?.getById('gallery-v2');
         if (gallery?.enabled && scrollY >= gallery.start && scrollY <= gallery.end) gallery.update();
         ports.scrollChanged?.();
+        if (stoppedByGate) { reset(); return; }
         const max = (document.scrollingElement ?? document.documentElement).scrollHeight - innerHeight;
         if ((step < 0 && scrollY <= 0) || (step > 0 && scrollY >= max - 1)) { reset(); return; }
         if (state.pending) frame = requestAnimationFrame(tick);
@@ -63,6 +71,11 @@ export function mountScrollPacing(root, ports = {}) {
             || document.querySelector('dialog[open], [aria-modal="true"], main[inert]')) { reset(); return; }
         const delta = wheelPixels(event, innerHeight);
         if (!delta) return;
+        if (ports.footerGate?.wheel(delta, scrollY, performance.now())) {
+            event.preventDefault();
+            reset();
+            return;
+        }
         const scroller = document.scrollingElement ?? document.documentElement;
         if ((delta < 0 && scrollY <= 0)
             || (delta > 0 && scrollY + innerHeight >= scroller.scrollHeight - 1)) {

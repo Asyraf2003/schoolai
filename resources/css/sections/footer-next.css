@@ -1,12 +1,11 @@
 /* Lusion-style next-page strip: only one third of the viewport is blue. */
 .site-footer-v2__next-shell {
     position: relative;
-    block-size: 160svh;
+    block-size: 33.333svh;
     background: #fff;
 }
 .site-footer-v2__next {
-    position: sticky;
-    top: 66.667svh;
+    position: relative;
     isolation: isolate;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);

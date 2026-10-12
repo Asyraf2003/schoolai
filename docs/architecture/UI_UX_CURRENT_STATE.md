@@ -1,5 +1,31 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Footer three distinct scroll gestures — 2026-10-12
+
+OWNER CORRECTION: (1) after final Story leaves naturally, the complete white
+footer rises and rests fully in viewport with ZERO blue visible; (2) only a NEW
+intentional wheel gesture can reveal the bottom blue NEXT PAGE strip occupying
+33.333svh; (3) after blue is entirely displayed and stopped, only ANOTHER
+separate intentional wheel gesture can redirect to /galeri. Long coasting
+or one continuous wheel gesture must never auto-skip phases.
+FACT: old next-shell was 160svh and its auto navigation listened for scroll
+progress >= .985; existing global scroll-pacing owns all wheel delivery,
+including coasting, so a single impulse could skip the white and blue stages.
+DECISION: remove extra scroll runway and sticky blue placement; normal 33.333svh
+blue strip follows full white canvas. Create pure, tested footer gate policy.
+Use existing scroll-pacing controller as SOLE wheel owner: bound delivered travel
+at real white-complete and blue-complete document offsets, reset kinetic debt
+at each checkpoint, and allow unlock/navigation only after a fresh wheel
+gesture separated by >=280ms and delta >=14px. Negative scroll remains possible
+at every stage; fullscreen/tall mobile whites use white bottom stop, not
+assumed 100vh. Direct Gallery/Article links remain functional; reduced motion
+uses native scroll and disables automatic routing as before.
+PROOF: authored src and node unit tests; local build / node / php / browser
+proof required. Avoid claiming browser PASS before owner sees it.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser proof.
+NEXT: owner local pull, npm build, node --test, inspect 3 pauses and RTL.
+
+
 ## Footer canvas horizontal thirds and Gallery scroll handoff — 2026-10-12
 
 OWNER_CORRECTION: white footer is divided into THREE HORIZONTAL HEIGHT BANDS,

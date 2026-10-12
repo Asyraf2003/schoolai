@@ -43,7 +43,10 @@ const storiesHeading = mountSectionHeading(document.querySelector('[data-stories
 const storiesMedia = mountStoriesMedia(document.querySelector('[data-stories]'));
 const footerHover = mountFooterHover(document.querySelector('[data-footer-v2]'));
 const footerNext = mountFooterNext(document.querySelector('[data-footer-v2]'));
-const scrollPacing = mountScrollPacing(main, { scrollChanged: () => testimonials.synchronize() });
+const scrollPacing = mountScrollPacing(main, {
+    scrollChanged: () => testimonials.synchronize(),
+    footerGate: footerNext,
+});
 window.addEventListener('pagehide', event => {
     gallery.suspend();
     testimonials.suspend();
