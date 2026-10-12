@@ -1,5 +1,28 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Footer Lusion visual parity / scroll-fill / map preview — 2026-10-12
+
+OWNER_REFERENCE: 5 screenshots compare actual SchoolAI footer and Lusion.
+GOAL: equal social + partner text sizes; description slightly larger only;
+left-of-text arrow hidden until focus/hover, label slides modestly; Maps photo
+fills physical RIGHT HALF of WHITE background with soft blur. Other social
+previews appear near deliberate left/right canvas edges, at limited rotations,
+not arbitrary random overlays on link text. On blue 1/3 NEXT PAGE strip:
+small Gallery title, two-line eyebrow copy, NEXT PAGE followed by thin line
+whose yellow fill grows with continued wheel input. Only when complete navigate
+to the existing real /galeri route (after separate white/blue scroll stops).
+DECISION: separate footer-specific styles and hover adapter; preserve existing
+global scroll-pacing owner and stage separation. Blue-held stage accumulates up
+to 840px of fresh wheel input, at most 140px per event; never redirect on the
+first impulse. A local /media/footer/school-map.webp image overrides Maps
+preview when installed using scripts/set-footer-map.sh; existing R2 maps-v1.webp
+remains fallback. No R2 overwrite, DB or gallery/story changes.
+PROOF: code and dedicated tests prepared, remote GitHub commit pending;
+local frontend/browser/PHP/JS tests pending.
+NEXT: pull feature, run check/build/test, install screenshot with CLI path,
+hover Maps and inspect blue progress in browser.
+
+
 ## Footer three distinct scroll gestures — 2026-10-12
 
 OWNER CORRECTION: (1) after final Story leaves naturally, the complete white

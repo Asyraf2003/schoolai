@@ -26,6 +26,9 @@ export function mountFooterNext(root) {
     const gate = createFooterGate(bounds, navigate);
     const paint = () => {
         panel.toggleAttribute('data-footer-next-active', gate.phase === 'blue-held');
+        const progress = gate.progress;
+        panel.style.setProperty('--footer-progress', progress.toFixed(4));
+        panel.dataset.footerNextProgress = String(Math.round(progress * 100));
         root.dataset.footerPhase = gate.phase;
     };
     const api = {

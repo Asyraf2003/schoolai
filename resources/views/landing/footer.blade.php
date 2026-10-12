@@ -21,10 +21,11 @@
                 @foreach ($socialIcons as $key)
                     @php($channel = $footerChannels->get($key))
                     <a href="{{ $channel['href'] }}" data-footer-preview="{{ $key }}"
-                       data-footer-preview-src="{{ $footerAssets[$iconAssets[$key]] }}"
+                       data-footer-preview-src="{{ $key === 'maps' ? asset('media/footer/school-map.webp') : $footerAssets[$iconAssets[$key]] }}"
+                       @if ($key === 'maps') data-footer-preview-fallback="{{ $footerAssets['maps'] }}" @endif
                        @if (str_starts_with($channel['href'], 'https://')) target="_blank" rel="noopener noreferrer" @endif>
-                        {{ $key === 'maps' ? 'Maps' : ($key === 'email' ? 'Gmail' : $channel['label']) }}
-                        <span aria-hidden="true">↗</span>
+                        <span class="site-footer-v2__social-arrow" aria-hidden="true">↗</span>
+                        <span class="site-footer-v2__social-label">{{ $key === 'maps' ? 'Maps' : ($key === 'email' ? 'Gmail' : $channel['label']) }}</span>
                     </a>
                 @endforeach
             </nav>
@@ -48,7 +49,13 @@
             <p class="site-footer-v2__next-eyebrow">{{ __('footer_v2.keep_scrolling') }}</p>
             <a class="site-footer-v2__next-main" href="{{ route('galeri') }}" data-footer-next-main>
                 <span>{{ __('footer_v2.gallery') }}</span>
-                <span class="site-footer-v2__next-direction">{{ __('footer_v2.next_label') }} <span aria-hidden="true">⟶</span></span>
+                <span class="site-footer-v2__next-direction">
+                    <span>{{ __('footer_v2.next_label') }}</span>
+                    <span class="site-footer-v2__next-line" aria-hidden="true">
+                        <span class="site-footer-v2__next-line-fill"></span>
+                    </span>
+                    <span class="site-footer-v2__next-arrow" aria-hidden="true">→</span>
+                </span>
                 <img src="{{ config('media.static.navigation.gallery') }}" alt="" loading="lazy" decoding="async">
             </a>
             <a class="site-footer-v2__next-alternate" href="{{ route('artikel') }}" data-footer-next-alternate>

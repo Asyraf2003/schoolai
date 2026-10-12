@@ -93,8 +93,7 @@
     transform: rotate(-13deg) scale(.9);
     transition: opacity 350ms ease, transform 350ms ease;
 }
-.site-footer-v2__next-main:is(:hover,:focus-visible) img,
-.site-footer-v2__next[data-footer-next-active] .site-footer-v2__next-main img {
+.site-footer-v2__next-main:is(:hover,:focus-visible) img {
     opacity: .45;
     transform: rotate(0deg) scale(1);
 }
