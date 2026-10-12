@@ -43,6 +43,9 @@ with scoped browser suites run explicitly above. Composer/npm audit PASS.
 Diff/Pint/structure262files/200line/build60modules PASS. Isolated cPanel runner
 executes migrations/optimize and self-deletes without a public storage symlink.
 Gallery catalog/presenter, CSS/JS animation owners are byte-unchanged from PR106.
+Production cPanel ZIP002 PASS with no public/media or public/storage binaries,
+Vite manifest present, private files0600 and original private credentials retained.
+The production path-style R2 client also returns signed HEAD200 for existing MP4.
 Inventory:127remote branches;ACTIVE2,COVERED79,SUPERSEDED35,UNUSED11; none deleted.
 STATUS: PASS scoped pre-deployment R2/SEO proof. PageSpeed100, physical devices,
 screen-reader, field CWV and actual cPanel hosting runtime remain unclaimed.
