@@ -17,6 +17,12 @@ for (const engine of engines) test(`R2 public playback and SEO in ${engine}`, { 
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
     const page = await context.newPage();
     const proof = { engine, version: browser.version(), metadata: [], playback: [] };
+    const mediaResponses = [];
+    page.on('response', response => {
+        if (response.request().resourceType() === 'media') mediaResponses.push({
+            url: response.url(), status: response.status(), range: response.headers()['content-range'],
+        });
+    });
     try {
         for (const route of ['/', '/galeri', '/artikel', '/artikel/menjelajah-dunia-digital']) {
             assert.equal((await page.goto(url + route, { waitUntil: 'load' })).status(), 200);
@@ -58,6 +64,7 @@ for (const engine of engines) test(`R2 public playback and SEO in ${engine}`, { 
             sources.push(...uploaded.uploads.filter(media => media.type === 'video/mp4').map(media => media.url));
         }
         for (const source of sources) {
+            await video.scrollIntoViewIfNeeded();
             const range = await page.evaluate(async source => {
                 const response = await fetch(source, { headers: { Range: 'bytes=0-31' } });
                 return { status: response.status, range: response.headers.get('Content-Range'),
@@ -80,5 +87,18 @@ for (const engine of engines) test(`R2 public playback and SEO in ${engine}`, { 
             proof.playback.push({ source, range, ...playing });
         }
         await fs.writeFile(`${out}/r2-media-${engine}.json`, JSON.stringify(proof, null, 2));
+    } catch (error) {
+        const diagnostic = await page.evaluate(() => {
+            const node = document.querySelector('video[controls]');
+            const rect = node?.getBoundingClientRect();
+            return { hidden: document.hidden, viewport: [innerWidth, innerHeight],
+                video: node ? { source: node.currentSrc, time: node.currentTime, paused: node.paused,
+                    ready: node.readyState, network: node.networkState, error: node.error?.code,
+                    width: node.videoWidth, top: rect.top, bottom: rect.bottom } : null };
+        }).catch(() => null);
+        console.error(JSON.stringify({ engine, diagnostic, mediaResponses }));
+        await fs.writeFile(`${out}/r2-media-${engine}.json`, JSON.stringify({ ...proof,
+            error: error.message, diagnostic, mediaResponses }, null, 2));
+        throw error;
     } finally { await browser.close(); }
 });

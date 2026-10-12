@@ -51,6 +51,11 @@ STATUS: PASS scoped pre-deployment R2/SEO proof. PageSpeed100, physical devices,
 screen-reader, field CWV and actual cPanel hosting runtime remain unclaimed.
 NEXT CHANNEL: Terminal Codex; publish the verified branch, require affected CI
 PASS, merge without deleting branches, then tag v0.1.0-rc.1. Deployment forbidden.
+CI GAP: head0a25bf82 passes security/PHP/Chromium and WebKit public/admin matrix,
+but new R2 WebKit playback progress times out in the hosted runner. Local playback
+passes. STATUS: FAIL publication gate; main/tag remain untouched. ACTIVE: inspect
+player visibility/state/network in the test harness; preserve media/source and
+assertions, never extend a timeout or merge over a failed check.
 
 ## Public content integration — 2026-10-12
 
