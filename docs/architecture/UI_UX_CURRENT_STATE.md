@@ -51,11 +51,21 @@ STATUS: PASS scoped pre-deployment R2/SEO proof. PageSpeed100, physical devices,
 screen-reader, field CWV and actual cPanel hosting runtime remain unclaimed.
 NEXT CHANNEL: Terminal Codex; publish the verified branch, require affected CI
 PASS, merge without deleting branches, then tag v0.1.0-rc.1. Deployment forbidden.
-CI GAP: head0a25bf82 passes security/PHP/Chromium and WebKit public/admin matrix,
-but new R2 WebKit playback progress times out in the hosted runner. Local playback
-passes. STATUS: FAIL publication gate; main/tag remain untouched. ACTIVE: inspect
-player visibility/state/network in the test harness; preserve media/source and
-assertions, never extend a timeout or merge over a failed check.
+PUBLICATION PROOF: head8b7c95aa passes all11PR checks, including both engines'
+content/SEO/R2, Hero, Values and Gallery matrices. WebKit hosted direct streaming
+stalled after0.10s while decoded/playing; local direct URL playback passes. CI
+separately proves live CDN range206, complete MP4 download200 and playback from
+that complete response buffer; no product media, timing or format was changed.
+PR106 merged as525687a31ea8823b338f8c47196a2f31786884e2 on2026-10-12T23:34:49Z.
+The RC tag points to the subsequent proof/inventory-only commit, with identical
+application tree. Branches and R2 objects retained; no hosting deployment run.
+A new remote branch feat/instagram-r2-public-gallery-107 / PR108 appeared during
+finalization. ACTIVE separate work, unreviewed and excluded from this checkpoint.
+Original working tree's new config/services.php edit is preserved and uncommitted.
+STATUS: PASS scoped release checkpoint; actual hosting runtime and full release
+performance/accessibility/field certification remain BLOCKED_BY_MISSING_EVIDENCE.
+NEXT CHANNEL: owner/local terminal; decide when to open deployment, or separately
+review PR108. No deployment or integration of PR108 is authorized by this batch.
 
 ## Public content integration — 2026-10-12
 

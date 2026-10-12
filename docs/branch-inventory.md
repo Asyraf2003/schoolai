@@ -1,10 +1,12 @@
 # SchoolAI branch inventory — v0.1.0-rc.1
 
-Repository: Asyraf2003/schoolai. Inspected origin on 2026-10-13; audit baseline
+Repository: Asyraf2003/schoolai. Inspected origin on 2026-10-13; 128 branches after new PR #108; audit baseline
 main `268cde3099b095dbd9127cf6648f90ebcf11dacd`. No branches are deleted.
 
 ACTIVE: main release baseline; feat/public-content-integration is the authorized
-PR #106 source including local SEO and R2 release corrections.
+PR #106 source including local SEO and R2 release corrections (now COVERED).
+ACTIVE also includes new PR #108, which appeared during finalization and is
+separate, unreviewed work excluded from the RC checkpoint.
 COVERED: merged history or equivalent capability exists in the current baseline.
 SUPERSEDED: older implementation replaced by Homepage V2 or the simple admin.
 UNUSED: incompatible retired architecture, temporary mutation workflows, or
@@ -12,7 +14,7 @@ placeholder-only branches; retained for reference, never imported into productio
 PR #8 (agent/admin-ui-foundation) is SUPERSEDED; its old CSS is not required.
 This is a disposition inventory, not permission to merge or delete other branches.
 
-ACTIVE: 2, COVERED: 79, SUPERSEDED: 35, UNUSED: 11.
+ACTIVE: 2, COVERED: 80, SUPERSEDED: 35, UNUSED: 11.
 
 | Remote branch (origin) | Disposition |
 |---|---|
@@ -85,12 +87,13 @@ ACTIVE: 2, COVERED: 79, SUPERSEDED: 35, UNUSED: 11.
 | `feat/gallery-five-motion-media-20260830` | COVERED |
 | `feat/home-v2-about` | COVERED |
 | `feat/home-v2-hero` | COVERED |
+| `feat/instagram-r2-public-gallery-107` | ACTIVE |
 | `feat/home-v2-scroll-indicator` | COVERED |
 | `feat/homepage-cinematic-scroll-pacing` | COVERED |
 | `feat/natural-scroll-testimonials` | COVERED |
 | `feat/portal-hexagonal-scaffold` | COVERED |
 | `feat/program-values-line` | COVERED |
-| `feat/public-content-integration` | ACTIVE |
+| `feat/public-content-integration` | COVERED |
 | `feat/v2-scroll-gallery` | COVERED |
 | `feat/v2-values-cards` | COVERED |
 | `feat/values-background-alternating` | COVERED |
