@@ -26,11 +26,11 @@ it('renders public pages in all three languages', function (string $locale, stri
             ->get(route($route))
             ->assertOk()
             ->assertSee('dir="'.$direction.'"', false)
-            ->assertSee($route === 'artikel' ? __('pages.common.nav.artikel') : 'data-portal-page="'.$page.'"', $route === 'artikel');
+            ->assertSee($route === 'artikel' ? 'data-public-articles' : 'data-public-gallery', false);
     }
 })->with([['id', 'ltr'], ['en', 'ltr'], ['ar', 'rtl']]);
 
-it('uses inert header navigation except for PPDB and login', function (): void {
+it('links the header to gallery articles PPDB and login', function (): void {
     $response = $this->get(route('home'))->assertOk();
     $items = $response->viewData('navigation')['menuItems'];
 
@@ -45,6 +45,11 @@ it('uses inert header navigation except for PPDB and login', function (): void {
             expect($item['href'])->toBe(route('portal.login'));
         } elseif (in_array('artikel', $item['route_patterns'] ?? [], true)) {
             expect($item['href'])->toBe(route('artikel'));
+        } elseif (in_array('galeri', $item['route_patterns'] ?? [], true)) {
+            expect($item['href'])->toBe(route('galeri'));
+            foreach ($item['mega']['links'] ?? [] as $link) {
+                expect($link['href'])->toBe(route('galeri'));
+            }
         } else {
             expect($item['href'])->toBe('#');
             foreach ($item['mega']['links'] ?? [] as $link) {

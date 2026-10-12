@@ -19,6 +19,7 @@
 .public-card :is(img, video) {
     display: block;
     inline-size: 100%;
+    block-size: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: .75rem;

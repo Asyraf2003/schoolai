@@ -1,5 +1,22 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Public content integration — 2026-10-12
+
+FACT: fetched main268cde30; /galeri was a placeholder and video articles lacked
+their own posters. OWNER: retain built-in landing Gallery; database-backed
+Gallery page; four initial Stories using original video/poster pairs; unlimited
+admin articles, newest four on landing and all active articles in listing.
+BLUEPRINT PUBLIC-CONTENT-05: OWNER_ACCEPTED; implemented in existing controllers,
+Blade and portal CSS. One DOM ID/EN/AR; native controls/no-JS, no new JS runtime.
+Grid: XS1, SM/MD/LG2, XL/2XL3; same layout in RTL. PPDB uses validated saved URL.
+PROOF: Chromium154/WebKit26.6 public288cells each across16widths,3locales,
+normal/reduced motion, plus keyboard/focus,200%zoom,landscape,no-JS/touch PASS.
+Admin/landing regression in both engines PASS; build/structure/diff PASS.
+Local DB backup precedes migration:4active articles,10archived; gallery17intact.
+STATUS: PASS scoped functional integration. Full release certification remains
+BLOCKED_BY_MISSING_EVIDENCE for native-device, PageSpeed and field CWV evidence.
+NEXT CHANNEL: Terminal Codex; publish PR and merge only after affected CI passes.
+
 ## Phone article side shading correction — 2026-10-12
 
 OWNER: remove side darkness from article sections on HP. Earlier requests for

@@ -7,6 +7,7 @@ use App\Models\GalleryItem;
 use App\Models\PpdbSetting;
 use App\Models\User;
 use App\Services\ActiveSessionManager;
+use Database\Seeders\StoryArticleSeeder;
 use Illuminate\Cookie\CookieValuePrefix;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Auth;
@@ -30,15 +31,8 @@ final class BrowserContentSeeder extends Seeder
                 'alt_text' => 'Browser fixture '.$photo]);
         }
         Article::query()->delete();
-        foreach (array_reverse(array_slice($sources, 0, 4, true), true) as $index => [$photo, $video]) {
-            $data = ['cover_url' => $index % 2 ? config('media.static.school_life.'.$photo) : config('media.public_url').'/gallery/media/'.$video.'-v1.mp4', 'published_date' => '2026-10-12'];
-            foreach (['id', 'en', 'ar'] as $locale) {
-                $data['title_'.$locale] = trans('stories.features.'.$index.'.title', [], $locale);
-                $data['description_'.$locale] = trans('stories.features.'.$index.'.description', [], $locale);
-                $data['content_'.$locale] = '<p>'.htmlspecialchars($data['description_'.$locale], ENT_QUOTES, 'UTF-8').'</p>';
-            }
-            Article::create($data);
-        }
+        Article::onlyTrashed()->whereIn('slug', ['menjelajah-dunia-digital', 'belajar-nilai-dalam-keseharian', 'berani-mencoba-hal-baru', 'disiplin-dalam-gerak'])->restore();
+        $this->call(StoryArticleSeeder::class);
         PpdbSetting::query()->updateOrCreate(['id' => 1], ['registration_url' => 'https://forms.gle/BrowserFixture']);
         $admin = User::query()->firstOrNew(['email' => 'browser-proof@example.test']);
         $admin->forceFill(['name' => 'Browser Proof', 'role' => User::ROLE_ADMIN, 'password' => Str::random(64)])->save();
