@@ -8,8 +8,10 @@
 .site-footer-v2__white {
     position: relative;
     isolation: isolate;
+    container-type: inline-size;
     display: grid;
-    grid-template-rows: minmax(33.333svh, 1fr) minmax(66.667svh, 2fr);
+    /* Fluid 1:2 vertical canvas; content can grow beyond one viewport. */
+    grid-template-rows: minmax(0, 1fr) minmax(min-content, 2fr);
     min-block-size: 100svh;
     padding-inline: var(--v2-space-page);
     background: #fff;
@@ -21,19 +23,19 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr) auto;
-    column-gap: clamp(1.25rem, 2vw, 2rem);
-    row-gap: clamp(1.25rem, 2.5svh, 2.5rem);
-    inline-size: min(100%, 70rem);
+    column-gap: clamp(.75rem, 2cqi, 2.5rem);
+    row-gap: clamp(.75rem, 2.5svh, 2.5rem);
+    inline-size: 100%;
     min-block-size: 0;
-    padding-block: clamp(1.25rem, 2.7vw, 2.75rem) clamp(1.5rem, 3vw, 3rem);
+    padding-block: clamp(1rem, 2.2cqi, 3rem) clamp(1rem, 2.5cqi, 3rem);
     align-items: start;
 }
 .site-footer-v2__about, .site-footer-v2__social, .site-footer-v2__partners { min-inline-size: 0; }
 .site-footer-v2__description {
-    max-inline-size: 22ch;
+    max-inline-size: 100%;
     margin: 0;
-    font-size: clamp(1.65rem, 2.15vw, 2.65rem);
-    line-height: 1.14;
+    font-size: clamp(1.8rem, 3.3cqi, 4.25rem);
+    line-height: 1.08;
     font-weight: 400;
     letter-spacing: -.047em;
     text-wrap: pretty;
@@ -43,15 +45,15 @@
     flex-direction: column;
     align-items: flex-start;
 }
-.site-footer-v2__social { gap: clamp(.65rem, 1vw, 1.05rem); }
+.site-footer-v2__social { gap: clamp(.65rem, 1.2cqi, 1.5rem); }
 .site-footer-v2__social a, .site-footer-v2__partner-grid a {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: .65rem;
+    gap: clamp(.45rem, .7cqi, 1rem);
     color: inherit;
     text-decoration: none;
-    font-size: clamp(1.15rem, 1.55vw, 1.7rem);
+    font-size: clamp(1.35rem, 2.3cqi, 3rem);
     font-weight: 400;
     letter-spacing: -.02em;
     line-height: 1.18;
@@ -78,19 +80,20 @@
 [dir="rtl"] .site-footer-v2__social-arrow { transform: translate3d(6px, -50%, 0); }
 .site-footer-v2__partners h2 {
     margin: 0 0 clamp(1.4rem, 2.1vw, 2rem);
-    font-size: clamp(1.15rem, 1.55vw, 1.7rem);
+    font-size: clamp(1.35rem, 2.3cqi, 3rem);
     line-height: 1.15;
     font-weight: 400;
     letter-spacing: -.03em;
 }
-.site-footer-v2__partner-grid { gap: clamp(.75rem, 1.25vw, 1.25rem); }
+.site-footer-v2__partner-grid { gap: clamp(.65rem, 1.1cqi, 1.5rem); }
 .site-footer-v2__partner-grid a { align-items: center; min-block-size: 2rem; }
 .site-footer-v2__partner-grid a:is(:hover,:focus-visible) { transform: scale(1.06); transform-origin: left center; }
 [dir="rtl"] .site-footer-v2__partner-grid a:is(:hover,:focus-visible) { transform-origin: right center; }
 .site-footer-v2__partner-grid img {
     display: block;
-    inline-size: clamp(2.25rem, 3vw, 3.6rem);
-    block-size: clamp(2.25rem, 3vw, 3.6rem);
+    inline-size: clamp(2.25rem, 3cqi, 4.5rem);
+    block-size: clamp(2.25rem, 3cqi, 4.5rem);
+    flex-shrink: 0;
     object-fit: contain;
 }
 .site-footer-v2__copyright {
@@ -128,8 +131,8 @@
     width: 50%;
     height: 100%;
     object-fit: cover;
-    filter: blur(9px);
-    opacity: .42;
+    filter: blur(1px);
+    opacity: .9;
     transform: rotate(0deg) scale(1);
 }
 [lang="ar"] .site-footer-v2 { font-family: Cairo, var(--v2-font); }
@@ -139,13 +142,13 @@
     .site-footer-v2__white { grid-template-rows: minmax(25svh, auto) auto; }
     .site-footer-v2__content { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
     .site-footer-v2__about { grid-column: 1 / -1; }
-    .site-footer-v2__description { max-inline-size: 32ch; }
+    .site-footer-v2__description { max-inline-size: 100%; }
 }
 @media (max-width: 639px) {
     .site-footer-v2__white { grid-template-rows: minmax(15svh, auto) auto; }
     .site-footer-v2__content { grid-template-columns: 1fr; row-gap: 2.5rem; }
     .site-footer-v2__about { grid-column: 1; }
-    .site-footer-v2__description { max-inline-size: 24ch; font-size: clamp(1.8rem, 7.5vw, 3rem); }
+    .site-footer-v2__description { max-inline-size: 100%; font-size: clamp(1.8rem, 7.5cqi, 3.5rem); }
     .site-footer-v2__visual img { width: 50vw; height: 38svh; }
     .site-footer-v2[data-footer-preview-active="maps"] .site-footer-v2__visual img { left: 35%; width: 65%; height: 100%; }
 }

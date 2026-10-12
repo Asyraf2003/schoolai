@@ -1,5 +1,26 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Footer fluid three-thirds responsive sizing — 2026-10-12
+
+OWNER_CORRECTION: No rigid width or font sizes. Footer white still follows
+the upper-third blank and lower-two-thirds content design, but all three
+LOWER columns must share the AVAILABLE container width equally, so the
+design looks full without a 70rem fixed width cap. Text, logos, gaps, and
+line wrapping must scale with the actual canvas width. Description remains
+visually larger; social/partners share the same fluid typography.
+DECISION: use inline-size 100% and repeat(3, minmax(0,1fr)) on desktop,
+container-size-based cqi values bounded only for legibility, intrinsic 1:2
+white track proportions, and responsive tablet/mobile collapse for overflow.
+Remove 22ch/32ch/24ch hard caps on description; let text use one-third
+of available width and wrap naturally. Maps still uses 50% physical RIGHT
+background; sharpen to 1px blur and 90% opacity per owner request.
+Do not touch global scroll controller, Stories, footer stage logic, links,
+or dummy content.
+PROOF: source patch written; actual build and desktop/tablet/HP browser
+confirmation remain required.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE runtime proof.
+
+
 ## Footer spacing/hover and decaying scroll-to-Gallery progress — 2026-10-12
 
 OWNER_VISUAL_REFERENCE: local and Lusion screenshots show too-wide horizontal
