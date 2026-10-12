@@ -41,7 +41,6 @@ Route::get('/ppdb', function (PpdbAccess $access) {
     return redirect()->away($url);
 })->name('ppdb');
 Route::get('/artikel', [PublicArticleController::class, 'index'])->name('artikel');
-Route::redirect('/artikel/adab-sebelum-prestasi', '/artikel', 301)->name('artikel.detail');
 Route::get('/artikel/{article:slug}', [PublicArticleController::class, 'show'])
     ->name('artikel.native');
 Route::get('/galeri', PortalPlaceholderController::class)->name('galeri');

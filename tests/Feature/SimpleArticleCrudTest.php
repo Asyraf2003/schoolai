@@ -86,3 +86,9 @@ it('keeps an Arabic-only article readable in every locale with the correct conte
             ->assertOk()->assertSee('محتوى عربي فقط')->assertSee('class="article-content" lang="ar" dir="auto"', false);
     }
 });
+
+it('preserves the public URL of a migrated article that previously had a placeholder redirect', function (): void {
+    $article = Article::create(['content_id' => '<p>Artikel asli</p>']);
+    $article->forceFill(['slug' => 'adab-sebelum-prestasi'])->save();
+    $this->get('/artikel/adab-sebelum-prestasi')->assertOk()->assertSee('Artikel asli');
+});
