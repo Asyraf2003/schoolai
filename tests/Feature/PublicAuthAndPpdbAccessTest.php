@@ -72,7 +72,7 @@ it('uses PPDB settings to control its dedicated route and homepage campaign owne
 
     $setting->update(['is_active' => false]);
 
-    $this->get(route('home'))
+    $this->withSession(['locale' => 'id'])->get(route('home'))
         ->assertOk()
         ->assertSee('Opening Admin Saat PPDB Tutup')
         ->assertDontSee(__('runtime.home.ppdb_campaign_title'))
