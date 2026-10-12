@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\View\Presenters\LandingAboutPresenter;
 use App\View\Presenters\LandingGalleryPresenter;
 use App\View\Presenters\LandingHeroPresenter;
@@ -28,6 +29,7 @@ final class HomeController extends Controller
             'values' => $values->present(),
             'gallery' => $gallery->present(),
             'testimonials' => $testimonials->present(),
+            'articles' => Article::latestPublished()->limit(4)->get(),
             'navigation' => $navbar->present(['siteNavMode' => 'home']),
         ]);
     }

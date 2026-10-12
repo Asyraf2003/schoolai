@@ -48,6 +48,6 @@ it('reads the main gallery label and empty submenu fallbacks from translation ow
     $items = $response->viewData('navigation')['menuItems'];
 
     expect($items[2]['label'])->toBe('Localized gallery');
-    expect($items[2]['mega']['links'][0]['label'])->toBe('Localized facilities');
+    expect($items[2]['mega']['links'][0]['label'])->toBe('Localized gallery');
     expect($items[3]['mega']['links'][0]['label'])->toBe('Localized articles');
 });

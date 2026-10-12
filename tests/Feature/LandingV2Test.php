@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Article;
-use App\Models\HeroSetting;
 use App\Models\PpdbSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -17,75 +16,21 @@ it('delivers the saved Arabic locale with direction foundation', function (): vo
         ->assertDontSee('resources_old', false);
 });
 
-it('preserves database copy and active legacy section destinations', function (): void {
-    PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
-    HeroSetting::query()->firstOrFail()->update([
-        'title_en' => 'A <strong>school</strong> for everyone',
-        'cta_label_en' => 'Explore our programs',
-        'cta_url' => '#program',
-    ]);
-
-    $response = $this->get(route('home'));
-
-    $response->assertSee('A &lt;strong&gt;school&lt;/strong&gt; for everyone', false)
-        ->assertDontSee('<strong>school</strong>', false)
-        ->assertSee('href="#program"', false)
-        ->assertSee('href="#"', false)
-        ->assertSee('id="kontak"', false)
-        ->assertSee('id="program"', false)
-        ->assertSee(config('media.homepage_hero_video_url'), false)
-        ->assertSee(config('media.static.hero_school'), false);
-
-    $document = new DOMDocument;
-    @$document->loadHTML($response->getContent());
-    $dom = new DOMXPath($document);
-    expect($dom->query('//footer[@id="kontak"][@data-footer-v2]')->length)->toBe(1);
+it('preserves one opening video and the V2 sections while articles remain separate records', function (): void {
+    Article::create(['title_id' => 'Cerita Sekolah', 'content_id' => '<p>Isi</p>']);
+    PpdbSetting::query()->firstOrFail()->update(['registration_url' => null]);
+    $response = $this->get(route('home'))->assertOk()->assertSee('id="kontak"', false)
+        ->assertSee('id="program"', false)->assertSee(config('media.homepage_hero_video_url'), false)
+        ->assertSee(config('media.static.hero_school'), false)->assertDontSee('data-next', false)->assertDontSee('data-previous', false);
+    expect($response->viewData('hero')['slides'])->toHaveCount(1);
+    expect($response->viewData('hero')['slides'][0]['is_opening'])->toBeTrue();
 });
 
-it('preserves the admissions campaign while registration is open', function (): void {
-    PpdbSetting::query()->firstOrFail()->update(['is_active' => true]);
-
-    $this->get(route('home'))
-        ->assertSee('Begin a Meaningful Learning Journey')
-        ->assertSee('href="/ppdb"', false)
+it('preserves the admissions campaign for a configured Google Form', function (): void {
+    PpdbSetting::query()->firstOrFail()->update(['registration_url' => 'https://forms.gle/V2Form']);
+    $this->get(route('home'))->assertSee('Begin a Meaningful Learning Journey')
+        ->assertSee('href="https://forms.gle/V2Form"', false)
         ->assertViewHas('hero', fn (array $hero): bool => $hero['slides'][0]['is_ppdb_campaign'] === true);
-});
-
-it('renders a single opening video without carousel controls even when an article is promoted', function (): void {
-    $story = Article::query()->create([
-        'article_source' => Article::SOURCE_NATIVE,
-        'article_status' => Article::STATUS_PUBLISHED,
-        'slug' => 'landing-v2-story',
-        'link_id' => '/artikel/landing-v2-story',
-        'title_id' => 'Cerita Sekolah',
-        'title_en' => 'Our school story',
-        'description_en' => 'A published story.',
-        'thumbnail_url' => config('media.static.hero_school'),
-        'published_at' => now()->subDay(),
-        'hero_position' => 1,
-    ]);
-
-    foreach (['id', 'en', 'ar'] as $locale) {
-        $response = $this->withSession(['locale' => $locale])->get(route('home'));
-        $response
-            ->assertOk()
-            ->assertSee(config('media.homepage_hero_video_url'), false)
-            ->assertDontSee('data-next', false)
-            ->assertDontSee('data-previous', false)
-            ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1
-                && ($hero['slides'][0]['is_opening'] ?? false) === true
-                && ($hero['slides'][0]['render_type'] ?? null) === 'video'
-                && ! isset($hero['slides'][0]['article_id']));
-
-        $html = $response->getContent();
-        expect(substr_count($html, ' data-slide '))->toBe(1)
-            ->and(substr_count($html, '<video data-video'))->toBe(1);
-    }
-
-    $story->update(['article_status' => Article::STATUS_DRAFT]);
-
-    $this->get(route('home'))
-        ->assertViewHas('hero', fn (array $hero): bool => count($hero['slides'] ?? []) === 1);
 });
 
 it('switches the landing language through the existing route', function (string $locale, string $direction): void {

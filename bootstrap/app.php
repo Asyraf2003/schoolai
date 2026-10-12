@@ -7,7 +7,6 @@ use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\EnsureGuru;
 use App\Http\Middleware\EnsureMurid;
 use App\Http\Middleware\ForceAdminLocale;
-use App\Http\Middleware\PersistArabicArticleCanvas;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -41,7 +40,6 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             SetLocale::class,
             AddSecurityHeaders::class,
-            PersistArabicArticleCanvas::class,
         ]);
         $middleware->redirectGuestsTo(function (Request $request): string {
             if ($request->is('guru', 'guru/*')) {

@@ -9,7 +9,7 @@ it('escapes database content rendered on public article cards', function (): voi
     Article::query()->create([
         'title_id' => '<script>alert(1)</script>',
         'description_id' => '\"><img src=x onerror=alert(1)>',
-        'thumbnail_url' => '/images/placeholder.webp',
+        'cover_url' => '/images/placeholder.webp',
         'link_id' => 'https://example.com/article',
         'author' => 'javascript:alert(1)',
         'published_at' => now(),
@@ -27,7 +27,7 @@ it('escapes database content rendered on public article cards', function (): voi
 });
 
 it('keeps the gallery lightbox free from HTML string injection sinks', function (): void {
-    $javascript = file_get_contents(resource_path('js/pages/welcome.js'));
+    $javascript = file_get_contents(resource_path('js/sections/gallery.js'));
 
     expect($javascript)
         ->not->toBeFalse()

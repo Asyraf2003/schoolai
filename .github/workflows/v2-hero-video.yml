@@ -5,7 +5,7 @@ on:
     paths:
       - 'app/View/Presenters/LandingHeroPresenter.php'
       - 'tests/Feature/LandingV2Test.php'
-      - 'tests/Feature/HeroArticlePlacementTest.php'
+      - 'tests/Feature/SimpleArticleCrudTest.php'
       - 'tests/Unit/HeroVideoOnlyBrowser.test.mjs'
       - '.github/workflows/v2-hero-video.yml'
   workflow_dispatch:
@@ -25,8 +25,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
-          extensions: mbstring, fileinfo, pdo_sqlite
+          php-version: '8.5'
+          extensions: mbstring, fileinfo, pdo_sqlite, gd
           coverage: none
           tools: composer:v2
       - uses: actions/setup-node@v4
@@ -50,8 +50,8 @@ jobs:
         run: >-
           php artisan test
           tests/Feature/LandingV2Test.php
-          tests/Feature/HeroArticlePlacementTest.php
-          tests/Feature/HeroDatabaseFallbackTest.php
+          tests/Feature/SimpleArticleCrudTest.php
+          tests/Feature/SimplePpdbLinkTest.php
       - name: Test existing single-video playback policy
         run: node --test tests/Unit/HeroMediaPolicyRuntime.test.mjs
       - name: Prepare browsers

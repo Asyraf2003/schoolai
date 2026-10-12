@@ -44,6 +44,7 @@ jobs:
           php artisan key:generate
           touch database/database.sqlite
           php artisan migrate:fresh --seed --force
+          APP_ENV=testing php artisan db:seed --class='Tests\Fixtures\BrowserContentSeeder' --force
           php artisan test --compact tests/Feature/LandingGalleryV2Test.php
           npm install --no-save --no-package-lock playwright@1.63.0
           npx playwright install --with-deps ${{ matrix.engine }}

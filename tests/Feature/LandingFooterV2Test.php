@@ -1,10 +1,14 @@
 <?php
 
+use App\Models\Article;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 it('renders the two-stage localized footer after all four articles', function (string $locale): void {
+    foreach (range(1, 4) as $index) {
+        Article::create(['content_id' => '<p>Artikel '.$index.'</p>']);
+    }
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
     $response->assertOk()->assertSeeHtmlInOrder([
         'id="artikel"', 'data-stories-number="4"', 'id="kontak"',

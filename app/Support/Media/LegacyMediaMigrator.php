@@ -4,9 +4,6 @@ namespace App\Support\Media;
 
 use App\Models\Article;
 use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
-use App\Models\HeroSlide;
-use App\Models\PpdbShowcaseItem;
 use App\Models\TestimonialMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -18,12 +15,9 @@ final class LegacyMediaMigrator
 {
     /** @var array<string, array<class-string<Model>, array<string, string>>> */
     private const OWNERS = [
-        'hero' => [HeroSlide::class => ['media_url' => 'hero/slides', 'poster_url' => 'hero/posters']],
-        'gallery-homepage' => [GalleryItem::class => ['media_url' => 'gallery/homepage']],
-        'gallery-page' => [GalleryPageMediaItem::class => ['media_url' => 'gallery/page-media']],
-        'ppdb' => [PpdbShowcaseItem::class => ['media_url' => 'ppdb/showcase']],
+        'gallery' => [GalleryItem::class => ['media_url' => 'gallery/media', 'thumbnail_url' => 'gallery/thumbnails']],
         'testimonials' => [TestimonialMedia::class => ['media_url' => 'testimonials/media']],
-        'articles' => [Article::class => ['thumbnail_url' => 'articles/thumbnails']],
+        'articles' => [Article::class => ['cover_url' => 'articles/covers']],
     ];
 
     public function __construct(private readonly R2MediaStorage $mediaStorage) {}
@@ -48,9 +42,6 @@ final class LegacyMediaMigrator
                         $this->migrateField($model, $field, $namespace, $dryRun, $stats);
                     }
 
-                    if ($model instanceof Article && $ownerName === 'articles') {
-                        $this->migrateArticleContent($model, $dryRun, $stats);
-                    }
                 }
             }
         }
@@ -91,43 +82,6 @@ final class LegacyMediaMigrator
         } catch (Throwable $exception) {
             $stats['failed']++;
             $stats['errors'][] = $model::class.'#'.$model->getKey().'.'.$field.': '.$exception->getMessage();
-        }
-    }
-
-    /** @param array<string, mixed> $stats */
-    private function migrateArticleContent(Article $article, bool $dryRun, array &$stats): void
-    {
-        foreach (['content_id', 'content_en', 'content_ar'] as $field) {
-            $content = (string) $article->getAttribute($field);
-            preg_match_all('~["\'](?<url>/storage/articles/content/[A-Za-z0-9/_\-.]+)["\']~', $content, $matches);
-            $urls = array_values(array_unique($matches['url'] ?? []));
-
-            foreach ($urls as $url) {
-                $stats['scanned']++;
-                $stats['eligible']++;
-
-                if ($dryRun) {
-                    continue;
-                }
-
-                try {
-                    $stored = $this->upload($url, 'articles/content', $article->getKey());
-                    $content = str_replace($url, $stored['url'], $content);
-                    $article->setAttribute($field, $content);
-
-                    try {
-                        $article->saveQuietly();
-                    } catch (Throwable $exception) {
-                        $this->mediaStorage->deleteKey($stored['key']);
-                        throw $exception;
-                    }
-
-                    $stats['migrated']++;
-                } catch (Throwable $exception) {
-                    $stats['failed']++;
-                    $stats['errors'][] = Article::class.'#'.$article->getKey().'.'.$field.': '.$exception->getMessage();
-                }
-            }
         }
     }
 

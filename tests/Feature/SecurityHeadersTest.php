@@ -9,7 +9,7 @@ uses(RefreshDatabase::class);
 it('adds nonce based security headers to public pages', function (): void {
     $pages = [
         [route('home'), true],
-        [route('ppdb'), false],
+        [route('artikel'), false],
         [route('galeri'), false],
     ];
 

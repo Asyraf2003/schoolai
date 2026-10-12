@@ -3,76 +3,70 @@
 namespace App\Models;
 
 use App\Models\Concerns\AuditsAdminChanges;
-use App\Models\Concerns\BuildsArticleQueries;
-use App\Models\Concerns\DescribesArticleState;
-use App\Models\Concerns\ResolvesArticlePresentation;
 use App\Models\Concerns\ResolvesLocalizedContent;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Support\ArticleContentSanitizer;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 final class Article extends Model
 {
-    use AuditsAdminChanges, HasFactory, ResolvesLocalizedContent, SoftDeletes;
-    use BuildsArticleQueries;
-    use DescribesArticleState;
-    use ResolvesArticlePresentation;
-
-    public const DEFAULT_AUTHOR = 'Admin';
-
-    public const SOURCE_EXTERNAL = 'external';
-
-    public const SOURCE_NATIVE = 'native';
-
-    public const STATUS_DRAFT = 'draft';
-
-    public const STATUS_PUBLISHED = 'published';
-
-    public const STATUS_SCHEDULED = 'scheduled';
-
-    public const HOMEPAGE_FEATURED_LIMIT = 4;
-
-    public const HERO_SPOTLIGHT_LIMIT = 3;
-
-    public const PLACEHOLDER_THUMBNAIL = 'https://media.almustaqbal.sch.id/site/seo/og-home-v1.jpg';
+    use AuditsAdminChanges, ResolvesLocalizedContent, SoftDeletes;
 
     protected $fillable = [
-        'article_source',
-        'article_status',
-        'slug',
-        'title_id',
-        'title_en',
-        'title_ar',
-        'subtitle_id',
-        'subtitle_en',
-        'subtitle_ar',
-        'description_id',
-        'description_en',
-        'description_ar',
-        'content_id',
-        'content_en',
-        'content_ar',
-        'tags',
-        'word_count',
-        'thumbnail_url',
-        'hero_position',
-        'homepage_position',
-        'link_id',
-        'link_en',
-        'link_ar',
-        'author',
-        'published_date',
-        'published_at',
-        'scheduled_at',
+        'title_id', 'title_en', 'title_ar', 'description_id', 'description_en', 'description_ar',
+        'content_id', 'content_en', 'content_ar', 'cover_url', 'published_date',
     ];
 
-    protected $casts = [
-        'tags' => 'array',
-        'word_count' => 'integer',
-        'hero_position' => 'integer',
-        'homepage_position' => 'integer',
-        'published_date' => 'date',
-        'published_at' => 'datetime',
-        'scheduled_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return ['published_date' => 'date'];
+    }
+
+    protected static function booted(): void
+    {
+        self::creating(function (Article $article): void {
+            $article->slug ??= 'artikel-'.Str::uuid();
+        });
+        self::saving(function (Article $article): void {
+            $sanitizer = app(ArticleContentSanitizer::class);
+            foreach (['id', 'en', 'ar'] as $locale) {
+                $column = 'content_'.$locale;
+                if ($article->isDirty($column)) {
+                    $article->{$column} = $sanitizer->sanitize($article->{$column}) ?: null;
+                }
+            }
+        });
+    }
+
+    public function scopeLatestPublished(Builder $query): Builder
+    {
+        return $query->orderByDesc('id');
+    }
+
+    public function titleForLocale(string $locale): string
+    {
+        return $this->localizedValue($locale, $this->title_id, $this->title_en, $this->title_ar);
+    }
+
+    public function descriptionForLocale(string $locale): string
+    {
+        return $this->localizedValue($locale, $this->description_id, $this->description_en, $this->description_ar);
+    }
+
+    public function contentForLocale(string $locale): string
+    {
+        return $this->localizedValue($locale, $this->content_id, $this->content_en, $this->content_ar);
+    }
+
+    public function linkForLocale(string $locale): string
+    {
+        return route('artikel.native', ['article' => $this->slug]);
+    }
+
+    public function getAdminTitleAttribute(): string
+    {
+        return $this->titleForLocale('id') ?: 'Artikel tanpa judul';
+    }
 }

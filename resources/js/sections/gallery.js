@@ -56,8 +56,7 @@ export function mountGallery(root) {
     };
     const prepare = async () => {
         if (!near || disposed || suspended || motion.matches || timeline || loading
-            || root.querySelectorAll('[data-gallery-item]').length !== 10
-            || !root.querySelector('[data-gallery-item] [data-gallery-video]')) return;
+            || root.querySelectorAll('[data-gallery-item]').length !== 10) return;
         const attempt = version;
         loading = true;
         try {

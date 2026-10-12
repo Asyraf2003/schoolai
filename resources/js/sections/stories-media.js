@@ -17,6 +17,7 @@ export function mountStoriesMedia(root) {
     let layout, near = false, enabled = false, suspended = false, disposed = false, frame = 0, measureFrame = 0;
 
     const release = video => {
+        if (!video) return;
         video.pause();
         if (video.hasAttribute('src')) {
             video.removeAttribute('src');
@@ -25,12 +26,14 @@ export function mountStoriesMedia(root) {
         delete video.dataset.ready;
     };
     const load = video => {
+        if (!video) return;
         if (video.dataset.failed || video.hasAttribute('src')) return;
         video.src = video.dataset.src;
         video.preload = 'metadata';
         video.load();
     };
     const play = video => {
+        if (!video) return;
         load(video);
         if (video.dataset.failed || !video.paused || pending.has(video)) return;
         pending.add(video);
@@ -45,6 +48,7 @@ export function mountStoriesMedia(root) {
         const { current } = frameState;
         const allowed = near && !suspended && !disposed && !document.hidden && !reduced.matches;
         videos.forEach((video, index) => {
+            if (!video) return;
             if (!allowed) {
                 if (!near || reduced.matches || disposed) release(video);
                 else video.pause();
@@ -127,6 +131,7 @@ export function mountStoriesMedia(root) {
         }
     };
     videos.forEach(video => {
+        if (!video) return;
         video.addEventListener('playing', () => { video.dataset.ready = 'true'; }, { signal });
         video.addEventListener('error', () => {
             video.dataset.failed = 'true';
@@ -145,7 +150,7 @@ export function mountStoriesMedia(root) {
     window.addEventListener('scroll', schedule, { passive: true, signal });
     window.addEventListener('resize', scheduleMeasure, { signal });
     document.addEventListener('visibilitychange', () => {
-        if (document.hidden) videos.forEach(video => video.pause());
+        if (document.hidden) videos.forEach(video => video?.pause());
         else render();
     }, { signal });
     mobile.addEventListener('change', measure, { signal });
@@ -153,7 +158,7 @@ export function mountStoriesMedia(root) {
     document.fonts?.ready.then(() => { if (!disposed) measure(); });
     configure();
     return {
-        suspend() { suspended = true; cancelAnimationFrame(frame); cancelAnimationFrame(measureFrame); frame = 0; measureFrame = 0; videos.forEach(video => video.pause()); },
+        suspend() { suspended = true; cancelAnimationFrame(frame); cancelAnimationFrame(measureFrame); frame = 0; measureFrame = 0; videos.forEach(video => video?.pause()); },
         resume() { suspended = false; measure(); schedule(); },
         dispose() {
             disposed = true; cancelAnimationFrame(frame); cancelAnimationFrame(measureFrame);
