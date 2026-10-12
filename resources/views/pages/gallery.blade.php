@@ -31,11 +31,12 @@
                 @foreach($instagramPosts as $post)
                     @if(\App\Support\PublicUrl::isSafe($post->media_url))
                         <figure class="public-card instagram-feed__card">
+                            @php($instagramThumbnail = \App\Support\PublicUrl::normalize((string) $post->thumbnail_url))
                             @if($post->is_video)
-                                <video controls playsinline preload="none" src="{{ $post->media_url }}" @if(\App\Support\PublicUrl::isSafe($post->thumbnail_url)) poster="{{ $post->thumbnail_url }}" @endif aria-label="{{ $post->caption ?: __('instagram_gallery.video') }}"></video>
+                                <video controls playsinline preload="none" src="{{ $post->media_url }}" @if($instagramThumbnail) poster="{{ $instagramThumbnail }}" @endif aria-label="{{ $post->caption ?: __('instagram_gallery.video') }}"></video>
                             @else
                                 <a href="{{ $post->permalink }}" target="_blank" rel="noopener noreferrer" aria-label="{{ __('instagram_gallery.open_post') }}">
-                                    <img src="{{ $post->thumbnail_url ?: $post->media_url }}" alt="{{ \Illuminate\Support\Str::limit($post->caption ?: __('instagram_gallery.photo'), 200) }}" width="1200" height="675" loading="lazy" decoding="async">
+                                    <img src="{{ $instagramThumbnail ?: $post->media_url }}" alt="{{ \Illuminate\Support\Str::limit($post->caption ?: __('instagram_gallery.photo'), 200) }}" width="1200" height="675" loading="lazy" decoding="async">
                                 </a>
                             @endif
                             <figcaption>
