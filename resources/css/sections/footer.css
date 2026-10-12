@@ -59,24 +59,28 @@
     line-height: 1.18;
     transition: transform 260ms ease;
 }
+/* All labels share the same inline-start baseline. The arrow overlays
+   that baseline only on hover; it never reserves its own layout column. */
 .site-footer-v2__social a {
-    display: inline-grid;
-    grid-template-columns: 1em minmax(0, max-content);
-    column-gap: .55em;
+    display: inline-flex;
     align-items: center;
+    position: relative;
     min-block-size: 2rem;
     padding-block: .15rem;
+    padding-inline-end: 1.4em;
     inline-size: max-content;
     max-inline-size: 100%;
 }
 .site-footer-v2__social-arrow {
-    position: static;
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
     opacity: 0;
     font-size: .7em;
     line-height: 1;
-    justify-self: center;
-    transform: translateX(-.3em);
+    transform: translate3d(-.3em, -50%, 0);
     transition: opacity 250ms ease, transform 250ms ease;
+    pointer-events: none;
 }
 .site-footer-v2__social-label {
     display: block;
@@ -85,14 +89,16 @@
 }
 .site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-arrow {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, -50%, 0);
 }
 .site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-label {
-    transform: translateX(.12em);
+    transform: translateX(1.25em);
 }
-[dir="rtl"] .site-footer-v2__social-arrow { transform: translateX(.3em); }
+[dir="rtl"] .site-footer-v2__social-arrow {
+    transform: translate3d(.3em, -50%, 0);
+}
 [dir="rtl"] .site-footer-v2__social a:is(:hover,:focus-visible) .site-footer-v2__social-label {
-    transform: translateX(-.12em);
+    transform: translateX(-1.25em);
 }
 .site-footer-v2__partners h2 {
     margin: 0 0 clamp(1.4rem, 2.1vw, 2rem);
