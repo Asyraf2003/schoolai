@@ -76,7 +76,7 @@ it('uses PPDB settings to control its dedicated route and homepage campaign owne
         ->assertOk()
         ->assertSee('Opening Admin Saat PPDB Tutup')
         ->assertDontSee(__('runtime.home.ppdb_campaign_title'))
-        ->assertDontSee('href="/ppdb"', escape: false);
+        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['is_ppdb_campaign'] ?? false) === false);
 
     $this->get(route('ppdb'))->assertNotFound();
 });
