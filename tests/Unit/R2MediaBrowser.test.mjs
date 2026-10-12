@@ -73,9 +73,17 @@ for (const engine of engines) test(`R2 public playback and SEO in ${engine}`, { 
             assert.equal(range.status, 206);
             assert.match(range.range, /^bytes 0-31\//);
             assert.equal(range.bytes, 32);
-            await video.evaluate((node, source) => {
-                node.pause(); node.src = source; node.muted = true; node.load();
+            const download = await video.evaluate(async (node, source) => {
+                const response = await fetch(source);
+                if (!response.ok) throw new Error(`R2 video download failed: ${response.status}`);
+                const binary = await response.blob();
+                const objectUrl = URL.createObjectURL(binary);
+                node.pause(); node.src = objectUrl; node.muted = true; node.load();
+                return { status: response.status, bytes: binary.size, type: binary.type, objectUrl };
             }, source);
+            assert.equal(download.status, 200);
+            assert.ok(download.bytes > 32);
+            assert.equal(download.type, 'video/mp4');
             await video.evaluate(node => node.play());
             await page.waitForFunction(() => document.querySelector('video[controls]').currentTime > .15);
             const playing = await video.evaluate(node => ({ time: node.currentTime,
@@ -84,7 +92,9 @@ for (const engine of engines) test(`R2 public playback and SEO in ${engine}`, { 
             assert.equal(playing.paused, false);
             assert.equal(playing.error, null);
             await video.evaluate(node => node.pause());
-            proof.playback.push({ source, range, ...playing });
+            await page.evaluate(objectUrl => URL.revokeObjectURL(objectUrl), download.objectUrl);
+            proof.playback.push({ source, range, delivery: 'complete R2 response buffer',
+                bytes: download.bytes, ...playing });
         }
         await fs.writeFile(`${out}/r2-media-${engine}.json`, JSON.stringify(proof, null, 2));
     } catch (error) {
