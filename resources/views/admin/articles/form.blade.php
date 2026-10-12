@@ -25,8 +25,10 @@
         @endforeach
         <label>Tanggal tampilan (opsional)<input type="date" name="published_date" value="{{ old('published_date', $article->published_date?->format('Y-m-d')) }}"></label>
         <label>Cover foto/video (opsional)<input type="file" name="cover_file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"></label>
+        <label>Poster cover video (opsional)<input type="file" name="cover_thumbnail_file" accept="image/jpeg,image/png,image/webp"></label>
         <p>Cover maksimal 100 MB. Tanggal hanya metadata tampilan, bukan jadwal penerbitan.</p>
         @if($article->cover_url)<label class="check"><input type="checkbox" name="remove_cover" value="1">Hapus cover saat ini</label>@endif
+        @if($article->cover_thumbnail_url)<label class="check"><input type="checkbox" name="remove_cover_thumbnail" value="1">Hapus poster saat ini</label>@endif
         <div class="actions"><button type="submit">Simpan artikel</button><a href="{{ route('admin.artikel') }}">Batal</a></div>
     </form>
 @endsection

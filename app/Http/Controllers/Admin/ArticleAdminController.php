@@ -45,6 +45,8 @@ final class ArticleAdminController extends Controller
     private function save(Request $request, Article $article, R2MediaStorage $storage): RedirectResponse
     {
         $rules = ['published_date' => ['nullable', 'date_format:Y-m-d'], 'remove_cover' => ['sometimes', 'boolean'],
+            'remove_cover_thumbnail' => ['sometimes', 'boolean'],
+            'cover_thumbnail_file' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:10240', new SafeImageUpload],
             'cover_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,mp4,webm', 'max:102400', Rule::when(str_starts_with($request->file('cover_file')?->getMimeType() ?? '', 'image/'), new SafeImageUpload)]];
         foreach (['id', 'en', 'ar'] as $locale) {
             $rules['title_'.$locale] = ['nullable', 'string', 'max:200'];
@@ -62,19 +64,30 @@ final class ArticleAdminController extends Controller
         if (! $hasText) {
             throw ValidationException::withMessages(['content_id' => 'Isi artikel wajib berupa teks pada minimal satu bahasa.']);
         }
-        unset($data['cover_file'], $data['remove_cover']);
+        unset($data['cover_file'], $data['remove_cover'], $data['cover_thumbnail_file'], $data['remove_cover_thumbnail']);
         if ($request->boolean('remove_cover')) {
             $data['cover_url'] = null;
+            $data['cover_thumbnail_url'] = null;
         }
-        $upload = null;
+        if ($request->boolean('remove_cover_thumbnail')) {
+            $data['cover_thumbnail_url'] = null;
+        }
+        $uploads = [];
         try {
             if ($request->hasFile('cover_file')) {
                 $upload = $storage->store($request->file('cover_file'), 'articles/covers', $article->id);
+                $uploads[] = $upload;
                 $data['cover_url'] = $upload['url'];
+                $data['cover_thumbnail_url'] = null;
+            }
+            if ($request->hasFile('cover_thumbnail_file')) {
+                $upload = $storage->store($request->file('cover_thumbnail_file'), 'articles/thumbnails', $article->id);
+                $uploads[] = $upload;
+                $data['cover_thumbnail_url'] = $upload['url'];
             }
             DB::transaction(fn () => $article->fill($data)->save());
         } catch (Throwable $exception) {
-            if ($upload !== null) {
+            foreach ($uploads as $upload) {
                 $storage->deleteKey($upload['key']);
             }
             throw $exception;
