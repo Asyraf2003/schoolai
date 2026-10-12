@@ -21,16 +21,16 @@ it('creates edits deletes and restores a gallery photo using R2', function (): v
     $this->get(route('admin.galeri.edit', $item))->assertOk()->assertSee('Foto kelas');
     $this->put(route('admin.galeri.update', $item), ['alt_text' => 'Alt baru'])->assertSessionHasNoErrors();
     expect($item->fresh()->alt_text)->toBe('Alt baru')->and($item->fresh()->media_url)->toBe($item->media_url);
-    $this->get(route('home'))->assertOk()->assertSee('Alt baru');
+    $this->get(route('galeri'))->assertOk()->assertSee('Alt baru');
     $this->delete(route('admin.galeri.destroy', $item))->assertRedirect(route('admin.galeri'));
     $this->assertSoftDeleted($item);
-    $this->get(route('home'))->assertDontSee('Alt baru');
+    $this->get(route('galeri'))->assertDontSee('Alt baru');
     Storage::disk('public')->assertExists($key);
     $this->patch(route('admin.galeri.restore', $item))->assertRedirect(route('admin.galeri'));
-    $this->get(route('home'))->assertSee('Alt baru');
+    $this->get(route('galeri'))->assertSee('Alt baru');
 });
 
-it('uploads video and thumbnail and exposes new videos on V2 rather than a hardcoded catalog', function (): void {
+it('uploads video and thumbnail and exposes new videos on the dedicated gallery page', function (): void {
     Storage::fake('public');
     $this->actingAs(User::factory()->create(['role' => User::ROLE_ADMIN]));
     $video = UploadedFile::fake()->createWithContent('video.mp4', hex2bin('000000206674797069736f6d0000020069736f6d69736f32617663316d703431'));
@@ -38,7 +38,8 @@ it('uploads video and thumbnail and exposes new videos on V2 rather than a hardc
         ->assertSessionHasNoErrors();
     $item = GalleryItem::sole();
     expect($item->type)->toBe('video')->and($item->thumbnail_url)->toStartWith(config('media.public_url').'/gallery/thumbnails/');
-    $this->get(route('home'))->assertSee($item->media_url, false)->assertSee($item->thumbnail_url, false)->assertSee('Video baru');
+    $this->get(route('galeri'))->assertSee($item->media_url, false)->assertSee($item->thumbnail_url, false)->assertSee('Video baru');
+    $this->get(route('home'))->assertDontSee($item->media_url, false)->assertDontSee('Video baru');
     Storage::disk('public')->assertExists(app(MediaUrlResolver::class)->ownedKey($item->thumbnail_url));
 });
 

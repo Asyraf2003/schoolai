@@ -59,7 +59,7 @@ jobs:
           PROGRAM_PLAYWRIGHT_MODULE: playwright
           PROGRAM_ENGINES: ${{ matrix.engine }}
           PROGRAM_PROOF_DIRECTORY: /tmp
-        run: node --test --test-timeout=240000 tests/Unit/SimpleAdminBrowser.test.mjs
+        run: node --test --test-concurrency=1 --test-timeout=240000 tests/Unit/SimpleAdminBrowser.test.mjs tests/Unit/PublicContentBrowser.test.mjs tests/Unit/R2MediaBrowser.test.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -68,3 +68,6 @@ jobs:
             /tmp/simple-admin-*.json
             /tmp/simple-admin-*.png
             /tmp/simple-admin-server.log
+            /tmp/public-content-*.json
+            /tmp/public-content-*.png
+            /tmp/r2-media-*.json

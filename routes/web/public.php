@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PortalPlaceholderController;
 use App\Http\Controllers\PublicArticleController;
 use App\Http\Controllers\PublicGalleryController;
 use App\Services\PpdbAccess;

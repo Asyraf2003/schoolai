@@ -1,4 +1,5 @@
 @import './foundation/fonts.css';
+@import './public-content.css';
 
 .article-content { overflow-wrap: anywhere; line-height: 1.7; }
 .article-content :is(p, ul, ol, blockquote, pre) { max-inline-size: 100%; }
@@ -6,24 +7,3 @@
 .article-content a { text-decoration: underline; color: #005fcc; }
 article > :is(img, video) { display: block; max-inline-size: 100%; block-size: auto; margin-block: 1rem; }
 .article-content:lang(ar) { font-family: Cairo, Tahoma, sans-serif; }
-
-
-/* Dedicated public /galeri page; homepage motion gallery remains independent. */
-.portal-gallery__intro { margin-block-end: clamp(2rem, 6vw, 4rem); }
-.portal-gallery__section { margin-block: clamp(2rem, 6vw, 5rem); }
-.portal-gallery__heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem; margin-block-end: 1.25rem; }
-.portal-gallery__heading h2 { margin: 0; font-size: clamp(1.4rem, 3vw, 2.25rem); }
-.portal-gallery__heading > a { text-underline-offset: .2em; }
-.portal-gallery__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: clamp(.8rem, 2.3vw, 1.25rem); }
-.portal-gallery__card { overflow: hidden; min-inline-size: 0; border-radius: 1rem; background: #fff; box-shadow: 0 2px 18px #162c2112; }
-.portal-gallery__card > video, .portal-gallery__image-link { inline-size: 100%; aspect-ratio: 4 / 5; display: block; background: #e5e8e4; }
-.portal-gallery__card > video { block-size: auto; object-fit: cover; margin: 0; }
-.portal-gallery__image-link img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
-.portal-gallery__info { padding: .9rem 1rem 1.2rem; }
-.portal-gallery__info p, .portal-gallery__caption { margin: .45rem 0; max-inline-size: none; overflow-wrap: anywhere; font-size: .9rem; line-height: 1.5; }
-.portal-gallery__info > a { display: inline-block; font-size: .9rem; text-underline-offset: .2em; }
-.portal-gallery__kind { color: #587062; font-size: .75rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
-.portal-gallery__caption { padding: .75rem 1rem; }
-.portal-gallery__pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.5rem; margin-block: 2rem; }
-.portal-gallery__pagination a { text-underline-offset: .25em; }
-.portal-gallery__empty { padding: 2rem; border: 1px solid #d6e1d7; border-radius: 1rem; background: #fff; }

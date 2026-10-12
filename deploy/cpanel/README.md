@@ -1,5 +1,21 @@
 # SchoolAI: Deployment ke cPanel Shared Hosting
 
+## Kontrak release v0.1.0-rc.1
+
+- Seluruh media publik first-party, termasuk brand, poster, fallback, cursor,
+  dan peta footer, memakai R2 melalui `https://media.almustaqbal.sch.id`.
+- `FILESYSTEM_DISK=local` mempertahankan file privat, log, session, dan cache.
+  `MEDIA_DISK=s3` hanya memilih storage media publik. Vite tetap di `public_html/build`.
+- Runner `clear.php` memvalidasi konfigurasi R2 dan tidak membuat atau mewajibkan
+  `public_html/storage`. Paket mengecualikan binary `public/media` dan upload lokal.
+- Credential berasal dari `.env` privat; builder mempertahankan APP_KEY dan
+  password database, tidak menanam nilai credential dalam source.
+- CRUD Galeri/Artikel sudah menjadi pengelola media; tidak ada file manager baru.
+- Jangan jalankan deployment sampai owner membuka tahap deployment. Tag RC bukan deploy.
+- Instruksi salinan storage pada catatan update lama hanya untuk arsip/migrasi;
+  bukan jalur penyajian media publik pada release ini.
+
+
 Panduan ini digunakan untuk deployment SchoolAI ketika hosting hanya menyediakan cPanel dan File Manager tanpa terminal.
 
 ## Layout hosting Al Mustaqbal saat ini
@@ -183,16 +199,11 @@ Jika versi baru gagal sebelum `app1` dihapus, rollback cukup dengan mengembalika
 - permission direktori yang harus writable;
 - `APP_ENV=production`, `APP_DEBUG=false`, dan `APP_KEY` tersedia;
 - koneksi database berhasil;
-- symlink media mengarah ke target yang benar.
+- konfigurasi media memakai endpoint Cloudflare R2, region `auto`, credential
+  privat, serta origin publik yang canonical.
 
-Symlink yang dibuat:
-
-```text
-/home/USERNAME/public_html/storage
-    -> /home/USERNAME/schoolai/storage/app/public
-```
-
-`storage/app/private` tidak pernah dihubungkan ke document root.
+Tidak ada symlink media publik yang dibuat atau diwajibkan. `storage/app/private`
+tetap berada di luar document root; seluruh upload baru memakai R2.
 
 Setelah preflight lulus, runner menjalankan:
 
@@ -223,12 +234,9 @@ npx wrangler r2 bucket cors list almustaqbal
 Di server aplikasi, audit lalu migrasikan satu owner per eksekusi:
 
 ```bash
-php artisan media:migrate-r2 hero --dry-run
-php artisan media:migrate-r2 hero
-php artisan media:migrate-r2 gallery-homepage
-php artisan media:migrate-r2 gallery-page
-php artisan media:migrate-r2 ppdb
-php artisan media:migrate-r2 testimonials
+php artisan media:migrate-r2 gallery --dry-run
+php artisan media:migrate-r2 articles --dry-run
+php artisan media:migrate-r2 gallery
 php artisan media:migrate-r2 articles
 ```
 
@@ -237,13 +245,10 @@ memiliki binary lokal yang dipindahkan. External/provider URL dan URL R2 yang
 sudah canonical dilewati. Pertahankan `storage/app/public` sampai seluruh owner,
 public rendering, soft-delete, dan restore selesai diverifikasi.
 
-Pengecualian H6 yang eksplisit adalah embed provider sosial/video serta URL
-Unsplash yang sudah ada pada seed, demo/fallback, dan pencarian provider Article
-Canvas. URL tersebut bukan object R2 milik SchoolAI dan tidak boleh ikut siklus
-delete. Memindahkannya memerlukan keputusan lisensi/atribusi dan source binary
-terpisah. Aset brand, chrome, serta semantic/static fallback yang dikemas di
-repository juga tetap release-bundled karena bukan media konten milik CRUD.
-Upload konten first-party baru tidak termasuk pengecualian dan wajib masuk R2.
+URL navigasi ke Google Form, Maps, sosial, dan provider bukan media first-party
+SchoolAI. Jangan memasukkannya ke siklus penghapusan R2. Media first-party tidak
+memiliki pengecualian storage lokal pada release ini. Upload konten first-party
+baru wajib masuk R2; build Vite (CSS/JS/font) tetap merupakan aset aplikasi.
 
 ## Verifikasi setelah deployment
 

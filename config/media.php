@@ -101,6 +101,7 @@ return [
         ],
 
         'footer' => [
+            'school_map' => $publicUrl.'/site/footer/school-map-v2.webp',
             'maps' => $publicUrl.'/site/footer/maps-v1.webp',
             'whatsapp' => $publicUrl.'/site/footer/whatsapp-v1.svg',
             'instagram' => $publicUrl.'/site/footer/instagram-v1.svg',
