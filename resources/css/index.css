@@ -25,3 +25,7 @@
 
 @import './sections/gallery.css';
 @import './sections/testimonials.css';
+@import './sections/stories.css';
+@import './sections/stories-sequence.css';
+@import './sections/footer.css';
+@import './sections/footer-next.css';

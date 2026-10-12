@@ -9,7 +9,7 @@
         </p>
     @endif
     @if (! empty($slide['campaign_link_label']) && ! empty($slide['title_href']))
-        <a class="hero__copy-action" href="{{ $slide['title_href'] }}" aria-label="{{ $slide['campaign_link_label'] }}">
+        <a class="hero__copy-action" href="{{ $slide['title_href'] }}">
     @else
         <div class="hero__copy-action">
     @endif

@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+it('renders the localized question and every existing disclosed sample in one testimonial wall', function (string $locale): void {
+    $response = $this->withSession(['locale' => $locale])->get(route('home'));
+
+    $response->assertOk()->assertSee(__('testimonials.title'))->assertSee(__('testimonials.description'));
+    $document = new DOMDocument;
+    @$document->loadHTML($response->getContent());
+    $dom = new DOMXPath($document);
+    expect($dom->query('//*[@id="testimonials-title"][@aria-label]')->length)->toBe(1);
+    expect($dom->query('//*[@data-testimonials-copy]/p')->length)->toBe(0);
+    expect($dom->query('//*[@data-testimonials-word][@aria-hidden="true"]')->length)->toBe(count(explode(' ', __('testimonials.title'))));
+    expect($dom->query('//*[@data-testimonials-row]//button')->length)->toBe(0);
+    expect($dom->query('//*[@data-testimonials-row]')->length)->toBe(3);
+    expect($dom->query('//*[@data-testimonials-row][@tabindex="0"][@aria-describedby="testimonials-browse"]')->length)->toBe(3);
+    expect($dom->query('//*[@data-testimonials-track]/article')->length)->toBe(21);
+    expect($dom->query('//*[@data-testimonials-track]//img[@loading="lazy"][@width="960"][@height="480"]')->length)->toBe(21);
+    foreach (__('testimonials.rows') as $row) {
+        foreach ($row['cards'] as $card) {
+            $response->assertSee($card['quote'])->assertSee($card['name']);
+        }
+    }
+})->with(['id', 'en', 'ar']);

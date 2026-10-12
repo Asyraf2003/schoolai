@@ -1,5 +1,681 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Phone article side shading correction — 2026-10-12
+
+OWNER: remove side darkness from article sections on HP. Earlier requests for
+native-feeling Latin phone scroll and shared1+3/3/3 Gallery remain pending.
+FACT: main017465df freshly fetched; existing local desktop/footer work retained.
+Stories desktop has horizontal25% edge gradient; <=767 CSS chooses a bottom
+gradient, but RTL .stories__feature::after has higher specificity and wins on HP.
+BLUEPRINT PHONE-STORIES-03: OWNER_ACCEPTED from exact request; IMPLEMENTING.
+DECISION: existing Stories owner exposes desktop edge direction through a token;
+remove conflicting RTL background selector. Phone bottom gradient then wins for
+ID/EN/AR; no horizontal edge shading. Retain existing overall media tone,
+readability, dummy content, desktop direction, videos and scroll queue.
+Scope: stories.css, focused browser proof and this ledger; other sources protected.
+TIERS: XS/SM <=767 bottom shading; MD/LG/XL/2XL existing directional edge.
+One DOM/controller across locales; no-JS/reduced motion same readable content;
+no assets/dependencies/input changes. Prove360/390/639/640/767/768/1440 in
+ID/EN/AR, Chromium/WebKit computed gradient, unchanged desktop and overflow.
+PROOF: Chromium155/WebKit26.6 computed-gradient42cells PASS across declared
+widths/locales. Phone has vertical bottom shading, no lateral gradient; desktop
+direction preserved. Focused PHP6/168, build57modules, structure329/diff PASS.
+STATUS: PASS scoped article correction; broader release proof remains pending.
+NEXT CHANNEL: Terminal Codex; shared Gallery composition requested by owner.
+
+## Shared Gallery composition within landing hardening — 2026-10-12
+
+OWNER: one opening media then nine in3/3/3, same dynamic style across Gallery;
+tablet already accepted; harden landing across engines and real HP versus PC
+inspection. Preserve accepted tablet/desktop, four dummy Stories and local work.
+FACT: enhanced Gallery currently forks width<768 into2columns/5rows; desktop
+uses three columns, leading media plus3/3/3 secondary cards. Static fallback is
+1column phone/2tablet/3desktop without a full-width lead. Gallery scrub:true reads
+native scroll, no smooth scroller. Touch has no preventDefault owner; all-width
+wheel pacer adds momentum. Actual HP/profile/URL and perceived Latin difference
+remain unanswered, so native-device certification cannot be inferred.
+BLUEPRINT GALLERY-SHARED-04: OWNER_ACCEPTED current request; IMPLEMENTING.
+Editable: gallery-geometry.js, gallery.css, minimal gallery-timeline.js geometry
+travel correction, meaningful geometry/browser tests and ledger.
+Protected: tablet/desktop enhanced coordinates/curves, media/Blade/content/
+controls/scroll ownership, no engine/dependencies/assets/DB/remote changes.
+DECISION: use existing approved desktop column math at every width, remove phone
+coordinate fork. Static fallback becomes full-width first plus nine3column cards.
+If a compact assembly fits the viewport, its rise distance floors at0 rather
+than moving down; larger matrices keep existing native upward travel.
+TIERS: XS360–639/SM640–767 now3columns; MD/LG/XL/2XL existing3columns retained;
+fluid widths/gaps and same semantic10media. RTL mirrors positions, not media.
+Normal: existing one sticky timeline; reduced/no-JS/failure: semantic CSS grid.
+Performance/media/lifecycle budgets unchanged, no new listeners or asset loads.
+ACTIVE: unify Gallery only, prove all tiers/locales/engines before scroll hardening.
+PROOF: geometry56profiles PASS all widths/directions/heights; focused PHP and
+build/structure PASS. Chromium AR9widths journey PASS; WebKit27locale/width
+visual journey cells pass but suite FAIL from ResizeObserver notifications.
+Chromium combined journey FAIL blue reverse33/57/255 versus32/56/255, despite
+standalone exact seam audit returning100%morph/0%dark. Do not weaken assertion.
+Static/no-JS/media failure/lifecycle6tests PASS; resize Chromium PASS, WebKit
+FAIL from same notification. Full correction is not certified yet.
+STATUS: PASS scoped shared geometry; FAIL full browser integration above.
+NEXT CHANNEL: Terminal Codex; owner-authorized hardening resolves proven
+runtime conflicts before rerunning full Gallery integration.
+
+## Landing browser/input hardening — 2026-10-12
+
+OWNER: tablet accepted; mature landing, consistent UI across browsers and Redmi12
+phone matching PC inspection. Local only; no deploy/push/merge authorization.
+FACT: current main017465df, HEAD190ead4d and preceding local patches retained.
+Actual source uses one semantic DOM and native touch. Wheel pacer is currently
+all-width/all-pointer, allowing artificial coast during narrow PC inspection.
+Local Lighthouse13.5 desktop baseline96/96/96/100; prohibited paragraph labels,
+Sound/campaign accessible names differing from visible copy, distorted Hero
+poster and CLS. Native Redmi12/browser connection absent; no adb installed.
+BLUEPRINT LANDING-HARDEN-05: OWNER_ACCEPTED exact hardening request; IMPLEMENTING.
+Scope: fix reproduced component lifecycle, accessibility and browser/input
+inconsistencies, add meaningful cross-engine responsive/touch/fallback proof.
+Keep tablet/desktop art direction, DB/dummy sources, media and chronology.
+Forbidden: dependency changes, publication/main writes, unrelated admin/legacy
+repair, device/locale component forks or invented performance certification.
+Atomic steps: input and accessibility/media corrections implemented; ACTIVE
+ResizeObserver ownership; pending full cross-engine matrix/performance comparison.
+DECISION input: cinematic wheel pacing only >=1024 with primary fine pointer
+and hover, normal motion. Phone/touch/tablet retains native scrolling across all
+locales; media query change cancels debt. No touch scroll preventDefault added.
+TIERS: XS/SM phone native; MD tablet native; LG/XL/2XL fine pointer keeps existing
+curve. Wide coarse pointer native, narrow fine pointer native; keyboard direct.
+ID/EN/AR same policy, AR typography/direction retained. Reduced/no-JS native.
+Proof: three engines six tiers/boundaries, phone touch/DPR/text metrics versus
+PC same width, native wheel exemption, wide coast, locale switch and lifecycle.
+Accessibility fixes follow inspected semantics; images reserve geometry/crop;
+observer fixes follow attributed callbacks, never swallow browser errors.
+Budget: no new dependencies/fonts/media, current JS/CSS transfer compared;
+3comparable local Lighthouse samples/profile, p75field/native-device unproven.
+PROOF input: Chromium30locale-width cases PASS, normal desktop coast preserved,
+phone resize cancels queued travel. Other-engine run continues; touch/native
+Redmi12 proof remains outstanding. Source never had a locale-specific pacer.
+ACCESSIBILITY DECISION: Lighthouse names exact paragraph/controls as failures.
+Use paragraph text alternative in semantic child, inherit Hero action name from
+visible heading/description/CTA, combine Sound visible label with action label.
+MEDIA DECISION: Hero poster joins existing absolute cover geometry used by video;
+reserve image/canvas bounds before decode. No visual redesign or media change.
+FONT FACT: Lighthouse CLS.053333 identifies Inter load on Hero content. Manifest
+already exports exact local Inter/Cairo font assets. DECISION: preload only the
+active locale's opening faces (Inter variable; AR Cairo400/700) via existing Vite
+asset paths; no new font files, weights or typography sizes. Prove localized
+preload HTTP contract and repeat comparable Lighthouse/rendered layout.
+BOOT GEOMETRY FACT: Header begins in normal flow then enhanced fixed positioning
+removes its height; Hero/entire main can shift during startup. Header static
+fallback must remain usable. DECISION: tiny CSP-nonced composition preflight
+sets temporary pending state before paint; existing Header CSS gives pending
+the same fixed geometry, compact nav waits for its existing controller. Native
+DOMContentLoaded removes pending regardless of enhancement success, exposing
+original static navigation if the module fails. No timer, copied menu, scroll
+lock or second Header controller. JS-disabled never enters pending state.
+Editable: landing/index Blade and Header's existing geometry CSS; test real
+delayed/failed module requests and post-boot same coordinates, no-JS semantics.
+Editable now: hero.css, hero-copy/header/stories Blade, header.js and semantic
+HTTP/browser tests. Existing typography/motion/controllers otherwise protected.
+PROOF observer: instrumented WebKit resize audit3notifications. Test-only
+counterfactual suppressing only Stories ResizeObserver callback produces0 with
+same Gallery journey. Stories observer calls measure synchronously; measure
+writes sequence travel and renders transforms during observation delivery.
+DECISION: defer that existing measurement to one cancellable RAF, coalesce
+resize callbacks and cancel on suspend/dispose; no swallowed exceptions or timer.
+Editable: stories-media.js and dedicated resize/lifecycle browser contracts.
+PROOF: exact-source WebKit observer repeat0notifications after deferral.
+Lighthouse after1desktop99/100/100/100; focused landing PHP53tests978assertions
+PASS. Previous absent-footer assertion migrated to accepted single footer.
+GALLERY DIAGNOSTIC: CSS at reverse is exact color(srgb32/255,56/255,1),100%morph
+and0%dark; scratch20CPU/default canvas readbacks both produce33/57/255 due local
+canvas quantization. Style test now reads computed channels directly, retaining
+exact blue assertion; no product color changed or assertion tolerance added.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE final hardening/runtime/owner proof pending.
+NEXT CHANNEL: Terminal Codex; execute one hardening capability at a time.
+
+## Footer Maps and finger-proportional next-page progress — 2026-10-12
+
+FACT: owner review requests Arabic Maps preview on the opposite side, fully
+opaque/unblurred; progress follows input distance, replacing the two-gesture
+charge rule. Released progress returns at half its measured rise speed.
+FACT: main freshly fetched017465df; working branch feat/natural-scroll-testimonials
+HEAD190ead4d, preceding local Arabic patch retained. Maps owner currently fixes
+physical right50%, blur1px, opacity.9 and gradient mask. Footer gate currently
+forces .5–.55 progress per meaningful packet and caps each gesture at.55;
+idle decay is fixed .00032/ms. Sole wheel owner delivers raw normalized deltas
+to footer BEFORE applying the unrelated document-wide2x gain.
+GAP/GOAL: replace those proven owners with logical-side, clear Maps and
+distance-proportional progress with measured2x release time.
+BLUEPRINT FOOTER-INPUT-02: OWNER_ACCEPTED matching current request; IMPLEMENTING.
+Editable: footer.css/footer-next.css, footer-gate.js, focused footer JS/browser
+tests and this ledger. Read-only: footer-next.js adapter, scroll-pacing wheel
+owner, shared CSS/DOM/locales/media. Forbidden: DB/articles/admin, other surfaces,
+new input controller/listener, main/remote changes, tablet/phone redesign.
+DECISION: Maps occupies existing inline-end half (LTR right/AR left), opacity1,
+filter/mask none; photos remain unmirrored. Keep existing narrow layout sizing.
+Progress += normalized positive input /840CSSpx (prior footer input budget);
+remove per-packet floor/per-gesture cap and accept tiny packets once armed.
+Preserve white/blue arrival checkpoints and fresh-input arming, direct link,
+reverse reset, reduced-motion native scrolling and existing lifecycle cleanup.
+Measure average rise speed within an input burst; decay at half that speed after
+120ms without input. A lone packet uses100ms minimum measurement to avoid an
+undefined/infinite rate. Resumed input measures a new burst from remaining fill.
+CSS fill tracks the gate directly; RAF owns the release without a second ease.
+TIERS: LG desktop/XL/2XL active proof; XS/SM/MD existing layouts retained,
+no tablet/phone design step. Same state/DOM in ID/EN/AR; RTL fill remains right
+origin. Chromium/WebKit, keyboard hover/focus, no-JS/direct-link and reduced
+motion remain usable; no new asset, dependency or offscreen continuous loop.
+ACTIVE STEP: implement this footer-only correction and prove Maps geometry,
+input proportionality, exact half-speed decay, fresh arming and navigation.
+EXECUTION: logical Maps half, opacity1/filter none; removed old gradient mask.
+Gate consumes raw wheel/trackpad distance before document gain, without50%
+floor,55% cap or minimum packet threshold at blue; tiny fresh movements arm it.
+Return speed is half the active burst's measured average fill speed. Existing
+adapter/RAF/pacer/white-blue stops are retained; CSS no longer adds a second
+100ms progress transition. Duplicate completion navigates once; reset/reverse
+clear rate, zero/invalid packets cannot postpone release.
+PROOF: Node23PASS including proportional packets, one long gesture, exact
+200ms rise/400ms return, cadence independence, reverse and stage regressions.
+Chromium155/WebKit26.6,1440x900,ID/EN/AR:2browser tests PASS; decoded Maps fills
+LTR right/AR left50% at opacity1 with no filter/mask. Keyboard focus/reduced
+preview intact. Actual wheel42px fills5%,84px adds10%,2.1px adds.25%; computed
+CSS fill equals delivered gate progress. Idle returns to0 without navigation;
+long input sends existing /galeri destination. Local raw proof/captures:
+/tmp/schoolai-desktop-rtl/footer-input-{unit,browser,build,php}.log and JSON/PNG.
+Diff/check:structure PASS329sources<=200; build PASS57modules. Full PHP355:
+207PASS/73FAIL/75ERROR,2203assertions; identical prior failure/error identity sets.
+GAP FOOTER-TARGET-01: actual /galeri HTTP500 locally, unchanged controller calls
+missing pages.galeri view. URL navigation passes; destination rendering does
+not. Controller/view migration is outside this correction, retained for later
+owner scope. No target availability, native Safari, touch-device or PSI claim.
+STATUS: PASS declared footer input/Maps proof; FAIL pre-existing full PHP and
+Galeri destination rendering; BLOCKED_BY_MISSING_EVIDENCE owner visual review.
+Blueprint IMPLEMENTING pending owner review. No publication/main mutation.
+NEXT CHANNEL: owner/local terminal; review corrected desktop footer behavior.
+
+## Desktop Arabic/RTL polish; Stories remain dummy — 2026-10-12
+
+FACT: owner accepts current desktop UI, requests Arabic/RTL polish and keeps
+homepage articles dummy until a later explicit integration. Working branch
+feat/natural-scroll-testimonials, starting HEAD 190ead4d; freshly fetched main
+017465df016a9fdff887fcefe5fdadf7396ddd2a. Tree started clean. No publication.
+FACT: landing/stories renders four lang-owned features and configured media,
+without Article queries. V2 index.css imports foundation/fonts, locale/ar then
+component owners. Named legacy typography files exist only in resources_old,
+outside the live graph. No .ai/rules directory exists.
+GAP: runtime1440x900 shows Hero/skip-link inheriting Inter, Hero Arabic tracking
+-2.044px/eyebrow1.69px; Program decoration leading .75; footer partner tracking
+-.914px; next arrow points physically right despite RTL travel toward left.
+GOAL: coherent Cairo, joined/readable Arabic, mirrored directional controls,
+same accepted composition and four localized dummy articles.
+IMPACT/DECISION: narrow typography/direction corrections at existing owners;
+no parallel DOM, new engine, content rewriting, DB binding or redesign.
+BLUEPRINT DESKTOP-AR-01: OWNER_ACCEPTED from current owner request; IMPLEMENTING.
+Editable: foundation/fonts.css, locale/ar.css, footer.css/footer-next.css,
+focused Stories feature test, one desktop browser contract, this ledger.
+Read-only: Blade, lang, JS controllers, Vite, assets and presenters.
+Forbidden: main/remote mutation, DB/schema/admin, legacy resources, scroll
+choreography, asset replacement, tablet/phone layout changes.
+SEMANTIC: shared DOM/source/order, native links/locale forms; no-JS and reduced
+motion remain readable. Videos/photographs/logos/play meaning stay unmirrored.
+OWNERS: fonts.css owns real Cairo faces; ar.css owns narrow shared typography;
+footer owners retain local type/directional arrow treatment. Existing motion,
+media hydration, lifecycle and Vite entry remain read-only.
+TIERS: XS360–639/SM640–767/MD768–1023 deferred for owner review; retain their
+existing layouts. LG desktop1181–1279, XL1280–1535, 2XL1536+ retain fluid
+composition. Shared Arabic glyph correction inherits without new tier forks.
+LOCALES: ID/EN Inter/LTR unchanged; AR Cairo/RTL, normal tracking and adequate
+leading. POST+redirect rebuilds lang/dir/font geometry, existing state owners.
+CAPABILITY: CSS/semantic fallback, Chromium and WebKit desktop proof; no graphics
+changes. Budget: only necessary local Cairo weights, no dependency/JS/media delta.
+ACCESS: keyboard/focus/Escape, Arabic joining, arrows, text expansion, reduced
+motion and no-JS; no control removals or changes to real-world media orientation.
+ACTIVE STEP: desktop Arabic typography/directional capability, then focused
+browser/feature proof and diff/structure/build/full PHP gates.
+PROGRESS: source/runtime audit captured in /tmp/schoolai-desktop-rtl.
+PROOF GAP: desktop keyboard gate reproduces RTL hover specificity overriding
+reduced-motion label stillness in both engines. Migrate directional translation
+to existing footer-inline-sign and remove conflicting RTL hover selectors;
+retain arrow centering and mirrored glyph even in the static focus state.
+EXECUTION: homepage Arabic inherits Cairo; Hero/eyebrow and submenu leading are
+Arabic-safe; existing decorative Program lines no longer use .75 leading.
+Cairo500/600 faces reuse binaries already emitted for Values, with no new font
+asset/dependency. Footer partner/social copy uses normal tracking/1.45 leading;
+social and next arrows mirror, progress fills from right. Reduced focus remains
+still with centered/mirrored arrows; losing RTL hover selectors were removed.
+Stories Blade/lang/media/controllers and all four dummy features remain intact.
+PROOF: diff/check:structure PASS329 sources<=200; build PASS57 modules, JS hash
+Bco6LRiK unchanged, CSS68.69->69.64kB (gzip13.81->13.95kB). Pint PASS.
+Focused PHP14tests/316assertions PASS, including three DB-independence cases.
+Node regression16PASS/3browser-only SKIP. Desktop browser4executed tests PASS:
+Brave/Chromium155 and Playwright WPE/WebKit26.6, Linux, localhost8000,
+48 locale/width cells across1180/1181/1279/1280/1440/1535/1536/1920 at900h;
+AR short1440x500, footer200% text, mirrored menu, focus/Escape, static arrows,
+normal/reduced focus, language-modal submission and no-JS semantic fallback.
+Initial WebKit media-active process exit retained in browser-final.log;
+restoring existing local GStreamer library/plugin paths allows the identical
+test/source to PASS, browser-webkit-restored.log. No product workaround.
+Full PHP355:207PASS/73FAIL/75ERROR,2203assertions. Baseline352:204PASS/73FAIL/
+75ERROR,2194assertions. Failure/error identity sets unchanged; full gate FAIL.
+Local raw logs, JSON and reviewed desktop captures: /tmp/schoolai-desktop-rtl.
+STATUS: PASS declared desktop checks; FAIL pre-existing full PHP gate;
+BLOCKED_BY_MISSING_EVIDENCE owner visual review and full release certification.
+Native Safari, speech/native zoom, tablet/phone, PSI and field CWV not certified.
+Blueprint remains IMPLEMENTING until owner review; no push/merge/main write.
+NEXT CHANNEL: owner/local terminal; review current desktop Arabic UI before
+authorizing tablet/phone work. No further implementation step is active.
+
+## Footer fluid three-thirds responsive sizing — 2026-10-12
+
+OWNER_CORRECTION: No rigid width or font sizes. Footer white still follows
+the upper-third blank and lower-two-thirds content design, but all three
+LOWER columns must share the AVAILABLE container width equally, so the
+design looks full without a 70rem fixed width cap. Text, logos, gaps, and
+line wrapping must scale with the actual canvas width. Description remains
+visually larger; social/partners share the same fluid typography.
+DECISION: use inline-size 100% and repeat(3, minmax(0,1fr)) on desktop,
+container-size-based cqi values bounded only for legibility, intrinsic 1:2
+white track proportions, and responsive tablet/mobile collapse for overflow.
+Remove 22ch/32ch/24ch hard caps on description; let text use one-third
+of available width and wrap naturally. Maps still uses 50% physical RIGHT
+background; sharpen to 1px blur and 90% opacity per owner request.
+Do not touch global scroll controller, Stories, footer stage logic, links,
+or dummy content.
+PROOF: source patch written; actual build and desktop/tablet/HP browser
+confirmation remain required.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE runtime proof.
+
+
+## Footer spacing/hover and decaying scroll-to-Gallery progress — 2026-10-12
+
+OWNER_VISUAL_REFERENCE: local and Lusion screenshots show too-wide horizontal
+gaps among the footer three lower groups and a left arrow displaced outside
+its hover target. The blue section should have no auxiliary Artikel link.
+When user stops wheel scrolling over the blue next-page strip, the yellow
+progress line must slowly return toward zero instead of staying charged.
+Target: approximately two intentional scroll gestures to fill and then
+navigate to Galeri, not an immediate one-wheel redirect.
+DECISION: keep top 1/3 white void and bottom 2/3 three-column layout;
+constrain lower grid width to 70rem and reduce gaps. Put social hover arrow
+INSIDE each anchor at logical start, center vertically, shift label right
+(LTR)/left (RTL); no out-of-column arrow offset. Remove alternate Artikel
+from blue only; page navigation elsewhere remains unchanged.
+Footer gate keeps existing two stage stops and sole scroll-pacing wheel
+owner; on the blue-held state a fresh gesture is required before accepting
+charge. Each wheel gesture is capped at 55% progress. After 450ms without
+input the charge eases downward at 0.32 progress/sec via component-local RAF,
+not a second wheel listener. Direct Galeri link remains accessible.
+Tests cover white stop, blue rearm, per-gesture cap, idle decay, refill,
+reverse navigation and tiny tail packets.
+PROOF: source patch and tests authored; local build, node, PHP and browser
+visual proof still require execution.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE final runtime proof.
+NEXT: pull feature; run structural check/build/unit/feature tests;
+inspect spacing, arrows and decaying yellow line on desktop and mobile.
+
+
+## Footer Lusion visual parity / scroll-fill / map preview — 2026-10-12
+
+OWNER_REFERENCE: 5 screenshots compare actual SchoolAI footer and Lusion.
+GOAL: equal social + partner text sizes; description slightly larger only;
+left-of-text arrow hidden until focus/hover, label slides modestly; Maps photo
+fills physical RIGHT HALF of WHITE background with soft blur. Other social
+previews appear near deliberate left/right canvas edges, at limited rotations,
+not arbitrary random overlays on link text. On blue 1/3 NEXT PAGE strip:
+small Gallery title, two-line eyebrow copy, NEXT PAGE followed by thin line
+whose yellow fill grows with continued wheel input. Only when complete navigate
+to the existing real /galeri route (after separate white/blue scroll stops).
+DECISION: separate footer-specific styles and hover adapter; preserve existing
+global scroll-pacing owner and stage separation. Blue-held stage accumulates up
+to 840px of fresh wheel input, at most 140px per event; never redirect on the
+first impulse. A local /media/footer/school-map.webp image overrides Maps
+preview when installed using scripts/set-footer-map.sh; existing R2 maps-v1.webp
+remains fallback. No R2 overwrite, DB or gallery/story changes.
+PROOF: code and dedicated tests prepared, remote GitHub commit pending;
+local frontend/browser/PHP/JS tests pending.
+NEXT: pull feature, run check/build/test, install screenshot with CLI path,
+hover Maps and inspect blue progress in browser.
+
+
+## Footer three distinct scroll gestures — 2026-10-12
+
+OWNER CORRECTION: (1) after final Story leaves naturally, the complete white
+footer rises and rests fully in viewport with ZERO blue visible; (2) only a NEW
+intentional wheel gesture can reveal the bottom blue NEXT PAGE strip occupying
+33.333svh; (3) after blue is entirely displayed and stopped, only ANOTHER
+separate intentional wheel gesture can redirect to /galeri. Long coasting
+or one continuous wheel gesture must never auto-skip phases.
+FACT: old next-shell was 160svh and its auto navigation listened for scroll
+progress >= .985; existing global scroll-pacing owns all wheel delivery,
+including coasting, so a single impulse could skip the white and blue stages.
+DECISION: remove extra scroll runway and sticky blue placement; normal 33.333svh
+blue strip follows full white canvas. Create pure, tested footer gate policy.
+Use existing scroll-pacing controller as SOLE wheel owner: bound delivered travel
+at real white-complete and blue-complete document offsets, reset kinetic debt
+at each checkpoint, and allow unlock/navigation only after a fresh wheel
+gesture separated by >=280ms and delta >=14px. Negative scroll remains possible
+at every stage; fullscreen/tall mobile whites use white bottom stop, not
+assumed 100vh. Direct Gallery/Article links remain functional; reduced motion
+uses native scroll and disables automatic routing as before.
+PROOF: authored src and node unit tests; local build / node / php / browser
+proof required. Avoid claiming browser PASS before owner sees it.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser proof.
+NEXT: owner local pull, npm build, node --test, inspect 3 pauses and RTL.
+
+
+## Footer canvas horizontal thirds and Gallery scroll handoff — 2026-10-12
+
+OWNER_CORRECTION: white footer is divided into THREE HORIZONTAL HEIGHT BANDS,
+not into a desktop grid with an empty FIRST COLUMN. Top ONE-THIRD of white
+viewport intentionally blank; BOTTOM TWO-THIRDS holds three SIDE-BY-SIDE
+groups: left large school description, middle large text list of all FIVE
+channels (WhatsApp, Maps, Instagram, Gmail, Facebook), right text-and-logo
+partner list. No newsletter, giant black footer or extra content panels.
+Blue bottom NEXT PAGE strip is only ONE-THIRD viewport height, full width;
+not another 100svh page. Use Lusion-style "keep scrolling", huge GALLERY
+primary link, NEXT PAGE arrow, ARTIKEL smaller alternate destination.
+A native-scroll runway (no global wheel controller or preventDefault)
+arms Gallery navigation when user continues scrolling through the blue
+strip; direct link always remains clickable, reduced-motion disables
+automatic navigation. White contact-image hover and partner scale retained.
+Desktop has three lower columns, tablet two, mobile one; RTL mirrored.
+FACT: prior implementation incorrectly positioned empty space in COLUMN 1
+and allocated 100svh to the blue panel. Canonical home.footer locale contracts
+already provide all contact URLs, labels, and 5 partner assets.
+DECISION: no Stories/video/controller change, no new DB/remote images,
+only footer markup/CSS, local next-page trigger and scoped test.
+PROOF: authored GitHub source patch, local build/Pest/visual pending.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local browser proof.
+NEXT: pull feature; verify 1/3 vertical whitespace and 1/3 blue strip.
+
+
+## Footer white/blue after final Story — 2026-10-12
+
+OWNER_ACCEPTED: once article 04 h3 reaches the viewport center, unpin the
+final 100svh video and caption together. A full white footer rises into view
+from below, then a single bright-blue next-pages navigation stage.
+Desktop white stage splits into 3 columns; first intentionally blank, columns
+2–3 contain existing localized school description, Maps/WhatsApp, textual
+Instagram/Gmail/Facebook, five real partner logos. Contact hover/focus reveals
+blurred Maps half-screen or varying rotated social-media assets (max 45deg)
+behind foreground links. Partners scale slightly. Blue stage links to real
+/article and /galeri routes with photographic hover previews.
+FACT: all contact/partner labels and links already exist in home.footer
+locale contracts, and all media in config('media.static.footer').
+DECISION: reuse old canonical contact data without DB or invented links.
+Only Stories' sticky end checkpoint changes, from last caption clearing top
+to caption 04 reaching center; no global wheel-owner edits.
+Styling/hover local to footer; no-JS readable, keyboard-focus preview and
+reduced-motion transitions disabled. Phone stacks cols 2–3 naturally.
+PROOF: source, targeted test and geometry test prepared, local build/browser
+proof pending.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE full runtime visual proof.
+NEXT: pull feature; run build, scoped Pest and JS test; inspect 3 locales and
+responsive footer/handoff.
+
+
+## Stories title queue / word entrance / title-driven media — 2026-10-12
+
+OWNER_ACCEPTED: captions A→B→C→D form a vertical scroll queue, not timed
+opacity slides. Previous caption scrolls naturally OFF TOP, next comes from
+below; when previous copy bottom clears the viewport, next title/copy is
+centered and its video switches. Only ENTRY is word-blurred/revealed like
+Gallery/Testimonial titles. No blur or fade when leaving above.
+FACT: old desktop Stories animation faded copy out by a fixed timing phase,
+and changed background before the next title center. Mobile previously
+slid the whole background panel with its caption tied to the same motion.
+DECISION: measure real caption heights; derive viewport-centered checkpoints
+where next caption arrives at the exact previous top-exit boundary.
+A single native-scroll read drives all caption translations, enter-only word
+opacity/blur, and media cutover. Desktop crossfades media only AFTER the
+center checkpoint. Phone retains upward-covering VIDEO planes; caption
+translation remains independent and first caption begins near phone bottom.
+Reduced motion/no JS are static stacked posters with readable text.
+Preserve all 4 dummy localized features, RTL direction, 25svh section gap,
+media loading policy and global scroll controller ownership.
+PROOF: source patch and test assertions; local/browser runtime pending.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/build/browser.
+NEXT: pull and inspect exact title-center ↔ video-switch alignment.
+
+
+## Stories & Insights 4-video dummy scroll sequence — 2026-10-12
+
+OWNER_ACCEPTED: extend existing approved article 01 with three dummy videos:
+02 musala, 03 renang, 04 taekwondo, no database/admin binding.
+FACT: videos and poster keys already exist in the Gallery catalog/media config;
+current section only displayed one 100svh video and localized overlaid copy.
+DECISION: ID/EN/AR localized content in lang/*/stories.php, sources in Blade
+local media array. Four full-width 100svh layers within a 500svh sequence.
+Enhanced desktop: one sticky stage, crossfade sequential media as text gently
+rises (all driven by native scroll progress, no additional wheel controller).
+Enhanced phone: incoming FULL article layer rises from viewport bottom and
+covers previous stationary layer; no horizontal carousel.
+No-JS or reduced motion: four articles as normal stacked poster sections.
+Videos muted/loop/playsinline, hydrated only near their active scroll range,
+paused outside the viewport and during BFCache suspension.
+Preserve title-only heading, 25svh Testimonials gap, approved editorial
+copy positioning and end-of-page treatment. No admin/DB/gallery/Testimonials
+or global scroll-state owner changes.
+PROOF: source patch and focused four-card locale assertions prepared.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local build, PHPUnit and browser proof.
+NEXT: local pull, build, tests, inspect desktop/mobile/RTL scrolling.
+
+
+## First Stories video visual parity correction — 2026-10-12
+
+OWNER_ACCEPTED: Fantasy-like treatment of first dummy media; Latin copy in
+RIGHT visual half, Arabic copy in LEFT half (newest owner correction).
+FACT: owner screenshots showed default large Inter title (~72px), copy on
+wrong edge, bright footage and exposed trailing white after video. Reference
+shows a small 01 marker, bold condensed editorial title (~44px), short quieter
+description and darkened media.
+DECISION: keep single 100svh stage and dummy video; shift copy toward physical
+right/left via logical margin-inline-start:auto. Mirror 25% side gradient
+to right for LTR / left for RTL; darken backdrop video/poster; condensed Latin
+display stack with ~44px sizing, restrained description and 01 eyebrow.
+Phone: copy stays at bottom and aligns toward physical right/left respectively.
+Remove Stories trailing bottom padding so scrolling to the page end does not
+expose a white band. Preserve previous 25svh Testimonial-to-header gap.
+No JS, lifecycle, data, scroll, heading or next-story changes.
+PROOF: owner screenshots and changed scoped code; build/viewport/RTL
+browser proof still need local execution.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE rendered proof.
+NEXT: local pull/build, visually confirm stage in ID/AR on desktop/mobile.
+
+
+## Stories & Insights first dummy video — 2026-10-12
+
+OWNER_ACCEPTED: one first article video only; dummy local content, no DB/admin
+or source-of-truth coupling until subsequent explicit stage.
+FACT: Gallery catalog already references IT video /gallery/media/it-v1.mp4
+and school-life labit poster from existing R2 config.
+DECISION: full-bleed 100svh single video and accessible overlaid localized title
+and description; desktop copy occupies logical inline-start half with a
+25%-wide edge dark-to-transparent gradient (RTL mirrored), phone copy sits
+logical bottom-start with bottom gradient. No controls or audio.
+Video hydrates near viewport, pauses away/hidden/BFCache, reduced motion keeps
+the existing poster. No timeline, gallery/testimonials controller or DB changes.
+PROOF: source and scoped updated test authored; owner/local build, PHP and
+browser rendition remain to be verified.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser proof.
+NEXT execution channel: owner/local terminal; pull, run scoped test/build,
+inspect first video before starting video 2.
+
+
+## Stories & Insights OLD heading parity correction — 2026-10-12
+
+OWNER_ACCEPTED: proceed one visible capability at a time; correct heading before
+the first video. Initial heading was incorrectly a heavy one-line text block.
+FACT: OLD article showcase uses two display lines, 360 weight, .84 leading,
+-.055em tracking, opposite vertical reveal and later horizontal lower-line
+shift; Program/Values V2 use the same shared section-heading engine.
+DECISION: Stories adopts two semantic/visual lines, display scales and V2
+responsive gutters; its lower line moves toward the physical center and RTL
+mirrors movement. Reuse shared heading controller with 900ms reveal then shift.
+Existing Program/Values behavior remains unchanged; no media/scroll/Testimonials
+changes. No-JS remains visible, reduced motion renders static.
+PROOF: authored source and focused DOM test; local structure, build, PHP,
+Chromium/WebKit and owner visual feedback remain unverified in this channel.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE local/browser proof.
+NEXT execution channel: owner/local terminal; pull feature and inspect heading.
+
+
+## Owner correction: equal corner gutters / equal reading hold — 2026-10-12
+
+PROOF: 84 Testimonials locale-width cells and fallback/lifecycle PASS both engines;
+aggressive native/word agreement PASS after settling initial direct navigation.
+Old Gallery handoff assertions require adaptation to the accepted black-hold
+overlap; original animation/geometry owners remain unchanged.
+OWNER_ACCEPTED: physical bottom gutter equals the logical side gutter, including
+centered wide content. Sharp reading hold equals the full blur-to-sharp scroll
+distance, then rise/fade/white departure. Preserve the existing title/media gap.
+ACTIVE STEP: bounded Testimonials geometry/timing correction only, then repeat
+affected motion/matrix/real-wheel proof and publish continuation PR.
+STATUS: PASS previous scoped proof; BLOCKED_BY_MISSING_EVIDENCE latest correction.
+NEXT execution channel: Terminal Codex, affected proof then continuation PR.
+
+## White question checkpoint / shared native delivery — 2026-10-12
+
+PROOF: new white/lower-corner exact-font matrix84 cells and no-JS PASS locally;
+revised lifecycle/reduced reentry PASS both engines after awaiting actual Gallery
+reinitialization before direct position assertions. Constant title/media gap PASS.
+Physical Testimonials samples expose up to.937 first-word opacity difference
+from current native progress: its event-driven RAF can lag the pacer, like GSAP.
+DECISION / ACTIVE STEP: composition passes a scrollChanged port from the existing
+pacer to the existing Testimonials owner. Synchronize only while nearby, cancel
+its redundant pending RAF, render same native delivery; no duplicate controller.
+Prove native/word agreement plus reverse into Gallery without premature field.
+STATUS: PASS current scoped layout; BLOCKED_BY_MISSING_EVIDENCE final synchronized
+journey, regression and CI pending. Existing full PHP remains FAIL.
+NEXT execution channel: Terminal Codex, combined proof then continuation PR.
+
+## Scroll proof / revised white question storyboard — 2026-10-12
+
+PROOF: corrected desktop angular pacing and same-turn Gallery/native agreement
+PASS Chromium/WebKit; compact390/768 aggressive wheel PASS both engines.
+Compact test first sampled stale pre-resize observer state; waiting for actual
+layout refresh and cards-motion readiness removes that initialization conflict,
+without changing or relaxing flip assertions. Pose budget uses last rendered
+angles; original Values/Gallery owners remain unchanged.
+OWNER_ACCEPTED latest correction supersedes black-on-light intro: question white
+on Gallery black, logical lower-start corner, exactly Gallery statement font
+size/weight/tracking/leading. Begin after the Gallery sentence/media disappear;
+fully sharp white text first, then upward fade/blur and gradual white field.
+Maintain the title-to-first-media gap during their shared native upward travel.
+ACTIVE STEP: render question over Gallery's existing empty final hold, without
+covering any still-visible Gallery media/words; reserved Testimonials-only native
+flow overlap, transparent before blackout. Then prove new journey/matrix/fallback.
+STATUS: PASS scoped scroll checkpoints; BLOCKED_BY_MISSING_EVIDENCE revised
+white intro and final combined proof. Existing full PHP71FAIL/75ERROR unchanged.
+NEXT execution channel: Terminal Codex, revised Testimonials surface then PR.
+
+## Pacing / GSAP observation checkpoint — 2026-10-12
+
+FACT: revised title/OLD rows matrix84 locale-width cells PASS locally.
+Updated physical coast proved315/296px ordinary impulse travel; prior candidate
+213/209px. Aggressive phase travel is faster, but Gallery/native samples can
+separate by .04048 progress (255px) because ScrollTrigger observes the pacer's
+native write on a later tick. A first WebKit aggressive attempt FAIL remains
+in logs; repeat passes do not explain or erase it. Local fixture server also
+expired mid-suite; no-JS/lifecycle failures from that run are not product PASS.
+DECISION / ACTIVE STEP: after each bounded native pacing write inside Gallery,
+call the existing gallery trigger.update(), preserving its timeline and curves.
+Require scene/native agreement on the same turn in aggressive tests; then rerun
+all affected proof. No extra controller, cloned timeline or weakened assertion.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE final synchronized runtime gates pending.
+NEXT execution channel: Terminal Codex, proof then continuation PR; no merge.
+
+## Owner correction in progress — 2026-10-11
+
+FACT: first candidate44b75206 pushed to feat/natural-scroll-testimonials;
+owner reports scroll too slow/no perceptible inertia, late static question,
+unwanted description and horizontal scroll chrome. Prior local PASS is
+candidate-specific and does not certify the corrected experience.
+OWNER_ACCEPTED: revised storyboard in the same bounded blueprint and issue100.
+ACTIVE STEP: replace conservative per-word/universal frame limits with visual
+phase budgets; explicit short velocity coast; Gallery-style word reveal then
+upward blur with simultaneous white/media arrival; remove row scroll chrome.
+Gallery/Values owners, original data, main and PR97/99 heads remain protected.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE corrected runtime/proof pending.
+NEXT execution channel: Terminal Codex, implement owner correction and prove it.
+
+## Natural scroll / Gallery–Testimonials — 2026-10-11
+
+FACT: main cdfd30980516bbe2022fd0f8c12e64e4a613c8c3 freshly fetched;
+PR99 7d020133 and PR97 5518756f still OPEN. Working tree began clean; retained
+stash backup/gallery-before-scrollbar-merge. Branch feat/natural-scroll-testimonials
+contains both original parents via merge e0b7931f; old branches/main untouched.
+OWNER_ACCEPTED: issue100; current detailed brief and matching blueprint
+blueprints/2026-10-11-natural-scroll-testimonials.md, IMPLEMENTING.
+DECISION: no universal velocity cap. Ordinary wheel input gains2×; stronger
+intent scales the bounded impulse. CSS/WAAPI uses actual remaining duration;
+scroll-linked Values/Gallery/intro phases reserve14 movement segments for12
+intermediate paints. Native scroll remains authoritative. Values1:1, original
+GSAP choreography, media and geometry stay byte-identical to combined PR97/99.
+Input release decays from actual delivered velocity, discards unused slow-phase
+debt, stops within180ms, reverses immediately and preserves fractional travel.
+WebKit root cause: delayed first RAF149–180ms crossed old145ms cutoff, dropping
+accepted input before scrollBy. Synchronous bounded first delivery fixes it.
+One performance.now clock also avoids a prior-frame RAF timestamp truncating
+glide. Paint-stall200ms and real post-input glide proved on both engines.
+Testimonials: Gallery black hold unchanged; enough light precedes black2–3-line
+question; ID/EN start-left, AR start-right/Cairo. Existing21 disclosed sample
+quotes/photos form OLD alternating2:1 tracks; keyboard/touch restores native row
+browsing. Reduced/no-JS remain complete. Final white area; Article unchanged.
+Release old Gallery-owned Testimonials font selector to the narrow AR adapter.
+PROOF: diff, structure317<=200, build and Pint PASS; Node17 PASS; PHP scoped
+16tests/259assertions PASS. Full345:199PASS/71FAIL/75ERROR, exactly the same
+failure/error names as combined baseline342:196PASS/71FAIL/75ERROR. Full FAIL.
+Chromium153/WebKit26.6: new pacing4 tests PASS; Testimonials6 tests PASS,
+42visual locale/width cells per engine plus six switches, short/orientation,
+200% text expansion, touch/keyboard, reduced/no-JS and synthetic lifecycle.
+Gallery/Values11 distinct regression cases per engine PASS after restoring
+missing local WebKit audio, MP4 demux and H264 plugins. Initial media error4
+and failed logs retained; production media code unchanged. No relaxed assertion.
+Three comparable headless1440x900 samples: baseline frame-p95 median33.2ms/
+worst33.3ms; continuation16.7/16.8ms, zero long tasks and idle section writes.
+These are local incremental measurements; GPU path/native-device/PSI/CWV unproven.
+Durable proof, source hashes, raw logs and selected captures:
+../../docs2/proof/natural-scroll-testimonials/proof.json.
+STATUS: PASS local scoped UI/input; FAIL existing full PHP baseline;
+BLOCKED_BY_MISSING_EVIDENCE final CI/native Safari/physical/speech/PSI/field CWV.
+NEXT channel Terminal Codex: publish the reviewed continuation PR and verify CI;
+keep main and original PR heads unchanged. No merge authorized.
+
+
+## Homepage cinematic wheel velocity cap — 2026-10-11
+
+OWNER_ACCEPTED: rapid wheel/trackpad input must not leap across About,
+Program, Values flip/hold/native exit, or Gallery's opening/shrink/media phases.
+Not an autoplay snap gate or timer per section: actual page-scroll velocity is
+bounded, while original controllers and GSAP ScrollTrigger read native scrollY.
+DECISION: one homepage-only (Landing V2 composition root) wheel pacer with
+1680 CSS px/s frame budget (owner doubled previous 840 on 2026-10-11),
+max 112 px outstanding and 145ms idle cutoff,
+direction reversal discards stale debt. Respect scrollbar/programmatic jumps,
+keyboard access, nested scroll, dialogs, browser zoom, lifecycle and reduced
+motion. Touch is intentionally native pending independent mobile safety proof;
+no external package or alternate scroll DOM. Issue #98, PR pending.
+PROOF: unit normalization/burst/bounds/reverse/stop plus Chromium/WebKit
+physical wheel browser evidence and existing Gallery/Values scoped regression.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE until CI, not a Lusion implementation claim.
+## Gallery opening title–video equal gutters — 2026-10-11
+
+OWNER_ACCEPTED: ONLY while the Gallery title and main video first rise
+together, title-bottom→media-top vertical gap must equal the opening video's
+left and right viewport insets (1:1:1), rather than the previous tiny stage
+opening gap. Preserve all ten media and shrinking, GSAP pose/time curves,
+main video width, title typography, Values→Gallery native 1:1 handoff,
+background transition, reduced/static fallback and page-end handoff.
+FACT: Gallery geometry sets openingX=(viewport-openingWidth)/2 but openingY
+is only clamp(1.1vw, 6px, 16px); current h2/media distance is openingY.
+DECISION: for enhanced Gallery, add ONLY openingX-openingY as measured
+native-flow bottom padding of the Gallery header, before ScrollTrigger
+calculates shrinkStart. Maintain opening media Y and all GSAP media tween
+positions; on resize recalculate from current responsive media geometry.
+Add direct ID/EN/AR Chromium/WebKit geometric assertions in existing Gallery
+heading/scroll browser matrix, including several pre-shrink scroll positions.
+Issue #96. Scope only Gallery CSS, timeline, lifecycle cleanup and tests.
+STATUS: PR CI PENDING. No device or production visual proof claimed.
+
 ## Values–Gallery continuous native handoff — 2026-10-11
 
 OWNER_ACCEPTED: screenshot #4 is the expected shared viewport. With constant

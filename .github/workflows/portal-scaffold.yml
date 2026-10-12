@@ -1,0 +1,58 @@
+name: Portal scaffold regression
+
+on:
+  pull_request:
+    paths:
+      - 'app/Application/Portal/**'
+      - 'app/Domain/Portal/**'
+      - 'app/Http/Controllers/PortalPlaceholderController.php'
+      - 'app/Http/Controllers/Auth/LoginController.php'
+      - 'app/View/Presenters/SiteNavbarMenuPresenter.php'
+      - 'routes/web/**'
+      - 'routes/admin/core.php'
+      - 'resources/views/portal/**'
+      - 'resources/views/auth/login-perspective.blade.php'
+      - 'resources/views/pages/ppdb*.blade.php'
+      - 'lang/*/portal.php'
+      - 'tests/Feature/PortalScaffoldTest.php'
+      - 'tests/Feature/PublicAuthAndPpdbAccessTest.php'
+      - '.github/workflows/portal-scaffold.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  portal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: mbstring, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: npm ci
+      - run: npm run check:structure
+      - run: npm run build
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+      - name: Verify portal pages, authentication and PPDB
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: |
+          php artisan test --compact \
+            tests/Feature/PortalScaffoldTest.php \
+            tests/Feature/PublicAuthAndPpdbAccessTest.php

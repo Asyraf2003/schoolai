@@ -25,16 +25,21 @@ it('preserves database copy and active legacy section destinations', function ()
         'cta_url' => '#program',
     ]);
 
-    $this->get(route('home'))
-        ->assertSee('A &lt;strong&gt;school&lt;/strong&gt; for everyone', false)
+    $response = $this->get(route('home'));
+
+    $response->assertSee('A &lt;strong&gt;school&lt;/strong&gt; for everyone', false)
         ->assertDontSee('<strong>school</strong>', false)
         ->assertSee('href="#program"', false)
-        ->assertSee('href="#visi-misi"', false)
-        ->assertSee('href="#kontak"', false)
+        ->assertSee('href="#"', false)
+        ->assertSee('id="kontak"', false)
         ->assertSee('id="program"', false)
-        ->assertDontSee('<footer', false)
         ->assertSee(config('media.homepage_hero_video_url'), false)
         ->assertSee(config('media.static.hero_school'), false);
+
+    $document = new DOMDocument;
+    @$document->loadHTML($response->getContent());
+    $dom = new DOMXPath($document);
+    expect($dom->query('//footer[@id="kontak"][@data-footer-v2]')->length)->toBe(1);
 });
 
 it('preserves the admissions campaign while registration is open', function (): void {

@@ -6,21 +6,23 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders a localized Login link without direct role or public PPDB menu links', function (string $locale, string $login): void {
+it('renders localized Login and PPDB links while other navigation links remain placeholders', function (string $locale, string $login): void {
     PpdbSetting::query()->firstOrFail()->update(['is_active' => false]);
 
     $response = $this->withSession(['locale' => $locale])->get(route('home'))->assertOk();
     $content = $response->getContent();
+    $items = $response->viewData('navigation')['menuItems'];
 
     expect($content)
         ->toContain('dir="'.($locale === 'ar' ? 'rtl' : 'ltr').'"')
         ->toContain($login)
+        ->toContain('href="'.route('portal.login').'"')
+        ->toContain('href="'.route('ppdb').'"')
         ->not->toContain('href="'.route('guru.login').'"')
-        ->not->toContain('href="'.route('murid.login').'"')
-        ->not->toContain('href="'.route('ppdb').'"')
-        ->not->toContain('href="/ppdb"');
-    expect(substr_count($content, 'href="'.route('portal.login').'"'))->toBeGreaterThanOrEqual(2)
-        ->and(substr_count($content, 'nav-login'))->toBeGreaterThanOrEqual(2);
+        ->not->toContain('href="'.route('murid.login').'"');
+
+    expect(collect($items)->firstWhere('type', 'login')['href'])->toBe(route('portal.login'))
+        ->and(collect($items)->firstWhere('type', 'ppdb')['href'])->toBe(route('ppdb'));
 })->with([
     'Indonesia' => ['id', 'Login'],
     'English' => ['en', 'Login'],
@@ -70,11 +72,11 @@ it('uses PPDB settings to control its dedicated route and homepage campaign owne
 
     $setting->update(['is_active' => false]);
 
-    $this->get(route('home'))
+    $this->withSession(['locale' => 'id'])->get(route('home'))
         ->assertOk()
         ->assertSee('Opening Admin Saat PPDB Tutup')
         ->assertDontSee(__('runtime.home.ppdb_campaign_title'))
-        ->assertDontSee('href="/ppdb"', escape: false);
+        ->assertViewHas('hero', fn (array $hero): bool => ($hero['slides'][0]['is_ppdb_campaign'] ?? false) === false);
 
     $this->get(route('ppdb'))->assertNotFound();
 });

@@ -39,9 +39,7 @@ export function mountSectionHeading(root, name, duration, travel) {
             if (!lower) { setState('complete'); release(); return; }
             setState('shifting');
             release();
-            const distance = name === 'program'
-                ? 'calc(var(--program-heading-sign) * var(--program-heading-shift))'
-                : 'calc(var(--values-heading-sign) * var(--values-heading-shift))';
+            const distance = `calc(var(--${name}-heading-sign) * var(--${name}-heading-shift))`;
             animations = [lower.animate([
                 { transform: 'translateX(0px)' }, { transform: `translateX(${distance})` },
             ], { duration, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'both' })];

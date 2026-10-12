@@ -32,6 +32,9 @@ export async function session(engine, options = {}) {
         try { await fs.access(path); } catch { return route.continue(); }
         return route.fulfill({ path, contentType: 'image/webp' });
     });
+    if (process.env.PROGRAM_TESTIMONIAL_FIXTURES) await page.route('**/site/testimonials/testi-*-v1.webp', route => route.fulfill({
+        path: `${process.env.PROGRAM_TESTIMONIAL_FIXTURES}/${new URL(route.request().url()).pathname.split('/').at(-1)}`, contentType: 'image/webp',
+    }));
     if (process.env.PROGRAM_SCROLLTRIGGER_FIXTURE) {
         await page.route('**/gsap@3.7.1/dist/gsap.min.js', route => route.fulfill({
             path: process.env.PROGRAM_GSAP_FIXTURE, contentType: 'application/javascript',
@@ -40,7 +43,7 @@ export async function session(engine, options = {}) {
             path: process.env.PROGRAM_SCROLLTRIGGER_FIXTURE, contentType: 'application/javascript',
         }));
     }
-    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.goto(options.baseURL ?? url, { waitUntil: 'domcontentloaded' });
     if (options.javaScriptEnabled !== false) await page.waitForFunction(() => !!document.querySelector('[data-program]')?.dataset.programState);
     return { browser, context, page, errors, requests, version: browser.version(), close: () => browser.close() };
 }

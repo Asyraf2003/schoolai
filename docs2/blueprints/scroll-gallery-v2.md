@@ -7,6 +7,14 @@ Issue86 / branch feat/v2-scroll-gallery / PR87.
 
 ## OWNER_RAW / OWNER_CONFIRMED
 
+Latest owner refinement (issue #96): ONLY Gallery's opening arrival layout
+must have the same measured spacing from heading bottom to main video top
+as the opening video's equal left/right page gutters. Dynamic openingX
+from existing Gallery media geometry determines the one native-flow header
+padding correction beyond the existing small openingY. Shrink geometry,
+ten other media entrance/timing and finalized GSAP choreography are protected.
+
+
 Exactly10 real media after Values before populated Testimonials:3 left,4 center,
 3 right. Media01 is the opening video and becomes the center column top.
 Latest corrections supersede the initial white-background/top-aligned storyboard:

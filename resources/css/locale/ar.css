@@ -1,5 +1,11 @@
-/* Homepage V2 ownership bucket. Isi hanya jika concern ini benar-benar dibutuhkan. */
+/* The homepage Arabic adapter preserves the shared semantic DOM and type sizes. */
+[lang="ar"] .landing { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .hero__title { letter-spacing: normal; line-height: 1.35; }
+[lang="ar"] .hero__eyebrow { letter-spacing: normal; line-height: 1.5; text-transform: none; }
+[lang="ar"] .hero__description { line-height: 1.65; }
 [lang="ar"] .site-header { font-family: Cairo, var(--v2-font); letter-spacing: normal; }
+[lang="ar"] .site-header__links strong { line-height: 1.45; }
+[lang="ar"] .site-header__links small { line-height: 1.6; }
 [lang="ar"] .about { font-family: Cairo, var(--v2-font); }
 [lang="ar"] .about__headline, [lang="ar"] .about__label { letter-spacing: normal; line-height: 1.5; }
 [lang="ar"] .program {
@@ -13,6 +19,10 @@
 [lang="ar"] .program__heading, [lang="ar"] .program__detail-title, [lang="ar"] .program__eyebrow {
     letter-spacing: normal; text-transform: none; line-height: 1.35;
 }
-[lang="ar"] .program__type-line { letter-spacing: normal; text-transform: none; }
+[lang="ar"] .program__type-line { letter-spacing: normal; text-transform: none; line-height: 1.35; }
 [lang="ar"] .values { font-family: Cairo, var(--v2-font); --values-heading-sign: -1; }
 [lang="ar"] .values__heading { letter-spacing: normal; line-height: 1.35; }
+
+[lang="ar"] .testimonials { font-family: Cairo, var(--v2-font); }
+[lang="ar"] .testimonials h2 { max-inline-size: 15ch; letter-spacing: normal; line-height: 1.45; }
+[lang="ar"] .testimonials :is(blockquote, cite) { letter-spacing: normal; line-height: 1.45; }

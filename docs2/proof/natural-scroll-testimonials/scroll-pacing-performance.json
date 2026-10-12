@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-11T15:31:50.321Z",
+  "platform": "linux",
+  "url": "http://127.0.0.1:8030",
+  "profiles": [
+    {
+      "name": "PR97+PR99",
+      "entryURL": "http://127.0.0.1:8031",
+      "samples": [
+        {
+          "run": 0,
+          "frameP95": 16.799999999999955,
+          "longTasks": [],
+          "travel": 2380,
+          "idleWrites": 0
+        },
+        {
+          "run": 1,
+          "frameP95": 33.200000000000045,
+          "longTasks": [],
+          "travel": 2660,
+          "idleWrites": 0
+        },
+        {
+          "run": 2,
+          "frameP95": 33.299999999999955,
+          "longTasks": [],
+          "travel": 2604,
+          "idleWrites": 0
+        }
+      ],
+      "medianP95": 33.200000000000045,
+      "worstP95": 33.299999999999955
+    },
+    {
+      "name": "continuation",
+      "entryURL": "http://127.0.0.1:8030",
+      "samples": [
+        {
+          "run": 0,
+          "frameP95": 16.799999999999955,
+          "longTasks": [],
+          "travel": 3706,
+          "idleWrites": 0
+        },
+        {
+          "run": 1,
+          "frameP95": 16.700000000000273,
+          "longTasks": [],
+          "travel": 3674,
+          "idleWrites": 0
+        },
+        {
+          "run": 2,
+          "frameP95": 16.700000000000273,
+          "longTasks": [],
+          "travel": 3469,
+          "idleWrites": 0
+        }
+      ],
+      "medianP95": 16.700000000000273,
+      "worstP95": 16.799999999999955
+    }
+  ],
+  "viewport": [
+    1440,
+    900
+  ],
+  "engine": "Chromium",
+  "mode": "headless Linux, real wheel112, fresh contexts; GPU path not certified",
+  "claims": "local incremental frame/idle evidence only"
+}

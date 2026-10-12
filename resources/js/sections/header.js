@@ -132,8 +132,9 @@ export function mountHeader(root, { requestAudio, heroBoundary, modalChanged }) 
             audioStatus = { enabled, available };
             audio.hidden = !available;
             audio.setAttribute('aria-pressed', String(enabled));
-            audio.querySelector('[data-audio-label]').textContent = enabled ? audio.dataset.labelOn : audio.dataset.labelOff;
-            audio.setAttribute('aria-label', enabled ? audio.dataset.actionOn : audio.dataset.actionOff);
+            const label = enabled ? audio.dataset.labelOn : audio.dataset.labelOff;
+            audio.querySelector('[data-audio-label]').textContent = label;
+            audio.setAttribute('aria-label', `${label}. ${enabled ? audio.dataset.actionOn : audio.dataset.actionOff}`);
             presentation(state.snapshot());
         },
         dispose() {
