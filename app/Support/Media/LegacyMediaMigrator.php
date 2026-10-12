@@ -17,7 +17,7 @@ final class LegacyMediaMigrator
     private const OWNERS = [
         'gallery' => [GalleryItem::class => ['media_url' => 'gallery/media', 'thumbnail_url' => 'gallery/thumbnails']],
         'testimonials' => [TestimonialMedia::class => ['media_url' => 'testimonials/media']],
-        'articles' => [Article::class => ['cover_url' => 'articles/covers']],
+        'articles' => [Article::class => ['cover_url' => 'articles/covers', 'cover_thumbnail_url' => 'articles/thumbnails']],
     ];
 
     public function __construct(private readonly R2MediaStorage $mediaStorage) {}

@@ -1,5 +1,54 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## First release checkpoint — 2026-10-13
+
+FACT: fetched main268cde30; active feat/public-content-integration / PR106.
+Owner authorizes local SEO integration, R2 finalization, branch inventory,
+validated commit/push/merge to main and tag v0.1.0-rc.1; deployment is forbidden.
+BLUEPRINT RELEASE-R2-01: OWNER_ACCEPTED; IMPLEMENTING in Terminal Codex.
+GOAL: existing R2 adapter owns all first-party public media; private application
+files remain local and Vite assets remain build output. CRUD already suffices.
+GAP: footer map preview remains local; cPanel runner requires a storage symlink;
+local SEO still marks the real Gallery page noindex. R2 GetBucketCors is denied
+by the object token; actual HTTPS, origin headers and playback need fresh proof.
+DECISION: correct these existing owners, validate production R2 configuration,
+retain established object namespaces, Gallery catalog and all motion sources.
+Scope: media configuration/storage/resolver, SEO head/shell, footer media URL,
+cPanel templates/scripts, focused tests and one compact branch inventory.
+Protected: locale copy/type/layout, Gallery presenter/geometry/timeline, private
+files, dependencies, branch history and existing R2 objects. No new file manager.
+TIERS: XS/SM/MD/LG/XL/2XL preserve all current layouts; public grid1/2/2/2/3/3;
+navigation remains1180/1181. ID/EN share Inter/LTR, AR retains Cairo/RTL.
+SEO is server-rendered; native media/no-JS/reduced-motion fallbacks remain.
+Media migration changes transport only, with identical footer map bytes; no new
+critical preload, media loop, controller, listener or art-direction decision.
+ACTIVE: finalize the existing public-media and SEO capability, prove focused PHP,
+full PHP/JS, structure/build/diff, Chromium/WebKit responsive/locale behavior,
+R2 upload/read/range/CORS/playback and secret-free cPanel source/preflight.
+PROOF: PHP270tests/2176assertions PASS; opt-in real R2 upload test1/40 PASS.
+Four real CRUD objects retain MIME/cache metadata and survive soft-delete/restore;
+the test blocks all S3 delete commands. Footer map223348bytes copied without
+replacing objects; downloaded binary is identical. No R2 object was deleted.
+All94distinct configured/active/proof media URLs return200 and exact production
+CORS. Range reads206/32bytes; preflight204; untrusted origin gets no allow-origin.
+GetBucketCors control-plane read remains AccessDenied with the object token;
+actual public behavior is proven without changing the Cloudflare policy.
+Chromium154/WebKit26.6 public576cells + admin/landing300cells PASS, including
+16widths,3locales, reduced/normal motion, focus,200%zoom,landscape,no-JS.
+Additional SEO24cells and6actual MP4 playbacks/range reads PASS in both engines,
+including newly uploaded Gallery/Article videos. WebKit initially lacked audio
+plugin/decoder paths; corrected test environment, not product source, resolves it.
+JS46pure/runtime tests PASS;185browser cases skip in the generic no-server run,
+with scoped browser suites run explicitly above. Composer/npm audit PASS.
+Diff/Pint/structure262files/200line/build60modules PASS. Isolated cPanel runner
+executes migrations/optimize and self-deletes without a public storage symlink.
+Gallery catalog/presenter, CSS/JS animation owners are byte-unchanged from PR106.
+Inventory:127remote branches;ACTIVE2,COVERED79,SUPERSEDED35,UNUSED11; none deleted.
+STATUS: PASS scoped pre-deployment R2/SEO proof. PageSpeed100, physical devices,
+screen-reader, field CWV and actual cPanel hosting runtime remain unclaimed.
+NEXT CHANNEL: Terminal Codex; publish the verified branch, require affected CI
+PASS, merge without deleting branches, then tag v0.1.0-rc.1. Deployment forbidden.
+
 ## Public content integration — 2026-10-12
 
 FACT: fetched main268cde30; /galeri was a placeholder and video articles lacked

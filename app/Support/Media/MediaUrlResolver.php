@@ -21,7 +21,7 @@ final class MediaUrlResolver
 
         $parts = parse_url(trim($url));
 
-        if (! is_array($parts) || isset($parts['user'], $parts['pass']) || isset($parts['query']) || isset($parts['fragment'])) {
+        if (! is_array($parts) || array_intersect(['user', 'pass', 'query', 'fragment'], array_keys($parts)) !== []) {
             return null;
         }
 
@@ -57,7 +57,7 @@ final class MediaUrlResolver
             ! is_array($parts)
             || strtolower((string) ($parts['scheme'] ?? '')) !== 'https'
             || empty($parts['host'])
-            || isset($parts['user'], $parts['pass'], $parts['query'], $parts['fragment'])
+            || array_intersect(['user', 'pass', 'query', 'fragment'], array_keys($parts)) !== []
         ) {
             throw new LogicException('MEDIA_PUBLIC_URL must be a canonical HTTPS origin or base URL.');
         }
