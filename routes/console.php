@@ -1,9 +1,11 @@
 <?php
 
 use App\Actions\Auth\BootstrapAdmin;
+use App\Services\SyncInstagramGallery;
 use App\Support\Media\LegacyMediaMigrator;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 use Symfony\Component\Console\Command\Command;
 
 Artisan::command('inspire', function () {
@@ -63,3 +65,20 @@ Artisan::command('media:migrate-r2 {owner?} {--dry-run}', function (): int {
 
     return $stats['failed'] === 0 ? Command::SUCCESS : Command::FAILURE;
 })->purpose('Migrate bounded legacy first-party media owners to canonical R2 URLs');
+
+
+Artisan::command('instagram:sync-gallery {--limit=12}', function (SyncInstagramGallery $sync): int {
+    try {
+        $stats = $sync->run((int) $this->option('limit'));
+    } catch (Throwable $exception) {
+        $this->error('Instagram gallery sync failed: '.$exception->getMessage());
+
+        return Command::FAILURE;
+    }
+
+    $this->info('Instagram gallery sync complete. Updated: '.$stats['synced'].'; skipped: '.$stats['skipped'].'.');
+
+    return $stats['skipped'] > 0 ? Command::FAILURE : Command::SUCCESS;
+})->purpose('Mirror the latest Instagram Creator posts to Cloudflare R2 for /galeri');
+
+Schedule::command('instagram:sync-gallery')->hourly()->withoutOverlapping();

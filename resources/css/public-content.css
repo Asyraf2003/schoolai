@@ -31,3 +31,15 @@
 .article-detail > :is(img, video) { inline-size: 100%; aspect-ratio: 16 / 9; object-fit: contain; }
 @media (min-width: 640px) { .public-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1280px) { .public-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+
+/* Instagram feed is scoped to /galeri and never alters landing V2 choreography. */
+.instagram-feed { margin-block-start: clamp(3rem, 7vw, 5rem); }
+.instagram-feed__heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem; margin-block-end: 1.3rem; }
+.instagram-feed__heading h2 { margin: 0; font-size: clamp(1.4rem, 3vw, 2.15rem); }
+.instagram-feed__heading a, .instagram-feed__card figcaption a { text-underline-offset: .25em; }
+.instagram-feed__card { background: #fff; border-radius: .75rem; overflow: hidden; box-shadow: 0 3px 16px #18372a12; }
+.instagram-feed__card :is(img, video) { border-radius: .75rem .75rem 0 0; }
+.instagram-feed__card figcaption { padding: 1rem; }
+.instagram-feed__card figcaption span { font-size: .78rem; font-weight: 700; text-transform: uppercase; color: #4f7160; }
+.instagram-feed__card figcaption p { font-size: .9rem; max-inline-size: none; line-height: 1.5; overflow-wrap: anywhere; }

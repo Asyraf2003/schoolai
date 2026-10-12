@@ -34,6 +34,10 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    'instagram' => [
+        'access_token' => env('INSTAGRAM_ACCESS_TOKEN'),
+    ],
+
     'unsplash' => [
         'access_key' => env('UNSPLASH_ACCESS_KEY'),
     ],
