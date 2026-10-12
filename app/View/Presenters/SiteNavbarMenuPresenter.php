@@ -66,16 +66,16 @@ final class SiteNavbarMenuPresenter
         }
         unset($item);
 
-        // Public module pages will be designed individually. Keep their menu links inert for now.
         foreach ($menuItems as &$item) {
             if (($item['type'] ?? null) === 'language') {
                 continue;
             }
 
-            $item['href'] = in_array('artikel', $item['route_patterns'] ?? [], true) ? route('artikel') : '#';
+            $publicRoute = collect(['artikel', 'galeri'])->first(fn (string $route): bool => in_array($route, $item['route_patterns'] ?? [], true));
+            $item['href'] = $publicRoute ? route($publicRoute) : '#';
             if (is_array($item['mega']['links'] ?? null)) {
                 foreach ($item['mega']['links'] as &$link) {
-                    $link['href'] = in_array('artikel', $item['route_patterns'] ?? [], true) ? route('artikel') : '#';
+                    $link['href'] = $item['href'];
                 }
                 unset($link);
             }

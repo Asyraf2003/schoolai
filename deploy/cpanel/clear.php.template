@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Contracts\Console\Kernel as ConsoleKernel;
 use Symfony\Component\Console\Output\BufferedOutput;
+use App\Support\Media\R2MediaConfiguration;
 
 header('Content-Type: text/plain; charset=utf-8');
 header('X-Robots-Tag: noindex, nofollow, noarchive');
@@ -80,33 +81,6 @@ try {
         }
     }
 
-    $storageTarget = realpath($appRoot.'/storage/app/public');
-    $storageLink = $publicPath.'/storage';
-
-    if ($storageTarget === false) {
-        $fail('Public storage target does not exist.');
-    }
-
-    if (is_link($storageLink)) {
-        if (realpath($storageLink) !== $storageTarget) {
-            $fail('An existing storage symlink points to the wrong target.');
-        }
-
-        $record('OK: existing public storage symlink is correct.');
-    } elseif (file_exists($storageLink)) {
-        $fail('public_html/storage already exists and is not a symlink.');
-    } else {
-        if (! function_exists('symlink')) {
-            $fail('symlink() is disabled on this hosting account.');
-        }
-
-        if (! @symlink($storageTarget, $storageLink)) {
-            $fail('Unable to create public storage symlink.');
-        }
-
-        $record('OK: public_html/storage symlink created.');
-    }
-
     require $appRoot.'/vendor/autoload.php';
 
     $app = require $appRoot.'/bootstrap/app.php';
@@ -125,6 +99,9 @@ try {
     if ((string) config('app.key') === '') {
         $fail('APP_KEY is empty.');
     }
+
+    $app->make(R2MediaConfiguration::class)->assertValid();
+    $record('OK: public media uses Cloudflare R2; no public storage symlink is required.');
 
     try {
         $app->make('db')->connection()->getPdo();
@@ -155,7 +132,8 @@ try {
         'completed_at' => gmdate(DATE_ATOM),
         'php_version' => PHP_VERSION,
         'public_path' => $publicPath,
-        'storage_target' => $storageTarget,
+        'media_disk' => config('media.disk'),
+        'media_public_url' => config('media.public_url'),
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
     if ($markerPayload === false || file_put_contents($markerPath, $markerPayload, LOCK_EX) === false) {

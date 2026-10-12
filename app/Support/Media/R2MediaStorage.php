@@ -85,6 +85,10 @@ final class R2MediaStorage
 
     private function disk(): string
     {
+        if (! app()->environment('testing')) {
+            app(R2MediaConfiguration::class)->assertValid();
+        }
+
         return (string) config('media.disk');
     }
 

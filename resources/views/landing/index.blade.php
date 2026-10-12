@@ -3,9 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ __('home.meta.title') }}</title>
-    <meta name="description" content="{{ __('home.meta.description') }}">
-    <link rel="icon" href="{{ config('media.static.brand.favicon') }}">
+    @include('partials.seo-head', [
+        'seoTitle' => __('home.meta.title'),
+        'seoDescription' => __('home.meta.description'),
+        'seoCanonical' => route('home'),
+        'seoIsHome' => true,
+    ])
     <script nonce="{{ Vite::cspNonce() }}">
         document.documentElement.setAttribute('data-landing-pending', '');
         window.addEventListener('DOMContentLoaded', function () {

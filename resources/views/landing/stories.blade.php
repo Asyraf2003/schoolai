@@ -14,6 +14,7 @@
                     $description = $article->descriptionForLocale(app()->getLocale());
                     $cover = $article->cover_url && \App\Support\PublicUrl::isSafe($article->cover_url) ? $article->cover_url : null;
                     $isVideo = $cover && \App\Support\HeroVideoUrl::isDirectVideo($cover);
+                    $poster = $article->coverPosterUrl() ?: config('media.static.hero_school');
                 @endphp
                 <article class="stories__feature" data-stories-feature
                          data-stories-number="{{ $loop->iteration }}"
@@ -21,11 +22,11 @@
                     <div class="stories__feature-media" aria-hidden="true">
                         @if($cover)
                             <img class="stories__feature-poster" data-stories-poster
-                                 src="{{ $isVideo ? config('media.static.hero_school') : $cover }}"
+                                 src="{{ $poster }}"
                                  alt="" loading="lazy" decoding="async" width="1600" height="900">
                             @if($isVideo)
                                 <video class="stories__feature-video" data-stories-video data-src="{{ $cover }}"
-                                       poster="{{ config('media.static.hero_school') }}"
+                                       poster="{{ $poster }}"
                                        preload="none" muted loop playsinline aria-hidden="true"></video>
                             @endif
                         @endif

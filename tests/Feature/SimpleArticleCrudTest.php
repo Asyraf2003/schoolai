@@ -92,3 +92,37 @@ it('preserves the public URL of a migrated article that previously had a placeho
     $article->forceFill(['slug' => 'adab-sebelum-prestasi'])->save();
     $this->get('/artikel/adab-sebelum-prestasi')->assertOk()->assertSee('Artikel asli');
 });
+
+it('uploads replaces and removes video posters without losing archived media', function (): void {
+    Storage::fake('public');
+    $this->actingAs(User::factory()->create(['role' => User::ROLE_ADMIN]));
+    $video = UploadedFile::fake()->createWithContent('cover.mp4', hex2bin('000000206674797069736f6d0000020069736f6d69736f32617663316d703431'));
+    $this->post(route('admin.artikel.store'), ['content_id' => '<p>Isi</p>', 'cover_file' => $video,
+        'cover_thumbnail_file' => UploadedFile::fake()->image('poster.jpg')])->assertSessionHasNoErrors();
+    $article = Article::sole();
+    $original = $article->cover_thumbnail_url;
+    Storage::disk('public')->assertExists(app(MediaUrlResolver::class)->ownedKey($original));
+    $this->get($article->linkForLocale('id'))->assertSee('poster="'.$original.'"', false);
+
+    $this->put(route('admin.artikel.update', $article), ['content_id' => '<p>Isi</p>',
+        'cover_thumbnail_file' => UploadedFile::fake()->image('replacement.jpg')])->assertSessionHasNoErrors();
+    expect($article->fresh()->cover_thumbnail_url)->not->toBe($original);
+    Storage::disk('public')->assertExists(app(MediaUrlResolver::class)->ownedKey($original));
+    $this->put(route('admin.artikel.update', $article), ['content_id' => '<p>Isi</p>', 'remove_cover_thumbnail' => true])->assertSessionHasNoErrors();
+    expect($article->fresh()->cover_thumbnail_url)->toBeNull();
+
+    $this->put(route('admin.artikel.update', $article), ['content_id' => '<p>Isi</p>',
+        'cover_thumbnail_file' => UploadedFile::fake()->image('poster.jpg'),
+        'cover_file' => UploadedFile::fake()->image('photo.jpg')])->assertSessionHasNoErrors();
+    $this->put(route('admin.artikel.update', $article), ['content_id' => '<p>Isi</p>', 'remove_cover' => true])->assertSessionHasNoErrors();
+    expect($article->fresh()->cover_url)->toBeNull()->and($article->fresh()->cover_thumbnail_url)->toBeNull();
+});
+
+it('rejects active thumbnail formats before saving article content or uploads', function (): void {
+    Storage::fake('public');
+    $this->actingAs(User::factory()->create(['role' => User::ROLE_ADMIN]));
+    $this->post(route('admin.artikel.store'), ['content_id' => '<p>Isi</p>',
+        'cover_thumbnail_file' => UploadedFile::fake()->createWithContent('evil.svg', '<svg onload="evil()"></svg>')])
+        ->assertSessionHasErrors('cover_thumbnail_file');
+    expect(Article::count())->toBe(0)->and(Storage::disk('public')->allFiles())->toBeEmpty();
+});

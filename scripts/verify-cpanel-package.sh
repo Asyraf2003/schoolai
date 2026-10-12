@@ -114,7 +114,7 @@ while IFS= read -r entry; do
         "$app_dir/bootstrap/cache/config.php"|"$app_dir/bootstrap/cache/events.php"|"$app_dir/bootstrap/cache/routes"*.php)
             fail "cache environment lokal ikut ZIP: $entry"
             ;;
-        "$public_dir/hot"|"$public_dir/storage"|"$public_dir/storage/"*)
+        "$public_dir/hot"|"$public_dir/storage"|"$public_dir/storage/"*|"$public_dir/media/"*)
             fail "artefak/symlink lokal ikut public_html: $entry"
             ;;
     esac
@@ -164,6 +164,12 @@ for required_env_line in \
     "DB_USERNAME=almusta2_database" \
     "DB_TIMEZONE=+07:00" \
     "SESSION_SECURE_COOKIE=true" \
+    "FILESYSTEM_DISK=local" \
+    "MEDIA_DISK=s3" \
+    "MEDIA_PUBLIC_URL=https://media.almustaqbal.sch.id" \
+    "AWS_URL=https://media.almustaqbal.sch.id" \
+    "AWS_DEFAULT_REGION=auto" \
+    "AWS_USE_PATH_STYLE_ENDPOINT=true" \
     "GOOGLE_REDIRECT_URI=$site_url/auth/google/callback"; do
     if ! grep -Fxq "$required_env_line" "$env_file"; then
         fail "production .env belum benar: $required_env_line"

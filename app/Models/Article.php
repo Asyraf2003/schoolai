@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Concerns\AuditsAdminChanges;
 use App\Models\Concerns\ResolvesLocalizedContent;
 use App\Support\ArticleContentSanitizer;
+use App\Support\HeroVideoUrl;
+use App\Support\PublicUrl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +18,7 @@ final class Article extends Model
 
     protected $fillable = [
         'title_id', 'title_en', 'title_ar', 'description_id', 'description_en', 'description_ar',
-        'content_id', 'content_en', 'content_ar', 'cover_url', 'published_date',
+        'content_id', 'content_en', 'content_ar', 'cover_url', 'cover_thumbnail_url', 'published_date',
     ];
 
     protected function casts(): array
@@ -69,6 +71,17 @@ final class Article extends Model
         }
 
         return $locale;
+    }
+
+    public function coverPosterUrl(): ?string
+    {
+        if ($this->cover_url === null || ! PublicUrl::isSafe($this->cover_url)) {
+            return null;
+        }
+
+        return HeroVideoUrl::isDirectVideo($this->cover_url)
+            ? PublicUrl::normalize((string) $this->cover_thumbnail_url)
+            : $this->cover_url;
     }
 
     public function linkForLocale(string $locale): string

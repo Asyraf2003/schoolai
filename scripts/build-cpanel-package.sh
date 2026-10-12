@@ -195,10 +195,19 @@ cp deploy/cpanel/.env.production.example "$app_stage/.env.production.example"
 echo "==> Convert staged .env to production"
 set_env_value "$app_stage/.env" "APP_NAME" "School"
 set_env_value "$app_stage/.env" "APP_ENV" "production"
-set_env_value "$app_stage/.env" "APP_KEY" "base64:tx01Hkpu3XouFanMD5F/m685fe7YJuxJ8vDQX3Wi8o0="
+if ! grep -Eq '^APP_KEY=base64:.+' "$app_stage/.env"; then
+    release_app_key="$(php -r 'echo "base64:".base64_encode(random_bytes(32));')"
+    set_env_value "$app_stage/.env" "APP_KEY" "$release_app_key"
+fi
 set_env_value "$app_stage/.env" "APP_TIMEZONE" "Asia/Jakarta"
 set_env_value "$app_stage/.env" "APP_DEBUG" "false"
 set_env_value "$app_stage/.env" "APP_URL" "$SITE_URL"
+set_env_value "$app_stage/.env" "FILESYSTEM_DISK" "local"
+set_env_value "$app_stage/.env" "MEDIA_DISK" "s3"
+set_env_value "$app_stage/.env" "MEDIA_PUBLIC_URL" "https://media.almustaqbal.sch.id"
+set_env_value "$app_stage/.env" "AWS_URL" "https://media.almustaqbal.sch.id"
+set_env_value "$app_stage/.env" "AWS_DEFAULT_REGION" "auto"
+set_env_value "$app_stage/.env" "AWS_USE_PATH_STYLE_ENDPOINT" "true"
 set_env_value "$app_stage/.env" "APP_LOCALE" "en"
 set_env_value "$app_stage/.env" "APP_FALLBACK_LOCALE" "id"
 set_env_value "$app_stage/.env" "APP_FAKER_LOCALE" "en_US"
@@ -213,7 +222,6 @@ set_env_value "$app_stage/.env" "DB_HOST" "127.0.0.1"
 set_env_value "$app_stage/.env" "DB_PORT" "3306"
 set_env_value "$app_stage/.env" "DB_DATABASE" "almusta2_database"
 set_env_value "$app_stage/.env" "DB_USERNAME" "almusta2_database"
-set_env_value "$app_stage/.env" "DB_PASSWORD" "almusta2_database"
 set_env_value "$app_stage/.env" "DB_TIMEZONE" "+07:00"
 set_env_value "$app_stage/.env" "SESSION_SECURE_COOKIE" "true"
 set_env_value "$app_stage/.env" "GOOGLE_REDIRECT_URI" "$SITE_URL/auth/google/callback"
@@ -235,7 +243,8 @@ echo "==> Stage public document root: $PUBLIC_DIR_NAME/"
 rsync -a public/ "$public_stage/" \
     --exclude "/hot" \
     --exclude "/storage" \
-    --exclude "/storage/***"
+    --exclude "/storage/***" \
+    --exclude "/media/***"
 
 sed "s/__APP_DIR_NAME__/$APP_DIR_NAME/g" \
     deploy/cpanel/index.php.template > "$public_stage/index.php"
@@ -260,6 +269,14 @@ echo "==> Install production Composer dependencies"
         --no-interaction \
         --prefer-dist
 )
+
+echo "==> Validate staged R2 configuration without exposing credentials"
+php -r '
+    require $argv[1]."/vendor/autoload.php";
+    $app = require $argv[1]."/bootstrap/app.php";
+    $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+    $app->make(App\Support\Media\R2MediaConfiguration::class)->assertValid();
+' "$app_stage"
 
 # Environment-specific caches must only be generated on the hosting server
 # after the packaged production .env is in its final location.

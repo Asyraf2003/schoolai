@@ -21,7 +21,7 @@
                 @foreach ($socialIcons as $key)
                     @php($channel = $footerChannels->get($key))
                     <a href="{{ $channel['href'] }}" data-footer-preview="{{ $key }}"
-                       data-footer-preview-src="{{ $key === 'maps' ? asset('media/footer/school-map.webp') : $footerAssets[$iconAssets[$key]] }}"
+                       data-footer-preview-src="{{ $key === 'maps' ? $footerAssets['school_map'] : $footerAssets[$iconAssets[$key]] }}"
                        @if ($key === 'maps') data-footer-preview-fallback="{{ $footerAssets['maps'] }}" @endif
                        @if (str_starts_with($channel['href'], 'https://')) target="_blank" rel="noopener noreferrer" @endif>
                         <span class="site-footer-v2__social-arrow" aria-hidden="true">↗</span>

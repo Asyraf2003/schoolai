@@ -3,8 +3,34 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') · Al Mustaqbal School</title>
-    <link rel="icon" href="{{ config('media.static.brand.favicon') }}">
+    @php
+        $seoIsArticle = request()->routeIs('artikel.native') && isset($article) && $article instanceof \App\Models\Article;
+        $seoIsListing = request()->routeIs('artikel', 'galeri');
+        $seoPageLabel = $seoIsArticle
+            ? ($article->titleForLocale(app()->getLocale()) ?: __('pages.common.nav.artikel'))
+            : trim(strip_tags($__env->yieldContent('title')));
+        $seoPageDescription = $seoIsArticle
+            ? ($article->descriptionForLocale(app()->getLocale())
+                ?: \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/u', ' ', strip_tags($article->contentForLocale(app()->getLocale())))), 160))
+            : __('home.meta.description');
+        $seoCover = $seoIsArticle ? $article->coverPosterUrl() : null;
+        $seoCoverSafe = is_string($seoCover)
+            && \App\Support\PublicUrl::isSafe($seoCover)
+            && ! \App\Support\HeroVideoUrl::isDirectVideo($seoCover);
+        $seoListingPage = $seoIsListing ? max(1, request()->integer('page', 1)) : 1;
+        $seoCanonical = $seoIsArticle
+            ? route('artikel.native', ['article' => $article->slug])
+            : ($seoIsListing ? route(request()->routeIs('galeri') ? 'galeri' : 'artikel').($seoListingPage > 1 ? '?page='.$seoListingPage : '') : null);
+    @endphp
+    @include('partials.seo-head', [
+        'seoTitle' => $seoPageLabel.' · Al Mustaqbal School',
+        'seoDescription' => $seoPageDescription,
+        'seoCanonical' => $seoCanonical,
+        'seoIndexable' => $seoIsArticle || $seoIsListing,
+        'seoType' => $seoIsArticle ? 'article' : 'website',
+        'seoArticleTitle' => $seoIsArticle ? $seoPageLabel : null,
+        'seoImage' => $seoCoverSafe ? $seoCover : config('media.static.seo.home_og'),
+    ])
     @vite('resources/css/portal.css')
     <style nonce="{{ Vite::cspNonce() }}">
         :root { color-scheme: light; font-family: Inter, system-ui, sans-serif; }
