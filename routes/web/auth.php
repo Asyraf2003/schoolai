@@ -3,13 +3,14 @@
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\StudentLoginController;
+use App\Http\Controllers\PortalPlaceholderController;
 use App\Http\Controllers\Student\StudentPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/login', [LoginController::class, 'choose'])->name('portal.login');
+
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'choose'])
-        ->name('portal.login');
     Route::get('/login/admin', [LoginController::class, 'show'])
         ->name('login');
     Route::get('/login/guru', [LoginController::class, 'showGuru'])
@@ -50,7 +51,7 @@ Route::middleware(['auth', 'active.account', 'active.session'])->group(function 
         ->name('logout');
 });
 
-Route::view('/guru/dashboard', 'guru.dashboard')
+Route::get('/guru/dashboard', PortalPlaceholderController::class)
     ->middleware(['auth', 'active.account', 'active.session', 'guru', 'internal.locale'])
     ->name('guru.dashboard');
 
@@ -61,7 +62,7 @@ Route::middleware([
     'murid',
     'internal.locale',
 ])->group(function (): void {
-    Route::view('/murid/dashboard', 'student.dashboard')
+    Route::get('/murid/dashboard', PortalPlaceholderController::class)
         ->name('murid.dashboard');
     Route::view('/murid/akun', 'student.account')
         ->name('murid.account');

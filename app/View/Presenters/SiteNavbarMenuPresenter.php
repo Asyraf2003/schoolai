@@ -65,10 +65,32 @@ final class SiteNavbarMenuPresenter
         }
         unset($item);
 
+        // Public module pages will be designed individually. Keep their menu links inert for now.
+        foreach ($menuItems as &$item) {
+            if (($item['type'] ?? null) === 'language') {
+                continue;
+            }
+
+            $item['href'] = '#';
+            if (is_array($item['mega']['links'] ?? null)) {
+                foreach ($item['mega']['links'] as &$link) {
+                    $link['href'] = '#';
+                }
+                unset($link);
+            }
+        }
+        unset($item);
+
+        $ppdbItem = [
+            'label' => $this->translator->get('pages.common.nav.ppdb'),
+            'type' => 'ppdb',
+            'href' => route('ppdb'),
+            'route_patterns' => ['ppdb'],
+        ];
         $loginItem = [
             'label' => $this->translator->get('app.auth.navigation.login'),
             'type' => 'login',
-            'href' => route('portal.login'),
+            'href' => auth()->check() ? route('dashboard') : route('portal.login'),
             'route_patterns' => [
                 'portal.login',
                 'login',
@@ -83,7 +105,7 @@ final class SiteNavbarMenuPresenter
             $menuItems,
             $languageIndex === false ? count($menuItems) : $languageIndex,
             0,
-            [$loginItem],
+            [$ppdbItem, $loginItem],
         );
 
         return $menuItems;

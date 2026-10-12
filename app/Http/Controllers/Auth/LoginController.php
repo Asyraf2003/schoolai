@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\ActiveSessionManager;
 use App\Services\AuditLogger;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -16,8 +17,12 @@ class LoginController extends Controller
         private readonly ActiveSessionManager $sessionManager,
     ) {}
 
-    public function choose(): View
+    public function choose(Request $request): View|RedirectResponse
     {
+        if ($request->user() !== null) {
+            return redirect()->route('dashboard');
+        }
+
         return view('auth.login-perspective', ['activeRole' => null]);
     }
 

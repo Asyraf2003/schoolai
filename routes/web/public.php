@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\ArticlePageController;
-use App\Http\Controllers\GalleryPageController;
+use App\Http\Controllers\PortalPlaceholderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NativeArticleController;
 use App\Http\Controllers\PpdbPageController;
@@ -36,8 +35,8 @@ Route::post('/bahasa/{locale}', function (string $locale, Request $request) {
 })->whereIn('locale', ['id', 'en', 'ar'])->name('language.switch');
 
 Route::get('/ppdb', PpdbPageController::class)->name('ppdb');
-Route::get('/artikel', ArticlePageController::class)->name('artikel');
+Route::get('/artikel', PortalPlaceholderController::class)->name('artikel');
 Route::redirect('/artikel/adab-sebelum-prestasi', '/artikel', 301)->name('artikel.detail');
 Route::get('/artikel/{article:slug}', [NativeArticleController::class, 'show'])
     ->name('artikel.native');
-Route::get('/galeri', GalleryPageController::class)->name('galeri');
+Route::get('/galeri', PortalPlaceholderController::class)->name('galeri');
