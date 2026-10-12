@@ -70,6 +70,14 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
                 await page.evaluate(() => {document.body.style.zoom = '2';});
                 assert.equal((await page.evaluate(geometry)).overflow, false, '200% zoom');
                 await page.evaluate(() => {document.body.style.zoom = '';});
+                if (route.includes('/artikel/')) {
+                    const title = page.locator('h1');
+                    const original = await title.textContent();
+                    await title.evaluate(node => {node.textContent = 'A'.repeat(200);});
+                    await page.setViewportSize({width:360,height:780});
+                    assert.equal((await page.evaluate(geometry)).overflow, false, 'long optional title');
+                    await title.evaluate((node, text) => {node.textContent = text;}, original);
+                }
                 await page.locator('body').click({position:{x:1,y:1}});
                 await page.keyboard.press('Tab');
                 assert.equal(await page.evaluate(() => document.activeElement.tagName), 'A');
