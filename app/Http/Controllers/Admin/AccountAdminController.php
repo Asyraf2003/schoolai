@@ -12,19 +12,37 @@ use App\Http\Resources\AccountResource;
 use App\Models\User;
 use App\Services\AccountDirectory;
 use App\Services\AccountRevision;
+use App\Services\ActiveSessionManager;
+use App\Services\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 final class AccountAdminController extends Controller
 {
-    public function index(AccountDirectory $directory): View
+    public function index(Request $request, AccountDirectory $directory): View
     {
+        $request->validate(['search' => ['nullable', 'string', 'max:100'], 'role' => ['nullable', 'in:guru,murid']]);
+
         return view('admin.accounts.index', [
-            'accounts' => $directory->list(null, null, null),
+            'accounts' => $directory->list($request->input('search'), $request->input('role'), null),
         ]);
+    }
+
+    public function destroy(Request $request, User $account, ActiveSessionManager $sessions, AuditLogger $audit): RedirectResponse
+    {
+        DB::transaction(function () use ($request, $account, $sessions, $audit): void {
+            $account = User::query()->lockForUpdate()->findOrFail($account->id);
+            abort_unless($account->isGuru() || $account->isMurid(), 403);
+            $sessions->invalidateAll($account, 'account_deleted', $request->user());
+            $audit->record('account.deleted', actor: $request->user(), subject: $account);
+            $account->delete();
+        });
+
+        return redirect()->route('admin.accounts.index')->with('success', 'Akun berhasil dihapus.');
     }
 
     public function data(

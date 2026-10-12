@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\PortalPlaceholderController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\NativeArticleController;
-use App\Http\Controllers\PpdbPageController;
+use App\Http\Controllers\PortalPlaceholderController;
+use App\Http\Controllers\PublicArticleController;
+use App\Services\PpdbAccess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,9 +34,13 @@ Route::post('/bahasa/{locale}', function (string $locale, Request $request) {
     return redirect($previous)->withCookie(cookie('site_locale', $locale, 60 * 24 * 365));
 })->whereIn('locale', ['id', 'en', 'ar'])->name('language.switch');
 
-Route::get('/ppdb', PpdbPageController::class)->name('ppdb');
-Route::get('/artikel', PortalPlaceholderController::class)->name('artikel');
-Route::redirect('/artikel/adab-sebelum-prestasi', '/artikel', 301)->name('artikel.detail');
-Route::get('/artikel/{article:slug}', [NativeArticleController::class, 'show'])
+Route::get('/ppdb', function (PpdbAccess $access) {
+    $url = $access->current()->publicRegistrationUrl();
+    abort_if($url === null, 404);
+
+    return redirect()->away($url);
+})->name('ppdb');
+Route::get('/artikel', [PublicArticleController::class, 'index'])->name('artikel');
+Route::get('/artikel/{article:slug}', [PublicArticleController::class, 'show'])
     ->name('artikel.native');
 Route::get('/galeri', PortalPlaceholderController::class)->name('galeri');

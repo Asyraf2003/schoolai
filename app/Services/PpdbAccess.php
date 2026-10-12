@@ -17,9 +17,6 @@ final class PpdbAccess
             }
         }
 
-        return new PpdbSetting([
-            'registration_url' => PpdbSetting::DEFAULT_REGISTRATION_URL,
-            'is_active' => true,
-        ]);
+        return new PpdbSetting;
     }
 }

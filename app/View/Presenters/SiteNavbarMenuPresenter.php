@@ -2,6 +2,7 @@
 
 namespace App\View\Presenters;
 
+use App\Services\PpdbAccess;
 use App\View\Presenters\Concerns\PreparesNavbarMediaMenus;
 use Illuminate\Contracts\Translation\Translator;
 
@@ -9,7 +10,7 @@ final class SiteNavbarMenuPresenter
 {
     use PreparesNavbarMediaMenus;
 
-    public function __construct(private Translator $translator) {}
+    public function __construct(private Translator $translator, private PpdbAccess $ppdb) {}
 
     /**
      * @param  array<string, mixed>  $siteNavbar
@@ -71,10 +72,10 @@ final class SiteNavbarMenuPresenter
                 continue;
             }
 
-            $item['href'] = '#';
+            $item['href'] = in_array('artikel', $item['route_patterns'] ?? [], true) ? route('artikel') : '#';
             if (is_array($item['mega']['links'] ?? null)) {
                 foreach ($item['mega']['links'] as &$link) {
-                    $link['href'] = '#';
+                    $link['href'] = in_array('artikel', $item['route_patterns'] ?? [], true) ? route('artikel') : '#';
                 }
                 unset($link);
             }
@@ -84,7 +85,7 @@ final class SiteNavbarMenuPresenter
         $ppdbItem = [
             'label' => $this->translator->get('pages.common.nav.ppdb'),
             'type' => 'ppdb',
-            'href' => route('ppdb'),
+            'href' => $this->ppdb->current()->publicRegistrationUrl(),
             'route_patterns' => ['ppdb'],
         ];
         $loginItem = [
@@ -105,7 +106,7 @@ final class SiteNavbarMenuPresenter
             $menuItems,
             $languageIndex === false ? count($menuItems) : $languageIndex,
             0,
-            [$ppdbItem, $loginItem],
+            array_values(array_filter([$ppdbItem, $loginItem], fn (array $item): bool => ! empty($item['href']))),
         );
 
         return $menuItems;

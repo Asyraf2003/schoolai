@@ -1,0 +1,8 @@
+@import './foundation/fonts.css';
+
+.article-content { overflow-wrap: anywhere; line-height: 1.7; }
+.article-content :is(p, ul, ol, blockquote, pre) { max-inline-size: 100%; }
+.article-content pre { overflow-x: auto; }
+.article-content a { text-decoration: underline; color: #005fcc; }
+article > :is(img, video) { display: block; max-inline-size: 100%; block-size: auto; margin-block: 1rem; }
+.article-content:lang(ar) { font-family: Cairo, Tahoma, sans-serif; }

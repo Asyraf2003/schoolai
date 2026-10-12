@@ -33,8 +33,8 @@ it('renders the Indonesian account manager without credential values', function 
         ])
         ->get(route('admin.accounts.index'))
         ->assertOk()
-        ->assertSee('<html lang="id">', escape: false)
-        ->assertSee('Kelola akses admin, guru, dan murid')
+        ->assertSee('<html lang="id" dir="ltr">', escape: false)
+        ->assertSee('Tambah akun Guru atau Murid')
         ->assertSee('Murid Tampilan')
         ->assertDontSee('rahasia-tidak-tampil');
 });
@@ -61,13 +61,8 @@ it('changes the account ETag when visible account data changes', function (): vo
         ->assertJsonPath('data.1.name', 'Nama Sesudah');
 });
 
-it('uses safe DOM updates and visibility-aware lightweight polling', function (): void {
-    $source = file_get_contents(resource_path('js/pages/admin-accounts.js'));
-
-    expect($source)
-        ->not->toContain('innerHTML')
-        ->not->toContain('localStorage')
-        ->toContain('textContent')
-        ->toContain('visibilitychange')
-        ->toContain('30000');
+it('uses server-rendered forms for accounts without exposing credentials to client storage', function (): void {
+    $this->actingAs(accountUiAdmin())->get(route('admin.accounts.index'))->assertOk()
+        ->assertSee('action="'.route('admin.accounts.store').'"', false)
+        ->assertSee('autocomplete="new-password"', false);
 });

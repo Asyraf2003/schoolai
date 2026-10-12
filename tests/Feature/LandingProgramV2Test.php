@@ -1,29 +1,20 @@
 <?php
 
-use App\View\Composers\HomeProgramComposer;
 use App\View\Presenters\LandingProgramPresenter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
-it('preserves the legacy selected data and media without using its frontend runtime', function (): void {
+it('preserves program copy and configured media independently of the retired backend', function (): void {
     app()->setLocale('en');
-    $legacy = view()->file(base_path('resources_old/views/home/sections/featured-programs.blade.php'));
-    app(HomeProgramComposer::class)->compose($legacy);
     $program = app(LandingProgramPresenter::class)->present();
-    $oldItems = $legacy->getData()['programItems']->all();
-
-    foreach (['code', 'eyebrow', 'title', 'summary', 'description', 'media', 'title_scale'] as $field) {
-        expect(array_column($program['items'], $field))->toBe(array_column($oldItems, $field));
+    $source = array_column(__('home_program.items'), null, 'code');
+    foreach ($program['items'] as $item) {
+        expect($item['title'])->toBe($source[$item['code']]['title']);
+        expect($item['description'])->toBe($source[$item['code']]['description']);
     }
-    if ($path = getenv('PROGRAM_LEGACY_REFERENCE_HTML')) {
-        file_put_contents($path, '<!doctype html><html lang="en"><head><meta charset="utf-8">'
-            .'<link rel="stylesheet" href="http://127.0.0.1:8000/build/'.collect(json_decode(file_get_contents(public_path('build/manifest.json')), true))->get('resources/css/index.css')['file'].'">'
-            .'<link rel="stylesheet" href="file://'.base_path('resources_old/css/pages/welcome/program-showcase-desktop.css').'">'
-            .'<link rel="stylesheet" href="file://'.base_path('resources_old/css/surfaces/home/values/story-kinetic.css').'">'
-            .'</head><body><div class="program-values-world">'.$legacy->render().'</div></body></html>');
-    }
+    expect(array_column($program['items'], 'code'))->toBe(['TQ', 'KH', 'LC', 'SJ', 'TS', 'IT', 'FD', 'SC']);
 });
 
 it('renders the eight featured programs after Mission in the saved language', function (string $locale): void {

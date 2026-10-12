@@ -3,12 +3,8 @@
 use App\Models\Article;
 use App\Models\Concerns\AuditsAdminChanges;
 use App\Models\GalleryItem;
-use App\Models\GalleryPageMediaItem;
-use App\Models\GalleryPageSection;
 use App\Models\PpdbSetting;
-use App\Models\PpdbShowcaseItem;
 use App\Models\SecurityAuditLog;
-use App\Models\SiteStatistic;
 use App\Models\User;
 use App\Services\AuditLogger;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -28,10 +24,8 @@ it('records admin content lifecycle events through one shared concern', function
 
     $article = Article::query()->create([
         'title_id' => 'Artikel audit',
-        'thumbnail_url' => '/storage/articles/audit.jpg',
-        'link_id' => 'https://example.com/audit',
-        'author' => 'Audit Admin',
-        'published_at' => now(),
+        'cover_url' => '/storage/articles/audit.jpg',
+        'content_id' => '<p>Audit</p>',
     ]);
     $article->update(['title_id' => 'Artikel audit diperbarui']);
     $article->delete();
@@ -53,11 +47,7 @@ it('attaches the audit concern to every admin content model', function (): void 
     $models = [
         Article::class,
         GalleryItem::class,
-        GalleryPageSection::class,
-        GalleryPageMediaItem::class,
         PpdbSetting::class,
-        PpdbShowcaseItem::class,
-        SiteStatistic::class,
     ];
 
     foreach ($models as $model) {

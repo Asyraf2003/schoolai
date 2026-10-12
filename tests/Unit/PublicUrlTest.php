@@ -48,16 +48,6 @@ it('blocks application-sensitive paths and protects PPDB legacy data', function 
     expect(PublicUrl::isSafe('https://93.184.216.34/admin/users', ['/admin']))
         ->toBeFalse();
 
-    $setting = new PpdbSetting([
-        'registration_url' => 'http://[::1]/registration',
-        'information_url' => 'https://user:pass@93.184.216.34/info',
-        'is_active' => true,
-    ]);
-
-    expect($setting->publicRegistrationUrl())
-        ->toBeNull()
-        ->and($setting->publicInformationUrl())
-        ->toBeNull()
-        ->and($setting->isRegistrationOpen())
-        ->toBeFalse();
+    expect(PpdbSetting::safeRegistrationUrl('http://[::1]/registration'))->toBeNull()
+        ->and(PpdbSetting::safeRegistrationUrl('https://user:pass@forms.gle/a'))->toBeNull();
 });

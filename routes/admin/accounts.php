@@ -15,3 +15,5 @@ Route::patch('/admin/akun/{account}/status', [AccountAdminController::class, 'st
     ->name('admin.accounts.status');
 Route::put('/admin/akun/{account}/password', [AccountAdminController::class, 'resetPassword'])
     ->name('admin.accounts.password.reset');
+Route::delete('/admin/akun/{account}', [AccountAdminController::class, 'destroy'])
+    ->name('admin.accounts.destroy');

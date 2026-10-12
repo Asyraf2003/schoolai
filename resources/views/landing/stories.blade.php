@@ -6,34 +6,37 @@
             @endforeach
         </h2>
     </header>
-    @php
-        $demoMedia = [
-            ['poster' => 'labit', 'video' => 'it'],
-            ['poster' => 'mushalla', 'video' => 'musola'],
-            ['poster' => 'renang', 'video' => 'renang'],
-            ['poster' => 'taekwondo', 'video' => 'tekwondo'],
-        ];
-    @endphp
     <div class="stories__sequence" data-stories-sequence>
         <div class="stories__viewport" data-stories-viewport>
-            @foreach ($demoMedia as $media)
-                <article class="stories__feature" data-stories-feature data-stories-demo
+            @foreach ($articles as $article)
+                @php
+                    $title = $article->titleForLocale(app()->getLocale()) ?: __('pages.common.nav.artikel');
+                    $description = $article->descriptionForLocale(app()->getLocale());
+                    $cover = $article->cover_url && \App\Support\PublicUrl::isSafe($article->cover_url) ? $article->cover_url : null;
+                    $isVideo = $cover && \App\Support\HeroVideoUrl::isDirectVideo($cover);
+                @endphp
+                <article class="stories__feature" data-stories-feature
                          data-stories-number="{{ $loop->iteration }}"
                          aria-labelledby="stories-feature-title-{{ $loop->iteration }}">
                     <div class="stories__feature-media" aria-hidden="true">
-                        <img class="stories__feature-poster" data-stories-poster
-                             src="{{ config('media.static.school_life.'.$media['poster']) }}"
-                             alt="" loading="lazy" decoding="async" width="1600" height="900">
-                        <video class="stories__feature-video" data-stories-video
-                               data-src="{{ rtrim(config('media.public_url'), '/') }}/gallery/media/{{ $media['video'] }}-v1.mp4"
-                               poster="{{ config('media.static.school_life.'.$media['poster']) }}"
-                               preload="none" autoplay muted loop playsinline aria-hidden="true"></video>
+                        @if($cover)
+                            <img class="stories__feature-poster" data-stories-poster
+                                 src="{{ $isVideo ? config('media.static.hero_school') : $cover }}"
+                                 alt="" loading="lazy" decoding="async" width="1600" height="900">
+                            @if($isVideo)
+                                <video class="stories__feature-video" data-stories-video data-src="{{ $cover }}"
+                                       poster="{{ config('media.static.hero_school') }}"
+                                       preload="none" muted loop playsinline aria-hidden="true"></video>
+                            @endif
+                        @endif
                     </div>
-                    @php($feature = __('stories.features.'.$loop->index))
                     <div class="stories__feature-copy" data-stories-copy>
                         <span class="stories__feature-index" aria-hidden="true">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-                        <h3 id="stories-feature-title-{{ $loop->iteration }}" aria-label="{{ $feature['title'] }}">@foreach (explode(' ', $feature['title']) as $word)<span data-stories-word aria-hidden="true">{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</h3>
-                        <p><span class="sr-only">{{ $feature['description'] }}</span>@foreach (explode(' ', $feature['description']) as $word)<span data-stories-word aria-hidden="true">{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</p>
+                        <h3 id="stories-feature-title-{{ $loop->iteration }}">
+                            <a href="{{ $article->linkForLocale(app()->getLocale()) }}" aria-label="{{ $title }}">@foreach (explode(' ', $title) as $word)<span data-stories-word aria-hidden="true">{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</a>
+                        </h3>
+                        @if($description)<p><span class="sr-only">{{ $description }}</span>@foreach (explode(' ', $description) as $word)<span data-stories-word aria-hidden="true">{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</p>@endif
+                        @if($article->published_date)<time datetime="{{ $article->published_date->toDateString() }}">{{ $article->published_date->format('d/m/Y') }}</time>@endif
                     </div>
                 </article>
             @endforeach

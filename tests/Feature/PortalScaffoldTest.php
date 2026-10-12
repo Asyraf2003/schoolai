@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\AccountRole;
+use App\Models\PpdbSetting;
 use App\Models\User;
 use App\Services\ActiveSessionManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,13 +20,13 @@ function portalAccount(AccountRole $role): User
     ]);
 }
 
-it('renders public placeholders in all three languages', function (string $locale, string $direction): void {
+it('renders public pages in all three languages', function (string $locale, string $direction): void {
     foreach (['artikel' => 'article', 'galeri' => 'gallery'] as $route => $page) {
         $this->withSession(['locale' => $locale])
             ->get(route($route))
             ->assertOk()
             ->assertSee('dir="'.$direction.'"', false)
-            ->assertSee('data-portal-page="'.$page.'"', false);
+            ->assertSee($route === 'artikel' ? __('pages.common.nav.artikel') : 'data-portal-page="'.$page.'"', $route === 'artikel');
     }
 })->with([['id', 'ltr'], ['en', 'ltr'], ['ar', 'rtl']]);
 
@@ -39,9 +40,11 @@ it('uses inert header navigation except for PPDB and login', function (): void {
         }
 
         if (($item['type'] ?? null) === 'ppdb') {
-            expect($item['href'])->toBe(route('ppdb'));
+            expect($item['href'])->toBe(PpdbSetting::sole()->registration_url);
         } elseif (($item['type'] ?? null) === 'login') {
             expect($item['href'])->toBe(route('portal.login'));
+        } elseif (in_array('artikel', $item['route_patterns'] ?? [], true)) {
+            expect($item['href'])->toBe(route('artikel'));
         } else {
             expect($item['href'])->toBe('#');
             foreach ($item['mega']['links'] ?? [] as $link) {
