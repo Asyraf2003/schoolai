@@ -1,0 +1,19 @@
+{
+  "source": "06b154cb",
+  "date": "2026-10-14",
+  "environment": "Linux; Chromium154.0.8037.97; software WebGL; localhost:8000 permitted CORS origin",
+  "automated": {
+    "diff": "PASS",
+    "structure": "288 files PASS",
+    "build": "PASS; deferred chunk521.43kB warning",
+    "php": "283 passed,2259 assertions,1 skipped; installed GD activated via temporary PHP_INI_SCAN_DIR",
+    "geometry": "3 passed",
+    "browser": "2 suites passed;42 width/locale cells; cycle datasets1/2/40"
+  },
+  "webkit": {
+    "status": "BLOCKED_BY_MISSING_EVIDENCE",
+    "reason": "page.goto crashes; current retry unsuccessful"
+  },
+  "visual": "Center, side and seam captures reviewed against retained live Jesper screenshot. Owner fidelity acceptance pending; no claim of visual PASS.",
+  "out_of_scope": "Backend, header, menu, footer, archive, Instagram, R2 and shared transitions unchanged."
+}

@@ -22,7 +22,7 @@
 .gallery-spatial[data-spatial-ready] .gallery-spatial__panel { position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-block-size: none; aspect-ratio: auto; pointer-events: auto; will-change: clip-path; }
 .gallery-spatial[data-spatial-ready] .gallery-spatial__panel img { visibility: hidden; }
 .gallery-spatial[data-spatial-ready] .gallery-spatial__caption { left: 0; top: 0; bottom: auto; width: max-content; max-width: var(--caption-width); transform-origin: left bottom; pointer-events: none; }
-.gallery-spatial[data-spatial-ready] .gallery-spatial__panel:focus-visible { outline: none; background: #ffffff20; }
+.gallery-spatial[data-spatial-ready] .gallery-spatial__panel:is(:focus-visible,[data-spatial-focused]) { outline: none; background: #ffffff20; }
 .gallery-spatial__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 @media (min-width: 768px) { .gallery-spatial__panel { flex-basis: 46%; } }
 @media (max-height: 540px) { .gallery-spatial { min-block-size: 26rem; } .gallery-spatial__intro p { max-inline-size: 24rem; font-size: .75rem; } }

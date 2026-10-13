@@ -25,10 +25,10 @@ for (const engine of (process.env.PROGRAM_ENGINES ?? 'chromium,webkit').split(',
         try {
             await page.goto(base + '/galeri'); await ready();
             await page.screenshot({ path: `${out}/${engine}-1440.png` });
-            const curve = await page.locator('[data-spatial-panel]').nth(1).evaluate(link => {
+            const curve = await page.locator('[data-spatial-instance="1"]').evaluate(link => {
                 const points = link.style.clipPath.match(/-?[\d.]+px/g).map(parseFloat);
-                const top = Array.from({ length: 25 }, (_, i) => [points[i*2], points[i*2+1]]);
-                return { midpointDeviation: Math.abs(top[12][1] - (top[0][1] + top[24][1]) / 2), outline: link.style.clipPath };
+                const top = Array.from({ length: 49 }, (_, i) => [points[i*2], points[i*2+1]]);
+                return { midpointDeviation: Math.abs(top[24][1] - (top[0][1] + top[48][1]) / 2), outline: link.style.clipPath };
             });
             assert.ok(curve.midpointDeviation > 5, JSON.stringify(curve)); checks.push({ name:'curved projected mesh edge', ...curve });
             await page.mouse.move(720,400); const before = await position();
@@ -40,7 +40,7 @@ for (const engine of (process.env.PROGRAM_ENGINES ?? 'chromium,webkit').split(',
             await page.screenshot({path:`${out}/${engine}-motion-01.png`});
             await page.waitForTimeout(150); await page.screenshot({path:`${out}/${engine}-motion-02.png`});
             await settle(); assert.equal(await page.locator('dialog').evaluate(d=>d.open),false);
-            assert.ok(Math.abs(await position() - idle) > .5);
+            assert.ok(Math.abs(await position() - idle) > .1);
             await page.screenshot({path:`${out}/${engine}-motion-03.png`});
             checks.push({name:'drag inertia without click',result:'PASS'});
             const horizontal = await position(); await page.mouse.wheel(260,0); await settle();

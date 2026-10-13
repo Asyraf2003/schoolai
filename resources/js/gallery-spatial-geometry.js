@@ -1,30 +1,32 @@
 import { PlaneGeometry, Vector3 } from 'three';
 
-// A cylindrical surface: every column occupies a different depth, including
-// the interior. UVs remain the original source rectangle (no image stretching).
-export function bentPoint(x, y, width) {
-    const radius = width / 1.15;
-    return new Vector3(Math.sin(x / radius) * radius, y, (Math.cos(x / radius) - 1) * radius);
+// One unbounded world-space track. Its depth and tangent depend only on global
+// distance, never on an individual panel's width, center, or media identity.
+export function trackPoint(distance, y, curve) {
+    const z = -curve.depth * (Math.hypot(1, distance / curve.radius) - 1);
+    return new Vector3(distance, y + .05, z);
 }
-export function bentPlane(width, height) {
-    const geometry = new PlaneGeometry(width, height, 48, 12);
-    const positions = geometry.attributes.position;
-    for (let i = 0; i < positions.count; i++) {
-        const p = bentPoint(positions.getX(i), positions.getY(i), width);
-        positions.setXYZ(i, p.x, p.y, p.z);
+export const mediaIndex = (slot, count) => ((slot % count) + count) % count;
+export const nearestOccurrence = (index, progress, count) => index + Math.round((progress - index) / count) * count;
+export function trackPlane() { return new PlaneGeometry(1, 1, 48, 12); }
+export function deformTrack(geometry, center, width, height, curve) {
+    const { position, uv } = geometry.attributes;
+    for (let i = 0; i < position.count; i++) {
+        const p = trackPoint(center + (uv.getX(i) - .5) * width, (uv.getY(i) - .5) * height, curve);
+        position.setXYZ(i, p.x, p.y, p.z);
     }
-    geometry.computeVertexNormals();
-    return geometry;
+    position.needsUpdate = true;
 }
-export function projectPanel(panel, camera, width, height) {
-    const { mesh, w, h, link } = panel;
-    const project = (x, y) => {
-        const p = mesh.localToWorld(bentPoint(x, y, w)).project(camera);
-        return [(p.x + 1) * width / 2, (1 - p.y) * height / 2];
-    };
+export function projectTrack(distance, y, curve, camera, width, height) {
+    const p = trackPoint(distance, y, curve).project(camera);
+    return [(p.x + 1) * width / 2, (1 - p.y) * height / 2];
+}
+export function projectPanel(panel, curve, camera, width, height) {
+    const { center, w, h, link } = panel;
+    const project = (x, y) => projectTrack(center + x, y, curve, camera, width, height);
     const outline = [];
-    for (let i = 0; i <= 24; i++) outline.push(project((i / 24 - .5) * w, h / 2));
-    for (let i = 24; i >= 0; i--) outline.push(project((i / 24 - .5) * w, -h / 2));
+    for (let i = 0; i <= 48; i++) outline.push(project((i / 48 - .5) * w, h / 2));
+    for (let i = 48; i >= 0; i--) outline.push(project((i / 48 - .5) * w, -h / 2));
     link.style.clipPath = `polygon(${outline.map(p => `${p[0]}px ${p[1]}px`).join(',')})`;
     const left = project(-w / 2 + .12, -h / 2 + .27);
     const right = project(-w / 2 + .45, -h / 2 + .27);

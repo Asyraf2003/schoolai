@@ -4,7 +4,7 @@ import { mountSpatialInput } from './gallery-spatial-input.js';
 export function mountSpatialGallery(root) {
     const abort = new AbortController(), { signal } = abort;
     const links = [...root.querySelectorAll('[data-spatial-panel]')];
-    const state = { links, centers: [], target: 0, position: 0, limit: 0, scale: 1, velocity: 0, dragging: false };
+    const state = { links, centers: [], target: 0, position: 0, scale: 1, velocity: 0, dragging: false };
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
     let frame = 0, last = 0, visible = true, suspended = false, disposed = false, graphics;
     const allowed = () => visible && !suspended && !document.hidden && !document.documentElement.hasAttribute('data-gallery-viewing');
@@ -25,7 +25,7 @@ export function mountSpatialGallery(root) {
         const dt = Math.min(.05, last ? (time - last) / 1000 : 1 / 60); last = time;
         if (!state.dragging) {
             state.velocity *= Math.exp(-7 * dt);
-            state.target = Math.max(0, Math.min(state.limit, state.target + state.velocity * dt));
+            state.target += state.velocity * dt;
         }
         state.position += (state.target - state.position) * (preference.matches ? 1 : 1 - Math.exp(-12 * dt));
         if (!graphics.draw()) { dispose(); return; }

@@ -1,10 +1,12 @@
+import { nearestOccurrence } from './gallery-spatial-geometry.js';
+
 export function mountSpatialInput(root, state, wake, signal) {
     const viewport = root.querySelector('[data-spatial-viewport]');
     let drag, suppress = false, pointerX, restoring = false;
     document.addEventListener('gallery:viewer', event => { restoring = true; pointerX = undefined; if (!event.detail) queueMicrotask(() => { restoring = false; }); }, { signal });
     const direction = document.documentElement.dir === 'rtl' ? -1 : 1;
     const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const shift = pixels => { state.target = Math.max(0, Math.min(state.limit, state.target + pixels * state.scale * direction)); wake(); };
+    const shift = pixels => { state.target += pixels * state.scale * direction; wake(); };
     viewport.addEventListener('pointerdown', event => {
         if (event.button !== 0 || !event.isPrimary) return;
         drag = { id: event.pointerId, x: event.clientX, y: event.clientY, last: event.clientX, time: event.timeStamp, active: false };
@@ -48,13 +50,12 @@ export function mountSpatialInput(root, state, wake, signal) {
     viewport.addEventListener('wheel', event => {
         if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || event.ctrlKey) return;
         const delta = event.deltaX * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientWidth : 1);
-        if ((delta * direction < 0 && state.target <= 0) || (delta * direction > 0 && state.target >= state.limit)) return;
         event.preventDefault(); state.velocity = 0; shift(delta);
     }, { signal, passive: false });
     viewport.addEventListener('focusin', event => {
         if (restoring || drag) return;
         const index = state.links.indexOf(event.target.closest('[data-spatial-panel]'));
         if (index < 0) return;
-        state.target = state.centers[index]; state.velocity = 0; wake();
+        state.target = nearestOccurrence(index, state.position, state.links.length); state.velocity = 0; wake();
     }, { signal });
 }

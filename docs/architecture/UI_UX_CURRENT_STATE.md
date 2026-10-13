@@ -1,5 +1,57 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Gallery shared track correction — 2026-10-14
+
+FACT: HEAD06b154cb; main033bb0b4 freshly fetched; working tree clean.
+Owner rejects independent panel bends. SPATIAL-02 is OWNER_ACCEPTED by request,
+IMPLEMENTING: one world curve, unbounded progress, cyclic virtual instances.
+CHANNEL: Terminal Codex; feature branch commit/push only, no merge/deploy.
+EDITABLE: gallery-spatial JS owners, stage focus CSS, scoped tests and proof.
+READ-ONLY/FORBIDDEN: all backend/data, Blade/header/archive/footer/menu/transition,
+media transport, dependencies and typography. Existing CSS/fallback retained.
+DECISION: shared monotonic world curve with continuous tangent; subdivided meshes
+sample absolute track coordinates. No per-panel rotation/local bend. Hit polygons
+and caption anchors use the identical function. Preserve original UV orientation.
+Integer virtual slots repeat source order; continuous progress never modulo/reset.
+Offscreen instances recycled by projected bounds; duplicate instances share one
+source texture. Original semantic links remain once; virtual pointer targets are
+aria-hidden, non-tabstop copies. Focus explores nearest cyclic occurrence.
+TIERS: XS/SM dominant panel plus edge neighbors; MD/LG expanded field; XL/2XL
+about three large panels. One fluid curve/camera and fixed slot pitch per size;
+texture completion never changes slot positions. Natural media ratio preserved.
+ID/EN/AR unchanged; mirror reading order, not images or physical pointer meaning.
+Reduced motion retains manual input, disables inertia/passive pointer. Native
+vertical scroll, modal restore, no-WebGL/context-loss fallback remain mandatory.
+PROOF: shared-coordinate and seam tests; browser center/side/seam sequences,
+small/large datasets, mobile/touch, modal/scroll and required build/PHP gates.
+GAP: supplied comparison screenshot absent in current attachments; use retained
+1440x900 live Jesper capture from previous audit, never copy its code/assets.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE; visual acceptance is not inferred from tests.
+PROOF: source uses trackPoint(globalDistance,y,curve) for every vertex, caption
+and polygon; no bentPlane/local radius/rotateY or target limit remains. Fixed
+slot pitch prevents texture decoding from shifting other panels. Texture/material
+shared across repeating identities; only viewport slots plus adjacent preload.
+Chromium154/Linux software WebGL:42width/locale cells, drag/inertia/pointer,
+deltaX/deltaY, modal/restore/keyboard, reduced motion/context-loss/no-JS PASS.
+Forward seam recorded with continuous progress across12; reverse continues
+below0. Frame assertions check identity order, projected-outline continuity,
+and that removed instances were fully outside viewport. Dataset1/2/40 tests PASS.
+Touch via CDP: horizontal1→1.829149, native vertical622px, no modal misclick PASS.
+Center/side/seam/mobile frames visually reviewed against retained Jesper capture:
+center is camera-facing, side edges now continue the global depth curve instead
+of curling around each panel center. This proves the changed geometric model,
+not owner acceptance of aesthetic fidelity. No reference assets/code copied.
+Diff/structure288files/build PASS; geometry3tests PASS; PHP283passed,
+2259assertions,1opt-in skipped using installed GD via temporary PHP_INI_SCAN_DIR.
+Deferred stage521.43kB/131.56kB gzip; existing Vite500kB warning retained.
+WebKit retry still crashes during page.goto; WebKit/physical Safari, field CWV,
+Lighthouse and full performance certification remain unproven.
+Artifacts: docs2/proof/gallery-shared-track (frames, video, browser metrics).
+PROGRESS: requested shared geometry and infinite exploration implemented.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE for WebKit and owner visual acceptance.
+NEXT CHANNEL: owner/local terminal; review shared-track center/side/seam evidence
+before any further Stage1 art-direction changes. Feature branch only.
+
 ## Gallery Stage 1 spatial rebuild — 2026-10-13
 
 FACT: main033bb0b49bb03647d6f41e0e9342de995197bfca fetched; clean feature branch.
