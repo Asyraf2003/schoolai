@@ -82,6 +82,9 @@
             </div>
             <div class="gallery-footer__meta">
                 <p>AL MUSTAQBAL SCHOOL <span>© {{ date('Y') }}</span></p>
+                @if($ppdbUrl)
+                    <a class="gallery-footer__ppdb" href="{{ $ppdbUrl }}">{{ __('pages.common.nav.ppdb') }} ↗</a>
+                @endif
                 <div class="gallery-locales" aria-label="{{ __('pages.common.language_label') }}">
                     @foreach(['id' => 'ID', 'en' => 'EN', 'ar' => 'العربية'] as $locale => $name)
                         <form method="POST" action="{{ route('language.switch', $locale) }}">
