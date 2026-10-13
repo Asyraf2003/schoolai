@@ -23,4 +23,10 @@ return [
     'original' => 'Buka media asli',
     'film' => 'Video',
     'photo' => 'Foto',
+    'hero_first' => 'GALE',
+    'hero_second' => 'RI.',
+    'hero_alt' => 'Suasana kegiatan sekolah Al-Mustaqbal',
+    'stories_heading' => 'Sehari, seribu cerita',
+    'footer_first' => 'Cerita ini',
+    'footer_second' => 'belum selesai.',
 ];
