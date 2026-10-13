@@ -13,7 +13,7 @@ final class PublicGalleryController extends Controller
     public function __invoke(PpdbAccess $ppdb, SiteNavbarPresenter $navbar): View
     {
         return view('pages.gallery', [
-            'items' => GalleryItem::query()->orderByDesc('id')->paginate(3)->withQueryString()->fragment('all-posts'),
+            'items' => GalleryItem::query()->orderByDesc('id')->paginate(24)->withQueryString()->fragment('all-posts'),
             'photos' => GalleryItem::query()->where('type', 'photo')->orderByDesc('id')
                 ->paginate(6, ['*'], 'photo_page')->withQueryString()->fragment('photos'),
             'videos' => GalleryItem::query()->where('type', 'video')->orderByDesc('id')
