@@ -1,14 +1,25 @@
-/* Above public content/header/cursor; native dialogs retain the browser top layer. */
+/* The same ten-sheet navigation exists on landing and public pages. */
 .public-transition {
-    --transition-front: #b8cee1; --transition-back: #f1ae7e;
-    position: fixed; inset: 0; z-index: 30; display: none;
-    grid-template-columns: repeat(10, minmax(0, 1fr)); pointer-events: none;
+    --transition-front: #d9fb63;
+    --transition-back: #234a3b;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: none;
+    grid-template-columns: repeat(10,minmax(0,1fr));
+    pointer-events: none;
+    overflow: hidden;
+    isolation: isolate;
 }
-[data-transition-palette="1"] .public-transition { --transition-front: #e5b5ba; --transition-back: #b4cbc1; }
-[data-transition-palette="2"] .public-transition { --transition-front: #d9d6ac; --transition-back: #acc6da; }
-[data-transition-palette="3"] .public-transition { --transition-front: #c9bee0; --transition-back: #edc48f; }
+[data-transition-palette="1"] .public-transition { --transition-front: #c1d6f4; --transition-back: #353a85; }
+[data-transition-palette="2"] .public-transition { --transition-front: #f7bf91; --transition-back: #8b423e; }
+[data-transition-palette="3"] .public-transition { --transition-front: #ddd0fb; --transition-back: #59456e; }
+[data-transition-palette="4"] .public-transition { --transition-front: #f7d26e; --transition-back: #234946; }
+[data-transition-palette="5"] .public-transition { --transition-front: #d6cbb0; --transition-back: #5b4433; }
+[data-transition-palette="6"] .public-transition { --transition-front: #c3e9d8; --transition-back: #18493c; }
+[data-transition-palette="7"] .public-transition { --transition-front: #edbcca; --transition-back: #57374a; }
 [data-public-transition] .public-transition { display: grid; }
-.public-transition__slice { position: relative; --order: 0; }
+.public-transition__slice { position: relative; --order: 0; min-inline-size: 0; }
 .public-transition__slice:nth-child(2) { --order: 3; }
 .public-transition__slice:nth-child(3) { --order: 1; }
 .public-transition__slice:nth-child(4) { --order: 5; }
@@ -18,18 +29,41 @@
 .public-transition__slice:nth-child(8) { --order: 9; }
 .public-transition__slice:nth-child(9) { --order: 6; }
 .public-transition__slice:nth-child(10) { --order: 8; }
-.public-transition__slice :is(i, b) { position: absolute; inset: 0 -1px; background: var(--transition-back); }
+.public-transition__slice :is(i,b) { position: absolute; inset: 0 -1px; display: block; will-change: transform; }
+.public-transition__slice i { background: var(--transition-back); }
 .public-transition__slice b { background: var(--transition-front); }
-.public-transition__logo { position: absolute; inset: 50% auto auto 50%; translate: -50% -50%; inline-size: clamp(4.5rem, 8vw, 6rem); block-size: auto; }
-[data-public-transition="exit"] .public-transition__slice { animation: public-cover 348ms cubic-bezier(.65, 0, .25, 1) both; animation-delay: calc(var(--order) * 8ms); }
-[data-public-transition="exit"] .public-transition__logo { animation: public-logo-in 280ms 120ms both; }
-[data-public-transition="enter"] .public-transition { animation: public-release 630ms step-end forwards; }
-[data-public-transition="enter"] .public-transition__slice b { animation: public-peel 380ms cubic-bezier(.65, 0, .25, 1) both; animation-delay: calc(var(--order) * 10ms); }
-[data-public-transition="enter"] .public-transition__slice i { animation: public-peel 400ms cubic-bezier(.65, 0, .25, 1) both; animation-delay: calc(140ms + var(--order) * 10ms); }
-[data-public-transition="enter"] .public-transition__logo { animation: public-logo-out 260ms 200ms both; }
+.public-transition__logo {
+    position: absolute;
+    z-index: 2;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: clamp(5.6rem,10vw,8rem);
+    block-size: auto;
+    max-block-size: 24svh;
+    object-fit: contain;
+    border-radius: 50%;
+    translate: -50% -50%;
+    filter: drop-shadow(0 8px 25px #14171333);
+    pointer-events: none;
+}
+[data-public-transition="exit"] .public-transition__slice {
+    animation: public-cover 400ms cubic-bezier(.67,.04,.3,.98) both;
+    animation-delay: calc(var(--order) * 10ms);
+}
+[data-public-transition="exit"] .public-transition__logo { animation: public-logo-in 330ms 130ms both; }
+[data-public-transition="enter"] .public-transition { animation: public-release 780ms step-end forwards; }
+[data-public-transition="enter"] .public-transition__slice b {
+    animation: public-peel 430ms cubic-bezier(.66,.08,.28,1) both;
+    animation-delay: calc(var(--order) * 11ms);
+}
+[data-public-transition="enter"] .public-transition__slice i {
+    animation: public-peel 440ms cubic-bezier(.66,.08,.28,1) both;
+    animation-delay: calc(170ms + var(--order) * 11ms);
+}
+[data-public-transition="enter"] .public-transition__logo { animation: public-logo-out 320ms 175ms both; }
 @keyframes public-cover { from { transform: translateY(101%); } to { transform: translateY(0); } }
-@keyframes public-peel { to { transform: translateY(-101%); } }
-@keyframes public-logo-in { from { opacity: 0; scale: .9; } to { opacity: 1; scale: 1; } }
-@keyframes public-logo-out { to { opacity: 0; scale: .94; } }
+@keyframes public-peel { from { transform: translateY(0); } to { transform: translateY(-101%); } }
+@keyframes public-logo-in { from { opacity: 0; scale: .87; } to { opacity: 1; scale: 1; } }
+@keyframes public-logo-out { 0%,25% { opacity: 1; scale: 1; } to { opacity: 0; scale: .94; } }
 @keyframes public-release { to { visibility: hidden; } }
 @media (prefers-reduced-motion: reduce) { .public-transition { display: none !important; } }
