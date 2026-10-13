@@ -8,7 +8,7 @@
             if (!entry || entry.url !== location.href || Date.now() - entry.at > 15000
                 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             document.documentElement.dataset.publicTransition = 'enter';
-            document.documentElement.dataset.transitionPalette = String(entry.palette % 4);
+            document.documentElement.dataset.transitionPalette = String(entry.palette % 8);
             // CSS owns the entrance and its fail-open completion, even if JS fails.
         } catch {}
     })();
