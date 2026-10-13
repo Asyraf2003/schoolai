@@ -61,8 +61,14 @@
         .logout { margin: 0; }
         @media (max-width: 480px) { header { align-items: start; } }
     </style>
+    @if(request()->routeIs('artikel', 'artikel.native', 'galeri'))
+        @include('partials.public-transition-head')
+    @endif
 </head>
 <body>
+    @if(request()->routeIs('artikel', 'artikel.native', 'galeri'))
+        @include('partials.public-transition')
+    @endif
     <header class="shell">
         <a href="{{ route('home') }}">Al Mustaqbal School</a>
         @auth

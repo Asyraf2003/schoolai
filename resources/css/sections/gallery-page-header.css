@@ -1,0 +1,21 @@
+.gallery-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem; padding-block: 1.25rem; border-block-end: 1px solid #193c3326; }
+.gallery-header a { text-decoration: none; }
+.gallery-back { display: flex; align-items: center; gap: 1rem; min-block-size: 44px; justify-self: start; font-size: .75rem; }
+.gallery-back__arrow { display: grid; place-items: center; inline-size: 3rem; block-size: 3rem; border: 1px solid #193c3355; border-radius: 50%; font-size: 1.75rem; transition: width 280ms, border-radius 280ms, background 280ms; }
+.gallery-back:is(:hover, :focus-visible) .gallery-back__arrow { inline-size: 4rem; border-radius: 3rem; background: #e5e9dd; }
+.gallery-header__logo { inline-size: clamp(2.8rem, 4vw, 4rem); block-size: auto; border-radius: 50%; }
+.gallery-header__controls { display: flex; align-items: center; justify-content: end; gap: clamp(.5rem, 2vw, 2rem); }
+.gallery-sound { --header-color: #193c33; --sound-ripple-enabled: 0; display: flex; align-items: center; gap: .5rem; padding: 0; background: none; color: inherit; border: 0; min-inline-size: 44px; min-block-size: 44px; font-size: .65rem; }
+.gallery-sound canvas { inline-size: 2.75rem; block-size: 2.75rem; border: 1px solid #193c3355; border-radius: 50%; }
+.gallery-sound:disabled { opacity: .35; }
+.gallery-article { display: flex; align-items: center; gap: .6rem; min-block-size: 44px; font-size: .75rem; }
+.gallery-article > span:first-child { display: grid; place-items: center; inline-size: 3rem; block-size: 3rem; border-radius: 50%; background: #193c33; color: #f4f2e9; font-size: 1.3rem; letter-spacing: -.08em; transition: rotate 250ms; }
+.gallery-article:hover > span:first-child { rotate: -12deg; }
+@media (max-width: 767px) {
+    .gallery-back { gap: .5rem; }
+    .gallery-back > span:last-child, .gallery-article > span:last-child, .gallery-sound [data-audio-label] { display: none; }
+    .gallery-back:is(:hover, :focus-visible) .gallery-back__arrow { inline-size: 3rem; }
+    .gallery-header { padding-block: 1rem; }
+    .gallery-header__controls { gap: .5rem; }
+    .gallery-back__arrow, .gallery-article > span:first-child { inline-size: 2.75rem; block-size: 2.75rem; }
+}

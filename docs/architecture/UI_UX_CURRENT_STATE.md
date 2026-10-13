@@ -1,5 +1,38 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Gallery V3 and public transitions — 2026-10-13
+
+FACT: main033bb0b4 fetched; clean dedicated feat/gallery-v3-public-transitions.
+GOAL: owner-requested Gallery header/UI and shared public navigation only.
+BLUEPRINT GALLERY-V3-01: OWNER_ACCEPTED by detailed current request; IMPLEMENTING.
+Terminal Codex owns this execution; no delegation, merge or deployment.
+EDITABLE: Gallery controller/view/lang/CSS/JS, public transition partial/assets,
+landing/portal composition, footer navigation port, scoped tests and this ledger.
+FORBIDDEN: Article content, auth/admin/dashboard, Instagram sync, R2 and schema.
+Existing navbar presenter supplies identical school logo. Existing footer gate
+and scroll pacing retain sole input ownership. Gallery has semantic links and
+independent page/photo_page/video_page/ig_page pagination; native dialog viewer.
+XS/SM: stacked editorial media, paired supporting cards; MD: expanded two-column
+composition; LG/XL: asymmetric dominant media; 2XL: bounded1760px composition.
+Controls remain44px+, same three controls and logo in all tiers; landing1180/1181
+unchanged. ID/EN Inter/LTR; AR Cairo/RTL with logical spacing and mirrored arrows.
+Motion:10columns, two peel layers,420ms exit +630ms entrance, network separate;
+logo centered. Native document navigation; allowlisted public routes only.
+Reduced motion/unsupported animation use immediate navigation; BFCache resets.
+No WebGL/new dependencies. Images reserve aspect ratios; videos activate by
+visibility, muted, pause offscreen/hidden. Sound requires explicit interaction.
+GAP: named legacy typography files moved to resources_old; live owners verified
+in foundation/fonts.css, foundation/base.css, locale/ar.css and portal shell.
+PROOF PLAN: focused PHP/JS, full PHP, diff/structure/build; Chromium/WebKit
+widths360/390/640/768/1024/1180/1181/1280/1440/1536/1920 and boundaries,3locales,
+normal/reduced, viewer/focus, menu/footer/Back/Artikel, no-JS and BFCache.
+Performance budget: no new dependency, no blocking remote assets, transition
+transform/opacity only; compare lab samples and record unresolved certification.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE until implementation/browser proof.
+PROOF: build PASS; Chromium smoke Artikel→Galeri exit/enter10columns/release PASS.
+ACTIVE STEP: implement Gallery presentation, header and independent pagination.
+NEXT CHANNEL: Terminal Codex; prove Gallery and all requested navigation paths.
+
 ## First release checkpoint — 2026-10-13
 
 FACT: fetched main268cde30; active feat/public-content-integration / PR106.
