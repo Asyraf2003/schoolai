@@ -23,4 +23,10 @@ return [
     'original' => 'فتح الوسائط الأصلية',
     'film' => 'فيديو',
     'photo' => 'صورة',
+    'hero_first' => 'معرض',
+    'hero_second' => 'الصور',
+    'hero_alt' => 'أنشطة الحياة المدرسية في مدرسة المستقبل',
+    'stories_heading' => 'كل يوم ألف حكاية',
+    'footer_first' => 'حكايتنا',
+    'footer_second' => 'لم تنته بعد.',
 ];
