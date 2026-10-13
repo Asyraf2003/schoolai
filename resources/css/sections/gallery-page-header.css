@@ -1,9 +1,9 @@
-.gallery-header { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem; padding-block: clamp(1.3rem,2vw,2.2rem); border-block-end: 1px solid #ffffff36; color: #f1f0e9; }
+.gallery-header { position: absolute; inset-inline: 0; inset-block-start: 0; z-index: 2; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .75rem; padding-block: clamp(1.3rem,2vw,2.2rem);  color: #f1f0e9; }
 .gallery-header a { text-decoration: none; }
-.gallery-back { display: inline-flex; align-items: center; gap: clamp(.5rem,1.4vw,1.1rem); justify-self: start; min-block-size: 48px; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; }
+.gallery-back { grid-column: 2; grid-row: 1; display: inline-flex; align-items: center; gap: clamp(.5rem,1.4vw,1.1rem); justify-self: start; min-block-size: 48px; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; }
 .gallery-back__arrow { display: grid; place-items: center; inline-size: clamp(2.7rem,4vw,3.5rem); block-size: clamp(2.7rem,4vw,3.5rem); border: 1px solid #ffffff87; border-radius: 50%; font-size: 1.65rem; transition: inline-size .3s,border-radius .3s,background .3s,color .3s,transform .3s; }
 .gallery-back:is(:hover,:focus-visible) .gallery-back__arrow { inline-size: clamp(3.2rem,5vw,4.5rem); border-radius: 3rem; background: #d9fb63; color: #141713; transform: translateX(-.2rem); }
-.gallery-header__logo { inline-size: clamp(2.75rem,4vw,4.5rem); block-size: clamp(2.75rem,4vw,4.5rem); object-fit: contain; border-radius: 50%; }
+.gallery-header__logo { grid-column: 1; grid-row: 1; inline-size: clamp(2.75rem,4vw,4.5rem); block-size: clamp(2.75rem,4vw,4.5rem); object-fit: contain; border-radius: 50%; }
 .gallery-header__controls { display: flex; align-items: center; justify-content: flex-end; gap: clamp(.55rem,2.2vw,2.3rem); }
 .gallery-sound { --header-color: #f1f0e9; --sound-ripple-enabled: 0; display: flex; align-items: center; gap: .75rem; padding: 0; color: inherit; border: 0; background: transparent; min-inline-size: 44px; min-block-size: 44px; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
 .gallery-sound canvas { inline-size: 2.8rem; block-size: 2.8rem; border: 1px solid #ffffff87; border-radius: 50%; }

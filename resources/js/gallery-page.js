@@ -46,7 +46,7 @@ button.addEventListener('click', async () => {
     try { await video.play(); enabled = true; } catch { video.muted = true; enabled = false; }
     status();
 });
-mountGalleryViewer(open => { viewing = open; if (open) enabled = false; reconcile(); status(); });
+mountGalleryViewer(open => { document.dispatchEvent(new CustomEvent('gallery:viewer', { detail: open })); viewing = open; if (open) enabled = false; reconcile(); status(); });
 const reveal = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (!isIntersecting) return;
     if (!preference.matches) target.dataset.revealed = '';
@@ -62,3 +62,11 @@ window.addEventListener('pagehide', event => {
 });
 window.addEventListener('pageshow', () => { suspended = false; enabled = false; reconcile(); status(); });
 status();
+
+// The gallery's renderer stays out of the landing and semantic critical path.
+const spatial = document.querySelector('[data-spatial-gallery]');
+if (spatial) {
+    const activate = () => import('./gallery-spatial.js').then(module => module.mountSpatialGallery(spatial)).catch(() => {});
+    if (document.readyState === 'complete') activate();
+    else window.addEventListener('load', activate, { once: true });
+}

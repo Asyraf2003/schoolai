@@ -1,0 +1,51 @@
+{
+  "engine": "chromium",
+  "version": "154.0.8037.97",
+  "proof": [
+    {
+      "name": "landing menu",
+      "path": "/galeri",
+      "result": "PASS"
+    },
+    {
+      "name": "Gallery Back",
+      "path": "/",
+      "result": "PASS"
+    },
+    {
+      "name": "landing Articles",
+      "path": "/artikel",
+      "result": "PASS"
+    },
+    {
+      "name": "Article Gallery",
+      "path": "/galeri",
+      "result": "PASS"
+    },
+    {
+      "name": "Gallery Article",
+      "path": "/artikel",
+      "result": "PASS"
+    },
+    {
+      "name": "existing footer wheel gate",
+      "path": "/galeri",
+      "result": "PASS"
+    },
+    {
+      "name": "mobile Back",
+      "path": "/",
+      "result": "PASS"
+    },
+    {
+      "name": "mobile menu",
+      "path": "/galeri",
+      "result": "PASS"
+    },
+    {
+      "name": "reduced motion immediate navigation",
+      "result": "PASS"
+    }
+  ],
+  "errors": []
+}

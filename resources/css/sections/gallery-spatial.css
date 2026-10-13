@@ -1,0 +1,28 @@
+.gallery-spatial {
+    position: relative;
+    isolation: isolate;
+    block-size: 100svh;
+    min-block-size: 32rem;
+    overflow: hidden;
+    background: #080909;
+    color: #f1f0e9;
+}
+.gallery-spatial__viewport { position: absolute; inset: 15% 0 17%; }
+.gallery-spatial__track { display: flex; align-items: center; gap: 3vw; block-size: 100%; padding-inline: 8vw; overflow-x: auto; scrollbar-width: thin; }
+.gallery-spatial__panel { position: relative; flex: 0 0 65%; text-decoration: none; aspect-ratio: 1.5; max-block-size: 100%; }
+.gallery-spatial__panel img { inline-size: 100%; block-size: 100%; object-fit: contain; }
+.gallery-spatial__caption { position: absolute; left: 1rem; bottom: 1rem; max-inline-size: calc(100% - 2rem); font-size: clamp(.8rem,1.1vw,1rem); line-height: 1.5; text-shadow: 0 1px 5px #000; background: #0009; padding: .3rem .6rem; }
+.gallery-spatial__intro { position: absolute; inset-inline: 0; bottom: max(2rem,env(safe-area-inset-bottom)); display: flex; align-items: end; justify-content: space-between; gap: 2rem; pointer-events: none; }
+.gallery-spatial__intro p { max-inline-size: 28rem; font-size: clamp(.8rem,1.15vw,1rem); line-height: 1.6; color: #b8bdb9; }
+.gallery-spatial__intro a { pointer-events: auto; min-inline-size: 44px; min-block-size: 44px; display: grid; place-items: center; text-decoration: none; font-size: 1.5rem; }
+.gallery-spatial__floor { position: absolute; inset: 77% -30% -28%; opacity: .18; transform: perspective(300px) rotateX(62deg); transform-origin: center top; background-image: linear-gradient(#72807955 1px,transparent 1px),linear-gradient(90deg,#72807955 1px,transparent 1px); background-size: 9% 32%; mask-image: linear-gradient(transparent,#000 65%,transparent); pointer-events: none; z-index: -1; }
+.gallery-spatial[data-spatial-ready] .gallery-spatial__viewport { inset: 0; touch-action: pan-y pinch-zoom; cursor: grab; }
+.gallery-spatial[data-spatial-dragging] .gallery-spatial__viewport { cursor: grabbing; }
+.gallery-spatial[data-spatial-ready] .gallery-spatial__track { position: absolute; inset: 0; display: block; padding: 0; overflow: hidden; pointer-events: none; }
+.gallery-spatial[data-spatial-ready] .gallery-spatial__panel { position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-block-size: none; aspect-ratio: auto; pointer-events: auto; will-change: clip-path; }
+.gallery-spatial[data-spatial-ready] .gallery-spatial__panel img { visibility: hidden; }
+.gallery-spatial[data-spatial-ready] .gallery-spatial__caption { left: 0; top: 0; bottom: auto; width: max-content; max-width: var(--caption-width); transform-origin: left bottom; pointer-events: none; }
+.gallery-spatial[data-spatial-ready] .gallery-spatial__panel:focus-visible { outline: none; background: #ffffff20; }
+.gallery-spatial__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+@media (min-width: 768px) { .gallery-spatial__panel { flex-basis: 46%; } }
+@media (max-height: 540px) { .gallery-spatial { min-block-size: 26rem; } .gallery-spatial__intro p { max-inline-size: 24rem; font-size: .75rem; } }

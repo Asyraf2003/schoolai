@@ -20,30 +20,7 @@
     </div>
     <main id="main-content" tabindex="-1">
         <div class="gallery-dark">
-            <section class="gallery-hero gallery-wrap" aria-labelledby="gallery-title">
-                <div class="gallery-hero__eyebrow">
-                    <span>AL MUSTAQBAL SCHOOL</span>
-                    <span>{{ __('gallery_v3.archive') }} / 2026</span>
-                </div>
-                <div class="gallery-hero__layout">
-                    <div class="gallery-hero__copy">
-                        <p class="gallery-hero__kicker">{{ __('gallery_v3.archive') }}</p>
-                        <h1 id="gallery-title">{{ __('gallery_v3.hero_first') }}<span>{{ __('gallery_v3.hero_second') }}</span></h1>
-                        <div class="gallery-hero__bottom">
-                            <p>{{ __('gallery_v3.intro') }}</p>
-                            <a href="#stories" aria-label="{{ __('gallery_v3.explore') }}"><span aria-hidden="true">↓</span></a>
-                        </div>
-                    </div>
-                    <div class="gallery-hero__art">
-                        <div class="gallery-hero__picture">
-                            <img src="{{ config('media.static.navigation.gallery') }}" alt="{{ __('gallery_v3.hero_alt') }}" width="900" height="1140" fetchpriority="high" decoding="async">
-                            <div class="gallery-hero__stamp" aria-hidden="true">LEARN.<br>PLAY.<br>GROW. ↗</div>
-                            <span class="gallery-hero__photo-label">01 / AL MUSTAQBAL</span>
-                        </div>
-                        <span class="gallery-hero__edge" aria-hidden="true">SCROLL TO DISCOVER / 2026</span>
-                    </div>
-                </div>
-            </section>
+            @include('pages.partials.gallery-spatial')
             <section class="gallery-stories gallery-wrap" id="stories" aria-labelledby="gallery-stories-title">
                 <div class="gallery-stories__heading">
                     <h2 id="gallery-stories-title">{{ __('gallery_v3.stories_heading') }}<i>.</i></h2>

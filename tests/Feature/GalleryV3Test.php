@@ -26,7 +26,7 @@ it('keeps the exact landing logo and three gallery header controls in every loca
     $response = $this->withSession(['locale' => $locale])->get(route('galeri'));
 
     $response->assertOk()->assertSee('src="'.config('media.static.brand.logo_nav').'"', false)
-        ->assertSee('gallery-hero__layout', false)->assertSee('gallery-stories__heading', false)
+        ->assertSee('data-spatial-gallery', false)->assertSee('gallery-stories__heading', false)
         ->assertSee('data-gallery-sound', false)->assertSee(route('home'), false)
         ->assertSee(route('artikel'), false)->assertSee(trans('gallery_v3.stories_note', [], $locale))
         ->assertDontSee('data-menu-toggle', false);

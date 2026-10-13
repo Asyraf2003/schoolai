@@ -1,5 +1,62 @@
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Gallery Stage 1 spatial rebuild — 2026-10-13
+
+FACT: main033bb0b49bb03647d6f41e0e9342de995197bfca fetched; clean feature branch.
+GOAL: replace only /galeri opening hero with an original school spatial stage.
+BLUEPRINT SPATIAL-01: OWNER_ACCEPTED by detailed request; IMPLEMENTING.
+CHANNEL: Terminal Codex; commit/push feat/gallery-v3-public-transitions only.
+EDITABLE: Gallery opening Blade/CSS, gallery-page bootstrap, stage renderer/input,
+stage data presenter/controller integration, scoped tests and this ledger.
+READ-ONLY: media config/models, archive/viewer, shared navigation/transitions.
+FORBIDDEN: landing/header, footer gate, storage/Instagram/auth/admin and schema.
+DECISION: installed Three0.185.1; deferred single WebGL renderer, subdivided
+cylindrical planes, perspective camera; native HTML links/captions and viewer.
+No new dependencies. Legacy hero rules removed, archive selectors retained.
+XS/SM: one dominant landscape + clipped neighbors; MD/LG: expanded spatial field;
+XL/2XL: about three panels, source-ratio geometry, no portrait-card packing.
+One fluid camera/layout, DPR<=1.5, at most5 resident textures; static video posters
+in stage, native video on modal intent. No texture for entire catalog at once.
+ID/EN Inter/LTR; AR Cairo/RTL, reverse reading order but never mirror photographs
+or physical drag direction. Locale POST unload suspends/disposes outgoing scene.
+Input: horizontal pointer displacement decays; drag/deltaX only; deltaY native.
+Time-based damping/inertia, no pinning. Keyboard focus moves panel into view.
+Reduced motion disables passive drift/inertia; no-JS/WebGL/context-loss uses
+scrollable semantic HTML. One RAF pauses offscreen/hidden/modal/navigation.
+Caption projects with mesh; whole curved outline is interactive, drag suppresses
+click. Existing dialog owns Escape/focus/body lock and position restoration.
+Gallery header retains links/sound/logo assets; logo moves left as requested.
+GAP: no existing Gallery contact affordance; no new contact UI authorized.
+GAP: referenced chat screenshots unavailable; live reference observation used.
+PROOF: required commands plus Chromium/WebKit,6tiers/3locales, desktop1440x900,
+mobile390, motion frames, modal/input/fallback/lifecycle and protected routes.
+Performance: record deferred bundle and frame work; target16.7ms/p95 where feasible,
+no offscreen RAF; lab/physical device/field claims require separate actual proof.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE pending runtime and owner visual review.
+PROOF 2026-10-13: diff/structure287files/build/Pint PASS. PHP283passed,
+2259assertions,1opt-in skipped; GD enabled through temporary PHP_INI_SCAN_DIR.
+Default PHP run has8GD errors; no application failures after enabling installed GD.
+Chromium154.0.8037.97/Linux software WebGL:42width/locale cells PASS, including
+360/390/639/640/767/768/1023/1024/1279/1280/1440/1535/1536/1920, ID/EN/AR.
+Projected curved top edge deviation>5px and637vertices with>20distinct depth
+columns proven. Drag/inertia/click suppression, pointer settle, deltaX/deltaY,
+modal/Escape/body lock/position restore, keyboard,200%zoom, no-JS/context-loss
+fallback PASS. CDP mobile touch horizontal swipe and native vertical405px PASS.
+Existing public navigation and footer white/blue-held scroll gate PASS, including
+landing menu, Gallery Back, Article, mobile menu, history and reduced navigation.
+Proof artifacts: docs2/proof/gallery-stage1; video includes horizontal motion,
+modal and locale/viewport checks. Actual configured school assets; no mocks.
+At most5resident textures; stage uses video posters and opens native video on
+intent. Gallery deferred chunk520.9kB/131.4kB gzip; Vite500kB warning retained.
+WebKit26.6 runner crashes on page.goto, including when stage JS is blocked;
+blank document works. WebKit parity remains BLOCKED_BY_MISSING_EVIDENCE.
+No physical Safari/touch, screen-reader, measured p95/GPU budget, Lighthouse
+three-run comparison or field CWV claim. Chat reference screenshot unavailable.
+PROGRESS: Stage1 implementation and Chromium proof ready for visual review.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE for WebKit and owner visual acceptance.
+NEXT CHANNEL: owner/local terminal; review Stage1 screenshots/video and live
+feature branch before authorizing any further stage. No merge/deployment.
+
 ## Gallery V3 and public transitions — 2026-10-13
 
 FACT: main033bb0b4 fetched; clean dedicated feat/gallery-v3-public-transitions.

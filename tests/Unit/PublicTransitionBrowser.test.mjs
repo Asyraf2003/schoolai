@@ -15,7 +15,10 @@ for(const engine of (process.env.PROGRAM_ENGINES??'chromium,webkit').split(','))
         page.on('pageerror',e=>errors.push(e.message));
         const ready=async()=>{await page.waitForTimeout(900);};
         const navigate=async(selector,path,name)=>{
-            await page.locator(selector).first().click();
+            const target = page.locator(selector).first();
+            const menu = target.locator('xpath=ancestor::details[1]');
+            if (await menu.count() && !(await menu.getAttribute('open') !== null)) await menu.locator('summary').click();
+            await target.click();
             assert.equal(await page.locator('html').getAttribute('data-public-transition'),'exit',name);
             await page.waitForURL(url=>url.pathname===path);
             assert.equal(await page.locator('.public-transition__slice').count(),10);
