@@ -18,8 +18,8 @@ export function navigatePublic(href) {
         location.assign(url.href);
         return;
     }
-    let palette = Math.floor(Math.random() * 4);
-    if (String(palette) === root.dataset.transitionPalette) palette = (palette + 1) % 4;
+    let palette = Math.floor(Math.random() * 8);
+    if (String(palette) === root.dataset.transitionPalette) palette = (palette + 1) % 8;
     try {
         sessionStorage.setItem(key, JSON.stringify({ url: url.href, at: Date.now(), palette }));
     } catch { location.assign(url.href); return; }
@@ -37,7 +37,7 @@ export function navigatePublic(href) {
     const last = layer.querySelector('.public-transition__slice:nth-child(8)');
     last.addEventListener('animationend', go, { once: true });
     // Bounded fallback for disabled CSS, interrupted animations or missing events.
-    deadline = setTimeout(go, 520);
+    deadline = setTimeout(go, 650);
 }
 
 if (document.querySelector('[data-public-transition]')) {
