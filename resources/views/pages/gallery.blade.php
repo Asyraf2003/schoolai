@@ -17,7 +17,9 @@
     <a class="skip-link" href="#main-content">{{ __('home.accessibility.skip_to_content') }}</a>
     <div class="gallery-dark">
         @include('pages.partials.gallery-header')
-        <main id="main-content" tabindex="-1">
+    </div>
+    <main id="main-content" tabindex="-1">
+        <div class="gallery-dark">
             <section class="gallery-hero gallery-wrap" aria-labelledby="gallery-title">
                 <div class="gallery-hero__eyebrow">
                     <span>AL MUSTAQBAL SCHOOL</span>
@@ -60,16 +62,16 @@
                     @endforelse
                 </div>
             </section>
-        </main>
-    </div>
-    <div class="gallery-public-archive">
+        </div>
+        <div class="gallery-public-archive">
         @include('pages.partials.gallery-section', ['sectionId' => 'all-posts', 'number' => '01', 'label' => __('gallery_v3.all'), 'description' => __('gallery_v3.all_note'), 'paginator' => $items, 'composition' => 'editorial'])
         @include('pages.partials.gallery-section', ['sectionId' => 'photos', 'number' => '02', 'label' => __('gallery_v3.photos'), 'description' => __('gallery_v3.photos_note'), 'paginator' => $photos, 'composition' => 'photos'])
         @include('pages.partials.gallery-section', ['sectionId' => 'films', 'number' => '03', 'label' => __('gallery_v3.films'), 'description' => __('gallery_v3.films_note'), 'paginator' => $videos, 'composition' => 'films'])
         @if($instagramPosts->count())
             @include('pages.partials.gallery-section', ['sectionId' => 'instagram', 'number' => '04', 'label' => __('instagram_gallery.instagram'), 'description' => __('gallery_v3.instagram_note'), 'paginator' => $instagramPosts, 'composition' => 'instagram'])
         @endif
-    </div>
+        </div>
+    </main>
     <footer class="gallery-footer">
         <div class="gallery-wrap">
             <p class="gallery-hero__kicker">{{ __('gallery_v3.archive') }}</p>
