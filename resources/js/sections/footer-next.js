@@ -1,3 +1,4 @@
+import { navigatePublic } from '../public-transition.js';
 import { createFooterGate } from './footer-gate.js';
 
 export function mountFooterNext(root) {
@@ -21,7 +22,7 @@ export function mountFooterNext(root) {
     const navigate = () => {
         if (disposed || suspended || navigated) return;
         navigated = true;
-        window.location.assign(next.href);
+        navigatePublic(next.href);
     };
     const gate = createFooterGate(bounds, navigate);
     const paint = () => {

@@ -22,8 +22,10 @@
         <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ Vite::asset('resources/fonts/inter/inter-latin-variable.woff2') }}">
     @endif
     @vite(['resources/css/index.css', 'resources/js/index.js'])
+    @include('partials.public-transition-head')
 </head>
 <body class="landing">
+    @include('partials.public-transition', ['transitionLogo' => $navigation['logoImageUrl']])
     <a class="skip-link" href="#main-content">{{ __('home.accessibility.skip_to_content') }}</a>
     <div class="scroll-indicator" data-scroll-indicator aria-hidden="true">
         <span class="scroll-indicator__thumb" data-scroll-indicator-thumb></span>

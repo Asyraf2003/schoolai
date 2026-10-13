@@ -1,0 +1,34 @@
+{
+  "engine": "154.0.8037.97",
+  "proof": [
+    {
+      "name": "continuous last-to-first native wheel sequence",
+      "frames": 279,
+      "from": 10.600006,
+      "to": 12.520003
+    },
+    {
+      "name": "negative progress without start boundary",
+      "progress": -3.479813
+    },
+    {
+      "name": "virtual instances and shared textures",
+      "media": 1,
+      "before": 0,
+      "after": 2.326378
+    },
+    {
+      "name": "virtual instances and shared textures",
+      "media": 2,
+      "before": 1,
+      "after": 3.326362
+    },
+    {
+      "name": "virtual instances and shared textures",
+      "media": 40,
+      "before": 1,
+      "after": 3.326362
+    }
+  ],
+  "errors": []
+}

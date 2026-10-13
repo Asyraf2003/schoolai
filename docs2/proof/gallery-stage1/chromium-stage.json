@@ -1,0 +1,416 @@
+{
+  "engine": "chromium",
+  "version": "154.0.8037.97",
+  "cells": [
+    {
+      "width": 360,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 390,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 639,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 640,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 767,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 768,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1023,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1024,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1279,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1280,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1440,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1535,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1536,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 3,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1920,
+      "locale": "id",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 360,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 390,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 639,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 640,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 767,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 768,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1023,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1024,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1279,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1280,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1535,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1536,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1920,
+      "locale": "en",
+      "dir": "ltr",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 360,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 390,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 639,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 640,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 767,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 768,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1023,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1024,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1279,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1280,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1440,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1535,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1536,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    },
+    {
+      "width": 1920,
+      "locale": "ar",
+      "dir": "rtl",
+      "overflow": false,
+      "textures": 4,
+      "ready": true,
+      "canvas": 1
+    }
+  ],
+  "checks": [
+    {
+      "name": "curved projected mesh edge",
+      "midpointDeviation": 18.13899999999998,
+      "outline": "polygon(408.409px 237.344px, 428.219px 234.705px, 449.475px 232.215px, 472.112px 229.895px, 496.051px 227.761px, 521.195px 225.832px, 547.435px 224.123px, 574.645px 222.65px, 602.685px 221.426px, 631.405px 220.461px, 660.644px 219.766px, 690.234px 219.346px, 720px 219.205px, 749.766px 219.346px, 779.356px 219.766px, 808.595px 220.461px, 837.315px 221.426px, 865.355px 222.65px, 892.565px 224.123px, 918.805px 225.832px, 943.949px 227.761px, 967.888px 229.895px, 990.525px 232.215px, 1011.78px 234.705px, 1031.59px 237.344px, 1031.59px 649.154px, 1011.78px 651.626px, 990.525px 653.957px, 967.888px 656.13px, 943.949px 658.129px, 918.805px 659.935px, 892.565px 661.536px, 865.355px 662.915px, 837.315px 664.062px, 808.595px 664.965px, 779.356px 665.616px, 749.766px 666.009px, 720px 666.141px, 690.234px 666.009px, 660.644px 665.616px, 631.405px 664.965px, 602.685px 664.062px, 574.645px 662.915px, 547.435px 661.536px, 521.195px 659.935px, 496.051px 658.129px, 472.112px 656.13px, 449.475px 653.957px, 428.219px 651.626px, 408.409px 649.154px)"
+    },
+    {
+      "name": "pointer displacement settles",
+      "result": "PASS"
+    },
+    {
+      "name": "drag inertia without click",
+      "result": "PASS"
+    },
+    {
+      "name": "deltaX/deltaY independent and lower archive viewer",
+      "result": "PASS"
+    },
+    {
+      "name": "whole-panel modal, Escape, scroll lock and position restoration",
+      "result": "PASS"
+    },
+    {
+      "name": "reduced pointer, keyboard modal, short height, 200% zoom",
+      "result": "PASS"
+    },
+    {
+      "name": "context loss restores clickable HTML",
+      "result": "PASS"
+    }
+  ],
+  "errors": []
+}
