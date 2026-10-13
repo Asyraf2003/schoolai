@@ -23,4 +23,10 @@ return [
     'original' => 'Open original media',
     'film' => 'Film',
     'photo' => 'Photo',
+    'hero_first' => 'GAL',
+    'hero_second' => 'LERY.',
+    'hero_alt' => 'School life at Al-Mustaqbal',
+    'stories_heading' => 'A thousand little stories',
+    'footer_first' => 'The story',
+    'footer_second' => 'continues.',
 ];
