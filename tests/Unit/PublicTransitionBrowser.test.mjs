@@ -13,7 +13,7 @@ for(const engine of (process.env.PROGRAM_ENGINES??'chromium,webkit').split(','))
         const context=await browser.newContext({viewport:{width:1440,height:900},recordVideo:{dir:out,size:{width:1440,height:900}}});
         const page=await context.newPage(), errors=[],proof=[];
         page.on('pageerror',e=>errors.push(e.message));
-        const ready=async()=>{await page.waitForTimeout(700);};
+        const ready=async()=>{await page.waitForTimeout(900);};
         const navigate=async(selector,path,name)=>{
             await page.locator(selector).first().click();
             assert.equal(await page.locator('html').getAttribute('data-public-transition'),'exit',name);
