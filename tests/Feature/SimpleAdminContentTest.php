@@ -46,3 +46,13 @@ it('keeps content mutations behind CSRF and active-session checks', function ():
         app()->detectEnvironment(fn () => 'testing');
     }
 });
+
+it('shows placeholders for articles and gallery while retaining accounts and PPDB forms', function (): void {
+    $this->actingAs(User::factory()->create(['role' => User::ROLE_ADMIN]));
+    $this->get(route('admin.artikel'))->assertOk()->assertSee('Coming Soon')
+        ->assertDontSee('Tambah artikel');
+    $this->get(route('admin.galeri'))->assertOk()->assertSee('Coming Soon')
+        ->assertDontSee('Tambah media');
+    $this->get(route('admin.accounts.index'))->assertOk()->assertSee('Tambah akun Guru atau Murid');
+    $this->get(route('admin.ppdb'))->assertOk()->assertSee('URL Google Form');
+});

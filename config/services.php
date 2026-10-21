@@ -36,6 +36,7 @@ return [
 
     'instagram' => [
         'access_token' => env('INSTAGRAM_ACCESS_TOKEN'),
+        'gallery_visible' => env('INSTAGRAM_GALLERY_VISIBLE', false),
     ],
 
     'unsplash' => [

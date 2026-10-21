@@ -13,7 +13,9 @@ final class PublicGalleryController extends Controller
     {
         return view('pages.gallery', [
             'items' => GalleryItem::query()->orderByDesc('id')->paginate(24),
-            'instagramPosts' => InstagramGalleryItem::query()->orderByDesc('posted_at')->paginate(18, ['*'], 'ig_page'),
+            'instagramPosts' => config('services.instagram.gallery_visible')
+                ? InstagramGalleryItem::query()->orderByDesc('posted_at')->paginate(18, ['*'], 'ig_page')
+                : collect(),
             'ppdbUrl' => $ppdb->current()->publicRegistrationUrl(),
         ]);
     }

@@ -25,6 +25,7 @@ it('renders existing school gallery records without requiring Instagram credenti
 
 it('syncs Instagram media into R2 URLs idempotently and renders the public feed', function (): void {
     config()->set('services.instagram.access_token', 'test-only-token');
+    config()->set('services.instagram.gallery_visible', true);
     Http::fake(['graph.instagram.com/*' => Http::response(['data' => [[
         'id' => '17912345',
         'caption' => 'Hari kreatif',
@@ -54,6 +55,7 @@ it('syncs Instagram media into R2 URLs idempotently and renders the public feed'
 
 it('keeps the public gallery working when the Instagram API is unavailable', function (): void {
     config()->set('services.instagram.access_token', 'test-only-token');
+    config()->set('services.instagram.gallery_visible', true);
     InstagramGalleryItem::create([
         'instagram_id' => '17923456', 'media_type' => 'IMAGE',
         'caption' => 'Foto tetap tersedia',
@@ -64,6 +66,21 @@ it('keeps the public gallery working when the Instagram API is unavailable', fun
     Http::fake(['graph.instagram.com/*' => Http::response(['error' => ['message' => 'Expired']], 401)]);
     $this->artisan('instagram:sync-gallery')->assertExitCode(1);
     $this->get(route('galeri'))->assertOk()->assertSee('Foto tetap tersedia');
+    expect(InstagramGalleryItem::count())->toBe(1);
+});
+
+it('hides the Instagram feed by default without deleting its records', function (): void {
+    config()->set('services.instagram.gallery_visible', false);
+    InstagramGalleryItem::create([
+        'instagram_id' => '17999999', 'media_type' => 'IMAGE',
+        'caption' => 'Konten tersimpan',
+        'media_url' => 'https://media.almustaqbal.sch.id/gallery/instagram/hidden.jpg',
+        'permalink' => 'https://www.instagram.com/p/hidden/',
+        'posted_at' => now(),
+    ]);
+    $this->get(route('galeri'))->assertOk()
+        ->assertDontSee('data-public-instagram-gallery', false)
+        ->assertDontSee('Konten tersimpan');
     expect(InstagramGalleryItem::count())->toBe(1);
 });
 

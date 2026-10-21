@@ -17,7 +17,7 @@ final class GalleryAdminController extends Controller
 {
     public function index(): View
     {
-        return view('admin.gallery.index', ['items' => GalleryItem::withTrashed()->orderByDesc('id')->paginate(20)]);
+        return view('admin.gallery.index');
     }
 
     public function create(): View
