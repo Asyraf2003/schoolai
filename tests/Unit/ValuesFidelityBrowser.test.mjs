@@ -1,10 +1,12 @@
 import test from 'node:test';
+import { existsSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
 import { oldValuesReference } from './ValuesOldReference.mjs';
 import { valuesCompactedProgress } from '../../resources/js/sections/values-card-keyframes.js';
 
 const phases = [0, .025, .065, .118, .16, .237, .31, .65, .92, .98];
+const archivedSourceAvailable = existsSync(new URL('../../resources_old/css/pages/welcome-values-story.css', import.meta.url));
 const inspect = legacy => {
     const cards = [...document.querySelectorAll('[data-values-card]')];
     const prefix = legacy ? '.values-card__' : '.values__card-';
@@ -65,7 +67,7 @@ async function desktopPosition(page, progress, legacy) {
     await page.waitForTimeout(1500);
 }
 for (const engine of engines) {
-    test(`Values preserves OLD card composition and native scroll choreography in ${engine}`, { skip: !enabled }, async () => {
+    test(`Values preserves OLD card composition and native scroll choreography in ${engine}`, { skip: !enabled || !archivedSourceAvailable }, async () => {
         const runtime = await session(engine);
         runtime.page.setDefaultTimeout(15000);
         const cases = [];

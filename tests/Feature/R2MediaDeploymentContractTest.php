@@ -30,7 +30,10 @@ it('keeps cPanel media on R2 without requiring a public storage symlink or embed
     $environment = file_get_contents(base_path('deploy/cpanel/.env.production.example'));
 
     expect($runner)->toContain('R2MediaConfiguration::class')->not->toContain('symlink(');
-    expect($builder)->toContain('"MEDIA_DISK" "s3"')->toContain('--exclude "/media/***"')
+    expect($builder)->toContain('cp .env.production "$app_stage/.env"')
+        ->toContain('"MEDIA_DISK" => "s3"')
+        ->toContain('--exclude "/media/***"')
+        ->not->toContain('cp .env "$app_stage/.env"')
         ->not->toMatch('/set_env_value.*"APP_KEY" "base64:[^"]+"/')
         ->not->toMatch('/set_env_value.*"DB_PASSWORD" "[^"]+"/');
     expect($environment)->toContain('FILESYSTEM_DISK=local')->toContain('MEDIA_DISK=s3')

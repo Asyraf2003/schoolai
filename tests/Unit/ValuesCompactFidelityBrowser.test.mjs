@@ -1,9 +1,11 @@
 import test from 'node:test';
+import { existsSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
 import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
 import { oldValuesReference } from './ValuesOldReference.mjs';
 
+const archivedSourceAvailable = existsSync(new URL('../../resources_old/css/pages/welcome-values-story.css', import.meta.url));
 const inspect = () => [...document.querySelectorAll('[data-values-card]')].map(card => ({
     width: card.offsetWidth, height: card.offsetHeight,
     pose: [...new DOMMatrix(getComputedStyle(card.querySelector('[data-values-card-pose]')).transform).toFloat64Array()],
@@ -22,7 +24,7 @@ const position = async (page, visible) => {
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 };
 for (const engine of engines) {
-    test(`Values matches OLD natural rows and visibility flips on compact tiers in ${engine}`, { skip: !enabled }, async () => {
+    test(`Values matches OLD natural rows and visibility flips on compact tiers in ${engine}`, { skip: !enabled || !archivedSourceAvailable }, async () => {
         const runtime = await session(engine);
         runtime.page.setDefaultTimeout(15000);
         const cases = [];

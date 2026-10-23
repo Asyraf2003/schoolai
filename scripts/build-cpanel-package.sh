@@ -122,6 +122,9 @@ rsync -a ./ "$app_stage/" \
     --exclude "/node_modules/" \
     --exclude "/vendor/" \
     --exclude "/tests/" \
+    --exclude "/docs/" \
+    --exclude "/docs2/" \
+    --exclude "/resources_old/" \
     --exclude "/deploy/" \
     --exclude "/scripts/" \
     --exclude "/$DEPLOY_DIR/" \
@@ -274,7 +277,7 @@ bash scripts/verify-cpanel-package.sh \
     echo "SchoolAI cPanel deployment"
     echo "ZIP: $(basename "$zip_file")"
     echo "Extract the ZIP directly into the cPanel home directory."
-    echo "The packaged $APP_DIR_NAME/.env comes from the private .env.production file."
+    echo "The packaged $APP_DIR_NAME/.env is already converted to production values."
     echo "After extraction, open this one-time maintenance URL:"
     echo "URL: $SITE_URL/clear.php?token=$clear_token"
     echo "clear.php runs optimize:clear, migrate --force, optimize, then deletes itself after success."
