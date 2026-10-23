@@ -1,3 +1,19 @@
+## Admin panel refresh and deployment source — 2026-10-23
+
+FACT: main 1854df8901a24402f19fc79beb78cf0fdd8b87ac contained a horizontal admin menu,
+unstructured UI actions, placeholder article/gallery listings and a packager reading development .env.
+User authorized a direct main push, admin components, and retirement of resources_old from the
+active tree while keeping Git history.
+DECISION: a single accessible sidebar DOM, reusable Blade UI primitives, real paginated
+article/gallery listings, and .env.production as the only deployment source.
+SCOPE: admin layout/components/CSS/views, index queries, targeted tests, cPanel
+builder/verifier, removing resources_old and tracked generated deploy ZIP.
+PROGRESS: source changes prepared remotely; local build, runtime browser and live hosting
+are not certified from this channel. Secret environment files were not committed.
+STATUS: BLOCKED_BY_MISSING_EVIDENCE for runtime; changes have not been deployed.
+NEXT: owner pulls latest main and runs npm structure/build, PHP tests and make deploy with
+their existing ignored .env.production. Verify cPanel backup/database before uploading.
+
 # UI/UX Engineering — Current State and Progress Ledger
 
 ## First release checkpoint — 2026-10-13

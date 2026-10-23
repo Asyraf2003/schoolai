@@ -1,0 +1,67 @@
+.admin {
+    --admin-accent: #214d3b;
+    --admin-accent-soft: #e8f0ea;
+    --admin-ink: #20382e;
+    --admin-muted: #64746b;
+    --admin-border: #dce5de;
+    --admin-surface: #fff;
+    background: #f5f7f4;
+    color: var(--admin-ink);
+}
+.admin-shell { min-block-size: 100svh; }
+.admin-sidebar { background: var(--admin-surface); border-block-end: 1px solid var(--admin-border); }
+.admin-brand { display: flex; align-items: center; gap: .8rem; padding: 1.25rem 1rem .75rem; }
+.admin-brand-mark {
+    display: grid; place-items: center; inline-size: 2.5rem; block-size: 2.5rem;
+    border-radius: .75rem; background: var(--admin-accent); color: white; font-weight: 800;
+}
+.admin-brand-copy { display: grid; line-height: 1.3; }
+.admin-brand-copy strong { font-size: .96rem; }
+.admin-brand-copy span { font-size: .75rem; color: var(--admin-muted); }
+.admin-nav-caption { display: none; }
+.admin-nav { display: flex; gap: .25rem; padding: .4rem .75rem 1rem; overflow-x: auto; scrollbar-width: thin; }
+.admin-nav-link {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    flex: 0 0 auto; padding: .7rem .8rem; min-block-size: 44px;
+    border-radius: .65rem; text-decoration: none; white-space: nowrap;
+    color: var(--admin-muted); font-size: .9rem; font-weight: 600;
+}
+.admin-nav-link:hover, .admin-site-link:hover { background: #f0f4f0; color: var(--admin-ink); }
+.admin-nav-link.is-active { color: var(--admin-accent); background: var(--admin-accent-soft); }
+.admin-nav-link svg { inline-size: 1.15rem; flex-shrink: 0; }
+.admin-sidebar-footer { display: none; }
+.admin-workspace { min-inline-size: 0; }
+.admin-topbar {
+    display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+    padding: .9rem clamp(1rem, 3vw, 2.5rem); border-block-end: 1px solid var(--admin-border);
+    background: var(--admin-surface);
+}
+.admin-topbar-label { color: var(--admin-muted); font-size: .7rem; font-weight: 700; letter-spacing: .08em; }
+.admin-topbar-user { font-size: .8rem; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-main { max-inline-size: 84rem; margin-inline: auto; padding: clamp(1.25rem, 3vw, 2.75rem); }
+.admin-page-heading { margin-block-end: 1.5rem; }
+.admin-eyebrow { margin: 0 0 .3rem; font-size: .72rem; font-weight: 750; letter-spacing: .08em; color: var(--admin-muted); }
+.admin-page-heading h1 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.35rem); letter-spacing: -.035em; line-height: 1.2; }
+.admin-page-description { margin: .65rem 0 0; color: var(--admin-muted); }
+@media (min-width: 1024px) {
+    .admin-shell { display: grid; grid-template-columns: 16.5rem minmax(0,1fr); }
+    .admin-sidebar {
+        position: sticky; inset-block-start: 0; block-size: 100svh; min-block-size: 35rem;
+        display: flex; flex-direction: column; border-inline-end: 1px solid var(--admin-border);
+        border-block-end: 0;
+    }
+    .admin-brand { padding: 2rem 1.35rem 2.75rem; }
+    .admin-nav-caption { display: block; margin: 0 1.35rem .6rem; font-size: .68rem; font-weight: 800; letter-spacing: .11em; color: var(--admin-muted); }
+    .admin-nav { display: grid; overflow: visible; padding: 0 .8rem; }
+    .admin-nav-link { justify-content: flex-start; padding: .85rem 1rem; }
+    .admin-sidebar-footer { display: grid; gap: .4rem; margin-block-start: auto; padding: 1rem .8rem 1.5rem; border-block-start: 1px solid var(--admin-border); }
+    .admin-site-link { display: flex; align-items: center; gap: .6rem; min-block-size: 44px; padding: .7rem 1rem; border-radius: .65rem; font-size: .88rem; text-decoration: none; color: var(--admin-muted); }
+}
+@media (max-width: 1023px) {
+    .admin-sidebar-footer { display: flex; align-items: center; gap: .5rem; padding: 0 1rem .7rem; }
+    .admin-site-link { display: inline-flex; align-items: center; gap: .4rem; font-size: .75rem; text-decoration: none; color: var(--admin-muted); }
+    .admin-site-link svg { inline-size: 1rem; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+    .admin-nav { flex-wrap: wrap; overflow: visible; }
+}

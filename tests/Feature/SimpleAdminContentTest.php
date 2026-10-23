@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use App\Models\Article;
+use App\Models\GalleryItem;
 use App\Services\ActiveSessionManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
@@ -47,12 +49,26 @@ it('keeps content mutations behind CSRF and active-session checks', function ():
     }
 });
 
-it('shows placeholders for articles and gallery while retaining accounts and PPDB forms', function (): void {
+it('exposes content management entry points and shared admin components', function (): void {
     $this->actingAs(User::factory()->create(['role' => User::ROLE_ADMIN]));
-    $this->get(route('admin.artikel'))->assertOk()->assertSee('Coming Soon')
-        ->assertDontSee('Tambah artikel');
-    $this->get(route('admin.galeri'))->assertOk()->assertSee('Coming Soon')
-        ->assertDontSee('Tambah media');
+    $this->get(route('admin.artikel'))->assertOk()->assertSee('Tambah artikel')->assertSee('Belum ada artikel');
+    $this->get(route('admin.galeri'))->assertOk()->assertSee('Tambah media')->assertSee('Galeri masih kosong');
     $this->get(route('admin.accounts.index'))->assertOk()->assertSee('Tambah akun Guru atau Murid');
     $this->get(route('admin.ppdb'))->assertOk()->assertSee('URL Google Form');
+});
+
+it('lists active and archived articles and media without losing restore actions', function (): void {
+    $this->actingAs(User::factory()->create(['role' => User::ROLE_ADMIN]));
+    $article = Article::query()->create(['title_id' => 'Kabar Kegiatan', 'content_id' => '<p>Isi artikel.</p>']);
+    $media = GalleryItem::query()->create([
+        'type' => 'photo',
+        'media_url' => 'https://media.almustaqbal.sch.id/gallery/test.webp',
+        'alt_text' => 'Foto kegiatan',
+    ]);
+    $this->get(route('admin.artikel'))->assertOk()->assertSee('Kabar Kegiatan')->assertSee('Edit');
+    $this->get(route('admin.galeri'))->assertOk()->assertSee('Foto kegiatan')->assertSee('Edit');
+    $article->delete();
+    $media->delete();
+    $this->get(route('admin.artikel'))->assertOk()->assertSee('Kabar Kegiatan')->assertSee('Pulihkan');
+    $this->get(route('admin.galeri'))->assertOk()->assertSee('Foto kegiatan')->assertSee('Pulihkan');
 });

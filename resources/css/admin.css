@@ -1,40 +1,6 @@
 @import './foundation/fonts.css';
 @import './foundation/tokens.css';
 @import './foundation/base.css';
-
-.admin { background: #faf9f6; color: #17251e; }
-.admin-header, .admin-main { inline-size: min(100% - 2rem, 70rem); margin-inline: auto; }
-.admin-header { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding-block: 1.25rem; border-block-end: 1px solid #d7e0da; }
-.admin-header > a { font-weight: 750; text-decoration: none; }
-.admin-header nav { display: flex; flex-wrap: wrap; gap: .35rem; flex: 1; }
-.admin-header nav a { padding: .7rem; border-radius: .5rem; text-decoration: none; }
-.admin-header nav [aria-current] { background: #e4ede7; font-weight: 700; }
-.admin-main { padding-block: 2rem 4rem; }
-.admin h1 { margin: 0 0 1.5rem; font-size: clamp(1.8rem, 5vw, 2.6rem); }
-.admin h2 { font-size: 1.25rem; }
-.admin p { line-height: 1.6; }
-.admin button, .admin .action { display: inline-flex; justify-content: center; align-items: center; min-block-size: 44px; padding: .65rem 1rem; border: 1px solid #234b39; border-radius: .5rem; background: #234b39; color: #fff; text-decoration: none; }
-.admin .secondary { color: #234b39; background: transparent; }
-.admin .danger { border-color: #a52323; background: #a52323; }
-.admin .actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-block: 1rem; }
-.admin .fields { display: grid; gap: 1rem; max-inline-size: 52rem; }
-.admin label { display: grid; gap: .4rem; }
-.admin input:not([type="checkbox"]), .admin select, .admin textarea { inline-size: 100%; min-inline-size: 0; border: 1px solid #849b8b; border-radius: .5rem; padding: .75rem; min-block-size: 44px; background: #fff; color: inherit; }
-.admin textarea { min-block-size: 8rem; resize: vertical; }
-.admin fieldset { min-inline-size: 0; border: 1px solid #d7e0da; padding: 1rem; border-radius: .6rem; }
-.admin legend { font-weight: 700; }
-.admin .check { display: flex; align-items: center; gap: .5rem; }
-.admin .notice { background: #e4ede7; padding: 1rem; border-radius: .5rem; }
-.admin .error { color: #a52323; }
-.admin .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1rem; }
-.admin .card { min-inline-size: 0; padding: 1rem; border: 1px solid #d7e0da; border-radius: .6rem; background: #fff; overflow-wrap: anywhere; }
-.admin .card img, .admin .card video, .admin .preview { inline-size: 100%; max-block-size: 16rem; aspect-ratio: 16 / 9; object-fit: contain; }
-.admin .card .fields { margin-block: 1rem; }
-.admin summary { cursor: pointer; padding-block: .75rem; }
-.admin .archived { border-style: dashed; }
-.admin .editor-toolbar { display: flex; flex-wrap: wrap; gap: .25rem; margin-block: .5rem; }
-.admin [contenteditable] { min-block-size: 12rem; padding: 1rem; border: 1px solid #849b8b; border-radius: .5rem; background: white; overflow-wrap: anywhere; }
-.admin [contenteditable] a { color: #005fcc; text-decoration: underline; }
-.admin .pagination { display: flex; flex-wrap: wrap; gap: 1rem; margin-block: 1.5rem; align-items: center; }
-
-.admin [lang="ar"] { font-family: Cairo, Tahoma, sans-serif; }
+@import './admin/shell.css';
+@import './admin/components.css';
+@import './admin/forms.css';

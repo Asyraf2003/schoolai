@@ -8,7 +8,7 @@
   `MEDIA_DISK=s3` hanya memilih storage media publik. Vite tetap di `public_html/build`.
 - Runner `clear.php` memvalidasi konfigurasi R2 dan tidak membuat atau mewajibkan
   `public_html/storage`. Paket mengecualikan binary `public/media` dan upload lokal.
-- Credential berasal dari `.env` privat; builder mempertahankan APP_KEY dan
+- Credential berasal dari `.env.production` privat; builder mempertahankan APP_KEY dan
   password database, tidak menanam nilai credential dalam source.
 - CRUD Galeri/Artikel sudah menjadi pengelola media; tidak ada file manager baru.
 - Jangan jalankan deployment sampai owner membuka tahap deployment. Tag RC bukan deploy.
@@ -65,6 +65,7 @@ public_html/
 ## Persyaratan lokal
 
 - Git working tree bersih.
+- File `.env.production` privat tersedia di root checkout, berisi nilai production sesungguhnya.
 - PHP 8.3 atau lebih baru.
 - Composer.
 - Node.js dan npm.
@@ -80,6 +81,8 @@ Builder berhenti jika working tree kotor, build Vite gagal, Composer gagal, mani
 - Fungsi PHP `symlink()` tidak dinonaktifkan.
 - `storage/` dan `bootstrap/cache/` dapat ditulis oleh PHP.
 - Database MySQL dan seluruh tabel aplikasi sudah disiapkan melalui phpMyAdmin atau mekanisme lain.
+
+`make deploy` membaca `.env.production` dari root repository, bukan `.env` lokal. Nilai production di dalam ZIP tidak boleh ditimpa dari konfigurasi development. Pastikan `DB_PASSWORD`, `APP_KEY`, kredensial R2, dan `APP_URL` benar sebelum build. ZIP yang dihasilkan adalah rahasia karena berisi kredensial production.
 
 ## Membuat paket
 

@@ -23,38 +23,6 @@ validate_name() {
     fi
 }
 
-set_env_value() {
-    local file="$1"
-    local key="$2"
-    local value="$3"
-
-    php -r '
-        $file = $argv[1];
-        $key = $argv[2];
-        $value = $argv[3];
-        $contents = file_get_contents($file);
-
-        if ($contents === false) {
-            fwrite(STDERR, "Unable to read staged environment file.\n");
-            exit(1);
-        }
-
-        $pattern = "/^".preg_quote($key, "/")."=.*$/m";
-        $line = $key."=".$value;
-
-        if (preg_match($pattern, $contents) === 1) {
-            $contents = preg_replace($pattern, $line, $contents, 1);
-        } else {
-            $contents = rtrim($contents).PHP_EOL.$line.PHP_EOL;
-        }
-
-        if ($contents === null || file_put_contents($file, $contents, LOCK_EX) === false) {
-            fwrite(STDERR, "Unable to write staged environment file.\n");
-            exit(1);
-        }
-    ' "$file" "$key" "$value"
-}
-
 validate_name "APP_NAME" "$APP_NAME"
 validate_name "APP_DIR_NAME" "$APP_DIR_NAME"
 validate_name "PUBLIC_DIR_NAME" "$PUBLIC_DIR_NAME"
@@ -83,7 +51,7 @@ for required_file in \
     artisan \
     composer.json \
     composer.lock \
-    .env \
+    .env.production \
     .env.example \
     package.json \
     package-lock.json \
@@ -185,48 +153,45 @@ rsync -a ./ "$app_stage/" \
     --exclude "/sai.sh" \
     --exclude "/sai.ssh"
 
-# Start from the developer's local .env so existing AWS/Google credentials and
-# other project-specific values are carried into the package. Only values that
-# must differ in production are overwritten below.
-cp .env "$app_stage/.env"
+# Explicit production source; never build from the local development environment.
+cp .env.production "$app_stage/.env"
 cp .env.example "$app_stage/.env.example"
 cp deploy/cpanel/.env.production.example "$app_stage/.env.production.example"
 
-echo "==> Convert staged .env to production"
-set_env_value "$app_stage/.env" "APP_NAME" "School"
-set_env_value "$app_stage/.env" "APP_ENV" "production"
-if ! grep -Eq '^APP_KEY=base64:.+' "$app_stage/.env"; then
-    release_app_key="$(php -r 'echo "base64:".base64_encode(random_bytes(32));')"
-    set_env_value "$app_stage/.env" "APP_KEY" "$release_app_key"
-fi
-set_env_value "$app_stage/.env" "APP_TIMEZONE" "Asia/Jakarta"
-set_env_value "$app_stage/.env" "APP_DEBUG" "false"
-set_env_value "$app_stage/.env" "APP_URL" "$SITE_URL"
-set_env_value "$app_stage/.env" "FILESYSTEM_DISK" "local"
-set_env_value "$app_stage/.env" "MEDIA_DISK" "s3"
-set_env_value "$app_stage/.env" "MEDIA_PUBLIC_URL" "https://media.almustaqbal.sch.id"
-set_env_value "$app_stage/.env" "AWS_URL" "https://media.almustaqbal.sch.id"
-set_env_value "$app_stage/.env" "AWS_DEFAULT_REGION" "auto"
-set_env_value "$app_stage/.env" "AWS_USE_PATH_STYLE_ENDPOINT" "true"
-set_env_value "$app_stage/.env" "APP_LOCALE" "en"
-set_env_value "$app_stage/.env" "APP_FALLBACK_LOCALE" "id"
-set_env_value "$app_stage/.env" "APP_FAKER_LOCALE" "en_US"
-set_env_value "$app_stage/.env" "APP_MAINTENANCE_DRIVER" "file"
-set_env_value "$app_stage/.env" "BCRYPT_ROUNDS" "12"
-set_env_value "$app_stage/.env" "LOG_CHANNEL" "stack"
-set_env_value "$app_stage/.env" "LOG_STACK" "single"
-set_env_value "$app_stage/.env" "LOG_DEPRECATIONS_CHANNEL" "null"
-set_env_value "$app_stage/.env" "LOG_LEVEL" "debug"
-set_env_value "$app_stage/.env" "DB_CONNECTION" "mysql"
-set_env_value "$app_stage/.env" "DB_HOST" "127.0.0.1"
-set_env_value "$app_stage/.env" "DB_PORT" "3306"
-set_env_value "$app_stage/.env" "DB_DATABASE" "almusta2_database"
-set_env_value "$app_stage/.env" "DB_USERNAME" "almusta2_database"
-set_env_value "$app_stage/.env" "DB_TIMEZONE" "+07:00"
-set_env_value "$app_stage/.env" "SESSION_SECURE_COOKIE" "true"
-set_env_value "$app_stage/.env" "GOOGLE_REDIRECT_URI" "$SITE_URL/auth/google/callback"
+echo "==> Validate explicit production .env without printing values"
+php -r '
+    $env = [];
+    foreach (file($argv[1], FILE_IGNORE_NEW_LINES) as $line) {
+        if (preg_match("/^([A-Z][A-Z0-9_]*)=(.*)$/", trim($line), $match)) {
+            $env[$match[1]] = trim(trim($match[2]), chr(34).chr(39));
+        }
+    }
+    $required = [
+        "APP_ENV" => "production", "APP_DEBUG" => "false",
+        "APP_URL" => $argv[2], "DB_CONNECTION" => "mysql",
+        "FILESYSTEM_DISK" => "local", "MEDIA_DISK" => "s3",
+        "MEDIA_PUBLIC_URL" => "https://media.almustaqbal.sch.id",
+        "AWS_DEFAULT_REGION" => "auto", "AWS_USE_PATH_STYLE_ENDPOINT" => "true",
+    ];
+    foreach ($required as $key => $expected) {
+        if (($env[$key] ?? null) !== $expected) {
+            fwrite(STDERR, "ERROR: .env.production: invalid $key".PHP_EOL);
+            exit(1);
+        }
+    }
+    foreach (["APP_KEY", "DB_HOST", "DB_DATABASE", "DB_USERNAME", "DB_PASSWORD",
+              "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_BUCKET", "AWS_ENDPOINT"] as $key) {
+        if (! isset($env[$key]) || $env[$key] === "") {
+            fwrite(STDERR, "ERROR: .env.production: missing $key".PHP_EOL);
+            exit(1);
+        }
+    }
+    if (! str_starts_with($env["APP_KEY"], "base64:")) {
+        fwrite(STDERR, "ERROR: production APP_KEY must remain stable".PHP_EOL);
+        exit(1);
+    }
+' "$app_stage/.env" "$SITE_URL"
 chmod 0600 "$app_stage/.env"
-
 mkdir -p \
     "$app_stage/bootstrap/cache" \
     "$app_stage/storage/app/private" \
@@ -309,7 +274,7 @@ bash scripts/verify-cpanel-package.sh \
     echo "SchoolAI cPanel deployment"
     echo "ZIP: $(basename "$zip_file")"
     echo "Extract the ZIP directly into the cPanel home directory."
-    echo "The packaged $APP_DIR_NAME/.env is already converted to production values."
+    echo "The packaged $APP_DIR_NAME/.env comes from the private .env.production file."
     echo "After extraction, open this one-time maintenance URL:"
     echo "URL: $SITE_URL/clear.php?token=$clear_token"
     echo "clear.php runs optimize:clear, migrate --force, optimize, then deletes itself after success."

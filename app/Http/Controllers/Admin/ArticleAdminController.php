@@ -19,7 +19,9 @@ final class ArticleAdminController extends Controller
 {
     public function index(): View
     {
-        return view('admin.articles.index');
+        return view('admin.articles.index', [
+            'articles' => Article::withTrashed()->orderByDesc('id')->paginate(12),
+        ]);
     }
 
     public function create(): View

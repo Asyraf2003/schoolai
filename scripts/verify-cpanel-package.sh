@@ -149,30 +149,25 @@ if ! grep -Fq 'unlink(__FILE__)' "$clear_file"; then
 fi
 
 for required_env_line in \
-    "APP_NAME=School" \
     "APP_ENV=production" \
     "APP_DEBUG=false" \
     "APP_URL=$site_url" \
-    "APP_TIMEZONE=Asia/Jakarta" \
-    "APP_LOCALE=en" \
-    "APP_FALLBACK_LOCALE=id" \
-    "APP_FAKER_LOCALE=en_US" \
     "DB_CONNECTION=mysql" \
-    "DB_HOST=127.0.0.1" \
-    "DB_PORT=3306" \
-    "DB_DATABASE=almusta2_database" \
-    "DB_USERNAME=almusta2_database" \
-    "DB_TIMEZONE=+07:00" \
-    "SESSION_SECURE_COOKIE=true" \
     "FILESYSTEM_DISK=local" \
     "MEDIA_DISK=s3" \
     "MEDIA_PUBLIC_URL=https://media.almustaqbal.sch.id" \
     "AWS_URL=https://media.almustaqbal.sch.id" \
     "AWS_DEFAULT_REGION=auto" \
     "AWS_USE_PATH_STYLE_ENDPOINT=true" \
-    "GOOGLE_REDIRECT_URI=$site_url/auth/google/callback"; do
+    "SESSION_SECURE_COOKIE=true"; do
     if ! grep -Fxq "$required_env_line" "$env_file"; then
         fail "production .env belum benar: $required_env_line"
+    fi
+done
+
+for required_key in APP_KEY DB_HOST DB_DATABASE DB_USERNAME DB_PASSWORD AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_BUCKET AWS_ENDPOINT; do
+    if ! grep -Eq "^$required_key=.+" "$env_file"; then
+        fail "production environment missing required key: $required_key"
     fi
 done
 

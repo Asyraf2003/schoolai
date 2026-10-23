@@ -3,30 +3,38 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') · SchoolAI</title>
+    <title>@yield('title') · Al Mustaqbal</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="{{ config('media.static.brand.favicon') }}">
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
 </head>
 <body class="admin">
     <a class="skip-link" href="#main-content">Lewati navigasi</a>
-    <header class="admin-header">
-        <a href="{{ route('home') }}">SchoolAI</a>
-        <nav aria-label="Menu admin">
-            <a href="{{ route('admin.accounts.index') }}" @if(request()->routeIs('admin.accounts.*', 'admin.dashboard')) aria-current="page" @endif>Akun</a>
-            <a href="{{ route('admin.galeri') }}" @if(request()->routeIs('admin.galeri*')) aria-current="page" @endif>Galeri</a>
-            <a href="{{ route('admin.artikel') }}" @if(request()->routeIs('admin.artikel*')) aria-current="page" @endif>Artikel</a>
-            <a href="{{ route('admin.ppdb') }}" @if(request()->routeIs('admin.ppdb*')) aria-current="page" @endif>Link PPDB</a>
-        </nav>
-        <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="secondary">Keluar</button></form>
-    </header>
-    <main class="admin-main" id="main-content" tabindex="-1">
-        <h1>@yield('title')</h1>
-        @if(session('success'))<p role="status" class="notice">{{ session('success') }}</p>@endif
-        @if($errors->any())
-            <div role="alert" class="error"><p>Periksa kembali data berikut:</p><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
-        @endif
-        @yield('content')
-    </main>
+    <div class="admin-shell">
+        <x-admin.sidebar/>
+        <div class="admin-workspace">
+            <header class="admin-topbar">
+                <span class="admin-topbar-label">AL MUSTAQBAL <span aria-hidden="true">/</span> PANEL ADMIN</span>
+                <span class="admin-topbar-user">{{ auth()->user()?->name ?? 'Administrator' }}</span>
+            </header>
+            <main class="admin-main" id="main-content" tabindex="-1">
+                <div class="admin-page-heading">
+                    <p class="admin-eyebrow">PENGELOLAAN SEKOLAH</p>
+                    <h1>@yield('title')</h1>
+                    @hasSection('description')<p class="admin-page-description">@yield('description')</p>@endif
+                </div>
+                @if(session('success'))
+                    <p role="status" class="admin-notice">{{ session('success') }}</p>
+                @endif
+                @if($errors->any())
+                    <div role="alert" class="admin-error">
+                        <strong>Periksa kembali data berikut:</strong>
+                        <ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+                    </div>
+                @endif
+                @yield('content')
+            </main>
+        </div>
+    </div>
 </body>
 </html>

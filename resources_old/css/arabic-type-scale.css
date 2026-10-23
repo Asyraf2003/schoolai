@@ -1,5 +1,0 @@
-/*
- * Arabic does not own a parallel optical type scale.
- * Cairo uses the shared semantic role sizes from text-system.css.
- * Keep this compatibility import until M10 so legacy entry ordering stays stable.
- */

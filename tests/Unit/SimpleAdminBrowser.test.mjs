@@ -13,7 +13,7 @@ const out = process.env.PROGRAM_PROOF_DIRECTORY ?? '/tmp';
 const geometry = () => ({
     overflow: document.documentElement.scrollWidth > innerWidth + 1,
     lang: document.documentElement.lang, dir: document.documentElement.dir,
-    menu: [...document.querySelectorAll('nav[aria-label="Menu admin"] a')].map(a => a.textContent),
+    menu: [...document.querySelectorAll('nav[aria-label="Menu admin"] a span')].map(a => a.textContent.trim()),
 });
 async function launch(engine) {
     const playwright = await import(modulePath);
@@ -38,6 +38,11 @@ for (const engine of engines) test(`Simple admin, localized articles and direct 
                 const cell = await page.evaluate(geometry);
                 assert.equal(cell.overflow, false, `${route}/${width}`);
                 assert.deepEqual(cell.menu, ['Akun', 'Galeri', 'Artikel', 'Link PPDB']);
+                if (width >= 1024) {
+                    const sidebar = await page.locator('.admin-sidebar').boundingBox();
+                    const main = await page.locator('.admin-main').boundingBox();
+                    assert.ok(sidebar.x < main.x, `${route}/${width}: sidebar must stay left`);
+                }
                 assert.equal(cell.lang, 'id');
                 cells.push({route, width, ...cell});
             }
