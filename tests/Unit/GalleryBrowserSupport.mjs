@@ -98,7 +98,8 @@ export function galleryState() {
             column: e.dataset.column, image: e.querySelector('img').naturalWidth })),
         words: [...document.querySelectorAll('[data-gallery-word]')].map(word => ({ opacity: +getComputedStyle(word).opacity, blur: filterBlur(word) })),
         videos: [...document.querySelectorAll('[data-gallery-video]')].map(v => ({ playing: !v.paused, hydrated: v.hasAttribute('src'), time: v.currentTime })),
-        testimonial: rect(document.querySelector('[data-testimonials]')),
+        gallery: rect(document.querySelector('[data-gallery]')),
+        stories: rect(document.querySelector('[data-stories]')),
         triggers: window.ScrollTrigger?.getAll().filter(t => t.vars.id === 'gallery-v2').length ?? 0,
     };
 }

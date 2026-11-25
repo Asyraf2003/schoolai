@@ -4,7 +4,7 @@ import { enabled, engines, session, locale, evidence, directory } from './Progra
 import { galleryReady, galleryAt, galleryFits, galleryResize, galleryOpening } from './GalleryBrowserSupport.mjs';
 
 for (const engine of engines) {
-    test(`Gallery opening, formation, travel and testimonial handoff in ${engine}`, { skip: !enabled }, async () => {
+    test(`Gallery opening, formation, travel and Stories handoff in ${engine}`, { skip: !enabled }, async () => {
         const runtime = await session(engine);
         const { page } = runtime;
         const cases = [];
@@ -86,20 +86,12 @@ for (const engine of engines) {
                     const blackout = await galleryAt(page, .90);
                     assert.ok(Math.abs(Math.max(...blackout.items.map(i => i.bottom)) - (exitBottom - 450)) < 2, 'exit keeps the same half-viewport upward travel');
                     assert.ok(blackout.items.every(i => i.opacity < .01) && blackout.words.every(w => w.opacity < .01));
-                    assert.ok(Math.abs(blackout.testimonial.y) <= 1, 'Testimonials begins in the finished Gallery black hold');
+                    assert.ok(blackout.stories.y >= blackout.height - 2, 'Gallery retains its black hold');
                     assert.equal(await page.locator('[data-gallery] button').count(), 0, 'automatic loop without pause UI');
-                    await page.evaluate(() => {
-                        const intro = document.querySelector('[data-testimonials-intro]').getBoundingClientRect();
-                        scrollTo(0, intro.top + scrollY + (intro.height - innerHeight) * .5);
-                    });
-                    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-                    assert.ok(await page.locator('[data-testimonials]').evaluate(root => getComputedStyle(root).backgroundColor === 'rgb(8, 9, 11)'
-                        && [...root.querySelectorAll('[data-testimonials-word]')].every(word => +getComputedStyle(word).opacity > .99 && parseFloat(getComputedStyle(word).filter.match(/[\d.]+/)[0]) < .01)), 'entire sharp white sentence reads on Gallery black before departure');
                     const end = await galleryAt(page, 1);
                     assert.ok(end.items.every(i => i.opacity < .01));
                     assert.ok(end.words.every(w => w.opacity < .01));
-                    assert.ok(end.testimonial.y < 0, 'question shares the finished black hold');
-                    assert.ok(await page.locator('[data-testimonials-word]').first().evaluate(word => +getComputedStyle(word).opacity > .5), 'sentence participates in the completed Gallery hold');
+                    assert.ok(Math.abs(end.stories.y - end.gallery.bottom) < 1, 'Stories follows Gallery in normal flow');
                     const reverse = await galleryAt(page, .52);
                     assert.ok(reverse.items.every((i, n) => Math.abs(i.x - full.items[n].x) < 1 && Math.abs(i.y - full.items[n].y) < 2));
                     if ([390, 1440].includes(width)) for (const [name, progress] of [['title', .005], ['rise', .075], ['opening', null], ['entering', .40], ['formation', .52], ['clear-text', .74], ['exit', .83], ['blackout', .90]]) {

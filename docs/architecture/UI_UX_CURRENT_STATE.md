@@ -16,6 +16,31 @@ their existing ignored .env.production. Verify cPanel backup/database before upl
 
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Testimonials social cards — 2026-11-26
+
+FACT: base main 8ca97044. The old Testimonials intro overlapped the Gallery
+blackout and its three tracks used the homepage scroll pacer.
+GAP: the 21 samples have no verified Instagram identity, type, or permalink.
+GOAL: an owner-approved light masonry wall between Stories and the footer.
+IMPACT: the old Gallery overlap and testimonial pacing ranges are retired.
+DECISION / BLUEPRINT: owner-accepted Testimonials contract. Existing localized
+quotes, disclosure, and lazy R2 avatars render in one Blade tree. CSS columns
+are XS/SM 1, MD 2, LG/XL/2XL 3 with logical ID/EN and AR direction. CSS owns the
+clipped light. A single delegated controller handles touch and the 700 ms
+source delay. Linked cards use native anchors for keyboard and reduced motion.
+ACTIVE STEP / EXECUTION: replace the wall, move its include, and verify the
+Gallery–Stories–Testimonials–Footer sequence in the owner's Brave profile.
+PROOF: Brave 1.100.59 on Linux passed 42 unique locale/width combinations
+(360–1920), hover, touch, keyboard focus, reduced motion, 200% text expansion,
+short landscape, no JS, and forward/reverse section seams. Four focused browser
+tests, five Gallery/Stories regressions, Footer input, and compact Values pacing
+passed. PHPUnit 278 passed with one opt-in live R2 write test skipped. JS 43
+passed. Structure, build, diff, and Pint passed. Two legacy wheel timing
+assertions failed at the same locations on base main and the candidate in Brave.
+PROGRESS / STATUS: PASS for the scoped Brave visual and interaction delivery.
+Safari/WebKit and Lighthouse/CWV certification remain outside this session.
+NEXT VALID STEP: owner/local Brave reviews the rendered Testimonials section.
+
 ## First release checkpoint — 2026-10-13
 
 FACT: fetched main268cde30; active feat/public-content-integration / PR106.

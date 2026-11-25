@@ -1,6 +1,5 @@
 import { valuesPaintTravel, compactFlipTravel } from './scroll-pacing-poses.js';
 import { valuesCompactedProgress } from './values-card-keyframes.js';
-import { testimonialRevealDistance, testimonialDepartureStart } from './testimonials-motion.js';
 
 export function measurePacingRanges(root) {
     const ranges = [];
@@ -96,16 +95,6 @@ export function measurePacingRanges(root) {
             const box = target.getBoundingClientRect();
             if (box.bottom <= 0 || box.top >= innerHeight) continue;
             add('timed-animation', Math.min(scrollY, top(target) - innerHeight), top(target) + box.height, seconds);
-        }
-    }
-    const intro = root.querySelector('[data-testimonials-enabled] [data-testimonials-intro]');
-    if (intro) {
-        const start = top(intro), span = Math.max(1, intro.offsetHeight - innerHeight);
-        const shrink = Number(root.querySelector('[data-gallery]')?.dataset.galleryShrinkStart);
-        const duration = shrink > 0 ? .4 * (.52 - shrink) : .20;
-        const sharpEnd = testimonialRevealDistance(duration);
-        for (const [name, a, b, segments] of [['words', 0, .116, 5], ['sharp', .116, sharpEnd, 6], ['depart', testimonialDepartureStart(duration), 1, 8]]) {
-            add(`testimonial-${name}`, start + a * span, start + b * span, 0, segments);
         }
     }
     return ranges;

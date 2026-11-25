@@ -12,7 +12,7 @@ it('renders the V2 Stories heading and four latest database articles in section 
             'cover_url' => config('media.static.school_life.labit')]);
     }
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
-    $response->assertOk()->assertSeeHtmlInOrder(['id="testimoni"', 'id="artikel"'])->assertSee(__('stories.title'));
+    $response->assertOk()->assertSeeHtmlInOrder(['id="artikel"', 'id="testimoni"'])->assertSee(__('stories.title'));
     $document = new DOMDocument;
     @$document->loadHTML($response->getContent());
     $xpath = new DOMXPath($document);

@@ -4,24 +4,54 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders the localized question and every existing disclosed sample in one testimonial wall', function (string $locale): void {
+it('renders one localized testimonial wall after Stories and before the footer', function (string $locale): void {
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
     $response->assertOk()->assertSee(__('testimonials.title'))->assertSee(__('testimonials.description'));
     $document = new DOMDocument;
     @$document->loadHTML($response->getContent());
     $dom = new DOMXPath($document);
-    expect($dom->query('//*[@id="testimonials-title"][@aria-label]')->length)->toBe(1);
-    expect($dom->query('//*[@data-testimonials-copy]/p')->length)->toBe(0);
-    expect($dom->query('//*[@data-testimonials-word][@aria-hidden="true"]')->length)->toBe(count(explode(' ', __('testimonials.title'))));
-    expect($dom->query('//*[@data-testimonials-row]//button')->length)->toBe(0);
-    expect($dom->query('//*[@data-testimonials-row]')->length)->toBe(3);
-    expect($dom->query('//*[@data-testimonials-row][@tabindex="0"][@aria-describedby="testimonials-browse"]')->length)->toBe(3);
-    expect($dom->query('//*[@data-testimonials-track]/article')->length)->toBe(21);
-    expect($dom->query('//*[@data-testimonials-track]//img[@loading="lazy"][@width="960"][@height="480"]')->length)->toBe(21);
+    expect($dom->query('//*[@data-testimonials]')->length)->toBe(1);
+    expect($dom->query('//*[@data-stories]/following-sibling::*[1][@data-testimonials]')->length)->toBe(1);
+    expect($dom->query('//*[main/*[last()][@data-testimonials]]/main/following-sibling::*[1][@data-footer-v2]')->length)->toBe(1);
+    expect($dom->query('//*[@data-testimonials][@aria-labelledby="testimonials-title"]//h2[@id="testimonials-title"]')->length)->toBe(1);
+    expect($dom->query('//*[@data-testimonials-wall]/article[blockquote/p]')->length)->toBe(21);
+    expect($dom->query('//*[@data-testimonials-wall]//img[@loading="lazy"][@width="40"][@height="40"][@alt=""]')->length)->toBe(21);
+    expect($dom->query('//*[@data-testimonials]//*[self::a or self::button or self::dialog or @tabindex]')->length)->toBe(0);
+
     foreach (__('testimonials.rows') as $row) {
         foreach ($row['cards'] as $card) {
             $response->assertSee($card['quote'])->assertSee($card['name']);
         }
     }
+    $response->assertSee(__('testimonials.source_types.sample'));
 })->with(['id', 'en', 'ar']);
+
+it('renders native links and source labels only for supported Instagram URLs', function (): void {
+    $cards = trans('testimonials', [], 'en')['rows'][0]['cards'];
+    $sources = [
+        ['story', 'https://www.instagram.com/stories/test_fixture/1234/'],
+        ['comment', 'https://instagram.com/p/TEST_FIXTURE/?comment_id=4321'],
+        ['story', 'https://instagram.com.evil.example/stories/test_fixture/1234/'],
+        ['comment', 'javascript:alert(1)'],
+        ['story', 'https://instagram.com/'],
+        ['comment', 'https://fake@instagram.com/p/TEST_FIXTURE/'],
+    ];
+    foreach ($sources as $index => [$type, $url]) {
+        $cards[$index]['source_type'] = $type;
+        $cards[$index]['source_url'] = $url;
+    }
+    app('translator')->addLines(['testimonials.rows.0.cards' => $cards], 'en');
+
+    $response = $this->withSession(['locale' => 'en'])->get(route('home'))->assertOk();
+    $document = new DOMDocument;
+    @$document->loadHTML($response->getContent());
+    $links = (new DOMXPath($document))->query('//*[@data-testimonial-link]');
+    expect($links->length)->toBe(2);
+    foreach (array_slice($sources, 0, 2) as $index => [$type, $url]) {
+        $link = $links->item($index);
+        expect($link->getAttribute('href'))->toBe($url);
+        expect($link->getAttribute('aria-label'))->toContain($cards[$index]['name']);
+        expect($link->parentNode->textContent)->toContain(__('testimonials.source_types.'.$type));
+    }
+});

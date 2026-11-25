@@ -59,7 +59,6 @@ export function mountScrollPacing(root, ports = {}) {
         // Render the existing scrubbed timeline at the delivered position.
         const gallery = window.ScrollTrigger?.getById('gallery-v2');
         if (gallery?.enabled && scrollY >= gallery.start && scrollY <= gallery.end) gallery.update();
-        ports.scrollChanged?.();
         if (stoppedByGate) { reset(); return; }
         const max = (document.scrollingElement ?? document.documentElement).scrollHeight - innerHeight;
         if ((step < 0 && scrollY <= 0) || (step > 0 && scrollY >= max - 1)) { reset(); return; }

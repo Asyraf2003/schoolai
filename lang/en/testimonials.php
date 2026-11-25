@@ -4,7 +4,12 @@ return [
     'eyebrow' => 'Testimonials',
     'title' => 'What do they say about our school?',
     'description' => 'Temporary sample content for layout validation. It will be replaced with verified testimonials.',
-    'browse_instruction' => 'Focus a row, then use the arrow keys to browse all testimonials.',
+    'source_types' => [
+        'sample' => 'Sample testimonial',
+        'story' => 'Instagram Story',
+        'comment' => 'Instagram Comment',
+    ],
+    'open_source' => 'Open Instagram source for :name',
     'rows' => [
         [
             'cards' => [

@@ -4,7 +4,12 @@ return [
     'eyebrow' => 'Testimoni',
     'title' => 'Apa kata mereka tentang sekolah kami?',
     'description' => 'Konten contoh sementara untuk menguji komposisi. Akan diganti dengan testimoni terverifikasi.',
-    'browse_instruction' => 'Fokuskan baris, lalu gunakan tombol panah untuk membaca semua testimoni.',
+    'source_types' => [
+        'sample' => 'Contoh testimoni',
+        'story' => 'Story Instagram',
+        'comment' => 'Komentar Instagram',
+    ],
+    'open_source' => 'Buka sumber Instagram untuk :name',
     'rows' => [
         [
             'cards' => [

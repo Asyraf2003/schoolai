@@ -6,11 +6,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('retains testimonial quotes when optional background photographs are unavailable', function (): void {
+it('retains testimonial quotes when optional avatars are unavailable', function (): void {
     config(['media.static.testimonials' => []]);
     $response = $this->get(route('home'));
     $response->assertOk()->assertSee(__('testimonials.rows.0.cards.0.quote'));
-    expect($response->viewData('testimonials')['rows'][0]['cards'][0]['background_url'])->toBe('');
+    expect($response->viewData('testimonials')['cards'][0]['avatar_url'])->toBeNull();
 });
 
 it('renders the built in photo and video media after Values without changing the V2 DOM', function (string $locale): void {
