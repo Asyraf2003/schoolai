@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence } from './ProgramBrowserSupport.mjs';
 import { galleryReady, galleryAt } from './GalleryBrowserSupport.mjs';
 import { settledValuesLayout } from './ValuesBrowserSupport.mjs';
+import { SCROLL_IDLE_CUTOFF_MS } from '../../resources/js/sections/scroll-pacing-core.js';
 
 async function record(page) {
     await page.evaluate(() => {
@@ -82,10 +83,10 @@ for (const engine of engines) test(`aggressive wheel preserves original flip and
             await page.mouse.wheel(0, -10000);
             const reverse = await page.evaluate(() => scrollY);
             assert.ok(reverse < beforeReverse, 'direction reverses on the same input turn');
-            await page.waitForTimeout(300);
+            await page.waitForTimeout(SCROLL_IDLE_CUTOFF_MS);
             const stopped = await page.evaluate(() => scrollY);
             await page.waitForTimeout(220);
-            assert.ok(Math.abs(await page.evaluate(() => scrollY) - stopped) <= 1, 'tail ends within 260ms');
+            assert.ok(Math.abs(await page.evaluate(() => scrollY) - stopped) <= 1, 'tail ends by the current coast cutoff');
             cases.push({ phase: name, frames, beforeReverse, reverse, stopped });
         }
         // Original WebKit failure: accepted wheel expired before delayed RAF.
@@ -99,6 +100,7 @@ for (const engine of engines) test(`aggressive wheel preserves original flip and
         await page.mouse.wheel(0, 10000); await page.waitForTimeout(300);
         const stalledAfter = await page.evaluate(() => scrollY);
         assert.ok(stalledAfter > stalledBefore, 'first delivery survives a 200ms paint stall');
+        await page.waitForTimeout(SCROLL_IDLE_CUTOFF_MS);
         const settled = await page.evaluate(() => scrollY);
         await page.waitForTimeout(200);
         assert.equal(await page.evaluate(() => scrollY), settled, 'stale input never becomes queued autoplay');

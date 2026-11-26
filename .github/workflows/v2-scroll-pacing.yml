@@ -4,7 +4,10 @@ on:
     paths:
       - 'resources/js/index.js'
       - 'resources/js/sections/scroll-pacing*.js'
+      - 'resources/js/sections/cursor.js'
+      - 'resources/css/sections/cursor.css'
       - 'tests/Unit/ScrollPacing*.mjs'
+      - 'tests/Unit/CursorRuntime.test.mjs'
       - 'resources/js/sections/testimonials*.js'
       - 'resources/css/sections/testimonials.css'
       - 'resources/views/landing/testimonials.blade.php'
@@ -80,6 +83,8 @@ jobs:
           PROGRAM_TESTIMONIAL_FIXTURES: /tmp/testimonial-photos
         run: |
           node --test --test-concurrency=1 --test-timeout=420000 \
+            tests/Unit/CursorRuntime.test.mjs \
+            tests/Unit/ScrollPacingPolicyBrowser.test.mjs \
             tests/Unit/ScrollPacingBrowser.test.mjs \
             tests/Unit/ScrollPacingChoreographyBrowser.test.mjs \
             tests/Unit/ScrollPacingCompactBrowser.test.mjs \

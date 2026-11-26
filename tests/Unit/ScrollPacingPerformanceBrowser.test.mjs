@@ -2,13 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, session, evidence, url } from './ProgramBrowserSupport.mjs';
 import { galleryReady, galleryAt } from './GalleryBrowserSupport.mjs';
+import { SCROLL_IDLE_CUTOFF_MS } from '../../resources/js/sections/scroll-pacing-core.js';
 
 const baseline = process.env.PROGRAM_BASELINE_URL;
 const percentile = (values, ratio) => [...values].sort((a, b) => a - b)[Math.floor((values.length - 1) * ratio)] ?? 0;
 
 test('three comparable Chromium scroll samples expose frame cost and idle work', { skip: !enabled || !baseline }, async () => {
     const profiles = [];
-    for (const [name, entryURL] of [['PR97+PR99', baseline], ['continuation', url]]) {
+    for (const [name, entryURL] of [['baseline', baseline], ['optimized', url]]) {
         const samples = [];
         for (let run = 0; run < 3; run++) {
             const runtime = await session('chromium', { baseURL: entryURL });
@@ -33,6 +34,9 @@ test('three comparable Chromium scroll samples expose frame cost and idle work',
                 await page.evaluate(() => {
                     scrollProfile.running = false;
                     profileObserver.disconnect();
+                });
+                await page.waitForTimeout(SCROLL_IDLE_CUTOFF_MS);
+                await page.evaluate(() => {
                     window.idleObserver = new MutationObserver(entries => { scrollProfile.writes += entries.length; });
                     for (const selector of ['[data-testimonials]', '[data-gallery]']) idleObserver.observe(document.querySelector(selector), { attributes: true });
                 });
