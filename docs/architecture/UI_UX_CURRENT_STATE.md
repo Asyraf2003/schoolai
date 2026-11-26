@@ -16,6 +16,35 @@ their existing ignored .env.production. Verify cPanel backup/database before upl
 
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Homepage scroll pacing and single-image cursor — 2026-11-26
+
+FACT: base main c2921f36 remeasured pacing geometry and enumerated animation
+subtrees every active frame. The cursor loaded two images for its selected
+character and queried open dialogs while painting.
+BLUEPRINT / DECISION: retain native scrollY, the current wheel and footer
+contracts, live Values pose budgets, same-turn Gallery updates, and existing
+ID/EN/AR layouts. Cache stable ranges and observe layout invalidation. Read
+active heading clocks and CSS transitions from their owners. Reuse wheel-path
+overflow styles across a burst and check current nested overflow before pacing.
+Use one randomly selected existing 96px cursor image. Fine pointers retain the
+image across hover, modal, fullscreen and BFCache lifecycle. Native input stays
+available on touch, unsupported pointers, and image failure.
+PROOF: structure281, Vite63 modules and PHP278 passed (2239 assertions, 1 opt-in
+skip), and 46 Node tests passed. Chromium pacing and Gallery CI and the new Chromium/WebKit cursor and
+cache tests passed. Gallery and Testimonials keep the current main structure.
+CDP Chromium158 headless Linux, 1440x900, three matched pairs, five repeated
+Program/Values bursts each. Median script time 234.7→194.3 ms, frame p95
+50.0→50.0 ms (worst 50.0→50.1), style 235.2→237.3 ms and layout 19.1→19.4 ms.
+Final median heap 2.67→2.71 MB, nodes 5469→5467 and listeners 257→259. Both
+profiles ended with one cursor and two ScrollTriggers, with no long tasks in
+this sample. Gallery-inclusive 4× CPU proof could not finish after a renderer
+crash. Field CWV and memory-leak diagnosis require separate evidence.
+GAP: current-main WebKit Testimonials already fails its decode/interaction
+checks. Composer audit reports 23 advisories in ten locked packages. Full
+WebKit and release certification remain FAIL. See issue #111 and PR #112.
+NEXT VALID STEP: revalidate outstanding WebKit coverage and the inherited
+Composer audit under their own scope before full release certification.
+
 ## Testimonials brick layout and edge light — 2026-11-26
 
 FACT: base main e66af1c0 served the same 21 samples in a static masonry wall.

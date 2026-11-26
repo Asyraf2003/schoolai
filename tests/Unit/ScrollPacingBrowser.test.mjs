@@ -79,18 +79,24 @@ for (const engine of engines) {
                 await page.evaluate(() => scrollTo(0, 350));
                 await settledValuesLayout(page);
                 await page.mouse.move(700, 400);
-                const glideStart = await page.evaluate(() => scrollY);
+                await page.evaluate(() => {
+                    window.glideSample = new Promise(resolve => {
+                        let glideStart;
+                        window.addEventListener('wheel', () => { glideStart = scrollY; }, { capture: true, once: true });
+                        window.addEventListener('wheel', () => {
+                            const impulseEnd = scrollY;
+                            const glideFrames = [];
+                            const sample = () => {
+                                glideFrames.push(scrollY);
+                                if (glideFrames.length === 5) resolve({ glideStart, impulseEnd, glideFrames });
+                                else requestAnimationFrame(sample);
+                            };
+                            requestAnimationFrame(sample);
+                        }, { once: true });
+                    });
+                });
                 await page.mouse.wheel(0, 112);
-                const impulseEnd = await page.evaluate(() => scrollY);
-                const glideFrames = await page.evaluate(() => new Promise(resolve => {
-                    const frames = [];
-                    const sample = () => {
-                        frames.push(scrollY);
-                        if (frames.length === 5) resolve(frames);
-                        else requestAnimationFrame(sample);
-                    };
-                    requestAnimationFrame(sample);
-                }));
+                const { glideStart, impulseEnd, glideFrames } = await page.evaluate(() => window.glideSample);
                 assert.ok(glideFrames.at(-1) > impulseEnd, 'released input still glides across subsequent real paints');
                 assert.ok(glideFrames.at(-1) - glideStart <= 450, 'ordinary impulse has a short bounded glide');
                 assert.ok(glideFrames.at(-1) - impulseEnd >= 40, 'coast is visibly present after ordinary released input');

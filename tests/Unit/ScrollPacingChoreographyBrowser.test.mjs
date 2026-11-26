@@ -78,10 +78,16 @@ for (const engine of engines) test(`aggressive wheel preserves original flip and
             assert.ok(inside.length >= (name === 'rise' ? 4 : 6), `${name} actual intermediate paints ${inside.length}`);
             if (name === 'assembly') assert.ok(inside.some(f => f.words.some(opacity => opacity > 0 && opacity < 1)), 'word opacity actually paints intermediate ink');
             if (name === 'exit') assert.ok(inside.some(f => f.media.every(opacity => opacity > 0 && opacity < 1)), 'all ten media visibly fade before blackout');
-            assert.ok(frames.at(-1).gallery >= finish, `${name} completes under aggressive input`);
-            const beforeReverse = await page.evaluate(() => scrollY);
+            assert.ok(frames.at(-1).gallery >= finish, `${name} completes under aggressive input (${frames.at(-1).gallery}/${finish})`);
+            await page.evaluate(() => {
+                window.reverseTurn = new Promise(resolve => {
+                    let beforeReverse;
+                    window.addEventListener('wheel', () => { beforeReverse = scrollY; }, { capture: true, once: true });
+                    window.addEventListener('wheel', () => resolve({ beforeReverse, reverse: scrollY }), { once: true });
+                });
+            });
             await page.mouse.wheel(0, -10000);
-            const reverse = await page.evaluate(() => scrollY);
+            const { beforeReverse, reverse } = await page.evaluate(() => window.reverseTurn);
             assert.ok(reverse < beforeReverse, 'direction reverses on the same input turn');
             await page.waitForTimeout(SCROLL_IDLE_CUTOFF_MS);
             const stopped = await page.evaluate(() => scrollY);
