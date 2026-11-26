@@ -15,7 +15,9 @@ it('renders one localized testimonial wall after Stories and before the footer',
     expect($dom->query('//*[@data-stories]/following-sibling::*[1][@data-testimonials]')->length)->toBe(1);
     expect($dom->query('//*[main/*[last()][@data-testimonials]]/main/following-sibling::*[1][@data-footer-v2]')->length)->toBe(1);
     expect($dom->query('//*[@data-testimonials][@aria-labelledby="testimonials-title"]//h2[@id="testimonials-title"]')->length)->toBe(1);
-    expect($dom->query('//*[@data-testimonials-wall]/article[blockquote/p]')->length)->toBe(21);
+    expect($dom->query('//*[@data-testimonials-wall]/*[@data-testimonials-row][@aria-label]')->length)->toBe(2);
+    expect($dom->query('(//*[@data-testimonials-row])[1]/article[blockquote/p]')->length)->toBe(11);
+    expect($dom->query('(//*[@data-testimonials-row])[2]/article[blockquote/p]')->length)->toBe(10);
     expect($dom->query('//*[@data-testimonials-wall]//img[@loading="lazy"][@width="40"][@height="40"][@alt=""]')->length)->toBe(21);
     expect($dom->query('//*[@data-testimonials]//*[self::a or self::button or self::dialog or @tabindex]')->length)->toBe(0);
 

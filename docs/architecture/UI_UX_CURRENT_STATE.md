@@ -16,6 +16,31 @@ their existing ignored .env.production. Verify cPanel backup/database before upl
 
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Testimonials brick layout and edge light — 2026-11-26
+
+FACT: base main e66af1c0 served the same 21 samples in a static masonry wall.
+GOAL / BLUEPRINT: owner-approved two staggered desktop rows with about 2.5
+cards visible per row, two downward phone columns, and the supplied narrow
+rainbow reference with a clear center.
+DECISION: one localized Blade tree with balanced groups of 11 and 10 cards.
+XS/SM and MD use two vertical columns. LG/XL/2XL with fine-pointer capability
+use opposing native horizontal offsets while the wall is sticky. Insufficient
+height, reduced motion, and no JS retain the vertical columns. Phone blur fades
+inward through a narrow, non-interactive edge mask. CSS clips the colored
+light inside each card. The 700 ms source-tap behavior remains available.
+EXECUTION: the Testimonials section owns its scroll progress and lifecycle.
+Stories and the footer retain their native document placement and behavior.
+PROOF: Brave 1.100.59 passed 42 unique width/locale combinations, opposite and
+reversible desktop travel in ID and AR, keyboard browsing, phone blur, hover,
+touch, reduced/no-JS fallbacks, and both adjoining transitions. Four
+Testimonials tests and five Gallery/Stories/Footer regressions passed with
+zero browser skips. PHPUnit had 278 passes and one opt-in R2 write test skip.
+JS 43, build, structure, Pint and diff passed.
+PROGRESS / STATUS: PASS for the scoped Brave visual and interaction revision.
+GAP: Instagram source data still awaits verification. Safari/WebKit and
+site-wide Lighthouse/CWV remain outside this Brave proof.
+NEXT VALID STEP: owner reviews the updated local Brave preview.
+
 ## Testimonials social cards — 2026-11-26
 
 FACT: base main 8ca97044. The old Testimonials intro overlapped the Gallery

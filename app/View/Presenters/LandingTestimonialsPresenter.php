@@ -24,7 +24,7 @@ final class LandingTestimonialsPresenter
         return [
             'title' => $section['title'],
             'description' => $section['description'],
-            'cards' => $cards,
+            'rows' => array_chunk($cards, max(1, (int) ceil(count($cards) / 2))),
         ];
     }
 

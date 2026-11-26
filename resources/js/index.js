@@ -69,4 +69,4 @@ window.addEventListener('pagehide', event => {
     if (!event.persisted) valuesCards.dispose();
     if (!event.persisted) { header.dispose(); hero.dispose(); cursor.dispose(); scrollIndicator.dispose(); scrollPacing.dispose(); }
 });
-window.addEventListener('pageshow', () => { gallery.resume(); storiesHeading.resume(); storiesMedia.resume(); footerHover.resume(); footerNext.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });
+window.addEventListener('pageshow', () => { gallery.resume(); testimonials.resume(); storiesHeading.resume(); storiesMedia.resume(); footerHover.resume(); footerNext.resume(); scrollIndicator.resume(); scrollPacing.resume(); hero.resume(); about.resume(); program.resume(); values.resume(); valuesLine.resume(); valuesCards.resume(); });

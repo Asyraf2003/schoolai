@@ -24,6 +24,25 @@ async function seam(page, selector, edge, y) {
     return page.evaluate(inspect);
 }
 
+async function wallAt(page, progress) {
+    await page.locator('[data-testimonials-scroll]').evaluate((scene, progress) => {
+        const inner = scene.firstElementChild;
+        const top = parseFloat(getComputedStyle(inner).insetBlockStart);
+        scrollTo(0, scrollY + scene.getBoundingClientRect().top - top + progress * (scene.offsetHeight - inner.offsetHeight));
+    }, progress);
+    await paint(page);
+    return page.locator('[data-testimonials-row]').evaluateAll(rows => rows.map(row => ({
+        offset: row.scrollLeft,
+        range: row.scrollWidth - row.clientWidth,
+        top: row.getBoundingClientRect().top,
+        visibleCards: [...row.children].filter(card => {
+            const bounds = row.getBoundingClientRect();
+            const box = card.getBoundingClientRect();
+            return box.right > bounds.left && box.left < bounds.right;
+        }).length,
+    })));
+}
+
 for (const engine of engines) test(`Stories–Testimonials–Footer remains in native flow in ${engine}`, { skip: !enabled }, async () => {
     const runtime = await session(engine);
     const { page } = runtime;
@@ -60,7 +79,36 @@ for (const engine of engines) test(`Stories–Testimonials–Footer remains in n
             assert.equal(new URL(page.url()).pathname, '/');
             profiles.push({ width, enter, forward, reverse, exit });
         }
+        const rails = [];
+        for (const language of ['id', 'ar']) {
+            await locale(page, language);
+            await page.setViewportSize({ width: 1440, height: 900 });
+            const start = await wallAt(page, 0);
+            const mid = await wallAt(page, .46);
+            const end = await wallAt(page, 1);
+            const reverse = await wallAt(page, .46);
+            const sign = language === 'ar' ? -1 : 1;
+            assert.ok(Math.abs(start[0].offset) <= 2 && Math.abs(start[1].offset - sign * start[1].range) <= 2);
+            assert.ok(Math.abs(end[1].offset) <= 4 && Math.abs(end[0].offset - sign * end[0].range) <= 4);
+            assert.ok(mid[0].offset * sign > start[0].offset * sign && mid[1].offset * sign < start[1].offset * sign);
+            assert.ok(mid.every((row, index) => Math.abs(row.top - start[index].top) <= 2
+                && Math.abs(row.offset - reverse[index].offset) <= 2 && row.visibleCards >= 3 && row.visibleCards <= 4));
+            await page.evaluate(() => Promise.all([...document.querySelectorAll('[data-testimonial-card] img')]
+                .filter(image => {
+                    const r = image.getBoundingClientRect();
+                    const row = image.closest('[data-testimonials-row]').getBoundingClientRect();
+                    return r.right > row.left && r.left < row.right;
+                }).map(image => image.decode())));
+            await page.screenshot({ path: `${directory}/testimonials-${engine}-${language}-brick-mid.jpg`, type: 'jpeg', quality: 92 });
+            rails.push({ language, start, mid, end, reverse });
+        }
+        await locale(page, 'id');
+        const start = await wallAt(page, 0);
+        const row = page.locator('[data-testimonials-row]').first();
+        await row.evaluate(e => e.focus({ preventScroll: true }));
+        await page.keyboard.press('ArrowRight');
+        await page.waitForFunction(initial => document.querySelector('[data-testimonials-row]').scrollLeft > initial + 5, start[0].offset);
         assert.deepEqual(runtime.errors, []);
-        await evidence(`testimonials-scroll-${engine}`, { version: runtime.version, profiles });
+        await evidence(`testimonials-scroll-${engine}`, { version: runtime.version, profiles, rails });
     } finally { await runtime.close(); }
 });

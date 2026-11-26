@@ -4,6 +4,7 @@ import { mountTestimonials } from '../../resources/js/sections/testimonials.js';
 
 function fixture(t) {
     const root = new EventTarget();
+    root.querySelector = () => null;
     const motion = new EventTarget();
     const document = new EventTarget();
     const navigations = [];

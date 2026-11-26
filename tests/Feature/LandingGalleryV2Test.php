@@ -10,7 +10,7 @@ it('retains testimonial quotes when optional avatars are unavailable', function 
     config(['media.static.testimonials' => []]);
     $response = $this->get(route('home'));
     $response->assertOk()->assertSee(__('testimonials.rows.0.cards.0.quote'));
-    expect($response->viewData('testimonials')['cards'][0]['avatar_url'])->toBeNull();
+    expect($response->viewData('testimonials')['rows'][0][0]['avatar_url'])->toBeNull();
 });
 
 it('renders the built in photo and video media after Values without changing the V2 DOM', function (string $locale): void {

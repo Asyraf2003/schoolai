@@ -1,8 +1,11 @@
+import { mountTestimonialsWall } from './testimonials-wall.js';
+
 export function mountTestimonials(root) {
-    if (!root) return { suspend() {}, dispose() {} };
+    if (!root) return { suspend() {}, resume() {}, dispose() {} };
 
     const lifecycle = new AbortController();
     const { signal } = lifecycle;
+    const wall = mountTestimonialsWall(root, signal);
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let touchCard;
     let activeCard;
@@ -47,7 +50,8 @@ export function mountTestimonials(root) {
     motion.addEventListener('change', clear, { signal });
 
     return {
-        suspend: clear,
+        suspend() { clear(); wall.suspend(); },
+        resume: wall.resume,
         dispose() { clear(); lifecycle.abort(); },
     };
 }

@@ -9,6 +9,7 @@ return [
         'story' => 'Instagram Story',
         'comment' => 'Instagram Comment',
     ],
+    'row_label' => 'Testimonial row :number',
     'open_source' => 'Open Instagram source for :name',
     'rows' => [
         [

@@ -9,6 +9,7 @@ return [
         'story' => 'Story Instagram',
         'comment' => 'Komentar Instagram',
     ],
+    'row_label' => 'Deret testimoni :number',
     'open_source' => 'Buka sumber Instagram untuk :name',
     'rows' => [
         [
