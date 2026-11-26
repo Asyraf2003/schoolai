@@ -51,6 +51,7 @@ export function mountValues(world) {
     motion.addEventListener('change', configure, { signal });
     configure();
     return {
+        pacingAnimations: heading.pacingAnimations,
         suspend() { suspended = true; cancel(); heading.suspend(); },
         resume() { suspended = false; paint(); heading.resume(); },
         dispose() { clear(); heading.dispose(); lifecycle.abort(); },

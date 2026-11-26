@@ -34,6 +34,7 @@ export function mountProgram(root, { loadKinetic } = {}) {
     const dialog = mountProgramDialog(root, prepare, signal);
     document.addEventListener('visibilitychange', () => { if (document.hidden) dialog.suspend(); }, { signal });
     return {
+        pacingAnimations: heading.pacingAnimations,
         suspend() { dialog.suspend(); heading.suspend(); },
         resume() { dialog.resume(); heading.resume(); },
         dispose() { disposed = true; dialog.dispose(); heading.dispose(); stopReveal(); lifecycle.abort(); },

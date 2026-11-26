@@ -71,6 +71,14 @@ export function mountSectionHeading(root, name, duration, travel) {
     motion.addEventListener('change', configure, { signal });
     configure();
     return {
+        pacingAnimations(visit) {
+            const shift = state === 'revealing' && lower ? duration : 0;
+            for (const animation of animations) {
+                if (animation.playState !== 'running') continue;
+                const remaining = Math.max(0, duration - Number(animation.currentTime ?? 0));
+                if (remaining) visit(animation.effect.target, remaining + shift);
+            }
+        },
         suspend() { suspended = true; synchronize(); },
         resume() { suspended = false; synchronize(); trigger(); },
         dispose() {

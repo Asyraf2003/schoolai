@@ -44,6 +44,10 @@ const storiesMedia = mountStoriesMedia(document.querySelector('[data-stories]'))
 const footerHover = mountFooterHover(document.querySelector('[data-footer-v2]'));
 const footerNext = mountFooterNext(document.querySelector('[data-footer-v2]'));
 const scrollPacing = mountScrollPacing(main, {
+    headingAnimations(visit) {
+        program.pacingAnimations?.(visit);
+        values.pacingAnimations?.(visit);
+    },
     footerGate: footerNext,
 });
 window.addEventListener('pagehide', event => {
