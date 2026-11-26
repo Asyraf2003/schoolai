@@ -1,14 +1,7 @@
-const ACTIONABLE = 'a[href], button, [role="button"], summary, input[type="submit"], input[type="button"], select, [data-actionable]';
 const BASE = 'https://media.almustaqbal.sch.id/ui/cursor';
 
 export function chooseCharacter(random = Math.random) {
     return random() < 0.5 ? 'cwo' : 'cwe';
-}
-
-export function cursorState(target) {
-    const control = target?.closest?.(ACTIONABLE);
-    return control && !control.matches(':disabled, [aria-disabled="true"]')
-        && !control.closest('[inert]') ? 'interactive' : 'default';
 }
 
 export function mountCursor() {
@@ -17,17 +10,18 @@ export function mountCursor() {
     const lifecycle = new AbortController();
     const options = { signal: lifecycle.signal, passive: true };
     let cursor;
-    let loading;
     let ready = false;
     let suspended = document.hidden;
     let point;
     let frame = 0;
-    const images = [];
+    let visible = false;
     function hide() {
         cancelAnimationFrame(frame);
         frame = 0;
         point = null;
-        cursor?.removeAttribute('data-visible');
+        if (!visible) return;
+        visible = false;
+        cursor.removeAttribute('data-visible');
         document.body.removeAttribute('data-custom-cursor');
     }
     function host() {
@@ -39,39 +33,38 @@ export function mountCursor() {
     function paint() {
         frame = 0;
         if (!ready || suspended || !capability.matches || !point) return;
-        host();
-        cursor.dataset.state = cursorState(point.target);
         cursor.style.setProperty('--cursor-x', `${point.x}px`);
         cursor.style.setProperty('--cursor-y', `${point.y}px`);
-        cursor.dataset.visible = '';
-        document.body.dataset.customCursor = '';
+        if (visible) return;
+        visible = true;
+        cursor.setAttribute('data-visible', '');
+        document.body.setAttribute('data-custom-cursor', '');
     }
     function move(event) {
         if (event.pointerType === 'touch' || !capability.matches) { hide(); return; }
-        point = { x: event.clientX, y: event.clientY, target: event.target };
+        if (point?.x === event.clientX && point?.y === event.clientY) return;
+        point = { x: event.clientX, y: event.clientY };
         if (ready && !frame && !suspended) frame = requestAnimationFrame(paint);
     }
     function activate() {
         hide();
-        if (!capability.matches || loading) return;
-        cursor = document.createElement('span');
+        if (!capability.matches || cursor) return;
+        cursor = document.createElement('img');
         cursor.className = 'site-cursor';
         cursor.dataset.character = character;
-        cursor.dataset.state = 'default';
+        cursor.alt = '';
+        cursor.draggable = false;
         cursor.setAttribute('aria-hidden', 'true');
+        cursor.addEventListener('load', () => {
+            ready = cursor.naturalWidth > 0;
+            if (ready && point && !suspended && !frame) frame = requestAnimationFrame(paint);
+        }, { ...options, once: true });
+        cursor.src = `${BASE}/${character}1.webp`;
         host();
-        loading = Promise.all([1, 2].map(suffix => new Promise(resolve => {
-            const image = new Image();
-            images.push(image);
-            image.onload = () => resolve(true);
-            image.onerror = () => resolve(false);
-            image.src = `${BASE}/${character}${suffix}.webp`;
-        }))).then(loaded => {
-            ready = loaded.every(Boolean);
-            if (ready && point && !suspended && !frame && !lifecycle.signal.aborted) frame = requestAnimationFrame(paint);
-        });
     }
-    const observer = new MutationObserver(host);
+    const observer = new MutationObserver(changes => {
+        if (changes.some(change => change.target.matches('dialog'))) host();
+    });
     observer.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open'] });
     document.addEventListener('pointermove', move, options);
     document.addEventListener('pointerover', move, options);
@@ -88,7 +81,6 @@ export function mountCursor() {
             hide();
             lifecycle.abort();
             observer.disconnect();
-            images.forEach(image => { image.onload = image.onerror = null; });
             cursor?.remove();
         },
     };
