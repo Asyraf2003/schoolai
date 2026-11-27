@@ -1,14 +1,14 @@
 <section class="testimonials" id="testimoni" data-testimonials aria-labelledby="testimonials-title">
-    <div class="testimonials__scene" data-testimonials-scene>
-        <div class="testimonials__inner">
-            <header class="testimonials__intro">
-                <h2 id="testimonials-title">{{ $testimonials['title'] }}</h2>
-                <p>{{ $testimonials['description'] }}</p>
-            </header>
-            <div class="testimonials__wall" data-testimonials-wall>
-                @foreach ($testimonials['rows'] as $row)
-                    <div class="testimonials__row" data-testimonials-row role="group"
-                         aria-label="{{ __('testimonials.row_label', ['number' => $loop->iteration]) }}">
+    <div class="testimonials__inner">
+        <header class="testimonials__intro">
+            <h2 id="testimonials-title" class="testimonials__heading">{{ $testimonials['title'] }}</h2>
+            <p class="sr-only">{{ $testimonials['description'] }}</p>
+        </header>
+        <div class="testimonials__wall" data-testimonials-wall role="group" aria-labelledby="testimonials-title">
+            @foreach ($testimonials['rows'] as $row)
+                <div class="testimonials__row" data-testimonials-row role="group"
+                     aria-label="{{ __('testimonials.row_label', ['number' => $loop->iteration]) }}">
+                    <div class="testimonials__track" data-testimonials-track>
                         @foreach ($row as $card)
                             <article class="testimonials__card" data-testimonial-card>
                                 <div class="testimonials__lighting" aria-hidden="true"></div>
@@ -43,8 +43,8 @@
                             </article>
                         @endforeach
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </section>

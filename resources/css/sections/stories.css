@@ -3,7 +3,8 @@
     --stories-heading-sign: 1;
     --stories-heading-shift: clamp(2.75rem, 7vw, 9rem);
     position: relative;
-    padding-block: 25svh 0;
+    padding-block: clamp(4rem, 14vh, 8rem) 0;
+    padding-block: clamp(4rem, 14svh, 8rem) 0;
     background: #fff;
     color: #152018;
     scroll-margin-block-start: var(--v2-header-block-size);
@@ -13,11 +14,12 @@
     margin-inline: auto;
     padding-block: 0 clamp(2.5rem, 6vw, 5rem);
 }
-.stories__heading {
+:is(.stories__heading, .testimonials__heading) {
     display: grid;
     gap: .04em;
     margin: 0;
-    font-size: clamp(3.4rem, 15vw, 7rem);
+    --editorial-heading-size: clamp(3.4rem, 15vw, 7rem);
+    font-size: var(--editorial-heading-size);
     font-weight: 360;
     font-variation-settings: "wght" 360;
     font-synthesis: none;
@@ -53,6 +55,7 @@
 .stories__feature {
     position: relative;
     isolation: isolate;
+    block-size: 100vh;
     block-size: 100svh;
     min-block-size: 26rem;
     inline-size: 100%;
@@ -139,6 +142,7 @@
         inline-size: 100%;
         margin-inline-start: 0;
         padding-inline: var(--v2-space-page);
+        padding-block: clamp(2rem, 6vh, 5rem);
         padding-block: clamp(2rem, 6svh, 5rem);
         text-align: end;
     }
@@ -157,7 +161,7 @@
     --stories-heading-sign: -1;
     font-family: Cairo, var(--v2-font);
 }
-[lang="ar"] .stories__heading {
+[lang="ar"] :is(.stories__heading, .testimonials__heading) {
     font-weight: 500;
     font-variation-settings: normal;
     line-height: 1.35;
@@ -167,13 +171,16 @@
 @media (max-width: 639px) {
     .stories { --stories-heading-shift: 0rem; }
     .stories__header { inline-size: 92%; }
-    .stories__heading { font-size: clamp(3.25rem, 16vw, 5rem); }
+    :is(.stories__heading, .testimonials__heading) { --editorial-heading-size: clamp(3.25rem, 16vw, 5rem); }
 }
-@media (min-width: 768px) { .stories__header { inline-size: 91.6667%; } }
-@media (min-width: 1024px) { .stories__heading { font-size: clamp(7rem, 12vw, 16rem); } }
+@media (min-width: 768px) {
+    .stories { padding-block-start: 0; }
+    .stories__header { inline-size: 91.6667%; }
+}
+@media (min-width: 1024px) { :is(.stories__heading, .testimonials__heading) { --editorial-heading-size: clamp(7rem, 12vw, 16rem); } }
 @media (min-width: 1280px) { .stories__header { inline-size: 90%; } }
 @media (min-width: 1280px) and (max-height: 620px) {
-    .stories__heading { font-size: clamp(5rem, 10vw, 7rem); }
+    :is(.stories__heading, .testimonials__heading) { --editorial-heading-size: clamp(5rem, 10vw, 7rem); }
 }
 @media (prefers-reduced-motion: reduce) {
     .stories { --stories-heading-shift: 0rem; }

@@ -37,8 +37,8 @@
             @include('landing.values', ['values' => $values])
         </div>
         @include('landing.gallery', ['gallery' => $gallery])
-        @include('landing.stories')
         @include('landing.testimonials', ['testimonials' => $testimonials])
+        @include('landing.stories')
     </main>
     @include('landing.footer')
 </body>

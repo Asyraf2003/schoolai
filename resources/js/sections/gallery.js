@@ -5,6 +5,7 @@ import { mountGalleryEntry } from './gallery-entry.js';
 
 export function mountGallery(root) {
     if (!root) return { suspend() {}, resume() {}, dispose() {} };
+    const items = root.querySelectorAll('[data-gallery-item]');
     const lifecycle = new AbortController();
     let entry;
     const media = mountGalleryMedia(root);
@@ -32,21 +33,25 @@ export function mountGallery(root) {
         version++;
         timeline?.scrollTrigger.kill(); timeline?.kill(); timeline = null;
         if (!keepStage) {
-            root.previousElementSibling?.removeAttribute('data-gallery-dark');
-            root.previousElementSibling?.style.removeProperty('--gallery-dark-pct');
+            root.previousElementSibling?.removeAttribute('data-gallery-white');
+            root.previousElementSibling?.style.removeProperty('--gallery-white-pct');
             root.previousElementSibling?.style.removeProperty('--gallery-decoration-opacity');
             root.previousElementSibling?.style.removeProperty('--gallery-line-opacity');
-            root.style.removeProperty('--gallery-dark-pct');
+            root.style.removeProperty('--gallery-white-pct');
+            root.style.removeProperty('--gallery-total-height');
             root.style.removeProperty('--gallery-opening-gap-extra');
         }
         if (!keepStage) {
             cancelAnimationFrame(reflowFrame); reflowFrame = 0; resizeState = null; resizeIntent = null;
             root.removeAttribute('data-gallery-enabled');
+            media.sync();
             delete root.dataset.galleryWidth; delete root.dataset.galleryHeight;
-            delete root.dataset.galleryShrinkStart;
+            delete root.dataset.galleryShrinkStart; delete root.dataset.galleryPinStart;
+            delete root.dataset.galleryFormation; delete root.dataset.galleryExitStart;
+            delete root.dataset.galleryExitPinned; delete root.dataset.galleryMediaCutoff;
             root.removeAttribute('data-gallery-reflow-pending');
         }
-        root.querySelectorAll('[data-gallery-item], [data-gallery-composition], [data-gallery-word]').forEach(node => node.removeAttribute('style'));
+        root.querySelectorAll('[data-gallery-item], [data-gallery-composition], [data-gallery-word], [data-gallery-statement]').forEach(node => node.removeAttribute('style'));
     };
     const refreshAt = (nativeScroll, progress = null) => {
         window.ScrollTrigger.refresh();
@@ -56,7 +61,7 @@ export function mountGallery(root) {
     };
     const prepare = async () => {
         if (!near || disposed || suspended || motion.matches || timeline || loading
-            || root.querySelectorAll('[data-gallery-item]').length !== 10) return;
+            || !items.length) return;
         const attempt = version;
         loading = true;
         try {
@@ -68,6 +73,7 @@ export function mountGallery(root) {
             root.setAttribute('data-gallery-enabled', '');
             timeline = createGalleryTimeline(gsap, trigger, root, update);
             refreshAt(nativeScroll);
+            media.sync();
         } catch { clear(); }
         finally { loading = false; }
     };

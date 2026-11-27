@@ -66,7 +66,6 @@ Artisan::command('media:migrate-r2 {owner?} {--dry-run}', function (): int {
     return $stats['failed'] === 0 ? Command::SUCCESS : Command::FAILURE;
 })->purpose('Migrate bounded legacy first-party media owners to canonical R2 URLs');
 
-
 Artisan::command('instagram:sync-gallery {--limit=12}', function (SyncInstagramGallery $sync): int {
     try {
         $stats = $sync->run((int) $this->option('limit'));

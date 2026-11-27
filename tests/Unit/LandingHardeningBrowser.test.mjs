@@ -134,7 +134,7 @@ for (const engine of engines) test(`Landing remains readable without JavaScript 
                 await runtime.page.setViewportSize({ width, height: 900 }); fits(await runtime.page.evaluate(metrics));
             }
             assert.equal(await runtime.page.locator('[data-stories-demo]').count(), 4);
-            assert.equal(await runtime.page.locator('[data-footer-next-main]').getAttribute('href'), `${process.env.PROGRAM_BROWSER_URL}/galeri`);
+            assert.equal(await runtime.page.locator('[data-footer-next-shell]').count(), 0);
         }
     } finally { await runtime.close(); }
 });

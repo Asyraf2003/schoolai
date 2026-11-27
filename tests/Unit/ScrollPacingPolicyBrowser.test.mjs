@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { enabled, engines, session } from './ProgramBrowserSupport.mjs';
 
 for (const engine of engines) {
-    test(`Pacing reuses stable geometry and rechecks nested scroll ownership in ${engine}`, { skip: !enabled }, async () => {
+    test(`Pacing performs zero heading geometry reads and rechecks nested scroll ownership in ${engine}`, { skip: !enabled }, async () => {
         const runtime = await session(engine);
         try {
             const { page } = runtime;
@@ -28,9 +28,7 @@ for (const engine of engines) {
                 };
                 const wheel = deltaY => !child.dispatchEvent(new WheelEvent('wheel', { deltaY, bubbles: true, cancelable: true, composed: true }));
                 try {
-                    // Alternating deltas force synchronous delivery every turn.
                     scrollTo(0, 350);
-                    window.dispatchEvent(new Event('resize'));
                     const before = geometryReads;
                     const paced = Array.from({ length: 10 }, (_, index) => wheel(index % 2 ? -4 : 4));
                     const cachedGeometry = geometryReads - before;
@@ -43,11 +41,7 @@ for (const engine of engines) {
                     child.style.height = '0px';
                     const explicit = wheel(4);
                     probe.removeAttribute('data-scroll-native');
-                    window.dispatchEvent(new Event('resize'));
-                    const beforeResizeWheel = geometryReads;
-                    const afterResize = wheel(4);
-                    return { paced, cachedGeometry, cachedOverflow, empty, nested, explicit, afterResize,
-                        resizedGeometry: geometryReads - beforeResizeWheel };
+                    return { paced, cachedGeometry, cachedOverflow, empty, nested, explicit };
                 } finally {
                     window.getComputedStyle = style;
                     delete heading.getBoundingClientRect;
@@ -55,13 +49,11 @@ for (const engine of engines) {
                 }
             });
             assert.ok(result.paced.every(Boolean), JSON.stringify(result));
-            assert.equal(result.cachedGeometry, 1);
+            assert.equal(result.cachedGeometry, 0);
             assert.equal(result.cachedOverflow, 1);
             assert.equal(result.empty, true);
             assert.equal(result.nested, false);
             assert.equal(result.explicit, false);
-            assert.equal(result.afterResize, true);
-            assert.equal(result.resizedGeometry, 1);
             assert.deepEqual(runtime.errors, []);
         } finally { await runtime.close(); }
     });

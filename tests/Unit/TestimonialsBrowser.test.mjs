@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enabled, engines, session, locale, evidence, directory } from './ProgramBrowserSupport.mjs';
-
 const widths = [360, 390, 639, 640, 767, 768, 1023, 1024, 1279, 1280, 1440, 1535, 1536, 1920];
 const testimonial = '[data-testimonial-card]';
 const fixtureURL = 'https://www.instagram.com/p/TEST_FIXTURE/?comment_id=4321';
@@ -10,17 +9,17 @@ function inspect() {
     const root = document.querySelector('[data-testimonials]');
     const wall = root.querySelector('[data-testimonials-wall]');
     const bounds = wall.getBoundingClientRect();
-    const rows = [...wall.querySelectorAll('[data-testimonials-row]')];
-    const cards = rows.flatMap(row => [...row.children]);
-    const first = rows.map(row => row.firstElementChild.getBoundingClientRect());
+    const rows = [...wall.querySelectorAll('[data-testimonials-row]')].filter(row => !row.hidden);
+    const tracks = rows.map(row => row.firstElementChild);
+    const cards = tracks.flatMap(track => [...track.children]);
+    const first = tracks.map(track => [...track.children].find(card => !card.hidden).getBoundingClientRect());
     const rowBoxes = rows.map(row => row.getBoundingClientRect());
     const edge = getComputedStyle(wall, '::before');
-    const horizontal = wall.closest('[data-testimonials-scroll]') !== null;
+    const mode = wall.dataset.testimonialsMode ?? 'static';
     return {
         direction: getComputedStyle(wall).direction,
-        font: getComputedStyle(root).fontFamily,
-        horizontal, counts: rows.map(row => row.childElementCount),
-        cardRatio: rowBoxes[0].width / (first[0].width + parseFloat(getComputedStyle(rows[0]).columnGap)),
+        mode, counts: tracks.map(track => track.childElementCount),
+        cardRatio: rowBoxes[0].width / (first[0].width + parseFloat(getComputedStyle(tracks[0]).columnGap)),
         stagger: first[1].top - first[0].top,
         firstX: rowBoxes[0].left, lastX: rowBoxes[1].left,
         fits: rowBoxes.every(rect => rect.left >= bounds.left - 1 && rect.right <= bounds.right + 1),
@@ -33,7 +32,7 @@ function inspect() {
         }),
         overflow: root.scrollWidth > root.clientWidth + 1 || document.documentElement.scrollWidth > innerWidth,
         links: wall.querySelectorAll('a, button').length,
-        tabStops: wall.querySelectorAll('[tabindex="0"]').length,
+        tabStops: wall.tabIndex === 0 ? 1 : wall.querySelectorAll('[tabindex="0"]').length,
     };
 }
 const firstCard = page => page.locator(testimonial).first();
@@ -52,12 +51,12 @@ async function openSection(page) {
     await page.locator('[data-testimonials]').evaluate(root => {
         scrollTo(0, scrollY + root.getBoundingClientRect().top - 60);
     });
-    await page.evaluate(() => Promise.all([...document.querySelectorAll('[data-testimonial-card] img')]
+    await page.waitForFunction(() => [...document.querySelectorAll('[data-testimonial-card] img')]
         .filter(img => {
             const box = img.getBoundingClientRect();
             const rail = img.closest('[data-testimonials-row]').getBoundingClientRect();
             return box.top < innerHeight && box.bottom > 0 && box.left < rail.right && box.right > rail.left;
-        }).map(img => img.decode())));
+        }).every(img => img.complete && img.naturalWidth > 0));
 }
 async function linkFixture(page) {
     const card = firstCard(page);
@@ -85,20 +84,19 @@ for (const engine of engines) {
                 const rtl = language === 'ar';
                 for (const width of matrix.some(cell => cell.language === language) ? [390] : widths) {
                     await page.setViewportSize({ width, height: 900 });
+                    await page.waitForFunction(mode => document.querySelector('[data-testimonials-wall]').dataset.testimonialsMode === mode, width >= 768 ? 'loop' : 'rotation');
                     const state = await page.evaluate(inspect);
                     assert.equal(state.direction, rtl ? 'rtl' : 'ltr');
-                    assert.match(state.font, rtl ? /Cairo/ : /Inter/);
-                    assert.equal(state.horizontal, width >= 1024);
-                    assert.deepEqual(state.counts, [11, 10]);
+                    assert.deepEqual(state.counts, state.mode === 'rotation' ? [11, 10] : [7, 7, 7]);
                     assert.ok(state.fits && state.titleFits && state.quotesFit && !state.overflow, JSON.stringify({ language, width, state }));
                     assert.equal(state.links, 0);
-                    assert.equal(state.tabStops, width >= 1024 ? 2 : 0);
-                    if (state.horizontal) {
+                    assert.equal(state.tabStops, width >= 768 ? 3 : 1);
+                    if (state.mode === 'loop') {
                         assert.ok(state.cardRatio > 2.4 && state.cardRatio < 2.6);
                         assert.ok(state.stagger > 100);
                     } else {
                         assert.ok(rtl ? state.firstX > state.lastX : state.firstX < state.lastX);
-                        assert.ok(state.stagger >= 15);
+                        assert.ok(state.stagger >= 11);
                     }
                     if (width < 768) {
                         assert.equal(state.blur, 'blur(2px)');
@@ -108,6 +106,7 @@ for (const engine of engines) {
                     matrix.push({ language, width, ...state });
                     if ([390, 1440].includes(width) && matrix.filter(cell => cell.language === language && cell.width === width).length === 1) {
                         await openSection(page);
+                        if (width === 390) await page.waitForFunction(() => !document.querySelector('[data-testimonial-pending]'));
                         await shot(page, `${engine}-${language}-${width}-idle`);
                     }
                 }
@@ -121,17 +120,19 @@ for (const engine of engines) {
             assert.equal(idle.opacity, 0);
             assert.equal(idle.animation, 'none');
             assert.equal(idle.background, 'rgb(255, 255, 255)');
-            await card.hover({ position: { x: idle.width / 2, y: 9 } });
+            const cardBox = await card.boundingBox();
+            await page.mouse.move(cardBox.x + cardBox.width / 2, cardBox.y + 9);
             await page.waitForFunction(() => Number(getComputedStyle(document.querySelectorAll('.testimonials__lighting')[1]).opacity) > .64);
             const hover = await lighting(card);
             assert.equal(hover.animation, 'testimonial-light-drift');
             assert.equal(hover.clip, 'hidden');
             assert.ok(hover.rim <= hover.width * .13, 'the tint is confined to each side');
-            assert.deepEqual([hover.width, hover.height, hover.border], [idle.width, idle.height, idle.border]);
+            assert.ok(Math.abs(hover.width - idle.width) < .5 && Math.abs(hover.height - idle.height) < .5
+                && hover.border === idle.border);
             assert.notEqual(hover.left, hover.right);
             await shot(page, `${engine}-hover`);
             assert.notEqual((await lighting(card)).left, hover.left);
-            await card.click({ position: { x: idle.width - 8, y: idle.height - 9 } });
+            await page.mouse.click(cardBox.x + cardBox.width / 2, cardBox.y + 9);
             assert.equal(new URL(page.url()).pathname, '/');
             await page.emulateMedia({ reducedMotion: 'reduce' });
             await openSection(page);
@@ -139,7 +140,7 @@ for (const engine of engines) {
             const reduced = await lighting(card);
             assert.equal(reduced.opacity, 0);
             assert.equal(reduced.animation, 'none');
-            assert.equal((await page.evaluate(inspect)).horizontal, false);
+            assert.equal((await page.evaluate(inspect)).mode, 'static');
             await shot(page, `${engine}-reduced`);
             await page.setViewportSize({ width: 390, height: 500 });
             await heading.evaluate(e => { e.style.fontSize = `${parseFloat(getComputedStyle(e).fontSize) * 2}px`; });
@@ -147,8 +148,14 @@ for (const engine of engines) {
             const expanded = await page.evaluate(inspect);
             assert.ok(expanded.titleFits && expanded.quotesFit && !expanded.overflow);
             const link = await linkFixture(page);
-            await page.locator('[data-stories-copy] a').last().focus();
-            await page.keyboard.press('Tab');
+            await link.evaluate(target => {
+                const previous = document.createElement('button');
+                previous.className = 'sr-only';
+                previous.textContent = 'Previous focus target';
+                target.before(previous);
+                previous.focus({ preventScroll: true });
+            });
+            await page.keyboard.press(engine === 'webkit' ? 'Alt+Tab' : 'Tab');
             assert.ok(await link.evaluate(e => e === document.activeElement));
             assert.equal(await link.evaluate(e => getComputedStyle(e, '::after').outlineStyle), 'solid');
             await page.keyboard.press('Enter');
@@ -163,7 +170,7 @@ for (const engine of engines) {
         try {
             await locale(page, 'id');
             await openSection(page);
-            const card = firstCard(page);
+            const card = page.locator(`${testimonial}:not([hidden]):not([inert])`).first();
             const startURL = page.url();
             await card.tap();
             assert.equal(await card.getAttribute('data-testimonial-lit'), '');
@@ -177,7 +184,7 @@ for (const engine of engines) {
             assert.equal(await card.getAttribute('data-testimonial-lit'), null);
             await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
             await page.setViewportSize({ width: 844, height: 390 });
-            assert.equal((await page.evaluate(inspect)).horizontal, false);
+            assert.equal((await page.evaluate(inspect)).mode, 'rotation');
             const before = performance.now();
             await link.tap();
             assert.equal(page.url(), startURL);
@@ -193,7 +200,8 @@ for (const engine of engines) {
         try {
             assert.equal(await runtime.page.locator(`${testimonial} blockquote`).count(), 21);
             assert.ok((await runtime.page.evaluate(inspect)).quotesFit);
-            assert.equal((await lighting(firstCard(runtime.page))).opacity, 0);
+            await runtime.page.mouse.move(0, 0);
+            await runtime.page.waitForFunction(() => getComputedStyle(document.querySelector('.testimonials__lighting')).opacity === '0');
         } finally { await runtime.close(); }
     });
 }

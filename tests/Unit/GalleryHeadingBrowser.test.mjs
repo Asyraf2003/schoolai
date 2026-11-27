@@ -4,7 +4,7 @@ import { enabled, engines, session, locale, evidence, directory } from './Progra
 import { galleryReady, galleryAt, galleryOpening, galleryResize } from './GalleryBrowserSupport.mjs';
 
 for (const engine of engines) {
-    test(`Gallery native title spacing and gradual dark handoff in ${engine}`, { skip: !enabled }, async () => {
+    test(`Gallery native title spacing and gradual white handoff in ${engine}`, { skip: !enabled }, async () => {
         const runtime = await session(engine);
         const { page } = runtime;
         const cases = [];
@@ -16,7 +16,7 @@ for (const engine of engines) {
                     await galleryResize(page, width, 900);
                     const start = +await page.locator('[data-gallery]').getAttribute('data-gallery-shrink-start');
                     const samples = [];
-                    for (const amount of [.2, .4, .6]) {
+                    for (const amount of [.15, .45, .8]) {
                         const state = await galleryAt(page, start * amount);
                         const spacing = await page.evaluate(() => {
                             const root = document.querySelector('[data-gallery]');
@@ -42,16 +42,18 @@ for (const engine of engines) {
                         assert.equal(spacing.transform, 'none');
                         assert.equal(spacing.animations, 0, 'title rises natively without an appearance animation');
                         assert.ok(Math.abs(spacing.gap - spacing.expected) < 2, `native spacing ${lang}/${width}: ${JSON.stringify(spacing)}`);
-                        if (width === 1536 && amount === .4) await page.screenshot({ path: `${directory}/gallery-${engine}-${lang}-1536-native-title.jpg`, type: 'jpeg', quality: 85 });
+                        if (width === 1536 && amount === .45) await page.screenshot({ path: `${directory}/gallery-${engine}-${lang}-1536-native-title.jpg`, type: 'jpeg', quality: 85 });
                         samples.push({ amount, state, spacing });
                     }
                     assert.ok(samples[0].state.heading.y > samples[2].state.heading.y, 'title keeps rising');
-                    assert.ok(samples[0].state.backgroundRGB[2] > samples[1].state.backgroundRGB[2]
-                        && samples[1].state.backgroundRGB[2] > samples[2].state.backgroundRGB[2], 'blue progressively darkens');
+                    assert.ok(samples[0].state.backgroundRGB[0] <= samples[2].state.backgroundRGB[0]
+                        && samples[2].state.backgroundRGB[0] === 255, 'blue progressively lightens to white');
                     const opening = await galleryOpening(page);
-                    assert.deepEqual(opening.backgroundRGB, [8, 9, 11]);
+                    const pinned = await galleryAt(page, opening.pinStart);
+                    assert.deepEqual(pinned.backgroundRGB, [255, 255, 255]);
+                    assert.deepEqual(pinned.heading.colorRGB, [23, 23, 23]);
                     assert.equal(opening.lineOpacity, 0, 'white decoration does not enter Gallery');
-                    assert.equal(opening.typeOpacity, 0);
+                    assert.equal(pinned.typeOpacity, 0);
                     const reverse = await galleryAt(page, 0);
                     assert.deepEqual(reverse.backgroundRGB, [32, 56, 255]);
                     cases.push({ lang, width, samples, opening, reverse });

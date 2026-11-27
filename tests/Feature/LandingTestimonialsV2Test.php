@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders one localized testimonial wall after Stories and before the footer', function (string $locale): void {
+it('renders one localized testimonial wall after Gallery and before Stories', function (string $locale): void {
     $response = $this->withSession(['locale' => $locale])->get(route('home'));
 
     $response->assertOk()->assertSee(__('testimonials.title'))->assertSee(__('testimonials.description'));
@@ -12,12 +12,15 @@ it('renders one localized testimonial wall after Stories and before the footer',
     @$document->loadHTML($response->getContent());
     $dom = new DOMXPath($document);
     expect($dom->query('//*[@data-testimonials]')->length)->toBe(1);
-    expect($dom->query('//*[@data-stories]/following-sibling::*[1][@data-testimonials]')->length)->toBe(1);
-    expect($dom->query('//*[main/*[last()][@data-testimonials]]/main/following-sibling::*[1][@data-footer-v2]')->length)->toBe(1);
+    expect($dom->query('//*[@data-gallery]/following-sibling::*[1][@data-testimonials]')->length)->toBe(1);
+    expect($dom->query('//*[@data-testimonials]/following-sibling::*[1][@data-stories]')->length)->toBe(1);
+    expect($dom->query('//*[main/*[last()][@data-stories]]/main/following-sibling::*[1][@data-footer-v2]')->length)->toBe(1);
     expect($dom->query('//*[@data-testimonials][@aria-labelledby="testimonials-title"]//h2[@id="testimonials-title"]')->length)->toBe(1);
-    expect($dom->query('//*[@data-testimonials-wall]/*[@data-testimonials-row][@aria-label]')->length)->toBe(2);
-    expect($dom->query('(//*[@data-testimonials-row])[1]/article[blockquote/p]')->length)->toBe(11);
-    expect($dom->query('(//*[@data-testimonials-row])[2]/article[blockquote/p]')->length)->toBe(10);
+    expect($dom->query('//*[@data-testimonials]/descendant::header[1]/p[@class="sr-only"]')->length)->toBe(1);
+    expect($dom->query('//*[@data-testimonials-wall]/*[@data-testimonials-row][@aria-label]')->length)->toBe(3);
+    expect($dom->query('(//*[@data-testimonials-row])[1]/*[@data-testimonials-track]/article[blockquote/p]')->length)->toBe(7);
+    expect($dom->query('(//*[@data-testimonials-row])[2]/*[@data-testimonials-track]/article[blockquote/p]')->length)->toBe(7);
+    expect($dom->query('(//*[@data-testimonials-row])[3]/*[@data-testimonials-track]/article[blockquote/p]')->length)->toBe(7);
     expect($dom->query('//*[@data-testimonials-wall]//img[@loading="lazy"][@width="40"][@height="40"][@alt=""]')->length)->toBe(21);
     expect($dom->query('//*[@data-testimonials]//*[self::a or self::button or self::dialog or @tabindex]')->length)->toBe(0);
 

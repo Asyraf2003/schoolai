@@ -1,36 +1,57 @@
-.gallery { overflow-anchor: none; position: relative; background: #08090b; color: #fff; }
+.gallery { overflow-anchor: none; position: relative; background: #fff; color: #171717; }
 .gallery[data-gallery-enabled] {
     margin-block-start: var(--gallery-entry-margin, 0px);
-    background: color-mix(in srgb, #2038ff calc(100% - var(--gallery-dark-pct, 0%)), #08090b var(--gallery-dark-pct, 0%));
+    block-size: var(--gallery-total-height, 700vh);
+    block-size: var(--gallery-total-height, 700svh);
+    background: #fff;
+    background: color-mix(in srgb, #2038ff calc(100% - var(--gallery-white-pct, 0%)), #fff var(--gallery-white-pct, 0%));
 }
 .gallery[data-gallery-enabled]::before {
     content: ''; position: absolute; inset-inline: 0; inset-block-end: 100%;
     block-size: max(0px, var(--gallery-entry-margin, 0px));
     background: inherit; pointer-events: none;
 }
-.program-values[data-gallery-dark] {
-    background: color-mix(in srgb, var(--values-blue) calc(100% - var(--gallery-dark-pct, 0%)), #08090b var(--gallery-dark-pct, 0%));
+.program-values[data-gallery-white] {
+    background: #fff;
+    background: color-mix(in srgb, var(--values-blue) calc(100% - var(--gallery-white-pct, 0%)), #fff var(--gallery-white-pct, 0%));
 }
-.program-values[data-gallery-dark] .program__type-home { opacity: var(--gallery-decoration-opacity, 1); }
-.program-values[data-gallery-dark] .values__line { opacity: var(--gallery-line-opacity, 1); }
+.program-values[data-gallery-white] .program__type-home { opacity: var(--gallery-decoration-opacity, 1); }
+.program-values[data-gallery-white] .values__line { opacity: var(--gallery-line-opacity, 1); }
 .gallery__stage { position: relative; padding-block: clamp(3rem, 6vw, 7rem); }
-.gallery__header { inline-size: 84%; margin-inline: auto; padding-block: calc(var(--v2-header-block-size) + 1svh) 0; }
-.gallery__header h2 { margin: 0; font-size: clamp(3.4rem, 15vw, 7rem); font-weight: 360; line-height: .84; letter-spacing: -.055em; text-transform: uppercase; }
+.gallery__header {
+    inline-size: 84%; margin-inline: auto;
+    padding-block: calc(var(--v2-header-block-size) + 1vh) 0;
+    padding-block: calc(var(--v2-header-block-size) + 1svh) 0;
+}
+.gallery__header h2 {
+    margin: 0; font-size: clamp(3.4rem, 15vw, 7rem); font-weight: 360; line-height: .84;
+    letter-spacing: -.055em; text-transform: uppercase;
+    color: #171717;
+    color: color-mix(in srgb, #fff calc(100% - var(--gallery-white-pct, 100%)), #171717 var(--gallery-white-pct, 100%));
+}
 .gallery[data-gallery-enabled] .gallery__header { padding-block-end: var(--gallery-opening-gap-extra, 0px); }
 .gallery__heading-clip { display: block; overflow: hidden; padding-block: .08em; }
 .gallery__heading-clip > span { display: block; }
-.gallery__composition { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.375rem, 1.1vw, 1rem); inline-size: 88%; margin-inline: auto; }
+.gallery__composition { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 3fr); gap: clamp(.375rem, 1.1vw, 1rem); inline-size: 88%; margin-inline: auto; }
 .gallery__item { position: relative; min-inline-size: 0; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: clamp(.4rem, .8vw, .8rem); background: #e8edf0; }
 .gallery__item:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-.gallery__item::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 32px 4px #0000005c; }
+.gallery__item::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 22px 2px #00000028; }
 .gallery__item img, .gallery__item video { position: absolute; inline-size: 100%; block-size: 100%; inset: 0; object-fit: cover; }
 .gallery__item video { opacity: 0; }
 .gallery__item video[data-ready="true"] { opacity: 1; }
-.gallery__statement { margin: 3rem auto; inline-size: 92%; text-align: center; color: #fff; font-size: clamp(2rem, 4.5vw, 5.5rem); font-weight: 600; line-height: 1.12; letter-spacing: -.035em; }
+.gallery__statement { margin: 3rem auto; inline-size: 92%; text-align: center; color: #171717; font-size: clamp(2rem, 4.5vw, 5.5rem); font-weight: 600; line-height: 1.12; letter-spacing: -.035em; }
 .gallery__statement-line { display: block; }
 .gallery__statement [data-gallery-word] { display: inline-block; }
-.gallery[data-gallery-enabled] .gallery__statement { position: absolute; top: 50%; inset-inline: 4%; margin: 0; transform: translateY(-50%); pointer-events: none; text-shadow: 0 0 3px #000, 0 2px 18px #000000db; }
-.gallery[data-gallery-enabled] { block-size: 700vh; block-size: 700svh; }
+.gallery[data-gallery-enabled] .gallery__statement {
+    position: absolute; top: 50%; inset-inline: 4%; margin: 0;
+    transform: translateY(-50%); pointer-events: none;
+    text-shadow: 0 0 18px rgb(255 255 255 / 92%), 0 2px 32px rgb(255 255 255 / 78%);
+}
+.gallery[data-gallery-enabled] .gallery__statement::before {
+    content: ''; position: absolute; inset: -35% -12%; z-index: -1; pointer-events: none;
+    opacity: var(--gallery-statement-mist, 0);
+    background: radial-gradient(ellipse 68% 66% at 50% 50%, rgb(255 255 255 / 92%) 0%, rgb(255 255 255 / 72%) 48%, rgb(255 255 255 / 0%) 100%);
+}
 .gallery[data-gallery-enabled] .gallery__stage { position: sticky; top: 0; block-size: 100vh; block-size: 100svh; overflow: hidden; padding: 0; }
 .gallery[data-gallery-enabled] .gallery__composition { display: block; position: absolute; inset: 0; inline-size: 100%; block-size: 100%; margin: 0; direction: ltr; pointer-events: none; }
 .gallery[data-gallery-enabled] .gallery__item { position: absolute; left: 0; top: 0; width: 86.666667%; aspect-ratio: 16 / 9; transform-origin: 0 0; }
@@ -39,9 +60,6 @@
 [lang="ar"] .gallery { font-family: Cairo, sans-serif; }
 [lang="ar"] .gallery__header h2 { letter-spacing: normal; line-height: 1.35; text-transform: none; }
 [lang="ar"] .gallery__statement { letter-spacing: normal; line-height: 1.45; }
-@media (max-width: 767px) {
-    .gallery[data-gallery-enabled] { block-size: 1000vh; block-size: 1000svh; }
-}
 @media (min-width: 768px) { .gallery__header { inline-size: 91.6667%; } }
 @media (min-width: 1280px) {
     .gallery__header { inline-size: 90%; }

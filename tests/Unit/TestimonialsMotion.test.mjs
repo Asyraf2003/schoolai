@@ -59,6 +59,18 @@ test('touch keeps the effect for 700 ms and follows a linked testimonial once', 
     assert.deepEqual(navigations, [href]);
 });
 
+test('a touch followed by a WebKit mouse-labeled click still lights and delays navigation', t => {
+    const { card, navigations } = fixture(t);
+    const linked = card({ href, isConnected: true });
+    linked.pointerdown('touch');
+    assert.equal(linked.click({ pointerType: 'mouse' }).defaultPrevented, true);
+    assert.equal(linked.lit(), true);
+    t.mock.timers.tick(699);
+    assert.deepEqual(navigations, []);
+    t.mock.timers.tick(1);
+    assert.deepEqual(navigations, [href]);
+});
+
 test('sample touch lights without navigation and cancels an earlier tap', t => {
     const { card, navigations } = fixture(t);
     const linked = card({ href, isConnected: true });

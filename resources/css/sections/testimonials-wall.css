@@ -1,32 +1,45 @@
-[data-testimonials-scroll]::after {
-    display: block;
-    block-size: clamp(42rem, 90vw, 76rem);
-    content: "";
-}
-[data-testimonials-scroll] .testimonials__inner {
-    position: sticky;
-    inset-block-start: max(calc(var(--v2-header-block-size) + 1rem), 13svh);
-}
-[data-testimonials-scroll] .testimonials__wall {
+[data-testimonials-mode="loop"] {
     grid-template-columns: minmax(0, 1fr);
     row-gap: clamp(.5rem, 1vw, 1rem);
 }
-[data-testimonials-scroll] .testimonials__row {
-    display: flex;
-    align-items: start;
-    overflow: auto hidden;
-    scrollbar-width: none;
+[data-testimonials-mode="loop"] .testimonials__row {
+    overflow: hidden;
+    overflow: clip;
     padding-block: .375rem;
+    cursor: grab;
+    touch-action: pan-y;
 }
-[data-testimonials-scroll] .testimonials__row:focus-visible { outline-offset: -.1875rem; }
-[data-testimonials-scroll] .testimonials__card {
+[data-testimonials-mode="loop"] .testimonials__row + .testimonials__row { padding-block-start: .375rem; }
+[data-testimonials-mode="loop"] .testimonials__track { display: flex; align-items: start; }
+[data-testimonials-mode="loop"] .testimonials__row:focus-visible { outline-offset: -.1875rem; }
+[data-testimonials-mode="loop"] .testimonials__card {
     flex: 0 0 calc((100% - 2 * var(--testimonials-gap)) / 2.5);
     min-inline-size: 0;
     min-block-size: 9.5rem;
     padding: clamp(1.5rem, 2.5vw, 2.125rem);
 }
-[data-testimonials-scroll] blockquote { font-size: 1.125rem; }
-[data-testimonials-scroll] .testimonials__link:focus-visible::after { outline-offset: -.25rem; }
+[data-testimonials-mode="loop"] blockquote { font-size: 1.125rem; }
+[data-testimonials-mode="loop"] .testimonials__link:focus-visible::after { outline-offset: -.25rem; }
+
+[data-testimonials-mode="rotation"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: hidden;
+    overflow: clip;
+    touch-action: pan-y;
+}
+[data-testimonials-mode="rotation"] .testimonials__row + .testimonials__row { padding-block-start: .75rem; }
+[data-testimonials-mode="rotation"] .testimonials__track {
+    grid-template-rows: repeat(3, var(--testimonials-phone-card-height));
+    transform: translateX(var(--testimonials-swipe, 0px));
+}
+[data-testimonials-mode="rotation"] .testimonials__card {
+    grid-column: 1;
+    grid-row: var(--testimonials-slot);
+    min-inline-size: 0;
+}
+[data-testimonials-mode="rotation"] .testimonials__card:not([inert]) { z-index: 1; }
+[data-testimonial-pending] { visibility: hidden; }
+[data-testimonial-dragging] { cursor: grabbing; user-select: none; }
 
 @media (max-width: 767px) {
     .testimonials__wall {
@@ -46,7 +59,7 @@
             position: absolute;
             inset-block: 0;
             inline-size: clamp(.875rem, 5.5vw, 2rem);
-            z-index: 1;
+            z-index: 2;
             pointer-events: none;
             background: linear-gradient(var(--testimonials-edge-direction), #ffffff24, transparent);
             content: "";
@@ -55,12 +68,15 @@
         .testimonials__wall::after { right: 0; --testimonials-edge-direction: to left; }
         .testimonials__wall:focus-within::before, .testimonials__wall:focus-within::after { visibility: hidden; }
 
-        @supports ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) and (mask-image: linear-gradient(black, transparent)) {
+        @supports ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) and ((mask-image: linear-gradient(black, transparent)) or (-webkit-mask-image: linear-gradient(black, transparent))) {
             .testimonials__wall::before, .testimonials__wall::after {
                 -webkit-backdrop-filter: blur(2px);
                 backdrop-filter: blur(2px);
+                -webkit-mask-image: linear-gradient(var(--testimonials-edge-direction), #000, transparent);
                 mask-image: linear-gradient(var(--testimonials-edge-direction), #000, transparent);
             }
         }
     }
 }
+
+[data-testimonials-measuring] .testimonials__track { display: block; transform: none; }

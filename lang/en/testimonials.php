@@ -2,7 +2,7 @@
 
 return [
     'eyebrow' => 'Testimonials',
-    'title' => 'What do they say about our school?',
+    'title' => 'Testimonials',
     'description' => 'Temporary sample content for layout validation. It will be replaced with verified testimonials.',
     'source_types' => [
         'sample' => 'Sample testimonial',

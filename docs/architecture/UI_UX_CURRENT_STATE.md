@@ -16,6 +16,89 @@ their existing ignored .env.production. Verify cPanel backup/database before upl
 
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Uniform scroll, white 34-tile Gallery, 3-row Testimonials, vertical Stories edge heading, crossfade mobile & clean white Footer — 2026-11-27
+
+FACT: after `dafca25d`, the landing page used black Gallery, per-section scroll brakes, Stories before Testimonials, a two-row Testimonials desktop rail, upward slide-in Stories mobile media, and a blue auto-navigating `/galeri` gate below the footer.
+DECISION / BLUEPRINT: [Uniform scroll white Gallery, Testimonials and Stories](blueprints/2026-11-27-uniform-scroll-white-gallery-testimonials-stories.md). Uniform `0.85x` exponential wheel inertia (`TAU = 180ms`); white 34-tile Gallery (`11/12/11` with 4 random bottom tiles) releasing pin at `80%` blur while Testimonials rises from below; `3` counter-scrolling Testimonials rows on desktop (`[7,7,7]`) with `75vh` white spacer before `#stories-title` and `2×3` card pool rotation on phone; vertical `Stories & Insights` edge heading (`aria-hidden`) in Stories sticky viewport (LTR top-left reading upward from center, RTL top-right mirrored, blur-to-sharp entrance, dynamically shifts down when header reveals); instant opacity+blur mobile crossfade on Stories (`280ms`); clean white Footer end with no `/galeri` strip or auto-navigation; Safari fallbacks (`vh` before `svh`, `overflow: hidden` before `overflow: clip`, `-webkit-writing-mode`, `-webkit-mask-image`, fallback colors before `color-mix`, `translate3d`).
+PROOF: `git diff --check`, `npm run check:structure` (278 source files <= 200 lines), `npm run build` (61 Vite modules), `vendor/bin/pint --dirty`, `php artisan test --compact` (278 passed, 2277 assertions, 1 skipped optional R2 test), and `node --test tests/Unit/*.test.mjs tests/Js/*.test.mjs` (47 passed, 0 failed, 200 browser-env skipped) all passed after the final code edit. Headless Chromium 158 CDP browser verification (`verify-latest-cdp.mjs` and `verify-cdp.mjs`) passed at `1440x900` and `390x844` across ID/AR/reduced-motion (uniform `170px` move / spread `0`, `1:1` Gallery rise `1684px`, `80%` blur `11.2px`, Testimonials `[7,7,7]` with `675px` (`75vh`) gap, mobile 6-slot rotation with zero horizontal overflow, LTR/RTL vertical edge heading + `72px` header reveal tracking, mobile Stories crossfade without `translateY`, zero `[data-footer-next-shell]` below Footer, and zero runtime JS errors).
+STATUS: PASS for implementation, PHP/Node unit checks, build, and headless Chromium CDP verification. Real macOS/iOS Safari hardware testing remains `BLOCKED_BY_MISSING_EVIDENCE` until verified on an Apple device.
+
+## Gallery repeats and recovered Testimonials preview — 2026-11-26
+
+FACT: the current main Gallery used a blue-to-black entry, original word
+reveal and black fade. The newer Testimonials preview was uncommitted on
+`c2921f36` in `/tmp/schoolai-testimonials-work`. The `make on` checkout was
+serving the earlier published testimonial wall.
+
+OWNER DECISION: retain the original Gallery presentation with ten assets
+shown three times, a center-anchored lead shrink and 3:4:3 lane widths across
+devices. Use the existing local Testimonials preview. It provides the editorial
+heading, counter-moving desktop tracks and six rotating phone cards.
+Enhanced short landscape bounds the lane width so the lead still shrinks.
+Reduced motion and no JS keep the static semantic media and card layouts.
+
+EXECUTION: restored the original Gallery styling, timing, statement and
+prior Stories-to-Testimonials order from main. Group placements extend through
+the existing Gallery rise. Reused the local Testimonials preview sources and
+kept the WebKit touch event fix. The preview is built in the checkout used by
+`http://127.0.0.1:8001/`.
+
+PROOF: the live preview passed Gallery opening, centered shrink, 30 tiles,
+3:4:3 formation, original word timing, exit and reverse at 390, 768 and 1440px
+in Chromium 158 and WebKit 26.6. Node geometry also covers tier boundaries,
+RTL and short landscape. Chromium and WebKit passed the Testimonials modes,
+locale layout, keyboard, drag, tap, rotation, reduced/no-JS and adjoining
+section checks. Chromium Gallery lifecycle passed with real MP4 fixtures and
+at most two active sources. Build, structure (284 files), changed-test Pint,
+diff, 47 Node tests and 278 PHP tests pass. The optional R2 write test skipped.
+STATUS: PASS for the corrected local preview.
+NEXT VALID STEP: Claude di terminal lokal merekonsiliasi checkout preview
+dan memakai tambahan terbaru pemilik sebagai scope aktif.
+[Handoff](handoffs/2026-11-26-gallery-testimonials-handoff.md) · [Prompt](handoffs/2026-11-26-gallery-testimonials-claude-prompt.md).
+
+## Continuous white Gallery and Testimonials — 2026-11-26
+
+Historical scope. Superseded by the later owner correction above.
+
+FACT: fetched main `dafca25dd91fbc915c655c99467a7a5af289f37f` rendered 10
+Gallery tiles on a black 700/1000svh track, with Stories between Gallery
+and Testimonials. WebKit 26.6 reproduced the existing touch sequence
+`pointerdown(touch) → click(mouse)`, which skipped the card glow and link delay.
+GOAL / DECISION: owner-approved 30 tiles in three permutations of the same 10
+assets, with 9/12/9 tiles at 30:40:30 available width. Preserve the opening
+media. Blend Values blue into white. Center the lead before scaling it, keep
+the heading in natural flow, and translate the assembled lanes one pixel per
+native scroll pixel. Native sticky release overlaps the visible media tail
+with the coming Testimonials heading. Stories follows Testimonials.
+BLUEPRINT: [Gallery and Testimonials](blueprints/2026-11-26-gallery-testimonials-choreography.md).
+EXECUTION: the Gallery trigger supplies measured phase endpoints to the
+existing pacing cache. Only GSAP's lead, follower-group and composition
+transforms move. The video observer permits two hydrated sources and releases
+them offscreen or during suspension. Testimonials retains its existing wall,
+with touch recognition following the originating pointer.
+PROOF: 84 geometry profiles on headless Linux (14 widths × 3 locales ×
+Chromium 158.0.8127.88 and WebKit 26.6). Max midpoint error during shrink was
+0.607 CSS px. At 900px height, rise and release together used 1,495px at 390px
+width and 4,269px at 1440px, 1:1 with the measured visual tail. At the midpoint
+of release about 450px remained visible and the Testimonials title was already
+visible below it. The matrix used the real posters; separate tests used the
+actual MP4s for playback, failure, release, visibility and BFCache events.
+Three Chromium 158 headless runs per version at 1440×900 started at formation
+on each build and used the same 24 wheel packets. Frame interval p95 median
+was 33.4→16.7ms and worst case 33.4→16.8ms. No long tasks or idle section writes
+were observed in those samples. Structure, Vite build, Pint and diff pass.
+PHP passed 278 tests and 2,283 assertions with one optional R2 test skipped.
+The Node run without browser configuration passed 48 tests. Focused browser
+checks passed for cursor, pacing cache, Values flip, the footer gate, extreme
+and reverse wheel, keyboard, resize, touch profiles, reduced motion, and
+Testimonials interaction. The WebKit footer passed on a dedicated rerun
+after timing failures in the mixed run and the baseline run.
+PROGRESS / STATUS: local implementation and focused proof PASS. Device and
+release certification is `BLOCKED_BY_MISSING_EVIDENCE`. Native Safari on
+Apple hardware and production Lighthouse/CWV are unmeasured.
+NEXT VALID STEP: review the local patch and run native Safari device proof
+before release certification.
+
 ## Homepage scroll pacing and single-image cursor — 2026-11-26
 
 FACT: base main c2921f36 remeasured pacing geometry and enumerated animation

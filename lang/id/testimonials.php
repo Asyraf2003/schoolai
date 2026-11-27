@@ -2,7 +2,7 @@
 
 return [
     'eyebrow' => 'Testimoni',
-    'title' => 'Apa kata mereka tentang sekolah kami?',
+    'title' => 'Testimoni',
     'description' => 'Konten contoh sementara untuk menguji komposisi. Akan diganti dengan testimoni terverifikasi.',
     'source_types' => [
         'sample' => 'Contoh testimoni',

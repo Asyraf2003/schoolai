@@ -35,6 +35,7 @@
 
 .values__card-summary {
     margin: 0;
+    color: var(--values-card-accent, #11131b);
     color: color-mix(in srgb, var(--values-card-accent) 72%, #11131b);
     font-size: clamp(.94rem, 4.7cqi, 1.18rem);
     font-weight: 700;
@@ -59,6 +60,7 @@
 }
 
 .values__card-body strong {
+    color: var(--values-card-accent, #11131b);
     color: color-mix(in srgb, var(--values-card-accent) 78%, #11131b);
     font-weight: 720;
 }

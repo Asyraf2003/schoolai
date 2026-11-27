@@ -8,8 +8,7 @@ const metrics = () => {
         '.site-header__links strong', '.site-header__links small', '.about__headline',
         '.program__type-line', '.gallery__header h2', '.stories__heading', '.stories__feature-copy h3',
         '.stories__feature-copy p', '.site-footer-v2__description', '.site-footer-v2__social a',
-        '.site-footer-v2__partners h2', '.site-footer-v2__partner-grid a',
-        '.site-footer-v2__next-eyebrow', '.site-footer-v2__next-direction'];
+        '.site-footer-v2__partners h2', '.site-footer-v2__partner-grid a'];
     return {
         locale: document.documentElement.lang, dir: document.documentElement.dir,
         viewport: [innerWidth, innerHeight], overflow: document.documentElement.scrollWidth > innerWidth,
@@ -18,11 +17,10 @@ const metrics = () => {
             return { selector, font: style.fontFamily, tracking: style.letterSpacing,
                 leading: parseFloat(style.lineHeight) / parseFloat(style.fontSize) };
         }),
-        arrows: ['.site-footer-v2__next-arrow', '.site-footer-v2__social-arrow'].map(selector => {
+        arrows: ['.site-footer-v2__social-arrow'].map(selector => {
             const style = getComputedStyle(document.querySelector(selector));
             return new DOMMatrix(style.transform).m11 * (style.scale === 'none' ? 1 : parseFloat(style.scale));
         }),
-        fillOrigin: getComputedStyle(document.querySelector('.site-footer-v2__next-line-fill')).transformOrigin,
         stories: [...document.querySelectorAll('[data-stories-feature]')].map(element => element.querySelector('h3').getAttribute('aria-label')),
     };
 };
@@ -36,13 +34,11 @@ function verify(state) {
             assert.equal(item.tracking, 'normal', item.selector);
             assert.ok(item.leading >= 1.25 - 1e-5, `${item.selector}: ${item.leading}`);
         }
-        assert.deepEqual(state.arrows, [-1, -1]);
-        assert.ok(parseFloat(state.fillOrigin) > 0, 'RTL progress grows from the right');
+        assert.deepEqual(state.arrows, [-1]);
     } else {
         assert.match(state.text[1].font, /Inter/);
         assert.equal(state.text[1].tracking === 'normal', false, 'Latin display tracking preserved');
-        assert.deepEqual(state.arrows, [1, 1]);
-        assert.equal(parseFloat(state.fillOrigin), 0);
+        assert.deepEqual(state.arrows, [1]);
     }
 }
 
@@ -85,7 +81,7 @@ for (const engine of engines) {
             await paint(page); verify(await page.evaluate(metrics));
             const social = await page.locator('.site-footer-v2__social-label').first().evaluate(element => new DOMMatrix(getComputedStyle(element).transform).m41);
             assert.equal(social, 0, 'Reduced motion keeps labels still on keyboard focus');
-            await page.locator('[data-footer-next-main]').focus();
+            await page.locator('.site-footer-v2__copyright').scrollIntoViewIfNeeded();
             await paint(page); verify(await page.evaluate(metrics));
             await page.screenshot({ path: `${directory}/desktop-ar-${engine}-next.png` });
             await page.locator('.site-footer-v2__description').evaluate(element => element.style.fontSize = `${parseFloat(getComputedStyle(element).fontSize) * 2}px`);
@@ -101,7 +97,7 @@ for (const engine of engines) {
             await page.locator('[data-footer-preview]').first().focus();
             await page.waitForFunction(() => new DOMMatrix(getComputedStyle(document.querySelector('.site-footer-v2__social-label')).transform).m41 < -1);
             verify(await page.evaluate(metrics));
-            await page.locator('[data-footer-next-main]').focus();
+            await page.locator('.site-footer-v2__copyright').scrollIntoViewIfNeeded();
             await paint(page); verify(await page.evaluate(metrics));
             await page.evaluate(() => { document.activeElement.blur(); scrollTo(0, 0); });
             await page.locator('[data-language] > summary').click();

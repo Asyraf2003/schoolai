@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\User;
 use App\Models\Article;
 use App\Models\GalleryItem;
+use App\Models\User;
 use App\Services\ActiveSessionManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;

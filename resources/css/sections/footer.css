@@ -14,6 +14,7 @@
     display: grid;
     /* Fluid 1:2 vertical canvas; content can grow beyond one viewport. */
     grid-template-rows: minmax(0, 1fr) minmax(min-content, 2fr);
+    min-block-size: 100vh;
     min-block-size: 100svh;
     padding-inline: var(--v2-space-page);
     background: #fff;
@@ -26,6 +27,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr) auto;
     column-gap: clamp(.75rem, 2cqi, 2.5rem);
+    row-gap: clamp(.75rem, 2.5vh, 2.5rem);
     row-gap: clamp(.75rem, 2.5svh, 2.5rem);
     inline-size: 100%;
     min-block-size: 0;
@@ -140,6 +142,7 @@
     left: var(--footer-art-x, 3%);
     top: var(--footer-art-y, 22%);
     width: min(25vw, 23rem);
+    height: min(48vh, 28rem);
     height: min(48svh, 28rem);
     object-fit: contain;
     opacity: 0;
@@ -167,17 +170,17 @@
 [lang="ar"] .site-footer-v2__social a,
 [lang="ar"] .site-footer-v2__partners :is(h2, a) { letter-spacing: normal; line-height: 1.45; }
 @media (max-width: 1023px) {
-    .site-footer-v2__white { grid-template-rows: minmax(25svh, auto) auto; }
+    .site-footer-v2__white { grid-template-rows: minmax(25vh, auto) auto; grid-template-rows: minmax(25svh, auto) auto; }
     .site-footer-v2__content { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
     .site-footer-v2__about { grid-column: 1 / -1; }
     .site-footer-v2__description { max-inline-size: 100%; }
 }
 @media (max-width: 639px) {
-    .site-footer-v2__white { grid-template-rows: minmax(15svh, auto) auto; }
+    .site-footer-v2__white { grid-template-rows: minmax(15vh, auto) auto; grid-template-rows: minmax(15svh, auto) auto; }
     .site-footer-v2__content { grid-template-columns: 1fr; row-gap: 2.5rem; }
     .site-footer-v2__about { grid-column: 1; }
     .site-footer-v2__description { max-inline-size: 100%; font-size: clamp(1.8rem, 7.5cqi, 3.5rem); }
-    .site-footer-v2__visual img { width: 50vw; height: 38svh; }
+    .site-footer-v2__visual img { width: 50vw; height: 38vh; height: 38svh; }
     .site-footer-v2[data-footer-preview-active="maps"] .site-footer-v2__visual img { inset-inline-start: 35%; width: 65%; height: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {

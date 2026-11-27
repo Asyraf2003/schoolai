@@ -44,20 +44,4 @@
             <div class="site-footer-v2__copyright">© {{ now()->year }} {{ __('home.footer.copyright') }}</div>
         </div>
     </div>
-    <div class="site-footer-v2__next-shell" data-footer-next-shell>
-        <nav class="site-footer-v2__next" aria-label="{{ __('footer_v2.next_label') }}" data-footer-next>
-            <p class="site-footer-v2__next-eyebrow">{{ __('footer_v2.keep_scrolling') }}</p>
-            <a class="site-footer-v2__next-main" href="{{ route('galeri') }}" data-footer-next-main>
-                <span>{{ __('footer_v2.gallery') }}</span>
-                <span class="site-footer-v2__next-direction">
-                    <span>{{ __('footer_v2.next_label') }}</span>
-                    <span class="site-footer-v2__next-line" aria-hidden="true">
-                        <span class="site-footer-v2__next-line-fill"></span>
-                    </span>
-                    <span class="site-footer-v2__next-arrow" aria-hidden="true">→</span>
-                </span>
-                <img src="{{ config('media.static.navigation.gallery') }}" alt="" loading="lazy" decoding="async">
-            </a>
-        </nav>
-    </div>
 </footer>

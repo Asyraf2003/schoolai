@@ -1,31 +1,22 @@
 .testimonials {
     background: #fff;
     color: #171717;
-    padding-block: clamp(3.75rem, 8vw, 8rem) clamp(2rem, 3vw, 3rem);
+    padding-block: clamp(1.25rem, 2.5vh, 2.25rem) clamp(2rem, 3vw, 3rem);
+    padding-block: clamp(1.25rem, 2.5svh, 2.25rem) clamp(2rem, 3vw, 3rem);
     padding-inline: var(--v2-space-page);
     scroll-margin-block-start: var(--v2-header-block-size);
 }
 
 .testimonials__inner { max-inline-size: 82rem; margin-inline: auto; }
-.testimonials__intro { margin-block-end: clamp(1.75rem, 4vw, 3rem); }
-.testimonials__intro h2 {
-    margin: 0;
-    font-size: clamp(1.875rem, 4.4vw, 3.625rem);
-    font-weight: 600;
-    line-height: 1.18;
-    letter-spacing: -.045em;
-    text-wrap: balance;
+.testimonials__intro {
+    container-type: inline-size;
+    margin-block-end: clamp(2rem, 6vw, 5.5rem);
+}
+.testimonials__intro .testimonials__heading {
+    font-size: min(var(--editorial-heading-size), 14cqi);
+    text-align: center;
     overflow-wrap: anywhere;
 }
-.testimonials__intro p {
-    max-inline-size: 64ch;
-    margin: .75rem 0 0;
-    color: #565b63;
-    font-size: .9375rem;
-    line-height: 1.6;
-}
-
-[lang="ar"] .testimonials__intro h2 { letter-spacing: normal; line-height: 1.4; }
 
 .testimonials__wall {
     --testimonials-gap: clamp(.65rem, 1.5vw, 1.25rem);
@@ -37,12 +28,25 @@
 
 .testimonials__row {
     min-inline-size: 0;
+}
+.testimonials__track {
     display: grid;
     align-content: start;
     gap: var(--testimonials-gap);
 }
 .testimonials__row:only-child { grid-column: 1 / -1; }
 .testimonials__row + .testimonials__row { padding-block-start: clamp(1rem, 4vw, 2.5rem); }
+
+/* Non-phone gets 3 rows (loop) or 3 static columns, plus 75vh gap before Stories heading on PC. */
+@media (min-width: 768px) {
+    .testimonials {
+        padding-block-end: 75vh;
+        padding-block-end: 75svh;
+    }
+    .testimonials__wall:not([data-testimonials-mode="loop"]):not([data-testimonials-mode="rotation"]) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
 
 .testimonials__card {
     position: relative;

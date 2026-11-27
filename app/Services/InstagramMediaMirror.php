@@ -45,6 +45,7 @@ class InstagramMediaMirror
 
                 if (in_array($response->status(), [301, 302, 303, 307, 308], true)) {
                     $url = $response->header('Location') ?? '';
+
                     continue;
                 }
 

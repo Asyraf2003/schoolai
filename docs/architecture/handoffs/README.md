@@ -20,4 +20,5 @@ Create one only when a trigger in `../UI_UX_SESSION_PROTOCOL.md` occurs.
 
 ## Active handoffs
 
-None. `../UI_UX_CURRENT_STATE.md` owns the current continuation point.
+- [Galeri dan Testimoni — handoff untuk Claude](2026-11-26-gallery-testimonials-handoff.md)
+  · [Prompt dengan ruang tambahan pemilik](2026-11-26-gallery-testimonials-claude-prompt.md)

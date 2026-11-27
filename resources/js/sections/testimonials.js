@@ -26,7 +26,8 @@ export function mountTestimonials(root) {
     root.addEventListener('click', event => {
         const card = event.target.closest('[data-testimonial-card]');
         const link = event.target.closest('[data-testimonial-link]');
-        const touch = event.pointerType ? event.pointerType === 'touch' : touchCard === card;
+        // WebKit can label the click following a touch pointer as mouse.
+        const touch = event.pointerType === 'touch' || touchCard === card;
         touchCard = null;
 
         if (!card || !touch || !event.detail || event.defaultPrevented || event.button !== 0
