@@ -11,7 +11,7 @@ button, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
 a { color: inherit; }
-button:disabled { cursor: default; }
+button:disabled, :is(a, button)[aria-disabled="true"] { cursor: default; }
 :focus-visible { outline: 3px solid var(--v2-focus); outline-offset: 5px; }
 img, video { display: block; max-inline-size: 100%; }
 [hidden] { display: none !important; }

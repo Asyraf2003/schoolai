@@ -1,7 +1,11 @@
 .site-cursor { display: none; }
 @media (hover: hover) and (pointer: fine) {
-    /* Keep the native pointer until the selected image is ready and visible. */
+    /* Keep the native pointer until both selected identity assets are ready and visible. */
     body[data-custom-cursor], body[data-custom-cursor] * { cursor: none !important; }
+    body { --cursor-intent: default; }
+    :where(:any-link, button, .site-header summary, .program__trigger) { --cursor-intent: pointer; }
+    :where(.testimonials__row, [data-testimonial-dragging]) { --cursor-intent: default; }
+    :is(:disabled, [aria-disabled="true"], [inert], [inert] *) { --cursor-intent: default; }
     .site-cursor {
         display: block; position: fixed; inset: 0 auto auto 0; z-index: 4;
         inline-size: 96px; block-size: 96px; margin: 0; pointer-events: none;
