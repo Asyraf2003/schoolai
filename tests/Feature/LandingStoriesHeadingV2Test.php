@@ -25,7 +25,7 @@ it('renders the V2 Stories heading and four latest database articles in section 
 
 it('updates Stories from CRUD records and removes deleted articles without dummy fallback', function (): void {
     $article = Article::create(['title_id' => 'Artikel dari database', 'content_id' => '<p>Isi</p>']);
-    $this->withSession(['locale' => 'id'])->get(route('home'))->assertSee('Artikel dari database')->assertSee($article->linkForLocale('id'), false);
+    $this->withSession(['locale' => 'id'])->get(route('home'))->assertSee('Artikel dari database')->assertSee(route('artikel'), false);
     $article->update(['title_id' => 'Judul berubah']);
     $this->get(route('home'))->assertSee('Judul berubah')->assertDontSee('Artikel dari database');
     $article->delete();

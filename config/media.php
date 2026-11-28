@@ -100,6 +100,10 @@ return [
             'article' => $publicUrl.'/site/navigation/library.webp',
         ],
 
+        'status' => [
+            'coming_soon' => $publicUrl.'/site/status/coming-soon-v1.webp',
+        ],
+
         'footer' => [
             'school_map' => $publicUrl.'/site/footer/school-map-v2.webp',
             'maps' => $publicUrl.'/site/footer/maps-v1.webp',

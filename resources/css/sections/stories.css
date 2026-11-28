@@ -115,6 +115,8 @@
     text-transform: uppercase;
     text-wrap: balance;
 }
+.stories__feature-copy h3 a { text-decoration: none; }
+.stories__feature-copy h3 a:hover { opacity: .88; }
 .stories__feature-copy p {
     max-inline-size: 38ch;
     margin: 0;

@@ -5,17 +5,18 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('escapes database content rendered on public article cards', function (): void {
-    Article::query()->create([
+it('escapes database content rendered on public article pages', function (): void {
+    $article = Article::query()->create([
         'title_id' => '<script>alert(1)</script>',
         'description_id' => '\"><img src=x onerror=alert(1)>',
+        'content_id' => '<p>Konten</p>',
         'cover_url' => '/images/placeholder.webp',
-        'link_id' => 'https://example.com/article',
         'author' => 'javascript:alert(1)',
         'published_at' => now(),
     ]);
 
-    $content = $this->get(route('artikel'))
+    $content = $this->withSession(['locale' => 'id'])
+        ->get($article->linkForLocale('id'))
         ->assertOk()
         ->getContent();
 

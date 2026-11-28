@@ -34,7 +34,7 @@
                     <div class="stories__feature-copy" data-stories-copy>
                         <span class="stories__feature-index" aria-hidden="true">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                         <h3 id="stories-feature-title-{{ $loop->iteration }}">
-                            <a href="{{ $article->linkForLocale(app()->getLocale()) }}" aria-label="{{ $title }}">@foreach (explode(' ', $title) as $word)<span data-stories-word aria-hidden="true">{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</a>
+                            <a href="{{ route('artikel') }}" aria-label="{{ $title }}">@foreach (explode(' ', $title) as $word)<span data-stories-word aria-hidden="true">{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</a>
                         </h3>
                         @if($description)<p><span class="sr-only">{{ $description }}</span>@foreach (explode(' ', $description) as $word)<span data-stories-word aria-hidden="true">{{ $word }}</span>{{ $loop->last ? '' : ' ' }}@endforeach</p>@endif
                         @if($article->published_date)<time datetime="{{ $article->published_date->toDateString() }}">{{ $article->published_date->format('d/m/Y') }}</time>@endif

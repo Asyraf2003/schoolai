@@ -35,7 +35,7 @@ it('updates the same record with optional metadata and a future display date wit
     expect(Article::count())->toBe(1)->and($article->fresh()->slug)->toBe($slug)
         ->and($article->fresh()->published_date->toDateString())->toBe('2099-01-01');
     $this->withSession(['locale' => 'ar'])->get($article->linkForLocale('ar'))->assertOk()->assertSee('نص جديد');
-    $this->get(route('home'))->assertOk()->assertSee($article->linkForLocale('ar'), false);
+    $this->withSession(['locale' => 'ar'])->get(route('home'))->assertOk()->assertSee('العربية')->assertSee(route('artikel'), false);
 });
 
 it('removes images video embeds event handlers and script links from article text', function (): void {

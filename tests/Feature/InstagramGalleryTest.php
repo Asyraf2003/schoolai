@@ -18,9 +18,9 @@ it('renders existing school gallery records without requiring Instagram credenti
     ]);
     $this->get(route('galeri'))
         ->assertOk()
-        ->assertSee('data-portal-page="gallery"', false)
-        ->assertSee('Kegiatan kelas')
-        ->assertSee('https://media.almustaqbal.sch.id/gallery/media/first.jpg', false);
+        ->assertSee('data-coming-soon="galeri"', false)
+        ->assertSee('data-header', false);
+    expect(GalleryItem::count())->toBe(1);
 });
 
 it('syncs Instagram media into R2 URLs idempotently and renders the public feed', function (): void {
@@ -48,9 +48,8 @@ it('syncs Instagram media into R2 URLs idempotently and renders the public feed'
     expect(InstagramGalleryItem::count())->toBe(1);
 
     $this->get(route('galeri'))
-        ->assertOk()->assertSee('Hari kreatif')
-        ->assertSee('https://media.almustaqbal.sch.id/gallery/instagram/17912345/video.mp4', false)
-        ->assertSee('https://www.instagram.com/reel/abc/', false);
+        ->assertOk()
+        ->assertSee('data-coming-soon="galeri"', false);
 });
 
 it('keeps the public gallery working when the Instagram API is unavailable', function (): void {
@@ -65,7 +64,7 @@ it('keeps the public gallery working when the Instagram API is unavailable', fun
     ]);
     Http::fake(['graph.instagram.com/*' => Http::response(['error' => ['message' => 'Expired']], 401)]);
     $this->artisan('instagram:sync-gallery')->assertExitCode(1);
-    $this->get(route('galeri'))->assertOk()->assertSee('Foto tetap tersedia');
+    $this->get(route('galeri'))->assertOk()->assertSee('data-coming-soon="galeri"', false);
     expect(InstagramGalleryItem::count())->toBe(1);
 });
 

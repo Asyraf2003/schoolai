@@ -27,7 +27,7 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
             : (process.env.PROGRAM_WEBKIT_PATH ? {executablePath:process.env.PROGRAM_WEBKIT_PATH} : {}))});
     const context = await browser.newContext({viewport:{width:390,height:844}});
     const page = await context.newPage();
-    await page.route('**/portal-*.css', async route => {
+    await page.route('**/coming-soon-*.css', async route => {
         await new Promise(resolve => setTimeout(resolve, 300));
         await route.continue();
     });
@@ -40,6 +40,10 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
             for (const route of ['/galeri', '/artikel', '/artikel/menjelajah-dunia-digital']) {
                 assert.equal((await page.goto(url + route, {waitUntil:'load'})).status(), 200);
                 for (const locale of ['id', 'en', 'ar']) {
+                    if (route !== '/artikel/menjelajah-dunia-digital') {
+                        const langToggle = page.locator('[data-language] > summary');
+                        if (await langToggle.isVisible()) await langToggle.click();
+                    }
                     await Promise.all([page.waitForNavigation({waitUntil:'load'}),
                         page.locator(`form[action$="/bahasa/${locale}"] button`).click()]);
                     assert.equal(new URL(page.url()).pathname, route);
@@ -55,15 +59,12 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
                         assert.equal(cell.unnamedLinks, 0);
                         cells.push({route,locale,width,motion,...cell});
                     }
-                    assert.equal(await page.locator('a[href="https://forms.gle/BrowserFixture"]').count(), 1);
-                    if (route === '/galeri') {
-                        assert.equal(await page.locator('[data-public-gallery] figure').count(), 10);
-                        assert.equal(await page.locator('video[controls][preload="none"][poster]').count(), 5);
-                    } else if (route === '/artikel') {
-                        assert.equal(await page.locator('[data-public-articles] article').count(), 4);
-                        assert.equal(await page.locator('[data-public-articles] img').count(), 4);
-                        assert.equal(await page.locator('[data-public-articles] video').count(), 0);
+                    if (route === '/galeri' || route === '/artikel') {
+                        assert.equal(await page.locator(`[data-coming-soon="${route.slice(1)}"]`).count(), 1);
+                        assert.equal(await page.locator('[data-header]').count(), 1);
+                        assert.equal(await page.locator('.coming-soon__media img').count(), 1);
                     } else {
+                        assert.equal(await page.locator('a[href="https://forms.gle/BrowserFixture"]').count(), 1);
                         assert.equal(await page.locator('video').getAttribute('poster'), 'https://media.almustaqbal.sch.id/site/school-life/labit-v1.webp');
                         assert.equal(await page.locator('.article-content img, .article-content video').count(), 0);
                         assert.ok((await page.locator('.article-content').textContent()).trim().length > 0);
@@ -98,7 +99,10 @@ for (const engine of engines) test(`Public gallery and real Stories in ${engine}
                 staticPage.locator('form[action$="/bahasa/ar"] button').tap()]);
             assert.equal((await staticPage.evaluate(geometry)).overflow, false);
             assert.equal((await staticPage.evaluate(geometry)).dir, 'rtl');
-            assert.equal(await staticPage.locator('.public-nav a').count(), 4);
+            const navCount = route === '/artikel/menjelajah-dunia-digital'
+                ? await staticPage.locator('.public-nav a').count()
+                : await staticPage.locator('#landing-navigation a').count();
+            assert.ok(navCount >= 4);
         }
         await staticContext.close();
         assert.deepEqual(errors, []);

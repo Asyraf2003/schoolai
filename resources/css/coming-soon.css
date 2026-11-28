@@ -1,0 +1,76 @@
+@import './foundation/fonts.css';
+@import './foundation/tokens.css';
+@import './foundation/base.css';
+@import './direction/ltr.css';
+@import './direction/rtl.css';
+@import './locale/id.css';
+@import './locale/en.css';
+@import './locale/ar.css';
+@import './sections/header.css';
+@import './sections/cursor.css';
+
+.coming-soon-page {
+    background: #fcfbff;
+    color: #171717;
+}
+
+.coming-soon-page .site-header {
+    --header-color: #111;
+    --header-fill: rgba(255, 255, 255, .74);
+    --v2-focus: #005fcc;
+    background: rgba(255, 255, 255, .92);
+}
+
+.coming-soon-page .site-header[data-enhanced],
+html[data-landing-pending] .coming-soon-page .site-header {
+    background: transparent;
+}
+
+.coming-soon-page .site-header[data-enhanced]::before,
+html[data-landing-pending] .coming-soon-page .site-header::before {
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    backdrop-filter: blur(14px) saturate(120%);
+}
+
+.coming-soon {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-block-size: 100vh;
+    min-block-size: 100svh;
+    overflow: hidden;
+    padding: calc(var(--v2-header-block-size) + clamp(1rem, 3.5vh, 2.5rem)) var(--v2-space-page) clamp(2rem, 5vh, 3.5rem);
+    background: #fcfbff;
+}
+
+.coming-soon__aurora {
+    position: absolute;
+    inset: -18%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 18% 24%, rgba(255, 166, 102, .42) 0%, transparent 46%),
+        radial-gradient(circle at 82% 20%, rgba(122, 189, 255, .42) 0%, transparent 48%),
+        radial-gradient(circle at 24% 80%, rgba(122, 232, 198, .38) 0%, transparent 46%),
+        radial-gradient(circle at 78% 78%, rgba(214, 155, 255, .4) 0%, transparent 48%),
+        radial-gradient(circle at 50% 50%, rgba(255, 224, 128, .32) 0%, transparent 52%);
+    -webkit-filter: blur(56px);
+    filter: blur(56px);
+}
+
+.coming-soon__media {
+    margin: 0;
+    inline-size: min(100%, 54rem);
+}
+
+.coming-soon__media img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    max-block-size: calc(100vh - var(--v2-header-block-size) - 4.5rem);
+    max-block-size: calc(100svh - var(--v2-header-block-size) - 4.5rem);
+    margin-inline: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 42px rgba(24, 28, 48, .12));
+}

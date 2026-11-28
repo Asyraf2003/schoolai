@@ -21,12 +21,15 @@ function portalAccount(AccountRole $role): User
 }
 
 it('renders public pages in all three languages', function (string $locale, string $direction): void {
-    foreach (['artikel' => 'article', 'galeri' => 'gallery'] as $route => $page) {
+    foreach (['artikel', 'galeri'] as $route) {
         $this->withSession(['locale' => $locale])
             ->get(route($route))
             ->assertOk()
             ->assertSee('dir="'.$direction.'"', false)
-            ->assertSee($route === 'artikel' ? 'data-public-articles' : 'data-public-gallery', false);
+            ->assertSee('data-coming-soon="'.$route.'"', false)
+            ->assertSee('data-header', false)
+            ->assertSee('landing-navigation', false)
+            ->assertSee('coming-soon-v1.webp', false);
     }
 })->with([['id', 'ltr'], ['en', 'ltr'], ['ar', 'rtl']]);
 

@@ -48,7 +48,7 @@ it('keeps admin media unlimited and the landing catalog independent from uploade
     }
     expect(GalleryItem::count())->toBe(12)->and(app(LandingGalleryPresenter::class)->present()['items'])->toHaveCount(10);
     $this->get(route('home'))->assertDontSee('/gallery/media/photo-12.webp', false);
-    $this->get(route('galeri'))->assertSee('/gallery/media/photo-12.webp', false);
+    $this->get(route('galeri'))->assertOk()->assertSee('data-coming-soon="galeri"', false);
 });
 
 it('retains the built in catalog when database media is deleted or unsafe', function (): void {

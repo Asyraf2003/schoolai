@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Article;
-use App\Models\GalleryItem;
 use App\Models\PpdbSetting;
 use App\Models\User;
 use Database\Seeders\StoryArticleSeeder;
@@ -9,40 +8,20 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('loads database gallery media thumbnails and alt text in every locale', function (string $locale, string $direction): void {
-    GalleryItem::create(['media_url' => config('media.public_url').'/gallery/photo.webp', 'alt_text' => 'Foto nyata']);
-    GalleryItem::create(['type' => 'video', 'media_url' => config('media.public_url').'/gallery/video.mp4',
-        'thumbnail_url' => config('media.static.school_life.labit'), 'alt_text' => 'Video nyata']);
+it('renders Coming Soon with the landing header on gallery and article pages in every locale', function (string $locale, string $direction): void {
     PpdbSetting::query()->updateOrCreate(['id' => 1], ['registration_url' => 'https://forms.gle/RealForm']);
 
-    $this->withSession(['locale' => $locale])->get(route('galeri'))->assertOk()
-        ->assertSee('dir="'.$direction.'"', false)->assertSee('Foto nyata')->assertSee('Video nyata')
-        ->assertSee('poster="'.config('media.static.school_life.labit').'"', false)
-        ->assertSee('controls playsinline preload="none"', false)->assertSee('https://forms.gle/RealForm', false)
-        ->assertSee(route('artikel'), false)->assertSee(route('language.switch', 'ar'), false);
-})->with([['id', 'ltr'], ['en', 'ltr'], ['ar', 'rtl']]);
-
-it('paginates the gallery beyond the landing catalog and hides archived or unsafe media', function (): void {
-    foreach (range(1, 25) as $index) {
-        GalleryItem::create(['media_url' => config('media.public_url').'/gallery/photo-'.$index.'.webp', 'alt_text' => 'Photo '.$index]);
-    }
-    $archived = GalleryItem::create(['media_url' => config('media.public_url').'/gallery/archived.webp', 'alt_text' => 'Archived']);
-    $archived->delete();
-    GalleryItem::create(['media_url' => 'javascript:alert(1)', 'alt_text' => 'Unsafe']);
-
-    $this->get(route('galeri'))->assertOk()->assertSee('photo-25.webp', false)
-        ->assertDontSee('Archived')->assertDontSee('Unsafe')->assertDontSee('javascript:alert(1)', false)
-        ->assertSee('rel="next"', false);
-    $this->get(route('galeri', ['page' => 2]))->assertOk()->assertSee('photo-1.webp', false);
-});
-
-it('renders localized empty states without a broken PPDB link', function (string $locale): void {
-    PpdbSetting::query()->updateOrCreate(['id' => 1], ['registration_url' => null]);
-    foreach (['galeri' => 'gallery_empty', 'artikel' => 'articles_empty'] as $route => $key) {
+    foreach (['galeri', 'artikel'] as $route) {
         $this->withSession(['locale' => $locale])->get(route($route))->assertOk()
-            ->assertSee(trans('public_content.'.$key, [], $locale))->assertDontSee('href="'.route('ppdb').'"', false);
+            ->assertSee('dir="'.$direction.'"', false)
+            ->assertSee('data-coming-soon="'.$route.'"', false)
+            ->assertSee('data-header', false)
+            ->assertSee('coming-soon-v1.webp', false)
+            ->assertSee(route('artikel'), false)
+            ->assertSee(route('galeri'), false)
+            ->assertSee(route('language.switch', 'ar'), false);
     }
-})->with(['id', 'en', 'ar']);
+})->with([['id', 'ltr'], ['en', 'ltr'], ['ar', 'rtl']]);
 
 it('publishes four original Stories with their own video posters and archives earlier data safely', function (): void {
     $old = Article::create(['content_id' => '<p>Artikel lama tetap utuh</p>', 'cover_url' => config('media.static.school_life.aula')]);
@@ -90,19 +69,6 @@ it('always shows the latest four on landing and includes older active articles i
 
     $response = $this->withSession(['locale' => 'id'])->get(route('home'))->assertOk();
     expect($response->viewData('articles')->pluck('id')->all())->toBe(Article::latestPublished()->limit(4)->pluck('id')->all());
-    $response->assertSee($new->linkForLocale('id'), false)->assertDontSee($oldest->linkForLocale('id'), false);
-    $this->get(route('artikel'))->assertOk()->assertSee($new->linkForLocale('id'), false)
-        ->assertSee($oldest->linkForLocale('id'), false)->assertSee($oldest->cover_thumbnail_url, false);
-});
-
-it('keeps all active articles reachable through pagination and excludes archived articles', function (): void {
-    foreach (range(1, 13) as $index) {
-        Article::create(['title_id' => 'Judul '.$index, 'content_id' => '<p>Isi</p>']);
-    }
-    $archived = Article::create(['title_id' => 'Judul arsip', 'content_id' => '<p>Isi</p>']);
-    $archived->delete();
-
-    $this->withSession(['locale' => 'id'])->get(route('artikel'))->assertOk()->assertSee('Judul 13')
-        ->assertDontSee('Judul arsip')->assertSee('rel="next"', false);
-    $this->get(route('artikel', ['page' => 2]))->assertOk()->assertSee('Judul 1')->assertSee('rel="prev"', false);
+    $response->assertSee($new->title_id)->assertSee(route('artikel'), false)->assertDontSee($oldest->title_id);
+    $this->get(route('artikel'))->assertOk()->assertSee('data-coming-soon="artikel"', false);
 });

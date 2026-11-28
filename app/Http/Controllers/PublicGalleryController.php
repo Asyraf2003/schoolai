@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GalleryItem;
-use App\Models\InstagramGalleryItem;
-use App\Services\PpdbAccess;
+use App\View\Presenters\SiteNavbarPresenter;
 use Illuminate\View\View;
 
 final class PublicGalleryController extends Controller
 {
-    public function __invoke(PpdbAccess $ppdb): View
+    public function __invoke(SiteNavbarPresenter $navbar): View
     {
-        return view('pages.gallery', [
-            'items' => GalleryItem::query()->orderByDesc('id')->paginate(24),
-            'instagramPosts' => config('services.instagram.gallery_visible')
-                ? InstagramGalleryItem::query()->orderByDesc('posted_at')->paginate(18, ['*'], 'ig_page')
-                : collect(),
-            'ppdbUrl' => $ppdb->current()->publicRegistrationUrl(),
+        return view('pages.coming-soon', [
+            'pageKey' => 'galeri',
+            'pageTitle' => __('pages.common.nav.galeri'),
+            'navigation' => $navbar->present(['siteNavMode' => 'public']),
         ]);
     }
 }
