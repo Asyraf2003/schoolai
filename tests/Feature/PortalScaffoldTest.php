@@ -33,32 +33,41 @@ it('renders public pages in all three languages', function (string $locale, stri
     }
 })->with([['id', 'ltr'], ['en', 'ltr'], ['ar', 'rtl']]);
 
-it('links the header to gallery articles PPDB and login', function (): void {
-    $response = $this->get(route('home'))->assertOk();
-    $items = $response->viewData('navigation')['menuItems'];
+it('links the header to home like the logo plus gallery articles PPDB and login', function (): void {
+    foreach ([route('home') => '#beranda', route('galeri') => route('home')] as $pageUrl => $expectedHomeHref) {
+        $response = $this->withSession(['locale' => 'id'])->get($pageUrl)->assertOk();
+        $navigation = $response->viewData('navigation');
+        $items = $navigation['menuItems'];
+        expect($navigation['logoHref'])->toBe($expectedHomeHref);
 
-    foreach ($items as $item) {
-        if (($item['type'] ?? null) === 'language') {
-            continue;
+        foreach ($items as $item) {
+            if (($item['type'] ?? null) === 'language') {
+                continue;
+            }
+
+            if (($item['type'] ?? null) === 'ppdb') {
+                expect($item['href'])->toBe(PpdbSetting::sole()->registration_url);
+            } elseif (($item['type'] ?? null) === 'login') {
+                expect($item['href'])->toBe(route('portal.login'));
+            } elseif (in_array('home', $item['route_patterns'] ?? [], true)) {
+                expect($item['href'])->toBe($navigation['logoHref']);
+            } elseif (in_array('artikel', $item['route_patterns'] ?? [], true)) {
+                expect($item['href'])->toBe(route('artikel'));
+            } elseif (in_array('galeri', $item['route_patterns'] ?? [], true)) {
+                expect($item['href'])->toBe(route('galeri'));
+                foreach ($item['mega']['links'] ?? [] as $link) {
+                    expect($link['href'])->toBe(route('galeri'));
+                }
+            } else {
+                expect($item['href'])->toBe('#');
+                foreach ($item['mega']['links'] ?? [] as $link) {
+                    expect($link['href'])->toBe('#');
+                }
+            }
         }
 
-        if (($item['type'] ?? null) === 'ppdb') {
-            expect($item['href'])->toBe(PpdbSetting::sole()->registration_url);
-        } elseif (($item['type'] ?? null) === 'login') {
-            expect($item['href'])->toBe(route('portal.login'));
-        } elseif (in_array('artikel', $item['route_patterns'] ?? [], true)) {
-            expect($item['href'])->toBe(route('artikel'));
-        } elseif (in_array('galeri', $item['route_patterns'] ?? [], true)) {
-            expect($item['href'])->toBe(route('galeri'));
-            foreach ($item['mega']['links'] ?? [] as $link) {
-                expect($link['href'])->toBe(route('galeri'));
-            }
-        } else {
-            expect($item['href'])->toBe('#');
-            foreach ($item['mega']['links'] ?? [] as $link) {
-                expect($link['href'])->toBe('#');
-            }
-        }
+        expect(collect($items[1]['mega']['links'])->pluck('label')->all())
+            ->toBe(['TK', 'SD', 'Kursus Bahasa', 'Tahfidzh']);
     }
 });
 

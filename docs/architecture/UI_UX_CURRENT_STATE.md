@@ -16,6 +16,13 @@ their existing ignored .env.production. Verify cPanel backup/database before upl
 
 # UI/UX Engineering — Current State and Progress Ledger
 
+## Header Beranda path parity, Pendidikan items (TK/SD/Kursus Bahasa/Tahfidzh) & 3-row desktop grid — 2026-11-28
+
+FACT: `SiteNavbarMenuPresenter` forced `Beranda` (`home` route pattern) to `#` instead of matching `logoHref` (`#beranda` on `/`, `route('home')` on subpages). `Pendidikan` dropdown still listed `Visi & Misi`, `Nilai QIII`, `Program Unggulan`, and `.site-header__links` used `repeat(4, minmax(0, 1fr))` unconditionally rather than a 3-row multi-column desktop grid matching the `3:2` media height.
+DECISION / EXECUTION: restored `Beranda` href parity with `logoHref` in `app/View/Presenters/SiteNavbarMenuPresenter.php`; updated `Pendidikan` links across `lang/id/home.php`, `lang/en/home.php`, and `lang/ar/home.php` to `TK`, `SD`, `Kursus Bahasa` / `Language Course` / `دورات اللغات`, and `Tahfidzh`; updated `resources/css/sections/header.css` so `.site-header__links` uses `grid-template-rows: repeat(3, minmax(0, 1fr))` with `grid-auto-flow: column` and `block-size: var(--menu-frame-height)` exclusively inside the non-burger desktop/landscape media query while keeping compact/burger menus in vertical row flow. Updated `tests/Feature/PortalScaffoldTest.php`.
+PROOF: `vendor/bin/pint --dirty --format agent`, `npm run check:structure` (`281` files, max `200` lines), `npm run build`, `php artisan test --compact` (`273` passed, `1` skipped opt-in R2 write test, `2319` assertions), and `node --test tests/Unit/*.test.mjs tests/Js/*.test.mjs` (`48` passed, `0` failed, `200` Playwright-env skipped) all passed. Headless `/usr/bin/chromium` CDP check verified `Beranda` matches `logoHref` on `/` (`#beranda`) and `/galeri` (`route('home')`), desktop `Pendidikan` panel height equals media height (`230.4px`) with 3 symmetrical `76.8px` rows (`TK` at `0px`, `SD` at `76.8px`, `Kursus Bahasa` at `153.6px`) plus `Tahfidzh` continuing in column 2 (`0px`, `gridAutoFlow: column`), and tablet burger (`768x1024`) stays single-column `row`.
+STATUS: `PASS`. Ready for fast-forward push to `origin/main`; hardcoded Instagram Testimonials links deferred until operator initiates that next task.
+
 ## Coming Soon /galeri and /artikel with landing header & Stories link/underscore fix — 2026-11-28
 
 FACT: `/galeri` and `/artikel` previously rendered the minimal `portal.shell` navbar and empty/card templates, while landing `#artikel` Stories headings rendered `text-decoration: underline` across spaces between `inline-block` word spans (`_`) and linked directly to individual `/artikel/{slug}` pages.

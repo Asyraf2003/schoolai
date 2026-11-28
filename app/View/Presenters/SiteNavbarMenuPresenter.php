@@ -34,6 +34,10 @@ final class SiteNavbarMenuPresenter
         $megaCopy = $this->translator->get('shared.navbar.mega');
         $megaCopy = is_array($megaCopy) ? $megaCopy : [];
 
+        $logoHref = $isHomeNav
+            ? ($siteNavbar['logo']['href'] ?? '#beranda')
+            : $homeUrl;
+
         foreach ($menuItems as $index => &$item) {
             if (($item['type'] ?? null) === 'language') {
                 $item = array_replace($item, $languageItem);
@@ -42,7 +46,7 @@ final class SiteNavbarMenuPresenter
             }
 
             if ($index === 0) {
-                $item['href'] = $isHomeNav ? '#beranda' : $homeUrl;
+                $item['href'] = $logoHref;
                 $item['route_patterns'] = ['home'];
             } elseif ($index === 1) {
                 $this->prepareEducationItem($item, $homeAnchor);
@@ -68,6 +72,12 @@ final class SiteNavbarMenuPresenter
 
         foreach ($menuItems as &$item) {
             if (($item['type'] ?? null) === 'language') {
+                continue;
+            }
+
+            if (in_array('home', $item['route_patterns'] ?? [], true)) {
+                $item['href'] = $logoHref;
+
                 continue;
             }
 
